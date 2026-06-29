@@ -35,8 +35,10 @@
 //! through:
 //!
 //! * [`fbuild_core::subprocess::run_command`](super::subprocess::run_command)
-//!   — the central blocking helper used by compilers, linkers, esptool,
-//!   avrdude, addr2line, and most emulator setup code.
+//!   — the central async helper used by compilers, linkers, esptool,
+//!   avrdude, addr2line, and most emulator setup code. (#813 Phase A
+//!   converted this from sync to async — it spawns via
+//!   [`tokio_spawn::spawn_contained`] under the hood.)
 //! * [`spawn_contained`] — direct `std::process::Command` spawns that
 //!   don't go through `run_command` (e.g. zccache daemon startup).
 //! * [`tokio_spawn::spawn_contained`] — long-running async spawns in

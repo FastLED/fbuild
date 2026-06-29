@@ -56,12 +56,18 @@ fn elf_is_up_to_date<'a>(elf_path: &Path, inputs: impl Iterator<Item = &'a PathB
 }
 
 /// Trait for platform-specific linkers.
+///
+/// FastLED/fbuild#820 (Phase B of #813): every method that invokes a
+/// subprocess (`archive`, `link`, `convert_firmware`, `report_size`)
+/// is `async fn` so the per-platform linker impls can `.await`
+/// `fbuild_core::subprocess::run_command` directly.
+#[async_trait::async_trait]
 pub trait Linker: Send + Sync {
     /// Create a static archive (.a) from object files.
-    fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()>;
+    async fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()>;
 
     /// Link objects and archives into an ELF binary.
-    fn link(
+    async fn link(
         &self,
         objects: &[PathBuf],
         archives: &[PathBuf],
@@ -70,10 +76,10 @@ pub trait Linker: Send + Sync {
     ) -> Result<PathBuf>;
 
     /// Convert ELF to firmware format (.hex, .bin, etc.).
-    fn convert_firmware(&self, elf_path: &Path, output_dir: &Path) -> Result<PathBuf>;
+    async fn convert_firmware(&self, elf_path: &Path, output_dir: &Path) -> Result<PathBuf>;
 
     /// Report firmware size.
-    fn report_size(&self, elf_path: &Path) -> Result<SizeInfo>;
+    async fn report_size(&self, elf_path: &Path) -> Result<SizeInfo>;
 
     /// Path to the platform's size tool (e.g. `arm-none-eabi-size`).
     ///
@@ -111,7 +117,7 @@ pub trait Linker: Send + Sync {
     /// Skips relinking when the existing firmware.elf is newer than all input
     /// objects and archives, saving ~10-14s on incremental builds where only
     /// the compilation step ran (or nothing changed at all).
-    fn link_all(
+    async fn link_all(
         &self,
         sketch_objects: &[PathBuf],
         core_objects: &[PathBuf],
@@ -127,10 +133,12 @@ pub trait Linker: Send + Sync {
             );
             if can_skip {
                 tracing::info!("link: firmware.elf is up-to-date, skipping relink");
-                let firmware_path = self.convert_firmware(&candidate_elf, output_dir)?;
-                let size_info = self.report_size(&candidate_elf).ok();
+                let firmware_path = self.convert_firmware(&candidate_elf, output_dir).await?;
+                let size_info = self.report_size(&candidate_elf).await.ok();
                 let symbol_map = if symbol_analysis {
-                    LinkerBase::analyze_symbols(self.size_tool_path(), &candidate_elf).ok()
+                    LinkerBase::analyze_symbols(self.size_tool_path(), &candidate_elf)
+                        .await
+                        .ok()
                 } else {
                     None
                 };
@@ -154,17 +162,21 @@ pub trait Linker: Send + Sync {
 
         // Pass core objects directly to linker (not archived) for LTO compatibility.
         // With LTO + archives, the linker can't see symbols across TUs properly.
-        let elf_path = self.link(sketch_objects, core_objects, output_dir, extra)?;
+        let elf_path = self
+            .link(sketch_objects, core_objects, output_dir, extra)
+            .await?;
 
         // Convert
-        let firmware_path = self.convert_firmware(&elf_path, output_dir)?;
+        let firmware_path = self.convert_firmware(&elf_path, output_dir).await?;
 
         // Size
-        let size_info = self.report_size(&elf_path).ok();
+        let size_info = self.report_size(&elf_path).await.ok();
 
         // Symbol analysis
         let symbol_map = if symbol_analysis {
-            LinkerBase::analyze_symbols(self.size_tool_path(), &elf_path).ok()
+            LinkerBase::analyze_symbols(self.size_tool_path(), &elf_path)
+                .await
+                .ok()
         } else {
             None
         };
@@ -300,7 +312,7 @@ impl LinkerBase {
     }
 
     /// Create a static archive (.a) from object files using `ar rcs`.
-    pub fn archive(
+    pub async fn archive(
         ar_path: &Path,
         objects: &[PathBuf],
         output: &Path,
@@ -328,7 +340,7 @@ impl LinkerBase {
         }
 
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, None, None, None)?;
+        let result = run_command(&args_ref, None, None, None).await?;
 
         if !result.success() {
             return Err(fbuild_core::FbuildError::BuildFailed(format!(
@@ -341,7 +353,7 @@ impl LinkerBase {
     }
 
     /// Report firmware size by running the size tool and parsing its output.
-    pub fn report_size(
+    pub async fn report_size(
         size_path: &Path,
         elf_path: &Path,
         max_flash: Option<u64>,
@@ -356,7 +368,7 @@ impl LinkerBase {
         ];
 
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, None, None, None)?;
+        let result = run_command(&args_ref, None, None, None).await?;
 
         if !result.success() {
             return Err(fbuild_core::FbuildError::BuildFailed(format!(
@@ -394,7 +406,10 @@ impl LinkerBase {
     }
 
     /// Run `nm --print-size --size-sort --reverse-sort` on an ELF and parse the output.
-    pub fn analyze_symbols(size_path: &Path, elf_path: &Path) -> Result<fbuild_core::SymbolMap> {
+    pub async fn analyze_symbols(
+        size_path: &Path,
+        elf_path: &Path,
+    ) -> Result<fbuild_core::SymbolMap> {
         use fbuild_core::subprocess::run_command;
 
         let nm_path = Self::nm_path_from_size_path(size_path);
@@ -406,7 +421,7 @@ impl LinkerBase {
             elf_path.to_string_lossy().to_string(),
         ];
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, None, None, None)?;
+        let result = run_command(&args_ref, None, None, None).await?;
 
         if !result.success() {
             return Err(fbuild_core::FbuildError::BuildFailed(format!(
@@ -421,7 +436,7 @@ impl LinkerBase {
     }
 
     /// Convert ELF to firmware using objcopy (shared by AVR and Teensy).
-    pub fn objcopy_firmware(
+    pub async fn objcopy_firmware(
         objcopy_path: &Path,
         elf_path: &Path,
         output_dir: &Path,
@@ -452,7 +467,7 @@ impl LinkerBase {
         args.push(hex_path.to_string_lossy().to_string());
 
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, None, None, None)?;
+        let result = run_command(&args_ref, None, None, None).await?;
 
         if !result.success() {
             return Err(fbuild_core::FbuildError::BuildFailed(format!(

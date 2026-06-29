@@ -13,6 +13,8 @@ use std::path::Path;
 
 use fbuild_core::Result;
 
+use crate::http;
+
 /// Version of ArduinoCore-API to use.
 const ARDUINO_API_VERSION: &str = "1.5.2";
 const ARDUINO_API_URL: &str =
@@ -26,7 +28,7 @@ const ARDUINO_API_URL: &str =
 ///
 /// # Arguments
 /// * `core_dir` - The framework's `cores/arduino/` directory (or equivalent)
-pub fn ensure_arduino_api(core_dir: &Path) -> Result<()> {
+pub async fn ensure_arduino_api(core_dir: &Path) -> Result<()> {
     let api_marker = core_dir.join("api").join("ArduinoAPI.h");
     if api_marker.exists() {
         tracing::debug!(
@@ -47,8 +49,8 @@ pub fn ensure_arduino_api(core_dir: &Path) -> Result<()> {
         fbuild_core::FbuildError::PackageError(format!("failed to create temp dir: {}", e))
     })?;
 
-    // Use blocking reqwest since we may or may not be in an async context
-    let response = reqwest::blocking::get(ARDUINO_API_URL).map_err(|e| {
+    // Async HTTP via the shared client (FastLED/fbuild#813).
+    let response = http::client().get(ARDUINO_API_URL).send().await.map_err(|e| {
         fbuild_core::FbuildError::PackageError(format!("failed to download ArduinoCore-API: {}", e))
     })?;
 
@@ -60,10 +62,10 @@ pub fn ensure_arduino_api(core_dir: &Path) -> Result<()> {
     }
 
     let archive_path = tmp_dir.path().join("ArduinoCore-API.tar.gz");
-    let bytes = response.bytes().map_err(|e| {
+    let bytes = response.bytes().await.map_err(|e| {
         fbuild_core::FbuildError::PackageError(format!("failed to read response: {}", e))
     })?;
-    std::fs::write(&archive_path, &bytes)?;
+    tokio::fs::write(&archive_path, &bytes).await?;
 
     // Extract
     let extract_dir = tmp_dir.path().join("extracted");

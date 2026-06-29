@@ -28,9 +28,9 @@ fn copy_dir_recursive(src: &Path, dst: &Path) {
 /// Build a self-contained Teensy 4.1 blink sketch.
 ///
 /// This test requires Internet access (first run only, then cached).
-#[test]
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore]
-fn build_teensy41_blink() {
+async fn build_teensy41_blink() {
     let tmp = tempfile::TempDir::new().unwrap();
     let project_dir = tmp.path();
 
@@ -86,6 +86,7 @@ void loop() {
     let orchestrator = fbuild_build::teensy::orchestrator::TeensyOrchestrator;
     let result = orchestrator
         .build(&params)
+        .await
         .expect("Teensy build should succeed");
 
     assert!(result.success);
@@ -104,9 +105,9 @@ void loop() {
 }
 
 /// Build a Teensy 4.1 sketch that includes Teensyduino framework libraries.
-#[test]
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore]
-fn build_teensy41_spi_octo_headers() {
+async fn build_teensy41_spi_octo_headers() {
     let tmp = tempfile::TempDir::new().unwrap();
     let project_dir = tmp.path();
 
@@ -159,6 +160,7 @@ void loop() {}
     let orchestrator = fbuild_build::teensy::orchestrator::TeensyOrchestrator;
     let result = orchestrator
         .build(&params)
+        .await
         .expect("Teensy framework library headers should build");
 
     assert!(result.success);
@@ -166,9 +168,9 @@ void loop() {}
 }
 
 /// Build using Teensy test fixture from the repo.
-#[test]
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore]
-fn build_teensy41_fixture() {
+async fn build_teensy41_fixture() {
     // Use the repo's test fixture
     let manifest_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     let project_dir = manifest_dir
@@ -210,6 +212,7 @@ fn build_teensy41_fixture() {
     let orchestrator = fbuild_build::teensy::orchestrator::TeensyOrchestrator;
     let result = orchestrator
         .build(&params)
+        .await
         .expect("Teensy fixture build should succeed");
 
     assert!(result.success);
@@ -231,9 +234,9 @@ fn build_teensy41_fixture() {
 }
 
 /// Build a Teensy 3.0 fixture where a project-local lib/FastLED shadows the bundled framework.
-#[test]
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore]
-fn build_teensy30_fixture_prefers_local_fastled() {
+async fn build_teensy30_fixture_prefers_local_fastled() {
     let manifest_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     let fixture_dir = manifest_dir
         .parent()
@@ -320,6 +323,7 @@ void loop() {
     let orchestrator = fbuild_build::teensy::orchestrator::TeensyOrchestrator;
     let result = orchestrator
         .build(&params)
+        .await
         .expect("Teensy 3.0 local FastLED shadow build should succeed");
 
     assert!(result.success);

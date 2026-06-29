@@ -62,9 +62,9 @@ fn cache_paths_stem_hash() {
 /// This test requires:
 /// - Internet access (first run only, then cached)
 /// - ~/dev/fbuild/tests/uno_minimal/ to exist (Python fbuild repo)
-#[test]
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore]
-fn build_uno_minimal() {
+async fn build_uno_minimal() {
     let project_dir = home_dir().join("dev/fbuild/tests/uno_minimal");
 
     if !project_dir.exists() {
@@ -105,6 +105,7 @@ fn build_uno_minimal() {
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;
     let result = orchestrator
         .build(&params)
+        .await
         .expect("AVR build should succeed");
 
     assert!(result.success, "build should report success");
@@ -159,9 +160,9 @@ fn build_uno_minimal() {
 }
 
 /// Compare our build output against the Python fbuild's cached output.
-#[test]
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore]
-fn compare_with_python_output() {
+async fn compare_with_python_output() {
     let project_dir = home_dir().join("dev/fbuild/tests/uno_minimal");
 
     let python_hex = project_dir.join(".fbuild/build/uno/release/firmware.hex");
@@ -199,7 +200,10 @@ fn compare_with_python_output() {
     };
 
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;
-    let result = orchestrator.build(&params).expect("build should succeed");
+    let result = orchestrator
+        .build(&params)
+        .await
+        .expect("build should succeed");
     let rust_hex = result.firmware_path.expect("should produce hex");
 
     let python_content = fs::read_to_string(&python_hex).unwrap();
@@ -229,9 +233,9 @@ fn compare_with_python_output() {
 }
 
 /// Build a self-contained test project (no dependency on Python fbuild repo).
-#[test]
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore]
-fn build_self_contained_blink() {
+async fn build_self_contained_blink() {
     let tmp = tempfile::TempDir::new().unwrap();
     let project_dir = tmp.path();
 
@@ -287,6 +291,7 @@ void loop() {
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;
     let result = orchestrator
         .build(&params)
+        .await
         .expect("self-contained build should succeed");
 
     assert!(result.success);
@@ -427,9 +432,9 @@ impl Drop for EnvVarGuard {
 ///
 /// Gated `#[ignore]` because it downloads avr-gcc + Arduino-AVR core (cached globally
 /// after first run, but still adds 30s+ to first invocation).
-#[test]
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore]
-fn cache_survives_tar_extract_uno() {
+async fn cache_survives_tar_extract_uno() {
     let tmp_a = tempfile::TempDir::new().unwrap();
     let proj_a = tmp_a.path().join("proj");
     fs::create_dir_all(&proj_a).unwrap();
@@ -443,6 +448,7 @@ fn cache_survives_tar_extract_uno() {
             proj_a.join(".fbuild/build/uno/release"),
             true,
         ))
+        .await
         .expect("cold AVR build should succeed");
     assert!(cold_result.success, "cold build should report success");
     assert!(
@@ -475,6 +481,7 @@ fn cache_survives_tar_extract_uno() {
             proj_a.join(".fbuild/build/uno/release"),
             false,
         ))
+        .await
         .expect("same-project warm build should succeed");
     assert!(
         same_project_warm
@@ -520,6 +527,7 @@ fn cache_survives_tar_extract_uno() {
             proj_b.join(".fbuild/build/uno/release"),
             false,
         ))
+        .await
         .expect("warm AVR build (post tar-extract) should succeed");
     assert!(warm_result.success, "warm build should report success");
     assert!(

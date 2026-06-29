@@ -172,30 +172,21 @@ impl FbuildZccacheService {
         &self.inner
     }
 
-    /// Synchronous per-compile dispatch (Phase 2 / FastLED/fbuild#791).
+    /// Async per-compile dispatch (FastLED/fbuild#820, Phase B of #813).
     ///
-    /// Builds a [`ZccacheCompileRequest`] from the wrapper-mode
-    /// inputs, blocks on the underlying async
-    /// [`ZccacheService::compile`] via the caller-supplied
-    /// `tokio::runtime::Handle`, and returns an
-    /// [`EmbeddedCompileOutcome`] shaped to drop into
-    /// [`crate::compiler::CompileResult`]. Designed to slot into
-    /// `compile_source` exactly where the wrapper-mode
-    /// `run_command(["zccache", "wrap", compiler, …])` runs today.
-    ///
-    /// `runtime` must be a multi-thread tokio runtime handle — the
-    /// daemon's `#[tokio::main]` default. Calling from inside a
-    /// current-thread runtime will panic per tokio's `Handle::block_on`
-    /// contract.
+    /// Builds a [`ZccacheCompileRequest`] and awaits the underlying
+    /// [`ZccacheService::compile`] directly. Replaces `compile_blocking`
+    /// on the hot path now that `compile_source` and the `Compiler`
+    /// trait are fully `async fn`. No `block_on` — the call happens on
+    /// whatever tokio task the orchestrator is already running on.
     ///
     /// `env` is forwarded as a `Vec<(String, String)>` — zccache's
     /// embedded API takes the same shape. fbuild does NOT inherit
     /// caller env here; the call site must pass exactly the env vars
     /// the compile needs (typically the empty vec — gcc reads no env
     /// fbuild cares about for caching).
-    pub fn compile_blocking(
+    pub async fn compile(
         &self,
-        runtime: &tokio::runtime::Handle,
         compiler: &Path,
         args: Vec<String>,
         cwd: PathBuf,
@@ -209,9 +200,10 @@ impl FbuildZccacheService {
             env,
             stdin: Vec::new(),
         };
-        let inner = self.inner.clone();
-        let resp = runtime
-            .block_on(async move { inner.compile(req).await })
+        let resp = self
+            .inner
+            .compile(req)
+            .await
             .map_err(|e| EmbeddedServiceError::Compile(e.to_string()))?;
         Ok(EmbeddedCompileOutcome {
             exit_code: resp.exit_code,
@@ -219,6 +211,36 @@ impl FbuildZccacheService {
             stderr: resp.stderr,
             cached: resp.cached,
         })
+    }
+
+    /// Deprecated sync wrapper around [`Self::compile`]. Retained
+    /// transiently for any out-of-tree caller that hasn't migrated to
+    /// the async path. `compile_source` no longer routes through this.
+    #[deprecated(
+        since = "0.2.0",
+        note = "FastLED/fbuild#820: use the async `compile` method directly; \
+                the build pipeline is fully async as of #813 Phase B"
+    )]
+    pub fn compile_blocking(
+        &self,
+        runtime: &tokio::runtime::Handle,
+        compiler: &Path,
+        args: Vec<String>,
+        cwd: PathBuf,
+        env: Vec<(String, String)>,
+    ) -> Result<EmbeddedCompileOutcome, EmbeddedServiceError> {
+        let svc = self.clone_handle();
+        runtime.block_on(async move { svc.compile(compiler, args, cwd, env).await })
+    }
+
+    /// Cheap clone of the service handle (Arc bump) for the deprecated
+    /// `compile_blocking` shim. Kept private to discourage direct use.
+    fn clone_handle(&self) -> Self {
+        Self {
+            inner: Arc::clone(&self.inner),
+            identity: self.identity.clone(),
+            cache_root: self.cache_root.clone(),
+        }
     }
 
     /// Drain pending writes. Useful at end-of-session boundaries.

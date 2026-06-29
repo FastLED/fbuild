@@ -69,23 +69,24 @@ pub async fn ensure_libraries(
     let mut downloaded_names: std::collections::HashSet<String> = std::collections::HashSet::new();
 
     let libs_dir_owned = libs_dir.to_path_buf();
-    let mut handles = Vec::new();
+    let mut tasks: tokio::task::JoinSet<
+        std::result::Result<(std::path::PathBuf, String, String), fbuild_core::FbuildError>,
+    > = tokio::task::JoinSet::new();
     for spec in &specs {
         let spec_clone = spec.clone();
         let dir = libs_dir_owned.clone();
-        handles.push(tokio::spawn(async move {
+        tasks.spawn(async move {
             let lib_dir = library_downloader::download_library(&spec_clone, &dir).await?;
-            Ok::<(std::path::PathBuf, String, String), fbuild_core::FbuildError>((
+            Ok((
                 lib_dir,
                 spec_clone.sanitized_name(),
                 spec_clone.name.to_lowercase(),
             ))
-        }));
+        });
     }
 
-    // Collect results (preserving order for determinism)
-    for handle in handles {
-        let (lib_dir, sanitized, name_lower) = handle.await.map_err(|e| {
+    while let Some(joined) = tasks.join_next().await {
+        let (lib_dir, sanitized, name_lower) = joined.map_err(|e| {
             fbuild_core::FbuildError::PackageError(format!("library download task failed: {}", e))
         })??;
         installed.push(InstalledLibrary::new(&lib_dir, &sanitized));
@@ -133,7 +134,9 @@ pub async fn ensure_libraries(
             verbose,
             jobs,
             compiler_cache,
-        )? {
+        )
+        .await?
+        {
             archives.push(archive_path);
         }
     }
@@ -271,7 +274,11 @@ async fn resolve_transitive_deps(
     Ok(())
 }
 
-/// Synchronous wrapper for ensure_libraries.
+/// Synchronous wrapper for ensure_libraries (legacy sync call-sites).
+///
+/// New code should call the async `ensure_libraries` directly. This bridge
+/// stays during the #813 migration so fbuild-build orchestrators that haven't
+/// been converted yet can still link.
 #[allow(clippy::too_many_arguments)]
 pub fn ensure_libraries_sync(
     lib_specs: &[String],
@@ -287,40 +294,27 @@ pub fn ensure_libraries_sync(
     jobs: usize,
     compiler_cache: Option<&Path>,
 ) -> Result<LibraryResult> {
-    let rt = tokio::runtime::Handle::try_current().ok();
-    if let Some(handle) = rt {
-        handle.block_on(ensure_libraries(
-            lib_specs,
-            lib_ignore,
-            gcc_path,
-            gxx_path,
-            ar_path,
-            c_flags,
-            cpp_flags,
-            base_includes,
-            libs_dir,
-            verbose,
-            jobs,
-            compiler_cache,
-        ))
+    let fut = ensure_libraries(
+        lib_specs,
+        lib_ignore,
+        gcc_path,
+        gxx_path,
+        ar_path,
+        c_flags,
+        cpp_flags,
+        base_includes,
+        libs_dir,
+        verbose,
+        jobs,
+        compiler_cache,
+    );
+    if let Ok(handle) = tokio::runtime::Handle::try_current() {
+        tokio::task::block_in_place(|| handle.block_on(fut))
     } else {
         let rt = tokio::runtime::Runtime::new().map_err(|e| {
             fbuild_core::FbuildError::PackageError(format!("failed to create tokio runtime: {}", e))
         })?;
-        rt.block_on(ensure_libraries(
-            lib_specs,
-            lib_ignore,
-            gcc_path,
-            gxx_path,
-            ar_path,
-            c_flags,
-            cpp_flags,
-            base_includes,
-            libs_dir,
-            verbose,
-            jobs,
-            compiler_cache,
-        ))
+        rt.block_on(fut)
     }
 }
 

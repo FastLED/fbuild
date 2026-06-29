@@ -8,7 +8,7 @@ use fbuild_core::Result;
 ///
 /// Downloads pioarduino platform.json, resolves toolchain via metadata,
 /// and downloads the split framework + libs packages.
-pub(super) fn resolve_pioarduino_packages(
+pub(super) async fn resolve_pioarduino_packages(
     project_dir: &Path,
     mcu: &str,
     mcu_config: &super::super::mcu_config::Esp32McuConfig,
@@ -18,7 +18,7 @@ pub(super) fn resolve_pioarduino_packages(
 )> {
     // Ensure pioarduino platform (contains platform.json with metadata URLs)
     let platform = fbuild_packages::library::Esp32Platform::new(project_dir);
-    fbuild_packages::Package::ensure_installed(&platform)?;
+    fbuild_packages::Package::ensure_installed(&platform).await?;
 
     // Resolve toolchain via metadata
     let toolchain = resolve_and_create_toolchain(&platform, project_dir, mcu_config)?;
@@ -45,11 +45,11 @@ pub(super) fn resolve_pioarduino_packages(
     };
 
     // Ensure framework is installed before trying to install libs
-    let _ = fbuild_packages::Package::ensure_installed(&framework)?;
+    let _ = fbuild_packages::Package::ensure_installed(&framework).await?;
 
     // Ensure SDK libs (split package in pioarduino 3.3.7+)
     if let Ok(libs_url) = platform.get_package_url("framework-arduinoespressif32-libs") {
-        framework.ensure_libs(&libs_url)?;
+        framework.ensure_libs(&libs_url).await?;
     }
 
     // Ensure MCU-specific skeleton libs (e.g. ESP32-C2, ESP32-C61).
@@ -58,7 +58,7 @@ pub(super) fn resolve_pioarduino_packages(
     if !mcu_suffix.is_empty() {
         let skeleton_name = format!("framework-arduino-{}-skeleton-lib", mcu_suffix);
         if let Ok(skeleton_url) = platform.get_package_url(&skeleton_name) {
-            framework.ensure_mcu_libs(&skeleton_url, mcu)?;
+            framework.ensure_mcu_libs(&skeleton_url, mcu).await?;
         }
     }
 

@@ -11,7 +11,7 @@ use super::embed::process_embed_files;
 /// cache, then convert each entry into a linkable ELF object. Returns the
 /// list of object files to be appended to the sketch link set.
 #[allow(clippy::too_many_arguments)]
-pub(super) fn stage_embed_files(
+pub(super) async fn stage_embed_files(
     embed_files: &[String],
     embed_txtfiles: &[String],
     project_dir: &Path,
@@ -68,4 +68,5 @@ pub(super) fn stage_embed_files(
         binary_arch,
         verbose,
     )
+    .await
 }

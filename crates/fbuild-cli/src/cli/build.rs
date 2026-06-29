@@ -2,7 +2,7 @@
 
 use crate::daemon_client::{self, BuildRequest, DaemonClient};
 
-pub fn open_in_browser(url: &str) -> fbuild_core::Result<()> {
+pub async fn open_in_browser(url: &str) -> fbuild_core::Result<()> {
     let args: Vec<&str> = if cfg!(target_os = "windows") {
         vec!["cmd", "/c", "start", "", url]
     } else if cfg!(target_os = "macos") {
@@ -11,6 +11,7 @@ pub fn open_in_browser(url: &str) -> fbuild_core::Result<()> {
         vec!["xdg-open", url]
     };
     let output = fbuild_core::subprocess::run_command(&args, None, None, None)
+        .await
         .map_err(|e| fbuild_core::FbuildError::Other(format!("failed to launch browser: {}", e)))?;
 
     if output.success() {

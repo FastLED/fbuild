@@ -1,9 +1,9 @@
-//! SAM/SAMD build orchestrator — wires together config, packages, compiler, linker.
+﻿//! SAM/SAMD build orchestrator â€” wires together config, packages, compiler, linker.
 //!
 //! Handles both SAM (Due/SAM3X) and SAMD (SAMD21/SAMD51) boards under the
 //! `atmelsam` platform. Selects the correct Arduino core:
-//! - SAM3X → ArduinoCore-sam
-//! - SAMD21/51 → ArduinoCore-samd (Adafruit fork)
+//! - SAM3X â†’ ArduinoCore-sam
+//! - SAMD21/51 â†’ ArduinoCore-samd (Adafruit fork)
 //!
 //! Build phases:
 //! 1. Parse platformio.ini
@@ -68,21 +68,22 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
     }
 }
 
+#[async_trait::async_trait]
 impl BuildOrchestrator for SamOrchestrator {
     fn platform(&self) -> Platform {
         Platform::AtmelSam
     }
 
-    fn build(&self, params: &BuildParams) -> Result<BuildResult> {
+    async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
         let compiler_cache: Option<std::path::PathBuf> = None;
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
-        let mut ctx = pipeline::BuildContext::new(params)?;
+        let mut ctx = pipeline::BuildContext::new(params).await?;
 
         // 3. Ensure ARM GCC toolchain
         let toolchain = fbuild_packages::toolchain::ArmToolchain::new(&params.project_dir);
-        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
+        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("arm-none-eabi toolchain at {}", toolchain_dir.display());
 
         use fbuild_packages::Toolchain;
@@ -90,14 +91,15 @@ impl BuildOrchestrator for SamOrchestrator {
             &toolchain.get_gcc_path(),
             "arm-none-eabi-gcc",
             &mut ctx.build_log,
-        );
+        )
+        .await;
 
         // 4. Ensure correct Arduino core based on MCU family
         let (framework_dir, core_dir, variant_dir, linker_script_path, system_includes) =
             if is_samd_mcu(&ctx.board.mcu) {
-                install_samd_core(params, &ctx.board.core, &ctx.board.variant)?
+                install_samd_core(params, &ctx.board.core, &ctx.board.variant).await?
             } else {
-                install_sam_core(params, &ctx.board.core, &ctx.board.variant)?
+                install_sam_core(params, &ctx.board.core, &ctx.board.variant).await?
             };
 
         let build_dir = &ctx.build_dir;
@@ -276,7 +278,7 @@ impl BuildOrchestrator for SamOrchestrator {
             TargetArchitecture::Arm,
             "SAM",
             start,
-        )?;
+        ).await?;
 
         if build_result.success
             && !params.compiledb_only
@@ -301,13 +303,13 @@ impl BuildOrchestrator for SamOrchestrator {
 /// Install ArduinoCore-sam for classic SAM3X boards (Due).
 ///
 /// Returns (framework_dir, core_dir, variant_dir, linker_script, system_includes).
-fn install_sam_core(
+async fn install_sam_core(
     params: &BuildParams,
     core_name: &str,
     variant_name: &str,
 ) -> Result<(PathBuf, PathBuf, PathBuf, PathBuf, Vec<PathBuf>)> {
     let framework = fbuild_packages::library::SamCores::new(&params.project_dir);
-    let framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
+    let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
     tracing::info!("SAM cores at {}", framework_dir.display());
 
     let core_dir = framework.get_core_dir(core_name);
@@ -336,13 +338,13 @@ fn install_sam_core(
 /// Install Adafruit ArduinoCore-samd for SAMD21/SAMD51 boards.
 ///
 /// Returns (framework_dir, core_dir, variant_dir, linker_script, system_includes).
-fn install_samd_core(
+async fn install_samd_core(
     params: &BuildParams,
     core_name: &str,
     variant_name: &str,
 ) -> Result<(PathBuf, PathBuf, PathBuf, PathBuf, Vec<PathBuf>)> {
     let framework = fbuild_packages::library::SamdCores::new(&params.project_dir);
-    let framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
+    let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
     tracing::info!("SAMD cores at {}", framework_dir.display());
 
     let core_dir = framework.get_core_dir(core_name);
@@ -351,11 +353,11 @@ fn install_samd_core(
 
     // SAMD core needs external CMSIS and CMSIS-Atmel packages for device headers
     let cmsis = fbuild_packages::library::CmsisFramework::new(&params.project_dir);
-    let cmsis_dir = fbuild_packages::Package::ensure_installed(&cmsis)?;
+    let cmsis_dir = fbuild_packages::Package::ensure_installed(&cmsis).await?;
     tracing::info!("CMSIS at {}", cmsis_dir.display());
 
     let cmsis_atmel = fbuild_packages::library::CmsisAtmel::new(&params.project_dir);
-    let _cmsis_atmel_dir = fbuild_packages::Package::ensure_installed(&cmsis_atmel)?;
+    let _cmsis_atmel_dir = fbuild_packages::Package::ensure_installed(&cmsis_atmel).await?;
     tracing::info!("CMSIS-Atmel installed");
 
     let mut includes = vec![
@@ -370,7 +372,7 @@ fn install_samd_core(
     // `BoardConfig::get_include_paths` already emits
     // `framework_root/cores/<board.core>`, which for Adafruit SAMD boards is
     // a vendor-brand label (e.g. "adafruit") that the framework doesn't
-    // actually ship as a directory — only `cores/arduino/` exists. That
+    // actually ship as a directory â€” only `cores/arduino/` exists. That
     // literal path becomes a phantom `-I` and `#include "Arduino.h"` /
     // `#include "WVariant.h"` lookups miss. `core_dir` here was produced by
     // `SamdCores::get_core_dir` which falls back to `cores/arduino/` when the

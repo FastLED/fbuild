@@ -32,9 +32,9 @@ use fbuild_build::{BuildOrchestrator, BuildParams};
 use fbuild_core::BuildProfile;
 use fbuild_test_support::{CompileDb, ElfProbe};
 
-#[test]
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads STM32duino + builds firmware; CI-only"]
-fn stm32f103c8_blink_with_spi_auto_discovers_library_205_ac4() {
+async fn stm32f103c8_blink_with_spi_auto_discovers_library_205_ac4() {
     // Use a temporary project dir so we can write our own SPI-using sketch
     // independent of whatever ships in the fixture.
     let tmp = tempfile::TempDir::new().unwrap();
@@ -85,6 +85,7 @@ fn stm32f103c8_blink_with_spi_auto_discovers_library_205_ac4() {
     let orchestrator = fbuild_build::stm32::orchestrator::Stm32Orchestrator;
     let result = orchestrator
         .build(&params)
+        .await
         .expect("stm32f103c8 build with SPI must succeed");
     assert!(result.success, "build did not report success");
 

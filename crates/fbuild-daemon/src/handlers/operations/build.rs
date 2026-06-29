@@ -322,11 +322,15 @@ pub async fn build(
                 }
             });
 
-            // Run build
+            // Run build. fbuild#813 / #815: the orchestrator is now async,
+            // so we spawn it directly on the runtime. The status-heartbeat
+            // loop still needs an awaitable handle, so wrap the build
+            // future in `tokio::spawn` and poll it via timeout-driven
+            // selection.
             let build_wallclock_start = std::time::Instant::now();
-            let mut build_task = tokio::task::spawn_blocking(move || {
+            let mut build_task = tokio::spawn(async move {
                 let orchestrator = fbuild_build::get_orchestrator(platform)?;
-                orchestrator.build(&params)
+                orchestrator.build(&params).await
             });
             let build_result = loop {
                 match tokio::time::timeout(STREAM_STATUS_INTERVAL, &mut build_task).await {
@@ -517,14 +521,14 @@ pub async fn build(
             bloat_analysis: req.bloat_analysis,
         };
 
-        let result = tokio::task::spawn_blocking(move || {
-            let orchestrator = fbuild_build::get_orchestrator(platform)?;
-            orchestrator.build(&params)
-        })
-        .await;
+        // fbuild#813 / #815: orchestrator.build is async, call directly.
+        let result = match fbuild_build::get_orchestrator(platform) {
+            Ok(orch) => orch.build(&params).await,
+            Err(e) => Err(e),
+        };
 
         match result {
-            Ok(Ok(build_result)) => {
+            Ok(build_result) => {
                 let exported = if build_result.success {
                     if let Some(ref out_dir) = resolved_output_dir {
                         Some(export_artifacts_bundle(
@@ -605,19 +609,11 @@ pub async fn build(
                 )
                     .into_response()
             }
-            Ok(Err(e)) => (
-                StatusCode::INTERNAL_SERVER_ERROR,
-                Json(OperationResponse::fail(
-                    request_id,
-                    format!("build error: {}", e),
-                )),
-            )
-                .into_response(),
             Err(e) => (
                 StatusCode::INTERNAL_SERVER_ERROR,
                 Json(OperationResponse::fail(
                     request_id,
-                    format!("build task panicked: {}", e),
+                    format!("build error: {}", e),
                 )),
             )
                 .into_response(),

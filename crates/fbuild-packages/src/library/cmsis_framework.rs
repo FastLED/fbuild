@@ -82,25 +82,14 @@ impl CmsisFramework {
     }
 }
 
+#[async_trait::async_trait]
 impl crate::Package for CmsisFramework {
-    fn ensure_installed(&self) -> fbuild_core::Result<PathBuf> {
+    async fn ensure_installed(&self) -> fbuild_core::Result<PathBuf> {
         if self.is_installed() {
             return Ok(self.base.install_path());
         }
 
-        let rt = tokio::runtime::Handle::try_current().ok();
-        if let Some(handle) = rt {
-            handle.block_on(self.base.staged_install(Self::validate))?;
-        } else {
-            let rt = tokio::runtime::Runtime::new().map_err(|e| {
-                fbuild_core::FbuildError::PackageError(format!(
-                    "failed to create tokio runtime: {}",
-                    e
-                ))
-            })?;
-            rt.block_on(self.base.staged_install(Self::validate))?;
-        }
-
+        self.base.staged_install(Self::validate).await?;
         Ok(self.base.install_path())
     }
 

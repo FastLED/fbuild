@@ -1,4 +1,4 @@
-//! AVR build orchestrator — wires together config, packages, compiler, linker.
+﻿//! AVR build orchestrator â€” wires together config, packages, compiler, linker.
 //!
 //! Build phases:
 //! 1. Parse platformio.ini
@@ -38,7 +38,7 @@ pub struct AvrOrchestrator;
 /// Any field that can change the produced firmware belongs here;
 /// a change flips the hash and forces a full rebuild. Keep this in
 /// sync with what [`AvrCompiler`] / [`AvrLinker`] actually read off
-/// of `BoardConfig` — extra fields only cost a tiny amount of CPU,
+/// of `BoardConfig` â€” extra fields only cost a tiny amount of CPU,
 /// but missing fields silently let stale artifacts get reused.
 #[derive(Debug, Serialize)]
 struct AvrFingerprintMetadata {
@@ -67,17 +67,18 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
     }
 }
 
+#[async_trait::async_trait]
 impl BuildOrchestrator for AvrOrchestrator {
     fn platform(&self) -> Platform {
         Platform::AtmelAvr
     }
 
-    fn build(&self, params: &BuildParams) -> Result<BuildResult> {
+    async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
         // Env-gated per-phase timer (FBUILD_PERF_LOG=1); zero-overhead when unset.
         let mut perf = crate::perf_log::PerfTimer::new("avr-orchestrator");
 
-        // Wrapper-binary discovery removed in FastLED/fbuild#800 — every
+        // Wrapper-binary discovery removed in FastLED/fbuild#800 â€” every
         // compile dispatches through the embedded zccache service. The
         // `compiler_cache: Option<PathBuf>` slot is retained as a dead
         // pass-through for the per-platform compiler API until a future
@@ -88,7 +89,7 @@ impl BuildOrchestrator for AvrOrchestrator {
         //      collect flags. `new_with_perf` records its own sub-phases
         //      (config-parse, board-load, build-dirs, flag-collect) into
         //      the shared `perf` timer.
-        let mut ctx = pipeline::BuildContext::new_with_perf(params, Some(&mut perf))?;
+        let mut ctx = pipeline::BuildContext::new_with_perf(params, Some(&mut perf)).await?;
 
         // Compute eh_frame strip policy once per build (FastLED/fbuild#244).
         // No sdkconfig on AVR.
@@ -99,13 +100,14 @@ impl BuildOrchestrator for AvrOrchestrator {
         let (toolchain, toolchain_dir) = {
             let _g = perf.phase("toolchain-ensure");
             let toolchain = fbuild_packages::toolchain::AvrToolchain::new(&params.project_dir);
-            let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
+            let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
             (toolchain, toolchain_dir)
         };
         tracing::info!("avr-gcc toolchain at {}", toolchain_dir.display());
 
         use fbuild_packages::Toolchain as _;
-        pipeline::log_toolchain_version(&toolchain.get_gcc_path(), "avr-gcc", &mut ctx.build_log);
+        pipeline::log_toolchain_version(&toolchain.get_gcc_path(), "avr-gcc", &mut ctx.build_log)
+            .await;
 
         // 4. Ensure Arduino core
         let (_framework_dir, core_dir, variant_dir) = {
@@ -115,7 +117,8 @@ impl BuildOrchestrator for AvrOrchestrator {
                 &ctx.board.core,
                 &ctx.board.variant,
                 ctx.board.platform(),
-            )?
+            )
+            .await?
         };
 
         // 4.5. Warm-build fast path.
@@ -211,7 +214,7 @@ impl BuildOrchestrator for AvrOrchestrator {
 
         // 6. Build include dirs + compiler
         let defines = ctx.board.get_defines();
-        // Use the resolved core_dir/variant_dir directly — board.get_include_paths()
+        // Use the resolved core_dir/variant_dir directly â€” board.get_include_paths()
         // uses the raw board core name which may differ from the actual directory
         // (e.g. MiniCore's core dir is "MCUdude_corefiles", not "MiniCore").
         let mut include_dirs = vec![core_dir.clone(), variant_dir.clone()];
@@ -236,7 +239,7 @@ impl BuildOrchestrator for AvrOrchestrator {
         .with_build_unflags(ctx.build_unflags.clone())
         .with_eh_frame_policy(eh_frame_policy);
 
-        // 7. Create linker — pass gcc-ar so framework .o inputs can be
+        // 7. Create linker â€” pass gcc-ar so framework .o inputs can be
         // archived into libframework.a with the LTO bytecode plugin index
         // intact (preserves `-fuse-linker-plugin`). See FastLED/fbuild#304.
         let linker = AvrLinker::new(
@@ -286,11 +289,12 @@ impl BuildOrchestrator for AvrOrchestrator {
             TargetArchitecture::Avr,
             "AVR",
             start,
-        )?;
+        )
+        .await?;
 
         // 10. Persist fingerprint so the next warm invocation can hit the
         // fast path. Skip this for compile-db-only / symbol-analysis runs
-        // — they don't produce the full artifact set the fast path
+        // â€” they don't produce the full artifact set the fast path
         // requires.
         if build_result.success
             && !params.compiledb_only
@@ -325,7 +329,7 @@ pub fn create() -> Box<dyn BuildOrchestrator> {
 /// to `"arduino_megaavr"` so they get `ArduinoCore-megaavr` (which contains the
 /// megaAVR variants like `nona4809`) instead of `ArduinoCore-avr`.
 /// Returns (framework_root, core_dir, variant_dir).
-fn ensure_avr_framework(
+async fn ensure_avr_framework(
     project_dir: &Path,
     core_name: &str,
     variant_name: &str,
@@ -343,7 +347,7 @@ fn ensure_avr_framework(
         };
 
     let framework = fbuild_packages::library::AvrFramework::for_core(lookup_key, project_dir)?;
-    let framework_dir = framework.ensure_installed()?;
+    let framework_dir = framework.ensure_installed().await?;
     tracing::info!(
         "AVR framework for core '{}' (lookup '{}') at {}",
         core_name,

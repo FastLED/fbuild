@@ -291,12 +291,13 @@ impl Esp32Linker {
     }
 }
 
+#[async_trait::async_trait]
 impl Linker for Esp32Linker {
-    fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
-        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "ar")
+    async fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
+        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "ar").await
     }
 
-    fn link(
+    async fn link(
         &self,
         objects: &[PathBuf],
         archives: &[PathBuf],
@@ -320,12 +321,13 @@ impl Linker for Esp32Linker {
                 &flags_for_rsp,
                 &rsp_dir,
                 "esp32_link",
-            )?;
+            )
+            .await?;
             let rsp_args = [link_args[0].as_str(), &format!("@{}", rsp_path.display())];
-            run_command(&rsp_args, None, None, None)?
+            run_command(&rsp_args, None, None, None).await?
         } else {
             let args_ref: Vec<&str> = link_args.iter().map(|s| s.as_str()).collect();
-            run_command(&args_ref, None, None, None)?
+            run_command(&args_ref, None, None, None).await?
         };
 
         if !result.success() {
@@ -338,7 +340,7 @@ impl Linker for Esp32Linker {
         Ok(elf_path)
     }
 
-    fn convert_firmware(&self, elf_path: &Path, output_dir: &Path) -> Result<PathBuf> {
+    async fn convert_firmware(&self, elf_path: &Path, output_dir: &Path) -> Result<PathBuf> {
         // Copy ELF to output directory
         let elf_out = output_dir.join("firmware.elf");
         if elf_path != elf_out {
@@ -378,7 +380,7 @@ impl Linker for Esp32Linker {
 
         tracing::info!("elf2image: {}", args.join(" "));
 
-        match run_command(&args, None, None, Some(std::time::Duration::from_secs(30))) {
+        match run_command(&args, None, None, Some(std::time::Duration::from_secs(30))).await {
             Ok(result) if result.success() => {
                 let cache = self.current_bin_cache(&elf_out, &flash_size)?;
                 if let Err(e) = save_json(&self.bin_cache_path(output_dir), &cache) {
@@ -415,7 +417,7 @@ impl Linker for Esp32Linker {
         Some(&self.gcc_path)
     }
 
-    fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
+    async fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
         if let Some(size_info) = self.load_cached_size(elf_path) {
             tracing::info!("size: firmware.elf is unchanged, reusing cached size report");
             return Ok(size_info);
@@ -427,7 +429,8 @@ impl Linker for Esp32Linker {
             self.max_flash,
             self.max_ram,
             "size",
-        )?;
+        )
+        .await?;
         self.save_size_cache(elf_path, &size_info);
         Ok(size_info)
     }

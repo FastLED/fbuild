@@ -1,4 +1,4 @@
-//! Renesas RA ARM linker implementation.
+﻿//! Renesas RA ARM linker implementation.
 //!
 //! Links ARM Cortex-M4 object files into firmware.elf, converts to firmware.bin,
 //! and reports size using arm-none-eabi-size.
@@ -54,12 +54,14 @@ impl RenesasLinker {
     }
 }
 
+#[async_trait::async_trait]
 impl Linker for RenesasLinker {
-    fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
+    async fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
         crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "arm-none-eabi-ar")
+            .await
     }
 
-    fn link(
+    async fn link(
         &self,
         objects: &[PathBuf],
         archives: &[PathBuf],
@@ -122,7 +124,7 @@ impl Linker for RenesasLinker {
             tracing::info!("link: {}", args.join(" "));
         }
 
-        // GCC LTO temp dir for MSYS-safe paths — see FastLED/fbuild#261.
+        // GCC LTO temp dir for MSYS-safe paths â€” see FastLED/fbuild#261.
         let lto_env = fbuild_core::subprocess::link_env_for_build(output_dir)?;
         let env_slice: Vec<(&str, &str)> = lto_env
             .iter()
@@ -130,7 +132,7 @@ impl Linker for RenesasLinker {
             .collect();
 
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, None, Some(&env_slice), None)?;
+        let result = run_command(&args_ref, None, Some(&env_slice), None).await?;
 
         if !result.success() {
             return Err(fbuild_core::FbuildError::BuildFailed(format!(
@@ -142,7 +144,7 @@ impl Linker for RenesasLinker {
         Ok(elf_path)
     }
 
-    fn convert_firmware(&self, elf_path: &Path, output_dir: &Path) -> Result<PathBuf> {
+    async fn convert_firmware(&self, elf_path: &Path, output_dir: &Path) -> Result<PathBuf> {
         crate::linker::LinkerBase::objcopy_firmware(
             &self.objcopy_path,
             elf_path,
@@ -151,6 +153,7 @@ impl Linker for RenesasLinker {
             &self.mcu_config.objcopy.remove_sections,
             "arm-none-eabi-objcopy",
         )
+        .await
     }
 
     fn size_tool_path(&self) -> &Path {
@@ -169,7 +172,7 @@ impl Linker for RenesasLinker {
         Some(&self.gcc_path)
     }
 
-    fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
+    async fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
         crate::linker::LinkerBase::report_size(
             &self.size_path,
             elf_path,
@@ -177,6 +180,7 @@ impl Linker for RenesasLinker {
             self.max_ram,
             "arm-none-eabi-size",
         )
+        .await
     }
 }
 

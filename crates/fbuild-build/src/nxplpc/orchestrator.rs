@@ -1,19 +1,19 @@
-//! NXP LPC8xx build orchestrator — Stage 2 of #487.
+﻿//! NXP LPC8xx build orchestrator â€” Stage 2 of #487.
 //!
-//! Compiles user sketch sources (.ino → .cpp + .c + .cpp + .S) together
+//! Compiles user sketch sources (.ino â†’ .cpp + .c + .cpp + .S) together
 //! with the per-MCU startup `.S` and the hand-rolled Arduino `main.cpp`
 //! shim, links against the per-MCU linker script, and emits `firmware.elf`
 //! + `firmware.bin` via objcopy.
 //!
-//! No external framework is required at this stage — the test fixtures
+//! No external framework is required at this stage â€” the test fixtures
 //! (`tests/platform/lpc845/lpc845.ino`,
 //! `tests/platform/lpc804/lpc804.ino`) are 3-line `setup()`/`loop()` stubs.
 //! Stage 3 (#479) replaces the embedded shim with the framework-owned
 //! `main()` from [`zackees/ArduinoCore-LPC8xx`](https://github.com/zackees/ArduinoCore-LPC8xx).
 //!
 //! Pattern mirrors the Apollo3 orchestrator
-//! (`crates/fbuild-build/src/apollo3/orchestrator.rs`) — same Cortex-M
-//! family, same `generic_arm::ArmCompiler` + `ArmLinker` pipeline — minus
+//! (`crates/fbuild-build/src/apollo3/orchestrator.rs`) â€” same Cortex-M
+//! family, same `generic_arm::ArmCompiler` + `ArmLinker` pipeline â€” minus
 //! the mbed-os framework machinery that Apollo3 needs.
 
 use std::path::PathBuf;
@@ -80,18 +80,19 @@ fn collect_compilable_sources(dir: &std::path::Path) -> Result<Vec<PathBuf>> {
 /// NXP LPC8xx (Cortex-M0+) build orchestrator.
 pub struct NxpLpcOrchestrator;
 
+#[async_trait::async_trait]
 impl BuildOrchestrator for NxpLpcOrchestrator {
     fn platform(&self) -> Platform {
         Platform::NxpLpc
     }
 
-    fn build(&self, params: &BuildParams) -> Result<BuildResult> {
+    async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
 
         // 1-2. Parse platformio.ini, load board, setup build dirs.
-        let mut ctx = pipeline::BuildContext::new(params)?;
+        let mut ctx = pipeline::BuildContext::new(params).await?;
 
-        // eh_frame strip policy — same convention every other orchestrator
+        // eh_frame strip policy â€” same convention every other orchestrator
         // follows (#244).
         let eh_frame_policy =
             crate::eh_frame_policy_compute::compute_eh_frame_policy(&ctx, params.profile, None);
@@ -100,11 +101,11 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
         // the platform is dispatched, but ensure_installed is idempotent
         // and cheap when the toolchain is already on disk.
         let toolchain = fbuild_packages::toolchain::ArmToolchain::new(&params.project_dir);
-        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
+        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("arm-none-eabi-gcc toolchain at {}", toolchain_dir.display());
 
         let cmsis = fbuild_packages::library::CmsisFramework::new(&params.project_dir);
-        let cmsis_dir = fbuild_packages::Package::ensure_installed(&cmsis)?;
+        let cmsis_dir = fbuild_packages::Package::ensure_installed(&cmsis).await?;
         tracing::info!("CMSIS framework at {}", cmsis_dir.display());
 
         use fbuild_packages::Toolchain;
@@ -112,7 +113,8 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
             &toolchain.get_gcc_path(),
             "arm-none-eabi-gcc",
             &mut ctx.build_log,
-        );
+        )
+        .await;
 
         // 4. Vendor the Arduino LPC8xx core framework. This supersedes the
         //    embedded `arduino_stub/` shim (FastLED/fbuild#479, #487): the
@@ -144,7 +146,7 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
             }
             None => fbuild_packages::library::ArduinoCoreLpc8xx::new(&params.project_dir),
         };
-        let core_root = fbuild_packages::Package::ensure_installed(&core)?;
+        let core_root = fbuild_packages::Package::ensure_installed(&core).await?;
         tracing::info!("ArduinoCore-LPC8xx at {}", core_root.display());
 
         // 5. Family + linker script. The board's `ldscript` is relative to
@@ -269,7 +271,7 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
         // see the same -D defines / -std overrides the sketch will see.
         // Without this fold, the only way to get `build_flags` defines into a
         // library compile was to bake them into the board JSON's `extra_flags`
-        // — exactly the workaround #576 installed for `lpc845brk` and that
+        // â€” exactly the workaround #576 installed for `lpc845brk` and that
         // this PR retires. Mirrors the ESP32 library-compile path at
         // `esp32/orchestrator/build.rs`; see FastLED/fbuild#587.
         let gcc_path = toolchain.get_gcc_path();
@@ -304,7 +306,8 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
             compiler_cache: None,
         };
         let extra_link_inputs =
-            pipeline::compile_extra_libraries(&extra_library_roots, &ctx.build_dir, &lib_env)?;
+            pipeline::compile_extra_libraries(&extra_library_roots, &ctx.build_dir, &lib_env)
+                .await?;
 
         // 11. Run the shared sequential build pipeline.
         pipeline::run_sequential_build_with_libs(
@@ -319,6 +322,7 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
             "NXPLPC",
             start,
         )
+        .await
     }
 }
 

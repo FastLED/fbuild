@@ -222,7 +222,7 @@ pub async fn run_deploy(
     // Open browser for avr8js only when daemon returned a launch URL (non-headless mode)
     if deploy_route == CliDeployRoute::Emulator(CliEmulatorKind::Avr8js) {
         if let Some(url) = resp.launch_url.as_deref() {
-            if let Err(e) = open_in_browser(url) {
+            if let Err(e) = open_in_browser(url).await {
                 eprintln!("warning: failed to open browser: {}", e);
                 eprintln!("open this URL manually: {}", url);
             }

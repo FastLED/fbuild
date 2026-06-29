@@ -10,7 +10,7 @@ use super::super::mcu_config::Esp32McuConfig;
 /// Stage boot/partition/boot_app0 binaries into `build_dir`. Logs warnings on
 /// missing inputs but does not error — the linker output remains usable for
 /// in-tree flows even when the boot artifacts cannot be produced.
-pub(super) fn prepare_boot_artifacts(
+pub(super) async fn prepare_boot_artifacts(
     build_dir: &Path,
     framework: &fbuild_packages::library::Esp32Framework,
     board: &fbuild_config::BoardConfig,
@@ -92,7 +92,9 @@ pub(super) fn prepare_boot_artifacts(
                 None,
                 None,
                 Some(std::time::Duration::from_secs(30)),
-            ) {
+            )
+            .await
+            {
                 Ok(result) if result.success() => {
                     tracing::info!("converted bootloader ELF → bootloader.bin");
                 }
@@ -143,7 +145,9 @@ pub(super) fn prepare_boot_artifacts(
                 None,
                 None,
                 Some(std::time::Duration::from_secs(10)),
-            ) {
+            )
+            .await
+            {
                 Ok(result) if result.success() => {
                     tracing::info!("generated partitions.bin from {}", partitions_name);
                 }

@@ -93,31 +93,21 @@ pub async fn install_deps(
 
     // Install dependencies via the package manager
     let env_label = env_name.clone();
-    let result = tokio::task::spawn_blocking(move || {
-        fbuild_build::install_platform_deps(platform, &project_dir)
-    })
-    .await;
+    let result = fbuild_build::install_platform_deps(platform, &project_dir).await;
 
     match result {
-        Ok(Ok(())) => (
+        Ok(()) => (
             StatusCode::OK,
             Json(OperationResponse::ok(
                 request_id,
                 format!("Dependencies installed for environment '{}'", env_label),
             )),
         ),
-        Ok(Err(e)) => (
-            StatusCode::INTERNAL_SERVER_ERROR,
-            Json(OperationResponse::fail(
-                request_id,
-                format!("install-deps error: {}", e),
-            )),
-        ),
         Err(e) => (
             StatusCode::INTERNAL_SERVER_ERROR,
             Json(OperationResponse::fail(
                 request_id,
-                format!("install-deps task panicked: {}", e),
+                format!("install-deps error: {}", e),
             )),
         ),
     }

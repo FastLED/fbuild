@@ -1,4 +1,4 @@
-//! Two-stage `compile-many` primitive (FastLED/fbuild#238).
+﻿//! Two-stage `compile-many` primitive (FastLED/fbuild#238).
 //!
 //! Compiles a list of sketches against the same board with the framework +
 //! library archives built **once**, then fans out per-sketch compile + link
@@ -41,7 +41,7 @@
 //!    writes of distinct keys never block. fbuild itself adds no
 //!    in-process locks around zccache (see `crates/fbuild-build/src/zccache.rs`),
 //!    so stage-2 contention is bounded by the zccache daemon's own
-//!    concurrency model — well below the parallelism cap we set.
+//!    concurrency model â€” well below the parallelism cap we set.
 //!
 //! ## Routing through the existing orchestrator
 //!
@@ -53,8 +53,6 @@
 
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
-use std::sync::atomic::{AtomicUsize, Ordering};
-use std::sync::Mutex;
 use std::time::Instant;
 
 use fbuild_core::{BuildProfile, FbuildError, Platform, Result};
@@ -90,7 +88,7 @@ pub fn default_sketch_jobs() -> usize {
 /// Routes through [`fbuild_paths::BuildLayout`] so layout decisions
 /// (env-segment auto-collapse, `FBUILD_BUILD_DIR` override) match
 /// what the daemon and the per-platform orchestrators use. Centralized
-/// here so the stage-1→stage-2 cache-seeding code can address that path
+/// here so the stage-1â†’stage-2 cache-seeding code can address that path
 /// without re-deriving the same string in three places. See
 /// FastLED/fbuild#335.
 pub fn project_build_dir(sketch: &Path, env: &str, profile: BuildProfile) -> PathBuf {
@@ -104,18 +102,18 @@ pub fn project_build_dir(sketch: &Path, env: &str, profile: BuildProfile) -> Pat
 ///
 /// Without this, every stage-2 project dir gets its own empty
 /// `.fbuild/build/<env>/<profile>/core/`, so the framework is rebuilt
-/// from scratch in every worker — the 25s-per-sketch path FastLED hit on
+/// from scratch in every worker â€” the 25s-per-sketch path FastLED hit on
 /// its teensy41 / esp32s3 runs (FastLED/fbuild#335).
 ///
 /// Uses hardlinks to keep the seed near-free; falls back to a byte copy
 /// if hardlinking fails (cross-filesystem, target FS lacks hardlink
-/// support, etc.). Both modes preserve the .o mtime — important because
+/// support, etc.). Both modes preserve the .o mtime â€” important because
 /// `needs_rebuild` consults dep-file mtimes against the .o mtime.
 ///
 /// Idempotent: skips files that already exist at the target. A pre-
 /// existing stage-2 partial build won't get clobbered.
 ///
-/// Errors are non-fatal and tracked by the caller — on any failure the
+/// Errors are non-fatal and tracked by the caller â€” on any failure the
 /// orchestrator simply falls back to its full framework-recompile path
 /// (no worse than the pre-#335 behavior).
 fn seed_stage2_core_from_stage1(stage1_core: &Path, stage2_core: &Path) -> std::io::Result<()> {
@@ -142,7 +140,7 @@ fn seed_stage2_core_from_stage1(stage1_core: &Path, stage2_core: &Path) -> std::
         if std::fs::hard_link(&src, &dst).is_ok() {
             n_linked += 1;
         } else {
-            // Hardlink failed (cross-fs, NTFS junction, etc.) — fall
+            // Hardlink failed (cross-fs, NTFS junction, etc.) â€” fall
             // back to a byte copy. `copy` preserves nothing about the
             // source mtime by default; we explicitly set it from the
             // stage-1 metadata so depfile freshness comparison still
@@ -177,14 +175,14 @@ fn seed_stage2_core_from_stage1(stage1_core: &Path, stage2_core: &Path) -> std::
 /// single TU (sketch.cpp) against a pre-built framework archive. In
 /// practice consumers stage each sketch in its own project dir (so two
 /// sketches with different `.ino` content can build in parallel), and
-/// each project dir has its own `.fbuild/build/<env>/<profile>/` — which
+/// each project dir has its own `.fbuild/build/<env>/<profile>/` â€” which
 /// means stage 2 rebuilds the framework from scratch per sketch. With
 /// `jobs=1` that framework rebuild is serial inside each worker, and the
 /// per-sketch wall time becomes "sum of framework TU times" instead of
 /// "max of framework TU times". See FastLED/fbuild#335.
 ///
 /// Splitting cores across workers keeps total in-flight compile slots
-/// at roughly `cores` so we don't oversubscribe small runners — each
+/// at roughly `cores` so we don't oversubscribe small runners â€” each
 /// worker gets `max(1, cores / sketch_jobs)`.
 pub fn stage2_jobs_per_worker(sketch_jobs: usize) -> usize {
     let cores = std::thread::available_parallelism()
@@ -302,7 +300,7 @@ impl CompileManyResult {
 ///   1. An environment literally named `<board>`.
 ///   2. The first environment whose `board = <board>`.
 ///
-/// Returns `Err` when neither is found — this is a contract violation that
+/// Returns `Err` when neither is found â€” this is a contract violation that
 /// should surface immediately rather than guessing.
 fn resolve_env_for_board(project_dir: &Path, board: &str) -> Result<String> {
     let ini_path = project_dir.join("platformio.ini");
@@ -341,7 +339,7 @@ fn platform_for_board(board: &str, project_dir: Option<&std::path::Path>) -> Res
 ///
 /// `jobs` controls intra-build parallelism (passed through to the
 /// orchestrator's per-build thread pool).
-fn build_one_sketch(inputs: SketchBuildInputs) -> SketchResult {
+async fn build_one_sketch(inputs: SketchBuildInputs) -> SketchResult {
     let SketchBuildInputs {
         sketch,
         env_name,
@@ -376,7 +374,7 @@ fn build_one_sketch(inputs: SketchBuildInputs) -> SketchResult {
     };
 
     let outcome = match get_orchestrator(platform) {
-        Ok(orch) => orch.build(&params),
+        Ok(orch) => orch.build(&params).await,
         Err(e) => Err(e),
     };
 
@@ -462,8 +460,12 @@ pub struct SketchBuildInputs {
 /// Trait used by [`compile_many_with`] to run a single sketch. Tests
 /// inject a mock implementation that records stage / concurrency / output
 /// path uniqueness without dragging in a real toolchain.
-pub trait SketchBuilder: Sync {
-    fn build(&self, inputs: SketchBuildInputs) -> SketchResult;
+///
+/// FastLED/fbuild#820 (Phase B of #813): `build` is `async` so per-sketch
+/// dispatch can `.await` the platform orchestrator's async build trait.
+#[async_trait::async_trait]
+pub trait SketchBuilder: Sync + Send {
+    async fn build(&self, inputs: SketchBuildInputs) -> SketchResult;
 }
 
 /// Production [`SketchBuilder`] that drives the real platform
@@ -471,27 +473,28 @@ pub trait SketchBuilder: Sync {
 /// from `compile_many`, so tests can swap it out wholesale.
 pub struct OrchestratorBuilder;
 
+#[async_trait::async_trait]
 impl SketchBuilder for OrchestratorBuilder {
-    fn build(&self, inputs: SketchBuildInputs) -> SketchResult {
-        build_one_sketch(inputs)
+    async fn build(&self, inputs: SketchBuildInputs) -> SketchResult {
+        build_one_sketch(inputs).await
     }
 }
 
 /// Run the two-stage `compile-many` flow.
 ///
 /// Returns once every sketch has been attempted. Individual sketch failures
-/// do not short-circuit subsequent sketches — the caller inspects
+/// do not short-circuit subsequent sketches â€” the caller inspects
 /// [`CompileManyResult::all_success`] / [`CompileManyResult::results`].
-pub fn compile_many(req: CompileManyRequest) -> Result<CompileManyResult> {
-    compile_many_with(req, &OrchestratorBuilder)
+pub async fn compile_many(req: CompileManyRequest) -> Result<CompileManyResult> {
+    compile_many_with(req, &OrchestratorBuilder).await
 }
 
 /// Like [`compile_many`] but parameterized over the [`SketchBuilder`]
 /// used to actually build each sketch. Public for tests; production
 /// callers should use [`compile_many`].
-pub fn compile_many_with(
+pub async fn compile_many_with(
     req: CompileManyRequest,
-    builder: &dyn SketchBuilder,
+    builder: &(dyn SketchBuilder + Send + Sync),
 ) -> Result<CompileManyResult> {
     if req.sketches.is_empty() {
         return Err(FbuildError::Other(
@@ -539,22 +542,24 @@ pub fn compile_many_with(
     let (first_sketch, first_env) = resolved[0].clone();
     // Remember stage 1's resolved (sketch_dir, env) so stage 2 can find the
     // pre-built framework artifacts and seed each worker's `core/` from
-    // them — see `seed_stage2_core_from_stage1` and FastLED/fbuild#335.
+    // them â€” see `seed_stage2_core_from_stage1` and FastLED/fbuild#335.
     let stage1_sketch = first_sketch.clone();
     let stage1_env = first_env.clone();
-    let first_result = builder.build(SketchBuildInputs {
-        sketch: first_sketch,
-        env_name: first_env,
-        platform,
-        profile: req.profile,
-        jobs: framework_jobs,
-        verbose: req.verbose,
-        stage: Stage::Stage1Framework,
-        pio_env: req.pio_env.clone(),
-    });
+    let first_result = builder
+        .build(SketchBuildInputs {
+            sketch: first_sketch,
+            env_name: first_env,
+            platform,
+            profile: req.profile,
+            jobs: framework_jobs,
+            verbose: req.verbose,
+            stage: Stage::Stage1Framework,
+            pio_env: req.pio_env.clone(),
+        })
+        .await;
     let stage1_secs = stage1_start.elapsed().as_secs_f64();
 
-    // If stage 1 failed there is no point fanning out — every stage-2
+    // If stage 1 failed there is no point fanning out â€” every stage-2
     // worker would re-run the framework build (which we just proved
     // broken) and report the same error. Return what we have so far.
     if !first_result.success {
@@ -576,7 +581,7 @@ pub fn compile_many_with(
     // Stage-1 has finished and (on success) written its framework `core/`
     // artifacts to disk. Compute that path once so every stage-2 worker
     // can hardlink them into its own per-sketch `core/` and skip the
-    // framework recompile entirely — FastLED/fbuild#335.
+    // framework recompile entirely â€” FastLED/fbuild#335.
     let stage1_core_seed: Option<PathBuf> = if first_result.success {
         Some(project_build_dir(&stage1_sketch, &stage1_env, req.profile).join("core"))
     } else {
@@ -597,6 +602,7 @@ pub fn compile_many_with(
             &stage1_env,
             req.diag_stage2,
         )
+        .await
     };
     let stage2_secs = stage2_start.elapsed().as_secs_f64();
 
@@ -629,13 +635,13 @@ pub fn compile_many_with(
 /// (FastLED/fbuild#335). Pass `None` to disable seeding (e.g. stage 1
 /// failed).
 #[allow(clippy::too_many_arguments)]
-fn run_stage2(
+async fn run_stage2(
     rest: &[(PathBuf, String)],
     platform: Platform,
     profile: BuildProfile,
     sketch_jobs: usize,
     verbose: bool,
-    builder: &dyn SketchBuilder,
+    builder: &(dyn SketchBuilder + Send + Sync),
     pio_env: &HashMap<String, String>,
     stage1_core_seed: Option<&Path>,
     stage1_env: &str,
@@ -649,95 +655,96 @@ fn run_stage2(
         cap
     );
 
-    // Work queue: indices into `rest`. We dispatch by index so the result
-    // slot lives at a stable position regardless of completion order.
-    let next = AtomicUsize::new(0);
-    let mut results: Vec<Option<SketchResult>> = (0..total).map(|_| None).collect();
-    let results_slot: Vec<Mutex<Option<SketchResult>>> =
-        results.iter_mut().map(|_| Mutex::new(None)).collect();
-
-    // Split available cores across stage-2 workers so each worker has
-    // real compile parallelism. See `stage2_jobs_per_worker` for why the
-    // old `jobs=1` hardcoding was a 2-3x regression vs the single-build
-    // path on cold cache — FastLED/fbuild#335.
+    // FastLED/fbuild#820 (Phase B of #813): replaces the old
+    // `std::thread::scope` worker-pool with a `tokio::task::JoinSet`
+    // gated by a semaphore. Each per-sketch task `.await`s the async
+    // `SketchBuilder::build`, so the orchestrator's per-sketch
+    // compile / link / size pipeline runs cooperatively on the
+    // daemon's tokio runtime instead of stealing OS threads.
     let jobs_per_worker = stage2_jobs_per_worker(cap);
+    let semaphore = std::sync::Arc::new(tokio::sync::Semaphore::new(cap));
+    let mut joinset: tokio::task::JoinSet<(usize, SketchResult)> = tokio::task::JoinSet::new();
 
-    std::thread::scope(|scope| {
-        let handles: Vec<_> = (0..cap)
-            .map(|worker_index| {
-                let next = &next;
-                let results_slot = &results_slot;
-                scope.spawn(move || loop {
-                    let idx = next.fetch_add(1, Ordering::Relaxed);
-                    if idx >= rest.len() {
-                        break;
-                    }
-                    let entry = &rest[idx];
-                    let (sketch, env_name) = (&entry.0, &entry.1);
-                    // Seed framework `core/` from stage 1 when the env
-                    // matches. Different envs may bake different flags
-                    // into framework objects, so we only reuse when the
-                    // env name is identical (the common case for a single
-                    // board across many FastLED examples). Errors are
-                    // logged and ignored — orchestrator falls back to a
-                    // full framework recompile, no worse than pre-#335.
-                    let seed_started = Instant::now();
-                    let mut seed_applied = false;
-                    if let Some(seed) = stage1_core_seed {
-                        if env_name == stage1_env {
-                            let target_core =
-                                project_build_dir(sketch, env_name, profile).join("core");
-                            seed_applied = seed.is_dir();
-                            if let Err(e) = seed_stage2_core_from_stage1(seed, &target_core) {
-                                tracing::warn!(
-                                    "compile-many stage 2: failed to seed core/ \
-                                     for {}: {} — falling back to full framework \
-                                     recompile",
-                                    sketch.display(),
-                                    e
-                                );
-                            }
-                        }
-                    }
-                    let seed_time_secs = seed_started.elapsed().as_secs_f64();
-                    let mut res = builder.build(SketchBuildInputs {
-                        sketch: sketch.clone(),
-                        env_name: env_name.clone(),
-                        platform,
-                        profile,
-                        jobs: jobs_per_worker,
-                        verbose,
-                        stage: Stage::Stage2Sketch,
-                        pio_env: pio_env.clone(),
-                    });
-                    res.worker_index = Some(worker_index);
-                    res.seed_time_secs = seed_time_secs;
-                    res.seed_applied = seed_applied;
-                    if diag_stage2 {
-                        tracing::info!(
-                            "compile-many stage2 diag worker={} index={} sketch={} env={} seed_applied={} seed_secs={:.6} build_secs={:.6} success={}",
-                            worker_index,
-                            idx,
+    // SAFETY: the JoinSet is drained before this function returns, so the
+    // borrows below stay alive for the duration of every spawned task.
+    let builder_ptr: &'static (dyn SketchBuilder + Send + Sync) =
+        unsafe { std::mem::transmute(builder) };
+    let stage1_env_owned = stage1_env.to_string();
+    let stage1_core_seed_owned: Option<PathBuf> = stage1_core_seed.map(|p| p.to_path_buf());
+
+    for (idx, entry) in rest.iter().enumerate() {
+        let sketch = entry.0.clone();
+        let env_name = entry.1.clone();
+        let pio_env = pio_env.clone();
+        let sem = semaphore.clone();
+        let seed = stage1_core_seed_owned.clone();
+        let stage1_env_cloned = stage1_env_owned.clone();
+        let worker_index = idx % cap;
+        joinset.spawn(async move {
+            let _permit = sem.acquire().await.expect("compile-many semaphore closed");
+            let seed_started = Instant::now();
+            let mut seed_applied = false;
+            if let Some(seed_path) = seed.as_deref() {
+                if env_name == stage1_env_cloned {
+                    let target_core =
+                        project_build_dir(&sketch, &env_name, profile).join("core");
+                    seed_applied = seed_path.is_dir();
+                    if let Err(e) = seed_stage2_core_from_stage1(seed_path, &target_core) {
+                        tracing::warn!(
+                            "compile-many stage 2: failed to seed core/ \
+                             for {}: {} â€” falling back to full framework \
+                             recompile",
                             sketch.display(),
-                            env_name,
-                            seed_applied,
-                            seed_time_secs,
-                            res.build_time_secs,
-                            res.success
+                            e
                         );
                     }
-                    *results_slot[idx].lock().unwrap() = Some(res);
+                }
+            }
+            let seed_time_secs = seed_started.elapsed().as_secs_f64();
+            let mut res = builder_ptr
+                .build(SketchBuildInputs {
+                    sketch: sketch.clone(),
+                    env_name: env_name.clone(),
+                    platform,
+                    profile,
+                    jobs: jobs_per_worker,
+                    verbose,
+                    stage: Stage::Stage2Sketch,
+                    pio_env,
                 })
-            })
-            .collect();
-        for h in handles {
-            let _ = h.join();
-        }
-    });
+                .await;
+            res.worker_index = Some(worker_index);
+            res.seed_time_secs = seed_time_secs;
+            res.seed_applied = seed_applied;
+            if diag_stage2 {
+                tracing::info!(
+                    "compile-many stage2 diag worker={} index={} sketch={} env={} seed_applied={} seed_secs={:.6} build_secs={:.6} success={}",
+                    worker_index,
+                    idx,
+                    sketch.display(),
+                    env_name,
+                    seed_applied,
+                    seed_time_secs,
+                    res.build_time_secs,
+                    res.success
+                );
+            }
+            (idx, res)
+        });
+    }
 
-    results_slot
+    let mut results: Vec<Option<SketchResult>> = (0..total).map(|_| None).collect();
+    while let Some(joined) = joinset.join_next().await {
+        match joined {
+            Ok((idx, res)) => results[idx] = Some(res),
+            Err(e) => {
+                tracing::error!("compile-many stage 2 worker join error: {e}");
+            }
+        }
+    }
+    results
         .into_iter()
-        .map(|slot| slot.into_inner().unwrap().expect("worker filled slot"))
+        .map(|slot| slot.expect("stage-2 worker filled every slot"))
         .collect()
 }
 
@@ -772,7 +779,7 @@ mod tests {
         let absent_source = tmp.path().join("missing");
         let target = tmp.path().join("target");
         assert!(seed_stage2_core_from_stage1(&absent_source, &target).is_ok());
-        // Must not create the target dir for an absent source — otherwise
+        // Must not create the target dir for an absent source â€” otherwise
         // we'd leave litter on disk for envs that don't match.
         assert!(!target.exists());
     }
@@ -828,7 +835,7 @@ mod tests {
         // Locks the on-disk convention the AVR/ESP32/etc. orchestrators
         // all derive their per-(env,profile) build root from. Any change
         // here that doesn't also update the orchestrators will silently
-        // break the stage-1→stage-2 core/ handoff in FastLED/fbuild#335.
+        // break the stage-1â†’stage-2 core/ handoff in FastLED/fbuild#335.
         let p = project_build_dir(Path::new("/tmp/sketch"), "uno", BuildProfile::Release);
         assert!(p.ends_with("sketch/.fbuild/build/uno/release"));
         let q = project_build_dir(Path::new("/tmp/sketch"), "esp32s3", BuildProfile::Quick);
@@ -895,8 +902,8 @@ mod tests {
         assert_eq!(p, Platform::AtmelAvr);
     }
 
-    #[test]
-    fn empty_sketch_list_errors_out() {
+    #[tokio::test]
+    async fn empty_sketch_list_errors_out() {
         let req = CompileManyRequest {
             board: "uno".to_string(),
             sketches: Vec::new(),
@@ -907,11 +914,11 @@ mod tests {
             pio_env: HashMap::new(),
             diag_stage2: false,
         };
-        assert!(compile_many(req).is_err());
+        assert!(compile_many(req).await.is_err());
     }
 
-    #[test]
-    fn missing_sketch_dir_errors_out() {
+    #[tokio::test]
+    async fn missing_sketch_dir_errors_out() {
         let tmp = tempfile::tempdir().unwrap();
         let missing = tmp.path().join("nope");
         let req = CompileManyRequest {
@@ -924,11 +931,11 @@ mod tests {
             pio_env: HashMap::new(),
             diag_stage2: false,
         };
-        assert!(compile_many(req).is_err());
+        assert!(compile_many(req).await.is_err());
     }
 
-    #[test]
-    fn sketch_without_matching_board_errors_out() {
+    #[tokio::test]
+    async fn sketch_without_matching_board_errors_out() {
         let tmp = tempfile::tempdir().unwrap();
         std::fs::write(
             tmp.path().join("platformio.ini"),
@@ -945,6 +952,6 @@ mod tests {
             pio_env: HashMap::new(),
             diag_stage2: false,
         };
-        assert!(compile_many(req).is_err());
+        assert!(compile_many(req).await.is_err());
     }
 }

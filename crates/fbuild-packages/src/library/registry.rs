@@ -21,7 +21,7 @@ pub struct ResolvedLibrary {
 /// Returns the owner if found.
 pub async fn search_library(name: &str) -> Result<Option<String>> {
     let url = format!("{}/search?query={}", REGISTRY_API_URL, name);
-    let response = reqwest::get(&url).await.map_err(|e| {
+    let response = crate::http::client().get(&url).send().await.map_err(|e| {
         FbuildError::PackageError(format!("registry search failed for {}: {}", name, e))
     })?;
 
@@ -74,7 +74,7 @@ pub async fn resolve_library(
     // Use the package details API which returns all versions
     let url = format!("{}/packages/{}/library/{}", REGISTRY_API_URL, owner, name);
 
-    let response = reqwest::get(&url).await.map_err(|e| {
+    let response = crate::http::client().get(&url).send().await.map_err(|e| {
         FbuildError::PackageError(format!(
             "registry query failed for {}/{}: {}",
             owner, name, e
@@ -186,7 +186,7 @@ pub async fn resolve_library(
 async fn resolve_library_via_search(owner: &str, name: &str) -> Result<ResolvedLibrary> {
     let url = format!("{}/search?query={}", REGISTRY_API_URL, name);
 
-    let response = reqwest::get(&url).await.map_err(|e| {
+    let response = crate::http::client().get(&url).send().await.map_err(|e| {
         FbuildError::PackageError(format!(
             "registry search failed for {}/{}: {}",
             owner, name, e

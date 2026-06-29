@@ -232,17 +232,17 @@ pub async fn deploy(
             bloat_analysis: false,
         };
 
-        let build_result = {
-            let p = platform;
-            tokio::task::spawn_blocking(move || {
-                let orchestrator = fbuild_build::get_orchestrator(p)?;
-                orchestrator.build(&params)
-            })
-            .await
+        // fbuild#813: orchestrator.build is now async — call directly,
+        // no spawn_blocking. The daemon runtime is multi-threaded so
+        // any heavy CPU work the orchestrator schedules (compile jobs)
+        // still runs in parallel via the executor.
+        let build_result = match fbuild_build::get_orchestrator(platform) {
+            Ok(orch) => orch.build(&params).await,
+            Err(e) => Err(e),
         };
 
         match build_result {
-            Ok(Ok(r)) if r.success => {
+            Ok(r) if r.success => {
                 let fw = r.firmware_path.clone().unwrap_or_else(|| {
                     r.elf_path
                         .clone()
@@ -250,7 +250,7 @@ pub async fn deploy(
                 });
                 (fw, r.elf_path)
             }
-            Ok(Ok(r)) => {
+            Ok(r) => {
                 return (
                     StatusCode::INTERNAL_SERVER_ERROR,
                     Json(OperationResponse::fail(
@@ -259,21 +259,12 @@ pub async fn deploy(
                     )),
                 );
             }
-            Ok(Err(e)) => {
-                return (
-                    StatusCode::INTERNAL_SERVER_ERROR,
-                    Json(OperationResponse::fail(
-                        request_id,
-                        format!("build error: {}", e),
-                    )),
-                );
-            }
             Err(e) => {
                 return (
                     StatusCode::INTERNAL_SERVER_ERROR,
                     Json(OperationResponse::fail(
                         request_id,
-                        format!("build task panicked: {}", e),
+                        format!("build error: {}", e),
                     )),
                 );
             }
@@ -415,7 +406,17 @@ pub async fn deploy(
         ctx.refresh_devices_if_stale_and_broadcast_serial_moves(std::time::Duration::from_secs(2))
             .await;
     }
-    let deploy_result = tokio::task::spawn_blocking(move || -> fbuild_core::Result<(Option<Box<dyn fbuild_deploy::Deployer>>, fbuild_deploy::DeploymentResult)> {
+    // fbuild#813 / #819: the Deployer trait is async; previously this
+    // entire block ran inside `spawn_blocking` because deploy() was sync.
+    // Now we run the dispatch + deploy inline on the daemon runtime —
+    // the long-running subprocess waits (esptool / avrdude / etc.) are
+    // tokio-aware via fbuild_core::subprocess::run_command, and the
+    // remaining espflash/native paths self-offload to spawn_blocking
+    // inside the Esp32Deployer.
+    let deploy_result: fbuild_core::Result<(
+        Option<Box<dyn fbuild_deploy::Deployer>>,
+        fbuild_deploy::DeploymentResult,
+    )> = async {
         // Populated by the Espressif32 arm with (image_hash, port).
         // The tail of the closure consults it after `deployer.deploy`
         // returns to record or invalidate the daemon's trusted-hash
@@ -575,7 +576,7 @@ pub async fn deploy(
                 // that the verify call didn't understand.
                 let mut selective_regions: Option<Vec<fbuild_deploy::esp32::FlashRegion>> = None;
                 if let Some(port) = deploy_port.as_deref() {
-                    match deployer.try_verify_deployment(&deploy_fw, port) {
+                    match deployer.try_verify_deployment(&deploy_fw, port).await {
                         Ok(fbuild_deploy::esp32::VerifyOutcome::Match { stdout, stderr }) => {
                             tracing::info!(
                                 port,
@@ -629,7 +630,7 @@ pub async fn deploy(
                     }
                 }
                 if let (Some(regions), Some(port)) = (selective_regions, deploy_port.as_deref()) {
-                    let result = deployer.deploy_regions(&deploy_fw, port, &regions);
+                    let result = deployer.deploy_regions(&deploy_fw, port, &regions).await;
                     // Record/invalidate the trusted hash based on
                     // the selective-flash outcome so the next warm
                     // redeploy can short-circuit via trust-skip.
@@ -715,12 +716,14 @@ pub async fn deploy(
             fbuild_core::Platform::NxpLpc => fbuild_deploy::lpc::dispatch_box(&board_id, &deploy_board_overrides, deploy_project.as_path(), baud_override),
             _ => return Err(fbuild_core::FbuildError::DeployFailed(format!("deployer for {:?} not yet implemented", platform))),
         };
-        let result = deployer.deploy(
-            &deploy_project,
-            &deploy_env,
-            &deploy_fw,
-            deploy_port.as_deref(),
-        );
+        let result = deployer
+            .deploy(
+                &deploy_project,
+                &deploy_env,
+                &deploy_fw,
+                deploy_port.as_deref(),
+            )
+            .await;
         // Session-trusted verify-skip: record (or invalidate) the
         // image hash the daemon associates with this port. Scoped
         // to the Espressif32 arm above — other platforms leave
@@ -744,15 +747,15 @@ pub async fn deploy(
         // Return the deployer so the async caller can invoke
         // `post_deploy_recovery` after `clear_preemption().await` (#605).
         result.map(|r| (Some(deployer), r))
-    })
+    }
     .await;
 
     // Split the deployer out so it can drive recovery while `deploy_result`
-    // retains its original shape for the downstream match. `None` covers
-    // verify-skip early returns, unsupported platforms, and join errors.
+    // retains its original shape for the downstream match. The async-block
+    // refactor (fbuild#813 / #819) replaces the join-error arm — no
+    // spawn_blocking, so the only failure mode is the deploy error itself.
     let (deployer_for_recovery, deploy_result) = match deploy_result {
-        Ok(Ok((d, r))) => (d, Ok(Ok(r))),
-        Ok(Err(e)) => (None, Ok(Err(e))),
+        Ok((d, r)) => (d, Ok(r)),
         Err(e) => (None, Err(e)),
     };
 
@@ -762,27 +765,27 @@ pub async fn deploy(
     // <4 s warm-trust-skip budget.
     let deploy_skipped_bus_work = matches!(
         &deploy_result,
-        Ok(Ok(r)) if r.success && matches!(r.outcome, fbuild_deploy::DeployOutcome::VerifySkip)
+        Ok(r) if r.success && matches!(r.outcome, fbuild_deploy::DeployOutcome::VerifySkip)
     );
     if let Some(ref p) = deploy_port_str {
         ctx.serial_manager.clear_preemption(p).await;
         if !deploy_skipped_bus_work {
             if let Some(deployer) = deployer_for_recovery {
                 let port_name = p.clone();
-                let _ = tokio::task::spawn_blocking(move || {
-                    if let Err(e) = deployer.post_deploy_recovery(&port_name) {
-                        tracing::warn!("post_deploy_recovery failed for {}: {}", port_name, e);
-                    }
-                })
-                .await;
+                // post_deploy_recovery is now async (the default impl
+                // polls via tokio sleeps + spawn_blocking serialport
+                // probes); call it directly on the runtime.
+                if let Err(e) = deployer.post_deploy_recovery(&port_name).await {
+                    tracing::warn!("post_deploy_recovery failed for {}: {}", port_name, e);
+                }
             }
         }
     }
 
     let (deploy_success, deploy_stdout, mut deploy_stderr, deploy_outcome, deploy_post_port) =
         match deploy_result {
-            Ok(Ok(r)) if r.success => (true, Some(r.stdout), Some(r.stderr), r.outcome, r.port),
-            Ok(Ok(r)) => {
+            Ok(r) if r.success => (true, Some(r.stdout), Some(r.stderr), r.outcome, r.port),
+            Ok(r) => {
                 return (
                     StatusCode::INTERNAL_SERVER_ERROR,
                     Json(OperationResponse {
@@ -798,21 +801,12 @@ pub async fn deploy(
                     }),
                 );
             }
-            Ok(Err(e)) => {
-                return (
-                    StatusCode::INTERNAL_SERVER_ERROR,
-                    Json(OperationResponse::fail(
-                        request_id,
-                        format!("deploy error: {}", e),
-                    )),
-                );
-            }
             Err(e) => {
                 return (
                     StatusCode::INTERNAL_SERVER_ERROR,
                     Json(OperationResponse::fail(
                         request_id,
-                        format!("deploy task panicked: {}", e),
+                        format!("deploy error: {}", e),
                     )),
                 );
             }

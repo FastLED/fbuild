@@ -168,15 +168,14 @@ impl Esp32Platform {
     }
 }
 
+#[async_trait::async_trait]
 impl crate::Package for Esp32Platform {
-    fn ensure_installed(&self) -> Result<PathBuf> {
+    async fn ensure_installed(&self) -> Result<PathBuf> {
         if self.is_installed() {
             return Ok(self.resolved_dir());
         }
 
-        let install_path =
-            crate::block_on_package_future(self.base.staged_install(Self::validate_install))?;
-
+        let install_path = self.base.staged_install(Self::validate_install).await?;
         Ok(find_platform_root(&install_path))
     }
 

@@ -37,7 +37,7 @@ struct ScriptRuntimeInput<'a> {
     platformio_home: String,
 }
 
-pub fn resolve_extra_script_overlay(
+pub async fn resolve_extra_script_overlay(
     project_dir: &Path,
     env_name: &str,
     config: &fbuild_config::PlatformIOConfig,
@@ -61,7 +61,7 @@ pub fn resolve_extra_script_overlay(
             .to_string(),
     };
 
-    let python = find_python().ok_or_else(|| {
+    let python = find_python().await.ok_or_else(|| {
         fbuild_core::FbuildError::BuildFailed(
             "extra_scripts detected but no Python interpreter was found; \
              install Python or use --platformio"
@@ -109,6 +109,7 @@ pub fn resolve_extra_script_overlay(
     argv.push(harness_path_str.as_ref());
     argv.push(input_path_str.as_ref());
     let output = fbuild_core::subprocess::run_command(&argv, Some(project_dir), None, None)
+        .await
         .map_err(|e| {
             fbuild_core::FbuildError::BuildFailed(format!(
                 "failed to run extra_scripts runtime via '{}': {}",
@@ -284,7 +285,7 @@ fn libs_to_flags(
     Ok(flags)
 }
 
-fn find_python() -> Option<Vec<String>> {
+async fn find_python() -> Option<Vec<String>> {
     let candidates: &[&[&str]] = if cfg!(windows) {
         &[&["python"], &["py", "-3"]]
     } else {
@@ -294,7 +295,7 @@ fn find_python() -> Option<Vec<String>> {
     for candidate in candidates {
         let mut argv: Vec<&str> = candidate.to_vec();
         argv.push("--version");
-        if let Ok(output) = fbuild_core::subprocess::run_command(&argv, None, None, None) {
+        if let Ok(output) = fbuild_core::subprocess::run_command(&argv, None, None, None).await {
             if output.success() {
                 return Some(candidate.iter().map(|s| (*s).to_string()).collect());
             }

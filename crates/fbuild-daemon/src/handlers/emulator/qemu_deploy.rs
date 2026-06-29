@@ -51,7 +51,7 @@ pub(crate) fn is_qemu_supported_esp32_mcu(mcu: &str) -> bool {
 /// Picks `qemu-system-xtensa` for ESP32/ESP32-S3 and `qemu-system-riscv32`
 /// for ESP32-C3/C6/H2. Returns the resolved binary path (downloading into
 /// the managed fbuild cache if required).
-pub(crate) fn resolve_esp_qemu_for_mcu(
+pub(crate) async fn resolve_esp_qemu_for_mcu(
     project_dir: &Path,
     mcu: &str,
 ) -> fbuild_core::Result<PathBuf> {
@@ -62,7 +62,7 @@ pub(crate) fn resolve_esp_qemu_for_mcu(
         ))
     })?;
     let pkg = fbuild_packages::toolchain::EspQemu::new(project_dir, arch)?;
-    pkg.resolve_executable()
+    pkg.resolve_executable().await
 }
 
 /// Fail fast if the board's flash mode is incompatible with QEMU (DIO only).
@@ -201,7 +201,7 @@ pub async fn deploy_qemu(
         }
     };
 
-    let qemu = match resolve_esp_qemu_for_mcu(&project_dir, &board.mcu) {
+    let qemu = match resolve_esp_qemu_for_mcu(&project_dir, &board.mcu).await {
         Ok(path) => path,
         Err(e) => {
             return (
@@ -254,11 +254,14 @@ pub async fn deploy_qemu(
         &flash_image,
         board.qemu_esp32_psram_config(),
     );
-    let addr2line_path = elf_path.as_ref().and_then(|_| {
-        resolve_esp32_toolchain_gcc_path(&project_dir, &mcu_config)
-            .ok()
-            .and_then(|gcc| fbuild_serial::crash_decoder::derive_addr2line_path(&gcc))
-    });
+    let addr2line_path = if elf_path.is_some() {
+        match resolve_esp32_toolchain_gcc_path(&project_dir, &mcu_config).await {
+            Ok(gcc) => fbuild_serial::crash_decoder::derive_addr2line_path(&gcc),
+            Err(_) => None,
+        }
+    } else {
+        None
+    };
 
     let timeout_secs = monitor_timeout.or(Some(qemu_timeout_secs as f64));
     let qemu_result = match run_qemu_process(

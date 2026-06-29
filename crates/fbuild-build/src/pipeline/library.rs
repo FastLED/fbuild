@@ -148,7 +148,7 @@ pub fn add_extra_library_include_dirs(library_roots: &[PathBuf], include_dirs: &
 }
 
 /// Compile extra library roots from `lib_extra_dirs` into archives.
-pub fn compile_extra_libraries(
+pub async fn compile_extra_libraries(
     library_roots: &[PathBuf],
     build_dir: &Path,
     env: &LibraryBuildEnv<'_>,
@@ -186,7 +186,9 @@ pub fn compile_extra_libraries(
             env.verbose,
             env.jobs,
             env.compiler_cache,
-        ) {
+        )
+        .await
+        {
             Ok(Some(archive)) => archives.push(archive),
             Ok(None) => {}
             Err(e) => {
@@ -210,7 +212,7 @@ pub fn compile_extra_libraries(
 /// library archive was produced.
 ///
 /// Matches PlatformIO's project-as-library convention; see ISSUES.md Issue 1.
-pub fn compile_project_as_library(
+pub async fn compile_project_as_library(
     project_dir: &Path,
     src_dir: &Path,
     build_dir: &Path,
@@ -288,7 +290,9 @@ pub fn compile_project_as_library(
         env.verbose,
         env.jobs,
         env.compiler_cache,
-    ) {
+    )
+    .await
+    {
         Ok(Some(archive)) => {
             tracing::info!(
                 "project-as-library compiled: {} sources -> {}",
@@ -417,8 +421,8 @@ mod project_as_library_tests {
         }
     }
 
-    #[test]
-    fn test_returns_none_when_not_a_library() {
+    #[tokio::test]
+    async fn test_returns_none_when_not_a_library() {
         let tmp = tempfile::TempDir::new().unwrap();
         let project_dir = tmp.path();
         // No library.json or library.properties
@@ -437,12 +441,13 @@ mod project_as_library_tests {
             &project_dir.join("build"),
             &env,
             &HashSet::new(),
-        );
+        )
+        .await;
         assert!(matches!(result, Ok(None)));
     }
 
-    #[test]
-    fn test_returns_none_when_src_dir_equals_project_src() {
+    #[tokio::test]
+    async fn test_returns_none_when_src_dir_equals_project_src() {
         // Library project being built normally (not as an example) — must
         // NOT compile project-as-library or we'd double-compile sketch sources.
         let tmp = tempfile::TempDir::new().unwrap();
@@ -463,12 +468,13 @@ mod project_as_library_tests {
             &project_dir.join("build"),
             &env,
             &HashSet::new(),
-        );
+        )
+        .await;
         assert!(matches!(result, Ok(None)));
     }
 
-    #[test]
-    fn test_returns_none_when_src_dir_equals_project_dir() {
+    #[tokio::test]
+    async fn test_returns_none_when_src_dir_equals_project_dir() {
         // BuildContext::new falls back to project_dir when the resolved src
         // dir doesn't exist. In that fallback, the sketch scanner walks
         // project_dir recursively and would pick up library sources — so we
@@ -490,12 +496,13 @@ mod project_as_library_tests {
             &project_dir.join("build"),
             &env,
             &HashSet::new(),
-        );
+        )
+        .await;
         assert!(matches!(result, Ok(None)));
     }
 
-    #[test]
-    fn test_returns_none_when_no_src_dir() {
+    #[tokio::test]
+    async fn test_returns_none_when_no_src_dir() {
         // library.properties exists but no src/ directory.
         let tmp = tempfile::TempDir::new().unwrap();
         let project_dir = tmp.path();
@@ -513,12 +520,13 @@ mod project_as_library_tests {
             &project_dir.join("build"),
             &env,
             &HashSet::new(),
-        );
+        )
+        .await;
         assert!(matches!(result, Ok(None)));
     }
 
-    #[test]
-    fn test_returns_none_when_header_only() {
+    #[tokio::test]
+    async fn test_returns_none_when_header_only() {
         // library.json + src/ but only headers — header-only library, not
         // an error, just nothing to compile.
         let tmp = tempfile::TempDir::new().unwrap();
@@ -541,12 +549,13 @@ mod project_as_library_tests {
             &project_dir.join("build"),
             &env,
             &HashSet::new(),
-        );
+        )
+        .await;
         assert!(matches!(result, Ok(None)));
     }
 
-    #[test]
-    fn test_returns_none_on_collision_with_lib_dir() {
+    #[tokio::test]
+    async fn test_returns_none_on_collision_with_lib_dir() {
         // If a user has both library.json AND lib/<projectname>/, the lib/
         // version wins (matches PlatformIO behavior). Must skip project-as-
         // library to prevent two libfastled.a archives at link time.
@@ -575,12 +584,13 @@ mod project_as_library_tests {
             &project_dir.join("build"),
             &env,
             &existing,
-        );
+        )
+        .await;
         assert!(matches!(result, Ok(None)));
     }
 
-    #[test]
-    fn test_attempts_compile_when_building_example() {
+    #[tokio::test]
+    async fn test_attempts_compile_when_building_example() {
         // The positive case: library project + sketch lives elsewhere + has
         // sources + no name collision → must reach the compile path. We
         // verify this by passing a bogus gcc path and asserting the function
@@ -608,7 +618,8 @@ mod project_as_library_tests {
             &project_dir.join("build"),
             &env,
             &HashSet::new(),
-        );
+        )
+        .await;
         // Must NOT be Ok(None) — that would mean a guard skipped compile.
         // Either Err (bogus tool failed) or Ok(Some(_)) (impossible without
         // a real toolchain) is acceptable.

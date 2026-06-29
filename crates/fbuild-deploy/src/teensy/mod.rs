@@ -145,8 +145,9 @@ fn resolve_trigger_port(explicit: Option<&str>) -> Option<String> {
     port_discovery::first_pjrc_cdc_port()
 }
 
+#[async_trait::async_trait]
 impl Deployer for TeensyDeployer {
-    fn deploy(
+    async fn deploy(
         &self,
         _project_dir: &Path,
         _env_name: &str,
@@ -178,13 +179,34 @@ impl Deployer for TeensyDeployer {
         if self.baud_134_trigger {
             if let Some(ref tp) = trigger_port {
                 if port_discovery::is_pjrc_cdc(tp) {
-                    match soft_reboot::baud_134_trigger(tp, self.verbose) {
-                        Ok(true) => {
+                    // serialport open + DTR/RTS + sleep is blocking;
+                    // offload so the runtime stays responsive.
+                    let tp_owned = tp.clone();
+                    let verbose = self.verbose;
+                    let trigger_result =
+                        tokio::task::spawn_blocking(move || -> Result<(bool, String)> {
+                            let triggered = soft_reboot::baud_134_trigger(&tp_owned, verbose)?;
+                            Ok((triggered, tp_owned))
+                        })
+                        .await
+                        .unwrap_or_else(|e| {
+                            Err(fbuild_core::FbuildError::DeployFailed(format!(
+                                "baud-134 trigger task panicked: {}",
+                                e
+                            )))
+                        });
+                    match trigger_result {
+                        Ok((true, port_name)) => {
                             // Confirm the device left CDC class (entered HalfKay).
-                            let _ =
-                                halfkay_probe::wait_for_disappearance(tp, Duration::from_secs(3));
+                            let _ = tokio::task::spawn_blocking(move || {
+                                halfkay_probe::wait_for_disappearance(
+                                    &port_name,
+                                    Duration::from_secs(3),
+                                )
+                            })
+                            .await;
                         }
-                        Ok(false) => {
+                        Ok((false, _)) => {
                             // Already gone — treat as already-HalfKay.
                         }
                         Err(e) => {
@@ -238,7 +260,8 @@ impl Deployer for TeensyDeployer {
             // before falling through to the structured diagnostic.
             Duration::from_secs(self.flash_timeout_secs),
             self.verbose,
-        )?;
+        )
+        .await?;
 
         if !flash_outcome.success {
             let attempt_count = flash_outcome.attempts.len();
@@ -258,10 +281,18 @@ impl Deployer for TeensyDeployer {
         }
 
         // ---- 4. Post-flash CDC ACM port discovery ----------------------
-        let new_port = match port_discovery::wait_for_new_cdc_port(
-            &pre_snapshot,
-            Duration::from_secs(self.post_flash_port_discovery_secs),
-        ) {
+        // wait_for_new_cdc_port polls the OS port list with 100ms sleeps;
+        // offload to a blocking thread so the runtime is free during the
+        // up-to-5s discovery window.
+        let discovery_pre = pre_snapshot.clone();
+        let discovery_window = Duration::from_secs(self.post_flash_port_discovery_secs);
+        let discovery_outcome =
+            tokio::task::spawn_blocking(move || {
+                port_discovery::wait_for_new_cdc_port(&discovery_pre, discovery_window)
+            })
+            .await
+            .unwrap_or(port_discovery::NewPortOutcome::TimedOut);
+        let new_port = match discovery_outcome {
             port_discovery::NewPortOutcome::Found(name) => Some(name),
             port_discovery::NewPortOutcome::TimedOut => {
                 // Re-enumeration may have reused the same port name (the
@@ -277,11 +308,13 @@ impl Deployer for TeensyDeployer {
         let mut message_suffix = String::new();
         if let Some(ref np) = new_port {
             if self.first_byte_timeout_secs > 0 {
-                let outcome = first_byte_probe::probe(
-                    np,
-                    115_200,
-                    Duration::from_secs(self.first_byte_timeout_secs),
-                );
+                let np_owned = np.clone();
+                let timeout = Duration::from_secs(self.first_byte_timeout_secs);
+                let outcome = tokio::task::spawn_blocking(move || {
+                    first_byte_probe::probe(&np_owned, 115_200, timeout)
+                })
+                .await
+                .unwrap_or(first_byte_probe::FirstByteOutcome::Disabled);
                 match outcome {
                     first_byte_probe::FirstByteOutcome::SawByte { elapsed_ms } => {
                         message_suffix.push_str(&format!("; first byte at {} ms", elapsed_ms));

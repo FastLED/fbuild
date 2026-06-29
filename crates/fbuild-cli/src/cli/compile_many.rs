@@ -151,13 +151,9 @@ pub async fn run_compile_many(args: CompileManyArgs) -> fbuild_core::Result<()> 
         effective_sketch,
     );
 
-    // `compile_many` is fully synchronous (CPU-bound). Run it on a
-    // blocking pool so we don't tie up the tokio runtime thread.
-    let result = tokio::task::spawn_blocking(move || compile_many(req))
-        .await
-        .map_err(|e| {
-            fbuild_core::FbuildError::Other(format!("compile-many task panicked: {e}"))
-        })??;
+    // `compile_many` is async (driving per-stage tokio fanout). Await it
+    // directly — the runtime is already multi-threaded.
+    let result = compile_many(req).await?;
 
     // Per-sketch result map suitable for the bench summary.
     println!();

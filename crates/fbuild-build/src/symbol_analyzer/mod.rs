@@ -167,15 +167,16 @@ pub fn default_map_path(elf_path: &Path) -> Option<PathBuf> {
 ///
 /// When c++filt can't decode a name it echoes it back unchanged, which
 /// is the desired fallback. Output stays parallel to the input.
-pub fn demangle_batch(mangled: &[String], cppfilt_path: &Path) -> Result<Vec<String>> {
+pub async fn demangle_batch(mangled: &[String], cppfilt_path: &Path) -> Result<Vec<String>> {
     if mangled.is_empty() {
         return Ok(Vec::new());
     }
     let stdin_data = mangled.join("\n");
     let cppfilt_s = cppfilt_path.to_string_lossy().to_string();
     let args = [cppfilt_s.as_str()];
-    let result =
-        run_command_with_stdin(&args, stdin_data.as_bytes(), None, None, None).map_err(|e| {
+    let result = run_command_with_stdin(&args, stdin_data.as_bytes(), None, None, None)
+        .await
+        .map_err(|e| {
             FbuildError::BuildFailed(format!(
                 "failed to run c++filt at {}: {e}",
                 cppfilt_path.display()
@@ -212,7 +213,7 @@ pub struct AnalyzeConfig<'a> {
 
 /// Run nm + c++filt + map-file parse and return the fully-attributed
 /// per-symbol map.
-pub fn analyze_elf(cfg: AnalyzeConfig<'_>) -> Result<FineGrainedSymbolMap> {
+pub async fn analyze_elf(cfg: AnalyzeConfig<'_>) -> Result<FineGrainedSymbolMap> {
     use fbuild_core::subprocess::run_command;
 
     let nm_path_s = cfg.nm_path.to_string_lossy().to_string();
@@ -225,7 +226,7 @@ pub fn analyze_elf(cfg: AnalyzeConfig<'_>) -> Result<FineGrainedSymbolMap> {
         "-S",
         elf_s.as_str(),
     ];
-    let result = run_command(&args, None, None, None)?;
+    let result = run_command(&args, None, None, None).await?;
     if !result.success() {
         return Err(FbuildError::BuildFailed(format!(
             "nm failed: {}",
@@ -237,10 +238,13 @@ pub fn analyze_elf(cfg: AnalyzeConfig<'_>) -> Result<FineGrainedSymbolMap> {
     let mangled: Vec<String> = nm_rows.iter().map(|r| r.3.clone()).collect();
 
     let demangled = if let Some(cppfilt) = cfg.cppfilt_path {
-        demangle_batch(&mangled, cppfilt).unwrap_or_else(|e| {
-            tracing::warn!("c++filt unavailable ({e}); falling back to mangled names");
-            mangled.clone()
-        })
+        match demangle_batch(&mangled, cppfilt).await {
+            Ok(v) => v,
+            Err(e) => {
+                tracing::warn!("c++filt unavailable ({e}); falling back to mangled names");
+                mangled.clone()
+            }
+        }
     } else {
         mangled.clone()
     };
@@ -274,12 +278,15 @@ pub fn analyze_elf(cfg: AnalyzeConfig<'_>) -> Result<FineGrainedSymbolMap> {
     let synth_demangled = if synth_mangled.is_empty() {
         Vec::new()
     } else if let Some(cppfilt) = cfg.cppfilt_path {
-        demangle_batch(&synth_mangled, cppfilt).unwrap_or_else(|e| {
-            tracing::warn!(
-                "c++filt unavailable for synthetic owners ({e}); falling back to mangled names"
-            );
-            synth_mangled.clone()
-        })
+        match demangle_batch(&synth_mangled, cppfilt).await {
+            Ok(v) => v,
+            Err(e) => {
+                tracing::warn!(
+                    "c++filt unavailable for synthetic owners ({e}); falling back to mangled names"
+                );
+                synth_mangled.clone()
+            }
+        }
     } else {
         synth_mangled.clone()
     };
@@ -327,7 +334,7 @@ pub fn analyze_elf(cfg: AnalyzeConfig<'_>) -> Result<FineGrainedSymbolMap> {
     // — we'd rather ship a report without forward edges than fail
     // the whole symbol-analysis post-link step.
     if let Some(objdump_path) = cfg.objdump_path {
-        match run_objdump_and_attribute(objdump_path, cfg.elf_path, &mut map) {
+        match run_objdump_and_attribute(objdump_path, cfg.elf_path, &mut map).await {
             Ok(edge_count) => {
                 tracing::info!(
                     "objdump: extracted {edge_count} forward edges from {}",
@@ -351,7 +358,7 @@ pub fn analyze_elf(cfg: AnalyzeConfig<'_>) -> Result<FineGrainedSymbolMap> {
 /// `references_to` on every symbol in `map` that the parser found
 /// outgoing call edges for. Returns the total edge count surfaced
 /// (across all symbols) so the caller can log a one-liner.
-fn run_objdump_and_attribute(
+async fn run_objdump_and_attribute(
     objdump_path: &Path,
     elf_path: &Path,
     map: &mut FineGrainedSymbolMap,
@@ -367,7 +374,7 @@ fn run_objdump_and_attribute(
         "--no-show-raw-insn",
         elf_s.as_str(),
     ];
-    let result = run_command(&args, None, None, None)?;
+    let result = run_command(&args, None, None, None).await?;
     if !result.success() {
         return Err(FbuildError::BuildFailed(format!(
             "objdump exit={}: {}",

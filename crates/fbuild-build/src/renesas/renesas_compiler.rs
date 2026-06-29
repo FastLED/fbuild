@@ -157,8 +157,9 @@ fn is_c_source(source: &Path) -> bool {
         .unwrap_or(false)
 }
 
+#[async_trait::async_trait]
 impl Compiler for RenesasCompiler {
-    fn compile_one(
+    async fn compile_one(
         &self,
         compiler_path: &Path,
         source: &Path,
@@ -200,6 +201,7 @@ impl Compiler for RenesasCompiler {
             None,
             &[],
         )
+        .await
     }
 
     fn gcc_path(&self) -> &Path {

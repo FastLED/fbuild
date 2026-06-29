@@ -47,9 +47,9 @@ fn scaffold_uno_blink(project_dir: &Path) {
     fs::write(src_dir.join("blink.ino"), UNO_BLINK_INO).unwrap();
 }
 
-#[test]
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore]
-fn stage2_per_sketch_wall_is_a_fraction_of_stage1() {
+async fn stage2_per_sketch_wall_is_a_fraction_of_stage1() {
     let tmp = tempfile::TempDir::new().unwrap();
     let sketches: Vec<PathBuf> = (0..4)
         .map(|i| {
@@ -71,7 +71,9 @@ fn stage2_per_sketch_wall_is_a_fraction_of_stage1() {
         diag_stage2: true,
     };
 
-    let result = compile_many(req).expect("compile_many should not error");
+    let result = compile_many(req)
+        .await
+        .expect("compile_many should not error");
     assert!(
         result.all_success,
         "every sketch should build: results={:?}",

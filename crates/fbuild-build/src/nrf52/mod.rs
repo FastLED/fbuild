@@ -1,4 +1,4 @@
-//! NRF52 platform build support (Nordic NRF52840, etc.)
+﻿//! NRF52 platform build support (Nordic NRF52840, etc.)
 
 pub mod mcu_config;
 pub mod nrf52_compiler;
@@ -12,15 +12,16 @@ pub use orchestrator::Nrf52Orchestrator;
 /// NRF52 platform support.
 pub struct Nrf52PlatformSupport;
 
+#[async_trait::async_trait]
 impl crate::PlatformSupport for Nrf52PlatformSupport {
     fn create_orchestrator(&self) -> Box<dyn crate::BuildOrchestrator> {
         orchestrator::create()
     }
 
-    fn install_deps(&self, project_dir: &std::path::Path) -> fbuild_core::Result<()> {
+    async fn install_deps(&self, project_dir: &std::path::Path) -> fbuild_core::Result<()> {
         use fbuild_packages::Package;
         let tc = fbuild_packages::toolchain::ArmToolchain::new(project_dir);
-        Package::ensure_installed(&tc)?;
+        Package::ensure_installed(&tc).await?;
         tracing::info!("ARM toolchain installed");
         Ok(())
     }

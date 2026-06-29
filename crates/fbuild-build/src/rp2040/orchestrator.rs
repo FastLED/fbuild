@@ -1,4 +1,4 @@
-//! RP2040/RP2350 build orchestrator — wires together config, packages, compiler, linker.
+﻿//! RP2040/RP2350 build orchestrator â€” wires together config, packages, compiler, linker.
 //!
 //! Build phases:
 //! 1. Parse platformio.ini
@@ -58,17 +58,18 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
     }
 }
 
+#[async_trait::async_trait]
 impl BuildOrchestrator for Rp2040Orchestrator {
     fn platform(&self) -> Platform {
         Platform::RaspberryPi
     }
 
-    fn build(&self, params: &BuildParams) -> Result<BuildResult> {
+    async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
         let compiler_cache: Option<std::path::PathBuf> = None;
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
-        let mut ctx = pipeline::BuildContext::new(params)?;
+        let mut ctx = pipeline::BuildContext::new(params).await?;
 
         // Compute eh_frame strip policy once per build (FastLED/fbuild#244).
         let eh_frame_policy =
@@ -76,7 +77,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
 
         // 3. Ensure the arduino-pico-matched pqt-gcc toolchain
         let toolchain = fbuild_packages::toolchain::Rp2040PqtToolchain::new(&params.project_dir);
-        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
+        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("rp2040 pqt-gcc toolchain at {}", toolchain_dir.display());
 
         use fbuild_packages::Toolchain;
@@ -84,11 +85,12 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             &toolchain.get_gcc_path(),
             "arm-none-eabi-gcc",
             &mut ctx.build_log,
-        );
+        )
+        .await;
 
         // 4. Ensure RP2040 cores (arduino-pico by earlephilhower)
         let framework = fbuild_packages::library::Rp2040Cores::new(&params.project_dir);
-        let framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
+        let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("RP2040 cores at {}", framework_dir.display());
         let board_id = ctx
             .config
@@ -269,7 +271,8 @@ impl BuildOrchestrator for Rp2040Orchestrator {
                 .and_then(|props| props.get("boot2"))
                 .map(String::as_str)
                 .unwrap_or("boot2_w25q080_2_padded_checksum"),
-        )?;
+        )
+        .await?;
         let mut mcu_config = mcu_config;
         add_rp_linker_flags(&framework_dir, &ctx.board.mcu, &mut mcu_config);
         let linker = ArmLinker::new(
@@ -321,7 +324,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             TargetArchitecture::Arm,
             "RP2040",
             start,
-        )?;
+        ).await?;
 
         if build_result.success
             && !params.compiledb_only
@@ -630,7 +633,7 @@ fn generate_linker_script(
     Ok(output)
 }
 
-fn compile_boot2_object(
+async fn compile_boot2_object(
     compiler: &ArmCompiler,
     framework_dir: &Path,
     build_dir: &Path,
@@ -683,7 +686,8 @@ fn compile_boot2_object(
         &boot2_object,
         &boot2_flags,
         &extra_flags,
-    )?;
+    )
+    .await?;
     if !result.success {
         return Err(fbuild_core::FbuildError::BuildFailed(format!(
             "RP2040 boot2 compile failed for {}:\n{}",

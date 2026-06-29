@@ -1,13 +1,16 @@
 //! Parallel source file compilation.
 //!
-//! Uses `std::thread::scope` with a work-stealing pattern to compile
-//! source files across N threads. No external dependencies needed.
+//! FastLED/fbuild#820 (Phase B of #813): converted from
+//! `std::thread::scope` work-stealing to `tokio::task::JoinSet` so
+//! the per-TU `Compiler::compile` futures can `.await` the embedded
+//! `ZccacheService` directly, with no `Handle::block_on` and no
+//! dedicated OS threads for compile dispatch.
 
 use std::path::{Path, PathBuf};
-use std::sync::atomic::{AtomicUsize, Ordering};
-use std::sync::Mutex;
+use std::sync::Arc;
 
 use fbuild_core::{BuildLog, FbuildError, Result};
+use tokio::sync::Semaphore;
 
 use crate::compiler::{Compiler, CompilerBase};
 use crate::flag_overlay::LanguageExtraFlags;
@@ -32,20 +35,28 @@ pub struct ParallelCompileResult {
     pub warnings: Vec<String>,
 }
 
-/// Compile source files in parallel using a thread pool.
+/// Compile source files in parallel, gating concurrency with a
+/// `tokio::sync::Semaphore`.
 ///
-/// Spawns up to `jobs` threads, each pulling work from a shared queue.
-/// Stops on first compilation error.
-/// Returns object file paths (in source order) and collected warnings.
+/// Spawns each per-file compile as a `JoinSet` task; the semaphore
+/// permits cap concurrent in-flight compiles at `jobs`. Stops on first
+/// compilation error and returns object file paths (in source order)
+/// plus collected warnings.
 ///
-/// If `build_log` is provided, progress milestones are streamed to it.
-pub fn compile_sources_parallel(
-    compiler: &dyn Compiler,
+/// FastLED/fbuild#820 (Phase B of #813): replaces the old
+/// `std::thread::scope` work-stealing loop. The borrowed `&dyn
+/// Compiler` is held across `.await` points safely because
+/// `compile_sources_parallel` is `async fn` and the per-task futures
+/// borrow `compiler` for the duration of the JoinSet — the outer fn
+/// `.await`s every task before returning, so the borrow is alive
+/// throughout.
+pub async fn compile_sources_parallel(
+    compiler: &(dyn Compiler + Send + Sync),
     sources: &[PathBuf],
     build_dir: &Path,
     extra_flags: &LanguageExtraFlags,
     jobs: usize,
-    build_log: Option<&Mutex<BuildLog>>,
+    build_log: Option<&std::sync::Mutex<BuildLog>>,
 ) -> Result<ParallelCompileResult> {
     // Build work list: (source, object) pairs needing rebuild
     let mut work: Vec<(PathBuf, PathBuf)> = Vec::new();
@@ -69,87 +80,102 @@ pub fn compile_sources_parallel(
     }
 
     let total = work.len();
-    let thread_count = jobs.min(total);
-    tracing::info!("compiling {} files with {} threads", total, thread_count);
+    let parallelism = jobs.min(total).max(1);
+    tracing::info!(
+        "compiling {} files with {} concurrent tasks",
+        total,
+        parallelism
+    );
 
-    let work_iter = Mutex::new(work.into_iter());
-    let first_error: Mutex<Option<String>> = Mutex::new(None);
-    let compiled_count = AtomicUsize::new(0);
-    let all_warnings: Mutex<Vec<String>> = Mutex::new(Vec::new());
+    let semaphore = Arc::new(Semaphore::new(parallelism));
+    let compiled_count = Arc::new(std::sync::atomic::AtomicUsize::new(0));
+    let mut warnings: Vec<String> = Vec::new();
+    let mut first_error: Option<String> = None;
 
-    std::thread::scope(|scope| {
-        let handles: Vec<_> = (0..thread_count)
-            .map(|_| {
-                scope.spawn(|| {
-                    let mut local_warnings: Vec<String> = Vec::new();
-                    loop {
-                        // Check for early termination
-                        if first_error.lock().unwrap().is_some() {
-                            break;
-                        }
+    // `JoinSet<Result<...>>` lets us cancel pending tasks the moment
+    // the first error appears. We accumulate Result outcomes and bail
+    // after draining.
+    let mut tasks: tokio::task::JoinSet<std::result::Result<Option<String>, String>> =
+        tokio::task::JoinSet::new();
 
-                        let job = work_iter.lock().unwrap().next();
-                        let (source, obj) = match job {
-                            Some(j) => j,
-                            None => break,
-                        };
+    // SAFETY: we extend the borrow of `compiler` / `extra_flags` /
+    // `build_log` to `'static` for the duration of the JoinSet's
+    // lifetime. The outer `async fn` awaits every spawned task before
+    // returning, so the borrows are alive for as long as the tasks
+    // execute. `transmute` is the standard idiom for this scoped-task
+    // pattern in tokio (no scoped tasks in tokio today).
+    let compiler_ptr: &'static (dyn Compiler + Send + Sync) =
+        unsafe { std::mem::transmute(compiler) };
+    let extra_flags_ptr: &'static LanguageExtraFlags = unsafe { std::mem::transmute(extra_flags) };
+    let build_log_ptr: Option<&'static std::sync::Mutex<BuildLog>> =
+        unsafe { std::mem::transmute(build_log) };
 
-                        let source_flags = extra_flags.for_source(&source);
-                        match compiler.compile(&source, &obj, &source_flags) {
-                            Ok(result) if result.success => {
-                                let stderr = result.stderr.trim().to_string();
-                                if !stderr.is_empty() {
-                                    local_warnings.push(stderr);
-                                }
-                                let count = compiled_count.fetch_add(1, Ordering::Relaxed) + 1;
-                                if count % 20 == 0 || count == total {
-                                    tracing::info!("[{}/{}] compiled", count, total);
-                                    if let Some(log) = build_log {
-                                        if let Ok(mut log) = log.lock() {
-                                            log.push(format!("Compiled {}/{} files", count, total));
-                                        }
-                                    }
-                                }
-                            }
-                            Ok(result) => {
-                                let mut err = first_error.lock().unwrap();
-                                if err.is_none() {
-                                    *err = Some(format!(
-                                        "compilation failed for {}:\n{}",
-                                        source.display(),
-                                        result.stderr
-                                    ));
-                                }
-                            }
-                            Err(e) => {
-                                let mut err = first_error.lock().unwrap();
-                                if err.is_none() {
-                                    *err = Some(e.to_string());
-                                }
+    for (source, obj) in work.into_iter() {
+        let sem = semaphore.clone();
+        let counter = compiled_count.clone();
+        tasks.spawn(async move {
+            // Acquire permit; if Acquired returns Err, semaphore was closed
+            // (only happens on shutdown — propagate as immediate-error).
+            let _permit = sem
+                .acquire()
+                .await
+                .map_err(|e| format!("semaphore closed: {e}"))?;
+
+            let source_flags = extra_flags_ptr.for_source(&source);
+            match compiler_ptr.compile(&source, &obj, &source_flags).await {
+                Ok(result) if result.success => {
+                    let stderr = result.stderr.trim().to_string();
+                    let count =
+                        counter.fetch_add(1, std::sync::atomic::Ordering::Relaxed) + 1;
+                    if count % 20 == 0 || count == total {
+                        tracing::info!("[{}/{}] compiled", count, total);
+                        if let Some(log) = build_log_ptr {
+                            if let Ok(mut log) = log.lock() {
+                                log.push(format!("Compiled {}/{} files", count, total));
                             }
                         }
                     }
-                    // Merge local warnings into shared collection
-                    if !local_warnings.is_empty() {
-                        all_warnings.lock().unwrap().extend(local_warnings);
+                    if stderr.is_empty() {
+                        Ok(None)
+                    } else {
+                        Ok(Some(stderr))
                     }
-                })
-            })
-            .collect();
+                }
+                Ok(result) => Err(format!(
+                    "compilation failed for {}:\n{}",
+                    source.display(),
+                    result.stderr
+                )),
+                Err(e) => Err(e.to_string()),
+            }
+        });
+    }
 
-        for handle in handles {
-            handle.join().unwrap();
+    while let Some(joined) = tasks.join_next().await {
+        match joined {
+            Ok(Ok(Some(warning))) => warnings.push(warning),
+            Ok(Ok(None)) => {}
+            Ok(Err(msg)) => {
+                if first_error.is_none() {
+                    first_error = Some(msg);
+                    // Abort remaining tasks; we already have an error.
+                    tasks.abort_all();
+                }
+            }
+            Err(join_err) => {
+                if first_error.is_none() {
+                    first_error = Some(format!("compile task panicked or was cancelled: {join_err}"));
+                    tasks.abort_all();
+                }
+            }
         }
-    });
+    }
 
-    if let Some(error) = first_error.into_inner().unwrap() {
+    if let Some(error) = first_error {
         return Err(FbuildError::BuildFailed(error));
     }
 
-    Ok(ParallelCompileResult {
-        objects,
-        warnings: all_warnings.into_inner().unwrap(),
-    })
+    Ok(ParallelCompileResult { objects, warnings })
 }
 
 #[cfg(test)]

@@ -96,7 +96,7 @@ pub async fn run_daemon(action: DaemonAction) -> fbuild_core::Result<()> {
             run_daemon_kill(&client, pid, force).await?;
         }
         DaemonAction::KillAll { force } => {
-            run_daemon_kill_all(force)?;
+            run_daemon_kill_all(force).await?;
         }
         DaemonAction::Locks => {
             run_daemon_locks(&client).await?;
@@ -292,7 +292,7 @@ pub async fn run_daemon_list(client: &DaemonClient) -> fbuild_core::Result<()> {
     }
 
     // Also scan for orphan processes
-    let pids = find_daemon_pids()?;
+    let pids = find_daemon_pids().await?;
     if pids.len() > 1 {
         println!("\nwarning: multiple fbuild-daemon processes detected:");
         for pid in &pids {
@@ -493,7 +493,7 @@ pub async fn run_daemon_kill(
         read_pid_from_file()?
     };
 
-    kill_process(target_pid, force)?;
+    kill_process(target_pid, force).await?;
     println!("killed daemon (PID {})", target_pid);
     let _ = std::fs::remove_file(fbuild_paths::get_daemon_pid_file());
     Ok(())
@@ -517,8 +517,8 @@ pub fn read_pid_from_file() -> fbuild_core::Result<u32> {
     }
 }
 
-pub fn run_daemon_kill_all(force: bool) -> fbuild_core::Result<()> {
-    let pids = find_daemon_pids()?;
+pub async fn run_daemon_kill_all(force: bool) -> fbuild_core::Result<()> {
+    let pids = find_daemon_pids().await?;
     if pids.is_empty() {
         println!("no fbuild-daemon processes found");
         return Ok(());
@@ -526,7 +526,7 @@ pub fn run_daemon_kill_all(force: bool) -> fbuild_core::Result<()> {
 
     let mut killed = 0;
     for pid in &pids {
-        match kill_process(*pid, force) {
+        match kill_process(*pid, force).await {
             Ok(()) => {
                 println!("killed daemon (PID {})", pid);
                 killed += 1;
@@ -542,7 +542,7 @@ pub fn run_daemon_kill_all(force: bool) -> fbuild_core::Result<()> {
     Ok(())
 }
 
-pub fn kill_process(pid: u32, force: bool) -> fbuild_core::Result<()> {
+pub async fn kill_process(pid: u32, force: bool) -> fbuild_core::Result<()> {
     let pid_str = pid.to_string();
     let argv: Vec<&str> = if cfg!(windows) {
         if force {
@@ -555,9 +555,11 @@ pub fn kill_process(pid: u32, force: bool) -> fbuild_core::Result<()> {
         vec!["kill", signal, &pid_str]
     };
 
-    let output = fbuild_core::subprocess::run_command(&argv, None, None, None).map_err(|e| {
-        fbuild_core::FbuildError::Other(format!("failed to execute kill command: {}", e))
-    })?;
+    let output = fbuild_core::subprocess::run_command(&argv, None, None, None)
+        .await
+        .map_err(|e| {
+            fbuild_core::FbuildError::Other(format!("failed to execute kill command: {}", e))
+        })?;
 
     if !output.success() {
         return Err(fbuild_core::FbuildError::Other(format!(
@@ -568,7 +570,7 @@ pub fn kill_process(pid: u32, force: bool) -> fbuild_core::Result<()> {
     Ok(())
 }
 
-pub fn find_daemon_pids() -> fbuild_core::Result<Vec<u32>> {
+pub async fn find_daemon_pids() -> fbuild_core::Result<Vec<u32>> {
     if cfg!(windows) {
         let output = fbuild_core::subprocess::run_command(
             &[
@@ -583,6 +585,7 @@ pub fn find_daemon_pids() -> fbuild_core::Result<Vec<u32>> {
             None,
             None,
         )
+        .await
         .map_err(|e| fbuild_core::FbuildError::Other(format!("failed to run tasklist: {}", e)))?;
         let mut pids = Vec::new();
         for line in output.stdout.lines() {
@@ -605,6 +608,7 @@ pub fn find_daemon_pids() -> fbuild_core::Result<Vec<u32>> {
             None,
             None,
         )
+        .await
         .map_err(|e| fbuild_core::FbuildError::Other(format!("failed to run pgrep: {}", e)))?;
         let pids: Vec<u32> = output
             .stdout

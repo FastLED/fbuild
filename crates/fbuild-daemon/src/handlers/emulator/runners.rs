@@ -80,7 +80,7 @@ impl EmulatorRunner for QemuRunner {
             mcu_config.default_flash_size(),
         )?;
 
-        let qemu = resolve_esp_qemu_for_mcu(&self.project_dir, &self.board.mcu)?;
+        let qemu = resolve_esp_qemu_for_mcu(&self.project_dir, &self.board.mcu).await?;
 
         let session_dir = qemu_session_dir(&self.project_dir, &self.env_name);
         std::fs::create_dir_all(&session_dir)?;
@@ -108,11 +108,14 @@ impl EmulatorRunner for QemuRunner {
             &flash_image,
             self.board.qemu_esp32_psram_config(),
         );
-        let addr2line_path = config.elf_path.as_ref().and_then(|_| {
-            resolve_esp32_toolchain_gcc_path(&self.project_dir, &mcu_config)
-                .ok()
-                .and_then(|gcc| fbuild_serial::crash_decoder::derive_addr2line_path(&gcc))
-        });
+        let addr2line_path = if config.elf_path.is_some() {
+            match resolve_esp32_toolchain_gcc_path(&self.project_dir, &mcu_config).await {
+                Ok(gcc) => fbuild_serial::crash_decoder::derive_addr2line_path(&gcc),
+                Err(_) => None,
+            }
+        } else {
+            None
+        };
 
         let command_line = format!("{} {}", qemu.display(), args.join(" "));
 
@@ -170,8 +173,8 @@ impl EmulatorRunner for Avr8jsRunner {
         {
             return Err(fbuild_core::FbuildError::DeployFailed(msg));
         }
-        let node_path = find_node()?;
-        let avr8js_cache = ensure_avr8js_npm()?;
+        let node_path = find_node().await?;
+        let avr8js_cache = ensure_avr8js_npm().await?;
 
         // headless.mjs uses `import ... from "avr8js"` (a bare ESM
         // specifier). Node's ESM resolver does NOT honor NODE_PATH —
@@ -235,7 +238,7 @@ impl EmulatorRunner for Avr8jsRunner {
 /// - Linux: `apt install simavr` or build from source
 /// - macOS: `brew install simavr`
 /// - Windows: build from source (MSYS2/MinGW) — limited support
-fn find_simavr() -> fbuild_core::Result<PathBuf> {
+async fn find_simavr() -> fbuild_core::Result<PathBuf> {
     let simavr = if cfg!(windows) {
         "simavr.exe"
     } else {
@@ -244,7 +247,7 @@ fn find_simavr() -> fbuild_core::Result<PathBuf> {
     // Try running simavr to verify it exists; route through containment
     // (issue #32). This is a short-lived probe so the containment
     // difference is purely consistency.
-    match fbuild_core::subprocess::run_command(&[simavr, "--help"], None, None, None) {
+    match fbuild_core::subprocess::run_command(&[simavr, "--help"], None, None, None).await {
         Ok(_) => Ok(PathBuf::from(simavr)),
         Err(_) => {
             let install_hint = if cfg!(target_os = "linux") {
@@ -291,7 +294,7 @@ impl EmulatorRunner for SimavrRunner {
         {
             return Err(fbuild_core::FbuildError::DeployFailed(msg));
         }
-        let simavr_path = find_simavr()?;
+        let simavr_path = find_simavr().await?;
 
         // simavr requires an ELF file
         let elf_path = config.elf_path.as_ref().ok_or_else(|| {

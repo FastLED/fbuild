@@ -56,9 +56,8 @@ impl std::fmt::Debug for ResolvedBlob {
 /// cache miss → download, verify, record, return path + lease.
 ///
 /// The download path runs synchronously by blocking on the existing async
-/// downloader via the workspace `block_on_package_future` helper. Callers
-/// already on a tokio runtime get `block_in_place`; off-runtime callers
-/// get a fresh single-thread runtime.
+/// downloader. Callers already on a tokio runtime get `block_in_place`;
+/// off-runtime callers get a fresh single-thread runtime.
 pub fn resolve(lnk: &LnkFile, cache: &DiskCache) -> Result<ResolvedBlob> {
     // Cache lookup uses (Kind, url, version) where "version" is the sha256.
     // This guarantees that a change to the .lnk's sha256 forces a refetch.
@@ -113,8 +112,17 @@ pub fn resolve(lnk: &LnkFile, cache: &DiskCache) -> Result<ResolvedBlob> {
         ))
     })?;
 
-    let downloaded =
-        crate::block_on_package_future(async { download_file(&lnk.url, &staging_dir).await })?;
+    let downloaded = {
+        let fut = async { download_file(&lnk.url, &staging_dir).await };
+        if let Ok(handle) = tokio::runtime::Handle::try_current() {
+            tokio::task::block_in_place(|| handle.block_on(fut))?
+        } else {
+            let rt = tokio::runtime::Runtime::new().map_err(|e| {
+                FbuildError::PackageError(format!("failed to create tokio runtime: {}", e))
+            })?;
+            rt.block_on(fut)?
+        }
+    };
 
     verify_sha256(&downloaded, &lnk.sha256).map_err(|e| {
         // Clean up the staging file so a retry starts fresh.

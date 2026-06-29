@@ -93,9 +93,9 @@ async fn run_qemu_process_surfaces_crash_decoder_output() {
     }
 }
 
-#[test]
+#[tokio::test]
 #[ignore]
-fn run_real_esp32s3_fixture_in_qemu() {
+async fn run_real_esp32s3_fixture_in_qemu() {
     use fbuild_build::{BuildOrchestrator, BuildParams};
     use fbuild_core::BuildProfile;
 
@@ -150,6 +150,7 @@ fn run_real_esp32s3_fixture_in_qemu() {
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
     let build_result = orchestrator
         .build(&params)
+        .await
         .expect("ESP32-S3 fixture build should succeed");
     assert!(build_result.success);
 
@@ -180,36 +181,39 @@ fn run_real_esp32s3_fixture_in_qemu() {
     )
     .unwrap();
 
-    let qemu = fbuild_packages::toolchain::EspQemuXtensa::new(&project_dir)
-        .and_then(|pkg| pkg.resolve_executable())
+    let pkg = fbuild_packages::toolchain::EspQemuXtensa::new(&project_dir)
+        .expect("EspQemuXtensa::new should succeed for ignored integration test");
+    let qemu = pkg
+        .resolve_executable()
+        .await
         .expect("native QEMU should resolve for ignored integration test");
     let args = fbuild_deploy::esp32::build_qemu_args(
         &board.mcu,
         &flash_image,
         board.qemu_esp32_psram_config(),
     );
-    let addr2line_path = resolve_esp32_toolchain_gcc_path(&project_dir, &mcu_config)
-        .ok()
-        .and_then(|gcc| fbuild_serial::crash_decoder::derive_addr2line_path(&gcc));
+    let addr2line_path = match resolve_esp32_toolchain_gcc_path(&project_dir, &mcu_config).await {
+        Ok(gcc) => fbuild_serial::crash_decoder::derive_addr2line_path(&gcc),
+        Err(_) => None,
+    };
 
-    let rt = tokio::runtime::Runtime::new().unwrap();
-    let result = rt
-        .block_on(run_qemu_process(
-            &qemu,
-            &args,
-            RunQemuOptions {
-                elf_path,
-                addr2line_path,
-                timeout_secs: Some(15.0),
-                halt_on_error: None,
-                halt_on_success: Some("Hello from ESP32-S3!"),
-                expect: Some("Hello from ESP32-S3!"),
-                show_timestamp: false,
-                verbose: true,
-                process_label: "QEMU",
-            },
-        ))
-        .unwrap();
+    let result = run_qemu_process(
+        &qemu,
+        &args,
+        RunQemuOptions {
+            elf_path,
+            addr2line_path,
+            timeout_secs: Some(15.0),
+            halt_on_error: None,
+            halt_on_success: Some("Hello from ESP32-S3!"),
+            expect: Some("Hello from ESP32-S3!"),
+            show_timestamp: false,
+            verbose: true,
+            process_label: "QEMU",
+        },
+    )
+    .await
+    .unwrap();
 
     assert!(result.stdout.contains("Hello from ESP32-S3!"));
     match result.outcome {

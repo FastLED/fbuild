@@ -1,10 +1,17 @@
-//! Subprocess runner backed by `running-process`.
+//! Subprocess runner — async-first (#813).
 //!
-//! Every synchronous spawn in fbuild flows through this module. We use
-//! [`running_process::NativeProcess`] so that stdout and stderr are
-//! drained concurrently from the moment the child starts — the manual
-//! drain loop that preceded this module deadlocked the moment a compiler
-//! filled its stderr pipe (see FastLED/fbuild#141).
+//! Every subprocess spawn in fbuild flows through this module. The
+//! primary surface is now `async fn`-shaped (`run_command`,
+//! `run_command_with_stdin`, `run_command_passthrough`); a small set of
+//! `_blocking` shims exist as the escape hatch for the handful of sync
+//! call sites (CLI diagnostic subcommands, tests, etc.).
+//!
+//! Internally we spawn via [`tokio::process::Command`] routed through
+//! [`crate::containment::tokio_spawn::spawn_contained`] so the daemon's
+//! Job Object / `PR_SET_PDEATHSIG` containment still kills every child
+//! when the daemon goes down. When no global containment group has been
+//! installed (CLI binary, unit tests) the contained helper falls back
+//! to a plain spawn — same coverage as the pre-async implementation.
 //!
 //! On Windows we still:
 //!   * prepend the executable's directory to PATH so GCC's `cc1plus` can
@@ -12,22 +19,23 @@
 //!   * strip MSYS/MSYS2 env vars that would otherwise poison native
 //!     Windows toolchain binaries.
 //!
-//! On Windows, containment is applied post-spawn by
-//! `crate::containment::windows_job::assign` when the daemon has
-//! installed the global containment group; CLI binaries and unit tests
-//! run uncontained just as before. (Earlier code used a `containment:`
-//! field on `ProcessConfig` from a pre-release `running-process-core`;
-//! the published `running-process` 4.0 API does not expose that field —
-//! see #32.)
+//! The legacy "what running-process gives us" output shape is preserved
+//! byte-for-byte: stdout/stderr are returned as `String`s composed of
+//! lossy-UTF-8 lines joined by `\n` with a trailing newline when
+//! non-empty (see [`join_lines`]).
 
 use std::path::Path;
+use std::process::Stdio;
 use std::time::Duration;
 
-use running_process::{
-    CommandSpec, NativeProcess, ProcessConfig, ProcessError, StderrMode, StdinMode,
-};
+use tokio::io::AsyncWriteExt;
+use tokio::process::{Child, Command as TokioCommand};
 
+use crate::containment::tokio_spawn;
 use crate::{FbuildError, Result};
+
+#[cfg(windows)]
+const CREATE_NO_WINDOW: u32 = 0x08000000;
 
 /// Build the env overlay that GCC link steps should pass to
 /// [`run_command`] so that `lto-wrapper`'s temp files (the `*.ltrans*.o`
@@ -78,69 +86,88 @@ impl ToolOutput {
 }
 
 /// Run an external command and capture its output.
-pub fn run_command(
+///
+/// Async-first: callers in an async context should `.await` this.
+/// Use [`run_command_blocking`] from sync contexts (CLI diagnostic
+/// subcommands, tests).
+pub async fn run_command(
     args: &[&str],
     cwd: Option<&Path>,
     env: Option<&[(&str, &str)]>,
     timeout: Option<Duration>,
 ) -> Result<ToolOutput> {
-    let config = build_config(args, cwd, env, /*capture=*/ true, StdinMode::Null)?;
-    run_captured(config, args, timeout)
+    if args.is_empty() {
+        return Err(FbuildError::Other("empty command".to_string()));
+    }
+    let mut cmd = build_command(args, cwd, env, /*capture=*/ true, /*stdin_piped=*/ false)?;
+    let child = tokio_spawn::spawn_contained(&mut cmd).map_err(|e| spawn_err(args, e))?;
+    wait_and_capture(child, args, timeout).await
 }
 
 /// Run an external command, feed `stdin_bytes` to its stdin, and
 /// capture stdout+stderr. Used by tools that operate on a payload
 /// piped through a filter (e.g. `c++filt`, `clang-format`).
 ///
-/// Routing through `NativeProcess` is critical for large stdin
-/// payloads: the running-process reader thread drains stdout in
-/// background while we write stdin, avoiding the Windows pipe-buffer
-/// deadlock that hits when ~3k mangled symbols (~250 KB) saturate
-/// the 4-8 KB stdout pipe before stdin EOF.
-pub fn run_command_with_stdin(
+/// Concurrency-safe: stdin write, stdout drain, and stderr drain all
+/// run on the tokio runtime concurrently — no risk of the Windows
+/// pipe-buffer deadlock that hits when a multi-hundred-KB symbol
+/// payload saturates the stdout pipe before stdin EOF.
+pub async fn run_command_with_stdin(
     args: &[&str],
     stdin_bytes: &[u8],
     cwd: Option<&Path>,
     env: Option<&[(&str, &str)]>,
     timeout: Option<Duration>,
 ) -> Result<ToolOutput> {
-    let config = build_config(args, cwd, env, /*capture=*/ true, StdinMode::Piped)?;
-    let process = NativeProcess::new(config);
-    process.start().map_err(|e| spawn_err(args, e))?;
-    // Writes the data then closes stdin (signals EOF). The reader
-    // threads spawned by `start()` keep stdout/stderr drained
-    // throughout the write.
-    if !stdin_bytes.is_empty() {
-        process
-            .write_stdin(stdin_bytes)
-            .map_err(|e| FbuildError::Other(format!("stdin write to {:?} failed: {}", args, e)))?;
-    } else {
-        // Empty payload: close stdin immediately so the child sees EOF.
-        let _ = process.close_stdin();
+    if args.is_empty() {
+        return Err(FbuildError::Other("empty command".to_string()));
     }
-    let exit_code = match process.wait(timeout) {
-        Ok(code) => code,
-        Err(ProcessError::Timeout) => {
-            let _ = process.kill();
-            return Err(FbuildError::Timeout(format!(
-                "command timed out after {}s",
-                timeout.map(|d| d.as_secs()).unwrap_or(0)
-            )));
+    let mut cmd = build_command(args, cwd, env, /*capture=*/ true, /*stdin_piped=*/ true)?;
+    let mut child = tokio_spawn::spawn_contained(&mut cmd).map_err(|e| spawn_err(args, e))?;
+
+    // Take the stdin handle and concurrently write the payload while
+    // tokio drains stdout/stderr in the background. Dropping `stdin`
+    // closes the pipe (signals EOF) before we wait for the exit.
+    if let Some(mut stdin) = child.stdin.take() {
+        let bytes = stdin_bytes.to_vec();
+        let args_owned: Vec<String> = args.iter().map(|s| (*s).to_string()).collect();
+        // Spawn the writer as a sibling task so the read side of the
+        // pipe can drain concurrently when we `wait_with_output` below.
+        let write_task = tokio::spawn(async move {
+            if !bytes.is_empty() {
+                stdin.write_all(&bytes).await?;
+            }
+            stdin.shutdown().await?;
+            drop(stdin);
+            Ok::<_, std::io::Error>(args_owned)
+        });
+
+        let output = wait_and_capture(child, args, timeout).await;
+
+        // Surface a stdin-write error only if the command itself
+        // succeeded — otherwise the command's own error is more useful.
+        match write_task.await {
+            Ok(Ok(_)) => output,
+            Ok(Err(e)) => match output {
+                Ok(_) => Err(FbuildError::Other(format!(
+                    "stdin write to {:?} failed: {}",
+                    args, e
+                ))),
+                Err(orig) => Err(orig),
+            },
+            Err(join_err) => match output {
+                Ok(_) => Err(FbuildError::Other(format!(
+                    "stdin writer task for {:?} panicked: {}",
+                    args, join_err
+                ))),
+                Err(orig) => Err(orig),
+            },
         }
-        Err(e) => {
-            return Err(FbuildError::Other(format!(
-                "command {:?} failed: {}",
-                args, e
-            )))
-        }
-    };
-    let stdout = join_lines(process.captured_stdout());
-    let stderr = join_lines(process.captured_stderr());
-    Ok(ToolOutput {
-        stdout,
-        stderr,
-        exit_code,
-    })
+    } else {
+        // No stdin handle (extremely unlikely with `stdin(Stdio::piped())`)
+        // — just wait for completion.
+        wait_and_capture(child, args, timeout).await
+    }
 }
 
 /// Run an external command with inherited stdin/stdout/stderr (no
@@ -148,128 +175,240 @@ pub fn run_command_with_stdin(
 /// delegation where users expect the tool's live output.
 ///
 /// Returns the exit code.
-pub fn run_command_passthrough(
+pub async fn run_command_passthrough(
     args: &[&str],
     cwd: Option<&Path>,
     env: Option<&[(&str, &str)]>,
     timeout: Option<Duration>,
 ) -> Result<i32> {
-    let config = build_config(args, cwd, env, /*capture=*/ false, StdinMode::Inherit)?;
-    let process = NativeProcess::new(config);
-    process.start().map_err(|e| spawn_err(args, e))?;
-    match process.wait(timeout) {
-        Ok(code) => Ok(code),
-        Err(ProcessError::Timeout) => {
-            let _ = process.kill();
-            Err(FbuildError::Timeout(format!(
-                "command timed out after {}s",
-                timeout.map(|d| d.as_secs()).unwrap_or(0)
-            )))
-        }
-        Err(e) => Err(FbuildError::Other(format!(
-            "command {:?} failed: {}",
-            args, e
-        ))),
+    if args.is_empty() {
+        return Err(FbuildError::Other("empty command".to_string()));
     }
-}
-
-fn run_captured(
-    config: ProcessConfig,
-    args: &[&str],
-    timeout: Option<Duration>,
-) -> Result<ToolOutput> {
-    let process = NativeProcess::new(config);
-    process.start().map_err(|e| spawn_err(args, e))?;
-    let exit_code = match process.wait(timeout) {
-        Ok(code) => code,
-        Err(ProcessError::Timeout) => {
-            let _ = process.kill();
+    let mut cmd = build_command(args, cwd, env, /*capture=*/ false, /*stdin_piped=*/ false)?;
+    let mut child = tokio_spawn::spawn_contained(&mut cmd).map_err(|e| spawn_err(args, e))?;
+    let status = match wait_with_timeout(&mut child, timeout).await? {
+        Some(status) => status,
+        None => {
+            let _ = child.kill().await;
             return Err(FbuildError::Timeout(format!(
                 "command timed out after {}s",
                 timeout.map(|d| d.as_secs()).unwrap_or(0)
             )));
         }
-        Err(e) => {
-            return Err(FbuildError::Other(format!(
-                "command {:?} failed: {}",
-                args, e
-            )))
-        }
     };
+    Ok(exit_code_from(status))
+}
 
-    let stdout = join_lines(process.captured_stdout());
-    let stderr = join_lines(process.captured_stderr());
+// ---------------------------------------------------------------------------
+// Sync bridges for one-shot callers (diagnostic CLI subcommands, tests).
+// ---------------------------------------------------------------------------
 
+/// Blocking variant of [`run_command`] for sync call sites.
+///
+/// Constructs a fresh single-threaded tokio runtime to drive the async
+/// path. Only use from contexts that are *not* already inside a tokio
+/// reactor — calling this from inside an async function will panic.
+pub fn run_command_blocking(
+    args: &[&str],
+    cwd: Option<&Path>,
+    env: Option<&[(&str, &str)]>,
+    timeout: Option<Duration>,
+) -> Result<ToolOutput> {
+    block_on(run_command(args, cwd, env, timeout))
+}
+
+/// Blocking variant of [`run_command_with_stdin`].
+pub fn run_command_with_stdin_blocking(
+    args: &[&str],
+    stdin_bytes: &[u8],
+    cwd: Option<&Path>,
+    env: Option<&[(&str, &str)]>,
+    timeout: Option<Duration>,
+) -> Result<ToolOutput> {
+    block_on(run_command_with_stdin(args, stdin_bytes, cwd, env, timeout))
+}
+
+/// Blocking variant of [`run_command_passthrough`].
+pub fn run_command_passthrough_blocking(
+    args: &[&str],
+    cwd: Option<&Path>,
+    env: Option<&[(&str, &str)]>,
+    timeout: Option<Duration>,
+) -> Result<i32> {
+    block_on(run_command_passthrough(args, cwd, env, timeout))
+}
+
+fn block_on<F: std::future::Future>(fut: F) -> F::Output {
+    // Use a fresh current-thread runtime. We deliberately do not try to
+    // pick up an ambient `Handle` here — callers of `_blocking` are sync
+    // contexts where re-entering a tokio runtime would panic anyway, and
+    // a fresh single-threaded runtime is the cheap, safe escape hatch.
+    let rt = tokio::runtime::Builder::new_current_thread()
+        .enable_all()
+        .build()
+        .expect("failed to build single-threaded tokio runtime for blocking subprocess call");
+    rt.block_on(fut)
+}
+
+// ---------------------------------------------------------------------------
+// Shared async plumbing
+// ---------------------------------------------------------------------------
+
+async fn wait_and_capture(
+    child: Child,
+    args: &[&str],
+    timeout: Option<Duration>,
+) -> Result<ToolOutput> {
+    let wait_fut = child.wait_with_output();
+    let output = match timeout {
+        Some(d) => match tokio::time::timeout(d, wait_fut).await {
+            Ok(res) => res.map_err(|e| FbuildError::Other(format!("command {:?} failed: {}", args, e)))?,
+            Err(_) => {
+                return Err(FbuildError::Timeout(format!(
+                    "command timed out after {}s",
+                    d.as_secs()
+                )))
+            }
+        },
+        None => wait_fut
+            .await
+            .map_err(|e| FbuildError::Other(format!("command {:?} failed: {}", args, e)))?,
+    };
+    let exit_code = exit_code_from(output.status);
     Ok(ToolOutput {
-        stdout,
-        stderr,
+        stdout: bytes_to_lines_string(&output.stdout),
+        stderr: bytes_to_lines_string(&output.stderr),
         exit_code,
     })
 }
 
-fn build_config(
+async fn wait_with_timeout(
+    child: &mut Child,
+    timeout: Option<Duration>,
+) -> Result<Option<std::process::ExitStatus>> {
+    match timeout {
+        Some(d) => match tokio::time::timeout(d, child.wait()).await {
+            Ok(res) => res
+                .map(Some)
+                .map_err(|e| FbuildError::Other(format!("wait failed: {}", e))),
+            Err(_) => Ok(None),
+        },
+        None => child
+            .wait()
+            .await
+            .map(Some)
+            .map_err(|e| FbuildError::Other(format!("wait failed: {}", e))),
+    }
+}
+
+fn exit_code_from(status: std::process::ExitStatus) -> i32 {
+    status.code().unwrap_or_else(|| {
+        #[cfg(unix)]
+        {
+            use std::os::unix::process::ExitStatusExt;
+            // Surface signal as -signo to match running-process semantics.
+            status.signal().map(|s| -s).unwrap_or(-1)
+        }
+        #[cfg(not(unix))]
+        {
+            let _ = status;
+            -1
+        }
+    })
+}
+
+fn build_command(
     args: &[&str],
     cwd: Option<&Path>,
     env: Option<&[(&str, &str)]>,
     capture: bool,
-    stdin_mode: StdinMode,
-) -> Result<ProcessConfig> {
-    if args.is_empty() {
-        return Err(FbuildError::Other("empty command".to_string()));
+    stdin_piped: bool,
+) -> Result<TokioCommand> {
+    let mut cmd = TokioCommand::new(args[0]);
+    if args.len() > 1 {
+        cmd.args(&args[1..]);
+    }
+    if let Some(dir) = cwd {
+        cmd.current_dir(dir);
     }
 
-    let argv: Vec<String> = args.iter().map(|s| (*s).to_string()).collect();
+    // Build the env overlay (Windows PATH rewriting / MSYS stripping,
+    // and any explicit overlay vars). When `compute_env` returns `None`
+    // the child inherits the parent env verbatim.
+    if let Some(env_vec) = compute_env(args[0], env) {
+        cmd.env_clear();
+        for (k, v) in env_vec {
+            cmd.env(k, v);
+        }
+    }
 
-    // Build the environment the child will see. Windows needs PATH
-    // rewriting (prepend exe dir) and optional MSYS-var stripping; Unix
-    // only needs overlay vars applied. When no changes are required
-    // leave `env = None` so the child inherits the parent environment
-    // verbatim (matching the pre-migration behaviour).
-    let env_vec = compute_env(args[0], env);
+    // Stdio wiring.
+    if capture {
+        cmd.stdout(Stdio::piped());
+        cmd.stderr(Stdio::piped());
+    } else {
+        cmd.stdout(Stdio::inherit());
+        cmd.stderr(Stdio::inherit());
+    }
+    if stdin_piped {
+        cmd.stdin(Stdio::piped());
+    } else if capture {
+        // Same shape as the pre-async StdinMode::Null: detach stdin so
+        // captured children don't accidentally read from the parent
+        // terminal.
+        cmd.stdin(Stdio::null());
+    } else {
+        cmd.stdin(Stdio::inherit());
+    }
 
+    // Hide the console window for child processes on Windows. Matches
+    // the pre-async `CREATE_NO_WINDOW` flag.
     #[cfg(windows)]
-    let creationflags = {
-        const CREATE_NO_WINDOW: u32 = 0x08000000;
-        Some(CREATE_NO_WINDOW)
-    };
-    #[cfg(not(windows))]
-    let creationflags: Option<u32> = None;
+    {
+        use std::os::windows::process::CommandExt;
+        cmd.as_std_mut().creation_flags(CREATE_NO_WINDOW);
+    }
 
-    Ok(ProcessConfig {
-        command: CommandSpec::Argv(argv),
-        cwd: cwd.map(|p| p.to_path_buf()),
-        env: env_vec,
-        capture,
-        stderr_mode: StderrMode::Pipe,
-        creationflags,
-        create_process_group: false,
-        stdin_mode,
-        nice: None,
-    })
+    Ok(cmd)
 }
 
-fn join_lines(lines: Vec<Vec<u8>>) -> String {
-    // NativeProcess returns one Vec<u8> per line (CR/LF stripped). Join
-    // with '\n' and add a trailing newline when non-empty so the result
-    // matches the shape of the previous `String::from_utf8_lossy(&raw)`
-    // output closely enough for downstream parsers (which mostly call
-    // `.trim()` or `.lines()`).
-    if lines.is_empty() {
+fn spawn_err(args: &[&str], e: std::io::Error) -> FbuildError {
+    FbuildError::Other(format!("failed to spawn {:?}: {}", args, e))
+}
+
+/// Format captured bytes the same way the old running-process path did:
+/// split into lossy-UTF-8 lines (stripping CR/LF), join with '\n', and
+/// add a trailing newline when non-empty. Downstream parsers rely on
+/// this exact shape (most call `.trim()` / `.lines()` but a few search
+/// for substrings — see #141).
+fn bytes_to_lines_string(raw: &[u8]) -> String {
+    if raw.is_empty() {
         return String::new();
     }
-    let mut out = String::new();
-    for (idx, line) in lines.iter().enumerate() {
-        if idx > 0 {
+    let lossy = String::from_utf8_lossy(raw);
+    let mut out = String::with_capacity(lossy.len());
+    let mut first = true;
+    for line in lossy.split('\n') {
+        // The split by '\n' already drops trailing '\n'; strip a
+        // trailing '\r' so CRLF input is collapsed to '\n'.
+        let line = line.strip_suffix('\r').unwrap_or(line);
+        if first {
+            first = false;
+        } else {
             out.push('\n');
         }
-        out.push_str(&String::from_utf8_lossy(line));
+        out.push_str(line);
     }
-    out.push('\n');
+    // The old `join_lines` always pushed a trailing newline when the
+    // input was non-empty. Preserve that.
+    if !out.is_empty() && !out.ends_with('\n') {
+        out.push('\n');
+    } else if out.is_empty() {
+        // Edge case: all input was a single empty line — match the old
+        // behaviour which would return empty.
+        return String::new();
+    }
     out
-}
-
-fn spawn_err(args: &[&str], e: ProcessError) -> FbuildError {
-    FbuildError::Other(format!("failed to spawn {:?}: {}", args, e))
 }
 
 /// Build the env vector to pass to the child.
@@ -404,28 +543,40 @@ fn strip_msys_env(env_map: &mut std::collections::BTreeMap<String, String>) {
 mod tests {
     use super::*;
 
-    #[test]
-    fn run_echo() {
+    #[tokio::test]
+    async fn run_echo() {
         let args = if cfg!(windows) {
             vec!["cmd", "/C", "echo hello"]
         } else {
             vec!["echo", "hello"]
         };
-        let result = run_command(&args, None, None, None).unwrap();
+        let result = run_command(&args, None, None, None).await.unwrap();
         assert!(result.success());
         assert!(result.stdout.trim().contains("hello"));
     }
 
-    #[test]
-    fn run_nonexistent_command() {
-        let result = run_command(&["nonexistent_command_xyz"], None, None, None);
+    #[tokio::test]
+    async fn run_nonexistent_command() {
+        let result = run_command(&["nonexistent_command_xyz"], None, None, None).await;
+        assert!(result.is_err());
+    }
+
+    #[tokio::test]
+    async fn run_empty_args() {
+        let result = run_command(&[], None, None, None).await;
         assert!(result.is_err());
     }
 
     #[test]
-    fn run_empty_args() {
-        let result = run_command(&[], None, None, None);
-        assert!(result.is_err());
+    fn run_command_blocking_works_from_sync_context() {
+        let args = if cfg!(windows) {
+            vec!["cmd", "/C", "echo blocking"]
+        } else {
+            vec!["echo", "blocking"]
+        };
+        let result = run_command_blocking(&args, None, None, None).unwrap();
+        assert!(result.success());
+        assert!(result.stdout.trim().contains("blocking"));
     }
 
     #[test]
@@ -489,16 +640,36 @@ mod tests {
         assert!(!output.success());
     }
 
-    #[test]
-    fn run_captures_stderr() {
+    #[tokio::test]
+    async fn run_captures_stderr() {
         // Verify that stderr is captured independently from stdout.
         let args = if cfg!(windows) {
             vec!["cmd", "/C", "echo err 1>&2"]
         } else {
             vec!["sh", "-c", "echo err 1>&2"]
         };
-        let result = run_command(&args, None, None, None).unwrap();
+        let result = run_command(&args, None, None, None).await.unwrap();
         assert!(result.success());
         assert!(result.stderr.contains("err"), "got: {:?}", result);
+    }
+
+    #[tokio::test]
+    async fn run_command_with_stdin_pipes_payload() {
+        // Round-trip: feed stdin → expect it back on stdout. `cat` on
+        // unix, `findstr` on windows (matches everything via /R ".*").
+        let args = if cfg!(windows) {
+            vec!["findstr", "/R", ".*"]
+        } else {
+            vec!["cat"]
+        };
+        let result = run_command_with_stdin(&args, b"hello world\n", None, None, None)
+            .await
+            .unwrap();
+        assert!(result.success(), "got: {:?}", result);
+        assert!(
+            result.stdout.contains("hello world"),
+            "stdout was {:?}",
+            result.stdout
+        );
     }
 }

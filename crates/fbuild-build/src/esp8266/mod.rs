@@ -1,4 +1,4 @@
-//! ESP8266 platform build support (NodeMCU, Wemos D1, etc.)
+﻿//! ESP8266 platform build support (NodeMCU, Wemos D1, etc.)
 
 pub mod esp8266_compiler;
 pub mod esp8266_linker;
@@ -12,15 +12,16 @@ pub use orchestrator::Esp8266Orchestrator;
 /// ESP8266 platform support.
 pub struct Esp8266PlatformSupport;
 
+#[async_trait::async_trait]
 impl crate::PlatformSupport for Esp8266PlatformSupport {
     fn create_orchestrator(&self) -> Box<dyn crate::BuildOrchestrator> {
         orchestrator::create()
     }
 
-    fn install_deps(&self, project_dir: &std::path::Path) -> fbuild_core::Result<()> {
+    async fn install_deps(&self, project_dir: &std::path::Path) -> fbuild_core::Result<()> {
         use fbuild_packages::Package;
         let tc = fbuild_packages::toolchain::Esp8266Toolchain::new(project_dir);
-        Package::ensure_installed(&tc)?;
+        Package::ensure_installed(&tc).await?;
         tracing::info!("ESP8266 toolchain installed");
         Ok(())
     }

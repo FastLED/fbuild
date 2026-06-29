@@ -45,8 +45,8 @@ impl BuildContext {
     ///
     /// Takes `&BuildParams` so that new fields (e.g. `src_dir`) flow through
     /// automatically — orchestrators just pass `params` without listing every field.
-    pub fn new(params: &BuildParams) -> Result<Self> {
-        Self::new_with_perf(params, None)
+    pub async fn new(params: &BuildParams) -> Result<Self> {
+        Self::new_with_perf(params, None).await
     }
 
     /// Variant that records phase timings into an optional `PerfTimer`.
@@ -54,7 +54,7 @@ impl BuildContext {
     /// Orchestrators that want per-phase visibility (see [`crate::perf_log`])
     /// pass in a shared timer. Callers that don't care get zero overhead by
     /// passing `None`.
-    pub fn new_with_perf(
+    pub async fn new_with_perf(
         params: &BuildParams,
         mut perf: Option<&mut crate::perf_log::PerfTimer>,
     ) -> Result<Self> {
@@ -70,7 +70,8 @@ impl BuildContext {
         let config =
             fbuild_config::PlatformIOConfig::from_path_with_overrides(&ini_path, pio_overrides)?;
         let overlay =
-            crate::script_runtime::resolve_extra_script_overlay(project_dir, env_name, &config)?;
+            crate::script_runtime::resolve_extra_script_overlay(project_dir, env_name, &config)
+                .await?;
         if let Some(p) = perf.as_mut() {
             p.record("config-parse", t0.elapsed());
         }

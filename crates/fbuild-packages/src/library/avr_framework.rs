@@ -142,14 +142,15 @@ impl AvrFramework {
     }
 }
 
+#[async_trait::async_trait]
 impl crate::Package for AvrFramework {
-    fn ensure_installed(&self) -> fbuild_core::Result<PathBuf> {
+    async fn ensure_installed(&self) -> fbuild_core::Result<PathBuf> {
         if self.is_installed() {
             let root = self.resolved_dir();
             // Still ensure API is present (may have been cached without it)
             if self.needs_arduino_api {
                 let core_dir = self.get_core_dir(&self.core_name);
-                super::arduino_api::ensure_arduino_api(&core_dir)?;
+                super::arduino_api::ensure_arduino_api(&core_dir).await?;
             }
             return Ok(root);
         }
@@ -172,18 +173,7 @@ impl crate::Package for AvrFramework {
             Ok(())
         };
 
-        let rt = tokio::runtime::Handle::try_current().ok();
-        let install_path = if let Some(handle) = rt {
-            handle.block_on(self.base.staged_install(validate_fn))?
-        } else {
-            let rt = tokio::runtime::Runtime::new().map_err(|e| {
-                fbuild_core::FbuildError::PackageError(format!(
-                    "failed to create tokio runtime: {}",
-                    e
-                ))
-            })?;
-            rt.block_on(self.base.staged_install(validate_fn))?
-        };
+        let install_path = self.base.staged_install(validate_fn).await?;
 
         let root = find_framework_root(&install_path);
 
@@ -191,7 +181,7 @@ impl crate::Package for AvrFramework {
         if self.needs_arduino_api {
             let core_dir_name = self.core_dir_override.as_deref().unwrap_or(&self.core_name);
             let core_dir = root.join("cores").join(core_dir_name);
-            super::arduino_api::ensure_arduino_api(&core_dir)?;
+            super::arduino_api::ensure_arduino_api(&core_dir).await?;
         }
 
         Ok(root)

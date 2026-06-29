@@ -10,14 +10,14 @@
 use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicUsize, Ordering};
-use std::sync::{Arc, Barrier, Mutex};
-use std::time::Duration;
+use std::sync::{Arc, Mutex};
 
 use fbuild_build::compile_many::{
     compile_many_with, stage2_jobs_per_worker, CompileManyRequest, SketchBuildInputs,
     SketchBuilder, SketchResult, Stage,
 };
 use fbuild_core::BuildProfile;
+use tokio::sync::Barrier;
 
 /// Test sketch root with a minimal `platformio.ini`. Used as a
 /// `project_dir` parameter — the mock builder does not read it, but
@@ -88,8 +88,9 @@ impl MockBuilder {
     }
 }
 
+#[async_trait::async_trait]
 impl SketchBuilder for MockBuilder {
-    fn build(&self, inputs: SketchBuildInputs) -> SketchResult {
+    async fn build(&self, inputs: SketchBuildInputs) -> SketchResult {
         // Synthesize the canonical per-sketch firmware path the same
         // way the real orchestrator does. We deliberately use the
         // same naming convention so the uniqueness assertion is
@@ -132,7 +133,7 @@ impl SketchBuilder for MockBuilder {
         // wired up: every worker blocks here until N peers arrive.
         if inputs.stage == Stage::Stage2Sketch {
             if let Some(ref b) = self.stage2_barrier {
-                b.wait();
+                b.wait().await;
                 self.stage2_wait_count.fetch_add(1, Ordering::Relaxed);
             }
         }
@@ -173,16 +174,17 @@ fn make_request(
 
 /// AC: stage 1 runs exactly once across N sketches, stage 2 produces
 /// N-1 firmware artifacts, and per-sketch output paths are unique.
-#[test]
-fn stage1_runs_exactly_once_and_stage2_handles_the_rest() {
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
+async fn stage1_runs_exactly_once_and_stage2_handles_the_rest() {
     let tmp = tempfile::tempdir().unwrap();
     let sketches: Vec<PathBuf> = (0..5)
         .map(|i| make_sketch(tmp.path(), &format!("sketch{i}"), "uno"))
         .collect();
 
     let mock = MockBuilder::new();
-    let result =
-        compile_many_with(make_request(sketches.clone(), 1, 4), &mock).expect("compile_many");
+    let result = compile_many_with(make_request(sketches.clone(), 1, 4), &mock)
+        .await
+        .expect("compile_many");
 
     assert!(result.all_success, "all mock builds should succeed");
     assert_eq!(result.results.len(), 5);
@@ -227,15 +229,17 @@ fn stage1_runs_exactly_once_and_stage2_handles_the_rest() {
 
 /// AC: stage-1 results are placed at index 0; stage-2 results follow
 /// input order regardless of completion order.
-#[test]
-fn results_are_returned_in_input_order() {
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
+async fn results_are_returned_in_input_order() {
     let tmp = tempfile::tempdir().unwrap();
     let sketches: Vec<PathBuf> = (0..6)
         .map(|i| make_sketch(tmp.path(), &format!("ordered{i}"), "uno"))
         .collect();
 
     let mock = MockBuilder::new();
-    let result = compile_many_with(make_request(sketches.clone(), 1, 3), &mock).expect("ok");
+    let result = compile_many_with(make_request(sketches.clone(), 1, 3), &mock)
+        .await
+        .expect("ok");
 
     for (i, r) in result.results.iter().enumerate() {
         assert_eq!(r.sketch, sketches[i], "result {i} should match input order");
@@ -250,8 +254,8 @@ fn results_are_returned_in_input_order() {
 /// concurrently — proven via a Barrier that would deadlock under serial
 /// execution. The barrier counts each stage-2 worker as it crosses; a
 /// successful test means N workers ran in parallel.
-#[test]
-fn stage2_workers_run_concurrently() {
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
+async fn stage2_workers_run_concurrently() {
     let tmp = tempfile::tempdir().unwrap();
     let n_stage2 = 4;
     let total = n_stage2 + 1;
@@ -262,35 +266,27 @@ fn stage2_workers_run_concurrently() {
     // Barrier sized to exactly the stage-2 worker count. If
     // `compile_many` ran them serially, `wait()` would block forever
     // (only one worker at a time would arrive), and the test would
-    // hang. We add a wall-clock timeout below so a regression is
-    // a fast failure rather than a CI hang.
+    // hang. We wrap in `tokio::time::timeout` so a regression is a
+    // fast failure rather than a CI hang.
     let barrier = Arc::new(Barrier::new(n_stage2));
     let mock = Arc::new(MockBuilder::with_barrier(Arc::clone(&barrier)));
     let req = make_request(sketches, 1, n_stage2);
 
-    let mock_for_thread = Arc::clone(&mock);
-    let handle = std::thread::spawn(move || compile_many_with(req, mock_for_thread.as_ref()));
+    let mock_for_task = Arc::clone(&mock);
+    let result = tokio::time::timeout(
+        std::time::Duration::from_secs(10),
+        compile_many_with(req, mock_for_task.as_ref()),
+    )
+    .await
+    .unwrap_or_else(|_| {
+        panic!(
+            "stage-2 deadlock: barrier expected {} concurrent workers but only {} arrived",
+            n_stage2,
+            mock.stage2_wait_count.load(Ordering::Relaxed)
+        )
+    })
+    .expect("compile_many");
 
-    // Generous deadline; on a healthy machine the test completes in
-    // milliseconds. The deadline only fires if the barrier deadlocks
-    // because workers ran serially.
-    let start = std::time::Instant::now();
-    let deadline = Duration::from_secs(10);
-    loop {
-        if handle.is_finished() {
-            break;
-        }
-        if start.elapsed() > deadline {
-            panic!(
-                "stage-2 deadlock: barrier expected {} concurrent workers but only {} arrived",
-                n_stage2,
-                mock.stage2_wait_count.load(Ordering::Relaxed)
-            );
-        }
-        std::thread::sleep(Duration::from_millis(20));
-    }
-
-    let result = handle.join().expect("worker thread").expect("compile_many");
     assert!(result.all_success);
     assert_eq!(result.stage2_count, n_stage2);
     assert_eq!(
@@ -303,11 +299,12 @@ fn stage2_workers_run_concurrently() {
 /// AC: stage-1 failure short-circuits stage 2 — no point fanning out
 /// when the framework build is broken, every stage-2 worker would just
 /// repeat the same error.
-#[test]
-fn stage1_failure_skips_stage2() {
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
+async fn stage1_failure_skips_stage2() {
     struct FailingStage1;
+    #[async_trait::async_trait]
     impl SketchBuilder for FailingStage1 {
-        fn build(&self, inputs: SketchBuildInputs) -> SketchResult {
+        async fn build(&self, inputs: SketchBuildInputs) -> SketchResult {
             SketchResult {
                 sketch: inputs.sketch.clone(),
                 env_name: inputs.env_name,
@@ -329,7 +326,9 @@ fn stage1_failure_skips_stage2() {
     let sketches: Vec<PathBuf> = (0..3)
         .map(|i| make_sketch(tmp.path(), &format!("fail{i}"), "uno"))
         .collect();
-    let result = compile_many_with(make_request(sketches, 1, 2), &FailingStage1).expect("ok");
+    let result = compile_many_with(make_request(sketches, 1, 2), &FailingStage1)
+        .await
+        .expect("ok");
     assert!(!result.all_success);
     assert_eq!(result.stage1_count, 1);
     assert_eq!(
@@ -344,12 +343,14 @@ fn stage1_failure_skips_stage2() {
 }
 
 /// AC: a single sketch falls through stage 1 only — stage 2 is empty.
-#[test]
-fn single_sketch_runs_only_stage1() {
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
+async fn single_sketch_runs_only_stage1() {
     let tmp = tempfile::tempdir().unwrap();
     let sketch = make_sketch(tmp.path(), "only", "uno");
     let mock = MockBuilder::new();
-    let result = compile_many_with(make_request(vec![sketch], 2, 4), &mock).expect("ok");
+    let result = compile_many_with(make_request(vec![sketch], 2, 4), &mock)
+        .await
+        .expect("ok");
     assert!(result.all_success);
     assert_eq!(result.stage1_count, 1);
     assert_eq!(result.stage2_count, 0);
@@ -428,8 +429,8 @@ fn stage2_jobs_per_worker_splits_cores_across_workers() {
     );
 }
 
-#[test]
-fn stage2_results_report_worker_and_seed_diagnostics() {
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
+async fn stage2_results_report_worker_and_seed_diagnostics() {
     let tmp = tempfile::tempdir().unwrap();
     let sketches: Vec<PathBuf> = (0..4)
         .map(|i| make_sketch(tmp.path(), &format!("diag{i}"), "uno"))
@@ -438,7 +439,7 @@ fn stage2_results_report_worker_and_seed_diagnostics() {
     let mock = MockBuilder::new();
     let mut req = make_request(sketches, 1, 2);
     req.diag_stage2 = true;
-    let result = compile_many_with(req, &mock).expect("compile_many");
+    let result = compile_many_with(req, &mock).await.expect("compile_many");
 
     let stage2: Vec<_> = result
         .results

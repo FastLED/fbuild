@@ -3,6 +3,12 @@
 //! Handles writing `@file` response files for GCC/G++ on Windows where
 //! command-line length limits (32KB CreateProcess) and MSYS2 path translation
 //! issues require special handling.
+//!
+//! Async surface (#813): `write_response_file` is now an `async fn` —
+//! it's called once per compile/link, often interleaved with other I/O,
+//! so going through `tokio::fs` keeps the runtime free to schedule
+//! other work. `write_response_file_blocking` exists as the escape
+//! hatch for the (rare) sync call sites.
 
 use crate::Result;
 use std::path::{Path, PathBuf};
@@ -117,32 +123,21 @@ pub fn replace_path_backslashes(s: &str) -> String {
     result
 }
 
-/// Write flags to a temporary GCC response file (`@file` syntax).
-///
-/// Returns the path to the response file.
-///
-/// Flags containing either `\"` or bare `"` in define values are wrapped in
-/// single quotes with `\"` converted to plain `"`. GCC's response file
-/// parser preserves literal `"` inside single-quoted arguments.
-pub fn write_response_file(flags: &[String], temp_dir: &Path, prefix: &str) -> Result<PathBuf> {
-    std::fs::create_dir_all(temp_dir).map_err(|e| {
-        crate::FbuildError::BuildFailed(format!(
-            "failed to create temp dir {}: {}",
-            temp_dir.display(),
-            e
-        ))
-    })?;
-    let _ = cleanup_stale_response_files(temp_dir, RESPONSE_FILE_STALE_AFTER, SystemTime::now());
-
-    // GCC treats backslashes in response files as escape characters (\n = newline,
-    // \f = formfeed, etc.). Convert to forward slashes for Windows path compatibility,
-    // but preserve \" sequences which are intentional escape sequences (e.g., in
+/// Build the deterministic on-disk path + content for a response file
+/// without performing any I/O. Shared by both the async and blocking
+/// public surfaces.
+fn render_response_file(flags: &[String], temp_dir: &Path, prefix: &str) -> (PathBuf, String) {
+    // GCC treats backslashes in response files as escape characters
+    // (\n = newline, \f = formfeed, etc.). Convert to forward slashes
+    // for Windows path compatibility, but preserve \" sequences which
+    // are intentional escape sequences (e.g.,
     // -DMBEDTLS_CONFIG_FILE=\"mbedtls/esp_config.h\").
     //
-    // Flags containing quoted define values need single-quote wrapping. Some
-    // define sources use escaped quotes (-DFOO=\"bar\"), while data-driven MCU
-    // configs can contain bare quotes (-DFOO="bar"). Normalize both forms to
-    // the response-file spelling GCC preserves as a string literal.
+    // Flags containing quoted define values need single-quote wrapping.
+    // Some define sources use escaped quotes (-DFOO=\"bar\"), while
+    // data-driven MCU configs can contain bare quotes (-DFOO="bar").
+    // Normalize both forms to the response-file spelling GCC preserves
+    // as a string literal.
     let content = flags
         .iter()
         .map(|f| {
@@ -173,6 +168,64 @@ pub fn write_response_file(flags: &[String], temp_dir: &Path, prefix: &str) -> R
         )
     };
     let path = temp_dir.join(format!("fbuild_{}_{}.rsp", prefix, hash));
+    (path, content)
+}
+
+/// Write flags to a temporary GCC response file (`@file` syntax) using
+/// async filesystem I/O.
+///
+/// Returns the path to the response file.
+///
+/// Flags containing either `\"` or bare `"` in define values are wrapped in
+/// single quotes with `\"` converted to plain `"`. GCC's response file
+/// parser preserves literal `"` inside single-quoted arguments.
+pub async fn write_response_file(
+    flags: &[String],
+    temp_dir: &Path,
+    prefix: &str,
+) -> Result<PathBuf> {
+    tokio::fs::create_dir_all(temp_dir).await.map_err(|e| {
+        crate::FbuildError::BuildFailed(format!(
+            "failed to create temp dir {}: {}",
+            temp_dir.display(),
+            e
+        ))
+    })?;
+    let _ = cleanup_stale_response_files(temp_dir, RESPONSE_FILE_STALE_AFTER, SystemTime::now());
+
+    let (path, content) = render_response_file(flags, temp_dir, prefix);
+
+    if tokio::fs::try_exists(&path).await.unwrap_or(false) {
+        return Ok(path);
+    }
+
+    tokio::fs::write(&path, content).await.map_err(|e| {
+        crate::FbuildError::BuildFailed(format!(
+            "failed to write response file {}: {}",
+            path.display(),
+            e
+        ))
+    })?;
+    Ok(path)
+}
+
+/// Sync escape hatch for [`write_response_file`]. Useful in tests and
+/// sync diagnostic subcommands.
+pub fn write_response_file_blocking(
+    flags: &[String],
+    temp_dir: &Path,
+    prefix: &str,
+) -> Result<PathBuf> {
+    std::fs::create_dir_all(temp_dir).map_err(|e| {
+        crate::FbuildError::BuildFailed(format!(
+            "failed to create temp dir {}: {}",
+            temp_dir.display(),
+            e
+        ))
+    })?;
+    let _ = cleanup_stale_response_files(temp_dir, RESPONSE_FILE_STALE_AFTER, SystemTime::now());
+
+    let (path, content) = render_response_file(flags, temp_dir, prefix);
 
     if path.exists() {
         return Ok(path);
@@ -216,50 +269,74 @@ mod tests {
         );
     }
 
-    #[test]
-    fn test_write_response_file_reuses_same_path_for_same_content() {
+    #[tokio::test]
+    async fn test_write_response_file_reuses_same_path_for_same_content() {
         let tmp = tempfile::TempDir::new().unwrap();
         let flags = vec!["-O2".to_string(), "-c".to_string(), "src.cpp".to_string()];
 
-        let first = write_response_file(&flags, tmp.path(), "stable").unwrap();
-        let second = write_response_file(&flags, tmp.path(), "stable").unwrap();
+        let first = write_response_file(&flags, tmp.path(), "stable")
+            .await
+            .unwrap();
+        let second = write_response_file(&flags, tmp.path(), "stable")
+            .await
+            .unwrap();
 
         assert_eq!(first, second);
     }
 
-    #[test]
-    fn test_write_response_file_changes_path_when_content_changes() {
+    #[tokio::test]
+    async fn test_write_response_file_changes_path_when_content_changes() {
         let tmp = tempfile::TempDir::new().unwrap();
-        let first = write_response_file(&["-O2".to_string()], tmp.path(), "stable").unwrap();
-        let second = write_response_file(&["-O3".to_string()], tmp.path(), "stable").unwrap();
+        let first = write_response_file(&["-O2".to_string()], tmp.path(), "stable")
+            .await
+            .unwrap();
+        let second = write_response_file(&["-O3".to_string()], tmp.path(), "stable")
+            .await
+            .unwrap();
 
         assert_ne!(first, second);
     }
 
-    #[test]
-    fn test_write_response_file_wraps_escaped_quote_defines() {
+    #[tokio::test]
+    async fn test_write_response_file_wraps_escaped_quote_defines() {
         let tmp = tempfile::TempDir::new().unwrap();
         let rsp = write_response_file(
             &[r#"-DARDUINO_BOARD=\"ESP32_DEV\""#.to_string()],
             tmp.path(),
             "define",
         )
+        .await
         .unwrap();
-        let content = std::fs::read_to_string(rsp).unwrap();
+        let content = tokio::fs::read_to_string(rsp).await.unwrap();
         assert_eq!(content, r#"'-DARDUINO_BOARD="ESP32_DEV"'"#);
     }
 
-    #[test]
-    fn test_write_response_file_wraps_bare_quote_defines() {
+    #[tokio::test]
+    async fn test_write_response_file_wraps_bare_quote_defines() {
         let tmp = tempfile::TempDir::new().unwrap();
         let rsp = write_response_file(
             &[r#"-DARDUINO_BSP_VERSION="1.6.1""#.to_string()],
             tmp.path(),
             "define",
         )
+        .await
         .unwrap();
-        let content = std::fs::read_to_string(rsp).unwrap();
+        let content = tokio::fs::read_to_string(rsp).await.unwrap();
         assert_eq!(content, r#"'-DARDUINO_BSP_VERSION="1.6.1"'"#);
+    }
+
+    #[test]
+    fn test_write_response_file_blocking_matches_async_path() {
+        // The sync escape hatch must produce byte-identical output to
+        // the async path so callers can mix them without surprises.
+        let tmp = tempfile::TempDir::new().unwrap();
+        let flags = vec!["-O2".to_string(), "-DFOO=bar".to_string()];
+        let blocking = write_response_file_blocking(&flags, tmp.path(), "stable").unwrap();
+        let content = std::fs::read_to_string(&blocking).unwrap();
+        let (expected_path, expected_content) =
+            render_response_file(&flags, tmp.path(), "stable");
+        assert_eq!(blocking, expected_path);
+        assert_eq!(content, expected_content);
     }
 
     #[test]

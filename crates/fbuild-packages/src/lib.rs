@@ -10,6 +10,7 @@ pub mod cache;
 pub mod disk_cache;
 pub mod downloader;
 pub mod extractor;
+pub mod http;
 pub mod library;
 pub mod lnk;
 pub mod toolchain;
@@ -21,10 +22,10 @@ pub use disk_cache::DiskCache;
 pub use lnk::{ExtractMode, LnkFile};
 
 use std::collections::{HashMap, HashSet};
-use std::future::Future;
 use std::path::{Path, PathBuf};
 use std::sync::{Mutex, OnceLock};
 
+use async_trait::async_trait;
 use fbuild_core::install_status::{self, InstallPhase, InstallRole};
 
 static PACKAGE_TOUCHES: OnceLock<Mutex<HashSet<String>>> = OnceLock::new();
@@ -53,24 +54,15 @@ fn dir_size(path: &Path) -> u64 {
         .sum()
 }
 
-pub(crate) fn block_on_package_future<F, T>(future: F) -> fbuild_core::Result<T>
-where
-    F: Future<Output = fbuild_core::Result<T>>,
-{
-    if let Ok(handle) = tokio::runtime::Handle::try_current() {
-        tokio::task::block_in_place(|| handle.block_on(future))
-    } else {
-        let rt = tokio::runtime::Runtime::new().map_err(|e| {
-            fbuild_core::FbuildError::PackageError(format!("failed to create tokio runtime: {}", e))
-        })?;
-        rt.block_on(future)
-    }
-}
-
 /// Base trait for all installable packages.
+///
+/// FastLED/fbuild#813: `ensure_installed` is async so it composes with the
+/// daemon's tokio reactor and tokio-console sees every package install as
+/// part of the task graph. Use `#[async_trait]` on impls.
+#[async_trait]
 pub trait Package: Send + Sync {
     /// Ensure the package is installed, downloading if necessary.
-    fn ensure_installed(&self) -> fbuild_core::Result<PathBuf>;
+    async fn ensure_installed(&self) -> fbuild_core::Result<PathBuf>;
 
     /// Check if the package is already installed.
     fn is_installed(&self) -> bool;
@@ -341,7 +333,7 @@ impl PackageBase {
     /// 5. Rename staging to final path (atomic commit)
     pub async fn staged_install<F>(&self, validate: F) -> fbuild_core::Result<PathBuf>
     where
-        F: FnOnce(&Path) -> fbuild_core::Result<()>,
+        F: FnOnce(&Path) -> fbuild_core::Result<()> + Send,
     {
         let install_path = self.install_path();
 
@@ -531,8 +523,9 @@ mod toolchain_gcc_ar_tests {
         ar_path: PathBuf,
     }
 
+    #[async_trait]
     impl Package for TestToolchain {
-        fn ensure_installed(&self) -> fbuild_core::Result<PathBuf> {
+        async fn ensure_installed(&self) -> fbuild_core::Result<PathBuf> {
             Ok(PathBuf::new())
         }
         fn is_installed(&self) -> bool {

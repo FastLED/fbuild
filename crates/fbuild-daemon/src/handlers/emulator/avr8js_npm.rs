@@ -5,13 +5,13 @@
 
 use std::path::{Path, PathBuf};
 
-pub(crate) fn find_node() -> fbuild_core::Result<PathBuf> {
+pub(crate) async fn find_node() -> fbuild_core::Result<PathBuf> {
     let node = if cfg!(windows) { "node.exe" } else { "node" };
     // Route through fbuild-core's `run_command` so the probe spawn is
     // captured by the daemon's containment group (issue #32). The probe
     // is short-lived (`node --version`) but a missing binary should
     // still bubble up the same way.
-    match fbuild_core::subprocess::run_command(&[node, "--version"], None, None, None) {
+    match fbuild_core::subprocess::run_command(&[node, "--version"], None, None, None).await {
         Ok(output) if output.success() => Ok(PathBuf::from(node)),
         _ => Err(fbuild_core::FbuildError::DeployFailed(
             "Node.js is required for headless avr8js emulation but 'node' was not found on PATH. \
@@ -109,16 +109,16 @@ pub(crate) fn prepare_avr8js_cache_for_install(
     Avr8jsCachePrep::NothingToClean
 }
 
-pub(crate) fn ensure_avr8js_npm() -> fbuild_core::Result<PathBuf> {
+pub(crate) async fn ensure_avr8js_npm() -> fbuild_core::Result<PathBuf> {
     let cache_dir = fbuild_paths::get_cache_root().join("avr8js-node");
-    ensure_avr8js_npm_in(&cache_dir, refresh_emu_cache_requested())?;
+    ensure_avr8js_npm_in(&cache_dir, refresh_emu_cache_requested()).await?;
     Ok(cache_dir)
 }
 
 /// Populate `cache_dir` with a fresh `node_modules/avr8js` install, wiping
 /// a corrupt or partial install as needed. Split out from `ensure_avr8js_npm`
 /// so unit tests can inject a temporary cache dir without touching env vars.
-pub(crate) fn ensure_avr8js_npm_in(
+pub(crate) async fn ensure_avr8js_npm_in(
     cache_dir: &Path,
     force_refresh: bool,
 ) -> fbuild_core::Result<()> {
@@ -153,6 +153,7 @@ pub(crate) fn ensure_avr8js_npm_in(
         None,
         None,
     )
+    .await
     .map_err(|e| {
         fbuild_core::FbuildError::DeployFailed(format!(
             "failed to launch 'npm' (for `npm install avr8js@0.21.0 --prefix {}`): {}. \

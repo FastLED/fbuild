@@ -113,8 +113,9 @@ impl ArmCompiler {
     }
 }
 
+#[async_trait::async_trait]
 impl Compiler for ArmCompiler {
-    fn compile_one(
+    async fn compile_one(
         &self,
         compiler_path: &Path,
         source: &Path,
@@ -134,6 +135,7 @@ impl Compiler for ArmCompiler {
             self.compiler_cache.as_deref(),
             &[],
         )
+        .await
     }
 
     fn gcc_path(&self) -> &Path {

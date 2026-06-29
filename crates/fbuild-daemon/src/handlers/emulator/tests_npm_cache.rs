@@ -12,12 +12,15 @@ use super::avr8js_npm::{
 
 /// Serialises tests that mutate process-wide env vars (PATH). Without
 /// this, parallel cargo-test workers would clobber each other's PATH.
-fn env_lock() -> std::sync::MutexGuard<'static, ()> {
-    use std::sync::{Mutex, OnceLock};
+///
+/// Uses `tokio::sync::Mutex` instead of `std::sync::Mutex` so the guard
+/// can be safely held across the `.await` points inside the async tests
+/// (clippy `await_holding_lock`).
+async fn env_lock() -> tokio::sync::MutexGuard<'static, ()> {
+    use std::sync::OnceLock;
+    use tokio::sync::Mutex;
     static LOCK: OnceLock<Mutex<()>> = OnceLock::new();
-    LOCK.get_or_init(|| Mutex::new(()))
-        .lock()
-        .unwrap_or_else(|p| p.into_inner())
+    LOCK.get_or_init(|| Mutex::new(())).lock().await
 }
 
 #[test]
@@ -102,9 +105,9 @@ fn prepare_avr8js_cache_nothing_to_clean_on_fresh_path() {
     );
 }
 
-#[test]
-fn refresh_emu_cache_requested_recognises_truthy_values() {
-    let _guard = env_lock();
+#[tokio::test]
+async fn refresh_emu_cache_requested_recognises_truthy_values() {
+    let _guard = env_lock().await;
     for (val, expected) in [
         ("1", true),
         ("true", true),
@@ -132,9 +135,9 @@ fn refresh_emu_cache_requested_recognises_truthy_values() {
 /// When npm isn't on PATH, `ensure_avr8js_npm_in` must return an
 /// `FbuildError::DeployFailed` that names both `npm` and the cache dir.
 /// This is the fix for issue #86's silent `ERR_MODULE_NOT_FOUND`.
-#[test]
-fn ensure_avr8js_npm_in_reports_clear_error_without_npm() {
-    let _guard = env_lock();
+#[tokio::test]
+async fn ensure_avr8js_npm_in_reports_clear_error_without_npm() {
+    let _guard = env_lock().await;
     let saved_path = std::env::var_os("PATH");
     // PATHEXT matters on Windows for command resolution of .cmd files.
     let saved_pathext = std::env::var_os("PATHEXT");
@@ -148,7 +151,7 @@ fn ensure_avr8js_npm_in_reports_clear_error_without_npm() {
 
     let tmp = tempfile::TempDir::new().unwrap();
     let cache = tmp.path().join("avr8js-node");
-    let result = ensure_avr8js_npm_in(&cache, false);
+    let result = ensure_avr8js_npm_in(&cache, false).await;
 
     // Restore BEFORE asserting so a panic doesn't leak PATH="" to sibling tests.
     if let Some(p) = saved_path {
@@ -185,9 +188,9 @@ fn ensure_avr8js_npm_in_reports_clear_error_without_npm() {
 /// When the cache dir contains a corrupt partial install, the reinstall
 /// path must fire (detected here by asserting the partial tree is wiped
 /// even when the downstream npm call subsequently fails).
-#[test]
-fn ensure_avr8js_npm_in_wipes_corrupt_before_reinstall() {
-    let _guard = env_lock();
+#[tokio::test]
+async fn ensure_avr8js_npm_in_wipes_corrupt_before_reinstall() {
+    let _guard = env_lock().await;
     let saved_path = std::env::var_os("PATH");
 
     // Force the npm spawn to fail so we isolate the wipe behaviour.
@@ -202,7 +205,7 @@ fn ensure_avr8js_npm_in_wipes_corrupt_before_reinstall() {
     std::fs::write(module_dir.join("garbage"), b"partial").unwrap();
     assert!(!avr8js_cache_is_intact(&cache));
 
-    let result = ensure_avr8js_npm_in(&cache, false);
+    let result = ensure_avr8js_npm_in(&cache, false).await;
 
     if let Some(p) = saved_path {
         std::env::set_var("PATH", p);

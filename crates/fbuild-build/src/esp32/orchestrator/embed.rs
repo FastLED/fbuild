@@ -13,7 +13,7 @@ use fbuild_core::Result;
 /// - `embed_files`: embedded as-is (binary)
 /// - `embed_txtfiles`: a null-terminated copy is created first, then embedded
 #[allow(clippy::too_many_arguments)]
-pub(super) fn process_embed_files(
+pub(super) async fn process_embed_files(
     embed_files: &[String],
     embed_txtfiles: &[String],
     project_dir: &Path,
@@ -69,7 +69,7 @@ pub(super) fn process_embed_files(
         }
 
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, Some(project_dir), None, None)?;
+        let result = run_command(&args_ref, Some(project_dir), None, None).await?;
 
         if !result.success() {
             return Err(fbuild_core::FbuildError::BuildFailed(format!(
@@ -129,7 +129,7 @@ pub(super) fn process_embed_files(
 
         // Run from embed_dir so objcopy generates symbols from the relative path
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, Some(embed_dir), None, None)?;
+        let result = run_command(&args_ref, Some(embed_dir), None, None).await?;
 
         if !result.success() {
             return Err(fbuild_core::FbuildError::BuildFailed(format!(

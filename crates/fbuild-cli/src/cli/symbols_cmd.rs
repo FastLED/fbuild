@@ -27,7 +27,7 @@ use fbuild_core::{FbuildError, Result};
 use super::graph_cmd::parse_graph_config;
 
 #[allow(clippy::too_many_arguments)]
-pub fn run_symbols(
+pub async fn run_symbols(
     input: String,
     map: Option<String>,
     nm: Option<String>,
@@ -86,7 +86,7 @@ pub fn run_symbols(
         objdump_path: tool_paths.objdump.as_deref(),
     };
 
-    let report = analyze_elf(cfg)?;
+    let report = analyze_elf(cfg).await?;
 
     let mut wrote_anything = false;
 

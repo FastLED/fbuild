@@ -1,4 +1,4 @@
-//! ESP8266 build orchestrator — wires together config, packages, compiler, linker.
+﻿//! ESP8266 build orchestrator â€” wires together config, packages, compiler, linker.
 //!
 //! Build phases:
 //! 1. Parse platformio.ini
@@ -28,16 +28,17 @@ use super::mcu_config::get_esp8266_config;
 /// ESP8266 platform build orchestrator.
 pub struct Esp8266Orchestrator;
 
+#[async_trait::async_trait]
 impl BuildOrchestrator for Esp8266Orchestrator {
     fn platform(&self) -> Platform {
         Platform::Espressif8266
     }
 
-    fn build(&self, params: &BuildParams) -> Result<BuildResult> {
+    async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
-        let mut ctx = pipeline::BuildContext::new(params)?;
+        let mut ctx = pipeline::BuildContext::new(params).await?;
 
         // Compute eh_frame strip policy once per build (FastLED/fbuild#244).
         // No sdkconfig on ESP8266.
@@ -46,7 +47,7 @@ impl BuildOrchestrator for Esp8266Orchestrator {
 
         // 3. Ensure toolchain
         let toolchain = fbuild_packages::toolchain::Esp8266Toolchain::new(&params.project_dir);
-        let _toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
+        let _toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("ESP8266 toolchain ready");
 
         use fbuild_packages::Toolchain as _;
@@ -54,11 +55,12 @@ impl BuildOrchestrator for Esp8266Orchestrator {
             &toolchain.get_gcc_path(),
             "xtensa-lx106-elf-gcc",
             &mut ctx.build_log,
-        );
+        )
+        .await;
 
         // 4. Ensure framework
         let framework = fbuild_packages::library::Esp8266Framework::new(&params.project_dir);
-        let _framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
+        let _framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("ESP8266 framework ready");
         let board_id = ctx
             .config
@@ -110,7 +112,7 @@ impl BuildOrchestrator for Esp8266Orchestrator {
         // SDK include paths
         include_dirs.extend(framework.get_sdk_include_dirs());
         // Toolchain sysroot includes (xtensa/coreasm.h, etc.)
-        // Required by .S assembly files — see platform.txt compiler.S.flags.
+        // Required by .S assembly files â€” see platform.txt compiler.S.flags.
         include_dirs.extend(toolchain.get_include_dirs());
         // SDK libc headers (platform.txt compiler.libc.path)
         include_dirs.extend(framework.get_libc_include_dirs());
@@ -218,6 +220,7 @@ impl BuildOrchestrator for Esp8266Orchestrator {
             "ESP8266",
             start,
         )
+        .await
     }
 }
 

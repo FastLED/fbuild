@@ -32,7 +32,13 @@ prost = { workspace = true }
 running-process = { workspace = true }
 # Async helpers for the tokio integration in `containment::tokio_spawn` —
 # we need the `process` feature so `tokio::process::Command` is in scope.
+# Also drives the async `subprocess::run_command*` surface introduced
+# in the full-async runtime conversion (#813).
 tokio = { workspace = true }
+# Used by future async trait surfaces folded under this crate. Added in
+# the #813 Phase A foundation so downstream crates can `use async_trait`
+# without each one redeclaring the workspace dep.
+async-trait = { workspace = true }
 
 # `libc::setpgid` / `libc::prctl` for the Unix `pre_exec` hook used by
 # `containment::tokio_spawn::configure`. See FastLED/fbuild#32.

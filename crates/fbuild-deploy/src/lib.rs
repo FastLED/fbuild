@@ -92,8 +92,17 @@ pub struct DeploymentResult {
 }
 
 /// Trait for platform-specific deployers.
+///
+/// Async per fbuild#813 / #819. The orchestrator calls into platform-specific
+/// `deploy` and `post_deploy_recovery` from inside the daemon's tokio runtime;
+/// implementations may `.await` subprocess I/O directly. CPU-bound or
+/// inherently-sync work (e.g. the native espflash `Flasher` from the
+/// `espflash` crate, or the `serialport` crate's blocking open path) must
+/// still be wrapped in `tokio::task::spawn_blocking` inside the
+/// implementation.
+#[async_trait::async_trait]
 pub trait Deployer: Send + Sync {
-    fn deploy(
+    async fn deploy(
         &self,
         project_dir: &Path,
         env_name: &str,
@@ -118,17 +127,26 @@ pub trait Deployer: Send + Sync {
     /// Phase 1 follow-up.
     ///
     // TODO(#605 Phase 1): LPC + CMSIS-DAP wedge-recovery override.
-    fn post_deploy_recovery(&self, port: &str) -> Result<()> {
+    async fn post_deploy_recovery(&self, port: &str) -> Result<()> {
         let deadline = std::time::Instant::now() + std::time::Duration::from_secs(3);
+        let port = port.to_string();
         while std::time::Instant::now() < deadline {
-            if serialport::new(port, 115200)
-                .timeout(std::time::Duration::from_millis(50))
-                .open()
-                .is_ok()
-            {
+            // serialport::new(...).open() is blocking; offload it. Each
+            // probe is short (50ms timeout) so spawn_blocking churn is
+            // bounded to ~30 calls over the 3s budget.
+            let port_for_probe = port.clone();
+            let opened = tokio::task::spawn_blocking(move || {
+                serialport::new(&port_for_probe, 115200)
+                    .timeout(std::time::Duration::from_millis(50))
+                    .open()
+                    .is_ok()
+            })
+            .await
+            .unwrap_or(false);
+            if opened {
                 return Ok(());
             }
-            std::thread::sleep(std::time::Duration::from_millis(100));
+            tokio::time::sleep(std::time::Duration::from_millis(100)).await;
         }
         tracing::warn!("USB re-enumeration: port {} not available after 3s", port);
         Ok(())
@@ -201,8 +219,9 @@ mod post_deploy_recovery_tests {
         port_seen: Arc<std::sync::Mutex<Option<String>>>,
     }
 
+    #[async_trait::async_trait]
     impl Deployer for ObservableDeployer {
-        fn deploy(
+        async fn deploy(
             &self,
             _project_dir: &Path,
             _env_name: &str,
@@ -212,7 +231,7 @@ mod post_deploy_recovery_tests {
             unreachable!("deploy not exercised by post_deploy_recovery tests")
         }
 
-        fn post_deploy_recovery(&self, port: &str) -> Result<()> {
+        async fn post_deploy_recovery(&self, port: &str) -> Result<()> {
             self.called.store(true, Ordering::SeqCst);
             *self.port_seen.lock().unwrap() = Some(port.to_string());
             Ok(())
@@ -226,8 +245,9 @@ mod post_deploy_recovery_tests {
         deploy_calls: Arc<AtomicUsize>,
     }
 
+    #[async_trait::async_trait]
     impl Deployer for DefaultRecoveryDeployer {
-        fn deploy(
+        async fn deploy(
             &self,
             _project_dir: &Path,
             _env_name: &str,
@@ -246,8 +266,8 @@ mod post_deploy_recovery_tests {
         }
     }
 
-    #[test]
-    fn override_is_dispatched_through_box_dyn() {
+    #[tokio::test]
+    async fn override_is_dispatched_through_box_dyn() {
         let called = Arc::new(AtomicBool::new(false));
         let port_seen = Arc::new(std::sync::Mutex::new(None));
         let dep: Box<dyn Deployer> = Box::new(ObservableDeployer {
@@ -256,6 +276,7 @@ mod post_deploy_recovery_tests {
         });
 
         dep.post_deploy_recovery("COM-fake")
+            .await
             .expect("override returns Ok");
 
         assert!(called.load(Ordering::SeqCst), "override must run");
@@ -266,8 +287,8 @@ mod post_deploy_recovery_tests {
         );
     }
 
-    #[test]
-    fn default_impl_returns_ok_for_nonexistent_port_within_budget() {
+    #[tokio::test]
+    async fn default_impl_returns_ok_for_nonexistent_port_within_budget() {
         // The default impl polls the port for up to 3 seconds and then
         // returns Ok regardless. Using a port name that cannot possibly
         // exist exercises the slow path. Budget is 4s — the impl itself
@@ -276,7 +297,7 @@ mod post_deploy_recovery_tests {
             deploy_calls: Arc::new(AtomicUsize::new(0)),
         };
         let start = std::time::Instant::now();
-        let result = dep.post_deploy_recovery("a-port-that-does-not-exist-zzz");
+        let result = dep.post_deploy_recovery("a-port-that-does-not-exist-zzz").await;
         let elapsed = start.elapsed();
         assert!(result.is_ok(), "default impl returns Ok even on timeout");
         assert!(

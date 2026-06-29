@@ -1229,6 +1229,7 @@ dependencies = [
 name = "fbuild-core"
 version = "2.3.12"
 dependencies = [
+ "async-trait",
  "libc",
  "prost",
  "running-process",
@@ -1340,6 +1341,7 @@ dependencies = [
 name = "fbuild-packages"
 version = "2.3.12"
 dependencies = [
+ "async-trait",
  "axum 0.7.9",
  "bzip2",
  "fbuild-config",

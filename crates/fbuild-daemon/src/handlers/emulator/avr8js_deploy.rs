@@ -193,7 +193,7 @@ pub async fn deploy_avr8js(
 
     if monitor_after {
         // Headless path: run avr8js in Node.js subprocess, capture UART on stdout
-        let node_path = match find_node() {
+        let node_path = match find_node().await {
             Ok(p) => p,
             Err(e) => {
                 return (
@@ -202,7 +202,7 @@ pub async fn deploy_avr8js(
                 );
             }
         };
-        let avr8js_cache = match ensure_avr8js_npm() {
+        let avr8js_cache = match ensure_avr8js_npm().await {
             Ok(p) => p,
             Err(e) => {
                 return (
