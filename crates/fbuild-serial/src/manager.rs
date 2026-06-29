@@ -451,13 +451,35 @@ impl SharedSerialManager {
         Ok(())
     }
 
+    async fn close_port_if_generation(
+        &self,
+        port: &str,
+        client_id: &str,
+        expected_generation: Option<u64>,
+    ) -> fbuild_core::Result<bool> {
+        let session_key = self.resolve_port_key(port);
+        let current_generation = self.close_generation(&session_key);
+        if current_generation != expected_generation {
+            tracing::info!(
+                port = session_key,
+                client_id,
+                expected_generation = ?expected_generation,
+                current_generation = ?current_generation,
+                "stale serial port close skipped"
+            );
+            return Ok(false);
+        }
+        self.close_port(port, client_id).await?;
+        Ok(true)
+    }
+
     /// Schedule physical close after a grace window if the port is still idle.
     ///
     /// This keeps `SerialProxy.close()` logical from the client's point of
     /// view: the subscriber detaches immediately, but a rapid reconnect can
     /// reuse the existing OS handle instead of forcing a USB CDC close/open
-    /// cycle. Immediate force-close paths such as deploy preemption still call
-    /// [`Self::close_port`] directly.
+    /// cycle. Immediate force-close paths such as deploy preemption use a
+    /// generation guard so stale closes cannot tear down a newer session.
     pub fn close_port_after_grace_if_idle(
         self: &Arc<Self>,
         port: &str,
@@ -736,10 +758,12 @@ impl SharedSerialManager {
         preempted_by: String,
     ) -> fbuild_core::Result<()> {
         let session_key = self.resolve_port_key(port);
+        let generation = self.close_generation(&session_key);
         self.preemption
             .preempt(&session_key, reason, preempted_by)
             .await;
-        self.close_port(port, "deploy_preemption").await?;
+        self.close_port_if_generation(&session_key, "deploy_preemption", generation)
+            .await?;
         Ok(())
     }
 

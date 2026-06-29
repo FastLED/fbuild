@@ -387,6 +387,66 @@ async fn grace_close_is_canceled_by_new_reader() {
     assert!(mgr.has_clients(port));
 }
 
+#[tokio::test]
+async fn stale_deploy_preemption_close_preserves_new_monitor_session() {
+    let mgr = SharedSerialManager::new();
+    let port = "COM_TEST_811";
+    let original_client = "deploy-preempted-client";
+    let monitor_client = "post-deploy-monitor";
+
+    let (tx, _rx) = broadcast::channel(BROADCAST_CHANNEL_SIZE);
+    mgr.broadcasters.insert(port.to_string(), tx);
+    let (fake, writes) = FakeSerialPort::new(port);
+    mgr.sessions.insert(
+        port.to_string(),
+        SerialSession {
+            port: port.to_string(),
+            baud_rate: 115200,
+            is_open: true,
+            writer_client_id: None,
+            reader_client_ids: Default::default(),
+            output_buffer: Default::default(),
+            total_bytes_read: 0,
+            total_bytes_written: 0,
+            started_at: 0.0,
+            owner_client_id: Some(original_client.to_string()),
+            elf_path: None,
+            serial_handle: Some(Arc::new(Mutex::new(Box::new(fake)))),
+            reader_handle: None,
+            stop_flag: Arc::new(AtomicBool::new(false)),
+        },
+    );
+
+    // A deploy preemption can capture the old session generation, yield,
+    // then resume after the post-deploy monitor has attached. The stale
+    // close must not remove the new monitor session or later writes fail
+    // with "port not open" (FastLED/fbuild#811).
+    let stale_generation = mgr.bump_close_generation(port);
+    assert!(mgr.attach_reader(port, monitor_client).is_some());
+    assert_ne!(mgr.close_generation(port), Some(stale_generation));
+
+    let closed = mgr
+        .close_port_if_generation(port, "deploy_preemption", Some(stale_generation))
+        .await
+        .expect("generation-checked close");
+    assert!(
+        !closed,
+        "stale deploy preemption close must not remove the active monitor"
+    );
+
+    mgr.acquire_writer(port, monitor_client)
+        .await
+        .expect("writer lock");
+    let payload = b"{\"jsonrpc\":\"2.0\",\"method\":\"ping\"}\n";
+    let bytes = mgr
+        .write_to_port(port, payload, monitor_client)
+        .await
+        .expect("write to active monitor session");
+
+    assert_eq!(bytes, payload.len());
+    assert_eq!(&*writes.lock().unwrap(), payload);
+}
+
 #[test]
 fn notify_port_renumbered_broadcasts_events_to_old_port() {
     let mgr = SharedSerialManager::new();

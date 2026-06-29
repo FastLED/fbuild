@@ -43,12 +43,10 @@ use std::sync::Arc;
 
 use zccache::audit::{AuditContext, AuditId, AuditMode};
 use zccache::embedded::{
-    AuditConfig, CompileRequest as ZccacheCompileRequest, HostIdentity, RuntimeHooks, ServiceLimits,
-    ShutdownMode, ZccacheConfig, ZccacheService,
+    AuditConfig, CompileRequest as ZccacheCompileRequest, HostIdentity, RuntimeHooks,
+    ServiceLimits, ShutdownMode, ZccacheConfig, ZccacheService,
 };
-use zccache::fingerprint::{
-    decision::CacheDecision, scan::walk_files, TwoLayerCache,
-};
+use zccache::fingerprint::{decision::CacheDecision, scan::walk_files, TwoLayerCache};
 
 /// fbuild-side handle around a started [`ZccacheService`].
 ///

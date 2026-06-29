@@ -430,7 +430,6 @@ impl Drop for EnvVarGuard {
 #[test]
 #[ignore]
 fn cache_survives_tar_extract_uno() {
-
     let tmp_a = tempfile::TempDir::new().unwrap();
     let proj_a = tmp_a.path().join("proj");
     fs::create_dir_all(&proj_a).unwrap();
