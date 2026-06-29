@@ -12,6 +12,30 @@ itself stays on stable 1.94.1).
   code (`crates/*/src/`). All subprocess spawns must flow through
   `fbuild_core::subprocess::run_command` /
   `fbuild_core::containment::*`. See #264.
+- **`ban_std_pathbuf/`** — bans raw `std::path::PathBuf` in workspace
+  code; steers callers at `fbuild_core::path::NormalizedPath` so paths
+  carry the normalization invariant Windows requires. Legacy call sites
+  exempted via `src/allowlist.txt`. See #826 / #436 / #437 / #282.
+- **`ban_unrooted_tempdir/`** — bans `tempfile::tempdir()` /
+  `tempfile::TempDir::new()` / `tempfile::NamedTempFile::new()` /
+  `std::env::temp_dir()` in production code; steers callers at the
+  `_in(...)` variants rooted under `fbuild_paths::get_cache_root()` so
+  every byte fbuild writes lives under one user-visible directory.
+  Legacy call sites exempted via `src/allowlist.txt`. See #826.
+- **`ban_direct_serialport/`** — bans direct use of the `serialport`
+  crate outside `crates/fbuild-serial/` and a small set of diagnostic
+  CLI entry points. All serial access must flow through
+  `fbuild-serial`'s blessed APIs so DTR/RTS rules, retry counts, and
+  the Windows USB-CDC contract stay consistent. See #826.
+- **`ban_file_based_locks/`** — bans file-based locking primitives
+  (`OpenOptions::create_new(true)` lock-file pattern, `fs2::FileExt`,
+  `flock`). All locking flows through the daemon's in-memory managers
+  per the `CLAUDE.md` "no file-based locks" rule. Locks in the
+  invariant; allowlist is empty. See #826.
+- **`ban_deploy_tool_direct_invocation/`** — bans direct
+  `Command::new("esptool" | "avrdude" | "picotool" | "dfu-util" |
+  "pyocd")` invocations outside `crates/fbuild-deploy/`. All deploy-
+  tool spawns must flow through `fbuild deploy`. See #826 / #694.
 
 ## Running locally
 
@@ -34,8 +58,8 @@ CI runs this on every push/PR via `.github/workflows/dylint.yml`.
 
 `dylint_linting` builds against a specific nightly rustc; the rustc
 internal API (`rustc_lint`, `rustc_hir`, `rustc_span`) changes between
-nightlies. Keeping the dylint crate in `[workspace.exclude]` lets it
-pin `nightly-2026-03-26` in its own `rust-toolchain.toml` without
+nightlies. Keeping each dylint crate out of the stable workspace lets
+it pin `nightly-2026-03-26` in its own `rust-toolchain.toml` without
 forcing the entire workspace to nightly.
 
 The workspace registers the lint directory via:
@@ -45,7 +69,7 @@ The workspace registers the lint directory via:
 libraries = [{ path = "dylints/*" }]
 ```
 
-so `cargo dylint --all` picks it up automatically.
+so `cargo dylint --all` picks every dylint up automatically.
 
 ## Why `build_dylint_driver.py`
 

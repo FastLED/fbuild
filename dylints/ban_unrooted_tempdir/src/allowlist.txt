@@ -1,0 +1,123 @@
+# Each non-empty, non-comment line is matched against the tail of each
+# source file path (slashes normalized to /). Use forward-slash paths
+# only — the lint normalizes \ to / before matching.
+#
+# Files in `*/tests/*` and `*/benches/*` directories are blanket-allowed
+# in lib.rs and do NOT need entries here.
+#
+# Rollout strategy:
+#   - The lint is ON and denies new unrooted `tempfile::tempdir()` /
+#     `tempfile::TempDir::new()` / `std::env::temp_dir()` /
+#     `tempfile::NamedTempFile::new()` usage by default.
+#   - This file lists the *legacy* call sites that existed when the
+#     lint was first enabled (FastLED/fbuild#826). They are exempted
+#     so the lint can land without a repo-wide migration.
+#   - New files MUST NOT be added here. The target state is zero
+#     entries — migrate each file to the `_in(<path under fbuild
+#     cache root>)` variant as you touch it.
+#   - If a NEW file legitimately needs raw temp dir access (diagnostic
+#     dumps that report the OS temp dir, dev-only helpers), open an
+#     issue first and add the entry with an inline justification.
+
+bench/fastled-examples/src/main.rs
+crates/fbuild-build/src/arduino_props.rs
+crates/fbuild-build/src/avr/avr_linker.rs
+crates/fbuild-build/src/avr/orchestrator.rs
+crates/fbuild-build/src/build_fingerprint/fast_path.rs
+crates/fbuild-build/src/build_fingerprint/mod.rs
+crates/fbuild-build/src/build_info.rs
+crates/fbuild-build/src/ch32v/ch32v_compiler.rs
+crates/fbuild-build/src/ch32v/orchestrator.rs
+crates/fbuild-build/src/compile_many.rs
+crates/fbuild-build/src/compiler_tests.rs
+crates/fbuild-build/src/esp32/esp32_compiler.rs
+crates/fbuild-build/src/esp32/esp32_linker.rs
+crates/fbuild-build/src/esp32/orchestrator/tests.rs
+crates/fbuild-build/src/esp8266/orchestrator.rs
+crates/fbuild-build/src/framework_core_cache.rs
+crates/fbuild-build/src/framework_libs.rs
+crates/fbuild-build/src/linker.rs
+crates/fbuild-build/src/nrf52/orchestrator.rs
+crates/fbuild-build/src/nxplpc/orchestrator.rs
+crates/fbuild-build/src/pipeline/library.rs
+crates/fbuild-build/src/pipeline/project_discovery.rs
+crates/fbuild-build/src/renesas/orchestrator.rs
+crates/fbuild-build/src/renesas/renesas_compiler.rs
+crates/fbuild-build/src/resolution.rs
+crates/fbuild-build/src/rp2040/orchestrator.rs
+crates/fbuild-build/src/sam/orchestrator.rs
+crates/fbuild-build/src/script_runtime.rs
+crates/fbuild-build/src/script_runtime_tests.rs
+crates/fbuild-build/src/stm32/orchestrator/mod.rs
+crates/fbuild-build/src/symbol_analyzer/tests.rs
+crates/fbuild-build/src/teensy/orchestrator.rs
+crates/fbuild-build/src/zccache.rs
+crates/fbuild-cli/src/cli/clangd_config.rs
+crates/fbuild-cli/src/cli/lnk.rs
+crates/fbuild-cli/src/cli/port_scan.rs
+crates/fbuild-cli/src/cli/symbols_cmd.rs
+crates/fbuild-config/src/board/tests_project_local.rs
+crates/fbuild-core/src/emulator.rs
+crates/fbuild-core/src/response_file.rs
+crates/fbuild-core/src/subprocess.rs
+crates/fbuild-core/src/usb/data.rs
+crates/fbuild-daemon/src/broker/service.rs
+crates/fbuild-daemon/src/handlers/emulator/tests_npm_cache.rs
+crates/fbuild-daemon/src/handlers/emulator/tests_process.rs
+crates/fbuild-daemon/src/handlers/operations/tests.rs
+crates/fbuild-deploy/src/avr.rs
+crates/fbuild-deploy/src/esp32/tests.rs
+crates/fbuild-deploy/src/esp32_native/tests.rs
+crates/fbuild-deploy/src/lpc.rs
+crates/fbuild-deploy/src/size_check.rs
+crates/fbuild-packages/src/disk_cache/gc.rs
+crates/fbuild-packages/src/disk_cache/index/tests.rs
+crates/fbuild-packages/src/disk_cache/mod.rs
+crates/fbuild-packages/src/disk_cache/paths.rs
+crates/fbuild-packages/src/extractor.rs
+crates/fbuild-packages/src/install_lock.rs
+crates/fbuild-packages/src/lib.rs
+crates/fbuild-packages/src/library/apollo3_core.rs
+crates/fbuild-packages/src/library/arduino_api.rs
+crates/fbuild-packages/src/library/arduino_core.rs
+crates/fbuild-packages/src/library/arduino_core_lpc8xx.rs
+crates/fbuild-packages/src/library/arduino_mbed_core.rs
+crates/fbuild-packages/src/library/attiny_core.rs
+crates/fbuild-packages/src/library/ch32v_core.rs
+crates/fbuild-packages/src/library/cmsis_atmel.rs
+crates/fbuild-packages/src/library/cmsis_framework.rs
+crates/fbuild-packages/src/library/esp32_framework/libs.rs
+crates/fbuild-packages/src/library/esp32_framework/tests.rs
+crates/fbuild-packages/src/library/esp32_platform.rs
+crates/fbuild-packages/src/library/esp8266_framework.rs
+crates/fbuild-packages/src/library/framework_library.rs
+crates/fbuild-packages/src/library/library_compiler.rs
+crates/fbuild-packages/src/library/library_downloader.rs
+crates/fbuild-packages/src/library/library_info.rs
+crates/fbuild-packages/src/library/nrf52_core.rs
+crates/fbuild-packages/src/library/renesas_core.rs
+crates/fbuild-packages/src/library/rp2040_core.rs
+crates/fbuild-packages/src/library/sam_core.rs
+crates/fbuild-packages/src/library/samd_core.rs
+crates/fbuild-packages/src/library/silabs_core.rs
+crates/fbuild-packages/src/library/stm32_core.rs
+crates/fbuild-packages/src/library/teensy_core.rs
+crates/fbuild-packages/src/lnk/format.rs
+crates/fbuild-packages/src/lnk/materialize.rs
+crates/fbuild-packages/src/lnk/resolver.rs
+crates/fbuild-packages/src/lnk/scanner.rs
+crates/fbuild-packages/src/toolchain/arm.rs
+crates/fbuild-packages/src/toolchain/arm_gcc8.rs
+crates/fbuild-packages/src/toolchain/avr.rs
+crates/fbuild-packages/src/toolchain/clang.rs
+crates/fbuild-packages/src/toolchain/esp32.rs
+crates/fbuild-packages/src/toolchain/esp32_metadata.rs
+crates/fbuild-packages/src/toolchain/esp8266.rs
+crates/fbuild-packages/src/toolchain/esp_qemu.rs
+crates/fbuild-packages/src/toolchain/riscv.rs
+crates/fbuild-packages/src/toolchain/rp2040_pqt.rs
+crates/fbuild-packages/src/toolchain/teensy_arm.rs
+crates/fbuild-python/src/daemon.rs
+crates/fbuild-test-support/src/compile_db.rs
+crates/fbuild-test-support/src/lib.rs
+crates/fbuild-test-support/src/mini_framework.rs
