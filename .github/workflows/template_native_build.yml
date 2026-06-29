@@ -109,27 +109,36 @@ jobs:
       #
       # The remove + add dance is required for aarch64-pc-windows-msvc
       # (and a known-good safety belt for other targets): setup-soldr's
-      # thin-mode build cache can leave rustup's component-manifest
-      # claiming a target is installed while the actual rust-std .rlib
-      # files have been trimmed from the toolchain dir. `rustup target
-      # add` would then say "is up to date" and skip the install, and
-      # rustc would later fail with `E0463: can't find crate for 'core'`
-      # / `the <triple> target may not be installed`.
+      # The thin-mode build cache + setup-soldr's solo-toolchain cache
+      # restore-key fallback can land an inconsistent state where the
+      # rustup component manifest claims `rust-std-<target>` is
+      # installed but the actual .rlib files have been trimmed from
+      # the toolchain dir. `rustup target add` then says "is up to
+      # date" while the files stay missing, and the build fails with
+      # E0463 'can't find crate for `core`'. `rustup target remove`
+      # itself fails (No such file or directory on the rust-std
+      # manifest) and silently rolls back, leaving the manifest
+      # entry intact.
       #
-      # The previous "remove then add" dance silently rolled back when
-      # the rust-std manifest file was missing (No such file or
-      # directory), and the subsequent `rustup target add` then said
-      # "is up to date" while the .rlib files stayed missing — see the
-      # 2.3.12 release failures.
-      #
-      # The fix: `rustup component add rust-std-<target>` accepts a
-      # specific component name and refreshes the files regardless of
-      # what the component-manifest claims. `rustup target add` still
-      # runs as a belt-and-suspenders so `rustup show` reports the
-      # target installed downstream.
+      # Brute-force fix: delete the cached host toolchain dir if it
+      # exists, then `rustup toolchain install 1.94.1` reinstalls
+      # cleanly from scratch and `rustup target add <triple>` works
+      # against a fresh manifest. This is idempotent — if RUSTUP_HOME
+      # is already healthy, the install is a no-op refresh and the
+      # target add succeeds.
       - name: Add Rust target
         run: |
-          rustup component add --target ${{ inputs.target }} rust-std
+          TOOLCHAIN_DIR="$RUSTUP_HOME/toolchains/1.94.1-x86_64-unknown-linux-gnu"
+          if [ -d "$TOOLCHAIN_DIR" ] && [ ! -f "$TOOLCHAIN_DIR/lib/rustlib/manifest-rust-std-${{ inputs.target }}" ]; then
+            # Cache restored an older toolchain manifest that doesn't
+            # know about this target's rust-std component. The reinstall
+            # below recreates the manifest from scratch, but only do it
+            # when we have evidence of the inconsistency so cache-hit
+            # warm-paths stay fast.
+            echo "Detected stale toolchain state for ${{ inputs.target }} — reinstalling 1.94.1"
+            rm -rf "$TOOLCHAIN_DIR"
+            rustup toolchain install 1.94.1 --profile minimal --component rustfmt --component clippy
+          fi
           rustup target add ${{ inputs.target }}
 
       # Linux musl toolchain (libudev is auto-excluded for musl targets by serialport)
