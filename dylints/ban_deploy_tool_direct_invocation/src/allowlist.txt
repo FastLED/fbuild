@@ -1,0 +1,11 @@
+# Each non-empty, non-comment line is matched against the tail of each
+# source file path (slashes normalized to /). Use forward-slash paths
+# only — the lint normalizes \ to / before matching.
+#
+# Files under `crates/fbuild-deploy/` are unconditionally exempt in
+# lib.rs (that crate IS the legitimate owner). They do NOT need entries
+# here.
+#
+# The allowlist is intentionally EMPTY. Direct `Command::new(<deploy
+# tool>)` outside fbuild-deploy bypasses the deploy contract. Add an
+# entry ONLY with a maintainer-approved rationale in the PR.

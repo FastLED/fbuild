@@ -1,0 +1,45 @@
+# Each non-empty, non-comment line is matched against the tail of each
+# source file path (slashes normalized to /). Use forward-slash paths
+# only — the lint normalizes \ to / before matching.
+#
+# Files under `crates/fbuild-serial/src/` are unconditionally exempt in
+# lib.rs (that crate IS the blessed wrapper). They do NOT need entries
+# here.
+#
+# Rollout strategy:
+#   - The lint is ON and denies new direct `serialport::*` references in
+#     production code outside `crates/fbuild-serial/`.
+#   - This file lists the *legacy* call sites that existed when the lint
+#     was first enabled (FastLED/fbuild#826). They are exempted so the
+#     lint can land without a repo-wide migration into fbuild-serial.
+#   - New files MUST NOT be added here. The target state is zero
+#     entries.
+#   - If a new caller is justified (e.g. a diagnostic CLI that
+#     enumerates ports without going through the manager), open an
+#     issue first and add the entry with an inline justification.
+
+# Diagnostic CLI: enumerates available ports for `fbuild port-scan` /
+# `fbuild serial probe list`. These are read-only probes, not the
+# active-serial-session path — they intentionally bypass the manager
+# so probing doesn't trip USB-CDC retry counters.
+crates/fbuild-cli/src/cli/port_scan.rs
+crates/fbuild-cli/src/cli/serial_probe.rs
+
+# Daemon device-manager: enumerates and tracks devices via serialport.
+# Migration into fbuild-serial would invert the dependency direction
+# (manager owns serialport, daemon owns manager). Track separately.
+crates/fbuild-daemon/src/device_manager.rs
+
+# fbuild-deploy native paths: ESP32 / Teensy / generic reset paths open
+# raw serial handles for bootloader transitions. Migrating into
+# fbuild-serial requires teaching the manager about the bootloader
+# protocol state machines — tracked as a follow-up to #826.
+crates/fbuild-deploy/src/lib.rs
+crates/fbuild-deploy/src/reset.rs
+crates/fbuild-deploy/src/esp32_native/transport.rs
+crates/fbuild-deploy/src/esp32_native/verify.rs
+crates/fbuild-deploy/src/esp32_native/write.rs
+crates/fbuild-deploy/src/teensy/first_byte_probe.rs
+crates/fbuild-deploy/src/teensy/mod.rs
+crates/fbuild-deploy/src/teensy/port_discovery.rs
+crates/fbuild-deploy/src/teensy/soft_reboot.rs

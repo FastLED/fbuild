@@ -1,0 +1,12 @@
+# Each non-empty, non-comment line is matched against the tail of each
+# source file path (slashes normalized to /). Use forward-slash paths
+# only — the lint normalizes \ to / before matching.
+#
+# The allowlist is intentionally EMPTY. fbuild has no file-based locks
+# per the "Key Constraints" section of CLAUDE.md; all locking flows
+# through the daemon's in-memory managers. This lint locks that
+# invariant in so future code can't drift back.
+#
+# Do NOT add entries here without a maintainer-approved exception in
+# the PR description that justifies why the daemon's in-memory manager
+# cannot own the lock.
