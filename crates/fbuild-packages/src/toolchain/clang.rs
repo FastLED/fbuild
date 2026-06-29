@@ -144,7 +144,7 @@ impl ClangComponent {
 
     async fn fetch_manifest(&self) -> fbuild_core::Result<ManifestEntry> {
         let url = self.manifest_url();
-        let resp = reqwest::get(&url).await.map_err(|e| {
+        let resp = crate::http::client().get(&url).send().await.map_err(|e| {
             fbuild_core::FbuildError::Other(format!(
                 "failed to fetch {} manifest from {}: {}",
                 self.kind.component_name(),

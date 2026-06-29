@@ -96,25 +96,14 @@ fn find_device_root(install_dir: &Path) -> PathBuf {
     install_dir.to_path_buf()
 }
 
+#[async_trait::async_trait]
 impl crate::Package for CmsisAtmel {
-    fn ensure_installed(&self) -> fbuild_core::Result<PathBuf> {
+    async fn ensure_installed(&self) -> fbuild_core::Result<PathBuf> {
         if self.is_installed() {
             return Ok(find_device_root(&self.base.install_path()));
         }
 
-        let rt = tokio::runtime::Handle::try_current().ok();
-        let install_path = if let Some(handle) = rt {
-            handle.block_on(self.base.staged_install(Self::validate))?
-        } else {
-            let rt = tokio::runtime::Runtime::new().map_err(|e| {
-                fbuild_core::FbuildError::PackageError(format!(
-                    "failed to create tokio runtime: {}",
-                    e
-                ))
-            })?;
-            rt.block_on(self.base.staged_install(Self::validate))?
-        };
-
+        let install_path = self.base.staged_install(Self::validate).await?;
         Ok(find_device_root(&install_path))
     }
 

@@ -159,17 +159,18 @@ impl Esp32Toolchain {
     }
 }
 
+#[async_trait::async_trait]
 impl crate::Package for Esp32Toolchain {
-    fn ensure_installed(&self) -> fbuild_core::Result<PathBuf> {
+    async fn ensure_installed(&self) -> fbuild_core::Result<PathBuf> {
         if self.is_installed() {
             return Ok(self.resolved_dir());
         }
 
         let prefix = self.prefix.clone();
-        let install_path = crate::block_on_package_future(
-            self.base
-                .staged_install(|dir| Self::validate_install(dir, &prefix)),
-        )?;
+        let install_path = self
+            .base
+            .staged_install(|dir| Self::validate_install(dir, &prefix))
+            .await?;
 
         Ok(find_bin_root(&install_path))
     }

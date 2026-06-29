@@ -71,16 +71,24 @@ pub async fn resolve_toolchain_url(
 }
 
 /// Synchronous wrapper for resolve_toolchain_url.
+///
+/// Bridges sync call-sites (legacy orchestrators not yet on the async API)
+/// into the now-async resolver. New code should `.await resolve_toolchain_url`
+/// directly.
 pub fn resolve_toolchain_url_sync(
     metadata_url: &str,
     toolchain_name: &str,
     cache_dir: &Path,
 ) -> Result<ResolvedToolchain> {
-    crate::block_on_package_future(resolve_toolchain_url(
-        metadata_url,
-        toolchain_name,
-        cache_dir,
-    ))
+    let fut = resolve_toolchain_url(metadata_url, toolchain_name, cache_dir);
+    if let Ok(handle) = tokio::runtime::Handle::try_current() {
+        tokio::task::block_in_place(|| handle.block_on(fut))
+    } else {
+        let rt = tokio::runtime::Runtime::new().map_err(|e| {
+            FbuildError::PackageError(format!("failed to create tokio runtime: {}", e))
+        })?;
+        rt.block_on(fut)
+    }
 }
 
 /// Find tools.json in a directory (may be at root or one level deep).

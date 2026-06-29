@@ -94,29 +94,19 @@ impl SilabsCores {
     }
 }
 
+#[async_trait::async_trait]
 impl crate::Package for SilabsCores {
-    fn ensure_installed(&self) -> fbuild_core::Result<PathBuf> {
+    async fn ensure_installed(&self) -> fbuild_core::Result<PathBuf> {
         if self.is_installed() {
             let root = self.resolved_dir();
-            super::arduino_api::ensure_arduino_api(&root.join("cores").join("silabs"))?;
+            super::arduino_api::ensure_arduino_api(&root.join("cores").join("silabs")).await?;
             return Ok(root);
         }
 
-        let rt = tokio::runtime::Handle::try_current().ok();
-        let install_path = if let Some(handle) = rt {
-            handle.block_on(self.base.staged_install(Self::validate))?
-        } else {
-            let rt = tokio::runtime::Runtime::new().map_err(|e| {
-                fbuild_core::FbuildError::PackageError(format!(
-                    "failed to create tokio runtime: {}",
-                    e
-                ))
-            })?;
-            rt.block_on(self.base.staged_install(Self::validate))?
-        };
+        let install_path = self.base.staged_install(Self::validate).await?;
 
         let root = find_core_root(&install_path);
-        super::arduino_api::ensure_arduino_api(&root.join("cores").join("silabs"))?;
+        super::arduino_api::ensure_arduino_api(&root.join("cores").join("silabs")).await?;
         Ok(root)
     }
 

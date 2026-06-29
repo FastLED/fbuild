@@ -98,7 +98,7 @@ fn patch_mcu_compatibility(mcu_dir: &Path, mcu: &str) -> fbuild_core::Result<()>
 
 impl Esp32Framework {
     /// Ensure the SDK libs are downloaded and extracted into the framework's `tools/` dir.
-    pub fn ensure_libs(&self, libs_url: &str) -> fbuild_core::Result<()> {
+    pub async fn ensure_libs(&self, libs_url: &str) -> fbuild_core::Result<()> {
         let root = self.resolved_dir();
         let tools_dir = root.join("tools");
 
@@ -119,18 +119,7 @@ impl Esp32Framework {
 
         if !archive_path.exists() {
             tracing::info!("downloading ESP32 SDK libs");
-            let rt = tokio::runtime::Handle::try_current().ok();
-            if let Some(handle) = rt {
-                handle.block_on(crate::downloader::download_file(libs_url, &tools_dir))?;
-            } else {
-                let rt = tokio::runtime::Runtime::new().map_err(|e| {
-                    fbuild_core::FbuildError::PackageError(format!(
-                        "failed to create tokio runtime: {}",
-                        e
-                    ))
-                })?;
-                rt.block_on(crate::downloader::download_file(libs_url, &tools_dir))?;
-            }
+            crate::downloader::download_file(libs_url, &tools_dir).await?;
         }
 
         // Extract to a short temp path to avoid Windows MAX_PATH (260 char) limit.
@@ -158,7 +147,7 @@ impl Esp32Framework {
     /// skeleton package rather than the main `framework-arduinoespressif32-libs`.
     /// This merges the skeleton into the existing `tools/` directory without
     /// clobbering other MCU subdirs.
-    pub fn ensure_mcu_libs(&self, libs_url: &str, mcu: &str) -> fbuild_core::Result<()> {
+    pub async fn ensure_mcu_libs(&self, libs_url: &str, mcu: &str) -> fbuild_core::Result<()> {
         let root = self.resolved_dir();
         let tools_dir = root.join("tools");
 
@@ -179,18 +168,7 @@ impl Esp32Framework {
 
         if !archive_path.exists() {
             tracing::info!("downloading {} skeleton libs", mcu);
-            let rt = tokio::runtime::Handle::try_current().ok();
-            if let Some(handle) = rt {
-                handle.block_on(crate::downloader::download_file(libs_url, &tools_dir))?;
-            } else {
-                let rt = tokio::runtime::Runtime::new().map_err(|e| {
-                    fbuild_core::FbuildError::PackageError(format!(
-                        "failed to create tokio runtime: {}",
-                        e
-                    ))
-                })?;
-                rt.block_on(crate::downloader::download_file(libs_url, &tools_dir))?;
-            }
+            crate::downloader::download_file(libs_url, &tools_dir).await?;
         }
 
         let temp_dir = tempfile::Builder::new().prefix("fbuild_skel_").tempdir()?;

@@ -10,6 +10,8 @@ use std::time::{Duration, Instant};
 use fbuild_core::{FbuildError, Result};
 use sha2::{Digest, Sha256};
 
+use crate::http;
+
 /// Number of GET attempts before giving up on a transient failure.
 /// One initial attempt + two retries. Worst-case wall time at the
 /// default backoff schedule is ~4 s of sleep before the third
@@ -110,7 +112,7 @@ async fn get_with_retry(url: &str) -> Result<Vec<u8>> {
     let mut attempt: u32 = 0;
     loop {
         attempt += 1;
-        match reqwest::get(url).await {
+        match http::client().get(url).send().await {
             Ok(response) => {
                 let status = response.status();
                 if !status.is_success() {
@@ -175,7 +177,7 @@ async fn open_with_retry(url: &str) -> Result<reqwest::Response> {
     let mut attempt: u32 = 0;
     loop {
         attempt += 1;
-        match reqwest::get(url).await {
+        match http::client().get(url).send().await {
             Ok(response) => {
                 let status = response.status();
                 if status.is_success() {

@@ -134,7 +134,7 @@ fn get_total_disk_space_windows(path: &Path) -> u64 {
         &drive[..1],
         &drive[..1]
     );
-    fbuild_core::subprocess::run_command(
+    fbuild_core::subprocess::run_command_blocking(
         &["powershell", "-NoProfile", "-Command", &ps_cmd],
         None,
         None,
@@ -151,8 +151,12 @@ fn get_total_disk_space_unix(path: &Path) -> u64 {
     // `-P` gives POSIX format, `-k` forces 1024-byte blocks on all
     // platforms. Route through the containment group (issue #32).
     let path_str = path.to_string_lossy();
-    let output =
-        fbuild_core::subprocess::run_command(&["df", "-P", "-k", &path_str], None, None, None);
+    let output = fbuild_core::subprocess::run_command_blocking(
+        &["df", "-P", "-k", &path_str],
+        None,
+        None,
+        None,
+    );
 
     output
         .ok()

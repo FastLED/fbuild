@@ -113,7 +113,7 @@ impl EspQemu {
         self.arch
     }
 
-    pub fn resolve_executable(&self) -> Result<PathBuf> {
+    pub async fn resolve_executable(&self) -> Result<PathBuf> {
         if let Ok(raw) = std::env::var(self.arch.env_var()) {
             let path = PathBuf::from(raw);
             let path = validate_qemu_path(path, self.arch.env_var())?;
@@ -141,7 +141,7 @@ impl EspQemu {
             return Ok(path);
         }
 
-        let _ = self.ensure_installed()?;
+        let _ = self.ensure_installed().await?;
         let path = find_qemu_binary(&self.base.install_path(), self.arch)?;
         hydrate_windows_runtime(&path)?;
         validate_windows_runtime(&path)?;
@@ -159,8 +159,9 @@ impl EspQemu {
     }
 }
 
+#[async_trait::async_trait]
 impl Package for EspQemu {
-    fn ensure_installed(&self) -> Result<PathBuf> {
+    async fn ensure_installed(&self) -> Result<PathBuf> {
         if self.is_installed() {
             return qemu_root(&self.base.install_path(), self.arch);
         }
@@ -169,7 +170,7 @@ impl Package for EspQemu {
             EspQemuArch::Xtensa => Self::validate_install_xtensa,
             EspQemuArch::Riscv32 => Self::validate_install_riscv32,
         };
-        let install_path = crate::block_on_package_future(self.base.staged_install(validate))?;
+        let install_path = self.base.staged_install(validate).await?;
 
         qemu_root(&install_path, self.arch)
     }
@@ -194,14 +195,15 @@ impl EspQemuXtensa {
         Ok(Self(EspQemu::new(project_dir, EspQemuArch::Xtensa)?))
     }
 
-    pub fn resolve_executable(&self) -> Result<PathBuf> {
-        self.0.resolve_executable()
+    pub async fn resolve_executable(&self) -> Result<PathBuf> {
+        self.0.resolve_executable().await
     }
 }
 
+#[async_trait::async_trait]
 impl Package for EspQemuXtensa {
-    fn ensure_installed(&self) -> Result<PathBuf> {
-        self.0.ensure_installed()
+    async fn ensure_installed(&self) -> Result<PathBuf> {
+        self.0.ensure_installed().await
     }
 
     fn is_installed(&self) -> bool {
@@ -221,14 +223,15 @@ impl EspQemuRiscv32 {
         Ok(Self(EspQemu::new(project_dir, EspQemuArch::Riscv32)?))
     }
 
-    pub fn resolve_executable(&self) -> Result<PathBuf> {
-        self.0.resolve_executable()
+    pub async fn resolve_executable(&self) -> Result<PathBuf> {
+        self.0.resolve_executable().await
     }
 }
 
+#[async_trait::async_trait]
 impl Package for EspQemuRiscv32 {
-    fn ensure_installed(&self) -> Result<PathBuf> {
-        self.0.ensure_installed()
+    async fn ensure_installed(&self) -> Result<PathBuf> {
+        self.0.ensure_installed().await
     }
 
     fn is_installed(&self) -> bool {

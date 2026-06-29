@@ -50,7 +50,7 @@ fn is_cxx_only_flag(flag: &str) -> bool {
 ///
 /// Returns the archive path, or None if the library is header-only.
 #[allow(clippy::too_many_arguments)]
-pub fn compile_library(
+pub async fn compile_library(
     name: &str,
     source_files: &[PathBuf],
     include_dirs: &[PathBuf],
@@ -77,11 +77,12 @@ pub fn compile_library(
         1,
         compiler_cache,
     )
+    .await
 }
 
 /// Compile all source files in a library with parallel jobs.
 #[allow(clippy::too_many_arguments)]
-pub fn compile_library_with_jobs(
+pub async fn compile_library_with_jobs(
     name: &str,
     source_files: &[PathBuf],
     include_dirs: &[PathBuf],
@@ -175,7 +176,8 @@ pub fn compile_library_with_jobs(
                 name,
                 verbose,
                 compiler_cache,
-            )?;
+            )
+            .await?;
         }
 
         tracing::info!(
@@ -184,7 +186,7 @@ pub fn compile_library_with_jobs(
             all_objects.len(),
             archive_path.display()
         );
-        archive_objects(ar_path, &all_objects, &archive_path)?;
+        archive_objects(ar_path, &all_objects, &archive_path).await?;
         tracing::info!(
             "compiled library {}: {} changed / {} total files -> {}",
             name,
@@ -195,72 +197,79 @@ pub fn compile_library_with_jobs(
         return Ok(Some(archive_path));
     }
 
-    // Parallel path
+    // Parallel path — use a tokio Semaphore to bound concurrency.
     let total = stale_sources.len();
     let thread_count = jobs.min(total);
+    let sem = std::sync::Arc::new(tokio::sync::Semaphore::new(thread_count));
 
-    let work_iter = std::sync::Mutex::new(stale_sources.iter());
-    let first_error: std::sync::Mutex<Option<String>> = std::sync::Mutex::new(None);
-    let compiled_count = std::sync::atomic::AtomicUsize::new(0);
+    let mut tasks = tokio::task::JoinSet::new();
+    let compiled_count = std::sync::Arc::new(std::sync::atomic::AtomicUsize::new(0));
 
-    std::thread::scope(|scope| {
-        let handles: Vec<_> = (0..thread_count)
-            .map(|_| {
-                scope.spawn(|| {
-                    loop {
-                        if first_error.lock().unwrap().is_some() {
-                            return;
-                        }
+    let obj_dir_owned = obj_dir.clone();
+    let gcc_path_owned = gcc_path.to_path_buf();
+    let gxx_path_owned = gxx_path.to_path_buf();
+    let c_safe_flags_arc = std::sync::Arc::new(c_safe_flags);
+    let cpp_flags_arc = std::sync::Arc::new(cpp_flags.clone());
+    let include_flags_arc = std::sync::Arc::new(include_flags.clone());
+    let name_owned = name.to_string();
+    let compiler_cache_owned = compiler_cache.map(|p| p.to_path_buf());
 
-                        // Get next work item with its index
-                        let item = {
-                            let mut iter = work_iter.lock().unwrap();
-                            iter.next().cloned()
-                        };
+    for source in stale_sources.iter().cloned() {
+        let sem = sem.clone();
+        let obj_dir_t = obj_dir_owned.clone();
+        let gcc_t = gcc_path_owned.clone();
+        let gxx_t = gxx_path_owned.clone();
+        let c_safe_t = c_safe_flags_arc.clone();
+        let cpp_t = cpp_flags_arc.clone();
+        let inc_t = include_flags_arc.clone();
+        let lib_name_t = name_owned.clone();
+        let cache_t = compiler_cache_owned.clone();
+        let counter = compiled_count.clone();
+        tasks.spawn(async move {
+            let _permit = sem
+                .acquire()
+                .await
+                .map_err(|e| FbuildError::BuildFailed(format!("semaphore closed: {e}")))?;
+            let cache_ref = cache_t.as_deref();
+            compile_one_source(
+                &source,
+                &obj_dir_t,
+                &gcc_t,
+                &gxx_t,
+                &c_safe_t,
+                &cpp_t,
+                &inc_t,
+                &lib_name_t,
+                verbose,
+                cache_ref,
+            )
+            .await?;
+            let count = counter.fetch_add(1, std::sync::atomic::Ordering::Relaxed) + 1;
+            if count % 20 == 0 || count == total {
+                tracing::info!("[{}/{}] compiled [{}]", count, total, lib_name_t);
+            }
+            Ok::<(), FbuildError>(())
+        });
+    }
 
-                        let source = match item {
-                            Some(s) => s,
-                            None => return,
-                        };
-
-                        match compile_one_source(
-                            &source,
-                            &obj_dir,
-                            gcc_path,
-                            gxx_path,
-                            &c_safe_flags,
-                            &cpp_flags,
-                            &include_flags,
-                            name,
-                            verbose,
-                            compiler_cache,
-                        ) {
-                            Ok(_) => {
-                                let count = compiled_count
-                                    .fetch_add(1, std::sync::atomic::Ordering::Relaxed)
-                                    + 1;
-                                if count % 20 == 0 || count == total {
-                                    tracing::info!("[{}/{}] compiled [{}]", count, total, name);
-                                }
-                            }
-                            Err(e) => {
-                                let mut err = first_error.lock().unwrap();
-                                if err.is_none() {
-                                    *err = Some(e.to_string());
-                                }
-                            }
-                        }
-                    }
-                })
-            })
-            .collect();
-
-        for handle in handles {
-            handle.join().unwrap();
+    let mut first_error: Option<String> = None;
+    while let Some(joined) = tasks.join_next().await {
+        match joined {
+            Ok(Ok(())) => {}
+            Ok(Err(e)) => {
+                if first_error.is_none() {
+                    first_error = Some(e.to_string());
+                }
+            }
+            Err(join_err) => {
+                if first_error.is_none() {
+                    first_error = Some(format!("compile task panicked: {join_err}"));
+                }
+            }
         }
-    });
+    }
 
-    if let Some(error) = first_error.into_inner().unwrap() {
+    if let Some(error) = first_error {
         return Err(FbuildError::BuildFailed(error));
     }
 
@@ -274,7 +283,7 @@ pub fn compile_library_with_jobs(
         all_objects.len(),
         archive_path.display()
     );
-    archive_objects(ar_path, &all_objects, &archive_path)?;
+    archive_objects(ar_path, &all_objects, &archive_path).await?;
 
     tracing::info!(
         "compiled library {}: {} changed / {} total files ({} threads) -> {}",
@@ -293,7 +302,7 @@ pub fn compile_library_with_jobs(
 /// On Windows, ALL compiler flags are written to a GCC response file (`@file`)
 /// to avoid exceeding the 32KB command-line limit (OS error 206).
 #[allow(clippy::too_many_arguments)]
-fn compile_one_source(
+async fn compile_one_source(
     source: &Path,
     obj_dir: &Path,
     gcc_path: &Path,
@@ -360,7 +369,7 @@ fn compile_one_source(
     };
 
     let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-    let result = run_command(&args_ref, None, None, None)?;
+    let result = run_command(&args_ref, None, None, None).await?;
 
     if !result.success() {
         return Err(FbuildError::BuildFailed(format!(
@@ -522,7 +531,7 @@ fn build_include_flags(include_dirs: &[PathBuf], _temp_dir: &Path) -> Result<Vec
 }
 
 /// Create a static archive from object files.
-fn archive_objects(ar_path: &Path, objects: &[PathBuf], output: &Path) -> Result<()> {
+async fn archive_objects(ar_path: &Path, objects: &[PathBuf], output: &Path) -> Result<()> {
     if output.exists() {
         std::fs::remove_file(output)?;
     }
@@ -538,7 +547,7 @@ fn archive_objects(ar_path: &Path, objects: &[PathBuf], output: &Path) -> Result
     }
 
     let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-    let result = run_command(&args_ref, None, None, None)?;
+    let result = run_command(&args_ref, None, None, None).await?;
 
     if !result.success() {
         return Err(FbuildError::BuildFailed(format!(
