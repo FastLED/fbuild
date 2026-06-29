@@ -72,17 +72,16 @@ jobs:
 
       - name: Setup soldr
         id: setup-soldr
-        # FastLED/fbuild#800 release: pinned to v0.7.59 (the latest
-        # soldr release published as of 2026-06-28). The 0.7.63 pin
-        # landed in #797/#799 for the blessed-cross-compile +
-        # soldr-clang-shim work, but v0.7.63 hadn't shipped by the
-        # time the 2.3.12 version bump fired, blocking the
-        # release-auto pipeline with a setup-soldr 404. Matches the
-        # last working v2.3.11-era pin from FastLED/fbuild#773.
-        # Restore to 0.7.63 once soldr cuts that release.
+        # Bumped to v0.7.65 — the first soldr release that ships the
+        # blessed-cross-compile + soldr-clang-shim features
+        # (soldr#1012/1013/1015/1016) #797/#799 was authored against,
+        # and the first release published after the v0.7.60–v0.7.64
+        # release-pipeline backlog (soldr#1020/#1022/#1027/#1028 fixed
+        # the Linux ARM64 musl + macOS timeout regressions that
+        # blocked those intermediate cuts).
         uses: zackees/setup-soldr@v0.9.63
         with:
-          version: "0.7.59"
+          version: "0.7.65"
           cache: true
           build-cache: true
           target-cache: true
