@@ -1,42 +1,14 @@
-//! Shared async `reqwest::Client` with configured timeouts.
+//! Forward-compat alias for the HTTP client bridge.
 //!
-//! FastLED/fbuild#813 (async migration) + #805 (timeout audit):
-//! every HTTP call in fbuild-packages goes through this client.
-//! Tokio-console sees the I/O because the underlying tokio
-//! reactor is the daemon's. Timeouts default to safe values; per-
-//! call overrides via `client_with_timeout(...)`.
+//! FastLED/fbuild#844 hoisted the shared `reqwest::Client` to
+//! `fbuild_core::http`. This module is a re-export so existing
+//! `use fbuild_packages::http::client;` call sites compile until the
+//! Phase 2 migration sweep moves them to `fbuild_core::http::client()`.
+//!
+//! New code should import directly from `fbuild_core::http`. The
+//! `ban_bare_reqwest` dylint forbids `reqwest::Client::new()` outside
+//! the bridge.
 
-use std::sync::OnceLock;
-use std::time::Duration;
-
-use reqwest::Client;
-
-/// Default per-request timeout. Long enough for slow CDN downloads
-/// of multi-MB toolchain archives, short enough that a wedged
-/// server doesn't pin a fbuild-daemon worker indefinitely.
-const DEFAULT_TIMEOUT: Duration = Duration::from_secs(300); // 5 min
-const DEFAULT_CONNECT_TIMEOUT: Duration = Duration::from_secs(30);
-
-static CLIENT: OnceLock<Client> = OnceLock::new();
-
-/// Get the shared client. Lazily built on first call.
-pub fn client() -> &'static Client {
-    CLIENT.get_or_init(|| {
-        Client::builder()
-            .timeout(DEFAULT_TIMEOUT)
-            .connect_timeout(DEFAULT_CONNECT_TIMEOUT)
-            .build()
-            .expect("reqwest client builder should never fail with these settings")
-    })
-}
-
-/// Build a client with a custom total timeout (for callers that
-/// need a tighter deadline, e.g. a registry ping that should
-/// fail fast).
-pub fn client_with_timeout(total: Duration) -> Client {
-    Client::builder()
-        .timeout(total)
-        .connect_timeout(DEFAULT_CONNECT_TIMEOUT)
-        .build()
-        .expect("reqwest client builder should never fail with valid settings")
-}
+pub use fbuild_core::http::{
+    blocking_client, client, client_with_timeout, DEFAULT_CONNECT_TIMEOUT, DEFAULT_TIMEOUT,
+};

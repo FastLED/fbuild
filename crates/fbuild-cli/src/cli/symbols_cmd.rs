@@ -24,6 +24,8 @@ use fbuild_build::symbol_analyzer::{
 };
 use fbuild_core::{FbuildError, Result};
 
+use crate::output;
+
 use super::graph_cmd::parse_graph_config;
 
 #[allow(clippy::too_many_arguments)]
@@ -91,14 +93,14 @@ pub async fn run_symbols(
     let mut wrote_anything = false;
 
     if let Some(json_path) = json_out {
-        write_json(&report, &json_path)?;
-        println!(
+        write_json(&report, &json_path).await?;
+        output::result(format!(
             "Wrote {} symbols to {} (flash={} B, ram={} B)",
             report.symbols.len(),
             json_path,
             report.total_flash,
             report.total_ram
-        );
+        ));
         wrote_anything = true;
     }
 
@@ -112,7 +114,7 @@ pub async fn run_symbols(
         })?;
         let json_target = dir.join("report.json");
         let md_target = dir.join("report.md");
-        write_json(&report, &json_target.to_string_lossy())?;
+        write_json(&report, &json_target.to_string_lossy()).await?;
         let graph_config = parse_graph_config(
             &graph_depth,
             graph_fan_out,
@@ -152,7 +154,7 @@ pub async fn run_symbols(
                 },
             )?
         };
-        println!(
+        output::result(format!(
             "Wrote {} symbols to {} and {} (flash={} B, ram={} B); {} sidecar graphs",
             report.symbols.len(),
             json_target.display(),
@@ -160,29 +162,32 @@ pub async fn run_symbols(
             report.total_flash,
             report.total_ram,
             sidecar_count,
-        );
+        ));
         wrote_anything = true;
     }
 
     if !wrote_anything {
-        println!("{}", format_text_report(&report, top));
+        output::result(format_text_report(&report, top));
     }
 
     Ok(())
 }
 
-fn write_json(
+async fn write_json(
     report: &fbuild_core::symbol_analysis::FineGrainedSymbolMap,
     json_path: &str,
 ) -> Result<()> {
     let json = serde_json::to_string_pretty(report)
         .map_err(|e| FbuildError::Other(format!("json serialize: {e}")))?;
-    std::fs::write(json_path, json).map_err(|e| {
-        FbuildError::Io(std::io::Error::new(
-            e.kind(),
-            format!("write {json_path}: {e}"),
-        ))
-    })?;
+    // Atomic write — FastLED/fbuild#844 bridge pair 6 (symbol report).
+    fbuild_core::fs::write_atomic(json_path, json)
+        .await
+        .map_err(|e| {
+            FbuildError::Io(std::io::Error::new(
+                e.kind(),
+                format!("write {json_path}: {e}"),
+            ))
+        })?;
     Ok(())
 }
 

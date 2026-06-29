@@ -20,7 +20,7 @@ impl CacheIndex {
     ) -> rusqlite::Result<Option<CacheEntry>> {
         use rusqlite::OptionalExtension;
         let (_, hash) = paths::stem_and_hash(url);
-        let conn = self.conn.lock().unwrap();
+        let conn = self.conn.lock().unwrap_or_else(|e| e.into_inner());
         conn.query_row(
             "SELECT id, kind, url, stem, hash, version,
                     archive_path, archive_bytes, archive_sha256,
@@ -46,7 +46,7 @@ impl CacheIndex {
     ) -> rusqlite::Result<CacheEntry> {
         let (stem, hash) = paths::stem_and_hash(url);
         let now = Self::now_epoch();
-        let conn = self.conn.lock().unwrap();
+        let conn = self.conn.lock().unwrap_or_else(|e| e.into_inner());
         conn.execute(
             "INSERT INTO entries (kind, url, stem, hash, version,
                                   archive_path, archive_bytes, archive_sha256,
@@ -88,7 +88,7 @@ impl CacheIndex {
     ) -> rusqlite::Result<CacheEntry> {
         let (stem, hash) = paths::stem_and_hash(url);
         let now = Self::now_epoch();
-        let conn = self.conn.lock().unwrap();
+        let conn = self.conn.lock().unwrap_or_else(|e| e.into_inner());
         conn.execute(
             "INSERT INTO entries (kind, url, stem, hash, version,
                                   installed_path, installed_bytes, installed_at,
@@ -120,7 +120,7 @@ impl CacheIndex {
     /// Bump LRU timestamp and use count for an entry.
     pub fn touch(&self, entry_id: i64) -> rusqlite::Result<()> {
         let now = Self::now_epoch();
-        let conn = self.conn.lock().unwrap();
+        let conn = self.conn.lock().unwrap_or_else(|e| e.into_inner());
         conn.execute(
             "UPDATE entries SET last_used_at = ?1, use_count = use_count + 1 WHERE id = ?2",
             params![now, entry_id],
@@ -133,7 +133,7 @@ impl CacheIndex {
     /// process correctly track independent pins.
     pub fn pin(&self, entry_id: i64, holder_pid: u32, holder_nonce: u64) -> rusqlite::Result<()> {
         let now = Self::now_epoch();
-        let conn = self.conn.lock().unwrap();
+        let conn = self.conn.lock().unwrap_or_else(|e| e.into_inner());
         let updated = conn.execute(
             "UPDATE leases SET refcount = refcount + 1
              WHERE entry_id = ?1 AND holder_pid = ?2 AND holder_nonce = ?3",
@@ -156,7 +156,7 @@ impl CacheIndex {
     /// Decrement the pinned count for an entry (lease released).
     /// Decrements refcount; removes the row when it reaches zero.
     pub fn unpin(&self, entry_id: i64, holder_pid: u32, holder_nonce: u64) -> rusqlite::Result<()> {
-        let conn = self.conn.lock().unwrap();
+        let conn = self.conn.lock().unwrap_or_else(|e| e.into_inner());
         conn.execute(
             "UPDATE leases SET refcount = refcount - 1
              WHERE entry_id = ?1 AND holder_pid = ?2 AND holder_nonce = ?3",
@@ -176,7 +176,7 @@ impl CacheIndex {
 
     /// Get total bytes for all archives.
     pub fn total_archive_bytes(&self) -> rusqlite::Result<i64> {
-        let conn = self.conn.lock().unwrap();
+        let conn = self.conn.lock().unwrap_or_else(|e| e.into_inner());
         conn.query_row(
             "SELECT COALESCE(SUM(archive_bytes), 0) FROM entries WHERE archive_path IS NOT NULL",
             [],
@@ -186,7 +186,7 @@ impl CacheIndex {
 
     /// Get total bytes for all installed entries.
     pub fn total_installed_bytes(&self) -> rusqlite::Result<i64> {
-        let conn = self.conn.lock().unwrap();
+        let conn = self.conn.lock().unwrap_or_else(|e| e.into_inner());
         conn.query_row(
             "SELECT COALESCE(SUM(installed_bytes), 0) FROM entries WHERE installed_path IS NOT NULL",
             [],
@@ -196,7 +196,7 @@ impl CacheIndex {
 
     /// Get LRU installed entries (oldest first), skipping pinned.
     pub fn lru_installed_entries(&self, limit: usize) -> rusqlite::Result<Vec<CacheEntry>> {
-        let conn = self.conn.lock().unwrap();
+        let conn = self.conn.lock().unwrap_or_else(|e| e.into_inner());
         let mut stmt = conn.prepare(
             "SELECT id, kind, url, stem, hash, version,
                     archive_path, archive_bytes, archive_sha256,
@@ -216,7 +216,7 @@ impl CacheIndex {
 
     /// Get LRU archive entries (oldest first), skipping pinned.
     pub fn lru_archive_entries(&self, limit: usize) -> rusqlite::Result<Vec<CacheEntry>> {
-        let conn = self.conn.lock().unwrap();
+        let conn = self.conn.lock().unwrap_or_else(|e| e.into_inner());
         let mut stmt = conn.prepare(
             "SELECT id, kind, url, stem, hash, version,
                     archive_path, archive_bytes, archive_sha256,
@@ -236,7 +236,7 @@ impl CacheIndex {
 
     /// Null out the installed_path for an entry (after evicting its directory).
     pub fn clear_installed(&self, entry_id: i64) -> rusqlite::Result<()> {
-        let conn = self.conn.lock().unwrap();
+        let conn = self.conn.lock().unwrap_or_else(|e| e.into_inner());
         conn.execute(
             "UPDATE entries SET installed_path = NULL, installed_bytes = NULL, installed_at = NULL WHERE id = ?1",
             params![entry_id],
@@ -246,7 +246,7 @@ impl CacheIndex {
 
     /// Null out the archive_path for an entry (after evicting its archive).
     pub fn clear_archive(&self, entry_id: i64) -> rusqlite::Result<()> {
-        let conn = self.conn.lock().unwrap();
+        let conn = self.conn.lock().unwrap_or_else(|e| e.into_inner());
         conn.execute(
             "UPDATE entries SET archive_path = NULL, archive_bytes = NULL, archive_sha256 = NULL, archived_at = NULL WHERE id = ?1",
             params![entry_id],
@@ -256,14 +256,14 @@ impl CacheIndex {
 
     /// Delete an entry entirely (when both archive and installed are gone).
     pub fn delete_entry(&self, entry_id: i64) -> rusqlite::Result<()> {
-        let conn = self.conn.lock().unwrap();
+        let conn = self.conn.lock().unwrap_or_else(|e| e.into_inner());
         conn.execute("DELETE FROM entries WHERE id = ?1", params![entry_id])?;
         Ok(())
     }
 
     /// Reap leases for dead PIDs.
     pub fn reap_dead_leases(&self) -> rusqlite::Result<usize> {
-        let conn = self.conn.lock().unwrap();
+        let conn = self.conn.lock().unwrap_or_else(|e| e.into_inner());
         let mut stmt = conn.prepare("SELECT DISTINCT holder_pid FROM leases")?;
         let pids: Vec<i64> = stmt
             .query_map([], |row| row.get::<_, i64>(0))?
@@ -291,7 +291,7 @@ impl CacheIndex {
 
     /// Get all entries (for reconciliation).
     pub fn all_entries(&self) -> rusqlite::Result<Vec<CacheEntry>> {
-        let conn = self.conn.lock().unwrap();
+        let conn = self.conn.lock().unwrap_or_else(|e| e.into_inner());
         let mut stmt = conn.prepare(
             "SELECT id, kind, url, stem, hash, version,
                     archive_path, archive_bytes, archive_sha256,
@@ -311,7 +311,7 @@ impl CacheIndex {
     pub fn lookup_latest(&self, kind: Kind, url: &str) -> rusqlite::Result<Option<CacheEntry>> {
         use rusqlite::OptionalExtension;
         let (_, hash) = paths::stem_and_hash(url);
-        let conn = self.conn.lock().unwrap();
+        let conn = self.conn.lock().unwrap_or_else(|e| e.into_inner());
         conn.query_row(
             "SELECT id, kind, url, stem, hash, version,
                     archive_path, archive_bytes, archive_sha256,
@@ -329,7 +329,7 @@ impl CacheIndex {
 
     /// Get total entry count.
     pub fn entry_count(&self) -> rusqlite::Result<i64> {
-        let conn = self.conn.lock().unwrap();
+        let conn = self.conn.lock().unwrap_or_else(|e| e.into_inner());
         conn.query_row("SELECT COUNT(*) FROM entries", [], |row| {
             row.get::<_, i64>(0)
         })

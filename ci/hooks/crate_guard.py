@@ -70,6 +70,20 @@ APPROVED_CRATE_DIRS: frozenset[str] = frozenset(
         "dylints/cli_no_build_deploy_direct_use",
         "dylints/require_multi_thread_flavor_when_spawning",
         "dylints/ban_std_sync_mutex_in_async",
+        # FastLED/fbuild#844 bridge sweep — 10 new dylints landing
+        # together with the matching internal bridge APIs in
+        # fbuild-core (http, fs, time, channel, path::canonicalize_existing)
+        # and fbuild-cli/src/output.rs.
+        "dylints/ban_bare_reqwest",
+        "dylints/ban_std_fs_in_async",
+        "dylints/ban_tokio_fs_direct_import",
+        "dylints/ban_std_thread_sleep",
+        "dylints/ban_std_mpsc_in_async_reachable",
+        "dylints/ban_tokio_mpsc_direct_import",
+        "dylints/ban_std_fs_canonicalize",
+        "dylints/ban_runtime_new_outside_main",
+        "dylints/ban_poison_panic",
+        "dylints/ban_print_in_production",
     }
 )
 

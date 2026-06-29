@@ -39,6 +39,11 @@ tokio = { workspace = true }
 # the #813 Phase A foundation so downstream crates can `use async_trait`
 # without each one redeclaring the workspace dep.
 async-trait = { workspace = true }
+# Shared HTTP client bridge (FastLED/fbuild#844). The `client()`
+# constructor is hoisted from fbuild-packages so every reqwest call site
+# in the workspace has one source of truth. See `src/http.rs` and the
+# matching `ban_bare_reqwest` dylint.
+reqwest = { workspace = true }
 
 # `libc::setpgid` / `libc::prctl` for the Unix `pre_exec` hook used by
 # `containment::tokio_spawn::configure`. See FastLED/fbuild#32.

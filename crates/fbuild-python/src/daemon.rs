@@ -147,7 +147,7 @@ fn one_shot_runtime() -> Result<tokio::runtime::Runtime, String> {
 }
 
 async fn verify_broker_daemon_cache_identity_async() -> Result<(), String> {
-    let info: serde_json::Value = reqwest::Client::new()
+    let info: serde_json::Value = fbuild_core::http::client()
         .get(direct_info_url())
         .timeout(std::time::Duration::from_secs(5))
         .send()
@@ -181,7 +181,7 @@ async fn ensure_running_via_broker_async(url: &str) -> Result<bool, String> {
     );
     match AsyncBrokerSession::adopt(request).await {
         Ok(_session) => {
-            let client = reqwest::Client::new();
+            let client = fbuild_core::http::client();
             for _ in 0..100 {
                 if let Ok(resp) = client
                     .get(url)
@@ -235,7 +235,7 @@ async fn ensure_running_async_impl(url: &str, spawn_target: Option<PathBuf>, dev
         Err(_) => return false,
     }
 
-    let client = reqwest::Client::new();
+    let client = fbuild_core::http::client();
 
     // Fast path: daemon is already up.
     if let Ok(resp) = client
@@ -297,7 +297,7 @@ async fn ensure_running_async_impl(url: &str, spawn_target: Option<PathBuf>, dev
 /// responded 2xx to the shutdown POST. FastLED/fbuild#817.
 async fn stop_async_impl() -> bool {
     let url = format!("{}/api/daemon/shutdown", fbuild_paths::get_daemon_url());
-    reqwest::Client::new()
+    fbuild_core::http::client()
         .post(&url)
         .headers(shutdown_caller_headers())
         .timeout(std::time::Duration::from_secs(10))
@@ -311,7 +311,7 @@ async fn stop_async_impl() -> bool {
 /// (the caller decodes JSON with the GIL held). FastLED/fbuild#817.
 async fn status_async_impl() -> PyResult<String> {
     let url = format!("{}/api/daemon/info", fbuild_paths::get_daemon_url());
-    let resp = reqwest::Client::new()
+    let resp = fbuild_core::http::client()
         .get(&url)
         .timeout(std::time::Duration::from_secs(10))
         .send()

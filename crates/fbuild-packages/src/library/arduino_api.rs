@@ -44,10 +44,13 @@ pub async fn ensure_arduino_api(core_dir: &Path) -> Result<()> {
         core_dir.display()
     );
 
-    // Download to a temp directory
-    let tmp_dir = tempfile::TempDir::new().map_err(|e| {
-        fbuild_core::FbuildError::PackageError(format!("failed to create temp dir: {}", e))
-    })?;
+    // Download to a temp directory rooted under
+    // `~/.fbuild/{dev|prod}/tmp/arduino-api/` — FastLED/fbuild#844
+    // bridge pair 10.
+    let tmp_dir =
+        tempfile::TempDir::new_in(fbuild_paths::temp_subdir("arduino-api")).map_err(|e| {
+            fbuild_core::FbuildError::PackageError(format!("failed to create temp dir: {}", e))
+        })?;
 
     // Async HTTP via the shared client (FastLED/fbuild#813).
     let response = http::client()

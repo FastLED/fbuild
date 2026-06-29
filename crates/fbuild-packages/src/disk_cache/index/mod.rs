@@ -125,7 +125,7 @@ impl CacheIndex {
     }
 
     fn migrate(&self) -> rusqlite::Result<()> {
-        let conn = self.conn.lock().unwrap();
+        let conn = self.conn.lock().unwrap_or_else(|e| e.into_inner());
         Self::run_migrations(&conn)
     }
 
@@ -178,7 +178,7 @@ impl CacheIndex {
 
     /// Get the current schema version.
     pub fn schema_version(&self) -> rusqlite::Result<i64> {
-        let conn = self.conn.lock().unwrap();
+        let conn = self.conn.lock().unwrap_or_else(|e| e.into_inner());
         conn.query_row(
             "SELECT value FROM cache_meta WHERE key = 'schema_version'",
             [],

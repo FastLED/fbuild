@@ -83,7 +83,7 @@ async fn run_toy_reader(
 #[tokio::test]
 async fn reader_control_drain_reports_drop_count() {
     let (bcast_tx, bcast_rx) = broadcast::channel::<u32>(16);
-    let (ctl_tx, ctl_rx) = mpsc::unbounded_channel();
+    let (ctl_tx, ctl_rx) = mpsc::unbounded();
     let reader = tokio::spawn(run_toy_reader(bcast_rx, ctl_rx));
 
     // Push 5 events, do NOT let the reader drain them via its
@@ -128,7 +128,7 @@ async fn reader_control_drain_reports_drop_count() {
 #[tokio::test]
 async fn reader_control_get_depth_reports_broadcast_length() {
     let (bcast_tx, bcast_rx) = broadcast::channel::<u32>(16);
-    let (ctl_tx, ctl_rx) = mpsc::unbounded_channel();
+    let (ctl_tx, ctl_rx) = mpsc::unbounded();
     let reader = tokio::spawn(run_toy_reader(bcast_rx, ctl_rx));
 
     for i in 0..3u32 {

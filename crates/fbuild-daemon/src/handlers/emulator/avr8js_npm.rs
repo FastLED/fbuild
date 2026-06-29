@@ -11,7 +11,20 @@ pub(crate) async fn find_node() -> fbuild_core::Result<PathBuf> {
     // captured by the daemon's containment group (issue #32). The probe
     // is short-lived (`node --version`) but a missing binary should
     // still bubble up the same way.
-    match fbuild_core::subprocess::run_command(&[node, "--version"], None, None, None).await {
+    //
+    // FastLED/fbuild#844: explicit 5 s timeout. `node --version` is a
+    // sub-100ms operation on every supported host — anything longer is a
+    // wedged process node and we want to fall through to the
+    // "not found" error path quickly so the user sees the install
+    // hint instead of a stalled emulator launch.
+    match fbuild_core::subprocess::run_command(
+        &[node, "--version"],
+        None,
+        None,
+        Some(std::time::Duration::from_secs(5)),
+    )
+    .await
+    {
         Ok(output) if output.success() => Ok(PathBuf::from(node)),
         _ => Err(fbuild_core::FbuildError::DeployFailed(
             "Node.js is required for headless avr8js emulation but 'node' was not found on PATH. \
@@ -153,8 +166,14 @@ pub(crate) async fn ensure_avr8js_npm_in(
     // Route through `run_command` (which spawns via the daemon's
     // containment group) so an `npm install` killed mid-flight doesn't
     // leak node processes after the daemon dies. See FastLED/fbuild#32.
+    //
+    // FastLED/fbuild#844: explicit no-timeout. A cold `npm install` of
+    // avr8js@0.21.0 can take 30 s on a fast box and several minutes on
+    // a corporate-proxy + slow-disk Windows host; the 15 min default
+    // subprocess cap would mask that as a generic timeout. We rely on
+    // the daemon's containment + parent-shutdown signal instead.
     let cache_dir_str = cache_dir.to_string_lossy().to_string();
-    let output = fbuild_core::subprocess::run_command(
+    let output = fbuild_core::subprocess::run_command_no_timeout(
         &[
             npm,
             "install",
@@ -163,7 +182,6 @@ pub(crate) async fn ensure_avr8js_npm_in(
             "--prefix",
             &cache_dir_str,
         ],
-        None,
         None,
         None,
     )

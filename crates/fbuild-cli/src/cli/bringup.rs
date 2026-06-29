@@ -33,6 +33,8 @@ use clap::Args;
 use fbuild_core::{FbuildError, Result};
 use fbuild_serial::boards::{family_for_vid_pid, vcom_for_env, BoardFamily};
 
+use crate::output;
+
 /// `fbuild bringup` CLI args. Pluggable RPC method / payload /
 /// expected-result, with per-board defaults supplied via the env
 /// argument's board JSON (`bringup.{method, payload, expected_result}`).
@@ -161,7 +163,9 @@ impl std::fmt::Display for BringupResult {
 /// Top-level entry — dispatcher calls this.
 pub fn run_bringup(args: BringupArgs) -> Result<()> {
     let result = run_bringup_inner(&args)?;
-    println!("{result}");
+    // BringupResult's Display impl already terminates with '\n'; strip the
+    // trailing newline so result()'s newline doesn't double up.
+    output::result(result.to_string().trim_end_matches('\n'));
     if !result.is_passing() && !args.dry_run {
         return Err(FbuildError::DeployFailed(format!(
             "bring-up failed: {result}"

@@ -28,6 +28,10 @@ use walkdir::{DirEntry, WalkDir};
 
 /// Top-level entry point. Returns a process exit code.
 pub fn run(project_dir: &Path, env: Option<&str>, explain: bool, json: bool) -> i32 {
+    // FastLED/fbuild#844 sync-context allowlist: `fbuild lib-select`
+    // is a synchronous diagnostic CLI entry point dispatched directly
+    // by clap, with no tokio runtime in scope. File is allowlisted in
+    // `dylints/ban_std_fs_canonicalize/src/allowlist.txt`.
     let project_dir = match std::fs::canonicalize(project_dir) {
         Ok(p) => p,
         Err(err) => {

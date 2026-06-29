@@ -1,11 +1,16 @@
 //! `fbuild show <target>` plus the daemon log tail used by both `show
 //! daemon` and `daemon monitor`.
 
+use crate::output;
+
 pub fn run_show(target: &str, follow: bool, lines: usize) -> fbuild_core::Result<()> {
     match target {
         "daemon" => show_daemon_logs(follow, lines),
         other => {
-            eprintln!("unknown show target: '{}' (available: daemon)", other);
+            output::error(format!(
+                "unknown show target: '{}' (available: daemon)",
+                other
+            ));
             std::process::exit(1);
         }
     }
@@ -14,8 +19,11 @@ pub fn run_show(target: &str, follow: bool, lines: usize) -> fbuild_core::Result
 pub fn show_daemon_logs(follow: bool, initial_lines: usize) -> fbuild_core::Result<()> {
     let log_path = fbuild_paths::get_daemon_log_file();
     if !log_path.exists() {
-        eprintln!("daemon log file not found: {}", log_path.display());
-        eprintln!("the daemon may not have been started yet");
+        output::error(format!(
+            "daemon log file not found: {}",
+            log_path.display()
+        ));
+        output::error("the daemon may not have been started yet");
         return Ok(());
     }
 
@@ -26,7 +34,7 @@ pub fn show_daemon_logs(follow: bool, initial_lines: usize) -> fbuild_core::Resu
     let all_lines: Vec<&str> = content.lines().collect();
     let start = all_lines.len().saturating_sub(initial_lines);
     for line in &all_lines[start..] {
-        println!("{}", line);
+        output::result(*line);
     }
 
     if !follow {
@@ -34,7 +42,10 @@ pub fn show_daemon_logs(follow: bool, initial_lines: usize) -> fbuild_core::Resu
     }
 
     // Follow mode: poll for new content
-    println!("--- following {} (Ctrl+C to stop) ---", log_path.display());
+    output::progress(format!(
+        "--- following {} (Ctrl+C to stop) ---",
+        log_path.display()
+    ));
     let mut pos = content.len() as u64;
     loop {
         std::thread::sleep(std::time::Duration::from_millis(100));
@@ -46,7 +57,9 @@ pub fn show_daemon_logs(follow: bool, initial_lines: usize) -> fbuild_core::Resu
                 let _ = file.seek(std::io::SeekFrom::Start(pos));
                 let mut buf = String::new();
                 if file.read_to_string(&mut buf).is_ok() && !buf.is_empty() {
-                    print!("{}", buf);
+                    // Buffered tail content may end with '\n'; strip it so
+                    // result()'s appended newline doesn't double up.
+                    output::result(buf.trim_end_matches('\n'));
                 }
                 pos = current_len;
             }

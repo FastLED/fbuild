@@ -1,0 +1,6 @@
+# FastLED/fbuild#844 ships this lint with ZERO allowlist entries — per
+# user directive every call site migrates in Phase 2. Bridge / scope
+# exemptions live in `lib.rs` by file path, not here.
+#
+# Each non-empty, non-comment line is matched against the tail of each
+# source file path (slashes normalized to /).

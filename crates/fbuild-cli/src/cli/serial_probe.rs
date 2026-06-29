@@ -37,6 +37,8 @@ use clap::Subcommand;
 use fbuild_core::{FbuildError, Result};
 use fbuild_serial::boards::{board_hint, family_for_vid_pid, vcom_for_env, BoardFamily};
 
+use crate::output;
+
 #[derive(Subcommand)]
 pub enum SerialAction {
     /// Port-probe utilities — list, find, read.
@@ -114,7 +116,7 @@ fn list_ports() -> Result<()> {
         .map_err(|e| FbuildError::SerialError(format!("serial port enumeration failed: {e}")))?;
 
     if ports.is_empty() {
-        eprintln!("no serial ports visible");
+        output::warn("no serial ports visible");
         return Ok(());
     }
 
@@ -138,15 +140,17 @@ fn print_port_summary(port: &serialport::SerialPortInfo) {
             } else {
                 format!("ser={serial}  ")
             };
-            println!(
+            output::result(format!(
                 "{name:<10} {vid:04X}:{pid:04X}  {serial_field}{product}  {hint}",
                 vid = info.vid,
                 pid = info.pid,
-            );
+            ));
         }
-        serialport::SerialPortType::PciPort => println!("{name:<10} [PCI]"),
-        serialport::SerialPortType::BluetoothPort => println!("{name:<10} [Bluetooth]"),
-        serialport::SerialPortType::Unknown => println!("{name:<10} [Unknown]"),
+        serialport::SerialPortType::PciPort => output::result(format!("{name:<10} [PCI]")),
+        serialport::SerialPortType::BluetoothPort => {
+            output::result(format!("{name:<10} [Bluetooth]"))
+        }
+        serialport::SerialPortType::Unknown => output::result(format!("{name:<10} [Unknown]")),
     }
 }
 
@@ -180,7 +184,7 @@ fn find_port(vid_pid: Option<&str>, env: Option<&str>) -> Result<()> {
     for port in ports {
         if let serialport::SerialPortType::UsbPort(info) = &port.port_type {
             if (info.vid, info.pid) == target {
-                println!("{}", port.port_name);
+                output::result(&port.port_name);
                 return Ok(());
             }
         }
@@ -232,10 +236,10 @@ fn read_port(port_name: &str, baud: u32, seconds: f64, send: Option<&str>) -> Re
         .write_request_to_send(rts)
         .map_err(|e| FbuildError::SerialError(format!("set RTS={rts} on `{port_name}`: {e}")))?;
 
-    eprintln!(
+    output::progress(format!(
         "probe read: port={port_name} baud={baud} family={family:?} \
          dtr={dtr} rts={rts} seconds={seconds}"
-    );
+    ));
 
     if let Some(payload) = send {
         let bytes = unescape_send(payload);

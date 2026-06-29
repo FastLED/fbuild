@@ -7,9 +7,9 @@
 //! When an `epoch` is set, every line pushed is automatically prefixed with
 //! the elapsed time since that epoch (e.g. `"   0.46 compiling foo.cpp"`).
 
+use crate::channel::UnboundedSender;
 use std::collections::VecDeque;
 use std::time::Instant;
-use tokio::sync::mpsc::UnboundedSender;
 
 /// Centralized build output log.
 ///

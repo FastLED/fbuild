@@ -3,7 +3,7 @@
 
 use clap::Parser;
 
-use crate::{daemon_client, lib_select, mcp};
+use crate::{daemon_client, lib_select, mcp, output};
 
 use super::args::{resolve_project_dir, rewrite_args, BloatCmd, Cli, Commands};
 use super::bloat_lookup::run_bloat_lookup;
@@ -48,14 +48,14 @@ pub async fn async_main() {
 
     // Handle Ctrl+C with exit code 130 (standard POSIX SIGINT behavior, matches Python)
     ctrlc::set_handler(move || {
-        eprintln!("\nInterrupted");
+        output::warn("Interrupted");
         std::process::exit(130);
     })
     .ok();
 
     // Notify when running in dev mode (matches Python behavior)
     if std::env::var("FBUILD_DEV_MODE").is_ok_and(|v| v == "1") {
-        eprintln!("FBUILD_DEV_MODE=1 (dev mode: port 8865, ~/.fbuild/dev/)");
+        output::progress("FBUILD_DEV_MODE=1 (dev mode: port 8865, ~/.fbuild/dev/)");
     }
 
     // Extract top-level project_dir before matching (since match partially moves cli)
@@ -465,10 +465,10 @@ pub async fn async_main() {
             sketches,
         }) => {
             if let Some(bd) = &build_dir {
-                eprintln!(
-                    "warning: --build-dir {} is accepted for pio ci compatibility but not yet honored; outputs go to .fbuild/build/...",
+                output::warn(format!(
+                    "--build-dir {} is accepted for pio ci compatibility but not yet honored; outputs go to .fbuild/build/...",
                     bd
-                );
+                ));
             }
             let normalized = normalize_ci_sketches(&sketches);
             let pio_env = build_ci_pio_env(&libs, project_conf.as_deref());
@@ -535,7 +535,7 @@ pub async fn async_main() {
     };
 
     if let Err(e) = result {
-        eprintln!("error: {}", e);
+        output::error(format!("{}", e));
         std::process::exit(1);
     }
 }

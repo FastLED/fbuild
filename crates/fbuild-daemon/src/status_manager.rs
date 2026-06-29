@@ -191,7 +191,15 @@ impl StatusManager {
         }
     }
 
-    /// Atomic write: write to temp file then rename (prevents partial reads).
+    /// Atomic write: route through the canonical async helper
+    /// `fbuild_core::fs::write_atomic` so the daemon-side state file
+    /// uses the same write-tempfile / fsync / rename path as every
+    /// other state-file writer (FastLED/fbuild#844 bridge pair 6).
+    ///
+    /// Called from synchronous code paths inside the tokio runtime, so
+    /// we bridge to the async helper via `block_in_place` +
+    /// `Handle::block_on`. Matches the pattern in
+    /// `fbuild_packages::toolchain::esp32_metadata::resolve_toolchain_url_sync`.
     fn write_atomic(&self, status: &DaemonStatus) {
         let json = match serde_json::to_string_pretty(status) {
             Ok(j) => j,
@@ -201,27 +209,36 @@ impl StatusManager {
             }
         };
 
-        // Ensure parent directory exists
+        // Ensure parent directory exists. `fbuild_core::fs::write_atomic`
+        // probes for it and errors if missing — surfacing that as a
+        // simple `create_dir_all` keeps the daemon's bootstrap behaviour.
         if let Some(parent) = self.path.parent() {
             let _ = std::fs::create_dir_all(parent);
         }
 
-        // Write to temp file then rename for atomicity
-        let tmp_path = self.path.with_extension("json.tmp");
-        if let Err(e) = std::fs::write(&tmp_path, json) {
-            tracing::warn!("failed to write daemon status temp file: {}", e);
-            return;
-        }
-        if let Err(e) = std::fs::rename(&tmp_path, &self.path) {
-            // Fallback: on some Windows configurations rename across volumes may fail
+        let path = self.path.clone();
+        let result = if let Ok(handle) = tokio::runtime::Handle::try_current() {
+            tokio::task::block_in_place(|| {
+                handle.block_on(fbuild_core::fs::write_atomic(&path, json.as_bytes()))
+            })
+        } else {
+            // No tokio runtime — spin up a one-shot. Path hit only by
+            // unit tests and the (rare) standalone bootstrap before the
+            // daemon's runtime exists.
+            match tokio::runtime::Runtime::new() {
+                Ok(rt) => rt.block_on(fbuild_core::fs::write_atomic(&path, json.as_bytes())),
+                Err(e) => {
+                    tracing::warn!("failed to create tokio runtime for status write: {}", e);
+                    return;
+                }
+            }
+        };
+        if let Err(e) = result {
             tracing::warn!(
-                "failed to rename daemon status file, falling back to direct write: {}",
+                "failed to atomically write daemon status to {}: {}",
+                self.path.display(),
                 e
             );
-            if let Ok(contents) = std::fs::read_to_string(&tmp_path) {
-                let _ = std::fs::write(&self.path, contents);
-            }
-            let _ = std::fs::remove_file(&tmp_path);
         }
     }
 }

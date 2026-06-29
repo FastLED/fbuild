@@ -1232,6 +1232,7 @@ dependencies = [
  "async-trait",
  "libc",
  "prost",
+ "reqwest",
  "running-process",
  "serde",
  "serde_json",

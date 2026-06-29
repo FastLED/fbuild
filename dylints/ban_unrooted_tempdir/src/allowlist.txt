@@ -46,7 +46,6 @@ crates/fbuild-build/src/renesas/renesas_compiler.rs
 crates/fbuild-build/src/resolution.rs
 crates/fbuild-build/src/rp2040/orchestrator.rs
 crates/fbuild-build/src/sam/orchestrator.rs
-crates/fbuild-build/src/script_runtime.rs
 crates/fbuild-build/src/script_runtime_tests.rs
 crates/fbuild-build/src/stm32/orchestrator/mod.rs
 crates/fbuild-build/src/symbol_analyzer/tests.rs

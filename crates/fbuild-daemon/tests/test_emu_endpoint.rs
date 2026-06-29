@@ -72,7 +72,7 @@ async fn test_emu_endpoint_returns_structured_error_for_missing_project() {
         "verbose": false,
     });
 
-    let resp = reqwest::Client::new()
+    let resp = fbuild_core::http::client_with_timeout(Duration::from_secs(10))
         .post(format!("http://{}/api/test-emu", addr))
         .json(&body)
         .timeout(Duration::from_secs(5))

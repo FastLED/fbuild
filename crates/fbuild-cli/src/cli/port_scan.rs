@@ -28,6 +28,8 @@ use clap::Subcommand;
 use fbuild_core::{FbuildError, Result};
 use std::time::Duration;
 
+use crate::output;
+
 #[derive(Subcommand)]
 pub enum PortAction {
     /// Enumerate every visible serial port; for each, render two rows —
@@ -63,7 +65,9 @@ fn run_scan(offline: bool) -> Result<()> {
     let ports = serialport::available_ports()
         .map_err(|e| FbuildError::SerialError(format!("serial port enumeration failed: {e}")))?;
     let rendered = render_scan(&ports);
-    print!("{rendered}");
+    // render_scan terminates every row with '\n'; strip the trailing newline
+    // so result()'s newline doesn't double up.
+    output::result(rendered.trim_end_matches('\n'));
     Ok(())
 }
 
@@ -126,10 +130,9 @@ fn fetch_overlay_to(path: &std::path::Path) -> std::result::Result<(), String> {
 }
 
 fn fetch_overlay_to_inner(path: &std::path::Path) -> std::result::Result<(), String> {
-    let client = reqwest::blocking::Client::builder()
-        .timeout(Duration::from_secs(15))
-        .build()
-        .map_err(|e| format!("client build: {e}"))?;
+    // FastLED/fbuild#844: route the OS-thread blocking client through the
+    // shared bridge so all reqwest construction has one source of truth.
+    let client = fbuild_core::http::blocking_client(Duration::from_secs(15));
     fetch_overlay_to_inner_with_client(path, &client, fbuild_core::usb::USB_VIDS_PROTO_ZSTD_URL)
 }
 

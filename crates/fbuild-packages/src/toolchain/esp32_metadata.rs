@@ -6,8 +6,26 @@
 //! 3. Download actual toolchain from the resolved URL
 
 use std::path::{Path, PathBuf};
+use std::sync::OnceLock;
 
 use fbuild_core::{FbuildError, Result};
+use tokio::runtime::Runtime;
+
+/// Module-level fallback runtime for the sync `resolve_toolchain_url_sync`
+/// bridge. Same rationale as
+/// [`crate::library::library_manager::fallback_runtime`]: one process-wide
+/// runtime is cheaper than a new one per call when legacy orchestrators
+/// hit this many times during a single build.
+fn fallback_runtime() -> Result<&'static Runtime> {
+    static RT: OnceLock<Runtime> = OnceLock::new();
+    if let Some(rt) = RT.get() {
+        return Ok(rt);
+    }
+    let rt = Runtime::new().map_err(|e| {
+        FbuildError::PackageError(format!("failed to create tokio runtime: {}", e))
+    })?;
+    Ok(RT.get_or_init(|| rt))
+}
 
 /// Resolved toolchain download info from tools.json.
 #[derive(Debug)]
@@ -84,10 +102,7 @@ pub fn resolve_toolchain_url_sync(
     if let Ok(handle) = tokio::runtime::Handle::try_current() {
         tokio::task::block_in_place(|| handle.block_on(fut))
     } else {
-        let rt = tokio::runtime::Runtime::new().map_err(|e| {
-            FbuildError::PackageError(format!("failed to create tokio runtime: {}", e))
-        })?;
-        rt.block_on(fut)
+        fallback_runtime()?.block_on(fut)
     }
 }
 

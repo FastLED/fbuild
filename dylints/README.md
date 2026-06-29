@@ -64,6 +64,62 @@ itself stays on stable 1.94.1).
   lock. Existing synchronous uses exempted via `src/allowlist.txt`.
   See #826.
 
+### FastLED/fbuild#844 bridge sweep (Phase 1 — APIs + lints land together)
+
+- **`ban_bare_reqwest/`** — forbids `reqwest::Client::new()` /
+  `reqwest::ClientBuilder::new()` / `reqwest::get` /
+  `reqwest::blocking::get` outside the bridge module
+  (`crates/fbuild-core/src/http.rs`). Use
+  `fbuild_core::http::client()` /
+  `fbuild_core::http::client_with_timeout(...)` /
+  `fbuild_core::http::blocking_client(...)`. Zero allowlist.
+- **`ban_std_fs_in_async/`** — forbids `std::fs::*` in
+  `crates/fbuild-daemon/src/**` (Phase 1 scope; Phase 2 will widen
+  via HIR async-fn detection). Use `fbuild_core::fs::*` (re-exports
+  `tokio::fs`) or wrap in `tokio::task::spawn_blocking`. Zero
+  allowlist.
+- **`ban_tokio_fs_direct_import/`** — forbids `use tokio::fs[…]`
+  outside `crates/fbuild-core/src/fs.rs`. Use `use fbuild_core::fs`
+  instead so the workspace has one source of truth for the async
+  filesystem surface. Zero allowlist.
+- **`ban_std_thread_sleep/`** — forbids `std::thread::sleep` /
+  `sleep_ms` in fbuild production code. Use
+  `fbuild_core::time::sleep(...).await` (with the named
+  `POLL_*` / `*_TIMEOUT` constants where applicable). Zero
+  allowlist.
+- **`ban_std_mpsc_in_async_reachable/`** — forbids any `std::sync::mpsc`
+  item (channel, Sender, Receiver, SyncSender, sync_channel) in
+  fbuild production code. Use `fbuild_core::channel::{bounded,
+  unbounded}` (tokio mpsc) so `.recv().await` yields to the
+  runtime. Zero allowlist.
+- **`ban_tokio_mpsc_direct_import/`** — forbids `use tokio::sync::mpsc[…]`
+  outside `crates/fbuild-core/src/channel.rs`. Use `use
+  fbuild_core::channel` instead. Zero allowlist.
+- **`ban_std_fs_canonicalize/`** — forbids `std::fs::canonicalize`
+  and `tokio::fs::canonicalize` in fbuild production code. Use
+  `fbuild_core::path::canonicalize_existing(...).await` — strips
+  the Windows `\\?\` UNC prefix and returns a `NormalizedPath` with
+  platform-stable Hash/Eq/Ord. Zero allowlist.
+- **`ban_runtime_new_outside_main/`** — forbids
+  `tokio::runtime::Runtime::new` and `Builder::new_*` in production
+  code outside `main.rs`, `src/bin/*.rs`, `#[cfg(test)]` modules,
+  and `tests/**`. Restructure to `async fn`, accept a
+  `tokio::runtime::Handle`, or use `tokio::task::spawn_blocking`.
+  Zero allowlist.
+- **`ban_poison_panic/`** — flags `.unwrap()` / `.expect(...)` on
+  `LockResult` returned by `std::sync::Mutex::lock` /
+  `RwLock::read` / `RwLock::write`. Either switch to
+  `tokio::sync::Mutex` / `RwLock` (no poison concept) or handle
+  the poison: `.unwrap_or_else(|e| e.into_inner())`. Zero
+  allowlist.
+- **`ban_print_in_production/`** — forbids `println!` / `eprintln!`
+  / `print!` / `eprint!` in `crates/fbuild-cli/src/**` and
+  `crates/fbuild-build/src/**`, except `crates/fbuild-cli/src/output.rs`
+  (the bridge itself). Use `fbuild_cli::output::{progress, result,
+  warn, error, debug}` (tracing-backed) so `--quiet`,
+  `--verbose`, and `--color={auto,always,never}` flow through one
+  level filter. Bridge-only allowlist.
+
 ## Running locally
 
 ```bash

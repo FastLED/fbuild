@@ -1,5 +1,7 @@
 //! `fbuild reset` — reboot a device without re-flashing.
 
+use crate::output;
+
 pub fn run_reset(
     project_dir: String,
     environment: Option<String>,
@@ -39,14 +41,14 @@ pub fn run_reset(
         fbuild_core::FbuildError::SerialError("no serial port specified (use --port)".to_string())
     })?;
 
-    println!("resetting {} device on {}...", platform, port);
+    output::progress(format!("resetting {} device on {}...", platform, port));
     match fbuild_deploy::reset::reset_device(platform, &port, verbose)? {
         true => {
-            println!("device reset successful");
+            output::result("device reset successful");
             Ok(())
         }
         false => {
-            eprintln!("device reset failed");
+            output::error("device reset failed");
             std::process::exit(1);
         }
     }

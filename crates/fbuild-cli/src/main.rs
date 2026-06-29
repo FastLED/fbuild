@@ -2,6 +2,7 @@ mod cli;
 mod daemon_client;
 mod lib_select;
 mod mcp;
+mod output;
 
 fn main() {
     // Trampoline through a larger-stack thread: Windows' default 1 MB main-thread

@@ -5,6 +5,7 @@ use super::build::open_in_browser;
 use crate::daemon_client::{
     self, DaemonClient, DeployRequest, MonitorRequest, OperationResponse, TestEmuRequest,
 };
+use crate::output;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum CliEmulatorKind {
@@ -215,7 +216,7 @@ pub async fn run_deploy(
     {
         print_operation_streams(&resp);
     }
-    println!("{}", resp.message);
+    output::result(&resp.message);
     if !resp.success {
         std::process::exit(resp.exit_code);
     }
@@ -223,8 +224,8 @@ pub async fn run_deploy(
     if deploy_route == CliDeployRoute::Emulator(CliEmulatorKind::Avr8js) {
         if let Some(url) = resp.launch_url.as_deref() {
             if let Err(e) = open_in_browser(url).await {
-                eprintln!("warning: failed to open browser: {}", e);
-                eprintln!("open this URL manually: {}", url);
+                output::warn(format!("failed to open browser: {}", e));
+                output::warn(format!("open this URL manually: {}", url));
             }
         }
     }
@@ -265,7 +266,7 @@ pub async fn run_test_emu(
 
     let resp = client.test_emu(&req).await?;
     print_operation_streams(&resp);
-    println!("{}", resp.message);
+    output::result(&resp.message);
     if !resp.success {
         // Guarantee a non-zero exit when the daemon reports failure. A
         // structured error response carries `exit_code`, but if the
@@ -288,20 +289,21 @@ pub fn print_operation_streams(resp: &OperationResponse) {
         .as_deref()
         .filter(|text| !text.trim().is_empty())
     {
-        print!("{}", stdout);
-        if !stdout.ends_with('\n') {
-            println!();
-        }
+        // result() always appends one '\n'; strip a trailing newline so we don't
+        // double up. If there was no trailing newline, result() supplies the one
+        // the caller would have added with println!().
+        output::result(stdout.trim_end_matches('\n'));
     }
     if let Some(stderr) = resp
         .stderr
         .as_deref()
         .filter(|text| !text.trim().is_empty())
     {
-        eprint!("{}", stderr);
-        if !stderr.ends_with('\n') {
-            eprintln!();
-        }
+        // Operation stderr is in-progress diagnostic output from the emulator
+        // / build subprocess being replayed back. Route it through warn() so
+        // it shares the tracing level filter with progress(); --quiet hides it,
+        // colour/format flow through the same subscriber.
+        output::warn(stderr.trim_end_matches('\n'));
     }
 }
 
@@ -337,7 +339,7 @@ pub async fn run_monitor(
     };
 
     let resp = client.monitor(&req).await?;
-    println!("{}", resp.message);
+    output::result(&resp.message);
     if !resp.success {
         std::process::exit(resp.exit_code);
     }

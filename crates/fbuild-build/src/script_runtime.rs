@@ -69,12 +69,16 @@ pub async fn resolve_extra_script_overlay(
         )
     })?;
 
-    let temp_dir = tempfile::tempdir().map_err(|e| {
-        fbuild_core::FbuildError::BuildFailed(format!(
-            "failed to create temporary directory for extra_scripts runtime: {}",
-            e
-        ))
-    })?;
+    // FastLED/fbuild#844 (bridge pair 10): rooted under
+    // `~/.fbuild/{dev|prod}/tmp/script-runtime/` so the harness sidecar
+    // is reachable from a single user-visible directory.
+    let temp_dir =
+        tempfile::tempdir_in(fbuild_paths::temp_subdir("script-runtime")).map_err(|e| {
+            fbuild_core::FbuildError::BuildFailed(format!(
+                "failed to create temporary directory for extra_scripts runtime: {}",
+                e
+            ))
+        })?;
     let harness_path = temp_dir.path().join("fbuild_lite_scons_harness.py");
     let input_path = temp_dir.path().join("input.json");
     std::fs::write(&harness_path, HARNESS).map_err(|e| {

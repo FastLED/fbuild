@@ -348,7 +348,9 @@ mod tests {
         let out_path = tmp.path().join("avr-gcc.archive");
 
         // Blocking download (test uses standalone runtime since it's a sync #[test]).
-        let rt = tokio::runtime::Runtime::new().unwrap();
+        // `Runtime::new()` can fail (e.g. fd exhaustion); use `expect` so the
+        // assertion shows up cleanly instead of a bare `unwrap` panic message.
+        let rt = tokio::runtime::Runtime::new().expect("tokio runtime should construct");
         rt.block_on(async {
             let resp = crate::http::client()
                 .get(&url)

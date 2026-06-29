@@ -4,6 +4,8 @@
 //! - `check` — verify every cached blob's sha256 (no network)
 //! - `add`   — fetch a URL once, hash it, write a new .lnk pointing at it
 
+use crate::output;
+
 use super::args::LnkAction;
 
 pub async fn run_lnk(
@@ -34,7 +36,7 @@ pub async fn run_lnk(
             let root = resolve_root(project_dir, top_level_project_dir);
             let discovered = scan_for_lnk(&root)?;
             if discovered.is_empty() {
-                println!("no .lnk files found under {}", root.display());
+                output::result(format!("no .lnk files found under {}", root.display()));
                 return Ok(());
             }
             let cache = open_cache()?;
@@ -44,23 +46,23 @@ pub async fn run_lnk(
                 match fbuild_packages::lnk::resolve(&d.lnk, &cache) {
                     Ok(r) => {
                         ok += 1;
-                        println!(
+                        output::result(format!(
                             "ok   {}  →  {}  ({})",
                             d.path.display(),
                             r.path.display(),
                             d.lnk.sha256
-                        );
+                        ));
                     }
                     Err(e) => {
                         failed += 1;
-                        eprintln!("FAIL {}: {}", d.path.display(), e);
+                        output::error(format!("FAIL {}: {}", d.path.display(), e));
                     }
                 }
             }
-            println!(
+            output::result(format!(
                 "\nlnk pull: {ok} ok, {failed} failed (of {})",
                 discovered.len()
-            );
+            ));
             if failed > 0 {
                 std::process::exit(1);
             }
@@ -71,7 +73,7 @@ pub async fn run_lnk(
             let root = resolve_root(project_dir, top_level_project_dir);
             let discovered = scan_for_lnk(&root)?;
             if discovered.is_empty() {
-                println!("no .lnk files found under {}", root.display());
+                output::result(format!("no .lnk files found under {}", root.display()));
                 return Ok(());
             }
             let cache = open_cache()?;
@@ -93,20 +95,20 @@ pub async fn run_lnk(
                     })?;
                 let Some(entry) = entry else {
                     missing += 1;
-                    println!(
+                    output::result(format!(
                         "MISSING {}  (run `fbuild lnk pull` to fetch)",
                         d.path.display()
-                    );
+                    ));
                     continue;
                 };
                 let blob_path = PathBuf::from(entry.archive_path.unwrap_or_default());
                 if !blob_path.exists() {
                     missing += 1;
-                    println!(
+                    output::result(format!(
                         "MISSING {}  (cache index points at {} which is gone)",
                         d.path.display(),
                         blob_path.display()
-                    );
+                    ));
                     continue;
                 }
                 let bytes = std::fs::read(&blob_path).map_err(|e| {
@@ -120,32 +122,35 @@ pub async fn run_lnk(
                 let actual = format!("{:x}", h.finalize());
                 if actual == d.lnk.sha256 {
                     ok += 1;
-                    println!("ok       {}", d.path.display());
+                    output::result(format!("ok       {}", d.path.display()));
                 } else {
                     mismatched += 1;
-                    println!(
+                    output::result(format!(
                         "BAD      {}  (expected {}, got {})",
                         d.path.display(),
                         d.lnk.sha256,
                         actual
-                    );
+                    ));
                 }
             }
-            println!(
+            output::result(format!(
                 "\nlnk check: {ok} ok, {missing} missing, {mismatched} mismatched (of {})",
                 discovered.len()
-            );
+            ));
             if mismatched > 0 || missing > 0 {
                 std::process::exit(1);
             }
             Ok(())
         }
 
-        LnkAction::Add { url, output } => {
+        LnkAction::Add {
+            url,
+            output: output_arg,
+        } => {
             // Determine output path before downloading so we fail early on a
             // bad output spec.
             let basename = url.rsplit('/').next().unwrap_or("blob");
-            let output_path = match output {
+            let output_path = match output_arg {
                 Some(p) => PathBuf::from(p),
                 None => PathBuf::from(format!("{basename}.lnk")),
             };
@@ -208,12 +213,12 @@ pub async fn run_lnk(
             })?;
             f.write_all(b"\n").ok();
 
-            println!(
+            output::result(format!(
                 "wrote {}  ({} bytes, sha256={})",
                 output_path.display(),
                 bytes.len(),
                 sha
-            );
+            ));
             Ok(())
         }
     }

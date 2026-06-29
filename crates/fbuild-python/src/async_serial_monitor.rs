@@ -345,7 +345,7 @@ pub(crate) async fn post_reset_request_async(
     let url = format!("{}/api/reset", fbuild_paths::get_daemon_url());
     let payload = ResetPayload { port, board };
 
-    let resp = reqwest::Client::new()
+    let resp = fbuild_core::http::client()
         .post(&url)
         .json(&payload)
         .timeout(std::time::Duration::from_secs(10))
