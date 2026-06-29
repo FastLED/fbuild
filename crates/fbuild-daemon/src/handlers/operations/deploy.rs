@@ -272,24 +272,43 @@ pub async fn deploy(
     };
 
     let artifact_export = match resolved_output_dir.as_ref() {
-        Some(out_dir) => match export_artifacts_bundle(
-            out_dir,
-            platform,
-            &env_name,
-            Some(&firmware_path),
-            elf_path.as_deref(),
-        ) {
-            Ok(result) => Some(result),
-            Err(e) => {
-                return (
-                    StatusCode::INTERNAL_SERVER_ERROR,
-                    Json(OperationResponse::fail(
-                        request_id,
-                        format!("failed to export artifacts: {}", e),
-                    )),
-                );
+        Some(out_dir) => {
+            // fbuild#815: export_artifacts_bundle does sync std::fs I/O —
+            // move it off the axum worker thread.
+            let out_dir_owned = out_dir.clone();
+            let env_name_owned = env_name.clone();
+            let firmware_path_owned = firmware_path.clone();
+            let elf_path_owned = elf_path.clone();
+            let join_result = tokio::task::spawn_blocking(move || {
+                export_artifacts_bundle(
+                    &out_dir_owned,
+                    platform,
+                    &env_name_owned,
+                    Some(&firmware_path_owned),
+                    elf_path_owned.as_deref(),
+                )
+            })
+            .await;
+            let export_result = match join_result {
+                Ok(inner) => inner,
+                Err(join_err) => Err(fbuild_core::FbuildError::Other(format!(
+                    "artifact export task panicked: {}",
+                    join_err
+                ))),
+            };
+            match export_result {
+                Ok(result) => Some(result),
+                Err(e) => {
+                    return (
+                        StatusCode::INTERNAL_SERVER_ERROR,
+                        Json(OperationResponse::fail(
+                            request_id,
+                            format!("failed to export artifacts: {}", e),
+                        )),
+                    );
+                }
             }
-        },
+        }
         None => None,
     };
 

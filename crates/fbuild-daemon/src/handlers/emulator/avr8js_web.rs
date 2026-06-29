@@ -158,7 +158,7 @@ pub(crate) fn render_page(session_id: &str) -> String {
     )
 }
 
-pub(crate) fn load_session_manifest(
+pub(crate) async fn load_session_manifest(
     ctx: &DaemonContext,
     session_id: &str,
 ) -> fbuild_core::Result<Avr8jsSessionManifest> {
@@ -169,7 +169,7 @@ pub(crate) fn load_session_manifest(
         .ok_or_else(|| {
             fbuild_core::FbuildError::Other(format!("unknown AVR8js session '{}'", session_id))
         })?;
-    let raw = std::fs::read_to_string(&manifest_path)?;
+    let raw = tokio::fs::read_to_string(&manifest_path).await?;
     serde_json::from_str(&raw).map_err(|e| {
         fbuild_core::FbuildError::Other(format!("failed to parse AVR8js session manifest: {}", e))
     })
@@ -179,7 +179,7 @@ pub async fn avr8js_page(
     AxumPath(session_id): AxumPath<String>,
     State(ctx): State<Arc<DaemonContext>>,
 ) -> impl IntoResponse {
-    match load_session_manifest(&ctx, &session_id) {
+    match load_session_manifest(&ctx, &session_id).await {
         Ok(_) => Html(render_page(&session_id)).into_response(),
         Err(e) => (StatusCode::NOT_FOUND, e.to_string()).into_response(),
     }
@@ -199,7 +199,7 @@ pub async fn avr8js_session_json(
     AxumPath(session_id): AxumPath<String>,
     State(ctx): State<Arc<DaemonContext>>,
 ) -> impl IntoResponse {
-    match load_session_manifest(&ctx, &session_id) {
+    match load_session_manifest(&ctx, &session_id).await {
         Ok(manifest) => (
             StatusCode::OK,
             Json(Avr8jsSessionResponse {
@@ -221,8 +221,8 @@ pub async fn avr8js_firmware_hex(
     AxumPath(session_id): AxumPath<String>,
     State(ctx): State<Arc<DaemonContext>>,
 ) -> impl IntoResponse {
-    match load_session_manifest(&ctx, &session_id) {
-        Ok(manifest) => match std::fs::read_to_string(&manifest.firmware_hex) {
+    match load_session_manifest(&ctx, &session_id).await {
+        Ok(manifest) => match tokio::fs::read_to_string(&manifest.firmware_hex).await {
             Ok(hex) => (
                 [(
                     header::CONTENT_TYPE,

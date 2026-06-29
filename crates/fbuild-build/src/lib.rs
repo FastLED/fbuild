@@ -165,7 +165,13 @@ pub struct BuildParams {
     /// Used by IWYU and clang-tidy to avoid building framework core files.
     pub compiledb_only: bool,
     /// Optional sender for streaming build log lines in real-time.
-    pub log_sender: Option<std::sync::mpsc::Sender<String>>,
+    ///
+    /// Uses `tokio::sync::mpsc::UnboundedSender` so the orchestrator (running
+    /// on a tokio runtime) and the WebSocket forwarder can share one channel
+    /// without a sync→async bridge — `UnboundedSender::send` is sync and safe
+    /// to call from blocking code, while the receive side is awaited from the
+    /// async daemon handler (fbuild#818).
+    pub log_sender: Option<tokio::sync::mpsc::UnboundedSender<String>>,
     /// When true, run symbol-level memory analysis after linking.
     pub symbol_analysis: bool,
     /// Optional path to write the symbol analysis report to.

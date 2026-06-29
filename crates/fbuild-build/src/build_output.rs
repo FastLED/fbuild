@@ -10,7 +10,9 @@ use std::time::Instant;
 use fbuild_core::{BuildLog, MemoryRegion, SizeInfo, SymbolMap};
 
 /// Create a [`BuildLog`], optionally wired to a real-time streaming sender.
-pub fn create_build_log(sender: Option<std::sync::mpsc::Sender<String>>) -> BuildLog {
+pub fn create_build_log(
+    sender: Option<tokio::sync::mpsc::UnboundedSender<String>>,
+) -> BuildLog {
     match sender {
         Some(s) => BuildLog::with_sender(s),
         None => BuildLog::new(),
@@ -19,7 +21,7 @@ pub fn create_build_log(sender: Option<std::sync::mpsc::Sender<String>>) -> Buil
 
 /// Create a [`BuildLog`] with elapsed-time prefixes from the given epoch.
 pub fn create_build_log_with_epoch(
-    sender: Option<std::sync::mpsc::Sender<String>>,
+    sender: Option<tokio::sync::mpsc::UnboundedSender<String>>,
     epoch: Instant,
 ) -> BuildLog {
     match sender {
@@ -327,7 +329,7 @@ mod tests {
 
     #[test]
     fn test_create_build_log_with_sender() {
-        let (tx, rx) = std::sync::mpsc::channel();
+        let (tx, mut rx) = tokio::sync::mpsc::unbounded_channel();
         let mut log = create_build_log(Some(tx));
         log.push("test");
         assert_eq!(rx.try_recv().unwrap(), "test");

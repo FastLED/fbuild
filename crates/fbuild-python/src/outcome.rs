@@ -119,48 +119,26 @@ pub(crate) fn parse_outcome(body: &serde_json::Value) -> OperationOutcome {
 }
 
 pub(crate) fn send_op(url: &str, req: &OpRequest, timeout: f64) -> OperationOutcome {
-    let client = reqwest::blocking::Client::new();
-    match client
-        .post(url)
-        .json(req)
-        .timeout(std::time::Duration::from_secs_f64(timeout))
-        .send()
+    // Sync wrapper around `send_op_async` (FastLED/fbuild#817): builds a
+    // current-thread tokio runtime per call so we don't duplicate the HTTP
+    // transport code. If the runtime fails to build we surface a structured
+    // failure outcome identical to a network error.
+    let rt = match tokio::runtime::Builder::new_current_thread()
+        .enable_all()
+        .build()
     {
-        Ok(resp) => match resp.json::<serde_json::Value>() {
-            Ok(body) => {
-                let outcome = parse_outcome(&body);
-                if !outcome.success {
-                    if let Some(ref msg) = outcome.message {
-                        eprintln!("[fbuild] operation failed: {}", msg);
-                    }
-                    if let Some(ref stderr) = outcome.stderr {
-                        if !stderr.is_empty() {
-                            eprintln!("[fbuild] stderr:\n{}", stderr);
-                        }
-                    }
-                }
-                outcome
-            }
-            Err(e) => {
-                let msg = format!("failed to parse daemon response: {}", e);
-                eprintln!("[fbuild] {}", msg);
-                OperationOutcome {
-                    success: false,
-                    message: Some(msg),
-                    ..Default::default()
-                }
-            }
-        },
+        Ok(rt) => rt,
         Err(e) => {
-            let msg = format!("request failed: {}", e);
+            let msg = format!("failed to build tokio runtime: {}", e);
             eprintln!("[fbuild] {}", msg);
-            OperationOutcome {
+            return OperationOutcome {
                 success: false,
                 message: Some(msg),
                 ..Default::default()
-            }
+            };
         }
-    }
+    };
+    rt.block_on(send_op_async(url.to_string(), req.clone(), timeout))
 }
 
 /// Native-async counterpart to `send_op`. Issues the same HTTP POST against
