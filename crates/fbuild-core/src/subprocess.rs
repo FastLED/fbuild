@@ -211,9 +211,11 @@ pub async fn run_command_passthrough(
 
 /// Blocking variant of [`run_command`] for sync call sites.
 ///
-/// Constructs a fresh single-threaded tokio runtime to drive the async
-/// path. Only use from contexts that are *not* already inside a tokio
-/// reactor — calling this from inside an async function will panic.
+/// Drives the async subprocess path from sync call sites.
+///
+/// When called from a multithreaded tokio runtime, this temporarily blocks
+/// the current worker instead of constructing a nested runtime. Plain sync
+/// callers still get a small current-thread runtime.
 pub fn run_command_blocking(
     args: &[&str],
     cwd: Option<&Path>,
@@ -245,10 +247,10 @@ pub fn run_command_passthrough_blocking(
 }
 
 fn block_on<F: std::future::Future>(fut: F) -> F::Output {
-    // Use a fresh current-thread runtime. We deliberately do not try to
-    // pick up an ambient `Handle` here — callers of `_blocking` are sync
-    // contexts where re-entering a tokio runtime would panic anyway, and
-    // a fresh single-threaded runtime is the cheap, safe escape hatch.
+    if let Ok(handle) = tokio::runtime::Handle::try_current() {
+        return tokio::task::block_in_place(|| handle.block_on(fut));
+    }
+
     let rt = tokio::runtime::Builder::new_current_thread()
         .enable_all()
         .build()
@@ -585,6 +587,23 @@ mod tests {
         let result = run_command_blocking(&args, None, None, None).unwrap();
         assert!(result.success());
         assert!(result.stdout.trim().contains("blocking"));
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn run_command_blocking_works_from_tokio_worker() {
+        let args = if cfg!(windows) {
+            vec!["cmd", "/C", "echo blocking-runtime"]
+        } else {
+            vec!["echo", "blocking-runtime"]
+        };
+
+        let result = tokio::spawn(async move { run_command_blocking(&args, None, None, None) })
+            .await
+            .expect("worker task must not panic")
+            .expect("blocking subprocess call");
+
+        assert!(result.success());
+        assert!(result.stdout.trim().contains("blocking-runtime"));
     }
 
     #[test]
