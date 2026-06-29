@@ -462,7 +462,11 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                                 current_index: last_index,
                             };
                             if ws_sink
-                                .send(Message::Text(serde_json::to_string(&coalesced).unwrap()))
+                                .send(Message::Text(
+                                    serde_json::to_string(&coalesced).expect(
+                                        "fbuild-daemon: SerialServerMessage::Data serialization is infallible",
+                                    ),
+                                ))
                                 .await
                                 .is_err()
                             {
@@ -471,7 +475,9 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                             }
                         }
                         if ws_sink
-                            .send(Message::Text(serde_json::to_string(&other).unwrap()))
+                            .send(Message::Text(serde_json::to_string(&other).expect(
+                                "fbuild-daemon: SerialServerMessage serialization is infallible",
+                            )))
                             .await
                             .is_err()
                         {
@@ -488,7 +494,9 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                     current_index: last_index,
                 };
                 if ws_sink
-                    .send(Message::Text(serde_json::to_string(&coalesced).unwrap()))
+                    .send(Message::Text(serde_json::to_string(&coalesced).expect(
+                        "fbuild-daemon: SerialServerMessage::Data serialization is infallible",
+                    )))
                     .await
                     .is_err()
                 {

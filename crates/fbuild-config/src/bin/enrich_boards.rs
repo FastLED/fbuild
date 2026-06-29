@@ -244,7 +244,13 @@ fn enrich_board(board_path: &Path, pio_dir: &Path) -> Result<bool, String> {
     let board_id = obj
         .get("id")
         .and_then(|v| v.as_str())
-        .unwrap_or_else(|| board_path.file_stem().unwrap().to_str().unwrap());
+        .unwrap_or_else(|| {
+            board_path
+                .file_stem()
+                .expect("fbuild-config: board JSON path always has a file stem")
+                .to_str()
+                .expect("fbuild-config: board JSON file stems are ASCII")
+        });
     let platform = obj.get("platform").and_then(|v| v.as_str()).unwrap_or("");
 
     if platform.is_empty() {
@@ -340,7 +346,10 @@ fn main() {
             Err(e) => {
                 eprintln!(
                     "  Error enriching {}: {e}",
-                    board_path.file_stem().unwrap().to_string_lossy()
+                    board_path
+                        .file_stem()
+                        .expect("fbuild-config: board JSON path always has a file stem")
+                        .to_string_lossy()
                 );
                 errors += 1;
             }

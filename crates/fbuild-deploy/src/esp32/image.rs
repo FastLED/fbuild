@@ -103,10 +103,16 @@ pub(super) fn resolve_esp_image_file_offset(firmware_bin: &[u8], load_addr: u32)
                 "firmware.bin ended before segment header".to_string(),
             ));
         }
-        let seg_load_addr =
-            u32::from_le_bytes(firmware_bin[cursor..cursor + 4].try_into().unwrap());
-        let seg_len =
-            u32::from_le_bytes(firmware_bin[cursor + 4..cursor + 8].try_into().unwrap()) as usize;
+        let seg_load_addr = u32::from_le_bytes(
+            firmware_bin[cursor..cursor + 4]
+                .try_into()
+                .expect("fbuild-deploy: 4-byte slice converts to [u8; 4] (bounds checked above)"),
+        );
+        let seg_len = u32::from_le_bytes(
+            firmware_bin[cursor + 4..cursor + 8]
+                .try_into()
+                .expect("fbuild-deploy: 4-byte slice converts to [u8; 4] (bounds checked above)"),
+        ) as usize;
         let data_start = cursor + ESP_IMAGE_SEGMENT_HEADER_LEN;
         let data_end = data_start + seg_len;
         if data_end > firmware_bin.len() {
@@ -185,8 +191,11 @@ pub(super) fn repair_esp_image_checksum_and_hash(image: &mut [u8]) -> Result<()>
                 "firmware.bin ended before segment header".to_string(),
             ));
         }
-        let seg_len =
-            u32::from_le_bytes(image[cursor + 4..cursor + 8].try_into().unwrap()) as usize;
+        let seg_len = u32::from_le_bytes(
+            image[cursor + 4..cursor + 8]
+                .try_into()
+                .expect("fbuild-deploy: 4-byte slice converts to [u8; 4] (bounds checked above)"),
+        ) as usize;
         let data_start = cursor + ESP_IMAGE_SEGMENT_HEADER_LEN;
         let data_end = data_start + seg_len;
         if data_end > image.len() {

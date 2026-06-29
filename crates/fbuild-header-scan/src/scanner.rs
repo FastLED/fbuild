@@ -135,11 +135,15 @@ pub fn scan(src: &str) -> Vec<IncludeRef> {
                     && !prev_is_ident_continuation
                     && is_raw_string_open(bytes, i)
                 {
-                    let open_quote = bytes[i..].iter().position(|&c| c == b'"').unwrap() + i;
+                    let open_quote = bytes[i..]
+                        .iter()
+                        .position(|&c| c == b'"')
+                        .expect("fbuild-header-scan: is_raw_string_open guarantees '\"' ahead")
+                        + i;
                     let paren = bytes[open_quote + 1..]
                         .iter()
                         .position(|&c| c == b'(')
-                        .unwrap()
+                        .expect("fbuild-header-scan: is_raw_string_open guarantees '(' after the opening quote")
                         + open_quote
                         + 1;
                     raw_delim.clear();

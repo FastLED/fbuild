@@ -46,28 +46,40 @@ fn riscv_register_re() -> &'static Regex {
     static RE: OnceLock<Regex> = OnceLock::new();
     RE.get_or_init(|| {
         Regex::new(r"(?:MEPC|RA|SP|GP|TP|T[0-6]|S[0-9]|S1[01]|A[0-7])\s*:\s*(0x[0-9a-fA-F]+)")
-            .unwrap()
+            .expect("fbuild-serial: riscv_register_re static pattern is a valid regex")
     })
 }
 
 fn xtensa_backtrace_re() -> &'static Regex {
     static RE: OnceLock<Regex> = OnceLock::new();
-    RE.get_or_init(|| Regex::new(r"Backtrace:\s*((?:0x[0-9a-fA-F]+:0x[0-9a-fA-F]+\s*)+)").unwrap())
+    RE.get_or_init(|| {
+        Regex::new(r"Backtrace:\s*((?:0x[0-9a-fA-F]+:0x[0-9a-fA-F]+\s*)+)")
+            .expect("fbuild-serial: xtensa_backtrace_re static pattern is a valid regex")
+    })
 }
 
 fn xtensa_addr_pair_re() -> &'static Regex {
     static RE: OnceLock<Regex> = OnceLock::new();
-    RE.get_or_init(|| Regex::new(r"(0x[0-9a-fA-F]+):0x[0-9a-fA-F]+").unwrap())
+    RE.get_or_init(|| {
+        Regex::new(r"(0x[0-9a-fA-F]+):0x[0-9a-fA-F]+")
+            .expect("fbuild-serial: xtensa_addr_pair_re static pattern is a valid regex")
+    })
 }
 
 fn stack_pointer_re() -> &'static Regex {
     static RE: OnceLock<Regex> = OnceLock::new();
-    RE.get_or_init(|| Regex::new(r"0x(?:3[CcFf]|4[02]|50)[0-9a-fA-F]{6}").unwrap())
+    RE.get_or_init(|| {
+        Regex::new(r"0x(?:3[CcFf]|4[02]|50)[0-9a-fA-F]{6}")
+            .expect("fbuild-serial: stack_pointer_re static pattern is a valid regex")
+    })
 }
 
 fn abort_pc_re() -> &'static Regex {
     static RE: OnceLock<Regex> = OnceLock::new();
-    RE.get_or_init(|| Regex::new(r"abort\(\) was called at PC (0x[0-9a-fA-F]+)").unwrap())
+    RE.get_or_init(|| {
+        Regex::new(r"abort\(\) was called at PC (0x[0-9a-fA-F]+)")
+            .expect("fbuild-serial: abort_pc_re static pattern is a valid regex")
+    })
 }
 
 // --- CrashDecoder ---

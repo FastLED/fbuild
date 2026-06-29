@@ -575,7 +575,7 @@ pub async fn build(
         axum::response::Response::builder()
             .header("content-type", "application/x-ndjson")
             .body(body)
-            .unwrap()
+            .expect("fbuild-daemon: static NDJSON response builder cannot fail")
             .into_response()
     } else {
         // --- NON-STREAMING PATH (existing behavior) ---

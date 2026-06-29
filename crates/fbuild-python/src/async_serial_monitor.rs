@@ -134,7 +134,8 @@ impl AsyncSerialMonitor {
                 open_if_needed: true,
                 pre_acquire_writer: true,
             };
-            let attach_json = serde_json::to_string(&attach).unwrap();
+            let attach_json = serde_json::to_string(&attach)
+                .expect("fbuild-python: ClientMessage::Attach serialization is infallible");
 
             match tokio::time::timeout(
                 HANDSHAKE_TIMEOUT,
@@ -219,7 +220,8 @@ impl AsyncSerialMonitor {
 
         pyo3_async_runtimes::tokio::future_into_py(py, async move {
             if let Some(mut write) = ws_write_slot.lock().await.take() {
-                let detach = serde_json::to_string(&ClientMessage::Detach).unwrap();
+                let detach = serde_json::to_string(&ClientMessage::Detach)
+                    .expect("fbuild-python: ClientMessage::Detach serialization is infallible");
                 let _ = write.send(tungstenite::Message::Text(detach)).await;
                 let _ = write.send(tungstenite::Message::Close(None)).await;
             }

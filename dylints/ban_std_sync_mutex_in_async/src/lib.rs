@@ -129,7 +129,7 @@ impl<'tcx> LateLintPass<'tcx> for BanStdSyncMutexInAsync {
 }
 
 /// Walk up the HIR owner chain looking for a module annotated with
-/// `#[cfg(test)]`. Mirrors `ban_unwrap_in_daemon_handlers`.
+/// `#[cfg(test)]`. Mirrors `ban_unwrap_in_production`.
 fn owned_by_cfg_test_module(cx: &LateContext<'_>, hir_id: HirId) -> bool {
     let mut current = cx.tcx.hir_get_parent_item(hir_id);
     loop {

@@ -13,33 +13,42 @@ use rustc_span::{symbol::Symbol, FileName, RemapPathScopeComponents};
 dylint_linting::declare_late_lint! {
     /// ### What it does
     ///
-    /// Bans `.unwrap()` method calls inside files under
-    /// `crates/fbuild-daemon/src/handlers/` (any depth), with two
-    /// exemptions:
-    ///   * test files (path tail matches `*tests*.rs`), and
+    /// Bans `.unwrap()` method calls inside fbuild *production* code:
+    ///   * `crates/fbuild-daemon/src/**` (any depth), and
+    ///   * `crates/fbuild-cli/src/cli/**` (any depth).
+    ///
+    /// The following are exempt:
+    ///   * sibling test files (path tail matches `tests.rs`,
+    ///     `*_tests.rs`, or `tests_*.rs`), and
     ///   * `.unwrap()` calls inside a `#[cfg(test)] mod` block (the
     ///     lint walks the owning module chain looking for the
     ///     `cfg(test)` attribute).
     ///
     /// ### Why is this bad?
     ///
-    /// Panics in HTTP/WebSocket handler paths crash the daemon
-    /// process, which disconnects every connected client (CLI build
-    /// streams, monitor WebSockets, FastLED's `SerialMonitor`, the
-    /// FastAPI bridge). Handlers must convert errors into structured
-    /// HTTP responses or WS error frames, not panic.
+    /// In the daemon, panics in any code path (HTTP/WebSocket
+    /// handler, broker worker, lock manager, build dispatcher) crash
+    /// the process, which disconnects every connected client (CLI
+    /// build streams, monitor WebSockets, FastLED's `SerialMonitor`,
+    /// the FastAPI bridge). Production code must convert errors into
+    /// structured HTTP responses, WS error frames, or `Result`
+    /// returns instead of panicking.
     ///
-    /// PR #833 already fixed the 10 known pre-existing `.unwrap()`
-    /// violations in daemon handlers; this lint locks in that state
-    /// so new violations can't sneak in.
+    /// In the CLI, panics drop the user into a Rust backtrace
+    /// instead of a clean error message and non-zero exit, which is
+    /// a poor UX and obscures the actual problem.
+    ///
+    /// PR #833 fixed the original daemon-handler scope. FastLED/fbuild#844
+    /// item 11 widened the scope to all of `fbuild-daemon/src/` and
+    /// `fbuild-cli/src/cli/`.
     ///
     /// ### Known problems
     ///
     /// - The lint walks owning modules looking for `#[cfg(test)]`.
     ///   It does NOT detect `#[cfg(test)]` on individual *items*
     ///   (e.g. `#[cfg(test)] fn helper() {}` in a non-test module).
-    ///   Such items are rare in handler code and should be moved
-    ///   under a proper `#[cfg(test)] mod tests` instead.
+    ///   Such items should be moved under a proper
+    ///   `#[cfg(test)] mod tests` instead.
     /// - The lint resolves the *method* DefId to `Option::unwrap` /
     ///   `Result::unwrap`. Custom types that define their own
     ///   `unwrap()` method are not affected.
@@ -55,11 +64,12 @@ dylint_linting::declare_late_lint! {
     /// ```
     ///
     /// Use instead: `.unwrap_or_default()`, `.expect("…")` with a
-    /// post-mortem-friendly message, or convert the error into a
-    /// structured response.
-    pub BAN_UNWRAP_IN_DAEMON_HANDLERS,
+    /// post-mortem-friendly message, `.unwrap_or_else(|e| e.into_inner())`
+    /// for poison-tolerant `Mutex::lock()`, or convert the error
+    /// into a structured response (`?` when the fn returns `Result`).
+    pub BAN_UNWRAP_IN_PRODUCTION,
     Deny,
-    "ban .unwrap() inside fbuild-daemon HTTP/WS handler code"
+    "ban .unwrap() inside fbuild production code (daemon + cli/cli/**)"
 }
 
 /// Methods we ban. Matched on the canonical DefId path returned by
@@ -73,10 +83,14 @@ const BANNED_METHOD_PATHS: &[&[&str]] = &[
     &["std", "result", "Result", "unwrap"],
 ];
 
-/// Scope: any file path matching this prefix is in scope.
-const HANDLERS_DIR: &str = "crates/fbuild-daemon/src/handlers/";
+/// In-scope path prefixes. A file is in scope if its (normalized,
+/// forward-slash) path contains any of these substrings.
+const IN_SCOPE_PREFIXES: &[&str] = &[
+    "crates/fbuild-daemon/src/",
+    "crates/fbuild-cli/src/cli/",
+];
 
-impl<'tcx> LateLintPass<'tcx> for BanUnwrapInDaemonHandlers {
+impl<'tcx> LateLintPass<'tcx> for BanUnwrapInProduction {
     fn check_expr(&mut self, cx: &LateContext<'tcx>, expr: &'tcx Expr<'tcx>) {
         let filename = source_filename(cx, expr.span);
         let normalized = normalize_slashes(&filename);
@@ -154,16 +168,19 @@ fn attr_is_cfg_test(attr: &rustc_hir::Attribute) -> bool {
 
 fn emit_lint(cx: &LateContext<'_>, span: rustc_span::Span) {
     cx.opt_span_lint(
-        BAN_UNWRAP_IN_DAEMON_HANDLERS,
+        BAN_UNWRAP_IN_PRODUCTION,
         Some(span),
         DiagDecorator(|diag| {
             diag.primary_message(
-                "`.unwrap()` inside an fbuild-daemon handler can crash the daemon and \
-                 disconnect every connected client. Convert the error into a structured \
-                 response (HTTP 500 / WS error frame) or use `.unwrap_or_default()` / \
-                 `.expect(\"<post-mortem-friendly reason>\")`. Tests are exempt — either \
-                 move the call into a `#[cfg(test)] mod tests { ... }` block or rename \
-                 the file to `*tests*.rs`.",
+                "`.unwrap()` inside fbuild production code (fbuild-daemon/src/** or \
+                 fbuild-cli/src/cli/**) can crash the daemon / drop the CLI user into \
+                 a Rust backtrace. Convert the error into a structured response \
+                 (HTTP 500 / WS error frame), propagate it with `?` if the fn returns \
+                 `Result`, use `.unwrap_or_else(|e| e.into_inner())` for poison-tolerant \
+                 `Mutex::lock()`, or use `.expect(\"<post-mortem-friendly reason>\")` \
+                 with an actionable invariant message. Tests are exempt — either move \
+                 the call into a `#[cfg(test)] mod tests { ... }` block or put it in \
+                 a sibling `tests.rs` / `*_tests.rs` / `tests_*.rs` file.",
             );
         }),
     );
@@ -187,19 +204,28 @@ fn source_filename(cx: &LateContext<'_>, span: rustc_span::Span) -> String {
 }
 
 fn in_scope(normalized: &str) -> bool {
-    normalized.contains(HANDLERS_DIR)
+    IN_SCOPE_PREFIXES
+        .iter()
+        .any(|prefix| normalized.contains(prefix))
 }
 
+/// A "sibling test file" is one whose base name marks the file itself
+/// as test code (not production), matching:
+///   * `tests.rs`
+///   * `*_tests.rs` (e.g. `websockets_tests.rs`)
+///   * `tests_*.rs` (e.g. `tests_npm_cache.rs`, `tests_process.rs`)
 fn is_test_file(normalized: &str) -> bool {
     let Some(name) = normalized.rsplit('/').next() else {
         return false;
     };
-    // Match files whose base name contains "tests" (e.g.
-    // `websockets_tests.rs`, `tests_npm_cache.rs`,
-    // `tests_process.rs`, `tests_select_runner.rs`, `tests_outcome.rs`,
-    // `tests.rs`). A plain `tests` substring is enough — the handler
-    // tree doesn't use `tests` as a prefix for non-test code.
-    name.contains("tests") && name.ends_with(".rs")
+    if !name.ends_with(".rs") {
+        return false;
+    }
+    if name == "tests.rs" {
+        return true;
+    }
+    let stem = &name[..name.len() - 3]; // strip ".rs"
+    stem.ends_with("_tests") || stem.starts_with("tests_")
 }
 
 fn normalize_slashes(path: &str) -> String {
@@ -226,7 +252,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn handler_paths_are_in_scope() {
+    fn daemon_paths_are_in_scope() {
         assert!(in_scope(
             "crates/fbuild-daemon/src/handlers/operations/build.rs"
         ));
@@ -234,31 +260,70 @@ mod tests {
         assert!(in_scope(
             "/anywhere/crates/fbuild-daemon/src/handlers/emulator/qemu_deploy.rs"
         ));
+        // Widened scope: all of fbuild-daemon/src/, not just handlers/.
+        assert!(in_scope("crates/fbuild-daemon/src/context.rs"));
+        assert!(in_scope("crates/fbuild-daemon/src/main.rs"));
+        assert!(in_scope("crates/fbuild-daemon/src/broker/session.rs"));
     }
 
     #[test]
-    fn non_handler_paths_are_out_of_scope() {
-        assert!(!in_scope("crates/fbuild-daemon/src/context.rs"));
-        assert!(!in_scope("crates/fbuild-daemon/src/main.rs"));
-        assert!(!in_scope("crates/fbuild-cli/src/cli/build.rs"));
-    }
-
-    #[test]
-    fn test_files_are_exempt_by_name() {
-        assert!(is_test_file(
-            "crates/fbuild-daemon/src/handlers/websockets_tests.rs"
+    fn cli_cli_paths_are_in_scope() {
+        assert!(in_scope("crates/fbuild-cli/src/cli/build.rs"));
+        assert!(in_scope("crates/fbuild-cli/src/cli/deploy.rs"));
+        assert!(in_scope(
+            "/anywhere/crates/fbuild-cli/src/cli/clang_tools.rs"
         ));
+    }
+
+    #[test]
+    fn cli_non_cli_paths_are_out_of_scope() {
+        // Only crates/fbuild-cli/src/cli/** is in scope, not the rest of fbuild-cli.
+        assert!(!in_scope("crates/fbuild-cli/src/main.rs"));
+        assert!(!in_scope("crates/fbuild-cli/src/lib_select.rs"));
+        assert!(!in_scope("crates/fbuild-cli/src/mcp/server.rs"));
+    }
+
+    #[test]
+    fn other_crates_are_out_of_scope() {
+        assert!(!in_scope("crates/fbuild-core/src/lib.rs"));
+        assert!(!in_scope("crates/fbuild-build/src/compiler.rs"));
+        assert!(!in_scope("crates/fbuild-serial/src/crash_decoder.rs"));
+    }
+
+    #[test]
+    fn sibling_test_files_are_exempt() {
+        // Plain `tests.rs`
         assert!(is_test_file(
             "crates/fbuild-daemon/src/handlers/operations/tests.rs"
         ));
+        // `*_tests.rs`
+        assert!(is_test_file(
+            "crates/fbuild-daemon/src/handlers/websockets_tests.rs"
+        ));
+        // `tests_*.rs`
         assert!(is_test_file(
             "crates/fbuild-daemon/src/handlers/emulator/tests_npm_cache.rs"
         ));
+        assert!(is_test_file(
+            "crates/fbuild-cli/src/cli/tests_select_runner.rs"
+        ));
+    }
+
+    #[test]
+    fn production_files_are_not_marked_as_test() {
+        // Per FastLED/fbuild#844 item 11: the old substring-based test detection
+        // accidentally exempted any file with "tests" in its name. The new
+        // detection requires the specific suffixes/prefixes above.
         assert!(!is_test_file(
             "crates/fbuild-daemon/src/handlers/operations/build.rs"
         ));
         assert!(!is_test_file(
             "crates/fbuild-daemon/src/handlers/websockets.rs"
+        ));
+        // A production file that merely contains "tests" but doesn't match
+        // the patterns must NOT be exempt.
+        assert!(!is_test_file(
+            "crates/fbuild-daemon/src/run_tests_pipeline.rs"
         ));
     }
 }
