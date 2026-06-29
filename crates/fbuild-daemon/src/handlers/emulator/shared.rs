@@ -7,6 +7,7 @@
 //! flags, `monitor_outcome_to_emulator`).
 
 use crate::handlers::operations::{MonitorOutcome, MonitorState};
+use fbuild_core::channel::{unbounded, UnboundedSender};
 use fbuild_core::emulator::EmulatorOutcome;
 use fbuild_packages::{Package, Toolchain};
 use std::path::{Path, PathBuf};
@@ -167,7 +168,7 @@ fn apply_windows_process_flags(_cmd: &mut tokio::process::Command, _exe_path: &P
 pub(crate) async fn spawn_line_reader(
     stream: impl tokio::io::AsyncRead + Unpin + Send + 'static,
     is_stderr: bool,
-    tx: tokio::sync::mpsc::UnboundedSender<ProcessEvent>,
+    tx: UnboundedSender<ProcessEvent>,
 ) {
     let mut lines = BufReader::new(stream).lines();
     while let Ok(Some(line)) = lines.next_line().await {
@@ -214,7 +215,7 @@ pub(crate) async fn run_qemu_process(
         fbuild_core::FbuildError::DeployFailed(format!("failed to capture {} stderr", label))
     })?;
 
-    let (tx, mut rx) = tokio::sync::mpsc::unbounded_channel::<ProcessEvent>();
+    let (tx, mut rx) = unbounded::<ProcessEvent>();
     let stdout_task = tokio::spawn(spawn_line_reader(stdout, false, tx.clone()));
     let stderr_task = tokio::spawn(spawn_line_reader(stderr, true, tx));
 

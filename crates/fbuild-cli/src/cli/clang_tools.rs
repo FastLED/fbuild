@@ -2,6 +2,8 @@
 //! `iwyu` (include-what-you-use), plus a couple of cache + filter helpers
 //! used by them.
 
+use crate::output;
+
 use super::build::{normalize_path, run_build};
 
 /// Run IWYU (include-what-you-use) analysis with ESP32 cross-compilation support.
@@ -26,15 +28,18 @@ pub async fn run_iwyu(
         fbuild_packages::toolchain::ClangComponentKind::Iwyu,
     );
     let tool_path = component.get_binary("include-what-you-use").await?;
-    println!("Using include-what-you-use: {}", tool_path.display());
+    output::progress(format!(
+        "Using include-what-you-use: {}",
+        tool_path.display()
+    ));
 
     // Step 2: Generate compile_commands.json via fbuild daemon (skip if it already exists)
     let project_path = std::path::Path::new(&project_dir);
     let db_path = project_path.join("compile_commands.json");
     if db_path.exists() {
-        println!("Using existing compile_commands.json");
+        output::progress("Using existing compile_commands.json");
     } else {
-        println!("Generating compile_commands.json...");
+        output::progress("Generating compile_commands.json...");
         run_build(
             project_dir.clone(),
             environment.clone(),
@@ -95,17 +100,20 @@ pub async fn run_iwyu(
         .collect();
 
     if source_entries.is_empty() {
-        println!("No source files found in compile_commands.json under src/");
+        output::result("No source files found in compile_commands.json under src/");
         return Ok(());
     }
 
     // Step 4: Find GCC toolchain builtin include dirs
     let gcc_includes = fbuild_packages::toolchain::clang::find_gcc_builtin_include_dirs();
     if !gcc_includes.is_empty() {
-        println!("Found {} GCC builtin include dir(s)", gcc_includes.len());
+        output::progress(format!(
+            "Found {} GCC builtin include dir(s)",
+            gcc_includes.len()
+        ));
         if verbose {
             for inc in &gcc_includes {
-                println!("  {}", inc.display());
+                output::debug(format!("  {}", inc.display()));
             }
         }
     }
@@ -203,13 +211,16 @@ pub async fn run_iwyu(
     let iwyu_json = serde_json::to_string_pretty(&iwyu_entries).map_err(|e| {
         fbuild_core::FbuildError::Other(format!("failed to serialize IWYU compile database: {}", e))
     })?;
-    std::fs::write(&iwyu_db_path, iwyu_json).map_err(|e| {
-        fbuild_core::FbuildError::Other(format!(
-            "failed to write {}: {}",
-            iwyu_db_path.display(),
-            e
-        ))
-    })?;
+    // Atomic write — FastLED/fbuild#844 bridge pair 6 (IWYU compile DB).
+    fbuild_core::fs::write_atomic(&iwyu_db_path, iwyu_json)
+        .await
+        .map_err(|e| {
+            fbuild_core::FbuildError::Other(format!(
+                "failed to write {}: {}",
+                iwyu_db_path.display(),
+                e
+            ))
+        })?;
     // Step 6: Set up zccache-style content-addressed cache for IWYU results.
     // Cache key = blake3(source_content + iwyu_entry_json) per file.
     let cache_dir = iwyu_dir_path.join("cache");
@@ -227,10 +238,10 @@ pub async fn run_iwyu(
         })
         .collect();
 
-    println!(
+    output::progress(format!(
         "Running include-what-you-use on {} source file(s)...",
         source_entries.len()
-    );
+    ));
 
     // Step 7: Run IWYU in parallel with caching
     let jobs = std::thread::available_parallelism()
@@ -341,7 +352,10 @@ pub async fn run_iwyu(
             Ok(stderr) => {
                 let filtered = filter_iwyu_output(&stderr, &src_path);
                 if !filtered.trim().is_empty() {
-                    print!("{}", filtered);
+                    // filter_iwyu_output already terminates each line with '\n'; strip
+                    // the final trailing newline so result()'s own newline doesn't
+                    // double up.
+                    output::result(filtered.trim_end_matches('\n'));
                     total_suggestions += filtered
                         .lines()
                         .filter(|l| l.contains("should add") || l.contains("should remove"))
@@ -349,20 +363,23 @@ pub async fn run_iwyu(
                 }
             }
             Err(e) => {
-                eprintln!("failed to run include-what-you-use on {}: {}", file, e);
+                output::error(format!(
+                    "failed to run include-what-you-use on {}: {}",
+                    file, e
+                ));
                 failed_files.push(file);
             }
         }
     }
 
-    println!("\n--- include-what-you-use summary ---");
-    println!("Suggestions: {}", total_suggestions);
-    println!(
+    output::result("\n--- include-what-you-use summary ---");
+    output::result(format!("Suggestions: {}", total_suggestions));
+    output::result(format!(
         "Cache:       {} hit(s), {} miss(es)",
         cache_hits, cache_misses
-    );
+    ));
     if !failed_files.is_empty() {
-        println!("Failed:      {} file(s)", failed_files.len());
+        output::result(format!("Failed:      {} file(s)", failed_files.len()));
     }
 
     if !failed_files.is_empty() {
@@ -473,10 +490,14 @@ pub async fn run_clang_tool(
     // Step 1: Ensure tool is installed
     let component = fbuild_packages::toolchain::ClangComponent::new(kind);
     let tool_path = component.get_binary(binary_name).await?;
-    println!("Using {}: {}", binary_name, tool_path.display());
+    output::progress(format!(
+        "Using {}: {}",
+        binary_name,
+        tool_path.display()
+    ));
 
     // Step 2: Generate compile_commands.json via fbuild daemon
-    println!("Generating compile_commands.json...");
+    output::progress("Generating compile_commands.json...");
     run_build(
         project_dir.clone(),
         environment.clone(),
@@ -521,20 +542,20 @@ pub async fn run_clang_tool(
         .collect();
 
     if source_files.is_empty() {
-        println!("No source files found in compile_commands.json under src/");
+        output::result("No source files found in compile_commands.json under src/");
         return Ok(());
     }
-    println!(
+    output::progress(format!(
         "Running {} on {} source file(s)...",
         binary_name,
         source_files.len()
-    );
+    ));
 
     // Step 4: Run tool in parallel with ncpus * 2
     let jobs = std::thread::available_parallelism()
         .map(|n| n.get() * 2)
         .unwrap_or(4);
-    println!("Using {} parallel jobs", jobs);
+    output::progress(format!("Using {} parallel jobs", jobs));
 
     let semaphore = std::sync::Arc::new(tokio::sync::Semaphore::new(jobs));
     let project_dir_arc = std::sync::Arc::new(project_dir.clone());
@@ -588,12 +609,14 @@ pub async fn run_clang_tool(
             .await
             .map_err(|e| fbuild_core::FbuildError::Other(format!("task join error: {}", e)))?;
         match result {
-            Ok(output) => {
-                let stdout = String::from_utf8_lossy(&output.stdout);
-                let stderr = String::from_utf8_lossy(&output.stderr);
+            Ok(out) => {
+                let stdout = String::from_utf8_lossy(&out.stdout);
+                let stderr = String::from_utf8_lossy(&out.stderr);
                 let combined = format!("{}{}", stdout, stderr);
                 if !combined.trim().is_empty() {
-                    print!("{}", combined);
+                    // clang-tidy already terminates each line with '\n'; strip the
+                    // final trailing newline so result()'s newline doesn't double up.
+                    output::result(combined.trim_end_matches('\n'));
                 }
                 for line in combined.lines() {
                     if line.contains("warning:") {
@@ -605,17 +628,17 @@ pub async fn run_clang_tool(
                 }
             }
             Err(e) => {
-                eprintln!("failed to run {} on {}: {}", binary_name, file, e);
+                output::error(format!("failed to run {} on {}: {}", binary_name, file, e));
                 failed_files.push(file);
             }
         }
     }
 
-    println!("\n--- {} summary ---", binary_name);
-    println!("Warnings: {}", total_warnings);
-    println!("Errors:   {}", total_errors);
+    output::result(format!("\n--- {} summary ---", binary_name));
+    output::result(format!("Warnings: {}", total_warnings));
+    output::result(format!("Errors:   {}", total_errors));
     if !failed_files.is_empty() {
-        println!("Failed:   {} file(s)", failed_files.len());
+        output::result(format!("Failed:   {} file(s)", failed_files.len()));
     }
 
     if total_errors > 0 || !failed_files.is_empty() {

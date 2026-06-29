@@ -9,6 +9,8 @@
 //! `.vscode/settings.json`, and `.vscode/extensions.json` at the project root.
 //! It does not touch the build pipeline.
 
+use crate::output;
+
 use super::build::{normalize_path, run_build};
 
 /// Generate clangd / VS Code configuration for the project's default env.
@@ -22,14 +24,14 @@ pub async fn run_clangd_config(
 
     // Step 1: Resolve the environment name (explicit -e wins, else default).
     let env_name = resolve_env_name(project_path, environment)?;
-    println!("Using environment: {}", env_name);
+    output::progress(format!("Using environment: {}", env_name));
 
     // Step 2: Ensure compile_commands.json exists at the project root.
     let db_path = project_path.join("compile_commands.json");
     if db_path.exists() {
-        println!("Using existing compile_commands.json");
+        output::progress("Using existing compile_commands.json");
     } else {
-        println!("Generating compile_commands.json...");
+        output::progress("Generating compile_commands.json...");
         run_build(
             project_dir.clone(),
             Some(env_name.clone()),
@@ -56,7 +58,7 @@ pub async fn run_clangd_config(
     // Step 3: Pull the real cross-compiler path out of the compile database.
     let compiler = extract_compiler_path(&db_path)?;
     let query_driver = compiler_query_driver_glob(&compiler);
-    println!("Detected compiler: {}", compiler);
+    output::progress(format!("Detected compiler: {}", compiler));
 
     // Step 4: Write .clangd
     let clangd_path = project_path.join(".clangd");
@@ -80,35 +82,38 @@ pub async fn run_clangd_config(
     })?;
 
     // Step 6: Write .vscode/extensions.json only if it does not already exist.
+    // Atomic write — FastLED/fbuild#844 bridge pair 6 (state-file write).
     let extensions_path = vscode_dir.join("extensions.json");
     let wrote_extensions = if extensions_path.exists() {
         false
     } else {
-        std::fs::write(&extensions_path, render_extensions_json()).map_err(|e| {
-            fbuild_core::FbuildError::Other(format!(
-                "failed to write {}: {}",
-                extensions_path.display(),
-                e
-            ))
-        })?;
+        fbuild_core::fs::write_atomic(&extensions_path, render_extensions_json())
+            .await
+            .map_err(|e| {
+                fbuild_core::FbuildError::Other(format!(
+                    "failed to write {}: {}",
+                    extensions_path.display(),
+                    e
+                ))
+            })?;
         true
     };
 
     // Step 7: Summary.
-    println!("\nWrote clangd configuration:");
-    println!("  {}", db_path.display());
-    println!("  {}", clangd_path.display());
-    println!("  {}", settings_path.display());
+    output::result("\nWrote clangd configuration:");
+    output::result(format!("  {}", db_path.display()));
+    output::result(format!("  {}", clangd_path.display()));
+    output::result(format!("  {}", settings_path.display()));
     if wrote_extensions {
-        println!("  {}", extensions_path.display());
+        output::result(format!("  {}", extensions_path.display()));
     } else {
-        println!(
+        output::result(format!(
             "  {} (left unchanged — already exists)",
             extensions_path.display()
-        );
+        ));
     }
-    println!("\nInstall the clangd extension (llvm-vs-code-extensions.vscode-clangd),");
-    println!("then run \"clangd: Restart language server\" in VS Code to pick up the config.");
+    output::result("\nInstall the clangd extension (llvm-vs-code-extensions.vscode-clangd),");
+    output::result("then run \"clangd: Restart language server\" in VS Code to pick up the config.");
 
     Ok(())
 }

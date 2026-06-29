@@ -15,15 +15,33 @@
 //! and return the lease + path.
 
 use std::path::{Path, PathBuf};
+use std::sync::OnceLock;
 
 use fbuild_core::{FbuildError, Result};
 use sha2::{Digest, Sha256};
+use tokio::runtime::Runtime;
 use tracing::{debug, info};
 
 use super::format::LnkFile;
 use crate::disk_cache::{CacheEntry, Kind, Lease};
 use crate::downloader::download_file;
 use crate::DiskCache;
+
+/// Module-level fallback runtime for the sync `.lnk` resolver bridge.
+///
+/// See [`crate::library::library_manager::fallback_runtime`] for the same
+/// pattern — building a Tokio runtime per call is expensive and pointless
+/// when this module gets hit repeatedly during a build.
+fn fallback_runtime() -> Result<&'static Runtime> {
+    static RT: OnceLock<Runtime> = OnceLock::new();
+    if let Some(rt) = RT.get() {
+        return Ok(rt);
+    }
+    let rt = Runtime::new().map_err(|e| {
+        FbuildError::PackageError(format!("failed to create tokio runtime: {}", e))
+    })?;
+    Ok(RT.get_or_init(|| rt))
+}
 
 /// A successfully resolved `.lnk` blob. Holds a `Lease` that keeps the
 /// blob pinned in the cache; the lease drops when this struct does.
@@ -117,10 +135,7 @@ pub fn resolve(lnk: &LnkFile, cache: &DiskCache) -> Result<ResolvedBlob> {
         if let Ok(handle) = tokio::runtime::Handle::try_current() {
             tokio::task::block_in_place(|| handle.block_on(fut))?
         } else {
-            let rt = tokio::runtime::Runtime::new().map_err(|e| {
-                FbuildError::PackageError(format!("failed to create tokio runtime: {}", e))
-            })?;
-            rt.block_on(fut)?
+            fallback_runtime()?.block_on(fut)?
         }
     };
 

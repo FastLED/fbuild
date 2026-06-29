@@ -1,0 +1,8 @@
+# FastLED/fbuild#844 ships this lint with ZERO allowlist entries — per
+# user directive every reqwest call site migrates to fbuild_core::http
+# in Phase 2. The bridge module itself is exempted by file path in
+# `lib.rs` (`is_bridge_module`) rather than via this file.
+#
+# Each non-empty, non-comment line is matched against the tail of each
+# source file path (slashes normalized to /). Add an entry ONLY for
+# files that legitimately need to construct a bare reqwest client.

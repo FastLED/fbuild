@@ -3,6 +3,7 @@
 use crate::daemon_client::{
     self, DaemonClient, DeviceLeaseConflictResponse, DeviceLeaseInfoResponse,
 };
+use crate::output;
 
 use super::args::DeviceAction;
 
@@ -14,14 +15,14 @@ pub async fn run_device(action: DeviceAction) -> fbuild_core::Result<()> {
         DeviceAction::List { refresh } => {
             let resp = client.list_devices(refresh).await?;
             if resp.devices.is_empty() {
-                println!("no devices found");
+                output::result("no devices found");
                 return Ok(());
             }
-            println!(
+            output::result(format!(
                 "{:<20} {:<12} {:<12} {:<24} DESCRIPTION",
                 "PORT", "DEVICE ID", "LEASE", "HOLDER"
-            );
-            println!("{}", "-".repeat(88));
+            ));
+            output::result("-".repeat(88));
             for dev in &resp.devices {
                 let id = dev.device_id.as_deref().unwrap_or("-");
                 let lease = lease_summary(dev.exclusive_lease.as_ref(), dev.monitor_count);
@@ -36,21 +37,21 @@ pub async fn run_device(action: DeviceAction) -> fbuild_core::Result<()> {
                 // older than the resolver wiring), fall back to the raw
                 // description so behavior is identical to pre-resolver.
                 let pretty = device_pretty_name(dev);
-                println!(
+                output::result(format!(
                     "{:<20} {:<12} {:<12} {:<24} {}",
                     dev.port,
                     id,
                     lease,
                     holder,
                     device_description(&pretty, dev.previous_port.as_deref())
-                );
+                ));
             }
-            println!("\n{} device(s) found", resp.devices.len());
+            output::result(format!("\n{} device(s) found", resp.devices.len()));
         }
         DeviceAction::Status { port } => {
             let resp = client.device_status(&port).await?;
             if !resp.success {
-                eprintln!("error: {}", resp.description);
+                output::error(&resp.description);
                 return Ok(());
             }
             let connected = if resp.is_connected {
@@ -58,38 +59,38 @@ pub async fn run_device(action: DeviceAction) -> fbuild_core::Result<()> {
             } else {
                 "disconnected"
             };
-            println!("  {}", resp.port);
-            println!("    Device ID: {}", resp.device_id);
+            output::result(format!("  {}", resp.port));
+            output::result(format!("    Device ID: {}", resp.device_id));
             if let Some(ref vendor) = resp.vendor_name {
-                println!("    Vendor: {}", vendor);
+                output::result(format!("    Vendor: {}", vendor));
             }
             if let Some(ref product) = resp.product_name {
-                println!("    Product: {}", product);
+                output::result(format!("    Product: {}", product));
             }
-            println!("    Description: {}", resp.description);
+            output::result(format!("    Description: {}", resp.description));
             if let Some(ref serial) = resp.serial_number {
-                println!("    Serial: {}", serial);
+                output::result(format!("    Serial: {}", serial));
             }
             if let Some(ref previous_port) = resp.previous_port {
-                println!("    Previous port: {}", previous_port);
+                output::result(format!("    Previous port: {}", previous_port));
             }
-            println!("    Status: {}", connected);
-            println!(
+            output::result(format!("    Status: {}", connected));
+            output::result(format!(
                 "    Available: {}",
                 if resp.available_for_exclusive {
                     "yes"
                 } else {
                     "no"
                 }
-            );
+            ));
             if let Some(ref holder) = resp.exclusive_holder {
-                println!("    Exclusive holder: {}", holder);
+                output::result(format!("    Exclusive holder: {}", holder));
             }
             if let Some(ref lease) = resp.exclusive_lease {
                 print_lease("    Exclusive lease", lease);
             }
             if resp.monitor_count > 0 {
-                println!("    Monitor sessions: {}", resp.monitor_count);
+                output::result(format!("    Monitor sessions: {}", resp.monitor_count));
                 for lease in &resp.monitor_leases {
                     print_lease("      Monitor lease", lease);
                 }
@@ -105,12 +106,12 @@ pub async fn run_device(action: DeviceAction) -> fbuild_core::Result<()> {
                 .device_lease(&port, &lease_type, &description, track_serial)
                 .await?;
             if resp.success {
-                println!("lease acquired on '{}'", port);
+                output::result(format!("lease acquired on '{}'", port));
                 if let Some(ref id) = resp.lease_id {
-                    println!("  lease_id: {}", id);
+                    output::result(format!("  lease_id: {}", id));
                 }
             } else {
-                eprintln!("error: {}", resp.message);
+                output::error(&resp.message);
                 if let Some(ref conflict) = resp.conflict {
                     print_conflict(conflict);
                 }
@@ -119,17 +120,17 @@ pub async fn run_device(action: DeviceAction) -> fbuild_core::Result<()> {
         DeviceAction::Release { port, lease_id } => {
             let resp = client.device_release(&port, lease_id.as_deref()).await?;
             if resp.success {
-                println!("{}", resp.message);
+                output::result(&resp.message);
             } else {
-                eprintln!("error: {}", resp.message);
+                output::error(&resp.message);
             }
         }
         DeviceAction::Take { port, reason } => {
             let resp = client.device_preempt(&port, &reason).await?;
             if resp.success {
-                println!("{}", resp.message);
+                output::result(&resp.message);
             } else {
-                eprintln!("error: {}", resp.message);
+                output::error(&resp.message);
             }
         }
     }
@@ -146,24 +147,33 @@ fn lease_summary(exclusive: Option<&DeviceLeaseInfoResponse>, monitor_count: usi
 }
 
 fn print_lease(label: &str, lease: &DeviceLeaseInfoResponse) {
-    println!("{}:", label);
-    println!("      lease_id: {}", lease.lease_id);
-    println!("      type: {}", lease.lease_type);
-    println!("      client_id: {}", lease.client_id);
-    println!("      description: {}", empty_dash(&lease.description));
-    println!("      acquired_at: {:.3}", lease.acquired_at);
-    println!("      track_serial: {}", lease.track_serial);
+    output::result(format!("{}:", label));
+    output::result(format!("      lease_id: {}", lease.lease_id));
+    output::result(format!("      type: {}", lease.lease_type));
+    output::result(format!("      client_id: {}", lease.client_id));
+    output::result(format!(
+        "      description: {}",
+        empty_dash(&lease.description)
+    ));
+    output::result(format!("      acquired_at: {:.3}", lease.acquired_at));
+    output::result(format!("      track_serial: {}", lease.track_serial));
 }
 
 fn print_conflict(conflict: &DeviceLeaseConflictResponse) {
-    eprintln!(
+    output::error(format!(
         "  holder: {} ({})",
         conflict.holder.client_id,
         empty_dash(&conflict.holder.description)
-    );
-    eprintln!("  lease_id: {}", conflict.holder.lease_id);
-    eprintln!("  device: {} {}", conflict.port, conflict.device_id);
-    eprintln!("  description: {}", empty_dash(&conflict.description));
+    ));
+    output::error(format!("  lease_id: {}", conflict.holder.lease_id));
+    output::error(format!(
+        "  device: {} {}",
+        conflict.port, conflict.device_id
+    ));
+    output::error(format!(
+        "  description: {}",
+        empty_dash(&conflict.description)
+    ));
 }
 
 fn empty_dash(value: &str) -> &str {

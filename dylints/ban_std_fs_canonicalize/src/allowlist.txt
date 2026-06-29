@@ -1,0 +1,18 @@
+# FastLED/fbuild#844 — Phase 2 migration.
+#
+# Each non-empty, non-comment line is matched against the tail of each
+# source file path (slashes normalized to /). Bridge / scope exemptions
+# live in `lib.rs` by file path, not here.
+#
+# The entries below are sync `canon()` helpers (and their colocated
+# `#[cfg(test)]` blocks) that live on hot LDF paths. Converting them to
+# async would cascade through `fbuild_header_scan::walk{,_with_state}` →
+# `fbuild_library_select::resolve{,_with_stats}` → 9 downstream call
+# sites in `fbuild-daemon`, `fbuild-build`, `fbuild-test-support`, and
+# `fbuild-cli`, none of which are in this PR's scope. The `canon` helper
+# is called from within a rayon-parallel walker where a blocking
+# `tokio::fs` call would deadlock the reactor; the sync `std::fs`
+# variant is the deliberate choice. See FastLED/fbuild#844 Phase 2.
+crates/fbuild-header-scan/src/walker.rs
+crates/fbuild-library-select/src/lib.rs
+crates/fbuild-cli/src/lib_select.rs

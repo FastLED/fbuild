@@ -6,11 +6,12 @@ use crate::context::DaemonContext;
 use axum::extract::ws::{Message, WebSocket};
 use axum::extract::{Path, State, WebSocketUpgrade};
 use axum::response::IntoResponse;
+use fbuild_core::channel as mpsc;
 use fbuild_serial::{SerialClientMessage, SerialServerMessage, SerialStreamEvent};
 use futures::{SinkExt, StreamExt};
 use std::sync::Arc;
 use std::time::Duration;
-use tokio::sync::{mpsc, oneshot};
+use tokio::sync::oneshot;
 
 /// Serialize a `SerialServerMessage` (or any `serde::Serialize` value)
 /// to JSON, falling back to a hardcoded JSON error frame if serialization
@@ -268,7 +269,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
     // mismatch, which is exactly what the device-burst case needs.
     // See FastLED/fbuild#749.
 
-    let (out_tx, mut out_rx) = mpsc::unbounded_channel::<SerialServerMessage>();
+    let (out_tx, mut out_rx) = mpsc::unbounded::<SerialServerMessage>();
     let (mut ws_sink, mut ws_stream) = socket.split();
     // Inbound -> reader control channel (#756). Inbound issues Drain /
     // GetDepth requests on this; reader handles them inline alongside
@@ -276,7 +277,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
     // the inbound task's ClearBuffer / GetInWaiting handlers, which
     // emit at most one message per client RPC -- bounded capacity
     // would only add deadlock corner cases for no real win.
-    let (control_tx, mut control_rx) = mpsc::unbounded_channel::<ReaderControl>();
+    let (control_tx, mut control_rx) = mpsc::unbounded::<ReaderControl>();
 
     // READER task -- broadcast -> mpsc queue.
     let reader_handle = {

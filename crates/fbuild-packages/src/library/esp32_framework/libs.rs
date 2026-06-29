@@ -123,7 +123,12 @@ impl Esp32Framework {
         }
 
         // Extract to a short temp path to avoid Windows MAX_PATH (260 char) limit.
-        let temp_dir = tempfile::Builder::new().prefix("fbuild_sdk_").tempdir()?;
+        // Rooted under `~/.fbuild/{dev|prod}/tmp/esp32-framework/` so the
+        // extract scratch dir is reachable from a single user-visible
+        // location — FastLED/fbuild#844 bridge pair 10.
+        let temp_dir = tempfile::Builder::new()
+            .prefix("fbuild_sdk_")
+            .tempdir_in(fbuild_paths::temp_subdir("esp32-framework"))?;
 
         tracing::info!(
             "extracting ESP32 SDK libs ({} MB)",
@@ -171,7 +176,11 @@ impl Esp32Framework {
             crate::downloader::download_file(libs_url, &tools_dir).await?;
         }
 
-        let temp_dir = tempfile::Builder::new().prefix("fbuild_skel_").tempdir()?;
+        // Rooted under `~/.fbuild/{dev|prod}/tmp/esp32-framework/` —
+        // FastLED/fbuild#844 bridge pair 10.
+        let temp_dir = tempfile::Builder::new()
+            .prefix("fbuild_skel_")
+            .tempdir_in(fbuild_paths::temp_subdir("esp32-framework"))?;
 
         tracing::info!("extracting {} skeleton libs", mcu);
         crate::extractor::extract(&archive_path, temp_dir.path())?;

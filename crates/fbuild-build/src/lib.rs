@@ -166,12 +166,15 @@ pub struct BuildParams {
     pub compiledb_only: bool,
     /// Optional sender for streaming build log lines in real-time.
     ///
-    /// Uses `tokio::sync::mpsc::UnboundedSender` so the orchestrator (running
-    /// on a tokio runtime) and the WebSocket forwarder can share one channel
+    /// Uses `fbuild_core::channel::UnboundedSender` (the workspace bridge over
+    /// `tokio::sync::mpsc::UnboundedSender`) so the orchestrator (running on a
+    /// tokio runtime) and the WebSocket forwarder can share one channel
     /// without a sync→async bridge — `UnboundedSender::send` is sync and safe
     /// to call from blocking code, while the receive side is awaited from the
-    /// async daemon handler (fbuild#818).
-    pub log_sender: Option<tokio::sync::mpsc::UnboundedSender<String>>,
+    /// async daemon handler (fbuild#818). Routed via `fbuild_core::channel`
+    /// to satisfy the workspace `ban_tokio_mpsc_direct_import` dylint
+    /// (fbuild#844).
+    pub log_sender: Option<fbuild_core::channel::UnboundedSender<String>>,
     /// When true, run symbol-level memory analysis after linking.
     pub symbol_analysis: bool,
     /// Optional path to write the symbol analysis report to.

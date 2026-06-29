@@ -139,8 +139,7 @@ impl Linker for TeensyLinker {
         let args = self.build_link_args(objects, archives, &elf_path, extra);
 
         if self.verbose {
-            eprintln!("link: {}", args.join(" "));
-            tracing::info!("link: {}", args.join(" "));
+            tracing::debug!(target: "fbuild_build::linker::teensy", "link: {}", args.join(" "));
         }
 
         // Redirect GCC LTO temp files into a forward-slashed, fbuild-owned

@@ -114,8 +114,7 @@ impl Linker for Nrf52Linker {
         args.extend(extra.libs.iter().cloned());
 
         if self.verbose {
-            eprintln!("link: {}", args.join(" "));
-            tracing::info!("link: {}", args.join(" "));
+            tracing::debug!(target: "fbuild_build::linker::nrf52", "link: {}", args.join(" "));
         }
 
         // GCC LTO temp dir for MSYS-safe paths â€” see FastLED/fbuild#261.

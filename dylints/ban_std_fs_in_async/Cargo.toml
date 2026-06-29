@@ -1,0 +1,18 @@
+[package]
+name = "ban_std_fs_in_async"
+version = "0.1.0"
+description = "Ban std::fs::* in scopes where async is the convention (fbuild-daemon production code)"
+edition = "2021"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+dylint_linting = { git = "https://github.com/trailofbits/dylint", rev = "4bd91ce7729b74c7ee5664bbb588f7baf30b4a09" }
+
+[dev-dependencies]
+dylint_testing = { git = "https://github.com/trailofbits/dylint", rev = "4bd91ce7729b74c7ee5664bbb588f7baf30b4a09" }
+
+[package.metadata.rust-analyzer]
+rustc_private = true

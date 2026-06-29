@@ -107,8 +107,7 @@ impl Linker for Ch32vLinker {
         args.extend(extra.libs.iter().cloned());
 
         if self.verbose {
-            eprintln!("link: {}", args.join(" "));
-            tracing::info!("link: {}", args.join(" "));
+            tracing::debug!(target: "fbuild_build::linker::ch32v", "link: {}", args.join(" "));
         }
 
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();

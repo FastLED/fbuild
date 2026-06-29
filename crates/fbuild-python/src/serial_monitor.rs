@@ -29,7 +29,13 @@ pub(crate) struct SerialMonitor {
     auto_reconnect: bool,
     verbose: bool,
     hooks: Vec<PyObject>,
-    runtime: Option<Runtime>,
+    // FastLED/fbuild#844: avoid `Runtime::new()` outside main/tests by
+    // borrowing the process-shared `pyo3_async_runtimes::tokio` runtime.
+    // Stored as `Option<&'static Runtime>` so the existing
+    // `Some(rt)` session-active guards keep their semantics — `None`
+    // means "before __enter__ / after __exit__", `Some(_)` means "WS
+    // session is live".
+    runtime: Option<&'static Runtime>,
     ws_write: Option<Mutex<WsSink>>,
     ws_read: Option<Mutex<WsSource>>,
     client_id: String,
@@ -147,7 +153,7 @@ impl SerialMonitor {
     }
 
     fn close_ws(&mut self) {
-        if let (Some(ref rt), Some(ref ws_write)) = (&self.runtime, &self.ws_write) {
+        if let (Some(rt), Some(ws_write)) = (&self.runtime, &self.ws_write) {
             let detach = serde_json::to_string(&ClientMessage::Detach).unwrap();
             if let Ok(mut write) = ws_write.lock() {
                 let _ = rt.block_on(write.send(tungstenite::Message::Text(detach)));
@@ -196,11 +202,17 @@ impl SerialMonitor {
     }
 
     fn __enter__(mut slf: PyRefMut<'_, Self>) -> PyResult<PyRefMut<'_, Self>> {
-        let rt = Runtime::new().map_err(|e| {
-            pyo3::exceptions::PyRuntimeError::new_err(format!("failed to create runtime: {}", e))
-        })?;
+        // FastLED/fbuild#844: borrow the process-shared async runtime
+        // instead of constructing a fresh `tokio::runtime::Runtime` per
+        // monitor session. The pyo3-async-runtimes runtime is the same
+        // one the AsyncSerialMonitor binding already uses, so we don't
+        // pay the overhead of spinning up a dedicated multi-threaded
+        // pool every time FastLED enters a `with SerialMonitor(...)`
+        // block, and the new lint ban on bare `Runtime::new()` outside
+        // main/tests is satisfied.
+        let rt: &'static Runtime = pyo3_async_runtimes::tokio::get_runtime();
 
-        let (write, read) = slf.connect_ws(&rt)?;
+        let (write, read) = slf.connect_ws(rt)?;
         slf.ws_write = Some(Mutex::new(write));
         slf.ws_read = Some(Mutex::new(read));
         slf.runtime = Some(rt);
@@ -230,7 +242,7 @@ impl SerialMonitor {
     /// Returns a list of lines received within the timeout period.
     #[pyo3(signature = (timeout=30.0))]
     fn read_lines(&mut self, py: Python<'_>, timeout: f64) -> Vec<String> {
-        let (Some(ref rt), Some(ref ws_read)) = (&self.runtime, &self.ws_read) else {
+        let (Some(rt), Some(ws_read)) = (&self.runtime, &self.ws_read) else {
             return vec![];
         };
 
@@ -307,7 +319,7 @@ impl SerialMonitor {
 
     /// Write data to the serial port.
     fn write(&self, data: &str) -> usize {
-        let (Some(ref rt), Some(ref ws_write), Some(ref ws_read)) =
+        let (Some(rt), Some(ws_write), Some(ws_read)) =
             (&self.runtime, &self.ws_write, &self.ws_read)
         else {
             return 0;
@@ -416,7 +428,7 @@ impl SerialMonitor {
     /// pyserial use by fbuild clients.
     #[getter]
     fn in_waiting(&self) -> usize {
-        let (Some(ref rt), Some(ref ws_write), Some(ref ws_read)) =
+        let (Some(rt), Some(ws_write), Some(ws_read)) =
             (&self.runtime, &self.ws_write, &self.ws_read)
         else {
             return 0;
@@ -466,7 +478,7 @@ impl SerialMonitor {
     /// FastLED/fbuild#605 — added as part of the deprecation of direct
     /// pyserial use by fbuild clients.
     fn reset_input_buffer(&self) {
-        let (Some(ref rt), Some(ref ws_write)) = (&self.runtime, &self.ws_write) else {
+        let (Some(rt), Some(ws_write)) = (&self.runtime, &self.ws_write) else {
             return;
         };
         let msg = serde_json::to_string(&ClientMessage::ClearBuffer).unwrap();
@@ -576,7 +588,7 @@ impl SerialMonitor {
 impl SerialMonitor {
     /// Internal read_lines without hook dispatch (for write_json_rpc which has &self).
     fn read_lines_inner(&self, timeout: f64) -> Vec<String> {
-        let (Some(ref rt), Some(ref ws_read)) = (&self.runtime, &self.ws_read) else {
+        let (Some(rt), Some(ws_read)) = (&self.runtime, &self.ws_read) else {
             return vec![];
         };
 

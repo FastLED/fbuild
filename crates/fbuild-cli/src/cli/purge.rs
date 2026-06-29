@@ -2,6 +2,7 @@
 //! formatting helpers they share with the daemon subcommands.
 
 use crate::daemon_client::DaemonClient;
+use crate::output;
 
 use super::daemon_cmd::print_gc_report;
 
@@ -16,26 +17,32 @@ pub async fn run_purge_gc() -> fbuild_core::Result<()> {
                 result.message.as_deref().unwrap_or("unknown error")
             )));
         }
-        println!("GC complete (via daemon):");
-        println!(
+        output::result("GC complete (via daemon):");
+        output::result(format!(
             "  Installed evicted: {} ({})",
             result.installed_evicted,
             format_size(result.installed_bytes_freed)
-        );
-        println!(
+        ));
+        output::result(format!(
             "  Archives evicted:  {} ({})",
             result.archives_evicted,
             format_size(result.archive_bytes_freed)
-        );
-        println!(
+        ));
+        output::result(format!(
             "  Total freed:       {}",
             format_size(result.total_bytes_freed)
-        );
+        ));
         if result.orphan_files_removed > 0 {
-            println!("  Orphan files removed: {}", result.orphan_files_removed);
+            output::result(format!(
+                "  Orphan files removed: {}",
+                result.orphan_files_removed
+            ));
         }
         if result.orphan_rows_cleaned > 0 {
-            println!("  Orphan rows cleaned:  {}", result.orphan_rows_cleaned);
+            output::result(format!(
+                "  Orphan rows cleaned:  {}",
+                result.orphan_rows_cleaned
+            ));
         }
         return Ok(());
     }
@@ -83,7 +90,7 @@ pub fn run_purge(
             // Purge specific cache subdirectory (e.g., environment name)
             let path = cache_root.join(t);
             if !path.exists() {
-                eprintln!("target not found: {}", path.display());
+                output::error(format!("target not found: {}", path.display()));
                 return Ok(());
             }
             purge_dir(&path, dry_run)?;
@@ -94,29 +101,40 @@ pub fn run_purge(
 
 pub fn purge_dir(path: &std::path::Path, dry_run: bool) -> fbuild_core::Result<()> {
     if !path.exists() {
-        println!("nothing to purge: {}", path.display());
+        output::result(format!("nothing to purge: {}", path.display()));
         return Ok(());
     }
     let size = dir_size(path);
     if dry_run {
-        println!("would remove: {} ({})", path.display(), format_size(size));
+        output::result(format!(
+            "would remove: {} ({})",
+            path.display(),
+            format_size(size)
+        ));
     } else {
         std::fs::remove_dir_all(path).map_err(|e| {
             fbuild_core::FbuildError::Other(format!("failed to remove {}: {}", path.display(), e))
         })?;
-        println!("removed: {} ({})", path.display(), format_size(size));
+        output::result(format!(
+            "removed: {} ({})",
+            path.display(),
+            format_size(size)
+        ));
     }
     Ok(())
 }
 
 pub fn list_cached_packages(cache_root: &std::path::Path) -> fbuild_core::Result<()> {
     if !cache_root.exists() {
-        println!("No cached packages found at {}", cache_root.display());
-        println!("\nUsage:");
-        println!("  fbuild purge all              Remove all cached packages");
-        println!("  fbuild purge project          Remove project build artifacts (.fbuild/)");
-        println!("  fbuild purge <name>           Remove specific cache subdirectory");
-        println!("  fbuild purge ... --dry-run    Show what would be removed");
+        output::result(format!(
+            "No cached packages found at {}",
+            cache_root.display()
+        ));
+        output::result("\nUsage:");
+        output::result("  fbuild purge all              Remove all cached packages");
+        output::result("  fbuild purge project          Remove project build artifacts (.fbuild/)");
+        output::result("  fbuild purge <name>           Remove specific cache subdirectory");
+        output::result("  fbuild purge ... --dry-run    Show what would be removed");
         return Ok(());
     }
 
@@ -150,22 +168,22 @@ pub fn list_cached_packages(cache_root: &std::path::Path) -> fbuild_core::Result
         packages.sort_by(|a, b| a.0.cmp(&b.0));
 
         if !packages.is_empty() {
-            println!("{}:", type_name.to_string_lossy().to_uppercase());
+            output::result(format!("{}:", type_name.to_string_lossy().to_uppercase()));
             for (name, size) in &packages {
-                println!("  {} ({})", name, format_size(*size));
+                output::result(format!("  {} ({})", name, format_size(*size)));
                 total_size += size;
                 total_count += 1;
             }
-            println!();
+            output::result("");
         }
     }
 
-    println!(
+    output::result(format!(
         "Total: {} package(s), {}",
         total_count,
         format_size(total_size)
-    );
-    println!("\nUse 'fbuild purge all' to remove all, or 'fbuild purge <target>' for specific.");
+    ));
+    output::result("\nUse 'fbuild purge all' to remove all, or 'fbuild purge <target>' for specific.");
     Ok(())
 }
 

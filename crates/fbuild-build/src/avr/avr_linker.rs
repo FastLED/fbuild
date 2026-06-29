@@ -181,8 +181,7 @@ impl Linker for AvrLinker {
         let args = self.build_link_args(objects, &linker_archives, output_dir, &elf_path, extra);
 
         if self.verbose {
-            eprintln!("link: {}", args.join(" "));
-            tracing::info!("link: {}", args.join(" "));
+            tracing::debug!(target: "fbuild_build::linker::avr", "link: {}", args.join(" "));
         }
 
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();

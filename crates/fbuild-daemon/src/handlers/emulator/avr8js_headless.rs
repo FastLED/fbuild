@@ -5,6 +5,7 @@
 use super::avr8js_npm::{avr8js_cache_is_intact, REFRESH_EMU_CACHE_ENV};
 use super::shared::{spawn_line_reader, ProcessEvent};
 use crate::handlers::operations::{MonitorOutcome, MonitorState};
+use fbuild_core::channel::unbounded;
 use std::path::Path;
 use std::process::Stdio;
 
@@ -99,7 +100,7 @@ pub(crate) async fn run_avr8js_headless(
         fbuild_core::FbuildError::DeployFailed("failed to capture avr8js stderr".to_string())
     })?;
 
-    let (tx, mut rx) = tokio::sync::mpsc::unbounded_channel::<ProcessEvent>();
+    let (tx, mut rx) = unbounded::<ProcessEvent>();
     let stdout_task = tokio::spawn(spawn_line_reader(stdout, false, tx.clone()));
     let stderr_task = tokio::spawn(spawn_line_reader(stderr, true, tx));
 

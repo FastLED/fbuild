@@ -18,6 +18,8 @@ use fbuild_build::symbol_analyzer::{
 use fbuild_core::symbol_analysis::{BackrefGraph, GraphConfig, GraphDepth};
 use fbuild_core::{FbuildError, Result};
 
+use crate::output as cli_output;
+
 use super::symbols_cmd::resolve_tool_paths_public;
 
 #[allow(clippy::too_many_arguments)]
@@ -85,14 +87,16 @@ pub async fn run_bloat_graph(
             std::fs::write(&path, &dot).map_err(|e| {
                 FbuildError::Io(std::io::Error::new(e.kind(), format!("write {path}: {e}")))
             })?;
-            println!(
+            cli_output::result(format!(
                 "Wrote back-reference graph for {symbol} to {path} ({} nodes, {} edges)",
                 graph.nodes.len(),
                 graph.edges.len()
-            );
+            ));
         }
         None => {
-            print!("{dot}");
+            // `dot` is the final answer (DOT graph text) — emit verbatim. Strip
+            // any trailing newline so result()'s newline doesn't double up.
+            cli_output::result(dot.trim_end_matches('\n'));
         }
     }
     Ok(())

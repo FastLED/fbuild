@@ -223,7 +223,7 @@ fn proto_to_map(db: UsbVidDatabase) -> HashMap<u32, UsbInfo> {
 /// the daemon could in principle skip the file dance — primary user is the
 /// resolver's own test suite.
 pub(crate) fn install_online_cache_map(map: HashMap<u32, UsbInfo>) {
-    let mut guard = ONLINE_MAP.write().unwrap();
+    let mut guard = ONLINE_MAP.write().unwrap_or_else(|e| e.into_inner());
     *guard = Some(map);
 }
 

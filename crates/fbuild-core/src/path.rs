@@ -233,6 +233,52 @@ impl<'de> Deserialize<'de> for NormalizedPath {
     }
 }
 
+/// Strip Windows extended-length / UNC prefix from a path.
+///
+/// On Unix this is a no-op (returns the path unchanged). On Windows
+/// it strips `\\?\` (extended-length) and `\\?\UNC\` (UNC normalized)
+/// prefixes that `std::fs::canonicalize` injects, so cache keys and
+/// log lines stay readable. See FastLED/fbuild#844 "Bridge pair 5".
+#[must_use]
+pub fn strip_unc_prefix(p: &Path) -> PathBuf {
+    #[cfg(windows)]
+    {
+        let s = p.to_string_lossy();
+        // `\\?\UNC\server\share\...` → `\\server\share\...`
+        if let Some(rest) = s.strip_prefix(r"\\?\UNC\") {
+            let mut out = String::from(r"\\");
+            out.push_str(rest);
+            return PathBuf::from(out);
+        }
+        // `\\?\C:\...` → `C:\...`
+        if let Some(rest) = s.strip_prefix(r"\\?\") {
+            return PathBuf::from(rest);
+        }
+        PathBuf::from(s.into_owned())
+    }
+    #[cfg(not(windows))]
+    {
+        p.to_path_buf()
+    }
+}
+
+/// Canonicalize an existing path, stripping the Windows UNC prefix and
+/// wrapping in [`NormalizedPath`].
+///
+/// FastLED/fbuild#844 (bridge sweep, "Bridge pair 5"). All
+/// `std::fs::canonicalize` / `tokio::fs::canonicalize` call sites
+/// migrate to this so the workspace has one source of truth for
+/// "canonical form" — `\\?\` prefix stripped, slashes normalized,
+/// case-folded on case-insensitive platforms.
+///
+/// Errors if the path does not exist or cannot be canonicalized
+/// (matches `std::fs::canonicalize` semantics).
+pub async fn canonicalize_existing(p: impl AsRef<Path>) -> std::io::Result<NormalizedPath> {
+    let canon = tokio::fs::canonicalize(p.as_ref()).await?;
+    let stripped = strip_unc_prefix(&canon);
+    Ok(NormalizedPath::from(stripped))
+}
+
 /// Normalize a path by resolving `.` and `..` components without
 /// touching the filesystem (no symlink resolution).
 ///
@@ -498,5 +544,62 @@ mod tests {
         }
         let n = NormalizedPath::new("/usr/bin/nm");
         assert!(takes_path(&n));
+    }
+
+    /// On non-Windows `strip_unc_prefix` is a no-op.
+    #[test]
+    #[cfg(not(windows))]
+    fn strip_unc_prefix_is_noop_on_unix() {
+        assert_eq!(
+            strip_unc_prefix(Path::new("/usr/bin/nm")),
+            PathBuf::from("/usr/bin/nm")
+        );
+    }
+
+    /// On Windows the extended-length prefix is stripped.
+    #[test]
+    #[cfg(windows)]
+    fn strip_unc_prefix_strips_extended_length_on_windows() {
+        assert_eq!(
+            strip_unc_prefix(Path::new(r"\\?\C:\Users\test")),
+            PathBuf::from(r"C:\Users\test")
+        );
+    }
+
+    /// On Windows the UNC-normalized prefix collapses to plain UNC.
+    #[test]
+    #[cfg(windows)]
+    fn strip_unc_prefix_collapses_unc_form_on_windows() {
+        assert_eq!(
+            strip_unc_prefix(Path::new(r"\\?\UNC\server\share\dir")),
+            PathBuf::from(r"\\server\share\dir")
+        );
+    }
+
+    /// `canonicalize_existing` returns a `NormalizedPath` that matches
+    /// the canonical form of an existing file. The temp dir trick is
+    /// the smallest "existing path" available in a unit test.
+    #[tokio::test]
+    async fn canonicalize_existing_returns_normalized_path() {
+        let dir = tempfile::tempdir().unwrap();
+        let file = dir.path().join("probe.txt");
+        std::fs::write(&file, b"hi").unwrap();
+        let canon = canonicalize_existing(&file).await.unwrap();
+        // Round-trip through `as_path` and back to `NormalizedPath`
+        // produces the same key.
+        assert_eq!(
+            canon.key(),
+            NormalizedPath::new(canon.as_path()).key()
+        );
+    }
+
+    /// `canonicalize_existing` propagates a `NotFound` for a missing
+    /// path — same contract as `tokio::fs::canonicalize`.
+    #[tokio::test]
+    async fn canonicalize_existing_errors_on_missing() {
+        let err = canonicalize_existing("/no/such/path/__fbuild_test_missing__")
+            .await
+            .unwrap_err();
+        assert_eq!(err.kind(), std::io::ErrorKind::NotFound);
     }
 }

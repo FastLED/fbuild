@@ -206,7 +206,7 @@ impl DeviceManager {
     /// *recently enough* — we just don't need one on every deploy.
     pub fn refresh_devices_if_stale(&self, max_age: std::time::Duration) -> bool {
         {
-            let last = self.last_refresh_at.lock().unwrap();
+            let last = self.last_refresh_at.lock().unwrap_or_else(|e| e.into_inner());
             if let Some(t) = *last {
                 if t.elapsed() < max_age {
                     return false;
@@ -281,11 +281,11 @@ impl DeviceManager {
             .collect();
 
         self.refresh_from_discovered(discovered);
-        *self.last_refresh_at.lock().unwrap() = Some(Instant::now());
+        *self.last_refresh_at.lock().unwrap_or_else(|e| e.into_inner()) = Some(Instant::now());
     }
 
     fn refresh_from_discovered(&self, discovered: Vec<DiscoveredDevice>) {
-        let mut devices = self.devices.lock().unwrap();
+        let mut devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
         let now = Self::now_unix();
 
         // Mark all devices as disconnected first. Track the previous
@@ -326,7 +326,7 @@ impl DeviceManager {
                             state.product_name = device.product_name;
                             state.serial_number = device.serial_number;
                             if let Some(previous_port) = state.previous_port.clone() {
-                                self.recent_port_moves.lock().unwrap().push(DevicePortMove {
+                                self.recent_port_moves.lock().unwrap_or_else(|e| e.into_inner()).push(DevicePortMove {
                                     previous_port,
                                     port: key.clone(),
                                     serial_number,
@@ -386,17 +386,17 @@ impl DeviceManager {
 
     /// Get all devices.
     pub fn get_all_devices(&self) -> HashMap<String, DeviceState> {
-        self.devices.lock().unwrap().clone()
+        self.devices.lock().unwrap_or_else(|e| e.into_inner()).clone()
     }
 
     pub fn take_recent_port_moves(&self) -> Vec<DevicePortMove> {
-        let mut moves = self.recent_port_moves.lock().unwrap();
+        let mut moves = self.recent_port_moves.lock().unwrap_or_else(|e| e.into_inner());
         std::mem::take(&mut *moves)
     }
 
     /// Get status for a specific device (by port name).
     pub fn get_device_status(&self, port: &str) -> Option<DeviceState> {
-        self.devices.lock().unwrap().get(port).cloned()
+        self.devices.lock().unwrap_or_else(|e| e.into_inner()).get(port).cloned()
     }
 
     /// Acquire an exclusive lease on a device.
@@ -407,7 +407,7 @@ impl DeviceManager {
         description: &str,
         track_serial: bool,
     ) -> Result<DeviceLease, DeviceLeaseError> {
-        let mut devices = self.devices.lock().unwrap();
+        let mut devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
         let state = devices
             .get_mut(port)
             .ok_or_else(|| DeviceLeaseError::NotFound {
@@ -455,7 +455,7 @@ impl DeviceManager {
         description: &str,
         track_serial: bool,
     ) -> Result<DeviceLease, DeviceLeaseError> {
-        let mut devices = self.devices.lock().unwrap();
+        let mut devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
         let state = devices
             .get_mut(port)
             .ok_or_else(|| DeviceLeaseError::NotFound {
@@ -490,7 +490,7 @@ impl DeviceManager {
 
     /// Release a lease by lease_id (searches all devices).
     pub fn release_lease(&self, lease_id: &str) -> Result<(), String> {
-        let mut devices = self.devices.lock().unwrap();
+        let mut devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
         for state in devices.values_mut() {
             // Check exclusive
             if let Some(ref exc) = state.exclusive_lease {
@@ -512,7 +512,7 @@ impl DeviceManager {
 
     /// Release all leases for a device (by port).
     pub fn release_device_leases(&self, port: &str) -> Result<usize, String> {
-        let mut devices = self.devices.lock().unwrap();
+        let mut devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
         let state = devices
             .get_mut(port)
             .ok_or_else(|| format!("device '{}' not found", port))?;
@@ -541,7 +541,7 @@ impl DeviceManager {
             });
         }
 
-        let mut devices = self.devices.lock().unwrap();
+        let mut devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
         let state = devices
             .get_mut(port)
             .ok_or_else(|| DeviceLeaseError::NotFound {
@@ -598,7 +598,7 @@ impl DeviceManager {
     /// Returns `None` in every other case, so the deploy handler falls
     /// back to the regular `verify-flash` path on any doubt.
     pub fn trusted_firmware_hash(&self, port: &str) -> Option<[u8; 32]> {
-        let devices = self.devices.lock().unwrap();
+        let devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
         let state = devices.get(port)?;
         if !state.is_connected {
             return None;
@@ -621,7 +621,7 @@ impl DeviceManager {
     /// yet: the hash will be recorded on the next deploy once
     /// `refresh_devices` has picked the port up.
     pub fn set_trusted_firmware_hash(&self, port: &str, hash: [u8; 32]) {
-        let mut devices = self.devices.lock().unwrap();
+        let mut devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
         if let Some(state) = devices.get_mut(port) {
             state.trusted_firmware = Some(TrustedFirmwareHash {
                 hash,
@@ -634,7 +634,7 @@ impl DeviceManager {
     /// fails part-way through — partial writes mean we can't say
     /// what's on the chip anymore.
     pub fn clear_trusted_firmware_hash(&self, port: &str) {
-        let mut devices = self.devices.lock().unwrap();
+        let mut devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
         if let Some(state) = devices.get_mut(port) {
             state.trusted_firmware = None;
         }
@@ -642,7 +642,7 @@ impl DeviceManager {
 
     /// Remove stale disconnected devices that have no leases.
     pub fn cleanup_stale_devices(&self) -> usize {
-        let mut devices = self.devices.lock().unwrap();
+        let mut devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
         let stale: Vec<String> = devices
             .iter()
             .filter(|(_, s)| {
@@ -659,7 +659,7 @@ impl DeviceManager {
 
     #[cfg(test)]
     pub(crate) fn insert_test_device(&self, port: &str) {
-        let mut devices = self.devices.lock().unwrap();
+        let mut devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
         devices.insert(
             port.to_string(),
             DeviceState {

@@ -1,6 +1,7 @@
 //! `fbuild build` handler and a couple of path / browser helpers.
 
 use crate::daemon_client::{self, BuildRequest, DaemonClient};
+use crate::output;
 
 pub async fn open_in_browser(url: &str) -> fbuild_core::Result<()> {
     let args: Vec<&str> = if cfg!(target_os = "windows") {
@@ -67,14 +68,14 @@ pub async fn run_build(
             .as_deref()
             .or_else(|| config.get_default_environment())
             .unwrap_or("default");
-        println!("Environment: {}", env_name);
-        println!("Daemon is running. Dry-run complete.");
+        output::result(format!("Environment: {}", env_name));
+        output::result("Daemon is running. Dry-run complete.");
         return Ok(());
     }
 
     let client = DaemonClient::new();
     if verbose {
-        eprintln!("{}", daemon_client::runtime_diagnostic());
+        output::debug(daemon_client::runtime_diagnostic());
     }
 
     let profile = if release {
@@ -87,10 +88,10 @@ pub async fn run_build(
     let generate_compiledb = target.as_deref() == Some("compiledb");
     if generate_compiledb {
         let env_label = environment.as_deref().unwrap_or("default");
-        println!(
+        output::progress(format!(
             "Generating compile_commands.json for environment: {}...",
             env_label
-        );
+        ));
     }
     let (caller_pid, caller_cwd) = daemon_client::caller_info();
     let req = BuildRequest {
@@ -121,7 +122,7 @@ pub async fn run_build(
     let resp = client.build_streaming(&req).await?;
     let stream_elapsed = stream_start.elapsed();
     if !resp.message.is_empty() {
-        println!("{}", resp.message);
+        output::result(&resp.message);
     }
     if perf_enabled {
         let summary = format!(
@@ -131,18 +132,21 @@ pub async fn run_build(
             cli_start.elapsed().as_millis(),
         );
         tracing::info!(target: "fbuild_cli::perf_log", "{}", summary);
-        eprintln!("{}", summary);
+        output::debug(&summary);
     }
     if !resp.success {
         if !verbose {
-            eprintln!("{}", daemon_client::runtime_diagnostic());
+            output::error(daemon_client::runtime_diagnostic());
         }
         std::process::exit(resp.exit_code);
     }
     if generate_compiledb {
         let db_path = std::path::Path::new(&project_dir).join("compile_commands.json");
         if db_path.exists() {
-            println!("compile_commands.json written to {}", db_path.display());
+            output::result(format!(
+                "compile_commands.json written to {}",
+                db_path.display()
+            ));
         }
     }
     Ok(())

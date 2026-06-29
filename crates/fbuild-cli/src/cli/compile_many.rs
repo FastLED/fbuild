@@ -1,6 +1,8 @@
 //! `fbuild compile-many` (FastLED/fbuild#238) and the thin `fbuild ci`
 //! adapter that maps `pio ci` flags onto it.
 
+use crate::output;
+
 /// Separator used to join `PLATFORMIO_LIB_EXTRA_DIRS` entries.
 ///
 /// PlatformIO follows `PATH`-style conventions: ';' on Windows, ':' elsewhere.
@@ -143,21 +145,21 @@ pub async fn run_compile_many(args: CompileManyArgs) -> fbuild_core::Result<()> 
     let effective_sketch = req
         .sketch_jobs
         .unwrap_or_else(fbuild_build::compile_many::default_sketch_jobs);
-    println!(
+    output::progress(format!(
         "compile-many: board={} sketches={} framework_jobs={} sketch_jobs={}",
         board,
         sketches.len(),
         effective_framework,
         effective_sketch,
-    );
+    ));
 
     // `compile_many` is async (driving per-stage tokio fanout). Await it
     // directly — the runtime is already multi-threaded.
     let result = compile_many(req).await?;
 
     // Per-sketch result map suitable for the bench summary.
-    println!();
-    println!("compile-many results:");
+    output::result("");
+    output::result("compile-many results:");
     for r in &result.results {
         let stage_label = match r.stage {
             Stage::Stage1Framework => "stage1",
@@ -169,7 +171,7 @@ pub async fn run_compile_many(args: CompileManyArgs) -> fbuild_core::Result<()> 
             .as_ref()
             .map(|p| p.display().to_string())
             .unwrap_or_else(|| "-".to_string());
-        println!(
+        output::result(format!(
             "  [{}] {} ({:.2}s) {}  log={}  {}",
             stage_label,
             status,
@@ -177,25 +179,24 @@ pub async fn run_compile_many(args: CompileManyArgs) -> fbuild_core::Result<()> 
             r.sketch.display(),
             log_str,
             r.message,
-        );
+        ));
     }
-    println!();
-    println!(
+    output::result("");
+    output::result(format!(
         "compile-many summary: stage1={}/{:.2}s stage2={}/{:.2}s total={:.2}s",
         result.stage1_count,
         result.stage1_secs,
         result.stage2_count,
         result.stage2_secs,
         result.total_secs,
-    );
+    ));
     if diag_stage2 {
         for r in result
             .results
             .iter()
             .filter(|r| r.stage == Stage::Stage2Sketch)
         {
-            println!(
-                "{}",
+            output::result(
                 serde_json::json!({
                     "type": "stage2",
                     "worker": r.worker_index,
@@ -207,6 +208,7 @@ pub async fn run_compile_many(args: CompileManyArgs) -> fbuild_core::Result<()> 
                     "build_secs": r.build_time_secs,
                     "log": r.log_path.as_ref().map(|p| p.display().to_string()),
                 })
+                .to_string(),
             );
         }
     }

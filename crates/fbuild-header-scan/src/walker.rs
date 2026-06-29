@@ -198,6 +198,12 @@ fn resolve_include(inc: &IncludeRef, from: &Path, search_paths: &[PathBuf]) -> O
 }
 
 fn canon(p: &Path) -> PathBuf {
+    // FastLED/fbuild#844 sync-context allowlist: this helper runs inside
+    // a rayon-parallel BFS (`walk_with_state`). Using
+    // `fbuild_core::path::canonicalize_existing(...).await` would force
+    // the walker async, which would cascade through every downstream LDF
+    // caller. File is allowlisted in
+    // `dylints/ban_std_fs_canonicalize/src/allowlist.txt`.
     std::fs::canonicalize(p).unwrap_or_else(|_| p.to_path_buf())
 }
 

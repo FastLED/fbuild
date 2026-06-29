@@ -66,6 +66,33 @@ pub fn get_cache_root() -> PathBuf {
     get_fbuild_root().join("cache")
 }
 
+/// Root directory for short-lived working / scratch dirs.
+///
+/// FastLED/fbuild#844 ("Bridge pair 10"). Returns `~/.fbuild/{dev|prod}/tmp`.
+/// This is the rooted alternative to `std::env::temp_dir()` and
+/// `tempfile::tempdir()`; per-platform package extractors, framework
+/// hydration, linker scratch dirs, etc. all live under this root so
+/// every byte fbuild writes is reachable from a single user-visible
+/// directory.
+///
+/// Note: this does NOT create the directory — pair with
+/// [`temp_subdir`] for the create-on-use pattern.
+pub fn dev_or_prod_temp_root() -> PathBuf {
+    get_fbuild_root().join("tmp")
+}
+
+/// Get (and create) a named subdirectory under [`dev_or_prod_temp_root`].
+///
+/// Best-effort `create_dir_all`: if creation fails the returned path
+/// still points where the caller asked, and the next filesystem op
+/// will surface the real error. This matches the convention every
+/// other "ensure dir" helper in fbuild-paths uses.
+pub fn temp_subdir(name: &str) -> PathBuf {
+    let dir = dev_or_prod_temp_root().join(name);
+    let _ = std::fs::create_dir_all(&dir);
+    dir
+}
+
 /// Project-local `.fbuild` directory.
 pub fn get_project_fbuild_dir(project_dir: &Path) -> PathBuf {
     project_dir.join(".fbuild")
@@ -543,6 +570,27 @@ mod tests {
             .with_override_root(Some(PathBuf::from("/tmp/root")));
         let resolved = layout.resolve();
         assert_eq!(resolved, PathBuf::from("/tmp/root/esp32dev/release"));
+    }
+
+    #[test]
+    fn dev_or_prod_temp_root_lives_under_fbuild_root() {
+        let temp_root = dev_or_prod_temp_root();
+        let fbuild_root = get_fbuild_root();
+        assert!(
+            temp_root.starts_with(&fbuild_root),
+            "temp root {} must live under fbuild root {}",
+            temp_root.display(),
+            fbuild_root.display()
+        );
+        assert!(temp_root.ends_with("tmp"));
+    }
+
+    #[test]
+    fn temp_subdir_creates_and_returns_path() {
+        let dir = temp_subdir("__fbuild_test_temp_subdir__");
+        assert!(dir.exists() || dir.parent().map(|p| !p.exists()).unwrap_or(true));
+        // Cleanup best-effort.
+        let _ = std::fs::remove_dir_all(&dir);
     }
 
     #[test]

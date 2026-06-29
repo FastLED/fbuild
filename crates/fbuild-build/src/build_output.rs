@@ -7,12 +7,11 @@
 use std::path::Path;
 use std::time::Instant;
 
+use fbuild_core::channel::UnboundedSender;
 use fbuild_core::{BuildLog, MemoryRegion, SizeInfo, SymbolMap};
 
 /// Create a [`BuildLog`], optionally wired to a real-time streaming sender.
-pub fn create_build_log(
-    sender: Option<tokio::sync::mpsc::UnboundedSender<String>>,
-) -> BuildLog {
+pub fn create_build_log(sender: Option<UnboundedSender<String>>) -> BuildLog {
     match sender {
         Some(s) => BuildLog::with_sender(s),
         None => BuildLog::new(),
@@ -21,7 +20,7 @@ pub fn create_build_log(
 
 /// Create a [`BuildLog`] with elapsed-time prefixes from the given epoch.
 pub fn create_build_log_with_epoch(
-    sender: Option<tokio::sync::mpsc::UnboundedSender<String>>,
+    sender: Option<UnboundedSender<String>>,
     epoch: Instant,
 ) -> BuildLog {
     match sender {

@@ -370,7 +370,17 @@ async fn compile_one_source(
     };
 
     let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-    let result = run_command(&args_ref, None, None, None).await?;
+    // FastLED/fbuild#844: explicit 15 min cap. A single-file compile
+    // (cold-cache, full templated FastLED translation unit) is the
+    // worst-case path that still finishes inside REAL_BUILD_TIMEOUT;
+    // anything beyond that is wedged toolchain rather than a slow build.
+    let result = run_command(
+        &args_ref,
+        None,
+        None,
+        Some(fbuild_core::time::REAL_BUILD_TIMEOUT),
+    )
+    .await?;
 
     if !result.success() {
         return Err(FbuildError::BuildFailed(format!(
@@ -549,7 +559,19 @@ async fn archive_objects(ar_path: &Path, objects: &[PathBuf], output: &Path) -> 
     }
 
     let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-    let result = run_command(&args_ref, None, None, None).await?;
+    // FastLED/fbuild#844: explicit 60 s cap. `ar rcs` over a large
+    // FastLED object set (hundreds of .o files) finishes in <10 s on
+    // every host fbuild supports; anything past a minute is a disk /
+    // filesystem fault rather than legitimately slow work, so we cap
+    // tightly to surface those failures fast instead of waiting out
+    // the 15 min default.
+    let result = run_command(
+        &args_ref,
+        None,
+        None,
+        Some(std::time::Duration::from_secs(60)),
+    )
+    .await?;
 
     if !result.success() {
         return Err(FbuildError::BuildFailed(format!(

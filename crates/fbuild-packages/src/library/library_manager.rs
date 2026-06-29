@@ -3,13 +3,34 @@
 //! Coordinates: spec parsing → download → include discovery → compile → archive.
 
 use std::path::{Path, PathBuf};
+use std::sync::OnceLock;
 
-use fbuild_core::Result;
+use fbuild_core::{FbuildError, Result};
+use tokio::runtime::Runtime;
 
 use super::library_compiler;
 use super::library_downloader;
 use super::library_info::InstalledLibrary;
 use super::library_spec::LibrarySpec;
+
+/// Module-level fallback runtime for sync bridge entry points.
+///
+/// Constructed lazily on first sync invocation that occurs outside an
+/// existing Tokio runtime. Reusing one runtime across calls is dramatically
+/// cheaper than building/tearing one down per invocation (each construction
+/// spawns worker threads + an I/O reactor). `OnceLock` makes this thread-safe
+/// for free.
+fn fallback_runtime() -> Result<&'static Runtime> {
+    static RT: OnceLock<Runtime> = OnceLock::new();
+    if let Some(rt) = RT.get() {
+        return Ok(rt);
+    }
+    let rt = Runtime::new().map_err(|e| {
+        FbuildError::PackageError(format!("failed to create tokio runtime: {}", e))
+    })?;
+    // If another thread won the race, our `rt` is dropped and we use theirs.
+    Ok(RT.get_or_init(|| rt))
+}
 
 /// Result of library resolution and compilation.
 pub struct LibraryResult {
@@ -311,10 +332,7 @@ pub fn ensure_libraries_sync(
     if let Ok(handle) = tokio::runtime::Handle::try_current() {
         tokio::task::block_in_place(|| handle.block_on(fut))
     } else {
-        let rt = tokio::runtime::Runtime::new().map_err(|e| {
-            fbuild_core::FbuildError::PackageError(format!("failed to create tokio runtime: {}", e))
-        })?;
-        rt.block_on(fut)
+        fallback_runtime()?.block_on(fut)
     }
 }
 

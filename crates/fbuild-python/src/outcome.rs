@@ -148,7 +148,7 @@ pub(crate) fn send_op(url: &str, req: &OpRequest, timeout: f64) -> OperationOutc
 /// Returns the same `OperationOutcome` so the sync and async surfaces share
 /// `parse_outcome` and `outcome_to_pydict`. See FastLED/fbuild#65.
 pub(crate) async fn send_op_async(url: String, req: OpRequest, timeout: f64) -> OperationOutcome {
-    let client = reqwest::Client::new();
+    let client = fbuild_core::http::client();
     let request = client
         .post(&url)
         .json(&req)

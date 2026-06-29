@@ -56,7 +56,7 @@ async fn streaming_build_failure_emits_log_before_result() {
         "verbose": false,
     });
 
-    let resp = reqwest::Client::new()
+    let resp = fbuild_core::http::client_with_timeout(Duration::from_secs(15))
         .post(format!("http://{}/api/build", addr))
         .json(&body)
         .timeout(Duration::from_secs(10))

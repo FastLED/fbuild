@@ -10,7 +10,10 @@ use serde::Serialize;
 mod types;
 pub use types::*;
 
-const LONG_OPERATION_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(1800);
+/// Daemon long-operation cap — re-exported as a local alias so existing
+/// call sites read naturally. Backed by `fbuild_core::time::DAEMON_LONG_OP_TIMEOUT`
+/// (30 min) per FastLED/fbuild#844.
+const LONG_OPERATION_TIMEOUT: std::time::Duration = fbuild_core::time::DAEMON_LONG_OP_TIMEOUT;
 
 /// Percent-encode a port name for use in a URL path segment.
 fn encode_port(port: &str) -> String {
@@ -202,14 +205,15 @@ pub struct DaemonClient {
 
 impl DaemonClient {
     pub fn new() -> Self {
-        // 100ms connect_timeout fails fast when the daemon is not running
-        // (ECONNREFUSED returns instantly on Windows and Linux but reqwest
-        // would otherwise wait for the full request timeout before surfacing
-        // the error).
-        let client = reqwest::Client::builder()
-            .connect_timeout(std::time::Duration::from_millis(100))
-            .build()
-            .unwrap_or_else(|_| reqwest::Client::new());
+        // FastLED/fbuild#844: route through the shared HTTP bridge so this
+        // crate has zero direct reqwest construction. Per-call
+        // `.timeout(...)` deadlines on each endpoint (already set on
+        // `health`, `health_full`, `list_devices`, etc.) bound the
+        // fast-fail behavior the previous 100ms connect_timeout provided —
+        // ECONNREFUSED still returns instantly on Windows/Linux, and a
+        // slow / non-responsive daemon trips the per-request timeout
+        // (typically 2-10s) rather than the 30s default connect_timeout.
+        let client = fbuild_core::http::client().clone();
         Self {
             base_url: fbuild_paths::get_daemon_url(),
             client,
@@ -220,7 +224,7 @@ impl DaemonClient {
     pub async fn health(&self) -> bool {
         self.client
             .get(format!("{}/health", self.base_url))
-            .timeout(std::time::Duration::from_secs(2))
+            .timeout(fbuild_core::time::SHORT_HTTP_TIMEOUT)
             .send()
             .await
             .map(|r| r.status().is_success())
@@ -231,7 +235,7 @@ impl DaemonClient {
     pub async fn health_full(&self) -> Option<HealthResponseFull> {
         self.client
             .get(format!("{}/health", self.base_url))
-            .timeout(std::time::Duration::from_secs(2))
+            .timeout(fbuild_core::time::SHORT_HTTP_TIMEOUT)
             .send()
             .await
             .ok()?
@@ -388,7 +392,7 @@ impl DaemonClient {
         let resp = self
             .client
             .get(format!("{}/api/daemon/info", self.base_url))
-            .timeout(std::time::Duration::from_secs(2))
+            .timeout(fbuild_core::time::SHORT_HTTP_TIMEOUT)
             .send()
             .await
             .map_err(|e| fbuild_core::FbuildError::DaemonError(format!("request failed: {}", e)))?;
@@ -429,7 +433,7 @@ impl DaemonClient {
         let resp = self
             .client
             .get(format!("{}/api/locks/status", self.base_url))
-            .timeout(std::time::Duration::from_secs(5))
+            .timeout(fbuild_core::time::MEDIUM_HTTP_TIMEOUT)
             .send()
             .await
             .map_err(|e| fbuild_core::FbuildError::DaemonError(format!("request failed: {}", e)))?;
@@ -545,7 +549,7 @@ impl DaemonClient {
         let resp = self
             .client
             .post(format!("{}/api/locks/clear", self.base_url))
-            .timeout(std::time::Duration::from_secs(5))
+            .timeout(fbuild_core::time::MEDIUM_HTTP_TIMEOUT)
             .send()
             .await
             .map_err(|e| fbuild_core::FbuildError::DaemonError(format!("request failed: {}", e)))?;
@@ -560,7 +564,7 @@ impl DaemonClient {
         let resp = self
             .client
             .get(format!("{}/api/cache/stats", self.base_url))
-            .timeout(std::time::Duration::from_secs(5))
+            .timeout(fbuild_core::time::MEDIUM_HTTP_TIMEOUT)
             .send()
             .await
             .map_err(|e| fbuild_core::FbuildError::DaemonError(format!("request failed: {}", e)))?;

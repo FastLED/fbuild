@@ -17,6 +17,8 @@ use fbuild_core::symbol_analysis::{
 };
 use fbuild_core::{FbuildError, Result};
 
+use crate::output;
+
 use super::symbols_cmd::resolve_tool_paths_public;
 
 #[allow(clippy::too_many_arguments)]
@@ -81,30 +83,34 @@ pub async fn run_bloat_lookup(
     match report.find_symbol(&query) {
         SymbolLookup::Hit(sym) => {
             if json {
-                let out = serde_json::to_string_pretty(sym)
+                let rendered = serde_json::to_string_pretty(sym)
                     .map_err(|e| FbuildError::Other(format!("json serialize: {e}")))?;
-                println!("{out}");
+                output::result(rendered);
             } else {
-                print!("{}", format_symbol_block(sym, &report));
+                // format_symbol_block already terminates lines with '\n'; strip
+                // the trailing newline so result()'s newline doesn't double up.
+                output::result(format_symbol_block(sym, &report).trim_end_matches('\n'));
             }
             Ok(())
         }
         SymbolLookup::Ambiguous(candidates) => {
             if json {
                 let payload: Vec<&FineGrainedSymbol> = candidates;
-                let out = serde_json::to_string_pretty(&payload)
+                let rendered = serde_json::to_string_pretty(&payload)
                     .map_err(|e| FbuildError::Other(format!("json serialize: {e}")))?;
-                println!("{out}");
+                output::result(rendered);
             } else {
-                eprintln!(
+                output::error(format!(
                     "ambiguous: {} symbols match `{}`:",
                     candidates.len(),
                     query_str
-                );
+                ));
                 for c in &candidates {
-                    eprintln!("  {} B  {}", c.size, c.demangled);
+                    output::error(format!("  {} B  {}", c.size, c.demangled));
                 }
-                eprintln!("re-run with a more specific --symbol value (or use --symbol-mangled).");
+                output::error(
+                    "re-run with a more specific --symbol value (or use --symbol-mangled).",
+                );
             }
             Err(FbuildError::BuildFailed(format!(
                 "ambiguous symbol query `{query_str}`"

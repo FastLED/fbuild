@@ -8,6 +8,7 @@ use crate::models::{BuildRequest, OperationResponse};
 use axum::extract::State;
 use axum::http::StatusCode;
 use axum::Json;
+use fbuild_core::channel::{unbounded, UnboundedSender};
 use std::path::PathBuf;
 use std::sync::atomic::Ordering;
 use std::sync::Arc;
@@ -18,13 +19,13 @@ use std::sync::Arc;
 /// `stream error: error decoding response body` from reqwest with no clue
 /// what went wrong. See fbuild#401.
 struct StreamTerminationGuard {
-    tx: tokio::sync::mpsc::UnboundedSender<bytes::Bytes>,
+    tx: UnboundedSender<bytes::Bytes>,
     request_id: String,
     completed: bool,
 }
 
 impl StreamTerminationGuard {
-    fn new(tx: tokio::sync::mpsc::UnboundedSender<bytes::Bytes>, request_id: String) -> Self {
+    fn new(tx: UnboundedSender<bytes::Bytes>, request_id: String) -> Self {
         Self {
             tx,
             request_id,
@@ -58,7 +59,7 @@ impl Drop for StreamTerminationGuard {
 }
 
 fn send_stream_status_event(
-    tx: &tokio::sync::mpsc::UnboundedSender<bytes::Bytes>,
+    tx: &UnboundedSender<bytes::Bytes>,
     ctx: &DaemonContext,
     request_id: &str,
     message: impl Into<String>,
@@ -207,8 +208,8 @@ pub async fn build(
         // been removed — `UnboundedSender::send` is sync and callable from
         // any context, and `UnboundedReceiver::recv` is awaited directly
         // from the async forwarder task.
-        let (log_tx, mut log_rx) = tokio::sync::mpsc::unbounded_channel::<String>();
-        let (async_tx, async_rx) = tokio::sync::mpsc::unbounded_channel::<bytes::Bytes>();
+        let (log_tx, mut log_rx) = unbounded::<String>();
+        let (async_tx, async_rx) = unbounded::<bytes::Bytes>();
 
         let params = fbuild_build::BuildParams {
             project_dir: project_dir.clone(),

@@ -148,8 +148,7 @@ impl Linker for ArmLinker {
         let args = self.build_link_args(objects, archives, &elf_path, &map_path, extra);
 
         if self.verbose {
-            eprintln!("link: {}", args.join(" "));
-            tracing::info!("link: {}", args.join(" "));
+            tracing::debug!(target: "fbuild_build::linker::generic_arm", "link: {}", args.join(" "));
         }
 
         // GCC LTO temp dir for MSYS-safe paths â€” see FastLED/fbuild#261.

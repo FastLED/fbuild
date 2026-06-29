@@ -204,6 +204,12 @@ pub fn resolve_with_stats(
 }
 
 fn canon(p: &Path) -> PathBuf {
+    // FastLED/fbuild#844 sync-context allowlist: `resolve_with_stats`
+    // is sync (called from the daemon's `BuildOrchestrator` chain and
+    // from the diagnostic `fbuild lib-select` CLI). Making it async to
+    // adopt `fbuild_core::path::canonicalize_existing` would cascade
+    // through every caller. File is allowlisted in
+    // `dylints/ban_std_fs_canonicalize/src/allowlist.txt`.
     match std::fs::canonicalize(p) {
         Ok(c) => c,
         Err(err) => {

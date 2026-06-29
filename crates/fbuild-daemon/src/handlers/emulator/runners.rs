@@ -83,7 +83,7 @@ impl EmulatorRunner for QemuRunner {
         let qemu = resolve_esp_qemu_for_mcu(&self.project_dir, &self.board.mcu).await?;
 
         let session_dir = qemu_session_dir(&self.project_dir, &self.env_name);
-        std::fs::create_dir_all(&session_dir)?;
+        fbuild_core::fs::create_dir_all(&session_dir).await?;
 
         let flash_image = session_dir.join("qemu_flash.bin");
 
@@ -185,7 +185,7 @@ impl EmulatorRunner for Avr8jsRunner {
         // (`include_str!`), so concurrent writes are idempotent.
         // See FastLED/fbuild#291.
         let script_path = avr8js_cache.join("headless.mjs");
-        std::fs::write(&script_path, AVR8JS_HEADLESS_MJS)?;
+        fbuild_core::fs::write(&script_path, AVR8JS_HEADLESS_MJS).await?;
 
         let f_cpu_hz: u32 = self
             .board
@@ -247,7 +247,19 @@ async fn find_simavr() -> fbuild_core::Result<PathBuf> {
     // Try running simavr to verify it exists; route through containment
     // (issue #32). This is a short-lived probe so the containment
     // difference is purely consistency.
-    match fbuild_core::subprocess::run_command(&[simavr, "--help"], None, None, None).await {
+    //
+    // FastLED/fbuild#844: explicit 5 s timeout. `simavr --help` prints a
+    // static usage string in well under 100 ms on every supported host —
+    // anything longer is a wedged binary and we want to fall through to
+    // the "not found" install hint quickly.
+    match fbuild_core::subprocess::run_command(
+        &[simavr, "--help"],
+        None,
+        None,
+        Some(std::time::Duration::from_secs(5)),
+    )
+    .await
+    {
         Ok(_) => Ok(PathBuf::from(simavr)),
         Err(_) => {
             let install_hint = if cfg!(target_os = "linux") {

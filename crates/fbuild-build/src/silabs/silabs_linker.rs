@@ -122,8 +122,7 @@ impl Linker for SilabsLinker {
         args.push("-Wl,--end-group".to_string());
 
         if self.verbose {
-            eprintln!("link: {}", args.join(" "));
-            tracing::info!("link: {}", args.join(" "));
+            tracing::debug!(target: "fbuild_build::linker::silabs", "link: {}", args.join(" "));
         }
 
         // GCC LTO temp dir for MSYS-safe paths â€” see FastLED/fbuild#261.

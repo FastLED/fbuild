@@ -128,7 +128,7 @@ pub trait Deployer: Send + Sync {
     ///
     // TODO(#605 Phase 1): LPC + CMSIS-DAP wedge-recovery override.
     async fn post_deploy_recovery(&self, port: &str) -> Result<()> {
-        let deadline = std::time::Instant::now() + std::time::Duration::from_secs(3);
+        let deadline = std::time::Instant::now() + fbuild_core::time::POST_DEPLOY_RECOVERY_DEADLINE;
         let port = port.to_string();
         while std::time::Instant::now() < deadline {
             // serialport::new(...).open() is blocking; offload it. Each
@@ -146,7 +146,7 @@ pub trait Deployer: Send + Sync {
             if opened {
                 return Ok(());
             }
-            tokio::time::sleep(std::time::Duration::from_millis(100)).await;
+            fbuild_core::time::sleep(fbuild_core::time::POLL_100MS).await;
         }
         tracing::warn!("USB re-enumeration: port {} not available after 3s", port);
         Ok(())

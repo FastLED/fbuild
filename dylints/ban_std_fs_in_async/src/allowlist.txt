@@ -1,0 +1,15 @@
+# FastLED/fbuild#844 — Phase 2 migration.
+#
+# Each non-empty, non-comment line is matched against the tail of each
+# source file path (slashes normalized to /). Bridge / scope exemptions
+# live in `lib.rs` by file path, not here.
+#
+# The entries below are sync helpers inside the daemon crate that are
+# deliberately blocking: each call site below is invoked through
+# `tokio::task::spawn_blocking` by its async caller (see
+# `handlers/operations/build.rs:446`, `deploy.rs:319`, and
+# `avr8js_npm.rs:130`). Converting them to async would force the
+# spawn_blocking wrappers to be removed and pull the I/O back onto
+# axum workers — the opposite of what this lint exists to encourage.
+crates/fbuild-daemon/src/handlers/operations/common.rs
+crates/fbuild-daemon/src/handlers/emulator/avr8js_npm.rs

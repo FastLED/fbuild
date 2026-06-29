@@ -230,8 +230,7 @@ impl Linker for Esp8266Linker {
         args.push("-Wl,--end-group".to_string());
 
         if self.verbose {
-            eprintln!("link: {}", args.join(" "));
-            tracing::info!("link: {}", args.join(" "));
+            tracing::debug!(target: "fbuild_build::linker::esp8266", "link: {}", args.join(" "));
         }
 
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();

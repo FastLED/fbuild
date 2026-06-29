@@ -470,7 +470,7 @@ fn package_touch_key(
 
 fn mark_package_touch_needed(key: String) -> bool {
     let touched = PACKAGE_TOUCHES.get_or_init(|| Mutex::new(HashSet::new()));
-    let mut touched = touched.lock().unwrap();
+    let mut touched = touched.lock().unwrap_or_else(|e| e.into_inner());
     touched.insert(key)
 }
 

@@ -3,6 +3,7 @@
 //! with the purge subcommand.
 
 use crate::daemon_client::{self, DaemonClient};
+use crate::output;
 
 use super::args::DaemonAction;
 use super::purge::format_size;
@@ -13,7 +14,7 @@ pub async fn run_daemon(action: DaemonAction) -> fbuild_core::Result<()> {
     match action {
         DaemonAction::Stop => {
             if !client.health().await {
-                println!("daemon is not running");
+                output::result("daemon is not running");
                 return Ok(());
             }
             client.shutdown().await?;
@@ -21,57 +22,66 @@ pub async fn run_daemon(action: DaemonAction) -> fbuild_core::Result<()> {
             for _ in 0..50 {
                 tokio::time::sleep(std::time::Duration::from_millis(100)).await;
                 if !client.health().await {
-                    println!("daemon stopped");
+                    output::result("daemon stopped");
                     return Ok(());
                 }
             }
-            println!("daemon stop requested (may still be shutting down)");
+            output::result("daemon stop requested (may still be shutting down)");
         }
         DaemonAction::Status => {
             if client.health().await {
                 match client.daemon_info().await {
                     Ok(info) => {
                         let uptime = format_uptime(info.uptime_seconds);
-                        println!("daemon is running at {}", fbuild_paths::get_daemon_url());
-                        println!("  PID:     {}", info.pid);
-                        println!("  Port:    {}", info.port);
-                        println!("  Uptime:  {}", uptime);
-                        println!("  Version: {}", info.version);
-                        println!("  Mode:    {}", if info.dev_mode { "dev" } else { "prod" });
-                        println!("  State:   {}", info.daemon_state);
+                        output::result(format!(
+                            "daemon is running at {}",
+                            fbuild_paths::get_daemon_url()
+                        ));
+                        output::result(format!("  PID:     {}", info.pid));
+                        output::result(format!("  Port:    {}", info.port));
+                        output::result(format!("  Uptime:  {}", uptime));
+                        output::result(format!("  Version: {}", info.version));
+                        output::result(format!(
+                            "  Mode:    {}",
+                            if info.dev_mode { "dev" } else { "prod" }
+                        ));
+                        output::result(format!("  State:   {}", info.daemon_state));
                         if info.operation_in_progress {
                             if let Some(ref op) = info.current_operation {
-                                println!("  Operation: {}", op);
+                                output::result(format!("  Operation: {}", op));
                             } else {
-                                println!("  Operation: (in progress)");
+                                output::result("  Operation: (in progress)");
                             }
                         }
                         if let Some(ref install) = info.dependency_install {
-                            println!(
+                            output::result(format!(
                                 "  Install: {} {} ({}, {})",
                                 install.name,
                                 install.version.as_deref().unwrap_or(""),
                                 install.phase,
                                 install.role
-                            );
-                            println!("           {}", install.message);
+                            ));
+                            output::result(format!("           {}", install.message));
                         }
                         if info.client_count > 0 {
-                            println!("  Clients: {}", info.client_count);
+                            output::result(format!("  Clients: {}", info.client_count));
                         }
                         if let Some(ref cwd) = info.spawner_cwd {
-                            println!("  Spawned from: {}", cwd);
+                            output::result(format!("  Spawned from: {}", cwd));
                         }
                         if let Some(mtime) = info.source_mtime {
-                            println!("  Binary mtime: {:.0}", mtime);
+                            output::result(format!("  Binary mtime: {:.0}", mtime));
                         }
                     }
                     Err(_) => {
-                        println!("daemon is running at {}", fbuild_paths::get_daemon_url());
+                        output::result(format!(
+                            "daemon is running at {}",
+                            fbuild_paths::get_daemon_url()
+                        ));
                     }
                 }
             } else {
-                println!("daemon is not running");
+                output::result("daemon is not running");
             }
         }
         DaemonAction::Restart => {
@@ -87,7 +97,7 @@ pub async fn run_daemon(action: DaemonAction) -> fbuild_core::Result<()> {
             }
             // Start fresh
             daemon_client::ensure_daemon_running().await?;
-            println!("daemon restarted");
+            output::result("daemon restarted");
         }
         DaemonAction::List => {
             run_daemon_list(&client).await?;
@@ -197,56 +207,74 @@ fn run_daemon_running_process(json: bool) -> fbuild_core::Result<()> {
                 "fallback_reason": fallback_reason,
             },
         });
-        let output = serde_json::to_string_pretty(&payload)
+        let rendered = serde_json::to_string_pretty(&payload)
             .map_err(|e| fbuild_core::FbuildError::Other(format!("json serialize: {e}")))?;
-        println!("{output}");
+        output::result(rendered);
         return Ok(());
     }
 
-    println!("running-process broker adoption");
-    println!("  Service:              {}", rp::SERVICE_NAME);
-    println!("  Isolation (local):    {}", rp::BROKER_ISOLATION);
-    println!(
+    output::result("running-process broker adoption");
+    output::result(format!("  Service:              {}", rp::SERVICE_NAME));
+    output::result(format!("  Isolation (local):    {}", rp::BROKER_ISOLATION));
+    output::result(format!(
         "  Isolation (CI):       EXPLICIT_INSTANCE \"{}\"",
         rp::CI_TRUSTED_INSTANCE
-    );
-    println!("  Min version:          {}", rp::MIN_VERSION);
-    println!(
+    ));
+    output::result(format!("  Min version:          {}", rp::MIN_VERSION));
+    output::result(format!(
         "  Payload protocol:     {:#06X}",
         rp::FBUILD_PAYLOAD_PROTOCOL
-    );
-    println!("  fbuild proto version: {}", rp::FBUILD_PROTOCOL_VERSION);
-    println!("  Cache schema version: {}", rp::CACHE_SCHEMA_VERSION);
-    println!("  Encoding lane:        json-direct + prost-broker (parity-tested)");
-    println!(
+    ));
+    output::result(format!(
+        "  fbuild proto version: {}",
+        rp::FBUILD_PROTOCOL_VERSION
+    ));
+    output::result(format!(
+        "  Cache schema version: {}",
+        rp::CACHE_SCHEMA_VERSION
+    ));
+    output::result("  Encoding lane:        json-direct + prost-broker (parity-tested)");
+    output::result(format!(
         "  Service definition:   {}",
         service_definition_path.display()
-    );
-    println!("  Selected path:        {selected_path}");
-    println!("  Mode:                 {live_mode}");
+    ));
+    output::result(format!("  Selected path:        {selected_path}"));
+    output::result(format!("  Mode:                 {live_mode}"));
     if let Some(endpoint) = negotiated_endpoint {
-        println!("  Negotiated endpoint:  {endpoint}");
+        output::result(format!("  Negotiated endpoint:  {endpoint}"));
     }
     if let Some(version) = negotiated_daemon_version {
-        println!("  Negotiated version:   {version}");
+        output::result(format!("  Negotiated version:   {version}"));
     }
     if let Some(reason) = fallback_reason {
-        println!("  Fallback reason:      {reason}");
+        output::result(format!("  Fallback reason:      {reason}"));
     }
-    println!("  Daemon endpoint:      {}", fbuild_paths::get_daemon_url());
-    println!("  Daemon binary:        {}", daemon_candidate.display());
-    println!(
+    output::result(format!(
+        "  Daemon endpoint:      {}",
+        fbuild_paths::get_daemon_url()
+    ));
+    output::result(format!(
+        "  Daemon binary:        {}",
+        daemon_candidate.display()
+    ));
+    output::result(format!(
         "  Daemon binary exists: {}",
         if daemon_candidate_exists { "yes" } else { "no" }
-    );
-    println!("  Cache roots:");
-    println!("    - artifact: {}", cache_roots.artifact.display());
-    println!("    - index:    {}", cache_roots.index.display());
-    println!("    - temp:     {}", cache_roots.temp.display());
-    println!("    - log:      {}", cache_roots.log.display());
-    println!("    - lock:     {}", cache_roots.lock.display());
-    println!("    - runtime:  {}", cache_roots.runtime.display());
-    println!("    - config:   {}", cache_roots.config.display());
+    ));
+    output::result("  Cache roots:");
+    output::result(format!(
+        "    - artifact: {}",
+        cache_roots.artifact.display()
+    ));
+    output::result(format!("    - index:    {}", cache_roots.index.display()));
+    output::result(format!("    - temp:     {}", cache_roots.temp.display()));
+    output::result(format!("    - log:      {}", cache_roots.log.display()));
+    output::result(format!("    - lock:     {}", cache_roots.lock.display()));
+    output::result(format!(
+        "    - runtime:  {}",
+        cache_roots.runtime.display()
+    ));
+    output::result(format!("    - config:   {}", cache_roots.config.display()));
     Ok(())
 }
 
@@ -265,28 +293,31 @@ pub async fn run_daemon_list(client: &DaemonClient) -> fbuild_core::Result<()> {
         match client.daemon_info().await {
             Ok(info) => {
                 let uptime = format_uptime(info.uptime_seconds);
-                println!("fbuild daemon (running)");
-                println!("  PID:     {}", info.pid);
-                println!("  Port:    {}", info.port);
-                println!("  Uptime:  {}", uptime);
-                println!("  Version: {}", info.version);
-                println!("  Mode:    {}", if info.dev_mode { "dev" } else { "prod" });
+                output::result("fbuild daemon (running)");
+                output::result(format!("  PID:     {}", info.pid));
+                output::result(format!("  Port:    {}", info.port));
+                output::result(format!("  Uptime:  {}", uptime));
+                output::result(format!("  Version: {}", info.version));
+                output::result(format!(
+                    "  Mode:    {}",
+                    if info.dev_mode { "dev" } else { "prod" }
+                ));
             }
             Err(e) => {
-                println!("daemon is running but info unavailable: {}", e);
+                output::result(format!("daemon is running but info unavailable: {}", e));
             }
         }
     } else {
-        println!("no daemon is running");
+        output::result("no daemon is running");
         // Check for stale PID file
         let pid_file = fbuild_paths::get_daemon_pid_file();
         if pid_file.exists() {
             if let Ok(contents) = std::fs::read_to_string(&pid_file) {
-                println!(
+                output::result(format!(
                     "  (stale PID file: {} — PID {})",
                     pid_file.display(),
                     contents.trim()
-                );
+                ));
             }
         }
     }
@@ -294,18 +325,18 @@ pub async fn run_daemon_list(client: &DaemonClient) -> fbuild_core::Result<()> {
     // Also scan for orphan processes
     let pids = find_daemon_pids().await?;
     if pids.len() > 1 {
-        println!("\nwarning: multiple fbuild-daemon processes detected:");
+        output::warn("multiple fbuild-daemon processes detected:");
         for pid in &pids {
-            println!("  PID {}", pid);
+            output::result(format!("  PID {}", pid));
         }
-        println!("use 'fbuild daemon kill-all' to clean up");
+        output::result("use 'fbuild daemon kill-all' to clean up");
     }
     Ok(())
 }
 
 pub async fn run_daemon_locks(client: &DaemonClient) -> fbuild_core::Result<()> {
     if !client.health().await {
-        println!("daemon is not running");
+        output::result("daemon is not running");
         return Ok(());
     }
 
@@ -313,35 +344,35 @@ pub async fn run_daemon_locks(client: &DaemonClient) -> fbuild_core::Result<()> 
 
     // Display port locks
     if status.port_locks.is_empty() {
-        println!("Port Locks: (none)");
+        output::result("Port Locks: (none)");
     } else {
-        println!("Port Locks:");
+        output::result("Port Locks:");
         for lock in &status.port_locks {
             let state = if lock.is_held { "HELD" } else { "FREE" };
             let writer = lock.writer_client_id.as_deref().unwrap_or("none");
-            println!(
+            output::result(format!(
                 "  {} [{}] open={} writer={} readers={}",
                 lock.port, state, lock.is_open, writer, lock.reader_count
-            );
+            ));
         }
     }
 
     // Display project locks
     if status.project_locks.is_empty() {
-        println!("Project Locks: (none)");
+        output::result("Project Locks: (none)");
     } else {
-        println!("Project Locks:");
+        output::result("Project Locks:");
         for lock in &status.project_locks {
             let state = if lock.is_held { "HELD" } else { "FREE" };
-            println!("  {} [{}]", lock.project_dir, state);
+            output::result(format!("  {} [{}]", lock.project_dir, state));
         }
     }
 
     if !status.stale_locks.is_empty() {
-        println!(
-            "\nWarning: {} stale lock(s) detected. Use 'fbuild daemon clear-locks' to clear.",
+        output::warn(format!(
+            "{} stale lock(s) detected. Use 'fbuild daemon clear-locks' to clear.",
             status.stale_locks.len()
-        );
+        ));
     }
 
     Ok(())
@@ -349,14 +380,14 @@ pub async fn run_daemon_locks(client: &DaemonClient) -> fbuild_core::Result<()> 
 
 pub async fn run_daemon_clear_locks(client: &DaemonClient) -> fbuild_core::Result<()> {
     if !client.health().await {
-        println!("daemon is not running");
+        output::result("daemon is not running");
         return Ok(());
     }
 
     let result = client.clear_locks().await?;
-    println!("{}", result.message);
+    output::result(&result.message);
     if result.cleared_count > 0 {
-        println!("Cleared {} lock(s)", result.cleared_count);
+        output::result(format!("Cleared {} lock(s)", result.cleared_count));
     }
     Ok(())
 }
@@ -369,7 +400,7 @@ pub async fn run_daemon_cache_stats(client: &DaemonClient) -> fbuild_core::Resul
                 let stats = dc.stats().map_err(|e| {
                     fbuild_core::FbuildError::Other(format!("failed to read cache stats: {}", e))
                 })?;
-                println!("{}", stats);
+                output::result(format!("{}", stats));
             }
             Err(e) => {
                 return Err(fbuild_core::FbuildError::Other(format!(
@@ -388,17 +419,26 @@ pub async fn run_daemon_cache_stats(client: &DaemonClient) -> fbuild_core::Resul
             stats.message.as_deref().unwrap_or("unknown error")
         )));
     }
-    println!("Disk Cache Statistics:");
-    println!("  Entries:    {}", stats.entry_count);
-    println!("  Installed:  {}", format_size(stats.installed_bytes));
-    println!("  Archives:   {}", format_size(stats.archive_bytes));
-    println!("  Total:      {}", format_size(stats.total_bytes));
-    println!(
+    output::result("Disk Cache Statistics:");
+    output::result(format!("  Entries:    {}", stats.entry_count));
+    output::result(format!(
+        "  Installed:  {}",
+        format_size(stats.installed_bytes)
+    ));
+    output::result(format!(
+        "  Archives:   {}",
+        format_size(stats.archive_bytes)
+    ));
+    output::result(format!("  Total:      {}", format_size(stats.total_bytes)));
+    output::result(format!(
         "  Watermarks: {} high / {} low",
         format_size(stats.high_watermark),
         format_size(stats.low_watermark)
-    );
-    println!("  Archive budget: {}", format_size(stats.archive_budget));
+    ));
+    output::result(format!(
+        "  Archive budget: {}",
+        format_size(stats.archive_budget)
+    ));
     Ok(())
 }
 
@@ -422,26 +462,32 @@ pub async fn run_daemon_gc(client: &DaemonClient) -> fbuild_core::Result<()> {
             result.message.as_deref().unwrap_or("unknown error")
         )));
     }
-    println!("GC complete:");
-    println!(
+    output::result("GC complete:");
+    output::result(format!(
         "  Installed evicted: {} ({})",
         result.installed_evicted,
         format_size(result.installed_bytes_freed)
-    );
-    println!(
+    ));
+    output::result(format!(
         "  Archives evicted:  {} ({})",
         result.archives_evicted,
         format_size(result.archive_bytes_freed)
-    );
-    println!(
+    ));
+    output::result(format!(
         "  Total freed:       {}",
         format_size(result.total_bytes_freed)
-    );
+    ));
     if result.orphan_files_removed > 0 {
-        println!("  Orphan files removed: {}", result.orphan_files_removed);
+        output::result(format!(
+            "  Orphan files removed: {}",
+            result.orphan_files_removed
+        ));
     }
     if result.orphan_rows_cleaned > 0 {
-        println!("  Orphan rows cleaned:  {}", result.orphan_rows_cleaned);
+        output::result(format!(
+            "  Orphan rows cleaned:  {}",
+            result.orphan_rows_cleaned
+        ));
     }
     Ok(())
 }
@@ -451,29 +497,35 @@ pub fn print_gc_report(report: &fbuild_packages::disk_cache::GcReport) {
         && report.orphan_files_removed == 0
         && report.orphan_rows_cleaned == 0
     {
-        println!("GC: nothing to clean up");
+        output::result("GC: nothing to clean up");
         return;
     }
-    println!("GC complete:");
-    println!(
+    output::result("GC complete:");
+    output::result(format!(
         "  Installed evicted: {} ({})",
         report.installed_evicted,
         format_size(report.installed_bytes_freed)
-    );
-    println!(
+    ));
+    output::result(format!(
         "  Archives evicted:  {} ({})",
         report.archives_evicted,
         format_size(report.archive_bytes_freed)
-    );
-    println!(
+    ));
+    output::result(format!(
         "  Total freed:       {}",
         format_size(report.total_bytes_freed())
-    );
+    ));
     if report.orphan_files_removed > 0 {
-        println!("  Orphan files removed: {}", report.orphan_files_removed);
+        output::result(format!(
+            "  Orphan files removed: {}",
+            report.orphan_files_removed
+        ));
     }
     if report.orphan_rows_cleaned > 0 {
-        println!("  Orphan rows cleaned:  {}", report.orphan_rows_cleaned);
+        output::result(format!(
+            "  Orphan rows cleaned:  {}",
+            report.orphan_rows_cleaned
+        ));
     }
 }
 
@@ -494,7 +546,7 @@ pub async fn run_daemon_kill(
     };
 
     kill_process(target_pid, force).await?;
-    println!("killed daemon (PID {})", target_pid);
+    output::result(format!("killed daemon (PID {})", target_pid));
     let _ = std::fs::remove_file(fbuild_paths::get_daemon_pid_file());
     Ok(())
 }
@@ -520,7 +572,7 @@ pub fn read_pid_from_file() -> fbuild_core::Result<u32> {
 pub async fn run_daemon_kill_all(force: bool) -> fbuild_core::Result<()> {
     let pids = find_daemon_pids().await?;
     if pids.is_empty() {
-        println!("no fbuild-daemon processes found");
+        output::result("no fbuild-daemon processes found");
         return Ok(());
     }
 
@@ -528,17 +580,17 @@ pub async fn run_daemon_kill_all(force: bool) -> fbuild_core::Result<()> {
     for pid in &pids {
         match kill_process(*pid, force).await {
             Ok(()) => {
-                println!("killed daemon (PID {})", pid);
+                output::result(format!("killed daemon (PID {})", pid));
                 killed += 1;
             }
             Err(e) => {
-                eprintln!("failed to kill PID {}: {}", pid, e);
+                output::error(format!("failed to kill PID {}: {}", pid, e));
             }
         }
     }
 
     let _ = std::fs::remove_file(fbuild_paths::get_daemon_pid_file());
-    println!("killed {} daemon(s)", killed);
+    output::result(format!("killed {} daemon(s)", killed));
     Ok(())
 }
 
