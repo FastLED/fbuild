@@ -60,6 +60,11 @@ APPROVED_CRATE_DIRS: frozenset[str] = frozenset(
         "bench/fastled-examples",
         # Workspace-excluded crates with their own toolchains:
         "dylints/ban_raw_subprocess",
+        "dylints/ban_std_pathbuf",
+        "dylints/ban_unrooted_tempdir",
+        "dylints/ban_direct_serialport",
+        "dylints/ban_file_based_locks",
+        "dylints/ban_deploy_tool_direct_invocation",
     }
 )
 
