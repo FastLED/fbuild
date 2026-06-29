@@ -19,6 +19,7 @@ name: add-to-project
 #   3. Revoke the old key in the App settings
 
 on:
+  workflow_dispatch: {}
   issues:
     types: [opened]
   pull_request:
