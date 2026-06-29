@@ -139,6 +139,43 @@ See [`../python/README.md`](../python/README.md) for more detail. PyPI wheels ar
 
 See the root [CLAUDE.md](../CLAUDE.md) for the full list of PreToolUse / PostToolUse / Stop hooks under `ci/hooks/`.
 
+## CI: per-board build triggers
+
+The 79 `build-<board>.yml` workflows under `.github/workflows/` are **path-filtered** — a board only builds on `push` / `pull_request` when one of these paths changed (see FastLED/fbuild#835):
+
+- The board's own test sketch: `tests/platform/<board>/**`
+- The board's family code: e.g. all LPC boards trigger on `crates/fbuild-build/src/nxplpc/**` and `crates/fbuild-build/src/generic_arm/**`
+- Any **common code** listed in `ci/ci_common_paths.txt` (touches `compiler.rs`, the `pipeline/` module, any of the always-needed crates like `fbuild-cli` / `fbuild-daemon` / `fbuild-core`, `Cargo.lock`, `rust-toolchain.toml`, etc. — broad on purpose: bias is toward catching regressions)
+- The workflow file itself + `template_build.yml` + the renderer + the SOT files
+
+A `nightly-platforms.yml` workflow runs **all** per-board builds once a day (`cron: '0 9 * * *'` UTC — ~1am PST winter / 2am PDT summer). It is gated by a `guard` job that exits cleanly when no commits landed in the last 24h, so quiet days cost nothing.
+
+### Source of truth
+
+Both the per-board `on:` blocks and the nightly fan-out are **rendered** from two files — never edit the workflow `on:` blocks by hand:
+
+| File | Purpose |
+|---|---|
+| `ci/board_families.json` | Per-board metadata + family → crate-path mapping |
+| `ci/ci_common_paths.txt` | Paths whose changes force-run every board |
+| `ci/render_workflows.py` | Renderer (writes the `on:` blocks + `nightly-platforms.yml`) |
+
+To add a new board / change a family / broaden the common-path list:
+
+```bash
+# edit ci/board_families.json and/or ci/ci_common_paths.txt
+uv run --no-project python ci/render_workflows.py
+git add -p .github/workflows ci/
+```
+
+The `ci-workflow-drift.yml` workflow runs `render_workflows.py --check` on every PR and fails if a committed workflow does not match the SOT.
+
+### Forcing a build
+
+- **One board, one-off:** trigger `workflow_dispatch` on `build-<board>.yml` from the Actions tab.
+- **All boards, manual:** trigger `workflow_dispatch` on `nightly-platforms.yml` with `force: true` to bypass the 24h commit guard.
+- **All boards, automatic on a PR:** touch any path in `ci/ci_common_paths.txt` (e.g. `crates/fbuild-cli/**`) — the common-path safety net fires every board.
+
 ## See also
 
 - [../CLAUDE.md](../CLAUDE.md) — project rules and essential commands

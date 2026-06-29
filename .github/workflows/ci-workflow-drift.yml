@@ -1,0 +1,26 @@
+name: CI Workflow Drift
+
+# Enforces that .github/workflows/build-*.yml and nightly-platforms.yml
+# match what `ci/render_workflows.py` would emit from the SOT files
+# (ci/board_families.json + ci/ci_common_paths.txt). See FastLED/fbuild#835.
+#
+# This is intentionally always-on (no paths filter) -- it is fast and
+# stops drift the moment it appears. If a contributor edits a per-board
+# `on:` block by hand, this gate fails with a copy-paste fix command.
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    name: Render-and-diff
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v3
+      - name: Verify rendered workflows match SOT
+        run: uv run --no-project python ci/render_workflows.py --check
