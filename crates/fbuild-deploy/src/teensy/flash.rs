@@ -87,7 +87,7 @@ impl FlashRunOutcome {
 /// after a baud-134 trigger; every subsequent retry uses the smaller
 /// `subsequent_attempt_timeout` since by then HalfKay has either already been
 /// observed or the device is wedged in a way another retry won't fix.
-pub fn run_with_retry(
+pub async fn run_with_retry(
     cfg: &FlashConfig,
     retries: u32,
     backoff_ms: u64,
@@ -119,7 +119,7 @@ pub fn run_with_retry(
         } else {
             subsequent_attempt_timeout
         };
-        let result = run_command(&args_ref, None, None, Some(attempt_timeout))?;
+        let result = run_command(&args_ref, None, None, Some(attempt_timeout)).await?;
         let success = result.success();
         let exit_code = result.exit_code;
         let stdout = result.stdout;
@@ -164,7 +164,7 @@ pub fn run_with_retry(
                 last_err,
                 backoff_ms
             );
-            std::thread::sleep(Duration::from_millis(backoff_ms));
+            tokio::time::sleep(Duration::from_millis(backoff_ms)).await;
         }
     }
 

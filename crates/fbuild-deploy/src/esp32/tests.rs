@@ -508,8 +508,8 @@ fn build_write_flash_args_default_includes_all_regions() {
 /// with a clear error rather than silently emitting a write-flash
 /// call with no offset/file pair (which would produce an opaque
 /// esptool usage error). Addresses CodeRabbit review on PR #71.
-#[test]
-fn deploy_regions_errors_when_requested_region_file_missing() {
+#[tokio::test]
+async fn deploy_regions_errors_when_requested_region_file_missing() {
     let params = test_esptool_params();
     let deployer = Esp32Deployer::new(
         "esp32s3", "921600", "0x0", "0x8000", "0x10000", &params, false,
@@ -520,6 +520,7 @@ fn deploy_regions_errors_when_requested_region_file_missing() {
     // Note: no bootloader.bin written.
     let err = deployer
         .deploy_regions(&fw, "COM13", &[FlashRegion::Bootloader])
+        .await
         .unwrap_err();
     assert!(
         err.to_string().contains("bootloader.bin"),
@@ -530,14 +531,15 @@ fn deploy_regions_errors_when_requested_region_file_missing() {
 
 /// Empty region slice -> usage error; we surface it rather than let
 /// esptool barf.
-#[test]
-fn deploy_regions_rejects_empty_slice() {
+#[tokio::test]
+async fn deploy_regions_rejects_empty_slice() {
     let params = test_esptool_params();
     let deployer = Esp32Deployer::new(
         "esp32s3", "921600", "0x0", "0x8000", "0x10000", &params, false,
     );
     let err = deployer
         .deploy_regions(Path::new("firmware.bin"), "COM13", &[])
+        .await
         .unwrap_err();
     assert!(err.to_string().contains("no regions"));
 }
@@ -589,7 +591,7 @@ fn verify_outcome_is_match_helper() {
 /// 2. Asserts that verify against the pre-flashed image returns `Match`
 ///    in under 15 seconds.
 /// 3. Asserts that a tampered image (1 byte flipped) returns `Mismatch`.
-fn run_verify_deployment_test(
+async fn run_verify_deployment_test(
     chip: &str,
     bootloader_offset: &str,
     port_env: &str,
@@ -649,6 +651,7 @@ fn run_verify_deployment_test(
     let start = std::time::Instant::now();
     let outcome = deployer
         .try_verify_deployment(&reference, &port)
+        .await
         .unwrap_or_else(|e| panic!("verify must not fail against attached {}: {}", chip, e));
     let elapsed = start.elapsed();
     assert!(
@@ -683,6 +686,7 @@ fn run_verify_deployment_test(
 
     let outcome = deployer
         .try_verify_deployment(&tampered, &port)
+        .await
         .unwrap_or_else(|e| {
             panic!(
                 "[{}] verify must not fail with tampered firmware: {}",
@@ -704,10 +708,10 @@ fn run_verify_deployment_test(
 /// ESP32_PORT=COM5 ESP32_FIRMWARE=C:\path\to\firmware.bin \
 ///   soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32 -- --ignored --nocapture
 /// ```
-#[test]
+#[tokio::test]
 #[ignore = "requires real ESP32 board — set ESP32_PORT and ESP32_FIRMWARE"]
-fn try_verify_deployment_real_esp32() {
-    run_verify_deployment_test("esp32", "0x1000", "ESP32_PORT", "ESP32_FIRMWARE");
+async fn try_verify_deployment_real_esp32() {
+    run_verify_deployment_test("esp32", "0x1000", "ESP32_PORT", "ESP32_FIRMWARE").await;
 }
 
 /// ESP32-S2 (Xtensa single-core, bootloader at 0x1000).
@@ -716,10 +720,10 @@ fn try_verify_deployment_real_esp32() {
 /// ESP32S2_PORT=COM6 ESP32S2_FIRMWARE=C:\path\to\firmware.bin \
 ///   soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32s2 -- --ignored --nocapture
 /// ```
-#[test]
+#[tokio::test]
 #[ignore = "requires real ESP32-S2 board — set ESP32S2_PORT and ESP32S2_FIRMWARE"]
-fn try_verify_deployment_real_esp32s2() {
-    run_verify_deployment_test("esp32s2", "0x1000", "ESP32S2_PORT", "ESP32S2_FIRMWARE");
+async fn try_verify_deployment_real_esp32s2() {
+    run_verify_deployment_test("esp32s2", "0x1000", "ESP32S2_PORT", "ESP32S2_FIRMWARE").await;
 }
 
 /// ESP32-S3 (Xtensa dual-core, bootloader at 0x0).
@@ -731,10 +735,10 @@ fn try_verify_deployment_real_esp32s2() {
 /// ESP32S3_PORT=COM13 ESP32S3_FIRMWARE=C:\Users\niteris\dev\fastled\.pio\build\esp32s3\firmware.bin \
 ///   soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32s3 -- --ignored --nocapture
 /// ```
-#[test]
+#[tokio::test]
 #[ignore = "requires real ESP32-S3 board — set ESP32S3_PORT and ESP32S3_FIRMWARE"]
-fn try_verify_deployment_real_esp32s3() {
-    run_verify_deployment_test("esp32s3", "0x0", "ESP32S3_PORT", "ESP32S3_FIRMWARE");
+async fn try_verify_deployment_real_esp32s3() {
+    run_verify_deployment_test("esp32s3", "0x0", "ESP32S3_PORT", "ESP32S3_FIRMWARE").await;
 }
 
 /// ESP32-C2 (RISC-V single-core, bootloader at 0x0).
@@ -743,10 +747,10 @@ fn try_verify_deployment_real_esp32s3() {
 /// ESP32C2_PORT=COM7 ESP32C2_FIRMWARE=C:\path\to\firmware.bin \
 ///   soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32c2 -- --ignored --nocapture
 /// ```
-#[test]
+#[tokio::test]
 #[ignore = "requires real ESP32-C2 board — set ESP32C2_PORT and ESP32C2_FIRMWARE"]
-fn try_verify_deployment_real_esp32c2() {
-    run_verify_deployment_test("esp32c2", "0x0", "ESP32C2_PORT", "ESP32C2_FIRMWARE");
+async fn try_verify_deployment_real_esp32c2() {
+    run_verify_deployment_test("esp32c2", "0x0", "ESP32C2_PORT", "ESP32C2_FIRMWARE").await;
 }
 
 /// ESP32-C3 (RISC-V single-core, bootloader at 0x0).
@@ -755,10 +759,10 @@ fn try_verify_deployment_real_esp32c2() {
 /// ESP32C3_PORT=COM8 ESP32C3_FIRMWARE=C:\path\to\firmware.bin \
 ///   soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32c3 -- --ignored --nocapture
 /// ```
-#[test]
+#[tokio::test]
 #[ignore = "requires real ESP32-C3 board — set ESP32C3_PORT and ESP32C3_FIRMWARE"]
-fn try_verify_deployment_real_esp32c3() {
-    run_verify_deployment_test("esp32c3", "0x0", "ESP32C3_PORT", "ESP32C3_FIRMWARE");
+async fn try_verify_deployment_real_esp32c3() {
+    run_verify_deployment_test("esp32c3", "0x0", "ESP32C3_PORT", "ESP32C3_FIRMWARE").await;
 }
 
 /// ESP32-C6 (RISC-V single-core, bootloader at 0x0).
@@ -767,10 +771,10 @@ fn try_verify_deployment_real_esp32c3() {
 /// ESP32C6_PORT=COM9 ESP32C6_FIRMWARE=C:\path\to\firmware.bin \
 ///   soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32c6 -- --ignored --nocapture
 /// ```
-#[test]
+#[tokio::test]
 #[ignore = "requires real ESP32-C6 board — set ESP32C6_PORT and ESP32C6_FIRMWARE"]
-fn try_verify_deployment_real_esp32c6() {
-    run_verify_deployment_test("esp32c6", "0x0", "ESP32C6_PORT", "ESP32C6_FIRMWARE");
+async fn try_verify_deployment_real_esp32c6() {
+    run_verify_deployment_test("esp32c6", "0x0", "ESP32C6_PORT", "ESP32C6_FIRMWARE").await;
 }
 
 /// ESP32-H2 (RISC-V single-core, bootloader at 0x0).
@@ -779,10 +783,10 @@ fn try_verify_deployment_real_esp32c6() {
 /// ESP32H2_PORT=COM10 ESP32H2_FIRMWARE=C:\path\to\firmware.bin \
 ///   soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32h2 -- --ignored --nocapture
 /// ```
-#[test]
+#[tokio::test]
 #[ignore = "requires real ESP32-H2 board — set ESP32H2_PORT and ESP32H2_FIRMWARE"]
-fn try_verify_deployment_real_esp32h2() {
-    run_verify_deployment_test("esp32h2", "0x0", "ESP32H2_PORT", "ESP32H2_FIRMWARE");
+async fn try_verify_deployment_real_esp32h2() {
+    run_verify_deployment_test("esp32h2", "0x0", "ESP32H2_PORT", "ESP32H2_FIRMWARE").await;
 }
 
 /// ESP32-P4 (RISC-V dual-core, OPI flash, bootloader at 0x2000).
@@ -794,8 +798,8 @@ fn try_verify_deployment_real_esp32h2() {
 /// ESP32P4_PORT=COM11 ESP32P4_FIRMWARE=C:\path\to\firmware.bin \
 ///   soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32p4 -- --ignored --nocapture
 /// ```
-#[test]
+#[tokio::test]
 #[ignore = "requires real ESP32-P4 board — set ESP32P4_PORT and ESP32P4_FIRMWARE"]
-fn try_verify_deployment_real_esp32p4() {
-    run_verify_deployment_test("esp32p4", "0x2000", "ESP32P4_PORT", "ESP32P4_FIRMWARE");
+async fn try_verify_deployment_real_esp32p4() {
+    run_verify_deployment_test("esp32p4", "0x2000", "ESP32P4_PORT", "ESP32P4_FIRMWARE").await;
 }

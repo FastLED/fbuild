@@ -162,8 +162,9 @@ pub fn dispatch_box(
     Box::new(deployer)
 }
 
+#[async_trait::async_trait]
 impl Deployer for LpcDeployer {
-    fn deploy(
+    async fn deploy(
         &self,
         _project_dir: &Path,
         _env_name: &str,
@@ -219,7 +220,8 @@ impl Deployer for LpcDeployer {
             None,
             None,
             Some(std::time::Duration::from_secs(self.timeout_secs)),
-        )?;
+        )
+        .await?;
 
         if result.success() {
             Ok(DeploymentResult {
@@ -288,11 +290,13 @@ mod tests {
         assert_eq!(deployer.baud_rate, "57600");
     }
 
-    #[test]
-    fn test_deploy_requires_port() {
+    #[tokio::test]
+    async fn test_deploy_requires_port() {
         let deployer = LpcDeployer::new("115200", 12_000, 60, None, false);
         let tmp = tempfile::TempDir::new().unwrap();
-        let result = deployer.deploy(tmp.path(), "lpc845", Path::new("firmware.hex"), None);
+        let result = deployer
+            .deploy(tmp.path(), "lpc845", Path::new("firmware.hex"), None)
+            .await;
         assert!(result.is_err());
         assert!(result
             .unwrap_err()

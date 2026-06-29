@@ -68,15 +68,12 @@ pub struct Esp32Deployer {
 }
 
 #[cfg(feature = "espflash-native")]
-pub(super) fn native_write_or_fallback<F>(
+pub(super) fn native_write_or_fallback_outcome(
     port: &str,
     label: &str,
-    native: F,
-) -> Option<DeploymentResult>
-where
-    F: FnOnce() -> Result<DeploymentResult>,
-{
-    match native() {
+    outcome: Result<DeploymentResult>,
+) -> Option<DeploymentResult> {
+    match outcome {
         Ok(result) if result.success => Some(result),
         Ok(result) => {
             tracing::warn!(
@@ -291,10 +288,14 @@ impl Esp32Deployer {
     /// matching the post-flash behavior — so callers can treat a `true`
     /// return as "device is now running the requested firmware" without
     /// any extra reset.
-    pub fn try_verify_deployment(&self, firmware_path: &Path, port: &str) -> Result<VerifyOutcome> {
+    pub async fn try_verify_deployment(
+        &self,
+        firmware_path: &Path,
+        port: &str,
+    ) -> Result<VerifyOutcome> {
         #[cfg(feature = "espflash-native")]
         if self.use_native_verify {
-            match self.try_verify_deployment_native(firmware_path, port) {
+            match self.try_verify_deployment_native(firmware_path, port).await {
                 Ok(outcome) => return Ok(outcome),
                 Err(e) => {
                     tracing::warn!(
@@ -306,10 +307,10 @@ impl Esp32Deployer {
             }
         }
 
-        self.try_verify_deployment_esptool(firmware_path, port)
+        self.try_verify_deployment_esptool(firmware_path, port).await
     }
 
-    fn try_verify_deployment_esptool(
+    async fn try_verify_deployment_esptool(
         &self,
         firmware_path: &Path,
         port: &str,
@@ -335,7 +336,8 @@ impl Esp32Deployer {
             // image. 30s gives plenty of headroom for slow USB-CDC stacks
             // and stub flasher upload retries.
             Some(std::time::Duration::from_secs(30)),
-        )?;
+        )
+        .await?;
 
         if result.success() {
             Ok(VerifyOutcome::Match {
@@ -378,7 +380,7 @@ impl Esp32Deployer {
     /// swap between the two behind the `use_native_verify` flag without
     /// any result-handling changes.
     #[cfg(feature = "espflash-native")]
-    fn try_verify_deployment_native(
+    async fn try_verify_deployment_native(
         &self,
         firmware_path: &Path,
         port: &str,
@@ -416,17 +418,34 @@ impl Esp32Deployer {
             self.chip
         );
 
-        crate::esp32_native::try_verify_deployment_native(
-            &self.chip,
-            port,
-            baud,
-            &self.before_reset,
-            &self.after_reset,
-            &regions,
-            boot_off,
-            parts_off,
-            fw_off,
-        )
+        // espflash's Flasher / Connection types are blocking (sync
+        // `serialport` under the hood). Offload to a blocking thread so
+        // the daemon's tokio runtime keeps draining other I/O while the
+        // ~6-10s verify happens.
+        let chip = self.chip.clone();
+        let port = port.to_string();
+        let before_reset = self.before_reset.clone();
+        let after_reset = self.after_reset.clone();
+        tokio::task::spawn_blocking(move || {
+            crate::esp32_native::try_verify_deployment_native(
+                &chip,
+                &port,
+                baud,
+                &before_reset,
+                &after_reset,
+                &regions,
+                boot_off,
+                parts_off,
+                fw_off,
+            )
+        })
+        .await
+        .map_err(|e| {
+            fbuild_core::FbuildError::DeployFailed(format!(
+                "native verify: blocking task panicked: {}",
+                e
+            ))
+        })?
     }
 
     /// Native `write-flash` via the [`espflash`] crate (issue #66).
@@ -438,7 +457,7 @@ impl Esp32Deployer {
     /// daemon's existing log broadcaster). Same [`DeploymentResult`]
     /// shape as the esptool path so callers swap behind a single flag.
     #[cfg(feature = "espflash-native")]
-    pub(super) fn try_deploy_native(
+    pub(super) async fn try_deploy_native(
         &self,
         firmware_path: &Path,
         port: &str,
@@ -469,15 +488,30 @@ impl Esp32Deployer {
             self.chip
         );
 
-        crate::esp32_native::try_write_deployment_native(
-            &self.chip,
-            port,
-            baud,
-            &self.before_reset,
-            &self.after_reset,
-            &regions,
-            /* selective */ false,
-        )
+        // espflash write is blocking (sync serialport + protocol);
+        // offload to a blocking thread so the runtime keeps moving.
+        let chip = self.chip.clone();
+        let port = port.to_string();
+        let before_reset = self.before_reset.clone();
+        let after_reset = self.after_reset.clone();
+        tokio::task::spawn_blocking(move || {
+            crate::esp32_native::try_write_deployment_native(
+                &chip,
+                &port,
+                baud,
+                &before_reset,
+                &after_reset,
+                &regions,
+                /* selective */ false,
+            )
+        })
+        .await
+        .map_err(|e| {
+            fbuild_core::FbuildError::DeployFailed(format!(
+                "native write: blocking task panicked: {}",
+                e
+            ))
+        })?
     }
 
     /// Native `write-flash` for a caller-chosen subset of regions
@@ -485,7 +519,7 @@ impl Esp32Deployer {
     /// regions that actually differ — skipping the ~1s
     /// bootloader/partitions rewrite when only firmware changed.
     #[cfg(feature = "espflash-native")]
-    pub(super) fn try_deploy_regions_native(
+    pub(super) async fn try_deploy_regions_native(
         &self,
         firmware_path: &Path,
         port: &str,
@@ -519,15 +553,28 @@ impl Esp32Deployer {
             self.chip
         );
 
-        crate::esp32_native::try_write_deployment_native(
-            &self.chip,
-            port,
-            baud,
-            &self.before_reset,
-            &self.after_reset,
-            &write_regions,
-            /* selective */ true,
-        )
+        let chip = self.chip.clone();
+        let port = port.to_string();
+        let before_reset = self.before_reset.clone();
+        let after_reset = self.after_reset.clone();
+        tokio::task::spawn_blocking(move || {
+            crate::esp32_native::try_write_deployment_native(
+                &chip,
+                &port,
+                baud,
+                &before_reset,
+                &after_reset,
+                &write_regions,
+                /* selective */ true,
+            )
+        })
+        .await
+        .map_err(|e| {
+            fbuild_core::FbuildError::DeployFailed(format!(
+                "native write (selective): blocking task panicked: {}",
+                e
+            ))
+        })?
     }
 
     #[cfg(feature = "espflash-native")]
@@ -612,7 +659,7 @@ impl Esp32Deployer {
     /// Returns an error when `regions` is empty; esptool rejects a
     /// write-flash call with no offset/file pair and the message would be
     /// opaque.
-    pub fn deploy_regions(
+    pub async fn deploy_regions(
         &self,
         firmware_path: &Path,
         port: &str,
@@ -647,9 +694,10 @@ impl Esp32Deployer {
 
         #[cfg(feature = "espflash-native")]
         if self.use_native_write {
-            if let Some(result) = native_write_or_fallback(port, "selective write-flash", || {
-                self.try_deploy_regions_native(firmware_path, port, regions)
-            }) {
+            let native = self.try_deploy_regions_native(firmware_path, port, regions).await;
+            if let Some(result) =
+                native_write_or_fallback_outcome(port, "selective write-flash", native)
+            {
                 return Ok(result);
             }
         }
@@ -673,7 +721,8 @@ impl Esp32Deployer {
             None,
             None,
             Some(std::time::Duration::from_secs(120)),
-        )?;
+        )
+        .await?;
 
         if result.success() {
             Ok(DeploymentResult {
@@ -706,8 +755,9 @@ impl Esp32Deployer {
     }
 }
 
+#[async_trait::async_trait]
 impl Deployer for Esp32Deployer {
-    fn deploy(
+    async fn deploy(
         &self,
         _project_dir: &Path,
         _env_name: &str,
@@ -722,9 +772,8 @@ impl Deployer for Esp32Deployer {
 
         #[cfg(feature = "espflash-native")]
         if self.use_native_write {
-            if let Some(result) = native_write_or_fallback(port, "write-flash", || {
-                self.try_deploy_native(firmware_path, port)
-            }) {
+            let native = self.try_deploy_native(firmware_path, port).await;
+            if let Some(result) = native_write_or_fallback_outcome(port, "write-flash", native) {
                 return Ok(result);
             }
         }
@@ -748,7 +797,8 @@ impl Deployer for Esp32Deployer {
             None,
             None,
             Some(std::time::Duration::from_secs(120)),
-        )?;
+        )
+        .await?;
 
         if result.success() {
             Ok(DeploymentResult {
