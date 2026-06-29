@@ -125,8 +125,7 @@ pub async fn compile_sources_parallel(
             match compiler_ptr.compile(&source, &obj, &source_flags).await {
                 Ok(result) if result.success => {
                     let stderr = result.stderr.trim().to_string();
-                    let count =
-                        counter.fetch_add(1, std::sync::atomic::Ordering::Relaxed) + 1;
+                    let count = counter.fetch_add(1, std::sync::atomic::Ordering::Relaxed) + 1;
                     if count % 20 == 0 || count == total {
                         tracing::info!("[{}/{}] compiled", count, total);
                         if let Some(log) = build_log_ptr {
@@ -164,7 +163,9 @@ pub async fn compile_sources_parallel(
             }
             Err(join_err) => {
                 if first_error.is_none() {
-                    first_error = Some(format!("compile task panicked or was cancelled: {join_err}"));
+                    first_error = Some(format!(
+                        "compile task panicked or was cancelled: {join_err}"
+                    ));
                     tasks.abort_all();
                 }
             }

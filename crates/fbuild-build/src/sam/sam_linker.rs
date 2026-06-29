@@ -1,4 +1,4 @@
-﻿//! SAM ARM linker implementation.
+//! SAM ARM linker implementation.
 //!
 //! Links ARM Cortex-M3 object files into firmware.elf, converts to firmware.bin,
 //! and reports size using arm-none-eabi-size.
@@ -71,8 +71,7 @@ impl SamLinker {
 #[async_trait::async_trait]
 impl Linker for SamLinker {
     async fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
-        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "arm-none-eabi-ar")
-            .await
+        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "arm-none-eabi-ar").await
     }
 
     async fn link(

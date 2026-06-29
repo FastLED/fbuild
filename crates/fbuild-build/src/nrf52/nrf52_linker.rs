@@ -1,4 +1,4 @@
-﻿//! NRF52 ARM linker implementation.
+//! NRF52 ARM linker implementation.
 //!
 //! Links ARM Cortex-M4F object files into firmware.elf, converts to firmware.hex,
 //! and reports size using arm-none-eabi-size.
@@ -60,8 +60,7 @@ impl Nrf52Linker {
 #[async_trait::async_trait]
 impl Linker for Nrf52Linker {
     async fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
-        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "arm-none-eabi-ar")
-            .await
+        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "arm-none-eabi-ar").await
     }
 
     async fn link(

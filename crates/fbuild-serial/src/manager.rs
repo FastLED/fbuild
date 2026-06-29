@@ -1,22 +1,8 @@
-//! SharedSerialManager: centralized serial port access.
-//!
-//! This is the Rust equivalent of Python's SharedSerialManager (1170 lines).
-//! All serial I/O flows through this single manager in the daemon.
-//!
-//! ## Concurrency Model
-//!
-//! - Per-port state protected by tokio::sync::Mutex
-//! - Background reader task per open port (tokio::spawn)
-//! - Broadcast channel for output distribution to readers
-//! - Exclusive writer access via condition variable pattern
-//!
-//! ## Windows USB-CDC Strategy (v5)
-//!
-//! 1. Drain input buffer aggressively (1 second initial)
-//! 2. Per-attempt: drain input buffer before each write
-//! 3. 50ms per-attempt timeout (many rapid attempts)
-//! 4. 200 max attempts in 20 seconds
-//! 5. Toggle DTR/RTS for flow control
+//! SharedSerialManager: centralized serial port access. All serial I/O
+//! flows through this single manager in the daemon. See
+//! `docs/architecture/serial.md` for the concurrency model
+//! (per-port `tokio::sync::Mutex`, per-port reader task, broadcast for
+//! readers, exclusive writer) and the Windows USB-CDC write strategy.
 
 use crate::crash_decoder::CrashDecoder;
 use crate::messages::SerialStreamEvent;

@@ -1,4 +1,4 @@
-﻿//! Teensy build orchestrator â€” wires together config, packages, compiler, linker.
+//! Teensy build orchestrator â€” wires together config, packages, compiler, linker.
 //!
 //! Build phases:
 //! 1. Parse platformio.ini
@@ -300,7 +300,8 @@ impl BuildOrchestrator for TeensyOrchestrator {
             TargetArchitecture::Arm,
             "Teensy",
             start,
-        ).await?;
+        )
+        .await?;
 
         if build_result.success
             && !params.compiledb_only
