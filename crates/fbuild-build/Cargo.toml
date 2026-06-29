@@ -45,3 +45,5 @@ zccache = { git = "https://github.com/zackees/zccache", rev = "73d3f84542deb16f7
 [dev-dependencies]
 filetime = { workspace = true }
 fbuild-test-support = { path = "../fbuild-test-support" }
+async-trait = { workspace = true }
+tokio = { workspace = true, features = ["macros", "rt-multi-thread", "sync"] }

@@ -113,7 +113,7 @@ pub async fn compile_library_with_jobs(
     }
 
     // Build include flags once (shared across all compilations)
-    let include_flags = build_include_flags(include_dirs, output_dir)?;
+    let include_flags = build_include_flags(include_dirs, output_dir).await?;
 
     // Pre-compute C-safe flags once
     let c_safe_flags: Vec<String> = c_flags
@@ -352,7 +352,8 @@ async fn compile_one_source(
     // without expanding them, so this is safe.
     let args = if cfg!(windows) {
         let rsp_path =
-            fbuild_core::response_file::write_response_file(&all_flags, &rsp_dir, "lib_compile")?;
+            fbuild_core::response_file::write_response_file(&all_flags, &rsp_dir, "lib_compile")
+                .await?;
         let rsp_path = invocation_response_file_path(&rsp_path)?;
         let raw_args = [
             compiler.to_string_lossy().to_string(),
@@ -514,7 +515,7 @@ fn modified_time(metadata: &Metadata) -> Result<SystemTime> {
 /// When there are many include paths (>100), writes a response file.
 /// Uses `-iprefix` + `-iwithprefixbefore` for paths sharing a common prefix
 /// to keep the total command line under GCC 8.4.0's 32KB CreateProcess limit.
-fn build_include_flags(include_dirs: &[PathBuf], _temp_dir: &Path) -> Result<Vec<String>> {
+async fn build_include_flags(include_dirs: &[PathBuf], _temp_dir: &Path) -> Result<Vec<String>> {
     let flags: Vec<String> = include_dirs
         .iter()
         .map(|d| format!("-I{}", d.display()))
@@ -523,7 +524,8 @@ fn build_include_flags(include_dirs: &[PathBuf], _temp_dir: &Path) -> Result<Vec
     if cfg!(windows) && flags.len() > 100 {
         let rsp_dir = _temp_dir.join("tmp");
         let rsp_path =
-            fbuild_core::response_file::write_response_file(&flags, &rsp_dir, "lib_includes")?;
+            fbuild_core::response_file::write_response_file(&flags, &rsp_dir, "lib_includes")
+                .await?;
         Ok(vec![format!("@{}", rsp_path.display())])
     } else {
         Ok(flags)
@@ -611,11 +613,11 @@ mod tests {
         assert_eq!(p.extension().unwrap(), "o");
     }
 
-    #[test]
-    fn test_build_include_flags_small() {
+    #[tokio::test]
+    async fn test_build_include_flags_small() {
         let tmp = tempfile::TempDir::new().unwrap();
         let dirs = vec![PathBuf::from("/a"), PathBuf::from("/b")];
-        let flags = build_include_flags(&dirs, tmp.path()).unwrap();
+        let flags = build_include_flags(&dirs, tmp.path()).await.unwrap();
         assert_eq!(flags.len(), 2);
         assert!(flags[0].starts_with("-I"));
     }

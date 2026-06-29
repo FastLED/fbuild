@@ -128,7 +128,7 @@ impl CrashDecoder {
     ///
     /// Returns `Some(lines)` when a crash dump has been fully decoded,
     /// or `None` if no output is ready yet.
-    pub fn process_line(&mut self, line: &str) -> Option<Vec<String>> {
+    pub async fn process_line(&mut self, line: &str) -> Option<Vec<String>> {
         match self.state {
             DecoderState::Idle => {
                 if Self::detect_crash_start(line) {
@@ -138,7 +138,7 @@ impl CrashDecoder {
             }
             DecoderState::Accumulating => {
                 if self.detect_crash_end(line) {
-                    let decoded = self.decode();
+                    let decoded = self.decode().await;
                     self.reset();
                     if decoded.is_empty() {
                         None
@@ -188,7 +188,7 @@ impl CrashDecoder {
     }
 
     /// Decode the buffered crash dump using addr2line.
-    fn decode(&mut self) -> Vec<String> {
+    async fn decode(&mut self) -> Vec<String> {
         if self.buffer.is_empty() {
             return Vec::new();
         }
@@ -225,7 +225,7 @@ impl CrashDecoder {
         }
 
         // Run addr2line
-        Self::run_addr2line(&addr2line_path, &elf_path, &addresses)
+        Self::run_addr2line(&addr2line_path, &elf_path, &addresses).await
     }
 
     /// Clear the accumulator for the next crash.
@@ -312,7 +312,11 @@ impl CrashDecoder {
     }
 
     /// Run addr2line on the extracted addresses.
-    fn run_addr2line(addr2line_path: &Path, elf_path: &Path, addresses: &[String]) -> Vec<String> {
+    async fn run_addr2line(
+        addr2line_path: &Path,
+        elf_path: &Path,
+        addresses: &[String],
+    ) -> Vec<String> {
         let addr2line_str = addr2line_path.to_string_lossy();
         let elf_str = elf_path.to_string_lossy();
 
@@ -321,7 +325,7 @@ impl CrashDecoder {
             args.push(addr.as_str());
         }
 
-        let result = match run_command(&args, None, None, Some(ADDR2LINE_TIMEOUT)) {
+        let result = match run_command(&args, None, None, Some(ADDR2LINE_TIMEOUT)).await {
             Ok(output) => output,
             Err(fbuild_core::FbuildError::Timeout(_)) => {
                 tracing::warn!("addr2line timed out after {}s", ADDR2LINE_TIMEOUT.as_secs());
@@ -521,71 +525,82 @@ mod tests {
 
     // --- process_line state machine ---
 
-    #[test]
-    fn process_line_normal_line() {
+    #[tokio::test]
+    async fn process_line_normal_line() {
         let mut decoder = CrashDecoder::new(None, None);
-        assert!(decoder.process_line("Hello from ESP32!").is_none());
+        assert!(decoder.process_line("Hello from ESP32!").await.is_none());
         assert!(!decoder.is_accumulating());
     }
 
-    #[test]
-    fn process_line_crash_start_begins_accumulating() {
+    #[tokio::test]
+    async fn process_line_crash_start_begins_accumulating() {
         let mut decoder = CrashDecoder::new(None, None);
         assert!(decoder
             .process_line("Guru Meditation Error: Core  0 panic'ed (LoadProhibited)")
+            .await
             .is_none());
         assert!(decoder.is_accumulating());
     }
 
-    #[test]
-    fn process_line_accumulates_then_ends() {
+    #[tokio::test]
+    async fn process_line_accumulates_then_ends() {
         let mut decoder = CrashDecoder::new(None, None);
 
         // Start
-        decoder.process_line("Guru Meditation Error: Core  0 panic'ed (LoadProhibited)");
+        decoder
+            .process_line("Guru Meditation Error: Core  0 panic'ed (LoadProhibited)")
+            .await;
         assert!(decoder.is_accumulating());
 
         // Middle lines
-        decoder.process_line("Core  0 register dump:");
-        decoder.process_line("Backtrace: 0x42002a3c:0x3fc90000");
+        decoder.process_line("Core  0 register dump:").await;
+        decoder.process_line("Backtrace: 0x42002a3c:0x3fc90000").await;
 
         // End — should produce output (warning about no elf)
-        let result = decoder.process_line("Rebooting...");
+        let result = decoder.process_line("Rebooting...").await;
         assert!(result.is_some());
         assert!(!decoder.is_accumulating());
     }
 
-    #[test]
-    fn process_line_no_elf_warns_once() {
+    #[tokio::test]
+    async fn process_line_no_elf_warns_once() {
         let mut decoder = CrashDecoder::new(None, None);
 
         // First crash — should warn
-        decoder.process_line("abort() was called at PC 0x42002a3c");
-        let result = decoder.process_line("Rebooting...");
+        decoder
+            .process_line("abort() was called at PC 0x42002a3c")
+            .await;
+        let result = decoder.process_line("Rebooting...").await;
         let lines = result.unwrap();
         assert!(lines[0].contains("no firmware.elf found"));
 
         // Second crash — should not produce output
-        decoder.process_line("abort() was called at PC 0x42002a3c");
-        let result = decoder.process_line("Rebooting...");
+        decoder
+            .process_line("abort() was called at PC 0x42002a3c")
+            .await;
+        let result = decoder.process_line("Rebooting...").await;
         assert!(result.is_none());
     }
 
     // --- Duplicate debouncing ---
 
-    #[test]
-    fn debounce_identical_crash() {
+    #[tokio::test]
+    async fn debounce_identical_crash() {
         let elf = PathBuf::from("/nonexistent/firmware.elf");
         let a2l = PathBuf::from("/nonexistent/addr2line");
         let mut decoder = CrashDecoder::new(Some(elf), Some(a2l));
 
         // First crash — will fail to run addr2line but will set the hash
-        decoder.process_line("abort() was called at PC 0x42002a3c");
-        let _result1 = decoder.process_line("Rebooting...");
+        decoder
+            .process_line("abort() was called at PC 0x42002a3c")
+            .await;
+        let _result1 = decoder.process_line("Rebooting...").await;
 
         // Identical crash immediately after — should be debounced
-        decoder.process_line("abort() was called at PC 0x42002a3c");
-        let result2 = decoder.process_line("Rebooting...");
+        decoder
+            .process_line("abort() was called at PC 0x42002a3c")
+            .await;
+        let result2 = decoder.process_line("Rebooting...").await;
         let lines = result2.unwrap();
         assert!(lines[0].contains("duplicate within debounce window"));
     }
@@ -649,8 +664,8 @@ mod tests {
 
     // --- Full Xtensa crash dump ---
 
-    #[test]
-    fn full_xtensa_crash_dump() {
+    #[tokio::test]
+    async fn full_xtensa_crash_dump() {
         let mut decoder = CrashDecoder::new(None, None);
 
         let lines = [
@@ -666,7 +681,7 @@ mod tests {
 
         let mut result = None;
         for line in &lines {
-            if let Some(r) = decoder.process_line(line) {
+            if let Some(r) = decoder.process_line(line).await {
                 result = Some(r);
             }
         }
@@ -678,8 +693,8 @@ mod tests {
 
     // --- Full RISC-V crash dump ---
 
-    #[test]
-    fn full_riscv_crash_dump() {
+    #[tokio::test]
+    async fn full_riscv_crash_dump() {
         let mut decoder = CrashDecoder::new(None, None);
 
         let lines = [
@@ -696,7 +711,7 @@ mod tests {
 
         let mut result = None;
         for line in &lines {
-            if let Some(r) = decoder.process_line(line) {
+            if let Some(r) = decoder.process_line(line).await {
                 result = Some(r);
             }
         }
@@ -710,9 +725,9 @@ mod tests {
     /// Integration test: feed a real ESP32-S3 Xtensa crash dump through the
     /// decoder with a real ELF + addr2line, verify we get `deliberate_crash`
     /// in the decoded output — matching the Python fbuild decoder.
-    #[test]
+    #[tokio::test]
     #[ignore] // requires build artifacts from esp32s3-crash-test
-    fn real_esp32s3_crash_decode() {
+    async fn real_esp32s3_crash_decode() {
         let elf = PathBuf::from(std::env::var("ESP32S3_CRASH_ELF").unwrap_or_else(|_| {
             format!(
                 "{}/.pio/build/esp32s3-crash-test/firmware.elf",
@@ -766,7 +781,7 @@ mod tests {
 
         let mut decoded_output = None;
         for line in &crash_lines {
-            if let Some(output) = decoder.process_line(line) {
+            if let Some(output) = decoder.process_line(line).await {
                 decoded_output = Some(output);
             }
         }

@@ -189,7 +189,6 @@ impl crate::Package for ArduinoCoreLpc8xx {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::Package;
 
     #[test]
     fn not_installed_on_empty_cache() {

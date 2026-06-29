@@ -321,7 +321,8 @@ impl Linker for Esp32Linker {
                 &flags_for_rsp,
                 &rsp_dir,
                 "esp32_link",
-            )?;
+            )
+            .await?;
             let rsp_args = [link_args[0].as_str(), &format!("@{}", rsp_path.display())];
             run_command(&rsp_args, None, None, None).await?
         } else {

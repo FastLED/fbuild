@@ -203,8 +203,8 @@ impl Drop for CurrentDirGuard {
     }
 }
 
-#[test]
-fn zccache_hit_across_workspace_rename() {
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
+async fn zccache_hit_across_workspace_rename() {
     let tmp = tempfile::TempDir::new().unwrap();
     let fake_zccache = compile_fake_zccache(tmp.path());
     let fake_compiler = tmp
@@ -224,8 +224,8 @@ fn zccache_hit_across_workspace_rename() {
     env::set_var("FBUILD_FAKE_ZCCACHE_CACHE", &cache_dir);
     env::set_var("FBUILD_FAKE_ZCCACHE_LOG", &log_path);
 
-    compile_workspace(&ws_a, &fake_compiler, &fake_zccache);
-    compile_workspace(&ws_b, &fake_compiler, &fake_zccache);
+    compile_workspace(&ws_a, &fake_compiler, &fake_zccache).await;
+    compile_workspace(&ws_b, &fake_compiler, &fake_zccache).await;
 
     let log = fs::read_to_string(&log_path).unwrap();
     let lines: Vec<&str> = log.lines().collect();
@@ -290,7 +290,7 @@ fn create_workspace(root: &Path) {
     .unwrap();
 }
 
-fn compile_workspace(root: &Path, compiler: &Path, zccache: &Path) {
+async fn compile_workspace(root: &Path, compiler: &Path, zccache: &Path) {
     let source = root.join("src").join("main.cpp");
     let output = root.join(".fbuild").join("build").join("main.o");
     let flags = vec![
@@ -310,6 +310,7 @@ fn compile_workspace(root: &Path, compiler: &Path, zccache: &Path) {
         Some(zccache),
         &[],
     )
+    .await
     .unwrap();
 
     assert!(

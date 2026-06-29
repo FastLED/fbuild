@@ -799,11 +799,18 @@ impl SharedSerialManager {
     /// Process a serial line through the crash decoder for a port.
     ///
     /// Returns decoded crash trace lines if a crash dump just completed.
-    pub fn process_crash_line(&self, port: &str, line: &str) -> Option<Vec<String>> {
+    ///
+    /// The decoder is temporarily removed from the DashMap so the shard
+    /// lock isn't held across the `addr2line` `.await`. Re-inserted on
+    /// completion; the brief race window is acceptable because the
+    /// caller (the serial-monitor reader task) is the only producer for
+    /// a given port.
+    pub async fn process_crash_line(&self, port: &str, line: &str) -> Option<Vec<String>> {
         let session_key = self.resolve_port_key(port);
-        self.crash_decoders
-            .get_mut(&session_key)
-            .and_then(|mut decoder| decoder.process_line(line))
+        let (key, mut decoder) = self.crash_decoders.remove(&session_key)?;
+        let result = decoder.process_line(line).await;
+        self.crash_decoders.insert(key, decoder);
+        result
     }
 
     /// Get a snapshot of all active serial port sessions for lock/status reporting.

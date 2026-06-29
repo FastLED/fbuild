@@ -39,9 +39,9 @@ use fbuild_build::{BuildOrchestrator, BuildParams};
 use fbuild_core::BuildProfile;
 use fbuild_test_support::{CompileDb, ElfProbe};
 
-#[test]
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads Teensyduino + arm-gcc; CI-only"]
-fn teensy30_analog_output_meets_205_ac2() {
+async fn teensy30_analog_output_meets_205_ac2() {
     // Use a temporary project dir so the committed teensy30 fixture
     // at tests/platform/teensy30/ stays untouched and no scratch
     // build artifacts land in the repo.
@@ -102,6 +102,7 @@ fn teensy30_analog_output_meets_205_ac2() {
 
     let result = fbuild_build::teensy::orchestrator::TeensyOrchestrator
         .build(&params)
+        .await
         .expect("teensy30 AnalogOutput build must succeed for AC#2 gate");
     assert!(result.success, "build did not report success");
 

@@ -307,15 +307,14 @@ pub async fn test_emu(
         };
 
         let p = platform;
-        tokio::task::spawn_blocking(move || {
-            let orchestrator = fbuild_build::get_orchestrator(p)?;
-            orchestrator.build(&params)
-        })
-        .await
+        match fbuild_build::get_orchestrator(p) {
+            Ok(orchestrator) => orchestrator.build(&params).await,
+            Err(e) => Err(e),
+        }
     };
 
     let (firmware_path, elf_path) = match build_result {
-        Ok(Ok(r)) if r.success => {
+        Ok(r) if r.success => {
             let fw = r.firmware_path.clone().unwrap_or_else(|| {
                 r.elf_path
                     .clone()
@@ -323,7 +322,7 @@ pub async fn test_emu(
             });
             (fw, r.elf_path)
         }
-        Ok(Ok(r)) => {
+        Ok(r) => {
             return (
                 StatusCode::INTERNAL_SERVER_ERROR,
                 Json(OperationResponse::fail(
@@ -332,21 +331,12 @@ pub async fn test_emu(
                 )),
             );
         }
-        Ok(Err(e)) => {
-            return (
-                StatusCode::INTERNAL_SERVER_ERROR,
-                Json(OperationResponse::fail(
-                    request_id,
-                    format!("build error: {}", e),
-                )),
-            );
-        }
         Err(e) => {
             return (
                 StatusCode::INTERNAL_SERVER_ERROR,
                 Json(OperationResponse::fail(
                     request_id,
-                    format!("build task panicked: {}", e),
+                    format!("build error: {}", e),
                 )),
             );
         }

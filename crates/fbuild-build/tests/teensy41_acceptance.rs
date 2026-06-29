@@ -37,9 +37,9 @@ use fbuild_library_select::resolve;
 use fbuild_packages::library::TeensyCores;
 use fbuild_packages::Package;
 
-#[test]
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads Teensyduino + arm-gcc; CI-only"]
-fn teensy41_cold_library_selection_meets_205_ac6() {
+async fn teensy41_cold_library_selection_meets_205_ac6() {
     // Inline tempdir project — same root-cause-isolation pattern as
     // stm32_acceptance.rs / teensy30_acceptance.rs. AC#6 needs only the
     // sketch on disk; we don't run a full build, only the resolver.
@@ -78,8 +78,9 @@ fn teensy41_cold_library_selection_meets_205_ac6() {
     // Materialize Teensyduino. Idempotent — cached across runs on the
     // CI runner once the package has been downloaded once.
     let teensy_cores = TeensyCores::new(project_dir);
-    let framework_dir =
-        Package::ensure_installed(&teensy_cores).expect("Teensyduino must install for AC#6 gate");
+    let framework_dir = Package::ensure_installed(&teensy_cores)
+        .await
+        .expect("Teensyduino must install for AC#6 gate");
     println!(
         "AC#6 teensy41 framework installed at {}",
         framework_dir.display()

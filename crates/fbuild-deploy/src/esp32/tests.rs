@@ -292,14 +292,16 @@ fn native_write_is_disabled_for_known_stalling_chips() {
     assert!(c3.use_native_write);
 }
 
-#[test]
-fn test_deploy_requires_port() {
+#[tokio::test]
+async fn test_deploy_requires_port() {
     let params = test_esptool_params();
     let deployer = Esp32Deployer::new(
         "esp32c6", "460800", "0x0", "0x8000", "0x10000", &params, false,
     );
     let tmp = tempfile::TempDir::new().unwrap();
-    let result = deployer.deploy(tmp.path(), "esp32c6", Path::new("firmware.bin"), None);
+    let result = deployer
+        .deploy(tmp.path(), "esp32c6", Path::new("firmware.bin"), None)
+        .await;
     assert!(result.is_err());
     assert!(result
         .unwrap_err()

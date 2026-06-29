@@ -5,10 +5,12 @@
 //! fbuild daemon or the upstream `pio` CLI for A/B comparisons.
 
 /// Find the `pio` binary. Checks PATH first, then the fbuild cache.
-pub fn find_pio() -> fbuild_core::Result<std::path::PathBuf> {
+pub async fn find_pio() -> fbuild_core::Result<std::path::PathBuf> {
     // Check PATH
     let locator = if cfg!(windows) { "where" } else { "which" };
-    if let Ok(output) = fbuild_core::subprocess::run_command(&[locator, "pio"], None, None, None) {
+    if let Ok(output) =
+        fbuild_core::subprocess::run_command(&[locator, "pio"], None, None, None).await
+    {
         if output.success() {
             let path = output
                 .stdout
@@ -45,12 +47,13 @@ pub fn find_pio() -> fbuild_core::Result<std::path::PathBuf> {
 }
 
 /// Run a PlatformIO command with real-time output streaming.
-pub fn run_pio_command(args: &[&str]) -> fbuild_core::Result<()> {
-    let pio = find_pio()?;
+pub async fn run_pio_command(args: &[&str]) -> fbuild_core::Result<()> {
+    let pio = find_pio().await?;
     let pio_str = pio.to_string_lossy();
     let mut argv: Vec<&str> = vec![pio_str.as_ref()];
     argv.extend_from_slice(args);
     let code = fbuild_core::subprocess::run_command_passthrough(&argv, None, None, None)
+        .await
         .map_err(|e| fbuild_core::FbuildError::Other(format!("failed to run pio: {}", e)))?;
 
     if code != 0 {
@@ -59,7 +62,7 @@ pub fn run_pio_command(args: &[&str]) -> fbuild_core::Result<()> {
     Ok(())
 }
 
-pub fn pio_build(
+pub async fn pio_build(
     project_dir: &str,
     environment: Option<&str>,
     clean: bool,
@@ -70,7 +73,7 @@ pub fn pio_build(
         if let Some(env) = environment {
             args.extend(["-e", env]);
         }
-        let _ = run_pio_command(&args);
+        let _ = run_pio_command(&args).await;
     }
     let mut args = vec!["run", "-d", project_dir];
     if let Some(env) = environment {
@@ -79,10 +82,10 @@ pub fn pio_build(
     if verbose {
         args.push("-v");
     }
-    run_pio_command(&args)
+    run_pio_command(&args).await
 }
 
-pub fn pio_deploy(
+pub async fn pio_deploy(
     project_dir: &str,
     environment: Option<&str>,
     port: Option<&str>,
@@ -94,7 +97,7 @@ pub fn pio_deploy(
         if let Some(env) = environment {
             args.extend(["-e", env]);
         }
-        let _ = run_pio_command(&args);
+        let _ = run_pio_command(&args).await;
     }
     let mut args = vec!["run", "--target", "upload", "-d", project_dir];
     if let Some(env) = environment {
@@ -106,10 +109,10 @@ pub fn pio_deploy(
     if verbose {
         args.push("-v");
     }
-    run_pio_command(&args)
+    run_pio_command(&args).await
 }
 
-pub fn pio_monitor(
+pub async fn pio_monitor(
     project_dir: &str,
     environment: Option<&str>,
     port: Option<&str>,
@@ -127,5 +130,5 @@ pub fn pio_monitor(
         baud_str = b.to_string();
         args.extend(["--baud", &baud_str]);
     }
-    run_pio_command(&args)
+    run_pio_command(&args).await
 }

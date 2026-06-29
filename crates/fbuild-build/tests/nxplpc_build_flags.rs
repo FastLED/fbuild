@@ -37,9 +37,9 @@ fn fixture_dir() -> std::path::PathBuf {
         .join("tests/platform/lpc845_build_flags")
 }
 
-#[test]
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads ARM GCC + ArduinoCore-LPC8xx + builds firmware; CI-only"]
-fn lpc845brk_propagates_build_flags_to_library_compile_587() {
+async fn lpc845brk_propagates_build_flags_to_library_compile_587() {
     let fixture = fixture_dir();
     assert!(
         fixture.join("platformio.ini").is_file(),
@@ -75,6 +75,7 @@ fn lpc845brk_propagates_build_flags_to_library_compile_587() {
     let orchestrator = fbuild_build::nxplpc::orchestrator::NxpLpcOrchestrator;
     let result = orchestrator
         .build(&params)
+        .await
         .expect("#587 regression: lpc845brk build with check_flag library must succeed");
     assert!(
         result.success,

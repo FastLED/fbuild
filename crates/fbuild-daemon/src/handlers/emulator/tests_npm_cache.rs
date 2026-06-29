@@ -132,8 +132,8 @@ fn refresh_emu_cache_requested_recognises_truthy_values() {
 /// When npm isn't on PATH, `ensure_avr8js_npm_in` must return an
 /// `FbuildError::DeployFailed` that names both `npm` and the cache dir.
 /// This is the fix for issue #86's silent `ERR_MODULE_NOT_FOUND`.
-#[test]
-fn ensure_avr8js_npm_in_reports_clear_error_without_npm() {
+#[tokio::test]
+async fn ensure_avr8js_npm_in_reports_clear_error_without_npm() {
     let _guard = env_lock();
     let saved_path = std::env::var_os("PATH");
     // PATHEXT matters on Windows for command resolution of .cmd files.
@@ -148,7 +148,7 @@ fn ensure_avr8js_npm_in_reports_clear_error_without_npm() {
 
     let tmp = tempfile::TempDir::new().unwrap();
     let cache = tmp.path().join("avr8js-node");
-    let result = ensure_avr8js_npm_in(&cache, false);
+    let result = ensure_avr8js_npm_in(&cache, false).await;
 
     // Restore BEFORE asserting so a panic doesn't leak PATH="" to sibling tests.
     if let Some(p) = saved_path {
@@ -185,8 +185,8 @@ fn ensure_avr8js_npm_in_reports_clear_error_without_npm() {
 /// When the cache dir contains a corrupt partial install, the reinstall
 /// path must fire (detected here by asserting the partial tree is wiped
 /// even when the downstream npm call subsequently fails).
-#[test]
-fn ensure_avr8js_npm_in_wipes_corrupt_before_reinstall() {
+#[tokio::test]
+async fn ensure_avr8js_npm_in_wipes_corrupt_before_reinstall() {
     let _guard = env_lock();
     let saved_path = std::env::var_os("PATH");
 
@@ -202,7 +202,7 @@ fn ensure_avr8js_npm_in_wipes_corrupt_before_reinstall() {
     std::fs::write(module_dir.join("garbage"), b"partial").unwrap();
     assert!(!avr8js_cache_is_intact(&cache));
 
-    let result = ensure_avr8js_npm_in(&cache, false);
+    let result = ensure_avr8js_npm_in(&cache, false).await;
 
     if let Some(p) = saved_path {
         std::env::set_var("PATH", p);

@@ -20,7 +20,7 @@ use fbuild_core::{FbuildError, Result};
 use super::symbols_cmd::resolve_tool_paths_public;
 
 #[allow(clippy::too_many_arguments)]
-pub fn run_bloat_lookup(
+pub async fn run_bloat_lookup(
     input: String,
     symbol: Option<String>,
     symbol_mangled: Option<String>,
@@ -69,7 +69,7 @@ pub fn run_bloat_lookup(
         cppfilt_path: cppfilt_path.as_deref(),
         objdump_path: objdump_path.as_deref(),
     };
-    let report = analyze_elf(cfg)?;
+    let report = analyze_elf(cfg).await?;
 
     let query_str = symbol.clone().or_else(|| symbol_mangled.clone()).unwrap();
     let query = match (&symbol, &symbol_mangled) {

@@ -185,7 +185,6 @@ fn find_core_root(install_dir: &Path) -> PathBuf {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::Package;
 
     #[test]
     fn test_apollo3_cores_not_installed() {

@@ -22,9 +22,9 @@ use fbuild_build::{BuildOrchestrator, BuildParams};
 use fbuild_core::BuildProfile;
 use fbuild_test_support::{CompileDb, ElfProbe};
 
-#[test]
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads Teensyduino + builds firmware; CI-only"]
-fn teensylc_blink_meets_205_acceptance_criteria() {
+async fn teensylc_blink_meets_205_acceptance_criteria() {
     let project_dir = repo_fixture("teensylc");
     let build_dir = tempfile::TempDir::new().unwrap();
 
@@ -54,6 +54,7 @@ fn teensylc_blink_meets_205_acceptance_criteria() {
 
     let result = fbuild_build::teensy::orchestrator::TeensyOrchestrator
         .build(&params)
+        .await
         .expect("teensyLC build must succeed for acceptance gate");
     assert!(result.success, "build did not report success");
 

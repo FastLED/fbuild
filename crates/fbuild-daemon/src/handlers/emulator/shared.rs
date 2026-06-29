@@ -103,12 +103,12 @@ pub(crate) fn build_linux_macos_qemu_hint(err: &str) -> String {
     }
 }
 
-pub(crate) fn resolve_esp32_toolchain_gcc_path(
+pub(crate) async fn resolve_esp32_toolchain_gcc_path(
     project_dir: &Path,
     mcu_config: &fbuild_build::esp32::mcu_config::Esp32McuConfig,
 ) -> fbuild_core::Result<PathBuf> {
     let platform = fbuild_packages::library::Esp32Platform::new(project_dir);
-    Package::ensure_installed(&platform)?;
+    Package::ensure_installed(&platform).await?;
 
     let is_riscv = mcu_config.is_riscv();
     let prefix = mcu_config.toolchain_prefix();
@@ -122,11 +122,13 @@ pub(crate) fn resolve_esp32_toolchain_gcc_path(
         Ok(metadata_url) => {
             let cache = fbuild_packages::Cache::new(project_dir);
             let cache_dir = cache.toolchains_dir().join(toolchain_name);
-            match fbuild_packages::toolchain::esp32_metadata::resolve_toolchain_url_sync(
+            match fbuild_packages::toolchain::esp32_metadata::resolve_toolchain_url(
                 &metadata_url,
                 toolchain_name,
                 &cache_dir,
-            ) {
+            )
+            .await
+            {
                 Ok(resolved) => fbuild_packages::toolchain::Esp32Toolchain::from_resolved(
                     project_dir,
                     &resolved.url,
@@ -142,7 +144,7 @@ pub(crate) fn resolve_esp32_toolchain_gcc_path(
         Err(_) => fbuild_packages::toolchain::Esp32Toolchain::new(project_dir, is_riscv, &prefix),
     };
 
-    let _ = Package::ensure_installed(&toolchain)?;
+    let _ = Package::ensure_installed(&toolchain).await?;
     Ok(toolchain.get_gcc_path())
 }
 
@@ -268,7 +270,7 @@ pub(crate) async fn run_qemu_process(
                             break;
                         }
 
-                        if let Some(decoded_lines) = crash_decoder.process_line(&line.line) {
+                        if let Some(decoded_lines) = crash_decoder.process_line(&line.line).await {
                             for decoded in decoded_lines {
                                 synthetic_buf.push_str(&decoded);
                                 synthetic_buf.push('\n');

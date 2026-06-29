@@ -272,7 +272,6 @@ fn is_source_file(path: &Path) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::Package;
 
     #[test]
     fn test_arduino_mbed_core_not_installed() {

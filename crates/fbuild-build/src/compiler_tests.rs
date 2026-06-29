@@ -199,9 +199,11 @@ fn test_prepare_flags_and_response_file_produce_same_define_value() {
     let exec_result = prepare_flags_for_exec(vec![input.clone()]);
     assert_eq!(exec_result[0], r#"-DFOO="bar""#);
 
-    // Response file path
+    // Response file path — sync test uses the blocking bridge.
     let tmp = tempfile::TempDir::new().unwrap();
-    let rsp = write_response_file(&[input], tmp.path(), "test").unwrap();
+    let rsp =
+        fbuild_core::response_file::write_response_file_blocking(&[input], tmp.path(), "test")
+            .unwrap();
     let content = std::fs::read_to_string(rsp).unwrap();
     // Response file wraps in single quotes with unescaped "
     assert_eq!(content, r#"'-DFOO="bar"'"#);
@@ -216,7 +218,9 @@ fn test_response_file_preserves_bare_quoted_define_value() {
     let input = r#"-DARDUINO_BSP_VERSION="1.6.1""#.to_string();
 
     let tmp = tempfile::TempDir::new().unwrap();
-    let rsp = write_response_file(&[input], tmp.path(), "test").unwrap();
+    let rsp =
+        fbuild_core::response_file::write_response_file_blocking(&[input], tmp.path(), "test")
+            .unwrap();
     let content = std::fs::read_to_string(rsp).unwrap();
     assert_eq!(content, r#"'-DARDUINO_BSP_VERSION="1.6.1"'"#);
 }

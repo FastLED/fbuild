@@ -245,7 +245,6 @@ fn patch_backup_header(root: &Path) -> fbuild_core::Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::Package;
 
     #[test]
     fn test_ch32v_cores_not_installed() {

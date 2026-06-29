@@ -528,8 +528,12 @@ pub fn windows_temp_dir() -> PathBuf {
 /// Write flags to a temporary GCC response file (`@file` syntax).
 ///
 /// Delegates to [`fbuild_core::response_file::write_response_file`].
-pub fn write_response_file(flags: &[String], temp_dir: &Path, prefix: &str) -> Result<PathBuf> {
-    fbuild_core::response_file::write_response_file(flags, temp_dir, prefix)
+pub async fn write_response_file(
+    flags: &[String],
+    temp_dir: &Path,
+    prefix: &str,
+) -> Result<PathBuf> {
+    fbuild_core::response_file::write_response_file(flags, temp_dir, prefix).await
 }
 
 /// Response-file directory for a given output object. Used by the

@@ -78,23 +78,26 @@ pub async fn async_main() {
             graph_fan_out,
             graph_collapse_archive,
             graph_exclude_archive,
-        }) => run_symbols(
-            input,
-            map,
-            nm,
-            cppfilt,
-            build_info,
-            json,
-            output_dir,
-            top,
-            no_graph,
-            graph_top,
-            graph_min_bytes,
-            graph_depth,
-            graph_fan_out,
-            graph_collapse_archive,
-            graph_exclude_archive,
-        ),
+        }) => {
+            run_symbols(
+                input,
+                map,
+                nm,
+                cppfilt,
+                build_info,
+                json,
+                output_dir,
+                top,
+                no_graph,
+                graph_top,
+                graph_min_bytes,
+                graph_depth,
+                graph_fan_out,
+                graph_collapse_archive,
+                graph_exclude_archive,
+            )
+            .await
+        }
         Some(Commands::Bloat { cmd }) => match cmd {
             BloatCmd::Graph {
                 input,
@@ -109,20 +112,23 @@ pub async fn async_main() {
                 max_depth,
                 collapse_archive,
                 exclude_archive,
-            } => run_bloat_graph(
-                input,
-                symbol,
-                map,
-                nm,
-                cppfilt,
-                build_info,
-                output,
-                depth,
-                fan_out,
-                max_depth,
-                collapse_archive,
-                exclude_archive,
-            ),
+            } => {
+                run_bloat_graph(
+                    input,
+                    symbol,
+                    map,
+                    nm,
+                    cppfilt,
+                    build_info,
+                    output,
+                    depth,
+                    fan_out,
+                    max_depth,
+                    collapse_archive,
+                    exclude_archive,
+                )
+                .await
+            }
             BloatCmd::Lookup {
                 input,
                 symbol,
@@ -132,16 +138,19 @@ pub async fn async_main() {
                 nm,
                 cppfilt,
                 build_info,
-            } => run_bloat_lookup(
-                input,
-                symbol,
-                symbol_mangled,
-                json,
-                map,
-                nm,
-                cppfilt,
-                build_info,
-            ),
+            } => {
+                run_bloat_lookup(
+                    input,
+                    symbol,
+                    symbol_mangled,
+                    json,
+                    map,
+                    nm,
+                    cppfilt,
+                    build_info,
+                )
+                .await
+            }
         },
         Some(Commands::Build {
             project_dir,
@@ -163,7 +172,7 @@ pub async fn async_main() {
         }) => {
             let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
             if platformio {
-                pio_build(&project_dir, environment.as_deref(), clean, verbose)
+                pio_build(&project_dir, environment.as_deref(), clean, verbose).await
             } else {
                 run_build(
                     project_dir,
@@ -216,6 +225,7 @@ pub async fn async_main() {
                     clean,
                     verbose,
                 )
+                .await
             } else {
                 let monitor_after = monitor.is_some();
                 let parsed = monitor
@@ -268,6 +278,7 @@ pub async fn async_main() {
                     port.as_deref(),
                     baud_rate,
                 )
+                .await
             } else {
                 run_monitor(
                     project_dir,
@@ -485,6 +496,7 @@ pub async fn async_main() {
                     cli.clean,
                     cli.verbose,
                 )
+                .await
             } else {
                 let monitor_after = true;
                 let parsed = cli

@@ -310,13 +310,15 @@ mod tests {
         assert!(include_flags.iter().any(|f: &String| f.contains("-I")));
     }
 
-    #[test]
-    fn test_response_file_generation() {
+    #[tokio::test]
+    async fn test_response_file_generation() {
         let tmp = tempfile::TempDir::new().unwrap();
         let flags: Vec<String> = (0..200)
             .map(|i| format!("-I/path/to/include/{}", i))
             .collect();
-        let path = crate::compiler::write_response_file(&flags, tmp.path(), "esp32").unwrap();
+        let path = crate::compiler::write_response_file(&flags, tmp.path(), "esp32")
+            .await
+            .unwrap();
         assert!(path.exists());
         let content = std::fs::read_to_string(&path).unwrap();
         assert!(content.contains("-I/path/to/include/0"));

@@ -261,7 +261,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                         let mut lines: Vec<String> = Vec::with_capacity(2);
                         lines.push(line.clone());
                         if let Some(decoded) =
-                            ctx.serial_manager.process_crash_line(&port_owned, &line)
+                            ctx.serial_manager.process_crash_line(&port_owned, &line).await
                         {
                             lines.extend(decoded);
                         }

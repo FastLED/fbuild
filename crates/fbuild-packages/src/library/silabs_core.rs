@@ -182,7 +182,6 @@ fn collect_sources(dir: &Path) -> Vec<PathBuf> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::Package;
 
     #[test]
     fn test_silabs_cores_not_installed() {

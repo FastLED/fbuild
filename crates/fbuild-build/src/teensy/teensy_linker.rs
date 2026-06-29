@@ -163,7 +163,8 @@ impl Linker for TeensyLinker {
                 &rsp_content,
                 &temp_dir,
                 "teensy_link",
-            )?;
+            )
+            .await?;
             let rsp_arg = format!("@{}", rsp_path.display());
             run_command(&[args[0].as_str(), &rsp_arg], None, Some(&env_slice), None).await?
         } else {

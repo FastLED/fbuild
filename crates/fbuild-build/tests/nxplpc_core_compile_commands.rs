@@ -46,14 +46,15 @@ fn build_core_repo(repo: &Path, env_name: &str) -> tempfile::TempDir {
     let orchestrator = fbuild_build::nxplpc::orchestrator::NxpLpcOrchestrator;
     let result = orchestrator
         .build(&params)
+        .await
         .expect("ArduinoCore-LPC8xx nxplpc build should succeed");
     assert!(result.success);
     tmp
 }
 
-#[test]
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "requires local ~/dev/ArduinoCore-LPC8xx checkout and ARM toolchain package"]
-fn arduino_core_lpc845brk_compile_commands_match_platform_txt() {
+async fn arduino_core_lpc845brk_compile_commands_match_platform_txt() {
     let Some(repo) = arduino_core_repo() else {
         eprintln!("skipping: ~/dev/ArduinoCore-LPC8xx not found");
         return;

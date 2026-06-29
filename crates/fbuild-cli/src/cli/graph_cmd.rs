@@ -21,7 +21,7 @@ use fbuild_core::{FbuildError, Result};
 use super::symbols_cmd::resolve_tool_paths_public;
 
 #[allow(clippy::too_many_arguments)]
-pub fn run_bloat_graph(
+pub async fn run_bloat_graph(
     input: String,
     symbol: String,
     map: Option<String>,
@@ -68,7 +68,7 @@ pub fn run_bloat_graph(
         cppfilt_path: cppfilt_path.as_deref(),
         objdump_path: objdump_path.as_deref(),
     };
-    let report = analyze_elf(cfg)?;
+    let report = analyze_elf(cfg).await?;
 
     let graph_config = parse_graph_config(
         &depth,

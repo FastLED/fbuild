@@ -25,9 +25,9 @@ fn home_dir() -> PathBuf {
 /// Build a self-contained ESP32 blink sketch.
 ///
 /// This test requires Internet access (first run only, then cached).
-#[test]
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore]
-fn build_esp32dev_blink() {
+async fn build_esp32dev_blink() {
     let tmp = tempfile::TempDir::new().unwrap();
     let project_dir = tmp.path();
 
@@ -85,6 +85,7 @@ void loop() {
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
     let result = orchestrator
         .build(&params)
+        .await
         .expect("ESP32 build should succeed");
 
     assert!(result.success);
@@ -117,9 +118,9 @@ void loop() {
 }
 
 /// Build a self-contained ESP32-C6 blink sketch (RISC-V).
-#[test]
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore]
-fn build_esp32c6_blink() {
+async fn build_esp32c6_blink() {
     let tmp = tempfile::TempDir::new().unwrap();
     let project_dir = tmp.path();
 
@@ -175,6 +176,7 @@ void loop() {
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
     let result = orchestrator
         .build(&params)
+        .await
         .expect("ESP32-C6 build should succeed");
 
     assert!(result.success);
@@ -199,9 +201,9 @@ void loop() {
 /// ESP32-C3 uses the rv32imc RISC-V ISA.  This test validates the full build
 /// pipeline for the C3 variant, including toolchain selection and framework
 /// extraction.  It requires Internet access (first run only, then cached).
-#[test]
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore]
-fn build_esp32c3_blink() {
+async fn build_esp32c3_blink() {
     let tmp = tempfile::TempDir::new().unwrap();
     let project_dir = tmp.path();
 
@@ -258,6 +260,7 @@ void loop() {
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
     let result = orchestrator
         .build(&params)
+        .await
         .expect("ESP32-C3 build should succeed");
 
     assert!(result.success);
@@ -280,9 +283,9 @@ void loop() {
 /// Build a self-contained ESP32-S3 blink sketch (Xtensa, native USB-CDC).
 ///
 /// This test requires Internet access (first run only, then cached).
-#[test]
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore]
-fn build_esp32s3_blink() {
+async fn build_esp32s3_blink() {
     let tmp = tempfile::TempDir::new().unwrap();
     let project_dir = tmp.path();
 
@@ -342,6 +345,7 @@ void loop() {
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
     let result = orchestrator
         .build(&params)
+        .await
         .expect("ESP32-S3 build should succeed");
 
     assert!(result.success);
@@ -376,9 +380,9 @@ void loop() {
 /// Build ESP32-S3 blink from the tests/platform/esp32s3 fixture with persistent output.
 ///
 /// Build output is stored at tests/platform/esp32s3/.fbuild/build/ for manual deployment.
-#[test]
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore]
-fn build_esp32s3_fixture() {
+async fn build_esp32s3_fixture() {
     let project_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
         .parent()
         .unwrap()
@@ -416,6 +420,7 @@ fn build_esp32s3_fixture() {
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
     let result = orchestrator
         .build(&params)
+        .await
         .expect("ESP32-S3 fixture build should succeed");
 
     assert!(result.success);
@@ -442,9 +447,9 @@ fn build_esp32s3_fixture() {
 /// Requires ~/dev/fbuild/tests/NightDriverStrip/ to exist.
 /// NOTE: This will fail until library dependency resolution (Phase 4) is implemented,
 /// because NightDriverStrip depends on FastLED, ArduinoJson, etc.
-#[test]
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore]
-fn build_nightdriverstrip_demo() {
+async fn build_nightdriverstrip_demo() {
     let project_dir = home_dir().join("dev/fbuild/tests/NightDriverStrip");
 
     if !project_dir.exists() {
@@ -482,6 +487,7 @@ fn build_nightdriverstrip_demo() {
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
     let result = orchestrator
         .build(&params)
+        .await
         .expect("NightDriverStrip demo build should succeed");
 
     assert!(result.success, "build should report success");
@@ -516,9 +522,9 @@ fn build_nightdriverstrip_demo() {
 ///
 /// Requires a prior clean build to exist at ~/dev/NightDriverStrip/.fbuild/build/demo/.
 /// Measures how fast a no-op rebuild is (should be seconds, not minutes).
-#[test]
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore]
-fn incremental_nightdriverstrip_no_changes() {
+async fn incremental_nightdriverstrip_no_changes() {
     // Try both NightDriverStrip locations
     let project_dir = home_dir().join("dev/NightDriverStrip");
     let env_name = if project_dir.exists() {
@@ -579,6 +585,7 @@ fn incremental_build_at(project_dir: &std::path::Path, env_name: &str) {
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
     let result = orchestrator
         .build(&params)
+        .await
         .expect("incremental build should succeed");
 
     assert!(result.success, "incremental build should succeed");
@@ -612,9 +619,9 @@ fn incremental_build_at(project_dir: &std::path::Path, env_name: &str) {
 ///
 /// Touches one .cpp file to simulate a single-file edit, then rebuilds.
 /// This measures the real incremental compile + relink time.
-#[test]
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore]
-fn incremental_nightdriverstrip_one_file_changed() {
+async fn incremental_nightdriverstrip_one_file_changed() {
     let project_dir = home_dir().join("dev/NightDriverStrip");
     if !project_dir.exists() {
         eprintln!("SKIP: ~/dev/NightDriverStrip does not exist");
@@ -676,6 +683,7 @@ fn incremental_nightdriverstrip_one_file_changed() {
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
     let result = orchestrator
         .build(&params)
+        .await
         .expect("incremental build should succeed");
 
     assert!(result.success, "incremental build should succeed");
