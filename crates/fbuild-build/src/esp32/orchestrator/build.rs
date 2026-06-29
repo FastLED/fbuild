@@ -368,7 +368,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 &c_flags,
                 &cpp_flags,
             );
-            let lib_result = fbuild_packages::library::library_manager::ensure_libraries_sync(
+            let lib_result = fbuild_packages::library::library_manager::ensure_libraries(
                 &lib_deps,
                 &lib_ignore,
                 &toolchain.get_gcc_path(),

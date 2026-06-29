@@ -125,7 +125,7 @@ fn test_scope_to_link_overlay_maps_libpath_and_libs() {
 
 #[tokio::test]
 async fn test_resolve_extra_script_overlay_supports_dump_shim() {
-    if find_python().is_none() {
+    if find_python().await.is_none() {
         return;
     }
 
@@ -167,7 +167,7 @@ env.Append(CPPDEFINES=[\"DUMP_SHIM_OK\"])
 
 #[tokio::test]
 async fn test_resolve_extra_script_overlay_supports_common_noop_scons_helpers() {
-    if find_python().is_none() {
+    if find_python().await.is_none() {
         return;
     }
 
@@ -213,7 +213,7 @@ env.Append(CPPDEFINES=[\"HELPERS_SHIM_OK\"])
 
 #[tokio::test]
 async fn test_resolve_extra_script_overlay_supports_board_config_shim() {
-    if find_python().is_none() {
+    if find_python().await.is_none() {
         return;
     }
 
@@ -256,7 +256,7 @@ env.Append(CPPDEFINES=[\"BOARD_CONFIG_SHIM_OK\"])
 
 #[tokio::test]
 async fn test_resolve_extra_script_overlay_supports_pio_platform_shim() {
-    if find_python().is_none() {
+    if find_python().await.is_none() {
         return;
     }
 
@@ -302,7 +302,7 @@ env.Append(CPPDEFINES=[\"PIO_PLATFORM_SHIM_OK\"])
 
 #[tokio::test]
 async fn test_resolve_extra_script_overlay_rejects_unsupported_script_prefix() {
-    if find_python().is_none() {
+    if find_python().await.is_none() {
         return;
     }
 
@@ -348,10 +348,12 @@ framework = arduino
     temp
 }
 
-fn resolve_runtime_overlay(project_dir: &Path) -> BuildOverlay {
+async fn resolve_runtime_overlay(project_dir: &Path) -> BuildOverlay {
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
-    resolve_extra_script_overlay(project_dir, "demo", &config).await.unwrap()
+    resolve_extra_script_overlay(project_dir, "demo", &config)
+        .await
+        .unwrap()
 }
 
 // ---- SIMPLE tier ------------------------------------------------------
@@ -359,9 +361,9 @@ fn resolve_runtime_overlay(project_dir: &Path) -> BuildOverlay {
 /// Marlin `common-cxxflags.py`-style script: language-specific append,
 /// `GetBuildType()` gating, in-place `BUILD_FLAGS` append, and a no-op
 /// `AddPostAction`. Source: MarlinFirmware/Marlin buildroot scripts.
-#[test]
-fn test_shim_simple_marlin_cxxflags_style() {
-    if find_python().is_none() {
+#[tokio::test]
+async fn test_shim_simple_marlin_cxxflags_style() {
+    if find_python().await.is_none() {
         return;
     }
 
@@ -382,7 +384,7 @@ env.AddPostAction(\"$PROGPATH\", lambda *a, **k: None)
 ",
     );
 
-    let overlay = resolve_runtime_overlay(temp.path());
+    let overlay = resolve_runtime_overlay(temp.path()).await;
     assert!(
         overlay
             .global_compile
@@ -408,9 +410,9 @@ env.AddPostAction(\"$PROGPATH\", lambda *a, **k: None)
 
 /// Tuple-shaped `CPPDEFINES` appended in place via `__getitem__` must still
 /// emit `-Dkey=value`, not a malformed array entry.
-#[test]
-fn test_shim_simple_inplace_tuple_cppdefine() {
-    if find_python().is_none() {
+#[tokio::test]
+async fn test_shim_simple_inplace_tuple_cppdefine() {
+    if find_python().await.is_none() {
         return;
     }
 
@@ -425,7 +427,7 @@ env.Append(CPPDEFINES=[\"PLAIN\"])
 ",
     );
 
-    let overlay = resolve_runtime_overlay(temp.path());
+    let overlay = resolve_runtime_overlay(temp.path()).await;
     assert!(
         overlay
             .global_compile
@@ -447,9 +449,9 @@ env.Append(CPPDEFINES=[\"PLAIN\"])
 /// namf `platformio_script.py`-style script: obtains env via
 /// `from SCons.Script import DefaultEnvironment`, reads + rewrites
 /// `LINKFLAGS`, and registers a no-op post action.
-#[test]
-fn test_shim_medium_default_environment_linkflags() {
-    if find_python().is_none() {
+#[tokio::test]
+async fn test_shim_medium_default_environment_linkflags() {
+    if find_python().await.is_none() {
         return;
     }
 
@@ -470,7 +472,7 @@ env.AddPostAction(\"$BUILD_DIR/firmware.bin\", after_build)
 ",
     );
 
-    let overlay = resolve_runtime_overlay(temp.path());
+    let overlay = resolve_runtime_overlay(temp.path()).await;
     assert!(
         overlay
             .link
@@ -485,9 +487,9 @@ env.AddPostAction(\"$BUILD_DIR/firmware.bin\", after_build)
 /// note; under lite-SCons (the only backend post-#553 step 4) the value
 /// is stored on the construction env without a note. Either way the
 /// script must not hard-fail and the parallel flag mutation must land.
-#[test]
-fn test_shim_medium_nonflag_scope_does_not_reject() {
-    if find_python().is_none() {
+#[tokio::test]
+async fn test_shim_medium_nonflag_scope_does_not_reject() {
+    if find_python().await.is_none() {
         return;
     }
 
@@ -502,7 +504,7 @@ env.Append(CPPDEFINES=[\"LFS_OK\"])
 ",
     );
 
-    let overlay = resolve_runtime_overlay(temp.path());
+    let overlay = resolve_runtime_overlay(temp.path()).await;
     assert!(
         overlay
             .global_compile

@@ -271,7 +271,8 @@ impl BuildOrchestrator for Rp2040Orchestrator {
                 .and_then(|props| props.get("boot2"))
                 .map(String::as_str)
                 .unwrap_or("boot2_w25q080_2_padded_checksum"),
-        )?;
+        )
+        .await?;
         let mut mcu_config = mcu_config;
         add_rp_linker_flags(&framework_dir, &ctx.board.mcu, &mut mcu_config);
         let linker = ArmLinker::new(
@@ -632,7 +633,7 @@ fn generate_linker_script(
     Ok(output)
 }
 
-fn compile_boot2_object(
+async fn compile_boot2_object(
     compiler: &ArmCompiler,
     framework_dir: &Path,
     build_dir: &Path,
@@ -685,7 +686,8 @@ fn compile_boot2_object(
         &boot2_object,
         &boot2_flags,
         &extra_flags,
-    )?;
+    )
+    .await?;
     if !result.success {
         return Err(fbuild_core::FbuildError::BuildFailed(format!(
             "RP2040 boot2 compile failed for {}:\n{}",

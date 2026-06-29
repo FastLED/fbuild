@@ -97,9 +97,9 @@ impl BuildOrchestrator for SamOrchestrator {
         // 4. Ensure correct Arduino core based on MCU family
         let (framework_dir, core_dir, variant_dir, linker_script_path, system_includes) =
             if is_samd_mcu(&ctx.board.mcu) {
-                install_samd_core(params, &ctx.board.core, &ctx.board.variant)?
+                install_samd_core(params, &ctx.board.core, &ctx.board.variant).await?
             } else {
-                install_sam_core(params, &ctx.board.core, &ctx.board.variant)?
+                install_sam_core(params, &ctx.board.core, &ctx.board.variant).await?
             };
 
         let build_dir = &ctx.build_dir;
@@ -303,7 +303,7 @@ impl BuildOrchestrator for SamOrchestrator {
 /// Install ArduinoCore-sam for classic SAM3X boards (Due).
 ///
 /// Returns (framework_dir, core_dir, variant_dir, linker_script, system_includes).
-fn install_sam_core(
+async fn install_sam_core(
     params: &BuildParams,
     core_name: &str,
     variant_name: &str,
@@ -338,7 +338,7 @@ fn install_sam_core(
 /// Install Adafruit ArduinoCore-samd for SAMD21/SAMD51 boards.
 ///
 /// Returns (framework_dir, core_dir, variant_dir, linker_script, system_includes).
-fn install_samd_core(
+async fn install_samd_core(
     params: &BuildParams,
     core_name: &str,
     variant_name: &str,

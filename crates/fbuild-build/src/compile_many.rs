@@ -902,8 +902,8 @@ mod tests {
         assert_eq!(p, Platform::AtmelAvr);
     }
 
-    #[test]
-    fn empty_sketch_list_errors_out() {
+    #[tokio::test]
+    async fn empty_sketch_list_errors_out() {
         let req = CompileManyRequest {
             board: "uno".to_string(),
             sketches: Vec::new(),
@@ -917,8 +917,8 @@ mod tests {
         assert!(compile_many(req).await.is_err());
     }
 
-    #[test]
-    fn missing_sketch_dir_errors_out() {
+    #[tokio::test]
+    async fn missing_sketch_dir_errors_out() {
         let tmp = tempfile::tempdir().unwrap();
         let missing = tmp.path().join("nope");
         let req = CompileManyRequest {
@@ -934,8 +934,8 @@ mod tests {
         assert!(compile_many(req).await.is_err());
     }
 
-    #[test]
-    fn sketch_without_matching_board_errors_out() {
+    #[tokio::test]
+    async fn sketch_without_matching_board_errors_out() {
         let tmp = tempfile::tempdir().unwrap();
         std::fs::write(
             tmp.path().join("platformio.ini"),
