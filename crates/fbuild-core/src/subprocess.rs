@@ -213,9 +213,9 @@ pub async fn run_command_passthrough(
 ///
 /// Drives the async subprocess path from sync call sites.
 ///
-/// When called from a multithreaded tokio runtime, this temporarily blocks
-/// the current worker instead of constructing a nested runtime. Plain sync
-/// callers still get a small current-thread runtime.
+/// Runs the future on a dedicated OS thread with a small current-thread tokio
+/// runtime. Keeping the runtime on a fresh thread avoids nested-runtime panics
+/// when daemon call sites use this sync bridge from async execution paths.
 pub fn run_command_blocking(
     args: &[&str],
     cwd: Option<&Path>,
@@ -246,16 +246,25 @@ pub fn run_command_passthrough_blocking(
     block_on(run_command_passthrough(args, cwd, env, timeout))
 }
 
-fn block_on<F: std::future::Future>(fut: F) -> F::Output {
-    if let Ok(handle) = tokio::runtime::Handle::try_current() {
-        return tokio::task::block_in_place(|| handle.block_on(fut));
-    }
-
-    let rt = tokio::runtime::Builder::new_current_thread()
-        .enable_all()
-        .build()
-        .expect("failed to build single-threaded tokio runtime for blocking subprocess call");
-    rt.block_on(fut)
+fn block_on<F>(fut: F) -> F::Output
+where
+    F: std::future::Future + Send,
+    F::Output: Send,
+{
+    std::thread::scope(|scope| {
+        scope
+            .spawn(move || {
+                let rt = tokio::runtime::Builder::new_current_thread()
+                    .enable_all()
+                    .build()
+                    .expect(
+                        "failed to build single-threaded tokio runtime for blocking subprocess call",
+                    );
+                rt.block_on(fut)
+            })
+            .join()
+            .expect("blocking subprocess runtime thread panicked")
+    })
 }
 
 // ---------------------------------------------------------------------------
@@ -604,6 +613,26 @@ mod tests {
 
         assert!(result.success());
         assert!(result.stdout.trim().contains("blocking-runtime"));
+    }
+
+    #[test]
+    fn run_command_blocking_works_inside_current_thread_runtime() {
+        let rt = tokio::runtime::Builder::new_current_thread()
+            .enable_all()
+            .build()
+            .expect("test runtime");
+        let args = if cfg!(windows) {
+            vec!["cmd", "/C", "echo current-thread-runtime"]
+        } else {
+            vec!["echo", "current-thread-runtime"]
+        };
+
+        let result = rt
+            .block_on(async { run_command_blocking(&args, None, None, None) })
+            .expect("blocking subprocess call");
+
+        assert!(result.success());
+        assert!(result.stdout.trim().contains("current-thread-runtime"));
     }
 
     #[test]
