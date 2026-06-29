@@ -36,6 +36,33 @@ itself stays on stable 1.94.1).
   `Command::new("esptool" | "avrdude" | "picotool" | "dfu-util" |
   "pyocd")` invocations outside `crates/fbuild-deploy/`. All deploy-
   tool spawns must flow through `fbuild deploy`. See #826 / #694.
+- **`ban_process_exit_outside_main/`** — bans `std::process::exit`
+  outside `crates/*/src/main.rs` and `crates/*/src/bin/*.rs`. Skipping
+  destructors leaks temp files, kills containment guards, and
+  truncates in-flight HTTP/WS responses. Legacy CLI subcommand
+  dispatchers exempted via `src/allowlist.txt`. See #826.
+- **`ban_unwrap_in_daemon_handlers/`** — bans `.unwrap()` inside
+  `crates/fbuild-daemon/src/handlers/**/*.rs` production code (tests
+  exempt by filename and by `#[cfg(test)]` module walking). Locks in
+  PR #833's hardening; new violations would crash the daemon. See
+  #826.
+- **`cli_no_build_deploy_direct_use/`** — bans `fbuild_build::*` /
+  `fbuild_deploy::*` references in `crates/fbuild-cli/src/` outside
+  the diagnostic-subcommand allowlist. Enforces the "thin HTTP
+  client" rule from `crates/CLAUDE.md` §"Dependency Graph". See
+  #826.
+- **`require_multi_thread_flavor_when_spawning/`** — flags
+  `#[tokio::test]` (without `flavor = "multi_thread"`) on async fns
+  that call `tokio::spawn(...)` in their body. The default
+  `current_thread` flavor deadlocks any test that awaits cross-task
+  state. Legacy violators exempted via `src/allowlist.txt`. See
+  #826.
+- **`ban_std_sync_mutex_in_async/`** — bans `std::sync::Mutex` /
+  `std::sync::RwLock` *type uses* inside `crates/fbuild-daemon/src/`
+  and `crates/fbuild-serial/src/` (tests exempt). Holding the guard
+  across `.await` starves the Tokio worker and a panic poisons the
+  lock. Existing synchronous uses exempted via `src/allowlist.txt`.
+  See #826.
 
 ## Running locally
 

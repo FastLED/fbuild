@@ -1,0 +1,34 @@
+# Each non-empty, non-comment line is matched against the tail of each
+# source file path (slashes normalized to /). Use forward-slash paths
+# only — the lint normalizes \ to / before matching.
+#
+# `crates/*/src/main.rs` and `crates/*/src/bin/*.rs` are UNCONDITIONALLY
+# exempt in lib.rs (they are the canonical program entry points). They
+# do NOT need entries here.
+#
+# Rollout strategy:
+#   - The lint is ON and denies new `std::process::exit` calls in
+#     production code outside `main.rs` / `src/bin/*.rs`.
+#   - This file lists the *legacy* call sites that existed when the
+#     lint was first enabled (FastLED/fbuild#826). They are exempted so
+#     the lint can land without a repo-wide migration to `Result`-based
+#     control flow.
+#   - New files MUST NOT be added here. The target state is zero
+#     entries.
+
+# CLI subcommand dispatchers that translate daemon HTTP responses
+# into shell exit codes. The canonical pattern is "print the message
+# the daemon already wrote, then exit with the daemon's exit_code".
+# These are effectively a thin layer between the daemon and the
+# shell — migrating them to bubble Result back into main() requires
+# threading exit codes through fbuild_core::Result, which is a
+# separate refactor (#826 follow-up).
+crates/fbuild-cli/src/cli/build.rs
+crates/fbuild-cli/src/cli/deploy.rs
+crates/fbuild-cli/src/cli/dispatch.rs
+crates/fbuild-cli/src/cli/lnk.rs
+crates/fbuild-cli/src/cli/pio.rs
+crates/fbuild-cli/src/cli/purge.rs
+crates/fbuild-cli/src/cli/reset.rs
+crates/fbuild-cli/src/cli/serial_probe.rs
+crates/fbuild-cli/src/cli/show.rs

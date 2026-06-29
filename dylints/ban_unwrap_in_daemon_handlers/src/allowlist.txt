@@ -1,0 +1,41 @@
+# Each non-empty, non-comment line is matched against the tail of each
+# source file path (slashes normalized to /). Use forward-slash paths
+# only — the lint normalizes \ to / before matching.
+#
+# Test files inside the handlers tree (any file whose base name
+# matches `*tests*.rs`, e.g. `tests.rs`, `tests_npm_cache.rs`,
+# `websockets_tests.rs`) are UNCONDITIONALLY exempt in lib.rs. They
+# do NOT need entries here.
+#
+# `.unwrap()` calls inside a module annotated with `#[cfg(test)]` are
+# also UNCONDITIONALLY exempt in lib.rs (the lint walks the owning
+# module chain).
+#
+# Rollout strategy:
+#   - The lint is ON and denies new `.unwrap()` calls in production
+#     handler code.
+#   - PR #833 already fixed the 10 known pre-existing violations, but
+#     a fresh audit found a small number of `.unwrap()` calls that
+#     survived (they were in async closures inside `tokio::spawn(...)`
+#     blocks that aren't tagged `#[cfg(test)]`). They are exempted at
+#     file level so the lint can land green; each one is tracked for
+#     follow-up.
+#   - New files MUST NOT be added here. The target state is zero
+#     entries.
+
+# WebSocket serial stream: `serde_json::to_string(&serialMessage).unwrap()`
+# inside the spawned send-loop. The input is a `SerialServerMessage`
+# struct whose `Serialize` impl cannot fail in practice, but
+# `.unwrap_or_default()` is a one-line follow-up. See #826.
+crates/fbuild-daemon/src/handlers/websockets.rs
+
+# Streaming build response: `Response::builder()...body(body).unwrap()`
+# for the NDJSON axum response. The builder only fails on header
+# encoding errors that don't apply here. See #826.
+crates/fbuild-daemon/src/handlers/operations/build.rs
+
+# AVR deploy path: `fbuild_build::avr::mcu_config::get_avr_config().unwrap()`
+# — the embedded MCU table is statically populated and the lookup
+# can't fail. Migrating to `expect("avr mcu table missing")` is a
+# one-line follow-up. See #826.
+crates/fbuild-daemon/src/handlers/operations/deploy.rs
