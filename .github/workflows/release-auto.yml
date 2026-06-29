@@ -198,20 +198,16 @@ jobs:
             linux_cross: false
             macos_cross: false
 
-          # aarch64-pc-windows-msvc re-enabled via soldr#1012 PR 6.
-          # The ring 0.17.x oversight (build.rs:563 hardcodes
-          # `c.compiler("clang")` for aarch64-windows-msvc, overriding
-          # whatever `CC_aarch64_pc_windows_msvc=clang-cl` says) is now
-          # sidestepped by soldr-clang-shim (soldr#1015) which routes
-          # plain `clang` to clang-cl when --target=*-pc-windows-msvc.
-          # `soldr build` (soldr#1013 / soldr#1016) installs the shim
-          # on PATH for any MSVC target, so ring's compile lands on
-          # clang-cl regardless of ring's hardcoded override.
-          - target: aarch64-pc-windows-msvc
-            runner: ubuntu-latest
-            binary_ext: ".exe"
-            linux_cross: false
-            macos_cross: false
+          # aarch64-pc-windows-msvc removed for the 2.3.12 release
+          # (FastLED/fbuild#800 follow-up). The lane was re-added in
+          # #797 via `soldr build` blessed cross-compile + soldr-
+          # clang-shim, but those features ship in soldr v0.7.63 which
+          # hasn't been published yet (soldr v0.7.65 release blocked
+          # on a separate Linux-ARM64-musl issue). Without the shim,
+          # ring 0.17.x's build.rs:563 `c.compiler("clang")` hardcode
+          # for aarch64-pc-windows-msvc breaks the cross-compile.
+          # Restore once soldr v0.7.63+ ships. Tracking: zackees/soldr
+          # release-auto pipeline.
 
     uses: ./.github/workflows/template_native_build.yml
     with:
