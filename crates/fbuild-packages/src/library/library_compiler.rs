@@ -214,7 +214,7 @@ pub async fn compile_library_with_jobs(
     let name_owned = name.to_string();
     let compiler_cache_owned = compiler_cache.map(|p| p.to_path_buf());
 
-    for source in stale_sources.iter().cloned() {
+    for source in stale_sources.clone() {
         let sem = sem.clone();
         let obj_dir_t = obj_dir_owned.clone();
         let gcc_t = gcc_path_owned.clone();
