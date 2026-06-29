@@ -1,4 +1,4 @@
-﻿//! SAM/SAMD build orchestrator â€” wires together config, packages, compiler, linker.
+//! SAM/SAMD build orchestrator â€” wires together config, packages, compiler, linker.
 //!
 //! Handles both SAM (Due/SAM3X) and SAMD (SAMD21/SAMD51) boards under the
 //! `atmelsam` platform. Selects the correct Arduino core:
@@ -278,7 +278,8 @@ impl BuildOrchestrator for SamOrchestrator {
             TargetArchitecture::Arm,
             "SAM",
             start,
-        ).await?;
+        )
+        .await?;
 
         if build_result.success
             && !params.compiledb_only

@@ -1,4 +1,4 @@
-﻿//! Silicon Labs ARM linker implementation.
+//! Silicon Labs ARM linker implementation.
 //!
 //! Links ARM Cortex-M33 object files into firmware.elf, converts to firmware.bin,
 //! and reports size using arm-none-eabi-size.
@@ -63,8 +63,7 @@ impl SilabsLinker {
 #[async_trait::async_trait]
 impl Linker for SilabsLinker {
     async fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
-        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "arm-none-eabi-ar")
-            .await
+        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "arm-none-eabi-ar").await
     }
 
     async fn link(

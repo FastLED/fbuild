@@ -1,4 +1,4 @@
-﻿//! Renesas RA ARM linker implementation.
+//! Renesas RA ARM linker implementation.
 //!
 //! Links ARM Cortex-M4 object files into firmware.elf, converts to firmware.bin,
 //! and reports size using arm-none-eabi-size.
@@ -57,8 +57,7 @@ impl RenesasLinker {
 #[async_trait::async_trait]
 impl Linker for RenesasLinker {
     async fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
-        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "arm-none-eabi-ar")
-            .await
+        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "arm-none-eabi-ar").await
     }
 
     async fn link(

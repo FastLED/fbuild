@@ -286,12 +286,11 @@ impl Deployer for TeensyDeployer {
         // up-to-5s discovery window.
         let discovery_pre = pre_snapshot.clone();
         let discovery_window = Duration::from_secs(self.post_flash_port_discovery_secs);
-        let discovery_outcome =
-            tokio::task::spawn_blocking(move || {
-                port_discovery::wait_for_new_cdc_port(&discovery_pre, discovery_window)
-            })
-            .await
-            .unwrap_or(port_discovery::NewPortOutcome::TimedOut);
+        let discovery_outcome = tokio::task::spawn_blocking(move || {
+            port_discovery::wait_for_new_cdc_port(&discovery_pre, discovery_window)
+        })
+        .await
+        .unwrap_or(port_discovery::NewPortOutcome::TimedOut);
         let new_port = match discovery_outcome {
             port_discovery::NewPortOutcome::Found(name) => Some(name),
             port_discovery::NewPortOutcome::TimedOut => {

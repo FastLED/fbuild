@@ -1,4 +1,4 @@
-﻿//! NRF52 build orchestrator â€” wires together config, packages, compiler, linker.
+//! NRF52 build orchestrator â€” wires together config, packages, compiler, linker.
 //!
 //! Build phases:
 //! 1. Parse platformio.ini
@@ -357,7 +357,8 @@ impl BuildOrchestrator for Nrf52Orchestrator {
             TargetArchitecture::Arm,
             "NRF52",
             start,
-        ).await?;
+        )
+        .await?;
 
         if build_result.success
             && !params.compiledb_only

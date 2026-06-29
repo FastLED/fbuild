@@ -307,7 +307,8 @@ impl Esp32Deployer {
             }
         }
 
-        self.try_verify_deployment_esptool(firmware_path, port).await
+        self.try_verify_deployment_esptool(firmware_path, port)
+            .await
     }
 
     async fn try_verify_deployment_esptool(
@@ -694,7 +695,9 @@ impl Esp32Deployer {
 
         #[cfg(feature = "espflash-native")]
         if self.use_native_write {
-            let native = self.try_deploy_regions_native(firmware_path, port, regions).await;
+            let native = self
+                .try_deploy_regions_native(firmware_path, port, regions)
+                .await;
             if let Some(result) =
                 native_write_or_fallback_outcome(port, "selective write-flash", native)
             {

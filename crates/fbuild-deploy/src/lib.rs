@@ -297,7 +297,9 @@ mod post_deploy_recovery_tests {
             deploy_calls: Arc::new(AtomicUsize::new(0)),
         };
         let start = std::time::Instant::now();
-        let result = dep.post_deploy_recovery("a-port-that-does-not-exist-zzz").await;
+        let result = dep
+            .post_deploy_recovery("a-port-that-does-not-exist-zzz")
+            .await;
         let elapsed = start.elapsed();
         assert!(result.is_ok(), "default impl returns Ok even on timeout");
         assert!(

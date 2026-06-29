@@ -1,4 +1,4 @@
-﻿use super::*;
+use super::*;
 use crate::flag_overlay::ScriptScopeState;
 use std::fs;
 
@@ -30,7 +30,8 @@ extra_scripts = {}
 async fn resolve_runtime_error(project_dir: &Path) -> String {
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
-    resolve_extra_script_overlay(project_dir, "demo", &config).await
+    resolve_extra_script_overlay(project_dir, "demo", &config)
+        .await
         .unwrap_err()
         .to_string()
 }
@@ -158,7 +159,9 @@ env.Append(CPPDEFINES=[\"DUMP_SHIM_OK\"])
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
     // Pinned to MockEnv (see resolve_runtime_overlay note).
-    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config).await.unwrap();
+    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config)
+        .await
+        .unwrap();
     assert!(overlay
         .global_compile
         .common
@@ -204,7 +207,9 @@ env.Append(CPPDEFINES=[\"HELPERS_SHIM_OK\"])
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
     // Pinned to MockEnv (see resolve_runtime_overlay note).
-    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config).await.unwrap();
+    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config)
+        .await
+        .unwrap();
     assert!(overlay
         .global_compile
         .common
@@ -247,7 +252,9 @@ env.Append(CPPDEFINES=[\"BOARD_CONFIG_SHIM_OK\"])
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
     // Pinned to MockEnv (see resolve_runtime_overlay note).
-    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config).await.unwrap();
+    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config)
+        .await
+        .unwrap();
     assert!(overlay
         .global_compile
         .common
@@ -293,7 +300,9 @@ env.Append(CPPDEFINES=[\"PIO_PLATFORM_SHIM_OK\"])
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
     // Pinned to MockEnv (see resolve_runtime_overlay note).
-    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config).await.unwrap();
+    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config)
+        .await
+        .unwrap();
     assert!(overlay
         .global_compile
         .common

@@ -554,7 +554,9 @@ mod tests {
 
         // Middle lines
         decoder.process_line("Core  0 register dump:").await;
-        decoder.process_line("Backtrace: 0x42002a3c:0x3fc90000").await;
+        decoder
+            .process_line("Backtrace: 0x42002a3c:0x3fc90000")
+            .await;
 
         // End — should produce output (warning about no elf)
         let result = decoder.process_line("Rebooting...").await;

@@ -333,8 +333,7 @@ mod tests {
         let flags = vec!["-O2".to_string(), "-DFOO=bar".to_string()];
         let blocking = write_response_file_blocking(&flags, tmp.path(), "stable").unwrap();
         let content = std::fs::read_to_string(&blocking).unwrap();
-        let (expected_path, expected_content) =
-            render_response_file(&flags, tmp.path(), "stable");
+        let (expected_path, expected_content) = render_response_file(&flags, tmp.path(), "stable");
         assert_eq!(blocking, expected_path);
         assert_eq!(content, expected_content);
     }

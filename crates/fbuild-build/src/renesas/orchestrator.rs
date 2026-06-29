@@ -1,4 +1,4 @@
-﻿//! Renesas RA build orchestrator â€” wires together config, packages, compiler, linker.
+//! Renesas RA build orchestrator â€” wires together config, packages, compiler, linker.
 //!
 //! Build phases:
 //! 1. Parse platformio.ini
@@ -258,7 +258,8 @@ impl BuildOrchestrator for RenesasOrchestrator {
             TargetArchitecture::Arm,
             "Renesas RA",
             start,
-        ).await?;
+        )
+        .await?;
 
         if build_result.success
             && !params.compiledb_only
