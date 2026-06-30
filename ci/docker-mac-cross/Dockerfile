@@ -65,9 +65,16 @@ RUN mkdir -p /opt/soldr-bin \
     | tar -xf - -C /opt/soldr-bin \
  && ls -la /opt/soldr-bin
 
-RUN for bin in soldr cargo-chef crgx zccache zccache-daemon zccache-fp; do \
+RUN for bin in soldr cargo-chef crgx; do \
         [ -f "/opt/soldr-bin/$bin" ] && cp "/opt/soldr-bin/$bin" "/usr/local/bin/$bin" && chmod +x "/usr/local/bin/$bin"; \
     done
+# Note: standalone `zccache` / `zccache-daemon` / `zccache-fp` binaries are
+# intentionally NOT copied. As of soldr 1.12.11+ / soldr#977 / #980 L1,
+# zccache is embedded into soldr-daemon and the new dedicated
+# `zccache-soldr` shim (soldr#1081) is the RUSTC_WRAPPER. The upstream
+# tarball stops shipping the standalone binaries past SOLDR_VERSION=0.7.59,
+# so the for-loop above would silently no-op anyway — explicit list now
+# documents the post-embedded-zccache architecture. See FastLED/fbuild#855.
 
 # Pre-seed soldr's home so its first-run setup is non-interactive +
 # the rustup auto-bootstrap has a writable HOME to drop ~/.cargo/ into.
