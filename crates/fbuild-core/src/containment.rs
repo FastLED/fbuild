@@ -263,6 +263,13 @@ pub mod tokio_spawn {
     pub fn spawn_contained(
         command: &mut tokio::process::Command,
     ) -> std::io::Result<tokio::process::Child> {
+        // FastLED/fbuild#853: every subprocess we spawn must die when its
+        // owning `Child` handle is dropped. Daemon-death containment (Job
+        // Object / pdeathsig) only fires when the *daemon* itself exits;
+        // for in-daemon cancellation (CLI force-kill -> body-drop ->
+        // build-task abort), the orchestrator future is dropped while the
+        // daemon stays alive, so we need tokio-level kill-on-drop too.
+        command.kill_on_drop(true);
         let Some(group) = super::GLOBAL_GROUP.get() else {
             return command.spawn();
         };
