@@ -13,6 +13,7 @@ is committed to orphan branches:
 | `build_www_manifest.py` | day-stable filenames                    | `www/manifest.json`                    |
 | `fetch_espressif_usb_pids.py` | `espressif/usb-pids` official PID registry | merge-compatible `/tmp/espressif-usb-pids.json` |
 | `fetch_raspberrypi_usb_pids.py` | `raspberrypi/usb-pid` official PID registry | merge-compatible `/tmp/raspberrypi-usb-pids.json` |
+| `fetch_nordic_usb_pids.py` | Nordic nRF Connect Programmer / DFU sources | merge-compatible `/tmp/nordic-usb-pids.json` |
 
 The merger scripts on the `online-data` orphan branch
 (`merge_sources.py`, `merge_pio_boards.py`, `build_manifest.py`,
@@ -39,12 +40,20 @@ allocation table for VID `0x2e8a`. It emits product names from the upstream
 not the USB vendor name. Blank placeholders, ranges, and reserved rows are
 skipped.
 
+The Nordic supplement ingests Nordic-maintained nRF Connect Programmer
+USB-product arrays and the `pc-nrf-dfu-js` README. It emits current Nordic
+DFU / MCUboot rows for VID `0x1915`, including the specific
+`1915:521f` PCA10059 nRF52840 dongle SDFU bootloader label, while keeping
+application-dependent IDs such as `cafe` generic rather than assigning them to
+a single firmware role.
+
 ## Tests
 
 ```bash
 uv run --no-project --with pytest pytest online-data-tools/test_build_sqlite.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_espressif_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_raspberrypi_usb_pids.py -v
+uv run --no-project --with pytest pytest online-data-tools/test_nordic_usb_pids.py -v
 ```
 
 Each script declares its own PEP 723 dependencies and is runnable via
