@@ -103,6 +103,19 @@ and Seeed VIDs (`2341:0072`, `2886:0062`, `2886:8062`), so this supplement
 does not infer Silicon Labs board names from bridge-chip or debug-interface
 IDs.
 
+Ambiq/Apollo3 currently has no wired PID supplement. The public USB-ID
+sources already identify VID `0x2aec` as Ambiq Micro with PID `6011`
+(`Converter`), while VID `0x1cbe` belongs to Luminary Micro/TI rather than
+Ambiq. SparkFun's `Arduino_Apollo3` board package has no `vid.N`/`pid.N`
+rows to ingest, and the Apollo3 boards present under
+`crates/fbuild-config/assets/boards` are SparkFun Artemis boards uploaded via
+serial loader rather than a documented Ambiq PID table. The `AM_APOLLO3`
+MCU-to-VID seed therefore uses the weak CH340 bridge VID `0x1a86` only as a
+board-search hint for those SparkFun boards; it does not add Ambiq product
+PIDs without a first-party source. Third-party SDK or board-package rows may
+be added later as supplemental data, but they should merge after first-party
+and generic USB-ID sources so they fill gaps only.
+
 ## Tests
 
 ```bash

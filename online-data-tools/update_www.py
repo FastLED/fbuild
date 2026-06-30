@@ -32,6 +32,7 @@ from __future__ import annotations
 import argparse
 import datetime as _dt
 import io
+import json
 import shutil
 import sys
 import urllib.request
@@ -52,6 +53,14 @@ import rotate_www_dbs            # noqa: E402
 # Static-site filenames mirrored from www_static/. Kept here so the workflow
 # YAML doesn't need to enumerate them.
 STATIC_ASSETS = ("index.html", "app.js", "style.css")
+
+# Narrow migrations for historical seed mistakes that may already have been
+# copied to the curated online-data branch. Keep this list explicit: the
+# online-data copy can carry curator edits, so seed changes must not become a
+# blanket overwrite.
+DEPRECATED_MCU_TO_VID_ROWS = {
+    ("AM_APOLLO3", "1cbe"),
+}
 
 
 @dataclass
@@ -101,6 +110,84 @@ def bootstrap_mcu_to_vid(cfg: Config) -> bool:
         return False
     shutil.copyfile(cfg.seed_mcu_to_vid, cfg.online_mcu_to_vid)
     return True
+
+
+def _vid_key(value: object) -> str:
+    """Normalize int, "1234", or "0x1234" VID values to 4-hex lowercase."""
+    if isinstance(value, int):
+        return f"{value:04x}"
+    text = str(value).strip().lower()
+    if text.startswith("0x"):
+        text = text[2:]
+    return f"{int(text, 16):04x}"
+
+
+def apply_mcu_to_vid_corrections(cfg: Config) -> int:
+    """Patch known-bad historical MCU VID rows in the online-data copy.
+
+    `data/mcu_to_vid.json` is intentionally curator-owned after bootstrap, so
+    this does not resync the whole seed. It only removes explicitly deprecated
+    rows and adds the current seed row(s) for the affected family if absent.
+    Returns the number of deprecated rows removed.
+    """
+    if not cfg.online_mcu_to_vid.is_file():
+        return 0
+
+    online_rows = json.loads(cfg.online_mcu_to_vid.read_text(encoding="utf-8"))
+    seed_rows = json.loads(cfg.seed_mcu_to_vid.read_text(encoding="utf-8"))
+    if not isinstance(online_rows, list) or not isinstance(seed_rows, list):
+        return 0
+
+    seed_by_family: dict[str, list[dict]] = {}
+    for row in seed_rows:
+        if not isinstance(row, dict):
+            continue
+        family = row.get("mcu_family")
+        if isinstance(family, str):
+            seed_by_family.setdefault(family, []).append(row)
+
+    kept_rows: list[dict] = []
+    corrected_families: set[str] = set()
+    removed = 0
+    for row in online_rows:
+        if not isinstance(row, dict):
+            kept_rows.append(row)
+            continue
+        family = row.get("mcu_family")
+        try:
+            vid = _vid_key(row.get("vid"))
+        except (TypeError, ValueError):
+            kept_rows.append(row)
+            continue
+        if (family, vid) in DEPRECATED_MCU_TO_VID_ROWS:
+            corrected_families.add(str(family))
+            removed += 1
+            continue
+        kept_rows.append(row)
+
+    if removed == 0:
+        return 0
+
+    existing: set[tuple[object, str]] = set()
+    for row in kept_rows:
+        if not isinstance(row, dict) or not row.get("mcu_family") or not row.get("vid"):
+            continue
+        try:
+            existing.add((row.get("mcu_family"), _vid_key(row.get("vid"))))
+        except (TypeError, ValueError):
+            continue
+    for family in sorted(corrected_families):
+        for seed_row in seed_by_family.get(family, []):
+            key = (seed_row.get("mcu_family"), _vid_key(seed_row.get("vid")))
+            if key not in existing:
+                kept_rows.append(dict(seed_row))
+                existing.add(key)
+
+    cfg.online_mcu_to_vid.write_text(
+        json.dumps(kept_rows, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+    return removed
 
 
 def build_todays_db(cfg: Config) -> Path:
@@ -164,7 +251,6 @@ def rotate_dbs(cfg: Config) -> list[Path]:
 
 def write_www_manifest(cfg: Config) -> dict:
     manifest = build_www_manifest.build(cfg.www_worktree)
-    import json
     cfg.www_manifest.write_text(
         json.dumps(manifest, indent=2, sort_keys=False) + "\n",
         encoding="utf-8",
@@ -173,7 +259,6 @@ def write_www_manifest(cfg: Config) -> dict:
 
 
 def annotate_online(cfg: Config, www_manifest: dict) -> dict:
-    import json
     online = json.loads(cfg.online_manifest.read_text(encoding="utf-8"))
     annotated = annotate_online_manifest.annotate(
         online_manifest = online,
@@ -195,6 +280,7 @@ def run(cfg: Config, *, fetch_sqljs: Callable[[str], bytes] | None = None) -> di
     """Execute all steps in order. Returns a summary dict for logging."""
     summary: dict = {"today": cfg.today, "website_url": cfg.website_url}
     summary["mcu_to_vid_bootstrapped"] = bootstrap_mcu_to_vid(cfg)
+    summary["mcu_to_vid_corrections"] = apply_mcu_to_vid_corrections(cfg)
     db = build_todays_db(cfg)
     summary["db_path"]   = str(db)
     summary["db_bytes"]  = db.stat().st_size

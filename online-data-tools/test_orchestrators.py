@@ -25,7 +25,6 @@ import subprocess
 import sys
 import zipfile
 from pathlib import Path
-from typing import Callable
 
 import pytest
 
@@ -187,6 +186,73 @@ def test_update_www_second_run_keeps_existing_mcu_to_vid(
             ("ESP32S3", int("303a", 16)),
         ).fetchone()
     assert row[0] == pytest.approx(0.99)
+
+
+def test_seed_does_not_map_apollo3_to_luminary_vid() -> None:
+    seed = json.loads((HERE / "seed_mcu_to_vid.json").read_text(encoding="utf-8"))
+    apollo3 = [row for row in seed if row["mcu_family"] == "AM_APOLLO3"]
+
+    assert apollo3 == [{
+        "mcu_family": "AM_APOLLO3",
+        "vid": "1a86",
+        "score": 0.60,
+        "reason": "SparkFun Artemis CH340 USB-serial bridge",
+    }]
+
+
+def test_update_www_replaces_deprecated_apollo3_vid(
+    workspace: Path, online_worktree: Path, www_worktree: Path,
+) -> None:
+    # Simulate the stale online-data row that was copied before the seed was
+    # corrected. The migration must remove only that row and preserve curator
+    # additions for the same MCU family.
+    stale = [
+        {"mcu_family": "AM_APOLLO3", "vid": "1cbe",
+         "score": 0.70, "reason": "Sparkfun Apollo3 bootloader"},
+        {"mcu_family": "AM_APOLLO3", "vid": "2aec",
+         "score": 0.40, "reason": "custom Ambiq row"},
+        {"mcu_family": "ESP32S3", "vid": "303a",
+         "score": 0.99, "reason": "custom curated"},
+    ]
+    (online_worktree / "data" / "mcu_to_vid.json").write_text(
+        json.dumps(stale), encoding="utf-8"
+    )
+    cfg = update_www.Config(
+        workspace       = workspace,
+        online_worktree = online_worktree,
+        www_worktree    = www_worktree,
+        today           = "2026-06-20",
+        website_url     = "https://example.invalid/fbuild/",
+        sqljs_zip_url   = "https://unused.invalid/sqljs.zip",
+    )
+
+    summary = update_www.run(cfg, fetch_sqljs=lambda _url: _fake_sqljs_zip())
+
+    assert summary["mcu_to_vid_bootstrapped"] is False
+    assert summary["mcu_to_vid_corrections"] == 1
+    corrected = json.loads(
+        (online_worktree / "data" / "mcu_to_vid.json").read_text(encoding="utf-8")
+    )
+    by_family_vid = {
+        (row["mcu_family"], row["vid"]): row
+        for row in corrected
+    }
+    assert ("AM_APOLLO3", "1cbe") not in by_family_vid
+    assert by_family_vid[("AM_APOLLO3", "1a86")]["score"] == pytest.approx(0.60)
+    assert by_family_vid[("AM_APOLLO3", "2aec")]["reason"] == "custom Ambiq row"
+
+    with sqlite3.connect(www_worktree / "2026-06-20.db") as conn:
+        rows = conn.execute(
+            "SELECT vid, score, reason FROM mcu_to_vid WHERE mcu_family=?",
+            ("AM_APOLLO3",),
+        ).fetchall()
+    assert (int("1cbe", 16), 0.70, "Sparkfun Apollo3 bootloader") not in rows
+    assert any(
+        vid == int("1a86", 16)
+        and score == pytest.approx(0.60)
+        and reason == "SparkFun Artemis CH340 USB-serial bridge"
+        for vid, score, reason in rows
+    )
 
 
 def test_update_www_rotation_drops_old_dbs(
