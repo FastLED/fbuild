@@ -245,6 +245,15 @@ jobs:
             --out /tmp/nxp-usb-pids.json
           wc -l /tmp/nxp-usb-pids.json
 
+      - name: Fetch Silicon Labs USB PID supplement (USB-VID tier-3 supplement)
+        id: fetch-silabs-pids
+        continue-on-error: true
+        run: |
+          uv run --no-project --script \
+            "${{ github.workspace }}/online-data-tools/fetch_silabs_usb_pids.py" \
+            --out /tmp/silabs-usb-pids.json
+          wc -l /tmp/silabs-usb-pids.json
+
       - name: Dump PlatformIO board catalog → /tmp/all_boards.json
         id: dump-pio
         continue-on-error: true
@@ -322,6 +331,12 @@ jobs:
             # NXP rows are after generic sources so existing usb.ids names
             # stay stable while newer mfgtools ROM-loader PIDs fill in.
             args+=(--json "nxp-usb-pids=/tmp/nxp-usb-pids.json")
+          fi
+          if [ "${{ steps.fetch-silabs-pids.outcome }}" = "success" ] && [ -s /tmp/silabs-usb-pids.json ]; then
+            # Silicon Labs rows are after generic sources so mature usb.ids
+            # names for common CP210x bridge PIDs stay stable while the
+            # Energy Micro / Silicon Labs debug-interface row fills in.
+            args+=(--json "silabs-usb-pids=/tmp/silabs-usb-pids.json")
           fi
           if [ "${#args[@]}" -eq 0 ]; then
             echo "::warning::all USB-VID sources failed; preserving previously committed data"
@@ -500,6 +515,7 @@ jobs:
             echo "| teensy usb-pids            | ${{ steps.fetch-teensy-pids.outcome }} |"
             echo "| stm usb-pids               | ${{ steps.fetch-stm-pids.outcome }} |"
             echo "| nxp usb-pids               | ${{ steps.fetch-nxp-pids.outcome }} |"
+            echo "| silabs usb-pids            | ${{ steps.fetch-silabs-pids.outcome }} |"
             echo "| pio boards (platformio)    | ${{ steps.dump-pio.outcome }} |"
             echo "| merge usb-vid              | ${{ steps.merge-usb.outcome }} |"
             echo "| emit inlined supplement    | ${{ steps.emit-inlined.outcome }} |"

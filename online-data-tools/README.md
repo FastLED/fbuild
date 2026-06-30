@@ -19,6 +19,7 @@ is committed to orphan branches:
 | `fetch_teensy_usb_pids.py` | PJRC Teensy core headers + loader CLI | merge-compatible `/tmp/teensy-usb-pids.json` |
 | `fetch_stm_usb_pids.py` | ST/OpenOCD ST-LINK sources | merge-compatible `/tmp/stm-usb-pids.json` |
 | `fetch_nxp_usb_pids.py` | NXP mfgtools/UUU config table | merge-compatible `/tmp/nxp-usb-pids.json` |
+| `fetch_silabs_usb_pids.py` | Linux CP210x driver + SiliconLabsSoftware OpenOCD udev rule | merge-compatible `/tmp/silabs-usb-pids.json` |
 
 The merger scripts on the `online-data` orphan branch
 (`merge_sources.py`, `merge_pio_boards.py`, `build_manifest.py`,
@@ -80,6 +81,15 @@ The NXP supplement parses NXP's mfgtools/UUU `config.cpp` table for VID
 `1fc9:0135` are labeled as NXP i.MX/i.MX RT serial downloader modes rather
 than as a specific downstream board.
 
+The Silicon Labs supplement parses Linux's CP210x driver for Silicon
+Labs-owned bridge defaults under VID `0x10c4`, then parses a first-party
+SiliconLabsSoftware Arduino example udev rule for Energy Micro VID
+`0x2544`, PID `0001`. Silicon Labs does not publish a public PID registry,
+and its current Arduino core only declares board-package rows under Arduino
+and Seeed VIDs (`2341:0072`, `2886:0062`, `2886:8062`), so this supplement
+does not infer Silicon Labs board names from bridge-chip or debug-interface
+IDs.
+
 ## Tests
 
 ```bash
@@ -92,6 +102,7 @@ uv run --no-project --with pytest pytest online-data-tools/test_wch_usb_pids.py 
 uv run --no-project --with pytest pytest online-data-tools/test_teensy_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_stm_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_nxp_usb_pids.py -v
+uv run --no-project --with pytest pytest online-data-tools/test_silabs_usb_pids.py -v
 ```
 
 Each script declares its own PEP 723 dependencies and is runnable via
