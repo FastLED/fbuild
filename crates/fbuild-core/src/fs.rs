@@ -142,6 +142,88 @@ pub async fn write_atomic(
     Ok(())
 }
 
+/// Synchronous companion to [`write_atomic`] — same atomic-rename
+/// semantics, but `std::fs` end-to-end so it's callable from a
+/// `current-thread` tokio runtime without any block-on / `block_in_place`
+/// gymnastics.
+///
+/// FastLED/fbuild#865: `StatusManager::write_atomic` previously bridged
+/// to the async [`write_atomic`] via `block_in_place` + `Handle::block_on`.
+/// `block_in_place` panics inside a current-thread runtime, which is the
+/// default flavor of `#[tokio::test]`, so every unit test that touched
+/// the status writer panicked on macOS + Windows CI.
+///
+/// Use this from any sync caller (the daemon's status writer, in-process
+/// snapshots, test harnesses). Prefer [`write_atomic`] from async paths
+/// that need to avoid blocking the reactor on the fsync.
+pub fn write_atomic_sync(
+    path: impl AsRef<Path>,
+    content: impl AsRef<[u8]>,
+) -> std::io::Result<()> {
+    use std::io::Write as _;
+
+    let path = path.as_ref();
+    let nonce = WRITE_ATOMIC_NONCE.fetch_add(1, Ordering::Relaxed);
+    let pid = std::process::id();
+
+    let mut tmp_name = path
+        .file_name()
+        .map(|s| s.to_os_string())
+        .unwrap_or_default();
+    if tmp_name.is_empty() {
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::InvalidInput,
+            "write_atomic_sync: target path has no file name",
+        ));
+    }
+    tmp_name.push(format!(".tmp.{pid}.{nonce}"));
+    let tmp_path = match path.parent() {
+        Some(parent) => parent.join(&tmp_name),
+        None => std::path::PathBuf::from(&tmp_name),
+    };
+
+    // Mirror `write_atomic`'s parent-must-exist contract.
+    if let Some(parent) = path.parent() {
+        if !parent.as_os_str().is_empty() {
+            match std::fs::metadata(parent) {
+                Ok(_) => {}
+                Err(e) if e.kind() == std::io::ErrorKind::NotFound => {
+                    return Err(std::io::Error::new(
+                        std::io::ErrorKind::NotFound,
+                        format!(
+                            "write_atomic_sync: parent directory does not exist: {}",
+                            parent.display()
+                        ),
+                    ));
+                }
+                Err(e) => return Err(e),
+            }
+        }
+    }
+
+    {
+        let mut file = std::fs::File::create(&tmp_path)?;
+        if let Err(e) = file.write_all(content.as_ref()) {
+            let _ = std::fs::remove_file(&tmp_path);
+            return Err(e);
+        }
+        if let Err(e) = file.sync_all() {
+            let _ = std::fs::remove_file(&tmp_path);
+            return Err(e);
+        }
+        // Drop before rename — same Windows MoveFileExW share-mode
+        // constraint that `write_atomic` documents.
+        drop(file);
+    }
+
+    if let Err(e) = std::fs::rename(&tmp_path, path) {
+        let _ = std::fs::remove_file(&tmp_path);
+        return Err(e);
+    }
+
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -191,6 +273,37 @@ mod tests {
         let dir = tempdir().unwrap();
         let target = dir.path().join("does_not_exist").join("state.json");
         let err = write_atomic(&target, b"x").await.unwrap_err();
+        assert_eq!(err.kind(), std::io::ErrorKind::NotFound);
+    }
+
+    // FastLED/fbuild#865 regression: `write_atomic_sync` must be safe to
+    // call inside a current-thread tokio runtime (the default flavor of
+    // `#[tokio::test]`) because that's the path the daemon's status
+    // writer takes from unit tests. The previous async bridge panicked
+    // on `block_in_place` here.
+    #[tokio::test]
+    async fn write_atomic_sync_runs_inside_current_thread_runtime() {
+        let dir = tempdir().unwrap();
+        let target = dir.path().join("state.json");
+        write_atomic_sync(&target, b"sync-payload").unwrap();
+        let got = std::fs::read(&target).unwrap();
+        assert_eq!(got, b"sync-payload");
+    }
+
+    #[test]
+    fn write_atomic_sync_works_without_runtime() {
+        let dir = tempdir().unwrap();
+        let target = dir.path().join("state.json");
+        write_atomic_sync(&target, b"no-runtime").unwrap();
+        let got = std::fs::read(&target).unwrap();
+        assert_eq!(got, b"no-runtime");
+    }
+
+    #[test]
+    fn write_atomic_sync_errors_when_parent_missing() {
+        let dir = tempdir().unwrap();
+        let target = dir.path().join("does_not_exist").join("state.json");
+        let err = write_atomic_sync(&target, b"x").unwrap_err();
         assert_eq!(err.kind(), std::io::ErrorKind::NotFound);
     }
 
