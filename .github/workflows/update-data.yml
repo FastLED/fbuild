@@ -191,6 +191,15 @@ jobs:
             --out /tmp/raspberrypi-usb-pids.json
           wc -l /tmp/raspberrypi-usb-pids.json
 
+      - name: Fetch Nordic USB PID supplement (USB-VID tier-1 supplement)
+        id: fetch-nordic-pids
+        continue-on-error: true
+        run: |
+          uv run --no-project --script \
+            "${{ github.workspace }}/online-data-tools/fetch_nordic_usb_pids.py" \
+            --out /tmp/nordic-usb-pids.json
+          wc -l /tmp/nordic-usb-pids.json
+
       - name: Dump PlatformIO board catalog → /tmp/all_boards.json
         id: dump-pio
         continue-on-error: true
@@ -228,6 +237,9 @@ jobs:
           fi
           if [ "${{ steps.fetch-raspberrypi-pids.outcome }}" = "success" ] && [ -s /tmp/raspberrypi-usb-pids.json ]; then
             args+=(--json "raspberrypi-usb-pids=/tmp/raspberrypi-usb-pids.json")
+          fi
+          if [ "${{ steps.fetch-nordic-pids.outcome }}" = "success" ] && [ -s /tmp/nordic-usb-pids.json ]; then
+            args+=(--json "nordic-usb-pids=/tmp/nordic-usb-pids.json")
           fi
           if [ "${{ steps.run-dump.outcome }}" = "success" ] && [ -s /tmp/usb-ids-rs.json ]; then
             args+=(--json "usb-ids-rs=/tmp/usb-ids-rs.json")
@@ -409,6 +421,7 @@ jobs:
             echo "| usbids/usbids github       | ${{ steps.fetch-github.outcome }} |"
             echo "| espressif usb-pids         | ${{ steps.fetch-espressif-pids.outcome }} |"
             echo "| raspberrypi usb-pid        | ${{ steps.fetch-raspberrypi-pids.outcome }} |"
+            echo "| nordic usb-pids            | ${{ steps.fetch-nordic-pids.outcome }} |"
             echo "| pio boards (platformio)    | ${{ steps.dump-pio.outcome }} |"
             echo "| merge usb-vid              | ${{ steps.merge-usb.outcome }} |"
             echo "| emit inlined supplement    | ${{ steps.emit-inlined.outcome }} |"
