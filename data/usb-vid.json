@@ -9081,7 +9081,7 @@
         "mSATA Adapter [renkforce Pi-102]"
       ]
     ],
-    "vendor": "Hitachi, Ltd"
+    "vendor": "Renesas Electronics"
   },
   "045e": {
     "products": [
@@ -87003,7 +87003,7 @@
         "Silicon Labs OpenOCD debug interface"
       ]
     ],
-    "vendor": "Energy Micro AS"
+    "vendor": "Silicon Labs"
   },
   "2546": {
     "products": [
