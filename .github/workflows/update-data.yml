@@ -200,6 +200,15 @@ jobs:
             --out /tmp/nordic-usb-pids.json
           wc -l /tmp/nordic-usb-pids.json
 
+      - name: Fetch FTDI USB PID supplement (USB-VID tier-3 supplement)
+        id: fetch-ftdi-pids
+        continue-on-error: true
+        run: |
+          uv run --no-project --script \
+            "${{ github.workspace }}/online-data-tools/fetch_ftdi_usb_pids.py" \
+            --out /tmp/ftdi-usb-pids.json
+          wc -l /tmp/ftdi-usb-pids.json
+
       - name: Dump PlatformIO board catalog → /tmp/all_boards.json
         id: dump-pio
         continue-on-error: true
@@ -249,6 +258,12 @@ jobs:
           fi
           if [ "${{ steps.fetch-github.outcome }}" = "success" ] && [ -s /tmp/usbids-github.txt ]; then
             args+=(--txt "usbids-github=/tmp/usbids-github.txt")
+          fi
+          if [ "${{ steps.fetch-ftdi-pids.outcome }}" = "success" ] && [ -s /tmp/ftdi-usb-pids.json ]; then
+            # FTDI is intentionally after generic sources so mature usb.ids
+            # product names win for common bridge PIDs; the supplement fills
+            # newer original-FTDI rows that generic sources often lack.
+            args+=(--json "ftdi-usb-pids=/tmp/ftdi-usb-pids.json")
           fi
           if [ "${#args[@]}" -eq 0 ]; then
             echo "::warning::all USB-VID sources failed; preserving previously committed data"
@@ -422,6 +437,7 @@ jobs:
             echo "| espressif usb-pids         | ${{ steps.fetch-espressif-pids.outcome }} |"
             echo "| raspberrypi usb-pid        | ${{ steps.fetch-raspberrypi-pids.outcome }} |"
             echo "| nordic usb-pids            | ${{ steps.fetch-nordic-pids.outcome }} |"
+            echo "| ftdi usb-pids              | ${{ steps.fetch-ftdi-pids.outcome }} |"
             echo "| pio boards (platformio)    | ${{ steps.dump-pio.outcome }} |"
             echo "| merge usb-vid              | ${{ steps.merge-usb.outcome }} |"
             echo "| emit inlined supplement    | ${{ steps.emit-inlined.outcome }} |"
