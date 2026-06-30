@@ -18,6 +18,7 @@ is committed to orphan branches:
 | `fetch_arduino_usb_pids.py` | Official ArduinoCore `boards.txt` files | merge-compatible `/tmp/arduino-usb-pids.json` |
 | `fetch_adafruit_usb_pids.py` | Adafruit Arduino cores + TinyUF2 + CircuitPython descriptors | merge-compatible `/tmp/adafruit-usb-pids.json` |
 | `fetch_sparkfun_usb_pids.py` | SparkFun board packages plus weak PlatformIO/CircuitPython supplements | merge-compatible `/tmp/sparkfun-*-usb-pids.json` |
+| `fetch_seeed_usb_pids.py` | Seeed package archives/platform JSON plus weak third-party board packages | merge-compatible `/tmp/seeed-*-usb-pids.json` |
 | `fetch_ftdi_usb_pids.py` | Linux `ftdi_sio_ids.h` original-FTDI PID section | merge-compatible `/tmp/ftdi-usb-pids.json` |
 | `fetch_wch_usb_pids.py` | WCH CH343 Linux driver + udev rules | merge-compatible `/tmp/wch-usb-pids.json` |
 | `fetch_teensy_usb_pids.py` | PJRC Teensy core headers + loader CLI | merge-compatible `/tmp/teensy-usb-pids.json` |
@@ -105,6 +106,22 @@ bridge hint rather than a SparkFun PID table. A SparkFun VID/PID row is USB
 product metadata, not proof of fbuild board support; support still depends on
 the board existing under `crates/fbuild-config/assets/boards`.
 
+The Seeed supplement has explicit source tiers for Seeed VID `0x2886`.
+`--tier first-party` reads the current Seeed Boards Manager package index,
+downloads the newest Seeed-hosted archives for SAMD, nRF52, mbed nRF52,
+Renesas RA, and i.MX RT packages, then parses each archive's `boards.txt`.
+It also parses Seeed's own `platform-seeedboards` JSON files as a first-party
+gap filler without replacing package-archive names. `--tier supplemental`
+parses third-party Espressif, Silicon Labs, Arduino-Pico, PlatformIO,
+CircuitPython, and TinyUF2 rows only after first-party and generic USB-ID
+sources. The Seeed platform C6 row that reuses `2886:0046` is skipped because
+that PID is already used by XIAO ESP32C3; the weak PlatformIO C6 rows
+`2886:0048`/`8048` are allowed to fill the gap. XIAO RP2040 remains under
+Raspberry Pi VID `0x2e8a` from first-party Seeed platform data, so the
+CircuitPython `2886:0042` row is not used to remap it. Rows for boards absent
+from `crates/fbuild-config/assets/boards` improve USB name resolution only;
+they do not prove fbuild board support.
+
 The FTDI supplement parses the upstream Linux `ftdi_sio_ids.h` header but only
 the original FTDI PID section before the third-party marker. It emits a small
 allowlist of missing FTDI-owned bridge/product rows such as `0403:6040` and
@@ -176,6 +193,7 @@ uv run --no-project --with pytest pytest online-data-tools/test_microchip_usb_pi
 uv run --no-project --with pytest pytest online-data-tools/test_arduino_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_adafruit_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_sparkfun_usb_pids.py -v
+uv run --no-project --with pytest pytest online-data-tools/test_seeed_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_ftdi_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_wch_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_teensy_usb_pids.py -v
