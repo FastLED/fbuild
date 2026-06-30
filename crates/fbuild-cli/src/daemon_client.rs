@@ -851,9 +851,20 @@ async fn ensure_direct_daemon_running() -> fbuild_core::Result<()> {
 
 /// Spawn a single daemon process instance.
 async fn spawn_daemon_process() -> fbuild_core::Result<()> {
-    let daemon_exe = "fbuild-daemon";
+    // FastLED/fbuild#830: prefer a `fbuild-daemon` binary sitting next
+    // to the current `fbuild` CLI binary. The previous bare-name spawn
+    // delegated entirely to the OS PATH lookup, which on Windows could
+    // pick up a stale global `%USERPROFILE%\.local\bin\fbuild-daemon.exe`
+    // from an older system-wide install — leaving a venv-installed CLI
+    // (e.g. 2.3.13) restarting a 2.2.27 daemon binary and silently
+    // diverging the user's environment from the version they think
+    // they're testing. `daemon_executable_hint()` already does the
+    // sibling-binary discovery; reuse it so spawn and the info / status
+    // surfaces agree on which binary is in play. Falls back to the bare
+    // name (and thus PATH) when no sibling is found.
+    let daemon_exe = daemon_executable_hint();
     // allow-direct-spawn: daemon must outlive the CLI; see INTENTIONALLY DETACHED comment below.
-    let mut cmd = tokio::process::Command::new(daemon_exe);
+    let mut cmd = tokio::process::Command::new(&daemon_exe);
     tracing::debug!(
         "running-process broker adoption status: {}",
         fbuild_paths::running_process::running_process_adoption_summary()
@@ -917,7 +928,7 @@ async fn spawn_daemon_process() -> fbuild_core::Result<()> {
     // daemon die the instant the CLI exits.
     cmd.spawn().map_err(|e| {
         fbuild_core::FbuildError::DaemonError(format!(
-            "failed to spawn daemon (is fbuild-daemon in PATH?): {}",
+            "failed to spawn daemon at {daemon_exe:?} (is fbuild-daemon next to the fbuild CLI or on PATH?): {}",
             e
         ))
     })?;
