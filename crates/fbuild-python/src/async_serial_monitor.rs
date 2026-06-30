@@ -4,6 +4,7 @@
 use futures::{SinkExt, StreamExt};
 use pyo3::prelude::*;
 use serde::Serialize;
+use std::collections::VecDeque;
 use std::sync::Arc;
 use tokio_tungstenite::tungstenite;
 
@@ -62,6 +63,7 @@ pub(crate) struct AsyncSerialMonitor {
     client_id: String,
     ws_write: Arc<tokio::sync::Mutex<Option<WsSink>>>,
     ws_read: Arc<tokio::sync::Mutex<Option<WsSource>>>,
+    pending_lines: Arc<tokio::sync::Mutex<VecDeque<String>>>,
 }
 
 #[pymethods]
@@ -77,6 +79,7 @@ impl AsyncSerialMonitor {
             client_id: uuid::Uuid::new_v4().to_string(),
             ws_write: Arc::new(tokio::sync::Mutex::new(None)),
             ws_read: Arc::new(tokio::sync::Mutex::new(None)),
+            pending_lines: Arc::new(tokio::sync::Mutex::new(VecDeque::new())),
         }
     }
 
@@ -91,6 +94,7 @@ impl AsyncSerialMonitor {
         let verbose = slf.verbose;
         let ws_write_slot = slf.ws_write.clone();
         let ws_read_slot = slf.ws_read.clone();
+        let pending_lines = slf.pending_lines.clone();
         let slf_obj: PyObject = slf.into_py(py);
 
         pyo3_async_runtimes::tokio::future_into_py(py, async move {
@@ -200,6 +204,7 @@ impl AsyncSerialMonitor {
 
             *ws_write_slot.lock().await = Some(write);
             *ws_read_slot.lock().await = Some(read);
+            pending_lines.lock().await.clear();
 
             Ok(slf_obj)
         })
@@ -217,6 +222,7 @@ impl AsyncSerialMonitor {
     ) -> PyResult<Bound<'py, PyAny>> {
         let ws_write_slot = self.ws_write.clone();
         let ws_read_slot = self.ws_read.clone();
+        let pending_lines = self.pending_lines.clone();
 
         pyo3_async_runtimes::tokio::future_into_py(py, async move {
             if let Some(mut write) = ws_write_slot.lock().await.take() {
@@ -226,6 +232,7 @@ impl AsyncSerialMonitor {
                 let _ = write.send(tungstenite::Message::Close(None)).await;
             }
             let _ = ws_read_slot.lock().await.take();
+            pending_lines.lock().await.clear();
             Ok(false)
         })
     }
@@ -237,10 +244,11 @@ impl AsyncSerialMonitor {
     #[pyo3(signature = (timeout_secs=30.0))]
     fn read_lines<'py>(&self, py: Python<'py>, timeout_secs: f64) -> PyResult<Bound<'py, PyAny>> {
         let ws_read_slot = self.ws_read.clone();
+        let pending_lines = self.pending_lines.clone();
         let auto_reconnect = self.auto_reconnect;
 
         pyo3_async_runtimes::tokio::future_into_py(py, async move {
-            Ok(read_lines_async(ws_read_slot, auto_reconnect, timeout_secs).await)
+            Ok(read_lines_async(ws_read_slot, pending_lines, auto_reconnect, timeout_secs).await)
         })
     }
 
@@ -252,10 +260,11 @@ impl AsyncSerialMonitor {
     fn write<'py>(&self, py: Python<'py>, data: &str) -> PyResult<Bound<'py, PyAny>> {
         let ws_write_slot = self.ws_write.clone();
         let ws_read_slot = self.ws_read.clone();
+        let pending_lines = self.pending_lines.clone();
         let encoded = encode_payload(data);
 
         pyo3_async_runtimes::tokio::future_into_py(py, async move {
-            Ok(write_async(ws_write_slot, ws_read_slot, encoded).await)
+            Ok(write_async(ws_write_slot, ws_read_slot, pending_lines, encoded).await)
         })
     }
 
@@ -287,6 +296,7 @@ impl AsyncSerialMonitor {
 
         let ws_write_slot = self.ws_write.clone();
         let ws_read_slot = self.ws_read.clone();
+        let pending_lines = self.pending_lines.clone();
         let auto_reconnect = self.auto_reconnect;
 
         pyo3_async_runtimes::tokio::future_into_py(py, async move {
@@ -294,11 +304,21 @@ impl AsyncSerialMonitor {
             // a write failure because the sync surface also proceeds
             // to poll for a REMOTE: response (which is how the Python
             // tests exercise this path).
-            let _ = write_async(ws_write_slot, ws_read_slot.clone(), encoded).await;
+            let _ = write_async(
+                ws_write_slot,
+                ws_read_slot.clone(),
+                pending_lines.clone(),
+                encoded,
+            )
+            .await;
 
-            let json_part =
-                wait_for_remote_json_rpc_response_async(timeout_secs, ws_read_slot, auto_reconnect)
-                    .await;
+            let json_part = wait_for_remote_json_rpc_response_async(
+                timeout_secs,
+                ws_read_slot,
+                pending_lines,
+                auto_reconnect,
+            )
+            .await;
 
             match json_part {
                 Some(payload) => Python::with_gil(|py| {
@@ -361,10 +381,7 @@ pub(crate) async fn post_reset_request_async(
         })?;
 
     let body: serde_json::Value = resp.json().await.map_err(|e| {
-        pyo3::exceptions::PyRuntimeError::new_err(format!(
-            "failed to parse reset response: {}",
-            e
-        ))
+        pyo3::exceptions::PyRuntimeError::new_err(format!("failed to parse reset response: {}", e))
     })?;
 
     Ok(body

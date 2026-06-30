@@ -35,7 +35,7 @@ use std::time::{Duration, Instant};
 
 use clap::Subcommand;
 use fbuild_core::{FbuildError, Result};
-use fbuild_serial::boards::{board_hint, family_for_vid_pid, vcom_for_env, BoardFamily};
+use fbuild_serial::boards::{board_hint, family_for_port_or_default, vcom_for_env};
 
 use crate::output;
 
@@ -222,7 +222,7 @@ fn read_port(port_name: &str, baud: u32, seconds: f64, send: Option<&str>) -> Re
     // if `serialport` can see it. Unknown VID:PID → safe-default
     // `CdcAcmBridge` (DTR=true, RTS=true) per the FastLED/FastLED#3300
     // bug mode — better to over-assert than to silently drop.
-    let family = infer_family_for_port(port_name);
+    let family = family_for_port_or_default(port_name);
     let (dtr, rts) = family.idle_dtr_rts();
 
     let mut handle = serialport::new(port_name, baud)
@@ -266,26 +266,6 @@ fn read_port(port_name: &str, baud: u32, seconds: f64, send: Option<&str>) -> Re
     }
     std::io::Write::flush(&mut stdout).ok();
     Ok(())
-}
-
-/// Walk `serialport::available_ports()` once and return the family of
-/// the port that matches `name`. Fall through to the safe-default
-/// CDC-ACM convention if the port isn't enumerable OR the VID/PID
-/// is unknown.
-fn infer_family_for_port(name: &str) -> BoardFamily {
-    if let Ok(ports) = serialport::available_ports() {
-        for port in ports {
-            if port.port_name != name {
-                continue;
-            }
-            if let serialport::SerialPortType::UsbPort(info) = port.port_type {
-                if let Some(family) = family_for_vid_pid(info.vid, info.pid) {
-                    return family;
-                }
-            }
-        }
-    }
-    BoardFamily::CdcAcmBridge
 }
 
 /// Interpret a handful of backslash escapes in `--send` payloads so

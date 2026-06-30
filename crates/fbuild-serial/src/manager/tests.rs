@@ -568,3 +568,184 @@ async fn rebind_preserves_session_and_routes_writes_to_new_handle() {
     assert!(mgr.sessions.get(old_port).is_none());
     assert!(mgr.port_aliases.get(new_port).is_none());
 }
+
+/// Fake port whose first `write()` only accepts the first `partial_n`
+/// bytes — exactly the OS-level behavior that breaks naive `write()`
+/// callers. Subsequent writes accept everything offered.
+#[derive(Clone)]
+struct PartialWriteSerialPort {
+    name: String,
+    writes: Arc<std::sync::Mutex<Vec<u8>>>,
+    first_chunk: Arc<std::sync::Mutex<Option<usize>>>,
+}
+
+impl PartialWriteSerialPort {
+    fn new(name: &str, partial_n: usize) -> (Self, Arc<std::sync::Mutex<Vec<u8>>>) {
+        let writes = Arc::new(std::sync::Mutex::new(Vec::new()));
+        (
+            Self {
+                name: name.to_string(),
+                writes: Arc::clone(&writes),
+                first_chunk: Arc::new(std::sync::Mutex::new(Some(partial_n))),
+            },
+            writes,
+        )
+    }
+}
+
+impl Read for PartialWriteSerialPort {
+    fn read(&mut self, _buf: &mut [u8]) -> std::io::Result<usize> {
+        Err(std::io::Error::new(std::io::ErrorKind::TimedOut, "no data"))
+    }
+}
+
+impl Write for PartialWriteSerialPort {
+    fn write(&mut self, buf: &[u8]) -> std::io::Result<usize> {
+        let take = {
+            let mut first = self.first_chunk.lock().unwrap();
+            match first.take() {
+                Some(n) => n.min(buf.len()),
+                None => buf.len(),
+            }
+        };
+        self.writes.lock().unwrap().extend_from_slice(&buf[..take]);
+        Ok(take)
+    }
+
+    fn flush(&mut self) -> std::io::Result<()> {
+        Ok(())
+    }
+}
+
+impl serialport::SerialPort for PartialWriteSerialPort {
+    fn name(&self) -> Option<String> {
+        Some(self.name.clone())
+    }
+    fn baud_rate(&self) -> serialport::Result<u32> {
+        Ok(115200)
+    }
+    fn data_bits(&self) -> serialport::Result<DataBits> {
+        Ok(DataBits::Eight)
+    }
+    fn flow_control(&self) -> serialport::Result<FlowControl> {
+        Ok(FlowControl::None)
+    }
+    fn parity(&self) -> serialport::Result<Parity> {
+        Ok(Parity::None)
+    }
+    fn stop_bits(&self) -> serialport::Result<StopBits> {
+        Ok(StopBits::One)
+    }
+    fn timeout(&self) -> Duration {
+        Duration::from_millis(100)
+    }
+    fn set_baud_rate(&mut self, _: u32) -> serialport::Result<()> {
+        Ok(())
+    }
+    fn set_data_bits(&mut self, _: DataBits) -> serialport::Result<()> {
+        Ok(())
+    }
+    fn set_flow_control(&mut self, _: FlowControl) -> serialport::Result<()> {
+        Ok(())
+    }
+    fn set_parity(&mut self, _: Parity) -> serialport::Result<()> {
+        Ok(())
+    }
+    fn set_stop_bits(&mut self, _: StopBits) -> serialport::Result<()> {
+        Ok(())
+    }
+    fn set_timeout(&mut self, _: Duration) -> serialport::Result<()> {
+        Ok(())
+    }
+    fn write_request_to_send(&mut self, _: bool) -> serialport::Result<()> {
+        Ok(())
+    }
+    fn write_data_terminal_ready(&mut self, _: bool) -> serialport::Result<()> {
+        Ok(())
+    }
+    fn read_clear_to_send(&mut self) -> serialport::Result<bool> {
+        Ok(true)
+    }
+    fn read_data_set_ready(&mut self) -> serialport::Result<bool> {
+        Ok(true)
+    }
+    fn read_ring_indicator(&mut self) -> serialport::Result<bool> {
+        Ok(false)
+    }
+    fn read_carrier_detect(&mut self) -> serialport::Result<bool> {
+        Ok(true)
+    }
+    fn bytes_to_read(&self) -> serialport::Result<u32> {
+        Ok(0)
+    }
+    fn bytes_to_write(&self) -> serialport::Result<u32> {
+        Ok(0)
+    }
+    fn clear(&self, _: ClearBuffer) -> serialport::Result<()> {
+        Ok(())
+    }
+    fn try_clone(&self) -> serialport::Result<Box<dyn serialport::SerialPort>> {
+        Ok(Box::new(self.clone()))
+    }
+    fn set_break(&self) -> serialport::Result<()> {
+        Ok(())
+    }
+    fn clear_break(&self) -> serialport::Result<()> {
+        Ok(())
+    }
+}
+
+/// Regression guard for the daemon-side write_ack accounting: when the
+/// OS-level `write()` accepts only part of the buffer (real USB-CDC
+/// behavior under back-pressure), `write_to_port` must loop until every
+/// byte is drained and report the FULL payload length, not the
+/// first-call partial count. Prior to the PR fix, `write_ack.bytes_written`
+/// could come back as 2 for a 5-byte payload, leaving the client to
+/// believe the write succeeded while three trailing bytes were silently
+/// dropped.
+#[tokio::test]
+async fn write_to_port_completes_partial_writes_and_reports_full_length() {
+    let mgr = SharedSerialManager::new();
+    let port = "COM_TEST_WRITE_ALL";
+    let writer = "writer-client";
+
+    let (fake, writes) = PartialWriteSerialPort::new(port, 2);
+    mgr.sessions.insert(
+        port.to_string(),
+        SerialSession {
+            port: port.to_string(),
+            baud_rate: 115200,
+            is_open: true,
+            writer_client_id: Some(writer.to_string()),
+            reader_client_ids: Default::default(),
+            output_buffer: Default::default(),
+            total_bytes_read: 0,
+            total_bytes_written: 0,
+            started_at: 0.0,
+            owner_client_id: Some(writer.to_string()),
+            elf_path: None,
+            serial_handle: Some(Arc::new(Mutex::new(Box::new(fake)))),
+            reader_handle: None,
+            stop_flag: Arc::new(AtomicBool::new(false)),
+        },
+    );
+
+    let payload = b"hello";
+    let bytes = mgr
+        .write_to_port(port, payload, writer)
+        .await
+        .expect("write succeeds even though first chunk is partial");
+
+    assert_eq!(
+        bytes,
+        payload.len(),
+        "write_to_port must report the full payload length (write_all contract), \
+         not the first partial write_count"
+    );
+    assert_eq!(
+        &*writes.lock().unwrap(),
+        payload,
+        "every byte of the payload must reach the OS handle — write_all loops \
+         until the buffer is drained"
+    );
+}

@@ -3,6 +3,7 @@
 use base64::Engine;
 use futures::{SinkExt, StreamExt};
 use pyo3::prelude::*;
+use std::collections::VecDeque;
 use std::sync::Mutex;
 use tokio::runtime::Runtime;
 use tokio_tungstenite::tungstenite;
@@ -38,6 +39,7 @@ pub(crate) struct SerialMonitor {
     runtime: Option<&'static Runtime>,
     ws_write: Option<Mutex<WsSink>>,
     ws_read: Option<Mutex<WsSource>>,
+    pending_lines: Mutex<VecDeque<String>>,
     client_id: String,
     last_line: String,
     #[allow(dead_code)]
@@ -56,8 +58,7 @@ impl SerialMonitor {
         const HANDSHAKE_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(5);
 
         let connect_result = rt.block_on(async {
-            tokio::time::timeout(HANDSHAKE_TIMEOUT, tokio_tungstenite::connect_async(&ws_url))
-                .await
+            tokio::time::timeout(HANDSHAKE_TIMEOUT, tokio_tungstenite::connect_async(&ws_url)).await
         });
         let (ws_stream, _) = match connect_result {
             Ok(Ok(ok)) => ok,
@@ -88,8 +89,11 @@ impl SerialMonitor {
             .expect("fbuild-python: ClientMessage::Attach serialization is infallible");
 
         let send_result = rt.block_on(async {
-            tokio::time::timeout(HANDSHAKE_TIMEOUT, write.send(tungstenite::Message::Text(attach_json)))
-                .await
+            tokio::time::timeout(
+                HANDSHAKE_TIMEOUT,
+                write.send(tungstenite::Message::Text(attach_json)),
+            )
+            .await
         });
         match send_result {
             Ok(Ok(())) => {}
@@ -106,9 +110,8 @@ impl SerialMonitor {
             }
         }
 
-        let read_result = rt.block_on(async {
-            tokio::time::timeout(HANDSHAKE_TIMEOUT, read.next()).await
-        });
+        let read_result =
+            rt.block_on(async { tokio::time::timeout(HANDSHAKE_TIMEOUT, read.next()).await });
         let msg: tungstenite::Message = match read_result {
             Ok(Some(Ok(msg))) => msg,
             Ok(Some(Err(e))) => {
@@ -164,6 +167,7 @@ impl SerialMonitor {
         }
         self.ws_write = None;
         self.ws_read = None;
+        self.clear_pending_lines();
     }
 
     fn reconnect_ws(&mut self) -> PyResult<()> {
@@ -174,6 +178,35 @@ impl SerialMonitor {
         self.ws_write = Some(Mutex::new(write));
         self.ws_read = Some(Mutex::new(read));
         Ok(())
+    }
+
+    fn push_pending_lines(&self, lines: Vec<String>) {
+        if lines.is_empty() {
+            return;
+        }
+        let mut pending = self.pending_lines.lock().unwrap_or_else(|e| e.into_inner());
+        pending.extend(lines);
+    }
+
+    fn drain_pending_lines_into(&self, lines: &mut Vec<String>) {
+        let mut pending = self.pending_lines.lock().unwrap_or_else(|e| e.into_inner());
+        while let Some(line) = pending.pop_front() {
+            lines.push(line);
+        }
+    }
+
+    fn pending_line_count(&self) -> usize {
+        self.pending_lines
+            .lock()
+            .unwrap_or_else(|e| e.into_inner())
+            .len()
+    }
+
+    fn clear_pending_lines(&self) {
+        self.pending_lines
+            .lock()
+            .unwrap_or_else(|e| e.into_inner())
+            .clear();
     }
 }
 
@@ -197,6 +230,7 @@ impl SerialMonitor {
             runtime: None,
             ws_write: None,
             ws_read: None,
+            pending_lines: Mutex::new(VecDeque::new()),
             client_id: uuid::Uuid::new_v4().to_string(),
             last_line: String::new(),
             preempted: false,
@@ -217,6 +251,7 @@ impl SerialMonitor {
         let (write, read) = slf.connect_ws(rt)?;
         slf.ws_write = Some(Mutex::new(write));
         slf.ws_read = Some(Mutex::new(read));
+        slf.clear_pending_lines();
         slf.runtime = Some(rt);
         Ok(slf)
     }
@@ -249,56 +284,59 @@ impl SerialMonitor {
         };
 
         let mut lines = Vec::new();
+        self.drain_pending_lines_into(&mut lines);
         let deadline = std::time::Instant::now() + std::time::Duration::from_secs_f64(timeout);
         let auto_reconnect = self.auto_reconnect;
 
-        py.allow_threads(|| {
-            while std::time::Instant::now() < deadline {
-                let remaining = deadline - std::time::Instant::now();
-                let result = {
-                    let mut read = ws_read.lock().unwrap_or_else(|e| e.into_inner());
-                    // tokio::time::timeout MUST be constructed inside the
-                    // runtime context, otherwise it panics with "there is
-                    // no reactor running" because the Sleep future needs
-                    // Handle::current() to register with the timer driver.
-                    rt.block_on(async { tokio::time::timeout(remaining, read.next()).await })
-                };
+        if lines.is_empty() {
+            py.allow_threads(|| {
+                while std::time::Instant::now() < deadline {
+                    let remaining = deadline - std::time::Instant::now();
+                    let result = {
+                        let mut read = ws_read.lock().unwrap_or_else(|e| e.into_inner());
+                        // tokio::time::timeout MUST be constructed inside the
+                        // runtime context, otherwise it panics with "there is
+                        // no reactor running" because the Sleep future needs
+                        // Handle::current() to register with the timer driver.
+                        rt.block_on(async { tokio::time::timeout(remaining, read.next()).await })
+                    };
 
-                match result {
-                    Ok(Some(Ok(tungstenite::Message::Text(text)))) => {
-                        match serde_json::from_str::<ServerMessage>(&text) {
-                            Ok(ServerMessage::Data {
-                                lines: data_lines, ..
-                            }) => {
-                                lines.extend(data_lines);
-                                if !lines.is_empty() {
+                    match result {
+                        Ok(Some(Ok(tungstenite::Message::Text(text)))) => {
+                            match serde_json::from_str::<ServerMessage>(&text) {
+                                Ok(ServerMessage::Data {
+                                    lines: data_lines, ..
+                                }) => {
+                                    lines.extend(data_lines);
+                                    if !lines.is_empty() {
+                                        break;
+                                    }
+                                }
+                                Ok(ServerMessage::Preempted { .. }) => {
+                                    // Pause — deploy is happening
+                                    if auto_reconnect {
+                                        continue;
+                                    }
                                     break;
                                 }
-                            }
-                            Ok(ServerMessage::Preempted { .. }) => {
-                                // Pause — deploy is happening
-                                if auto_reconnect {
+                                Ok(ServerMessage::Reconnected { .. }) => {
+                                    // Resume after deploy
                                     continue;
                                 }
-                                break;
+                                Ok(ServerMessage::PortRenumbered { .. })
+                                | Ok(ServerMessage::PortReattached { .. }) => continue,
+                                Ok(ServerMessage::PortRebindFailed { .. }) => break,
+                                Ok(ServerMessage::PortDisconnected { .. }) => break,
+                                _ => continue,
                             }
-                            Ok(ServerMessage::Reconnected { .. }) => {
-                                // Resume after deploy
-                                continue;
-                            }
-                            Ok(ServerMessage::PortRenumbered { .. })
-                            | Ok(ServerMessage::PortReattached { .. }) => continue,
-                            Ok(ServerMessage::PortRebindFailed { .. }) => break,
-                            Ok(ServerMessage::PortDisconnected { .. }) => break,
-                            _ => continue,
                         }
+                        Ok(Some(Ok(tungstenite::Message::Close(_)))) | Ok(None) => break,
+                        Err(_) => break, // timeout
+                        _ => continue,
                     }
-                    Ok(Some(Ok(tungstenite::Message::Close(_)))) | Ok(None) => break,
-                    Err(_) => break, // timeout
-                    _ => continue,
                 }
-            }
-        });
+            });
+        }
 
         // Update last_line and dispatch hooks
         if let Some(last) = lines.last() {
@@ -341,21 +379,42 @@ impl SerialMonitor {
             }
         }
 
-        // Wait for write_ack
+        // Wait for write_ack. Serial data can race ahead of the ack on the
+        // WebSocket; preserve it for the next read instead of discarding it.
         let mut read = ws_read.lock().unwrap_or_else(|e| e.into_inner());
-        let timeout = std::time::Duration::from_secs(5);
-        // tokio::time::timeout must be created inside the runtime context.
-        match rt.block_on(async { tokio::time::timeout(timeout, read.next()).await }) {
-            Ok(Some(Ok(tungstenite::Message::Text(text)))) => {
-                if let Ok(ServerMessage::WriteAck { bytes_written, .. }) =
-                    serde_json::from_str(&text)
-                {
-                    return bytes_written;
+        let deadline = std::time::Instant::now() + std::time::Duration::from_secs(5);
+        while std::time::Instant::now() < deadline {
+            let remaining = deadline - std::time::Instant::now();
+            // tokio::time::timeout must be created inside the runtime context.
+            match rt.block_on(async { tokio::time::timeout(remaining, read.next()).await }) {
+                Ok(Some(Ok(tungstenite::Message::Text(text)))) => {
+                    match serde_json::from_str::<ServerMessage>(&text) {
+                        Ok(ServerMessage::WriteAck {
+                            success,
+                            bytes_written,
+                            ..
+                        }) => return if success { bytes_written } else { 0 },
+                        Ok(ServerMessage::Data { lines, .. }) => {
+                            self.push_pending_lines(lines);
+                            continue;
+                        }
+                        Ok(ServerMessage::Preempted { .. })
+                        | Ok(ServerMessage::Reconnected { .. })
+                        | Ok(ServerMessage::PortRenumbered { .. })
+                        | Ok(ServerMessage::PortReattached { .. })
+                        | Ok(ServerMessage::Other) => continue,
+                        Ok(ServerMessage::Error { .. })
+                        | Ok(ServerMessage::PortDisconnected { .. })
+                        | Ok(ServerMessage::PortRebindFailed { .. }) => return 0,
+                        _ => continue,
+                    }
                 }
-                0
+                Ok(Some(Ok(tungstenite::Message::Close(_)))) | Ok(None) => break,
+                Err(_) => break,
+                _ => continue,
             }
-            _ => 0,
         }
+        0
     }
 
     /// Run monitor until condition returns True or timeout expires.
@@ -460,12 +519,16 @@ impl SerialMonitor {
             let result = rt.block_on(async { tokio::time::timeout(remaining, read.next()).await });
             match result {
                 Ok(Some(Ok(tungstenite::Message::Text(text)))) => {
-                    if let Ok(ServerMessage::InWaiting { count }) =
-                        serde_json::from_str::<ServerMessage>(&text)
-                    {
-                        return count;
+                    match serde_json::from_str::<ServerMessage>(&text) {
+                        Ok(ServerMessage::InWaiting { count }) => {
+                            return self.pending_line_count() + count;
+                        }
+                        Ok(ServerMessage::Data { lines, .. }) => {
+                            self.push_pending_lines(lines);
+                            continue;
+                        }
+                        _ => continue,
                     }
-                    continue;
                 }
                 Ok(Some(Ok(tungstenite::Message::Close(_)))) | Ok(None) => break,
                 Err(_) => break,
@@ -482,6 +545,7 @@ impl SerialMonitor {
     /// FastLED/fbuild#605 — added as part of the deprecation of direct
     /// pyserial use by fbuild clients.
     fn reset_input_buffer(&self) {
+        self.clear_pending_lines();
         let (Some(rt), Some(ws_write)) = (&self.runtime, &self.ws_write) else {
             return;
         };
@@ -598,10 +662,11 @@ impl SerialMonitor {
         };
 
         let mut lines = Vec::new();
+        self.drain_pending_lines_into(&mut lines);
         let deadline = std::time::Instant::now() + std::time::Duration::from_secs_f64(timeout);
         let auto_reconnect = self.auto_reconnect;
 
-        while std::time::Instant::now() < deadline {
+        while lines.is_empty() && std::time::Instant::now() < deadline {
             let remaining = deadline - std::time::Instant::now();
             let result = {
                 let mut read = ws_read.lock().unwrap_or_else(|e| e.into_inner());

@@ -489,6 +489,42 @@ pub fn family_for_vid_pid(vid: u16, pid: u16) -> Option<BoardFamily> {
     }
 }
 
+/// Walk `serialport::available_ports()` once and classify the port that
+/// matches `name`.
+///
+/// Returns `None` when the port is not enumerable, is not a USB serial
+/// port, or has an unknown VID/PID. Callers that need an idle DTR/RTS
+/// state should prefer [`family_for_port_or_default`] so unknown
+/// hardware keeps the CDC-ACM host-ready convention.
+#[must_use]
+pub fn family_for_port(name: &str) -> Option<BoardFamily> {
+    let ports = serialport::available_ports().ok()?;
+    for port in ports {
+        if !serial_port_name_matches(&port.port_name, name) {
+            continue;
+        }
+        if let serialport::SerialPortType::UsbPort(info) = port.port_type {
+            return family_for_vid_pid(info.vid, info.pid);
+        }
+    }
+    None
+}
+
+/// Classify a serial port, falling back to the safe CDC-ACM host-ready
+/// convention when the OS cannot report a known VID/PID.
+#[must_use]
+pub fn family_for_port_or_default(name: &str) -> BoardFamily {
+    family_for_port(name).unwrap_or(BoardFamily::CdcAcmBridge)
+}
+
+fn serial_port_name_matches(candidate: &str, requested: &str) -> bool {
+    if cfg!(windows) {
+        candidate.eq_ignore_ascii_case(requested)
+    } else {
+        candidate == requested
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -615,6 +651,14 @@ mod tests {
     fn family_for_vid_pid_returns_none_for_unknown() {
         assert_eq!(family_for_vid_pid(0xDEAD, 0xBEEF), None);
         assert_eq!(family_for_vid_pid(0, 0), None);
+    }
+
+    #[test]
+    fn family_for_port_default_is_host_ready_cdc() {
+        assert_eq!(
+            family_for_port_or_default("__fbuild_missing_test_port__"),
+            BoardFamily::CdcAcmBridge
+        );
     }
 
     /// The whole point of #684 + #686: any path that ends in
