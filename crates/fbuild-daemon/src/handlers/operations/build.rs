@@ -8,10 +8,51 @@ use crate::models::{BuildRequest, OperationResponse};
 use axum::extract::State;
 use axum::http::StatusCode;
 use axum::Json;
-use fbuild_core::channel::{unbounded, UnboundedSender};
+use fbuild_core::channel::{unbounded, UnboundedReceiver, UnboundedSender};
 use std::path::PathBuf;
-use std::sync::atomic::Ordering;
+use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
+use tokio::sync::Notify;
+
+/// Drop-guard that fires the cancel signal when the streaming response
+/// body is dropped — which is what hyper does when the HTTP client
+/// disconnects (CLI Ctrl+C, SIGKILL, terminal close). Bundled into the
+/// `stream::unfold` state so it lives exactly as long as the response
+/// body.
+///
+/// FastLED/fbuild#853: without this, force-killing the CLI left the
+/// daemon's build worker detached, holding the project lock and spawning
+/// compiler subprocesses to completion (zombie builds).
+struct CancelOnDrop {
+    cancel: Arc<Notify>,
+    project_desc: String,
+    /// Set by the build worker once the terminal `result` event has been
+    /// queued. After that, a body-drop is the *client* hanging up cleanly
+    /// after reading — not a cancel request — so we suppress the signal.
+    fired_normal_terminal: Arc<AtomicBool>,
+}
+
+impl Drop for CancelOnDrop {
+    fn drop(&mut self) {
+        if self.fired_normal_terminal.load(Ordering::Acquire) {
+            return;
+        }
+        tracing::info!(
+            "streaming build body dropped (client disconnected); cancelling build for {}",
+            self.project_desc
+        );
+        self.cancel.notify_waiters();
+    }
+}
+
+/// Shared state for the `stream::unfold` body — receiver plus the cancel
+/// guard. Bundling them in the unfold state means dropping the stream
+/// drops both, which is the signal hyper gives us when the client goes
+/// away.
+struct StreamBodyState {
+    rx: UnboundedReceiver<bytes::Bytes>,
+    _guard: CancelOnDrop,
+}
 
 /// Ensures a terminal `result` NDJSON event reaches the client, even if the
 /// streaming task panics or returns early. Without this, the body stream
@@ -211,6 +252,14 @@ pub async fn build(
         let (log_tx, mut log_rx) = unbounded::<String>();
         let (async_tx, async_rx) = unbounded::<bytes::Bytes>();
 
+        // FastLED/fbuild#853: cancellation channel between the response
+        // body (held by hyper) and the build worker. When hyper drops the
+        // body — which happens whenever the HTTP client disconnects —
+        // `CancelOnDrop::drop` fires `notify_waiters()` and the worker's
+        // `tokio::select!` aborts the `build_task`.
+        let cancel_notify = Arc::new(Notify::new());
+        let fired_normal_terminal = Arc::new(AtomicBool::new(false));
+
         let params = fbuild_build::BuildParams {
             project_dir: project_dir.clone(),
             env_name: env_name.clone(),
@@ -234,6 +283,8 @@ pub async fn build(
 
         let project_dir_desc = req.project_dir.clone();
         let guard_request_id = request_id.clone();
+        let worker_cancel = Arc::clone(&cancel_notify);
+        let worker_fired_normal_terminal = Arc::clone(&fired_normal_terminal);
         tokio::spawn(async move {
             let mut termination_guard =
                 StreamTerminationGuard::new(async_tx.clone(), guard_request_id);
@@ -404,9 +455,33 @@ pub async fn build(
                     tracing::error!("{}", abort_msg);
                     break Ok(Err(fbuild_core::FbuildError::Other(abort_msg)));
                 }
-                match tokio::time::timeout(STREAM_STATUS_INTERVAL, &mut build_task).await {
-                    Ok(result) => break result,
-                    Err(_) => {
+                // FastLED/fbuild#853: three-way race —
+                //   1. build_task finishes naturally
+                //   2. client disconnects (body dropped → CancelOnDrop
+                //      fires `worker_cancel.notify_waiters()`) → abort
+                //   3. heartbeat tick → emit dependency-install status
+                // `biased` makes cancel checked first so a flood of log
+                // chunks can't starve the cancel branch.
+                tokio::select! {
+                    biased;
+                    _ = worker_cancel.notified() => {
+                        tracing::info!(
+                            "client disconnected mid-build; aborting build task for {}",
+                            project_dir_desc
+                        );
+                        build_task.abort();
+                        // Drain the JoinHandle so all child Drops run
+                        // (this is where the orchestrator's in-flight
+                        // subprocess Child handles get dropped → with
+                        // tokio_spawn::spawn_contained's kill_on_drop
+                        // they kill the OS process).
+                        let _ = (&mut build_task).await;
+                        break Ok(Err(fbuild_core::FbuildError::Other(
+                            "build cancelled (CLI disconnected)".to_string(),
+                        )));
+                    }
+                    result = &mut build_task => break result,
+                    _ = tokio::time::sleep(STREAM_STATUS_INTERVAL) => {
                         if let Some(status) = ctx.dependency_install_snapshot() {
                             if should_emit_dependency_status(&status) {
                                 send_stream_status_event(
@@ -561,15 +636,34 @@ pub async fn build(
             let _ = async_tx.send(bytes::Bytes::from(chunk));
 
             // Final event sent successfully — disarm the termination guard so
-            // its Drop impl does not emit a duplicate fallback event.
+            // its Drop impl does not emit a duplicate fallback event, and
+            // mark the cancel guard so the body-drop that follows the
+            // client reading the final event isn't misread as a cancel.
             termination_guard.mark_completed();
+            worker_fired_normal_terminal.store(true, Ordering::Release);
         });
 
-        // Return streaming response immediately
-        let stream = futures::stream::unfold(async_rx, |mut rx| async move {
-            rx.recv()
+        // Return streaming response immediately. FastLED/fbuild#853:
+        // we bundle the channel receiver and a `CancelOnDrop` guard
+        // into the unfold state so the guard lives exactly as long as
+        // the response body. When hyper drops the body (client
+        // disconnect), the state drops, the guard drops, and the build
+        // worker's `tokio::select!` aborts the build task.
+        let cancel_guard = CancelOnDrop {
+            cancel: Arc::clone(&cancel_notify),
+            project_desc: req.project_dir.clone(),
+            fired_normal_terminal: Arc::clone(&fired_normal_terminal),
+        };
+        let state = StreamBodyState {
+            rx: async_rx,
+            _guard: cancel_guard,
+        };
+        let stream = futures::stream::unfold(state, |mut state| async move {
+            state
+                .rx
+                .recv()
                 .await
-                .map(|data| (Ok::<_, std::convert::Infallible>(data), rx))
+                .map(|data| (Ok::<_, std::convert::Infallible>(data), state))
         });
         let body = axum::body::Body::from_stream(stream);
         axum::response::Response::builder()
@@ -827,6 +921,73 @@ mod tests {
         assert_eq!(event["message"], "waiting for dependency install");
         assert_eq!(event["dependency_install"]["name"], "zccache");
         assert_eq!(event["dependency_install"]["phase"], "waiting_for_lock");
+    }
+
+    /// FastLED/fbuild#853: when the response body is dropped while the
+    /// `fired_normal_terminal` flag is still false (the client
+    /// disconnected mid-build), the guard must fire `notify_waiters()`
+    /// so the build worker's `tokio::select!` can abort.
+    #[tokio::test]
+    async fn cancel_on_drop_fires_when_not_completed() {
+        let cancel = Arc::new(Notify::new());
+        let fired = Arc::new(AtomicBool::new(false));
+        let waiter = {
+            let cancel = Arc::clone(&cancel);
+            tokio::spawn(async move {
+                cancel.notified().await;
+            })
+        };
+        // Ensure the waiter has registered with `notified()` before we
+        // drop the guard; otherwise `notify_waiters` has no one to wake.
+        tokio::task::yield_now().await;
+        tokio::time::sleep(std::time::Duration::from_millis(20)).await;
+        {
+            let _guard = CancelOnDrop {
+                cancel: Arc::clone(&cancel),
+                project_desc: "test-project".to_string(),
+                fired_normal_terminal: Arc::clone(&fired),
+            };
+            // Simulate hyper dropping the body mid-stream.
+        }
+        tokio::time::timeout(std::time::Duration::from_secs(1), waiter)
+            .await
+            .expect("cancel notify must wake waiter on body drop")
+            .expect("waiter task must not panic");
+    }
+
+    /// After `fired_normal_terminal` is set (build completed and final
+    /// event was queued), dropping the guard must NOT fire the cancel —
+    /// otherwise a clean client read-and-disconnect would look like a
+    /// cancel and racing tasks could see spurious wake-ups.
+    #[tokio::test]
+    async fn cancel_on_drop_silent_when_completed() {
+        let cancel = Arc::new(Notify::new());
+        let fired = Arc::new(AtomicBool::new(false));
+        let waiter = {
+            let cancel = Arc::clone(&cancel);
+            tokio::spawn(async move {
+                cancel.notified().await;
+            })
+        };
+        tokio::task::yield_now().await;
+        tokio::time::sleep(std::time::Duration::from_millis(20)).await;
+        {
+            let _guard = CancelOnDrop {
+                cancel: Arc::clone(&cancel),
+                project_desc: "test-project".to_string(),
+                fired_normal_terminal: Arc::clone(&fired),
+            };
+            // Build worker reaches the terminal event before the body
+            // is dropped.
+            fired.store(true, Ordering::Release);
+        }
+        // Waiter must NOT have been notified.
+        let res =
+            tokio::time::timeout(std::time::Duration::from_millis(100), waiter).await;
+        assert!(
+            res.is_err(),
+            "cancel must not fire when fired_normal_terminal is set"
+        );
     }
 
     #[test]
