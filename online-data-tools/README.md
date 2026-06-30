@@ -15,6 +15,7 @@ is committed to orphan branches:
 | `fetch_raspberrypi_usb_pids.py` | `raspberrypi/usb-pid` official PID registry | merge-compatible `/tmp/raspberrypi-usb-pids.json` |
 | `fetch_nordic_usb_pids.py` | Nordic nRF Connect Programmer / DFU sources | merge-compatible `/tmp/nordic-usb-pids.json` |
 | `fetch_ftdi_usb_pids.py` | Linux `ftdi_sio_ids.h` original-FTDI PID section | merge-compatible `/tmp/ftdi-usb-pids.json` |
+| `fetch_wch_usb_pids.py` | WCH CH343 Linux driver + udev rules | merge-compatible `/tmp/wch-usb-pids.json` |
 
 The merger scripts on the `online-data` orphan branch
 (`merge_sources.py`, `merge_pio_boards.py`, `build_manifest.py`,
@@ -54,6 +55,12 @@ allowlist of missing FTDI-owned bridge/product rows such as `0403:6040` and
 `0403:fbfa`; the workflow orders this source after generic USB-ID sources so
 existing mature product names win for common bridge PIDs.
 
+The WCH supplement parses OpenWCH's CH343 Linux driver and its udev rules for
+newer VID `0x1a86` USB serial chips. Udev comments provide names for CH342,
+CH343, CH344, CH347T, and CH9101-CH9104 rows; newer driver-only IDs such as
+CH339, CH346, CH9105, CH911x, and CH9433 are named from the driver's
+PID-to-chip switch cases. It does not infer board names from bridge-chip IDs.
+
 ## Tests
 
 ```bash
@@ -62,6 +69,7 @@ uv run --no-project --with pytest pytest online-data-tools/test_espressif_usb_pi
 uv run --no-project --with pytest pytest online-data-tools/test_raspberrypi_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_nordic_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_ftdi_usb_pids.py -v
+uv run --no-project --with pytest pytest online-data-tools/test_wch_usb_pids.py -v
 ```
 
 Each script declares its own PEP 723 dependencies and is runnable via
