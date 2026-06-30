@@ -219,6 +219,15 @@ jobs:
             --out /tmp/arduino-usb-pids.json
           wc -l /tmp/arduino-usb-pids.json
 
+      - name: Fetch Adafruit USB PID supplement (USB-VID tier-1 supplement)
+        id: fetch-adafruit-pids
+        continue-on-error: true
+        run: |
+          uv run --no-project --script \
+            "${{ github.workspace }}/online-data-tools/fetch_adafruit_usb_pids.py" \
+            --out /tmp/adafruit-usb-pids.json
+          wc -l /tmp/adafruit-usb-pids.json
+
       - name: Fetch FTDI USB PID supplement (USB-VID tier-3 supplement)
         id: fetch-ftdi-pids
         continue-on-error: true
@@ -338,6 +347,9 @@ jobs:
           fi
           if [ "${{ steps.fetch-arduino-pids.outcome }}" = "success" ] && [ -s /tmp/arduino-usb-pids.json ]; then
             args+=(--json "arduino-usb-pids=/tmp/arduino-usb-pids.json")
+          fi
+          if [ "${{ steps.fetch-adafruit-pids.outcome }}" = "success" ] && [ -s /tmp/adafruit-usb-pids.json ]; then
+            args+=(--json "adafruit-usb-pids=/tmp/adafruit-usb-pids.json")
           fi
           if [ "${{ steps.run-dump.outcome }}" = "success" ] && [ -s /tmp/usb-ids-rs.json ]; then
             args+=(--json "usb-ids-rs=/tmp/usb-ids-rs.json")
@@ -567,6 +579,7 @@ jobs:
             echo "| nordic usb-pids            | ${{ steps.fetch-nordic-pids.outcome }} |"
             echo "| microchip first-party pids | ${{ steps.fetch-microchip-first-party-pids.outcome }} |"
             echo "| arduino usb-pids           | ${{ steps.fetch-arduino-pids.outcome }} |"
+            echo "| adafruit usb-pids          | ${{ steps.fetch-adafruit-pids.outcome }} |"
             echo "| ftdi usb-pids              | ${{ steps.fetch-ftdi-pids.outcome }} |"
             echo "| wch usb-pids               | ${{ steps.fetch-wch-pids.outcome }} |"
             echo "| teensy usb-pids            | ${{ steps.fetch-teensy-pids.outcome }} |"

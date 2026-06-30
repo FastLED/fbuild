@@ -16,6 +16,7 @@ is committed to orphan branches:
 | `fetch_nordic_usb_pids.py` | Nordic nRF Connect Programmer / DFU sources | merge-compatible `/tmp/nordic-usb-pids.json` |
 | `fetch_microchip_usb_pids.py` | Microchip pyedbglib/pykitinfo plus weak AVRDUDE/board-package supplements | merge-compatible `/tmp/microchip-*-usb-pids.json` |
 | `fetch_arduino_usb_pids.py` | Official ArduinoCore `boards.txt` files | merge-compatible `/tmp/arduino-usb-pids.json` |
+| `fetch_adafruit_usb_pids.py` | Adafruit Arduino cores + TinyUF2 + CircuitPython descriptors | merge-compatible `/tmp/adafruit-usb-pids.json` |
 | `fetch_ftdi_usb_pids.py` | Linux `ftdi_sio_ids.h` original-FTDI PID section | merge-compatible `/tmp/ftdi-usb-pids.json` |
 | `fetch_wch_usb_pids.py` | WCH CH343 Linux driver + udev rules | merge-compatible `/tmp/wch-usb-pids.json` |
 | `fetch_teensy_usb_pids.py` | PJRC Teensy core headers + loader CLI | merge-compatible `/tmp/teensy-usb-pids.json` |
@@ -76,6 +77,16 @@ and historical Arduino VID `0x2a03`. The workflow orders this source before
 generic USB-ID feeds so current Arduino product names win. As with other
 board-package data, a row from an ArduinoCore source improves VID/PID
 resolution but does not prove the board exists under
+`crates/fbuild-config/assets/boards`.
+
+The Adafruit supplement parses Adafruit-maintained Arduino core `boards.txt`
+files for SAMD, nRF52, AVR/32u4, and WICED rows, then fills newer gaps from
+Adafruit TinyUF2 bootloader `board.h` descriptors and CircuitPython
+`mpconfigboard.mk` descriptors for Adafruit-prefixed boards. These sources
+cover VID `0x239a` products across SAMD, nRF52, ESP32-S2/S3, and RP2040
+families. The workflow orders the supplement before generic USB-ID feeds so
+Adafruit first-party product names win, but entries still describe USB
+products rather than fbuild board support; support is governed by
 `crates/fbuild-config/assets/boards`.
 
 The FTDI supplement parses the upstream Linux `ftdi_sio_ids.h` header but only
@@ -147,6 +158,7 @@ uv run --no-project --with pytest pytest online-data-tools/test_raspberrypi_usb_
 uv run --no-project --with pytest pytest online-data-tools/test_nordic_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_microchip_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_arduino_usb_pids.py -v
+uv run --no-project --with pytest pytest online-data-tools/test_adafruit_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_ftdi_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_wch_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_teensy_usb_pids.py -v
