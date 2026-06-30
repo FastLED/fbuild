@@ -2,3 +2,30 @@ reviews:
   request_changes_workflow: true
   pre_merge_checks:
     enabled: true
+  path_instructions:
+    # FastLED/fbuild#838 — mock-vs-integration test review.
+    # Dylint can't tell a "mock" from a normal #[cfg(test)] struct, so the
+    # design call ("is the mocked surface a real integration boundary?")
+    # is escalated here for human review whenever a new mock-typed trait
+    # or struct lands in a test file.
+    - path: "crates/**/tests/**/*.rs"
+      instructions: |
+        If this diff adds a new trait impl or struct whose name suggests a
+        mock/fake/stub (e.g. `Mock*`, `Fake*`, `Stub*`, `Dummy*`,
+        `Recording*`, `Spy*`) — or any new `impl SomeTrait for SomeLocalType`
+        inside a test file where `SomeTrait` represents an external surface —
+        ask: **Is the mocked boundary a real integration surface (subprocess,
+        filesystem, serial port, HTTP, child process)? If yes, prefer
+        `tempfile::TempDir` + a real binary, gated with `#[ignore]` when
+        slow.** Mocks are acceptable ONLY when the trait abstracts pure
+        orchestration logic (counts, ordering, concurrency) with no concrete
+        cheap dependency to stand up. See `CLAUDE.md` § Development
+        Philosophy: TDD for the policy.
+    - path: "crates/**/src/**/tests.rs"
+      instructions: |
+        Same rule as `crates/**/tests/**/*.rs`: new mock-typed traits or
+        structs (`Mock*`, `Fake*`, `Stub*`, `Dummy*`, `Recording*`, `Spy*`)
+        introduced inside `#[cfg(test)]` modules trigger the same review
+        question: is the mocked surface (subprocess, FS, serial, HTTP, child
+        process) a real integration boundary? If so, prefer `tempfile` + a
+        real binary. See `CLAUDE.md` § Development Philosophy: TDD.
