@@ -25087,7 +25087,8 @@
     "frameworks": [
       "arduino",
       "cmsis",
-      "stm32cube"
+      "stm32cube",
+      "libopencm3"
     ],
     "id": "nucleo_g031k8",
     "mcu": "STM32G031K8",
@@ -25171,7 +25172,8 @@
     "fcpu": 64000000,
     "frameworks": [
       "arduino",
-      "stm32cube"
+      "stm32cube",
+      "libopencm3"
     ],
     "id": "nucleo_g0b1re",
     "mcu": "STM32G0B1RET6",
@@ -25386,6 +25388,7 @@
       "cmsis",
       "stm32cube",
       "mbed",
+      "libopencm3",
       "zephyr"
     ],
     "id": "nucleo_h743zi",
@@ -25417,6 +25420,7 @@
     "frameworks": [
       "cmsis",
       "stm32cube",
+      "libopencm3",
       "zephyr"
     ],
     "id": "nucleo_h745zi_q",
@@ -25449,6 +25453,7 @@
       "arduino",
       "cmsis",
       "stm32cube",
+      "libopencm3",
       "zephyr"
     ],
     "id": "nucleo_h753zi",
@@ -25475,7 +25480,8 @@
     "fcpu": 32000000,
     "frameworks": [
       "arduino",
-      "stm32cube"
+      "stm32cube",
+      "libopencm3"
     ],
     "id": "nucleo_l010rb",
     "mcu": "STM32L010RBT6",
@@ -25647,7 +25653,8 @@
     "frameworks": [
       "arduino",
       "cmsis",
-      "stm32cube"
+      "stm32cube",
+      "libopencm3"
     ],
     "id": "nucleo_l412kb",
     "mcu": "STM32L412KBU6",
@@ -25675,6 +25682,7 @@
       "arduino",
       "cmsis",
       "stm32cube",
+      "libopencm3",
       "zephyr"
     ],
     "id": "nucleo_l412rb_p",
