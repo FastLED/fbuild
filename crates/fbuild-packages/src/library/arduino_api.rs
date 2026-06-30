@@ -8,6 +8,38 @@
 //! This mirrors Arduino's own release process (see ArduinoCore-megaavr's
 //! `.github/workflows/release.yaml`) which checks out ArduinoCore-API and
 //! copies its `api/` directory into `cores/arduino/`.
+//!
+//! # `platform_packages` override scope — intentionally out (FastLED/fbuild#666)
+//!
+//! The #664 / #681 platform-packages-override audit explicitly does NOT cover
+//! ArduinoCore-API. Reasoning:
+//!
+//! 1. **Bisection workflows target frameworks, not the API header layer.**
+//!    The motivating use case for the audit (FastLED/FastLED#3325 LPC8xx
+//!    bisection) bisects framework commits, not ArduinoCore-API releases.
+//!    ArduinoCore-API is a small, header-only library on a stable tag (`v1.5.2`)
+//!    that almost never changes in a way that requires per-build override.
+//! 2. **No `PackageBase` to extend.** Unlike every other framework package in
+//!    this directory, `arduino_api` is a one-shot fetcher (`ensure_arduino_api`)
+//!    that bypasses `PackageBase` entirely — it downloads via the shared HTTP
+//!    client, extracts, and copies `api/` into an already-existing core dir.
+//!    Wiring `with_override` would require either: refactoring this into a
+//!    `PackageBase` (large change for negligible gain), or threading an
+//!    `Option<PackageOverride>` through every framework that consumes this
+//!    helper (`AvrFramework`, `ArduinoMbedCore`, `SilabsCores`), each of which
+//!    is itself a `PackageBase` consumer that already routes the
+//!    *framework-level* override. The cost/benefit doesn't pay off.
+//! 3. **PIO's atmelavr / arduino-mbed / silabs packages don't expose an
+//!    `arduino-api` override key either** — there is no canonical
+//!    `framework-arduino-api` PIO package consumers can set in `platform_packages`.
+//!    Wiring an override would be inventing an interface no consumer is asking for.
+//!
+//! If a future bisection workflow ever needs to swap the ArduinoCore-API tag
+//! per-build, the right migration is to convert this module to use
+//! `PackageBase` (mirror `arduino_core_lpc8xx.rs`) and add a single
+//! `framework_name` for `package_override::resolve_override` consumers — but
+//! that change should be driven by a real consumer need, not by audit
+//! completeness.
 
 use std::path::Path;
 
