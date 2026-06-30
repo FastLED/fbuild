@@ -19,6 +19,7 @@
 #   3. **in parallel** produces:
 #        - `usb-ids` Rust crate dump (tier-1 USB-VID source)
 #        - two upstream `usb.ids` text mirror fetches
+#        - official vendor PID registry supplements
 #        - the full PlatformIO board catalog (`pio boards --json-output`)
 #      Each source has its own step + `continue-on-error: true` so any
 #      single failure is non-fatal — the merger downstream sees only the
@@ -181,6 +182,15 @@ jobs:
             --out /tmp/espressif-usb-pids.json
           wc -l /tmp/espressif-usb-pids.json
 
+      - name: Fetch Raspberry Pi USB PID registry (USB-VID tier-1 supplement)
+        id: fetch-raspberrypi-pids
+        continue-on-error: true
+        run: |
+          uv run --no-project --script \
+            "${{ github.workspace }}/online-data-tools/fetch_raspberrypi_usb_pids.py" \
+            --out /tmp/raspberrypi-usb-pids.json
+          wc -l /tmp/raspberrypi-usb-pids.json
+
       - name: Dump PlatformIO board catalog → /tmp/all_boards.json
         id: dump-pio
         continue-on-error: true
@@ -213,6 +223,12 @@ jobs:
         run: |
           set -euo pipefail
           args=()
+          if [ "${{ steps.fetch-espressif-pids.outcome }}" = "success" ] && [ -s /tmp/espressif-usb-pids.json ]; then
+            args+=(--json "espressif-usb-pids=/tmp/espressif-usb-pids.json")
+          fi
+          if [ "${{ steps.fetch-raspberrypi-pids.outcome }}" = "success" ] && [ -s /tmp/raspberrypi-usb-pids.json ]; then
+            args+=(--json "raspberrypi-usb-pids=/tmp/raspberrypi-usb-pids.json")
+          fi
           if [ "${{ steps.run-dump.outcome }}" = "success" ] && [ -s /tmp/usb-ids-rs.json ]; then
             args+=(--json "usb-ids-rs=/tmp/usb-ids-rs.json")
           fi
@@ -221,9 +237,6 @@ jobs:
           fi
           if [ "${{ steps.fetch-github.outcome }}" = "success" ] && [ -s /tmp/usbids-github.txt ]; then
             args+=(--txt "usbids-github=/tmp/usbids-github.txt")
-          fi
-          if [ "${{ steps.fetch-espressif-pids.outcome }}" = "success" ] && [ -s /tmp/espressif-usb-pids.json ]; then
-            args+=(--json "espressif-usb-pids=/tmp/espressif-usb-pids.json")
           fi
           if [ "${#args[@]}" -eq 0 ]; then
             echo "::warning::all USB-VID sources failed; preserving previously committed data"
@@ -395,6 +408,7 @@ jobs:
             echo "| linux-usb.org              | ${{ steps.fetch-linux-usb.outcome }} |"
             echo "| usbids/usbids github       | ${{ steps.fetch-github.outcome }} |"
             echo "| espressif usb-pids         | ${{ steps.fetch-espressif-pids.outcome }} |"
+            echo "| raspberrypi usb-pid        | ${{ steps.fetch-raspberrypi-pids.outcome }} |"
             echo "| pio boards (platformio)    | ${{ steps.dump-pio.outcome }} |"
             echo "| merge usb-vid              | ${{ steps.merge-usb.outcome }} |"
             echo "| emit inlined supplement    | ${{ steps.emit-inlined.outcome }} |"
