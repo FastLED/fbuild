@@ -69,10 +69,19 @@ impl BuildOrchestrator for Esp32Orchestrator {
             mcu_config.architecture
         );
 
-        // 4-6. Resolve platform, toolchain, and framework
+        // 4-6. Resolve platform, toolchain, and framework.
+        // Look up the env's `platform_packages` overrides so the platform
+        // (`platform-espressif32`) and framework (`framework-arduinoespressif32`)
+        // packages can honor consumer-pinned URLs (FastLED/fbuild#672).
+        let env_config = ctx.config.get_env_config(&params.env_name).ok();
         let _resolve_phase = perf.phase("pioarduino-resolve");
-        let (toolchain, framework) =
-            resolve_pioarduino_packages(&params.project_dir, &ctx.board.mcu, &mcu_config).await?;
+        let (toolchain, framework) = resolve_pioarduino_packages(
+            &params.project_dir,
+            &ctx.board.mcu,
+            &mcu_config,
+            env_config,
+        )
+        .await?;
         drop(_resolve_phase);
         let _toolchain_cache_dir = fbuild_packages::Package::get_info(&toolchain).install_path;
         let _framework_cache_dir = fbuild_packages::Package::get_info(&framework).install_path;

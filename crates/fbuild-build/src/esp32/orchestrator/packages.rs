@@ -1,5 +1,6 @@
 //! Package resolution for pioarduino (platform.json, framework, toolchain).
 
+use std::collections::HashMap;
 use std::path::Path;
 
 use fbuild_core::Result;
@@ -8,16 +9,32 @@ use fbuild_core::Result;
 ///
 /// Downloads pioarduino platform.json, resolves toolchain via metadata,
 /// and downloads the split framework + libs packages.
+///
+/// `env_config` is the resolved `[env:<name>]` section from `platformio.ini`,
+/// used to honor `platform_packages` overrides for both
+/// `platform-espressif32` and `framework-arduinoespressif32`
+/// (FastLED/fbuild#672). Pass `None` if no env is in scope (cold-cache /
+/// diagnostic paths) — both packages will fall back to their pinned defaults.
 pub(super) async fn resolve_pioarduino_packages(
     project_dir: &Path,
     mcu: &str,
     mcu_config: &super::super::mcu_config::Esp32McuConfig,
+    env_config: Option<&HashMap<String, String>>,
 ) -> Result<(
     fbuild_packages::toolchain::Esp32Toolchain,
     fbuild_packages::library::Esp32Framework,
 )> {
-    // Ensure pioarduino platform (contains platform.json with metadata URLs)
-    let platform = fbuild_packages::library::Esp32Platform::new(project_dir);
+    // Ensure pioarduino platform (contains platform.json with metadata URLs).
+    // Honor `platform_packages = platform-espressif32@<URL>#<sha>` from the env
+    // section (FastLED/fbuild#672): if set, the override URL replaces the
+    // const-pinned default and gets its own cache subdir via
+    // `PackageBase::with_override`.
+    let platform_ovr = env_config
+        .and_then(|env| crate::package_override::resolve_override(env, "platform-espressif32"));
+    let platform = match platform_ovr {
+        Some(o) => fbuild_packages::library::Esp32Platform::with_override(project_dir, o),
+        None => fbuild_packages::library::Esp32Platform::new(project_dir),
+    };
     fbuild_packages::Package::ensure_installed(&platform).await?;
 
     // Resolve toolchain via metadata
@@ -32,16 +49,28 @@ pub(super) async fn resolve_pioarduino_packages(
     // See fbuild#401.
     provision_helper_toolchains(&platform, project_dir, mcu_config);
 
-    // Resolve framework
-    let framework = match platform.get_package_url("framework-arduinoespressif32") {
-        Ok(url) => {
-            tracing::info!("resolved framework URL from platform.json");
-            fbuild_packages::library::Esp32Framework::from_url(project_dir, &url)
-        }
-        Err(e) => {
-            tracing::warn!("could not resolve framework URL, using legacy: {}", e);
-            fbuild_packages::library::Esp32Framework::new(project_dir, mcu)
-        }
+    // Resolve framework. Override precedence (FastLED/fbuild#672):
+    //   1. `platform_packages = framework-arduinoespressif32@<URL>#<sha>` wins
+    //      outright — consumer-supplied URL replaces the platform.json-derived
+    //      URL and gets its own cache subdir.
+    //   2. Otherwise, derive the URL from platform.json.
+    //   3. Otherwise (very old / missing platform.json), fall back to the
+    //      legacy hardcoded URL via `Esp32Framework::new`.
+    let framework_ovr = env_config.and_then(|env| {
+        crate::package_override::resolve_override(env, "framework-arduinoespressif32")
+    });
+    let framework = match framework_ovr {
+        Some(o) => fbuild_packages::library::Esp32Framework::with_override(project_dir, o),
+        None => match platform.get_package_url("framework-arduinoespressif32") {
+            Ok(url) => {
+                tracing::info!("resolved framework URL from platform.json");
+                fbuild_packages::library::Esp32Framework::from_url(project_dir, &url)
+            }
+            Err(e) => {
+                tracing::warn!("could not resolve framework URL, using legacy: {}", e);
+                fbuild_packages::library::Esp32Framework::new(project_dir, mcu)
+            }
+        },
     };
 
     // Ensure framework is installed before trying to install libs
