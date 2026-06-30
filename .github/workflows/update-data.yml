@@ -172,6 +172,15 @@ jobs:
             "https://raw.githubusercontent.com/usbids/usbids/master/usb.ids"
           wc -l /tmp/usbids-github.txt
 
+      - name: Fetch Espressif USB PID registry (USB-VID tier-1 supplement)
+        id: fetch-espressif-pids
+        continue-on-error: true
+        run: |
+          uv run --no-project --script \
+            "${{ github.workspace }}/online-data-tools/fetch_espressif_usb_pids.py" \
+            --out /tmp/espressif-usb-pids.json
+          wc -l /tmp/espressif-usb-pids.json
+
       - name: Dump PlatformIO board catalog → /tmp/all_boards.json
         id: dump-pio
         continue-on-error: true
@@ -212,6 +221,9 @@ jobs:
           fi
           if [ "${{ steps.fetch-github.outcome }}" = "success" ] && [ -s /tmp/usbids-github.txt ]; then
             args+=(--txt "usbids-github=/tmp/usbids-github.txt")
+          fi
+          if [ "${{ steps.fetch-espressif-pids.outcome }}" = "success" ] && [ -s /tmp/espressif-usb-pids.json ]; then
+            args+=(--json "espressif-usb-pids=/tmp/espressif-usb-pids.json")
           fi
           if [ "${#args[@]}" -eq 0 ]; then
             echo "::warning::all USB-VID sources failed; preserving previously committed data"
@@ -382,6 +394,7 @@ jobs:
             echo "| usb-ids-rs (dump example)  | ${{ steps.run-dump.outcome }} |"
             echo "| linux-usb.org              | ${{ steps.fetch-linux-usb.outcome }} |"
             echo "| usbids/usbids github       | ${{ steps.fetch-github.outcome }} |"
+            echo "| espressif usb-pids         | ${{ steps.fetch-espressif-pids.outcome }} |"
             echo "| pio boards (platformio)    | ${{ steps.dump-pio.outcome }} |"
             echo "| merge usb-vid              | ${{ steps.merge-usb.outcome }} |"
             echo "| emit inlined supplement    | ${{ steps.emit-inlined.outcome }} |"
