@@ -32,6 +32,16 @@
             "timeout": 5
           }
         ]
+      },
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}\" && { [ -f ci/hooks/worktree_guard.py ] && uv run --no-project --script ci/hooks/worktree_guard.py || exit 0; }",
+            "timeout": 5
+          }
+        ]
       }
     ],
     "PostToolUse": [
