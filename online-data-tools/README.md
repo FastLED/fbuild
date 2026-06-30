@@ -15,6 +15,7 @@ is committed to orphan branches:
 | `fetch_raspberrypi_usb_pids.py` | `raspberrypi/usb-pid` official PID registry | merge-compatible `/tmp/raspberrypi-usb-pids.json` |
 | `fetch_nordic_usb_pids.py` | Nordic nRF Connect Programmer / DFU sources | merge-compatible `/tmp/nordic-usb-pids.json` |
 | `fetch_microchip_usb_pids.py` | Microchip pyedbglib/pykitinfo plus weak AVRDUDE/board-package supplements | merge-compatible `/tmp/microchip-*-usb-pids.json` |
+| `fetch_arduino_usb_pids.py` | Official ArduinoCore `boards.txt` files | merge-compatible `/tmp/arduino-usb-pids.json` |
 | `fetch_ftdi_usb_pids.py` | Linux `ftdi_sio_ids.h` original-FTDI PID section | merge-compatible `/tmp/ftdi-usb-pids.json` |
 | `fetch_wch_usb_pids.py` | WCH CH343 Linux driver + udev rules | merge-compatible `/tmp/wch-usb-pids.json` |
 | `fetch_teensy_usb_pids.py` | PJRC Teensy core headers + loader CLI | merge-compatible `/tmp/teensy-usb-pids.json` |
@@ -66,6 +67,16 @@ first-party data. LowPowerLab's current package maps CurrentRanger to
 `04d8:ee44`/`ee48`/`ee4c` and Moteino M0 to `04d8:eee4`/`eee5`/`eee8`;
 local FastLED board JSON currently carries `current_ranger` as `04d8:eee5`,
 so that local mismatch is noted rather than used as source truth.
+
+The Arduino supplement parses official ArduinoCore `boards.txt` files from
+Arduino-maintained AVR, SAM, SAMD, megaAVR, mbed, Renesas, and Zephyr cores.
+Arduino does not publish a single public PID allocation registry; the core
+board definitions are the authoritative public table for Arduino VID `0x2341`
+and historical Arduino VID `0x2a03`. The workflow orders this source before
+generic USB-ID feeds so current Arduino product names win. As with other
+board-package data, a row from an ArduinoCore source improves VID/PID
+resolution but does not prove the board exists under
+`crates/fbuild-config/assets/boards`.
 
 The FTDI supplement parses the upstream Linux `ftdi_sio_ids.h` header but only
 the original FTDI PID section before the third-party marker. It emits a small
@@ -135,6 +146,7 @@ uv run --no-project --with pytest pytest online-data-tools/test_espressif_usb_pi
 uv run --no-project --with pytest pytest online-data-tools/test_raspberrypi_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_nordic_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_microchip_usb_pids.py -v
+uv run --no-project --with pytest pytest online-data-tools/test_arduino_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_ftdi_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_wch_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_teensy_usb_pids.py -v
