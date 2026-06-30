@@ -17,6 +17,7 @@ is committed to orphan branches:
 | `fetch_ftdi_usb_pids.py` | Linux `ftdi_sio_ids.h` original-FTDI PID section | merge-compatible `/tmp/ftdi-usb-pids.json` |
 | `fetch_wch_usb_pids.py` | WCH CH343 Linux driver + udev rules | merge-compatible `/tmp/wch-usb-pids.json` |
 | `fetch_teensy_usb_pids.py` | PJRC Teensy core headers + loader CLI | merge-compatible `/tmp/teensy-usb-pids.json` |
+| `fetch_stm_usb_pids.py` | ST/OpenOCD ST-LINK sources | merge-compatible `/tmp/stm-usb-pids.json` |
 
 The merger scripts on the `online-data` orphan branch
 (`merge_sources.py`, `merge_pio_boards.py`, `build_manifest.py`,
@@ -68,6 +69,11 @@ HalfKay bootloader references. Teensy PIDs identify USB personalities, not a
 single board model; duplicate PIDs that differ by USB BCD version are collapsed
 to conservative family labels such as `Teensyduino MIDI + Serial`.
 
+The STM supplement parses ST's OpenOCD ST-LINK driver and `stlink.cfg` PID
+list, then adds common ST DFU and virtual COM rows. These entries identify
+debugger or USB function products (`STLINK-V3P`, `STM Device in DFU Mode`,
+`Virtual COM Port`); they do not imply a specific Nucleo or Discovery board.
+
 ## Tests
 
 ```bash
@@ -78,6 +84,7 @@ uv run --no-project --with pytest pytest online-data-tools/test_nordic_usb_pids.
 uv run --no-project --with pytest pytest online-data-tools/test_ftdi_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_wch_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_teensy_usb_pids.py -v
+uv run --no-project --with pytest pytest online-data-tools/test_stm_usb_pids.py -v
 ```
 
 Each script declares its own PEP 723 dependencies and is runnable via
