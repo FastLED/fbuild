@@ -14,6 +14,7 @@ is committed to orphan branches:
 | `fetch_espressif_usb_pids.py` | `espressif/usb-pids` official PID registry | merge-compatible `/tmp/espressif-usb-pids.json` |
 | `fetch_raspberrypi_usb_pids.py` | `raspberrypi/usb-pid` official PID registry | merge-compatible `/tmp/raspberrypi-usb-pids.json` |
 | `fetch_nordic_usb_pids.py` | Nordic nRF Connect Programmer / DFU sources | merge-compatible `/tmp/nordic-usb-pids.json` |
+| `fetch_ftdi_usb_pids.py` | Linux `ftdi_sio_ids.h` original-FTDI PID section | merge-compatible `/tmp/ftdi-usb-pids.json` |
 
 The merger scripts on the `online-data` orphan branch
 (`merge_sources.py`, `merge_pio_boards.py`, `build_manifest.py`,
@@ -47,6 +48,12 @@ DFU / MCUboot rows for VID `0x1915`, including the specific
 application-dependent IDs such as `cafe` generic rather than assigning them to
 a single firmware role.
 
+The FTDI supplement parses the upstream Linux `ftdi_sio_ids.h` header but only
+the original FTDI PID section before the third-party marker. It emits a small
+allowlist of missing FTDI-owned bridge/product rows such as `0403:6040` and
+`0403:fbfa`; the workflow orders this source after generic USB-ID sources so
+existing mature product names win for common bridge PIDs.
+
 ## Tests
 
 ```bash
@@ -54,6 +61,7 @@ uv run --no-project --with pytest pytest online-data-tools/test_build_sqlite.py 
 uv run --no-project --with pytest pytest online-data-tools/test_espressif_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_raspberrypi_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_nordic_usb_pids.py -v
+uv run --no-project --with pytest pytest online-data-tools/test_ftdi_usb_pids.py -v
 ```
 
 Each script declares its own PEP 723 dependencies and is runnable via
