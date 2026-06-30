@@ -112,6 +112,12 @@ Custom Claude Code skills in `.claude/skills/`:
 - **Mocks vs. real fixtures (FastLED/fbuild#838).** Use mocks only when the abstraction has no concrete dependency you can stand up cheaply. Real integration boundaries — subprocess invocation, real filesystem layout, serial-port behavior — must be exercised with a real binary + `tempfile::TempDir`, gated with `#[ignore]` when slow. Example: orchestration logic (stage counting, input ordering, concurrency) over a `SketchBuilder` trait is fine to mock; the actual compile/link/flash path is not.
 - **A/B testing**: FastLED can switch between `--platformio` and fbuild. The Python integration tests in `~/dev/fbuild/tests/` are the acceptance criteria.
 
+## Ignored-test policy (FastLED/fbuild#839)
+
+Every `#[ignore]` attribute MUST carry a reason string: `#[ignore = "..."]`. The reason MUST either cite a tracking issue (`#NNN`) or name a concrete hardware/toolchain requirement (e.g. `requires teensy 3.0`, `downloads ESP32 toolchain (~hundreds of MB)`). Bare `#[ignore]` is a policy violation and will be flagged in the weekly inventory.
+
+The current inventory is auto-published to a stable tracking issue every Monday by `.github/workflows/audit-ignored-tests.yml`, which runs `ci/audit_ignored_tests.py --markdown` and rewrites the issue body. Manual dispatch: `gh workflow run audit-ignored-tests.yml --repo FastLED/fbuild`. Tests left ignored 90+ days without a hardware reason will be escalated to CodeRabbit review in a follow-up.
+
 ## Core Principles
 
 - Simplicity first. Minimal code impact. No over-engineering.

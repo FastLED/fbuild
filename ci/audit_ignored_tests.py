@@ -1,0 +1,182 @@
+#!/usr/bin/env python3
+"""Audit `#[ignore]` attribute usage across the fbuild Rust workspace.
+
+This script walks every `*.rs` file under the workspace (skipping `target/`
+and `.git/`), finds every `#[ignore]` and `#[ignore = "..."]` attribute, and
+emits an inventory in CSV (default) or markdown.
+
+Design notes:
+- Only stdlib (re, csv, argparse, pathlib). No third-party dependencies — the
+  workflow invokes this via `uv run python ci/audit_ignored_tests.py`.
+- The regex matches the attribute at the start of a line (after optional
+  whitespace) so doc-comments like `//! Marked `#[ignore]` ...` are filtered.
+- The "test_name" is the first `fn <name>` (or `pub fn <name>`) encountered
+  after the attribute, skipping intervening attributes/comments/blank lines.
+- The "reason" is the literal contents of `#[ignore = "..."]`; bare `#[ignore]`
+  records an empty reason — these are policy violations under #839.
+- First-seen dates are intentionally NOT computed in this pass. That's a
+  follow-up — the goal here is a current-state inventory the cron can diff.
+
+Outputs:
+- `--csv` (default): `file,test_name,reason,line` with a header row.
+- `--markdown`: a GitHub-flavored markdown table suitable for the body of the
+  tracking issue, with a count summary.
+
+Exit codes:
+- 0 on success regardless of inventory size — the script reports, it does
+  not gate.
+
+See FastLED/fbuild#839 for the policy this script enforces visibility for.
+"""
+
+from __future__ import annotations
+
+import argparse
+import csv
+import io
+import re
+import sys
+from pathlib import Path
+from typing import Iterator
+
+# Match `#[ignore]` or `#[ignore = "reason"]` at start of line (after optional
+# whitespace). Excludes lines where `#[ignore]` appears inside a comment or
+# string literal. We anchor on `^\s*#\[ignore` and disallow a preceding `//`
+# or `*` (doc comment / block comment) on the same line by relying on the
+# anchor — anything inside a `//!`/`///`/`//`-style comment starts with `/`,
+# not `#`.
+IGNORE_RE = re.compile(
+    r'^\s*#\[ignore(?:\s*=\s*"(?P<reason>(?:[^"\\]|\\.)*)")?\s*\]\s*(?://.*)?$'
+)
+
+# After the attribute, skip these kinds of lines while searching for the fn.
+SKIP_RE = re.compile(r'^\s*(#\[|//|/\*|\*|$)')
+
+# Capture the function name from `fn foo(` or `pub fn foo(` etc.
+FN_RE = re.compile(r'^\s*(?:pub(?:\([^)]*\))?\s+)?(?:async\s+)?fn\s+(?P<name>[A-Za-z_][A-Za-z0-9_]*)\b')
+
+
+def iter_rust_files(root: Path) -> Iterator[Path]:
+    """Yield every `*.rs` file under `root`, skipping vendored/build dirs."""
+    skip_dirs = {
+        "target",
+        ".git",
+        ".cargo",
+        "node_modules",
+        ".extern-repos",
+        ".venv",
+        ".claude",
+    }
+    for path in root.rglob("*.rs"):
+        # Skip if any path component is in skip_dirs.
+        if any(part in skip_dirs for part in path.parts):
+            continue
+        yield path
+
+
+def find_ignored_tests(path: Path, workspace_root: Path) -> Iterator[dict]:
+    """Yield one dict per `#[ignore]` attribute found in `path`.
+
+    Each dict has keys: file, test_name, reason, line.
+    """
+    try:
+        text = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return
+    lines = text.splitlines()
+    rel = path.relative_to(workspace_root).as_posix()
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        m = IGNORE_RE.match(line)
+        if not m:
+            i += 1
+            continue
+        reason = m.group("reason") or ""
+        # Find the next `fn` declaration, skipping comments / other attrs.
+        test_name = ""
+        j = i + 1
+        while j < len(lines):
+            nxt = lines[j]
+            fn_m = FN_RE.match(nxt)
+            if fn_m:
+                test_name = fn_m.group("name")
+                break
+            if SKIP_RE.match(nxt):
+                j += 1
+                continue
+            # Hit something that's neither attr/comment/blank nor fn — give up
+            # on naming this one. Likely a macro invocation or odd layout.
+            break
+        yield {
+            "file": rel,
+            "test_name": test_name,
+            "reason": reason,
+            "line": i + 1,
+        }
+        i += 1
+
+
+def collect_inventory(workspace_root: Path) -> list[dict]:
+    findings: list[dict] = []
+    for path in iter_rust_files(workspace_root):
+        findings.extend(find_ignored_tests(path, workspace_root))
+    findings.sort(key=lambda d: (d["file"], d["line"]))
+    return findings
+
+
+def emit_csv(findings: list[dict], out: io.TextIOBase) -> None:
+    writer = csv.DictWriter(
+        out, fieldnames=["file", "test_name", "reason", "line"], lineterminator="\n"
+    )
+    writer.writeheader()
+    for row in findings:
+        writer.writerow(row)
+
+
+def emit_markdown(findings: list[dict], out: io.TextIOBase) -> None:
+    total = len(findings)
+    missing_reason = sum(1 for f in findings if not f["reason"])
+    out.write("# Ignored-test inventory\n\n")
+    out.write(
+        "Auto-generated by `ci/audit_ignored_tests.py` "
+        "via `.github/workflows/audit-ignored-tests.yml` (weekly cron).\n\n"
+    )
+    out.write(f"- **Total `#[ignore]` findings:** {total}\n")
+    out.write(f"- **Missing reason string (policy violation per #839):** {missing_reason}\n\n")
+    out.write("See [#839](https://github.com/FastLED/fbuild/issues/839) for the policy.\n\n")
+    out.write("| File | Test | Reason | Line |\n")
+    out.write("| --- | --- | --- | --- |\n")
+    for f in findings:
+        # Escape pipes in the reason to keep the table well-formed.
+        reason = f["reason"].replace("|", "\\|") if f["reason"] else "_(no reason — policy violation)_"
+        test = f["test_name"] or "_(unparseable)_"
+        out.write(f"| `{f['file']}` | `{test}` | {reason} | {f['line']} |\n")
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        description="Audit #[ignore] attribute usage in the fbuild workspace."
+    )
+    parser.add_argument(
+        "--workspace-root",
+        default=".",
+        type=Path,
+        help="Workspace root to scan (default: current dir).",
+    )
+    fmt = parser.add_mutually_exclusive_group()
+    fmt.add_argument("--csv", action="store_true", help="Emit CSV (default).")
+    fmt.add_argument("--markdown", action="store_true", help="Emit markdown.")
+    args = parser.parse_args(argv)
+
+    workspace_root = args.workspace_root.resolve()
+    findings = collect_inventory(workspace_root)
+    if args.markdown:
+        emit_markdown(findings, sys.stdout)
+    else:
+        emit_csv(findings, sys.stdout)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
