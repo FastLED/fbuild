@@ -62,6 +62,11 @@ DEPRECATED_MCU_TO_VID_ROWS = {
     ("AM_APOLLO3", "1cbe"),
 }
 
+MCU_TO_VID_SEED_FAMILIES_TO_ENSURE = {
+    "RA4M1",
+    "R7FA6M5",
+}
+
 
 @dataclass
 class Config:
@@ -190,6 +195,50 @@ def apply_mcu_to_vid_corrections(cfg: Config) -> int:
     return removed
 
 
+def ensure_mcu_to_vid_seed_rows(cfg: Config) -> int:
+    """Ensure whitelisted seed rows exist in the curated online-data copy."""
+    if not cfg.online_mcu_to_vid.is_file():
+        return 0
+
+    online_rows = json.loads(cfg.online_mcu_to_vid.read_text(encoding="utf-8"))
+    seed_rows = json.loads(cfg.seed_mcu_to_vid.read_text(encoding="utf-8"))
+    if not isinstance(online_rows, list) or not isinstance(seed_rows, list):
+        return 0
+
+    existing: set[tuple[object, str]] = set()
+    for row in online_rows:
+        if not isinstance(row, dict) or not row.get("mcu_family") or not row.get("vid"):
+            continue
+        try:
+            existing.add((row.get("mcu_family"), _vid_key(row.get("vid"))))
+        except (TypeError, ValueError):
+            continue
+
+    added = 0
+    for seed_row in seed_rows:
+        if not isinstance(seed_row, dict):
+            continue
+        family = seed_row.get("mcu_family")
+        if family not in MCU_TO_VID_SEED_FAMILIES_TO_ENSURE:
+            continue
+        try:
+            key = (family, _vid_key(seed_row.get("vid")))
+        except (TypeError, ValueError):
+            continue
+        if key in existing:
+            continue
+        online_rows.append(dict(seed_row))
+        existing.add(key)
+        added += 1
+
+    if added:
+        cfg.online_mcu_to_vid.write_text(
+            json.dumps(online_rows, indent=2, ensure_ascii=False) + "\n",
+            encoding="utf-8",
+        )
+    return added
+
+
 def build_todays_db(cfg: Config) -> Path:
     data_dir = cfg.online_worktree / "data"
     build_sqlite.build_db(
@@ -281,6 +330,7 @@ def run(cfg: Config, *, fetch_sqljs: Callable[[str], bytes] | None = None) -> di
     summary: dict = {"today": cfg.today, "website_url": cfg.website_url}
     summary["mcu_to_vid_bootstrapped"] = bootstrap_mcu_to_vid(cfg)
     summary["mcu_to_vid_corrections"] = apply_mcu_to_vid_corrections(cfg)
+    summary["mcu_to_vid_seed_rows_added"] = ensure_mcu_to_vid_seed_rows(cfg)
     db = build_todays_db(cfg)
     summary["db_path"]   = str(db)
     summary["db_bytes"]  = db.stat().st_size
