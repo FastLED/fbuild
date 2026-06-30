@@ -25,6 +25,14 @@ fn test_strip_zccache() {
     assert_eq!(stripped[0], "/usr/bin/gcc");
 }
 
+/// Legacy `zccache.exe wrap <compiler>` command-line shape (pre-embedded
+/// zccache, soldr <0.7.59). soldr 1.12.11+ embeds zccache into
+/// soldr-daemon and the RUSTC_WRAPPER is now soldr / `zccache-soldr`
+/// (soldr#977 / #980 L1 / #1081), so production no longer emits this
+/// shape. Test retained as a backward-compat parse assertion: if a
+/// legacy compile_commands.json fragment is fed through
+/// `strip_cache_wrapper`, the wrapper + `wrap` subcommand must still
+/// be stripped off. See FastLED/fbuild#855.
 #[test]
 fn test_strip_zccache_wrap_mode() {
     let args = vec![

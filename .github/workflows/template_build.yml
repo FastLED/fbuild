@@ -68,8 +68,13 @@ jobs:
           cache-payload-warn-bytes: 2GiB
           cache-key-suffix: fbuild-rust-debug
 
-      - name: Reset zccache daemon after cache warm
-        run: pkill -f '[z]ccache-daemon' || true
+      # Note: standalone `zccache-daemon` no longer runs separately.
+      # As of soldr 1.12.11+ (soldr#977 / #980 L1) zccache is embedded
+      # into soldr-daemon and the daemon's lifecycle is owned by soldr,
+      # not by this workflow. The previous `pkill -f '[z]ccache-daemon'`
+      # step is removed because there is no such process to kill —
+      # killing the soldr-daemon directly would fight soldr's own
+      # ipc shutdown path. See FastLED/fbuild#855.
 
       - name: Restore fbuild toolchains
         timeout-minutes: 10

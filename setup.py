@@ -26,8 +26,11 @@ Why soldr (and not bare cargo)?
 
 - soldr resolves the toolchain via `rustup which`, respecting
   `rust-toolchain.toml` without requiring PATH to be pre-shaped.
-- soldr auto-sets `RUSTC_WRAPPER` to zccache, so rebuilds across `pip
-  install .` invocations are incremental + dep-cached.
+- soldr auto-sets `RUSTC_WRAPPER` to itself (or the dedicated
+  `zccache-soldr` shim per soldr#1081), which talks to soldr-daemon's
+  embedded zccache (soldr#977 / #980 L1) — rebuilds across `pip install .`
+  invocations are incremental + dep-cached. There is no standalone
+  `zccache.exe` involved; the wrapper chain is entirely in-soldr.
 
 Why not `setuptools-rust` or `maturin`? Both are reasonable but heavier:
 they introduce another tool with its own toolchain assumptions, while
