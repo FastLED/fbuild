@@ -110,6 +110,26 @@ impl BuildOrchestrator for AvrOrchestrator {
             .await;
 
         // 4. Ensure Arduino core
+        //
+        // Honor `platform_packages = framework-arduino-avr@<URL>` (FastLED/fbuild#667)
+        // and `platform_packages = framework-arduino-avr-attiny@<URL>`
+        // (FastLED/fbuild#669) from the env section. The PIO atmelavr platform
+        // exposes the standard Arduino core as `framework-arduino-avr` and the
+        // ATTinyCore-based ATtiny core as `framework-arduino-avr-attiny`
+        // (see https://github.com/platformio/platform-atmelavr/blob/develop/platform.json);
+        // those names are the canonical override keys consumers will set in
+        // their `platformio.ini`. The non-ATtiny "tinyX/MiniCore/etc." JSON
+        // entries currently share the `framework-arduino-avr` override key —
+        // they all fall under the atmelavr platform — but only the two PIO
+        // canonical names are resolved here. If those alt-core PIO package
+        // names land in the registry later, add additional resolution branches.
+        let env_cfg = ctx.config.get_env_config(&params.env_name).ok();
+        let __avr_ovr = env_cfg.as_ref().and_then(|env| {
+            crate::package_override::resolve_override(env, "framework-arduino-avr")
+        });
+        let __attiny_ovr = env_cfg.as_ref().and_then(|env| {
+            crate::package_override::resolve_override(env, "framework-arduino-avr-attiny")
+        });
         let (_framework_dir, core_dir, variant_dir) = {
             let _g = perf.phase("framework-ensure");
             ensure_avr_framework(
@@ -117,6 +137,8 @@ impl BuildOrchestrator for AvrOrchestrator {
                 &ctx.board.core,
                 &ctx.board.variant,
                 ctx.board.platform(),
+                __avr_ovr,
+                __attiny_ovr,
             )
             .await?
         };
@@ -328,12 +350,22 @@ pub fn create() -> Box<dyn BuildOrchestrator> {
 /// For `AtmelMegaAvr` boards whose core is `"arduino"`, the lookup key is remapped
 /// to `"arduino_megaavr"` so they get `ArduinoCore-megaavr` (which contains the
 /// megaAVR variants like `nona4809`) instead of `ArduinoCore-avr`.
+///
+/// `avr_override` / `attiny_override` are pre-resolved `platform_packages`
+/// overrides for `framework-arduino-avr` and `framework-arduino-avr-attiny`
+/// respectively (FastLED/fbuild#667, #669). When set, the resolved URL
+/// supersedes the registry-pinned default; the cache subdir is derived from
+/// the override URL via `PackageBase::with_override` so an override doesn't
+/// collide with the default cache entry.
+///
 /// Returns (framework_root, core_dir, variant_dir).
 async fn ensure_avr_framework(
     project_dir: &Path,
     core_name: &str,
     variant_name: &str,
     platform: Option<fbuild_core::Platform>,
+    avr_override: Option<fbuild_config::PackageOverride>,
+    attiny_override: Option<fbuild_config::PackageOverride>,
 ) -> fbuild_core::Result<(PathBuf, PathBuf, PathBuf)> {
     use fbuild_packages::Package;
 
@@ -346,7 +378,27 @@ async fn ensure_avr_framework(
             core_name
         };
 
-    let framework = fbuild_packages::library::AvrFramework::for_core(lookup_key, project_dir)?;
+    // Route the appropriate `platform_packages` override to the matching PIO
+    // package. `framework-arduino-avr` covers the standard ArduinoCore-avr
+    // (board core "arduino" on the atmelavr platform);
+    // `framework-arduino-avr-attiny` covers SpenceKonde/ATTinyCore (board cores
+    // "tiny" and "tinymodern"). Other JSON entries (MiniCore, MegaCoreX,
+    // digistump, megatinycore, megaavr) ignore both overrides — their PIO
+    // package names are distinct and aren't wired in this PR.
+    let routed_override = match lookup_key {
+        "arduino" => avr_override,
+        "tiny" | "tinymodern" => attiny_override,
+        _ => None,
+    };
+
+    let framework = match routed_override {
+        Some(ovr) => fbuild_packages::library::AvrFramework::for_core_with_override(
+            lookup_key,
+            project_dir,
+            ovr,
+        )?,
+        None => fbuild_packages::library::AvrFramework::for_core(lookup_key, project_dir)?,
+    };
     let framework_dir = framework.ensure_installed().await?;
     tracing::info!(
         "AVR framework for core '{}' (lookup '{}') at {}",

@@ -122,6 +122,46 @@ impl AvrFramework {
         })
     }
 
+    /// Construct with a consumer-supplied override (parsed from the env's
+    /// `platform_packages` line in `platformio.ini`). The default URL / version
+    /// / checksum resolved from `avr_frameworks.json` are replaced; `cache_subdir`
+    /// and `name` are preserved. See `PackageBase::with_override` and
+    /// FastLED/fbuild#667 (AVR) / #669 (ATtiny).
+    ///
+    /// This is the JSON-driven analog of the per-framework `with_override`
+    /// constructors used by other Arduino cores (e.g. `ArduinoCoreLpc8xx::with_override`).
+    /// The `core_name` argument is resolved against the same registry as
+    /// `for_core`; the override is applied to the resulting `PackageBase`
+    /// before the struct is returned.
+    pub fn for_core_with_override(
+        core_name: &str,
+        project_dir: &Path,
+        ovr: fbuild_config::PackageOverride,
+    ) -> fbuild_core::Result<Self> {
+        let entry = lookup_entry(core_name)?;
+        let url = format!(
+            "https://github.com/{}/archive/refs/tags/{}{}.tar.gz",
+            entry.github, entry.tag_prefix, entry.version
+        );
+
+        Ok(Self {
+            base: PackageBase::new(
+                &entry.name,
+                &entry.version,
+                &url,
+                &url,
+                entry.checksum.as_deref(),
+                CacheSubdir::Platforms,
+                project_dir,
+            )
+            .with_override(ovr),
+            core_name: core_name.to_string(),
+            validation_path: entry.validation_path,
+            core_dir_override: entry.core_dir,
+            needs_arduino_api: entry.needs_arduino_api,
+        })
+    }
+
     /// Get the resolved root directory of the framework.
     fn resolved_dir(&self) -> PathBuf {
         find_framework_root(&self.base.install_path())
