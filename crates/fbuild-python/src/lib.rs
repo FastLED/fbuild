@@ -628,4 +628,26 @@ mod tests {
             let _ = server.await;
         });
     }
+
+    /// `wait_for_remote_json_rpc_response_async` must consult the
+    /// pending queue via `read_lines_async`, so a `REMOTE: ...` line
+    /// parked there by `write_async` (Data-before-WriteAck case) is
+    /// surfaced on the very next poll — without ever touching the
+    /// wire. Closes the loop on the write_ack ordering fix.
+    #[test]
+    fn wait_for_remote_response_async_picks_up_pending_remote_line() {
+        use crate::json_rpc::wait_for_remote_json_rpc_response_async;
+        use std::collections::VecDeque;
+        use std::sync::Arc;
+        let rt = tokio::runtime::Runtime::new().unwrap();
+        rt.block_on(async {
+            let ws_read_slot = Arc::new(tokio::sync::Mutex::new(None));
+            let pending = Arc::new(tokio::sync::Mutex::new(VecDeque::from(vec![
+                r#"REMOTE: {"id":1,"result":"ok"}"#.to_string(),
+            ])));
+            let payload =
+                wait_for_remote_json_rpc_response_async(0.5, ws_read_slot, pending, false).await;
+            assert_eq!(payload.as_deref(), Some(r#" {"id":1,"result":"ok"}"#));
+        });
+    }
 }
