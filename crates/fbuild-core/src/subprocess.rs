@@ -122,6 +122,71 @@ pub fn link_env_for_build(build_dir: &Path) -> std::io::Result<Vec<(String, Stri
     ])
 }
 
+/// Env overlay every per-TU compile MUST pass when dispatching through
+/// the embedded zccache backend. See FastLED/fbuild#875.
+///
+/// Why this exists — zccache's `apply_client_env` treats a `Some(env)`
+/// payload (even an empty one) as "client provided full env, clear the
+/// daemon's inherited env." The previous call site at `compile_source`
+/// passed `Vec::new()`, so gcc subprocesses were spawned with a literally
+/// empty env. On Windows that broke compilation on the very first TU:
+/// without `TMP`/`TEMP`/`USERPROFILE`/`LOCALAPPDATA`, the Windows
+/// `GetTempPathW` fallback chain bottoms out at `C:\Windows\` (which
+/// regular users can't write to), and gcc fails with
+/// `Cannot create temporary file in C:\Windows\: Permission denied`
+/// before producing a single `.o`.
+///
+/// This helper composes the minimum env a Windows compile subprocess
+/// needs to find tempfiles + helper binaries (cc1/cc1plus/as) without
+/// reintroducing host pollution that would hurt zccache hit rates:
+///
+/// - `TMPDIR` / `TMP` / `TEMP` → fbuild-owned scratch dir (mirrors
+///   [`link_env_for_build`]).
+/// - `PATH` → forwarded from the daemon so gcc's driver can find its
+///   `cc1`/`as`/`ld` next to itself.
+/// - `SystemRoot` → required by `kernel32.dll`'s loader on Windows.
+/// - `USERPROFILE` / `LOCALAPPDATA` → `GetTempPathW` fallback chain.
+/// - `PATHEXT` / `ComSpec` → shell-style program lookup compatibility.
+///
+/// On non-Windows hosts only the temp-dir pinning is exposed; gcc finds
+/// everything else via the normal Unix conventions whether or not env is
+/// forwarded.
+///
+/// `build_dir` should be the same per-build scratch root that
+/// [`link_env_for_build`] uses, so per-build cleanup covers both halves.
+pub fn compile_env_for_build(build_dir: &Path) -> std::io::Result<Vec<(String, String)>> {
+    let tmp = build_dir.join(".compile-tmp");
+    std::fs::create_dir_all(&tmp)?;
+    let tmp_str = tmp.to_string_lossy().to_string();
+
+    let mut env: Vec<(String, String)> = vec![
+        ("TMPDIR".to_string(), tmp_str.clone()),
+        ("TMP".to_string(), tmp_str.clone()),
+        ("TEMP".to_string(), tmp_str),
+    ];
+
+    // Forward a small allowlist of host env vars so the compiler
+    // driver can locate its sibling binaries (cc1/cc1plus/as), resolve
+    // DLLs, and use the Windows GetTempPathW fallback chain. Missing
+    // vars are silently skipped — they're absent on POSIX hosts and
+    // the compile path doesn't need them there.
+    const FORWARD: &[&str] = &[
+        "PATH",
+        "SystemRoot",
+        "USERPROFILE",
+        "LOCALAPPDATA",
+        "APPDATA",
+        "PATHEXT",
+        "ComSpec",
+    ];
+    for key in FORWARD {
+        if let Ok(value) = std::env::var(key) {
+            env.push(((*key).to_string(), value));
+        }
+    }
+    Ok(env)
+}
+
 /// Output from a subprocess invocation.
 #[derive(Debug, Clone)]
 pub struct ToolOutput {
@@ -792,6 +857,50 @@ mod tests {
         let tmp = tempfile::tempdir().expect("tempdir");
         let first = link_env_for_build(tmp.path()).expect("first call");
         let second = link_env_for_build(tmp.path()).expect("second call (dir already exists)");
+        assert_eq!(first, second, "helper must be idempotent");
+    }
+
+    // FastLED/fbuild#875 regression: every compile spawn must carry
+    // TMPDIR/TMP/TEMP pointing at an fbuild-owned dir so the gcc/clang
+    // driver can write its preprocess / temp .o files without falling
+    // back to a host path. On Windows that fallback bottoms out at
+    // `C:\Windows\` and breaks the very first TU.
+    #[test]
+    fn compile_env_for_build_pins_tmp_keys_to_build_dir() {
+        let tmp = tempfile::tempdir().expect("tempdir");
+        let env = compile_env_for_build(tmp.path()).expect("compile_env_for_build");
+
+        let compile_tmp = tmp.path().join(".compile-tmp");
+        assert!(
+            compile_tmp.is_dir(),
+            ".compile-tmp must be created as a directory"
+        );
+
+        let keys: Vec<&str> = env.iter().map(|(k, _)| k.as_str()).collect();
+        for required in ["TMPDIR", "TMP", "TEMP"] {
+            assert!(
+                keys.contains(&required),
+                "missing {required}; got {keys:?}"
+            );
+        }
+
+        for (k, v) in &env {
+            if matches!(k.as_str(), "TMPDIR" | "TMP" | "TEMP") {
+                let v_norm = v.replace('\\', "/");
+                assert!(
+                    v_norm.ends_with(".compile-tmp"),
+                    "{k}={v:?} must point at the build_dir's .compile-tmp"
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn compile_env_for_build_is_idempotent() {
+        let tmp = tempfile::tempdir().expect("tempdir");
+        let first = compile_env_for_build(tmp.path()).expect("first call");
+        let second =
+            compile_env_for_build(tmp.path()).expect("second call (dir already exists)");
         assert_eq!(first, second, "helper must be idempotent");
     }
 

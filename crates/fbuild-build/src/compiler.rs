@@ -723,7 +723,23 @@ pub async fn compile_source(
     // scan, …) can never park a daemon worker thread forever. 5 min is
     // a generous upper bound for any single translation-unit compile;
     // every legitimately-long step (linking, image gen) lives elsewhere.
-    let compile_fut = svc.compile(compiler, sanitized, cwd, Vec::new());
+    //
+    // FastLED/fbuild#875: zccache's `apply_client_env` treats `Some(env)`
+    // — even an empty vec — as "clear the daemon's env." Passing
+    // `Vec::new()` here spawned gcc with a literally empty environment
+    // on Windows, and `GetTempPathW` then bottomed out at `C:\Windows\`,
+    // failing with `Cannot create temporary file in C:\Windows\:
+    // Permission denied` on the very first TU. The minimum env every
+    // compile needs (fbuild-owned `TMP`/`TEMP`, forwarded `PATH` +
+    // Windows host vars) is composed by
+    // [`fbuild_core::subprocess::compile_env_for_build`].
+    let build_scratch_root = compile_cwd
+        .clone()
+        .or_else(|| output.parent().map(Path::to_path_buf))
+        .unwrap_or_else(|| PathBuf::from("."));
+    let compile_env = fbuild_core::subprocess::compile_env_for_build(&build_scratch_root)
+        .unwrap_or_default();
+    let compile_fut = svc.compile(compiler, sanitized, cwd, compile_env);
     let outcome = tokio::time::timeout(std::time::Duration::from_secs(300), compile_fut)
         .await
         .map_err(|_| {
