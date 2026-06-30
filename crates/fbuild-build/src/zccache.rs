@@ -109,24 +109,38 @@ pub fn compile_cwd_from_output(output: &Path) -> Option<PathBuf> {
 /// stripping the compile CWD keeps zccache keys workspace-relative across both
 /// path spellings.
 pub fn path_arg_for_compile_cwd(path: &Path, cwd: &Path) -> String {
-    if !path.is_absolute() {
-        return path.to_string_lossy().to_string();
-    }
-
-    // Both ends must be in the same normal form (stripped of any `\\?\`
-    // Windows extended-length prefix) for `strip_prefix` to match, since
-    // `canonicalize_existing_path` now strips that prefix from `path`.
-    let stable_path = canonicalize_existing_path(path).unwrap_or_else(|| path.to_path_buf());
-    let stable_cwd = strip_unc_prefix(cwd.to_path_buf());
-    let relative = stable_path
-        .strip_prefix(&stable_cwd)
-        .unwrap_or(&stable_path)
-        .to_string_lossy()
-        .to_string();
-    if relative.is_empty() {
-        ".".to_string()
+    let raw = if !path.is_absolute() {
+        path.to_string_lossy().to_string()
     } else {
-        relative
+        // Both ends must be in the same normal form (stripped of any `\\?\`
+        // Windows extended-length prefix) for `strip_prefix` to match, since
+        // `canonicalize_existing_path` now strips that prefix from `path`.
+        let stable_path = canonicalize_existing_path(path).unwrap_or_else(|| path.to_path_buf());
+        let stable_cwd = strip_unc_prefix(cwd.to_path_buf());
+        let relative = stable_path
+            .strip_prefix(&stable_cwd)
+            .unwrap_or(&stable_path)
+            .to_string_lossy()
+            .to_string();
+        if relative.is_empty() {
+            ".".to_string()
+        } else {
+            relative
+        }
+    };
+    // FastLED/fbuild#875 follow-up: GCC's internal spec-file pass (the
+    // temp file the driver uses to hand args to cc1/cc1plus) treats `\`
+    // as an escape character — so `src\main.cpp` reaches cc1plus as
+    // `srcmain.cpp` and fails with "fatal error: srcmain.cpp: No such
+    // file or directory". Surfaced as soon as the env fix in #885 let
+    // the spec-file mechanism actually create its temp file. Forward
+    // slashes are unambiguous on every GCC port (Windows GCC resolves
+    // both against the FS), so the safe Windows compile contract is to
+    // spell every path argument with `/`. POSIX hosts pass through.
+    if cfg!(windows) {
+        raw.replace('\\', "/")
+    } else {
+        raw
     }
 }
 
