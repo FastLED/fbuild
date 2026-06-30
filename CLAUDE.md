@@ -109,6 +109,7 @@ Custom Claude Code skills in `.claude/skills/`:
 - Tests are the spec. If the test suite passes, the feature works. If behavior isn't tested, it doesn't exist.
 - Comprehensive tests over comprehensive docs. Tests are executable documentation.
 - Test real behavior: use `tempfile` for filesystem tests, not mocks. Test the contract, not the implementation.
+- **Mocks vs. real fixtures (FastLED/fbuild#838).** Use mocks only when the abstraction has no concrete dependency you can stand up cheaply. Real integration boundaries — subprocess invocation, real filesystem layout, serial-port behavior — must be exercised with a real binary + `tempfile::TempDir`, gated with `#[ignore]` when slow. Example: orchestration logic (stage counting, input ordering, concurrency) over a `SketchBuilder` trait is fine to mock; the actual compile/link/flash path is not.
 - **A/B testing**: FastLED can switch between `--platformio` and fbuild. The Python integration tests in `~/dev/fbuild/tests/` are the acceptance criteria.
 
 ## Core Principles
