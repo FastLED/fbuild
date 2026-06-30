@@ -513,23 +513,98 @@ pub fn family_for_vid_pid(vid: u16, pid: u16) -> Option<BoardFamily> {
 /// it did before.
 #[must_use]
 pub fn family_for_port(name: &str) -> Option<BoardFamily> {
-    if let Some(family) = family_for_port_via_vid_pid(name) {
+    // FastLED/fbuild#897: when both the VID/PID table AND the OS
+    // kernel-class signal classify the port, compare them. They CAN
+    // disagree — typically because a stale VID/PID entry, a cloned
+    // VID/PID, or a firmware re-flash that changed the USB class. The
+    // disagreement is forensically interesting; we emit one warn-level
+    // line per attach showing both signals. Behavior is unchanged —
+    // VID/PID still wins because it carries reset semantics the
+    // kernel-class signal can't (TouchBaud1200 vs DtrRtsPulse vs
+    // DtrPulse all map to "CDC" at the kernel layer).
+    let vid_pid_lookup = lookup_port_vid_pid(name);
+    let kernel_class = crate::port_class::detect_port_kernel_class(name);
+
+    if let (Some((vid, pid, Some(vp_family))), Some(kc)) =
+        (vid_pid_lookup.as_ref().copied(), kernel_class.as_ref().copied())
+    {
+        warn_if_class_disagrees(name, vid, pid, vp_family, kc);
+    }
+
+    // Precedence: VID/PID always wins. Only fall back to kernel-class
+    // when the VID/PID lookup found no entry (None) OR the port wasn't
+    // enumerated at all.
+    if let Some((_, _, Some(family))) = vid_pid_lookup {
         return Some(family);
     }
-    family_for_port_via_kernel_class(name)
+    family_for_port_via_kernel_class_inner(kernel_class)
 }
 
-fn family_for_port_via_vid_pid(name: &str) -> Option<BoardFamily> {
+/// Walk `serialport::available_ports()` for `name` and return the
+/// USB port's `(vid, pid, family_lookup_result)`. Returns `None` when
+/// the port is not present in the live enumeration or is not a USB
+/// port (real UART, Bluetooth virtual serial, etc.). When the port IS
+/// USB but its VID/PID isn't in the table, returns `Some((vid, pid, None))`.
+fn lookup_port_vid_pid(name: &str) -> Option<(u16, u16, Option<BoardFamily>)> {
     let ports = serialport::available_ports().ok()?;
     for port in ports {
         if !serial_port_name_matches(&port.port_name, name) {
             continue;
         }
         if let serialport::SerialPortType::UsbPort(info) = port.port_type {
-            return family_for_vid_pid(info.vid, info.pid);
+            return Some((info.vid, info.pid, family_for_vid_pid(info.vid, info.pid)));
         }
     }
     None
+}
+
+/// True iff the VID/PID family classifies as CDC-ACM at the kernel
+/// level. Used by [`warn_if_class_disagrees`] to compare the table's
+/// implied class against the OS-side kernel-class signal.
+///
+/// FastLED/fbuild#897 — the table-driven `BoardFamily` carries reset
+/// semantics that are downstream of the USB class:
+///
+/// - `Esp32NativeUsbCdc` — ESP32-S3/C3/C6/H2 native USB ⇒ CDC
+/// - `CdcAcmBridge` — LPC11U35 VCOM / NXP DAPLink ⇒ CDC (the bridge is
+///   inside the LPC11U35, but from the host's POV it's CDC class)
+/// - `Teensy` — PJRC native USB ⇒ CDC
+/// - `NativeUsbCdcReset1200Bps` — RP2040 / SAMD UF2 ⇒ CDC
+/// - `Esp32ExternalUart` — CP2102 / CH340 / FTDI ⇒ chip-specific bridge
+/// - `ArduinoAutoReset` — classic UNO/Mega/Nano with FT232/CH340 ⇒
+///   chip-specific bridge
+fn vp_family_implies_cdc(family: BoardFamily) -> bool {
+    use BoardFamily::*;
+    match family {
+        Esp32NativeUsbCdc | CdcAcmBridge | Teensy | NativeUsbCdcReset1200Bps => true,
+        Esp32ExternalUart | ArduinoAutoReset => false,
+    }
+}
+
+/// Emit a forensic warning if the two classification signals disagree
+/// on the CDC-vs-bridge axis. FastLED/fbuild#897.
+fn warn_if_class_disagrees(
+    name: &str,
+    vid: u16,
+    pid: u16,
+    vp_family: BoardFamily,
+    kc: crate::port_class::PortKernelClass,
+) {
+    use crate::port_class::PortKernelClass;
+    let vp_cdc = vp_family_implies_cdc(vp_family);
+    let kc_cdc = matches!(kc, PortKernelClass::CdcAcm);
+    if vp_cdc != kc_cdc {
+        tracing::warn!(
+            port = name,
+            vid = format!("0x{vid:04X}"),
+            pid = format!("0x{pid:04X}"),
+            table_family = ?vp_family,
+            kernel_class = ?kc,
+            "VID/PID table and kernel-class signal disagree on CDC \
+             classification — table wins, but this may indicate a stale \
+             table entry or cloned VID/PID. See FastLED/fbuild#897."
+        );
+    }
 }
 
 /// Map the OS-detected kernel-driver class to a `BoardFamily`.
@@ -546,9 +621,11 @@ fn family_for_port_via_vid_pid(name: &str) -> Option<BoardFamily> {
 ///   `(false, false)` idle. Same rationale: safer to NOT pulse DTR/RTS
 ///   on a board whose autoreset wiring we can't confirm than to risk
 ///   stomping on a running sketch.
-fn family_for_port_via_kernel_class(name: &str) -> Option<BoardFamily> {
-    use crate::port_class::{detect_port_kernel_class, PortKernelClass};
-    match detect_port_kernel_class(name)? {
+fn family_for_port_via_kernel_class_inner(
+    kernel_class: Option<crate::port_class::PortKernelClass>,
+) -> Option<BoardFamily> {
+    use crate::port_class::PortKernelClass;
+    match kernel_class? {
         PortKernelClass::CdcAcm => Some(BoardFamily::Esp32NativeUsbCdc),
         PortKernelClass::UsbSerialBridge => Some(BoardFamily::Esp32ExternalUart),
     }
@@ -634,6 +711,134 @@ mod tests {
         // walks the live OS port list. The short-circuit is enforced
         // by reading the source — and by the precedence comment on
         // `family_for_port`.)
+    }
+
+    // --- FastLED/fbuild#897: VID/PID vs kernel-class disagreement ---
+
+    #[test]
+    fn vp_family_implies_cdc_for_native_usb_cdc_devices() {
+        // Every family whose hardware speaks CDC at the kernel level
+        // must return true. The LPC11U35 VCOM bridge case is the most
+        // important one — name says "Bridge" but it's CDC class at
+        // the USB layer; if this entry flips to false the
+        // disagreement-warning fires on every LPC845-BRK attach
+        // (false alarm).
+        assert!(vp_family_implies_cdc(BoardFamily::Esp32NativeUsbCdc));
+        assert!(vp_family_implies_cdc(BoardFamily::CdcAcmBridge));
+        assert!(vp_family_implies_cdc(BoardFamily::Teensy));
+        assert!(vp_family_implies_cdc(BoardFamily::NativeUsbCdcReset1200Bps));
+    }
+
+    #[test]
+    fn vp_family_implies_cdc_false_for_external_bridge_devices() {
+        // Esp32ExternalUart (CP2102/CH340/FTDI behind an ESP32-WROOM)
+        // and ArduinoAutoReset (FT232 behind classic UNO) are chip-
+        // specific UART bridges. Kernel binds them via usbserial
+        // family (Linux ttyUSB*, macOS cu.usbserial-*), NOT cdc_acm.
+        assert!(!vp_family_implies_cdc(BoardFamily::Esp32ExternalUart));
+        assert!(!vp_family_implies_cdc(BoardFamily::ArduinoAutoReset));
+    }
+
+    /// Per the audit in #897, every VID/PID currently in the table
+    /// agrees with the kernel-class signal. Verify that — if any
+    /// entry's `vp_family_implies_cdc` ever stops matching the
+    /// kernel-binding for that hardware, this test catches it.
+    #[test]
+    fn current_vid_pid_table_implies_class_consistent_with_kernel() {
+        use BoardFamily::*;
+        // 0x303A — Espressif native USB → CDC ✓
+        assert_eq!(family_for_vid_pid(0x303A, 0x1001), Some(Esp32NativeUsbCdc));
+        assert!(vp_family_implies_cdc(Esp32NativeUsbCdc));
+        // 0x16C0:0x0483 — LPC11U35 VCOM (or Teensy) → CDC ✓
+        assert_eq!(family_for_vid_pid(0x16C0, 0x0483), Some(CdcAcmBridge));
+        assert!(vp_family_implies_cdc(CdcAcmBridge));
+        // 0x1FC9 — NXP CMSIS-DAP → CDC ✓
+        assert_eq!(family_for_vid_pid(0x1FC9, 0x0132), Some(CdcAcmBridge));
+        // 0x10C4 / 0x1A86 / 0x0403 — bridge chips → bridge ✓
+        assert_eq!(family_for_vid_pid(0x10C4, 0xEA60), Some(Esp32ExternalUart));
+        assert!(!vp_family_implies_cdc(Esp32ExternalUart));
+        assert_eq!(family_for_vid_pid(0x1A86, 0x7523), Some(Esp32ExternalUart));
+        assert_eq!(family_for_vid_pid(0x0403, 0x6001), Some(Esp32ExternalUart));
+        // 0x2341 — Arduino (UNO/Mega style with FT232) → bridge ✓
+        assert_eq!(family_for_vid_pid(0x2341, 0x0001), Some(ArduinoAutoReset));
+        assert!(!vp_family_implies_cdc(ArduinoAutoReset));
+        // 0x2E8A — RP2040 native CDC → CDC ✓
+        assert_eq!(family_for_vid_pid(0x2E8A, 0x000A), Some(NativeUsbCdcReset1200Bps));
+        assert!(vp_family_implies_cdc(NativeUsbCdcReset1200Bps));
+    }
+
+    /// FastLED/fbuild#897 — capture the warn emission via tracing-test
+    /// when the two signals disagree.
+    #[test]
+    #[tracing_test::traced_test]
+    fn warn_emitted_when_table_says_bridge_but_kernel_says_cdc() {
+        use crate::port_class::PortKernelClass;
+        // Hypothetical stale-table case: the VID/PID lookup says
+        // bridge (e.g. an ArduinoAutoReset entry that's been
+        // re-flashed with native USB CDC firmware) but the kernel
+        // bound cdc_acm. Warning should fire.
+        warn_if_class_disagrees(
+            "/dev/ttyACM0",
+            0x2341,
+            0x0001,
+            BoardFamily::ArduinoAutoReset,
+            PortKernelClass::CdcAcm,
+        );
+        assert!(logs_contain(
+            "VID/PID table and kernel-class signal disagree"
+        ));
+        assert!(logs_contain("FastLED/fbuild#897"));
+    }
+
+    #[test]
+    #[tracing_test::traced_test]
+    fn warn_emitted_when_table_says_cdc_but_kernel_says_bridge() {
+        use crate::port_class::PortKernelClass;
+        // Other direction: table thinks this is a native-CDC family
+        // but kernel bound a bridge driver. Same warning should fire.
+        warn_if_class_disagrees(
+            "/dev/ttyUSB0",
+            0x303A,
+            0x1001,
+            BoardFamily::Esp32NativeUsbCdc,
+            PortKernelClass::UsbSerialBridge,
+        );
+        assert!(logs_contain(
+            "VID/PID table and kernel-class signal disagree"
+        ));
+    }
+
+    #[test]
+    #[tracing_test::traced_test]
+    fn no_warn_when_signals_agree_cdc() {
+        use crate::port_class::PortKernelClass;
+        // The common case for every device in the current table.
+        warn_if_class_disagrees(
+            "/dev/ttyACM0",
+            0x303A,
+            0x1001,
+            BoardFamily::Esp32NativeUsbCdc,
+            PortKernelClass::CdcAcm,
+        );
+        assert!(!logs_contain(
+            "VID/PID table and kernel-class signal disagree"
+        ));
+    }
+
+    #[test]
+    #[tracing_test::traced_test]
+    fn no_warn_when_signals_agree_bridge() {
+        use crate::port_class::PortKernelClass;
+        warn_if_class_disagrees(
+            "/dev/ttyUSB0",
+            0x10C4,
+            0xEA60,
+            BoardFamily::Esp32ExternalUart,
+            PortKernelClass::UsbSerialBridge,
+        );
+        assert!(!logs_contain(
+            "VID/PID table and kernel-class signal disagree"
+        ));
     }
 
     #[test]
