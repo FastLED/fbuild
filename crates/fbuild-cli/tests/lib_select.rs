@@ -6,7 +6,7 @@
 //! that need a real framework install (Teensy, STM32, ...) are gated
 //! behind `#[ignore]` and run manually.
 
-use std::process::{Command, Output};
+use std::process::{Command, Output, Stdio};
 use std::time::{Duration, Instant};
 
 /// Run a `Command` with a hard wall-clock budget (FastLED/fbuild#806).
@@ -15,8 +15,14 @@ use std::time::{Duration, Instant};
 /// (e.g. a regression in clap parsing → infinite loop). 10 s is overkill
 /// for `--help` / argument-validation paths, but keeps the test runner
 /// from sitting on its 6 h job budget if the CLI ever does wedge.
+///
+/// stdout/stderr must be piped explicitly: `spawn()` inherits the parent
+/// streams by default, so without this `wait_with_output()` reports an
+/// empty stdout and the `--help`-content assertions panic spuriously.
+/// `Command::output()` pipes for you; `spawn()` does not.
 fn run_cli_or_timeout(mut cmd: Command) -> Output {
     let budget = Duration::from_secs(10);
+    cmd.stdout(Stdio::piped()).stderr(Stdio::piped());
     let mut child = cmd.spawn().expect("spawn fbuild");
     let deadline = Instant::now() + budget;
     loop {
