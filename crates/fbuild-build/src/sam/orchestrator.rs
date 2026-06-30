@@ -98,6 +98,10 @@ impl BuildOrchestrator for SamOrchestrator {
         // Honor `platform_packages` override (FastLED/fbuild#664, #681). Only
         // SAM (Due) is wired through this PR — SAMD's framework_name needs
         // separate verification (see issue thread).
+        // FastLED/fbuild#664, #681: honor `platform_packages` override per
+        // framework. SAMD (Adafruit ArduinoCore-samd) and SAM (Arduino
+        // ArduinoCore-sam) are distinct PIO packages, so resolve both
+        // overrides and route to the branch that runs.
         let __sam_ovr = ctx
             .config
             .get_env_config(&params.env_name)
@@ -105,9 +109,18 @@ impl BuildOrchestrator for SamOrchestrator {
             .and_then(|env| {
                 crate::package_override::resolve_override(env, "framework-arduino-sam")
             });
+        // FastLED/fbuild#677: fbuild ships Adafruit's `ArduinoCore-samd`,
+        // so the matching PIO package name is `framework-arduino-samd-adafruit`.
+        let __samd_ovr = ctx
+            .config
+            .get_env_config(&params.env_name)
+            .ok()
+            .and_then(|env| {
+                crate::package_override::resolve_override(env, "framework-arduino-samd-adafruit")
+            });
         let (framework_dir, core_dir, variant_dir, linker_script_path, system_includes) =
             if is_samd_mcu(&ctx.board.mcu) {
-                install_samd_core(params, &ctx.board.core, &ctx.board.variant).await?
+                install_samd_core(params, &ctx.board.core, &ctx.board.variant, __samd_ovr).await?
             } else {
                 install_sam_core(params, &ctx.board.core, &ctx.board.variant, __sam_ovr).await?
             };
@@ -357,8 +370,14 @@ async fn install_samd_core(
     params: &BuildParams,
     core_name: &str,
     variant_name: &str,
+    override_: Option<fbuild_config::PackageOverride>,
 ) -> Result<(PathBuf, PathBuf, PathBuf, PathBuf, Vec<PathBuf>)> {
-    let framework = fbuild_packages::library::SamdCores::new(&params.project_dir);
+    let framework = match override_ {
+        Some(o) => {
+            fbuild_packages::library::SamdCores::with_override(&params.project_dir, o)
+        }
+        None => fbuild_packages::library::SamdCores::new(&params.project_dir),
+    };
     let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
     tracing::info!("SAMD cores at {}", framework_dir.display());
 
