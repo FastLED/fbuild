@@ -41,6 +41,8 @@ _HEX4_LOWER = re.compile(r"^[0-9a-f]{4}$")
 @pytest.mark.parametrize("vid, expected_substring", [
     ("303a", "Espressif"),
     ("2e8a", "Raspberry Pi"),
+    ("045b", "Renesas"),
+    ("2544", "Silicon Labs"),
     ("1b4f", "SparkFun"),
     ("2914", "Kent"),                  # Kent Displays
     ("ffff", "Wrong vendor ID"),       # all-bits-set sentinel
