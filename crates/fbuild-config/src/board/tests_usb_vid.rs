@@ -51,6 +51,21 @@ fn test_due_port_specific_vid_pid_rows() {
     }
 }
 
+#[test]
+fn test_unexpected_maker_s3_usb_pid_rows_are_distinct() {
+    let expected = [
+        ("um_tinys3", "0X303A", "0x80D0"),
+        ("um_feathers3", "0X303A", "0x80D6"),
+        ("um_feathers3_neo", "0X303A", "0x81FB"),
+    ];
+
+    for (board_id, vid, pid) in expected {
+        let config = BoardConfig::from_board_id(board_id, &HashMap::new()).unwrap();
+        assert_eq!(config.vid, Some(vid.to_string()), "{board_id} VID");
+        assert_eq!(config.pid, Some(pid.to_string()), "{board_id} PID");
+    }
+}
+
 /// FastLED/fbuild#405: on ESP32-S2/S3 the Arduino framework's
 /// `variants/<board>/pins_arduino.h` already defines `USB_VID`/`USB_PID`,
 /// so injecting them again via `-D` produces a "USB_VID redefined" warning
