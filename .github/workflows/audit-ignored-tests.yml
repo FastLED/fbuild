@@ -1,0 +1,36 @@
+name: Audit Ignored Tests
+
+# Weekly inventory of every `#[ignore]` attribute in the workspace.
+# Writes the markdown report to the body of tracking issue #880 (per
+# FastLED/fbuild#839). Manual dispatch is supported for local re-runs.
+
+on:
+  schedule:
+    # Mondays at 00:00 UTC.
+    - cron: '0 0 * * MON'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  audit:
+    name: Audit and update tracking issue #880
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      TRACKING_ISSUE: "880"
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install uv
+        run: pip install --timeout 60 uv
+      - name: Generate inventory (markdown)
+        run: uv run --no-project python ci/audit_ignored_tests.py --markdown > /tmp/inv.md
+      - name: Update tracking issue body
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh issue edit "$TRACKING_ISSUE" --repo "$GITHUB_REPOSITORY" --body-file /tmp/inv.md
