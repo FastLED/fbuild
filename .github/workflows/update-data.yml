@@ -238,6 +238,16 @@ jobs:
             --out /tmp/sparkfun-first-party-usb-pids.json
           wc -l /tmp/sparkfun-first-party-usb-pids.json
 
+      - name: Fetch Seeed USB PID supplement (USB-VID tier-1 supplement)
+        id: fetch-seeed-first-party-pids
+        continue-on-error: true
+        run: |
+          uv run --no-project --script \
+            "${{ github.workspace }}/online-data-tools/fetch_seeed_usb_pids.py" \
+            --tier first-party \
+            --out /tmp/seeed-first-party-usb-pids.json
+          wc -l /tmp/seeed-first-party-usb-pids.json
+
       - name: Fetch FTDI USB PID supplement (USB-VID tier-3 supplement)
         id: fetch-ftdi-pids
         continue-on-error: true
@@ -321,6 +331,16 @@ jobs:
             --out /tmp/sparkfun-supplemental-usb-pids.json
           wc -l /tmp/sparkfun-supplemental-usb-pids.json
 
+      - name: Fetch Seeed supplemental USB PID rows (USB-VID tier-4 supplement)
+        id: fetch-seeed-supplemental-pids
+        continue-on-error: true
+        run: |
+          uv run --no-project --script \
+            "${{ github.workspace }}/online-data-tools/fetch_seeed_usb_pids.py" \
+            --tier supplemental \
+            --out /tmp/seeed-supplemental-usb-pids.json
+          wc -l /tmp/seeed-supplemental-usb-pids.json
+
       - name: Dump PlatformIO board catalog → /tmp/all_boards.json
         id: dump-pio
         continue-on-error: true
@@ -373,6 +393,9 @@ jobs:
           fi
           if [ "${{ steps.fetch-sparkfun-first-party-pids.outcome }}" = "success" ] && [ -s /tmp/sparkfun-first-party-usb-pids.json ]; then
             args+=(--json "sparkfun-first-party-usb-pids=/tmp/sparkfun-first-party-usb-pids.json")
+          fi
+          if [ "${{ steps.fetch-seeed-first-party-pids.outcome }}" = "success" ] && [ -s /tmp/seeed-first-party-usb-pids.json ]; then
+            args+=(--json "seeed-first-party-usb-pids=/tmp/seeed-first-party-usb-pids.json")
           fi
           if [ "${{ steps.run-dump.outcome }}" = "success" ] && [ -s /tmp/usb-ids-rs.json ]; then
             args+=(--json "usb-ids-rs=/tmp/usb-ids-rs.json")
@@ -432,6 +455,11 @@ jobs:
             # Third-party SparkFun board-package rows are deliberately weak:
             # they fill gaps only after first-party and generic USB-ID sources.
             args+=(--json "sparkfun-supplemental-usb-pids=/tmp/sparkfun-supplemental-usb-pids.json")
+          fi
+          if [ "${{ steps.fetch-seeed-supplemental-pids.outcome }}" = "success" ] && [ -s /tmp/seeed-supplemental-usb-pids.json ]; then
+            # Third-party Seeed board-package rows are deliberately weak:
+            # they fill gaps only after first-party and generic USB-ID sources.
+            args+=(--json "seeed-supplemental-usb-pids=/tmp/seeed-supplemental-usb-pids.json")
           fi
           if [ "${#args[@]}" -eq 0 ]; then
             echo "::warning::all USB-VID sources failed; preserving previously committed data"
@@ -609,6 +637,7 @@ jobs:
             echo "| arduino usb-pids           | ${{ steps.fetch-arduino-pids.outcome }} |"
             echo "| adafruit usb-pids          | ${{ steps.fetch-adafruit-pids.outcome }} |"
             echo "| sparkfun first-party pids  | ${{ steps.fetch-sparkfun-first-party-pids.outcome }} |"
+            echo "| seeed first-party pids     | ${{ steps.fetch-seeed-first-party-pids.outcome }} |"
             echo "| ftdi usb-pids              | ${{ steps.fetch-ftdi-pids.outcome }} |"
             echo "| wch usb-pids               | ${{ steps.fetch-wch-pids.outcome }} |"
             echo "| teensy usb-pids            | ${{ steps.fetch-teensy-pids.outcome }} |"
@@ -618,6 +647,7 @@ jobs:
             echo "| renesas weak pids          | ${{ steps.fetch-renesas-pids.outcome }} |"
             echo "| microchip weak pids        | ${{ steps.fetch-microchip-supplemental-pids.outcome }} |"
             echo "| sparkfun weak pids         | ${{ steps.fetch-sparkfun-supplemental-pids.outcome }} |"
+            echo "| seeed weak pids            | ${{ steps.fetch-seeed-supplemental-pids.outcome }} |"
             echo "| pio boards (platformio)    | ${{ steps.dump-pio.outcome }} |"
             echo "| merge usb-vid              | ${{ steps.merge-usb.outcome }} |"
             echo "| emit inlined supplement    | ${{ steps.emit-inlined.outcome }} |"
