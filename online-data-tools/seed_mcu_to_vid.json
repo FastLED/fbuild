@@ -60,7 +60,7 @@
   {"mcu_family": "LPC8",        "vid": "1fc9", "score": 0.65, "reason": "NXP LPC8xx CMSIS-DAP / DAPLink"},
   {"mcu_family": "LPC8",        "vid": "0d28", "score": 0.55, "reason": "DAPLink CMSIS-DAP"},
 
-  {"mcu_family": "AM_APOLLO3",  "vid": "1cbe", "score": 0.70, "reason": "Sparkfun Apollo3 bootloader"},
+  {"mcu_family": "AM_APOLLO3",  "vid": "1a86", "score": 0.60, "reason": "SparkFun Artemis CH340 USB-serial bridge"},
 
   {"mcu_family": "MGM240P",     "vid": "10c4", "score": 0.65, "reason": "Silicon Labs CP210x"},
 
