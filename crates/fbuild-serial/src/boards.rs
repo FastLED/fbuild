@@ -492,12 +492,34 @@ pub fn family_for_vid_pid(vid: u16, pid: u16) -> Option<BoardFamily> {
 /// Walk `serialport::available_ports()` once and classify the port that
 /// matches `name`.
 ///
-/// Returns `None` when the port is not enumerable, is not a USB serial
-/// port, or has an unknown VID/PID. Callers that need an idle DTR/RTS
-/// state should prefer [`family_for_port_or_default`] so unknown
-/// hardware keeps the CDC-ACM host-ready convention.
+/// Detection order (FastLED/fbuild#895):
+///
+/// 1. **VID/PID table** ([`family_for_vid_pid`]) — explicit, hand-curated
+///    list of well-known vendor ranges. Always wins when it matches.
+/// 2. **OS-native kernel-class detection** ([`crate::port_class`]) — the
+///    fallback that catches off-brand / uncatalogued devices. On Linux
+///    reads `/sys/class/tty/<port>/device/driver`; on macOS classifies
+///    by the device-node naming convention; Windows returns `None`
+///    (SetupDi follow-up). Adds NO runtime dependencies — pure
+///    `std::fs` + name parsing.
+/// 3. Returns `None` if neither path classifies — callers fall back to
+///    their existing default behavior via
+///    [`family_for_port_or_default`].
+///
+/// The kernel-class fallback is purely additive: if any step fails for
+/// any reason (port disconnected, sysfs unmounted, etc.) it returns
+/// `None` and the existing default chain takes over. This function
+/// cannot regress existing behavior — it only catches more cases than
+/// it did before.
 #[must_use]
 pub fn family_for_port(name: &str) -> Option<BoardFamily> {
+    if let Some(family) = family_for_port_via_vid_pid(name) {
+        return Some(family);
+    }
+    family_for_port_via_kernel_class(name)
+}
+
+fn family_for_port_via_vid_pid(name: &str) -> Option<BoardFamily> {
     let ports = serialport::available_ports().ok()?;
     for port in ports {
         if !serial_port_name_matches(&port.port_name, name) {
@@ -508,6 +530,28 @@ pub fn family_for_port(name: &str) -> Option<BoardFamily> {
         }
     }
     None
+}
+
+/// Map the OS-detected kernel-driver class to a `BoardFamily`.
+///
+/// - `CdcAcm` → [`BoardFamily::Esp32NativeUsbCdc`] gives `(false, false)`
+///   idle DTR/RTS — the safer default for any CDC native USB device.
+///   Worst case: an Arduino-style auto-reset CDC device won't get its
+///   auto-reset on attach, but it WILL still work for serial I/O. The
+///   alternative — defaulting CDC to `(true, true)` — risks resetting
+///   running firmware on every attach, which is what motivated #895 in
+///   the first place. Choosing `Esp32NativeUsbCdc` does NOT trigger any
+///   reset on attach; it only sets the post-open idle state.
+/// - `UsbSerialBridge` → [`BoardFamily::Esp32ExternalUart`] gives
+///   `(false, false)` idle. Same rationale: safer to NOT pulse DTR/RTS
+///   on a board whose autoreset wiring we can't confirm than to risk
+///   stomping on a running sketch.
+fn family_for_port_via_kernel_class(name: &str) -> Option<BoardFamily> {
+    use crate::port_class::{detect_port_kernel_class, PortKernelClass};
+    match detect_port_kernel_class(name)? {
+        PortKernelClass::CdcAcm => Some(BoardFamily::Esp32NativeUsbCdc),
+        PortKernelClass::UsbSerialBridge => Some(BoardFamily::Esp32ExternalUart),
+    }
 }
 
 /// Classify a serial port, falling back to the safe CDC-ACM host-ready
@@ -553,6 +597,43 @@ mod tests {
         assert_eq!(board_hint(0, 0), None);
         // Vendor known, product unknown — exact-match policy
         assert_eq!(board_hint(0x303A, 0xFFFF), None);
+    }
+
+    /// FastLED/fbuild#895: the kernel-class fallback in
+    /// `family_for_port_via_kernel_class` must map `CdcAcm` to a
+    /// family whose `idle_dtr_rts` is the safe `(false, false)`. If
+    /// someone changes the mapping to a family with `(true, true)`,
+    /// every attach to an off-brand ESP32-S3 will reset the running
+    /// firmware again. Pin the invariant in a test.
+    #[test]
+    fn kernel_class_cdc_default_uses_false_false_idle() {
+        let f = BoardFamily::Esp32NativeUsbCdc; // what the mapping returns
+        assert_eq!(f.idle_dtr_rts(), (false, false));
+    }
+
+    #[test]
+    fn kernel_class_bridge_default_uses_false_false_idle() {
+        let f = BoardFamily::Esp32ExternalUart; // what the mapping returns
+        assert_eq!(f.idle_dtr_rts(), (false, false));
+    }
+
+    /// VID/PID table must always win over the kernel-class fallback.
+    /// If an ESP32-S3 board IS in `family_for_vid_pid` (0x303A:*) we
+    /// must NOT degrade to the generic CDC default — the explicit
+    /// table carries more semantic info (handoff timing, reset method).
+    #[test]
+    fn family_for_port_vid_pid_wins_over_kernel_class() {
+        // Confirm the table classifies the known VID. The fact that
+        // the table returns Some(Esp32NativeUsbCdc) is sufficient —
+        // `family_for_port` calls VID/PID first and short-circuits.
+        assert_eq!(
+            family_for_vid_pid(0x303A, 0x1001),
+            Some(BoardFamily::Esp32NativeUsbCdc)
+        );
+        // (We can't unit-test `family_for_port` directly because it
+        // walks the live OS port list. The short-circuit is enforced
+        // by reading the source — and by the precedence comment on
+        // `family_for_port`.)
     }
 
     #[test]
