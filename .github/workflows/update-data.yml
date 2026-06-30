@@ -218,6 +218,15 @@ jobs:
             --out /tmp/wch-usb-pids.json
           wc -l /tmp/wch-usb-pids.json
 
+      - name: Fetch Teensy USB PID supplement (USB-VID tier-3 supplement)
+        id: fetch-teensy-pids
+        continue-on-error: true
+        run: |
+          uv run --no-project --script \
+            "${{ github.workspace }}/online-data-tools/fetch_teensy_usb_pids.py" \
+            --out /tmp/teensy-usb-pids.json
+          wc -l /tmp/teensy-usb-pids.json
+
       - name: Dump PlatformIO board catalog → /tmp/all_boards.json
         id: dump-pio
         continue-on-error: true
@@ -279,6 +288,12 @@ jobs:
             # reason as FTDI: fill newer chip IDs without replacing mature
             # usb.ids names for older CH34x entries.
             args+=(--json "wch-usb-pids=/tmp/wch-usb-pids.json")
+          fi
+          if [ "${{ steps.fetch-teensy-pids.outcome }}" = "success" ] && [ -s /tmp/teensy-usb-pids.json ]; then
+            # Teensy rows are after generic VOTI/PJRC USB-ID data so legacy
+            # names remain stable; this source fills modern Teensyduino PIDs
+            # declared in PJRC's current core headers.
+            args+=(--json "teensy-usb-pids=/tmp/teensy-usb-pids.json")
           fi
           if [ "${#args[@]}" -eq 0 ]; then
             echo "::warning::all USB-VID sources failed; preserving previously committed data"
@@ -454,6 +469,7 @@ jobs:
             echo "| nordic usb-pids            | ${{ steps.fetch-nordic-pids.outcome }} |"
             echo "| ftdi usb-pids              | ${{ steps.fetch-ftdi-pids.outcome }} |"
             echo "| wch usb-pids               | ${{ steps.fetch-wch-pids.outcome }} |"
+            echo "| teensy usb-pids            | ${{ steps.fetch-teensy-pids.outcome }} |"
             echo "| pio boards (platformio)    | ${{ steps.dump-pio.outcome }} |"
             echo "| merge usb-vid              | ${{ steps.merge-usb.outcome }} |"
             echo "| emit inlined supplement    | ${{ steps.emit-inlined.outcome }} |"
