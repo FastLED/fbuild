@@ -162,7 +162,11 @@ impl Platform {
             Some(Self::Ch32v)
         } else if s.contains("nordicnrf52") {
             Some(Self::NordicNrf52)
-        } else if s.contains("nxplpc") {
+        // FastLED/fbuild#XXX: GitHub URL form is `platform-nxp-lpc8xx`
+        // (hyphenated). PlatformIO registry name is `nxplpc` (no separator).
+        // Match both so a `platform = https://github.com/FastLED/
+        // platform-nxp-lpc8xx.git#<sha>` spec in platformio.ini resolves.
+        } else if s.contains("nxplpc") || s.contains("nxp-lpc") {
             Some(Self::NxpLpc)
         } else if s.contains("renesas") {
             Some(Self::RenesasRa)
@@ -569,6 +573,18 @@ mod tests {
                 "https://github.com/platformio/platform-atmelavr.git#feature-branch"
             ),
             Some(Platform::AtmelAvr)
+        );
+        // FastLED LPC8xx fork uses the hyphenated GitHub form
+        // `platform-nxp-lpc8xx` (PlatformIO registry name is `nxplpc`).
+        assert_eq!(
+            Platform::from_platform_str(
+                "https://github.com/FastLED/platform-nxp-lpc8xx.git#12265f765aebd3893465d6d7ad76be66d89ba015"
+            ),
+            Some(Platform::NxpLpc)
+        );
+        assert_eq!(
+            Platform::from_platform_str("nxplpc"),
+            Some(Platform::NxpLpc)
         );
     }
 
