@@ -17,6 +17,7 @@ is committed to orphan branches:
 | `fetch_microchip_usb_pids.py` | Microchip pyedbglib/pykitinfo plus weak AVRDUDE/board-package supplements | merge-compatible `/tmp/microchip-*-usb-pids.json` |
 | `fetch_arduino_usb_pids.py` | Official ArduinoCore `boards.txt` files | merge-compatible `/tmp/arduino-usb-pids.json` |
 | `fetch_adafruit_usb_pids.py` | Adafruit Arduino cores + TinyUF2 + CircuitPython descriptors | merge-compatible `/tmp/adafruit-usb-pids.json` |
+| `fetch_sparkfun_usb_pids.py` | SparkFun board packages plus weak PlatformIO/CircuitPython supplements | merge-compatible `/tmp/sparkfun-*-usb-pids.json` |
 | `fetch_ftdi_usb_pids.py` | Linux `ftdi_sio_ids.h` original-FTDI PID section | merge-compatible `/tmp/ftdi-usb-pids.json` |
 | `fetch_wch_usb_pids.py` | WCH CH343 Linux driver + udev rules | merge-compatible `/tmp/wch-usb-pids.json` |
 | `fetch_teensy_usb_pids.py` | PJRC Teensy core headers + loader CLI | merge-compatible `/tmp/teensy-usb-pids.json` |
@@ -89,6 +90,21 @@ Adafruit first-party product names win, but entries still describe USB
 products rather than fbuild board support; support is governed by
 `crates/fbuild-config/assets/boards`.
 
+The SparkFun supplement has explicit source tiers for VID `0x1b4f`.
+`--tier first-party` parses SparkFun-maintained Arduino board package files,
+product-repo board files, and SparkFun product descriptors such as UF2
+`board_config.h` and CircuitPython `mpconfigboard.mk` files. The workflow
+orders this first-party tier before generic USB-ID feeds so SparkFun-owned
+product names win. `--tier supplemental` parses third-party PlatformIO board
+JSON `build.hwids` and Adafruit CircuitPython descriptors for SparkFun-named
+boards only after first-party and generic USB-ID sources. Those weak rows fill
+gaps such as newer SparkFun ESP32/RP/Teensy MicroMod products but must not
+override first-party rows. SparkFun's Apollo3 package currently has no
+`vid.N`/`pid.N` rows, so Artemis/Apollo3 board discovery remains a weak CH340
+bridge hint rather than a SparkFun PID table. A SparkFun VID/PID row is USB
+product metadata, not proof of fbuild board support; support still depends on
+the board existing under `crates/fbuild-config/assets/boards`.
+
 The FTDI supplement parses the upstream Linux `ftdi_sio_ids.h` header but only
 the original FTDI PID section before the third-party marker. It emits a small
 allowlist of missing FTDI-owned bridge/product rows such as `0403:6040` and
@@ -159,6 +175,7 @@ uv run --no-project --with pytest pytest online-data-tools/test_nordic_usb_pids.
 uv run --no-project --with pytest pytest online-data-tools/test_microchip_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_arduino_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_adafruit_usb_pids.py -v
+uv run --no-project --with pytest pytest online-data-tools/test_sparkfun_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_ftdi_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_wch_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_teensy_usb_pids.py -v
