@@ -36,6 +36,21 @@ fn test_leonardo_board_has_vid_pid() {
     assert_eq!(defines.get("USB_PID"), Some(&"0x8036".to_string()));
 }
 
+#[test]
+fn test_due_port_specific_vid_pid_rows() {
+    for board_id in ["due", "sainSmartDue"] {
+        let config = BoardConfig::from_board_id(board_id, &HashMap::new()).unwrap();
+        assert_eq!(config.vid, Some("0x2341".to_string()));
+        assert_eq!(config.pid, Some("0x003D".to_string()));
+    }
+
+    for board_id in ["dueUSB", "sainSmartDueUSB"] {
+        let config = BoardConfig::from_board_id(board_id, &HashMap::new()).unwrap();
+        assert_eq!(config.vid, Some("0x2341".to_string()));
+        assert_eq!(config.pid, Some("0x003E".to_string()));
+    }
+}
+
 /// FastLED/fbuild#405: on ESP32-S2/S3 the Arduino framework's
 /// `variants/<board>/pins_arduino.h` already defines `USB_VID`/`USB_PID`,
 /// so injecting them again via `-D` produces a "USB_VID redefined" warning

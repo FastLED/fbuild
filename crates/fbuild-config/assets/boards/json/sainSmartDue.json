@@ -7,7 +7,7 @@
     "extra_flags": "-D__SAM3X8E__ -DARDUINO_SAM_DUE",
     "f_cpu": "84000000L",
     "mcu": "at91sam3x8e",
-    "pid": "0x003E",
+    "pid": "0x003D",
     "variant": "arduino_due_x",
     "vid": "0x2341"
   },
