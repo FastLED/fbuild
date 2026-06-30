@@ -66,6 +66,10 @@ impl SharedSerialManager {
     /// caller knows the chip is a native ESP USB CDC AND wants the
     /// "(false, false) = run firmware" post-open idle. Pass
     /// `Some(BoardFamily::Esp32NativeUsbCdc)` in that case.
+    ///
+    /// Daemon callers usually pass `None`; that path now infers native
+    /// ESP USB CDC from the OS-reported VID/PID before applying the
+    /// `(true, true)` unknown-port fallback.
     pub async fn open_port(
         &self,
         port: &str,
@@ -106,11 +110,13 @@ impl SharedSerialManager {
             // self-eviction tick, HTTP handlers) keep making progress. See
             // ISSUES.md "Issue C".
             let port_for_open = port_name.clone();
-            let family_for_open = family;
+            let explicit_family = family;
             let open_result: std::result::Result<
                 std::result::Result<Box<dyn serialport::SerialPort>, serialport::Error>,
                 tokio::task::JoinError,
             > = tokio::task::spawn_blocking(move || {
+                let family_for_open =
+                    explicit_family.or_else(|| crate::boards::family_for_port(&port_for_open));
                 let mut serial = serialport::new(&port_for_open, baud_rate)
                     .timeout(Duration::from_millis(timeout_ms))
                     .open()?;
@@ -131,7 +137,9 @@ impl SharedSerialManager {
                 // incident (FastLED/FastLED#3300). For the full per-chip
                 // matrix see `docs/usb-cdc-control-line-matrix.md`
                 // (FastLED/fbuild#689).
-                let (dtr, rts) = family.map(|f| f.idle_dtr_rts()).unwrap_or((true, true));
+                let (dtr, rts) = family_for_open
+                    .map(|f| f.idle_dtr_rts())
+                    .unwrap_or((true, true));
                 match serial.write_data_terminal_ready(dtr) {
                     Ok(()) => tracing::debug!(
                         family = ?family_for_open,
@@ -337,30 +345,28 @@ impl SharedSerialManager {
 
         let port_owned = port.to_string();
         let data_owned = data.to_vec();
+        let expected_len = data_owned.len();
         let write_future = tokio::task::spawn_blocking(move || {
             use std::io::Write;
             let mut serial = handle.blocking_lock();
-            let n = serial
-                .write(&data_owned)
-                .map_err(|e| format!("write failed: {}", e))?;
             serial
-                .flush()
-                .map_err(|e| format!("flush failed: {}", e))?;
-            Ok::<usize, String>(n)
+                .write_all(&data_owned)
+                .map_err(|e| format!("write failed: {}", e))?;
+            serial.flush().map_err(|e| format!("flush failed: {}", e))?;
+            Ok::<usize, String>(expected_len)
         });
 
         // 2s budget: covers normal Windows USB-CDC drain + headroom but
         // bounds the worst case so a wedged adapter cannot stall the
         // daemon indefinitely on a write/flush syscall.
-        let join_result =
-            tokio::time::timeout(Duration::from_secs(2), write_future)
-                .await
-                .map_err(|_| {
-                    fbuild_core::FbuildError::SerialError(format!(
-                        "write to {} timed out after 2s",
-                        port_owned
-                    ))
-                })?;
+        let join_result = tokio::time::timeout(Duration::from_secs(2), write_future)
+            .await
+            .map_err(|_| {
+                fbuild_core::FbuildError::SerialError(format!(
+                    "write to {} timed out after 2s",
+                    port_owned
+                ))
+            })?;
 
         let bytes_written = match join_result {
             Ok(Ok(n)) => n,
@@ -909,15 +915,25 @@ impl SharedSerialManager {
                 std::result::Result<Box<dyn serialport::SerialPort>, serialport::Error>,
                 tokio::task::JoinError,
             > = tokio::task::spawn_blocking(move || {
+                let family_for_open = crate::boards::family_for_port(&port_for_open);
+                let (dtr, rts) = family_for_open
+                    .map(|family| family.idle_dtr_rts())
+                    .unwrap_or((true, true));
                 let mut serial = serialport::new(&port_for_open, baud_rate)
                     .timeout(Duration::from_millis(100))
                     .open()?;
-                match serial.write_data_terminal_ready(true) {
-                    Ok(()) => tracing::debug!("manager: open-time DTR=high asserted"),
+                match serial.write_data_terminal_ready(dtr) {
+                    Ok(()) => tracing::debug!(
+                        family = ?family_for_open,
+                        "manager: open-time DTR={dtr} asserted"
+                    ),
                     Err(e) => tracing::warn!("failed to set DTR: {}", e),
                 }
-                match serial.write_request_to_send(true) {
-                    Ok(()) => tracing::debug!("manager: open-time RTS=high asserted"),
+                match serial.write_request_to_send(rts) {
+                    Ok(()) => tracing::debug!(
+                        family = ?family_for_open,
+                        "manager: open-time RTS={rts} asserted"
+                    ),
                     Err(e) => tracing::warn!("failed to set RTS: {}", e),
                 }
                 Ok(serial)

@@ -3,6 +3,7 @@
 
 use base64::Engine;
 use futures::{SinkExt, StreamExt};
+use std::collections::VecDeque;
 use std::sync::Arc;
 use tokio_tungstenite::tungstenite;
 
@@ -38,10 +39,21 @@ where
 /// futures can still progress between iterations.
 pub(crate) async fn read_lines_async(
     ws_read_slot: Arc<tokio::sync::Mutex<Option<WsSource>>>,
+    pending_lines: Arc<tokio::sync::Mutex<VecDeque<String>>>,
     auto_reconnect: bool,
     timeout_secs: f64,
 ) -> Vec<String> {
     let mut lines = Vec::new();
+    {
+        let mut pending = pending_lines.lock().await;
+        while let Some(line) = pending.pop_front() {
+            lines.push(line);
+        }
+    }
+    if !lines.is_empty() {
+        return lines;
+    }
+
     let deadline = std::time::Instant::now() + std::time::Duration::from_secs_f64(timeout_secs);
 
     loop {
@@ -103,6 +115,7 @@ pub(crate) async fn read_lines_async(
 pub(crate) async fn write_async(
     ws_write_slot: Arc<tokio::sync::Mutex<Option<WsSink>>>,
     ws_read_slot: Arc<tokio::sync::Mutex<Option<WsSource>>>,
+    pending_lines: Arc<tokio::sync::Mutex<VecDeque<String>>>,
     encoded: String,
 ) -> bool {
     let msg = serde_json::to_string(&ClientMessage::Write { data: encoded })
@@ -118,22 +131,44 @@ pub(crate) async fn write_async(
         }
     }
 
-    // Wait for write_ack. Hold the read half's mutex only across this
-    // single `.next()` so concurrent `read_lines` futures can resume.
+    // Wait for write_ack. Serial data can arrive before the ack on the
+    // WebSocket; queue it for the next read rather than consuming it.
     let mut guard = ws_read_slot.lock().await;
     let Some(source) = guard.as_mut() else {
         return false;
     };
-    let ack_timeout = std::time::Duration::from_secs(5);
-    match tokio::time::timeout(ack_timeout, source.next()).await {
-        Ok(Some(Ok(tungstenite::Message::Text(text)))) => {
-            matches!(
-                serde_json::from_str::<ServerMessage>(&text),
-                Ok(ServerMessage::WriteAck { bytes_written, .. }) if bytes_written > 0
-            )
+    let deadline = std::time::Instant::now() + std::time::Duration::from_secs(5);
+    while std::time::Instant::now() < deadline {
+        let remaining = deadline - std::time::Instant::now();
+        match tokio::time::timeout(remaining, source.next()).await {
+            Ok(Some(Ok(tungstenite::Message::Text(text)))) => {
+                match serde_json::from_str::<ServerMessage>(&text) {
+                    Ok(ServerMessage::WriteAck {
+                        success,
+                        bytes_written,
+                        ..
+                    }) => return success && bytes_written > 0,
+                    Ok(ServerMessage::Data { lines, .. }) => {
+                        pending_lines.lock().await.extend(lines);
+                        continue;
+                    }
+                    Ok(ServerMessage::Preempted { .. })
+                    | Ok(ServerMessage::Reconnected { .. })
+                    | Ok(ServerMessage::PortRenumbered { .. })
+                    | Ok(ServerMessage::PortReattached { .. })
+                    | Ok(ServerMessage::Other) => continue,
+                    Ok(ServerMessage::Error { .. })
+                    | Ok(ServerMessage::PortDisconnected { .. })
+                    | Ok(ServerMessage::PortRebindFailed { .. }) => return false,
+                    _ => continue,
+                }
+            }
+            Ok(Some(Ok(tungstenite::Message::Close(_)))) | Ok(None) => break,
+            Err(_) => break,
+            _ => continue,
         }
-        _ => false,
     }
+    false
 }
 
 /// Async counterpart to `wait_for_remote_json_rpc_response`. Keeps
@@ -142,6 +177,7 @@ pub(crate) async fn write_async(
 pub(crate) async fn wait_for_remote_json_rpc_response_async(
     timeout_secs: f64,
     ws_read_slot: Arc<tokio::sync::Mutex<Option<WsSource>>>,
+    pending_lines: Arc<tokio::sync::Mutex<VecDeque<String>>>,
     auto_reconnect: bool,
 ) -> Option<String> {
     let deadline = std::time::Instant::now() + std::time::Duration::from_secs_f64(timeout_secs);
@@ -151,7 +187,13 @@ pub(crate) async fn wait_for_remote_json_rpc_response_async(
         if remaining <= 0.0 {
             break;
         }
-        let lines = read_lines_async(ws_read_slot.clone(), auto_reconnect, remaining).await;
+        let lines = read_lines_async(
+            ws_read_slot.clone(),
+            pending_lines.clone(),
+            auto_reconnect,
+            remaining,
+        )
+        .await;
         if let Some(json_part) = extract_remote_json_rpc_response(&lines) {
             return Some(json_part);
         }
