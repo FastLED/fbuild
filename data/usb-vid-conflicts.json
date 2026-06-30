@@ -1,4 +1,307 @@
 {
+  "03eb:2103": [
+    {
+      "product": "JTAG ICE mkII",
+      "source": "usb-ids-rs",
+      "vendor": "Atmel Corp."
+    },
+    {
+      "product": "AVR JTAGICE mkII",
+      "source": "microchip-supplemental-usb-pids",
+      "vendor": "Atmel Corp."
+    }
+  ],
+  "03eb:2110": [
+    {
+      "product": "AVR JTAGICE3 Debugger and Programmer",
+      "source": "usb-ids-rs",
+      "vendor": "Atmel Corp."
+    },
+    {
+      "product": "AVR JTAGICE3",
+      "source": "microchip-supplemental-usb-pids",
+      "vendor": "Atmel Corp."
+    }
+  ],
+  "03eb:2111": [
+    {
+      "product": "EDBG",
+      "source": "microchip-first-party-usb-pids",
+      "vendor": "Atmel Corp."
+    },
+    {
+      "product": "Xplained Pro board debugger and programmer",
+      "source": "usb-ids-rs",
+      "vendor": "Atmel Corp."
+    },
+    {
+      "product": "Xplained Pro board debugger",
+      "source": "microchip-supplemental-usb-pids",
+      "vendor": "Atmel Corp."
+    },
+    {
+      "product": "Xplained Pro board debugger and programmer",
+      "source": "linux-usb.org",
+      "vendor": "Atmel Corp."
+    },
+    {
+      "product": "Xplained Pro board debugger and programmer",
+      "source": "usbids-github",
+      "vendor": "Atmel Corp."
+    }
+  ],
+  "03eb:2140": [
+    {
+      "product": "JTAGICE3",
+      "source": "microchip-first-party-usb-pids",
+      "vendor": "Atmel Corp."
+    },
+    {
+      "product": "AVR JTAGICE3 (v3.x) Debugger and Programmer",
+      "source": "usb-ids-rs",
+      "vendor": "Atmel Corp."
+    },
+    {
+      "product": "JTAGICE3/EDBG",
+      "source": "microchip-supplemental-usb-pids",
+      "vendor": "Atmel Corp."
+    },
+    {
+      "product": "AVR JTAGICE3 (v3.x) Debugger and Programmer",
+      "source": "linux-usb.org",
+      "vendor": "Atmel Corp."
+    },
+    {
+      "product": "AVR JTAGICE3 (v3.x) Debugger and Programmer",
+      "source": "usbids-github",
+      "vendor": "Atmel Corp."
+    }
+  ],
+  "03eb:2141": [
+    {
+      "product": "Atmel-ICE",
+      "source": "microchip-first-party-usb-pids",
+      "vendor": "Atmel Corp."
+    },
+    {
+      "product": "ICE debugger",
+      "source": "usb-ids-rs",
+      "vendor": "Atmel Corp."
+    },
+    {
+      "product": "ICE debugger",
+      "source": "linux-usb.org",
+      "vendor": "Atmel Corp."
+    },
+    {
+      "product": "ICE debugger",
+      "source": "usbids-github",
+      "vendor": "Atmel Corp."
+    }
+  ],
+  "03eb:2145": [
+    {
+      "product": "mEDBG",
+      "source": "microchip-first-party-usb-pids",
+      "vendor": "Atmel Corp."
+    },
+    {
+      "product": "ATMEGA328P-XMINI (CDC ACM)",
+      "source": "usb-ids-rs",
+      "vendor": "Atmel Corp."
+    },
+    {
+      "product": "Xplained Mini mEDBG",
+      "source": "microchip-supplemental-usb-pids",
+      "vendor": "Atmel Corp."
+    },
+    {
+      "product": "ATMEGA328P-XMINI (CDC ACM)",
+      "source": "linux-usb.org",
+      "vendor": "Atmel Corp."
+    },
+    {
+      "product": "ATMEGA328P-XMINI (CDC ACM)",
+      "source": "usbids-github",
+      "vendor": "Atmel Corp."
+    }
+  ],
+  "03eb:2157": [
+    {
+      "product": "Arduino Zero EDBG",
+      "source": "microchip-first-party-usb-pids",
+      "vendor": "Atmel Corp."
+    },
+    {
+      "product": "Arduino Zero (Programming Port)",
+      "source": "microchip-supplemental-usb-pids",
+      "vendor": "Atmel Corp."
+    }
+  ],
+  "0403:8372": [
+    {
+      "product": "FT8U100AX Serial Port",
+      "source": "usb-ids-rs",
+      "vendor": "Future Technology Devices International, Ltd"
+    },
+    {
+      "product": "SIO application of 8U100AX",
+      "source": "ftdi-usb-pids",
+      "vendor": "Future Technology Devices International, Ltd"
+    }
+  ],
+  "0483:374d": [
+    {
+      "product": "STLINK-V3 Loader",
+      "source": "usb-ids-rs",
+      "vendor": "STMicroelectronics"
+    },
+    {
+      "product": "STLINK-V3 USB loader",
+      "source": "stm-usb-pids",
+      "vendor": "STMicroelectronics"
+    }
+  ],
+  "0483:374e": [
+    {
+      "product": "STLINK-V3",
+      "source": "usb-ids-rs",
+      "vendor": "STMicroelectronics"
+    },
+    {
+      "product": "STLINK-V3E",
+      "source": "stm-usb-pids",
+      "vendor": "STMicroelectronics"
+    }
+  ],
+  "0483:374f": [
+    {
+      "product": "STLINK-V3",
+      "source": "usb-ids-rs",
+      "vendor": "STMicroelectronics"
+    },
+    {
+      "product": "STLINK-V3S",
+      "source": "stm-usb-pids",
+      "vendor": "STMicroelectronics"
+    }
+  ],
+  "0483:3752": [
+    {
+      "product": "ST-LINK/V2.1",
+      "source": "usb-ids-rs",
+      "vendor": "STMicroelectronics"
+    },
+    {
+      "product": "ST-LINK/V2.1 no MSD",
+      "source": "stm-usb-pids",
+      "vendor": "STMicroelectronics"
+    }
+  ],
+  "0483:3753": [
+    {
+      "product": "STLINK-V3",
+      "source": "usb-ids-rs",
+      "vendor": "STMicroelectronics"
+    },
+    {
+      "product": "STLINK-V3 with 2 VCP",
+      "source": "stm-usb-pids",
+      "vendor": "STMicroelectronics"
+    }
+  ],
+  "04d8:9012": [
+    {
+      "product": "MPLAB PICkit 4",
+      "source": "microchip-first-party-usb-pids",
+      "vendor": "Microchip Technology, Inc."
+    },
+    {
+      "product": "PICkit4",
+      "source": "usb-ids-rs",
+      "vendor": "Microchip Technology, Inc."
+    },
+    {
+      "product": "PICkit4",
+      "source": "linux-usb.org",
+      "vendor": "Microchip Technology, Inc."
+    },
+    {
+      "product": "PICkit4",
+      "source": "usbids-github",
+      "vendor": "Microchip Technology, Inc."
+    }
+  ],
+  "04d8:9015": [
+    {
+      "product": "MPLAB ICD 4",
+      "source": "microchip-first-party-usb-pids",
+      "vendor": "Microchip Technology, Inc."
+    },
+    {
+      "product": "ICD 4 In-Circuit Debugger",
+      "source": "usb-ids-rs",
+      "vendor": "Microchip Technology, Inc."
+    },
+    {
+      "product": "ICD 4 In-Circuit Debugger",
+      "source": "linux-usb.org",
+      "vendor": "Microchip Technology, Inc."
+    },
+    {
+      "product": "ICD 4 In-Circuit Debugger",
+      "source": "usbids-github",
+      "vendor": "Microchip Technology, Inc."
+    }
+  ],
+  "04d8:9018": [
+    {
+      "product": "MPLAB Snap In-Circuit Debugger",
+      "source": "microchip-first-party-usb-pids",
+      "vendor": "Microchip Technology, Inc."
+    },
+    {
+      "product": "MPLAB Snap",
+      "source": "microchip-supplemental-usb-pids",
+      "vendor": "Microchip Technology, Inc."
+    }
+  ],
+  "04d8:9036": [
+    {
+      "product": "MPLAB PICkit 5 CDC",
+      "source": "microchip-first-party-usb-pids",
+      "vendor": "Microchip Technology, Inc."
+    },
+    {
+      "product": "MPLAB PICkit 5",
+      "source": "microchip-supplemental-usb-pids",
+      "vendor": "Microchip Technology, Inc."
+    }
+  ],
+  "04d8:9055": [
+    {
+      "product": "MPLAB PICkit Basic CDC",
+      "source": "microchip-first-party-usb-pids",
+      "vendor": "Microchip Technology, Inc."
+    },
+    {
+      "product": "MPLAB PICkit Basic",
+      "source": "microchip-supplemental-usb-pids",
+      "vendor": "Microchip Technology, Inc."
+    }
+  ],
+  "04d8:90ac": [
+    {
+      "product": "MPLAB PICkit Basic CMSIS-DAP CDC",
+      "source": "microchip-first-party-usb-pids",
+      "vendor": "Microchip Technology, Inc."
+    },
+    {
+      "product": "MPLAB PICkit Basic CMSIS-DAP",
+      "source": "microchip-supplemental-usb-pids",
+      "vendor": "Microchip Technology, Inc."
+    }
+  ],
   "0ccd:10ad": [
     {
       "product": " Cinergy H5 Rev. 2",
@@ -65,6 +368,1068 @@
       "product": "C902 Phone [Mass Storage]",
       "source": "usbids-github",
       "vendor": "Sony Ericsson Mobile Communications AB"
+    }
+  ],
+  "16c0:0478": [
+    {
+      "product": "Teensy Halfkay Bootloader",
+      "source": "usb-ids-rs",
+      "vendor": "Van Ooijen Technische Informatica"
+    },
+    {
+      "product": "Teensy HalfKay Bootloader",
+      "source": "teensy-usb-pids",
+      "vendor": "Van Ooijen Technische Informatica"
+    }
+  ],
+  "16c0:0482": [
+    {
+      "product": "Teensyduino Keyboard+Mouse+Joystick",
+      "source": "usb-ids-rs",
+      "vendor": "Van Ooijen Technische Informatica"
+    },
+    {
+      "product": "Teensyduino Keyboard/Mouse/Joystick",
+      "source": "teensy-usb-pids",
+      "vendor": "Van Ooijen Technische Informatica"
+    }
+  ],
+  "16c0:0487": [
+    {
+      "product": "Teensyduino Serial+Keyboard+Mouse+Joystick",
+      "source": "usb-ids-rs",
+      "vendor": "Van Ooijen Technische Informatica"
+    },
+    {
+      "product": "Teensyduino Serial/Keyboard/Mouse/Joystick",
+      "source": "teensy-usb-pids",
+      "vendor": "Van Ooijen Technische Informatica"
+    }
+  ],
+  "1b4f:0015": [
+    {
+      "product": "RedBoard Turbo",
+      "source": "sparkfun-first-party-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun RedBoard Turbo / SparkFun RedBoard Turbo Board",
+      "source": "sparkfun-supplemental-usb-pids",
+      "vendor": "SparkFun"
+    }
+  ],
+  "1b4f:0020": [
+    {
+      "product": "SparkFun MicroMod SAMD51 Processor Board / SparkFun SAMD51 MicroMod",
+      "source": "sparkfun-first-party-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun MicroMod SAMD51 Processor / SparkFun SAMD51 MicroMod",
+      "source": "sparkfun-supplemental-usb-pids",
+      "vendor": "SparkFun"
+    }
+  ],
+  "1b4f:0d21": [
+    {
+      "product": "SFE SAMD21",
+      "source": "sparkfun-first-party-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun SAMD21 Dev Breakout / SparkFun SAMD21 Mini Breakout",
+      "source": "sparkfun-supplemental-usb-pids",
+      "vendor": "SparkFun"
+    }
+  ],
+  "1b4f:214f": [
+    {
+      "product": "SFE SAMD21 Pro RF",
+      "source": "sparkfun-first-party-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun SAMD21 Pro RF",
+      "source": "sparkfun-supplemental-usb-pids",
+      "vendor": "SparkFun"
+    }
+  ],
+  "1b4f:215f": [
+    {
+      "product": "SFE SAMD21 Pro RF",
+      "source": "sparkfun-first-party-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun SAMD21 Pro RF",
+      "source": "sparkfun-supplemental-usb-pids",
+      "vendor": "SparkFun"
+    }
+  ],
+  "1b4f:2b74": [
+    {
+      "product": "SparkFun MaKey MaKey",
+      "source": "sparkfun-first-party-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun Makey Makey",
+      "source": "sparkfun-supplemental-usb-pids",
+      "vendor": "SparkFun"
+    }
+  ],
+  "1b4f:2b75": [
+    {
+      "product": "SparkFun MaKey MaKey",
+      "source": "sparkfun-first-party-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun Makey Makey",
+      "source": "sparkfun-supplemental-usb-pids",
+      "vendor": "SparkFun"
+    }
+  ],
+  "1b4f:514d": [
+    {
+      "product": "Qtechknow Qduino Mini",
+      "source": "sparkfun-first-party-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun Qduino Mini",
+      "source": "sparkfun-supplemental-usb-pids",
+      "vendor": "SparkFun"
+    }
+  ],
+  "1b4f:516d": [
+    {
+      "product": "Qtechknow Qduino Mini",
+      "source": "sparkfun-first-party-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun Qduino Mini",
+      "source": "sparkfun-supplemental-usb-pids",
+      "vendor": "SparkFun"
+    }
+  ],
+  "1b4f:8d21": [
+    {
+      "product": "SFE SAMD21 / SFE SAMD21 Pro RF 1W",
+      "source": "sparkfun-first-party-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun SAMD21 Dev Breakout / SparkFun SAMD21 Mini Breakout",
+      "source": "sparkfun-supplemental-usb-pids",
+      "vendor": "SparkFun"
+    }
+  ],
+  "1b4f:9203": [
+    {
+      "product": "SparkFun Pro Micro ATmega32U4 (3.3V, 8 MHz)",
+      "source": "sparkfun-first-party-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun Pro Micro 3.3V/8MHz",
+      "source": "sparkfun-supplemental-usb-pids",
+      "vendor": "SparkFun"
+    }
+  ],
+  "1b4f:9204": [
+    {
+      "product": "SparkFun Pro Micro ATmega32U4 (3.3V, 8 MHz)",
+      "source": "sparkfun-first-party-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun Pro Micro 3.3V/8MHz",
+      "source": "sparkfun-supplemental-usb-pids",
+      "vendor": "SparkFun"
+    }
+  ],
+  "1b4f:9205": [
+    {
+      "product": "SparkFun Pro Micro ATmega32U4 (5V, 16 MHz)",
+      "source": "sparkfun-first-party-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun Pro Micro 5V/16MHz",
+      "source": "sparkfun-supplemental-usb-pids",
+      "vendor": "SparkFun"
+    }
+  ],
+  "1b4f:9206": [
+    {
+      "product": "SparkFun Pro Micro ATmega32U4 (5V, 16 MHz)",
+      "source": "sparkfun-first-party-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun Pro Micro 5V/16MHz",
+      "source": "sparkfun-supplemental-usb-pids",
+      "vendor": "SparkFun"
+    }
+  ],
+  "1b4f:9d0e": [
+    {
+      "product": "SFE 9DOF-D21",
+      "source": "sparkfun-first-party-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun 9DoF Razor IMU M0",
+      "source": "sparkfun-supplemental-usb-pids",
+      "vendor": "SparkFun"
+    }
+  ],
+  "1b4f:9d0f": [
+    {
+      "product": "SFE 9DOF-D21",
+      "source": "sparkfun-first-party-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun 9DoF Razor IMU M0",
+      "source": "sparkfun-supplemental-usb-pids",
+      "vendor": "SparkFun"
+    }
+  ],
+  "1b4f:f015": [
+    {
+      "product": "RedBoard Turbo",
+      "source": "sparkfun-first-party-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun RedBoard Turbo",
+      "source": "sparkfun-supplemental-usb-pids",
+      "vendor": "SparkFun"
+    }
+  ],
+  "1b4f:f100": [
+    {
+      "product": "SparkFun Fio v3",
+      "source": "sparkfun-first-party-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun Fio V3 3.3V/8MHz",
+      "source": "sparkfun-supplemental-usb-pids",
+      "vendor": "SparkFun"
+    }
+  ],
+  "1b4f:f101": [
+    {
+      "product": "SparkFun Fio v3",
+      "source": "sparkfun-first-party-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun Fio V3 3.3V/8MHz",
+      "source": "sparkfun-supplemental-usb-pids",
+      "vendor": "SparkFun"
+    }
+  ],
+  "1fc9:0126": [
+    {
+      "product": "i.MX 7ULP SystemOnChip in RecoveryMode",
+      "source": "usb-ids-rs",
+      "vendor": "NXP Semiconductors"
+    },
+    {
+      "product": "NXP MX7ULP serial downloader (SDP)",
+      "source": "nxp-usb-pids",
+      "vendor": "NXP Semiconductors"
+    }
+  ],
+  "1fc9:012b": [
+    {
+      "product": "i.MX 8M Dual/8M QuadLite/8M Quad Serial Downloader",
+      "source": "usb-ids-rs",
+      "vendor": "NXP Semiconductors"
+    },
+    {
+      "product": "NXP MX8MQ serial downloader (SDP)",
+      "source": "nxp-usb-pids",
+      "vendor": "NXP Semiconductors"
+    }
+  ],
+  "2341:0001": [
+    {
+      "product": "Arduino UNO",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Uno (CDC ACM)",
+      "source": "usb-ids-rs",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Uno (CDC ACM)",
+      "source": "linux-usb.org",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Uno (CDC ACM)",
+      "source": "usbids-github",
+      "vendor": "Arduino SA"
+    }
+  ],
+  "2341:0010": [
+    {
+      "product": "Arduino Mega or Mega 2560",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Mega 2560 (CDC ACM)",
+      "source": "usb-ids-rs",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Mega 2560 (CDC ACM)",
+      "source": "linux-usb.org",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Mega 2560 (CDC ACM)",
+      "source": "usbids-github",
+      "vendor": "Arduino SA"
+    }
+  ],
+  "2341:0036": [
+    {
+      "product": "Arduino Leonardo",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Leonardo Bootloader",
+      "source": "usb-ids-rs",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Leonardo Bootloader",
+      "source": "linux-usb.org",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Leonardo Bootloader",
+      "source": "usbids-github",
+      "vendor": "Arduino SA"
+    }
+  ],
+  "2341:003d": [
+    {
+      "product": "Arduino Due (Programming Port)",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Due Programming Port",
+      "source": "usb-ids-rs",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Due Programming Port",
+      "source": "linux-usb.org",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Due Programming Port",
+      "source": "usbids-github",
+      "vendor": "Arduino SA"
+    }
+  ],
+  "2341:003e": [
+    {
+      "product": "Arduino Due (Native USB Port)",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Due",
+      "source": "usb-ids-rs",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Due",
+      "source": "linux-usb.org",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Due",
+      "source": "usbids-github",
+      "vendor": "Arduino SA"
+    }
+  ],
+  "2341:003f": [
+    {
+      "product": "Arduino Mega ADK",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Mega ADK (CDC ACM)",
+      "source": "usb-ids-rs",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Mega ADK (CDC ACM)",
+      "source": "linux-usb.org",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Mega ADK (CDC ACM)",
+      "source": "usbids-github",
+      "vendor": "Arduino SA"
+    }
+  ],
+  "2341:0042": [
+    {
+      "product": "Arduino Mega or Mega 2560",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Mega 2560 R3 (CDC ACM)",
+      "source": "usb-ids-rs",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Mega 2560 R3 (CDC ACM)",
+      "source": "linux-usb.org",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Mega 2560 R3 (CDC ACM)",
+      "source": "usbids-github",
+      "vendor": "Arduino SA"
+    }
+  ],
+  "2341:0043": [
+    {
+      "product": "Arduino UNO",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Uno R3 (CDC ACM)",
+      "source": "usb-ids-rs",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Uno R3 (CDC ACM)",
+      "source": "linux-usb.org",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Uno R3 (CDC ACM)",
+      "source": "usbids-github",
+      "vendor": "Arduino SA"
+    }
+  ],
+  "2341:0044": [
+    {
+      "product": "Arduino Mega ADK",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Mega ADK R3 (CDC ACM)",
+      "source": "usb-ids-rs",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Mega ADK R3 (CDC ACM)",
+      "source": "linux-usb.org",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Mega ADK R3 (CDC ACM)",
+      "source": "usbids-github",
+      "vendor": "Arduino SA"
+    }
+  ],
+  "2341:8036": [
+    {
+      "product": "Arduino Leonardo",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Leonardo (CDC ACM, HID)",
+      "source": "usb-ids-rs",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Leonardo (CDC ACM, HID)",
+      "source": "linux-usb.org",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Leonardo (CDC ACM, HID)",
+      "source": "usbids-github",
+      "vendor": "Arduino SA"
+    }
+  ],
+  "2341:8038": [
+    {
+      "product": "Arduino Robot Control",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Robot Control Board (CDC ACM, HID)",
+      "source": "usb-ids-rs",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Robot Control Board (CDC ACM, HID)",
+      "source": "linux-usb.org",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Robot Control Board (CDC ACM, HID)",
+      "source": "usbids-github",
+      "vendor": "Arduino SA"
+    }
+  ],
+  "2341:8039": [
+    {
+      "product": "Arduino Robot Motor",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Robot Motor Board (CDC ACM, HID)",
+      "source": "usb-ids-rs",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Robot Motor Board (CDC ACM, HID)",
+      "source": "linux-usb.org",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Robot Motor Board (CDC ACM, HID)",
+      "source": "usbids-github",
+      "vendor": "Arduino SA"
+    }
+  ],
+  "239a:801e": [
+    {
+      "product": "Adafruit Trinket M0 (SAMD21)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Trinket M0",
+      "source": "usb-ids-rs",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Trinket M0",
+      "source": "linux-usb.org",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Trinket M0",
+      "source": "usbids-github",
+      "vendor": "Adafruit"
+    }
+  ],
+  "2886:0046": [
+    {
+      "product": "Seeed Studio XIAO ESP32C3",
+      "source": "seeed-first-party-usb-pids",
+      "vendor": "Seeed Technology Co., Ltd."
+    },
+    {
+      "product": "Pcbcupid GLYPH C3 / Seeed XIAO ESP32C3 / Seeed Studio XIAO ESP32C3",
+      "source": "seeed-supplemental-usb-pids",
+      "vendor": "Seeed Technology Co., Ltd."
+    }
+  ],
+  "2886:0056": [
+    {
+      "product": "Seeed Studio XIAO ESP32S3 Plus / Seeed Studio XIAO ESP32S3 Sense",
+      "source": "seeed-first-party-usb-pids",
+      "vendor": "Seeed Technology Co., Ltd."
+    },
+    {
+      "product": "Seeed Studio XIAO ESP32S3 / Seeed XIAO ESP32S3",
+      "source": "seeed-supplemental-usb-pids",
+      "vendor": "Seeed Technology Co., Ltd."
+    }
+  ],
+  "2886:0058": [
+    {
+      "product": "Seeed Studio XIAO RP2350",
+      "source": "seeed-first-party-usb-pids",
+      "vendor": "Seeed Technology Co., Ltd."
+    },
+    {
+      "product": "Seeed XIAO RP2350",
+      "source": "seeed-supplemental-usb-pids",
+      "vendor": "Seeed Technology Co., Ltd."
+    }
+  ],
+  "2886:8056": [
+    {
+      "product": "Seeed Studio XIAO ESP32S3 Plus / Seeed Studio XIAO ESP32S3 Sense",
+      "source": "seeed-first-party-usb-pids",
+      "vendor": "Seeed Technology Co., Ltd."
+    },
+    {
+      "product": "Seeed Studio XIAO ESP32S3 / Seeed XIAO ESP32S3 / Seeed Xiao ESP32-S3 Sense / Seeed XIAO ESP32-S3",
+      "source": "seeed-supplemental-usb-pids",
+      "vendor": "Seeed Technology Co., Ltd."
+    }
+  ],
+  "2a03:0001": [
+    {
+      "product": "Linino One",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino LLC"
+    },
+    {
+      "product": "Linino ONE (bootloader)",
+      "source": "usb-ids-rs",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Linino ONE (bootloader)",
+      "source": "linux-usb.org",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Linino ONE (bootloader)",
+      "source": "usbids-github",
+      "vendor": "dog hunter AG"
+    }
+  ],
+  "2a03:0036": [
+    {
+      "product": "Arduino Leonardo",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino LLC"
+    },
+    {
+      "product": "Arduino Leonardo (bootloader)",
+      "source": "usb-ids-rs",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Leonardo (bootloader)",
+      "source": "linux-usb.org",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Leonardo (bootloader)",
+      "source": "usbids-github",
+      "vendor": "dog hunter AG"
+    }
+  ],
+  "2a03:0037": [
+    {
+      "product": "Arduino Micro",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino LLC"
+    },
+    {
+      "product": "Arduino Micro (bootloader)",
+      "source": "usb-ids-rs",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Micro (bootloader)",
+      "source": "linux-usb.org",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Micro (bootloader)",
+      "source": "usbids-github",
+      "vendor": "dog hunter AG"
+    }
+  ],
+  "2a03:0038": [
+    {
+      "product": "Arduino Robot Control",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino LLC"
+    },
+    {
+      "product": "Arduino Robot Control (bootloader)",
+      "source": "usb-ids-rs",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Robot Control (bootloader)",
+      "source": "linux-usb.org",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Robot Control (bootloader)",
+      "source": "usbids-github",
+      "vendor": "dog hunter AG"
+    }
+  ],
+  "2a03:0039": [
+    {
+      "product": "Arduino Robot Motor",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino LLC"
+    },
+    {
+      "product": "Arduino Robot Motor (bootloader)",
+      "source": "usb-ids-rs",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Robot Motor (bootloader)",
+      "source": "linux-usb.org",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Robot Motor (bootloader)",
+      "source": "usbids-github",
+      "vendor": "dog hunter AG"
+    }
+  ],
+  "2a03:003c": [
+    {
+      "product": "Arduino Esplora",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino LLC"
+    },
+    {
+      "product": "Arduino Explora (bootloader)",
+      "source": "usb-ids-rs",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Explora (bootloader)",
+      "source": "linux-usb.org",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Explora (bootloader)",
+      "source": "usbids-github",
+      "vendor": "dog hunter AG"
+    }
+  ],
+  "2a03:003d": [
+    {
+      "product": "Arduino Due (Programming Port)",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino LLC"
+    },
+    {
+      "product": "Arduino Due (usb2serial)",
+      "source": "usb-ids-rs",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Due (usb2serial)",
+      "source": "linux-usb.org",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Due (usb2serial)",
+      "source": "usbids-github",
+      "vendor": "dog hunter AG"
+    }
+  ],
+  "2a03:003e": [
+    {
+      "product": "Arduino Due (Native USB Port)",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino LLC"
+    },
+    {
+      "product": "Arduino Due",
+      "source": "usb-ids-rs",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Due",
+      "source": "linux-usb.org",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Due",
+      "source": "usbids-github",
+      "vendor": "dog hunter AG"
+    }
+  ],
+  "2a03:0041": [
+    {
+      "product": "Arduino Yún",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino LLC"
+    },
+    {
+      "product": "Arduino Yun (bootloader)",
+      "source": "usb-ids-rs",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Yun (bootloader)",
+      "source": "linux-usb.org",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Yun (bootloader)",
+      "source": "usbids-github",
+      "vendor": "dog hunter AG"
+    }
+  ],
+  "2a03:0042": [
+    {
+      "product": "Arduino Mega or Mega 2560",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino LLC"
+    },
+    {
+      "product": "Arduino Mega 2560 Rev3",
+      "source": "usb-ids-rs",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Mega 2560 Rev3",
+      "source": "linux-usb.org",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Mega 2560 Rev3",
+      "source": "usbids-github",
+      "vendor": "dog hunter AG"
+    }
+  ],
+  "2a03:0043": [
+    {
+      "product": "Arduino UNO",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino LLC"
+    },
+    {
+      "product": "Arduino Uno Rev3",
+      "source": "usb-ids-rs",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Uno Rev3",
+      "source": "linux-usb.org",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Uno Rev3",
+      "source": "usbids-github",
+      "vendor": "dog hunter AG"
+    }
+  ],
+  "2a03:004d": [
+    {
+      "product": "Arduino M0 / Arduino M0 Pro (Native USB Port)",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino LLC"
+    },
+    {
+      "product": "Arduino Zero Pro (bootloader)",
+      "source": "usb-ids-rs",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Zero Pro (bootloader)",
+      "source": "linux-usb.org",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Zero Pro (bootloader)",
+      "source": "usbids-github",
+      "vendor": "dog hunter AG"
+    }
+  ],
+  "2a03:8001": [
+    {
+      "product": "Linino One",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino LLC"
+    },
+    {
+      "product": "Linino ONE (CDC ACM)",
+      "source": "usb-ids-rs",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Linino ONE (CDC ACM)",
+      "source": "linux-usb.org",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Linino ONE (CDC ACM)",
+      "source": "usbids-github",
+      "vendor": "dog hunter AG"
+    }
+  ],
+  "2a03:8036": [
+    {
+      "product": "Arduino Leonardo",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino LLC"
+    },
+    {
+      "product": "Arduino Leonardo (CDC ACM)",
+      "source": "usb-ids-rs",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Leonardo (CDC ACM)",
+      "source": "linux-usb.org",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Leonardo (CDC ACM)",
+      "source": "usbids-github",
+      "vendor": "dog hunter AG"
+    }
+  ],
+  "2a03:8037": [
+    {
+      "product": "Arduino Micro",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino LLC"
+    },
+    {
+      "product": "Arduino Micro (CDC ACM)",
+      "source": "usb-ids-rs",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Micro (CDC ACM)",
+      "source": "linux-usb.org",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Micro (CDC ACM)",
+      "source": "usbids-github",
+      "vendor": "dog hunter AG"
+    }
+  ],
+  "2a03:8038": [
+    {
+      "product": "Arduino Robot Control",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino LLC"
+    },
+    {
+      "product": "Arduino Robot Control (CDC ACM)",
+      "source": "usb-ids-rs",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Robot Control (CDC ACM)",
+      "source": "linux-usb.org",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Robot Control (CDC ACM)",
+      "source": "usbids-github",
+      "vendor": "dog hunter AG"
+    }
+  ],
+  "2a03:8039": [
+    {
+      "product": "Arduino Robot Motor",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino LLC"
+    },
+    {
+      "product": "Arduino Robot Motor (CDC ACM)",
+      "source": "usb-ids-rs",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Robot Motor (CDC ACM)",
+      "source": "linux-usb.org",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Robot Motor (CDC ACM)",
+      "source": "usbids-github",
+      "vendor": "dog hunter AG"
+    }
+  ],
+  "2a03:803c": [
+    {
+      "product": "Arduino Esplora",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino LLC"
+    },
+    {
+      "product": "Arduino Explora (CDC ACM)",
+      "source": "usb-ids-rs",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Explora (CDC ACM)",
+      "source": "linux-usb.org",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Explora (CDC ACM)",
+      "source": "usbids-github",
+      "vendor": "dog hunter AG"
+    }
+  ],
+  "2a03:8041": [
+    {
+      "product": "Arduino Yún",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino LLC"
+    },
+    {
+      "product": "Arduino Yun (CDC ACM)",
+      "source": "usb-ids-rs",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Yun (CDC ACM)",
+      "source": "linux-usb.org",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Yun (CDC ACM)",
+      "source": "usbids-github",
+      "vendor": "dog hunter AG"
+    }
+  ],
+  "2a03:804d": [
+    {
+      "product": "Arduino M0 / Arduino M0 Pro (Native USB Port)",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino LLC"
+    },
+    {
+      "product": "Arduino Zero Pro (CDC ACM)",
+      "source": "usb-ids-rs",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Zero Pro (CDC ACM)",
+      "source": "linux-usb.org",
+      "vendor": "dog hunter AG"
+    },
+    {
+      "product": "Arduino Zero Pro (CDC ACM)",
+      "source": "usbids-github",
+      "vendor": "dog hunter AG"
     }
   ]
 }

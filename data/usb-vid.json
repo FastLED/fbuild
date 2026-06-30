@@ -539,7 +539,7 @@
       ],
       [
         "2111",
-        "Xplained Pro board debugger and programmer"
+        "EDBG"
       ],
       [
         "2122",
@@ -547,15 +547,55 @@
       ],
       [
         "2140",
-        "AVR JTAGICE3 (v3.x) Debugger and Programmer"
+        "JTAGICE3"
       ],
       [
         "2141",
-        "ICE debugger"
+        "Atmel-ICE"
+      ],
+      [
+        "2144",
+        "Power Debugger"
       ],
       [
         "2145",
-        "ATMEGA328P-XMINI (CDC ACM)"
+        "mEDBG"
+      ],
+      [
+        "2157",
+        "Arduino Zero EDBG"
+      ],
+      [
+        "2169",
+        "EDBG MSD interface"
+      ],
+      [
+        "216a",
+        "Public EDBG CMSIS-DAP"
+      ],
+      [
+        "2170",
+        "Kraken CMSIS-DAP"
+      ],
+      [
+        "2175",
+        "nEDBG"
+      ],
+      [
+        "2177",
+        "MPLAB PICkit 4"
+      ],
+      [
+        "217c",
+        "MPLAB ICD 4"
+      ],
+      [
+        "2180",
+        "MPLAB Snap"
+      ],
+      [
+        "2193",
+        "MPLAB ICE 4"
       ],
       [
         "2310",
@@ -716,6 +756,10 @@
       [
         "800c",
         "Airspy HF+"
+      ],
+      [
+        "c7b4",
+        "USBasp"
       ],
       [
         "ff01",
@@ -3210,6 +3254,10 @@
         "Lumel PD12"
       ],
       [
+        "6006",
+        "8U232AM alternate PID"
+      ],
+      [
         "6007",
         "Serial Converter"
       ],
@@ -3244,6 +3292,34 @@
       [
         "601f",
         "FT601 32-bit FIFO IC"
+      ],
+      [
+        "6040",
+        "FT2233HP Dual channel hi-speed device with PD"
+      ],
+      [
+        "6041",
+        "FT4233HP Quad channel hi-speed device with PD"
+      ],
+      [
+        "6042",
+        "FT2232HP Dual channel hi-speed device with PD"
+      ],
+      [
+        "6043",
+        "FT4232HP Quad channel hi-speed device with PD"
+      ],
+      [
+        "6044",
+        "FT233HP Dual channel hi-speed device with PD"
+      ],
+      [
+        "6045",
+        "FT232HP Dual channel hi-speed device with PD"
+      ],
+      [
+        "6048",
+        "FT4232HA Quad channel automotive grade hi-speed device"
       ],
       [
         "6ee0",
@@ -3820,6 +3896,10 @@
       [
         "fa20",
         "Ross-Tech HEX-USB"
+      ],
+      [
+        "fbfa",
+        "FT232RL"
       ],
       [
         "fc08",
@@ -14011,6 +14091,18 @@
         "STLINK-V3"
       ],
       [
+        "3754",
+        "STLINK-V3E no MSD"
+      ],
+      [
+        "3755",
+        "STLINK-V3P USB loader"
+      ],
+      [
+        "3757",
+        "STLINK-V3P"
+      ],
+      [
         "4810",
         "ISDN adapter"
       ],
@@ -20769,6 +20861,26 @@
         "ChipKit Pro MX7 (PIC32MX)"
       ],
       [
+        "8109",
+        "MPLAB PKoB4 In-Circuit Debugger"
+      ],
+      [
+        "810a",
+        "MPLAB PKoB4 Bootloader"
+      ],
+      [
+        "810b",
+        "MPLAB PKoB4 In-Circuit Debugger CDC"
+      ],
+      [
+        "810c",
+        "MPLAB PKoB4 In-Circuit Debugger"
+      ],
+      [
+        "810d",
+        "MPLAB PKoB4 In-Circuit Debugger CDC"
+      ],
+      [
         "9004",
         "Microchip REAL ICE"
       ],
@@ -20782,11 +20894,131 @@
       ],
       [
         "9012",
-        "PICkit4"
+        "MPLAB PICkit 4"
+      ],
+      [
+        "9013",
+        "MPLAB PM4"
       ],
       [
         "9015",
-        "ICD 4 In-Circuit Debugger"
+        "MPLAB ICD 4"
+      ],
+      [
+        "9017",
+        "MPLAB PICkit 4 Bootloader"
+      ],
+      [
+        "9018",
+        "MPLAB Snap In-Circuit Debugger"
+      ],
+      [
+        "9019",
+        "MPLAB Snap Bootloader"
+      ],
+      [
+        "901b",
+        "MPLAB PICkit 4 CDC"
+      ],
+      [
+        "901c",
+        "MPLAB Snap In-Circuit Debugger CDC"
+      ],
+      [
+        "901d",
+        "MPLAB PICkit 4"
+      ],
+      [
+        "901f",
+        "MPLAB ICE 4 Bootloader"
+      ],
+      [
+        "9020",
+        "MPLAB ICE 4"
+      ],
+      [
+        "9021",
+        "MPLAB ICE 4 CDC"
+      ],
+      [
+        "9022",
+        "MPLAB ICE 4"
+      ],
+      [
+        "9023",
+        "MPLAB ICE 4 CDC"
+      ],
+      [
+        "9024",
+        "MPLAB ICE 4 FX3 Trace Endpoint"
+      ],
+      [
+        "9028",
+        "MPLAB PICkit 4 CDC"
+      ],
+      [
+        "9029",
+        "MPLAB Snap In-Circuit Debugger CDC"
+      ],
+      [
+        "902a",
+        "MPLAB ICD 4 Bootloader"
+      ],
+      [
+        "9035",
+        "MPLAB PICkit 5 Bootloader"
+      ],
+      [
+        "9036",
+        "MPLAB PICkit 5 CDC"
+      ],
+      [
+        "904c",
+        "MPLAB PKoB4 CMSIS-DAP CDC"
+      ],
+      [
+        "9054",
+        "MPLAB PICkit Basic"
+      ],
+      [
+        "9055",
+        "MPLAB PICkit Basic CDC"
+      ],
+      [
+        "9056",
+        "MPLAB PICkit Basic"
+      ],
+      [
+        "9057",
+        "MPLAB PICkit Basic Bootloader"
+      ],
+      [
+        "90ab",
+        "MPLAB PICkit Basic CMSIS-DAP"
+      ],
+      [
+        "90ac",
+        "MPLAB PICkit Basic CMSIS-DAP CDC"
+      ],
+      [
+        "90ad",
+        "MPLAB PICkit Basic CMSIS-DAP"
+      ],
+      [
+        "90ae",
+        "MPLAB PICkit Basic CMSIS-DAP"
+      ],
+      [
+        "90af",
+        "MPLAB PICkit 4 CMSIS-DAP CDC"
+      ],
+      [
+        "90b0",
+        "MPLAB PICkit 5 CMSIS-DAP CDC"
+      ],
+      [
+        "90b1",
+        "MPLAB Snap CMSIS-DAP CDC"
       ],
       [
         "c001",
@@ -20819,6 +21051,30 @@
       [
         "edb5",
         "ATMEGA32U4 [Black Brix ECU]"
+      ],
+      [
+        "ee44",
+        "CurrentRanger"
+      ],
+      [
+        "ee48",
+        "CurrentRanger"
+      ],
+      [
+        "ee4c",
+        "CurrentRanger"
+      ],
+      [
+        "eee4",
+        "Moteino M0"
+      ],
+      [
+        "eee5",
+        "Moteino M0"
+      ],
+      [
+        "eee8",
+        "Moteino M0"
       ],
       [
         "f2c4",
@@ -62834,6 +63090,14 @@
         "CP2108 Quad UART Bridge"
       ],
       [
+        "ea7a",
+        "CP2105 Dual UART Bridge"
+      ],
+      [
+        "ea7b",
+        "CP2108 Quad UART Bridge"
+      ],
+      [
         "ea80",
         "CP2110 HID UART Bridge"
       ],
@@ -72584,6 +72848,10 @@
         "free for internal lab use 1009"
       ],
       [
+        "0476",
+        "Teensyduino All The Things"
+      ],
+      [
         "0477",
         "Teensy Rebootor"
       ],
@@ -72654,6 +72922,46 @@
       [
         "0488",
         "Teensyduino Flight Sim Controls"
+      ],
+      [
+        "0489",
+        "Teensyduino MIDI + Serial"
+      ],
+      [
+        "048a",
+        "Teensyduino MIDI/Audio + Serial"
+      ],
+      [
+        "048b",
+        "Teensyduino Dual Serial"
+      ],
+      [
+        "048c",
+        "Teensyduino Triple Serial"
+      ],
+      [
+        "04d0",
+        "Teensyduino Keyboard"
+      ],
+      [
+        "04d1",
+        "Teensy MTP Disk"
+      ],
+      [
+        "04d2",
+        "Teensy Audio"
+      ],
+      [
+        "04d3",
+        "Teensyduino Keyboard/Touchscreen"
+      ],
+      [
+        "04d4",
+        "Teensyduino Keyboard/Mouse/Touchscreen"
+      ],
+      [
+        "04d5",
+        "Teensyduino MTP Disk + Serial"
       ],
       [
         "05b5",
@@ -75190,8 +75498,40 @@
         "Linksys WUSB11 v3.0 802.11b Adapter [Intersil PRISM 3]"
       ],
       [
+        "520f",
+        "Nordic Thingy:91"
+      ],
+      [
+        "521f",
+        "PCA10059 nRF52840 Dongle USB SDFU bootloader"
+      ],
+      [
+        "530c",
+        "Nordic Thingy:53"
+      ],
+      [
+        "53ab",
+        "Nordic nPM1300"
+      ],
+      [
+        "53ac",
+        "Nordic nPM1300 Serial Recovery"
+      ],
+      [
         "7777",
         "Bitcraze Crazyradio (PA) dongle"
+      ],
+      [
+        "9100",
+        "Nordic Thingy:91"
+      ],
+      [
+        "c00a",
+        "Nordic USB serial DFU"
+      ],
+      [
+        "cafe",
+        "Nordic USB serial DFU"
       ]
     ],
     "vendor": "Nordic Semiconductor ASA"
@@ -76267,6 +76607,82 @@
         "CH341 in parallel mode, usb to printer port converter"
       ],
       [
+        "55d2",
+        "WCH CH342 USB/Serial converter"
+      ],
+      [
+        "55d3",
+        "WCH CH343 USB/Serial converter"
+      ],
+      [
+        "55d4",
+        "WCH CH9102 USB/Serial converter"
+      ],
+      [
+        "55d5",
+        "WCH CH344 USB/Serial converter"
+      ],
+      [
+        "55d7",
+        "WCH CH9103 USB/Serial converter"
+      ],
+      [
+        "55d8",
+        "WCH CH9101 USB/Serial converter"
+      ],
+      [
+        "55da",
+        "WCH CH347T Mode0 USB/Serial converter"
+      ],
+      [
+        "55db",
+        "WCH CH347T Mode1 USB/Serial converter"
+      ],
+      [
+        "55dd",
+        "WCH CH347T Mode3 USB/Serial converter"
+      ],
+      [
+        "55de",
+        "WCH CH347T UART0 & UART1 USB/Serial converter"
+      ],
+      [
+        "55df",
+        "WCH CH9104 USB/Serial converter"
+      ],
+      [
+        "55e7",
+        "WCH CH339 USB/Serial converter"
+      ],
+      [
+        "55e8",
+        "WCH CH9114 USB/Serial converter"
+      ],
+      [
+        "55e9",
+        "WCH CH9111 Mode0 USB/Serial converter"
+      ],
+      [
+        "55ea",
+        "WCH CH9111 Mode1 USB/Serial converter"
+      ],
+      [
+        "55eb",
+        "WCH CH346C Mode0/Mode1 USB/Serial converter"
+      ],
+      [
+        "55ec",
+        "WCH CH346C Mode2 USB/Serial converter"
+      ],
+      [
+        "55ef",
+        "WCH CH9105 USB/Serial converter"
+      ],
+      [
+        "5610",
+        "WCH CH9433 USB/Serial converter"
+      ],
+      [
         "7522",
         "CH340 serial converter"
       ],
@@ -77128,7 +77544,204 @@
     "vendor": "Energizer Holdings, Inc."
   },
   "1b4f": {
-    "products": [],
+    "products": [
+      [
+        "0015",
+        "RedBoard Turbo"
+      ],
+      [
+        "0016",
+        "SparkFun SAMD51 Thing Plus / SparkFun SAMD51 Thing+"
+      ],
+      [
+        "0017",
+        "SparkFun LUMIDrive Board"
+      ],
+      [
+        "0019",
+        "SparkFun Qwiic Micro"
+      ],
+      [
+        "0020",
+        "SparkFun MicroMod SAMD51 Processor Board / SparkFun SAMD51 MicroMod"
+      ],
+      [
+        "0021",
+        "SparkFun MicroMod nRF52840 Processor"
+      ],
+      [
+        "0024",
+        "SparkFun MicroMod RP2040 Processor"
+      ],
+      [
+        "0025",
+        "SparkFun Thing Plus RP2040"
+      ],
+      [
+        "0026",
+        "SparkFun Pro Micro RP2040"
+      ],
+      [
+        "0027",
+        "SparkFun ESP32-S2 Thing Plus"
+      ],
+      [
+        "0029",
+        "nRF52840 Mini Breakout"
+      ],
+      [
+        "002a",
+        "LoRaSerial / nRF52840 Mini Breakout"
+      ],
+      [
+        "002b",
+        "LoRaSerial"
+      ],
+      [
+        "002e",
+        "Teensy MicroMod"
+      ],
+      [
+        "0035",
+        "SparkFun Pro Micro - ESP32C3"
+      ],
+      [
+        "0038",
+        "SparkFun Thing Plus RP2350"
+      ],
+      [
+        "0039",
+        "SparkFun Pro Micro RP2350"
+      ],
+      [
+        "0100",
+        "SFE LILYMINI"
+      ],
+      [
+        "0101",
+        "SFE LILYMINI"
+      ],
+      [
+        "0110",
+        "LilyPad USB Plus"
+      ],
+      [
+        "0d21",
+        "SFE SAMD21"
+      ],
+      [
+        "0d24",
+        "Qwiic USB Bridge"
+      ],
+      [
+        "214f",
+        "SFE SAMD21 Pro RF"
+      ],
+      [
+        "215f",
+        "SFE SAMD21 Pro RF"
+      ],
+      [
+        "2b74",
+        "SparkFun MaKey MaKey"
+      ],
+      [
+        "2b75",
+        "SparkFun MaKey MaKey"
+      ],
+      [
+        "3aba",
+        "SFE SAMD21 Pro RF 1W"
+      ],
+      [
+        "514d",
+        "Qtechknow Qduino Mini"
+      ],
+      [
+        "516d",
+        "Qtechknow Qduino Mini"
+      ],
+      [
+        "5284",
+        "nRF52840 Mini Breakout"
+      ],
+      [
+        "5289",
+        "SparkFun SFE_nRF52840_Mini"
+      ],
+      [
+        "8029",
+        "nRF52840 Mini Breakout"
+      ],
+      [
+        "802a",
+        "nRF52840 Mini Breakout"
+      ],
+      [
+        "8d21",
+        "SFE SAMD21 / SFE SAMD21 Pro RF 1W"
+      ],
+      [
+        "8d22",
+        "SparkFun SAMD21 Mini Breakout"
+      ],
+      [
+        "8d23",
+        "SparkFun SAMD21 Dev Breakout"
+      ],
+      [
+        "8d24",
+        "SparkFun Qwiic Micro"
+      ],
+      [
+        "9203",
+        "SparkFun Pro Micro ATmega32U4 (3.3V, 8 MHz)"
+      ],
+      [
+        "9204",
+        "SparkFun Pro Micro ATmega32U4 (3.3V, 8 MHz)"
+      ],
+      [
+        "9205",
+        "SparkFun Pro Micro ATmega32U4 (5V, 16 MHz)"
+      ],
+      [
+        "9206",
+        "SparkFun Pro Micro ATmega32U4 (5V, 16 MHz)"
+      ],
+      [
+        "9d0e",
+        "SFE 9DOF-D21"
+      ],
+      [
+        "9d0f",
+        "SFE 9DOF-D21"
+      ],
+      [
+        "f015",
+        "RedBoard Turbo"
+      ],
+      [
+        "f016",
+        "SparkFun SAMD51 Thing Plus"
+      ],
+      [
+        "f019",
+        "SparkFun Qwiic Micro"
+      ],
+      [
+        "f020",
+        "SparkFun SAMD51 MicroMod"
+      ],
+      [
+        "f100",
+        "SparkFun Fio v3"
+      ],
+      [
+        "f101",
+        "SparkFun Fio v3"
+      ]
+    ],
     "vendor": "SparkFun"
   },
   "1b52": {
@@ -81106,6 +81719,14 @@
         "LPC4330FET180 [ARM Cortex M4 + M0] (device firmware upgrade mode)"
       ],
       [
+        "0027",
+        "NXP MX943 serial downloader (SDPS)"
+      ],
+      [
+        "0028",
+        "NXP MX952 serial downloader (SDPS)"
+      ],
+      [
         "0082",
         "LPC4330FET180 [ARM Cortex M4 + M0] (mass storage controller mode)"
       ],
@@ -81118,8 +81739,76 @@
         "i.MX 7ULP SystemOnChip in RecoveryMode"
       ],
       [
+        "0128",
+        "NXP MX6SLL serial downloader (SDP)"
+      ],
+      [
+        "0129",
+        "NXP MX8QM serial downloader (SDPS)"
+      ],
+      [
         "012b",
         "i.MX 8M Dual/8M QuadLite/8M Quad Serial Downloader"
+      ],
+      [
+        "012f",
+        "NXP MX8QXP serial downloader (SDPS)"
+      ],
+      [
+        "0134",
+        "NXP MX8MM serial downloader (SDP)"
+      ],
+      [
+        "0135",
+        "NXP MXRT106X serial downloader (SDP)"
+      ],
+      [
+        "013e",
+        "NXP MX815 serial downloader (SDPS)"
+      ],
+      [
+        "0146",
+        "NXP MX865 serial downloader (SDPS)"
+      ],
+      [
+        "0147",
+        "NXP MX8DXL serial downloader (SDPS)"
+      ],
+      [
+        "014a",
+        "NXP MX8ULP serial downloader (SDPS)"
+      ],
+      [
+        "014b",
+        "NXP MX8ULP serial downloader (SDPS)"
+      ],
+      [
+        "014e",
+        "NXP MX93 serial downloader (SDPS)"
+      ],
+      [
+        "0151",
+        "NXP SPL1 serial downloader (SDPV)"
+      ],
+      [
+        "0152",
+        "NXP fastboot"
+      ],
+      [
+        "0153",
+        "NXP fastboot kernel"
+      ],
+      [
+        "0159",
+        "NXP MX91 serial downloader (SDPS)"
+      ],
+      [
+        "015c",
+        "NXP MX95 serial downloader (SDPS)"
+      ],
+      [
+        "015d",
+        "NXP MX95 serial downloader (SDPS)"
       ],
       [
         "5002",
@@ -84217,43 +84906,63 @@
     "products": [
       [
         "0001",
-        "Uno (CDC ACM)"
+        "Arduino UNO"
       ],
       [
         "0010",
-        "Mega 2560 (CDC ACM)"
+        "Arduino Mega or Mega 2560"
       ],
       [
         "0036",
-        "Leonardo Bootloader"
+        "Arduino Leonardo"
+      ],
+      [
+        "0037",
+        "Arduino Micro"
+      ],
+      [
+        "0038",
+        "Arduino Robot Control"
+      ],
+      [
+        "0039",
+        "Arduino Robot Motor"
       ],
       [
         "003b",
         "Serial Adapter (CDC ACM)"
       ],
       [
+        "003c",
+        "Arduino Esplora"
+      ],
+      [
         "003d",
-        "Due Programming Port"
+        "Arduino Due (Programming Port)"
       ],
       [
         "003e",
-        "Due"
+        "Arduino Due (Native USB Port)"
       ],
       [
         "003f",
-        "Mega ADK (CDC ACM)"
+        "Arduino Mega ADK"
+      ],
+      [
+        "0041",
+        "Arduino Y\u00fan"
       ],
       [
         "0042",
-        "Mega 2560 R3 (CDC ACM)"
+        "Arduino Mega or Mega 2560"
       ],
       [
         "0043",
-        "Uno R3 (CDC ACM)"
+        "Arduino UNO"
       ],
       [
         "0044",
-        "Mega ADK R3 (CDC ACM)"
+        "Arduino Mega ADK"
       ],
       [
         "0045",
@@ -84264,16 +84973,356 @@
         "ISP"
       ],
       [
+        "004d",
+        "Arduino Zero (Native USB Port)"
+      ],
+      [
+        "004e",
+        "Arduino MKR 1000 WiFi"
+      ],
+      [
+        "004f",
+        "Arduino MKR Zero"
+      ],
+      [
+        "0050",
+        "Arduino MKR FOX 1200"
+      ],
+      [
+        "0052",
+        "Arduino MKR GSM 1400"
+      ],
+      [
+        "0053",
+        "Arduino MKR WAN 1300"
+      ],
+      [
+        "0054",
+        "Arduino MKR WiFi 1010"
+      ],
+      [
+        "0055",
+        "Arduino MKR NB 1500"
+      ],
+      [
+        "0056",
+        "Arduino MKR Vidor 4000"
+      ],
+      [
+        "0057",
+        "Arduino NANO 33 IoT"
+      ],
+      [
+        "0058",
+        "Arduino Nano Every"
+      ],
+      [
+        "0059",
+        "Arduino MKR WAN 1310"
+      ],
+      [
+        "005a",
+        "Arduino Nano 33 BLE / Arduino Stella"
+      ],
+      [
+        "005d",
+        "Arduino Edge Control"
+      ],
+      [
+        "005e",
+        "Arduino Nano RP2040 Connect"
+      ],
+      [
+        "0060",
+        "Arduino Nicla Sense ME"
+      ],
+      [
+        "0061",
+        "Arduino Portenta X8"
+      ],
+      [
+        "0062",
+        "Arduino UNO Mini"
+      ],
+      [
+        "0064",
+        "Opta"
+      ],
+      [
+        "0065",
+        "Arduino Nicla Voice"
+      ],
+      [
+        "0066",
+        "Arduino Giga R1"
+      ],
+      [
+        "0068",
+        "Arduino Portenta C33"
+      ],
+      [
+        "0069",
+        "Arduino UNO R4 Minima"
+      ],
+      [
+        "006a",
+        "Arduino UNO"
+      ],
+      [
+        "006c",
+        "Science Kit R3 Audio Module"
+      ],
+      [
+        "006d",
+        "Arduino UNO R4 WiFi"
+      ],
+      [
+        "006e",
+        "Arduino OPTA DIGITAL"
+      ],
+      [
+        "0071",
+        "Arduino OPTA ANALOG"
+      ],
+      [
+        "0072",
+        "Arduino Nano Matter"
+      ],
+      [
+        "0074",
+        "Arduino Nano R4"
+      ],
+      [
+        "0076",
+        "Arduino Stella"
+      ],
+      [
+        "0077",
+        "Renesas RA8D1 EK"
+      ],
+      [
+        "0078",
+        "Arduino UNO Q"
+      ],
+      [
+        "015a",
+        "Arduino Nano 33 BLE"
+      ],
+      [
+        "015e",
+        "Arduino Nano RP2040 Connect"
+      ],
+      [
+        "0164",
+        "Opta"
+      ],
+      [
+        "016c",
+        "Science Kit R3 Audio Module"
+      ],
+      [
+        "016e",
+        "Arduino OPTA DIGITAL"
+      ],
+      [
+        "0171",
+        "Arduino OPTA ANALOG"
+      ],
+      [
+        "0210",
+        "Arduino Mega or Mega 2560"
+      ],
+      [
+        "0237",
+        "Arduino Micro"
+      ],
+      [
+        "0242",
+        "Arduino Mega or Mega 2560"
+      ],
+      [
+        "0243",
+        "Arduino UNO"
+      ],
+      [
+        "024d",
+        "Arduino Zero (Native USB Port)"
+      ],
+      [
+        "024e",
+        "Arduino MKR 1000 WiFi"
+      ],
+      [
+        "025a",
+        "Arduino Nano 33 BLE"
+      ],
+      [
+        "025b",
+        "Arduino Portenta H7 / Arduino Portenta H7 (ThreadDebug)"
+      ],
+      [
+        "025e",
+        "Arduino Nano RP2040 Connect"
+      ],
+      [
+        "025f",
+        "Arduino Nicla Vision"
+      ],
+      [
+        "0264",
+        "Opta"
+      ],
+      [
+        "0266",
+        "Arduino Giga R1"
+      ],
+      [
+        "035b",
+        "Arduino Portenta H7"
+      ],
+      [
+        "035f",
+        "Arduino Nicla Vision"
+      ],
+      [
+        "0364",
+        "Opta"
+      ],
+      [
+        "0366",
+        "Arduino Giga R1"
+      ],
+      [
+        "0368",
+        "Arduino Portenta C33"
+      ],
+      [
+        "0369",
+        "Arduino UNO R4 Minima"
+      ],
+      [
+        "0374",
+        "Arduino Nano R4"
+      ],
+      [
+        "045b",
+        "Arduino Portenta H7"
+      ],
+      [
+        "045f",
+        "Arduino Nicla Vision"
+      ],
+      [
+        "0466",
+        "Arduino Giga R1"
+      ],
+      [
+        "055b",
+        "Arduino Portenta H7"
+      ],
+      [
+        "055f",
+        "Arduino Nicla Vision"
+      ],
+      [
+        "0c9f",
+        "Arduino Gemma"
+      ],
+      [
+        "1002",
+        "Arduino UNO R4 WiFi"
+      ],
+      [
         "8036",
-        "Leonardo (CDC ACM, HID)"
+        "Arduino Leonardo"
+      ],
+      [
+        "8037",
+        "Arduino Micro"
       ],
       [
         "8038",
-        "Robot Control Board (CDC ACM, HID)"
+        "Arduino Robot Control"
       ],
       [
         "8039",
-        "Robot Motor Board (CDC ACM, HID)"
+        "Arduino Robot Motor"
+      ],
+      [
+        "803c",
+        "Arduino Esplora"
+      ],
+      [
+        "8041",
+        "Arduino Y\u00fan"
+      ],
+      [
+        "804d",
+        "Arduino Zero (Native USB Port)"
+      ],
+      [
+        "804e",
+        "Arduino MKR 1000 WiFi"
+      ],
+      [
+        "804f",
+        "Arduino MKR Zero"
+      ],
+      [
+        "8050",
+        "Arduino MKR FOX 1200"
+      ],
+      [
+        "8052",
+        "Arduino MKR GSM 1400"
+      ],
+      [
+        "8053",
+        "Arduino MKR WAN 1300"
+      ],
+      [
+        "8054",
+        "Arduino MKR WiFi 1010"
+      ],
+      [
+        "8055",
+        "Arduino MKR NB 1500"
+      ],
+      [
+        "8056",
+        "Arduino MKR Vidor 4000"
+      ],
+      [
+        "8057",
+        "Arduino NANO 33 IoT"
+      ],
+      [
+        "8059",
+        "Arduino MKR WAN 1310"
+      ],
+      [
+        "805a",
+        "Arduino Nano 33 BLE"
+      ],
+      [
+        "805d",
+        "Arduino Edge Control"
+      ],
+      [
+        "805e",
+        "Arduino Nano RP2040 Connect"
+      ],
+      [
+        "8237",
+        "Arduino Micro"
+      ],
+      [
+        "824d",
+        "Arduino Zero (Native USB Port)"
+      ],
+      [
+        "824e",
+        "Arduino MKR 1000 WiFi"
       ]
     ],
     "vendor": "Arduino SA"
@@ -84537,8 +85586,796 @@
         "CDC Bootloader"
       ],
       [
+        "000b",
+        "Adafruit Feather M0 (SAMD21)"
+      ],
+      [
+        "000d",
+        "Adafruit ItsyBitsy 32u4 3V 8MHz"
+      ],
+      [
+        "000e",
+        "Adafruit ItsyBitsy 32u4 5V 16MHz"
+      ],
+      [
+        "000f",
+        "Adafruit ItsyBitsy M0 Express (SAMD21)"
+      ],
+      [
+        "0010",
+        "Adafruit WICED Feather"
+      ],
+      [
+        "0013",
+        "Adafruit Metro M0 Express (SAMD21)"
+      ],
+      [
+        "0015",
+        "Adafruit Feather M0 (SAMD21)"
+      ],
+      [
+        "0019",
+        "Adafruit Circuit Playground Express (SAMD21)"
+      ],
+      [
+        "001b",
+        "Adafruit Feather M0 Express (SAMD21)"
+      ],
+      [
+        "001c",
+        "Adafruit Gemma M0 (SAMD21)"
+      ],
+      [
+        "001e",
+        "Adafruit Trinket M0 (SAMD21)"
+      ],
+      [
+        "0020",
+        "Adafruit Metro M4 (SAMD51)"
+      ],
+      [
+        "0021",
+        "Adafruit Metro M4 (SAMD51)"
+      ],
+      [
+        "0022",
+        "Adafruit Feather M4 Express (SAMD51)"
+      ],
+      [
+        "0027",
+        "Adafruit pIRKey (SAMD21)"
+      ],
+      [
+        "0029",
+        "Adafruit Feather nRF52840 Express"
+      ],
+      [
+        "002a",
+        "Adafruit Feather nRF52840 Express"
+      ],
+      [
+        "002b",
+        "Adafruit ItsyBitsy M4 (SAMD51)"
+      ],
+      [
+        "002d",
+        "Adafruit Crickit M0 (SAMD21)"
+      ],
+      [
+        "002f",
+        "Adafruit Trellis M4 (SAMD51)"
+      ],
+      [
+        "0030",
+        "Adafruit Trellis M4 (SAMD51)"
+      ],
+      [
+        "0031",
+        "Adafruit Grand Central M4 (SAMD51)"
+      ],
+      [
+        "0032",
+        "Adafruit Grand Central M4 (SAMD51)"
+      ],
+      [
+        "0033",
+        "Adafruit pyBadge M4 Express (SAMD51)"
+      ],
+      [
+        "0034",
+        "Adafruit pyBadge M4 Express (SAMD51)"
+      ],
+      [
+        "0035",
+        "Adafruit PyPortal M4 (SAMD51)"
+      ],
+      [
+        "0037",
+        "Adafruit Metro M4 AirLift Lite (SAMD51)"
+      ],
+      [
+        "003d",
+        "Adafruit PyGamer M4 Express (SAMD51)"
+      ],
+      [
+        "003f",
+        "Adafruit Metro nRF52840 Express"
+      ],
+      [
+        "0040",
+        "Adafruit Metro nRF52840 Express"
+      ],
+      [
+        "0043",
+        "Adafruit pyBadge AirLift M4 (SAMD51)"
+      ],
+      [
+        "0045",
+        "Adafruit Circuit Playground Bluefruit"
+      ],
+      [
+        "0047",
+        "Adafruit MONSTER M4SK (SAMD51)"
+      ],
+      [
+        "0049",
+        "Adafruit Hallowing M4 (SAMD51)"
+      ],
+      [
+        "0051",
+        "Adafruit ItsyBitsy nRF52840 Express"
+      ],
+      [
+        "0052",
+        "Adafruit ItsyBitsy nRF52840 Express"
+      ],
+      [
+        "0071",
+        "Adafruit CLUE"
+      ],
+      [
+        "0087",
+        "Adafruit Feather nRF52840 Sense / Adafruit Feather nRF52840 Sense TFT"
+      ],
+      [
+        "0088",
+        "Adafruit Feather nRF52840 Sense / Adafruit Feather nRF52840 Sense TFT"
+      ],
+      [
+        "00bf",
+        "Adafruit BLM Badge (SAMD21)"
+      ],
+      [
+        "00c9",
+        "Adafruit Matrix Portal M4 (SAMD51)"
+      ],
+      [
+        "00cb",
+        "Adafruit QT Py M0 (SAMD21)"
+      ],
+      [
+        "00cc",
+        "Adafruit QT Py M0 (SAMD21)"
+      ],
+      [
+        "00cd",
+        "Adafruit Feather M4 CAN (SAME51)"
+      ],
+      [
+        "00d8",
+        "Nordic nRF52833 DK"
+      ],
+      [
+        "00da",
+        "Nordic nRF52840 DK / Particle Xenon"
+      ],
+      [
+        "00df",
+        "Adafruit Metro ESP32-S2"
+      ],
+      [
+        "00e5",
+        "Adafruit MagTag 2.9 Grayscale"
+      ],
+      [
+        "00eb",
+        "Adafruit Feather ESP32-S2"
+      ],
+      [
+        "00ed",
+        "Adafruit Feather ESP32-S2 Reverse TFT"
+      ],
+      [
+        "00ef",
+        "Adafruit NeoPixel Trinkey M0 (SAMD21)"
+      ],
+      [
+        "00f9",
+        "Adafruit FunHouse"
+      ],
+      [
+        "00fb",
+        "Adafruit Rotary Trinkey M0 (SAMD21)"
+      ],
+      [
+        "00ff",
+        "Adafruit NeoKey Trinkey M0 (SAMD21)"
+      ],
+      [
+        "0101",
+        "Adafruit Slide Trinkey M0 (SAMD21)"
+      ],
+      [
+        "0103",
+        "Adafruit ProxLight Trinkey M0 (SAMD21)"
+      ],
+      [
+        "010b",
+        "Raytac nRF52840 Dongle"
+      ],
+      [
+        "010d",
+        "Adafruit LED Glasses Driver nRF52840"
+      ],
+      [
+        "010f",
+        "Adafruit Feather ESP32-S2 TFT"
+      ],
+      [
+        "0111",
+        "Adafruit QT Py ESP32-S2"
+      ],
+      [
+        "0113",
+        "Adafruit Feather ESP32-S3 No PSRAM"
+      ],
+      [
+        "0117",
+        "Adafruit PyCamera"
+      ],
+      [
+        "0119",
+        "Adafruit QT Py ESP32-S3"
+      ],
+      [
+        "011b",
+        "Adafruit Feather ESP32-S3"
+      ],
+      [
+        "011d",
+        "Adafruit Feather ESP32-S3 TFT"
+      ],
+      [
+        "0123",
+        "Adafruit Feather ESP32-S3 Reverse TFT"
+      ],
+      [
+        "0125",
+        "Adafruit MatrixPortal S3"
+      ],
+      [
+        "013f",
+        "Adafruit My Little Hacker ESP32-S2"
+      ],
+      [
+        "0143",
+        "Adafruit QT Py ESP32-S3 (4M Flash, 2M PSRAM)"
+      ],
+      [
+        "0145",
+        "Adafruit Metro ESP32-S3"
+      ],
+      [
+        "0147",
+        "Adafruit Qualia ESP32-S3 RGB666"
+      ],
+      [
+        "0153",
+        "Adafruit SHT4x Trinkey M0 (SAMD21)"
+      ],
+      [
+        "0155",
+        "Adafruit Pixel Trinkey M0 (SAMD21)"
+      ],
+      [
+        "0157",
+        "Adafruit TRRS Trinkey M0 (SAMD21)"
+      ],
+      [
+        "0159",
+        "Adafruit Thumbstick Trinkey M0 (SAMD21)"
+      ],
+      [
+        "015f",
+        "Adafruit Vindie S2"
+      ],
+      [
+        "8001",
+        "Adafruit 32u4 Breakout"
+      ],
+      [
+        "8004",
+        "Adafruit Flora"
+      ],
+      [
+        "800a",
+        "Adafruit Bluefruit Micro"
+      ],
+      [
+        "800b",
+        "Adafruit Feather M0 (SAMD21)"
+      ],
+      [
+        "800c",
+        "Adafruit Feather 32u4"
+      ],
+      [
+        "800f",
+        "Adafruit ItsyBitsy M0 Express (SAMD21)"
+      ],
+      [
+        "8010",
+        "Adafruit WICED Feather"
+      ],
+      [
+        "8011",
+        "Adafruit Circuit Playground Classic"
+      ],
+      [
+        "8012",
+        "Adafruit ItsyBitsy M0 Express (SAMD21)"
+      ],
+      [
+        "8013",
+        "Adafruit Metro M0 Express (SAMD21)"
+      ],
+      [
+        "8018",
+        "Adafruit Circuit Playground Express (SAMD21)"
+      ],
+      [
+        "801b",
+        "Adafruit Feather M0 Express (SAMD21)"
+      ],
+      [
+        "801c",
+        "Adafruit Gemma M0 (SAMD21)"
+      ],
+      [
         "801e",
-        "Trinket M0"
+        "Adafruit Trinket M0 (SAMD21)"
+      ],
+      [
+        "8020",
+        "Adafruit Metro M4 (SAMD51)"
+      ],
+      [
+        "8021",
+        "Adafruit Metro M4 (SAMD51)"
+      ],
+      [
+        "8022",
+        "Adafruit Feather M4 Express (SAMD51)"
+      ],
+      [
+        "8026",
+        "Adafruit Feather M4 Express (SAMD51)"
+      ],
+      [
+        "8027",
+        "Adafruit pIRKey (SAMD21)"
+      ],
+      [
+        "8028",
+        "Adafruit pIRKey (SAMD21)"
+      ],
+      [
+        "8029",
+        "Adafruit Feather nRF52840 Express"
+      ],
+      [
+        "802a",
+        "Adafruit Feather nRF52840 Express"
+      ],
+      [
+        "802b",
+        "Adafruit ItsyBitsy M4 (SAMD51)"
+      ],
+      [
+        "802d",
+        "Adafruit Crickit M0 (SAMD21)"
+      ],
+      [
+        "802f",
+        "Adafruit Trellis M4 (SAMD51)"
+      ],
+      [
+        "8031",
+        "Adafruit Grand Central M4 (SAMD51)"
+      ],
+      [
+        "8033",
+        "Adafruit pyBadge M4 Express (SAMD51)"
+      ],
+      [
+        "8034",
+        "Adafruit pyBadge M4 Express (SAMD51)"
+      ],
+      [
+        "8035",
+        "Adafruit PyPortal M4 (SAMD51)"
+      ],
+      [
+        "8036",
+        "Adafruit PyPortal M4 (SAMD51)"
+      ],
+      [
+        "8037",
+        "Adafruit Metro M4 AirLift Lite (SAMD51)"
+      ],
+      [
+        "803d",
+        "Adafruit PyGamer M4 Express (SAMD51)"
+      ],
+      [
+        "803e",
+        "Adafruit PyGamer M4 Express (SAMD51)"
+      ],
+      [
+        "803f",
+        "Adafruit Metro nRF52840 Express"
+      ],
+      [
+        "8040",
+        "Adafruit Metro nRF52840 Express"
+      ],
+      [
+        "8043",
+        "Adafruit pyBadge AirLift M4 (SAMD51)"
+      ],
+      [
+        "8044",
+        "Adafruit pyBadge AirLift M4 (SAMD51)"
+      ],
+      [
+        "8045",
+        "Adafruit Circuit Playground Bluefruit"
+      ],
+      [
+        "8046",
+        "Adafruit Circuit Playground Bluefruit"
+      ],
+      [
+        "8047",
+        "Adafruit MONSTER M4SK (SAMD51)"
+      ],
+      [
+        "8048",
+        "Adafruit MONSTER M4SK (SAMD51)"
+      ],
+      [
+        "8049",
+        "Adafruit Hallowing M4 (SAMD51)"
+      ],
+      [
+        "804a",
+        "Adafruit Hallowing M4 (SAMD51)"
+      ],
+      [
+        "8051",
+        "Adafruit ItsyBitsy nRF52840 Express"
+      ],
+      [
+        "8052",
+        "Adafruit ItsyBitsy nRF52840 Express"
+      ],
+      [
+        "8053",
+        "Adafruit PyPortal M4 Titano (SAMD51)"
+      ],
+      [
+        "8071",
+        "Adafruit CLUE"
+      ],
+      [
+        "8072",
+        "Adafruit CLUE"
+      ],
+      [
+        "8087",
+        "Adafruit Feather nRF52840 Sense / Adafruit Feather nRF52840 Sense TFT"
+      ],
+      [
+        "8088",
+        "Adafruit Feather nRF52840 Sense / Adafruit Feather nRF52840 Sense TFT"
+      ],
+      [
+        "80bf",
+        "Adafruit BLM Badge (SAMD21)"
+      ],
+      [
+        "80c0",
+        "Adafruit BLM Badge (SAMD21)"
+      ],
+      [
+        "80c9",
+        "Adafruit Matrix Portal M4 (SAMD51)"
+      ],
+      [
+        "80ca",
+        "Adafruit Matrix Portal M4 (SAMD51)"
+      ],
+      [
+        "80cb",
+        "Adafruit QT Py M0 (SAMD21)"
+      ],
+      [
+        "80cd",
+        "Adafruit Feather M4 CAN (SAME51)"
+      ],
+      [
+        "80d8",
+        "Nordic nRF52833 DK"
+      ],
+      [
+        "80da",
+        "Nordic nRF52840 DK / Particle Xenon"
+      ],
+      [
+        "80e0",
+        "Adafruit Metro ESP32S2"
+      ],
+      [
+        "80e6",
+        "Adafruit MagTag"
+      ],
+      [
+        "80ec",
+        "Adafruit Feather ESP32S2"
+      ],
+      [
+        "80ee",
+        "Adafruit Feather ESP32-S2 Reverse TFT"
+      ],
+      [
+        "80ef",
+        "Adafruit NeoPixel Trinkey M0 (SAMD21)"
+      ],
+      [
+        "80f0",
+        "Adafruit NeoPixel Trinkey M0 (SAMD21)"
+      ],
+      [
+        "80f2",
+        "Adafruit Feather RP2040"
+      ],
+      [
+        "80f8",
+        "Adafruit QT Py RP2040"
+      ],
+      [
+        "80fa",
+        "Adafruit FunHouse"
+      ],
+      [
+        "80fb",
+        "Adafruit Rotary Trinkey M0 (SAMD21)"
+      ],
+      [
+        "80fc",
+        "Adafruit Rotary Trinkey M0 (SAMD21)"
+      ],
+      [
+        "80fe",
+        "Adafruit ItsyBitsy RP2040"
+      ],
+      [
+        "80ff",
+        "Adafruit NeoKey Trinkey M0 (SAMD21)"
+      ],
+      [
+        "8100",
+        "Adafruit NeoKey Trinkey M0 (SAMD21)"
+      ],
+      [
+        "8101",
+        "Adafruit Slide Trinkey M0 (SAMD21)"
+      ],
+      [
+        "8102",
+        "Adafruit Slide Trinkey M0 (SAMD21)"
+      ],
+      [
+        "8103",
+        "Adafruit ProxLight Trinkey M0 (SAMD21)"
+      ],
+      [
+        "8104",
+        "Adafruit ProxLight Trinkey M0 (SAMD21)"
+      ],
+      [
+        "8106",
+        "Adafruit KB2040"
+      ],
+      [
+        "8108",
+        "Adafruit Macropad RP2040"
+      ],
+      [
+        "810a",
+        "Adafruit QT2040 Trinkey"
+      ],
+      [
+        "810b",
+        "Raytac nRF52840 Dongle"
+      ],
+      [
+        "810c",
+        "Raytac nRF52840 Dongle"
+      ],
+      [
+        "810d",
+        "Adafruit LED Glasses Driver nRF52840"
+      ],
+      [
+        "810e",
+        "Adafruit LED Glasses Driver nRF52840"
+      ],
+      [
+        "8110",
+        "Adafruit Feather ESP32-S2 TFT"
+      ],
+      [
+        "8112",
+        "Adafruit QT Py ESP32S2"
+      ],
+      [
+        "8114",
+        "Adafruit Feather ESP32S3 No PSRAM"
+      ],
+      [
+        "8118",
+        "Adafruit Camera"
+      ],
+      [
+        "811a",
+        "Adafruit QT Py ESP32S3 no psram"
+      ],
+      [
+        "811c",
+        "Adafruit Feather ESP32S3 4MB Flash 2MB PSRAM"
+      ],
+      [
+        "811e",
+        "Adafruit Feather ESP32-S3 TFT"
+      ],
+      [
+        "8122",
+        "Adafruit Feather RP2040 Scorpio"
+      ],
+      [
+        "8124",
+        "Adafruit Feather ESP32-S3 Reverse TFT"
+      ],
+      [
+        "8126",
+        "Adafruit MatrixPortal S3"
+      ],
+      [
+        "8128",
+        "Adafruit Feather RP2040 DVI"
+      ],
+      [
+        "812a",
+        "Adafruit Feather RP2040 USB Host"
+      ],
+      [
+        "812c",
+        "Adafruit Feather RP2040 ThinkInk"
+      ],
+      [
+        "812e",
+        "Adafruit Feather RP2040 RFM"
+      ],
+      [
+        "8130",
+        "Adafruit Feather RP2040 CAN"
+      ],
+      [
+        "8132",
+        "Adafruit Feather RP2040 Prop-Maker"
+      ],
+      [
+        "813e",
+        "Adafruit Metro RP2040"
+      ],
+      [
+        "8142",
+        "Adafruit Metro M7 iMX RT1011 SD"
+      ],
+      [
+        "8144",
+        "Adafruit QT Py ESP32S3 4MB Flash 2MB PSRAM"
+      ],
+      [
+        "8148",
+        "Adafruit Qualia-S3-RGB666"
+      ],
+      [
+        "814e",
+        "Adafruit Metro RP2350"
+      ],
+      [
+        "8150",
+        "Adafruit Feather RP2350"
+      ],
+      [
+        "8152",
+        "Adafruit Floppsy RP2040"
+      ],
+      [
+        "8153",
+        "Adafruit SHT4x Trinkey M0 (SAMD21)"
+      ],
+      [
+        "8154",
+        "Adafruit SHT4x Trinkey M0 (SAMD21)"
+      ],
+      [
+        "8155",
+        "Adafruit Pixel Trinkey M0 (SAMD21)"
+      ],
+      [
+        "8156",
+        "Adafruit Pixel Trinkey M0 (SAMD21)"
+      ],
+      [
+        "8157",
+        "Adafruit TRRS Trinkey M0 (SAMD21)"
+      ],
+      [
+        "8158",
+        "Adafruit TRRS Trinkey M0 (SAMD21)"
+      ],
+      [
+        "8159",
+        "Adafruit Thumbstick Trinkey M0 (SAMD21)"
+      ],
+      [
+        "815e",
+        "Adafruit Feather RP2040 Adalogger"
+      ],
+      [
+        "8160",
+        "Adafruit Thumbstick Trinkey M0 (SAMD21)"
+      ],
+      [
+        "816c",
+        "Adafruit Fruit Jam"
+      ],
+      [
+        "816e",
+        "Adafruit Feather RP2350 Adalogger"
+      ],
+      [
+        "8170",
+        "Adafruit Tinychad RP2350"
+      ],
+      [
+        "8174",
+        "Adafruit P4 GPIO"
+      ],
+      [
+        "b000",
+        "Adafruit Hallowing M0 (SAMD21)"
+      ],
+      [
+        "d1ed",
+        "Adafruit Hallowing M0 (SAMD21)"
+      ],
+      [
+        "dead",
+        "Adafruit Hallowing M0 (SAMD21)"
       ]
     ],
     "vendor": "Adafruit"
@@ -85158,6 +86995,15 @@
   "2541": {
     "products": [],
     "vendor": "Chipsailing"
+  },
+  "2544": {
+    "products": [
+      [
+        "0001",
+        "Silicon Labs OpenOCD debug interface"
+      ]
+    ],
+    "vendor": "Energy Micro AS"
   },
   "2546": {
     "products": [
@@ -86769,8 +88615,208 @@
   "2886": {
     "products": [
       [
+        "0000",
+        "Seeeduino Grove UI Wireles (SAMD51)"
+      ],
+      [
         "0002",
         "Seeeduino Lite"
+      ],
+      [
+        "000b",
+        "Seeeduino Zero"
+      ],
+      [
+        "000c",
+        "Seeeduino LoRaWAN"
+      ],
+      [
+        "000e",
+        "Seeeduino Wio GPS Board"
+      ],
+      [
+        "002a",
+        "Seeeduino Wio lite MG126"
+      ],
+      [
+        "002b",
+        "Seeeduino Arch Mix"
+      ],
+      [
+        "002c",
+        "Seeeduino Femto"
+      ],
+      [
+        "002d",
+        "Seeeduino Wio Terminal"
+      ],
+      [
+        "002f",
+        "Seeeduino XIAO"
+      ],
+      [
+        "0031",
+        "Wio LTE Cat.1"
+      ],
+      [
+        "003f",
+        "Seeed XIAO M0 Plus"
+      ],
+      [
+        "0044",
+        "Seeed XIAO nRF52840"
+      ],
+      [
+        "0045",
+        "Seeed XIAO nRF52840 Sense"
+      ],
+      [
+        "0046",
+        "Seeed Studio XIAO ESP32C3"
+      ],
+      [
+        "0048",
+        "Seeed Studio XIAO ESP32C6"
+      ],
+      [
+        "0049",
+        "Seeed XIAO RA4M1"
+      ],
+      [
+        "0050",
+        "INDICATOR RP2040"
+      ],
+      [
+        "0055",
+        "Seeed Wio Tracker 1110"
+      ],
+      [
+        "0056",
+        "Seeed Studio XIAO ESP32S3 Plus / Seeed Studio XIAO ESP32S3 Sense"
+      ],
+      [
+        "0057",
+        "Seeed Tracker T1000 E LoRaWAN"
+      ],
+      [
+        "0058",
+        "Seeed Studio XIAO RP2350"
+      ],
+      [
+        "0062",
+        "Seeed Studio XIAO MG24 (Sense)"
+      ],
+      [
+        "0063",
+        "Seeed XIAO ESP32S3 PLUS"
+      ],
+      [
+        "0064",
+        "Seeed XIAO nRF52840 Plus"
+      ],
+      [
+        "0065",
+        "Seeed XIAO nRF52840 Sense Plus"
+      ],
+      [
+        "0067",
+        "Seeed XIAO ESP32C5"
+      ],
+      [
+        "0145",
+        "Seeed XIAO nRF52840 / Seeed XIAO nRF52840 Sense"
+      ],
+      [
+        "0164",
+        "Seeed XIAO nRF52840 Plus"
+      ],
+      [
+        "0165",
+        "Seeed XIAO nRF52840 Sense Plus"
+      ],
+      [
+        "800b",
+        "Seeeduino Zero"
+      ],
+      [
+        "800c",
+        "Seeeduino LoRaWAN"
+      ],
+      [
+        "800e",
+        "Seeeduino Wio GPS Board"
+      ],
+      [
+        "802a",
+        "Seeeduino Wio lite MG126"
+      ],
+      [
+        "802b",
+        "Seeeduino Arch Mix"
+      ],
+      [
+        "802c",
+        "Seeeduino Femto"
+      ],
+      [
+        "802d",
+        "Seeeduino Wio Terminal"
+      ],
+      [
+        "802f",
+        "Seeeduino XIAO"
+      ],
+      [
+        "8031",
+        "Wio LTE Cat.1"
+      ],
+      [
+        "803f",
+        "Seeed XIAO M0 Plus"
+      ],
+      [
+        "8044",
+        "Seeed XIAO nRF52840"
+      ],
+      [
+        "8045",
+        "Seeed XIAO nRF52840 Sense"
+      ],
+      [
+        "8048",
+        "Seeed Studio XIAO ESP32C6"
+      ],
+      [
+        "8049",
+        "Seeed XIAO RA4M1"
+      ],
+      [
+        "8055",
+        "Seeed Wio Tracker 1110"
+      ],
+      [
+        "8056",
+        "Seeed Studio XIAO ESP32S3 Plus / Seeed Studio XIAO ESP32S3 Sense"
+      ],
+      [
+        "8057",
+        "Seeed Tracker T1000 E LoRaWAN"
+      ],
+      [
+        "8062",
+        "Seeed Studio XIAO MG24 (Sense)"
+      ],
+      [
+        "8063",
+        "Seeed XIAO ESP32S3 PLUS"
+      ],
+      [
+        "8064",
+        "Seeed XIAO nRF52840 Plus"
+      ],
+      [
+        "8065",
+        "Seeed XIAO nRF52840 Sense Plus"
       ]
     ],
     "vendor": "Seeed Technology Co., Ltd."
@@ -87293,23 +89339,27 @@
     "products": [
       [
         "0001",
-        "Linino ONE (bootloader)"
+        "Linino One"
+      ],
+      [
+        "0010",
+        "Arduino Mega or Mega 2560"
       ],
       [
         "0036",
-        "Arduino Leonardo (bootloader)"
+        "Arduino Leonardo"
       ],
       [
         "0037",
-        "Arduino Micro (bootloader)"
+        "Arduino Micro"
       ],
       [
         "0038",
-        "Arduino Robot Control (bootloader)"
+        "Arduino Robot Control"
       ],
       [
         "0039",
-        "Arduino Robot Motor (bootloader)"
+        "Arduino Robot Motor"
       ],
       [
         "003a",
@@ -87321,51 +89371,83 @@
       ],
       [
         "003c",
-        "Arduino Explora (bootloader)"
+        "Arduino Esplora"
       ],
       [
         "003d",
-        "Arduino Due (usb2serial)"
+        "Arduino Due (Programming Port)"
       ],
       [
         "003e",
-        "Arduino Due"
+        "Arduino Due (Native USB Port)"
+      ],
+      [
+        "003f",
+        "Arduino Mega ADK"
+      ],
+      [
+        "0040",
+        "Arduino Leonardo ETH"
       ],
       [
         "0041",
-        "Arduino Yun (bootloader)"
+        "Arduino Y\u00fan"
       ],
       [
         "0042",
-        "Arduino Mega 2560 Rev3"
+        "Arduino Mega or Mega 2560"
       ],
       [
         "0043",
-        "Arduino Uno Rev3"
+        "Arduino UNO"
+      ],
+      [
+        "0044",
+        "Arduino Mega ADK"
       ],
       [
         "004d",
-        "Arduino Zero Pro (bootloader)"
+        "Arduino M0 / Arduino M0 Pro (Native USB Port)"
+      ],
+      [
+        "004e",
+        "Arduino M0"
+      ],
+      [
+        "004f",
+        "Arduino M0 Pro (Native USB Port)"
+      ],
+      [
+        "0050",
+        "Arduino Y\u00fan Mini"
+      ],
+      [
+        "0056",
+        "Arduino Industrial 101"
+      ],
+      [
+        "0057",
+        "Arduino UNO WiFi"
       ],
       [
         "8001",
-        "Linino ONE (CDC ACM)"
+        "Linino One"
       ],
       [
         "8036",
-        "Arduino Leonardo (CDC ACM)"
+        "Arduino Leonardo"
       ],
       [
         "8037",
-        "Arduino Micro (CDC ACM)"
+        "Arduino Micro"
       ],
       [
         "8038",
-        "Arduino Robot Control (CDC ACM)"
+        "Arduino Robot Control"
       ],
       [
         "8039",
-        "Arduino Robot Motor (CDC ACM)"
+        "Arduino Robot Motor"
       ],
       [
         "803a",
@@ -87373,18 +89455,38 @@
       ],
       [
         "803c",
-        "Arduino Explora (CDC ACM)"
+        "Arduino Esplora"
+      ],
+      [
+        "8040",
+        "Arduino Leonardo ETH"
       ],
       [
         "8041",
-        "Arduino Yun (CDC ACM)"
+        "Arduino Y\u00fan"
       ],
       [
         "804d",
-        "Arduino Zero Pro (CDC ACM)"
+        "Arduino M0 / Arduino M0 Pro (Native USB Port)"
+      ],
+      [
+        "804e",
+        "Arduino M0"
+      ],
+      [
+        "804f",
+        "Arduino M0 Pro (Native USB Port)"
+      ],
+      [
+        "8050",
+        "Arduino Y\u00fan Mini"
+      ],
+      [
+        "8056",
+        "Arduino Industrial 101"
       ]
     ],
-    "vendor": "dog hunter AG"
+    "vendor": "Arduino LLC"
   },
   "2a13": {
     "products": [
@@ -88445,7 +90547,1080 @@
     "vendor": "Swift Navigation"
   },
   "2e8a": {
-    "products": [],
+    "products": [
+      [
+        "0003",
+        "Raspberry Pi RP2040 boot"
+      ],
+      [
+        "0004",
+        "Raspberry Pi PicoProbe"
+      ],
+      [
+        "0005",
+        "Raspberry Pi Pico MicroPython firmware (CDC)"
+      ],
+      [
+        "0009",
+        "Raspberry Pi Pico SDK CDC UART"
+      ],
+      [
+        "000a",
+        "Raspberry Pi Pico SDK CDC UART (RP2040)"
+      ],
+      [
+        "000b",
+        "Raspberry Pi Pico CircuitPython firmware"
+      ],
+      [
+        "000c",
+        "Raspberry Pi Debug Probe"
+      ],
+      [
+        "000d",
+        "Raspberry Pi USB3HUB ( USB2 hub part)"
+      ],
+      [
+        "000e",
+        "Raspberry Pi USB3HUB ( USB3 hub part)"
+      ],
+      [
+        "000f",
+        "Raspberry Pi RP2350 boot"
+      ],
+      [
+        "0010",
+        "Raspberry Pi 500 QMK keyboard firmware"
+      ],
+      [
+        "0013",
+        "Raspberry Pi USB Ethernet gadget"
+      ],
+      [
+        "0030",
+        "Raspberry Pi USB 3.0 Flash Drive"
+      ],
+      [
+        "1000",
+        "Cytron Maker Pi RP2040"
+      ],
+      [
+        "1001",
+        "Picade 2040"
+      ],
+      [
+        "1002",
+        "Pimoroni Pico Lipo (4MB)"
+      ],
+      [
+        "1003",
+        "Pimoroni Pico Lipo (16MB)"
+      ],
+      [
+        "1005",
+        "Melopero Shake RP2040"
+      ],
+      [
+        "1006",
+        "Challenger 2040"
+      ],
+      [
+        "1008",
+        "Pimoroni PGA2040"
+      ],
+      [
+        "1009",
+        "Pimoroni Interstate 75"
+      ],
+      [
+        "100a",
+        "Pimoroni Plasma 2040"
+      ],
+      [
+        "100b",
+        "Challenger RP2040 LTE"
+      ],
+      [
+        "100c",
+        "CNC Control Pendant"
+      ],
+      [
+        "100d",
+        "Challenger NB RP2040 WiFi"
+      ],
+      [
+        "100e",
+        "Raspberry Pi Zero"
+      ],
+      [
+        "100f",
+        "Cytron Maker Nano RP2040"
+      ],
+      [
+        "1010",
+        "RPICO32"
+      ],
+      [
+        "1011",
+        "Melopero Cookie RP2040"
+      ],
+      [
+        "1012",
+        "Raspberry Pi CM4 IO"
+      ],
+      [
+        "1013",
+        "Raspberry Pi 4"
+      ],
+      [
+        "1014",
+        "Raspberry Pi CM4"
+      ],
+      [
+        "1015",
+        "Raspberry Pi Zero 2W"
+      ],
+      [
+        "1016",
+        "Pimoroni Tiny 2040 (2MB)"
+      ],
+      [
+        "1017",
+        "Pimoroni Automation 2040 W"
+      ],
+      [
+        "1018",
+        "Pimoroni Inky Frame 5.7\""
+      ],
+      [
+        "1019",
+        "Pimoroni Motor 2040"
+      ],
+      [
+        "101a",
+        "Pimoroni Servo 2040"
+      ],
+      [
+        "101b",
+        "Pimoroni Badger 2040"
+      ],
+      [
+        "101e",
+        "Raspberry Pi Zero W"
+      ],
+      [
+        "101f",
+        "RP2040-Zero"
+      ],
+      [
+        "1020",
+        "RP2040-Plus"
+      ],
+      [
+        "1021",
+        "RP2040-LCD-0.96"
+      ],
+      [
+        "1023",
+        "Challenger RP2040 LoRa"
+      ],
+      [
+        "1025",
+        "M?sli USB Pmod"
+      ],
+      [
+        "1026",
+        "Pico:ed"
+      ],
+      [
+        "1027",
+        "W5100S-EVB-Pico"
+      ],
+      [
+        "1028",
+        "WizFi360-EVB-Pico"
+      ],
+      [
+        "1029",
+        "W5500-EVB-Pico"
+      ],
+      [
+        "102a",
+        "Lossless Adapter"
+      ],
+      [
+        "102b",
+        "Slippi latency tester"
+      ],
+      [
+        "102c",
+        "Challenger RP2040 WiFi/BLE"
+      ],
+      [
+        "102d",
+        "Challenger RP2040 SD/RTC"
+      ],
+      [
+        "102e",
+        "YD-RP2040"
+      ],
+      [
+        "102f",
+        "B0XX"
+      ],
+      [
+        "1030",
+        "RF-ID Reader"
+      ],
+      [
+        "1031",
+        "RF-ID Reader"
+      ],
+      [
+        "1032",
+        "Challenger RP2040 SubGHz"
+      ],
+      [
+        "1035",
+        "LightWare Lidar"
+      ],
+      [
+        "1037",
+        "Hunter Cat NFC"
+      ],
+      [
+        "1038",
+        "nemi Link USB Receiver"
+      ],
+      [
+        "1039",
+        "RP2040-LCD-1.28"
+      ],
+      [
+        "103a",
+        "RP2040-One"
+      ],
+      [
+        "103b",
+        "FAST Pinball Controller"
+      ],
+      [
+        "103c",
+        "FAST Pinball Audio"
+      ],
+      [
+        "103d",
+        "FAST Pinball Expansion"
+      ],
+      [
+        "103e",
+        "FAST Pinball Display"
+      ],
+      [
+        "103f",
+        "BomberCat"
+      ],
+      [
+        "1040",
+        "Challenger RP2040 NFC"
+      ],
+      [
+        "1041",
+        "IDM2040-7A"
+      ],
+      [
+        "1042",
+        "TACT"
+      ],
+      [
+        "1043",
+        "Archi"
+      ],
+      [
+        "1044",
+        "Power Management HAT (B)"
+      ],
+      [
+        "1045",
+        "Vms LX4e Laser Controller"
+      ],
+      [
+        "1046",
+        "W6100-EVB-Pico"
+      ],
+      [
+        "1048",
+        "nullbits Bit-C PRO RP2040"
+      ],
+      [
+        "1049",
+        "ECUTamer MicroEMU"
+      ],
+      [
+        "104a",
+        "Blok"
+      ],
+      [
+        "104b",
+        "PicoADK"
+      ],
+      [
+        "104c",
+        "COSMO-Pico"
+      ],
+      [
+        "104d",
+        "MaxxStick R3"
+      ],
+      [
+        "104e",
+        "CDC / HID device"
+      ],
+      [
+        "104f",
+        "Pimoroni Badger 2040 W"
+      ],
+      [
+        "1050",
+        "Pixelcade"
+      ],
+      [
+        "1051",
+        "SOELPEC - Spectra XR"
+      ],
+      [
+        "1052",
+        "Challenger RP2040 UWB"
+      ],
+      [
+        "1053",
+        "DDC controller software"
+      ],
+      [
+        "1054",
+        "SOELPEC - XR-5 Display"
+      ],
+      [
+        "1055",
+        "RP2040-ETH"
+      ],
+      [
+        "1056",
+        "RP2040-GEEK"
+      ],
+      [
+        "1057",
+        "RP2040-Touch-LCD-1.28"
+      ],
+      [
+        "1058",
+        "Pimoroni Plasma Stick 2040 W"
+      ],
+      [
+        "1059",
+        "Pimoroni Pico DV Demo Base for Pico"
+      ],
+      [
+        "105a",
+        "Pimoroni Pico DV Demo Base for Pico W"
+      ],
+      [
+        "105b",
+        "Pimoroni Yukon"
+      ],
+      [
+        "105d",
+        "DC31 5N4CK3Y 7R"
+      ],
+      [
+        "105e",
+        "Raspberry Breadstick"
+      ],
+      [
+        "105f",
+        "Challenger RP2040 WiFi6/BLE"
+      ],
+      [
+        "1060",
+        "Liatris"
+      ],
+      [
+        "1063",
+        "Picopad / Picopad Wifi"
+      ],
+      [
+        "1064",
+        "Jackal"
+      ],
+      [
+        "1065",
+        "MICROpi"
+      ],
+      [
+        "1067",
+        "Ardu2040M"
+      ],
+      [
+        "1069",
+        "Matrix"
+      ],
+      [
+        "106a",
+        "WisdPi Tiny RP2040"
+      ],
+      [
+        "106b",
+        "XLAB CoreControl"
+      ],
+      [
+        "106d",
+        "KATO EC-1"
+      ],
+      [
+        "106e",
+        "MFC-DAQ01"
+      ],
+      [
+        "106f",
+        "DudesCab"
+      ],
+      [
+        "1071",
+        "Cytron Maker Uno RP2040"
+      ],
+      [
+        "1072",
+        "Elite-Pi"
+      ],
+      [
+        "1073",
+        "DCKids Badge"
+      ],
+      [
+        "1074",
+        "Cytron EDU PICO"
+      ],
+      [
+        "1075",
+        "PicoCTR"
+      ],
+      [
+        "1076",
+        "Lift eye-P Mini"
+      ],
+      [
+        "1077",
+        "IncrediDAQ 100"
+      ],
+      [
+        "1078",
+        "Stella Mini"
+      ],
+      [
+        "1079",
+        "VPinIO"
+      ],
+      [
+        "107b",
+        "Connectivity RP2040 LTE/WIFI/BLE"
+      ],
+      [
+        "107c",
+        "DeskHop"
+      ],
+      [
+        "107d",
+        "Picomo"
+      ],
+      [
+        "107e",
+        "Cytron EDU PICO 2"
+      ],
+      [
+        "107f",
+        "Croco Gameboy Cartridge"
+      ],
+      [
+        "1080",
+        "PiKVM Switch Multiport Extender"
+      ],
+      [
+        "1081",
+        "Inky Frame 7.3\""
+      ],
+      [
+        "1082",
+        "GPI Controller Mk. 1"
+      ],
+      [
+        "1083",
+        "RP2040-PiZero"
+      ],
+      [
+        "1084",
+        "RP2040-Tiny"
+      ],
+      [
+        "1085",
+        "RP2040-Matrix"
+      ],
+      [
+        "1086",
+        "RP2040-BLE"
+      ],
+      [
+        "1087",
+        "PICO-Cam-A"
+      ],
+      [
+        "1088",
+        "Redshift 6"
+      ],
+      [
+        "1089",
+        "RP2040 Lauchpad"
+      ],
+      [
+        "108a",
+        "SOELPEC - Spectra LT"
+      ],
+      [
+        "108b",
+        "Late Mate"
+      ],
+      [
+        "108d",
+        "ICD62 Board"
+      ],
+      [
+        "108e",
+        "VI-CWBB"
+      ],
+      [
+        "108f",
+        "AGC-4P"
+      ],
+      [
+        "1090",
+        "Noise Nugget 2040"
+      ],
+      [
+        "1091",
+        "IDM2040-43A"
+      ],
+      [
+        "1092",
+        "Glyph"
+      ],
+      [
+        "1093",
+        "Cytron IRIV IO Controller"
+      ],
+      [
+        "1094",
+        "NOVA Evo"
+      ],
+      [
+        "1096",
+        "Cytron MOTION 2350 Pro"
+      ],
+      [
+        "1098",
+        "Picade Max Input"
+      ],
+      [
+        "1099",
+        "Picade Max Audio"
+      ],
+      [
+        "109c",
+        "Cytron SUMO:BIT"
+      ],
+      [
+        "109d",
+        "VI-LAPTIMER"
+      ],
+      [
+        "109e",
+        "W5100S-EVB-Pico2"
+      ],
+      [
+        "109f",
+        "W5500-EVB-Pico2"
+      ],
+      [
+        "10a0",
+        "W6100-EVB-Pico2"
+      ],
+      [
+        "10a1",
+        "GRAM Slim Smash"
+      ],
+      [
+        "10a2",
+        "Pimoroni Tiny FX"
+      ],
+      [
+        "10a3",
+        "Pimoroni Pico Plus 2"
+      ],
+      [
+        "10a4",
+        "Pimoroni Tiny 2350"
+      ],
+      [
+        "10a5",
+        "Pimoroni Plasma 2350"
+      ],
+      [
+        "10a6",
+        "Pimoroni PGA2350"
+      ],
+      [
+        "10a8",
+        "snek board"
+      ],
+      [
+        "10a9",
+        "CFHEADER"
+      ],
+      [
+        "10aa",
+        "Macropad device"
+      ],
+      [
+        "10ab",
+        "B5-DDU"
+      ],
+      [
+        "10ac",
+        "B7-DDU"
+      ],
+      [
+        "10ad",
+        "AcCellerator"
+      ],
+      [
+        "10ae",
+        "PicoADK v2 (RP2350)"
+      ],
+      [
+        "10b0",
+        "RP2350-Zero"
+      ],
+      [
+        "10b1",
+        "RP2350-Plus"
+      ],
+      [
+        "10b2",
+        "RP2350-Tiny"
+      ],
+      [
+        "10b3",
+        "RP2350-LCD-1.28"
+      ],
+      [
+        "10b4",
+        "RP2350-Touch-LCD-1.28"
+      ],
+      [
+        "10b5",
+        "RP2350-One"
+      ],
+      [
+        "10b6",
+        "RP2350-GEEK"
+      ],
+      [
+        "10b7",
+        "RP2350-LCD-0.96"
+      ],
+      [
+        "10b8",
+        "PROG-001-3300"
+      ],
+      [
+        "10b9",
+        "PicoScratch MINT"
+      ],
+      [
+        "10ba",
+        "SRGS"
+      ],
+      [
+        "10bb",
+        "SRFCS"
+      ],
+      [
+        "10bc",
+        "VI-296BB"
+      ],
+      [
+        "10bd",
+        "Pimoroni Pico Plus 2 W"
+      ],
+      [
+        "10be",
+        "Pimoroni Tiny FX W"
+      ],
+      [
+        "10bf",
+        "Pimoroni Plasma 2350 W"
+      ],
+      [
+        "10c0",
+        "Pimoroni Explorer"
+      ],
+      [
+        "10c1",
+        "Workshop Computer"
+      ],
+      [
+        "10c2",
+        "CND Engineering Porsche RSR"
+      ],
+      [
+        "10c3",
+        "RP2350-ETH"
+      ],
+      [
+        "10c4",
+        "Picomo V3"
+      ],
+      [
+        "10c6",
+        "Hoja Gamepad"
+      ],
+      [
+        "10c7",
+        "StitchPort"
+      ],
+      [
+        "10c8",
+        "JackBoard"
+      ],
+      [
+        "10c9",
+        "VI-LMDH"
+      ],
+      [
+        "10ca",
+        "GP2040-CE Combat Unit Board P1"
+      ],
+      [
+        "10cb",
+        "GP2040-CE Combat Unit Board P2"
+      ],
+      [
+        "10ce",
+        "ALETH42"
+      ],
+      [
+        "10cf",
+        "Equus 296 GTX"
+      ],
+      [
+        "10d0",
+        "Orpheus Pico"
+      ],
+      [
+        "10d2",
+        "SPC Button Plate"
+      ],
+      [
+        "10d4",
+        "W55RP20"
+      ],
+      [
+        "10d5",
+        "Kastle 2"
+      ],
+      [
+        "10d6",
+        "I4E Flight Sim Interface"
+      ],
+      [
+        "10d8",
+        "Music Thing Radio Music"
+      ],
+      [
+        "10d9",
+        "stac2"
+      ],
+      [
+        "10da",
+        "AGC2P-Coleco"
+      ],
+      [
+        "10db",
+        "P8W-DDU"
+      ],
+      [
+        "10dc",
+        "VI-RSR"
+      ],
+      [
+        "10dd",
+        "1. GC Ultimate"
+      ],
+      [
+        "10df",
+        "ProGCC"
+      ],
+      [
+        "10e0",
+        "FireBird"
+      ],
+      [
+        "10e1",
+        "21R-P1X"
+      ],
+      [
+        "10e2",
+        "KODAI - MF1"
+      ],
+      [
+        "10e3",
+        "CROSSplate"
+      ],
+      [
+        "10e4",
+        "OHIS Kiss Modules"
+      ],
+      [
+        "10e5",
+        "PS4 FireBird"
+      ],
+      [
+        "10e6",
+        "USB HSM"
+      ],
+      [
+        "10e7",
+        "W6300-EVB-Pico"
+      ],
+      [
+        "10e8",
+        "W6300-EVB-Pico2"
+      ],
+      [
+        "10ea",
+        "Digital Pullforcegauge"
+      ],
+      [
+        "10eb",
+        "SOELPEC - Terra LX"
+      ],
+      [
+        "10ec",
+        "Soldered NULA Max RP2350"
+      ],
+      [
+        "10ed",
+        "OpenOGMA Filter Wheel"
+      ],
+      [
+        "10ee",
+        "Crea8"
+      ],
+      [
+        "10ef",
+        "SOELPEC - XR-7 Display"
+      ],
+      [
+        "10f0",
+        "Ant64-ICP"
+      ],
+      [
+        "10f1",
+        "Ark I"
+      ],
+      [
+        "10f2",
+        "FADEC"
+      ],
+      [
+        "10f4",
+        "Canarin Fub"
+      ],
+      [
+        "10f5",
+        "Kinoshita Lab's products"
+      ],
+      [
+        "10f7",
+        "G1000 NXi"
+      ],
+      [
+        "10f8",
+        "Svalboard Lightly"
+      ],
+      [
+        "10f9",
+        "AM Dongle"
+      ],
+      [
+        "10fc",
+        "Reachy Mini Eyes"
+      ],
+      [
+        "10fd",
+        "pico-hsm"
+      ],
+      [
+        "10fe",
+        "pico-fido"
+      ],
+      [
+        "10ff",
+        "pico-openpgp"
+      ],
+      [
+        "1100",
+        "Badger 2350 (Badgeware)"
+      ],
+      [
+        "1101",
+        "Tufty 2350 (Badgeware)"
+      ],
+      [
+        "1102",
+        "Blinky 2350 (Badgeware)"
+      ],
+      [
+        "1103",
+        "axusbio"
+      ],
+      [
+        "1104",
+        "SynConnect SmartCable"
+      ],
+      [
+        "1105",
+        "5z6p's human interface devices"
+      ],
+      [
+        "1106",
+        "VibeMic"
+      ],
+      [
+        "1107",
+        "USB-TMC SCPI Interface (RP2040)"
+      ],
+      [
+        "1108",
+        "Rotatrix Trackball"
+      ],
+      [
+        "1109",
+        "Consofy"
+      ],
+      [
+        "110b",
+        "DIOPTIC USB DEVICE"
+      ],
+      [
+        "110c",
+        "KODAI - AM2"
+      ],
+      [
+        "110d",
+        "Challenger+ RP2350 NB-IoT"
+      ],
+      [
+        "110e",
+        "Translational Joystick"
+      ],
+      [
+        "110f",
+        "DarrenMC System Infomation Display"
+      ],
+      [
+        "1110",
+        "Conex audio"
+      ],
+      [
+        "1111",
+        "GD Round DDU Display"
+      ],
+      [
+        "1113",
+        "Apodemus BatMic"
+      ],
+      [
+        "1114",
+        "Apodemus BatRecorder"
+      ],
+      [
+        "1115",
+        "DeltaTrack"
+      ],
+      [
+        "1116",
+        "Xiaomao"
+      ],
+      [
+        "1117",
+        "OpenTaxus"
+      ],
+      [
+        "1119",
+        "KODAI - GZ"
+      ],
+      [
+        "111a",
+        "Apodemus Griff"
+      ],
+      [
+        "111c",
+        "Remote Bridge MiniKey"
+      ],
+      [
+        "111d",
+        "Bat Detector 384"
+      ],
+      [
+        "1120",
+        "TLM-110"
+      ],
+      [
+        "1121",
+        "omni kbd"
+      ],
+      [
+        "1123",
+        "Glyph Mini 2040"
+      ],
+      [
+        "1124",
+        "DeskPressor"
+      ],
+      [
+        "1125",
+        "Schwarzonator"
+      ],
+      [
+        "1126",
+        "IQ-Series"
+      ],
+      [
+        "1127",
+        "2Step"
+      ],
+      [
+        "1128",
+        "Glyph 2040"
+      ],
+      [
+        "112a",
+        "Alpha"
+      ],
+      [
+        "112b",
+        "ProtoV MINI"
+      ]
+    ],
     "vendor": "Raspberry Pi Foundation"
   },
   "2e95": {
@@ -88603,7 +91778,3724 @@
     "vendor": "Control iD"
   },
   "303a": {
-    "products": [],
+    "products": [
+      [
+        "0002",
+        "ESP32-S2 USB-OTG"
+      ],
+      [
+        "1001",
+        "USB JTAG/serial debug unit"
+      ],
+      [
+        "4001",
+        "ESP-IDF TinyUSB serial device"
+      ],
+      [
+        "7000",
+        "ESP32-S2-HMI-DevKit-1 - UF2 Bootloader"
+      ],
+      [
+        "7001",
+        "ESP32-S2-HMI-DevKit-1 - CircuitPython"
+      ],
+      [
+        "7002",
+        "ESP32-S3-DevKitC-1 - UF2 Bootloader"
+      ],
+      [
+        "7003",
+        "ESP32-S3-DevKitC-1 - CircuitPython"
+      ],
+      [
+        "7004",
+        "ESP32-S3 Box - UF2 Bootloader"
+      ],
+      [
+        "7005",
+        "ESP32-S3 Box - CircuitPython"
+      ],
+      [
+        "7006",
+        "ESP32-S3-DevKitM-1 - UF2 Bootloader"
+      ],
+      [
+        "7007",
+        "ESP32-S3-DevKitM-1 - CircuitPython"
+      ],
+      [
+        "7008",
+        "ESP32-S2-DevKitC-1 - UF2 Bootloader"
+      ],
+      [
+        "7009",
+        "ESP32-S2-DevKitC-1 - CircuitPython"
+      ],
+      [
+        "700a",
+        "ESP32-S3-USB-OTG - UF2 Bootloader"
+      ],
+      [
+        "700b",
+        "ESP32-S3-USB-OTG - CircuitPython"
+      ],
+      [
+        "700c",
+        "ESP32-S3 Box Lite - UF2 Bootloader"
+      ],
+      [
+        "700d",
+        "ESP32-S3 Box Lite - CircuitPython"
+      ],
+      [
+        "700e",
+        "ESP32-S3-EYE - UF2 Bootloader"
+      ],
+      [
+        "700f",
+        "ESP32-S3-EYE - CircuitPython"
+      ],
+      [
+        "7010",
+        "ESP32-S3-LCD-EV-Board v1.5 - UF2 Bootloader"
+      ],
+      [
+        "7011",
+        "ESP32-S3-LCD-EV-Board v1.5 - CircuitPython"
+      ],
+      [
+        "7012",
+        "ESP32-P4-Function-EV - UF2 Bootloader"
+      ],
+      [
+        "7013",
+        "ESP32-P4-Function-EV - CircuitPython"
+      ],
+      [
+        "8000",
+        "Espressif test PID"
+      ],
+      [
+        "8001",
+        "Unexpected Maker TinyS2 - Arduino"
+      ],
+      [
+        "8002",
+        "Unexpected Maker TinyS2 - CircuitPython"
+      ],
+      [
+        "8003",
+        "Wualabs - Wuard Zero - Vera crypto dev board"
+      ],
+      [
+        "8004",
+        "Wualabs - Wuard crypto"
+      ],
+      [
+        "8005",
+        "Unexpected Maker TinyS2 - UF2 Bootloader"
+      ],
+      [
+        "8006",
+        "LILYGO TTGO T8 ESP32-S2 - Arduino"
+      ],
+      [
+        "8007",
+        "LILYGO TTGO T8 ESP32-S2 - CircuitPython"
+      ],
+      [
+        "8008",
+        "LILYGO TTGO T8 ESP32-S2 - UF2 Bootloader"
+      ],
+      [
+        "8009",
+        "ATMegaZero ESP32-S2 - CircuitPython"
+      ],
+      [
+        "800a",
+        "ATMegaZero ESP32-S2 - Arduino"
+      ],
+      [
+        "800b",
+        "ATMegaZero ESP32-S2 - UF2 Bootloader"
+      ],
+      [
+        "800c",
+        "GRAVITECH CUCUMBER RIS ESP32S2 - Arduino"
+      ],
+      [
+        "800d",
+        "GRAVITECH CUCUMBER RIS ESP32S2 - CircuitPython"
+      ],
+      [
+        "800e",
+        "GRAVITECH CUCUMBER RIS ESP32S2 - UF2 Bootloader"
+      ],
+      [
+        "800f",
+        "Troo - FarmTRX Yield Monitor"
+      ],
+      [
+        "8010",
+        "ESP32DE Stickley-MIDI-PRO"
+      ],
+      [
+        "8011",
+        "ESP32DE Stickley-Arduino"
+      ],
+      [
+        "8012",
+        "ESP32DE Stickley-UF2-Bootloader"
+      ],
+      [
+        "8013",
+        "ESP32DE Stickley-CircuitPython"
+      ],
+      [
+        "8014",
+        "ESP32DE WiFi-CAN-Bridge-PRO"
+      ],
+      [
+        "8015",
+        "ESP32DE WiFi-OTG-Bridge-PRO"
+      ],
+      [
+        "8016",
+        "ESP32DE WiFi-MCU-Bridge-PRO"
+      ],
+      [
+        "8017",
+        "ESP32DE LIVE-STYLER-PRO"
+      ],
+      [
+        "8018",
+        "ESP32DE STICKLEY-PRO"
+      ],
+      [
+        "8019",
+        "ESP32DE MCU-Commander"
+      ],
+      [
+        "801a",
+        "ESP32DE -A-TESTDRIVE"
+      ],
+      [
+        "801b",
+        "ESP32DE -B-TESTHOST"
+      ],
+      [
+        "801c",
+        "ESP32DE -C-TESTDEVICE"
+      ],
+      [
+        "801d",
+        "ESP32DE -D-NEURONAL"
+      ],
+      [
+        "801e",
+        "ESP32DE -E-REMOTE"
+      ],
+      [
+        "801f",
+        "ESP32DE -F-OSZ"
+      ],
+      [
+        "8020",
+        "ESP32DE PSRAMBANK-PRO"
+      ],
+      [
+        "8021",
+        "ESP32DE WiFi-DONGLE"
+      ],
+      [
+        "8022",
+        "ESP32DE PeripheralBridge"
+      ],
+      [
+        "8023",
+        "ESP32DE SIMEPI\u2122 DONGLE"
+      ],
+      [
+        "8024",
+        "ESP32DE AIoT-DONGLE"
+      ],
+      [
+        "8025",
+        "ESP32DE IoT-DONGLE"
+      ],
+      [
+        "8026",
+        "ESP32DE WEBUSB-PRO"
+      ],
+      [
+        "8027",
+        "ESP32DE TINY-SHinY"
+      ],
+      [
+        "8028",
+        "ESP32DE devflowcharter PRO"
+      ],
+      [
+        "8029",
+        "ESP32DE WEBSPI-PRO"
+      ],
+      [
+        "802a",
+        "ESPattoZero\u2122 CircuitS"
+      ],
+      [
+        "802b",
+        "ESPattoZero\u2122 Engineering"
+      ],
+      [
+        "802c",
+        "ESPattoZero\u2122 Test fixture"
+      ],
+      [
+        "802d",
+        "ESPattozero\u2122 Logic Analyzer"
+      ],
+      [
+        "802e",
+        "ESPattoZero\u2122 Board Tester"
+      ],
+      [
+        "802f",
+        "ESPattoZero\u2122 Air quality tester"
+      ],
+      [
+        "8030",
+        "ESPattoZero\u2122 X-ThermalPro"
+      ],
+      [
+        "8031",
+        "ESPattoZero\u2122 SECureCAM"
+      ],
+      [
+        "8032",
+        "ESPattoZero\u2122 StampIT"
+      ],
+      [
+        "8033",
+        "ESPattoZero\u2122 Signalgenerator"
+      ],
+      [
+        "8034",
+        "ESPattoZero\u2122 SnapSONzero"
+      ],
+      [
+        "8035",
+        "ESPattoZero\u2122 SnapSONmini"
+      ],
+      [
+        "8036",
+        "ESPattoZero\u2122 espKIT Home"
+      ],
+      [
+        "8037",
+        "ESPattoZero\u2122 espKIT Mobil"
+      ],
+      [
+        "8038",
+        "ESPattoZero\u2122 LoRa-X-Home"
+      ],
+      [
+        "8039",
+        "ESPattoZero\u2122 LoRa-X-Mobil"
+      ],
+      [
+        "803a",
+        "ESPattoZero\u2122 ZERO-UF2-Bootloader"
+      ],
+      [
+        "803b",
+        "ESPattoZero\u2122 ZERO-CircuitPython"
+      ],
+      [
+        "803c",
+        "ESPattoZero\u2122 ZERO-Arduino"
+      ],
+      [
+        "803d",
+        "ESPattoZero\u2122 SIMEPI\u2122-Arduino"
+      ],
+      [
+        "803e",
+        "ESPattoZero\u2122 RODI\u2122-Arduino"
+      ],
+      [
+        "803f",
+        "ESPattoZero\u2122 GRBL-DONGLE"
+      ],
+      [
+        "8040",
+        "ESPattoZero\u2122 USB-MIDI32"
+      ],
+      [
+        "8041",
+        "ESPattoZero\u2122 USB-MIDI64"
+      ],
+      [
+        "8042",
+        "ESPattoZero\u2122 USB-MIDI128"
+      ],
+      [
+        "8043",
+        "ESPattoZero\u2122 DMX-BASE-HOME"
+      ],
+      [
+        "8044",
+        "ESPattpZero\u2122 DMX-BASE-PRO"
+      ],
+      [
+        "8045",
+        "ESPattoZero\u2122 B4A-Connect"
+      ],
+      [
+        "8046",
+        "ESPattoZero\u2122 Android-Bridge"
+      ],
+      [
+        "8047",
+        "ESPattoZero\u2122 CINEMA-SCOPE-IT"
+      ],
+      [
+        "8048",
+        "ESPattoZero\u2122 MINI-SCOPE-IT"
+      ],
+      [
+        "8049",
+        "ESPattoZero\u2122 X-LINK"
+      ],
+      [
+        "804a",
+        "ESPattoZero\u2122 BION-ELV"
+      ],
+      [
+        "804b",
+        "ESPattoZero\u2122 EMU-x-"
+      ],
+      [
+        "804c",
+        "ESPattoZero\u2122 Switch-TH-ing"
+      ],
+      [
+        "804d",
+        "ESPattoZero\u2122 VFM vehicle fleet manager"
+      ],
+      [
+        "804e",
+        "ESPattoZero\u2122 Health&Fitnees minder"
+      ],
+      [
+        "804f",
+        "ESPattoZero\u2122 DAW-PRO"
+      ],
+      [
+        "8050",
+        "ESPattoZero\u2122 V-bridge"
+      ],
+      [
+        "8051",
+        "ESPattoZero\u2122 CPY-KIT"
+      ],
+      [
+        "8052",
+        "ESPattoZero\u2122 NUTTX-KIT"
+      ],
+      [
+        "8053",
+        "ESPattoZero\u2122 DIY-KIT"
+      ],
+      [
+        "8054",
+        "ESPattoZero\u2122 USB-CTM16"
+      ],
+      [
+        "8055",
+        "ESPattoZero\u2122 USB-CTM32"
+      ],
+      [
+        "8056",
+        "ESPattoZero\u2122 USB-CTM64"
+      ],
+      [
+        "8057",
+        "ESPattoZero\u2122 USB-CTM128"
+      ],
+      [
+        "8058",
+        "ESPattoZero\u2122 USB-MTC16"
+      ],
+      [
+        "8059",
+        "ESPattoZero\u2122 USB-MTC32"
+      ],
+      [
+        "805a",
+        "ESPattoZero\u2122 USB-MTC64"
+      ],
+      [
+        "805b",
+        "ESPattoZero\u2122 USB-MTC128"
+      ],
+      [
+        "805c",
+        "ESPattoZero\u2122 CTM PRO"
+      ],
+      [
+        "805d",
+        "ESPattoZero\u2122 MTC PRO"
+      ],
+      [
+        "805e",
+        "ESPattoZero\u2122 VCP2WiFi"
+      ],
+      [
+        "805f",
+        "ESPattoZero\u2122 EIA-485"
+      ],
+      [
+        "8060",
+        "ESPattoZero\u2122 ESPattoZero-cero"
+      ],
+      [
+        "8061",
+        "ESPattoZero\u2122 ESPattoZero-uno"
+      ],
+      [
+        "8062",
+        "ESPattoZero\u2122 ESPattoZero-dos"
+      ],
+      [
+        "8063",
+        "ESPattoZero\u2122 ESPattoZero-tres"
+      ],
+      [
+        "8064",
+        "ESPattoZero\u2122 ESPattoZero-cuatro"
+      ],
+      [
+        "8065",
+        "ESPattoZero\u2122 ESPattoZero-cinco"
+      ],
+      [
+        "8066",
+        "ESPattoZero\u2122 ESPattoZero-seis"
+      ],
+      [
+        "8067",
+        "ESPattoZero\u2122 ESPattoZero-siete"
+      ],
+      [
+        "8068",
+        "ESPattoZero\u2122 ESPattoZero-ocho"
+      ],
+      [
+        "8069",
+        "ESPattoZero\u2122 ESPattoZero-nueve"
+      ],
+      [
+        "806a",
+        "ESPattoZero\u2122 PICOio-UF2"
+      ],
+      [
+        "806b",
+        "ESPattoZero\u2122 PICOio-CircuitPython"
+      ],
+      [
+        "806c",
+        "ESPattoZero\u2122 PICOio-Arduino"
+      ],
+      [
+        "806d",
+        "ESPattoZero\u2122 PICOio-PRO-UF2"
+      ],
+      [
+        "806e",
+        "ESPattoZero\u2122 PICOio-PRO-CircuitPython"
+      ],
+      [
+        "806f",
+        "ESPattoZero\u2122 PICOio-PRO-Arduino"
+      ],
+      [
+        "8070",
+        "ESPattoZero\u2122 ATTO-UF2"
+      ],
+      [
+        "8071",
+        "ESPattoZero\u2122 ATTO-CircuitPython"
+      ],
+      [
+        "8072",
+        "ESPattoZero\u2122 ATTO-Arduino"
+      ],
+      [
+        "8073",
+        "ESPattoZero\u2122 ATTO-PRO-UF2"
+      ],
+      [
+        "8074",
+        "ESPattoZero\u2122 ATTO-PRO-CircuitPython"
+      ],
+      [
+        "8075",
+        "ESPattoZero\u2122 ATTO-PRO-Arduino"
+      ],
+      [
+        "8076",
+        "ESPattoZero\u2122 MAMAMIA-UF2"
+      ],
+      [
+        "8077",
+        "ESPattoZero\u2122 MAMAMIA-CircuitPython"
+      ],
+      [
+        "8078",
+        "ESPattoZero\u2122 MAMAMIA-Arduino"
+      ],
+      [
+        "8079",
+        "ESPattoZero\u2122 LEONPI-MSI-PRO"
+      ],
+      [
+        "807a",
+        "ESPattoZero\u2122 LEONPI-MSI-UF2"
+      ],
+      [
+        "807b",
+        "ESPattoZero\u2122 LEONPI-MSI-CircuitPython"
+      ],
+      [
+        "807c",
+        "ESPattoZero\u2122 LEONPI-MSI-Arduino"
+      ],
+      [
+        "807d",
+        "ESPattoZero\u2122 GeoTracking Station"
+      ],
+      [
+        "807e",
+        "ESPattoZero\u2122 GeoTracking Base"
+      ],
+      [
+        "807f",
+        "ESPattoZero\u2122 GeoTracking Mobil"
+      ],
+      [
+        "8080",
+        "ESPattoZero\u2122 PROXY-NET"
+      ],
+      [
+        "8081",
+        "ESPattoZero\u2122 PORT-NET"
+      ],
+      [
+        "8082",
+        "ESPattoZero\u2122 Studentenwerk Station"
+      ],
+      [
+        "8083",
+        "ESPattoZero\u2122 Studentenwerk Client"
+      ],
+      [
+        "8084",
+        "ESPattoZero\u2122 Studentenwerk Mobil"
+      ],
+      [
+        "8085",
+        "ESPattoZero\u2122 Studentenwerk YESAR"
+      ],
+      [
+        "8086",
+        "ESPattoZero\u2122 UNI VM-iAPX 86"
+      ],
+      [
+        "8087",
+        "ESPattoZero\u2122 UNI VM-x87 floating-point"
+      ],
+      [
+        "8088",
+        "ESPattoZero\u2122 UNI VM-8088"
+      ],
+      [
+        "8089",
+        "ESPattoZero\u2122 UNI VM-DMA"
+      ],
+      [
+        "808a",
+        "ESPattoZero\u2122 Freifunk S2 Bridge"
+      ],
+      [
+        "808b",
+        "ESPattoZero\u2122 Voltamere PI Station"
+      ],
+      [
+        "808c",
+        "ESPattoZero\u2122 Voltamere PI Client"
+      ],
+      [
+        "808d",
+        "ESPattoZero\u2122 Voltamere PI Mobil"
+      ],
+      [
+        "808e",
+        "ESPattoZero\u2122 Voltamere PI YESAR"
+      ],
+      [
+        "808f",
+        "ESPattoZero\u2122 GPS NMEA Locater"
+      ],
+      [
+        "8090",
+        "ESPattoZero\u2122 GPS NMEA FOX"
+      ],
+      [
+        "8091",
+        "ESPattoZero\u2122 GPS NMEA HUNTER"
+      ],
+      [
+        "8092",
+        "ESPattoZero\u2122 GPS NMEA Base"
+      ],
+      [
+        "8093",
+        "ESPattoZero\u2122 GPS NMEA Station"
+      ],
+      [
+        "8094",
+        "ESPattoZero\u2122 GPS NMEA Mobil"
+      ],
+      [
+        "8095",
+        "ESPattoZero\u2122 GPS NMEA YESAR"
+      ],
+      [
+        "8096",
+        "ESPattoZero\u2122 NMEA Monitor"
+      ],
+      [
+        "8097",
+        "ESPattoZero\u2122 USB Reminder"
+      ],
+      [
+        "8098",
+        "ESPattoZero\u2122 USB TrackingStar"
+      ],
+      [
+        "8099",
+        "ESPattoZero\u2122 USB Router"
+      ],
+      [
+        "809a",
+        "ESPattoZero\u2122 USB-INK"
+      ],
+      [
+        "809b",
+        "ESPattoZero\u2122 HOMESCHOOLING"
+      ],
+      [
+        "809c",
+        "ESPattoZero\u2122 UNI-VM-A7150-ROB-VEB"
+      ],
+      [
+        "809d",
+        "ESPattoZero\u2122 UNI-VM-DCP1700-ROB-VEB"
+      ],
+      [
+        "809e",
+        "ESPattoZero\u2122 UNI-VM-DCP-GX-ROB-VEB"
+      ],
+      [
+        "809f",
+        "ESPattoZero\u2122 USB WIFI-HOTSPOT"
+      ],
+      [
+        "80a0",
+        "GRAVITECH CUCUMBER R ESP32S2 - Arduino"
+      ],
+      [
+        "80a1",
+        "GRAVITECH CUCUMBER R ESP32S2 - CircuitPython"
+      ],
+      [
+        "80a2",
+        "GRAVITECH CUCUMBER R ESP32S2 - UF2 Bootloader"
+      ],
+      [
+        "80a3",
+        "GRAVITECH CUCUMBER M ESP32S2 - Arduino"
+      ],
+      [
+        "80a4",
+        "GRAVITECH CUCUMBER M ESP32S2 - CircuitPython"
+      ],
+      [
+        "80a5",
+        "GRAVITECH CUCUMBER M ESP32S2 - UF2 Bootloader"
+      ],
+      [
+        "80a6",
+        "GRAVITECH CUCUMBER MS ESP32S2 - Arduino"
+      ],
+      [
+        "80a7",
+        "GRAVITECH CUCUMBER MS ESP32S2 - CircuitPython"
+      ],
+      [
+        "80a8",
+        "GRAVITECH CUCUMBER MS ESP32S2 - UF2 Bootloader"
+      ],
+      [
+        "80a9",
+        "Franzininho WIFI - Arduino"
+      ],
+      [
+        "80aa",
+        "Franzininho WIFI - CircuitPython"
+      ],
+      [
+        "80ab",
+        "Franzininho WIFI - UF2 Bootloader"
+      ],
+      [
+        "80ac",
+        "Franzininho WIFI Wrover - Arduino"
+      ],
+      [
+        "80ad",
+        "Franzininho WIFI Wrover - CircuitPython"
+      ],
+      [
+        "80ae",
+        "Franzininho WIFI Wrover - UF2 Bootloader"
+      ],
+      [
+        "80af",
+        "Artisense RD00 - CircuitPython"
+      ],
+      [
+        "80b0",
+        "Artisense RD00 - UF2 Bootloader"
+      ],
+      [
+        "80b1",
+        "Project Stida RoboCloud - CircuitPython"
+      ],
+      [
+        "80b2",
+        "Muse Lab nanoESP32-S2 WROVER - CircuitPython"
+      ],
+      [
+        "80b3",
+        "Muse Lab nanoESP32-S2 WROVER - UF2 Bootloader"
+      ],
+      [
+        "80b4",
+        "Unexpected Maker FeatherS2 Neo - Arduino"
+      ],
+      [
+        "80b5",
+        "Unexpected Maker FeatherS2 Neo - CircuitPython"
+      ],
+      [
+        "80b6",
+        "Morpheans MorphESP-240 - UF2 Bootloader"
+      ],
+      [
+        "80b7",
+        "Morpheans MorphESP-240 - UF2 Arduino"
+      ],
+      [
+        "80b8",
+        "Morpheans MorphESP-240 - UF2 CircuitPython"
+      ],
+      [
+        "80b9",
+        "Hypnocube - HypnoBall"
+      ],
+      [
+        "80ba",
+        "Hypnocube - HypnoLSD"
+      ],
+      [
+        "80bb",
+        "Hypnocube - HypnoCube8"
+      ],
+      [
+        "80bc",
+        "Hypnocube - HypnoCube4"
+      ],
+      [
+        "80bd",
+        "Hypnocube - HypnoLights"
+      ],
+      [
+        "80be",
+        "Hypnocube - HypnoSquare8"
+      ],
+      [
+        "80bf",
+        "WarmBit ESPixel32 - UF2 Bootloader"
+      ],
+      [
+        "80c0",
+        "WarmBit ESPixel32 - UF2 Arduino"
+      ],
+      [
+        "80c1",
+        "WarmBit ESPixel32 - UF2 CircuitPython"
+      ],
+      [
+        "80c2",
+        "Lolin S2 Mini - Arduino"
+      ],
+      [
+        "80c3",
+        "Lolin S2 Mini - CircuitPython"
+      ],
+      [
+        "80c4",
+        "Lolin S2 Mini - UF2 Bootloader"
+      ],
+      [
+        "80c5",
+        "Lolin S2 Pico - Arduino"
+      ],
+      [
+        "80c6",
+        "Lolin S2 Pico - CircuitPython"
+      ],
+      [
+        "80c7",
+        "Lolin S2 Pico - UF2 Bootloader"
+      ],
+      [
+        "80c8",
+        "BrainBoardz Neuron - CircuitPython"
+      ],
+      [
+        "80c9",
+        "BrainBoardz NeuronZ - CircuitPython"
+      ],
+      [
+        "80ca",
+        "BrainBoardz Neuron - Arduino"
+      ],
+      [
+        "80cb",
+        "BrainBoardz NeuronZ - Arduino"
+      ],
+      [
+        "80cc",
+        "BrainBoardz Neuron - UF2 Bootloader"
+      ],
+      [
+        "80cd",
+        "BrainBoardz NeuronZ - UF2 Bootloader"
+      ],
+      [
+        "80ce",
+        "Soul Injector Firmware Programmer - Configurator"
+      ],
+      [
+        "80cf",
+        "CM-Manu Alc-Test - USB MSD"
+      ],
+      [
+        "80d0",
+        "Unexpected Maker TinyS3 - Arduino"
+      ],
+      [
+        "80d1",
+        "Unexpected Maker TinyS3 - CircuitPython"
+      ],
+      [
+        "80d2",
+        "Unexpected Maker TinyS3 - UF2 Bootloader"
+      ],
+      [
+        "80d3",
+        "Unexpected Maker ProS3 - Arduino"
+      ],
+      [
+        "80d4",
+        "Unexpected Maker ProS3 - CircuitPython"
+      ],
+      [
+        "80d5",
+        "Unexpected Maker ProS3 - UF2 Bootloader"
+      ],
+      [
+        "80d6",
+        "Unexpected Maker FeatherS3 - Arduino"
+      ],
+      [
+        "80d7",
+        "Unexpected Maker FeatherS3 - CircuitPython"
+      ],
+      [
+        "80d8",
+        "Unexpected Maker FeatherS3 - UF2 Bootloader"
+      ],
+      [
+        "80d9",
+        "FutureKeys HexKy S2 - CircuitPython"
+      ],
+      [
+        "80da",
+        "FutureKeys HexKy S2 - UF2 Bootloader"
+      ],
+      [
+        "80db",
+        "CircuitArt ESP32S3 zero - Arduino"
+      ],
+      [
+        "80dc",
+        "CircuitArt ESP32S3 zero - UF2 Bootloader"
+      ],
+      [
+        "80dd",
+        "CircuitArt ESP32S3 zero - CircuitPython"
+      ],
+      [
+        "80de",
+        "Banana Pi BPI-Leaf-S3 - UF2 Bootloader"
+      ],
+      [
+        "80df",
+        "Banana Pi BPI-Leaf-S3 - Arduino"
+      ],
+      [
+        "80e0",
+        "Banana Pi BPI-Leaf-S3 - CircuitPython"
+      ],
+      [
+        "80e1",
+        "Banana Pi BPI-Leaf-S2 - UF2 Bootloader"
+      ],
+      [
+        "80e2",
+        "Banana Pi BPI-Leaf-S2 - Arduino"
+      ],
+      [
+        "80e3",
+        "Banana Pi BPI-Leaf-S2 - CircuitPython"
+      ],
+      [
+        "80e4",
+        "Banana Pi BPI:Bit v2 - UF2 Bootloader"
+      ],
+      [
+        "80e5",
+        "Banana Pi BPI:Bit v2 - Arduino"
+      ],
+      [
+        "80e6",
+        "Banana Pi BPI:Bit v2 - CircuitPython"
+      ],
+      [
+        "80e7",
+        "Hiibot IoTS2 - UF2 Bootloader"
+      ],
+      [
+        "80e8",
+        "Hiibot IoTS2 - CircuitPython"
+      ],
+      [
+        "80e9",
+        "LILYGO TTGO T8 ESP32-S2-WROOM - Arduino"
+      ],
+      [
+        "80ea",
+        "LILYGO TTGO T8 ESP32-S2-WROOM - CircuitPython"
+      ],
+      [
+        "80eb",
+        "LILYGO TTGO T8 ESP32-S2-WROOM - UF2 Bootloader"
+      ],
+      [
+        "80ec",
+        "LILYGO TTGO T8 ESP32-S2 noDisplay - Arduino"
+      ],
+      [
+        "80ed",
+        "LILYGO TTGO T8 ESP32-S2 noDisplay - CircuitPython"
+      ],
+      [
+        "80ee",
+        "LILYGO TTGO T8 ESP32-S2 noDisplay - UF2 Bootloader"
+      ],
+      [
+        "80ef",
+        "GoGo Board - UF2 Bootloader"
+      ],
+      [
+        "80f0",
+        "GoGo Board - Arduino"
+      ],
+      [
+        "80f1",
+        "Tevofy Technology LTD - Muro Box MIDI N20"
+      ],
+      [
+        "80f2",
+        "Tevofy Technology LTD - Muro Box MIDI N40"
+      ],
+      [
+        "80f3",
+        "WERMA Signaltechnik GmbH + Co. KG - eSIGN"
+      ],
+      [
+        "80f4",
+        "WERMA Signaltechnik GmbH + Co. KG - eSIGN Bootloader"
+      ],
+      [
+        "80f5",
+        "Lolin C3 Mini - CircuitPython"
+      ],
+      [
+        "80f6",
+        "Unexpected Maker - Reflow Master Pro"
+      ],
+      [
+        "80f7",
+        "Siemens - ECS"
+      ],
+      [
+        "80f8",
+        "Cytron Maker Feather AIoT S3 - Arduino"
+      ],
+      [
+        "80f9",
+        "Cytron Maker Feather AIoT S3 - CircuitPython"
+      ],
+      [
+        "80fa",
+        "Cytron Maker Feather AIoT S3 - UF2 Bootloader"
+      ],
+      [
+        "80fb",
+        "MixGo CE - Arduino"
+      ],
+      [
+        "80fc",
+        "MixGo CE - CircuitPython"
+      ],
+      [
+        "80fd",
+        "MixGo CE - UF2 Bootloader"
+      ],
+      [
+        "80fe",
+        "PerpetCal Smart Calendar - Configurator"
+      ],
+      [
+        "80ff",
+        "MiniMain ESP32-S2 - Arduino"
+      ],
+      [
+        "8100",
+        "MiniMain ESP32-S2 - CircuitPython"
+      ],
+      [
+        "8101",
+        "MiniMain ESP32-S2 - UF2 Bootloader"
+      ],
+      [
+        "8102",
+        "IoT-PostBox v1 - Arduino"
+      ],
+      [
+        "8103",
+        "IoT-PostBox v1 - CircuitPython"
+      ],
+      [
+        "8104",
+        "IoT-PostBox v1 - UF2 Bootloader"
+      ],
+      [
+        "8105",
+        "MuseLab ESP32-S2 ESPLink - esp-usb-bridge"
+      ],
+      [
+        "8106",
+        "MuseLab ESP32-S2 ESPLink - Arduino"
+      ],
+      [
+        "8107",
+        "MuseLab ESP32-S2 ESPLink - CircuitPython"
+      ],
+      [
+        "8108",
+        "MuseLab ESP32-S2 ESPLink - UF2 Bootloader"
+      ],
+      [
+        "8109",
+        "Waveshare ESP32-S2-Pico - UF2 Bootloader"
+      ],
+      [
+        "810a",
+        "Waveshare ESP32-S2-Pico - CircuitPython"
+      ],
+      [
+        "810b",
+        "Waveshare ESP32-S2-Pico-LCD - UF2 Bootloader"
+      ],
+      [
+        "810c",
+        "Waveshare ESP32-S2-Pico-LCD - CircuitPython"
+      ],
+      [
+        "810d",
+        "Smart Bee Designs Bee Motion - Arduino"
+      ],
+      [
+        "810e",
+        "Smart Bee Designs Bee Motion - CircuitPython"
+      ],
+      [
+        "810f",
+        "Smart Bee Designs Bee Motion - UF2 Bootloader"
+      ],
+      [
+        "8110",
+        "Smart Bee Designs Bee S3 - Arduino"
+      ],
+      [
+        "8111",
+        "Smart Bee Designs Bee S3 - CircuitPython"
+      ],
+      [
+        "8112",
+        "Smart Bee Designs Bee S3 - UF2 Bootloader"
+      ],
+      [
+        "8113",
+        "Smart Bee Designs Bee Motion S3 - Arduino"
+      ],
+      [
+        "8114",
+        "Smart Bee Designs Bee Motion S3 - CircuitPython"
+      ],
+      [
+        "8115",
+        "Smart Bee Designs Bee Motion S3 - UF2 Bootloader"
+      ],
+      [
+        "8116",
+        "Lolin S3 - Arduino"
+      ],
+      [
+        "8117",
+        "Lolin S3 - CircuitPython"
+      ],
+      [
+        "8118",
+        "Lolin S3 - UF2 Bootloader"
+      ],
+      [
+        "8119",
+        "M5STACK CoreS3 - Arduino"
+      ],
+      [
+        "811a",
+        "M5STACK CoreS3 - CircuitPython/Micropython"
+      ],
+      [
+        "811b",
+        "M5STACK CoreS3 - UF2 Bootloader"
+      ],
+      [
+        "811c",
+        "M5STACK StickS3 - Arduino"
+      ],
+      [
+        "811d",
+        "M5STACK StickS3 - CircuitPython/Micropython"
+      ],
+      [
+        "811e",
+        "M5STACK StickS3 - UF2 Bootloader"
+      ],
+      [
+        "811f",
+        "M5STACK AtomS3 - Arduino"
+      ],
+      [
+        "8120",
+        "M5STACK AtomS3 - CircuitPython/Micropython"
+      ],
+      [
+        "8121",
+        "M5STACK AtomS3 - UF2 Bootloader"
+      ],
+      [
+        "8122",
+        "Intech Studio Grid - UF2 Bootloader"
+      ],
+      [
+        "8123",
+        "Intech Studio Grid - Production Firmware"
+      ],
+      [
+        "8124",
+        "Intech Studio Knot - UF2 Bootloader"
+      ],
+      [
+        "8125",
+        "Intech Studio Knot - Production Firmware"
+      ],
+      [
+        "8126",
+        "RobotClass Graphite S2 - Arduino"
+      ],
+      [
+        "8127",
+        "RobotClass Graphite S2 - CircuitPython"
+      ],
+      [
+        "8128",
+        "RobotClass Graphite S2 - UF2 Bootloader"
+      ],
+      [
+        "8129",
+        "RIKA FireNet 2.0 USB-WiFi Stick - Bootloader"
+      ],
+      [
+        "812a",
+        "RIKA FireNet 2.0 USB-WiFi Stick - Production Firmware"
+      ],
+      [
+        "812b",
+        "Banana Pi BPI-PicoW-S3 - Arduino"
+      ],
+      [
+        "812c",
+        "Banana Pi BPI-PicoW-S3 - CircuitPython"
+      ],
+      [
+        "812d",
+        "Banana Pi BPI-PicoW-S3 - UF2 Bootloader"
+      ],
+      [
+        "812e",
+        "CharaChorder Lite-S2"
+      ],
+      [
+        "812f",
+        "CharaChorder Lite-S2 UF2 Bootloader"
+      ],
+      [
+        "8130",
+        "Refract AXIS"
+      ],
+      [
+        "8131",
+        "SoftRF WebTop USB S2"
+      ],
+      [
+        "8132",
+        "SoftRF Standalone Edition S3"
+      ],
+      [
+        "8133",
+        "SoftRF Prime Edition Mk3"
+      ],
+      [
+        "8134",
+        "SoftRF Prime Edition Mk3 - UF2 Bootloader"
+      ],
+      [
+        "8135",
+        "Sensory Bridge - Arduino"
+      ],
+      [
+        "8136",
+        "Matatalab Universal Robot S3"
+      ],
+      [
+        "8137",
+        "Matatalab VinciBot S3"
+      ],
+      [
+        "8138",
+        "Matatalab TaleBot S3"
+      ],
+      [
+        "8139",
+        "Matatalab MatataBot S3"
+      ],
+      [
+        "813a",
+        "Flash64 Ultra"
+      ],
+      [
+        "813b",
+        "Flash64 UF2 Bootloader"
+      ],
+      [
+        "813c",
+        "Flash64 Lite"
+      ],
+      [
+        "813d",
+        "Flash64 Deluxe"
+      ],
+      [
+        "813e",
+        "LILYGO T-Display-S3 - Arduino"
+      ],
+      [
+        "813f",
+        "LILYGO T-Display-S3 - CircuitPython"
+      ],
+      [
+        "8140",
+        "LILYGO T-Display-S3 - UF2 Bootloader"
+      ],
+      [
+        "8141",
+        "Deneyap Mini - Arduino"
+      ],
+      [
+        "8142",
+        "Deneyap Mini - CircuitPython"
+      ],
+      [
+        "8143",
+        "Deneyap Mini - UF2 Bootloader"
+      ],
+      [
+        "8144",
+        "Deneyap Mini v2 - Arduino"
+      ],
+      [
+        "8145",
+        "Deneyap Mini v2 - CircuitPython"
+      ],
+      [
+        "8146",
+        "Deneyap Mini v2 - UF2 Bootloader"
+      ],
+      [
+        "8147",
+        "Deneyap Kart 1A v2 - Arduino"
+      ],
+      [
+        "8148",
+        "Deneyap Kart 1A v2 - CircuitPython"
+      ],
+      [
+        "8149",
+        "Deneyap Kart 1A v2 - UF2 Bootloader"
+      ],
+      [
+        "814a",
+        "Deneyap Kart G - Arduino"
+      ],
+      [
+        "814b",
+        "Deneyap Kart G - CircuitPython"
+      ],
+      [
+        "814c",
+        "Deneyap Kart G - UF2 Bootloader"
+      ],
+      [
+        "814d",
+        "Crabik Slot ESP32-S3 - Arduino or CircuitPython"
+      ],
+      [
+        "814e",
+        "Chroma.tech Canopy"
+      ],
+      [
+        "814f",
+        "Chroma.tech Canopy - MicroPython"
+      ],
+      [
+        "8150",
+        "LILYGO T-Embed-S3 - Arduino"
+      ],
+      [
+        "8151",
+        "LILYGO T-Embed-S3 - CircuitPython"
+      ],
+      [
+        "8152",
+        "LILYGO T-Embed-S3 - UF2 Bootloader"
+      ],
+      [
+        "8153",
+        "LILYGO T-QT - Arduino"
+      ],
+      [
+        "8154",
+        "LILYGO T-QT - CircuitPython"
+      ],
+      [
+        "8155",
+        "LILYGO T-QT - UF2 Bootloader"
+      ],
+      [
+        "8156",
+        "CableMate"
+      ],
+      [
+        "8157",
+        "MD-PLUG Type C"
+      ],
+      [
+        "8158",
+        "MD-PLUG Type A"
+      ],
+      [
+        "8159",
+        "Shrooly SH01 - UF2 Bootloader"
+      ],
+      [
+        "815a",
+        "Shrooly SH01 - Production Firmware"
+      ],
+      [
+        "815b",
+        "MicroStorm CORE_S3 - ProjectSource"
+      ],
+      [
+        "815c",
+        "Smart Bee Designs Bee Data Logger - Arduino"
+      ],
+      [
+        "815d",
+        "Smart Bee Designs Bee Data Logger - CircuitPython"
+      ],
+      [
+        "815e",
+        "Smart Bee Designs Bee Data Logger - UF2 Bootloader"
+      ],
+      [
+        "815f",
+        "M5STACK AtomS3 Lite - CircuitPython/Micropython"
+      ],
+      [
+        "8160",
+        "M5STACK AtomS3 Lite - UF2 Bootloader"
+      ],
+      [
+        "8161",
+        "LOLIN S3 Pro - Arduino"
+      ],
+      [
+        "8162",
+        "LOLIN S3 Pro - CircuitPython"
+      ],
+      [
+        "8163",
+        "LOLIN S3 Pro - UF2 Bootloader"
+      ],
+      [
+        "8164",
+        "YD-ESP32-S3 - Arduino"
+      ],
+      [
+        "8165",
+        "YD-ESP32-S3 - UF2 Bootloader"
+      ],
+      [
+        "8166",
+        "YD-ESP32-S3 - CircuitPython"
+      ],
+      [
+        "8167",
+        "LOLIN S3 Mini - Arduino"
+      ],
+      [
+        "8168",
+        "LOLIN S3 Mini - CircuitPython"
+      ],
+      [
+        "8169",
+        "LOLIN S3 Mini - UF2 Bootloader"
+      ],
+      [
+        "816a",
+        "M5STACK StampS3 - Arduino"
+      ],
+      [
+        "816b",
+        "M5STACK StampS3 - CircuitPython/Micropython"
+      ],
+      [
+        "816c",
+        "M5STACK StampS3 - UF2 Bootloader"
+      ],
+      [
+        "816d",
+        "M5STACK TimerCamS3 - Arduino"
+      ],
+      [
+        "816e",
+        "M5STACK TimerCamS3 - CircuitPython/Micropython"
+      ],
+      [
+        "816f",
+        "M5STACK TimerCamS3 - UF2 Bootloader"
+      ],
+      [
+        "8170",
+        "CaniotBox - Production Firmware"
+      ],
+      [
+        "8171",
+        "01Space ESP32-S3-0.42OLED - Arduino"
+      ],
+      [
+        "8172",
+        "01Space ESP32-S3-0.42OLED - CircuitPython"
+      ],
+      [
+        "8173",
+        "01Space ESP32-S3-0.42OLED - MicroPython"
+      ],
+      [
+        "8174",
+        "01Space ESP32-S3-0.42OLED - UF2 Bootloader"
+      ],
+      [
+        "8175",
+        "Talk All Sport - Base Station"
+      ],
+      [
+        "8176",
+        "Talk All Sport - Hand Controller"
+      ],
+      [
+        "8177",
+        "Talk All Sport - Speech Unit"
+      ],
+      [
+        "8178",
+        "Talk All Sport - Arm Remote"
+      ],
+      [
+        "8179",
+        "Unexpected Maker NanoS3 - Arduino"
+      ],
+      [
+        "817a",
+        "Unexpected Maker NanoS3 - CircuitPython"
+      ],
+      [
+        "817b",
+        "Unexpected Maker NanoS3 - UF2 Bootloader"
+      ],
+      [
+        "817c",
+        "Unexpected Maker BlizzardS3 - Arduino"
+      ],
+      [
+        "817d",
+        "Unexpected Maker BlizzardS3 - CircuitPython"
+      ],
+      [
+        "817e",
+        "Unexpected Maker BlizzardS3 - UF2 Bootloader"
+      ],
+      [
+        "817f",
+        "Unexpected Maker Bling - Arduino"
+      ],
+      [
+        "8180",
+        "Unexpected Maker Bling - CircuitPython"
+      ],
+      [
+        "8181",
+        "Unexpected Maker Bling - UF2 Bootloader"
+      ],
+      [
+        "8182",
+        "Banana Pi BPI-Centi-S3 - Arduino"
+      ],
+      [
+        "8183",
+        "Banana Pi BPI-Centi-S3 - CircuitPython"
+      ],
+      [
+        "8184",
+        "Banana Pi BPI-Centi-S3 - UF2 Bootloader"
+      ],
+      [
+        "8185",
+        "M5STACK AtomS3 Lite - Arduino"
+      ],
+      [
+        "8186",
+        "M5STACK ATOMS3U - Arduino"
+      ],
+      [
+        "8187",
+        "M5STACK ATOMS3U - CircuitPython/Micropython"
+      ],
+      [
+        "8188",
+        "M5STACK ATOMS3U - UF2 Bootloader"
+      ],
+      [
+        "8189",
+        "CharaChorder Engine S2"
+      ],
+      [
+        "818a",
+        "CharaChorder Engine S2 - UF2 Bootloader"
+      ],
+      [
+        "818b",
+        "CharaChorder X S2"
+      ],
+      [
+        "818c",
+        "CharaChorder X S2 - UF2 Bootloader"
+      ],
+      [
+        "818d",
+        "CharaChorder X S2 Host"
+      ],
+      [
+        "818e",
+        "CharaChorder X S2 Host - UF2 Bootloader"
+      ],
+      [
+        "818f",
+        "LilyGO T-TWR Plus S3 - Arduino"
+      ],
+      [
+        "8190",
+        "LilyGO T-TWR Plus S3 - CircuitPython/Micropython"
+      ],
+      [
+        "8191",
+        "LilyGO T-TWR Plus S3 - UF2 Bootloader"
+      ],
+      [
+        "8192",
+        "uPesy ESP32S3 Devkit - Arduino"
+      ],
+      [
+        "8193",
+        "uPesy ESP32S3 Devkit - CircuitPython"
+      ],
+      [
+        "8194",
+        "uPesy ESP32S3 Devkit - UF2 Bootloader"
+      ],
+      [
+        "8195",
+        "uPesy ESP32C3 Basic - Arduino"
+      ],
+      [
+        "8196",
+        "uPesy ESP32C3 Basic - CircuitPython"
+      ],
+      [
+        "8197",
+        "uPesy ESP32C3 Basic - UF2 Bootloader"
+      ],
+      [
+        "8198",
+        "uPesy ESP32C3 Pro - Arduino"
+      ],
+      [
+        "8199",
+        "uPesy ESP32C3 Pro - CircuitPython"
+      ],
+      [
+        "819a",
+        "uPesy ESP32C3 Pro - UF2 Bootloader"
+      ],
+      [
+        "819b",
+        "uPesy ESP32C3 Mini - Arduino"
+      ],
+      [
+        "819c",
+        "uPesy ESP32C3 Mini - CircuitPython"
+      ],
+      [
+        "819d",
+        "uPesy ESP32C3 Mini - UF2 Bootloader"
+      ],
+      [
+        "819e",
+        "Lunii FLAM"
+      ],
+      [
+        "819f",
+        "LAEPI safe.EAR - Arduino"
+      ],
+      [
+        "81a0",
+        "SoftRF Midi Edition S3"
+      ],
+      [
+        "81a1",
+        "SoftRF Midi Edition S3 - UF2 Bootloader"
+      ],
+      [
+        "81a2",
+        "Waveshare ESP32-S3-Pico - UF2 Bootloader"
+      ],
+      [
+        "81a3",
+        "Waveshare ESP32-S3-Pico - CircuitPython"
+      ],
+      [
+        "81a4",
+        "Kailani Reverb - VTR Effects"
+      ],
+      [
+        "81a5",
+        "Narciso Delay - VTR Effects"
+      ],
+      [
+        "81a6",
+        "Helios Overdrive - VTR Effects"
+      ],
+      [
+        "81a7",
+        "Venator Distortion - VTR Effects"
+      ],
+      [
+        "81a8",
+        "Loki Modulation - VTR Effects"
+      ],
+      [
+        "81a9",
+        "MagiClick S3 - Arduino"
+      ],
+      [
+        "81aa",
+        "MagiClick S3 - CircuitPython"
+      ],
+      [
+        "81ab",
+        "MagiClick S3 - MicroPython"
+      ],
+      [
+        "81ac",
+        "MagiClick S3 - UF2 Bootloader"
+      ],
+      [
+        "81ad",
+        "Creekside S3 - Buzzer Receiver"
+      ],
+      [
+        "81ae",
+        "Creekside S3 - Buzzer"
+      ],
+      [
+        "81af",
+        "Creekside S3 - Buzzer Tool"
+      ],
+      [
+        "81b0",
+        "Unexpected Maker TinyWATCH-S3 - Arduino"
+      ],
+      [
+        "81b1",
+        "Unexpected Maker TinyWATCH-S3 - CircuitPython"
+      ],
+      [
+        "81b2",
+        "Unexpected Maker TinyWATCH-S3 - UF2 Bootloader"
+      ],
+      [
+        "81b3",
+        "Waveshare ESP32-S3-Zero - UF2 Bootloader"
+      ],
+      [
+        "81b4",
+        "Waveshare ESP32-S3-Zero - UF2 CircuitPython"
+      ],
+      [
+        "81b5",
+        "LILYGO T-Deck - Arduino"
+      ],
+      [
+        "81b6",
+        "LILYGO T-Deck - CircuitPython/Micropython"
+      ],
+      [
+        "81b7",
+        "LILYGO T-Deck - UF2 Bootloader"
+      ],
+      [
+        "81b8",
+        "senseBox MCU-S2 ESP32-S2 - Arduino"
+      ],
+      [
+        "81b9",
+        "senseBox MCU-S2 ESP32-S2 - CircuitPython"
+      ],
+      [
+        "81ba",
+        "senseBox MCU-S2 ESP32-S2 - UF2 Bootloader"
+      ],
+      [
+        "81bb",
+        "ESP32-S3 PowerFeather ESP32-S3 - Arduino"
+      ],
+      [
+        "81bc",
+        "ESP32-S3 PowerFeather ESP32-S3 - CircuitPython"
+      ],
+      [
+        "81bd",
+        "ESP32-S3 PowerFeather ESP32-S3 - UF2 Bootloader"
+      ],
+      [
+        "81be",
+        "Makerfabs MaTouch ESP32-S3 - Arduino"
+      ],
+      [
+        "81bf",
+        "Makerfabs MaTouch ESP32-S3 - CircuitPython"
+      ],
+      [
+        "81c0",
+        "Makerfabs MaTouch ESP32-S3 - UF2 Bootloader"
+      ],
+      [
+        "81c1",
+        "ADRIA-electronic - UF2 Bootloader"
+      ],
+      [
+        "81c2",
+        "ADRIA-electronic - AECE5 - Card encoder"
+      ],
+      [
+        "81c3",
+        "ADRIA-electronic - AEOFF - Offline flasher"
+      ],
+      [
+        "81c4",
+        "ADRIA-electronic - AEMPG - Multi-protocol gateway"
+      ],
+      [
+        "81c5",
+        "Ultradrom - USB HID Plus"
+      ],
+      [
+        "81c6",
+        "Ultradrom - USB MIDI Controller Plus"
+      ],
+      [
+        "81c7",
+        "Ultradrom - USB Mass Storage Plus"
+      ],
+      [
+        "81c8",
+        "Ultradrom - USB Joystick Plus"
+      ],
+      [
+        "81c9",
+        "Ultradrom - USB Gamepad Plus"
+      ],
+      [
+        "81ca",
+        "Ultradrom - USB HID"
+      ],
+      [
+        "81cb",
+        "Ultradrom - USB MIDI Controller"
+      ],
+      [
+        "81cc",
+        "Ultradrom - USB Mass Storage"
+      ],
+      [
+        "81cd",
+        "Ultradrom - USB Joystick"
+      ],
+      [
+        "81ce",
+        "Ultradrom - USB Gamepad"
+      ],
+      [
+        "81cf",
+        "Columbia DSL Sensor Board - Arduino"
+      ],
+      [
+        "81d0",
+        "Columbia DSL Sensor Board - CircuitPython"
+      ],
+      [
+        "81d1",
+        "Columbia DSL Sensor Board - UF2 Bootloader"
+      ],
+      [
+        "81d2",
+        "Sterling Hawk - SterlingKey"
+      ],
+      [
+        "81d3",
+        "Meocap Receiver"
+      ],
+      [
+        "81d4",
+        "Meocap Receiver - UF2 Bootloader"
+      ],
+      [
+        "81d5",
+        "HSBL-ko-gyo HSBL-S100 Chameleon Key"
+      ],
+      [
+        "81d6",
+        "HSBL-ko-gyo HSBL-S100 Chameleon Key - UF2 Bootloader"
+      ],
+      [
+        "81d7",
+        "Kailani Reverb Black Edition - VTR Effects"
+      ],
+      [
+        "81d8",
+        "CCLLC Sensor Mesh Node"
+      ],
+      [
+        "81d9",
+        "M5STACK Cardputer - Arduino"
+      ],
+      [
+        "81da",
+        "M5STACK Cardputer - CircuitPython"
+      ],
+      [
+        "81db",
+        "M5STACK Cardputer - UF2 Bootloader"
+      ],
+      [
+        "81dc",
+        "M5STACK Dial - Arduino"
+      ],
+      [
+        "81dd",
+        "M5STACK Dial - CircuitPython"
+      ],
+      [
+        "81de",
+        "M5STACK Dial - UF2 Bootloader"
+      ],
+      [
+        "81df",
+        "GREYNUT - BUSY TAG"
+      ],
+      [
+        "81e0",
+        "QRP Labs - LightTracker Plus"
+      ],
+      [
+        "81e1",
+        "SimKTech - SF1000"
+      ],
+      [
+        "81e2",
+        "SimKTech - Evo Plus"
+      ],
+      [
+        "81e3",
+        "SimKTech - Evo"
+      ],
+      [
+        "81e4",
+        "SimKTech - 488"
+      ],
+      [
+        "81e5",
+        "Narciso Delay Black Edition - VTR Effects"
+      ],
+      [
+        "81e6",
+        "MRC Nexxt Gateway"
+      ],
+      [
+        "81e7",
+        "MRC Nexxt Command Station"
+      ],
+      [
+        "81e8",
+        "MRC Nexxt Throttle"
+      ],
+      [
+        "81e9",
+        "MRC Nexxt Booster"
+      ],
+      [
+        "81ea",
+        "Waveshare ESP32-S3-GEEK - CircuitPython"
+      ],
+      [
+        "81eb",
+        "BlueRetro - X BT adapter"
+      ],
+      [
+        "81ec",
+        "LILYGO T-Keyboard-S3 - Arduino"
+      ],
+      [
+        "81ed",
+        "LILYGO T-Keyboard-S3 - CircuitPython"
+      ],
+      [
+        "81ee",
+        "LILYGO T-Keyboard-S3 - MicroPython"
+      ],
+      [
+        "81ef",
+        "LILYGO T-Keyboard-S3 - UF2 Bootloader"
+      ],
+      [
+        "81f0",
+        "KairoTech - Arcade Card Reader"
+      ],
+      [
+        "81f1",
+        "KairoTech - CHUNITHM Controller"
+      ],
+      [
+        "81f2",
+        "KairoTech - ONGEKI Controller"
+      ],
+      [
+        "81f3",
+        "KairoTech - maimaiDX Controller"
+      ],
+      [
+        "81f4",
+        "KairoTech - beatmania IIDX Controller"
+      ],
+      [
+        "81f5",
+        "KairoTech - Sound Voltex Controller"
+      ],
+      [
+        "81f6",
+        "KairoTech - PSoC Flasher"
+      ],
+      [
+        "81f7",
+        "KairoTech - Universal IO"
+      ],
+      [
+        "81f8",
+        "Waveshare ESP32-S3-Tiny - CircuitPython"
+      ],
+      [
+        "81f9",
+        "Wirmo SkysyLight ESP32-S2 - Busylight"
+      ],
+      [
+        "81fa",
+        "Wirmo SkysyLight ESP32-S2 - UF2 Bootloader"
+      ],
+      [
+        "81fb",
+        "Unexpected Maker FeatherS3 Neo - Arduino"
+      ],
+      [
+        "81fc",
+        "Unexpected Maker FeatherS3 Neo - CircuitPython"
+      ],
+      [
+        "81fd",
+        "Unexpected Maker FeatherS3 Neo - UF2 Bootloader"
+      ],
+      [
+        "81fe",
+        "Unexpected Maker RGBTouch Mini - Arduino"
+      ],
+      [
+        "81ff",
+        "Unexpected Maker RGBTouch Mini - CircuitPython"
+      ],
+      [
+        "8200",
+        "Unexpected Maker RGBTouch Mini - UF2 Bootloader"
+      ],
+      [
+        "8201",
+        "UMD - Logger"
+      ],
+      [
+        "8202",
+        "ThingPulse Pendrive S3 128MB - Arduino"
+      ],
+      [
+        "8203",
+        "EMC - EMCFFB"
+      ],
+      [
+        "8204",
+        "ThingPulse Pendrive S3 128MB - Circuit Python"
+      ],
+      [
+        "8205",
+        "ThingPulse Pendrive S3 128MB - UF2 Bootloader"
+      ],
+      [
+        "8206",
+        "modue\u00ae One Touch - main"
+      ],
+      [
+        "8207",
+        "modue\u00ae One Touch - bootloader"
+      ],
+      [
+        "8208",
+        "modue\u00ae One XLR - main"
+      ],
+      [
+        "8209",
+        "modue\u00ae One XLR - bootloader"
+      ],
+      [
+        "820a",
+        "LilyGO T3-S3 - Arduino"
+      ],
+      [
+        "820b",
+        "LilyGO T3-S3 - CircuitPython/Micropython"
+      ],
+      [
+        "820c",
+        "LilyGO T3-S3 - UF2 Bootloader"
+      ],
+      [
+        "820d",
+        "Bits and Droids - Flight Companion Unit"
+      ],
+      [
+        "820e",
+        "Domino4 - CWA - Core WiFi Alpha (ESP32-S3 8MB)"
+      ],
+      [
+        "820f",
+        "Domino4 - CWV - Core WiFi Vertebra (ESP32-S3 8MB)"
+      ],
+      [
+        "8210",
+        "LILYGO T-Display-S3-Pro - Arduino"
+      ],
+      [
+        "8211",
+        "LILYGO T-Display-S3-Pro - CircuitPython"
+      ],
+      [
+        "8212",
+        "LILYGO T-Display-S3-Pro - UF2 Bootloader"
+      ],
+      [
+        "8213",
+        "LILYGO T4-S3 - Arduino"
+      ],
+      [
+        "8214",
+        "LILYGO T4-S3 - CircuitPython"
+      ],
+      [
+        "8215",
+        "LILYGO T4-S3 - UF2 Bootloader"
+      ],
+      [
+        "8216",
+        "LOLIN S3 Mini Pro - Arduino"
+      ],
+      [
+        "8217",
+        "LOLIN S3 Mini Pro - CircuitPython"
+      ],
+      [
+        "8218",
+        "LOLIN S3 Mini Pro - UF2 Bootloader"
+      ],
+      [
+        "8219",
+        "WERMA Signaltechnik GmbH + Co. KG - MC55 Touch Smart"
+      ],
+      [
+        "821a",
+        "CBMSTUFF.COM - SuperCard Pro Deluxe (ESP32-S3-N4R2)"
+      ],
+      [
+        "821b",
+        "LILYGO T-Watch-S3 - Arduino"
+      ],
+      [
+        "821c",
+        "LILYGO T-Watch-S3 - CircuitPython/MicroPython"
+      ],
+      [
+        "821d",
+        "LILYGO T-Watch-S3 - UF2 Bootloader"
+      ],
+      [
+        "821e",
+        "Waveshare ESP32-S3-Touch-LCD-1.69 - Arduino"
+      ],
+      [
+        "821f",
+        "Waveshare ESP32-S3-Touch-LCD-1.69 - CircuitPython/MicroPython"
+      ],
+      [
+        "8220",
+        "Waveshare ESP32-S3-Touch-LCD-1.69 - UF2 Bootloader"
+      ],
+      [
+        "8221",
+        "Waveshare ESP32-S3-LCD-1.69 - Arduino"
+      ],
+      [
+        "8222",
+        "Waveshare ESP32-S3-LCD-1.69 - CircuitPython/MicroPython"
+      ],
+      [
+        "8223",
+        "Waveshare ESP32-S3-LCD-1.69 - UF2 Bootloader"
+      ],
+      [
+        "8224",
+        "Unexpected Maker OMGS3 - Arduino"
+      ],
+      [
+        "8225",
+        "Unexpected Maker OMGS3 - CircuitPython/MicroPython"
+      ],
+      [
+        "8226",
+        "Unexpected Maker OMGS3 - UF2 Bootloader"
+      ],
+      [
+        "8227",
+        "LILYGO T-Watch-Ultra - Arduino"
+      ],
+      [
+        "8228",
+        "LILYGO T-Watch-Ultra - CircuitPython/MicroPython"
+      ],
+      [
+        "8229",
+        "LILYGO T-Watch-Ultra - UF2 Bootloader"
+      ],
+      [
+        "822a",
+        "ATLNS Flasher"
+      ],
+      [
+        "822b",
+        "Waveshare ESP32-S3-Zero - Arduino"
+      ],
+      [
+        "822c",
+        "Waveshare ESP32-S3-Zero - CircuitPython/MicroPython"
+      ],
+      [
+        "822d",
+        "Waveshare ESP32-S3-Zero - UF2 Bootloader"
+      ],
+      [
+        "822e",
+        "Waveshare ESP32-S3-Touch-LCD-4.3 - Arduino"
+      ],
+      [
+        "822f",
+        "Waveshare ESP32-S3-Touch-LCD-4.3 - CircuitPython/MicroPython"
+      ],
+      [
+        "8230",
+        "Waveshare ESP32-S3-Touch-LCD-4.3 - UF2 Bootloader"
+      ],
+      [
+        "8231",
+        "Waveshare ESP32-S3-Touch-LCD-4.3B - Arduino"
+      ],
+      [
+        "8232",
+        "Waveshare ESP32-S3-Touch-LCD-4.3B - CircuitPython/MicroPython"
+      ],
+      [
+        "8233",
+        "Waveshare ESP32-S3-Touch-LCD-4.3B - UF2 Bootloader"
+      ],
+      [
+        "8234",
+        "Waveshare ESP32-S3-Touch-LCD-7 - Arduino"
+      ],
+      [
+        "8235",
+        "Waveshare ESP32-S3-Touch-LCD-7 - CircuitPython/MicroPython"
+      ],
+      [
+        "8236",
+        "Waveshare ESP32-S3-Touch-LCD-7 - UF2 Bootloader"
+      ],
+      [
+        "8237",
+        "Waveshare ESP32-S3-Touch-LCD-5 - Arduino"
+      ],
+      [
+        "8238",
+        "Waveshare ESP32-S3-Touch-LCD-5 - CircuitPython/MicroPython"
+      ],
+      [
+        "8239",
+        "Waveshare ESP32-S3-Touch-LCD-5 - UF2 Bootloader"
+      ],
+      [
+        "823a",
+        "Waveshare ESP32-S3-Touch-LCD-5B - Arduino"
+      ],
+      [
+        "823b",
+        "Waveshare ESP32-S3-Touch-LCD-5B - CircuitPython/MicroPython"
+      ],
+      [
+        "823c",
+        "Waveshare ESP32-S3-Touch-LCD-5B - UF2 Bootloader"
+      ],
+      [
+        "823d",
+        "Waveshare ESP32-S3-Touch-LCD-4 - Arduino"
+      ],
+      [
+        "823e",
+        "Waveshare ESP32-S3-Touch-LCD-4 - CircuitPython/MicroPython"
+      ],
+      [
+        "823f",
+        "Waveshare ESP32-S3-Touch-LCD-4 - UF2 Bootloader"
+      ],
+      [
+        "8240",
+        "kohacraft.com Padauk Programmer - Arduino"
+      ],
+      [
+        "8241",
+        "EASYBCI Bio Amp 1"
+      ],
+      [
+        "8242",
+        "Waveshare ESP32-S3-Touch-AMOLED-2.41 - Arduino"
+      ],
+      [
+        "8243",
+        "Barduino 4 - Arduino"
+      ],
+      [
+        "8244",
+        "Barduino 4 - CircuitPython/MicroPython"
+      ],
+      [
+        "8245",
+        "Barduino 4 - UF2 Bootloader"
+      ],
+      [
+        "8246",
+        "Generic ESP32-S3-Super-Mini - Arduino"
+      ],
+      [
+        "8247",
+        "Generic ESP32-S3-Super-Mini - CircuitPython/MicroPython"
+      ],
+      [
+        "8248",
+        "Generic ESP32-S3-Super-Mini - UF2 Bootloader"
+      ],
+      [
+        "8249",
+        "Waveshare ESP32-S3-Touch-AMOLED-1.64 - Arduino"
+      ],
+      [
+        "824a",
+        "Waveshare ESP32-S3-Touch-AMOLED-1.43 - Arduino"
+      ],
+      [
+        "824b",
+        "Waveshare ESP32-S3-Touch-AMOLED-1.91 - Arduino"
+      ],
+      [
+        "824c",
+        "LILYGO T7-S3 - Arduino"
+      ],
+      [
+        "824d",
+        "LILYGO T7-S3 - CircuitPython"
+      ],
+      [
+        "824e",
+        "LILYGO T7-S3 - UF2 Bootloader"
+      ],
+      [
+        "824f",
+        "CircuitArt ESP32S3 CamTFT - Arduino"
+      ],
+      [
+        "8250",
+        "CircuitArt ESP32S3 CamTFT - UF2 Bootloader"
+      ],
+      [
+        "8251",
+        "CircuitArt ESP32S3 CamTFT - CircuitPython"
+      ],
+      [
+        "8252",
+        "HE-FMX digital thickness gauge - Marconilab"
+      ],
+      [
+        "8253",
+        "CharaChorder Two S3"
+      ],
+      [
+        "8254",
+        "CharaChorder Two S3 - UF2 Bootloader"
+      ],
+      [
+        "8255",
+        "Waveshare ESP32-S3-Touch-AMOLED-1.8 - Arduino"
+      ],
+      [
+        "8256",
+        "Waveshare ESP32-S3-Touch-AMOLED-1.8 - CircuitPython/MicroPython"
+      ],
+      [
+        "8257",
+        "Waveshare ESP32-S3-TOUCH-AMOLED-1.8 - UF2 Bootloader"
+      ],
+      [
+        "8258",
+        "Waveshare ESP32-S3-Touch-LCD-1.46 - Arduino"
+      ],
+      [
+        "8259",
+        "Waveshare ESP32-S3-Touch-LCD-1.46 - CircuitPython/MicroPython"
+      ],
+      [
+        "825a",
+        "Waveshare ESP32-S3-Touch-LCD-1.46 - UF2 Bootloader"
+      ],
+      [
+        "825b",
+        "Waveshare ESP32-S3-Touch-LCD-2.1 - Arduino"
+      ],
+      [
+        "825c",
+        "Waveshare ESP32-S3-Touch-LCD-2.1 - CircuitPython/MicroPython"
+      ],
+      [
+        "825d",
+        "Waveshare ESP32-S3-Touch-LCD-2.1 - UF2 Bootloader"
+      ],
+      [
+        "825e",
+        "Waveshare ESP32-S3-Touch-LCD-2.8 - Arduino"
+      ],
+      [
+        "825f",
+        "Waveshare ESP32-S3-Touch-LCD-2.8 - CircuitPython/MicroPython"
+      ],
+      [
+        "8260",
+        "Waveshare ESP32-S3-Touch-LCD-2.8 - UF2 Bootloader"
+      ],
+      [
+        "8261",
+        "Waveshare ESP32-S3-Touch-LCD-2.8B - Arduino"
+      ],
+      [
+        "8262",
+        "Waveshare ESP32-S3-Touch-LCD-2.8B - CircuitPython/MicroPython"
+      ],
+      [
+        "8263",
+        "Waveshare ESP32-S3-Touch-LCD-2.8B - UF2 Bootloader"
+      ],
+      [
+        "8264",
+        "Waveshare ESP32-S3-Touch-LCD-2.8C - Arduino"
+      ],
+      [
+        "8265",
+        "Waveshare ESP32-S3-Touch-LCD-2.8C - CircuitPython/MicroPython"
+      ],
+      [
+        "8266",
+        "Waveshare ESP32-S3-Touch-LCD-2.8C - UF2 Bootloader"
+      ],
+      [
+        "8267",
+        "Waveshare ESP32-S3-Tiny - Arduino"
+      ],
+      [
+        "8268",
+        "Waveshare ESP32-S3-Tiny - CircuitPython/MicroPython"
+      ],
+      [
+        "8269",
+        "Waveshare ESP32-S3-Tiny - UF2 Bootloader"
+      ],
+      [
+        "826a",
+        "Waveshare ESP32-S3-Touch-LCD-1.3 - Arduino"
+      ],
+      [
+        "826b",
+        "Waveshare ESP32-S3-Touch-LCD-1.3 - CircuitPython/MicroPython"
+      ],
+      [
+        "826c",
+        "Waveshare ESP32-S3-Touch-LCD-1.3 - UF2 Bootloader"
+      ],
+      [
+        "826d",
+        "Waveshare ESP32-S3-Matrix - Arduino"
+      ],
+      [
+        "826e",
+        "Waveshare ESP32-S3-Matrix - CircuitPython/MicroPython"
+      ],
+      [
+        "826f",
+        "Waveshare ESP32-S3-Matrix - UF2 Bootloader"
+      ],
+      [
+        "8270",
+        "Waveshare ESP32-S3-Touch-LCD-3.5 - Arduino"
+      ],
+      [
+        "8271",
+        "Waveshare ESP32-S3-Touch-LCD-3.5 - CircuitPython/MicroPython"
+      ],
+      [
+        "8272",
+        "Waveshare ESP32-S3-Touch-LCD-3.5 - UF2 Bootloader"
+      ],
+      [
+        "8273",
+        "Waveshare ESP32-S3-Relay-6CH - Arduino"
+      ],
+      [
+        "8274",
+        "Waveshare ESP32-S3-Relay-6CH - CircuitPython/MicroPython"
+      ],
+      [
+        "8275",
+        "Waveshare ESP32-S3-Relay-6CH - UF2 Bootloader"
+      ],
+      [
+        "8276",
+        "Waveshare ESP32-S3-Touch-AMOLED-1.43 - CircuitPython/MicroPython"
+      ],
+      [
+        "8277",
+        "Waveshare ESP32-S3-Touch-AMOLED-1.43 - UF2 Bootloader"
+      ],
+      [
+        "8278",
+        "Waveshare ESP32-S3-Touch-AMOLED-2.41 - CircuitPython/MicroPython"
+      ],
+      [
+        "8279",
+        "Waveshare ESP32-S3-Touch-AMOLED-2.41 - UF2 Bootloader"
+      ],
+      [
+        "827a",
+        "kenny's Labs - WaKu Controller"
+      ],
+      [
+        "827c",
+        "Waveshare ESP32-S3-GEEK - Arduino"
+      ],
+      [
+        "827d",
+        "Waveshare ESP32-S3-GEEK - UF2 Bootloader"
+      ],
+      [
+        "827e",
+        "Waveshare ESP32-S3-LCD-1.28 - Arduino"
+      ],
+      [
+        "827f",
+        "Waveshare ESP32-S3-LCD-1.28 - CircuitPython/MicroPython"
+      ],
+      [
+        "8280",
+        "Waveshare ESP32-S3-LCD-1.28 - UF2 Bootloader"
+      ],
+      [
+        "8281",
+        "Waveshare ESP32-S3-Touch-LCD-1.28 - Arduino"
+      ],
+      [
+        "8282",
+        "Waveshare ESP32-S3-Touch-LCD-1.28 - CircuitPython/MicroPython"
+      ],
+      [
+        "8283",
+        "Waveshare ESP32-S3-Touch-LCD-1.28 - UF2 Bootloader"
+      ],
+      [
+        "8284",
+        "Waveshare ESP32-S3-LCD-Driver-Board - Arduino"
+      ],
+      [
+        "8285",
+        "Waveshare ESP32-S3-LCD-Driver-Board - CircuitPython/MicroPython"
+      ],
+      [
+        "8286",
+        "Waveshare ESP32-S3-LCD-Driver-Board - UF2 Bootloader"
+      ],
+      [
+        "8287",
+        "Waveshare ESP32-S3-Touch-LCD-1.85-Box - Arduino"
+      ],
+      [
+        "8288",
+        "Waveshare ESP32-S3-Touch-LCD-1.85-Box - CircuitPython/MicroPython"
+      ],
+      [
+        "8289",
+        "Waveshare ESP32-S3-Touch-LCD-1.85-Box - UF2 Bootloader"
+      ],
+      [
+        "828a",
+        "Waveshare ESP32-S3-LCD-1.47 - Arduino"
+      ],
+      [
+        "828b",
+        "Waveshare ESP32-S3-LCD-1.47 - CircuitPython/MicroPython"
+      ],
+      [
+        "828c",
+        "Waveshare ESP32-S3-LCD-1.47 - UF2 Bootloader"
+      ],
+      [
+        "828d",
+        "Waveshare ESP32-S3-Touch-AMOLED-1.75 - Arduino"
+      ],
+      [
+        "828e",
+        "Waveshare ESP32-S3-Touch-AMOLED-1.75 - CircuitPython/MicroPython"
+      ],
+      [
+        "828f",
+        "Waveshare ESP32-S3-Touch-AMOLED-1.75 - UF2 Bootloader"
+      ],
+      [
+        "8290",
+        "Waveshare ESP32-S3-Touch-LCD-1.85 - Arduino"
+      ],
+      [
+        "8291",
+        "Waveshare ESP32-S3-Touch-LCD-1.85 - CircuitPython/MicroPython"
+      ],
+      [
+        "8292",
+        "Waveshare ESP32-S3-Touch-LCD-1.85 - UF2 Bootloader"
+      ],
+      [
+        "8293",
+        "Piston Medical - BLE Heart Rate Monitor Adapter"
+      ],
+      [
+        "8294",
+        "Work Louder - Nomad [E] v1 - ANSI"
+      ],
+      [
+        "8295",
+        "Work Louder - Nomad [E] v1 - ISO"
+      ],
+      [
+        "8296",
+        "Work Louder - Knob v1 - ANSI"
+      ],
+      [
+        "8297",
+        "Work Louder - Creator Micro v2"
+      ],
+      [
+        "8298",
+        "Work Louder - Creator Micro v2 - BLE"
+      ],
+      [
+        "8299",
+        "Work Louder - USB Dongle v1"
+      ],
+      [
+        "829a",
+        "CharaChorder Master Forge S3"
+      ],
+      [
+        "829b",
+        "CharaChorder Master Forge S3 - UF2 Bootloader"
+      ],
+      [
+        "829c",
+        "Bantam Tools Serama Rooster ArtFrame 1824"
+      ],
+      [
+        "829d",
+        "Bantam Tools Serama Rooster ArtFrame 2436"
+      ],
+      [
+        "829e",
+        "Bantam Tools Serama Rooster ArtFrame XXL"
+      ],
+      [
+        "829f",
+        "Bantam Tools Serama Handwriter"
+      ],
+      [
+        "82a0",
+        "Bantam Tools Serama"
+      ],
+      [
+        "82a1",
+        "RobotClass Graphite S3 - Arduino"
+      ],
+      [
+        "82a2",
+        "RobotClass Graphite S3 - CircuitPython"
+      ],
+      [
+        "82a3",
+        "RobotClass Graphite S3 - UF2 Bootloader"
+      ],
+      [
+        "82a4",
+        "ENERTY Module M - UF2 Bootloader"
+      ],
+      [
+        "82a5",
+        "OpenRemise - S3Main"
+      ],
+      [
+        "82a6",
+        "Undalogic miniSMU MS01"
+      ],
+      [
+        "82a7",
+        "Waveshare ESP32-S3-ETH - Circuitpython"
+      ],
+      [
+        "82a8",
+        "MIDI Dobrynya Aurora"
+      ],
+      [
+        "82a9",
+        "MIDI Dobrynya Aurora UF2 Bootloader"
+      ],
+      [
+        "82aa",
+        "MIDI Dobrynya Aurora Pro"
+      ],
+      [
+        "82ab",
+        "MIDI Dobrynya Aurora Pro UF2 Bootloader"
+      ],
+      [
+        "82ac",
+        "MIDI Dobrynya Pocket"
+      ],
+      [
+        "82ad",
+        "MIDI Dobrynya Pocket UF2 Bootloader"
+      ],
+      [
+        "82ae",
+        "MIDI Dobrynya Pocket Pro"
+      ],
+      [
+        "82af",
+        "MIDI Dobrynya Pocket Pro UF2 Bootloader"
+      ],
+      [
+        "82b0",
+        "MIDI Dobrynya Micro V3"
+      ],
+      [
+        "82b1",
+        "MIDI Dobrynya Micro V3 UF2 Bootloader"
+      ],
+      [
+        "82b2",
+        "MIDI Dobrynya Mini V3"
+      ],
+      [
+        "82b3",
+        "MIDI Dobrynya Mini V3 UF2 Bootloader"
+      ],
+      [
+        "82b4",
+        "MIDI Dobrynya Pro V2"
+      ],
+      [
+        "82b5",
+        "MIDI Dobrynya Pro V2 UF2 Bootloader"
+      ],
+      [
+        "82b6",
+        "MIDI Dobrynya 32"
+      ],
+      [
+        "82b7",
+        "MIDI Dobrynya 32 UF2 Bootloader"
+      ],
+      [
+        "82b8",
+        "HOJA Gamepad Device"
+      ],
+      [
+        "82b9",
+        "neway navpad controller v1 (boot)"
+      ],
+      [
+        "82ba",
+        "neway navpad controller v1"
+      ],
+      [
+        "82bb",
+        "neway navpad controller mini v1 (boot)"
+      ],
+      [
+        "82bc",
+        "neway navpad controller mini v1"
+      ],
+      [
+        "82bd",
+        "Enilinx\u2122 Flexbar"
+      ],
+      [
+        "82be",
+        "SONULAB\u2122 StompStation"
+      ],
+      [
+        "82bf",
+        "Enilinx\u2122 Flexbar-CDC"
+      ],
+      [
+        "82c0",
+        "Dinnosys Llc. - SpeakNGo"
+      ],
+      [
+        "82c1",
+        "LILYGO T-Dongle-S3 - Arduino"
+      ],
+      [
+        "82c2",
+        "LILYGO T-Dongle-S3 - CircuitPython"
+      ],
+      [
+        "82c3",
+        "LILYGO T-Dongle-S3 - UF2 Bootloader"
+      ],
+      [
+        "82c4",
+        "Generic Red ESP32-S2-WROOM with Type-C - CircuitPython"
+      ],
+      [
+        "82c5",
+        "Geekble Geekble Nano ESP32-S3 - Arduino"
+      ],
+      [
+        "82c6",
+        "Geekble Geekble Nano ESP32-S3 - CircuitPython"
+      ],
+      [
+        "82c7",
+        "Geekble Geekble Nano ESP32-S3 - UF2 Bootloader"
+      ],
+      [
+        "82c8",
+        "Heltec Vision Master E290 - UF2 Bootloader"
+      ],
+      [
+        "82c9",
+        "Heltec Vision Master E290 - CircuitPython"
+      ],
+      [
+        "82ca",
+        "Heltec Vision Master E290 - Arduino"
+      ],
+      [
+        "82cb",
+        "METADOX Soundproof Mask Headset USB - ESP32-S3"
+      ],
+      [
+        "82cc",
+        "EVO X1E"
+      ],
+      [
+        "82cd",
+        "WERMA Signaltechnik GmbH + Co. KG - LineLIGHT Fusion Smart"
+      ],
+      [
+        "82ce",
+        "Waveshare ESP32-S3-Touch-LCD-2 - CircuitPython"
+      ],
+      [
+        "82cf",
+        "Waveshare ESP32-S3-Touch-LCD-2 - UF2 Bootloader"
+      ],
+      [
+        "82d0",
+        "SHED Makerspace Access Control Core (ESP32 S2)"
+      ],
+      [
+        "82d1",
+        "senseBox-eye ESP32-S3 - Arduino"
+      ],
+      [
+        "82d2",
+        "senseBox-eye ESP32-S3 - CircuitPython"
+      ],
+      [
+        "82d3",
+        "senseBox-eye ESP32-S3 - Uf2 Bootloader"
+      ],
+      [
+        "82d4",
+        "LILYGO T-LoRa-Pager - Arduino"
+      ],
+      [
+        "82d5",
+        "LILYGO T-LoRa-Pager - CircuitPython/MicroPython"
+      ],
+      [
+        "82d6",
+        "LILYGO T-LoRa-Pager - UF2 Bootloader"
+      ],
+      [
+        "82d7",
+        "Glydr Galactic Holdings Inc - Glydr\u2122"
+      ],
+      [
+        "82d8",
+        "DanioVision Observation Chamber - Noldus Information Technology BV"
+      ],
+      [
+        "82d9",
+        "Elecrow ThinkNode M2 - Arduino"
+      ],
+      [
+        "82da",
+        "Elecrow ThinkNode M2 - CircuitPython/Micropython"
+      ],
+      [
+        "82db",
+        "Elecrow ThinkNode M2 - UF2 Bootloader"
+      ],
+      [
+        "82dc",
+        "Unexpected Maker EDGES3 - Arduino"
+      ],
+      [
+        "82dd",
+        "Unexpected Maker EDGES3 - CircuitPython/MicroPython"
+      ],
+      [
+        "82de",
+        "Unexpected Maker EDGES3 - UF2 Bootloader"
+      ],
+      [
+        "82df",
+        "Unexpected Maker SQUiXL - Arduino"
+      ],
+      [
+        "82e0",
+        "Unexpected Maker SQUiXL - CircuitPython/MicroPython"
+      ],
+      [
+        "82e1",
+        "Unexpected Maker SQUiXL - UF2 Bootloader"
+      ],
+      [
+        "82e2",
+        "Dilon Tech Probe (ESP32 S3)"
+      ],
+      [
+        "82e3",
+        "Work Louder - Knob v1 - ISO"
+      ],
+      [
+        "82e4",
+        "Domino4 - CWS - Springbot (ESP32-S2) - UF2 Bootloader"
+      ],
+      [
+        "82e5",
+        "FED4 - Arduino"
+      ],
+      [
+        "82e6",
+        "FED4 - CircuitPython"
+      ],
+      [
+        "82e7",
+        "FED4 - Uf2 Bootloader"
+      ],
+      [
+        "82e8",
+        "Wireless-tag WT99P4C5 - Arduino"
+      ],
+      [
+        "82e9",
+        "Wireless-tag WT99P4C5 - CircuitPython"
+      ],
+      [
+        "82ea",
+        "Wireless-tag WT99P4C5 - Uf2 Bootloader"
+      ],
+      [
+        "82eb",
+        "Deneyap Kart v2 - Arduino"
+      ],
+      [
+        "82ec",
+        "Deneyap Kart v2 - CircuitPython"
+      ],
+      [
+        "82ed",
+        "Deneyap Kart v2 - UF2 Bootloader"
+      ],
+      [
+        "82ee",
+        "Sentient Computing - Tyr"
+      ],
+      [
+        "82ef",
+        "Laptitude\u2122 - Bootloader"
+      ],
+      [
+        "82f0",
+        "Laptitude\u2122 - Main"
+      ],
+      [
+        "82f1",
+        "WERMA Signaltechnik GmbH + Co. KG - MC55 Smart"
+      ],
+      [
+        "82f2",
+        "CharaChorder Forge Trackball S2"
+      ],
+      [
+        "82f3",
+        "CharaChorder Forge Trackball S2 - UF2 Bootloader"
+      ],
+      [
+        "82f4",
+        "FoBE Quill ESP32-S3 Mesh - Arduino"
+      ],
+      [
+        "82f5",
+        "FoBE Quill ESP32-S3 Mesh - CircuitPython/MicroPython"
+      ],
+      [
+        "82f6",
+        "FoBE Quill ESP32-S3 Mesh - UF2 Bootloader"
+      ],
+      [
+        "82f7",
+        "Namaka Reverb - Silver Series - VTR Effects"
+      ],
+      [
+        "82f8",
+        "Ignis Amp Modeler - Diamond Series - VTR Effects"
+      ],
+      [
+        "82f9",
+        "Elecrow ThinkNode M5 - Arduino"
+      ],
+      [
+        "82fa",
+        "Elecrow ThinkNode M5 - CircuitPython/Micropython"
+      ],
+      [
+        "82fb",
+        "Elecrow ThinkNode M5 - UF2 Bootloader"
+      ],
+      [
+        "82fc",
+        "Soldered NULA DeepSleep ESP32-S3"
+      ],
+      [
+        "82fd",
+        "Soldered NULA Vision ESP32-S3"
+      ],
+      [
+        "82fe",
+        "Vulintus RePlay IMU"
+      ],
+      [
+        "82ff",
+        "Digimet WIC5 Control"
+      ],
+      [
+        "8300",
+        "SEIKAN Akari NEW Card Reader"
+      ],
+      [
+        "8301",
+        "SEIKAN Stavona R Controller"
+      ],
+      [
+        "8302",
+        "SEIKAN Stavona Lite Controller"
+      ],
+      [
+        "8303",
+        "SEIKAN Stavona Evo Controller"
+      ],
+      [
+        "8304",
+        "SEIKAN ONGEKI Controller"
+      ],
+      [
+        "8305",
+        "SEIKAN maimaiDX Controller"
+      ],
+      [
+        "8306",
+        "SEIKAN beatmania IIDX Controller"
+      ],
+      [
+        "8307",
+        "SEIKAN Sound Voltex Controller"
+      ],
+      [
+        "8308",
+        "SEIKAN Fate Grand/Order Controller"
+      ],
+      [
+        "8309",
+        "SEIKAN VR Tracker"
+      ],
+      [
+        "830a",
+        "M5STACK DinMeter - Arduino"
+      ],
+      [
+        "830b",
+        "M5STACK DinMeter - Micropython/CircuitPython"
+      ],
+      [
+        "830c",
+        "M5STACK DinMeter - UF2 Bootloader"
+      ],
+      [
+        "830d",
+        "Soundskrit Firefly"
+      ],
+      [
+        "830e",
+        "INBRAT - INMD1"
+      ],
+      [
+        "830f",
+        "INBRAT - INMD10"
+      ],
+      [
+        "8310",
+        "INBRAT - INMD100"
+      ],
+      [
+        "8311",
+        "INBRAT - INMD200"
+      ],
+      [
+        "8312",
+        "INBRAT - INMG5"
+      ],
+      [
+        "8313",
+        "INBRAT - INMG10"
+      ],
+      [
+        "8314",
+        "INBRAT - INMG15"
+      ],
+      [
+        "8315",
+        "INBRAT - INTR"
+      ],
+      [
+        "8316",
+        "INBRAT - INTTR8000"
+      ],
+      [
+        "8317",
+        "INBRAT - PVOne"
+      ],
+      [
+        "8318",
+        "INBRAT - PVTracer"
+      ],
+      [
+        "8319",
+        "Nabu Casa - Home Assistant Connect ZWA-2"
+      ],
+      [
+        "831a",
+        "Nabu Casa - Home Assistant Connect ZBT-2"
+      ],
+      [
+        "831b",
+        "ecoprintQ - Fingerprint Release"
+      ],
+      [
+        "831c",
+        "PilotWisdom - Autopilot module"
+      ],
+      [
+        "831d",
+        "PilotWisdom - Starter SimPanel"
+      ],
+      [
+        "831e",
+        "PilotWisdom - DoubleSwitch SimPanel"
+      ],
+      [
+        "831f",
+        "PilotWisdom - Lights SimPanel"
+      ],
+      [
+        "8320",
+        "Neubras \u2013 Universal RFID Reader"
+      ],
+      [
+        "8321",
+        "Neubras \u2013 Universal RFID Reader WIFI"
+      ],
+      [
+        "8322",
+        "Neubras \u2013 FingerPrint RFID Reader"
+      ],
+      [
+        "8323",
+        "Neubras \u2013 Face RFID Reader"
+      ],
+      [
+        "8324",
+        "Waveshare ESP32-S3-TOUCH-LCD-1.47 - Arduino"
+      ],
+      [
+        "8325",
+        "Waveshare ESP32-S3-TOUCH-LCD-1.47 - CircuitPython/MicroPython"
+      ],
+      [
+        "8326",
+        "Waveshare ESP32-S3-TOUCH-LCD-1.47 - UF2 Bootloader"
+      ],
+      [
+        "8327",
+        "JoLaBi SonicSense Ultrasonic Microphone"
+      ],
+      [
+        "8328",
+        "Robotic Sports Games - Pocorobo"
+      ],
+      [
+        "8329",
+        "Javiju555 DIY SimRacing Peripheral Ecosystem (umbrella PID)"
+      ],
+      [
+        "832a",
+        "M5STACK Tab5 - Arduino"
+      ],
+      [
+        "832b",
+        "M5STACK Tab5 - Micropython/CircuitPython"
+      ],
+      [
+        "832c",
+        "M5STACK Tab5 - UF2 Bootloader"
+      ],
+      [
+        "832d",
+        "Nuavos - Oasis Desktop Speaker Hub"
+      ],
+      [
+        "832e",
+        "GREYNUT - Luxafor Signal"
+      ],
+      [
+        "832f",
+        "Croxel - HTS Heated Tip Syringe Controller"
+      ],
+      [
+        "8330",
+        "Croxel - RPC Rapid PreCure Controller"
+      ],
+      [
+        "8331",
+        "DIY FFB Pedal - Wireless Controller"
+      ],
+      [
+        "8332",
+        "DIY FFB Pedal - Pedal Clutch"
+      ],
+      [
+        "8333",
+        "DIY FFB Pedal - Pedal Brake"
+      ],
+      [
+        "8334",
+        "DIY FFB Pedal - Pedal Throttle"
+      ],
+      [
+        "8335",
+        "Smart UPS W180 - WalleCube"
+      ],
+      [
+        "8336",
+        "AI MOUSE PID"
+      ],
+      [
+        "8337",
+        "XT Motion Simulators XT-CB1"
+      ],
+      [
+        "8338",
+        "PilotWisdom - Garmin1x"
+      ],
+      [
+        "8339",
+        "PilotWisdom - Garmin3x touch"
+      ],
+      [
+        "833a",
+        "PilotWisdom - Flaps control"
+      ],
+      [
+        "833b",
+        "PilotWisdom - Trim control"
+      ],
+      [
+        "833c",
+        "PilotWisdom - Gear control"
+      ],
+      [
+        "833d",
+        "PilotWisdom - Frequency control"
+      ],
+      [
+        "833e",
+        "PilotWisdom - Transponder"
+      ],
+      [
+        "833f",
+        "PilotWisdom - SimpleAutopilot"
+      ],
+      [
+        "8340",
+        "PilotWisdom - Radio selector"
+      ],
+      [
+        "8341",
+        "Openloop Hardware Wallet"
+      ],
+      [
+        "8342",
+        "EMC PARTNER ESDEX - ESD Generator"
+      ],
+      [
+        "8343",
+        "LilyGO T-Display-P4 - Arduino"
+      ],
+      [
+        "8344",
+        "LilyGO T-Display-P4 - CircuitPython/MicroPython"
+      ],
+      [
+        "8345",
+        "LilyGO T-Display-P4 - UF2 Bootloader"
+      ],
+      [
+        "8346",
+        "Work Louder - XYZ Work Board r2"
+      ],
+      [
+        "8347",
+        "Meatdryer - Smart Hook"
+      ],
+      [
+        "8348",
+        "M5Stack CoreS3 SE - CircuitPython"
+      ],
+      [
+        "8349",
+        "NHB Systems - JL401-S3 - Arduino"
+      ],
+      [
+        "834a",
+        "NHB Systems - JL401-S3 - CircuitPython/MicroPython"
+      ],
+      [
+        "834b",
+        "NHB Systems - JL401-S3 - UF2 Bootloader"
+      ],
+      [
+        "834c",
+        "KiraLive - KEY"
+      ],
+      [
+        "834d",
+        "KiraLive - BIO"
+      ],
+      [
+        "834e",
+        "EasyTune - EasyFlash OBD Vehicle Interface"
+      ],
+      [
+        "834f",
+        "WERMA Signaltechnik GmbH + Co. KG - MC55 High Smart"
+      ],
+      [
+        "8350",
+        "PAUSCH-e - Schwelltritt und Pistons \u00fcber USB"
+      ],
+      [
+        "8351",
+        "oryzn - Volume Controller"
+      ],
+      [
+        "8352",
+        "oryzn - System Controller"
+      ],
+      [
+        "8353",
+        "Fenby - Puddle Remote DFU"
+      ],
+      [
+        "8354",
+        "Fenby - Puddle Remote"
+      ],
+      [
+        "8355",
+        "Bilbos - Auris"
+      ],
+      [
+        "8356",
+        "Bilbos - Echos"
+      ],
+      [
+        "8357",
+        "Bilbos - Spira"
+      ],
+      [
+        "8358",
+        "Bilbos - Sound Level Calibrator"
+      ],
+      [
+        "8359",
+        "Bilbos - Flow Meter Calibrator"
+      ],
+      [
+        "835a",
+        "F5 Datalink Adapter - Remote Camera Control"
+      ],
+      [
+        "835b",
+        "SynthHead - Midi Controller"
+      ],
+      [
+        "835c",
+        "Siemens - Einbauleuchte 8WD56"
+      ],
+      [
+        "835d",
+        "Smart Solution For International Trade LLC - Tensai BLE HID Dongle"
+      ],
+      [
+        "835e",
+        "CamSync - Camera Sync Controller"
+      ],
+      [
+        "835f",
+        "Barbiani Solucoes em Tecnologia LTDA"
+      ],
+      [
+        "8360",
+        "Work Louder - Creator Micro v2 - Project 2077"
+      ],
+      [
+        "8361",
+        "Gevto - Digital Scale Type A"
+      ],
+      [
+        "8362",
+        "Gevto - Digital Scale Type B"
+      ],
+      [
+        "8363",
+        "PenEngineering S.R.L - AkiraConsole"
+      ],
+      [
+        "8364",
+        "Paige Braille - Paige Writer"
+      ],
+      [
+        "8365",
+        "Paige Braille - Paige Connect"
+      ],
+      [
+        "8366",
+        "LilyGO T-Beam 1W - Arduino"
+      ],
+      [
+        "8367",
+        "LilyGO T-Beam 1W - CircuitPython/MicroPython"
+      ],
+      [
+        "8368",
+        "LilyGO T-Beam 1W - UF2 Bootloader"
+      ],
+      [
+        "8369",
+        "Geeksville - Touchy-pad"
+      ],
+      [
+        "836a",
+        "Starpoint Australis - SP3 Focus"
+      ],
+      [
+        "836b",
+        "Starpoint Australis - Vela 7"
+      ],
+      [
+        "836c",
+        "Starpoint Australis - Vela 9"
+      ],
+      [
+        "836d",
+        "Starpoint Australis - RC Focus"
+      ],
+      [
+        "836e",
+        "Starpoint Australis - Chameleon IQ"
+      ],
+      [
+        "836f",
+        "Starpoint Australis - Pavo Power"
+      ],
+      [
+        "8370",
+        "Work Louder - Nomad [E] v2 - ISO"
+      ],
+      [
+        "8371",
+        "Work Louder - Nomad [E] v2 - ANSI"
+      ],
+      [
+        "8372",
+        "PCBCupid Glyph S3 - Arduino"
+      ],
+      [
+        "8373",
+        "PCBCupid Glyph S3 - CircuitPython/MicroPython"
+      ],
+      [
+        "8374",
+        "PCBCupid Glyph S3 - UF2 Bootloader"
+      ],
+      [
+        "8375",
+        "PCBCupid Glyph S3 with PSRAM - Arduino"
+      ],
+      [
+        "8376",
+        "PCBCupid Glyph S3 with PSRAM - CircuitPython/MicroPython"
+      ],
+      [
+        "8377",
+        "PCBCupid Glyph S3 with PSRAM - UF2 Bootloader"
+      ],
+      [
+        "8378",
+        "Waveshare ESP32-S3-Tiny-N8R8 - Arduino"
+      ],
+      [
+        "8379",
+        "Waveshare ESP32-S3-Tiny-N8R8 - CircuitPython/MicroPython"
+      ],
+      [
+        "837a",
+        "Waveshare ESP32-S3-Tiny-N8R8 - UF2 Bootloader"
+      ],
+      [
+        "837b",
+        "Sterling Hawk - USB 2.4GHz Receiver"
+      ],
+      [
+        "837c",
+        "TEILE Elektronik MIB GmbH - DSP - UAC2.0 Audio + Custom DFU/RPC"
+      ],
+      [
+        "837d",
+        "TEILE Elektronik MIB GmbH - DSP - Vendor Specific Interface (alternative mode)"
+      ],
+      [
+        "837e",
+        "MeXkey3"
+      ],
+      [
+        "837f",
+        "MeXkey3 (recovery mode)"
+      ],
+      [
+        "8380",
+        "Eliobot-S2 - Arduino"
+      ],
+      [
+        "8381",
+        "Eliobot-S2 - CircuitPython"
+      ],
+      [
+        "8382",
+        "Eliobot-S2 - UF2 Bootloader"
+      ],
+      [
+        "8383",
+        "Eliobot-S3 - Arduino"
+      ],
+      [
+        "8384",
+        "Eliobot-S3 - CircuitPython"
+      ],
+      [
+        "8385",
+        "Eliobot-S3 - UF2 Bootloader"
+      ],
+      [
+        "8386",
+        "NexusHID - BLE to USB Bridge"
+      ],
+      [
+        "8387",
+        "Scensai Electronic Nose"
+      ],
+      [
+        "8388",
+        "PCBCupid Cypher - Arduino"
+      ],
+      [
+        "8389",
+        "PCBCupid Cypher - CircuitPython/MicroPython"
+      ],
+      [
+        "838a",
+        "PCBCupid Cypher - UF2 Bootloader"
+      ]
+    ],
     "vendor": "Espressif Systems"
   },
   "3057": {
