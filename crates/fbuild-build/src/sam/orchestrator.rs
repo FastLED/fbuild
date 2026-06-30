@@ -95,11 +95,21 @@ impl BuildOrchestrator for SamOrchestrator {
         .await;
 
         // 4. Ensure correct Arduino core based on MCU family
+        // Honor `platform_packages` override (FastLED/fbuild#664, #681). Only
+        // SAM (Due) is wired through this PR — SAMD's framework_name needs
+        // separate verification (see issue thread).
+        let __sam_ovr = ctx
+            .config
+            .get_env_config(&params.env_name)
+            .ok()
+            .and_then(|env| {
+                crate::package_override::resolve_override(env, "framework-arduino-sam")
+            });
         let (framework_dir, core_dir, variant_dir, linker_script_path, system_includes) =
             if is_samd_mcu(&ctx.board.mcu) {
                 install_samd_core(params, &ctx.board.core, &ctx.board.variant).await?
             } else {
-                install_sam_core(params, &ctx.board.core, &ctx.board.variant).await?
+                install_sam_core(params, &ctx.board.core, &ctx.board.variant, __sam_ovr).await?
             };
 
         let build_dir = &ctx.build_dir;
@@ -308,8 +318,12 @@ async fn install_sam_core(
     params: &BuildParams,
     core_name: &str,
     variant_name: &str,
+    ovr: Option<fbuild_config::PackageOverride>,
 ) -> Result<(PathBuf, PathBuf, PathBuf, PathBuf, Vec<PathBuf>)> {
-    let framework = fbuild_packages::library::SamCores::new(&params.project_dir);
+    let framework = match ovr {
+        Some(o) => fbuild_packages::library::SamCores::with_override(&params.project_dir, o),
+        None => fbuild_packages::library::SamCores::new(&params.project_dir),
+    };
     let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
     tracing::info!("SAM cores at {}", framework_dir.display());
 

@@ -53,7 +53,18 @@ impl BuildOrchestrator for Ch32vOrchestrator {
         .await;
 
         // 4. Ensure OpenWCH CH32V cores
-        let framework = fbuild_packages::library::Ch32vCores::new(&params.project_dir);
+        // Honor `platform_packages` override (FastLED/fbuild#664, #681).
+        let __ovr = ctx
+            .config
+            .get_env_config(&params.env_name)
+            .ok()
+            .and_then(|env| {
+                crate::package_override::resolve_override(env, "framework-arduino-ch32v")
+            });
+        let framework = match __ovr {
+            Some(o) => fbuild_packages::library::Ch32vCores::with_override(&params.project_dir, o),
+            None => fbuild_packages::library::Ch32vCores::new(&params.project_dir),
+        };
         let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("CH32V cores at {}", framework_dir.display());
 

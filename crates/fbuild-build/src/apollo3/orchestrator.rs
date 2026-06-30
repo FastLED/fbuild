@@ -55,7 +55,21 @@ impl BuildOrchestrator for Apollo3Orchestrator {
         .await;
 
         // 4. Ensure Apollo3 cores (SparkFun Arduino Apollo3 core)
-        let framework = fbuild_packages::library::Apollo3Cores::new(&params.project_dir);
+        // Honor `platform_packages` override from the env section
+        // (FastLED/fbuild#664, #681): if set, the override URL replaces the
+        // const-pinned default and gets its own cache subdir via
+        // `PackageBase::with_override`.
+        let __ovr = ctx
+            .config
+            .get_env_config(&params.env_name)
+            .ok()
+            .and_then(|env| {
+                crate::package_override::resolve_override(env, "framework-arduinoambiqapollo3")
+            });
+        let framework = match __ovr {
+            Some(o) => fbuild_packages::library::Apollo3Cores::with_override(&params.project_dir, o),
+            None => fbuild_packages::library::Apollo3Cores::new(&params.project_dir),
+        };
         let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("Apollo3 cores at {}", framework_dir.display());
 

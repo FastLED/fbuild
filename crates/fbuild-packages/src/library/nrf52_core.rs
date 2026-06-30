@@ -33,6 +33,26 @@ impl Nrf52Cores {
         }
     }
 
+    /// Construct with a consumer-supplied override (parsed from the env's
+    /// `platform_packages` line in `platformio.ini`). The default const-pinned
+    /// URL / version / checksum are replaced; `cache_subdir` and `name` are
+    /// preserved. See `PackageBase::with_override` and FastLED/fbuild#681.
+    pub fn with_override(project_dir: &Path, ovr: fbuild_config::PackageOverride) -> Self {
+        Self {
+            base: PackageBase::new(
+                "nrf52-core",
+                NRF52_CORE_VERSION,
+                NRF52_CORE_URL,
+                NRF52_CORE_URL,
+                None,
+                CacheSubdir::Platforms,
+                project_dir,
+            )
+            .with_override(ovr),
+            install_dir: None,
+        }
+    }
+
     #[cfg(test)]
     fn with_cache_root(project_dir: &Path, cache_root: &Path) -> Self {
         Self {
