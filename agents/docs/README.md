@@ -10,6 +10,15 @@ routing table sends an agent here by task.
 - [`deploy-architecture.md`](deploy-architecture.md) — the
   `Deployer` trait, `post_deploy_recovery`, board-family dispatch
   model.
+- [`hardware-ci-setup.md`](hardware-ci-setup.md) — how the
+  hardware-in-the-loop CI rigs are wired (existing doc).
+- [`serial-testing.md`](serial-testing.md) — Docker/WSL real-device
+  harness for `port_class` + `family_for_port` validation against an
+  actual ESP32. **Reach for this** when you touch
+  `crates/fbuild-serial/src/port_class.rs`,
+  `crates/fbuild-serial/src/boards.rs::family_for_vid_pid`, or any
+  DTR/RTS handling in `SharedSerialManager::open_port`. See
+  FastLED/fbuild#899 (resolved).
 
 ## Backlog
 
