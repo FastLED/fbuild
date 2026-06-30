@@ -14,6 +14,7 @@ is committed to orphan branches:
 | `fetch_espressif_usb_pids.py` | `espressif/usb-pids` official PID registry | merge-compatible `/tmp/espressif-usb-pids.json` |
 | `fetch_raspberrypi_usb_pids.py` | `raspberrypi/usb-pid` official PID registry | merge-compatible `/tmp/raspberrypi-usb-pids.json` |
 | `fetch_nordic_usb_pids.py` | Nordic nRF Connect Programmer / DFU sources | merge-compatible `/tmp/nordic-usb-pids.json` |
+| `fetch_microchip_usb_pids.py` | Microchip pyedbglib/pykitinfo plus weak AVRDUDE/board-package supplements | merge-compatible `/tmp/microchip-*-usb-pids.json` |
 | `fetch_ftdi_usb_pids.py` | Linux `ftdi_sio_ids.h` original-FTDI PID section | merge-compatible `/tmp/ftdi-usb-pids.json` |
 | `fetch_wch_usb_pids.py` | WCH CH343 Linux driver + udev rules | merge-compatible `/tmp/wch-usb-pids.json` |
 | `fetch_teensy_usb_pids.py` | PJRC Teensy core headers + loader CLI | merge-compatible `/tmp/teensy-usb-pids.json` |
@@ -52,6 +53,18 @@ DFU / MCUboot rows for VID `0x1915`, including the specific
 `1915:521f` PCA10059 nRF52840 dongle SDFU bootloader label, while keeping
 application-dependent IDs such as `cafe` generic rather than assigning them to
 a single firmware role.
+
+The Microchip supplement has explicit source tiers. `--tier first-party`
+parses Microchip-maintained `pyedbglib` and `pykitinfo` rows for Atmel VID
+`0x03eb` CMSIS-DAP tools and Microchip VID `0x04d8` MPLAB tools; the workflow
+orders this before generic USB-ID sources so first-party tool names win.
+`--tier supplemental` parses AVRDUDE plus selected Arduino/LowPowerLab board
+package rows only after first-party and generic sources. The weak tier fills
+gaps such as LowPowerLab SAMD VID/PIDs, but it must not override Microchip
+first-party data. LowPowerLab's current package maps CurrentRanger to
+`04d8:ee44`/`ee48`/`ee4c` and Moteino M0 to `04d8:eee4`/`eee5`/`eee8`;
+local FastLED board JSON currently carries `current_ranger` as `04d8:eee5`,
+so that local mismatch is noted rather than used as source truth.
 
 The FTDI supplement parses the upstream Linux `ftdi_sio_ids.h` header but only
 the original FTDI PID section before the third-party marker. It emits a small
@@ -97,6 +110,7 @@ uv run --no-project --with pytest pytest online-data-tools/test_build_sqlite.py 
 uv run --no-project --with pytest pytest online-data-tools/test_espressif_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_raspberrypi_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_nordic_usb_pids.py -v
+uv run --no-project --with pytest pytest online-data-tools/test_microchip_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_ftdi_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_wch_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_teensy_usb_pids.py -v
