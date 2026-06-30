@@ -16,6 +16,7 @@ is committed to orphan branches:
 | `fetch_nordic_usb_pids.py` | Nordic nRF Connect Programmer / DFU sources | merge-compatible `/tmp/nordic-usb-pids.json` |
 | `fetch_ftdi_usb_pids.py` | Linux `ftdi_sio_ids.h` original-FTDI PID section | merge-compatible `/tmp/ftdi-usb-pids.json` |
 | `fetch_wch_usb_pids.py` | WCH CH343 Linux driver + udev rules | merge-compatible `/tmp/wch-usb-pids.json` |
+| `fetch_teensy_usb_pids.py` | PJRC Teensy core headers + loader CLI | merge-compatible `/tmp/teensy-usb-pids.json` |
 
 The merger scripts on the `online-data` orphan branch
 (`merge_sources.py`, `merge_pio_boards.py`, `build_manifest.py`,
@@ -61,6 +62,12 @@ CH343, CH344, CH347T, and CH9101-CH9104 rows; newer driver-only IDs such as
 CH339, CH346, CH9105, CH911x, and CH9433 are named from the driver's
 PID-to-chip switch cases. It does not infer board names from bridge-chip IDs.
 
+The Teensy supplement parses PJRC's `teensy3/usb_desc.h` and
+`teensy4/usb_desc.h` product descriptors plus `teensy_loader_cli` rebootor and
+HalfKay bootloader references. Teensy PIDs identify USB personalities, not a
+single board model; duplicate PIDs that differ by USB BCD version are collapsed
+to conservative family labels such as `Teensyduino MIDI + Serial`.
+
 ## Tests
 
 ```bash
@@ -70,6 +77,7 @@ uv run --no-project --with pytest pytest online-data-tools/test_raspberrypi_usb_
 uv run --no-project --with pytest pytest online-data-tools/test_nordic_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_ftdi_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_wch_usb_pids.py -v
+uv run --no-project --with pytest pytest online-data-tools/test_teensy_usb_pids.py -v
 ```
 
 Each script declares its own PEP 723 dependencies and is runnable via
