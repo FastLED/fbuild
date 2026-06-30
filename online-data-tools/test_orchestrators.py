@@ -200,6 +200,50 @@ def test_seed_does_not_map_apollo3_to_luminary_vid() -> None:
     }]
 
 
+def test_update_www_adds_required_renesas_seed_rows(
+    workspace: Path, online_worktree: Path, www_worktree: Path,
+) -> None:
+    existing = [
+        {"mcu_family": "ESP32S3", "vid": "303a",
+         "score": 0.99, "reason": "custom curated"},
+    ]
+    (online_worktree / "data" / "mcu_to_vid.json").write_text(
+        json.dumps(existing), encoding="utf-8"
+    )
+    cfg = update_www.Config(
+        workspace       = workspace,
+        online_worktree = online_worktree,
+        www_worktree    = www_worktree,
+        today           = "2026-06-20",
+        website_url     = "https://example.invalid/fbuild/",
+        sqljs_zip_url   = "https://unused.invalid/sqljs.zip",
+    )
+
+    summary = update_www.run(cfg, fetch_sqljs=lambda _url: _fake_sqljs_zip())
+
+    assert summary["mcu_to_vid_seed_rows_added"] == 2
+    corrected = json.loads(
+        (online_worktree / "data" / "mcu_to_vid.json").read_text(encoding="utf-8")
+    )
+    by_family_vid = {
+        (row["mcu_family"], row["vid"]): row
+        for row in corrected
+    }
+    assert by_family_vid[("RA4M1", "2341")]["reason"] == (
+        "Arduino UNO R4 / Nano R4 Renesas RA boards"
+    )
+    assert by_family_vid[("R7FA6M5", "2341")]["reason"] == (
+        "Arduino Portenta C33 Renesas RA board"
+    )
+
+    with sqlite3.connect(www_worktree / "2026-06-20.db") as conn:
+        rows = conn.execute(
+            "SELECT mcu_family, vid FROM mcu_to_vid WHERE mcu_family LIKE 'R%'",
+        ).fetchall()
+    assert ("RA4M1", int("2341", 16)) in rows
+    assert ("R7FA6M5", int("2341", 16)) in rows
+
+
 def test_update_www_replaces_deprecated_apollo3_vid(
     workspace: Path, online_worktree: Path, www_worktree: Path,
 ) -> None:

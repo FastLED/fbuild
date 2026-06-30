@@ -21,6 +21,7 @@ is committed to orphan branches:
 | `fetch_stm_usb_pids.py` | ST/OpenOCD ST-LINK sources | merge-compatible `/tmp/stm-usb-pids.json` |
 | `fetch_nxp_usb_pids.py` | NXP mfgtools/UUU config table | merge-compatible `/tmp/nxp-usb-pids.json` |
 | `fetch_silabs_usb_pids.py` | Linux CP210x driver + SiliconLabsSoftware OpenOCD udev rule | merge-compatible `/tmp/silabs-usb-pids.json` |
+| `fetch_renesas_usb_pids.py` | ArduinoCore-renesas `boards.txt` weak supplement | merge-compatible `/tmp/renesas-usb-pids.json` |
 
 The merger scripts on the `online-data` orphan branch
 (`merge_sources.py`, `merge_pio_boards.py`, `build_manifest.py`,
@@ -116,6 +117,16 @@ PIDs without a first-party source. Third-party SDK or board-package rows may
 be added later as supplemental data, but they should merge after first-party
 and generic USB-ID sources so they fill gaps only.
 
+The Renesas RA supplement parses Arduino's `ArduinoCore-renesas` `boards.txt`
+for Arduino-owned VID rows used by UNO R4, Nano R4, Portenta C33, and related
+RA-family board-package entries. Renesas-owned VID `0x045b` remains sourced
+from the generic USB-ID feeds unless a first-party Renesas PID registry is
+found. Because the parsed source is an Arduino board package rather than a
+Renesas allocation table, the workflow merges it after generic USB-ID sources
+and vendor-owned supplements. Rows from ArduinoCore-renesas may describe
+boards that are not present under `crates/fbuild-config/assets/boards`; those
+rows improve VID/PID resolution but do not prove fbuild board support.
+
 ## Tests
 
 ```bash
@@ -130,6 +141,7 @@ uv run --no-project --with pytest pytest online-data-tools/test_teensy_usb_pids.
 uv run --no-project --with pytest pytest online-data-tools/test_stm_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_nxp_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_silabs_usb_pids.py -v
+uv run --no-project --with pytest pytest online-data-tools/test_renesas_usb_pids.py -v
 ```
 
 Each script declares its own PEP 723 dependencies and is runnable via

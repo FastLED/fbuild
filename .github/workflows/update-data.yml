@@ -264,6 +264,15 @@ jobs:
             --out /tmp/silabs-usb-pids.json
           wc -l /tmp/silabs-usb-pids.json
 
+      - name: Fetch Renesas RA Arduino USB PID rows (USB-VID tier-4 supplement)
+        id: fetch-renesas-pids
+        continue-on-error: true
+        run: |
+          uv run --no-project --script \
+            "${{ github.workspace }}/online-data-tools/fetch_renesas_usb_pids.py" \
+            --out /tmp/renesas-usb-pids.json
+          wc -l /tmp/renesas-usb-pids.json
+
       - name: Fetch Microchip supplemental USB PID rows (USB-VID tier-4 supplement)
         id: fetch-microchip-supplemental-pids
         continue-on-error: true
@@ -360,6 +369,12 @@ jobs:
             # names for common CP210x bridge PIDs stay stable while the
             # Energy Micro / Silicon Labs debug-interface row fills in.
             args+=(--json "silabs-usb-pids=/tmp/silabs-usb-pids.json")
+          fi
+          if [ "${{ steps.fetch-renesas-pids.outcome }}" = "success" ] && [ -s /tmp/renesas-usb-pids.json ]; then
+            # ArduinoCore-renesas board-package rows are deliberately weak:
+            # they fill missing Arduino RA board product names after generic
+            # USB-ID sources and vendor-owned supplements have won.
+            args+=(--json "renesas-usb-pids=/tmp/renesas-usb-pids.json")
           fi
           if [ "${{ steps.fetch-microchip-supplemental-pids.outcome }}" = "success" ] && [ -s /tmp/microchip-supplemental-usb-pids.json ]; then
             # Third-party Microchip/Atmel rows are deliberately weak: they
@@ -545,6 +560,7 @@ jobs:
             echo "| stm usb-pids               | ${{ steps.fetch-stm-pids.outcome }} |"
             echo "| nxp usb-pids               | ${{ steps.fetch-nxp-pids.outcome }} |"
             echo "| silabs usb-pids            | ${{ steps.fetch-silabs-pids.outcome }} |"
+            echo "| renesas weak pids          | ${{ steps.fetch-renesas-pids.outcome }} |"
             echo "| microchip weak pids        | ${{ steps.fetch-microchip-supplemental-pids.outcome }} |"
             echo "| pio boards (platformio)    | ${{ steps.dump-pio.outcome }} |"
             echo "| merge usb-vid              | ${{ steps.merge-usb.outcome }} |"

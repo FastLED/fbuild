@@ -42,6 +42,9 @@
   {"mcu_family": "SAMD51",      "vid": "239a", "score": 0.80, "reason": "Adafruit Feather M4 / ItsyBitsy M4"},
   {"mcu_family": "SAMD51",      "vid": "2341", "score": 0.55, "reason": "Arduino MKR Vidor 4000 etc."},
 
+  {"mcu_family": "RA4M1",       "vid": "2341", "score": 0.80, "reason": "Arduino UNO R4 / Nano R4 Renesas RA boards"},
+  {"mcu_family": "R7FA6M5",     "vid": "2341", "score": 0.75, "reason": "Arduino Portenta C33 Renesas RA board"},
+
   {"mcu_family": "NRF52840",    "vid": "239a", "score": 0.80, "reason": "Adafruit Bluefruit nRF52840"},
   {"mcu_family": "NRF52840",    "vid": "1915", "score": 0.65, "reason": "Nordic Semi reference / DK"},
   {"mcu_family": "NRF52832",    "vid": "1915", "score": 0.70, "reason": "Nordic Semi reference"},
