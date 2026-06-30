@@ -117,6 +117,24 @@ impl SharedSerialManager {
             > = tokio::task::spawn_blocking(move || {
                 let family_for_open =
                     explicit_family.or_else(|| crate::boards::family_for_port(&port_for_open));
+                // FastLED/fbuild#893 acceptance: every attach logs the
+                // (port, family, dtr, rts) tuple at info! so a downstream
+                // diagnosis (e.g. AutoResearch on ESP32-S3) can verify the
+                // attach honored the inferred board-family DTR/RTS rather
+                // than the universal (true, true) fallback. Inferring
+                // `(false, false)` for ESP native USB CDC vs the default
+                // is the difference between firmware running vs stuck in
+                // boot-mode after deploy.
+                let (preview_dtr, preview_rts) = family_for_open
+                    .map(|f| f.idle_dtr_rts())
+                    .unwrap_or((true, true));
+                tracing::info!(
+                    port = %port_for_open,
+                    family = ?family_for_open,
+                    dtr = preview_dtr,
+                    rts = preview_rts,
+                    "serial_manager: opening port (family inferred from VID/PID, idle_dtr_rts applied at open)"
+                );
                 let mut serial = serialport::new(&port_for_open, baud_rate)
                     .timeout(Duration::from_millis(timeout_ms))
                     .open()?;
