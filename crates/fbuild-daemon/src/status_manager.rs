@@ -191,15 +191,13 @@ impl StatusManager {
         }
     }
 
-    /// Atomic write: route through the canonical async helper
-    /// `fbuild_core::fs::write_atomic` so the daemon-side state file
-    /// uses the same write-tempfile / fsync / rename path as every
-    /// other state-file writer (FastLED/fbuild#844 bridge pair 6).
-    ///
-    /// Called from synchronous code paths inside the tokio runtime, so
-    /// we bridge to the async helper via `block_in_place` +
-    /// `Handle::block_on`. Matches the pattern in
-    /// `fbuild_packages::toolchain::esp32_metadata::resolve_toolchain_url_sync`.
+    /// Atomic write: route through the sync helper
+    /// `fbuild_core::fs::write_atomic_sync` so the daemon-side state
+    /// file uses the same write-tempfile / fsync / rename path as
+    /// every other state-file writer (FastLED/fbuild#844 bridge
+    /// pair 6) without any tokio-runtime-flavor sniffing
+    /// (FastLED/fbuild#865 — the previous async bridge panicked
+    /// inside current-thread runtimes used by unit tests).
     fn write_atomic(&self, status: &DaemonStatus) {
         let json = match serde_json::to_string_pretty(status) {
             Ok(j) => j,
@@ -216,23 +214,15 @@ impl StatusManager {
             let _ = std::fs::create_dir_all(parent);
         }
 
-        let path = self.path.clone();
-        let result = if let Ok(handle) = tokio::runtime::Handle::try_current() {
-            tokio::task::block_in_place(|| {
-                handle.block_on(fbuild_core::fs::write_atomic(&path, json.as_bytes()))
-            })
-        } else {
-            // No tokio runtime — spin up a one-shot. Path hit only by
-            // unit tests and the (rare) standalone bootstrap before the
-            // daemon's runtime exists.
-            match tokio::runtime::Runtime::new() {
-                Ok(rt) => rt.block_on(fbuild_core::fs::write_atomic(&path, json.as_bytes())),
-                Err(e) => {
-                    tracing::warn!("failed to create tokio runtime for status write: {}", e);
-                    return;
-                }
-            }
-        };
+        // FastLED/fbuild#865: write the daemon status synchronously.
+        // The previous bridge used `tokio::task::block_in_place` +
+        // `Handle::block_on`, which panics inside a current-thread
+        // runtime — the default flavor of `#[tokio::test]`, so unit
+        // tests touching this path failed on macOS + Windows CI.
+        // `write_atomic_sync` has identical write+fsync+rename
+        // semantics via `std::fs`, so the status file's atomicity
+        // contract is preserved without any runtime-flavor sniffing.
+        let result = fbuild_core::fs::write_atomic_sync(&self.path, json.as_bytes());
         if let Err(e) = result {
             tracing::warn!(
                 "failed to atomically write daemon status to {}: {}",
