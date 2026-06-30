@@ -92,6 +92,18 @@ TARGET_BINARY_NAME = "fbuild.exe" if sys.platform == "win32" else "fbuild"
 STAGED_BIN_DIR = REPO_ROOT / "ci" / "bin"
 STAGED_BINARY_PATH = STAGED_BIN_DIR / TARGET_BINARY_NAME
 
+# FastLED/fbuild#829: PyO3 extension produced by `fbuild-python`. Python
+# extension module conventions: `.pyd` on Windows, `.so` on Linux/macOS.
+# Cargo emits a cdylib named `lib_native.{so,dylib}` on Unix or
+# `_native.dll` on Windows; we rename / strip-prefix during the copy.
+PYTHON_EXT_DIR = REPO_ROOT / "python" / "fbuild"
+if sys.platform == "win32":
+    STAGED_NATIVE_EXT_NAME = "_native.pyd"
+else:
+    # Same `.so` suffix on macOS and Linux — what CPython searches for.
+    STAGED_NATIVE_EXT_NAME = "_native.so"
+STAGED_NATIVE_EXT_PATH = PYTHON_EXT_DIR / STAGED_NATIVE_EXT_NAME
+
 # Pin cargo's target directory to a stable absolute path so PEP 517
 # isolated builds (pip copies the source tree to a temp dir, so
 # `<cwd>/target/` lives in that temp dir and is discarded after the
@@ -134,6 +146,25 @@ def _staged_binary_is_up_to_date() -> bool:
                 return False
         except FileNotFoundError:
             # File disappeared between glob and stat — treat as changed.
+            return False
+    return True
+
+
+def _staged_native_ext_is_up_to_date() -> bool:
+    """True if the staged PyO3 extension exists and is newer than every cargo input.
+
+    FastLED/fbuild#829: companion to `_staged_binary_is_up_to_date` for the
+    Python extension. If either staged artifact is stale, both rebuild —
+    they share the same cargo workspace and the same incremental cache.
+    """
+    if not STAGED_NATIVE_EXT_PATH.is_file():
+        return False
+    staged_mtime = STAGED_NATIVE_EXT_PATH.stat().st_mtime
+    for path in _iter_cargo_inputs():
+        try:
+            if path.stat().st_mtime > staged_mtime:
+                return False
+        except FileNotFoundError:
             return False
     return True
 
@@ -224,6 +255,128 @@ def _find_fbuild_executable_by_search() -> Optional[Path]:
     return None
 
 
+def _find_native_cdylib_from_json(stdout: str) -> Optional[Path]:
+    """Walk cargo's structured artifact stream and return the path to the
+    `_native` cdylib produced by `fbuild-python`.
+
+    FastLED/fbuild#829. Mirrors `_find_fbuild_executable_from_json`'s
+    selection rule: keep the *last* `compiler-artifact` for
+    `target.name == "_native"` whose `target.kind` includes `cdylib`.
+    The `filenames` array carries the cdylib path (cargo doesn't surface
+    cdylibs via `executable` since they aren't directly runnable).
+    """
+    cdylib_path: Optional[Path] = None
+    for line in stdout.splitlines():
+        line = line.strip()
+        if not line or not line.startswith("{"):
+            continue
+        try:
+            msg = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if msg.get("reason") != "compiler-artifact":
+            continue
+        target = msg.get("target") or {}
+        if target.get("name") != "_native":
+            continue
+        kinds = target.get("kind") or []
+        if "cdylib" not in kinds:
+            continue
+        filenames = msg.get("filenames") or []
+        for fn in filenames:
+            p = Path(fn)
+            # Pick the cdylib file (suffix varies by host):
+            # - Windows: `.dll`
+            # - Linux:   `.so`
+            # - macOS:   `.dylib`
+            if p.suffix in (".dll", ".so", ".dylib"):
+                cdylib_path = p
+                break
+    return cdylib_path
+
+
+def _find_native_cdylib_by_search() -> Optional[Path]:
+    """Fallback when cargo didn't emit a usable artifact line (cached
+    `Fresh` builds skip compiler-artifact lines). Probe the canonical
+    `target/<profile>` path and every per-host-triple subdir.
+    """
+    profile_dir = _profile_subdir()
+    target_root = Path(os.environ.get("CARGO_TARGET_DIR", REPO_ROOT / "target"))
+
+    if sys.platform == "win32":
+        candidate_names = ("_native.dll",)
+    elif sys.platform == "darwin":
+        candidate_names = ("lib_native.dylib", "lib_native.so")
+    else:
+        candidate_names = ("lib_native.so",)
+
+    search_dirs = [target_root / profile_dir]
+    if target_root.is_dir():
+        for child in target_root.iterdir():
+            search_dirs.append(child / profile_dir)
+    for d in search_dirs:
+        for name in candidate_names:
+            candidate = d / name
+            if candidate.is_file():
+                return candidate
+    return None
+
+
+def _build_fbuild_python() -> Path:
+    """Run `soldr cargo build -p fbuild-python --features extension-module`
+    and return the path to the built cdylib.
+
+    FastLED/fbuild#829: a source/editable install left the Python API
+    unusable because `setup.py` only built `fbuild-cli`. The PyO3 extension
+    from `crates/fbuild-python` is now built alongside and copied into
+    `python/fbuild/_native.{pyd,so}` so `from fbuild import ...` works
+    end-to-end after `uv pip install -e .`.
+    """
+    cmd = [
+        "soldr",
+        "cargo",
+        "build",
+        "-p",
+        "fbuild-python",
+        "--features",
+        "extension-module",
+        "--message-format=json-render-diagnostics",
+    ]
+    if _use_release_profile():
+        cmd.insert(3, "--release")
+    sys.stderr.write(f"  $ {' '.join(cmd)}\n")
+    proc = subprocess.run(
+        cmd,
+        cwd=str(REPO_ROOT),
+        stdout=subprocess.PIPE,
+        stderr=None,
+        check=False,
+        text=True,
+        encoding="utf-8",
+    )
+    if proc.returncode != 0:
+        sys.stderr.write(
+            f"ERROR: `soldr cargo build -p fbuild-python` exited with code {proc.returncode}.\n"
+        )
+        sys.exit(proc.returncode)
+
+    cdylib_path = _find_native_cdylib_from_json(proc.stdout)
+    if cdylib_path is None or not cdylib_path.is_file():
+        cdylib_path = _find_native_cdylib_by_search()
+
+    if cdylib_path is None or not cdylib_path.is_file():
+        sys.stderr.write(
+            "ERROR: cargo build succeeded but no `_native` cdylib was found.\n"
+            "If you suspect cargo wrote the cdylib somewhere else, please\n"
+            "file an issue at https://github.com/FastLED/fbuild/issues and\n"
+            "attach the output of `soldr cargo build -p fbuild-python "
+            "--features extension-module -v`.\n"
+        )
+        sys.exit(1)
+
+    return cdylib_path
+
+
 def _build_fbuild_cli() -> Path:
     """Run `soldr cargo build` and return the path to the built executable."""
     cmd = [
@@ -279,14 +432,20 @@ class BuildWithCargo(build_py):
     """Run `soldr cargo build --release -p fbuild-cli` before packaging."""
 
     def run(self) -> None:  # noqa: D401 — setuptools API name
-        # Fast path: if the staged binary is newer than every cargo input,
+        # Fast path: if BOTH staged artifacts (the CLI binary AND the PyO3
+        # extension — FastLED/fbuild#829) are newer than every cargo input,
         # skip the cargo invocation entirely. Even cargo's "Fresh" pass walks
         # the workspace and takes wall-clock seconds; this short-circuits it.
         # Triggered when uv/pip reinstall fbuild without any actual source
         # change (e.g. version bump, lockfile churn, --reinstall-package).
-        if _staged_binary_is_up_to_date():
+        if (
+            _staged_binary_is_up_to_date()
+            and _staged_native_ext_is_up_to_date()
+        ):
             sys.stderr.write(
-                f"  staged binary up-to-date ({STAGED_BINARY_PATH}); skipping cargo\n"
+                f"  staged artifacts up-to-date "
+                f"({STAGED_BINARY_PATH.name}, {STAGED_NATIVE_EXT_PATH.name}); "
+                f"skipping cargo\n"
             )
             super().run()
             return
@@ -296,6 +455,19 @@ class BuildWithCargo(build_py):
         STAGED_BIN_DIR.mkdir(parents=True, exist_ok=True)
         shutil.copy2(binary_path, STAGED_BINARY_PATH)
         sys.stderr.write(f"  staged binary -> {STAGED_BINARY_PATH}\n")
+
+        # FastLED/fbuild#829: also build + stage the PyO3 extension so
+        # `from fbuild import ...` works after an editable / source install.
+        # Previously this was a separate manual step; users hit
+        # `ModuleNotFoundError: No module named 'fbuild._native'` the first
+        # time anything tried to import the Python API.
+        cdylib_path = _build_fbuild_python()
+        PYTHON_EXT_DIR.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(cdylib_path, STAGED_NATIVE_EXT_PATH)
+        sys.stderr.write(
+            f"  staged native extension -> {STAGED_NATIVE_EXT_PATH}\n"
+        )
+
         super().run()
 
 
