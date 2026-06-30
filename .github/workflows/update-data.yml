@@ -236,6 +236,15 @@ jobs:
             --out /tmp/stm-usb-pids.json
           wc -l /tmp/stm-usb-pids.json
 
+      - name: Fetch NXP USB PID supplement (USB-VID tier-3 supplement)
+        id: fetch-nxp-pids
+        continue-on-error: true
+        run: |
+          uv run --no-project --script \
+            "${{ github.workspace }}/online-data-tools/fetch_nxp_usb_pids.py" \
+            --out /tmp/nxp-usb-pids.json
+          wc -l /tmp/nxp-usb-pids.json
+
       - name: Dump PlatformIO board catalog → /tmp/all_boards.json
         id: dump-pio
         continue-on-error: true
@@ -308,6 +317,11 @@ jobs:
             # ST rows are after generic sources so existing usb.ids names
             # stay stable while newer ST-LINK products fill in.
             args+=(--json "stm-usb-pids=/tmp/stm-usb-pids.json")
+          fi
+          if [ "${{ steps.fetch-nxp-pids.outcome }}" = "success" ] && [ -s /tmp/nxp-usb-pids.json ]; then
+            # NXP rows are after generic sources so existing usb.ids names
+            # stay stable while newer mfgtools ROM-loader PIDs fill in.
+            args+=(--json "nxp-usb-pids=/tmp/nxp-usb-pids.json")
           fi
           if [ "${#args[@]}" -eq 0 ]; then
             echo "::warning::all USB-VID sources failed; preserving previously committed data"
@@ -485,6 +499,7 @@ jobs:
             echo "| wch usb-pids               | ${{ steps.fetch-wch-pids.outcome }} |"
             echo "| teensy usb-pids            | ${{ steps.fetch-teensy-pids.outcome }} |"
             echo "| stm usb-pids               | ${{ steps.fetch-stm-pids.outcome }} |"
+            echo "| nxp usb-pids               | ${{ steps.fetch-nxp-pids.outcome }} |"
             echo "| pio boards (platformio)    | ${{ steps.dump-pio.outcome }} |"
             echo "| merge usb-vid              | ${{ steps.merge-usb.outcome }} |"
             echo "| emit inlined supplement    | ${{ steps.emit-inlined.outcome }} |"

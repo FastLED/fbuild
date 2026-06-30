@@ -18,6 +18,7 @@ is committed to orphan branches:
 | `fetch_wch_usb_pids.py` | WCH CH343 Linux driver + udev rules | merge-compatible `/tmp/wch-usb-pids.json` |
 | `fetch_teensy_usb_pids.py` | PJRC Teensy core headers + loader CLI | merge-compatible `/tmp/teensy-usb-pids.json` |
 | `fetch_stm_usb_pids.py` | ST/OpenOCD ST-LINK sources | merge-compatible `/tmp/stm-usb-pids.json` |
+| `fetch_nxp_usb_pids.py` | NXP mfgtools/UUU config table | merge-compatible `/tmp/nxp-usb-pids.json` |
 
 The merger scripts on the `online-data` orphan branch
 (`merge_sources.py`, `merge_pio_boards.py`, `build_manifest.py`,
@@ -74,6 +75,11 @@ list, then adds common ST DFU and virtual COM rows. These entries identify
 debugger or USB function products (`STLINK-V3P`, `STM Device in DFU Mode`,
 `Virtual COM Port`); they do not imply a specific Nucleo or Discovery board.
 
+The NXP supplement parses NXP's mfgtools/UUU `config.cpp` table for VID
+`0x1fc9` ROM downloader and fastboot protocol rows. Entries such as
+`1fc9:0135` are labeled as NXP i.MX/i.MX RT serial downloader modes rather
+than as a specific downstream board.
+
 ## Tests
 
 ```bash
@@ -85,6 +91,7 @@ uv run --no-project --with pytest pytest online-data-tools/test_ftdi_usb_pids.py
 uv run --no-project --with pytest pytest online-data-tools/test_wch_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_teensy_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_stm_usb_pids.py -v
+uv run --no-project --with pytest pytest online-data-tools/test_nxp_usb_pids.py -v
 ```
 
 Each script declares its own PEP 723 dependencies and is runnable via
