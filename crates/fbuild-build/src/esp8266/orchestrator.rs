@@ -59,7 +59,20 @@ impl BuildOrchestrator for Esp8266Orchestrator {
         .await;
 
         // 4. Ensure framework
-        let framework = fbuild_packages::library::Esp8266Framework::new(&params.project_dir);
+        // Honor `platform_packages` override (FastLED/fbuild#664, #681).
+        let __ovr = ctx
+            .config
+            .get_env_config(&params.env_name)
+            .ok()
+            .and_then(|env| {
+                crate::package_override::resolve_override(env, "framework-arduinoespressif8266")
+            });
+        let framework = match __ovr {
+            Some(o) => {
+                fbuild_packages::library::Esp8266Framework::with_override(&params.project_dir, o)
+            }
+            None => fbuild_packages::library::Esp8266Framework::new(&params.project_dir),
+        };
         let _framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("ESP8266 framework ready");
         let board_id = ctx

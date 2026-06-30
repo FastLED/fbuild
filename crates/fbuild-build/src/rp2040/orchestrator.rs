@@ -89,7 +89,18 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         .await;
 
         // 4. Ensure RP2040 cores (arduino-pico by earlephilhower)
-        let framework = fbuild_packages::library::Rp2040Cores::new(&params.project_dir);
+        // Honor `platform_packages` override (FastLED/fbuild#664, #681).
+        let __ovr = ctx
+            .config
+            .get_env_config(&params.env_name)
+            .ok()
+            .and_then(|env| {
+                crate::package_override::resolve_override(env, "framework-arduinopico")
+            });
+        let framework = match __ovr {
+            Some(o) => fbuild_packages::library::Rp2040Cores::with_override(&params.project_dir, o),
+            None => fbuild_packages::library::Rp2040Cores::new(&params.project_dir),
+        };
         let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("RP2040 cores at {}", framework_dir.display());
         let board_id = ctx
