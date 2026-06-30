@@ -84,6 +84,12 @@ APPROVED_CRATE_DIRS: frozenset[str] = frozenset(
         "dylints/ban_runtime_new_outside_main",
         "dylints/ban_poison_panic",
         "dylints/ban_print_in_production",
+        # FastLED/fbuild#840 initializer-order sweep — convention-based
+        # checks for env-var mutation and OnceLock installation outside
+        # binary entry points. See dylints/ban_env_var_set_after_import
+        # and dylints/require_oncelock_install_before_use READMEs.
+        "dylints/ban_env_var_set_after_import",
+        "dylints/require_oncelock_install_before_use",
     }
 )
 

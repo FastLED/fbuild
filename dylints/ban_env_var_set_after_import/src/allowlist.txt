@@ -1,0 +1,6 @@
+# FastLED/fbuild#840 ships this lint with ZERO allowlist entries.
+# Scope exemptions (main.rs, src/bin/**, tests/**, #[cfg(test)]) live
+# in `lib.rs` by file path, not here.
+#
+# Each non-empty, non-comment line is matched against the tail of each
+# source file path (slashes normalized to /).

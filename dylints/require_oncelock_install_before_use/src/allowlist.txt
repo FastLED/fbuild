@@ -1,0 +1,16 @@
+# FastLED/fbuild#840 — legitimate one-shot global-install call sites.
+# Scope exemptions (main.rs, src/bin/**, tests/**, #[cfg(test)]) live
+# in `lib.rs` by file path, not here.
+#
+# Each non-empty, non-comment line is matched against the tail of each
+# source file path (slashes normalized to /).
+#
+# These files contain dedicated `install_global()` (or close-analog)
+# functions that the binary entry points call exactly once at startup,
+# *before* any subprocess spawns or any consumer reaches the OnceLock.
+# The order-of-init bug class the lint targets is structurally
+# impossible at these sites because the call IS the install path —
+# any future addition of a non-install call to `OnceLock::set` outside
+# these files will trip the lint as intended.
+crates/fbuild-core/src/containment.rs
+crates/fbuild-build/src/compile_backend.rs
