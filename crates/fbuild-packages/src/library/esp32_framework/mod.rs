@@ -95,6 +95,30 @@ impl Esp32Framework {
         }
     }
 
+    /// Construct with a consumer-supplied override (parsed from the env's
+    /// `platform_packages` line in `platformio.ini`). The default
+    /// `platform.json`-resolved URL / version / checksum are replaced;
+    /// `cache_subdir` and `name` are preserved. See `PackageBase::with_override`
+    /// and FastLED/fbuild#672.
+    ///
+    /// The override completely supersedes the platform.json-derived URL —
+    /// there is no merge; the consumer's URL wins outright.
+    pub fn with_override(project_dir: &Path, ovr: fbuild_config::PackageOverride) -> Self {
+        Self {
+            base: PackageBase::new(
+                "esp32-arduino",
+                ESP32_FRAMEWORK_VERSION,
+                ESP32_FRAMEWORK_URL,
+                "framework-arduinoespressif32",
+                None,
+                CacheSubdir::Platforms,
+                project_dir,
+            )
+            .with_override(ovr),
+            install_dir: None,
+        }
+    }
+
     /// Get the resolved root directory of the framework.
     pub(crate) fn resolved_dir(&self) -> PathBuf {
         self.install_dir
