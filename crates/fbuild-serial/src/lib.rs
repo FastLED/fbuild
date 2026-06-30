@@ -37,6 +37,7 @@ pub mod crash_decoder;
 pub mod esp_reset;
 pub mod manager;
 pub mod messages;
+pub mod port_class;
 pub mod preemption;
 pub mod rpc_validate;
 pub mod session;
