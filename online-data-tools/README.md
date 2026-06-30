@@ -12,6 +12,7 @@ is committed to orphan branches:
 | `rotate_www_dbs.py` | `www/*.db`                                  | `www/` (deletes >2-day-old `.db`s)     |
 | `build_www_manifest.py` | day-stable filenames                    | `www/manifest.json`                    |
 | `fetch_espressif_usb_pids.py` | `espressif/usb-pids` official PID registry | merge-compatible `/tmp/espressif-usb-pids.json` |
+| `fetch_raspberrypi_usb_pids.py` | `raspberrypi/usb-pid` official PID registry | merge-compatible `/tmp/raspberrypi-usb-pids.json` |
 
 The merger scripts on the `online-data` orphan branch
 (`merge_sources.py`, `merge_pio_boards.py`, `build_manifest.py`,
@@ -31,11 +32,19 @@ land in `usb-vid.json` and the www SQLite `vidpid` table. Board existence is
 still governed by the board catalogs (`pio-boards` / FastLED board data); a PID
 registry entry does not by itself prove that fbuild supports a board.
 
+The Raspberry Pi supplement ingests the official `raspberrypi/usb-pid`
+allocation table for VID `0x2e8a`. It emits product names from the upstream
+`Product Description` column while keeping the VID owner as
+`Raspberry Pi Foundation`; the per-row `Company` cell is allocation context,
+not the USB vendor name. Blank placeholders, ranges, and reserved rows are
+skipped.
+
 ## Tests
 
 ```bash
 uv run --no-project --with pytest pytest online-data-tools/test_build_sqlite.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_espressif_usb_pids.py -v
+uv run --no-project --with pytest pytest online-data-tools/test_raspberrypi_usb_pids.py -v
 ```
 
 Each script declares its own PEP 723 dependencies and is runnable via
