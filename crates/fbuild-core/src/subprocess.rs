@@ -22,7 +22,7 @@
 //! The legacy "what running-process gives us" output shape is preserved
 //! byte-for-byte: stdout/stderr are returned as `String`s composed of
 //! lossy-UTF-8 lines joined by `\n` with a trailing newline when
-//! non-empty (see [`join_lines`]).
+//! non-empty (see `join_lines`).
 
 use std::path::Path;
 use std::process::Stdio;
@@ -211,7 +211,7 @@ impl ToolOutput {
 /// subcommands, tests).
 ///
 /// Timeout policy: passing `timeout: None` applies the workspace
-/// default cap (see [`DEFAULT_SUBPROCESS_TIMEOUT_SECS`] /
+/// default cap (see `DEFAULT_SUBPROCESS_TIMEOUT_SECS` /
 /// `FBUILD_SUBPROCESS_DEFAULT_TIMEOUT_SECS`). Pass `Some(Duration)` for
 /// an explicit budget. For the (rare) legitimately-unbounded case use
 /// [`run_command_no_timeout`].
@@ -270,8 +270,14 @@ pub async fn run_command_with_stdin(
     env: Option<&[(&str, &str)]>,
     timeout: Option<Duration>,
 ) -> Result<ToolOutput> {
-    run_command_with_stdin_inner(args, stdin_bytes, cwd, env, resolve_default_timeout(timeout))
-        .await
+    run_command_with_stdin_inner(
+        args,
+        stdin_bytes,
+        cwd,
+        env,
+        resolve_default_timeout(timeout),
+    )
+    .await
 }
 
 async fn run_command_with_stdin_inner(
@@ -880,10 +886,7 @@ mod tests {
 
         let keys: Vec<&str> = env.iter().map(|(k, _)| k.as_str()).collect();
         for required in ["TMPDIR", "TMP", "TEMP"] {
-            assert!(
-                keys.contains(&required),
-                "missing {required}; got {keys:?}"
-            );
+            assert!(keys.contains(&required), "missing {required}; got {keys:?}");
         }
 
         for (k, v) in &env {
@@ -902,8 +905,7 @@ mod tests {
     fn compile_env_for_build_is_idempotent() {
         let tmp = tempfile::tempdir().expect("tempdir");
         let first = compile_env_for_build(tmp.path()).expect("first call");
-        let second =
-            compile_env_for_build(tmp.path()).expect("second call (dir already exists)");
+        let second = compile_env_for_build(tmp.path()).expect("second call (dir already exists)");
         assert_eq!(first, second, "helper must be idempotent");
     }
 

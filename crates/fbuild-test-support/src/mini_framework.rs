@@ -433,8 +433,8 @@ mod tests {
         assert_eq!(std::fs::read_to_string(&main).unwrap(), "// sketch\n");
     }
 
-    #[test]
-    fn walker_round_trip() {
+    #[tokio::test]
+    async fn walker_round_trip() {
         let mut fx = MiniFramework::new();
         fx.add_library("SPI").done();
         fx.sketch("#include <SPI.h>\n");
@@ -449,10 +449,15 @@ mod tests {
         }
 
         let res = walk(&fx.project_seeds(), &search_paths);
-        let spi_h = std::fs::canonicalize(fx.libraries_dir().join("SPI").join("src").join("SPI.h"))
-            .unwrap();
+        let spi_h = fbuild_core::path::canonicalize_existing(
+            fx.libraries_dir().join("SPI").join("src").join("SPI.h"),
+        )
+        .await
+        .unwrap();
         assert!(
-            res.reached.contains(&spi_h),
+            res.reached
+                .iter()
+                .any(|p| fbuild_core::path::NormalizedPath::new(p).key() == spi_h.key()),
             "walker did not reach SPI.h via fixture; reached={:?}",
             res.reached,
         );

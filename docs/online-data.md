@@ -7,6 +7,7 @@ currently published:
 | Dataset | Path | Description |
 |---|---|---|
 | `usb-vid` | `data/usb-vid.json` | USB VID:PID → `{vendor, product}` (union of multiple sources) |
+| `usb-vids.proto.zstd` | `data/usb-vids.proto.zstd` | Compact protobuf/zstd form of `usb-vid.json` used by fbuild runtime scans |
 | `usb-vid-conflicts` | `data/usb-vid-conflicts.json` | Per-key disagreements between USB-VID sources (observability) |
 | `pio-boards` | `data/pio-boards.json` | Full PlatformIO board catalog (vendor, mcu, frameworks, debug tools, etc.) |
 | `vendor_boards` | `data/vendor_boards.json` | Slim view of `pio-boards` — only `{vendor, name, mcu}` per board id, for cheap "what board is plugged in?" lookups |
@@ -14,10 +15,20 @@ currently published:
 The format is **future-forward** — new datasets are added by writing a new
 JSON file under `data/`; `tools/build_manifest.py` auto-discovers them on
 the next workflow run. No client breakage when datasets are added.
+Binary companion files such as `usb-vids.proto.zstd` are published under
+`data/` too, but are consumed through explicit runtime constants rather than
+manifest auto-discovery.
 
 The companion in-process USB resolver lives at `fbuild_core::usb` — see
 `crates/fbuild-core/src/usb/`. The branch is the **tier-2 fallback** when
 the bundled `usb-ids` crate doesn't know a VID:PID.
+
+VID/PID product rows are USB-name metadata, not board-support proof. Board
+existence remains governed by `crates/fbuild-config/assets/boards`; if a board
+is absent there, it may not be an fbuild-supported board. Local FastLED board
+VID/PID rows fill product-name gaps for checked-in boards after stronger USB
+owner and generic sources have won. Third-party SDK or board-package rows are
+weaker supplements after that.
 
 ## URLs
 
@@ -28,6 +39,8 @@ future, but the manifest's `datasets.<name>.url` field is the contract.
   `https://raw.githubusercontent.com/fastled/fbuild/online-data/manifest.json`
 - USB VID:PID dataset:
   `https://raw.githubusercontent.com/fastled/fbuild/online-data/data/usb-vid.json`
+- Compact USB VID:PID protobuf/zstd runtime overlay:
+  `https://raw.githubusercontent.com/fastled/fbuild/online-data/data/usb-vids.proto.zstd`
 - USB-VID source-conflict log:
   `https://raw.githubusercontent.com/fastled/fbuild/online-data/data/usb-vid-conflicts.json`
 - PlatformIO full board catalog:
@@ -35,8 +48,9 @@ future, but the manifest's `datasets.<name>.url` field is the contract.
 - PlatformIO slim vendor-name lookup (small, ~200 KB):
   `https://raw.githubusercontent.com/fastled/fbuild/online-data/data/vendor_boards.json`
 
-The matching constants in code: `fbuild_core::usb::MANIFEST_URL` and
-`fbuild_core::usb::USB_VID_JSON_URL`.
+The matching constants in code: `fbuild_core::usb::MANIFEST_URL`,
+`fbuild_core::usb::USB_VID_JSON_URL`, and
+`fbuild_core::usb::USB_VIDS_PROTO_ZSTD_URL`.
 
 ## Branch shape
 
@@ -46,6 +60,7 @@ online-data (orphan, NEVER merged into main)
 ├── manifest.json
 ├── data/
 │   ├── usb-vid.json            # alphabetically sorted, lowercase hex keys
+│   ├── usb-vids.proto.zstd     # compact runtime overlay consumed by fbuild
 │   └── usb-vid-conflicts.json  # only keys where sources disagreed
 └── tools/
     ├── README.md
@@ -79,11 +94,13 @@ Per run:
    the run).
 6. `uv run --no-project --script .online-data/tools/merge_sources.py …`
    over whichever sources arrived intact. The merger:
-   - takes the union, prefers `usb-ids-rs` > `linux-usb.org` > `usbids-github`
-     on conflict;
+   - takes the union in workflow argument order; first-party/vendor-owned
+     sources are ordered before generic USB-ID feeds, local FastLED board rows
+     fill checked-in board gaps after those sources, and third-party SDK /
+     board-package supplements come last so they only fill remaining rows;
    - sorts keys alphabetically (lowercase `vvvv:pppp`);
    - writes `data/usb-vid.json`, `data/usb-vid-conflicts.json`,
-     and the freshly-stamped `manifest.json`;
+     `data/usb-vids.proto.zstd`, and the freshly-stamped `manifest.json`;
    - **refuses to write** if the union has fewer than 1000 entries so a
      truncated upstream cannot blow away a healthy committed dataset.
 7. If files actually changed, commit on `online-data`.
@@ -102,6 +119,8 @@ Manual trigger: Actions → "Update data" → Run workflow.
 - **All upstream sources fail** → merger refuses to write → workflow
   finishes with no commit; existing committed data is preserved.
 - **Merger writes too-small output** → same as above (sanity floor).
+- **Compact protobuf generation fails after a successful USB merge** →
+  workflow stops before publishing a mismatched `online-data` commit.
 - **Workflow itself fails before commit** → previous commit on
   `online-data` remains the live data.
 

@@ -131,7 +131,7 @@ pub fn detect_port_kernel_class(port_name: &str) -> Option<PortKernelClass> {
 #[cfg(target_os = "linux")]
 mod linux {
     use super::PortKernelClass;
-    use std::path::{Path, PathBuf};
+    use std::path::Path;
 
     pub(super) fn detect(port_name: &str) -> Option<PortKernelClass> {
         detect_with_sysfs_root(port_name, Path::new("/sys"))
@@ -150,9 +150,7 @@ mod linux {
         //    e.g. -> .../bus/usb-serial/drivers/cdc_acm
         //          -> .../bus/usb-serial/drivers/ftdi_sio
         //          -> .../bus/usb-serial/drivers/cp210x
-        if let Some(driver_name) =
-            read_driver_symlink_name(sysfs_root, bare)
-        {
+        if let Some(driver_name) = read_driver_symlink_name(sysfs_root, bare) {
             return Some(classify_driver(&driver_name));
         }
 
@@ -166,7 +164,7 @@ mod linux {
     }
 
     fn read_driver_symlink_name(sysfs_root: &Path, port_stem: &str) -> Option<String> {
-        let driver_link: PathBuf = sysfs_root
+        let driver_link = sysfs_root
             .join("class")
             .join("tty")
             .join(port_stem)
@@ -220,7 +218,9 @@ mod linux {
     }
 
     #[cfg(test)]
-    pub(super) use port_name_stem as port_name_stem_for_tests;
+    pub(super) fn port_name_stem_for_tests(port_name: &str) -> Option<&str> {
+        port_name_stem(port_name)
+    }
 }
 
 #[cfg(target_os = "macos")]
@@ -290,11 +290,7 @@ mod tests {
         // Build a fake `/sys/class/tty/<port>/device/driver` symlink
         // pointing at a fake driver dir under a tmp root, then ask
         // detect_with_sysfs_root to classify it.
-        fn build_fake_sysfs_tree(
-            sysfs_root: &std::path::Path,
-            port_stem: &str,
-            driver_name: &str,
-        ) {
+        fn build_fake_sysfs_tree(sysfs_root: &std::path::Path, port_stem: &str, driver_name: &str) {
             let device_dir = sysfs_root
                 .join("class")
                 .join("tty")
@@ -380,7 +376,10 @@ mod tests {
             // either — the kernel didn't bind it via cdc_acm or
             // usbserial.
             let tmp = tempdir().unwrap();
-            assert_eq!(linux::detect_with_sysfs_root("/dev/ttyS0", tmp.path()), None);
+            assert_eq!(
+                linux::detect_with_sysfs_root("/dev/ttyS0", tmp.path()),
+                None
+            );
         }
 
         #[test]
@@ -489,10 +488,7 @@ mod tests {
                 None
             );
             // Stray random name returns None too.
-            assert_eq!(
-                macos::classify_macos_devnode("/dev/cu.random-thing"),
-                None
-            );
+            assert_eq!(macos::classify_macos_devnode("/dev/cu.random-thing"), None);
         }
     }
 

@@ -580,11 +580,8 @@ pub async fn deploy(
                         16,
                     )
                     .unwrap_or(0),
-                    u32::from_str_radix(
-                        mcu_config.firmware_offset().trim_start_matches("0x"),
-                        16,
-                    )
-                    .unwrap_or(0),
+                    u32::from_str_radix(mcu_config.firmware_offset().trim_start_matches("0x"), 16)
+                        .unwrap_or(0),
                 );
 
                 // Session-trusted verify-skip: if the daemon last
@@ -643,17 +640,20 @@ pub async fn deploy(
                                 "verify-flash: device already running this exact image; skipping write"
                             );
                             // VerifySkip → recovery skipped (#605).
-                            return Ok((None, fbuild_deploy::DeploymentResult {
-                                success: true,
-                                message: format!(
-                                    "firmware already current on {} (skipped via verify-flash)",
-                                    port
-                                ),
-                                port: Some(port.to_string()),
-                                stdout,
-                                stderr,
-                                outcome: fbuild_deploy::DeployOutcome::VerifySkip,
-                            }));
+                            return Ok((
+                                None,
+                                fbuild_deploy::DeploymentResult {
+                                    success: true,
+                                    message: format!(
+                                        "firmware already current on {} (skipped via verify-flash)",
+                                        port
+                                    ),
+                                    port: Some(port.to_string()),
+                                    stdout,
+                                    stderr,
+                                    outcome: fbuild_deploy::DeployOutcome::VerifySkip,
+                                },
+                            ));
                         }
                         Ok(fbuild_deploy::esp32::VerifyOutcome::Mismatch { regions, .. }) => {
                             // Pick only the regions that actually differ
@@ -702,7 +702,9 @@ pub async fn deploy(
                                     .set_trusted_firmware_hash(port, hash);
                             }
                             _ => {
-                                ctx_for_deploy.device_manager.clear_trusted_firmware_hash(port);
+                                ctx_for_deploy
+                                    .device_manager
+                                    .clear_trusted_firmware_hash(port);
                             }
                         }
                     }
@@ -773,8 +775,18 @@ pub async fn deploy(
                 );
                 Box::new(deployer)
             }
-            fbuild_core::Platform::NxpLpc => fbuild_deploy::lpc::dispatch_box(&board_id, &deploy_board_overrides, deploy_project.as_path(), baud_override),
-            _ => return Err(fbuild_core::FbuildError::DeployFailed(format!("deployer for {:?} not yet implemented", platform))),
+            fbuild_core::Platform::NxpLpc => fbuild_deploy::lpc::dispatch_box(
+                &board_id,
+                &deploy_board_overrides,
+                deploy_project.as_path(),
+                baud_override,
+            ),
+            _ => {
+                return Err(fbuild_core::FbuildError::DeployFailed(format!(
+                    "deployer for {:?} not yet implemented",
+                    platform
+                )))
+            }
         };
         let result = deployer
             .deploy(

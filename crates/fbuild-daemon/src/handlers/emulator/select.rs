@@ -327,20 +327,20 @@ pub async fn test_emu(
         // FastLED/fbuild#808 (CRITICAL): wall-clock cap on the
         // pre-emulator build so a wedged compiler doesn't hang the
         // test-emu handler indefinitely.
-        const EMU_BUILD_HARD_DEADLINE: std::time::Duration = std::time::Duration::from_secs(60 * 60);
+        const EMU_BUILD_HARD_DEADLINE: std::time::Duration =
+            std::time::Duration::from_secs(60 * 60);
         match fbuild_build::get_orchestrator(p) {
-            Ok(orchestrator) => match tokio::time::timeout(
-                EMU_BUILD_HARD_DEADLINE,
-                orchestrator.build(&params),
-            )
-            .await
-            {
-                Ok(r) => r,
-                Err(_) => Err(fbuild_core::FbuildError::Other(format!(
-                    "pre-emulator build exceeded hard deadline ({}s); aborting",
-                    EMU_BUILD_HARD_DEADLINE.as_secs()
-                ))),
-            },
+            Ok(orchestrator) => {
+                match tokio::time::timeout(EMU_BUILD_HARD_DEADLINE, orchestrator.build(&params))
+                    .await
+                {
+                    Ok(r) => r,
+                    Err(_) => Err(fbuild_core::FbuildError::Other(format!(
+                        "pre-emulator build exceeded hard deadline ({}s); aborting",
+                        EMU_BUILD_HARD_DEADLINE.as_secs()
+                    ))),
+                }
+            }
             Err(e) => Err(e),
         }
     };

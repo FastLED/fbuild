@@ -11,22 +11,17 @@
 //!
 //! Different from [`super::serial_probe::SerialAction::Probe`]'s `list`
 //! action (FastLED/fbuild#686) which annotates from a tiny hardcoded
-//! `BOARD_FINGERPRINTS` table — `port scan` consults the full canonical
-//! FastLED/boards aggregate via the tiered resolver, so an unrecognized
+//! `BOARD_FINGERPRINTS` table — `port scan` consults the fbuild online-data
+//! VID:PID overlay via the tiered resolver, so an unrecognized
 //! device shows the actual vendor + product name instead of a blank
 //! hint.
 //!
-//! The canonical data source is [FastLED/boards] (see
-//! <https://fastled.github.io/boards/> for the live portal). The
-//! resolver in `fbuild_core::usb` is wired to consume it via tier-2
-//! overlay; that's separate plumbing — this command takes whatever the
-//! resolver returns.
-//!
-//! [FastLED/boards]: https://github.com/FastLED/boards
+//! The canonical runtime data source is the `fastled/fbuild` `online-data`
+//! branch. The resolver in `fbuild_core::usb` is wired to consume it via the
+//! tier-2 overlay; this command takes whatever the resolver returns.
 
 use clap::Subcommand;
 use fbuild_core::{FbuildError, Result};
-use std::time::Duration;
 
 use crate::output;
 
@@ -36,7 +31,7 @@ pub enum PortAction {
     /// the OS-visible identity + a `└─ vendor / product` second row
     /// resolved via [`fbuild_core::usb::resolve`].
     Scan {
-        /// Skip the network fetch of the FastLED/boards online overlay
+        /// Skip the network fetch of the fbuild online-data overlay
         /// (tier-2 of the resolver). Useful for offline runs — the
         /// embedded vendor archive (tier-1) still provides vendor
         /// names; product columns fall through to the synthetic
@@ -71,25 +66,34 @@ fn run_scan(offline: bool) -> Result<()> {
     Ok(())
 }
 
-/// Fetch the FastLED/boards `usb-vids.proto.zstd` tier-2 overlay backing
+/// Fetch the fbuild online-data `usb-vids.proto.zstd` tier-2 overlay backing
 /// [`fbuild_core::usb::resolve`] into the local cache root, then install it.
 ///
 /// Best-effort: any I/O / network / parse failure is swallowed and the
 /// resolver degrades to tier-1 (embedded vendor archive). The cache is
 /// kept fresh on a 7-day cadence — older copies are refetched.
 fn populate_online_overlay() {
-    let Some(cache_path) = overlay_cache_path() else {
+    populate_online_overlay_from_urls(
+        fbuild_core::usb::USB_VIDS_PROTO_ZSTD_URL,
+        fbuild_core::usb::USB_VID_JSON_URL,
+    );
+}
+
+fn populate_online_overlay_from_urls(proto_url: &str, json_url: &str) {
+    let Some(proto_cache_path) = overlay_cache_path() else {
         return;
     };
-    if !cache_is_fresh(&cache_path) {
-        if let Err(e) = fetch_overlay_to(&cache_path) {
-            tracing::debug!(
-                error = %e,
-                "port scan: overlay fetch failed — degrading to tier-1 only"
-            );
-        }
+    let Some(json_cache_path) = overlay_json_cache_path() else {
+        return;
+    };
+    if !fbuild_core::usb::populate_online_cache_from_paths_and_urls(
+        &proto_cache_path,
+        &json_cache_path,
+        proto_url,
+        json_url,
+    ) {
+        tracing::debug!("port scan: overlay unavailable; degrading to tier-1 only");
     }
-    fbuild_core::usb::install_online_cache_proto_zstd(&cache_path);
 }
 
 fn overlay_cache_path() -> Option<std::path::PathBuf> {
@@ -99,67 +103,11 @@ fn overlay_cache_path() -> Option<std::path::PathBuf> {
     Some(dir.join("usb-vids.proto.zstd"))
 }
 
-/// 7-day cache TTL — fbuild's online-data branch refreshes nightly;
-/// a weekly local refresh gives us most of the benefit with minimal
-/// cold-start network cost. CI / offline boxes still get useful
-/// results from the cached copy.
-const OVERLAY_TTL_SECS: u64 = 7 * 24 * 60 * 60;
-
-fn cache_is_fresh(path: &std::path::Path) -> bool {
-    let Ok(meta) = std::fs::metadata(path) else {
-        return false;
-    };
-    let Ok(modified) = meta.modified() else {
-        return false;
-    };
-    let Ok(age) = modified.elapsed() else {
-        return false;
-    };
-    age.as_secs() < OVERLAY_TTL_SECS
-}
-
-fn fetch_overlay_to(path: &std::path::Path) -> std::result::Result<(), String> {
-    // reqwest::blocking spins its own internal runtime and rejects
-    // being called from inside an outer tokio runtime (the CLI
-    // dispatcher uses `#[tokio::main]`). Run the fetch on a dedicated
-    // OS thread so reqwest's runtime sees a clean async-free context.
-    let path = path.to_path_buf();
-    std::thread::spawn(move || fetch_overlay_to_inner(&path))
-        .join()
-        .map_err(|_| "fetch thread panicked".to_string())?
-}
-
-fn fetch_overlay_to_inner(path: &std::path::Path) -> std::result::Result<(), String> {
-    // FastLED/fbuild#844: route the OS-thread blocking client through the
-    // shared bridge so all reqwest construction has one source of truth.
-    let client = fbuild_core::http::blocking_client(Duration::from_secs(15));
-    fetch_overlay_to_inner_with_client(path, &client, fbuild_core::usb::USB_VIDS_PROTO_ZSTD_URL)
-}
-
-fn fetch_overlay_to_inner_with_client(
-    path: &std::path::Path,
-    client: &reqwest::blocking::Client,
-    url: &str,
-) -> std::result::Result<(), String> {
-    let response = client
-        .get(url)
-        .send()
-        .map_err(|e| format!("http get: {e}"))?;
-    if !response.status().is_success() {
-        return Err(format!("http status {}", response.status()));
-    }
-    let body = response.bytes().map_err(|e| format!("body read: {e}"))?;
-    // Atomic write via a `.tmp` sibling + rename — partial writes from
-    // a Ctrl+C mid-fetch don't poison the cache.
-    let tmp = path.with_extension("proto.zstd.tmp");
-    std::fs::write(&tmp, &body).map_err(|e| format!("tmp write: {e}"))?;
-    std::fs::rename(&tmp, path).map_err(|e| format!("rename: {e}"))?;
-    tracing::debug!(
-        path = %path.display(),
-        size = body.len(),
-        "port scan: overlay cache refreshed"
-    );
-    Ok(())
+fn overlay_json_cache_path() -> Option<std::path::PathBuf> {
+    let root = fbuild_paths::get_cache_root();
+    let dir = root.join("usb");
+    std::fs::create_dir_all(&dir).ok()?;
+    Some(dir.join("usb-vid.json"))
 }
 
 // ─── pure, testable formatter ────────────────────────────────────────
@@ -228,6 +176,19 @@ fn render_usb_port(
     product: Option<&str>,
     serial: Option<&str>,
 ) {
+    let kernel_class = fbuild_serial::port_class::detect_port_kernel_class(name);
+    render_usb_port_with_kernel_class(out, name, vid, pid, product, serial, kernel_class);
+}
+
+fn render_usb_port_with_kernel_class(
+    out: &mut String,
+    name: &str,
+    vid: u16,
+    pid: u16,
+    product: Option<&str>,
+    serial: Option<&str>,
+    kernel_class: Option<fbuild_serial::port_class::PortKernelClass>,
+) {
     use std::fmt::Write as _;
     let descriptor = product.unwrap_or("USB Serial Device");
     let serial_field = match serial {
@@ -240,7 +201,21 @@ fn render_usb_port(
     );
     let info = fbuild_core::usb::resolve(vid, pid);
     let friendly_product = friendly_product_name(vid, pid, &info.product, product);
-    let _ = writeln!(out, "          └─ {} / {}", info.vendor, friendly_product);
+    let _ = writeln!(
+        out,
+        "          └─ {} / {}    cdc={}",
+        info.vendor,
+        friendly_product,
+        cdc_label(kernel_class)
+    );
+}
+
+fn cdc_label(kernel_class: Option<fbuild_serial::port_class::PortKernelClass>) -> &'static str {
+    match kernel_class {
+        Some(fbuild_serial::port_class::PortKernelClass::CdcAcm) => "yes",
+        Some(fbuild_serial::port_class::PortKernelClass::UsbSerialBridge) => "no",
+        None => "unknown",
+    }
 }
 
 /// Pick the most "friendly" product label for the resolver row.
@@ -291,8 +266,9 @@ fn is_generic_descriptor(d: &str) -> bool {
 }
 
 /// Small inline supplement for common embedded VID:PIDs that the
-/// canonical FastLED/boards `vidpid` table doesn't carry yet. Keep it
-/// short — anything that lands upstream should be removed here.
+/// canonical online overlay may not carry in offline/test paths. Keep it
+/// short — anything that lands into the embedded product map should be
+/// removed here.
 const FRIENDLY_PRODUCTS: &[(u16, u16, &str)] = &[
     // Espressif Systems (VID 0x303A) — ESP32 series USB-CDC ACM.
     (0x303A, 0x1001, "ESP32-S3 USB-CDC"),
@@ -328,6 +304,7 @@ mod tests {
     use std::io::{Read, Write};
     use std::net::TcpListener;
     use std::sync::Mutex;
+    use std::time::Duration;
 
     static ENV_LOCK: Mutex<()> = Mutex::new(());
 
@@ -379,42 +356,74 @@ mod tests {
         let _guard = EnvVarGuard::set("FBUILD_CACHE_DIR", tmp.path());
 
         let path = overlay_cache_path().expect("cache path");
+        let json_path = overlay_json_cache_path().expect("json cache path");
 
         assert_eq!(path, tmp.path().join("usb").join("usb-vids.proto.zstd"));
+        assert_eq!(json_path, tmp.path().join("usb").join("usb-vid.json"));
         assert!(tmp.path().join("usb").is_dir());
     }
 
     #[test]
-    fn fetch_overlay_writes_cache_file_atomically() {
+    fn populate_overlay_falls_back_to_json_when_proto_is_missing() {
+        let _env = ENV_LOCK.lock().unwrap();
+        let tmp = tempfile::tempdir().unwrap();
+        let _guard = EnvVarGuard::set("FBUILD_CACHE_DIR", tmp.path());
+
         let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+        listener.set_nonblocking(true).unwrap();
         let addr = listener.local_addr().unwrap();
-        let expected = b"fake proto zstd bytes".to_vec();
-        let server_expected = expected.clone();
+        let json = r#"{"feed":{"vendor":"Feedface Inc","products":[["c0de","Coded Widget"]]}}"#;
+        let server_json = json.as_bytes().to_vec();
         let handle = std::thread::spawn(move || {
-            let (mut stream, _) = listener.accept().unwrap();
-            let mut request = [0_u8; 1024];
-            let _ = stream.read(&mut request).unwrap();
-            let response = format!(
-                "HTTP/1.1 200 OK\r\nContent-Length: {}\r\nConnection: close\r\n\r\n",
-                server_expected.len()
-            );
-            stream.write_all(response.as_bytes()).unwrap();
-            stream.write_all(&server_expected).unwrap();
+            let deadline = std::time::Instant::now() + Duration::from_secs(5);
+            let mut request_count = 0_u8;
+            while request_count < 2 {
+                match listener.accept() {
+                    Ok((mut stream, _)) => {
+                        let mut request = [0_u8; 1024];
+                        let _ = stream.read(&mut request).unwrap();
+                        request_count += 1;
+                        if request_count == 1 {
+                            stream
+                                .write_all(
+                                    b"HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\nConnection: close\r\n\r\n",
+                                )
+                                .unwrap();
+                        } else {
+                            let response = format!(
+                                "HTTP/1.1 200 OK\r\nContent-Length: {}\r\nConnection: close\r\n\r\n",
+                                server_json.len()
+                            );
+                            stream.write_all(response.as_bytes()).unwrap();
+                            stream.write_all(&server_json).unwrap();
+                        }
+                    }
+                    Err(e) if e.kind() == std::io::ErrorKind::WouldBlock => {
+                        assert!(
+                            std::time::Instant::now() < deadline,
+                            "timed out waiting for overlay requests"
+                        );
+                        std::thread::sleep(Duration::from_millis(10));
+                    }
+                    Err(e) => panic!("accept failed: {e}"),
+                }
+            }
+            request_count
         });
 
-        let tmp = tempfile::tempdir().unwrap();
-        let path = tmp.path().join("usb-vids.proto.zstd");
-        let client = reqwest::blocking::Client::builder()
-            .timeout(Duration::from_secs(5))
-            .build()
-            .unwrap();
+        populate_online_overlay_from_urls(
+            &format!("http://{addr}/usb-vids.proto.zstd"),
+            &format!("http://{addr}/usb-vid.json"),
+        );
 
-        fetch_overlay_to_inner_with_client(&path, &client, &format!("http://{addr}/data"))
-            .expect("fetch should write cache");
-
-        handle.join().unwrap();
-        assert_eq!(std::fs::read(&path).unwrap(), expected);
-        assert!(!path.with_extension("proto.zstd.tmp").exists());
+        assert_eq!(handle.join().unwrap(), 2);
+        assert_eq!(
+            std::fs::read_to_string(tmp.path().join("usb").join("usb-vid.json")).unwrap(),
+            json
+        );
+        let info = fbuild_core::usb::resolve(0xFEED, 0xC0DE);
+        assert_eq!(info.vendor, "Feedface Inc");
+        assert_eq!(info.product, "Coded Widget");
     }
 
     #[test]
@@ -541,10 +550,43 @@ mod tests {
     }
 
     #[test]
+    fn usb_port_rows_show_cdc_classification() {
+        use fbuild_serial::port_class::PortKernelClass;
+
+        let mut cdc = String::new();
+        render_usb_port_with_kernel_class(
+            &mut cdc,
+            "COM1",
+            0x303A,
+            0x1001,
+            None,
+            None,
+            Some(PortKernelClass::CdcAcm),
+        );
+        assert!(cdc.contains("cdc=yes"), "got: {cdc}");
+
+        let mut bridge = String::new();
+        render_usb_port_with_kernel_class(
+            &mut bridge,
+            "COM2",
+            0x10C4,
+            0xEA60,
+            None,
+            None,
+            Some(PortKernelClass::UsbSerialBridge),
+        );
+        assert!(bridge.contains("cdc=no"), "got: {bridge}");
+
+        let mut unknown = String::new();
+        render_usb_port_with_kernel_class(&mut unknown, "COM3", 0x303A, 0x1001, None, None, None);
+        assert!(unknown.contains("cdc=unknown"), "got: {unknown}");
+    }
+
+    #[test]
     fn esp32_s3_cdc_pid_gets_friendly_supplement() {
-        // 303A:1001 lacks a product entry in both the embedded archive
-        // and the FastLED/boards `vidpid` table; the inline supplement
-        // is what makes the row a friendly name instead of synthetic.
+        // In the tier-1/offline path the embedded archive carries vendor
+        // names only; the inline supplement keeps this common PID friendly
+        // when the online product overlay is not installed.
         let ports = vec![usb_port(
             "COM25",
             0x303A,

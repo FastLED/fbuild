@@ -338,7 +338,7 @@ pub async fn async_main() {
             upgrade_package,
         }) => {
             let code = run_sync_cmd(
-                Some(std::path::PathBuf::from(project_dir)),
+                Some(fbuild_core::path::NormalizedPath::new(project_dir)),
                 environment,
                 yes,
                 locked,
@@ -513,7 +513,7 @@ pub async fn async_main() {
                 ));
             }
             let normalized = normalize_ci_sketches(&sketches);
-            let pio_env = build_ci_pio_env(&libs, project_conf.as_deref());
+            let pio_env = build_ci_pio_env(&libs, project_conf.as_deref()).await;
             run_compile_many(CompileManyArgs {
                 board,
                 framework_jobs,

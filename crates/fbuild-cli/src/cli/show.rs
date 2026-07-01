@@ -19,10 +19,7 @@ pub fn run_show(target: &str, follow: bool, lines: usize) -> fbuild_core::Result
 pub fn show_daemon_logs(follow: bool, initial_lines: usize) -> fbuild_core::Result<()> {
     let log_path = fbuild_paths::get_daemon_log_file();
     if !log_path.exists() {
-        output::error(format!(
-            "daemon log file not found: {}",
-            log_path.display()
-        ));
+        output::error(format!("daemon log file not found: {}", log_path.display()));
         output::error("the daemon may not have been started yet");
         return Ok(());
     }

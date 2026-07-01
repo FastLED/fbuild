@@ -300,6 +300,20 @@ fn resolve_variant_dir(
     requested_variant: &str,
     system_series: &str,
 ) -> PathBuf {
+    // OpenWCH d767162 adds CH32VM00X/CH32V006K8, but that variant currently
+    // references PB_* pins not defined by the CH32V006 build. Before that
+    // upstream directory existed, fbuild built this board with the CH32V003F4
+    // family fallback; keep that known-good path for the pinned core.
+    if requested_variant == "CH32VM00X/CH32V006K8" {
+        let fallback = framework_dir
+            .join("variants")
+            .join("CH32V00x")
+            .join("CH32V003F4");
+        if fallback.is_dir() {
+            return fallback;
+        }
+    }
+
     let requested = framework_dir.join("variants").join(requested_variant);
     if requested.is_dir() {
         return requested;
@@ -333,13 +347,14 @@ fn resolve_variant_dir(
 }
 
 /// Map a series name to the system directory name in the OpenWCH core.
-/// e.g. "ch32v003" -> "CH32V00x", "ch32v103" -> "CH32V10x", "ch32x035" -> "CH32X035"
+/// e.g. "ch32v003" -> "CH32V00x", "ch32l103" -> "CH32L10x", "ch32x035" -> "CH32X035"
 fn series_to_system_dir(series: &str) -> String {
     let upper = series.to_uppercase();
     if upper.len() >= 7 {
-        // CH32V series use the "replace last digit with x" pattern (CH32V00x, CH32V10x, etc.)
-        // CH32X/CH32L series use the exact uppercase name (CH32X035, CH32L103, etc.)
-        if upper.starts_with("CH32V") {
+        // CH32V/CH32L series use the "replace last digit with x" family
+        // directory pattern (CH32V00x, CH32V10x, CH32L10x, etc.).
+        // CH32X035 uses its exact uppercase directory name.
+        if upper.starts_with("CH32V") || upper.starts_with("CH32L") {
             format!("{}x", &upper[..upper.len() - 1])
         } else {
             upper
@@ -358,6 +373,10 @@ pub fn is_ch32v_project(project_dir: &Path, env_name: &str) -> bool {
 mod tests {
     use super::*;
 
+    fn tempdir() -> tempfile::TempDir {
+        tempfile::TempDir::new_in(fbuild_paths::temp_subdir("fbuild-ch32v-tests")).unwrap()
+    }
+
     #[test]
     fn test_ch32v_orchestrator_platform() {
         let orch = Ch32vOrchestrator;
@@ -366,7 +385,7 @@ mod tests {
 
     #[test]
     fn test_is_ch32v_project() {
-        let tmp = tempfile::TempDir::new().unwrap();
+        let tmp = tempdir();
         std::fs::write(
             tmp.path().join("platformio.ini"),
             "[env:ch32v003]\nplatform = ch32v\nboard = genericCH32V003F4P6\nframework = arduino\n",
@@ -378,7 +397,7 @@ mod tests {
 
     #[test]
     fn test_is_not_ch32v_project() {
-        let tmp = tempfile::TempDir::new().unwrap();
+        let tmp = tempdir();
         std::fs::write(
             tmp.path().join("platformio.ini"),
             "[env:uno]\nplatform = atmelavr\nboard = uno\nframework = arduino\n",
@@ -395,14 +414,15 @@ mod tests {
         assert_eq!(series_to_system_dir("ch32v203"), "CH32V20x");
         assert_eq!(series_to_system_dir("ch32v303"), "CH32V30x");
         assert_eq!(series_to_system_dir("ch32v307"), "CH32V30x");
-        // CH32X/CH32L: exact uppercase name
+        // CH32L follows the same family-directory pattern as CH32V.
+        assert_eq!(series_to_system_dir("ch32l103"), "CH32L10x");
+        // CH32X: exact uppercase name
         assert_eq!(series_to_system_dir("ch32x035"), "CH32X035");
-        assert_eq!(series_to_system_dir("ch32l103"), "CH32L103");
     }
 
     #[test]
     fn test_resolve_variant_dir_falls_back_to_family_variant() {
-        let tmp = tempfile::TempDir::new().unwrap();
+        let tmp = tempdir();
         let fallback = tmp
             .path()
             .join("variants")
@@ -415,8 +435,28 @@ mod tests {
     }
 
     #[test]
+    fn test_resolve_variant_dir_skips_broken_ch32v006_upstream_variant() {
+        let tmp = tempdir();
+        let requested = tmp
+            .path()
+            .join("variants")
+            .join("CH32VM00X")
+            .join("CH32V006K8");
+        let fallback = tmp
+            .path()
+            .join("variants")
+            .join("CH32V00x")
+            .join("CH32V003F4");
+        std::fs::create_dir_all(&requested).unwrap();
+        std::fs::create_dir_all(&fallback).unwrap();
+
+        let resolved = resolve_variant_dir(tmp.path(), "CH32VM00X/CH32V006K8", "CH32V00x");
+        assert_eq!(resolved, fallback);
+    }
+
+    #[test]
     fn test_resolve_variant_h_ignores_missing_preferred_header() {
-        let tmp = tempfile::TempDir::new().unwrap();
+        let tmp = tempdir();
         std::fs::write(tmp.path().join("variant_CH32V003F4.h"), "").unwrap();
 
         let resolved = resolve_variant_h(tmp.path(), Some("variant_CH32V006K8.h"));

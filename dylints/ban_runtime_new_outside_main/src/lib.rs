@@ -8,7 +8,10 @@ extern crate rustc_span;
 use rustc_errors::DiagDecorator;
 use rustc_hir::{def::Res, Expr, ExprKind, HirId};
 use rustc_lint::{LateContext, LateLintPass, LintContext};
-use rustc_span::{symbol::Symbol, FileName, RemapPathScopeComponents};
+use rustc_span::{
+    symbol::{sym, Symbol},
+    FileName, RemapPathScopeComponents,
+};
 
 dylint_linting::declare_late_lint! {
     /// ### What it does
@@ -130,31 +133,29 @@ fn emit_lint(cx: &LateContext<'_>, span: rustc_span::Span, banned: &[&str]) {
 }
 
 fn owned_by_cfg_test_module(cx: &LateContext<'_>, hir_id: HirId) -> bool {
-    let mut current = cx.tcx.hir_get_parent_item(hir_id);
-    loop {
-        let attrs = cx.tcx.hir_attrs(current.into());
-        for attr in attrs {
-            if attr_is_cfg_test(attr) {
-                return true;
-            }
-        }
-        let parent = cx.tcx.hir_get_parent_item(current.into());
-        if parent == current {
-            return false;
-        }
-        current = parent;
-    }
+    std::iter::once(hir_id)
+        .chain(cx.tcx.hir_parent_id_iter(hir_id))
+        .any(|id| {
+            cx.tcx.hir_attrs(id).iter().any(attr_is_cfg_test) || is_test_module_node(cx, id)
+        })
+}
+
+fn is_test_module_node(cx: &LateContext<'_>, hir_id: HirId) -> bool {
+    let rustc_hir::Node::Item(item) = cx.tcx.hir_node(hir_id) else {
+        return false;
+    };
+    let rustc_hir::ItemKind::Mod(ident, _) = item.kind else {
+        return false;
+    };
+    let name = ident.name.as_str();
+    name == "tests" || name.ends_with("_tests") || name.ends_with("_test")
 }
 
 fn attr_is_cfg_test(attr: &rustc_hir::Attribute) -> bool {
-    let Some(meta) = attr.meta() else {
-        return false;
-    };
-    let path = meta.path();
-    if path.segments.len() != 1 || path.segments[0].ident.as_str() != "cfg" {
+    if !attr.has_name(sym::cfg) {
         return false;
     }
-    let Some(list) = meta.meta_item_list() else {
+    let Some(list) = attr.meta_item_list() else {
         return false;
     };
     list.iter().any(|nested| {

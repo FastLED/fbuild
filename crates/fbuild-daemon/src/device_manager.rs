@@ -108,6 +108,10 @@ pub struct DeviceState {
     pub vendor_name: Option<String>,
     /// Human-readable USB product name (same provenance as `vendor_name`).
     pub product_name: Option<String>,
+    /// Whether the OS classified this USB serial endpoint as CDC-ACM.
+    /// `Some(false)` means a USB-serial bridge driver; `None` means
+    /// non-USB or unknown on this platform.
+    pub is_cdc: Option<bool>,
     pub serial_number: Option<String>,
     pub previous_port: Option<String>,
     pub exclusive_lease: Option<DeviceLease>,
@@ -159,6 +163,7 @@ struct DiscoveredDevice {
     pid: Option<u16>,
     vendor_name: Option<String>,
     product_name: Option<String>,
+    is_cdc: Option<bool>,
     serial_number: Option<String>,
 }
 
@@ -206,7 +211,10 @@ impl DeviceManager {
     /// *recently enough* — we just don't need one on every deploy.
     pub fn refresh_devices_if_stale(&self, max_age: std::time::Duration) -> bool {
         {
-            let last = self.last_refresh_at.lock().unwrap_or_else(|e| e.into_inner());
+            let last = self
+                .last_refresh_at
+                .lock()
+                .unwrap_or_else(|e| e.into_inner());
             if let Some(t) = *last {
                 if t.elapsed() < max_age {
                     return false;
@@ -245,6 +253,10 @@ impl DeviceManager {
                     serialport::SerialPortType::PciPort => (None, None, "PCI Serial".to_string()),
                     serialport::SerialPortType::Unknown => (None, None, "Unknown".to_string()),
                 };
+                let is_cdc = match &port_info.port_type {
+                    serialport::SerialPortType::UsbPort(_) => detect_is_cdc(&port_info.port_name),
+                    _ => None,
+                };
                 // Resolve VID:PID → pretty (vendor, product) via the bundled
                 // `usb-ids` snapshot + any online overlay the daemon has
                 // installed. When both are present, the resolver-derived
@@ -275,13 +287,17 @@ impl DeviceManager {
                     pid,
                     vendor_name,
                     product_name,
+                    is_cdc,
                     serial_number,
                 }
             })
             .collect();
 
         self.refresh_from_discovered(discovered);
-        *self.last_refresh_at.lock().unwrap_or_else(|e| e.into_inner()) = Some(Instant::now());
+        *self
+            .last_refresh_at
+            .lock()
+            .unwrap_or_else(|e| e.into_inner()) = Some(Instant::now());
     }
 
     fn refresh_from_discovered(&self, discovered: Vec<DiscoveredDevice>) {
@@ -324,13 +340,17 @@ impl DeviceManager {
                             state.pid = device.pid;
                             state.vendor_name = device.vendor_name;
                             state.product_name = device.product_name;
+                            state.is_cdc = device.is_cdc;
                             state.serial_number = device.serial_number;
                             if let Some(previous_port) = state.previous_port.clone() {
-                                self.recent_port_moves.lock().unwrap_or_else(|e| e.into_inner()).push(DevicePortMove {
-                                    previous_port,
-                                    port: key.clone(),
-                                    serial_number,
-                                });
+                                self.recent_port_moves
+                                    .lock()
+                                    .unwrap_or_else(|e| e.into_inner())
+                                    .push(DevicePortMove {
+                                        previous_port,
+                                        port: key.clone(),
+                                        serial_number,
+                                    });
                             }
                             devices.insert(key, state);
                             continue;
@@ -347,6 +367,7 @@ impl DeviceManager {
                 pid: device.pid,
                 vendor_name: device.vendor_name.clone(),
                 product_name: device.product_name.clone(),
+                is_cdc: device.is_cdc,
                 serial_number: device.serial_number.clone(),
                 previous_port: None,
                 exclusive_lease: None,
@@ -365,6 +386,7 @@ impl DeviceManager {
             entry.pid = device.pid;
             entry.vendor_name = device.vendor_name;
             entry.product_name = device.product_name;
+            entry.is_cdc = device.is_cdc;
             entry.serial_number = device.serial_number;
         }
 
@@ -386,17 +408,27 @@ impl DeviceManager {
 
     /// Get all devices.
     pub fn get_all_devices(&self) -> HashMap<String, DeviceState> {
-        self.devices.lock().unwrap_or_else(|e| e.into_inner()).clone()
+        self.devices
+            .lock()
+            .unwrap_or_else(|e| e.into_inner())
+            .clone()
     }
 
     pub fn take_recent_port_moves(&self) -> Vec<DevicePortMove> {
-        let mut moves = self.recent_port_moves.lock().unwrap_or_else(|e| e.into_inner());
+        let mut moves = self
+            .recent_port_moves
+            .lock()
+            .unwrap_or_else(|e| e.into_inner());
         std::mem::take(&mut *moves)
     }
 
     /// Get status for a specific device (by port name).
     pub fn get_device_status(&self, port: &str) -> Option<DeviceState> {
-        self.devices.lock().unwrap_or_else(|e| e.into_inner()).get(port).cloned()
+        self.devices
+            .lock()
+            .unwrap_or_else(|e| e.into_inner())
+            .get(port)
+            .cloned()
     }
 
     /// Acquire an exclusive lease on a device.
@@ -670,6 +702,7 @@ impl DeviceManager {
                 pid: Some(0x5678),
                 vendor_name: Some("Test Vendor".to_string()),
                 product_name: Some("Test Device".to_string()),
+                is_cdc: None,
                 serial_number: Some("TEST-SERIAL".to_string()),
                 previous_port: None,
                 exclusive_lease: None,
@@ -680,6 +713,13 @@ impl DeviceManager {
                 last_disconnect_at: None,
             },
         );
+    }
+}
+
+fn detect_is_cdc(port_name: &str) -> Option<bool> {
+    match fbuild_serial::port_class::detect_port_kernel_class(port_name)? {
+        fbuild_serial::port_class::PortKernelClass::CdcAcm => Some(true),
+        fbuild_serial::port_class::PortKernelClass::UsbSerialBridge => Some(false),
     }
 }
 

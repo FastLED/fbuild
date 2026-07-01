@@ -270,10 +270,7 @@ fn run_daemon_running_process(json: bool) -> fbuild_core::Result<()> {
     output::result(format!("    - temp:     {}", cache_roots.temp.display()));
     output::result(format!("    - log:      {}", cache_roots.log.display()));
     output::result(format!("    - lock:     {}", cache_roots.lock.display()));
-    output::result(format!(
-        "    - runtime:  {}",
-        cache_roots.runtime.display()
-    ));
+    output::result(format!("    - runtime:  {}", cache_roots.runtime.display()));
     output::result(format!("    - config:   {}", cache_roots.config.display()));
     Ok(())
 }

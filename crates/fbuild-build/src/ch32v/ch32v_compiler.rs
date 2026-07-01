@@ -6,6 +6,7 @@
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::{BuildProfile, Result};
 
 use super::mcu_config::Ch32vMcuConfig;
@@ -101,13 +102,9 @@ impl Ch32vCompiler {
         let Some(root) = self.framework_root.as_ref() else {
             return false;
         };
-        match (
-            std::fs::canonicalize(source).ok(),
-            std::fs::canonicalize(root).ok(),
-        ) {
-            (Some(s), Some(r)) => s.starts_with(&r),
-            _ => source.starts_with(root),
-        }
+        let source = NormalizedPath::new(source).into_path_buf();
+        let root = NormalizedPath::new(root).into_path_buf();
+        source.starts_with(&root)
     }
 }
 

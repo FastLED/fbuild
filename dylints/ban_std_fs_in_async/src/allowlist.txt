@@ -13,3 +13,10 @@
 # axum workers — the opposite of what this lint exists to encourage.
 crates/fbuild-daemon/src/handlers/operations/common.rs
 crates/fbuild-daemon/src/handlers/emulator/avr8js_npm.rs
+
+# Synchronous daemon lifecycle helpers. The broker backend is hosted on a
+# dedicated std::thread, not a tokio worker. StatusManager intentionally writes
+# synchronously via write_atomic_sync so daemon status updates are safe from
+# current-thread test runtimes (FastLED/fbuild#865).
+crates/fbuild-daemon/src/broker/backend.rs
+crates/fbuild-daemon/src/status_manager.rs

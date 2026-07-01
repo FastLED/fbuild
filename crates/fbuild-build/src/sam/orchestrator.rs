@@ -373,9 +373,7 @@ async fn install_samd_core(
     override_: Option<fbuild_config::PackageOverride>,
 ) -> Result<(PathBuf, PathBuf, PathBuf, PathBuf, Vec<PathBuf>)> {
     let framework = match override_ {
-        Some(o) => {
-            fbuild_packages::library::SamdCores::with_override(&params.project_dir, o)
-        }
+        Some(o) => fbuild_packages::library::SamdCores::with_override(&params.project_dir, o),
         None => fbuild_packages::library::SamdCores::new(&params.project_dir),
     };
     let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;

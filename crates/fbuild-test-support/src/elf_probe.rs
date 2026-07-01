@@ -387,7 +387,8 @@ mod tests {
 
     #[test]
     fn open_returns_io_error_for_missing_file() {
-        let path = std::env::temp_dir().join("fbuild-elfprobe-no-such-file-xyz123.elf");
+        let path = fbuild_paths::temp_subdir("fbuild-test-support-elf-probe")
+            .join("fbuild-elfprobe-no-such-file-xyz123.elf");
         // Ensure it really doesn't exist.
         let _ = std::fs::remove_file(&path);
         match ElfProbe::open(&path) {

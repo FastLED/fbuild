@@ -40,8 +40,10 @@
 //! command exit code.
 
 use serde::{Deserialize, Serialize};
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::time::{Duration, SystemTime};
+
+use fbuild_core::path::NormalizedPath;
 
 /// Where the running `fbuild` binary lives, per the schema in issue #626.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -92,9 +94,7 @@ impl InstallSource {
     fn suggestion(self, latest: &str) -> String {
         match self {
             Self::Pypi => "run: python -m pip install --upgrade fbuild".to_string(),
-            Self::LocalSource => {
-                "editable install — run: git pull && pip install -e .".to_string()
-            }
+            Self::LocalSource => "editable install — run: git pull && pip install -e .".to_string(),
             Self::Vcs => {
                 "VCS install — re-run: pip install --upgrade git+https://github.com/FastLED/fbuild"
                     .to_string()
@@ -196,7 +196,11 @@ async fn try_run_passive_check(
     if let Ok(cached) = read_cache(&cache_path) {
         if cached.is_fresh(now) && cached.current_version == current_version {
             if cached.stale {
-                emit_warning(current_version, &cached.latest_version, cached.install_source);
+                emit_warning(
+                    current_version,
+                    &cached.latest_version,
+                    cached.install_source,
+                );
             }
             return Ok(());
         }
@@ -247,7 +251,9 @@ fn suppress_from_env() -> bool {
 /// case-fold of `false` are treated as falsy — matches the convention
 /// PowerShell / GitHub Actions / bash all seem to converge on.
 fn is_truthy_env(key: &str) -> bool {
-    let Ok(v) = std::env::var(key) else { return false };
+    let Ok(v) = std::env::var(key) else {
+        return false;
+    };
     let trimmed = v.trim();
     if trimmed.is_empty() || trimmed == "0" || trimmed.eq_ignore_ascii_case("false") {
         return false;
@@ -258,9 +264,15 @@ fn is_truthy_env(key: &str) -> bool {
 fn is_ci_env() -> bool {
     // Common CI markers. `CI=true` is universal per
     // https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables.
-    ["CI", "GITHUB_ACTIONS", "GITLAB_CI", "CIRCLECI", "JENKINS_URL"]
-        .iter()
-        .any(|k| is_truthy_env(k))
+    [
+        "CI",
+        "GITHUB_ACTIONS",
+        "GITLAB_CI",
+        "CIRCLECI",
+        "JENKINS_URL",
+    ]
+    .iter()
+    .any(|k| is_truthy_env(k))
 }
 
 /// Classify the running binary's install source. Never panics; returns
@@ -325,7 +337,9 @@ fn probe_dist_info(dir: &Path) -> Option<InstallSource> {
         };
         for entry in entries.flatten() {
             let name = entry.file_name();
-            let Some(name_str) = name.to_str() else { continue };
+            let Some(name_str) = name.to_str() else {
+                continue;
+            };
             if !name_str.starts_with("fbuild-") || !name_str.ends_with(".dist-info") {
                 continue;
             }
@@ -353,7 +367,11 @@ fn classify_direct_url(path: &Path) -> InstallSource {
         return InstallSource::Vcs;
     }
     if let Some(dir_info) = v.get("dir_info") {
-        if dir_info.get("editable").and_then(|e| e.as_bool()).unwrap_or(false) {
+        if dir_info
+            .get("editable")
+            .and_then(|e| e.as_bool())
+            .unwrap_or(false)
+        {
             return InstallSource::LocalSource;
         }
     }
@@ -372,7 +390,9 @@ fn classify_direct_url(path: &Path) -> InstallSource {
 async fn fetch_latest_for_source(
     source: InstallSource,
 ) -> Result<(String, String), UpdateCheckError> {
-    if source.is_stable_pypi_source() || matches!(source, InstallSource::LocalSource | InstallSource::Vcs) {
+    if source.is_stable_pypi_source()
+        || matches!(source, InstallSource::LocalSource | InstallSource::Vcs)
+    {
         // Editable / VCS installs still get the PyPI version as the target
         // (the user's env has fbuild-the-package; the "latest published" is
         // the meaningful comparison).
@@ -446,7 +466,9 @@ where
 {
     let mut best: Option<semver::Version> = None;
     for s in iter {
-        let Ok(v) = semver::Version::parse(s) else { continue };
+        let Ok(v) = semver::Version::parse(s) else {
+            continue;
+        };
         if !v.pre.is_empty() {
             continue;
         }
@@ -482,13 +504,13 @@ fn is_newer(latest: &str, current: &str) -> Result<bool, UpdateCheckError> {
 // Cache I/O
 // --------------------------------------------------------------------------
 
-fn cache_file_path() -> PathBuf {
-    fbuild_paths::get_cache_root().join(CACHE_FILENAME)
+fn cache_file_path() -> NormalizedPath {
+    NormalizedPath::new(fbuild_paths::get_cache_root().join(CACHE_FILENAME))
 }
 
 fn read_cache(path: &Path) -> Result<CachedCheck, UpdateCheckError> {
-    let raw = std::fs::read_to_string(path)
-        .map_err(|e| UpdateCheckError::Cache(format!("read: {e}")))?;
+    let raw =
+        std::fs::read_to_string(path).map_err(|e| UpdateCheckError::Cache(format!("read: {e}")))?;
     serde_json::from_str(&raw).map_err(|e| UpdateCheckError::Cache(format!("parse: {e}")))
 }
 
@@ -545,8 +567,14 @@ mod tests {
 
     #[test]
     fn install_source_env_parsing() {
-        assert_eq!(InstallSource::from_env_str("pypi"), Some(InstallSource::Pypi));
-        assert_eq!(InstallSource::from_env_str("PIP"), Some(InstallSource::Pypi));
+        assert_eq!(
+            InstallSource::from_env_str("pypi"),
+            Some(InstallSource::Pypi)
+        );
+        assert_eq!(
+            InstallSource::from_env_str("PIP"),
+            Some(InstallSource::Pypi)
+        );
         assert_eq!(
             InstallSource::from_env_str(" local "),
             Some(InstallSource::LocalSource)
@@ -589,7 +617,13 @@ mod tests {
 
     #[test]
     fn pypi_pick_latest_stable_skips_prereleases() {
-        let versions = ["2.3.14", "2.3.15", "2.4.0-rc.1", "2.4.0-alpha.1", "2.3.15.dev0"];
+        let versions = [
+            "2.3.14",
+            "2.3.15",
+            "2.4.0-rc.1",
+            "2.4.0-alpha.1",
+            "2.3.15.dev0",
+        ];
         assert_eq!(
             pick_latest_stable_from_strings(versions.iter().copied()),
             Some("2.3.15".to_string())
@@ -599,7 +633,10 @@ mod tests {
     #[test]
     fn pypi_pick_latest_stable_all_prereleases_returns_none() {
         let versions = ["2.4.0-rc.1", "2.4.0-alpha.1"];
-        assert_eq!(pick_latest_stable_from_strings(versions.iter().copied()), None);
+        assert_eq!(
+            pick_latest_stable_from_strings(versions.iter().copied()),
+            None
+        );
     }
 
     #[test]
@@ -739,9 +776,17 @@ mod tests {
         // Snapshot + clear ALL CI markers we recognize, not just CI —
         // otherwise GitHub Actions' own GITHUB_ACTIONS=true poisons the
         // `assert!(!is_ci_env())` checks below.
-        const CI_KEYS: &[&str] = &["CI", "GITHUB_ACTIONS", "GITLAB_CI", "CIRCLECI", "JENKINS_URL"];
-        let saved: Vec<(&str, Option<String>)> =
-            CI_KEYS.iter().map(|k| (*k, std::env::var(*k).ok())).collect();
+        const CI_KEYS: &[&str] = &[
+            "CI",
+            "GITHUB_ACTIONS",
+            "GITLAB_CI",
+            "CIRCLECI",
+            "JENKINS_URL",
+        ];
+        let saved: Vec<(&str, Option<String>)> = CI_KEYS
+            .iter()
+            .map(|k| (*k, std::env::var(*k).ok()))
+            .collect();
         // SAFETY: single-threaded test process.
         for k in CI_KEYS {
             std::env::remove_var(k);

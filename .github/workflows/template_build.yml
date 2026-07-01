@@ -24,6 +24,11 @@ env:
   CARGO_TERM_COLOR: always
   RUSTFLAGS: "-D warnings"
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+  # setup-soldr's default 5 GiB target free-space guard is too conservative
+  # for hosted per-board Linux builds after the runner image and caches load.
+  # A 2 GiB hard stop still catches genuinely exhausted runners without
+  # failing healthy jobs before the board build starts.
+  SOLDR_TARGET_BLOCK_FREE_GB: "2"
 
 jobs:
   build:

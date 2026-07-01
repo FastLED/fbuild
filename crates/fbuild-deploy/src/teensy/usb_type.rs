@@ -110,6 +110,10 @@ mod tests {
     use super::*;
     use tempfile::TempDir;
 
+    fn tempdir() -> TempDir {
+        TempDir::new_in(fbuild_paths::temp_subdir("fbuild-deploy-usb-type-tests")).unwrap()
+    }
+
     #[test]
     fn classify_known_serial_variants() {
         assert_eq!(
@@ -164,7 +168,7 @@ mod tests {
 
     #[test]
     fn read_usb_type_finds_sibling_file() {
-        let dir = TempDir::new().unwrap();
+        let dir = tempdir();
         let fw = dir.path().join("firmware.hex");
         fs::write(&fw, b":00000001FF").unwrap();
         fs::write(dir.path().join("firmware.usb_type"), b"USB_MIDI_SERIAL\n").unwrap();
@@ -173,7 +177,7 @@ mod tests {
 
     #[test]
     fn read_usb_type_falls_back_to_usb_type_txt() {
-        let dir = TempDir::new().unwrap();
+        let dir = tempdir();
         let fw = dir.path().join("firmware.hex");
         fs::write(&fw, b":00000001FF").unwrap();
         fs::write(dir.path().join("usb_type.txt"), b"USB_SERIAL").unwrap();
@@ -182,7 +186,7 @@ mod tests {
 
     #[test]
     fn read_usb_type_returns_none_when_absent() {
-        let dir = TempDir::new().unwrap();
+        let dir = tempdir();
         let fw = dir.path().join("firmware.hex");
         fs::write(&fw, b":00000001FF").unwrap();
         assert!(read_usb_type_near(&fw).is_none());

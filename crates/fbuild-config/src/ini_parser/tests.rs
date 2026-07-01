@@ -8,7 +8,8 @@ use std::path::Path;
 use tempfile::NamedTempFile;
 
 fn write_ini(content: &str) -> NamedTempFile {
-    let mut f = NamedTempFile::new().unwrap();
+    let mut f =
+        NamedTempFile::new_in(fbuild_paths::temp_subdir("fbuild-config-ini-parser-tests")).unwrap();
     f.write_all(content.as_bytes()).unwrap();
     f.flush().unwrap();
     f

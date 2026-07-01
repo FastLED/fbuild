@@ -50,30 +50,31 @@ pub fn normalize_ci_sketches(entries: &[String]) -> Vec<String> {
 
 /// Build the `PLATFORMIO_*` env overlay for `fbuild ci` from `--lib` and
 /// `--project-conf`. Returns an empty map when neither flag was set.
-pub fn build_ci_pio_env(
+pub async fn build_ci_pio_env(
     libs: &[String],
     project_conf: Option<&str>,
 ) -> std::collections::HashMap<String, String> {
     let mut env = std::collections::HashMap::new();
     if !libs.is_empty() {
-        let libs: Vec<String> = libs
-            .iter()
-            .map(|lib| {
-                std::fs::canonicalize(lib)
-                    .ok()
-                    .map(|p| p.to_string_lossy().to_string())
-                    .unwrap_or_else(|| lib.clone())
-            })
-            .collect();
+        let mut canonical_libs = Vec::with_capacity(libs.len());
+        for lib in libs {
+            let value = fbuild_core::path::canonicalize_existing(lib)
+                .await
+                .ok()
+                .map(|p| p.as_path().to_string_lossy().to_string())
+                .unwrap_or_else(|| lib.clone());
+            canonical_libs.push(value);
+        }
         env.insert(
             "PLATFORMIO_LIB_EXTRA_DIRS".to_string(),
-            libs.join(ci_lib_extra_dirs_sep()),
+            canonical_libs.join(ci_lib_extra_dirs_sep()),
         );
     }
     if let Some(conf) = project_conf {
-        let canonical = std::fs::canonicalize(conf)
+        let canonical = fbuild_core::path::canonicalize_existing(conf)
+            .await
             .ok()
-            .map(|p| p.to_string_lossy().to_string())
+            .map(|p| p.as_path().to_string_lossy().to_string())
             .unwrap_or_else(|| conf.to_string());
         env.insert("PLATFORMIO_PROJECT_CONFIG".to_string(), canonical);
     }

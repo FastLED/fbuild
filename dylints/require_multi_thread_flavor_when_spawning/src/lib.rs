@@ -12,7 +12,7 @@ use rustc_hir::{
     def::Res,
     def_id::LocalDefId,
     intravisit::{walk_expr, Visitor},
-    Attribute, BodyId, Expr, ExprKind, FnDecl,
+    Attribute, Body, Expr, ExprKind, FnDecl,
 };
 use rustc_lint::{LateContext, LateLintPass, LintContext};
 use rustc_middle::hir::nested_filter;
@@ -76,7 +76,7 @@ impl<'tcx> LateLintPass<'tcx> for RequireMultiThreadFlavorWhenSpawning {
         cx: &LateContext<'tcx>,
         kind: rustc_hir::intravisit::FnKind<'tcx>,
         _decl: &'tcx FnDecl<'tcx>,
-        body_id: BodyId,
+        body: &'tcx Body<'tcx>,
         span: Span,
         def_id: LocalDefId,
     ) {
@@ -104,7 +104,6 @@ impl<'tcx> LateLintPass<'tcx> for RequireMultiThreadFlavorWhenSpawning {
         }
 
         // Walk the body looking for `tokio::spawn(...)` calls.
-        let body = cx.tcx.hir_body(body_id);
         let mut visitor = SpawnFinder {
             cx,
             found_at: None,
@@ -135,18 +134,15 @@ fn is_async_fn(kind: &rustc_hir::intravisit::FnKind<'_>) -> bool {
 /// `#[::tokio::test]`, and `#[tokio::test(...)]`.
 fn find_tokio_test_attr(attrs: &[Attribute]) -> Option<&Attribute> {
     for attr in attrs {
-        let meta = attr.meta()?;
-        let path = meta.path();
-        let segments: Vec<&str> = path
-            .segments
-            .iter()
-            .map(|s| s.ident.as_str())
-            .collect::<Vec<_>>();
-        let last = segments.last().copied().unwrap_or("");
-        if last != "test" {
+        let path = attr.path();
+        if !path
+            .last()
+            .map(|symbol| symbol.as_str() == "test")
+            .unwrap_or(false)
+        {
             continue;
         }
-        if segments.iter().any(|s| *s == "tokio") {
+        if path.iter().any(|symbol| symbol.as_str() == "tokio") {
             return Some(attr);
         }
     }
@@ -154,10 +150,7 @@ fn find_tokio_test_attr(attrs: &[Attribute]) -> Option<&Attribute> {
 }
 
 fn attr_has_multi_thread_flavor(attr: &Attribute) -> bool {
-    let Some(meta) = attr.meta() else {
-        return false;
-    };
-    let Some(list) = meta.meta_item_list() else {
+    let Some(list) = attr.meta_item_list() else {
         return false;
     };
     for nested in list {

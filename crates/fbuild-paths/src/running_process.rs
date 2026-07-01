@@ -239,21 +239,30 @@ fn platform_service_definition_dir() -> PathBuf {
 
 #[cfg(target_os = "macos")]
 fn platform_service_definition_dir() -> PathBuf {
-    std::env::var_os("HOME")
-        .map(PathBuf::from)
-        .unwrap_or_else(std::env::temp_dir)
-        .join("Library")
-        .join("Application Support")
-        .join("running-process")
-        .join("services")
+    if let Some(home) = std::env::var_os("HOME") {
+        return PathBuf::from(home)
+            .join("Library")
+            .join("Application Support")
+            .join("running-process")
+            .join("services");
+    }
+    fbuild_owned_service_definition_dir()
 }
 
 #[cfg(all(unix, not(target_os = "macos")))]
 fn platform_service_definition_dir() -> PathBuf {
-    std::env::var_os("XDG_CONFIG_HOME")
+    if let Some(config_home) = std::env::var_os("XDG_CONFIG_HOME")
         .map(PathBuf::from)
         .or_else(|| std::env::var_os("HOME").map(|home| PathBuf::from(home).join(".config")))
-        .unwrap_or_else(std::env::temp_dir)
+    {
+        return config_home.join("running-process").join("services");
+    }
+    fbuild_owned_service_definition_dir()
+}
+
+#[cfg(any(target_os = "macos", all(unix, not(target_os = "macos"))))]
+fn fbuild_owned_service_definition_dir() -> PathBuf {
+    crate::get_cache_root()
         .join("running-process")
         .join("services")
 }
@@ -310,6 +319,24 @@ mod tests {
         );
     }
 
+    #[cfg(all(unix, not(target_os = "macos")))]
+    #[test]
+    fn service_definition_dir_falls_back_to_fbuild_cache_root_without_home() {
+        let _env = ENV_LOCK.lock().unwrap();
+        let cache_root = crate::temp_subdir(&format!(
+            "fbuild-service-def-cache-root-{}",
+            std::process::id()
+        ));
+        let _cache_guard = EnvVarGuard::set(FBUILD_CACHE_DIR_ENV, &cache_root);
+        let _xdg_guard = EnvVarGuard::remove("XDG_CONFIG_HOME");
+        let _home_guard = EnvVarGuard::remove("HOME");
+
+        assert_eq!(
+            platform_service_definition_dir(),
+            cache_root.join("running-process").join("services")
+        );
+    }
+
     #[test]
     fn broker_requested_mode_is_still_direct_fallback_for_this_slice() {
         let mode = RunningProcessDaemonMode::BrokerRequested;
@@ -341,8 +368,7 @@ mod tests {
     #[test]
     fn cache_roots_respect_fbuild_cache_dir_as_artifact_owner() {
         let _env = ENV_LOCK.lock().unwrap();
-        let cache_root =
-            std::env::temp_dir().join(format!("fbuild-cache-roots-{}", std::process::id()));
+        let cache_root = crate::temp_subdir(&format!("fbuild-cache-roots-{}", std::process::id()));
         let _cache_guard = EnvVarGuard::set(FBUILD_CACHE_DIR_ENV, &cache_root);
         let runtime = PathBuf::from("/opt/fbuild/bin");
 
@@ -361,7 +387,7 @@ mod tests {
     fn cache_roots_keep_artifacts_stable_across_runtime_dirs() {
         let _env = ENV_LOCK.lock().unwrap();
         let cache_root =
-            std::env::temp_dir().join(format!("fbuild-cache-roots-stable-{}", std::process::id()));
+            crate::temp_subdir(&format!("fbuild-cache-roots-stable-{}", std::process::id()));
         let _cache_guard = EnvVarGuard::set(FBUILD_CACHE_DIR_ENV, &cache_root);
         let runtime_v1 = PathBuf::from("/opt/fbuild-1/bin");
         let runtime_v2 = PathBuf::from("/opt/fbuild-2/bin");

@@ -16,6 +16,7 @@ tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
 tokio = { workspace = true }
 fbuild-config = { path = "../fbuild-config" }
+fbuild-core = { path = "../fbuild-core" }
 fbuild-packages = { path = "../fbuild-packages" }
 fbuild-paths = { path = "../fbuild-paths" }
 fbuild-header-scan = { path = "../fbuild-header-scan" }

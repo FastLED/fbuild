@@ -391,13 +391,13 @@ mod tests {
 
     #[test]
     fn find_firmware_returns_none_for_missing_dir() {
-        let tmp = std::env::temp_dir().join("fbuild_test_find_fw_none");
+        let tmp = temp_subdir("fbuild_test_find_fw_none");
         assert!(find_firmware(&tmp, "esp32dev", None).is_none());
     }
 
     #[test]
     fn find_firmware_finds_bin_in_release_profile() {
-        let tmp = std::env::temp_dir().join("fbuild_test_find_fw_bin");
+        let tmp = temp_subdir("fbuild_test_find_fw_bin");
         let fw_dir = tmp
             .join(".fbuild")
             .join("build")
@@ -419,7 +419,7 @@ mod tests {
 
     #[test]
     fn find_firmware_prefers_release_over_quick() {
-        let tmp = std::env::temp_dir().join("fbuild_test_find_fw_pref");
+        let tmp = temp_subdir("fbuild_test_find_fw_pref");
         let release_dir = tmp
             .join(".fbuild")
             .join("build")
@@ -440,7 +440,7 @@ mod tests {
 
     #[test]
     fn find_firmware_specific_name() {
-        let tmp = std::env::temp_dir().join("fbuild_test_find_fw_specific");
+        let tmp = temp_subdir("fbuild_test_find_fw_specific");
         let fw_dir = tmp
             .join(".fbuild")
             .join("build")
@@ -464,7 +464,7 @@ mod tests {
     /// firmware in that collapsed layout. See FastLED/fbuild#432.
     #[test]
     fn find_firmware_in_collapsed_layout_when_basename_matches_env() {
-        let tmp = std::env::temp_dir().join("fbuild_test_find_fw_collapsed");
+        let tmp = temp_subdir("fbuild_test_find_fw_collapsed");
         let _ = std::fs::remove_dir_all(&tmp);
         let project_dir = tmp.join(".build").join("pio").join("teensy40");
         // Collapsed layout: `<project_dir>/.fbuild/build/release/` —
@@ -489,7 +489,7 @@ mod tests {
 
     #[test]
     fn find_firmware_legacy_pio_build() {
-        let tmp = std::env::temp_dir().join("fbuild_test_find_fw_pio");
+        let tmp = temp_subdir("fbuild_test_find_fw_pio");
         let pio_dir = tmp.join(".pio").join("build").join("uno");
         std::fs::create_dir_all(&pio_dir).unwrap();
         std::fs::write(pio_dir.join("firmware.hex"), b"legacy").unwrap();

@@ -31,8 +31,10 @@ pub mod embedded;
 pub mod resolver;
 
 pub use data::{
-    install_online_cache, install_online_cache_proto_zstd, MANIFEST_URL, USB_VIDS_PROTO_ZSTD_URL,
-    USB_VID_JSON_URL,
+    install_online_cache, install_online_cache_proto_zstd, populate_online_cache_from_paths,
+    populate_online_cache_from_paths_and_urls, try_install_online_cache,
+    try_install_online_cache_proto_zstd, MANIFEST_URL, ONLINE_CACHE_TTL_SECS,
+    USB_VIDS_PROTO_ZSTD_URL, USB_VID_JSON_URL,
 };
 pub use embedded::vendor_name as embedded_vendor_name;
 pub use resolver::{pretty, resolve, resolve_bundled, try_resolve, UsbInfo};

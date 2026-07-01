@@ -77,6 +77,14 @@ async fn main() {
 
     tracing::info!("fbuild daemon starting on port {}", port);
 
+    // Populate the tier-2 USB VID:PID overlay so `device list/status/deploy`
+    // return full vendor + product names instead of the tier-1 vendor-only
+    // + synthetic `Device 0xPPPP` placeholder. Best-effort: the resolver
+    // silently degrades to the embedded vendor archive if the fetch or
+    // decode fails. Runs on a blocking thread so a slow network doesn't
+    // stall daemon bootstrap.
+    tokio::task::spawn_blocking(populate_usb_overlay_best_effort);
+
     // FastLED/fbuild#800 (Phase 4 stage 2 of #789): start the embedded
     // zccache service inside this tokio runtime and install the global
     // handle BEFORE any compile work begins. The wrapper-binary path is
@@ -169,12 +177,12 @@ async fn main() {
     // timeout. Cleaning up the PID file lets `fbuild daemon list` reflect
     // reality, and the bind retry below handles the kernel-state case.
     // See ISSUES.md "Issue B5a".
-    if let Some(stale_pid) = read_stale_daemon_pid() {
+    if let Some(stale_pid) = read_stale_daemon_pid().await {
         tracing::warn!(
             "found stale daemon PID file pointing at dead PID {}; cleaning up",
             stale_pid
         );
-        let _ = std::fs::remove_file(fbuild_paths::get_daemon_pid_file());
+        let _ = fbuild_core::fs::remove_file(fbuild_paths::get_daemon_pid_file()).await;
     }
 
     let listener = bind_listener_with_retry(&addr).await;
@@ -185,12 +193,12 @@ async fn main() {
     let pid_file = fbuild_paths::get_daemon_pid_file();
     let port_file = fbuild_paths::get_daemon_port_file();
     if let Some(parent) = pid_file.parent() {
-        let _ = std::fs::create_dir_all(parent);
+        let _ = fbuild_core::fs::create_dir_all(parent).await;
     }
-    if let Err(e) = std::fs::write(&pid_file, std::process::id().to_string()) {
+    if let Err(e) = fbuild_core::fs::write(&pid_file, std::process::id().to_string()).await {
         tracing::warn!("failed to write PID file: {}", e);
     }
-    if let Err(e) = std::fs::write(&port_file, port.to_string()) {
+    if let Err(e) = fbuild_core::fs::write(&port_file, port.to_string()).await {
         tracing::warn!("failed to write port file: {}", e);
     }
 
@@ -432,11 +440,34 @@ async fn main() {
         });
 
     // Clean up PID and port files
-    let _ = std::fs::remove_file(&pid_file);
-    let _ = std::fs::remove_file(&port_file);
+    let _ = fbuild_core::fs::remove_file(&pid_file).await;
+    let _ = fbuild_core::fs::remove_file(&port_file).await;
 
     tracing::info!("daemon exiting");
     std::process::exit(0);
+}
+
+/// Populate the runtime USB VID:PID overlay from the shared cache root.
+///
+/// The daemon's `/api/devices/*` handlers call `fbuild_core::usb::resolve`
+/// to render vendor/product names. Without this best-effort startup step
+/// the resolver only sees the compile-time embedded vendor archive
+/// (tier-1), so unknown PIDs render as `Device 0xPPPP`. Any I/O, network,
+/// or decode failure is swallowed — the resolver falls back to tier-1.
+///
+/// The `<cache-root>/usb/` directory is created lazily inside the shared
+/// `fbuild_core::usb::populate_online_cache_from_paths` helper (its fetch
+/// step does its own parent-dir `create_dir_all`), so we don't touch
+/// `std::fs` from the daemon crate here.
+fn populate_usb_overlay_best_effort() {
+    let dir = fbuild_paths::get_cache_root().join("usb");
+    let proto_path = dir.join("usb-vids.proto.zstd");
+    let json_path = dir.join("usb-vid.json");
+    if fbuild_core::usb::populate_online_cache_from_paths(&proto_path, &json_path) {
+        tracing::info!("usb overlay: tier-2 VID:PID map installed");
+    } else {
+        tracing::warn!("usb overlay: tier-2 unavailable; falling back to embedded vendor archive");
+    }
 }
 
 /// Read the daemon PID file. Returns `Some(pid)` only if the file exists,
@@ -447,9 +478,9 @@ async fn main() {
 /// Used at startup to clean up after a crashed previous instance so that
 /// `fbuild daemon list` reflects reality and the bind-retry loop has a
 /// chance to claim the port. See ISSUES.md "Issue B5a".
-fn read_stale_daemon_pid() -> Option<u32> {
+async fn read_stale_daemon_pid() -> Option<u32> {
     let path = fbuild_paths::get_daemon_pid_file();
-    let raw = std::fs::read_to_string(&path).ok()?;
+    let raw = fbuild_core::fs::read_to_string(&path).await.ok()?;
     let pid: u32 = raw.trim().parse().ok()?;
     if is_pid_alive(pid) {
         None

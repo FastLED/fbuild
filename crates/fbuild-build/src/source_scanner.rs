@@ -10,7 +10,7 @@
 //! (`src_filter`, `lib_ldf_mode`) as raw strings. Those patterns are not
 //! filesystem paths yet — `NormalizedPath` is the wrong type. Instead,
 //! every call site routes the pattern-level `\` → `/` rewrite through
-//! [`normalize_glob_separators`], the single auditable owner of that
+//! `normalize_glob_separators`, the single auditable owner of that
 //! transform. The workspace's `ban_manual_slash_normalize` dylint
 //! allowlists this file's definition site for exactly that reason
 //! (FastLED/fbuild#911).
@@ -415,12 +415,8 @@ impl SourceFilter {
             return true;
         }
 
-        let rel = normalize_glob_separators(
-            &path
-                .strip_prefix(root)
-                .unwrap_or(path)
-                .to_string_lossy(),
-        );
+        let rel =
+            normalize_glob_separators(&path.strip_prefix(root).unwrap_or(path).to_string_lossy());
 
         let mut included = !self.has_include_rules;
         for rule in &self.rules {

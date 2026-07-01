@@ -18,7 +18,7 @@
 
 use std::path::PathBuf;
 
-use fbuild_build::{BuildOrchestrator, BuildParams};
+use fbuild_build::{compile_backend, BuildOrchestrator, BuildParams};
 use fbuild_core::BuildProfile;
 use fbuild_test_support::{CompileDb, ElfProbe};
 
@@ -35,9 +35,18 @@ async fn under_test_timeout<F: std::future::Future>(fut: F) -> F::Output {
     }
 }
 
+async fn install_test_compile_backend() {
+    let backend = compile_backend::CompileBackend::start()
+        .await
+        .expect("compile backend starts for acceptance gate");
+    compile_backend::install_global(backend);
+}
+
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads Teensyduino + builds firmware; CI-only"]
 async fn teensylc_blink_meets_205_acceptance_criteria() {
+    install_test_compile_backend().await;
+
     let project_dir = repo_fixture("teensylc");
     let build_dir = tempfile::TempDir::new().unwrap();
 
@@ -65,11 +74,10 @@ async fn teensylc_blink_meets_205_acceptance_criteria() {
         bloat_analysis: false,
     };
 
-    let result = under_test_timeout(
-        fbuild_build::teensy::orchestrator::TeensyOrchestrator.build(&params),
-    )
-    .await
-    .expect("teensyLC build must succeed for acceptance gate");
+    let result =
+        under_test_timeout(fbuild_build::teensy::orchestrator::TeensyOrchestrator.build(&params))
+            .await
+            .expect("teensyLC build must succeed for acceptance gate");
     assert!(result.success, "build did not report success");
 
     // ── ELF probes (AC#1) ───────────────────────────────────────────────

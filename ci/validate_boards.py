@@ -84,6 +84,16 @@ FBUILD_NATIVE_BOARDS = frozenset(
     }
 )
 
+# Intentional local corrections where fbuild's checked-in board asset is more
+# specific than the current PlatformIO registry row. Keep this narrow: it is
+# only for board-local facts that are also asserted by fbuild tests.
+FBUILD_BUILD_FIELD_OVERRIDES = {
+    # FastLED/fbuild#905 split Unexpected Maker TinyS3 and FeatherS3 USB PIDs.
+    # PlatformIO 6.13.0 still reports FeatherS3 as 303A:80D0, which collides
+    # with TinyS3. The local board asset and board::tests_usb_vid pin 80D6.
+    "um_feathers3": {"pid": "0x80D6"},
+}
+
 MEGATINYCORE_EXTRA_FLAGS = (
     "-DCLOCK_SOURCE=0",
     '-DMEGATINYCORE="2.6.11"',
@@ -253,6 +263,7 @@ def validate_board(board_path: Path, pio_dir: Path) -> list[str] | None:
     pio_build = pio_board.get("build", {})
     if isinstance(pio_build, dict):
         expected_build = extract_build(pio_build)
+        expected_build.update(FBUILD_BUILD_FIELD_OVERRIDES.get(board_id, {}))
         actual_build = board.get("build", {})
         # Strip intentional fbuild-only extensions from the actual side so
         # they aren't reported as drift (see FBUILD_EXTENSION_BUILD_FIELDS).

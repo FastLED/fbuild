@@ -25,7 +25,7 @@
 #      single failure is non-fatal — the merger downstream sees only the
 #      sources that actually arrived intact;
 #   4. runs the USB-VID merger → sorted `usb-vid.json` + conflict log +
-#      per-dataset manifest fragment;
+#      per-dataset manifest fragment + compact runtime `usb-vids.proto.zstd`;
 #   5. runs the PlatformIO board merger → `pio-boards.json` (deep-union
 #      with the previously committed copy so transient field drops in
 #      `pio boards` don't lose data) + per-dataset manifest fragment;
@@ -341,6 +341,16 @@ jobs:
             --out /tmp/seeed-supplemental-usb-pids.json
           wc -l /tmp/seeed-supplemental-usb-pids.json
 
+      - name: Extract FastLED board USB PID rows (USB-VID repo-board supplement)
+        id: extract-fastled-board-pids
+        continue-on-error: true
+        run: |
+          uv run --no-project --script \
+            "${{ github.workspace }}/online-data-tools/extract_fastled_board_usb_pids.py" \
+            --boards-dir "${{ github.workspace }}/crates/fbuild-config/assets/boards/json" \
+            --out /tmp/fastled-board-usb-pids.json
+          wc -l /tmp/fastled-board-usb-pids.json
+
       - name: Dump PlatformIO board catalog → /tmp/all_boards.json
         id: dump-pio
         continue-on-error: true
@@ -440,6 +450,12 @@ jobs:
             # Energy Micro / Silicon Labs debug-interface row fills in.
             args+=(--json "silabs-usb-pids=/tmp/silabs-usb-pids.json")
           fi
+          if [ "${{ steps.extract-fastled-board-pids.outcome }}" = "success" ] && [ -s /tmp/fastled-board-usb-pids.json ]; then
+            # Local board JSON rows are repo-scope supplements: they fill
+            # missing product names for boards fbuild actually carries, but
+            # do not replace stronger vendor/generic USB-ID source rows.
+            args+=(--json "fastled-board-usb-pids=/tmp/fastled-board-usb-pids.json")
+          fi
           if [ "${{ steps.fetch-renesas-pids.outcome }}" = "success" ] && [ -s /tmp/renesas-usb-pids.json ]; then
             # ArduinoCore-renesas board-package rows are deliberately weak:
             # they fill missing Arduino RA board product names after generic
@@ -537,6 +553,20 @@ jobs:
             --upstream "${ONLINE_WORKTREE}/data/usb-vid.json" \
             --out      "${ONLINE_WORKTREE}/data/usb-vendors.tar.zst"
           ls -la "${ONLINE_WORKTREE}/data/usb-vendors.tar.zst"
+
+      - name: Package usb-vids.proto.zstd (runtime USB VID:PID overlay)
+        id: package-usb-proto
+        if: steps.merge-usb.outcome == 'success'
+        # Full product-level runtime cache for fbuild CLI/device scans. This
+        # is derived after source priority has already been resolved into
+        # usb-vid.json; weak third-party rows only fill gaps left by
+        # first-party/vendor/generic sources and never override their winners.
+        run: |
+          uv run --no-project --script \
+            "${{ github.workspace }}/online-data-tools/build_usb_vid_proto.py" \
+            --upstream "${ONLINE_WORKTREE}/data/usb-vid.json" \
+            --out      "${ONLINE_WORKTREE}/data/usb-vids.proto.zstd"
+          ls -la "${ONLINE_WORKTREE}/data/usb-vids.proto.zstd"
 
       - name: Assemble manifest.json
         id: build-manifest

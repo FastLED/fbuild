@@ -201,6 +201,7 @@ mod tests {
             pid,
             vendor_name: None,
             product_name: None,
+            is_cdc: None,
             serial_number: None,
             previous_port: None,
             exclusive_lease: None,

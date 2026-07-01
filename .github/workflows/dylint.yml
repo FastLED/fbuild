@@ -71,7 +71,9 @@ jobs:
         run: |
           export PATH="${CARGO_HOME}/bin:${PATH}"
           set +e
-          for attempt in 1 2 3; do
+          lint_count="$(find dylints -mindepth 2 -maxdepth 2 -name Cargo.toml | wc -l | tr -d ' ')"
+          max_attempts=$((lint_count + 2))
+          for attempt in $(seq 1 "$max_attempts"); do
             cargo dylint --all -- --workspace --all-targets
             rc=$?
             if [ $rc -eq 0 ]; then
@@ -102,5 +104,5 @@ jobs:
             fi
             echo "Created @<toolchain> aliases; retrying cargo dylint (attempt $((attempt+1)))..."
           done
-          echo "::error::cargo dylint did not succeed after 3 attempts"
+          echo "::error::cargo dylint did not succeed after ${max_attempts} attempts"
           exit 1

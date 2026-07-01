@@ -70,6 +70,9 @@ impl<'tcx> LateLintPass<'tcx> for BanUnrootedTempdir {
         if is_allowlisted(cx, expr.span) {
             return;
         }
+        if is_unit_test_module_scope(cx, expr.hir_id) {
+            return;
+        }
 
         if let ExprKind::Path(qpath) = expr.kind {
             let res = cx.qpath_res(&qpath, expr.hir_id);
@@ -83,6 +86,23 @@ impl<'tcx> LateLintPass<'tcx> for BanUnrootedTempdir {
             }
         }
     }
+}
+
+fn is_unit_test_module_scope(cx: &LateContext<'_>, hir_id: rustc_hir::HirId) -> bool {
+    std::iter::once(hir_id)
+        .chain(cx.tcx.hir_parent_id_iter(hir_id))
+        .any(|id| is_test_module_node(cx, id))
+}
+
+fn is_test_module_node(cx: &LateContext<'_>, hir_id: rustc_hir::HirId) -> bool {
+    let rustc_hir::Node::Item(item) = cx.tcx.hir_node(hir_id) else {
+        return false;
+    };
+    let rustc_hir::ItemKind::Mod(ident, _) = item.kind else {
+        return false;
+    };
+    let name = ident.name.as_str();
+    name == "tests" || name.ends_with("_tests") || name.ends_with("_test")
 }
 
 fn emit_lint(cx: &LateContext<'_>, span: rustc_span::Span, banned: &[&str]) {

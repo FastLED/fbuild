@@ -11,7 +11,7 @@
 //! `fbuild-build` and don't have a handle to `DaemonContext`, so the
 //! installed backend lives in a process-wide `OnceLock` set by the
 //! daemon's `#[tokio::main]` before any compile fires. Reads
-//! ([`get`]) are lock-free.
+//! ([`get_global`]) are lock-free.
 
 use std::sync::{Arc, OnceLock};
 

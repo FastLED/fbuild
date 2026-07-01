@@ -589,17 +589,15 @@ pub fn family_from_upload_hint(hint: &UploadHint) -> Option<BoardFamily> {
             "picotool" => return Some(NativeUsbCdcReset1200Bps),
             // PJRC — teensy_loader_cli / Teensy Loader GUI. HalfKay
             // bootloader entered via 1200-bps touch.
-            "teensy-gui" | "teensy_gui" | "teensy-cli" | "teensy_cli"
-            | "teensy_loader_cli" => {
+            "teensy-gui" | "teensy_gui" | "teensy-cli" | "teensy_cli" | "teensy_loader_cli" => {
                 return Some(Teensy);
             }
             // SWD-side reset. The physical serial VCOM bridge in front
             // of the target MCU wants DTR=true/RTS=true (host-ready);
             // the reset is dispatched by the debug probe over SWD,
             // NOT DTR/RTS.
-            "cmsis-dap" | "cmsis_dap" | "jlink" | "j-link" | "stlink"
-            | "st-link" | "raspberrypi-swd" | "raspberrypi_swd"
-            | "atmel-ice" | "atmel_ice" | "openocd" => {
+            "cmsis-dap" | "cmsis_dap" | "jlink" | "j-link" | "stlink" | "st-link"
+            | "raspberrypi-swd" | "raspberrypi_swd" | "atmel-ice" | "atmel_ice" | "openocd" => {
                 return Some(CdcAcmBridge);
             }
             _ => {} // fall through to touch-flag fallback
@@ -681,9 +679,10 @@ pub fn family_for_port(name: &str) -> Option<BoardFamily> {
     let vid_pid_lookup = lookup_port_vid_pid(name);
     let kernel_class = crate::port_class::detect_port_kernel_class(name);
 
-    if let (Some((vid, pid, Some(vp_family))), Some(kc)) =
-        (vid_pid_lookup.as_ref().copied(), kernel_class.as_ref().copied())
-    {
+    if let (Some((vid, pid, Some(vp_family))), Some(kc)) = (
+        vid_pid_lookup.as_ref().copied(),
+        kernel_class.as_ref().copied(),
+    ) {
         warn_if_class_disagrees(name, vid, pid, vp_family, kc);
     }
 
@@ -919,7 +918,10 @@ mod tests {
         assert_eq!(family_for_vid_pid(0x2341, 0x0001), Some(ArduinoAutoReset));
         assert!(!vp_family_implies_cdc(ArduinoAutoReset));
         // 0x2E8A — RP2040 native CDC → CDC ✓
-        assert_eq!(family_for_vid_pid(0x2E8A, 0x000A), Some(NativeUsbCdcReset1200Bps));
+        assert_eq!(
+            family_for_vid_pid(0x2E8A, 0x000A),
+            Some(NativeUsbCdcReset1200Bps)
+        );
         assert!(vp_family_implies_cdc(NativeUsbCdcReset1200Bps));
     }
 

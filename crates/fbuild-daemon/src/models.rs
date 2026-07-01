@@ -289,6 +289,9 @@ pub struct DeviceInfo {
     /// Human-readable USB product name (same provenance as `vendor_name`).
     #[serde(skip_serializing_if = "Option::is_none")]
     pub product_name: Option<String>,
+    /// `true` for CDC-ACM, `false` for a USB-serial bridge, `null` if
+    /// the host could not classify this port.
+    pub is_cdc: Option<bool>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub serial_number: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -447,12 +450,19 @@ pub struct DeviceStatusResponse {
     pub port: String,
     pub device_id: String,
     pub description: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub vid: Option<u16>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub pid: Option<u16>,
     /// Human-readable USB vendor name (only present for USB ports).
     #[serde(skip_serializing_if = "Option::is_none")]
     pub vendor_name: Option<String>,
     /// Human-readable USB product name (only present for USB ports).
     #[serde(skip_serializing_if = "Option::is_none")]
     pub product_name: Option<String>,
+    /// `true` for CDC-ACM, `false` for a USB-serial bridge, `null` if
+    /// the host could not classify this port.
+    pub is_cdc: Option<bool>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub serial_number: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]

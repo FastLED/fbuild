@@ -3,6 +3,7 @@
 
 use std::path::{Path, PathBuf};
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::Result;
 
 use super::project_discovery::is_project_a_library;
@@ -75,17 +76,6 @@ fn library_name(path: &Path) -> String {
         .to_lowercase()
 }
 
-fn strip_windows_extended_prefix(path: PathBuf) -> PathBuf {
-    if !cfg!(windows) {
-        return path;
-    }
-    let s = path.to_string_lossy();
-    if let Some(rest) = s.strip_prefix(r"\\?\").or_else(|| s.strip_prefix("//?/")) {
-        return PathBuf::from(rest);
-    }
-    path
-}
-
 /// Resolve `lib_extra_dirs`/`PLATFORMIO_LIB_EXTRA_DIRS` entries to library roots.
 ///
 /// `pio ci --lib <path>` commonly points directly at a library root (FastLED
@@ -118,9 +108,7 @@ pub fn discover_extra_library_roots(project_dir: &Path, entries: &[String]) -> V
         }
 
         for candidate in candidates {
-            let key = std::fs::canonicalize(&candidate)
-                .map(strip_windows_extended_prefix)
-                .unwrap_or(candidate.clone());
+            let key = NormalizedPath::new(&candidate).into_path_buf();
             if seen.insert(key.clone()) {
                 roots.push(key);
             }
@@ -354,10 +342,7 @@ mod extra_library_tests {
         let roots = discover_extra_library_roots(tmp.path(), &[".".to_string()]);
 
         assert_eq!(roots.len(), 1);
-        assert_eq!(
-            roots[0],
-            strip_windows_extended_prefix(std::fs::canonicalize(tmp.path()).unwrap())
-        );
+        assert_eq!(roots[0], NormalizedPath::new(tmp.path()).into_path_buf());
     }
 
     #[test]

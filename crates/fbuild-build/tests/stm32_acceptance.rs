@@ -28,7 +28,7 @@
 
 use std::path::{Path, PathBuf};
 
-use fbuild_build::{BuildOrchestrator, BuildParams};
+use fbuild_build::{compile_backend, BuildOrchestrator, BuildParams};
 use fbuild_core::BuildProfile;
 use fbuild_test_support::{CompileDb, ElfProbe};
 
@@ -45,9 +45,18 @@ async fn under_test_timeout<F: std::future::Future>(fut: F) -> F::Output {
     }
 }
 
+async fn install_test_compile_backend() {
+    let backend = compile_backend::CompileBackend::start()
+        .await
+        .expect("compile backend starts for acceptance gate");
+    compile_backend::install_global(backend);
+}
+
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads STM32duino + builds firmware; CI-only"]
 async fn stm32f103c8_blink_with_spi_auto_discovers_library_205_ac4() {
+    install_test_compile_backend().await;
+
     // Use a temporary project dir so we can write our own SPI-using sketch
     // independent of whatever ships in the fixture.
     let tmp = tempfile::TempDir::new().unwrap();

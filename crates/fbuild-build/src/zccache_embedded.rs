@@ -27,7 +27,7 @@
 //!
 //! ## Identity defaults
 //!
-//! Constructed via [`HostIdentity::default_for_product("fbuild")`],
+//! Constructed via `HostIdentity::default_for_product("fbuild")`,
 //! which hashes the current exe path so two fbuild installs at
 //! different paths get distinct cache identities while an
 //! upgrade-in-place keeps cache continuity. See zccache#925 for the

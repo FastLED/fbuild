@@ -42,13 +42,12 @@ impl PreemptionTracker {
 
     pub async fn preempt(&self, port: &str, reason: String, preempted_by: String) {
         // No `.await` inside this critical section — `std::sync::Mutex`
-        // is the right choice. `expect` is safe: the only path that
-        // could poison the lock is a panic while holding it, and we
-        // hold it only across a single `HashMap::insert`.
+        // is the right choice. If a previous holder panicked, keep the
+        // tracker usable and recover the inner map.
         let mut ports = self
             .preempted_ports
             .lock()
-            .expect("preemption mutex poisoned");
+            .unwrap_or_else(|err| err.into_inner());
         ports.insert(
             port.to_string(),
             PreemptionInfo {
@@ -63,7 +62,7 @@ impl PreemptionTracker {
         let mut ports = self
             .preempted_ports
             .lock()
-            .expect("preemption mutex poisoned");
+            .unwrap_or_else(|err| err.into_inner());
         ports.remove(port);
     }
 
@@ -71,7 +70,7 @@ impl PreemptionTracker {
         let ports = self
             .preempted_ports
             .lock()
-            .expect("preemption mutex poisoned");
+            .unwrap_or_else(|err| err.into_inner());
         ports.contains_key(port)
     }
 }

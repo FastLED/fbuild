@@ -1,4 +1,4 @@
-﻿//! Apollo3 build orchestrator â€” wires together config, packages, compiler, linker.
+//! Apollo3 build orchestrator â€” wires together config, packages, compiler, linker.
 //!
 //! Build phases:
 //! 1. Parse platformio.ini
@@ -67,7 +67,9 @@ impl BuildOrchestrator for Apollo3Orchestrator {
                 crate::package_override::resolve_override(env, "framework-arduinoambiqapollo3")
             });
         let framework = match __ovr {
-            Some(o) => fbuild_packages::library::Apollo3Cores::with_override(&params.project_dir, o),
+            Some(o) => {
+                fbuild_packages::library::Apollo3Cores::with_override(&params.project_dir, o)
+            }
             None => fbuild_packages::library::Apollo3Cores::new(&params.project_dir),
         };
         let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
