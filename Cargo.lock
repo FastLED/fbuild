@@ -1218,6 +1218,7 @@ name = "fbuild-config"
 version = "2.3.16"
 dependencies = [
  "fbuild-core",
+ "fbuild-paths",
  "include_dir",
  "regex",
  "serde",
@@ -1316,6 +1317,7 @@ name = "fbuild-header-scan"
 version = "2.3.16"
 dependencies = [
  "criterion",
+ "fbuild-paths",
  "rayon",
  "tempfile",
  "tracing",
@@ -1330,6 +1332,7 @@ dependencies = [
  "criterion",
  "fbuild-header-scan",
  "fbuild-packages",
+ "fbuild-paths",
  "fbuild-test-support",
  "prost",
  "serde",
@@ -1425,6 +1428,7 @@ name = "fbuild-test-support"
 version = "2.3.16"
 dependencies = [
  "fbuild-config",
+ "fbuild-core",
  "fbuild-header-scan",
  "fbuild-library-select",
  "fbuild-packages",
