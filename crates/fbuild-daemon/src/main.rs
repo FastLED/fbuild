@@ -454,17 +454,13 @@ async fn main() {
 /// the resolver only sees the compile-time embedded vendor archive
 /// (tier-1), so unknown PIDs render as `Device 0xPPPP`. Any I/O, network,
 /// or decode failure is swallowed — the resolver falls back to tier-1.
+///
+/// The `<cache-root>/usb/` directory is created lazily inside the shared
+/// `fbuild_core::usb::populate_online_cache_from_paths` helper (its fetch
+/// step does its own parent-dir `create_dir_all`), so we don't touch
+/// `std::fs` from the daemon crate here.
 fn populate_usb_overlay_best_effort() {
-    let root = fbuild_paths::get_cache_root();
-    let dir = root.join("usb");
-    if let Err(e) = std::fs::create_dir_all(&dir) {
-        tracing::debug!(
-            path = %dir.display(),
-            error = %e,
-            "usb overlay: cache dir create failed; skipping tier-2 population"
-        );
-        return;
-    }
+    let dir = fbuild_paths::get_cache_root().join("usb");
     let proto_path = dir.join("usb-vids.proto.zstd");
     let json_path = dir.join("usb-vid.json");
     if fbuild_core::usb::populate_online_cache_from_paths(&proto_path, &json_path) {
