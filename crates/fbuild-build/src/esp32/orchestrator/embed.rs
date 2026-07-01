@@ -60,7 +60,9 @@ pub(super) async fn process_embed_files(
             binary_arch.to_string(),
             "--rename-section".to_string(),
             ".data=.rodata.embedded".to_string(),
-            file.replace('\\', "/"),
+            // FastLED/fbuild#911 — path-shape slash normalization goes
+            // through `NormalizedPath::display_slash()`.
+            fbuild_core::path::NormalizedPath::from(file.as_str()).display_slash(),
             obj_path.to_string_lossy().to_string(),
         ];
 
@@ -126,7 +128,9 @@ pub(super) async fn process_embed_files(
             binary_arch.to_string(),
             "--rename-section".to_string(),
             ".data=.rodata.embedded".to_string(),
-            file.replace('\\', "/"),
+            // FastLED/fbuild#911 — path-shape slash normalization goes
+            // through `NormalizedPath::display_slash()`.
+            fbuild_core::path::NormalizedPath::from(file.as_str()).display_slash(),
             obj_path.to_string_lossy().to_string(),
         ];
 

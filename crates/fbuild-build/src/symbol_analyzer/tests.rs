@@ -67,7 +67,9 @@ fn discover_elf_picks_build_info_first() {
         &bi,
         format!(
             r#"{{ "x": {{ "prog_path": "{}" }} }}"#,
-            elf_path.to_string_lossy().replace('\\', "/")
+            // FastLED/fbuild#911 — path-shape slash normalization goes
+            // through `NormalizedPath::display_slash()`.
+            fbuild_core::path::NormalizedPath::from(elf_path.as_path()).display_slash()
         ),
     )
     .unwrap();

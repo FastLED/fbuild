@@ -3,6 +3,7 @@
 //! Defines the `Compiler` trait and `CompilerBase` shared logic for
 //! building compiler flags, invoking gcc/g++, and detecting rebuilds.
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::Result;
 use serde::Deserialize;
 use sha2::{Digest, Sha256};
@@ -401,15 +402,19 @@ fn normalize_signature_path(path: &Path) -> String {
 }
 
 fn normalize_signature_components(path: &Path) -> Vec<String> {
+    // FastLED/fbuild#911 — every per-component slash rewrite delegates
+    // to `NormalizedPath::display_slash()`, which owns the Windows
+    // `\` → `/` transform (and the UNC prefix strip) for the workspace.
+    // Same hand-rolled anti-pattern the compile pipeline used to have.
     path.components()
         .filter_map(|component| match component {
             Component::Prefix(prefix) => {
-                Some(prefix.as_os_str().to_string_lossy().replace('\\', "/"))
+                Some(NormalizedPath::new(prefix.as_os_str()).display_slash())
             }
             Component::RootDir => None,
             Component::CurDir => None,
             Component::ParentDir => Some("..".to_string()),
-            Component::Normal(value) => Some(value.to_string_lossy().replace('\\', "/")),
+            Component::Normal(value) => Some(NormalizedPath::new(value).display_slash()),
         })
         .collect()
 }
@@ -657,26 +662,19 @@ pub async fn compile_source(
             crate::zccache::path_arg_for_compile_cwd(output, cwd),
         )
     } else {
-        // FastLED/fbuild#875 follow-up (again): on the no-compile-CWD
-        // fallback path (typical for PIO builds under `.build/pio/…`
-        // where there is no `.fbuild` component upstream), the source
-        // and output paths still need Windows backslashes rewritten to
-        // forward slashes. Otherwise GCC's internal spec-file pass
-        // treats `\` as an escape and strips it: `src\main.cpp` reaches
-        // cc1plus as `srcmain.cpp` → "fatal error: srcmain.cpp: No such
-        // file or directory". The compile-CWD arm above already
-        // handles this via `path_arg_for_compile_cwd`; mirror the same
-        // guard here so both fallback shapes agree.
-        let source_str = source.to_string_lossy().to_string();
-        let output_str = output.to_string_lossy().to_string();
-        if cfg!(windows) {
-            (
-                source_str.replace('\\', "/"),
-                output_str.replace('\\', "/"),
-            )
-        } else {
-            (source_str, output_str)
-        }
+        // No-compile-CWD fallback path (typical for PIO builds under
+        // `.build/pio/…` where there is no `.fbuild` component upstream).
+        // No cwd-relativization to do here, but path args still need the
+        // Windows `\` → `/` rewrite so GCC's spec-file pass doesn't
+        // interpret `\` as an escape. Route through the single primitive
+        // that owns the rewrite — `NormalizedPath::display_slash()` —
+        // so both arms of this if/else use the same code path
+        // (FastLED/fbuild#911 structural fix; supersedes the
+        // hand-rolled `.replace('\\', "/")` guards added by #890/#912).
+        (
+            NormalizedPath::from(source).display_slash(),
+            NormalizedPath::from(output).display_slash(),
+        )
     };
 
     let mut all_flags: Vec<String> = Vec::new();

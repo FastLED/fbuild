@@ -1,0 +1,10 @@
+error: use fbuild_core::path::NormalizedPath::display_slash() instead of hand-rolled '.replace('\\', "/")' backslash-to-slash rewrite
+ --> $DIR/disallowed.rs:5:16
+  |
+5 |     let _arg = path.to_string_lossy().replace('\\', "/");
+  |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[deny(ban_manual_slash_normalize)]` on by default
+
+error: aborting due to 1 previous error
+

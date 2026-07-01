@@ -159,9 +159,13 @@ env.Append(CPPDEFINES=[("BUILDINFO_PRESENT", "1")])
     );
 
     let path_match = records.generated_files.iter().any(|f| {
-        f.get("path")
-            .and_then(|p| p.as_str())
-            .is_some_and(|p| p.replace('\\', "/").ends_with("/buildinfo.h"))
+        f.get("path").and_then(|p| p.as_str()).is_some_and(|p| {
+            // FastLED/fbuild#911 — path-shape slash normalization goes
+            // through `NormalizedPath::display_slash()`.
+            fbuild_core::path::NormalizedPath::from(p)
+                .display_slash()
+                .ends_with("/buildinfo.h")
+        })
     });
     assert!(
         path_match,

@@ -120,7 +120,11 @@ pub async fn run_iwyu(
 
     // Step 5: Preprocess compile_commands.json for IWYU
     // Transform entries directly as JSON: remove --target=, dedup -D, convert -I to -isystem
-    let src_prefix = src_dir.to_string_lossy().replace('\\', "/").to_lowercase();
+    // FastLED/fbuild#911 — path-shape slash normalization goes through
+    // `NormalizedPath::display_slash()`.
+    let src_prefix = fbuild_core::path::NormalizedPath::from(src_dir.as_path())
+        .display_slash()
+        .to_lowercase();
     let iwyu_entries: Vec<serde_json::Value> = entries
         .iter()
         .map(|entry| {
@@ -173,7 +177,11 @@ pub async fn run_iwyu(
 
                     // Convert non-project -I to -isystem
                     if let Some(path) = arg.strip_prefix("-I") {
-                        let normalized = path.replace('\\', "/").to_lowercase();
+                        // FastLED/fbuild#911 — path-shape slash normalization
+                        // goes through `NormalizedPath::display_slash()`.
+                        let normalized = fbuild_core::path::NormalizedPath::from(path)
+                            .display_slash()
+                            .to_lowercase();
                         if normalized.starts_with(&src_prefix) {
                             new_args.push(arg_val.clone());
                         } else {
@@ -429,7 +437,11 @@ pub fn iwyu_cache_key(
 ///
 /// We only keep blocks whose file path is under `src_dir`.
 pub fn filter_iwyu_output(output: &str, src_dir: &std::path::Path) -> String {
-    let src_prefix = src_dir.to_string_lossy().replace('\\', "/").to_lowercase();
+    // FastLED/fbuild#911 — path-shape slash normalization goes through
+    // `NormalizedPath::display_slash()`.
+    let src_prefix = fbuild_core::path::NormalizedPath::from(src_dir)
+        .display_slash()
+        .to_lowercase();
     let mut result = String::new();
     let mut current_block = String::new();
     let mut block_is_user_file = false;
@@ -458,7 +470,11 @@ pub fn filter_iwyu_output(output: &str, src_dir: &std::path::Path) -> String {
                         .and_then(|s| s.strip_suffix(':'))
                 })
                 .unwrap_or("");
-            let normalized = file_path.replace('\\', "/").to_lowercase();
+            // FastLED/fbuild#911 — path-shape slash normalization goes
+            // through `NormalizedPath::display_slash()`.
+            let normalized = fbuild_core::path::NormalizedPath::from(file_path)
+                .display_slash()
+                .to_lowercase();
             block_is_user_file = normalized.starts_with(&src_prefix);
         }
 

@@ -49,7 +49,11 @@ pub fn translate_flags_for_clang(args: &[String], arch: TargetArchitecture) -> V
     let mut result = Vec::with_capacity(args.len() + 1);
 
     // Replace compiler path: detect g++ vs gcc by checking the normalized path
-    let compiler_path = args[0].to_lowercase().replace('\\', "/");
+    // FastLED/fbuild#911 — path-shape slash normalization goes through
+    // `NormalizedPath::display_slash()`.
+    let compiler_path = fbuild_core::path::NormalizedPath::from(args[0].as_str())
+        .display_slash()
+        .to_lowercase();
     let clang_name = if compiler_path.ends_with("g++") || compiler_path.ends_with("g++.exe") {
         "clang++"
     } else {
@@ -129,7 +133,11 @@ impl CompileDatabase {
 
                     // Convert non-project -I to -isystem (suppresses IWYU analysis)
                     if let Some(path) = arg.strip_prefix("-I") {
-                        let normalized = path.replace('\\', "/").to_lowercase();
+                        // FastLED/fbuild#911 — path-shape slash normalization
+                        // goes through `NormalizedPath::display_slash()`.
+                        let normalized = fbuild_core::path::NormalizedPath::from(path)
+                            .display_slash()
+                            .to_lowercase();
                         if normalized.starts_with(&src_prefix) {
                             args.push(arg.clone());
                         } else {

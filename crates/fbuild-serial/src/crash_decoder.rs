@@ -742,25 +742,27 @@ mod tests {
     #[tokio::test]
     #[ignore] // requires build artifacts from esp32s3-crash-test
     async fn real_esp32s3_crash_decode() {
+        // FastLED/fbuild#911 — path-shape slash normalization goes through
+        // `NormalizedPath::display_slash()`.
         let elf = PathBuf::from(std::env::var("ESP32S3_CRASH_ELF").unwrap_or_else(|_| {
-            format!(
+            fbuild_core::path::NormalizedPath::from(format!(
                 "{}/.pio/build/esp32s3-crash-test/firmware.elf",
                 std::env::var("TEMP")
                     .or_else(|_| std::env::var("TMP"))
                     .unwrap_or_else(|_| "/tmp".to_string())
-            )
-            .replace('\\', "/")
+            ))
+            .display_slash()
         }));
         let addr2line = PathBuf::from(std::env::var("ESP32S3_ADDR2LINE").unwrap_or_else(|_| {
             let home = std::env::var("USERPROFILE")
                 .or_else(|_| std::env::var("HOME"))
                 .unwrap_or_default();
-            format!(
+            fbuild_core::path::NormalizedPath::from(format!(
                 "{}/.platformio/packages/toolchain-xtensa-esp-elf/bin/xtensa-esp-elf-addr2line{}",
                 home,
                 if cfg!(windows) { ".exe" } else { "" }
-            )
-            .replace('\\', "/")
+            ))
+            .display_slash()
         }));
 
         if !elf.exists() {

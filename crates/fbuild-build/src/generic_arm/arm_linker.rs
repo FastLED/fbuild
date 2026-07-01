@@ -167,7 +167,13 @@ impl Linker for ArmLinker {
         let result = if cfg!(windows) && args.len() > 50 {
             let temp_dir = output_dir.join("tmp");
             std::fs::create_dir_all(&temp_dir)?;
-            let rsp_content: Vec<String> = args[1..].iter().map(|a| a.replace('\\', "/")).collect();
+            // FastLED/fbuild#911 — path-shape slash normalization goes
+            // through `NormalizedPath::display_slash()`. Non-path args
+            // (flags like `-lc`) round-trip unchanged.
+            let rsp_content: Vec<String> = args[1..]
+                .iter()
+                .map(|a| fbuild_core::path::NormalizedPath::from(a.as_str()).display_slash())
+                .collect();
             let rsp_path = fbuild_core::response_file::write_response_file(
                 &rsp_content,
                 &temp_dir,

@@ -3,6 +3,17 @@
 //! Finds .cpp, .cc, .cxx, .c, .S, .ino files in project source directories.
 //! Preprocesses .ino files into valid .cpp with function prototypes and an
 //! Arduino.h include when the active include roots provide that header.
+//!
+//! ## Glob-pattern separator normalization
+//!
+//! This module accepts user-supplied glob patterns from `platformio.ini`
+//! (`src_filter`, `lib_ldf_mode`) as raw strings. Those patterns are not
+//! filesystem paths yet — `NormalizedPath` is the wrong type. Instead,
+//! every call site routes the pattern-level `\` → `/` rewrite through
+//! [`normalize_glob_separators`], the single auditable owner of that
+//! transform. The workspace's `ban_manual_slash_normalize` dylint
+//! allowlists this file's definition site for exactly that reason
+//! (FastLED/fbuild#911).
 
 use owo_colors::OwoColorize;
 use regex::Regex;
@@ -12,6 +23,27 @@ use std::io::{self, Write};
 use std::path::{Path, PathBuf};
 use tree_sitter::{Node, Parser};
 use walkdir::WalkDir;
+
+/// Slash-normalize a user-supplied glob pattern for `platformio.ini`
+/// `src_filter` / `lib_ldf_mode` matching.
+///
+/// The lone auditable owner of the pattern-level `\` → `/` rewrite in
+/// this module. Every glob-pattern call site (`SourceFilter::parse`,
+/// `SourceFilter::matches`, `compile_source_filter_pattern`,
+/// `normalize_generated_source_path_text`) routes through this helper.
+///
+/// Do NOT hand-roll `.replace('\\', "/")` on glob strings — the
+/// `ban_manual_slash_normalize` dylint flags that anti-pattern.
+/// Filesystem paths use `fbuild_core::path::NormalizedPath::display_slash()`
+/// instead; this helper is for glob-shape strings that aren't (yet)
+/// filesystem paths.
+fn normalize_glob_separators(pattern: &str) -> String {
+    // Glob-pattern normalization is INTENTIONALLY unconditional
+    // (unlike `NormalizedPath::display_slash()` which gates on
+    // `cfg!(windows)`) — glob patterns come from `platformio.ini` and
+    // may contain a mix of `\` and `/` regardless of host OS.
+    pattern.replace('\\', "/")
+}
 
 /// Collection of source files found by the scanner.
 #[derive(Debug, Default)]
@@ -355,7 +387,7 @@ impl SourceFilter {
                 )));
             };
 
-            let pattern = inner.trim().replace('\\', "/");
+            let pattern = normalize_glob_separators(inner.trim());
             if pattern.is_empty() {
                 return Err(fbuild_core::FbuildError::ConfigError(
                     "source filter rule must not be empty".to_string(),
@@ -383,11 +415,12 @@ impl SourceFilter {
             return true;
         }
 
-        let rel = path
-            .strip_prefix(root)
-            .unwrap_or(path)
-            .to_string_lossy()
-            .replace('\\', "/");
+        let rel = normalize_glob_separators(
+            &path
+                .strip_prefix(root)
+                .unwrap_or(path)
+                .to_string_lossy(),
+        );
 
         let mut included = !self.has_include_rules;
         for rule in &self.rules {
@@ -440,7 +473,7 @@ fn normalize_generated_source_path(path: &Path) -> String {
 }
 
 fn normalize_generated_source_path_text(path: &str) -> String {
-    let mut normalized = path.replace('\\', "/");
+    let mut normalized = normalize_glob_separators(path);
     let bytes = normalized.as_bytes();
     if bytes.len() >= 3
         && bytes[1] == b':'
@@ -532,7 +565,7 @@ fn file_name_for_sort(path: &Path) -> String {
 }
 
 fn compile_source_filter_pattern(pattern: &str) -> fbuild_core::Result<Regex> {
-    let normalized = pattern.replace('\\', "/");
+    let normalized = normalize_glob_separators(pattern);
     let regex_body = if normalized == "*" {
         String::from(".*")
     } else if normalized.ends_with('/') {

@@ -7,6 +7,8 @@
 
 use std::path::{Path, PathBuf};
 
+use fbuild_core::path::NormalizedPath;
+
 pub const SERVICE_NAME: &str = "fbuild";
 pub const SERVICE_DEFINITION_FILE_NAME: &str = "fbuild.servicedef";
 pub const SERVICE_DEFINITION_TEMPLATE: &str =
@@ -163,7 +165,9 @@ fn stable_path_key(path: &Path) -> String {
             .map(|cwd| cwd.join(path))
             .unwrap_or_else(|_| path.to_path_buf())
     };
-    absolute.to_string_lossy().replace('\\', "/")
+    // FastLED/fbuild#911 — delegate the Windows `\` → `/` rewrite to
+    // NormalizedPath, the canonical primitive.
+    NormalizedPath::from(absolute).display_slash()
 }
 
 /// The seven cache roots fbuild records in its broker manifest, resolved from

@@ -90,6 +90,12 @@ APPROVED_CRATE_DIRS: frozenset[str] = frozenset(
         # and dylints/require_oncelock_install_before_use READMEs.
         "dylints/ban_env_var_set_after_import",
         "dylints/require_oncelock_install_before_use",
+        # FastLED/fbuild#911 — bans hand-rolled '.replace(\\, /)'
+        # backslash-to-slash rewrites on path-shaped strings, directing
+        # callers at fbuild_core::path::NormalizedPath::display_slash().
+        # Filed after PRs #890 and #912 both had to patch the same
+        # anti-pattern at yet another call site.
+        "dylints/ban_manual_slash_normalize",
     }
 )
 
