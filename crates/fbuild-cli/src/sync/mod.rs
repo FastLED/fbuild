@@ -56,8 +56,10 @@ pub struct SyncArgs {
     /// `--upgrade` — repin every dep to the current registry/tag latest
     /// (Phase 2). Phase 1 accepts the flag but only re-classifies; no
     /// resolution.
+    #[allow(dead_code)] // FastLED/fbuild#618 Phase 2 hook — CLI surface stable now
     pub upgrade: bool,
     /// `--upgrade-package <name>` — repin only the named dep (Phase 2).
+    #[allow(dead_code)] // FastLED/fbuild#618 Phase 2 hook — CLI surface stable now
     pub upgrade_package: Option<String>,
     /// Explicit project dir. Defaults to CWD.
     pub project_dir: Option<PathBuf>,
@@ -75,6 +77,13 @@ impl SyncArgs {
 
 /// Structured result surfaced to `dispatch`. The runner returns an exit
 /// code; extra state is emitted to stderr as it happens.
+///
+/// Some variants carry payload the CLI adapter doesn't read directly —
+/// they're preserved because programmatic callers (tests + future
+/// `fbuild sync --json`) will consume the structured output. Clippy's
+/// dead-code check doesn't see the tests as consumers, so we allow at
+/// the enum level.
+#[allow(dead_code)] // Variants populated for structured callers; CLI adapter only reads exit_code.
 #[derive(Debug)]
 pub enum SyncOutcome {
     /// Lockfile written / re-written successfully. Exit 0.
