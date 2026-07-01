@@ -3,7 +3,7 @@
 
 use clap::Parser;
 
-use crate::{daemon_client, lib_select, mcp, output};
+use crate::{daemon_client, lib_select, mcp, output, update_check};
 
 use super::args::{resolve_project_dir, rewrite_args, BloatCmd, Cli, Commands};
 use super::bloat_lookup::run_bloat_lookup;
@@ -57,6 +57,20 @@ pub async fn async_main() {
     if std::env::var("FBUILD_DEV_MODE").is_ok_and(|v| v == "1") {
         output::progress("FBUILD_DEV_MODE=1 (dev mode: port 8865, ~/.fbuild/dev/)");
     }
+
+    // FastLED/fbuild#626 Phase 1: passive update check. Kick it off in
+    // the background so the network round-trip (~200 ms hot cache, up to
+    // 3 s cold) doesn't gate the command that follows. The task detaches;
+    // when it completes it prints a single stderr line if a newer stable
+    // release is available. Network failures are swallowed. Fully
+    // suppressed by `--no-update-check`, `FBUILD_NO_UPDATE_CHECK=1`, or
+    // any CI marker (`CI=true` etc.).
+    let update_check_opts = update_check::CheckOptions {
+        no_update_check: cli.no_update_check,
+    };
+    tokio::spawn(async move {
+        update_check::run_passive_check(env!("CARGO_PKG_VERSION"), &update_check_opts).await;
+    });
 
     // Extract top-level project_dir before matching (since match partially moves cli)
     let top_level_project_dir = cli.project_dir.clone();
