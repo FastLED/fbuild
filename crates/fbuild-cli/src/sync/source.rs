@@ -231,10 +231,7 @@ pub fn classify(raw: &str) -> ClassifiedDep {
 /// `.git`. Never returns empty — falls back to the input.
 fn last_segment(s: &str) -> &str {
     let end = s.trim_end_matches(['/', '\\']);
-    let seg = end
-        .rsplit(|c| c == '/' || c == '\\')
-        .next()
-        .unwrap_or(end);
+    let seg = end.rsplit(['/', '\\']).next().unwrap_or(end);
     let seg = seg.trim_end_matches(".git");
     if seg.is_empty() {
         end

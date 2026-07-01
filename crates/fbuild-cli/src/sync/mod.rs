@@ -187,10 +187,11 @@ async fn do_run_sync(args: SyncArgs) -> Result<SyncOutcome, SyncError> {
     let selected_envs = select_envs(&all_envs, args.environment.as_deref())?;
 
     // Multi-env prompt (skipped by --yes / --check / -e <env>).
-    if selected_envs.len() > 1 && !args.skip_multi_env_prompt() {
-        if !prompt_multi_env(&selected_envs) {
-            return Ok(SyncOutcome::UserCancelled);
-        }
+    if selected_envs.len() > 1
+        && !args.skip_multi_env_prompt()
+        && !prompt_multi_env(&selected_envs)
+    {
+        return Ok(SyncOutcome::UserCancelled);
     }
 
     // Classify every env's lib_deps.
