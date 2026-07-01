@@ -318,18 +318,30 @@ mod tests {
         );
     }
 
+    // The Windows-input arms of these two tests feed a raw `C:\tc\...`
+    // literal through `NormalizedPath::display_slash()`, which only
+    // converts `\` → `/` on Windows targets. On Linux, `\` is a valid
+    // filename byte, so the normalizer leaves it alone and the asserted
+    // `"C:/tc/bin/*"` shape never materializes. Gate the Windows arms
+    // behind `#[cfg(windows)]` and keep the POSIX arm portable.
     #[test]
-    fn query_driver_glob_uses_bin_dir_forward_slashes() {
-        assert_eq!(
-            compiler_query_driver_glob(r"C:\tc\bin\avr-g++.exe"),
-            "C:/tc/bin/*"
-        );
+    fn query_driver_glob_uses_bin_dir_forward_slashes_posix() {
         assert_eq!(
             compiler_query_driver_glob("/home/u/.platformio/packages/tc/bin/arm-none-eabi-g++"),
             "/home/u/.platformio/packages/tc/bin/*"
         );
     }
 
+    #[cfg(windows)]
+    #[test]
+    fn query_driver_glob_uses_bin_dir_forward_slashes_windows() {
+        assert_eq!(
+            compiler_query_driver_glob(r"C:\tc\bin\avr-g++.exe"),
+            "C:/tc/bin/*"
+        );
+    }
+
+    #[cfg(windows)]
     #[test]
     fn clangd_yaml_mentions_compiler_and_database() {
         let yaml = render_clangd_yaml(r"C:\tc\bin\avr-g++");

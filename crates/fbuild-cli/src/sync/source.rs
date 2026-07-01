@@ -163,8 +163,12 @@ pub fn classify(raw: &str) -> ClassifiedDep {
         };
     }
 
-    // 4. HTTP/HTTPS — could be GitHub or a plain archive.
-    if trimmed.starts_with("http://") || trimmed.starts_with("https://") {
+    // 4. HTTP/HTTPS — could be GitHub or a plain archive. Case-insensitive
+    //    on the scheme because PlatformIO's `lib_deps` treats URLs as
+    //    URIs per RFC 3986 §3.1 (scheme is case-insensitive), and the
+    //    `github_case_insensitive_host` test expects `HTTPS://GITHUB.COM/...`
+    //    to still classify as Github.
+    if starts_with_ci(trimmed, "http://") || starts_with_ci(trimmed, "https://") {
         // Split off the optional `#<ref>` (only meaningful for repo URLs;
         // if it's on an archive URL it's harmless noise).
         let (url_no_ref, hash_suffix) = split_ref(trimmed);
@@ -226,6 +230,12 @@ pub fn classify(raw: &str) -> ClassifiedDep {
 }
 
 // ---------- helpers ----------
+
+/// ASCII case-insensitive `starts_with`, used for the RFC 3986 URI
+/// scheme prefix check in `classify()`.
+fn starts_with_ci(s: &str, prefix: &str) -> bool {
+    s.len() >= prefix.len() && s.as_bytes()[..prefix.len()].eq_ignore_ascii_case(prefix.as_bytes())
+}
 
 /// Take the last `/` or `\` segment of a string, trimming any trailing
 /// `.git`. Never returns empty — falls back to the input.

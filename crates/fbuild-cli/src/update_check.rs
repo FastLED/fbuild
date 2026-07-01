@@ -736,9 +736,16 @@ mod tests {
 
     #[test]
     fn ci_detection_via_ci_env() {
-        // Snapshot env to restore after test.
-        let saved = std::env::var("CI").ok();
+        // Snapshot + clear ALL CI markers we recognize, not just CI —
+        // otherwise GitHub Actions' own GITHUB_ACTIONS=true poisons the
+        // `assert!(!is_ci_env())` checks below.
+        const CI_KEYS: &[&str] = &["CI", "GITHUB_ACTIONS", "GITLAB_CI", "CIRCLECI", "JENKINS_URL"];
+        let saved: Vec<(&str, Option<String>)> =
+            CI_KEYS.iter().map(|k| (*k, std::env::var(*k).ok())).collect();
         // SAFETY: single-threaded test process.
+        for k in CI_KEYS {
+            std::env::remove_var(k);
+        }
         std::env::set_var("CI", "true");
         assert!(is_ci_env());
         std::env::set_var("CI", "0");
@@ -748,9 +755,11 @@ mod tests {
         std::env::remove_var("CI");
         assert!(!is_ci_env());
         // Restore.
-        match saved {
-            Some(v) => std::env::set_var("CI", v),
-            None => std::env::remove_var("CI"),
+        for (k, v) in saved {
+            match v {
+                Some(val) => std::env::set_var(k, val),
+                None => std::env::remove_var(k),
+            }
         }
     }
 }
