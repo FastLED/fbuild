@@ -81,6 +81,16 @@ FBUILD_NATIVE_BOARDS = frozenset(
         "lpc845brk",
         "lpcxpresso804",
         "lpcxpresso845max",
+        # FastLED/fbuild#740 back-fill: popular community boards that
+        # ship no PlatformIO board JSON but have well-known runtime USB
+        # VID:PID that fbuild needs to identify. Added to give the
+        # tier-1 board-VID:PID supplement first-party rows for these
+        # devices; no PlatformIO row exists to diff against.
+        "adafruit_qt_py_rp2040",
+        "seeed_xiao_rp2040",
+        "seeed_xiao_mg24",
+        "nice_nano",
+        "nrfmicro",
     }
 )
 
@@ -92,6 +102,14 @@ FBUILD_BUILD_FIELD_OVERRIDES = {
     # PlatformIO 6.13.0 still reports FeatherS3 as 303A:80D0, which collides
     # with TinyS3. The local board asset and board::tests_usb_vid pin 80D6.
     "um_feathers3": {"pid": "0x80D6"},
+    # FastLED/fbuild#740 back-fill: PlatformIO carries no USB hwids for
+    # these boards, but the runtime VID:PID is well-known upstream and
+    # fbuild needs it in the tier-1 supplement so `device list/status`
+    # can identify them by name instead of `Device 0xPPPP`. Sources
+    # tracked in issue #740 board-name match table.
+    "esp32-s2-saola-1": {"vid": "0x10C4", "pid": "0xEA60"},
+    "sparkfun_thingplusmatter": {"vid": "0x1366", "pid": "0x0101"},
+    "ch32v003f4p6_evt_r0": {"vid": "0x1A86", "pid": "0x8010"},
 }
 
 MEGATINYCORE_EXTRA_FLAGS = (

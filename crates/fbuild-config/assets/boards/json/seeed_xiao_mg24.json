@@ -3,37 +3,34 @@
     "core": "silabs",
     "f_cpu": "39000000L",
     "mcu": "cortex-m33",
-    "pid": "0x0101",
-    "variant": "thingplusmatter",
-    "vid": "0x1366"
+    "pid": "0x0062",
+    "variant": "xiao_mg24",
+    "vid": "0x2886"
   },
   "connectivity": [
     "bluetooth",
     "thread",
-    "wifi",
     "zigbee"
   ],
   "debug": {
     "tools": {
       "cmsis-dap": {},
-      "jlink": {
-        "onboard": true
-      }
+      "jlink": {}
     }
   },
   "fcpu": 39000000,
   "frameworks": [
     "arduino"
   ],
-  "id": "sparkfun_thingplusmatter",
+  "id": "seeed_xiao_mg24",
   "mcu": "CORTEX-M33",
-  "name": "Sparkfun Thing Plus Matter",
+  "name": "Seeed Studio XIAO MG24",
   "platform": "siliconlabsefm32",
   "ram": 262144,
   "rom": 1572864,
   "upload": {
     "protocol": "simplicitycommander"
   },
-  "url": "https://www.sparkfun.com/products/20270",
-  "vendor": "Sparkfun"
+  "url": "https://wiki.seeedstudio.com/xiao-mg24/",
+  "vendor": "Seeed Studio"
 }
