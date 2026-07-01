@@ -1,0 +1,34 @@
+{
+  "build": {
+    "core": "earlephilhower",
+    "extra_flags": "-DARDUINO_SEEED_XIAO_RP2040 -DARDUINO_ARCH_RP2040 -DUSBD_MAX_POWER_MA=250",
+    "f_cpu": "133000000L",
+    "mcu": "rp2040",
+    "pid": "0x000A",
+    "variant": "seeed_xiao_rp2040",
+    "vid": "0x2E8A"
+  },
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "jlink": {},
+      "raspberrypi-swd": {}
+    }
+  },
+  "fcpu": 133000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "seeed_xiao_rp2040",
+  "mcu": "RP2040",
+  "name": "Seeed Studio XIAO RP2040",
+  "platform": "raspberrypi",
+  "ram": 262144,
+  "rom": 2097152,
+  "upload": {
+    "protocol": "picotool",
+    "require_upload_port": true
+  },
+  "url": "https://wiki.seeedstudio.com/XIAO-RP2040/",
+  "vendor": "Seeed Studio"
+}

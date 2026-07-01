@@ -13,8 +13,10 @@
     "mabi": "ilp32e",
     "march": "rv32ec_zicsr",
     "mcu": "ch32v003f4p6",
+    "pid": "0x8010",
     "series": "ch32v003",
-    "variant": "CH32V003"
+    "variant": "CH32V003",
+    "vid": "0x1A86"
   },
   "debug": {
     "tools": {

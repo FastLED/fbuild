@@ -1,0 +1,45 @@
+{
+  "build": {
+    "arduino": {
+      "ldscript": "nrf52840_s140_v6.ld"
+    },
+    "core": "nRF5",
+    "extra_flags": "-DARDUINO_NRFMICRO -DNRF52840_XXAA",
+    "f_cpu": "64000000L",
+    "mcu": "nrf52840",
+    "pid": "0x5284",
+    "variant": "nrfmicro",
+    "vid": "0x1209"
+  },
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {}
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "nrfmicro",
+  "mcu": "NRF52840",
+  "name": "nRFMicro",
+  "platform": "nordicnrf52",
+  "ram": 248832,
+  "rom": 815104,
+  "upload": {
+    "maximum_ram_size": 248832,
+    "maximum_size": 815104,
+    "protocol": "nrfutil",
+    "require_upload_port": true,
+    "speed": 115200,
+    "use_1200bps_touch": true,
+    "wait_for_upload_port": true
+  },
+  "url": "https://github.com/joric/nrfmicro/wiki",
+  "vendor": "Joric"
+}
