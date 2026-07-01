@@ -1135,8 +1135,10 @@ mod tests {
         // No protocol string, but the touch flag is a strong
         // ecosystem-standard signal in its own right (every product
         // shipping this flag semantically means "1200-bps touch reset").
-        let mut h = UploadHint::default();
-        h.use_1200bps_touch = Some(true);
+        let h = UploadHint {
+            use_1200bps_touch: Some(true),
+            ..Default::default()
+        };
         assert_eq!(
             family_from_upload_hint(&h),
             Some(BoardFamily::NativeUsbCdcReset1200Bps)
