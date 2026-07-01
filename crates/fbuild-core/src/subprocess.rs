@@ -113,8 +113,10 @@ pub fn link_env_for_build(build_dir: &Path) -> std::io::Result<Vec<(String, Stri
     std::fs::create_dir_all(&lto_tmp)?;
     // Forward-slash form so MSYS-flavored shells (used by the `mv` step
     // inside GCC's LTO wrapper recipe on Windows) don't lose the path
-    // separators.
-    let posix_path = lto_tmp.to_string_lossy().replace('\\', "/");
+    // separators. `NormalizedPath::display_slash()` owns the rewrite
+    // (FastLED/fbuild#911 — see the workspace's `ban_manual_slash_normalize`
+    // dylint).
+    let posix_path = crate::path::NormalizedPath::from(lto_tmp).display_slash();
     Ok(vec![
         ("TMPDIR".to_string(), posix_path.clone()),
         ("TMP".to_string(), posix_path.clone()),
@@ -886,9 +888,10 @@ mod tests {
 
         for (k, v) in &env {
             if matches!(k.as_str(), "TMPDIR" | "TMP" | "TEMP") {
-                let v_norm = v.replace('\\', "/");
+                // Production emits values via `NormalizedPath::display_slash()`
+                // so `v` is already slash-normalized on every platform.
                 assert!(
-                    v_norm.ends_with(".compile-tmp"),
+                    v.ends_with(".compile-tmp"),
                     "{k}={v:?} must point at the build_dir's .compile-tmp"
                 );
             }

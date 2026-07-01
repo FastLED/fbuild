@@ -11,6 +11,7 @@ use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 use std::time::UNIX_EPOCH;
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::{Result, SizeInfo};
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
 use sha2::{Digest, Sha256};
@@ -98,7 +99,9 @@ impl FileStamp {
 }
 
 pub fn normalize_path(path: &Path) -> String {
-    path.to_string_lossy().replace('\\', "/")
+    // FastLED/fbuild#911 — every path-shape slash normalization goes
+    // through `NormalizedPath::display_slash()`.
+    NormalizedPath::from(path).display_slash()
 }
 
 pub fn normalize_paths(paths: &[PathBuf]) -> Vec<String> {
@@ -390,7 +393,9 @@ fn watch_identity(watch: &FingerprintWatch) -> String {
     watch
         .cache_file
         .file_name()
-        .map(|name| name.to_string_lossy().replace('\\', "/"))
+        // FastLED/fbuild#911 — path-shape slash normalization goes
+        // through `NormalizedPath::display_slash()`.
+        .map(|name| NormalizedPath::new(name).display_slash())
         .unwrap_or_else(|| normalize_path(&watch.root))
 }
 

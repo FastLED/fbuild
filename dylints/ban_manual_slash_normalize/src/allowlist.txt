@@ -1,0 +1,35 @@
+# Each non-empty, non-comment line is matched against the tail of each
+# source file path (slashes normalized to /). Use forward-slash paths
+# only — the lint normalizes \ to / before matching.
+#
+# Rollout strategy:
+#   - The lint is ON and denies new hand-rolled `.replace('\', "/")`
+#     calls by default.
+#   - The target state is very few entries. Any hand-rolled site that
+#     stays here should have a written justification.
+#   - New files MUST NOT be added here unless there is a genuine
+#     reason (glob-pattern helper, lint test fixture). Do not use this
+#     allowlist to paper over "I don't want to plumb NormalizedPath
+#     through here" — thread the type instead.
+
+# The primitive itself. `NormalizedPath::display_slash` and
+# `normalize_for_key` in this file own the transformation; every other
+# call site delegates to them.
+crates/fbuild-core/src/path.rs
+
+# Symbol-analysis Graphviz DOT emitter escapes `\` to `\\` for label
+# text. The `.replace('\\', "\\\\")` call is not a path-shape rewrite —
+# it's DOT string escaping. Keep it here to document the semantics.
+crates/fbuild-core/src/symbol_analysis/graph/mod.rs
+
+# User-supplied glob patterns from platformio.ini's `src_filter` /
+# `lib_ldf_mode` shapes. Not filesystem paths, so `NormalizedPath` is
+# the wrong type. The one helper `normalize_glob_separators` lives
+# here and every other glob site delegates to it — see the
+# module-level comment for enforcement.
+crates/fbuild-build/src/source_scanner.rs
+
+# Dylint's own UI test fixtures for other path-shape lints intentionally
+# include the anti-pattern to prove the lint fires. Same convention
+# ban_std_pathbuf uses for its ui/disallowed.rs.
+dylints/ban_manual_slash_normalize/ui/disallowed.rs

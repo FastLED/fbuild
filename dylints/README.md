@@ -125,6 +125,22 @@ itself stays on stable 1.94.1).
   `--verbose`, and `--color={auto,always,never}` flow through one
   level filter. Bridge-only allowlist.
 
+### FastLED/fbuild#911 — path-normalization anti-pattern
+
+- **`ban_manual_slash_normalize/`** — forbids hand-rolled
+  `.replace('\\', "/")` calls; steers callers at
+  `fbuild_core::path::NormalizedPath::display_slash()`, which
+  already owns the Windows `\` → `/` rewrite + UNC-prefix strip.
+  Companion to `ban_std_pathbuf/`. The four bugs #875 / #885 /
+  #890 / #912 were the same class — a path argument reached the
+  compiler / linker with backslashes still in it — and each fix
+  added yet another hand-rolled site. This lint closes the loop by
+  making the anti-pattern impossible to introduce. Allowlist: the
+  primitive itself (`fbuild-core/src/path.rs`), the DOT-string
+  escape in the symbol-graph emitter, the glob-pattern helper in
+  `source_scanner.rs`, and the lint's own UI fixture. See
+  FastLED/fbuild#911.
+
 ## Running locally
 
 ```bash

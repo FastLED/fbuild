@@ -26,6 +26,7 @@
 
 use std::path::{Path, PathBuf};
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::{FbuildError, Result};
 
 /// A persistent zccache fingerprint watch.
@@ -108,39 +109,40 @@ pub fn compile_cwd_from_output(output: &Path) -> Option<PathBuf> {
 /// inside the child process. Canonicalizing absolute compiler arguments before
 /// stripping the compile CWD keeps zccache keys workspace-relative across both
 /// path spellings.
+///
+/// The final `NormalizedPath::display_slash()` call is the load-bearing
+/// step: `NormalizedPath` owns the Windows `\` → `/` rewrite that GCC's
+/// internal spec-file pass requires (see FastLED/fbuild#875, #885, #890,
+/// #912). Do NOT hand-roll the rewrite here — the `ban_manual_slash_normalize`
+/// dylint flags that anti-pattern. Route every path arg through
+/// `NormalizedPath::display_slash()` at exactly one place, which is here.
 pub fn path_arg_for_compile_cwd(path: &Path, cwd: &Path) -> String {
-    let raw = if !path.is_absolute() {
-        path.to_string_lossy().to_string()
+    let relative: PathBuf = if !path.is_absolute() {
+        path.to_path_buf()
     } else {
         // Both ends must be in the same normal form (stripped of any `\\?\`
         // Windows extended-length prefix) for `strip_prefix` to match, since
         // `canonicalize_existing_path` now strips that prefix from `path`.
         let stable_path = canonicalize_existing_path(path).unwrap_or_else(|| path.to_path_buf());
         let stable_cwd = strip_unc_prefix(cwd.to_path_buf());
-        let relative = stable_path
+        stable_path
             .strip_prefix(&stable_cwd)
-            .unwrap_or(&stable_path)
-            .to_string_lossy()
-            .to_string();
-        if relative.is_empty() {
-            ".".to_string()
-        } else {
-            relative
-        }
+            .map(|tail| tail.to_path_buf())
+            .unwrap_or(stable_path)
     };
-    // FastLED/fbuild#875 follow-up: GCC's internal spec-file pass (the
-    // temp file the driver uses to hand args to cc1/cc1plus) treats `\`
-    // as an escape character — so `src\main.cpp` reaches cc1plus as
-    // `srcmain.cpp` and fails with "fatal error: srcmain.cpp: No such
-    // file or directory". Surfaced as soon as the env fix in #885 let
-    // the spec-file mechanism actually create its temp file. Forward
-    // slashes are unambiguous on every GCC port (Windows GCC resolves
-    // both against the FS), so the safe Windows compile contract is to
-    // spell every path argument with `/`. POSIX hosts pass through.
-    if cfg!(windows) {
-        raw.replace('\\', "/")
+    // GCC's internal spec-file pass treats `\` as an escape character, so
+    // `src\main.cpp` reaches cc1plus as `srcmain.cpp` and fails to open.
+    // `NormalizedPath::display_slash()` owns the `\` → `/` rewrite (plus
+    // the Windows UNC prefix strip) for the whole workspace — see
+    // fbuild_core::path::NormalizedPath. POSIX hosts pass through unchanged.
+    let arg = NormalizedPath::from(relative).display_slash();
+    // Preserve the "empty relative → '.'" invariant: when the source file
+    // *is* the compile CWD (or the caller passed a bare empty path), GCC
+    // requires a positional argument that resolves to the current directory.
+    if arg.is_empty() {
+        ".".to_string()
     } else {
-        raw
+        arg
     }
 }
 
@@ -320,12 +322,39 @@ mod tests {
         std::fs::create_dir_all(source.parent().unwrap()).unwrap();
         std::fs::write(&source, "int main() { return 0; }\n").unwrap();
         let cwd = cwd.canonicalize().unwrap();
-        let expected = Path::new("src")
-            .join("main.cpp")
-            .to_string_lossy()
-            .to_string();
 
-        assert_eq!(path_arg_for_compile_cwd(&source, &cwd), expected);
+        // Forward-slash spelling is the invariant on every platform — GCC's
+        // spec-file pass treats `\` as an escape character on Windows.
+        // `NormalizedPath::display_slash()` owns that rewrite.
+        assert_eq!(path_arg_for_compile_cwd(&source, &cwd), "src/main.cpp");
+    }
+
+    #[test]
+    #[cfg(windows)]
+    fn path_arg_for_compile_cwd_forces_forward_slashes_on_windows() {
+        // FastLED/fbuild#911 regression test — the #890 / #912 bug class:
+        // any hand-rolled path formatting on Windows that leaves backslashes
+        // intact reaches cc1plus with `\` interpreted as an escape, so
+        // `src\main.cpp` becomes `srcmain.cpp` and fails to open. This test
+        // walks the absolute-path arm end-to-end on Windows and asserts no
+        // `\` character survives — locking the invariant that
+        // `NormalizedPath::display_slash()` is doing its job for the
+        // compile pipeline.
+        let tmp = tempfile::TempDir::new().unwrap();
+        let cwd = tmp.path().join("project");
+        let nested = cwd.join("src").join("sketch");
+        let source = nested.join("main.cpp");
+        std::fs::create_dir_all(&nested).unwrap();
+        std::fs::write(&source, "int main() { return 0; }\n").unwrap();
+        let cwd = cwd.canonicalize().unwrap();
+
+        let arg = path_arg_for_compile_cwd(&source, &cwd);
+
+        assert!(
+            !arg.contains('\\'),
+            "compile arg must not contain backslashes: {arg}"
+        );
+        assert_eq!(arg, "src/sketch/main.cpp");
     }
 
     #[test]

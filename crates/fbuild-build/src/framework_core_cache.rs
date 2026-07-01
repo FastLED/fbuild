@@ -8,6 +8,7 @@
 
 use std::path::{Path, PathBuf};
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::BuildProfile;
 use sha2::{Digest, Sha256};
 
@@ -99,7 +100,9 @@ fn core_cache_key(
     let mut source_entries: Vec<_> = core_sources
         .iter()
         .map(|source| {
-            let source_path = source.to_string_lossy().replace('\\', "/");
+            // FastLED/fbuild#911 — path-shape slash normalization goes
+            // through `NormalizedPath::display_slash()`.
+            let source_path = NormalizedPath::from(source.as_path()).display_slash();
             let source_flags = extra_flags.for_source(source);
             let signature = compiler.rebuild_signature(source, &source_flags);
             let content = file_content_digest(source);
