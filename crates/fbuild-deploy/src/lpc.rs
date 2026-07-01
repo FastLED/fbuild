@@ -36,6 +36,178 @@ use fbuild_core::Result;
 
 use crate::{DeployOutcome, Deployer, DeploymentResult};
 
+/// Env var pointing directly at the `lpc21isp` binary. Bypasses every
+/// path search below when set — useful for CI / dev overrides where the
+/// tool lives in an unusual location.
+///
+/// FastLED/fbuild#921: the primary escape hatch until fbuild auto-fetches
+/// lpc21isp itself.
+pub const LPC21ISP_PATH_ENV_VAR: &str = "FBUILD_LPC21ISP_PATH";
+
+/// Resolve `$HOME` (`$USERPROFILE` on Windows). Kept as a small local
+/// helper so this crate does not gain a `dirs` / `home` dependency for
+/// one call site — mirrors the same pattern in `fbuild-paths`.
+fn home_dir() -> Option<PathBuf> {
+    #[cfg(target_os = "windows")]
+    {
+        std::env::var_os("USERPROFILE").map(PathBuf::from)
+    }
+    #[cfg(not(target_os = "windows"))]
+    {
+        std::env::var_os("HOME").map(PathBuf::from)
+    }
+}
+
+/// The one canonical location fbuild manages lpc21isp at. FastLED/fbuild#921
+/// treats lpc21isp as a fbuild-owned dependency — auto-install will drop
+/// the binary here in a follow-up PR, and the deployer reads it back from
+/// the same path. No PATH walk, no out-of-tree fallbacks: if it isn't
+/// here (and no env override is set), fbuild owes the user a "how to
+/// install" hint, not a silent hunt through system directories.
+///
+/// Honors `FBUILD_DEV_MODE=1` → `~/.fbuild/dev/tools/…` to match the
+/// isolation the rest of `fbuild-paths` applies.
+pub fn managed_lpc21isp_path() -> Option<PathBuf> {
+    let exe = if cfg!(windows) {
+        "lpc21isp.exe"
+    } else {
+        "lpc21isp"
+    };
+    let home = home_dir()?;
+    let mode = if std::env::var_os("FBUILD_DEV_MODE").is_some() {
+        "dev"
+    } else {
+        "prod"
+    };
+    Some(home.join(".fbuild").join(mode).join("tools").join(exe))
+}
+
+/// Resolve where `lpc21isp` lives on this system.
+///
+/// Search order (first hit wins):
+///
+/// 1. `FBUILD_LPC21ISP_PATH` env var — direct override, for CI or dev
+///    boxes that want to point at a bespoke build.
+/// 2. `~/.fbuild/{prod|dev}/tools/lpc21isp[.exe]` — the canonical
+///    fbuild-managed location. Auto-install populates this in a
+///    follow-up PR under FastLED/fbuild#921.
+///
+/// **Deliberately NOT searched:** `PATH`, `C:\tools\lpc21isp\`, Homebrew,
+/// apt, etc. Per #921, lpc21isp is fbuild-owned — it lives where fbuild
+/// installs it, or it lives at the env-var override, and nowhere else.
+/// A silent PATH walk would hide "we forgot to install this" behind a
+/// wildcard hit against whatever `lpc21isp` shipped with the host OS,
+/// which is the failure mode the deploy pipeline needs to surface, not
+/// paper over.
+///
+/// Returns `None` if no candidate is present — the deployer converts
+/// that into a clear "how to install lpc21isp" diagnostic instead of
+/// blowing up mid-flash.
+pub fn find_lpc21isp() -> Option<PathBuf> {
+    if let Some(env_hit) = std::env::var_os(LPC21ISP_PATH_ENV_VAR) {
+        let p = PathBuf::from(env_hit);
+        if p.is_file() {
+            return Some(p);
+        }
+    }
+
+    if let Some(managed) = managed_lpc21isp_path() {
+        if managed.is_file() {
+            return Some(managed);
+        }
+    }
+
+    None
+}
+
+/// Build the "install lpc21isp" hint that surfaces on the failing
+/// deploy path. Kept as a standalone function so the test module can
+/// assert the exact URLs / paths without shelling out.
+pub(crate) fn lpc21isp_install_hint() -> String {
+    let (tools_dir, exe) = if cfg!(windows) {
+        ("~/.fbuild/prod/tools/", "lpc21isp.exe")
+    } else {
+        ("~/.fbuild/prod/tools/", "lpc21isp")
+    };
+    format!(
+        "lpc21isp not found on PATH or in any fbuild-managed tools dir.\n\
+         \n\
+         Auto-fetch is not wired yet (tracked under FastLED/fbuild#921).\n\
+         Until it lands, install lpc21isp yourself into the location\n\
+         fbuild owns, then retry:\n\
+         \n\
+           1. Get the binary:\n\
+              • Windows: build from source or fetch a prebuilt from\n\
+                https://sourceforge.net/projects/lpc21isp/files/ .\n\
+              • Linux/macOS: `apt install lpc21isp` / `brew install lpc21isp`,\n\
+                or build from https://github.com/capiman/lpc21isp source.\n\
+           2. Drop it at {tools_dir}{exe} .\n\
+           3. Or set {env}=<full path to lpc21isp binary> to point\n\
+              anywhere else.\n\
+         \n\
+         Verify with: `{exe}` (should print usage).",
+        env = LPC21ISP_PATH_ENV_VAR
+    )
+}
+
+/// Anything below the lowest legitimate lpc21isp baud is refused as a
+/// serial rate. Board JSONs that reuse `upload.speed` as an openocd /
+/// CMSIS-DAP adapter throughput knob (`lpc845brk.json` sets it to
+/// `1000`, i.e. 1 MHz SWD clock) fall well under this floor; the
+/// deployer treats those as "not really a baud" and falls back to the
+/// family default instead of passing kHz through to lpc21isp's autobaud.
+///
+/// Common lpc21isp baud rates on LPC8xx are 9600 → 230400, with 115200
+/// as the reference; picking 4800 as the floor keeps the deployer open
+/// to legacy 9600-only harnesses (2× headroom) while catching the
+/// CMSIS-DAP kHz values which are all ≤ 4000. FastLED/fbuild#927.
+pub(crate) const MIN_LPC21ISP_BAUD: u32 = 4800;
+
+/// FastLED/fbuild#927: resolve the baud that gets passed to lpc21isp.
+///
+/// - `None` → family default (`params.default_baud`).
+/// - `Some(s)` where `s` parses as a `u32 >= MIN_LPC21ISP_BAUD` → use it.
+/// - `Some(s)` where `s` parses as a `u32 < MIN_LPC21ISP_BAUD` → refuse
+///   and fall back to the family default. Emit a tracing warning so the
+///   misconfiguration surfaces on the next deploy run.
+/// - `Some(s)` that does not parse as a positive integer → pass through
+///   verbatim (lpc21isp's argument parser will complain). Kept lenient
+///   so this safety net does not turn into a validation layer.
+pub(crate) fn resolve_lpc21isp_baud(
+    board_upload_speed: Option<&str>,
+    family_default: &str,
+) -> String {
+    let Some(raw) = board_upload_speed else {
+        return family_default.to_string();
+    };
+    match raw.parse::<u32>() {
+        Ok(n) if n >= MIN_LPC21ISP_BAUD => raw.to_string(),
+        Ok(n) => {
+            tracing::warn!(
+                "board `upload.speed = {n}` is below the lpc21isp minimum baud \
+                 ({MIN_LPC21ISP_BAUD}); reverting to family default `{family_default}` \
+                 (this typically means the board JSON reused `upload.speed` for a \
+                 CMSIS-DAP / openocd throughput knob in kHz — see FastLED/fbuild#927)"
+            );
+            family_default.to_string()
+        }
+        Err(_) => raw.to_string(),
+    }
+}
+
+/// FastLED/fbuild#927: return true when the firmware path has the
+/// Intel-HEX extension. Case-insensitive so `.HEX` from Windows-authored
+/// tooling still hits. Anything else is treated as raw binary and gets
+/// spawned WITHOUT the `-hex` flag so lpc21isp does not try to parse
+/// binary bytes as Intel-HEX ASCII and abort with exit 1.
+pub(crate) fn firmware_is_intel_hex(firmware_path: &Path) -> bool {
+    firmware_path
+        .extension()
+        .and_then(|s| s.to_str())
+        .map(|ext| ext.eq_ignore_ascii_case("hex"))
+        .unwrap_or(false)
+}
+
 /// lpc21isp deploy parameters sourced from MCU config JSON.
 ///
 /// All LPC845 / LPC804 boards (including the LPC845-BRK and the
@@ -102,19 +274,31 @@ impl LpcDeployer {
     }
 
     /// Build an LPC deployer from board config + lpc21isp params.
+    ///
+    /// Resolves `lpc21isp` through [`find_lpc21isp`] so the deployer runs
+    /// against a real binary on disk. If the resolver comes back empty,
+    /// the deployer is still constructed (with the literal string
+    /// `"lpc21isp"` as its path) so unit tests can build one without
+    /// hardware — the `deploy()` call surfaces the actionable "install
+    /// lpc21isp" hint at flash time. FastLED/fbuild#921.
+    ///
+    /// FastLED/fbuild#927 safety net: `board.upload_speed` under 4800
+    /// is refused as a baud value. `lpc845brk.json` (and any board JSON
+    /// that reuses `upload.speed` as its openocd/CMSIS-DAP adapter
+    /// throughput knob) sets that field to values in kHz (e.g. `1000`),
+    /// which cannot legitimately be a UART baud. Fall back to the
+    /// family default (115200) rather than passing nonsense to lpc21isp.
     pub fn from_board_config(
         board: &fbuild_config::BoardConfig,
         params: &Lpc21IspParams,
         verbose: bool,
     ) -> Self {
+        let baud = resolve_lpc21isp_baud(board.upload_speed.as_deref(), &params.default_baud);
         Self::new(
-            board
-                .upload_speed
-                .as_deref()
-                .unwrap_or(&params.default_baud),
+            &baud,
             params.xtal_khz,
             params.timeout_secs,
-            None,
+            find_lpc21isp(),
             verbose,
         )
     }
@@ -177,8 +361,25 @@ impl Deployer for LpcDeployer {
             )
         })?;
 
+        // FastLED/fbuild#921: fail fast with an actionable "install
+        // lpc21isp" hint BEFORE we try to spawn it. `run_command` would
+        // otherwise return a generic ENOENT that hides the fix.
+        //
+        // If the deployer was constructed with the literal `"lpc21isp"`
+        // string (find_lpc21isp() returned None), the file at that
+        // relative path does not exist. In every other case
+        // (env override, ~/.fbuild/tools/, C:\tools\..., or a resolved
+        // PATH hit) `lpc21isp_path` is an absolute path that does exist.
+        // Skip the check for shell-name paths so `PATH` lookup at spawn
+        // time still works when someone points us at a bare filename.
+        if self.lpc21isp_path.components().count() > 1 && !self.lpc21isp_path.is_file() {
+            return Err(fbuild_core::FbuildError::DeployFailed(
+                lpc21isp_install_hint(),
+            ));
+        }
+
         // lpc21isp argv:
-        //   lpc21isp [-control] [-wipe] -hex <firmware> <port> <baud> <xtal_kHz>
+        //   lpc21isp [-control] [-wipe] [-hex] <firmware> <port> <baud> <xtal_kHz>
         //
         // -control : drive DTR/RTS to enter ISP mode and exit it after
         //            flashing. Required for auto-reset boards like the
@@ -188,18 +389,27 @@ impl Deployer for LpcDeployer {
         //            only erases the sectors it's about to write, which
         //            leaves stale data in sectors the new firmware happened
         //            to skip. Cheap on 64 KB / 32 KB parts (~250 ms).
-        // -hex     : firmware is in Intel HEX format. fbuild's nxplpc
-        //            orchestrator emits .hex (see nxplpc/orchestrator.rs).
-        let args = [
+        // -hex     : ONLY when firmware ends in `.hex` (Intel HEX).
+        //            FastLED/fbuild#927: the nxplpc orchestrator currently
+        //            emits raw `.bin`; feeding that to `lpc21isp -hex`
+        //            makes it try to parse Intel-HEX-formatted ASCII and
+        //            abort with exit 1 before touching the serial port.
+        //            Omit `-hex` for raw-binary paths so lpc21isp treats
+        //            the file as a plain memory image (its default).
+        let mut args = vec![
             self.lpc21isp_path.to_string_lossy().to_string(),
             "-control".to_string(),
             "-wipe".to_string(),
-            "-hex".to_string(),
+        ];
+        if firmware_is_intel_hex(firmware_path) {
+            args.push("-hex".to_string());
+        }
+        args.extend([
             firmware_path.to_string_lossy().to_string(),
             port.to_string(),
             self.baud_rate.clone(),
             self.xtal_khz.to_string(),
-        ];
+        ]);
 
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
 
@@ -310,5 +520,150 @@ mod tests {
         assert_eq!(params.default_baud, "115200");
         assert_eq!(params.xtal_khz, 12_000);
         assert_eq!(params.timeout_secs, 60);
+    }
+
+    // ---------- FastLED/fbuild#921 lpc21isp path resolver ----------
+
+    #[test]
+    fn find_lpc21isp_env_var_wins_when_pointing_at_real_file() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let fake = tmp.path().join(if cfg!(windows) {
+            "lpc21isp.exe"
+        } else {
+            "lpc21isp"
+        });
+        std::fs::write(&fake, b"stub").unwrap();
+
+        // SAFETY: single-threaded test process.
+        let saved = std::env::var_os(LPC21ISP_PATH_ENV_VAR);
+        std::env::set_var(LPC21ISP_PATH_ENV_VAR, &fake);
+
+        let got = find_lpc21isp();
+
+        match saved {
+            Some(v) => std::env::set_var(LPC21ISP_PATH_ENV_VAR, v),
+            None => std::env::remove_var(LPC21ISP_PATH_ENV_VAR),
+        }
+
+        assert_eq!(got.as_deref(), Some(fake.as_path()));
+    }
+
+    #[test]
+    fn find_lpc21isp_env_var_missing_file_falls_through() {
+        // Env var pointing at a non-existent path should be treated as
+        // "not configured" rather than a hard error — the resolver
+        // continues to the next search location.
+        let tmp = tempfile::TempDir::new().unwrap();
+        let ghost = tmp.path().join("does-not-exist");
+
+        let saved = std::env::var_os(LPC21ISP_PATH_ENV_VAR);
+        std::env::set_var(LPC21ISP_PATH_ENV_VAR, &ghost);
+
+        let got = find_lpc21isp();
+
+        match saved {
+            Some(v) => std::env::set_var(LPC21ISP_PATH_ENV_VAR, v),
+            None => std::env::remove_var(LPC21ISP_PATH_ENV_VAR),
+        }
+
+        // We can't assert the exact fallback (depends on host state), but
+        // we CAN assert that the ghost env var did not sneak through.
+        assert!(got.as_deref() != Some(ghost.as_path()));
+    }
+
+    #[test]
+    fn install_hint_mentions_env_var_and_download_source() {
+        let hint = lpc21isp_install_hint();
+        assert!(
+            hint.contains(LPC21ISP_PATH_ENV_VAR),
+            "hint must name the env var"
+        );
+        assert!(
+            hint.contains("sourceforge.net"),
+            "hint must point at a download"
+        );
+        assert!(
+            hint.contains("~/.fbuild/prod/tools/"),
+            "hint must direct the user at the fbuild-managed tools dir \
+             (never an out-of-tree C:\\tools\\ path or PATH-walk)"
+        );
+        assert!(hint.contains("#921"), "hint must cite the tracking issue");
+    }
+
+    // ---------- FastLED/fbuild#927 baud + hex-flag fixes ----------
+
+    #[test]
+    fn resolve_baud_none_falls_back_to_family_default() {
+        assert_eq!(resolve_lpc21isp_baud(None, "115200"), "115200");
+    }
+
+    #[test]
+    fn resolve_baud_ok_when_at_or_above_floor() {
+        assert_eq!(resolve_lpc21isp_baud(Some("115200"), "9600"), "115200");
+        assert_eq!(resolve_lpc21isp_baud(Some("57600"), "9600"), "57600");
+        // Right AT the floor: still accepted (>= comparison).
+        assert_eq!(
+            resolve_lpc21isp_baud(Some(&MIN_LPC21ISP_BAUD.to_string()), "9600"),
+            MIN_LPC21ISP_BAUD.to_string()
+        );
+    }
+
+    #[test]
+    fn resolve_baud_refuses_cmsis_dap_khz_and_falls_back() {
+        // FastLED/fbuild#927: lpc845brk.json ships `upload.speed = 1000`,
+        // which is a CMSIS-DAP adapter clock in kHz, not a serial baud.
+        // The safety net rejects it and uses the family default instead.
+        assert_eq!(resolve_lpc21isp_baud(Some("1000"), "115200"), "115200");
+        assert_eq!(resolve_lpc21isp_baud(Some("2000"), "115200"), "115200");
+        // Just under the floor: still refused.
+        assert_eq!(
+            resolve_lpc21isp_baud(Some(&(MIN_LPC21ISP_BAUD - 1).to_string()), "115200"),
+            "115200"
+        );
+    }
+
+    #[test]
+    fn resolve_baud_non_numeric_passes_through() {
+        // Something exotic like `"auto"` — leave it to lpc21isp to fail
+        // clearly rather than silently swap it for the family default.
+        assert_eq!(resolve_lpc21isp_baud(Some("auto"), "115200"), "auto");
+    }
+
+    #[test]
+    fn firmware_is_intel_hex_true_for_dot_hex_variants() {
+        assert!(firmware_is_intel_hex(Path::new("build/firmware.hex")));
+        assert!(firmware_is_intel_hex(Path::new("build/firmware.HEX")));
+        assert!(firmware_is_intel_hex(Path::new("firmware.Hex")));
+    }
+
+    #[test]
+    fn firmware_is_intel_hex_false_for_bin_and_other() {
+        // FastLED/fbuild#927: the nxplpc orchestrator emits `.bin`; the
+        // deployer must NOT pass `-hex` when that lands.
+        assert!(!firmware_is_intel_hex(Path::new("build/firmware.bin")));
+        assert!(!firmware_is_intel_hex(Path::new("build/firmware.elf")));
+        assert!(!firmware_is_intel_hex(Path::new("build/firmware")));
+        assert!(!firmware_is_intel_hex(Path::new("some.hex.zip")));
+    }
+
+    #[tokio::test]
+    async fn deploy_errors_with_install_hint_when_lpc21isp_missing() {
+        // Force the deployer to point at an absolute-but-nonexistent
+        // path so the file-exists precondition trips.
+        let tmp = tempfile::TempDir::new().unwrap();
+        let ghost = tmp.path().join("nonexistent-lpc21isp");
+
+        let deployer = LpcDeployer::new("115200", 12_000, 60, Some(ghost), false);
+
+        let fw = tmp.path().join("firmware.hex");
+        std::fs::write(&fw, b":00000001FF\n").unwrap();
+
+        let err = deployer
+            .deploy(tmp.path(), "lpc845brk", &fw, Some("COM10"))
+            .await
+            .expect_err("must fail-fast when lpc21isp binary is absent");
+        let msg = err.to_string();
+        assert!(msg.contains(LPC21ISP_PATH_ENV_VAR), "err={msg}");
+        assert!(msg.contains("#921"), "err={msg}");
     }
 }
