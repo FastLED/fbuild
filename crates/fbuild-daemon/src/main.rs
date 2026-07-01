@@ -77,6 +77,14 @@ async fn main() {
 
     tracing::info!("fbuild daemon starting on port {}", port);
 
+    // Populate the tier-2 USB VID:PID overlay so `device list/status/deploy`
+    // return full vendor + product names instead of the tier-1 vendor-only
+    // + synthetic `Device 0xPPPP` placeholder. Best-effort: the resolver
+    // silently degrades to the embedded vendor archive if the fetch or
+    // decode fails. Runs on a blocking thread so a slow network doesn't
+    // stall daemon bootstrap.
+    tokio::task::spawn_blocking(populate_usb_overlay_best_effort);
+
     // FastLED/fbuild#800 (Phase 4 stage 2 of #789): start the embedded
     // zccache service inside this tokio runtime and install the global
     // handle BEFORE any compile work begins. The wrapper-binary path is
@@ -437,6 +445,33 @@ async fn main() {
 
     tracing::info!("daemon exiting");
     std::process::exit(0);
+}
+
+/// Populate the runtime USB VID:PID overlay from the shared cache root.
+///
+/// The daemon's `/api/devices/*` handlers call `fbuild_core::usb::resolve`
+/// to render vendor/product names. Without this best-effort startup step
+/// the resolver only sees the compile-time embedded vendor archive
+/// (tier-1), so unknown PIDs render as `Device 0xPPPP`. Any I/O, network,
+/// or decode failure is swallowed — the resolver falls back to tier-1.
+fn populate_usb_overlay_best_effort() {
+    let root = fbuild_paths::get_cache_root();
+    let dir = root.join("usb");
+    if let Err(e) = std::fs::create_dir_all(&dir) {
+        tracing::debug!(
+            path = %dir.display(),
+            error = %e,
+            "usb overlay: cache dir create failed; skipping tier-2 population"
+        );
+        return;
+    }
+    let proto_path = dir.join("usb-vids.proto.zstd");
+    let json_path = dir.join("usb-vid.json");
+    if fbuild_core::usb::populate_online_cache_from_paths(&proto_path, &json_path) {
+        tracing::info!("usb overlay: tier-2 VID:PID map installed");
+    } else {
+        tracing::warn!("usb overlay: tier-2 unavailable; falling back to embedded vendor archive");
+    }
 }
 
 /// Read the daemon PID file. Returns `Some(pid)` only if the file exists,

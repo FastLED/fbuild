@@ -22,7 +22,6 @@
 
 use clap::Subcommand;
 use fbuild_core::{FbuildError, Result};
-use std::time::Duration;
 
 use crate::output;
 
@@ -81,33 +80,18 @@ fn populate_online_overlay() {
 }
 
 fn populate_online_overlay_from_urls(proto_url: &str, json_url: &str) {
-    let Some(cache_path) = overlay_cache_path() else {
+    let Some(proto_cache_path) = overlay_cache_path() else {
         return;
     };
-    if !cache_is_fresh(&cache_path) {
-        if let Err(e) = fetch_overlay_to(&cache_path, proto_url) {
-            tracing::debug!(
-                error = %e,
-                "port scan: protobuf overlay fetch failed; trying JSON overlay"
-            );
-        }
-    }
-    if fbuild_core::usb::try_install_online_cache_proto_zstd(&cache_path) {
-        return;
-    }
-
     let Some(json_cache_path) = overlay_json_cache_path() else {
         return;
     };
-    if !cache_is_fresh(&json_cache_path) {
-        if let Err(e) = fetch_overlay_to(&json_cache_path, json_url) {
-            tracing::debug!(
-                error = %e,
-                "port scan: JSON overlay fetch failed"
-            );
-        }
-    }
-    if !fbuild_core::usb::try_install_online_cache(&json_cache_path) {
+    if !fbuild_core::usb::populate_online_cache_from_paths_and_urls(
+        &proto_cache_path,
+        &json_cache_path,
+        proto_url,
+        json_url,
+    ) {
         tracing::debug!("port scan: overlay unavailable; degrading to tier-1 only");
     }
 }
@@ -124,70 +108,6 @@ fn overlay_json_cache_path() -> Option<std::path::PathBuf> {
     let dir = root.join("usb");
     std::fs::create_dir_all(&dir).ok()?;
     Some(dir.join("usb-vid.json"))
-}
-
-/// 7-day cache TTL — fbuild's online-data branch refreshes nightly;
-/// a weekly local refresh gives us most of the benefit with minimal
-/// cold-start network cost. CI / offline boxes still get useful
-/// results from the cached copy.
-const OVERLAY_TTL_SECS: u64 = 7 * 24 * 60 * 60;
-
-fn cache_is_fresh(path: &std::path::Path) -> bool {
-    let Ok(meta) = std::fs::metadata(path) else {
-        return false;
-    };
-    let Ok(modified) = meta.modified() else {
-        return false;
-    };
-    let Ok(age) = modified.elapsed() else {
-        return false;
-    };
-    age.as_secs() < OVERLAY_TTL_SECS
-}
-
-fn fetch_overlay_to(path: &std::path::Path, url: &str) -> std::result::Result<(), String> {
-    // reqwest::blocking spins its own internal runtime and rejects
-    // being called from inside an outer tokio runtime (the CLI
-    // dispatcher uses `#[tokio::main]`). Run the fetch on a dedicated
-    // OS thread so reqwest's runtime sees a clean async-free context.
-    let path = path.to_path_buf();
-    let url = url.to_string();
-    std::thread::spawn(move || fetch_overlay_to_inner(&path, &url))
-        .join()
-        .map_err(|_| "fetch thread panicked".to_string())?
-}
-
-fn fetch_overlay_to_inner(path: &std::path::Path, url: &str) -> std::result::Result<(), String> {
-    // FastLED/fbuild#844: route the OS-thread blocking client through the
-    // shared bridge so all reqwest construction has one source of truth.
-    let client = fbuild_core::http::blocking_client(Duration::from_secs(15));
-    fetch_overlay_to_inner_with_client(path, &client, url)
-}
-
-fn fetch_overlay_to_inner_with_client(
-    path: &std::path::Path,
-    client: &reqwest::blocking::Client,
-    url: &str,
-) -> std::result::Result<(), String> {
-    let response = client
-        .get(url)
-        .send()
-        .map_err(|e| format!("http get: {e}"))?;
-    if !response.status().is_success() {
-        return Err(format!("http status {}", response.status()));
-    }
-    let body = response.bytes().map_err(|e| format!("body read: {e}"))?;
-    // Atomic write via a `.tmp` sibling + rename — partial writes from
-    // a Ctrl+C mid-fetch don't poison the cache.
-    let tmp = path.with_extension("proto.zstd.tmp");
-    std::fs::write(&tmp, &body).map_err(|e| format!("tmp write: {e}"))?;
-    std::fs::rename(&tmp, path).map_err(|e| format!("rename: {e}"))?;
-    tracing::debug!(
-        path = %path.display(),
-        size = body.len(),
-        "port scan: overlay cache refreshed"
-    );
-    Ok(())
 }
 
 // ─── pure, testable formatter ────────────────────────────────────────
@@ -384,6 +304,7 @@ mod tests {
     use std::io::{Read, Write};
     use std::net::TcpListener;
     use std::sync::Mutex;
+    use std::time::Duration;
 
     static ENV_LOCK: Mutex<()> = Mutex::new(());
 
@@ -440,39 +361,6 @@ mod tests {
         assert_eq!(path, tmp.path().join("usb").join("usb-vids.proto.zstd"));
         assert_eq!(json_path, tmp.path().join("usb").join("usb-vid.json"));
         assert!(tmp.path().join("usb").is_dir());
-    }
-
-    #[test]
-    fn fetch_overlay_writes_cache_file_atomically() {
-        let listener = TcpListener::bind("127.0.0.1:0").unwrap();
-        let addr = listener.local_addr().unwrap();
-        let expected = b"fake proto zstd bytes".to_vec();
-        let server_expected = expected.clone();
-        let handle = std::thread::spawn(move || {
-            let (mut stream, _) = listener.accept().unwrap();
-            let mut request = [0_u8; 1024];
-            let _ = stream.read(&mut request).unwrap();
-            let response = format!(
-                "HTTP/1.1 200 OK\r\nContent-Length: {}\r\nConnection: close\r\n\r\n",
-                server_expected.len()
-            );
-            stream.write_all(response.as_bytes()).unwrap();
-            stream.write_all(&server_expected).unwrap();
-        });
-
-        let tmp = tempfile::tempdir().unwrap();
-        let path = tmp.path().join("usb-vids.proto.zstd");
-        let client = reqwest::blocking::Client::builder()
-            .timeout(Duration::from_secs(5))
-            .build()
-            .unwrap();
-
-        fetch_overlay_to_inner_with_client(&path, &client, &format!("http://{addr}/data"))
-            .expect("fetch should write cache");
-
-        handle.join().unwrap();
-        assert_eq!(std::fs::read(&path).unwrap(), expected);
-        assert!(!path.with_extension("proto.zstd.tmp").exists());
     }
 
     #[test]

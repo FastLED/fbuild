@@ -60,6 +60,7 @@ use serde::Deserialize;
 use std::collections::HashMap;
 use std::path::Path;
 use std::sync::RwLock;
+use std::time::Duration;
 
 /// Legacy URL of the dataset index produced by the `online-data` branch's
 /// nightly workflow.
@@ -76,6 +77,11 @@ pub const USB_VIDS_PROTO_ZSTD_URL: &str =
     "https://raw.githubusercontent.com/fastled/fbuild/online-data/data/usb-vids.proto.zstd";
 
 static ONLINE_MAP: RwLock<Option<HashMap<u32, UsbInfo>>> = RwLock::new(None);
+
+/// 7-day cache TTL. The `online-data` branch refreshes nightly; a weekly
+/// local refresh gives useful freshness without adding network cost to every
+/// serial-port operation.
+pub const ONLINE_CACHE_TTL_SECS: u64 = 7 * 24 * 60 * 60;
 
 #[derive(Clone, PartialEq, Message)]
 struct UsbVidDatabase {
@@ -199,6 +205,102 @@ pub fn try_install_online_cache_proto_zstd(path: &Path) -> bool {
             false
         }
     }
+}
+
+/// Populate and install the runtime USB overlay from cache paths.
+///
+/// The compact protobuf/zstd artifact is preferred. If that fetch or decode
+/// fails, the legacy JSON dataset is fetched/installed as a compatibility
+/// fallback. This is intentionally path-driven so callers can use
+/// `fbuild-paths` without creating a dependency cycle in `fbuild-core`.
+pub fn populate_online_cache_from_paths(proto_cache_path: &Path, json_cache_path: &Path) -> bool {
+    populate_online_cache_from_paths_and_urls(
+        proto_cache_path,
+        json_cache_path,
+        USB_VIDS_PROTO_ZSTD_URL,
+        USB_VID_JSON_URL,
+    )
+}
+
+/// Same as [`populate_online_cache_from_paths`], with injectable URLs for
+/// tests and local mirrors.
+pub fn populate_online_cache_from_paths_and_urls(
+    proto_cache_path: &Path,
+    json_cache_path: &Path,
+    proto_url: &str,
+    json_url: &str,
+) -> bool {
+    if !cache_is_fresh(proto_cache_path) {
+        if let Err(e) = fetch_overlay_to(proto_cache_path, proto_url) {
+            tracing::debug!(
+                error = %e,
+                "usb online protobuf overlay fetch failed; trying JSON overlay"
+            );
+        }
+    }
+    if try_install_online_cache_proto_zstd(proto_cache_path) {
+        return true;
+    }
+
+    if !cache_is_fresh(json_cache_path) {
+        if let Err(e) = fetch_overlay_to(json_cache_path, json_url) {
+            tracing::debug!(error = %e, "usb online JSON overlay fetch failed");
+        }
+    }
+    try_install_online_cache(json_cache_path)
+}
+
+fn cache_is_fresh(path: &Path) -> bool {
+    let Ok(meta) = std::fs::metadata(path) else {
+        return false;
+    };
+    let Ok(modified) = meta.modified() else {
+        return false;
+    };
+    let Ok(age) = modified.elapsed() else {
+        return false;
+    };
+    age.as_secs() < ONLINE_CACHE_TTL_SECS
+}
+
+fn fetch_overlay_to(path: &Path, url: &str) -> Result<(), String> {
+    let path = path.to_path_buf();
+    let url = url.to_string();
+    std::thread::spawn(move || fetch_overlay_to_inner(&path, &url))
+        .join()
+        .map_err(|_| "fetch thread panicked".to_string())?
+}
+
+fn fetch_overlay_to_inner(path: &Path, url: &str) -> Result<(), String> {
+    let client = crate::http::blocking_client(Duration::from_secs(15));
+    fetch_overlay_to_inner_with_client(path, &client, url)
+}
+
+fn fetch_overlay_to_inner_with_client(
+    path: &Path,
+    client: &reqwest::blocking::Client,
+    url: &str,
+) -> Result<(), String> {
+    let response = client
+        .get(url)
+        .send()
+        .map_err(|e| format!("http get: {e}"))?;
+    if !response.status().is_success() {
+        return Err(format!("http status {}", response.status()));
+    }
+    let body = response.bytes().map_err(|e| format!("body read: {e}"))?;
+    if let Some(parent) = path.parent() {
+        std::fs::create_dir_all(parent).map_err(|e| format!("mkdir: {e}"))?;
+    }
+    let tmp = path.with_extension("tmp");
+    std::fs::write(&tmp, &body).map_err(|e| format!("tmp write: {e}"))?;
+    std::fs::rename(&tmp, path).map_err(|e| format!("rename: {e}"))?;
+    tracing::debug!(
+        path = %path.display(),
+        size = body.len(),
+        "usb online overlay cache refreshed"
+    );
+    Ok(())
 }
 
 fn decode_proto_zstd_bytes(raw: &[u8]) -> Result<HashMap<u32, UsbInfo>, String> {
@@ -385,6 +487,78 @@ mod tests {
         std::fs::write(&path, "this is not json {").unwrap();
         install_online_cache(&path); // must not panic
         assert!(lookup(0x1234, 0x5678).is_none());
+    }
+
+    #[test]
+    fn populate_online_cache_falls_back_to_json_when_proto_is_missing() {
+        use std::io::{Read, Write};
+        use std::net::TcpListener;
+
+        let _guard = OVERLAY_LOCK.lock().unwrap();
+        clear_online_cache_for_tests();
+
+        let tmp = tempfile::tempdir().unwrap();
+        let proto_path = tmp.path().join("usb-vids.proto.zstd");
+        let json_path = tmp.path().join("usb-vid.json");
+
+        let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+        listener.set_nonblocking(true).unwrap();
+        let addr = listener.local_addr().unwrap();
+        let json = r#"{"feed":{"vendor":"Feedface Inc","products":[["c0de","Coded Widget"]]}}"#;
+        let server_json = json.as_bytes().to_vec();
+        let handle = std::thread::spawn(move || {
+            let deadline = std::time::Instant::now() + Duration::from_secs(5);
+            let mut request_count = 0_u8;
+            while request_count < 2 {
+                match listener.accept() {
+                    Ok((mut stream, _)) => {
+                        let mut buf = [0_u8; 1024];
+                        let _ = stream.read(&mut buf).unwrap();
+                        request_count += 1;
+                        if request_count == 1 {
+                            stream
+                                .write_all(
+                                    b"HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\nConnection: close\r\n\r\n",
+                                )
+                                .unwrap();
+                        } else {
+                            let response = format!(
+                                "HTTP/1.1 200 OK\r\nContent-Length: {}\r\nConnection: close\r\n\r\n",
+                                server_json.len()
+                            );
+                            stream.write_all(response.as_bytes()).unwrap();
+                            stream.write_all(&server_json).unwrap();
+                        }
+                    }
+                    Err(e) if e.kind() == std::io::ErrorKind::WouldBlock => {
+                        assert!(
+                            std::time::Instant::now() < deadline,
+                            "timed out waiting for overlay requests"
+                        );
+                        std::thread::sleep(Duration::from_millis(10));
+                    }
+                    Err(e) => panic!("accept failed: {e}"),
+                }
+            }
+            request_count
+        });
+
+        let installed = populate_online_cache_from_paths_and_urls(
+            &proto_path,
+            &json_path,
+            &format!("http://{addr}/usb-vids.proto.zstd"),
+            &format!("http://{addr}/usb-vid.json"),
+        );
+
+        assert_eq!(handle.join().unwrap(), 2);
+        assert!(installed, "JSON fallback should install the overlay");
+        assert_eq!(std::fs::read_to_string(&json_path).unwrap(), json);
+
+        let info = lookup(0xFEED, 0xC0DE).expect("json fallback overlay lookup");
+        assert_eq!(info.vendor, "Feedface Inc");
+        assert_eq!(info.product, "Coded Widget");
+
+        clear_online_cache_for_tests();
     }
 
     #[test]
