@@ -336,7 +336,7 @@ mod tests {
     /// This is an integration test that hits the network. Run with:
     ///   cargo test -p fbuild-packages -- --ignored test_download_and_verify_checksum
     #[test]
-    #[ignore]
+    #[ignore = "downloads AVR toolchain archive from network"]
     fn test_download_and_verify_checksum() {
         let (url, expected) = platform_package();
         let Some(expected) = expected else {

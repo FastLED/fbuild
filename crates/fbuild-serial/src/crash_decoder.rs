@@ -740,7 +740,7 @@ mod tests {
     /// decoder with a real ELF + addr2line, verify we get `deliberate_crash`
     /// in the decoded output — matching the Python fbuild decoder.
     #[tokio::test]
-    #[ignore] // requires build artifacts from esp32s3-crash-test
+    #[ignore = "requires build artifacts from esp32s3-crash-test"]
     async fn real_esp32s3_crash_decode() {
         // FastLED/fbuild#911 — path-shape slash normalization goes through
         // `NormalizedPath::display_slash()`.

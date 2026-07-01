@@ -89,7 +89,7 @@ fn cache_paths_stem_hash() {
 /// - Internet access (first run only, then cached)
 /// - ~/dev/fbuild/tests/uno_minimal/ to exist (Python fbuild repo)
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
-#[ignore]
+#[ignore = "downloads AVR toolchain + Arduino-AVR core; requires ~/dev/fbuild/tests/uno_minimal"]
 async fn build_uno_minimal() {
     let project_dir = home_dir().join("dev/fbuild/tests/uno_minimal");
 
@@ -186,7 +186,7 @@ async fn build_uno_minimal() {
 
 /// Compare our build output against the Python fbuild's cached output.
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
-#[ignore]
+#[ignore = "downloads AVR toolchain; requires Python fbuild reference output at ~/dev/fbuild/tests/uno_minimal"]
 async fn compare_with_python_output() {
     let project_dir = home_dir().join("dev/fbuild/tests/uno_minimal");
 
@@ -258,7 +258,7 @@ async fn compare_with_python_output() {
 
 /// Build a self-contained test project (no dependency on Python fbuild repo).
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
-#[ignore]
+#[ignore = "downloads AVR toolchain + Arduino-AVR core"]
 async fn build_self_contained_blink() {
     let tmp = tempfile::TempDir::new().unwrap();
     let project_dir = tmp.path();
@@ -456,7 +456,7 @@ impl Drop for EnvVarGuard {
 /// Gated `#[ignore]` because it downloads avr-gcc + Arduino-AVR core (cached globally
 /// after first run, but still adds 30s+ to first invocation).
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
-#[ignore]
+#[ignore = "downloads AVR toolchain + Arduino-AVR core; exercises tar-extract cache path"]
 async fn cache_survives_tar_extract_uno() {
     let tmp_a = tempfile::TempDir::new().unwrap();
     let proj_a = tmp_a.path().join("proj");
