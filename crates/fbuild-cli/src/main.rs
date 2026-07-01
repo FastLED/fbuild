@@ -3,6 +3,7 @@ mod daemon_client;
 mod lib_select;
 mod mcp;
 mod output;
+mod sync;
 mod update_check;
 
 fn main() {

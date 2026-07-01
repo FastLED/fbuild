@@ -1201,6 +1201,7 @@ dependencies = [
  "owo-colors",
  "reqwest",
  "running-process",
+ "semver",
  "serde",
  "serde_json",
  "serialport",
@@ -1415,6 +1416,7 @@ dependencies = [
  "tokio",
  "tokio-tungstenite",
  "tracing",
+ "tracing-test",
  "uuid",
 ]
 
