@@ -34,7 +34,14 @@ const ACLPC_COMMIT: &str = "50d76e0d63c2d2a2b365b29de47100d93c530c83";
 const ACLPC_VERSION: &str = "0.2.0+g50d76e0";
 const ACLPC_URL: &str =
     "https://github.com/FastLED/framework-arduino-lpc8xx/archive/50d76e0d63c2d2a2b365b29de47100d93c530c83.tar.gz";
-const ACLPC_CHECKSUM: &str = "e6bbcc3392ae9da44c5c92268d7cd953770e0011fcf285561104633e36087428";
+// FastLED/framework-arduino-lpc8xx was org-transferred from zackees/
+// to FastLED/ on 2026-06-28. GitHub regenerates archive metadata after
+// ownership changes (the archive's top-level directory name flips
+// owner), so the tarball SHA256 changed even though the git tree is
+// identical. Updated to the post-transfer archive SHA below. Verified
+// 2026-07-01 against the archive GitHub currently serves for
+// `github.com/FastLED/framework-arduino-lpc8xx/archive/50d76e0d…tar.gz`.
+const ACLPC_CHECKSUM: &str = "e64f0cb81ab1673e05c2a63b7b4548c1373c9ba885413d2a2351bbfae160fbec";
 
 /// Arduino LPC8xx core framework manager.
 pub struct ArduinoCoreLpc8xx {
