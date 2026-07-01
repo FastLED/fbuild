@@ -195,6 +195,38 @@ pub(crate) fn resolve_lpc21isp_baud(
     }
 }
 
+/// FastLED/fbuild#927 (Windows COM10+ path): lpc21isp v1.97 opens the
+/// serial port via a bare `CreateFile(<name>, ...)` on Windows. Windows'
+/// CreateFile rejects a bare `"COM10"` (or any double-digit COM name)
+/// with `ERROR_FILE_NOT_FOUND (2)` — the DOS-device namespace requires
+/// the `\\.\` prefix for those, e.g. `\\.\COM10`. Ports COM1–COM9 open
+/// unprefixed.
+///
+/// This helper returns the port string that lpc21isp actually sees on
+/// its argv, with the prefix applied when needed. On non-Windows hosts
+/// (or ports that already carry the prefix, or non-`COM*` names such as
+/// Linux `/dev/ttyUSB0`) the input is returned unchanged.
+pub(crate) fn normalize_lpc21isp_port(port: &str) -> String {
+    if !cfg!(windows) {
+        return port.to_string();
+    }
+    // Already prefixed — nothing to do.
+    if port.starts_with(r"\\.\") {
+        return port.to_string();
+    }
+    // Match `COM<digits>`, case-insensitive on the `COM` prefix. Only
+    // apply the prefix to COM10 and above — COM1–COM9 open unprefixed.
+    let (head, tail) = port.split_at(port.len().min(3));
+    if head.eq_ignore_ascii_case("COM") && tail.bytes().all(|b| b.is_ascii_digit()) {
+        if let Ok(n) = tail.parse::<u32>() {
+            if n >= 10 {
+                return format!(r"\\.\{port}");
+            }
+        }
+    }
+    port.to_string()
+}
+
 /// FastLED/fbuild#927: return true when the firmware path has the
 /// Intel-HEX extension. Case-insensitive so `.HEX` from Windows-authored
 /// tooling still hits. Anything else is treated as raw binary and gets
@@ -379,7 +411,7 @@ impl Deployer for LpcDeployer {
         }
 
         // lpc21isp argv:
-        //   lpc21isp [-control] [-wipe] [-hex] <firmware> <port> <baud> <xtal_kHz>
+        //   lpc21isp [-control] [-wipe] (-hex|-bin) <firmware> <port> <baud> <xtal_kHz>
         //
         // -control : drive DTR/RTS to enter ISP mode and exit it after
         //            flashing. Required for auto-reset boards like the
@@ -389,13 +421,13 @@ impl Deployer for LpcDeployer {
         //            only erases the sectors it's about to write, which
         //            leaves stale data in sectors the new firmware happened
         //            to skip. Cheap on 64 KB / 32 KB parts (~250 ms).
-        // -hex     : ONLY when firmware ends in `.hex` (Intel HEX).
-        //            FastLED/fbuild#927: the nxplpc orchestrator currently
-        //            emits raw `.bin`; feeding that to `lpc21isp -hex`
-        //            makes it try to parse Intel-HEX-formatted ASCII and
-        //            abort with exit 1 before touching the serial port.
-        //            Omit `-hex` for raw-binary paths so lpc21isp treats
-        //            the file as a plain memory image (its default).
+        // -hex/-bin: file format selector. `-hex` is lpc21isp's DEFAULT,
+        //            so simply omitting it does NOT get raw-binary
+        //            behavior — the tool still tries to parse Intel HEX
+        //            and errors out with `Missing start of record (':')`
+        //            on the first non-`:` byte. Pass `-bin` explicitly
+        //            for raw-binary firmware paths so the tool loads
+        //            the file byte-for-byte into flash. FastLED/fbuild#927.
         let mut args = vec![
             self.lpc21isp_path.to_string_lossy().to_string(),
             "-control".to_string(),
@@ -403,10 +435,20 @@ impl Deployer for LpcDeployer {
         ];
         if firmware_is_intel_hex(firmware_path) {
             args.push("-hex".to_string());
+        } else {
+            args.push("-bin".to_string());
         }
+        // FastLED/fbuild#927 (Windows COM10+ path): lpc21isp v1.97 opens
+        // the serial port via a bare `CreateFile("COM10", ...)` on
+        // Windows. Windows rejects that with ERROR_FILE_NOT_FOUND (2)
+        // for any COMx with x >= 10 — it needs the DOS-device prefix
+        // `\\.\COM10`. Apply that here for double-digit ports so the
+        // port-open actually succeeds and lpc21isp reaches its
+        // synchronize handshake. Ports COM1–COM9 stay unchanged.
+        let normalized_port = normalize_lpc21isp_port(port);
         args.extend([
             firmware_path.to_string_lossy().to_string(),
-            port.to_string(),
+            normalized_port,
             self.baud_rate.clone(),
             self.xtal_khz.to_string(),
         ]);
@@ -627,6 +669,30 @@ mod tests {
         // Something exotic like `"auto"` — leave it to lpc21isp to fail
         // clearly rather than silently swap it for the family default.
         assert_eq!(resolve_lpc21isp_baud(Some("auto"), "115200"), "auto");
+    }
+
+    #[test]
+    #[cfg(windows)]
+    fn normalize_port_prefixes_com10_and_above_on_windows() {
+        assert_eq!(normalize_lpc21isp_port("COM1"), "COM1");
+        assert_eq!(normalize_lpc21isp_port("COM9"), "COM9");
+        assert_eq!(normalize_lpc21isp_port("COM10"), r"\\.\COM10");
+        assert_eq!(normalize_lpc21isp_port("COM99"), r"\\.\COM99");
+        assert_eq!(normalize_lpc21isp_port("com10"), r"\\.\com10");
+        // Already prefixed — leave alone.
+        assert_eq!(normalize_lpc21isp_port(r"\\.\COM10"), r"\\.\COM10");
+        // Non-COM devices — leave alone.
+        assert_eq!(normalize_lpc21isp_port("/dev/ttyUSB0"), "/dev/ttyUSB0");
+        assert_eq!(normalize_lpc21isp_port("COMx"), "COMx");
+    }
+
+    #[test]
+    #[cfg(not(windows))]
+    fn normalize_port_is_a_noop_on_non_windows() {
+        // On POSIX the caller sees /dev/ttyUSBn / /dev/tty.usbserial-*
+        // and lpc21isp opens them via plain open(2); no prefix needed.
+        assert_eq!(normalize_lpc21isp_port("COM10"), "COM10");
+        assert_eq!(normalize_lpc21isp_port("/dev/ttyUSB0"), "/dev/ttyUSB0");
     }
 
     #[test]
