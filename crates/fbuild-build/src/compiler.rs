@@ -657,10 +657,26 @@ pub async fn compile_source(
             crate::zccache::path_arg_for_compile_cwd(output, cwd),
         )
     } else {
-        (
-            source.to_string_lossy().to_string(),
-            output.to_string_lossy().to_string(),
-        )
+        // FastLED/fbuild#875 follow-up (again): on the no-compile-CWD
+        // fallback path (typical for PIO builds under `.build/pio/…`
+        // where there is no `.fbuild` component upstream), the source
+        // and output paths still need Windows backslashes rewritten to
+        // forward slashes. Otherwise GCC's internal spec-file pass
+        // treats `\` as an escape and strips it: `src\main.cpp` reaches
+        // cc1plus as `srcmain.cpp` → "fatal error: srcmain.cpp: No such
+        // file or directory". The compile-CWD arm above already
+        // handles this via `path_arg_for_compile_cwd`; mirror the same
+        // guard here so both fallback shapes agree.
+        let source_str = source.to_string_lossy().to_string();
+        let output_str = output.to_string_lossy().to_string();
+        if cfg!(windows) {
+            (
+                source_str.replace('\\', "/"),
+                output_str.replace('\\', "/"),
+            )
+        } else {
+            (source_str, output_str)
+        }
     };
 
     let mut all_flags: Vec<String> = Vec::new();

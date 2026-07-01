@@ -361,6 +361,40 @@ pub enum Commands {
         #[arg(long)]
         gc: bool,
     },
+    /// Resolve dependencies from `platformio.ini` and write a
+    /// deterministic JSON `platformio.lock` (FastLED/fbuild#618 Phase 1).
+    ///
+    /// Phase 1 classifies every `lib_deps` entry per env (registry /
+    /// GitHub / git+ / http archive / symlink / file / local path)
+    /// and writes the lockfile atomically. Local sources get status
+    /// `unlocked`; remote sources get `unresolved` pending Phase 2
+    /// network resolution. See docs/sync.md.
+    Sync {
+        /// Project directory.
+        #[arg(default_value = ".")]
+        project_dir: String,
+        /// Sync a single environment; skips the multi-env prompt.
+        #[arg(short = 'e', long)]
+        environment: Option<String>,
+        /// Accept multi-env scope non-interactively.
+        #[arg(long)]
+        yes: bool,
+        /// Require a fresh lockfile; never write.
+        #[arg(long)]
+        locked: bool,
+        /// Validate lockfile freshness without installing or writing.
+        #[arg(long)]
+        check: bool,
+        /// Print planned changes; don't write.
+        #[arg(long = "dry-run")]
+        dry_run: bool,
+        /// Repin every dep to the current registry/tag latest (Phase 2).
+        #[arg(long)]
+        upgrade: bool,
+        /// Repin only the named dep (Phase 2).
+        #[arg(long = "upgrade-package")]
+        upgrade_package: Option<String>,
+    },
     /// Manage the fbuild daemon
     Daemon {
         #[command(subcommand)]
@@ -844,6 +878,7 @@ pub const KNOWN_SUBCOMMANDS: &[&str] = &[
     "ci",
     "symbols",
     "bloat",
+    "sync",
 ];
 
 /// Rewrite `fbuild <dir> <subcommand> ...` → `fbuild <subcommand> <dir> ...`

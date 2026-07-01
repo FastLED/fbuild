@@ -30,6 +30,7 @@ pub mod reset;
 pub mod serial_probe;
 pub mod show;
 pub mod symbols_cmd;
+pub mod sync_cmd;
 
 #[cfg(test)]
 mod tests;

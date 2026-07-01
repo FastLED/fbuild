@@ -55,7 +55,7 @@ exclude = [
 libraries = [{ path = "dylints/*" }]
 
 [workspace.package]
-version = "2.3.15"
+version = "2.3.16"
 edition = "2021"
 rust-version = "1.94.1"
 license = "MIT OR Apache-2.0"

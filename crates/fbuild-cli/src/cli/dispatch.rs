@@ -27,6 +27,7 @@ use super::reset::run_reset;
 use super::serial_probe::run_serial;
 use super::show::run_show;
 use super::symbols_cmd::run_symbols;
+use super::sync_cmd::run_sync_cmd;
 
 pub async fn async_main() {
     let cli = Cli::parse_from(rewrite_args());
@@ -324,6 +325,33 @@ pub async fn async_main() {
                 run_purge_gc().await
             } else {
                 run_purge(target, dry_run, project_dir)
+            }
+        }
+        Some(Commands::Sync {
+            project_dir,
+            environment,
+            yes,
+            locked,
+            check,
+            dry_run,
+            upgrade,
+            upgrade_package,
+        }) => {
+            let code = run_sync_cmd(
+                Some(std::path::PathBuf::from(project_dir)),
+                environment,
+                yes,
+                locked,
+                check,
+                dry_run,
+                upgrade,
+                upgrade_package,
+            )
+            .await;
+            if code == 0 {
+                Ok(())
+            } else {
+                std::process::exit(code);
             }
         }
         Some(Commands::Daemon { action }) => run_daemon(action).await,
