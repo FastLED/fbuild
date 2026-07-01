@@ -35,6 +35,11 @@
       "vendor": "Atmel Corp."
     },
     {
+      "product": "Atmel ATSAMW25-XPRO",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Atmel"
+    },
+    {
       "product": "Xplained Pro board debugger",
       "source": "microchip-supplemental-usb-pids",
       "vendor": "Atmel Corp."
@@ -111,6 +116,11 @@
       "vendor": "Atmel Corp."
     },
     {
+      "product": "Arduino Uno WiFi Rev2",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    },
+    {
       "product": "Xplained Mini mEDBG",
       "source": "microchip-supplemental-usb-pids",
       "vendor": "Atmel Corp."
@@ -136,6 +146,42 @@
       "product": "Arduino Zero (Programming Port)",
       "source": "microchip-supplemental-usb-pids",
       "vendor": "Atmel Corp."
+    }
+  ],
+  "03eb:2404": [
+    {
+      "product": "The Micro",
+      "source": "usb-ids-rs",
+      "vendor": "Atmel Corp."
+    },
+    {
+      "product": "RedBearLab Blend Micro 3.3V/16MHz (overclock) / RedBearLab Blend Micro 3.3V/8MHz",
+      "source": "fastled-board-usb-pids",
+      "vendor": "RedBearLab"
+    }
+  ],
+  "0403:6001": [
+    {
+      "product": "FT232 Serial (UART) IC",
+      "source": "usb-ids-rs",
+      "vendor": "Future Technology Devices International, Ltd"
+    },
+    {
+      "product": "Digilent chipKIT UNO32",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Digilent"
+    }
+  ],
+  "0403:6010": [
+    {
+      "product": "FT2232C/D/H Dual UART/FIFO IC",
+      "source": "usb-ids-rs",
+      "vendor": "Future Technology Devices International, Ltd"
+    },
+    {
+      "product": "Espressif ESP-WROVER-KIT / YeaCreate NSCREEN-32",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Espressif / YeaCreate"
     }
   ],
   "0403:8372": [
@@ -208,6 +254,18 @@
       "product": "STLINK-V3 with 2 VCP",
       "source": "stm-usb-pids",
       "vendor": "STMicroelectronics"
+    }
+  ],
+  "0483:df11": [
+    {
+      "product": "STM Device in DFU Mode",
+      "source": "usb-ids-rs",
+      "vendor": "STMicroelectronics"
+    },
+    {
+      "product": "Econode-L082CZ / N2+ / STM32F4Stamp F405",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Econode / Generic / Netduino"
     }
   ],
   "04d8:9012": [
@@ -302,6 +360,18 @@
       "vendor": "Microchip Technology, Inc."
     }
   ],
+  "04d8:eee5": [
+    {
+      "product": "LowPowerLab CurrentRanger / Moteino M0",
+      "source": "fastled-board-usb-pids",
+      "vendor": "LowPowerLab"
+    },
+    {
+      "product": "Moteino M0",
+      "source": "microchip-supplemental-usb-pids",
+      "vendor": "Microchip Technology, Inc."
+    }
+  ],
   "0ccd:10ad": [
     {
       "product": " Cinergy H5 Rev. 2",
@@ -317,6 +387,18 @@
       "product": "Cinergy H5 Rev. 2",
       "source": "usbids-github",
       "vendor": "TerraTec Electronic GmbH"
+    }
+  ],
+  "0d28:0204": [
+    {
+      "product": "ARM mbed",
+      "source": "usb-ids-rs",
+      "vendor": "NXP"
+    },
+    {
+      "product": "Calliope Mini v3 / PHYTEC reel board / PHYTEC reel board v2",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Calliope / PHYTEC"
     }
   ],
   "0df6:001a": [
@@ -370,6 +452,30 @@
       "vendor": "Sony Ericsson Mobile Communications AB"
     }
   ],
+  "10c4:ea60": [
+    {
+      "product": "CP210x UART Bridge",
+      "source": "usb-ids-rs",
+      "vendor": "Silicon Labs"
+    },
+    {
+      "product": "Espressif ESP32-S2-Saola-1 / NodeMCU 0.9 (ESP-12 Module)",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Espressif / NodeMCU"
+    }
+  ],
+  "1366:0101": [
+    {
+      "product": "J-Link PLUS",
+      "source": "usb-ids-rs",
+      "vendor": "SEGGER"
+    },
+    {
+      "product": "Sparkfun Thing Plus Matter",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Sparkfun"
+    }
+  ],
   "16c0:0478": [
     {
       "product": "Teensy Halfkay Bootloader",
@@ -394,6 +500,18 @@
       "vendor": "Van Ooijen Technische Informatica"
     }
   ],
+  "16c0:0483": [
+    {
+      "product": "Teensyduino Serial",
+      "source": "usb-ids-rs",
+      "vendor": "Van Ooijen Technische Informatica"
+    },
+    {
+      "product": "Teensy 4.0",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Teensy"
+    }
+  ],
   "16c0:0487": [
     {
       "product": "Teensyduino Serial+Keyboard+Mouse+Joystick",
@@ -406,10 +524,51 @@
       "vendor": "Van Ooijen Technische Informatica"
     }
   ],
+  "1a86:55d3": [
+    {
+      "product": "WCH CH343 USB/Serial converter",
+      "source": "wch-usb-pids",
+      "vendor": "QinHeng Electronics"
+    },
+    {
+      "product": "Waveshare ESP32-S3-Touch-LCD-1.28 (16 MB QD, 2MB PSRAM)",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Waveshare"
+    }
+  ],
+  "1a86:55d4": [
+    {
+      "product": "WCH CH9102 USB/Serial converter",
+      "source": "wch-usb-pids",
+      "vendor": "QinHeng Electronics"
+    },
+    {
+      "product": "LilyGo T-Display",
+      "source": "fastled-board-usb-pids",
+      "vendor": "LilyGo"
+    }
+  ],
+  "1a86:7523": [
+    {
+      "product": "CH340 serial converter",
+      "source": "usb-ids-rs",
+      "vendor": "QinHeng Electronics"
+    },
+    {
+      "product": "OLIMEX ESP32-DevKit-LiPo / OLIMEX ESP32-EVB / OLIMEX ESP32-GATEWAY / OLIMEX ESP32-PoE / OLIMEX ESP32-PoE-ISO / YelloByte YB-ESP32-S3-AMP (Rev.2)",
+      "source": "fastled-board-usb-pids",
+      "vendor": "OLIMEX / YelloByte"
+    }
+  ],
   "1b4f:0015": [
     {
       "product": "RedBoard Turbo",
       "source": "sparkfun-first-party-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun RedBoard Turbo",
+      "source": "fastled-board-usb-pids",
       "vendor": "SparkFun"
     },
     {
@@ -422,6 +581,11 @@
     {
       "product": "SparkFun MicroMod SAMD51 Processor Board / SparkFun SAMD51 MicroMod",
       "source": "sparkfun-first-party-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun SAMD51 MicroMod",
+      "source": "fastled-board-usb-pids",
       "vendor": "SparkFun"
     },
     {
@@ -450,6 +614,11 @@
     },
     {
       "product": "SparkFun SAMD21 Pro RF",
+      "source": "fastled-board-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun SAMD21 Pro RF",
       "source": "sparkfun-supplemental-usb-pids",
       "vendor": "SparkFun"
     }
@@ -470,6 +639,11 @@
     {
       "product": "SparkFun MaKey MaKey",
       "source": "sparkfun-first-party-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun Makey Makey",
+      "source": "fastled-board-usb-pids",
       "vendor": "SparkFun"
     },
     {
@@ -510,6 +684,11 @@
     },
     {
       "product": "SparkFun Qduino Mini",
+      "source": "fastled-board-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun Qduino Mini",
       "source": "sparkfun-supplemental-usb-pids",
       "vendor": "SparkFun"
     }
@@ -522,6 +701,11 @@
     },
     {
       "product": "SparkFun SAMD21 Dev Breakout / SparkFun SAMD21 Mini Breakout",
+      "source": "fastled-board-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun SAMD21 Dev Breakout / SparkFun SAMD21 Mini Breakout",
       "source": "sparkfun-supplemental-usb-pids",
       "vendor": "SparkFun"
     }
@@ -530,6 +714,11 @@
     {
       "product": "SparkFun Pro Micro ATmega32U4 (3.3V, 8 MHz)",
       "source": "sparkfun-first-party-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun Pro Micro 3.3V/8MHz",
+      "source": "fastled-board-usb-pids",
       "vendor": "SparkFun"
     },
     {
@@ -570,6 +759,11 @@
     },
     {
       "product": "SparkFun Pro Micro 5V/16MHz",
+      "source": "fastled-board-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun Pro Micro 5V/16MHz",
       "source": "sparkfun-supplemental-usb-pids",
       "vendor": "SparkFun"
     }
@@ -578,6 +772,11 @@
     {
       "product": "SFE 9DOF-D21",
       "source": "sparkfun-first-party-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun 9DoF Razor IMU M0",
+      "source": "fastled-board-usb-pids",
       "vendor": "SparkFun"
     },
     {
@@ -618,6 +817,11 @@
     },
     {
       "product": "SparkFun Fio V3 3.3V/8MHz",
+      "source": "fastled-board-usb-pids",
+      "vendor": "SparkFun"
+    },
+    {
+      "product": "SparkFun Fio V3 3.3V/8MHz",
       "source": "sparkfun-supplemental-usb-pids",
       "vendor": "SparkFun"
     }
@@ -632,6 +836,42 @@
       "product": "SparkFun Fio V3 3.3V/8MHz",
       "source": "sparkfun-supplemental-usb-pids",
       "vendor": "SparkFun"
+    }
+  ],
+  "1c40:0537": [
+    {
+      "product": "MIST Board",
+      "source": "usb-ids-rs",
+      "vendor": "EZPrototypes"
+    },
+    {
+      "product": "ftDuino",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Till Harbaum"
+    }
+  ],
+  "1d50:6096": [
+    {
+      "product": "LightUp (sketch)",
+      "source": "usb-ids-rs",
+      "vendor": "OpenMoko, Inc."
+    },
+    {
+      "product": "LightUp",
+      "source": "fastled-board-usb-pids",
+      "vendor": "LightUp"
+    }
+  ],
+  "1eaf:0003": [
+    {
+      "product": "Maple DFU interface",
+      "source": "usb-ids-rs",
+      "vendor": "Leaflabs"
+    },
+    {
+      "product": "BlackPill F103C8 / BlackPill F103C8 (128k) / BluePill F103C6 / BluePill F103C8 / BluePill F103C8 (128k) / Malyan M200 V1 / Maple / Maple (RET6) / Maple Mini Bootloader 2.0 / Maple Mini Original / Microduino Core STM32 to Flash / RYMCU Nebula Pi F103VE (64k RAM. 512k Flash) / RYMCU STM32F407VE (192k RAM. 512k Flash) / STM32F103C8 (20k RAM. 64k Flash) / STM32F103CB (20k RAM. 128k Flash) / STM32F103R8 (20k RAM. 64 Flash) / STM32F103RB (20k RAM. 128k Flash) / STM32F103RC (48k RAM. 256k Flash) / STM32F103RE (64k RAM. 512k Flash) / STM32F103T8 (20k RAM. 64k Flash) / STM32F103TB (20k RAM. 128k Flash) / STM32F103VB (20k RAM. 128k Flash) / STM32F103VC (48k RAM. 256k Flash) / STM32F103VD (64k RAM. 384k Flash) / STM32F103VE (64k RAM. 512k Flash) / STM32F103ZC (48k RAM. 256k Flash) / STM32F103ZD (64k RAM. 384k Flash) / STM32F103ZE (64k RAM. 512k Flash) / STM32F407IG (192k RAM. 1024k Flash) / STM32F407VE (192k RAM. 512k Flash) / STM32F407VG (128k RAM. 1024k Flash) / Tiny STM103T",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Generic / HY / LeafLabs / Malyan / Microduino / RYMCU"
     }
   ],
   "1fc9:0126": [
@@ -692,6 +932,11 @@
       "vendor": "Arduino SA"
     },
     {
+      "product": "Controllino Maxi / Controllino Maxi Automation / Controllino Mega",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Controllino"
+    },
+    {
       "product": "Mega 2560 (CDC ACM)",
       "source": "linux-usb.org",
       "vendor": "Arduino SA"
@@ -714,6 +959,11 @@
       "vendor": "Arduino SA"
     },
     {
+      "product": "Arduboy / Arduboy DevKit / The Things Uno",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduboy / The Things Network"
+    },
+    {
       "product": "Leonardo Bootloader",
       "source": "linux-usb.org",
       "vendor": "Arduino SA"
@@ -722,6 +972,42 @@
       "product": "Leonardo Bootloader",
       "source": "usbids-github",
       "vendor": "Arduino SA"
+    }
+  ],
+  "2341:0038": [
+    {
+      "product": "Arduino Robot Control",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino Robot Control",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
+  "2341:0039": [
+    {
+      "product": "Arduino Robot Motor",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino Robot Motor",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
+  "2341:003c": [
+    {
+      "product": "Arduino Esplora",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino Esplora",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
     }
   ],
   "2341:003d": [
@@ -734,6 +1020,11 @@
       "product": "Due Programming Port",
       "source": "usb-ids-rs",
       "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino Due (Programming Port) / SainSmart Due (Programming Port)",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino / SainSmart"
     },
     {
       "product": "Due Programming Port",
@@ -756,6 +1047,11 @@
       "product": "Due",
       "source": "usb-ids-rs",
       "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino Due (USB Native Port) / SainSmart Due (USB Native Port)",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino / SainSmart"
     },
     {
       "product": "Due",
@@ -790,6 +1086,18 @@
       "vendor": "Arduino SA"
     }
   ],
+  "2341:0041": [
+    {
+      "product": "Arduino Yún",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino Yun",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
   "2341:0042": [
     {
       "product": "Arduino Mega or Mega 2560",
@@ -800,6 +1108,11 @@
       "product": "Mega 2560 R3 (CDC ACM)",
       "source": "usb-ids-rs",
       "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino Mega or Mega 2560 ATmega2560 (Mega 2560)",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
     },
     {
       "product": "Mega 2560 R3 (CDC ACM)",
@@ -822,6 +1135,11 @@
       "product": "Uno R3 (CDC ACM)",
       "source": "usb-ids-rs",
       "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino Uno / Controllino Mini / Elektor Uno R4",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino / Controllino / Elektor"
     },
     {
       "product": "Uno R3 (CDC ACM)",
@@ -856,6 +1174,138 @@
       "vendor": "Arduino SA"
     }
   ],
+  "2341:0058": [
+    {
+      "product": "Arduino Nano Every",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino Nano Every",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
+  "2341:005a": [
+    {
+      "product": "Arduino Nano 33 BLE / Arduino Stella",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino Nano 33 BLE",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
+  "2341:005e": [
+    {
+      "product": "Arduino Nano RP2040 Connect",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino Nano RP2040 Connect",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
+  "2341:0060": [
+    {
+      "product": "Arduino Nicla Sense ME",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino Nicla Sense ME",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
+  "2341:0062": [
+    {
+      "product": "Arduino UNO Mini",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino Uno Mini",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
+  "2341:0072": [
+    {
+      "product": "Arduino Nano Matter",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino Nano Matter",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
+  "2341:035b": [
+    {
+      "product": "Arduino Portenta H7",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino Portenta H7 (M4 core) / Arduino Portenta H7 (M7 core)",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
+  "2341:035f": [
+    {
+      "product": "Arduino Nicla Vision",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino Nicla Vision / Arduino Nicla Vision (M4 core)",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
+  "2341:0364": [
+    {
+      "product": "Opta",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino Opta / Arduino Opta (M4 core)",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
+  "2341:0366": [
+    {
+      "product": "Arduino Giga R1",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino Giga R1 (M4 core) / Arduino Giga R1 (M7 core)",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
+  "2341:0c9f": [
+    {
+      "product": "Arduino Gemma",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "TI FraunchPad MSP-EXP430FR5739LP / TI LaunchPad MSP-EXP430F5529LP / TI LaunchPad MSP-EXP430FR2311LP / TI LaunchPad MSP-EXP430FR2355LP / TI LaunchPad MSP-EXP430FR2433LP / TI LaunchPad MSP-EXP430FR2476LP / TI LaunchPad MSP-EXP430FR4133LP / TI LaunchPad MSP-EXP430FR5969LP / TI LaunchPad MSP-EXP430FR5994LP / TI LaunchPad MSP-EXP430FR6989LP / TI LaunchPad MSP-EXP430G2 w/ MSP430G2231 / TI LaunchPad MSP-EXP430G2 w/ MSP430G2452 / TI LaunchPad MSP-EXP430G2553LP",
+      "source": "fastled-board-usb-pids",
+      "vendor": "TI"
+    }
+  ],
   "2341:8036": [
     {
       "product": "Arduino Leonardo",
@@ -868,6 +1318,11 @@
       "vendor": "Arduino SA"
     },
     {
+      "product": "Arduino Leonardo / Microduino Core USB (ATmega32U4@16M,5V) / RedBearLab Blend",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino / Microduino / RedBearLab"
+    },
+    {
       "product": "Leonardo (CDC ACM, HID)",
       "source": "linux-usb.org",
       "vendor": "Arduino SA"
@@ -876,6 +1331,18 @@
       "product": "Leonardo (CDC ACM, HID)",
       "source": "usbids-github",
       "vendor": "Arduino SA"
+    }
+  ],
+  "2341:8037": [
+    {
+      "product": "Arduino Micro",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino Micro",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
     }
   ],
   "2341:8038": [
@@ -922,6 +1389,258 @@
       "vendor": "Arduino SA"
     }
   ],
+  "2341:804d": [
+    {
+      "product": "Arduino Zero (Native USB Port)",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino Zero (Programming/Debug Port) / Arduino Zero (USB Native Port) / SODAQ Autonomo / SODAQ ExpLoRer / SODAQ ONE / SODAQ SARA / SODAQ SFF / Seeeduino LoRaWAN",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino / SODAQ / Seeed"
+    }
+  ],
+  "2341:804e": [
+    {
+      "product": "Arduino MKR 1000 WiFi",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino MKR1000",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
+  "2341:804f": [
+    {
+      "product": "Arduino MKR Zero",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino MKRZERO",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
+  "2341:8050": [
+    {
+      "product": "Arduino MKR FOX 1200",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino MKR FOX 1200",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
+  "2341:8052": [
+    {
+      "product": "Arduino MKR GSM 1400",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino MKR GSM 1400",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
+  "2341:8053": [
+    {
+      "product": "Arduino MKR WAN 1300",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino MKR WAN 1300",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
+  "2341:8054": [
+    {
+      "product": "Arduino MKR WiFi 1010",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino MKR WiFi 1010 / Minitronics v2.0",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino / ReprapWorld"
+    }
+  ],
+  "2341:8055": [
+    {
+      "product": "Arduino MKR NB 1500",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino MKR NB 1500",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
+  "2341:8056": [
+    {
+      "product": "Arduino MKR Vidor 4000",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "MKR Vidor 4000",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
+  "2341:8057": [
+    {
+      "product": "Arduino NANO 33 IoT",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "NANO 33 IoT",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
+  "2341:8059": [
+    {
+      "product": "Arduino MKR WAN 1310",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino SA"
+    },
+    {
+      "product": "Arduino MKR WAN 1310",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
+  "239a:000e": [
+    {
+      "product": "Adafruit ItsyBitsy 32u4 5V 16MHz",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit ItsyBitsy 3V/8MHz / Adafruit ItsyBitsy 5V/16MHz",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:0117": [
+    {
+      "product": "Adafruit PyCamera",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit pyCamera S3",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:800a": [
+    {
+      "product": "Adafruit Bluefruit Micro",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit Bluefruit Micro / EspinalLab ATMegaZero ESP32-S2",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit / EspinalLab"
+    }
+  ],
+  "239a:800b": [
+    {
+      "product": "Adafruit Feather M0 (SAMD21)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit Feather M0",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:800c": [
+    {
+      "product": "Adafruit Feather 32u4",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit Feather 328P / Adafruit Feather 32u4 / LoRa32u4II (868-915MHz)",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit / BSFrance"
+    }
+  ],
+  "239a:800f": [
+    {
+      "product": "Adafruit ItsyBitsy M0 Express (SAMD21)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit ItsyBitsy M0",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:8013": [
+    {
+      "product": "Adafruit Metro M0 Express (SAMD21)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit Metro M0 Expresss",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:8018": [
+    {
+      "product": "Adafruit Circuit Playground Express (SAMD21)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit Circuit Playground Express",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:801b": [
+    {
+      "product": "Adafruit Feather M0 Express (SAMD21)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit Feather M0 Express",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:801c": [
+    {
+      "product": "Adafruit Gemma M0 (SAMD21)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit Gemma M0",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
   "239a:801e": [
     {
       "product": "Adafruit Trinket M0 (SAMD21)",
@@ -931,6 +1650,11 @@
     {
       "product": "Trinket M0",
       "source": "usb-ids-rs",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit Trinket M0 / Adafruit pIRkey",
+      "source": "fastled-board-usb-pids",
       "vendor": "Adafruit"
     },
     {
@@ -944,6 +1668,354 @@
       "vendor": "Adafruit"
     }
   ],
+  "239a:8020": [
+    {
+      "product": "Adafruit Metro M4 (SAMD51)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit Grand Central M4 / Adafruit Metro M4",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:8029": [
+    {
+      "product": "Adafruit Feather nRF52840 Express",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit Bluefruit nRF52832 Feather / Adafruit Feather nRF52840 Express / Nordic nRF52840-DK (Adafruit BSP) / Particle Xenon",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit / Nordic / Particle"
+    }
+  ],
+  "239a:802b": [
+    {
+      "product": "Adafruit ItsyBitsy M4 (SAMD51)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit ItsyBitsy M4",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:802d": [
+    {
+      "product": "Adafruit Crickit M0 (SAMD21)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit Crickit M0",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:802f": [
+    {
+      "product": "Adafruit Trellis M4 (SAMD51)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit Trellis M4",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:8031": [
+    {
+      "product": "Adafruit Grand Central M4 (SAMD51)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit Feather M4 Express",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:8033": [
+    {
+      "product": "Adafruit pyBadge M4 Express (SAMD51)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit pyBadge M4 Express",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:8035": [
+    {
+      "product": "Adafruit PyPortal M4 (SAMD51)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit PyPortal M4 / Adafruit PyPortal M4 Titano",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:8037": [
+    {
+      "product": "Adafruit Metro M4 AirLift Lite (SAMD51)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit Metro M4 AirLift Lite",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:803d": [
+    {
+      "product": "Adafruit PyGamer M4 Express (SAMD51)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit PyGamer M4 Express",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:803f": [
+    {
+      "product": "Adafruit Metro nRF52840 Express",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Metro nRF52840 Express",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:8043": [
+    {
+      "product": "Adafruit pyBadge AirLift M4 (SAMD51)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit pyBadge AirLift M4",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:8045": [
+    {
+      "product": "Adafruit Circuit Playground Bluefruit",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Circuit Playground Bluefruit",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:8047": [
+    {
+      "product": "Adafruit MONSTER M4SK (SAMD51)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit MONSTER M4SK",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:8049": [
+    {
+      "product": "Adafruit Hallowing M4 (SAMD51)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit Hallowing M4",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:8051": [
+    {
+      "product": "Adafruit ItsyBitsy nRF52840 Express",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "ItsyBitsy nRF52840 Express",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:8071": [
+    {
+      "product": "Adafruit CLUE",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit CLUE nRF52840",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:8087": [
+    {
+      "product": "Adafruit Feather nRF52840 Sense / Adafruit Feather nRF52840 Sense TFT",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit Feather Bluefruit Sense",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:80bf": [
+    {
+      "product": "Adafruit BLM Badge (SAMD21)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit BLM Badge",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:80c9": [
+    {
+      "product": "Adafruit Matrix Portal M4 (SAMD51)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit Matrix Portal M4",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:80cb": [
+    {
+      "product": "Adafruit QT Py M0 (SAMD21)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit QT Py M0",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:80cd": [
+    {
+      "product": "Adafruit Feather M4 CAN (SAME51)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit Feather M4 CAN",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:80ef": [
+    {
+      "product": "Adafruit NeoPixel Trinkey M0 (SAMD21)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit NeoPixel Trinkey",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:80fb": [
+    {
+      "product": "Adafruit Rotary Trinkey M0 (SAMD21)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit Rotary Trinkey",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:80ff": [
+    {
+      "product": "Adafruit NeoKey Trinkey M0 (SAMD21)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit NeoKey Trinkey",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:8101": [
+    {
+      "product": "Adafruit Slide Trinkey M0 (SAMD21)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit Slide Trinkey",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:8103": [
+    {
+      "product": "Adafruit ProxLight Trinkey M0 (SAMD21)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit ProxLight Trinkey",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
+  "239a:810b": [
+    {
+      "product": "Raytac nRF52840 Dongle",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Raytac MDBT50Q-RX Dongle",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Raytac"
+    }
+  ],
+  "239a:dead": [
+    {
+      "product": "Adafruit Hallowing M0 (SAMD21)",
+      "source": "adafruit-usb-pids",
+      "vendor": "Adafruit"
+    },
+    {
+      "product": "Adafruit Hallowing M0",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Adafruit"
+    }
+  ],
   "2886:0046": [
     {
       "product": "Seeed Studio XIAO ESP32C3",
@@ -951,7 +2023,24 @@
       "vendor": "Seeed Technology Co., Ltd."
     },
     {
+      "product": "Seeed Studio XIAO ESP32C3",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Seeed Studio"
+    },
+    {
       "product": "Pcbcupid GLYPH C3 / Seeed XIAO ESP32C3 / Seeed Studio XIAO ESP32C3",
+      "source": "seeed-supplemental-usb-pids",
+      "vendor": "Seeed Technology Co., Ltd."
+    }
+  ],
+  "2886:0048": [
+    {
+      "product": "Seeed Studio XIAO ESP32C6",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Seeed Studio"
+    },
+    {
+      "product": "Seeed Studio XIAO ESP32C6",
       "source": "seeed-supplemental-usb-pids",
       "vendor": "Seeed Technology Co., Ltd."
     }
@@ -961,6 +2050,11 @@
       "product": "Seeed Studio XIAO ESP32S3 Plus / Seeed Studio XIAO ESP32S3 Sense",
       "source": "seeed-first-party-usb-pids",
       "vendor": "Seeed Technology Co., Ltd."
+    },
+    {
+      "product": "Seeed Studio XIAO ESP32S3",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Seeed Studio"
     },
     {
       "product": "Seeed Studio XIAO ESP32S3 / Seeed XIAO ESP32S3",
@@ -978,6 +2072,66 @@
       "product": "Seeed XIAO RP2350",
       "source": "seeed-supplemental-usb-pids",
       "vendor": "Seeed Technology Co., Ltd."
+    }
+  ],
+  "2886:0062": [
+    {
+      "product": "Seeed Studio XIAO MG24",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Seeed Studio"
+    },
+    {
+      "product": "Seeed Studio XIAO MG24 (Sense)",
+      "source": "seeed-supplemental-usb-pids",
+      "vendor": "Seeed Technology Co., Ltd."
+    }
+  ],
+  "2886:800b": [
+    {
+      "product": "Seeeduino Zero",
+      "source": "seeed-first-party-usb-pids",
+      "vendor": "Seeed Technology Co., Ltd."
+    },
+    {
+      "product": "Seeeduino Zero",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Seeed"
+    }
+  ],
+  "2886:802a": [
+    {
+      "product": "Seeeduino Wio lite MG126",
+      "source": "seeed-first-party-usb-pids",
+      "vendor": "Seeed Technology Co., Ltd."
+    },
+    {
+      "product": "Seeeduino Wio Lite MG126",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Seeed"
+    }
+  ],
+  "2886:802d": [
+    {
+      "product": "Seeeduino Wio Terminal",
+      "source": "seeed-first-party-usb-pids",
+      "vendor": "Seeed Technology Co., Ltd."
+    },
+    {
+      "product": "Seeeduino Wio Terminal",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Seeed"
+    }
+  ],
+  "2886:802f": [
+    {
+      "product": "Seeeduino XIAO",
+      "source": "seeed-first-party-usb-pids",
+      "vendor": "Seeed Technology Co., Ltd."
+    },
+    {
+      "product": "Seeeduino Femto M0 / Seeeduino XIAO",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Seeed"
     }
   ],
   "2886:8056": [
@@ -1268,6 +2422,11 @@
       "vendor": "dog hunter AG"
     },
     {
+      "product": "Linino One",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Linino"
+    },
+    {
       "product": "Linino ONE (CDC ACM)",
       "source": "linux-usb.org",
       "vendor": "dog hunter AG"
@@ -1388,6 +2547,18 @@
       "vendor": "dog hunter AG"
     }
   ],
+  "2a03:8040": [
+    {
+      "product": "Arduino Leonardo ETH",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino LLC"
+    },
+    {
+      "product": "Arduino Leonardo ETH",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
   "2a03:8041": [
     {
       "product": "Arduino Yún",
@@ -1430,6 +2601,438 @@
       "product": "Arduino Zero Pro (CDC ACM)",
       "source": "usbids-github",
       "vendor": "dog hunter AG"
+    }
+  ],
+  "2a03:804e": [
+    {
+      "product": "Arduino M0",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino LLC"
+    },
+    {
+      "product": "Arduino M0",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
+  "2a03:804f": [
+    {
+      "product": "Arduino M0 Pro (Native USB Port)",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino LLC"
+    },
+    {
+      "product": "Arduino M0 Pro (Native USB Port) / Arduino M0 Pro (Programming/Debug Port)",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
+  "2a03:8050": [
+    {
+      "product": "Arduino Yún Mini",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino LLC"
+    },
+    {
+      "product": "Arduino Yun Mini",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
+  "2a03:8056": [
+    {
+      "product": "Arduino Industrial 101",
+      "source": "arduino-usb-pids",
+      "vendor": "Arduino LLC"
+    },
+    {
+      "product": "Arduino Industrial 101",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Arduino"
+    }
+  ],
+  "2e8a:000a": [
+    {
+      "product": "Raspberry Pi Pico SDK CDC UART (RP2040)",
+      "source": "raspberrypi-usb-pids",
+      "vendor": "Raspberry Pi Foundation"
+    },
+    {
+      "product": "Raspberry Pi Pico / Seeed Studio XIAO RP2040",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Raspberry Pi / Seeed Studio"
+    }
+  ],
+  "2e8a:000b": [
+    {
+      "product": "Raspberry Pi Pico CircuitPython firmware",
+      "source": "raspberrypi-usb-pids",
+      "vendor": "Raspberry Pi Foundation"
+    },
+    {
+      "product": "Raspberry Pi Pico 2",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Raspberry Pi"
+    }
+  ],
+  "303a:1001": [
+    {
+      "product": "USB JTAG/serial debug unit",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "4D Systems GEN4-ESP32 16MB (ESP32S3-R8N16) / Adafruit QT Py ESP32-C3 / ArtronShop ATD1.47-S3 / Aventen S3 Sync / Blinker WiFiduino32S3 / DFRobot Romeo ESP32-S3 / ESP32-S3 16MB QIO, 8MB OPI PSRAM / ESP32S3 CAM LCD / Espressif ESP32-H2-DevKit / Espressif ESP32-S3-Box / Espressif ESP32-S3-DevKitC-1-N16R8V (16 MB Flash Quad, 16 MB PSRAM Octal) / Espressif ESP32-S3-DevKitC-1-N16R8V (16 MB Flash Quad, 8 MB PSRAM Octal) / Espressif ESP32-S3-DevKitC-1-N32R8V (32 MB Flash Octal, 8 MB PSRAM Octal) / Espressif ESP32-S3-DevKitC-1-N8 (8 MB QD, No PSRAM) / Espressif ESP32-S3-DevKitC-1-N8R8 (16 MB Flash Quad, 2 MB PSRAM Quad) / Espressif ESP32-S3-DevKitC-1-N8R8 (4 MB Flash Quad, 2 MB PSRAM Quad) / Espressif ESP32-S3-DevKitC-1-N8R8 (4 MB Flash Quad, 8 MB PSRAM Octal) / Espressif ESP32-S3-DevKitC-1-N8R8 (8 MB Flash Quad, 2 MB PSRAM quad) / Espressif ESP32-S3-DevKitC-1-N8R8 (8 MB Flash Quad, 8 MB PSRAM Octal) / Espressif ESP32-S3-DevKitM-1 / Espressif ESP32-S3-FH4R2 (4 MB QD, 2MB PSRAM) / Espressif ESP32-S3-USB-OTG / Freenove ESP32-S3 WROOM N8R8 (8MB Flash / 8MB PSRAM) / Heltec WiFi Kit 32 (V3) / Heltec WiFi LoRa 32 (V3) / Huidu HD-WF2 / Huidu HD-WF4 / Kinetic Dynamics Nebula S3 / LilyGo T-Display-S3 / Lion:Bit S3 STEM Dev Board / M5Stack AtomS3 / M5Stack StampS3 / MotorGo Mini 1 (ESP32-S3) / Namino Arancio / Namino Rosso / RYMCU ESP32-S3-DevKitC-1-N8R2 (8 MB QD, 2 MB PSRAM) / SPARKFUN_ESP32S3_THING_PLUS / TAMC Termod S3 / Unexpected Maker PROS3 / Valetron Systems VALTRACK-V4MVF / Valetron Systems VALTRACK-V4VTS / WEMOS LOLIN C3 Mini / WEMOS LOLIN S3 / WeAct Studio ESP32C3CoreBoard / YelloByte YB-ESP32-S3-AMP (Rev.3) / YelloByte YB-ESP32-S3-DRV / YelloByte YB-ESP32-S3-ETH / cezerio dev ESP32C6 / cezerio mini dev ESP32C6 / wt32-sc01-plus",
+      "source": "fastled-board-usb-pids",
+      "vendor": "4D Systems / Adafruit / ArtronShop / Aventen / Blinker / DFRobot / Espressif / Freenove / Heltec / Huidu Tech / Kinetic Dynamics / LilyGo / Lion:Bit / M5Stack / MECT SRL / MotorGo / RYMCU / SparkFun / TAMC / Unexpected Maker / Valetron Systems / WEMOS / WeAct Studio / Wireless-Tag / YelloByte / cezerio / espressif"
+    }
+  ],
+  "303a:8001": [
+    {
+      "product": "Unexpected Maker TinyS2 - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "Unexpected Maker TinyS2",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Unexpected Maker"
+    }
+  ],
+  "303a:80a9": [
+    {
+      "product": "Franzininho WIFI - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "Franzininho WiFi / Franzininho WiFi MSC",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Franzininho"
+    }
+  ],
+  "303a:80b4": [
+    {
+      "product": "Unexpected Maker FeatherS2 Neo - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "Unexpected Maker FeatherS2 Neo",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Unexpected Maker"
+    }
+  ],
+  "303a:80c2": [
+    {
+      "product": "Lolin S2 Mini - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "WEMOS LOLIN S2 Mini",
+      "source": "fastled-board-usb-pids",
+      "vendor": "WEMOS"
+    }
+  ],
+  "303a:80c5": [
+    {
+      "product": "Lolin S2 Pico - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "WEMOS LOLIN S2 PICO",
+      "source": "fastled-board-usb-pids",
+      "vendor": "WEMOS"
+    }
+  ],
+  "303a:80d0": [
+    {
+      "product": "Unexpected Maker TinyS3 - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "Unexpected Maker TinyS3",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Unexpected Maker"
+    }
+  ],
+  "303a:80d6": [
+    {
+      "product": "Unexpected Maker FeatherS3 - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "Unexpected Maker FeatherS3",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Unexpected Maker"
+    }
+  ],
+  "303a:80df": [
+    {
+      "product": "Banana Pi BPI-Leaf-S3 - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "BPI-Centi-S3 / BPI-Leaf-S3",
+      "source": "fastled-board-usb-pids",
+      "vendor": "BPI Tech"
+    }
+  ],
+  "303a:80f6": [
+    {
+      "product": "Unexpected Maker - Reflow Master Pro",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "Unexpected Maker RMP",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Unexpected Maker"
+    }
+  ],
+  "303a:80f8": [
+    {
+      "product": "Cytron Maker Feather AIoT S3 - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "Cytron Maker Feather AIoT S3 / Munich Labs RedPill ESP32-S3",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Cytron Technologies / Munich Labs"
+    }
+  ],
+  "303a:80ff": [
+    {
+      "product": "MiniMain ESP32-S2 - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "Deparment of Alchemy MiniMain ESP32-S2",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Deparment of Alchemy"
+    }
+  ],
+  "303a:810d": [
+    {
+      "product": "Smart Bee Designs Bee Motion - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "Smart Bee Motion",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Smart Bee"
+    }
+  ],
+  "303a:8110": [
+    {
+      "product": "Smart Bee Designs Bee S3 - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "Smart Bee S3",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Smart Bee"
+    }
+  ],
+  "303a:8113": [
+    {
+      "product": "Smart Bee Designs Bee Motion S3 - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "Smart Bee Motion S3",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Smart Bee"
+    }
+  ],
+  "303a:8119": [
+    {
+      "product": "M5STACK CoreS3 - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "M5Stack CoreS3",
+      "source": "fastled-board-usb-pids",
+      "vendor": "M5Stack"
+    }
+  ],
+  "303a:8141": [
+    {
+      "product": "Deneyap Mini - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "Deneyap Mini",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Deneyap"
+    }
+  ],
+  "303a:8144": [
+    {
+      "product": "Deneyap Mini v2 - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "Deneyap Mini v2",
+      "source": "fastled-board-usb-pids",
+      "vendor": "T3 Foundation"
+    }
+  ],
+  "303a:8147": [
+    {
+      "product": "Deneyap Kart 1A v2 - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "Deneyap Kart 1A v2",
+      "source": "fastled-board-usb-pids",
+      "vendor": "T3 Foundation"
+    }
+  ],
+  "303a:815c": [
+    {
+      "product": "Smart Bee Designs Bee Data Logger - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "Smart Bee Data Logger",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Smart Bee"
+    }
+  ],
+  "303a:8161": [
+    {
+      "product": "LOLIN S3 Pro - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "WEMOS LOLIN S3 PRO",
+      "source": "fastled-board-usb-pids",
+      "vendor": "WEMOS"
+    }
+  ],
+  "303a:8167": [
+    {
+      "product": "LOLIN S3 Mini - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "WEMOS LOLIN S3 Mini / WEMOS LOLIN S3 Mini Pro",
+      "source": "fastled-board-usb-pids",
+      "vendor": "WEMOS"
+    }
+  ],
+  "303a:8179": [
+    {
+      "product": "Unexpected Maker NanoS3 - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "Unexpected Maker NanoS3",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Unexpected Maker"
+    }
+  ],
+  "303a:817f": [
+    {
+      "product": "Unexpected Maker Bling - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "Unexpected Maker BLING!",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Unexpected Maker"
+    }
+  ],
+  "303a:81b8": [
+    {
+      "product": "senseBox MCU-S2 ESP32-S2 - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "senseBox MCU-S2 ESP32-S2",
+      "source": "fastled-board-usb-pids",
+      "vendor": "senseBox"
+    }
+  ],
+  "303a:81bb": [
+    {
+      "product": "ESP32-S3 PowerFeather ESP32-S3 - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "ESP32-S3 PowerFeather",
+      "source": "fastled-board-usb-pids",
+      "vendor": "PowerFeather"
+    }
+  ],
+  "303a:81fb": [
+    {
+      "product": "Unexpected Maker FeatherS3 Neo - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "Unexpected Maker FeatherS3 Neo",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Unexpected Maker"
+    }
+  ],
+  "303a:8224": [
+    {
+      "product": "Unexpected Maker OMGS3 - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "Unexpected Maker OMGS3",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Unexpected Maker"
+    }
+  ],
+  "303a:82dc": [
+    {
+      "product": "Unexpected Maker EDGES3 - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "Unexpected Maker EDGES3[D]",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Unexpected Maker"
+    }
+  ],
+  "303a:82df": [
+    {
+      "product": "Unexpected Maker SQUiXL - Arduino",
+      "source": "espressif-usb-pids",
+      "vendor": "Espressif Systems"
+    },
+    {
+      "product": "Unexpected Maker SQUiXL",
+      "source": "fastled-board-usb-pids",
+      "vendor": "Unexpected Maker"
     }
   ]
 }

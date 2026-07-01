@@ -21070,7 +21070,7 @@
       ],
       [
         "eee5",
-        "Moteino M0"
+        "LowPowerLab CurrentRanger / Moteino M0"
       ],
       [
         "eee8",
@@ -59506,6 +59506,10 @@
       [
         "7668",
         "MT7668 2x2 Dual Band Dual Concurrent 802.11a/b/g/n/ac WiFi with MU-MIMO and Bluetooth 5.0 Radios"
+      ],
+      [
+        "ab01",
+        "LinkIt Smart 7688 Duo"
       ]
     ],
     "vendor": "MediaTek Inc."
@@ -63062,6 +63066,10 @@
         "C8051F38x 4K HDMI Audio Extractor w/Audio Amplifier, HDBT Input, Line Audio Input RS-232 Ports and IP Control [SC-3H]"
       ],
       [
+        "8d9a",
+        "Connaxio's Espoir"
+      ],
+      [
         "8db5",
         "C8051F38x CATx HDMI Receiver with USB [EX-HDU-R]"
       ],
@@ -64733,6 +64741,10 @@
         "telavivmakers attami"
       ],
       [
+        "5284",
+        "nRFMicro"
+      ],
+      [
         "53c0",
         "SatoshiLabs TREZOR Bootloader"
       ],
@@ -64775,6 +64787,10 @@
       [
         "6570",
         "Iowa Scaled Engineering, LLC CKT-AVRPROGRAMMER"
+      ],
+      [
+        "6665",
+        "Cicada-L082CZ / Cricket-L082CZ / Gnat-L082CZ / Grasshopper-L082CZ"
       ],
       [
         "6666",
@@ -73158,6 +73174,10 @@
         "AB-1.x UAC2 [Audio Widget]"
       ],
       [
+        "078a",
+        "Digistump DigiX"
+      ],
+      [
         "07cc",
         "Xylanta Ltd, Saint3 Device"
       ],
@@ -73228,6 +73248,10 @@
       [
         "0e1e",
         "AtomMiner"
+      ],
+      [
+        "1178",
+        "unPhone 9"
       ]
     ],
     "vendor": "MCS"
@@ -76699,6 +76723,10 @@
         "CH340S"
       ],
       [
+        "8010",
+        "CH32V003F4P6-EVT-R0"
+      ],
+      [
         "e008",
         "HID-based serial adapter"
       ]
@@ -77708,6 +77736,10 @@
       [
         "9206",
         "SparkFun Pro Micro ATmega32U4 (5V, 16 MHz)"
+      ],
+      [
+        "9208",
+        "Arduino LilyPad USB / Engduino 3"
       ],
       [
         "9d0e",
@@ -81889,6 +81921,10 @@
       [
         "00b0",
         "AVR Programmer v2"
+      ],
+      [
+        "2300",
+        "Pololu A-Star 32U4"
       ]
     ],
     "vendor": "Pololu Corporation"
@@ -85081,6 +85117,10 @@
         "Arduino OPTA DIGITAL"
       ],
       [
+        "0070",
+        "Arduino Nano ESP32"
+      ],
+      [
         "0071",
         "Arduino OPTA ANALOG"
       ],
@@ -85742,6 +85782,10 @@
         "Adafruit Feather nRF52840 Sense / Adafruit Feather nRF52840 Sense TFT"
       ],
       [
+        "00b3",
+        "nice!nano"
+      ],
+      [
         "00bf",
         "Adafruit BLM Badge (SAMD21)"
       ],
@@ -86030,6 +86074,10 @@
         "Adafruit Metro nRF52840 Express"
       ],
       [
+        "8041",
+        "Adafruit PyGamer Advance M4"
+      ],
+      [
         "8043",
         "Adafruit pyBadge AirLift M4 (SAMD51)"
       ],
@@ -86090,12 +86138,20 @@
         "Adafruit Feather nRF52840 Sense / Adafruit Feather nRF52840 Sense TFT"
       ],
       [
+        "80ab",
+        "Unexpected Maker FeatherS2"
+      ],
+      [
         "80bf",
         "Adafruit BLM Badge (SAMD21)"
       ],
       [
         "80c0",
         "Adafruit BLM Badge (SAMD21)"
+      ],
+      [
+        "80c5",
+        "microS2"
       ],
       [
         "80c9",
@@ -86122,16 +86178,32 @@
         "Nordic nRF52840 DK / Particle Xenon"
       ],
       [
+        "80df",
+        "Adafruit Metro ESP32-S2"
+      ],
+      [
         "80e0",
         "Adafruit Metro ESP32S2"
+      ],
+      [
+        "80e5",
+        "Adafruit MagTag 2.9"
       ],
       [
         "80e6",
         "Adafruit MagTag"
       ],
       [
+        "80eb",
+        "Adafruit ESP32-S2 Feather Development Board / Adafruit Feather ESP32-S2"
+      ],
+      [
         "80ec",
         "Adafruit Feather ESP32S2"
+      ],
+      [
+        "80ed",
+        "Adafruit Feather ESP32-S2 Reverse TFT"
       ],
       [
         "80ee",
@@ -86152,6 +86224,10 @@
       [
         "80f8",
         "Adafruit QT Py RP2040"
+      ],
+      [
+        "80f9",
+        "Adafruit FunHouse"
       ],
       [
         "80fa",
@@ -86222,8 +86298,16 @@
         "Adafruit LED Glasses Driver nRF52840"
       ],
       [
+        "810f",
+        "Adafruit Feather ESP32-S2 TFT"
+      ],
+      [
         "8110",
         "Adafruit Feather ESP32-S2 TFT"
+      ],
+      [
+        "8111",
+        "Adafruit QT Py ESP32-S2"
       ],
       [
         "8112",
@@ -86238,12 +86322,24 @@
         "Adafruit Camera"
       ],
       [
+        "8119",
+        "Adafruit QT Py ESP32-S3 No PSRAM"
+      ],
+      [
         "811a",
         "Adafruit QT Py ESP32S3 no psram"
       ],
       [
+        "811b",
+        "Adafruit Feather ESP32-S3 (2MB PSRAM) / Adafruit Feather ESP32-S3 No PSRAM"
+      ],
+      [
         "811c",
         "Adafruit Feather ESP32S3 4MB Flash 2MB PSRAM"
+      ],
+      [
+        "811d",
+        "Adafruit Feather ESP32-S3 TFT"
       ],
       [
         "811e",
@@ -86254,8 +86350,16 @@
         "Adafruit Feather RP2040 Scorpio"
       ],
       [
+        "8123",
+        "Adafruit Feather ESP32-S3 Reverse TFT"
+      ],
+      [
         "8124",
         "Adafruit Feather ESP32-S3 Reverse TFT"
+      ],
+      [
+        "8125",
+        "Adafruit MatrixPortal ESP32-S3"
       ],
       [
         "8126",
@@ -86294,8 +86398,20 @@
         "Adafruit Metro M7 iMX RT1011 SD"
       ],
       [
+        "8143",
+        "Adafruit QT Py ESP32-S3 (4M Flash 2M PSRAM)"
+      ],
+      [
         "8144",
         "Adafruit QT Py ESP32S3 4MB Flash 2MB PSRAM"
+      ],
+      [
+        "8145",
+        "Adafruit Metro ESP32-S3 / Lilka v2"
+      ],
+      [
+        "8147",
+        "Adafruit Qualia ESP32-S3 RGB666"
       ],
       [
         "8148",
@@ -88396,6 +88512,15 @@
     ],
     "vendor": "Square, Inc."
   },
+  "27b2": {
+    "products": [
+      [
+        "0002",
+        "FYSETC F6 V1.3"
+      ]
+    ],
+    "vendor": "FYSETC"
+  },
   "27b8": {
     "products": [
       [
@@ -88623,6 +88748,10 @@
         "Seeeduino Lite"
       ],
       [
+        "0004",
+        "Seeeduino"
+      ],
+      [
         "000b",
         "Seeeduino Zero"
       ],
@@ -88704,7 +88833,7 @@
       ],
       [
         "0062",
-        "Seeed Studio XIAO MG24 (Sense)"
+        "Seeed Studio XIAO MG24"
       ],
       [
         "0063",
@@ -88817,6 +88946,10 @@
       [
         "8065",
         "Seeed XIAO nRF52840 Sense Plus"
+      ],
+      [
+        "f004",
+        "Quirkbot"
       ]
     ],
     "vendor": "Seeed Technology Co., Ltd."
@@ -89480,6 +89613,10 @@
       [
         "8050",
         "Arduino Y\u00fan Mini"
+      ],
+      [
+        "8052",
+        "Arduino Tian"
       ],
       [
         "8056",
@@ -90200,6 +90337,10 @@
       [
         "0001",
         "i3 MK2S"
+      ],
+      [
+        "0004",
+        "Original Prusa i3 MK3 Multi Material 2.0 Upgrade"
       ]
     ],
     "vendor": "Prusa"
@@ -90599,6 +90740,10 @@
       [
         "0030",
         "Raspberry Pi USB 3.0 Flash Drive"
+      ],
+      [
+        "00c0",
+        "Raspberry Pi Pico / SparkFun XRP Controller"
       ],
       [
         "1000",
@@ -91619,6 +91764,10 @@
       [
         "112b",
         "ProtoV MINI"
+      ],
+      [
+        "f00a",
+        "Raspberry Pi Pico W"
       ]
     ],
     "vendor": "Raspberry Pi Foundation"
@@ -95494,6 +95643,10 @@
       [
         "838a",
         "PCBCupid Cypher - UF2 Bootloader"
+      ],
+      [
+        "83cf",
+        "DFRobot Firebeetle 2 ESP32-S3"
       ]
     ],
     "vendor": "Espressif Systems"
@@ -95716,6 +95869,15 @@
       ]
     ],
     "vendor": "Meteca SA"
+  },
+  "3116": {
+    "products": [
+      [
+        "0096",
+        "Tuino 096"
+      ]
+    ],
+    "vendor": "Gimasi"
   },
   "311f": {
     "products": [],
@@ -96024,6 +96186,15 @@
       ]
     ],
     "vendor": "Yakumo"
+  },
+  "3343": {
+    "products": [
+      [
+        "8364",
+        "DFRobot Beetle ESP32-C3"
+      ]
+    ],
+    "vendor": "DFRobot"
   },
   "3344": {
     "products": [
@@ -99425,6 +99596,15 @@
       ]
     ],
     "vendor": "Ultimarc"
+  },
+  "d3e0": {
+    "products": [
+      [
+        "601b",
+        "Dwenguino"
+      ]
+    ],
+    "vendor": "Dwengo"
   },
   "d904": {
     "products": [
