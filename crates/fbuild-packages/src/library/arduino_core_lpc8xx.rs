@@ -31,21 +31,25 @@ use crate::{CacheSubdir, PackageBase, PackageInfo};
 ///   #27: Wire/SPI proxy-singleton refactor (--gc-sections drops unused I2C/SPI)
 ///   #24-#26: operator new/delete + .ARM.exidx + heap base + F_CPU=24MHz
 ///
-/// Bump to 1179200 (FastLED/framework-arduino-lpc8xx#35) which adds
-/// `DMA_Type` + `DMA0` peripheral declarations to
-/// `variants/lpc804/LPC804.h` (the initial CMSIS PAL omitted them
-/// even though LPC804 has a 4-channel DMA0 at 0x50008000). Unblocks
-/// LPC804 support in FastLED's `spi_arm_lpc_dma.h` (FastLED#3499,
-/// #3453 Phase 1). Byte-for-byte identical to LPC845's DMA block;
-/// only the channel count differs (`CHANNEL[4]` vs `CHANNEL[25]`).
-const ACLPC_COMMIT: &str = "1179200a301a517b49d056a1803abed67973bb64";
-const ACLPC_VERSION: &str = "0.2.1+g1179200";
+/// Bump post the phantom-LPC804-DMA revert
+/// (FastLED/framework-arduino-lpc8xx#36). The previous pin (`1179200`)
+/// added a fabricated `DMA_Type` + `DMA0` block to
+/// `variants/lpc804/LPC804.h` at reserved AHB slot 0x50008000; LPC804
+/// silicon has no DMA peripheral (NXP mcux-sdk has zero `DMA_Type`,
+/// `DMA0_BASE`, `FSL_FEATURE_SOC_DMA_COUNT` for LPC804; UM11065 has
+/// no DMA chapter). Diagnosed by @phatpaul in FastLED/FastLED#3499
+/// comment 4855252061. FastLED-side revert cascade:
+/// FastLED/FastLED#3513 (merged). FastLED#3499 closed as INVALID.
+/// Preventive guardrail: FastLED/FastLED#3506 / #3507
+/// (`agents/docs/peripheral-existence.md`).
+const ACLPC_COMMIT: &str = "8836a9bb08c77273758776aa3e8a233e97ff97cf";
+const ACLPC_VERSION: &str = "0.2.2+g8836a9b";
 const ACLPC_URL: &str =
-    "https://github.com/FastLED/framework-arduino-lpc8xx/archive/1179200a301a517b49d056a1803abed67973bb64.tar.gz";
+    "https://github.com/FastLED/framework-arduino-lpc8xx/archive/8836a9bb08c77273758776aa3e8a233e97ff97cf.tar.gz";
 // SHA256 of the archive GitHub currently serves for
-// `github.com/FastLED/framework-arduino-lpc8xx/archive/1179200a30…tar.gz`.
+// `github.com/FastLED/framework-arduino-lpc8xx/archive/8836a9bb08…tar.gz`.
 // Verified 2026-07-01 via `curl … | sha256sum`.
-const ACLPC_CHECKSUM: &str = "6b87823e8db65e61fc052c3a482ff5e547898bdf2a6ee2a8197b4955c5aa3baf";
+const ACLPC_CHECKSUM: &str = "e74c2226873ccf5676096b8e28c8a9acc4af39894c7fc651ea320628a69281ec";
 
 /// Arduino LPC8xx core framework manager.
 pub struct ArduinoCoreLpc8xx {
