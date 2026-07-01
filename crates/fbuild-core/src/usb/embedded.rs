@@ -238,6 +238,135 @@ mod tests {
     }
 
     #[test]
+    fn embedded_resolves_every_issue_740_vendor() {
+        // FastLED/fbuild#740 hand-verified 19 vendor VIDs at each
+        // `online-data` publish. Every prior verification pass has been
+        // a manual `gh` + `jq` sweep against the published JSON.
+        //
+        // Codify the entire table here so CI catches any regression the
+        // moment the embedded vendor archive is rebuilt without one of
+        // the headline VIDs — the exact class of drift that previously
+        // required manually re-running the verification each cycle.
+        //
+        // Match is case-insensitive substring; ANY alternative matches.
+        // ALL failures are collected before asserting so regressions
+        // surface as a single message with every affected row.
+        //
+        // ## Overlay vs embedded drift (documented, not aspirational)
+        //
+        // The #740 issue body's "Vendor-resolution results" table was
+        // taken from the PUBLISHED `online-data/data/usb-vid.json`,
+        // which has `vendor_names_inlined.py` applied via
+        // `overlay_usb_vid.py --mode vendor-override`. Three of the 19
+        // VIDs in that table were vendor-name-overridden by that
+        // overlay pass (so the "Actual" column reads the overlay
+        // value):
+        //
+        //   - 0x045B — upstream `usb.ids` says "Hitachi, Ltd";
+        //     overlay renames to "Renesas Electronics".
+        //   - 0x2A03 — upstream says "dog hunter AG" (the actual
+        //     VID holder); overlay renames to "Arduino LLC" (the
+        //     downstream licensee that ships boards under this VID).
+        //   - 0x2544 — missing from upstream entirely; overlay adds
+        //     as "Silicon Labs" (a.k.a. Energy Micro).
+        //
+        // The embedded archive shipped in `data/usb-vendors.tar.zst`
+        // is built from the OVERLAID JSON, so it SHOULD also carry
+        // these overrides. Whether it does today is a snapshot of the
+        // last archive rebuild — this test asserts the current
+        // effective label, and the substring list carries BOTH the
+        // upstream and overlay names so the test survives either
+        // resolution outcome without silently accepting drift.
+        let rows: &[(u16, &[&str])] = &[
+            (0x303a, &["Espressif"]),
+            (0x2e8a, &["Raspberry Pi"]),
+            (0x0483, &["STMicroelectronics", "STMicro"]),
+            (0x1fc9, &["NXP"]),
+            (0x1915, &["Nordic"]),
+            (0x03eb, &["Atmel"]),
+            (0x04d8, &["Microchip"]),
+            (0x10c4, &["Silicon Lab", "Cygnal"]),
+            (0x1a86, &["QinHeng", "WCH"]),
+            (0x0403, &["Future Technology", "FTDI"]),
+            // 0x1cbe is Luminary Micro (Cortex-M / Apollo3 bootloader
+            // VID reused by Sparkfun Artemis products in the field).
+            (0x1cbe, &["Luminary", "Apollo3", "Sparkfun"]),
+            (0x2341, &["Arduino"]),
+            (0x239a, &["Adafruit"]),
+            (0x1b4f, &["SparkFun", "Spark Fun"]),
+            (0x16c0, &["Van Ooijen", "PJRC"]),
+            (0x2886, &["Seeed"]),
+            // Overlay-covered VIDs — either name is accepted so the
+            // test survives an archive rebuild + overlay pipeline
+            // change in either direction. See the module comment
+            // above for the source of each alternative.
+            (0x045b, &["Renesas", "Hitachi"]),
+            (0x2a03, &["Arduino", "dog hunter"]),
+        ];
+
+        // 0x2544 (Silicon Labs) is a supplement-only VID — the archive
+        // MAY not carry it, depending on whether the archive was
+        // rebuilt after the vendor_names_inlined.py addition. Assert
+        // that IF present it resolves to Silicon Labs; a missing entry
+        // is tolerated but reported so the drift is visible in test
+        // logs.
+        let overlay_only: &[(u16, &[&str])] = &[(0x2544, &["Silicon Lab", "Cygnal"])];
+
+        let mut failures = Vec::new();
+        for (vid, expected_alts) in rows {
+            match vendor_name(*vid) {
+                None => failures.push(format!(
+                    "VID 0x{vid:04X}: missing from embedded archive; expected any of {expected_alts:?}"
+                )),
+                Some(name) => {
+                    let name_lc = name.to_lowercase();
+                    let matched = expected_alts
+                        .iter()
+                        .any(|alt| name_lc.contains(&alt.to_lowercase()));
+                    if !matched {
+                        failures.push(format!(
+                            "VID 0x{vid:04X}: got {name:?}, expected any-of {expected_alts:?}"
+                        ));
+                    }
+                }
+            }
+        }
+
+        // Overlay-only rows: report drift, but don't fail. Missing =
+        // "archive hasn't been rebuilt with the current overlay yet";
+        // wrong name = "archive was rebuilt but overlay changed the
+        // canonical string" — either way a follow-up rebuild is the
+        // remediation, not a source-code fix.
+        for (vid, expected_alts) in overlay_only {
+            match vendor_name(*vid) {
+                None => eprintln!(
+                    "note: VID 0x{vid:04X} not in embedded archive \
+                     (overlay-only; archive rebuild will pick it up); \
+                     expected any of {expected_alts:?}"
+                ),
+                Some(name) => {
+                    let name_lc = name.to_lowercase();
+                    let matched = expected_alts
+                        .iter()
+                        .any(|alt| name_lc.contains(&alt.to_lowercase()));
+                    if !matched {
+                        failures.push(format!(
+                            "VID 0x{vid:04X}: got {name:?}, expected any-of {expected_alts:?}"
+                        ));
+                    }
+                }
+            }
+        }
+
+        assert!(
+            failures.is_empty(),
+            "FastLED/fbuild#740 vendor-VID table drift ({} row(s) failed):\n  {}",
+            failures.len(),
+            failures.join("\n  "),
+        );
+    }
+
+    #[test]
     fn unknown_vid_returns_none() {
         // 0xBADD is in the unallocated portion of the USB-IF range as of
         // the 2026 snapshot. If a future archive picks it up the test
