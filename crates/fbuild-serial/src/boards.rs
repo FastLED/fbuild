@@ -489,6 +489,158 @@ pub fn family_for_vid_pid(vid: u16, pid: u16) -> Option<BoardFamily> {
     }
 }
 
+/// PlatformIO-style `upload.*` hint from a board JSON, used as the
+/// highest-priority signal in the detection chain when the caller has
+/// board context in scope (FastLED/fbuild#906).
+///
+/// Matches the ecosystem-standard `upload.*` schema PlatformIO ships
+/// in every `boards/*.json`, mirrored in Arduino CLI's `boards.txt`
+/// (`upload.tool`, `upload.protocol`, `upload.use_1200bps_touch`,
+/// `upload.wait_for_upload_port`). The BoardFamily returned encodes
+/// the reset primitive the board expects — resolving straight from
+/// this hint avoids the hand-curated VID/PID table entirely for
+/// boards that maintain their upload metadata correctly.
+///
+/// # Example
+///
+/// ```
+/// use fbuild_serial::boards::{family_from_upload_hint, BoardFamily, UploadHint};
+///
+/// // ESP32-S3 native USB (from a board JSON with
+/// //   "upload": {"protocol":"esptool","native_usb":true})
+/// let hint = UploadHint { protocol: Some("esptool".into()), use_1200bps_touch: None, native_usb: Some(true) };
+/// assert_eq!(family_from_upload_hint(&hint), Some(BoardFamily::Esp32NativeUsbCdc));
+///
+/// // Pico via picotool + 1200-bps touch
+/// let hint = UploadHint { protocol: Some("picotool".into()), use_1200bps_touch: Some(true), native_usb: Some(true) };
+/// assert_eq!(family_from_upload_hint(&hint), Some(BoardFamily::NativeUsbCdcReset1200Bps));
+///
+/// // Arduino UNO — protocol = "arduino" implies avrdude's DTR-cap auto-reset
+/// let hint = UploadHint { protocol: Some("arduino".into()), use_1200bps_touch: None, native_usb: None };
+/// assert_eq!(family_from_upload_hint(&hint), Some(BoardFamily::ArduinoAutoReset));
+/// ```
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct UploadHint {
+    /// Value of `upload.protocol` from the board JSON. Canonical
+    /// names per the PlatformIO / Arduino CLI ecosystems:
+    /// - `"esptool"` / `"esptool_py"`
+    /// - `"arduino"` (avrdude programmer type)
+    /// - `"sam-ba"` (BOSSA + 1200-bps touch)
+    /// - `"picotool"` (Pico UF2 + 1200-bps touch)
+    /// - `"teensy-gui"` / `"teensy-cli"` (HalfKay + 1200-bps touch)
+    /// - `"cmsis-dap"` / `"jlink"` / `"stlink"` / `"raspberrypi-swd"`
+    ///   / `"atmel-ice"` (SWD-side reset, DTR-true idle for VCOM)
+    pub protocol: Option<String>,
+
+    /// PlatformIO's `upload.use_1200bps_touch`. When `true` and
+    /// `protocol` is missing, we still classify as
+    /// [`BoardFamily::NativeUsbCdcReset1200Bps`] because every product
+    /// that ships this flag means "open at 1200 baud, close, wait
+    /// for re-enum, then upload" (SAMD UF2 / RP2040 BOOTSEL / Teensy
+    /// HalfKay).
+    pub use_1200bps_touch: Option<bool>,
+
+    /// PlatformIO's `native_usb`. Only distinguishes the ESP path
+    /// today: ESP32 native USB (S3/C3/C6/H2/P4) vs classic ESP
+    /// behind an external UART bridge (WROOM behind CP2102/CH340).
+    pub native_usb: Option<bool>,
+}
+
+/// Map a PlatformIO-style [`UploadHint`] to a [`BoardFamily`] using
+/// the canonical `upload.protocol` vocabulary from the ecosystem
+/// survey documented on FastLED/fbuild#906.
+///
+/// Returns `None` when the hint carries no actionable signal — the
+/// caller falls back to VID/PID + kernel-class detection.
+#[must_use]
+pub fn family_from_upload_hint(hint: &UploadHint) -> Option<BoardFamily> {
+    use BoardFamily::*;
+
+    if let Some(proto) = hint.protocol.as_deref() {
+        // Normalize case + strip whitespace so `"ESPTOOL"`, `"esptool_py"`
+        // and `" arduino "` all hit the right arm.
+        let p = proto.trim().to_ascii_lowercase();
+        match p.as_str() {
+            // Espressif's flash-and-reset tool. Split ESP native USB
+            // vs external UART bridge on `native_usb` — the ecosystem
+            // convention (PIO `native_usb: true` for esp32-s3-*, false
+            // or absent for classic esp32dev). When absent, default to
+            // external UART because that's the older / more common
+            // classic DevKit topology; if we default to native and the
+            // real board is a WROOM behind CP2102, the (false, false)
+            // idle STILL doesn't reset the chip — the difference is
+            // reset-method timing, not idle state.
+            "esptool" | "esptool_py" => {
+                return Some(if hint.native_usb.unwrap_or(false) {
+                    Esp32NativeUsbCdc
+                } else {
+                    Esp32ExternalUart
+                });
+            }
+            // avrdude with `-c arduino` — DTR cap-coupled autoreset.
+            "arduino" => return Some(ArduinoAutoReset),
+            // BOSSA on SAMD (Zero, MKR family, Adafruit Feather M0/M4).
+            // Also Microchip / Atmel SAM-BA classic.
+            "sam-ba" | "sam_ba" | "bossac18" | "bossac" => {
+                return Some(NativeUsbCdcReset1200Bps);
+            }
+            // Pico — picotool + UF2 flash. 1200-bps touch to enter
+            // BOOTSEL is intrinsic.
+            "picotool" => return Some(NativeUsbCdcReset1200Bps),
+            // PJRC — teensy_loader_cli / Teensy Loader GUI. HalfKay
+            // bootloader entered via 1200-bps touch.
+            "teensy-gui" | "teensy_gui" | "teensy-cli" | "teensy_cli"
+            | "teensy_loader_cli" => {
+                return Some(Teensy);
+            }
+            // SWD-side reset. The physical serial VCOM bridge in front
+            // of the target MCU wants DTR=true/RTS=true (host-ready);
+            // the reset is dispatched by the debug probe over SWD,
+            // NOT DTR/RTS.
+            "cmsis-dap" | "cmsis_dap" | "jlink" | "j-link" | "stlink"
+            | "st-link" | "raspberrypi-swd" | "raspberrypi_swd"
+            | "atmel-ice" | "atmel_ice" | "openocd" => {
+                return Some(CdcAcmBridge);
+            }
+            _ => {} // fall through to touch-flag fallback
+        }
+    }
+
+    // No recognized protocol string, but `use_1200bps_touch: true`
+    // still gives us a strong ecosystem-standard signal — every
+    // product that ships that flag semantically means "1200-bps touch
+    // reset."
+    if hint.use_1200bps_touch.unwrap_or(false) {
+        return Some(NativeUsbCdcReset1200Bps);
+    }
+
+    None
+}
+
+/// Hint-aware variant of [`family_for_port`] — highest-priority
+/// classification path (FastLED/fbuild#906).
+///
+/// Detection order:
+///
+/// 1. **UploadHint from board JSON** ([`family_from_upload_hint`]) —
+///    explicit maintainer intent. Wins when a hint is provided AND
+///    the mapping resolves.
+/// 2. **Everything from [`family_for_port`]**: VID/PID table, OS
+///    kernel-class fallback (#895), #897 disagreement warning.
+/// 3. `None` when nothing classifies.
+///
+/// Deploy paths that have `BoardConfig` in scope should thread it
+/// through here to avoid guessing from VID/PID.
+#[must_use]
+pub fn family_for_port_with_hint(name: &str, hint: Option<&UploadHint>) -> Option<BoardFamily> {
+    if let Some(h) = hint {
+        if let Some(f) = family_from_upload_hint(h) {
+            return Some(f);
+        }
+    }
+    family_for_port(name)
+}
+
 /// Walk `serialport::available_ports()` once and classify the port that
 /// matches `name`.
 ///
@@ -511,6 +663,10 @@ pub fn family_for_vid_pid(vid: u16, pid: u16) -> Option<BoardFamily> {
 /// `None` and the existing default chain takes over. This function
 /// cannot regress existing behavior — it only catches more cases than
 /// it did before.
+///
+/// Callers with board context in scope should prefer
+/// [`family_for_port_with_hint`] and pass an [`UploadHint`] built from
+/// the board JSON's `upload.*` block (FastLED/fbuild#906).
 #[must_use]
 pub fn family_for_port(name: &str) -> Option<BoardFamily> {
     // FastLED/fbuild#897: when both the VID/PID table AND the OS
@@ -839,6 +995,192 @@ mod tests {
         assert!(!logs_contain(
             "VID/PID table and kernel-class signal disagree"
         ));
+    }
+
+    // --- FastLED/fbuild#906: UploadHint → BoardFamily mapping ---
+
+    fn hint(protocol: Option<&str>) -> UploadHint {
+        UploadHint {
+            protocol: protocol.map(str::to_string),
+            ..Default::default()
+        }
+    }
+
+    #[test]
+    fn upload_hint_esptool_with_native_usb_true_is_native_cdc() {
+        let mut h = hint(Some("esptool"));
+        h.native_usb = Some(true);
+        assert_eq!(
+            family_from_upload_hint(&h),
+            Some(BoardFamily::Esp32NativeUsbCdc)
+        );
+        // Alias `esptool_py` used by arduino-esp32 boards.txt hits the same arm.
+        let mut h = hint(Some("esptool_py"));
+        h.native_usb = Some(true);
+        assert_eq!(
+            family_from_upload_hint(&h),
+            Some(BoardFamily::Esp32NativeUsbCdc)
+        );
+    }
+
+    #[test]
+    fn upload_hint_esptool_without_native_usb_is_external_uart() {
+        // Classic ESP32-WROOM DevKit behind a CP2102/CH340 — native_usb
+        // absent or explicitly false. Same idle-DTR/RTS as the native
+        // path (false, false) — the difference is which chip the
+        // reset primitive drives.
+        assert_eq!(
+            family_from_upload_hint(&hint(Some("esptool"))),
+            Some(BoardFamily::Esp32ExternalUart)
+        );
+        let mut h = hint(Some("esptool"));
+        h.native_usb = Some(false);
+        assert_eq!(
+            family_from_upload_hint(&h),
+            Some(BoardFamily::Esp32ExternalUart)
+        );
+    }
+
+    #[test]
+    fn upload_hint_arduino_protocol_is_autoreset() {
+        // avrdude programmer `arduino` (classic UNO/Mega) — the reset
+        // path is DTR-cap coupled auto-reset, no touch.
+        assert_eq!(
+            family_from_upload_hint(&hint(Some("arduino"))),
+            Some(BoardFamily::ArduinoAutoReset)
+        );
+    }
+
+    #[test]
+    fn upload_hint_sam_ba_family_is_1200bps_touch() {
+        // BOSSA / SAM-BA — Adafruit Feather M0/M4, Arduino MKR family.
+        assert_eq!(
+            family_from_upload_hint(&hint(Some("sam-ba"))),
+            Some(BoardFamily::NativeUsbCdcReset1200Bps)
+        );
+        // Aliases from Arduino CLI boards.txt.
+        assert_eq!(
+            family_from_upload_hint(&hint(Some("bossac18"))),
+            Some(BoardFamily::NativeUsbCdcReset1200Bps)
+        );
+        assert_eq!(
+            family_from_upload_hint(&hint(Some("bossac"))),
+            Some(BoardFamily::NativeUsbCdcReset1200Bps)
+        );
+    }
+
+    #[test]
+    fn upload_hint_picotool_is_1200bps_touch() {
+        assert_eq!(
+            family_from_upload_hint(&hint(Some("picotool"))),
+            Some(BoardFamily::NativeUsbCdcReset1200Bps)
+        );
+    }
+
+    #[test]
+    fn upload_hint_teensy_variants_map_to_teensy_family() {
+        assert_eq!(
+            family_from_upload_hint(&hint(Some("teensy-gui"))),
+            Some(BoardFamily::Teensy)
+        );
+        assert_eq!(
+            family_from_upload_hint(&hint(Some("teensy-cli"))),
+            Some(BoardFamily::Teensy)
+        );
+        assert_eq!(
+            family_from_upload_hint(&hint(Some("teensy_loader_cli"))),
+            Some(BoardFamily::Teensy)
+        );
+    }
+
+    #[test]
+    fn upload_hint_swd_probes_map_to_cdc_acm_bridge() {
+        // Every SWD-side reset protocol: the VCOM bridge in front of
+        // the target MCU wants (true, true) idle DTR/RTS. Reset is
+        // dispatched by the debug probe over SWD, NOT DTR/RTS.
+        for proto in [
+            "cmsis-dap",
+            "jlink",
+            "j-link",
+            "stlink",
+            "st-link",
+            "raspberrypi-swd",
+            "atmel-ice",
+            "openocd",
+        ] {
+            assert_eq!(
+                family_from_upload_hint(&hint(Some(proto))),
+                Some(BoardFamily::CdcAcmBridge),
+                "protocol {proto} should map to CdcAcmBridge",
+            );
+        }
+    }
+
+    #[test]
+    fn upload_hint_case_and_whitespace_tolerant() {
+        // Board JSONs come from many upstream projects; case and
+        // whitespace hygiene varies. The mapping must be tolerant.
+        assert_eq!(
+            family_from_upload_hint(&hint(Some(" ESPTOOL "))),
+            Some(BoardFamily::Esp32ExternalUart)
+        );
+        assert_eq!(
+            family_from_upload_hint(&hint(Some("Arduino"))),
+            Some(BoardFamily::ArduinoAutoReset)
+        );
+    }
+
+    #[test]
+    fn upload_hint_1200bps_touch_alone_implies_native_cdc_reset() {
+        // No protocol string, but the touch flag is a strong
+        // ecosystem-standard signal in its own right (every product
+        // shipping this flag semantically means "1200-bps touch reset").
+        let mut h = UploadHint::default();
+        h.use_1200bps_touch = Some(true);
+        assert_eq!(
+            family_from_upload_hint(&h),
+            Some(BoardFamily::NativeUsbCdcReset1200Bps)
+        );
+    }
+
+    #[test]
+    fn upload_hint_unknown_protocol_returns_none() {
+        assert_eq!(
+            family_from_upload_hint(&hint(Some("some-future-protocol"))),
+            None
+        );
+        // Empty hint → None (nothing to say).
+        assert_eq!(family_from_upload_hint(&UploadHint::default()), None);
+    }
+
+    #[test]
+    fn upload_hint_wins_over_vid_pid_kernel_class_chain() {
+        // `family_for_port_with_hint` should short-circuit on the
+        // hint. We can't easily unit-test the full chain (needs a
+        // live serialport enumeration), but the mapping code path
+        // is: `family_from_upload_hint` returns Some → early return.
+        //
+        // Prove that with a hint we get the hint-derived family (even
+        // when the port name would enumerate to nothing):
+        let hint = UploadHint {
+            protocol: Some("arduino".to_string()),
+            ..Default::default()
+        };
+        assert_eq!(
+            family_for_port_with_hint("/dev/nonexistent-port-for-test", Some(&hint)),
+            Some(BoardFamily::ArduinoAutoReset)
+        );
+    }
+
+    #[test]
+    fn upload_hint_missing_falls_back_to_vid_pid_chain() {
+        // No hint → `family_for_port_with_hint` degrades to
+        // `family_for_port` (which walks the live enumeration and
+        // returns None for a nonexistent port).
+        assert_eq!(
+            family_for_port_with_hint("/dev/nonexistent-port-for-test", None),
+            None
+        );
     }
 
     #[test]

@@ -249,10 +249,39 @@ filled in empirically without datasheet archaeology. Mentioned in
 
 Source: `crates/fbuild-serial/src/boards.rs::BoardFamily::handoff_timing`. The LPC11U35 row is from FastLED/FastLED#3339 (the bring-up incident). 1200-bps-touch rows tolerate the double-enumeration window (bootloader VID/PID then app VID/PID). Arduino has zero `port_reappear_timeout_ms` because the USB endpoint lives on the bridge chip and never drops.
 
+## Ecosystem `upload.protocol` mapping (FastLED/fbuild#906)
+
+PlatformIO and Arduino CLI encode reset semantics via a small
+per-board vocabulary in their board JSONs / `boards.txt`. fbuild's
+`crates/fbuild-serial/src/boards.rs::family_from_upload_hint` maps
+these strings directly to `BoardFamily`, giving callers with board
+context (deploy path, `fbuild-config::BoardConfig`) a higher-priority
+signal than the VID/PID table.
+
+| `upload.protocol` | `BoardFamily` | Idle DTR/RTS | Reset primitive |
+|---|---|---|---|
+| `esptool` / `esptool_py` + `native_usb: true` | `Esp32NativeUsbCdc` | (false, false) | `DtrRtsPulse` |
+| `esptool` / `esptool_py` (default / `native_usb: false`) | `Esp32ExternalUart` | (false, false) | `DtrRtsPulse` |
+| `arduino` | `ArduinoAutoReset` | (true, true) | `DtrPulse` |
+| `sam-ba` / `bossac` / `bossac18` | `NativeUsbCdcReset1200Bps` | (true, true) | `TouchBaud1200` |
+| `picotool` | `NativeUsbCdcReset1200Bps` | (true, true) | `TouchBaud1200` |
+| `teensy-gui` / `teensy-cli` / `teensy_loader_cli` | `Teensy` | (true, true) | `TouchBaud1200` |
+| `cmsis-dap` / `jlink` / `stlink` / `raspberrypi-swd` / `atmel-ice` / `openocd` | `CdcAcmBridge` | (true, true) | `SwdViaCmsisDap` |
+
+Fallback: when `upload.protocol` is missing but `use_1200bps_touch:
+true` is set (also PIO / Arduino CLI standard), the mapping returns
+`NativeUsbCdcReset1200Bps`.
+
+Adding a new upload-protocol entry: extend the `match` arm in
+`family_from_upload_hint`, add a row here, and add a unit test in
+`boards::tests::upload_hint_*`.
+
 ## When to update this doc
 
 - A new board family lands in `crates/fbuild-build/src/<family>/`.
 - A new VID:PID entry lands in `crates/fbuild-serial/src/boards.rs`.
+- A new `upload.protocol` string mapping lands in
+  `family_from_upload_hint` (extend the table above in the same PR).
 - A FastLED bring-up incident involves DTR/RTS guessing.
 - A datasheet URL above 404s — update both URL and capture date in
   the same PR.
