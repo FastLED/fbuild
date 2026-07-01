@@ -98,6 +98,13 @@ pub struct Cli {
     /// Disable all shrink optimizations. Equivalent to `--shrink=off`.
     #[arg(long = "no-shrink", conflicts_with = "shrink")]
     pub no_shrink: bool,
+
+    /// Suppress the passive update check that warns when a newer stable
+    /// `fbuild` release exists. Also opts-out of the 24h cache write on
+    /// this run. Env-var equivalent: `FBUILD_NO_UPDATE_CHECK=1`. CI
+    /// (`CI=true`) is auto-suppressed. See FastLED/fbuild#626.
+    #[arg(long = "no-update-check")]
+    pub no_update_check: bool,
 }
 
 #[derive(Subcommand)]
