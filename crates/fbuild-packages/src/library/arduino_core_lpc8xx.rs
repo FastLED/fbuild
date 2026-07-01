@@ -30,18 +30,22 @@ use crate::{CacheSubdir, PackageBase, PackageInfo};
 /// Earlier merges still in effect:
 ///   #27: Wire/SPI proxy-singleton refactor (--gc-sections drops unused I2C/SPI)
 ///   #24-#26: operator new/delete + .ARM.exidx + heap base + F_CPU=24MHz
-const ACLPC_COMMIT: &str = "50d76e0d63c2d2a2b365b29de47100d93c530c83";
-const ACLPC_VERSION: &str = "0.2.0+g50d76e0";
+///
+/// Bump to 1179200 (FastLED/framework-arduino-lpc8xx#35) which adds
+/// `DMA_Type` + `DMA0` peripheral declarations to
+/// `variants/lpc804/LPC804.h` (the initial CMSIS PAL omitted them
+/// even though LPC804 has a 4-channel DMA0 at 0x50008000). Unblocks
+/// LPC804 support in FastLED's `spi_arm_lpc_dma.h` (FastLED#3499,
+/// #3453 Phase 1). Byte-for-byte identical to LPC845's DMA block;
+/// only the channel count differs (`CHANNEL[4]` vs `CHANNEL[25]`).
+const ACLPC_COMMIT: &str = "1179200a301a517b49d056a1803abed67973bb64";
+const ACLPC_VERSION: &str = "0.2.1+g1179200";
 const ACLPC_URL: &str =
-    "https://github.com/FastLED/framework-arduino-lpc8xx/archive/50d76e0d63c2d2a2b365b29de47100d93c530c83.tar.gz";
-// FastLED/framework-arduino-lpc8xx was org-transferred from zackees/
-// to FastLED/ on 2026-06-28. GitHub regenerates archive metadata after
-// ownership changes (the archive's top-level directory name flips
-// owner), so the tarball SHA256 changed even though the git tree is
-// identical. Updated to the post-transfer archive SHA below. Verified
-// 2026-07-01 against the archive GitHub currently serves for
-// `github.com/FastLED/framework-arduino-lpc8xx/archive/50d76e0d…tar.gz`.
-const ACLPC_CHECKSUM: &str = "e64f0cb81ab1673e05c2a63b7b4548c1373c9ba885413d2a2351bbfae160fbec";
+    "https://github.com/FastLED/framework-arduino-lpc8xx/archive/1179200a301a517b49d056a1803abed67973bb64.tar.gz";
+// SHA256 of the archive GitHub currently serves for
+// `github.com/FastLED/framework-arduino-lpc8xx/archive/1179200a30…tar.gz`.
+// Verified 2026-07-01 via `curl … | sha256sum`.
+const ACLPC_CHECKSUM: &str = "6b87823e8db65e61fc052c3a482ff5e547898bdf2a6ee2a8197b4955c5aa3baf";
 
 /// Arduino LPC8xx core framework manager.
 pub struct ArduinoCoreLpc8xx {
