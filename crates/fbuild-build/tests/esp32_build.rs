@@ -42,7 +42,7 @@ fn home_dir() -> PathBuf {
 ///
 /// This test requires Internet access (first run only, then cached).
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
-#[ignore]
+#[ignore = "downloads ESP32 toolchain (~hundreds of MB)"]
 async fn build_esp32dev_blink() {
     let tmp = tempfile::TempDir::new().unwrap();
     let project_dir = tmp.path();
@@ -134,7 +134,7 @@ void loop() {
 
 /// Build a self-contained ESP32-C6 blink sketch (RISC-V).
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
-#[ignore]
+#[ignore = "downloads ESP32 toolchain (~hundreds of MB)"]
 async fn build_esp32c6_blink() {
     let tmp = tempfile::TempDir::new().unwrap();
     let project_dir = tmp.path();
@@ -216,7 +216,7 @@ void loop() {
 /// pipeline for the C3 variant, including toolchain selection and framework
 /// extraction.  It requires Internet access (first run only, then cached).
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
-#[ignore]
+#[ignore = "downloads ESP32 toolchain (~hundreds of MB)"]
 async fn build_esp32c3_blink() {
     let tmp = tempfile::TempDir::new().unwrap();
     let project_dir = tmp.path();
@@ -297,7 +297,7 @@ void loop() {
 ///
 /// This test requires Internet access (first run only, then cached).
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
-#[ignore]
+#[ignore = "downloads ESP32 toolchain (~hundreds of MB)"]
 async fn build_esp32s3_blink() {
     let tmp = tempfile::TempDir::new().unwrap();
     let project_dir = tmp.path();
@@ -393,7 +393,7 @@ void loop() {
 ///
 /// Build output is stored at tests/platform/esp32s3/.fbuild/build/ for manual deployment.
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
-#[ignore]
+#[ignore = "downloads ESP32 toolchain (~hundreds of MB)"]
 async fn build_esp32s3_fixture() {
     let project_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
         .parent()
@@ -459,7 +459,7 @@ async fn build_esp32s3_fixture() {
 /// NOTE: This will fail until library dependency resolution (Phase 4) is implemented,
 /// because NightDriverStrip depends on FastLED, ArduinoJson, etc.
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
-#[ignore]
+#[ignore = "downloads ESP32 toolchain + NightDriverStrip sources (~hundreds of MB)"]
 async fn build_nightdriverstrip_demo() {
     let project_dir = home_dir().join("dev/fbuild/tests/NightDriverStrip");
 
@@ -533,7 +533,7 @@ async fn build_nightdriverstrip_demo() {
 /// Requires a prior clean build to exist at ~/dev/NightDriverStrip/.fbuild/build/demo/.
 /// Measures how fast a no-op rebuild is (should be seconds, not minutes).
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
-#[ignore]
+#[ignore = "downloads ESP32 toolchain + NightDriverStrip sources (~hundreds of MB)"]
 async fn incremental_nightdriverstrip_no_changes() {
     // Try both NightDriverStrip locations
     let project_dir = home_dir().join("dev/NightDriverStrip");
@@ -629,7 +629,7 @@ async fn incremental_build_at(project_dir: &std::path::Path, env_name: &str) {
 /// Touches one .cpp file to simulate a single-file edit, then rebuilds.
 /// This measures the real incremental compile + relink time.
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
-#[ignore]
+#[ignore = "downloads ESP32 toolchain + NightDriverStrip sources (~hundreds of MB)"]
 async fn incremental_nightdriverstrip_one_file_changed() {
     let project_dir = home_dir().join("dev/NightDriverStrip");
     if !project_dir.exists() {

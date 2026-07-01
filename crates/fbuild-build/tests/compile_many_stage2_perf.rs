@@ -61,7 +61,7 @@ fn scaffold_uno_blink(project_dir: &Path) {
 }
 
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
-#[ignore]
+#[ignore = "downloads AVR toolchain + measures wall-time; perf oracle, flaky under CI load"]
 async fn stage2_per_sketch_wall_is_a_fraction_of_stage1() {
     let tmp = tempfile::TempDir::new().unwrap();
     let sketches: Vec<PathBuf> = (0..4)

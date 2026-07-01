@@ -42,7 +42,7 @@ fn copy_dir_recursive(src: &Path, dst: &Path) {
 ///
 /// This test requires Internet access (first run only, then cached).
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
-#[ignore]
+#[ignore = "downloads Teensyduino + arm-gcc"]
 async fn build_teensy41_blink() {
     let tmp = tempfile::TempDir::new().unwrap();
     let project_dir = tmp.path();
@@ -118,7 +118,7 @@ void loop() {
 
 /// Build a Teensy 4.1 sketch that includes Teensyduino framework libraries.
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
-#[ignore]
+#[ignore = "downloads Teensyduino + arm-gcc"]
 async fn build_teensy41_spi_octo_headers() {
     let tmp = tempfile::TempDir::new().unwrap();
     let project_dir = tmp.path();
@@ -180,7 +180,7 @@ void loop() {}
 
 /// Build using Teensy test fixture from the repo.
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
-#[ignore]
+#[ignore = "downloads Teensyduino + arm-gcc"]
 async fn build_teensy41_fixture() {
     // Use the repo's test fixture
     let manifest_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
@@ -245,7 +245,7 @@ async fn build_teensy41_fixture() {
 
 /// Build a Teensy 3.0 fixture where a project-local lib/FastLED shadows the bundled framework.
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
-#[ignore]
+#[ignore = "downloads Teensyduino + arm-gcc; requires local FastLED checkout"]
 async fn build_teensy30_fixture_prefers_local_fastled() {
     let manifest_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     let fixture_dir = manifest_dir

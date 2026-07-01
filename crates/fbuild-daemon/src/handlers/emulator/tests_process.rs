@@ -94,7 +94,7 @@ async fn run_qemu_process_surfaces_crash_decoder_output() {
 }
 
 #[tokio::test]
-#[ignore]
+#[ignore = "requires QEMU + ESP32-S3 firmware fixture"]
 async fn run_real_esp32s3_fixture_in_qemu() {
     use fbuild_build::{BuildOrchestrator, BuildParams};
     use fbuild_core::BuildProfile;
