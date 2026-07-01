@@ -1,9 +1,9 @@
 {
   "schema_version": "1",
-  "generated_at": "2026-06-30T23:14:44Z",
+  "generated_at": "2026-07-01T05:54:41Z",
   "engine": "sql.js",
   "payload": "wasm",
   "format": "sqlite-over-http",
-  "current_db": "2026-06-30.db",
-  "previous_db": "2026-06-29.db"
+  "current_db": "2026-07-01.db",
+  "previous_db": "2026-06-30.db"
 }
