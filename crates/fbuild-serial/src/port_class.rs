@@ -181,7 +181,7 @@ mod linux {
 
     /// Strip `/dev/` (or `/devices/` in some odd configurations) and
     /// return the bare port name, e.g. `ttyACM0`.
-    fn port_name_stem(port_name: &str) -> Option<&str> {
+    pub(super) fn port_name_stem(port_name: &str) -> Option<&str> {
         if let Some(stem) = port_name.strip_prefix("/dev/") {
             return Some(stem);
         }
@@ -220,7 +220,7 @@ mod linux {
     }
 
     #[cfg(test)]
-    pub(crate) use port_name_stem as port_name_stem_for_tests;
+    pub(super) use port_name_stem as port_name_stem_for_tests;
 }
 
 #[cfg(target_os = "macos")]
