@@ -201,6 +201,58 @@ pub fn install_hint() -> String {
     )
 }
 
+/// USB VID:PID pair the on-board LPC-Link2 debugger enumerates as
+/// while running its factory CMSIS-DAP v1.0.7 firmware. FastLED/fbuild
+/// #921 (the reproduction environment referenced in that issue) —
+/// LPC845-BRK stock shipment. The debugger's PID changes to something
+/// ARM-defined once the CMSIS-DAP V2 upgrade lands, which is how the
+/// warning path detects "still on the old firmware".
+pub const LPC_LINK2_V1_FIRMWARE_VID: u16 = 0x1FC9;
+pub const LPC_LINK2_V1_FIRMWARE_PID: u16 = 0x0132;
+
+/// Return true when a USB device's VID:PID matches the stock LPC-Link2
+/// v1.0.7 firmware — the one that does NOT forward DTR/RTS to the
+/// target's `!RESET`/`!ISP` pins, so `-control` cannot auto-enter ISP.
+///
+/// This is the trigger for the yellow "please upgrade your debugger"
+/// warning printed by [`firmware_upgrade_warning_ansi`].
+pub fn looks_like_lpc_link2_v1_firmware(vid: u16, pid: u16) -> bool {
+    vid == LPC_LINK2_V1_FIRMWARE_VID && pid == LPC_LINK2_V1_FIRMWARE_PID
+}
+
+/// The rendered warning users see on the terminal when we detect the
+/// old firmware. Wraps the message in ANSI SGR yellow (`\x1b[33m` /
+/// `\x1b[0m`) unless `no_ansi` is set — TTY-safe consumers should call
+/// this with `no_ansi = true` to strip the escapes.
+///
+/// Names the exact `fbuild deploy … --upgrade-debugger` command the
+/// user should run, so the warning is self-documenting.
+pub fn firmware_upgrade_warning_ansi(no_ansi: bool) -> String {
+    // ANSI SGR: 33 = yellow foreground; 1 = bold; 0 = reset.
+    let (open, close) = if no_ansi {
+        ("", "")
+    } else {
+        ("\x1b[1;33m", "\x1b[0m")
+    };
+    format!(
+        "{open}⚠ LPC-Link2 debugger is running factory CMSIS-DAP v1.0.7 firmware.\n\
+         \n\
+         That firmware does NOT forward the host CDC DTR/RTS lines to\n\
+         the target's !RESET/!ISP pins, so `lpc21isp -control` cannot\n\
+         auto-enter ISP mode — every deploy will need a physical\n\
+         SW3+SW4 button press.\n\
+         \n\
+         To upgrade to CMSIS-DAP V2 (one-time, ~10 s), first put the\n\
+         board's LPC-Link2 into DFU mode by holding the ISP-select\n\
+         short (LPC845-BRK: JP1 to GND) at power-up. Then run:\n\
+         \n\
+             fbuild deploy … --upgrade-debugger\n\
+         \n\
+         After the upgrade completes, subsequent deploys enter ISP mode\n\
+         automatically. See FastLED/fbuild#921 for the full context.{close}",
+    )
+}
+
 /// The two assets we need — enumerated so `--upgrade-debugger` can
 /// fetch them in one pass. Downloader plumbing lives in the sibling
 /// `fbuild-packages` crate; that crate is not depended on from

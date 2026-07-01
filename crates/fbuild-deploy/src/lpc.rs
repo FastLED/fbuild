@@ -393,6 +393,14 @@ impl Deployer for LpcDeployer {
             )
         })?;
 
+        // FastLED/fbuild#921: warn if the on-board LPC-Link2 debugger is
+        // still on the factory CMSIS-DAP v1.0.7 firmware. That firmware
+        // eats DTR/RTS, so `-control` cannot auto-enter ISP and every
+        // deploy will need a SW3+SW4 press. The yellow warning names
+        // the `fbuild deploy … --upgrade-debugger` command that fixes
+        // it once and for all.
+        emit_lpc_link2_v1_warning_if_detected(port);
+
         // FastLED/fbuild#921: fail fast with an actionable "install
         // lpc21isp" hint BEFORE we try to spawn it. `run_command` would
         // otherwise return a generic ENOENT that hides the fix.
@@ -500,6 +508,44 @@ impl Deployer for LpcDeployer {
     }
 }
 
+/// Enumerate serial ports, find the one that matches `port_name`, and
+/// if its USB descriptor advertises the factory LPC-Link2 CMSIS-DAP
+/// v1.0.7 firmware, emit the yellow "please upgrade your debugger"
+/// warning to stderr. FastLED/fbuild#921.
+///
+/// Non-fatal: any errors from the `serialport` API are swallowed since
+/// the warning is best-effort — we don't want to fail a deploy just
+/// because port enumeration hiccuped.
+fn emit_lpc_link2_v1_warning_if_detected(port_name: &str) {
+    let Ok(ports) = serialport::available_ports() else {
+        return;
+    };
+    for p in ports {
+        if !port_names_match(&p.port_name, port_name) {
+            continue;
+        }
+        if let serialport::SerialPortType::UsbPort(usb) = &p.port_type {
+            if crate::lpc_debugger_reflash::looks_like_lpc_link2_v1_firmware(usb.vid, usb.pid) {
+                let no_ansi = std::env::var_os("NO_COLOR").is_some()
+                    || std::env::var_os("FBUILD_NO_COLOR").is_some();
+                let msg = crate::lpc_debugger_reflash::firmware_upgrade_warning_ansi(no_ansi);
+                eprintln!("{msg}");
+            }
+        }
+        return;
+    }
+}
+
+/// Compare a `serialport::SerialPortInfo.port_name` against the
+/// user-supplied port string. `serialport` returns names like `COM10`
+/// on Windows; users may have typed `\\.\COM10` (the CreateFile prefix
+/// FastLED/fbuild#927 applies later in argv) or plain `COM10`. Match
+/// on the tail after the DOS-device prefix.
+fn port_names_match(sys: &str, user: &str) -> bool {
+    let strip = |s: &str| -> String { s.trim_start_matches(r"\\.\").to_ascii_lowercase() };
+    strip(sys) == strip(user)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -510,6 +556,55 @@ mod tests {
         assert_eq!(deployer.baud_rate, "115200");
         assert_eq!(deployer.xtal_khz, 12_000);
         assert_eq!(deployer.timeout_secs, 60);
+    }
+
+    // ---------- FastLED/fbuild#921 firmware-old detection ----------
+
+    #[test]
+    fn port_names_match_handles_dos_device_prefix() {
+        // Windows: `serialport::available_ports()` returns "COM10",
+        // user may have typed "COM10", "com10", or the prefixed
+        // `\\.\COM10` form.
+        assert!(port_names_match("COM10", "COM10"));
+        assert!(port_names_match("COM10", "com10"));
+        assert!(port_names_match(r"\\.\COM10", "COM10"));
+        assert!(port_names_match("COM10", r"\\.\COM10"));
+        assert!(port_names_match(r"\\.\COM10", r"\\.\com10"));
+        assert!(!port_names_match("COM10", "COM11"));
+        // POSIX paths — pass-through.
+        assert!(port_names_match("/dev/ttyUSB0", "/dev/ttyUSB0"));
+    }
+
+    #[test]
+    fn lpc_link2_v1_firmware_detection_hits_only_expected_vid_pid() {
+        use crate::lpc_debugger_reflash::{
+            looks_like_lpc_link2_v1_firmware, LPC_LINK2_V1_FIRMWARE_PID, LPC_LINK2_V1_FIRMWARE_VID,
+        };
+        assert!(looks_like_lpc_link2_v1_firmware(
+            LPC_LINK2_V1_FIRMWARE_VID,
+            LPC_LINK2_V1_FIRMWARE_PID
+        ));
+        // Adjacent PIDs / random VIDs — no false hits.
+        assert!(!looks_like_lpc_link2_v1_firmware(0x1FC9, 0x0090));
+        assert!(!looks_like_lpc_link2_v1_firmware(0x0D28, 0x0204));
+        assert!(!looks_like_lpc_link2_v1_firmware(0, 0));
+    }
+
+    #[test]
+    fn firmware_upgrade_warning_ansi_wraps_yellow_and_names_the_command() {
+        use crate::lpc_debugger_reflash::firmware_upgrade_warning_ansi;
+        let colored = firmware_upgrade_warning_ansi(false);
+        // ANSI SGR yellow-bold opener + reset closer.
+        assert!(colored.contains("\x1b[1;33m"));
+        assert!(colored.contains("\x1b[0m"));
+        assert!(colored.contains("--upgrade-debugger"));
+        assert!(colored.contains("#921"));
+
+        // no_ansi=true strips the escapes but keeps the rest.
+        let plain = firmware_upgrade_warning_ansi(true);
+        assert!(!plain.contains("\x1b["));
+        assert!(plain.contains("--upgrade-debugger"));
+        assert!(plain.contains("#921"));
     }
 
     #[test]
