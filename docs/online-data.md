@@ -25,9 +25,10 @@ the bundled `usb-ids` crate doesn't know a VID:PID.
 
 VID/PID product rows are USB-name metadata, not board-support proof. Board
 existence remains governed by `crates/fbuild-config/assets/boards`; if a board
-is absent there, a third-party SDK or board-package row is treated only as a
-weak supplement that can fill product-name gaps after first-party, vendor, and
-generic USB-ID sources have already won.
+is absent there, it may not be an fbuild-supported board. Local FastLED board
+VID/PID rows fill product-name gaps for checked-in boards after stronger USB
+owner and generic sources have won. Third-party SDK or board-package rows are
+weaker supplements after that.
 
 ## URLs
 
@@ -94,9 +95,9 @@ Per run:
 6. `uv run --no-project --script .online-data/tools/merge_sources.py …`
    over whichever sources arrived intact. The merger:
    - takes the union in workflow argument order; first-party/vendor-owned
-     sources are ordered before generic USB-ID feeds, while third-party SDK
-     and board-package supplements are ordered after them so they only fill
-     missing rows;
+     sources are ordered before generic USB-ID feeds, local FastLED board rows
+     fill checked-in board gaps after those sources, and third-party SDK /
+     board-package supplements come last so they only fill remaining rows;
    - sorts keys alphabetically (lowercase `vvvv:pppp`);
    - writes `data/usb-vid.json`, `data/usb-vid-conflicts.json`,
      `data/usb-vids.proto.zstd`, and the freshly-stamped `manifest.json`;

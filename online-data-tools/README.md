@@ -27,6 +27,7 @@ is committed to orphan branches:
 | `fetch_nxp_usb_pids.py` | NXP mfgtools/UUU config table | merge-compatible `/tmp/nxp-usb-pids.json` |
 | `fetch_silabs_usb_pids.py` | Linux CP210x driver + SiliconLabsSoftware OpenOCD udev rule | merge-compatible `/tmp/silabs-usb-pids.json` |
 | `fetch_renesas_usb_pids.py` | ArduinoCore-renesas `boards.txt` weak supplement | merge-compatible `/tmp/renesas-usb-pids.json` |
+| `extract_fastled_board_usb_pids.py` | Local `crates/fbuild-config/assets/boards/json` board VID/PID metadata | merge-compatible `/tmp/fastled-board-usb-pids.json` |
 
 The merger scripts on the `online-data` orphan branch
 (`merge_sources.py`, `merge_pio_boards.py`, `build_manifest.py`,
@@ -35,12 +36,14 @@ the convention is documented in [issue #718](https://github.com/FastLED/fbuild/i
 
 ## USB VID:PID Supplements
 
-Source authority is intentional. First-party vendor registries and local
-FastLED board data are stronger than generic USB-ID feeds; third-party SDK or
-board-package rows are weak supplements that merge after those sources and
-only fill gaps. A USB VID/PID row improves product-name resolution, but if a
-board is not present under `crates/fbuild-config/assets/boards`, it may not be
-an fbuild-supported board.
+Source authority is intentional. First-party vendor registries are strongest,
+generic USB-ID feeds provide broad baseline names, and local FastLED board data
+is a repo-scope supplement that fills product-name gaps for boards under
+`crates/fbuild-config/assets/boards/json`. Third-party SDK or board-package
+rows are weaker supplements that merge after those sources and only fill gaps.
+A USB VID/PID row improves product-name resolution, but if a board is not
+present under `crates/fbuild-config/assets/boards`, it may not be an
+fbuild-supported board.
 
 The Espressif supplement ingests the official `espressif/usb-pids` registry:
 
@@ -98,6 +101,13 @@ families. The workflow orders the supplement before generic USB-ID feeds so
 Adafruit first-party product names win, but entries still describe USB
 products rather than fbuild board support; support is governed by
 `crates/fbuild-config/assets/boards`.
+
+The FastLED board supplement extracts `build.vid` / `build.pid` from the
+checked-in board JSON files under `crates/fbuild-config/assets/boards/json`.
+It is intentionally ordered after vendor-owned and generic USB-ID sources:
+local board names fill gaps for boards fbuild actually carries, but board JSON
+`vendor` fields are not always the USB VID owner and should not replace
+stronger USB product tables. Boards outside this repo are not inferred here.
 
 The SparkFun supplement has explicit source tiers for VID `0x1b4f`.
 `--tier first-party` parses SparkFun-maintained Arduino board package files,

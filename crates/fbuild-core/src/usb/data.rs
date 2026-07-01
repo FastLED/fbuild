@@ -115,18 +115,24 @@ struct VendorEntry {
 /// installed overlay. Silently no-ops on any IO or parse error so the
 /// resolver never crashes on a stale / partial cache file.
 pub fn install_online_cache(path: &Path) {
+    let _ = try_install_online_cache(path);
+}
+
+/// Same as [`install_online_cache`], but reports whether an overlay was
+/// successfully parsed and installed.
+pub fn try_install_online_cache(path: &Path) -> bool {
     let raw = match std::fs::read_to_string(path) {
         Ok(s) => s,
         Err(e) => {
             tracing::debug!(?path, error = %e, "usb online overlay: read failed");
-            return;
+            return false;
         }
     };
     let parsed: HashMap<String, VendorEntry> = match serde_json::from_str(&raw) {
         Ok(m) => m,
         Err(e) => {
             tracing::warn!(?path, error = %e, "usb online overlay: parse failed");
-            return;
+            return false;
         }
     };
     // Flatten the on-disk per-VID nested shape into the O(1) flat
@@ -152,6 +158,7 @@ pub fn install_online_cache(path: &Path) {
     let count = packed.len();
     install_online_cache_map(packed);
     tracing::debug!(path = %path.display(), entries = count, "usb online overlay installed");
+    true
 }
 
 /// Install the overlay from the current `usb-vids.proto.zstd` cache file.
@@ -159,11 +166,17 @@ pub fn install_online_cache(path: &Path) {
 /// resolution always degrades to the embedded vendor archive instead of
 /// failing port enumeration.
 pub fn install_online_cache_proto_zstd(path: &Path) {
+    let _ = try_install_online_cache_proto_zstd(path);
+}
+
+/// Same as [`install_online_cache_proto_zstd`], but reports whether an
+/// overlay was successfully decoded and installed.
+pub fn try_install_online_cache_proto_zstd(path: &Path) -> bool {
     let raw = match std::fs::read(path) {
         Ok(bytes) => bytes,
         Err(e) => {
             tracing::debug!(?path, error = %e, "usb online overlay: read failed");
-            return;
+            return false;
         }
     };
     match decode_proto_zstd_bytes(&raw) {
@@ -175,6 +188,7 @@ pub fn install_online_cache_proto_zstd(path: &Path) {
                 entries = count,
                 "usb online protobuf overlay installed"
             );
+            true
         }
         Err(e) => {
             tracing::warn!(
@@ -182,6 +196,7 @@ pub fn install_online_cache_proto_zstd(path: &Path) {
                 error = %e,
                 "usb online protobuf overlay decode failed"
             );
+            false
         }
     }
 }

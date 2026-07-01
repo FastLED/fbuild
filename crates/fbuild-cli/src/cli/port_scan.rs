@@ -74,18 +74,42 @@ fn run_scan(offline: bool) -> Result<()> {
 /// resolver degrades to tier-1 (embedded vendor archive). The cache is
 /// kept fresh on a 7-day cadence — older copies are refetched.
 fn populate_online_overlay() {
+    populate_online_overlay_from_urls(
+        fbuild_core::usb::USB_VIDS_PROTO_ZSTD_URL,
+        fbuild_core::usb::USB_VID_JSON_URL,
+    );
+}
+
+fn populate_online_overlay_from_urls(proto_url: &str, json_url: &str) {
     let Some(cache_path) = overlay_cache_path() else {
         return;
     };
     if !cache_is_fresh(&cache_path) {
-        if let Err(e) = fetch_overlay_to(&cache_path) {
+        if let Err(e) = fetch_overlay_to(&cache_path, proto_url) {
             tracing::debug!(
                 error = %e,
-                "port scan: overlay fetch failed — degrading to tier-1 only"
+                "port scan: protobuf overlay fetch failed; trying JSON overlay"
             );
         }
     }
-    fbuild_core::usb::install_online_cache_proto_zstd(&cache_path);
+    if fbuild_core::usb::try_install_online_cache_proto_zstd(&cache_path) {
+        return;
+    }
+
+    let Some(json_cache_path) = overlay_json_cache_path() else {
+        return;
+    };
+    if !cache_is_fresh(&json_cache_path) {
+        if let Err(e) = fetch_overlay_to(&json_cache_path, json_url) {
+            tracing::debug!(
+                error = %e,
+                "port scan: JSON overlay fetch failed"
+            );
+        }
+    }
+    if !fbuild_core::usb::try_install_online_cache(&json_cache_path) {
+        tracing::debug!("port scan: overlay unavailable; degrading to tier-1 only");
+    }
 }
 
 fn overlay_cache_path() -> Option<std::path::PathBuf> {
@@ -93,6 +117,13 @@ fn overlay_cache_path() -> Option<std::path::PathBuf> {
     let dir = root.join("usb");
     std::fs::create_dir_all(&dir).ok()?;
     Some(dir.join("usb-vids.proto.zstd"))
+}
+
+fn overlay_json_cache_path() -> Option<std::path::PathBuf> {
+    let root = fbuild_paths::get_cache_root();
+    let dir = root.join("usb");
+    std::fs::create_dir_all(&dir).ok()?;
+    Some(dir.join("usb-vid.json"))
 }
 
 /// 7-day cache TTL — fbuild's online-data branch refreshes nightly;
@@ -114,22 +145,23 @@ fn cache_is_fresh(path: &std::path::Path) -> bool {
     age.as_secs() < OVERLAY_TTL_SECS
 }
 
-fn fetch_overlay_to(path: &std::path::Path) -> std::result::Result<(), String> {
+fn fetch_overlay_to(path: &std::path::Path, url: &str) -> std::result::Result<(), String> {
     // reqwest::blocking spins its own internal runtime and rejects
     // being called from inside an outer tokio runtime (the CLI
     // dispatcher uses `#[tokio::main]`). Run the fetch on a dedicated
     // OS thread so reqwest's runtime sees a clean async-free context.
     let path = path.to_path_buf();
-    std::thread::spawn(move || fetch_overlay_to_inner(&path))
+    let url = url.to_string();
+    std::thread::spawn(move || fetch_overlay_to_inner(&path, &url))
         .join()
         .map_err(|_| "fetch thread panicked".to_string())?
 }
 
-fn fetch_overlay_to_inner(path: &std::path::Path) -> std::result::Result<(), String> {
+fn fetch_overlay_to_inner(path: &std::path::Path, url: &str) -> std::result::Result<(), String> {
     // FastLED/fbuild#844: route the OS-thread blocking client through the
     // shared bridge so all reqwest construction has one source of truth.
     let client = fbuild_core::http::blocking_client(Duration::from_secs(15));
-    fetch_overlay_to_inner_with_client(path, &client, fbuild_core::usb::USB_VIDS_PROTO_ZSTD_URL)
+    fetch_overlay_to_inner_with_client(path, &client, url)
 }
 
 fn fetch_overlay_to_inner_with_client(
@@ -403,8 +435,10 @@ mod tests {
         let _guard = EnvVarGuard::set("FBUILD_CACHE_DIR", tmp.path());
 
         let path = overlay_cache_path().expect("cache path");
+        let json_path = overlay_json_cache_path().expect("json cache path");
 
         assert_eq!(path, tmp.path().join("usb").join("usb-vids.proto.zstd"));
+        assert_eq!(json_path, tmp.path().join("usb").join("usb-vid.json"));
         assert!(tmp.path().join("usb").is_dir());
     }
 
@@ -439,6 +473,69 @@ mod tests {
         handle.join().unwrap();
         assert_eq!(std::fs::read(&path).unwrap(), expected);
         assert!(!path.with_extension("proto.zstd.tmp").exists());
+    }
+
+    #[test]
+    fn populate_overlay_falls_back_to_json_when_proto_is_missing() {
+        let _env = ENV_LOCK.lock().unwrap();
+        let tmp = tempfile::tempdir().unwrap();
+        let _guard = EnvVarGuard::set("FBUILD_CACHE_DIR", tmp.path());
+
+        let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+        listener.set_nonblocking(true).unwrap();
+        let addr = listener.local_addr().unwrap();
+        let json = r#"{"feed":{"vendor":"Feedface Inc","products":[["c0de","Coded Widget"]]}}"#;
+        let server_json = json.as_bytes().to_vec();
+        let handle = std::thread::spawn(move || {
+            let deadline = std::time::Instant::now() + Duration::from_secs(5);
+            let mut request_count = 0_u8;
+            while request_count < 2 {
+                match listener.accept() {
+                    Ok((mut stream, _)) => {
+                        let mut request = [0_u8; 1024];
+                        let _ = stream.read(&mut request).unwrap();
+                        request_count += 1;
+                        if request_count == 1 {
+                            stream
+                                .write_all(
+                                    b"HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\nConnection: close\r\n\r\n",
+                                )
+                                .unwrap();
+                        } else {
+                            let response = format!(
+                                "HTTP/1.1 200 OK\r\nContent-Length: {}\r\nConnection: close\r\n\r\n",
+                                server_json.len()
+                            );
+                            stream.write_all(response.as_bytes()).unwrap();
+                            stream.write_all(&server_json).unwrap();
+                        }
+                    }
+                    Err(e) if e.kind() == std::io::ErrorKind::WouldBlock => {
+                        assert!(
+                            std::time::Instant::now() < deadline,
+                            "timed out waiting for overlay requests"
+                        );
+                        std::thread::sleep(Duration::from_millis(10));
+                    }
+                    Err(e) => panic!("accept failed: {e}"),
+                }
+            }
+            request_count
+        });
+
+        populate_online_overlay_from_urls(
+            &format!("http://{addr}/usb-vids.proto.zstd"),
+            &format!("http://{addr}/usb-vid.json"),
+        );
+
+        assert_eq!(handle.join().unwrap(), 2);
+        assert_eq!(
+            std::fs::read_to_string(tmp.path().join("usb").join("usb-vid.json")).unwrap(),
+            json
+        );
+        let info = fbuild_core::usb::resolve(0xFEED, 0xC0DE);
+        assert_eq!(info.vendor, "Feedface Inc");
+        assert_eq!(info.product, "Coded Widget");
     }
 
     #[test]

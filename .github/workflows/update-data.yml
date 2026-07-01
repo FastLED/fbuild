@@ -341,6 +341,16 @@ jobs:
             --out /tmp/seeed-supplemental-usb-pids.json
           wc -l /tmp/seeed-supplemental-usb-pids.json
 
+      - name: Extract FastLED board USB PID rows (USB-VID repo-board supplement)
+        id: extract-fastled-board-pids
+        continue-on-error: true
+        run: |
+          uv run --no-project --script \
+            "${{ github.workspace }}/online-data-tools/extract_fastled_board_usb_pids.py" \
+            --boards-dir "${{ github.workspace }}/crates/fbuild-config/assets/boards/json" \
+            --out /tmp/fastled-board-usb-pids.json
+          wc -l /tmp/fastled-board-usb-pids.json
+
       - name: Dump PlatformIO board catalog → /tmp/all_boards.json
         id: dump-pio
         continue-on-error: true
@@ -439,6 +449,12 @@ jobs:
             # names for common CP210x bridge PIDs stay stable while the
             # Energy Micro / Silicon Labs debug-interface row fills in.
             args+=(--json "silabs-usb-pids=/tmp/silabs-usb-pids.json")
+          fi
+          if [ "${{ steps.extract-fastled-board-pids.outcome }}" = "success" ] && [ -s /tmp/fastled-board-usb-pids.json ]; then
+            # Local board JSON rows are repo-scope supplements: they fill
+            # missing product names for boards fbuild actually carries, but
+            # do not replace stronger vendor/generic USB-ID source rows.
+            args+=(--json "fastled-board-usb-pids=/tmp/fastled-board-usb-pids.json")
           fi
           if [ "${{ steps.fetch-renesas-pids.outcome }}" = "success" ] && [ -s /tmp/renesas-usb-pids.json ]; then
             # ArduinoCore-renesas board-package rows are deliberately weak:
