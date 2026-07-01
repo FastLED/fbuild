@@ -37,4 +37,7 @@ mod tests_lpc8xx;
 #[cfg(test)]
 mod tests_usb_vid;
 
+#[cfg(test)]
+mod tests_common_board_vidpid;
+
 pub use types::{BoardConfig, DebugToolMeta, Esp32QemuPsramConfig};
