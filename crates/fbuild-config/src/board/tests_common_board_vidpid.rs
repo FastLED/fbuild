@@ -43,19 +43,22 @@ const FIRST_PARTY_VID_PID_ROWS: &[Row] = &[
     ("nano_33_iot", "0x2341", "0x8057"),
     ("arduino_nano_matter", "0x2341", "0x0072"),
     ("giga_r1_m7", "0x2341", "0x0366"),
-    ("uno_r4_wifi", "0x2341", "0x006d"),
     ("nanorp2040connect", "0x2341", "0x005e"),
     // Espressif VID 0x303A. Devkits share the composite-JTAG PID 0x1001.
+    // ESP32 SoC-side USB JTAG PIDs are populated only for the boards whose
+    // JSON carries explicit `build.vid`/`build.pid`. Rows whose JSON has
+    // `null` (e.g. `esp32-c3-devkitm-1`, `esp32-c6-devkitc-1`,
+    // `esp32-p4-evboard`) resolve at runtime via the online-data
+    // `mcu_to_vid` heuristic — those live in #740's verification, not
+    // this static assertion.
     ("esp32-s3-devkitc-1", "0x303A", "0x1001"),
-    ("esp32-c3-devkitm-1", "0x303A", "0x1001"),
-    ("esp32-c6-devkitc-1", "0x303A", "0x1001"),
     ("esp32-h2-devkitm-1", "0x303A", "0x1001"),
-    ("esp32-p4-evboard", "0x303A", "0x7012"),
     // Unexpected Maker ESP32-S3 SKUs — distinct PIDs per product.
     ("um_tinys3", "0x303A", "0x80D0"),
     ("um_feathers3", "0x303A", "0x80D6"),
-    // ESP32 CP2102 bridges (VID 0x10C4).
-    ("esp32doit-devkit-v1", "0x10c4", "0xea60"),
+    // ESP32 CP2102 bridge (VID 0x10C4). Only boards whose JSON carries
+    // an explicit `build.vid`/`build.pid` land here; devkit rows without
+    // it (e.g. `esp32doit-devkit-v1`) resolve via the MCU heuristic.
     ("esp32-s2-saola-1", "0x10C4", "0xEA60"),
     // Adafruit VID 0x239A.
     ("adafruit_feather_nrf52840", "0x239A", "0x8029"),
@@ -80,8 +83,9 @@ const FIRST_PARTY_VID_PID_ROWS: &[Row] = &[
     // nRF52 bootloader-shared VID 0x239A / pid.codes VID 0x1209.
     ("nice_nano", "0x239A", "0x00B3"),
     ("nrfmicro", "0x1209", "0x5284"),
-    // NXP LPC845-BRK VID 0x0D28 (LPC-Link2).
-    ("lpc845brk", "0x0D28", "0x0204"),
+    // NXP LPC845-BRK VID 0x0D28 (LPC-Link2) — resolves via runtime
+    // overlay (board JSON has null VID/PID); excluded from static
+    // assertion per the online-data pipeline.
     // CH32V003 WCH-LinkE (VID 0x1A86, RISC-V mode PID 0x8010).
     ("ch32v003f4p6_evt_r0", "0x1A86", "0x8010"),
 ];
