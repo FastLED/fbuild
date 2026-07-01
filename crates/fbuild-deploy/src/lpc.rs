@@ -58,21 +58,51 @@ fn home_dir() -> Option<PathBuf> {
     }
 }
 
+/// The one canonical location fbuild manages lpc21isp at. FastLED/fbuild#921
+/// treats lpc21isp as a fbuild-owned dependency — auto-install will drop
+/// the binary here in a follow-up PR, and the deployer reads it back from
+/// the same path. No PATH walk, no out-of-tree fallbacks: if it isn't
+/// here (and no env override is set), fbuild owes the user a "how to
+/// install" hint, not a silent hunt through system directories.
+///
+/// Honors `FBUILD_DEV_MODE=1` → `~/.fbuild/dev/tools/…` to match the
+/// isolation the rest of `fbuild-paths` applies.
+pub fn managed_lpc21isp_path() -> Option<PathBuf> {
+    let exe = if cfg!(windows) {
+        "lpc21isp.exe"
+    } else {
+        "lpc21isp"
+    };
+    let home = home_dir()?;
+    let mode = if std::env::var_os("FBUILD_DEV_MODE").is_some() {
+        "dev"
+    } else {
+        "prod"
+    };
+    Some(home.join(".fbuild").join(mode).join("tools").join(exe))
+}
+
 /// Resolve where `lpc21isp` lives on this system.
 ///
 /// Search order (first hit wins):
 ///
-/// 1. `FBUILD_LPC21ISP_PATH` env var.
-/// 2. `~/.fbuild/tools/lpc21isp[.exe]` — fbuild's managed tools dir. Also
-///    honors `FBUILD_DEV_MODE=1` → `~/.fbuild/dev/tools/…`.
-/// 3. `C:\tools\lpc21isp\lpc21isp.exe` on Windows — a widely-followed
-///    convention that this repo's fresh-install docs point at (matches
-///    the empty placeholder dir already present on maintainer boxes).
-/// 4. `lpc21isp` (or `lpc21isp.exe`) on `PATH`.
+/// 1. `FBUILD_LPC21ISP_PATH` env var — direct override, for CI or dev
+///    boxes that want to point at a bespoke build.
+/// 2. `~/.fbuild/{prod|dev}/tools/lpc21isp[.exe]` — the canonical
+///    fbuild-managed location. Auto-install populates this in a
+///    follow-up PR under FastLED/fbuild#921.
 ///
-/// Returns `None` if no candidate is found — the deployer converts that
-/// into a clear "how to install lpc21isp" diagnostic instead of blowing
-/// up mid-flash. FastLED/fbuild#921.
+/// **Deliberately NOT searched:** `PATH`, `C:\tools\lpc21isp\`, Homebrew,
+/// apt, etc. Per #921, lpc21isp is fbuild-owned — it lives where fbuild
+/// installs it, or it lives at the env-var override, and nowhere else.
+/// A silent PATH walk would hide "we forgot to install this" behind a
+/// wildcard hit against whatever `lpc21isp` shipped with the host OS,
+/// which is the failure mode the deploy pipeline needs to surface, not
+/// paper over.
+///
+/// Returns `None` if no candidate is present — the deployer converts
+/// that into a clear "how to install lpc21isp" diagnostic instead of
+/// blowing up mid-flash.
 pub fn find_lpc21isp() -> Option<PathBuf> {
     if let Some(env_hit) = std::env::var_os(LPC21ISP_PATH_ENV_VAR) {
         let p = PathBuf::from(env_hit);
@@ -81,48 +111,9 @@ pub fn find_lpc21isp() -> Option<PathBuf> {
         }
     }
 
-    let exe = if cfg!(windows) {
-        "lpc21isp.exe"
-    } else {
-        "lpc21isp"
-    };
-
-    // fbuild-managed tools dir. Mirrors the `~/.fbuild/{prod|dev}/`
-    // isolation the rest of fbuild-paths applies.
-    if let Some(home) = home_dir() {
-        let mode = if std::env::var_os("FBUILD_DEV_MODE").is_some() {
-            "dev"
-        } else {
-            "prod"
-        };
-        let managed = home.join(".fbuild").join(mode).join("tools").join(exe);
+    if let Some(managed) = managed_lpc21isp_path() {
         if managed.is_file() {
             return Some(managed);
-        }
-        // Also check the mode-less legacy path some maintainer setups use.
-        let legacy = home.join(".fbuild").join("tools").join(exe);
-        if legacy.is_file() {
-            return Some(legacy);
-        }
-    }
-
-    // Windows convention: `C:\tools\lpc21isp\lpc21isp.exe`. Matches the
-    // maintainer-box layout referenced in FastLED/fbuild#921.
-    if cfg!(windows) {
-        let tools_dir = PathBuf::from("C:\\tools\\lpc21isp").join(exe);
-        if tools_dir.is_file() {
-            return Some(tools_dir);
-        }
-    }
-
-    // PATH lookup — via `which` when the crate is available on the host
-    // toolchain, otherwise a manual walk of `$PATH`.
-    if let Ok(path_var) = std::env::var("PATH") {
-        for dir in std::env::split_paths(&path_var) {
-            let candidate = dir.join(exe);
-            if candidate.is_file() {
-                return Some(candidate);
-            }
         }
     }
 
@@ -133,20 +124,28 @@ pub fn find_lpc21isp() -> Option<PathBuf> {
 /// deploy path. Kept as a standalone function so the test module can
 /// assert the exact URLs / paths without shelling out.
 pub(crate) fn lpc21isp_install_hint() -> String {
+    let (tools_dir, exe) = if cfg!(windows) {
+        ("~/.fbuild/prod/tools/", "lpc21isp.exe")
+    } else {
+        ("~/.fbuild/prod/tools/", "lpc21isp")
+    };
     format!(
         "lpc21isp not found on PATH or in any fbuild-managed tools dir.\n\
          \n\
-         Install one of the following, then retry:\n\
+         Auto-fetch is not wired yet (tracked under FastLED/fbuild#921).\n\
+         Until it lands, install lpc21isp yourself into the location\n\
+         fbuild owns, then retry:\n\
          \n\
-           • Windows prebuilt: fetch lpc21isp.exe from\n\
-             https://sourceforge.net/projects/lpc21isp/files/ and drop\n\
-             it in C:\\tools\\lpc21isp\\lpc21isp.exe (or set\n\
-             {env}=<full path to lpc21isp.exe>).\n\
-           • Linux/macOS: `apt install lpc21isp` / `brew install lpc21isp`,\n\
-             or build from https://github.com/capiman/lpc21isp source.\n\
+           1. Get the binary:\n\
+              • Windows: build from source or fetch a prebuilt from\n\
+                https://sourceforge.net/projects/lpc21isp/files/ .\n\
+              • Linux/macOS: `apt install lpc21isp` / `brew install lpc21isp`,\n\
+                or build from https://github.com/capiman/lpc21isp source.\n\
+           2. Drop it at {tools_dir}{exe} .\n\
+           3. Or set {env}=<full path to lpc21isp binary> to point\n\
+              anywhere else.\n\
          \n\
-         Once installed, verify with: `lpc21isp` (should print usage).\n\
-         Tracked under FastLED/fbuild#921.",
+         Verify with: `{exe}` (should print usage).",
         env = LPC21ISP_PATH_ENV_VAR
     )
 }
@@ -512,8 +511,9 @@ mod tests {
             "hint must point at a download"
         );
         assert!(
-            hint.contains("C:\\tools\\lpc21isp"),
-            "hint must show the Windows convention path"
+            hint.contains("~/.fbuild/prod/tools/"),
+            "hint must direct the user at the fbuild-managed tools dir \
+             (never an out-of-tree C:\\tools\\ path or PATH-walk)"
         );
         assert!(hint.contains("#921"), "hint must cite the tracking issue");
     }
