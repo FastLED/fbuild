@@ -25,7 +25,7 @@
 #      single failure is non-fatal — the merger downstream sees only the
 #      sources that actually arrived intact;
 #   4. runs the USB-VID merger → sorted `usb-vid.json` + conflict log +
-#      per-dataset manifest fragment;
+#      per-dataset manifest fragment + compact runtime `usb-vids.proto.zstd`;
 #   5. runs the PlatformIO board merger → `pio-boards.json` (deep-union
 #      with the previously committed copy so transient field drops in
 #      `pio boards` don't lose data) + per-dataset manifest fragment;
@@ -537,6 +537,20 @@ jobs:
             --upstream "${ONLINE_WORKTREE}/data/usb-vid.json" \
             --out      "${ONLINE_WORKTREE}/data/usb-vendors.tar.zst"
           ls -la "${ONLINE_WORKTREE}/data/usb-vendors.tar.zst"
+
+      - name: Package usb-vids.proto.zstd (runtime USB VID:PID overlay)
+        id: package-usb-proto
+        if: steps.merge-usb.outcome == 'success'
+        # Full product-level runtime cache for fbuild CLI/device scans. This
+        # is derived after source priority has already been resolved into
+        # usb-vid.json; weak third-party rows only fill gaps left by
+        # first-party/vendor/generic sources and never override their winners.
+        run: |
+          uv run --no-project --script \
+            "${{ github.workspace }}/online-data-tools/build_usb_vid_proto.py" \
+            --upstream "${ONLINE_WORKTREE}/data/usb-vid.json" \
+            --out      "${ONLINE_WORKTREE}/data/usb-vids.proto.zstd"
+          ls -la "${ONLINE_WORKTREE}/data/usb-vids.proto.zstd"
 
       - name: Assemble manifest.json
         id: build-manifest

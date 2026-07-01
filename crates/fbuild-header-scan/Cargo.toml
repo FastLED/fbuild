@@ -12,6 +12,7 @@ tracing = { workspace = true }
 
 [dev-dependencies]
 criterion = { workspace = true }
+fbuild-paths = { path = "../fbuild-paths" }
 tempfile = { workspace = true }
 
 [[bench]]

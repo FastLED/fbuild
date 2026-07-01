@@ -190,7 +190,9 @@ pub fn classify(raw: &str) -> ClassifiedDep {
         return ClassifiedDep {
             raw: raw.to_string(),
             name: archive_name_from_url(&url_no_ref).unwrap_or_else(|| {
-                last_segment(&url_no_ref).trim_end_matches(".git").to_string()
+                last_segment(&url_no_ref)
+                    .trim_end_matches(".git")
+                    .to_string()
             }),
             source_type: SourceType::HttpArchive,
             version_spec: hash_suffix,
@@ -272,9 +274,8 @@ fn is_github_url(url: &str) -> bool {
 
 /// Extract `(owner, repo)` from `https://github.com/<owner>/<repo>[.git]`.
 fn github_owner_repo(url: &str) -> Option<(String, String)> {
-    let after_host = url
-        .split_once("github.com/")
-        .map(|(_, rest)| rest)?;
+    let lower = url.to_ascii_lowercase();
+    let after_host = &url[lower.find("github.com/")? + "github.com/".len()..];
     let mut parts = after_host.splitn(3, '/');
     let owner = parts.next()?.trim();
     let repo = parts.next()?.trim().trim_end_matches(".git");

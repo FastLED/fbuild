@@ -20,4 +20,5 @@ tracing = { workspace = true }
 regex = { workspace = true }
 
 [dev-dependencies]
+fbuild-paths = { path = "../fbuild-paths" }
 tempfile = { workspace = true }

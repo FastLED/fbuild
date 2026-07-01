@@ -11,18 +11,14 @@
 //!
 //! Different from [`super::serial_probe::SerialAction::Probe`]'s `list`
 //! action (FastLED/fbuild#686) which annotates from a tiny hardcoded
-//! `BOARD_FINGERPRINTS` table — `port scan` consults the full canonical
-//! FastLED/boards aggregate via the tiered resolver, so an unrecognized
+//! `BOARD_FINGERPRINTS` table — `port scan` consults the fbuild online-data
+//! VID:PID overlay via the tiered resolver, so an unrecognized
 //! device shows the actual vendor + product name instead of a blank
 //! hint.
 //!
-//! The canonical data source is [FastLED/boards] (see
-//! <https://fastled.github.io/boards/> for the live portal). The
-//! resolver in `fbuild_core::usb` is wired to consume it via tier-2
-//! overlay; that's separate plumbing — this command takes whatever the
-//! resolver returns.
-//!
-//! [FastLED/boards]: https://github.com/FastLED/boards
+//! The canonical runtime data source is the `fastled/fbuild` `online-data`
+//! branch. The resolver in `fbuild_core::usb` is wired to consume it via the
+//! tier-2 overlay; this command takes whatever the resolver returns.
 
 use clap::Subcommand;
 use fbuild_core::{FbuildError, Result};
@@ -36,7 +32,7 @@ pub enum PortAction {
     /// the OS-visible identity + a `└─ vendor / product` second row
     /// resolved via [`fbuild_core::usb::resolve`].
     Scan {
-        /// Skip the network fetch of the FastLED/boards online overlay
+        /// Skip the network fetch of the fbuild online-data overlay
         /// (tier-2 of the resolver). Useful for offline runs — the
         /// embedded vendor archive (tier-1) still provides vendor
         /// names; product columns fall through to the synthetic
@@ -71,7 +67,7 @@ fn run_scan(offline: bool) -> Result<()> {
     Ok(())
 }
 
-/// Fetch the FastLED/boards `usb-vids.proto.zstd` tier-2 overlay backing
+/// Fetch the fbuild online-data `usb-vids.proto.zstd` tier-2 overlay backing
 /// [`fbuild_core::usb::resolve`] into the local cache root, then install it.
 ///
 /// Best-effort: any I/O / network / parse failure is swallowed and the
@@ -228,6 +224,19 @@ fn render_usb_port(
     product: Option<&str>,
     serial: Option<&str>,
 ) {
+    let kernel_class = fbuild_serial::port_class::detect_port_kernel_class(name);
+    render_usb_port_with_kernel_class(out, name, vid, pid, product, serial, kernel_class);
+}
+
+fn render_usb_port_with_kernel_class(
+    out: &mut String,
+    name: &str,
+    vid: u16,
+    pid: u16,
+    product: Option<&str>,
+    serial: Option<&str>,
+    kernel_class: Option<fbuild_serial::port_class::PortKernelClass>,
+) {
     use std::fmt::Write as _;
     let descriptor = product.unwrap_or("USB Serial Device");
     let serial_field = match serial {
@@ -240,7 +249,21 @@ fn render_usb_port(
     );
     let info = fbuild_core::usb::resolve(vid, pid);
     let friendly_product = friendly_product_name(vid, pid, &info.product, product);
-    let _ = writeln!(out, "          └─ {} / {}", info.vendor, friendly_product);
+    let _ = writeln!(
+        out,
+        "          └─ {} / {}    cdc={}",
+        info.vendor,
+        friendly_product,
+        cdc_label(kernel_class)
+    );
+}
+
+fn cdc_label(kernel_class: Option<fbuild_serial::port_class::PortKernelClass>) -> &'static str {
+    match kernel_class {
+        Some(fbuild_serial::port_class::PortKernelClass::CdcAcm) => "yes",
+        Some(fbuild_serial::port_class::PortKernelClass::UsbSerialBridge) => "no",
+        None => "unknown",
+    }
 }
 
 /// Pick the most "friendly" product label for the resolver row.
@@ -291,8 +314,9 @@ fn is_generic_descriptor(d: &str) -> bool {
 }
 
 /// Small inline supplement for common embedded VID:PIDs that the
-/// canonical FastLED/boards `vidpid` table doesn't carry yet. Keep it
-/// short — anything that lands upstream should be removed here.
+/// canonical online overlay may not carry in offline/test paths. Keep it
+/// short — anything that lands into the embedded product map should be
+/// removed here.
 const FRIENDLY_PRODUCTS: &[(u16, u16, &str)] = &[
     // Espressif Systems (VID 0x303A) — ESP32 series USB-CDC ACM.
     (0x303A, 0x1001, "ESP32-S3 USB-CDC"),
@@ -541,10 +565,43 @@ mod tests {
     }
 
     #[test]
+    fn usb_port_rows_show_cdc_classification() {
+        use fbuild_serial::port_class::PortKernelClass;
+
+        let mut cdc = String::new();
+        render_usb_port_with_kernel_class(
+            &mut cdc,
+            "COM1",
+            0x303A,
+            0x1001,
+            None,
+            None,
+            Some(PortKernelClass::CdcAcm),
+        );
+        assert!(cdc.contains("cdc=yes"), "got: {cdc}");
+
+        let mut bridge = String::new();
+        render_usb_port_with_kernel_class(
+            &mut bridge,
+            "COM2",
+            0x10C4,
+            0xEA60,
+            None,
+            None,
+            Some(PortKernelClass::UsbSerialBridge),
+        );
+        assert!(bridge.contains("cdc=no"), "got: {bridge}");
+
+        let mut unknown = String::new();
+        render_usb_port_with_kernel_class(&mut unknown, "COM3", 0x303A, 0x1001, None, None, None);
+        assert!(unknown.contains("cdc=unknown"), "got: {unknown}");
+    }
+
+    #[test]
     fn esp32_s3_cdc_pid_gets_friendly_supplement() {
-        // 303A:1001 lacks a product entry in both the embedded archive
-        // and the FastLED/boards `vidpid` table; the inline supplement
-        // is what makes the row a friendly name instead of synthetic.
+        // In the tier-1/offline path the embedded archive carries vendor
+        // names only; the inline supplement keeps this common PID friendly
+        // when the online product overlay is not installed.
         let ports = vec![usb_port(
             "COM25",
             0x303A,

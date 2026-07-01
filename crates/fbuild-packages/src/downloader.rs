@@ -387,9 +387,16 @@ mod tests {
     use std::io::Write;
     use tempfile::NamedTempFile;
 
+    fn named_temp_file() -> NamedTempFile {
+        NamedTempFile::new_in(fbuild_paths::temp_subdir(
+            "fbuild-packages-downloader-tests",
+        ))
+        .unwrap()
+    }
+
     #[test]
     fn test_verify_checksum_valid() {
-        let mut f = NamedTempFile::new().unwrap();
+        let mut f = named_temp_file();
         f.write_all(b"hello world").unwrap();
         f.flush().unwrap();
 
@@ -400,7 +407,7 @@ mod tests {
 
     #[test]
     fn test_verify_checksum_invalid() {
-        let mut f = NamedTempFile::new().unwrap();
+        let mut f = named_temp_file();
         f.write_all(b"hello world").unwrap();
         f.flush().unwrap();
 
@@ -439,7 +446,7 @@ mod tests {
                     Err(_) => break,
                 };
                 let resp = {
-                    let mut guard = responses.lock().unwrap();
+                    let mut guard = responses.lock().unwrap_or_else(|err| err.into_inner());
                     if guard.is_empty() {
                         break;
                     }

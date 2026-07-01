@@ -5,14 +5,12 @@
 //! `crates/fbuild-cli/src/sync/`; this file is intentionally thin so the
 //! CLI wiring is easy to audit.
 
-use std::path::PathBuf;
-
 use crate::sync::{run_sync, SyncArgs, SyncOutcome};
 
 /// Adapter for `Commands::Sync` — invoked from `cli::dispatch`.
 #[allow(clippy::too_many_arguments)] // Matches clap's parsed variant fields 1:1.
 pub async fn run_sync_cmd(
-    project_dir: Option<PathBuf>,
+    project_dir: Option<fbuild_core::path::NormalizedPath>,
     environment: Option<String>,
     yes: bool,
     locked: bool,

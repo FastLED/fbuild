@@ -21,7 +21,7 @@ pub async fn run_iwyu(
     environment: Option<String>,
     verbose: bool,
 ) -> fbuild_core::Result<()> {
-    let project_dir = normalize_path(&project_dir)?;
+    let project_dir = normalize_path(&project_dir).await?;
 
     // Step 1: Ensure IWYU is installed
     let component = fbuild_packages::toolchain::ClangComponent::new(
@@ -313,22 +313,19 @@ pub async fn run_iwyu(
             cmd.arg(&file);
             // FastLED/fbuild#810: cap each IWYU invocation at 120s so a wedged
             // subprocess can't hang the whole fan-out forever.
-            let output = match tokio::time::timeout(
-                std::time::Duration::from_secs(120),
-                cmd.output(),
-            )
-            .await
-            {
-                Ok(res) => res,
-                Err(_) => {
-                    return (
-                        file,
-                        Err("include-what-you-use timed out after 120s".to_string()),
-                        false,
-                        src_path,
-                    );
-                }
-            };
+            let output =
+                match tokio::time::timeout(std::time::Duration::from_secs(120), cmd.output()).await
+                {
+                    Ok(res) => res,
+                    Err(_) => {
+                        return (
+                            file,
+                            Err("include-what-you-use timed out after 120s".to_string()),
+                            false,
+                            src_path,
+                        );
+                    }
+                };
 
             match output {
                 Ok(out) => {
@@ -504,16 +501,12 @@ pub async fn run_clang_tool(
     verbose: bool,
     extra_args: &[&str],
 ) -> fbuild_core::Result<()> {
-    let project_dir = normalize_path(&project_dir)?;
+    let project_dir = normalize_path(&project_dir).await?;
 
     // Step 1: Ensure tool is installed
     let component = fbuild_packages::toolchain::ClangComponent::new(kind);
     let tool_path = component.get_binary(binary_name).await?;
-    output::progress(format!(
-        "Using {}: {}",
-        binary_name,
-        tool_path.display()
-    ));
+    output::progress(format!("Using {}: {}", binary_name, tool_path.display()));
 
     // Step 2: Generate compile_commands.json via fbuild daemon
     output::progress("Generating compile_commands.json...");
@@ -605,18 +598,15 @@ pub async fn run_clang_tool(
             }
             // FastLED/fbuild#810: cap each clang-tidy invocation at 120s so a
             // wedged subprocess can't hang the whole fan-out forever.
-            let output = match tokio::time::timeout(
-                std::time::Duration::from_secs(120),
-                cmd.output(),
-            )
-            .await
-            {
-                Ok(res) => res,
-                Err(_) => Err(std::io::Error::new(
-                    std::io::ErrorKind::TimedOut,
-                    "clang-tidy timed out after 120s",
-                )),
-            };
+            let output =
+                match tokio::time::timeout(std::time::Duration::from_secs(120), cmd.output()).await
+                {
+                    Ok(res) => res,
+                    Err(_) => Err(std::io::Error::new(
+                        std::io::ErrorKind::TimedOut,
+                        "clang-tidy timed out after 120s",
+                    )),
+                };
             (file, output)
         });
         handles.push(handle);

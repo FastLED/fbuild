@@ -730,18 +730,17 @@ pub async fn build(
         const NON_STREAM_BUILD_HARD_DEADLINE: std::time::Duration =
             std::time::Duration::from_secs(60 * 60);
         let result = match fbuild_build::get_orchestrator(platform) {
-            Ok(orch) => match tokio::time::timeout(
-                NON_STREAM_BUILD_HARD_DEADLINE,
-                orch.build(&params),
-            )
-            .await
-            {
-                Ok(r) => r,
-                Err(_) => Err(fbuild_core::FbuildError::Other(format!(
-                    "build exceeded hard deadline ({}s); aborting — a compiler may be wedged",
-                    NON_STREAM_BUILD_HARD_DEADLINE.as_secs()
-                ))),
-            },
+            Ok(orch) => {
+                match tokio::time::timeout(NON_STREAM_BUILD_HARD_DEADLINE, orch.build(&params))
+                    .await
+                {
+                    Ok(r) => r,
+                    Err(_) => Err(fbuild_core::FbuildError::Other(format!(
+                        "build exceeded hard deadline ({}s); aborting — a compiler may be wedged",
+                        NON_STREAM_BUILD_HARD_DEADLINE.as_secs()
+                    ))),
+                }
+            }
             Err(e) => Err(e),
         };
 
@@ -982,8 +981,7 @@ mod tests {
             fired.store(true, Ordering::Release);
         }
         // Waiter must NOT have been notified.
-        let res =
-            tokio::time::timeout(std::time::Duration::from_millis(100), waiter).await;
+        let res = tokio::time::timeout(std::time::Duration::from_millis(100), waiter).await;
         assert!(
             res.is_err(),
             "cancel must not fire when fired_normal_terminal is set"

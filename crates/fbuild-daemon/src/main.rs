@@ -169,12 +169,12 @@ async fn main() {
     // timeout. Cleaning up the PID file lets `fbuild daemon list` reflect
     // reality, and the bind retry below handles the kernel-state case.
     // See ISSUES.md "Issue B5a".
-    if let Some(stale_pid) = read_stale_daemon_pid() {
+    if let Some(stale_pid) = read_stale_daemon_pid().await {
         tracing::warn!(
             "found stale daemon PID file pointing at dead PID {}; cleaning up",
             stale_pid
         );
-        let _ = std::fs::remove_file(fbuild_paths::get_daemon_pid_file());
+        let _ = fbuild_core::fs::remove_file(fbuild_paths::get_daemon_pid_file()).await;
     }
 
     let listener = bind_listener_with_retry(&addr).await;
@@ -185,12 +185,12 @@ async fn main() {
     let pid_file = fbuild_paths::get_daemon_pid_file();
     let port_file = fbuild_paths::get_daemon_port_file();
     if let Some(parent) = pid_file.parent() {
-        let _ = std::fs::create_dir_all(parent);
+        let _ = fbuild_core::fs::create_dir_all(parent).await;
     }
-    if let Err(e) = std::fs::write(&pid_file, std::process::id().to_string()) {
+    if let Err(e) = fbuild_core::fs::write(&pid_file, std::process::id().to_string()).await {
         tracing::warn!("failed to write PID file: {}", e);
     }
-    if let Err(e) = std::fs::write(&port_file, port.to_string()) {
+    if let Err(e) = fbuild_core::fs::write(&port_file, port.to_string()).await {
         tracing::warn!("failed to write port file: {}", e);
     }
 
@@ -432,8 +432,8 @@ async fn main() {
         });
 
     // Clean up PID and port files
-    let _ = std::fs::remove_file(&pid_file);
-    let _ = std::fs::remove_file(&port_file);
+    let _ = fbuild_core::fs::remove_file(&pid_file).await;
+    let _ = fbuild_core::fs::remove_file(&port_file).await;
 
     tracing::info!("daemon exiting");
     std::process::exit(0);
@@ -447,9 +447,9 @@ async fn main() {
 /// Used at startup to clean up after a crashed previous instance so that
 /// `fbuild daemon list` reflects reality and the bind-retry loop has a
 /// chance to claim the port. See ISSUES.md "Issue B5a".
-fn read_stale_daemon_pid() -> Option<u32> {
+async fn read_stale_daemon_pid() -> Option<u32> {
     let path = fbuild_paths::get_daemon_pid_file();
-    let raw = std::fs::read_to_string(&path).ok()?;
+    let raw = fbuild_core::fs::read_to_string(&path).await.ok()?;
     let pid: u32 = raw.trim().parse().ok()?;
     if is_pid_alive(pid) {
         None

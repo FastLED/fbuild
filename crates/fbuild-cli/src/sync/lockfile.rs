@@ -47,7 +47,9 @@ impl Lockfile {
             packages.sort_by(|a, b| {
                 a.name
                     .cmp(&b.name)
-                    .then_with(|| format!("{:?}", a.source_type).cmp(&format!("{:?}", b.source_type)))
+                    .then_with(|| {
+                        format!("{:?}", a.source_type).cmp(&format!("{:?}", b.source_type))
+                    })
                     .then_with(|| a.raw.cmp(&b.raw))
             });
             out_envs.insert(env_name, LockEnv { packages });
@@ -116,12 +118,17 @@ impl Lockfile {
                 return LockDiff::Stale(format!("env `{env}` missing from lock"));
             };
             // Re-classify the lock's packages to build a compare-shape.
-            let mut new_pkgs: Vec<LockPackage> =
-                new_deps.iter().cloned().map(LockPackage::from_dep).collect();
+            let mut new_pkgs: Vec<LockPackage> = new_deps
+                .iter()
+                .cloned()
+                .map(LockPackage::from_dep)
+                .collect();
             new_pkgs.sort_by(|a, b| {
                 a.name
                     .cmp(&b.name)
-                    .then_with(|| format!("{:?}", a.source_type).cmp(&format!("{:?}", b.source_type)))
+                    .then_with(|| {
+                        format!("{:?}", a.source_type).cmp(&format!("{:?}", b.source_type))
+                    })
                     .then_with(|| a.raw.cmp(&b.raw))
             });
             if new_pkgs != lock_env.packages {
@@ -221,7 +228,10 @@ impl std::fmt::Display for LockfileError {
             Self::Parse(m) => write!(f, "lockfile parse: {m}"),
             Self::Serialize(m) => write!(f, "lockfile serialize: {m}"),
             Self::UnsupportedVersion(v) => {
-                write!(f, "unsupported lockfile version {v}, expected {LOCKFILE_VERSION}")
+                write!(
+                    f,
+                    "unsupported lockfile version {v}, expected {LOCKFILE_VERSION}"
+                )
             }
         }
     }
@@ -271,10 +281,7 @@ mod tests {
 
     #[test]
     fn packages_are_sorted_by_name() {
-        let lock = Lockfile::from_classified(
-            "t".into(),
-            deps("uno", &["Zebra", "Alpha", "Mango"]),
-        );
+        let lock = Lockfile::from_classified("t".into(), deps("uno", &["Zebra", "Alpha", "Mango"]));
         let names: Vec<&str> = lock.envs["uno"]
             .packages
             .iter()
@@ -355,10 +362,7 @@ mod tests {
 
     #[test]
     fn compare_fresh_when_deps_match() {
-        let lock = Lockfile::from_classified(
-            "t".into(),
-            deps("uno", &["FastLED", "./libs/local"]),
-        );
+        let lock = Lockfile::from_classified("t".into(), deps("uno", &["FastLED", "./libs/local"]));
         let diff = lock.compare_to_classified(&deps("uno", &["FastLED", "./libs/local"]));
         assert_eq!(diff, LockDiff::Fresh);
     }

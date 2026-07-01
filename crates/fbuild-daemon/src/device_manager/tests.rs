@@ -188,12 +188,14 @@ fn tracked_serial_lease_moves_to_new_port_on_refresh() {
         pid: Some(0x5678),
         vendor_name: Some("Test Vendor".to_string()),
         product_name: Some("Test Device".to_string()),
+        is_cdc: Some(true),
         serial_number: Some("TEST-SERIAL".to_string()),
     }]);
 
     assert!(mgr.get_device_status("COM3").is_none());
     let moved = mgr.get_device_status("COM4").unwrap();
     assert_eq!(moved.previous_port.as_deref(), Some("COM3"));
+    assert_eq!(moved.is_cdc, Some(true));
     assert_eq!(
         moved.exclusive_lease.as_ref().map(|l| l.client_id.as_str()),
         Some("c1")
@@ -230,6 +232,7 @@ fn untracked_serial_lease_stays_on_old_disconnected_port() {
         pid: Some(0x5678),
         vendor_name: Some("Test Vendor".to_string()),
         product_name: Some("Test Device".to_string()),
+        is_cdc: Some(false),
         serial_number: Some("TEST-SERIAL".to_string()),
     }]);
 
@@ -238,6 +241,7 @@ fn untracked_serial_lease_stays_on_old_disconnected_port() {
     assert!(old.exclusive_lease.is_some());
     let new = mgr.get_device_status("COM4").unwrap();
     assert!(new.exclusive_lease.is_none());
+    assert_eq!(new.is_cdc, Some(false));
 }
 
 #[test]

@@ -290,6 +290,10 @@ mod tests {
     use super::*;
     use tempfile::TempDir;
 
+    fn tempdir() -> TempDir {
+        TempDir::new_in(fbuild_paths::temp_subdir("fbuild-packages-cache-tests")).unwrap()
+    }
+
     #[test]
     fn test_hash_url_deterministic() {
         let h1 = hash_url("https://example.com/package.tar.gz");
@@ -339,21 +343,21 @@ mod tests {
 
     #[test]
     fn test_packages_dir() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let cache = Cache::with_cache_root(tmp.path(), tmp.path().join("cache").as_path());
         assert!(cache.packages_dir().ends_with("packages"));
     }
 
     #[test]
     fn test_toolchains_dir() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let cache = Cache::with_cache_root(tmp.path(), tmp.path().join("cache").as_path());
         assert!(cache.toolchains_dir().ends_with("toolchains"));
     }
 
     #[test]
     fn global_artifact_roots_stay_under_authoritative_cache_root() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let cache_root = tmp.path().join("cache-root");
         let cache = Cache::with_cache_root(tmp.path(), cache_root.as_path());
 
@@ -375,7 +379,7 @@ mod tests {
 
     #[test]
     fn test_get_package_path_with_stem_hash() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let cache = Cache::with_cache_root(tmp.path(), tmp.path().join("cache").as_path());
         let path = cache.get_package_path("https://example.com/pkg.tar.gz", "1.0.0");
         let path_str = path.to_string_lossy();
@@ -386,7 +390,7 @@ mod tests {
 
     #[test]
     fn test_get_toolchain_path_with_stem_hash() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let cache = Cache::with_cache_root(tmp.path(), tmp.path().join("cache").as_path());
         let path = cache.get_toolchain_path("https://downloads.arduino.cc/tools", "7.3.0");
         let path_str = path.to_string_lossy();
@@ -398,7 +402,7 @@ mod tests {
 
     #[test]
     fn test_get_build_dir() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let cache = Cache::new(tmp.path());
         let release_dir = cache.get_build_dir("uno", BuildProfile::Release);
         assert!(release_dir.to_string_lossy().contains("uno"));
@@ -410,7 +414,7 @@ mod tests {
 
     #[test]
     fn test_get_core_build_dir() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let cache = Cache::new(tmp.path());
         let dir = cache.get_core_build_dir("uno", BuildProfile::Release);
         assert!(dir.ends_with("core"));
@@ -418,7 +422,7 @@ mod tests {
 
     #[test]
     fn test_get_src_build_dir() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let cache = Cache::new(tmp.path());
         let dir = cache.get_src_build_dir("uno", BuildProfile::Release);
         assert!(dir.ends_with("src"));
@@ -426,7 +430,7 @@ mod tests {
 
     #[test]
     fn test_ensure_directories() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let cache = Cache::with_cache_root(tmp.path(), tmp.path().join("cache").as_path());
         cache.ensure_directories().unwrap();
         assert!(cache.packages_dir().exists());
@@ -437,7 +441,7 @@ mod tests {
 
     #[test]
     fn test_ensure_build_directories() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let cache = Cache::new(tmp.path());
         cache
             .ensure_build_directories("uno", BuildProfile::Release)
@@ -452,7 +456,7 @@ mod tests {
 
     #[test]
     fn test_clean_build() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let cache = Cache::new(tmp.path());
         cache
             .ensure_build_directories("uno", BuildProfile::Release)
@@ -464,7 +468,7 @@ mod tests {
 
     #[test]
     fn test_clean_build_nonexistent() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let cache = Cache::new(tmp.path());
         cache
             .clean_build("nonexistent", BuildProfile::Release)
@@ -473,7 +477,7 @@ mod tests {
 
     #[test]
     fn test_is_package_cached() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let cache = Cache::with_cache_root(tmp.path(), tmp.path().join("cache").as_path());
         let url = "https://example.com/pkg.tar.gz";
         assert!(!cache.is_package_cached(url, "1.0.0"));
@@ -485,7 +489,7 @@ mod tests {
 
     #[test]
     fn test_is_toolchain_cached() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let cache = Cache::with_cache_root(tmp.path(), tmp.path().join("cache").as_path());
         let url = "https://example.com/gcc.tar.gz";
         assert!(!cache.is_toolchain_cached(url, "7.3.0"));
@@ -497,7 +501,7 @@ mod tests {
 
     #[test]
     fn test_is_toolchain_cached_file_not_dir() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let cache = Cache::with_cache_root(tmp.path(), tmp.path().join("cache").as_path());
         let url = "https://example.com/gcc.tar.gz";
         let path = cache.get_toolchain_path(url, "7.3.0");
@@ -508,7 +512,7 @@ mod tests {
 
     #[test]
     fn test_multiple_environments() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let cache = Cache::new(tmp.path());
         cache
             .ensure_build_directories("uno", BuildProfile::Release)
@@ -525,7 +529,7 @@ mod tests {
 
     #[test]
     fn test_version_isolation() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let cache = Cache::with_cache_root(tmp.path(), tmp.path().join("cache").as_path());
         let url = "https://example.com/pkg.tar.gz";
         let v1 = cache.get_package_path(url, "1.0.0");

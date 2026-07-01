@@ -183,7 +183,9 @@ pub fn list_cached_packages(cache_root: &std::path::Path) -> fbuild_core::Result
         total_count,
         format_size(total_size)
     ));
-    output::result("\nUse 'fbuild purge all' to remove all, or 'fbuild purge <target>' for specific.");
+    output::result(
+        "\nUse 'fbuild purge all' to remove all, or 'fbuild purge <target>' for specific.",
+    );
     Ok(())
 }
 

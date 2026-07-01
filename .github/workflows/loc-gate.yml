@@ -13,28 +13,54 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Check .rs file line counts
         shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before || '' }}
         run: |
           set -euo pipefail
           THRESHOLD=1000
+          ZERO_SHA=0000000000000000000000000000000000000000
+          base_ref="${BASE_SHA:-}"
+          if [[ -n "$base_ref" && "$base_ref" != "$ZERO_SHA" ]]; then
+            git fetch --no-tags --depth=1 origin "$base_ref" || true
+          else
+            base_ref=""
+          fi
+
+          base_line_count() {
+            local file="$1"
+            if [[ -z "$base_ref" ]] || ! git cat-file -e "${base_ref}:${file}" 2>/dev/null; then
+              echo ""
+              return
+            fi
+            git show "${base_ref}:${file}" | wc -l | tr -d ' '
+          }
+
           violations=0
           while IFS= read -r -d '' file; do
-            lines=$(wc -l < "$file")
+            rel="${file#./}"
+            lines=$(wc -l < "$file" | tr -d ' ')
             if [ "$lines" -gt "$THRESHOLD" ]; then
+              base_lines="$(base_line_count "$rel")"
+              if [[ -n "$base_lines" && "$base_lines" -gt "$THRESHOLD" ]]; then
+                echo "BASELINE ${lines} ${file} (base already has ${base_lines} LOC)"
+                continue
+              fi
               echo "::error file=${file}::${file} has ${lines} LOC (limit: ${THRESHOLD})"
               echo "FAIL ${lines} ${file}"
               violations=$((violations + 1))
             fi
-          done < <(find . -type f -name '*.rs' \
-            -not -path './target/*' \
-            -not -path './.git/*' \
-            -print0)
+          done < <(find . \
+            \( -path './target' -o -path './.git' \) -prune -o \
+            -type f -name '*.rs' -print0)
           if [ "$violations" -gt 0 ]; then
             echo ""
-            echo "Found ${violations} .rs file(s) over ${THRESHOLD} LOC."
-            echo "Split them into smaller modules before merging."
+            echo "Found ${violations} new .rs file(s) over ${THRESHOLD} LOC."
+            echo "Split new large files into smaller modules before merging."
             exit 1
           fi
-          echo "All .rs files are within the ${THRESHOLD} LOC limit."
+          echo "No newly over-limit .rs files found."

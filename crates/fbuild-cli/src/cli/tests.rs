@@ -51,10 +51,10 @@ fn normalize_batch_preserves_order() {
     assert_eq!(got[1], "examples/Fire2012");
 }
 
-#[test]
-fn build_pio_env_joins_libs_with_platform_separator() {
+#[tokio::test]
+async fn build_pio_env_joins_libs_with_platform_separator() {
     let libs = vec!["a".to_string(), "b".to_string()];
-    let env = build_ci_pio_env(&libs, None);
+    let env = build_ci_pio_env(&libs, None).await;
     let expected = if cfg!(windows) { "a;b" } else { "a:b" };
     assert_eq!(
         env.get("PLATFORMIO_LIB_EXTRA_DIRS").map(String::as_str),
@@ -63,16 +63,16 @@ fn build_pio_env_joins_libs_with_platform_separator() {
     assert!(!env.contains_key("PLATFORMIO_PROJECT_CONFIG"));
 }
 
-#[test]
-fn build_pio_env_omits_libs_key_when_empty() {
-    let env = build_ci_pio_env(&[], None);
+#[tokio::test]
+async fn build_pio_env_omits_libs_key_when_empty() {
+    let env = build_ci_pio_env(&[], None).await;
     assert!(env.is_empty());
 }
 
-#[test]
-fn build_pio_env_falls_back_to_as_given_when_canonicalize_fails() {
+#[tokio::test]
+async fn build_pio_env_falls_back_to_as_given_when_canonicalize_fails() {
     let bogus = "/this/path/does/not/exist/conf.ini";
-    let env = build_ci_pio_env(&[], Some(bogus));
+    let env = build_ci_pio_env(&[], Some(bogus)).await;
     assert_eq!(
         env.get("PLATFORMIO_PROJECT_CONFIG").map(String::as_str),
         Some(bogus)

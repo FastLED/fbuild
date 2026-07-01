@@ -212,6 +212,10 @@ mod tests {
     use super::*;
     use tempfile::TempDir;
 
+    fn tempdir() -> TempDir {
+        TempDir::new_in(fbuild_paths::temp_subdir("fbuild-header-scan-tests")).unwrap()
+    }
+
     fn write(path: &Path, contents: &str) {
         if let Some(parent) = path.parent() {
             std::fs::create_dir_all(parent).unwrap();
@@ -221,7 +225,7 @@ mod tests {
 
     #[test]
     fn w01_quoted_resolves_same_dir_first() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let main = tmp.path().join("main.cpp");
         let local = tmp.path().join("foo.h");
         let other = tmp.path().join("other").join("foo.h");
@@ -241,7 +245,7 @@ mod tests {
 
     #[test]
     fn w02_angled_skips_same_dir() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let main = tmp.path().join("main.cpp");
         let local = tmp.path().join("foo.h");
         let other_dir = tmp.path().join("other");
@@ -264,7 +268,7 @@ mod tests {
 
     #[test]
     fn w03_search_path_precedence_first_hit_wins() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let main = tmp.path().join("main.cpp");
         let a = tmp.path().join("a");
         let b = tmp.path().join("b");
@@ -279,7 +283,7 @@ mod tests {
 
     #[test]
     fn w04_missing_header_goes_to_unresolved() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let main = tmp.path().join("main.cpp");
         write(&main, "#include <does_not_exist.h>\n");
         let res = walk(std::slice::from_ref(&main), &[]);
@@ -288,7 +292,7 @@ mod tests {
 
     #[test]
     fn w10_cycle_terminates() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let a = tmp.path().join("a.h");
         let b = tmp.path().join("b.h");
         write(&a, "#include \"b.h\"\n");
@@ -303,7 +307,7 @@ mod tests {
 
     #[test]
     fn w11_diamond_dedupes() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let main = tmp.path().join("main.cpp");
         let a = tmp.path().join("a.h");
         let b = tmp.path().join("b.h");
@@ -321,7 +325,7 @@ mod tests {
 
     #[test]
     fn w12_depth_5_chain() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         for i in 1..=5 {
             let next = if i == 5 {
                 String::new()
@@ -341,7 +345,7 @@ mod tests {
 
     #[test]
     fn w20_deterministic_order() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let main = tmp.path().join("main.cpp");
         let z = tmp.path().join("z.h");
         let a = tmp.path().join("a.h");

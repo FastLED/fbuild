@@ -587,10 +587,7 @@ mod tests {
         let canon = canonicalize_existing(&file).await.unwrap();
         // Round-trip through `as_path` and back to `NormalizedPath`
         // produces the same key.
-        assert_eq!(
-            canon.key(),
-            NormalizedPath::new(canon.as_path()).key()
-        );
+        assert_eq!(canon.key(), NormalizedPath::new(canon.as_path()).key());
     }
 
     /// `canonicalize_existing` propagates a `NotFound` for a missing

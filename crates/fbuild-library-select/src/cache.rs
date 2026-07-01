@@ -29,7 +29,7 @@ use std::path::{Path, PathBuf};
 use fbuild_packages::library::FrameworkLibrary;
 use prost::Message;
 
-use crate::{resolve, Selection};
+use crate::{canon, resolve, Selection};
 
 /// Bump when the scanner's lexical grammar changes in a way that could change
 /// which `#include` directives it emits for the same source.
@@ -231,10 +231,10 @@ pub fn cache_key(
     let mut seed_pairs: Vec<(String, [u8; 32])> = seeds
         .iter()
         .map(|p| {
-            let canon = std::fs::canonicalize(p).unwrap_or_else(|_| p.clone());
-            let bytes = std::fs::read(&canon).unwrap_or_default();
+            let canonical = canon(p);
+            let bytes = std::fs::read(&canonical).unwrap_or_default();
             (
-                canon.to_string_lossy().into_owned(),
+                canonical.to_string_lossy().into_owned(),
                 *blake3::hash(&bytes).as_bytes(),
             )
         })
@@ -391,8 +391,12 @@ mod tests {
         }
     }
 
+    fn tempdir() -> TempDir {
+        TempDir::new_in(fbuild_paths::temp_subdir("fbuild-library-select-tests")).unwrap()
+    }
+
     fn build_simple_project() -> (TempDir, Vec<PathBuf>, Vec<PathBuf>, Vec<FrameworkLibrary>) {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let project_src = tmp.path().join("project").join("src");
         write(&project_src.join("main.cpp"), "#include <SPI.h>\n");
 
@@ -477,7 +481,7 @@ mod tests {
 
     #[test]
     fn c05_library_input_order_does_not_affect_key() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let project_src = tmp.path().join("project").join("src");
         write(&project_src.join("main.cpp"), "#include <SPI.h>\n");
 

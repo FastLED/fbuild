@@ -1,8 +1,8 @@
 //! Tier-2 online overlay: an optional per-VID protobuf map loaded from disk
 //! at runtime.
 //!
-//! Current on-disk schema is `usb-vids.proto.zstd`, published by
-//! <https://fastled.github.io/boards/>:
+//! Current on-disk schema is `usb-vids.proto.zstd`, published by the
+//! `fastled/fbuild` `online-data` branch:
 //!
 //! ```protobuf
 //! message UsbVidDatabase {
@@ -45,7 +45,7 @@
 //! shape on disk just avoids duplicating the vendor name for every
 //! product entry under a VID (significantly smaller payload).
 //!
-//! The CLI downloads the zstd-compressed protobuf from FastLED/boards,
+//! The CLI downloads the zstd-compressed protobuf from `online-data`,
 //! writes it to the global fbuild cache root, and calls
 //! [`install_online_cache_proto_zstd`] to plug it into the resolver.
 //! Replacing the cache is supported (`RwLock`, not `OnceLock`) so the
@@ -71,8 +71,9 @@ pub const MANIFEST_URL: &str =
 pub const USB_VID_JSON_URL: &str =
     "https://raw.githubusercontent.com/fastled/fbuild/online-data/data/usb-vid.json";
 
-/// Current compact USB VID:PID overlay published by FastLED/boards.
-pub const USB_VIDS_PROTO_ZSTD_URL: &str = "https://fastled.github.io/boards/usb-vids.proto.zstd";
+/// Current compact USB VID:PID overlay published by the `online-data` branch.
+pub const USB_VIDS_PROTO_ZSTD_URL: &str =
+    "https://raw.githubusercontent.com/fastled/fbuild/online-data/data/usb-vids.proto.zstd";
 
 static ONLINE_MAP: RwLock<Option<HashMap<u32, UsbInfo>>> = RwLock::new(None);
 
@@ -245,7 +246,7 @@ fn parse_hex_u16(s: &str) -> Option<u16> {
 
 #[cfg(test)]
 pub(crate) fn clear_online_cache_for_tests() {
-    let mut guard = ONLINE_MAP.write().unwrap();
+    let mut guard = ONLINE_MAP.write().unwrap_or_else(|e| e.into_inner());
     *guard = None;
 }
 

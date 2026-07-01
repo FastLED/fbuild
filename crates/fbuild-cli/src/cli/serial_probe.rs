@@ -69,7 +69,7 @@ pub enum ProbeAction {
     },
     /// Open a port, optionally send a payload, then read bytes to
     /// stdout for up to `--seconds`. DTR/RTS is picked from the
-    /// inferred [`BoardFamily`] so CDC-ACM bridges (LPC11U35, FTDI
+    /// inferred `BoardFamily` so CDC-ACM bridges (LPC11U35, FTDI
     /// CDC) see "host ready" rather than the ESP-default
     /// "host not ready" that drops bytes silently.
     Read {
@@ -215,8 +215,8 @@ fn parse_vid_pid(s: &str) -> Result<(u16, u16)> {
 /// `fbuild serial probe read PORT …` — open with correct DTR/RTS,
 /// optionally send a payload, then read bytes to stdout for the
 /// duration. Uses `family_for_vid_pid` against the resolved port to
-/// pick a [`BoardFamily`] and consults
-/// [`BoardFamily::idle_dtr_rts`] for the open-time state.
+/// pick a `BoardFamily` and consults
+/// `BoardFamily::idle_dtr_rts` for the open-time state.
 fn read_port(port_name: &str, baud: u32, seconds: f64, send: Option<&str>) -> Result<()> {
     // Resolve the family by looking up the connected port's VID:PID,
     // if `serialport` can see it. Unknown VID:PID → safe-default

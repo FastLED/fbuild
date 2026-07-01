@@ -37,6 +37,7 @@ pub async fn run_device(action: DeviceAction) -> fbuild_core::Result<()> {
                 // older than the resolver wiring), fall back to the raw
                 // description so behavior is identical to pre-resolver.
                 let pretty = device_pretty_name(dev);
+                let pretty = with_cdc_suffix(pretty, dev.vid, dev.is_cdc);
                 output::result(format!(
                     "{:<20} {:<12} {:<12} {:<24} {}",
                     dev.port,
@@ -61,11 +62,17 @@ pub async fn run_device(action: DeviceAction) -> fbuild_core::Result<()> {
             };
             output::result(format!("  {}", resp.port));
             output::result(format!("    Device ID: {}", resp.device_id));
+            if let (Some(vid), Some(pid)) = (resp.vid, resp.pid) {
+                output::result(format!("    USB ID: {vid:04X}:{pid:04X}"));
+            }
             if let Some(ref vendor) = resp.vendor_name {
                 output::result(format!("    Vendor: {}", vendor));
             }
             if let Some(ref product) = resp.product_name {
                 output::result(format!("    Product: {}", product));
+            }
+            if resp.vid.is_some() {
+                output::result(format!("    CDC: {}", cdc_label(resp.is_cdc)));
             }
             output::result(format!("    Description: {}", resp.description));
             if let Some(ref serial) = resp.serial_number {
@@ -191,6 +198,22 @@ fn device_description(description: &str, previous_port: Option<&str>) -> String 
     }
 }
 
+fn with_cdc_suffix(description: String, vid: Option<u16>, is_cdc: Option<bool>) -> String {
+    if vid.is_some() {
+        format!("{description} [cdc={}]", cdc_label(is_cdc))
+    } else {
+        description
+    }
+}
+
+fn cdc_label(is_cdc: Option<bool>) -> &'static str {
+    match is_cdc {
+        Some(true) => "yes",
+        Some(false) => "no",
+        None => "unknown",
+    }
+}
+
 /// Compose the canonical `"vendor product (VVVV:PPPP)"` display string
 /// for a device row. Falls back to the daemon-provided `description`
 /// (and bare hex VID:PID, when available) so this code remains usable
@@ -207,5 +230,30 @@ fn device_pretty_name(dev: &crate::daemon_client::DeviceInfoResponse) -> String 
         }
         (Some(v), Some(p), _, _) => format!("{} ({:04X}:{:04X})", dev.description, v, p),
         _ => dev.description.clone(),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn cdc_suffix_only_applies_to_usb_devices() {
+        assert_eq!(
+            with_cdc_suffix("Espressif ESP32-S3".to_string(), Some(0x303A), Some(true)),
+            "Espressif ESP32-S3 [cdc=yes]"
+        );
+        assert_eq!(
+            with_cdc_suffix("CP210x bridge".to_string(), Some(0x10C4), Some(false)),
+            "CP210x bridge [cdc=no]"
+        );
+        assert_eq!(
+            with_cdc_suffix("USB device".to_string(), Some(0x303A), None),
+            "USB device [cdc=unknown]"
+        );
+        assert_eq!(
+            with_cdc_suffix("Bluetooth Serial".to_string(), None, None),
+            "Bluetooth Serial"
+        );
     }
 }

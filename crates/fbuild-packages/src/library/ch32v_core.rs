@@ -7,9 +7,9 @@ use std::path::{Path, PathBuf};
 
 use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 
-const CH32V_CORE_VERSION: &str = "1.0.4";
+const CH32V_CORE_VERSION: &str = "1.0.4+d767162.ch32l103";
 const CH32V_CORE_URL: &str =
-    "https://github.com/openwch/arduino_core_ch32/archive/refs/tags/1.0.4.tar.gz";
+    "https://github.com/openwch/arduino_core_ch32/archive/d76716239cdf8a084a5045c3dfd3151b3f69eeec.tar.gz";
 
 /// OpenWCH CH32V Arduino core framework manager.
 pub struct Ch32vCores {

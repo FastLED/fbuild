@@ -399,9 +399,9 @@ impl DaemonContext {
         match tokio::time::timeout(Duration::from_secs(5), join).await {
             Ok(Ok(())) => {}
             Ok(Err(e)) => tracing::warn!("device refresh task panicked: {}", e),
-            Err(_) => tracing::warn!(
-                "device refresh exceeded 5s; continuing — USB stack may be wedged"
-            ),
+            Err(_) => {
+                tracing::warn!("device refresh exceeded 5s; continuing — USB stack may be wedged")
+            }
         }
         self.rebind_recent_device_port_moves().await;
     }
@@ -422,9 +422,7 @@ impl DaemonContext {
                 false
             }
             Err(_) => {
-                tracing::warn!(
-                    "device refresh exceeded 5s; continuing — USB stack may be wedged"
-                );
+                tracing::warn!("device refresh exceeded 5s; continuing — USB stack may be wedged");
                 false
             }
         };

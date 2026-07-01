@@ -15,8 +15,8 @@ use super::*;
 /// the raw relative string — so gcc received absolute `cwd` + relative `-o`,
 /// resolving to a doubled path whose parent directory (`core/`) was never
 /// created.
-#[test]
-fn compile_path_contract_pairs_cwd_and_output_arg_for_282() {
+#[tokio::test]
+async fn compile_path_contract_pairs_cwd_and_output_arg_for_282() {
     use crate::zccache::{compile_cwd_from_output, path_arg_for_compile_cwd};
     let tmp = tempfile::tempdir().unwrap();
     // Normalize the tempdir to the same form `compile_cwd_from_output` will
@@ -28,15 +28,10 @@ fn compile_path_contract_pairs_cwd_and_output_arg_for_282() {
     //   `compile_cwd_from_output` runs the result through `strip_unc_prefix`.
     //   Strip the prefix here too so both sides stay on the plain `C:\...`
     //   form.
-    let tmp_canon = {
-        let canon = std::fs::canonicalize(tmp.path()).unwrap();
-        let s = canon.to_string_lossy().into_owned();
-        if let Some(rest) = s.strip_prefix(r"\\?\") {
-            std::path::PathBuf::from(rest)
-        } else {
-            canon
-        }
-    };
+    let tmp_canon = fbuild_core::path::canonicalize_existing(tmp.path())
+        .await
+        .unwrap()
+        .into_path_buf();
     // Workspace shape mirrors CI: <project>/.fbuild/build/<env>/quick/core
     let workspace = tmp_canon.join("proj_for_282");
     let core = workspace

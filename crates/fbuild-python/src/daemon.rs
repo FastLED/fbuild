@@ -228,7 +228,11 @@ fn broker_refusal_is_fatal(kind: Option<RefusalKind>) -> bool {
 /// `AsyncDaemon::ensure_running` (via `pyo3_async_runtimes::tokio`). The
 /// process spawn must be resolved against the venv before this is called.
 /// FastLED/fbuild#817.
-async fn ensure_running_async_impl(url: &str, spawn_target: Option<PathBuf>, dev_mode: bool) -> bool {
+async fn ensure_running_async_impl(
+    url: &str,
+    spawn_target: Option<PathBuf>,
+    dev_mode: bool,
+) -> bool {
     match ensure_running_via_broker_async(url).await {
         Ok(true) => return true,
         Ok(false) => {}
@@ -361,8 +365,7 @@ impl Daemon {
     #[staticmethod]
     fn status(py: Python<'_>) -> PyResult<PyObject> {
         // FastLED/fbuild#817: sync wrapper around `status_async_impl`.
-        let rt = one_shot_runtime()
-            .map_err(pyo3::exceptions::PyRuntimeError::new_err)?;
+        let rt = one_shot_runtime().map_err(pyo3::exceptions::PyRuntimeError::new_err)?;
         let text = rt.block_on(status_async_impl())?;
         let json_module = py.import_bound("json")?;
         let result = json_module.call_method1("loads", (text,))?;
@@ -435,9 +438,7 @@ impl AsyncDaemon {
     /// Returns `True` if the daemon acknowledged with a 2xx response.
     #[staticmethod]
     fn stop(py: Python<'_>) -> PyResult<Bound<'_, PyAny>> {
-        pyo3_async_runtimes::tokio::future_into_py(py, async move {
-            Ok(stop_async_impl().await)
-        })
+        pyo3_async_runtimes::tokio::future_into_py(py, async move { Ok(stop_async_impl().await) })
     }
 }
 

@@ -21,6 +21,7 @@ prost = { workspace = true }
 tempfile = { workspace = true }
 criterion = { workspace = true }
 fbuild-test-support = { path = "../fbuild-test-support" }
+fbuild-paths = { path = "../fbuild-paths" }
 tracing-test = { workspace = true, features = ["no-env-filter"] }
 
 [[bench]]

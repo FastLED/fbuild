@@ -258,9 +258,13 @@ mod tests {
         }
     }
 
+    fn tempdir() -> TempDir {
+        TempDir::new_in(fbuild_paths::temp_subdir("fbuild-library-select-tests")).unwrap()
+    }
+
     #[test]
     fn r01_direct_include_selects_library() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let project_src = tmp.path().join("project").join("src");
         write(&project_src.join("main.cpp"), "#include <SPI.h>\n");
         let mut spi = lib(tmp.path(), "SPI");
@@ -277,7 +281,7 @@ mod tests {
 
     #[test]
     fn r02_transitive_library_selection() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let project_src = tmp.path().join("project").join("src");
         write(&project_src.join("main.cpp"), "#include <SPI.h>\n");
 
@@ -315,7 +319,7 @@ mod tests {
         // Expected: pass 1 selects {SPI}; pass 2 (with SPI.cpp as a seed)
         // selects {SPI, Wire}. A regression that drops the second pass would
         // produce {SPI} only and silently miss Wire at link time.
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let project_src = tmp.path().join("project").join("src");
         write(&project_src.join("main.cpp"), "#include <SPI.h>\n");
 
@@ -345,7 +349,7 @@ mod tests {
 
     #[test]
     fn r03_no_includes_selects_nothing() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let project_src = tmp.path().join("project").join("src");
         write(&project_src.join("main.cpp"), "int main() { return 0; }\n");
         let spi = lib(tmp.path(), "SPI");
@@ -358,7 +362,7 @@ mod tests {
 
     #[test]
     fn r13_unrelated_library_not_selected() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let project_src = tmp.path().join("project").join("src");
         write(&project_src.join("main.cpp"), "#include <SPI.h>\n");
 
@@ -381,7 +385,7 @@ mod tests {
 
     #[test]
     fn path_prefix_attribution_distinguishes_same_basename() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let project_src = tmp.path().join("project").join("src");
         write(&project_src.join("main.cpp"), "#include \"foo/config.h\"\n");
 
@@ -417,7 +421,7 @@ mod tests {
         // Adversary: no libraries at all. resolve must terminate cleanly with
         // no required_libraries, no panics, and any reached files limited to
         // what the walker found from seeds alone.
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let project_src = tmp.path().join("project").join("src");
         write(&project_src.join("main.cpp"), "int main() { return 0; }\n");
         let seeds = vec![project_src.join("main.cpp")];
@@ -433,7 +437,7 @@ mod tests {
         // downloaded). canon() falls back and emits a tracing::warn; the
         // resolver must not panic and must return a sensible empty
         // selection.
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let project_src = tmp.path().join("project").join("src");
         write(&project_src.join("main.cpp"), "int main() { return 0; }\n");
         let phantom = FrameworkLibrary {
@@ -452,7 +456,7 @@ mod tests {
         // Adversary: 6 libs in deliberately scrambled input order. The
         // output must be sorted lexicographically, independent of input
         // order — required for stable cache keys (#205 Phase 4).
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let project_src = tmp.path().join("project").join("src");
         write(
             &project_src.join("main.cpp"),
@@ -488,7 +492,7 @@ mod tests {
         // The doc on `Selection::required_libraries` and the cache-key story
         // in #205 Phase 4 both depend on this being a pure function of the
         // selected *set* of libraries, not their input position.
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let project_src = tmp.path().join("project").join("src");
         write(
             &project_src.join("main.cpp"),

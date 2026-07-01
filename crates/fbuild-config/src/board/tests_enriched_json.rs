@@ -12,7 +12,8 @@ use super::db::get_board_db;
 use super::{BoardConfig, Esp32QemuPsramConfig};
 
 fn write_boards_txt(content: &str) -> NamedTempFile {
-    let mut f = NamedTempFile::new().unwrap();
+    let mut f =
+        NamedTempFile::new_in(fbuild_paths::temp_subdir("fbuild-config-board-tests")).unwrap();
     f.write_all(content.as_bytes()).unwrap();
     f.flush().unwrap();
     f

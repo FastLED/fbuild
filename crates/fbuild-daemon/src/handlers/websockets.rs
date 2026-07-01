@@ -24,9 +24,8 @@ use tokio::sync::oneshot;
 /// purely as a panic-free guarantee for the cold path; FastLED/fbuild#826
 /// flagged the prior `.unwrap()` calls as a stability hazard.
 fn serialize_or_fallback<T: serde::Serialize>(value: &T) -> String {
-    serde_json::to_string(value).unwrap_or_else(|_| {
-        r#"{"type":"error","message":"<internal serde failure>"}"#.to_string()
-    })
+    serde_json::to_string(value)
+        .unwrap_or_else(|_| r#"{"type":"error","message":"<internal serde failure>"}"#.to_string())
 }
 
 // ReaderControl -- inbound -> reader cross-task RPC for the small set

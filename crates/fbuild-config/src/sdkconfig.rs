@@ -120,6 +120,10 @@ mod tests {
     use std::fs;
     use tempfile::TempDir;
 
+    fn tempdir() -> TempDir {
+        TempDir::new_in(fbuild_paths::temp_subdir("fbuild-config-sdkconfig-tests")).unwrap()
+    }
+
     #[test]
     fn arduino_default_values() {
         let d = SdkConfigSummary::arduino_default();
@@ -210,14 +214,14 @@ CONFIG_COMPILER_OPTIMIZATION_DEBUG=y
 
     #[test]
     fn from_project_dir_empty_returns_default() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         let s = SdkConfigSummary::from_project_dir(tmp.path());
         assert_eq!(s, SdkConfigSummary::arduino_default());
     }
 
     #[test]
     fn from_project_dir_defaults_only() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         fs::write(
             tmp.path().join("sdkconfig.defaults"),
             "CONFIG_ESP_SYSTEM_PANIC_GDBSTUB=y\n",
@@ -229,7 +233,7 @@ CONFIG_COMPILER_OPTIMIZATION_DEBUG=y
 
     #[test]
     fn from_project_dir_active_wins_over_defaults() {
-        let tmp = TempDir::new().unwrap();
+        let tmp = tempdir();
         // defaults says gdbstub=y
         fs::write(
             tmp.path().join("sdkconfig.defaults"),

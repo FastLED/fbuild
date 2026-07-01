@@ -321,6 +321,10 @@ pub struct DeviceInfoResponse {
     /// Pretty USB product name (same provenance as `vendor_name`).
     #[serde(default)]
     pub product_name: Option<String>,
+    /// `true` for CDC-ACM, `false` for a USB-serial bridge, `None` for
+    /// unknown or older daemons that did not report the field.
+    #[serde(default)]
+    pub is_cdc: Option<bool>,
     #[serde(default)]
     pub serial_number: Option<String>,
     #[serde(default)]
@@ -340,6 +344,10 @@ pub struct DeviceStatusResponse {
     pub port: String,
     pub device_id: String,
     pub description: String,
+    #[serde(default)]
+    pub vid: Option<u16>,
+    #[serde(default)]
+    pub pid: Option<u16>,
     /// Pretty USB vendor name resolved by the daemon. `None` for
     /// bluetooth/PCI/unknown serials.
     #[serde(default)]
@@ -347,6 +355,10 @@ pub struct DeviceStatusResponse {
     /// Pretty USB product name (same provenance as `vendor_name`).
     #[serde(default)]
     pub product_name: Option<String>,
+    /// `true` for CDC-ACM, `false` for a USB-serial bridge, `None` for
+    /// unknown or older daemons that did not report the field.
+    #[serde(default)]
+    pub is_cdc: Option<bool>,
     #[serde(default)]
     pub serial_number: Option<String>,
     #[serde(default)]

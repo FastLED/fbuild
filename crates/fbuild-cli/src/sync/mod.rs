@@ -29,10 +29,11 @@ pub mod lockfile;
 pub mod source;
 
 use std::collections::BTreeMap;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::time::SystemTime;
 
 use fbuild_config::PlatformIOConfig;
+use fbuild_core::path::NormalizedPath;
 
 use self::lockfile::{LockDiff, Lockfile, LockfileError};
 use self::source::{classify, ClassifiedDep};
@@ -62,7 +63,7 @@ pub struct SyncArgs {
     #[allow(dead_code)] // FastLED/fbuild#618 Phase 2 hook — CLI surface stable now
     pub upgrade_package: Option<String>,
     /// Explicit project dir. Defaults to CWD.
-    pub project_dir: Option<PathBuf>,
+    pub project_dir: Option<NormalizedPath>,
 }
 
 impl SyncArgs {
@@ -87,7 +88,7 @@ impl SyncArgs {
 #[derive(Debug)]
 pub enum SyncOutcome {
     /// Lockfile written / re-written successfully. Exit 0.
-    Wrote(PathBuf),
+    Wrote(NormalizedPath),
     /// Lockfile matches the current `platformio.ini` (nothing to do).
     /// Exit 0.
     NoOp,
@@ -124,7 +125,7 @@ impl SyncOutcome {
 /// these into a [`SyncOutcome::Error`] before returning to the CLI.
 #[derive(Debug)]
 pub enum SyncError {
-    NoPlatformioIni(PathBuf),
+    NoPlatformioIni(NormalizedPath),
     ConfigParse(String),
     UnknownEnv(String),
     NoEnvsDeclared,
@@ -166,7 +167,9 @@ pub async fn run_sync(args: SyncArgs) -> SyncOutcome {
 async fn do_run_sync(args: SyncArgs) -> Result<SyncOutcome, SyncError> {
     let project_dir = match &args.project_dir {
         Some(p) => p.clone(),
-        None => std::env::current_dir().map_err(|e| SyncError::Io(e.to_string()))?,
+        None => {
+            NormalizedPath::new(std::env::current_dir().map_err(|e| SyncError::Io(e.to_string()))?)
+        }
     };
     let ini_path = project_dir.join("platformio.ini");
     if !ini_path.is_file() {
@@ -178,7 +181,11 @@ async fn do_run_sync(args: SyncArgs) -> Result<SyncOutcome, SyncError> {
 
     // Discover envs. `get_environments` returns borrowed slices; own them
     // so the rest of the pipeline can move envs into the classified map.
-    let all_envs: Vec<String> = config.get_environments().iter().map(|s| s.to_string()).collect();
+    let all_envs: Vec<String> = config
+        .get_environments()
+        .iter()
+        .map(|s| s.to_string())
+        .collect();
     if all_envs.is_empty() {
         return Err(SyncError::NoEnvsDeclared);
     }
@@ -187,9 +194,7 @@ async fn do_run_sync(args: SyncArgs) -> Result<SyncOutcome, SyncError> {
     let selected_envs = select_envs(&all_envs, args.environment.as_deref())?;
 
     // Multi-env prompt (skipped by --yes / --check / -e <env>).
-    if selected_envs.len() > 1
-        && !args.skip_multi_env_prompt()
-        && !prompt_multi_env(&selected_envs)
+    if selected_envs.len() > 1 && !args.skip_multi_env_prompt() && !prompt_multi_env(&selected_envs)
     {
         return Ok(SyncOutcome::UserCancelled);
     }
@@ -367,7 +372,7 @@ mod tests {
 
     fn args_for(dir: &Path) -> SyncArgs {
         SyncArgs {
-            project_dir: Some(dir.to_path_buf()),
+            project_dir: Some(NormalizedPath::new(dir)),
             ..Default::default()
         }
     }
@@ -411,7 +416,10 @@ lib_deps = FastLED
         let mut args = args_for(tmp.path());
         args.check = true;
         let outcome = run_sync(args).await;
-        assert!(matches!(outcome, SyncOutcome::CheckFailed(_)), "got {outcome:?}");
+        assert!(
+            matches!(outcome, SyncOutcome::CheckFailed(_)),
+            "got {outcome:?}"
+        );
     }
 
     #[tokio::test]
@@ -541,7 +549,7 @@ lib_deps = FastLED
 
     #[test]
     fn exit_code_matrix() {
-        assert_eq!(SyncOutcome::Wrote(PathBuf::new()).exit_code(), 0);
+        assert_eq!(SyncOutcome::Wrote(NormalizedPath::new("")).exit_code(), 0);
         assert_eq!(SyncOutcome::NoOp.exit_code(), 0);
         assert_eq!(SyncOutcome::CheckPassed.exit_code(), 0);
         assert_eq!(SyncOutcome::DryRun.exit_code(), 0);
@@ -553,13 +561,21 @@ lib_deps = FastLED
 
     #[test]
     fn skip_multi_env_prompt_matrix() {
-        assert!(SyncArgs { yes: true, ..Default::default() }.skip_multi_env_prompt());
+        assert!(SyncArgs {
+            yes: true,
+            ..Default::default()
+        }
+        .skip_multi_env_prompt());
         assert!(SyncArgs {
             environment: Some("uno".into()),
             ..Default::default()
         }
         .skip_multi_env_prompt());
-        assert!(SyncArgs { check: true, ..Default::default() }.skip_multi_env_prompt());
+        assert!(SyncArgs {
+            check: true,
+            ..Default::default()
+        }
+        .skip_multi_env_prompt());
         assert!(!SyncArgs::default().skip_multi_env_prompt());
     }
 

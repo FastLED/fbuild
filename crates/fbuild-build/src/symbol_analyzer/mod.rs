@@ -386,13 +386,7 @@ async fn run_objdump_and_attribute(
     // FastLED/fbuild#809: `objdump -d` on a large ESP32 ELF can emit
     // 100+ MB; bound to 2 min so a wedge cannot stall the post-link
     // analysis step (which is off the critical build path).
-    let result = run_command(
-        &args,
-        None,
-        None,
-        Some(std::time::Duration::from_secs(120)),
-    )
-    .await?;
+    let result = run_command(&args, None, None, Some(std::time::Duration::from_secs(120))).await?;
     if !result.success() {
         return Err(FbuildError::BuildFailed(format!(
             "objdump exit={}: {}",

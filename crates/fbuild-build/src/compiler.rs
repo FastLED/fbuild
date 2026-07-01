@@ -751,8 +751,8 @@ pub async fn compile_source(
         .clone()
         .or_else(|| output.parent().map(Path::to_path_buf))
         .unwrap_or_else(|| PathBuf::from("."));
-    let compile_env = fbuild_core::subprocess::compile_env_for_build(&build_scratch_root)
-        .unwrap_or_default();
+    let compile_env =
+        fbuild_core::subprocess::compile_env_for_build(&build_scratch_root).unwrap_or_default();
     let compile_fut = svc.compile(compiler, sanitized, cwd, compile_env);
     let outcome = tokio::time::timeout(std::time::Duration::from_secs(300), compile_fut)
         .await

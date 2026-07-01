@@ -153,7 +153,7 @@ pub async fn run_build(
 }
 
 /// Convert MSYS/Git-Bash paths (/c/Users/...) to native Windows paths and canonicalize.
-pub fn normalize_path(path: &str) -> fbuild_core::Result<String> {
+pub async fn normalize_path(path: &str) -> fbuild_core::Result<String> {
     let converted = if cfg!(windows) {
         // /c/foo → C:\foo
         let bytes = path.as_bytes();
@@ -170,10 +170,10 @@ pub fn normalize_path(path: &str) -> fbuild_core::Result<String> {
     } else {
         path.to_string()
     };
-    let canon = std::fs::canonicalize(&converted).map_err(|e| {
-        fbuild_core::FbuildError::Other(format!("cannot resolve path '{}': {}", path, e))
-    })?;
-    let s = canon.to_string_lossy().to_string();
-    // Strip \\?\ prefix that canonicalize adds on Windows
-    Ok(s.strip_prefix(r"\\?\").unwrap_or(&s).to_string())
+    let canon = fbuild_core::path::canonicalize_existing(&converted)
+        .await
+        .map_err(|e| {
+            fbuild_core::FbuildError::Other(format!("cannot resolve path '{}': {}", path, e))
+        })?;
+    Ok(canon.as_path().to_string_lossy().to_string())
 }

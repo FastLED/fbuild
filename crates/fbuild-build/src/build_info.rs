@@ -293,18 +293,17 @@ pub fn emit_build_info(project_dir: &Path, env_name: &str, info: &BuildInfo) -> 
         // pipeline code, but always under the daemon's tokio runtime.
         // Bridge to the async `write_atomic` via `block_in_place`. Same
         // pattern as `fbuild_packages::toolchain::esp32_metadata`.
-        let write_res =
-            if let Ok(handle) = tokio::runtime::Handle::try_current() {
-                tokio::task::block_in_place(|| {
-                    handle.block_on(fbuild_core::fs::write_atomic(path, json.as_bytes()))
-                })
-            } else {
-                // No runtime — happens in unit tests of this module.
-                // Fall back to plain `std::fs::write`; the integration
-                // path always has a runtime so the atomic guarantee is
-                // preserved where it matters.
-                std::fs::write(path, &json)
-            };
+        let write_res = if let Ok(handle) = tokio::runtime::Handle::try_current() {
+            tokio::task::block_in_place(|| {
+                handle.block_on(fbuild_core::fs::write_atomic(path, json.as_bytes()))
+            })
+        } else {
+            // No runtime — happens in unit tests of this module.
+            // Fall back to plain `std::fs::write`; the integration
+            // path always has a runtime so the atomic guarantee is
+            // preserved where it matters.
+            std::fs::write(path, &json)
+        };
         if let Err(e) = write_res {
             tracing::warn!("failed to write {}: {}", path.display(), e);
         }

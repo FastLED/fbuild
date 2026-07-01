@@ -9,6 +9,7 @@ is committed to orphan branches:
 | Script              | Reads from                                  | Writes to                              |
 | ------------------- | ------------------------------------------- | -------------------------------------- |
 | `build_sqlite.py`   | `online-data/data/*.json`                   | `www/<YYYY-MM-DD>.db`                  |
+| `build_usb_vid_proto.py` | `online-data/data/usb-vid.json`        | `online-data/data/usb-vids.proto.zstd` |
 | `rotate_www_dbs.py` | `www/*.db`                                  | `www/` (deletes >2-day-old `.db`s)     |
 | `build_www_manifest.py` | day-stable filenames                    | `www/manifest.json`                    |
 | `fetch_espressif_usb_pids.py` | `espressif/usb-pids` official PID registry | merge-compatible `/tmp/espressif-usb-pids.json` |
@@ -33,6 +34,13 @@ The merger scripts on the `online-data` orphan branch
 the convention is documented in [issue #718](https://github.com/FastLED/fbuild/issues/718).
 
 ## USB VID:PID Supplements
+
+Source authority is intentional. First-party vendor registries and local
+FastLED board data are stronger than generic USB-ID feeds; third-party SDK or
+board-package rows are weak supplements that merge after those sources and
+only fill gaps. A USB VID/PID row improves product-name resolution, but if a
+board is not present under `crates/fbuild-config/assets/boards`, it may not be
+an fbuild-supported board.
 
 The Espressif supplement ingests the official `espressif/usb-pids` registry:
 
@@ -186,6 +194,7 @@ rows improve VID/PID resolution but do not prove fbuild board support.
 
 ```bash
 uv run --no-project --with pytest pytest online-data-tools/test_build_sqlite.py -v
+uv run --no-project --with pytest --with zstandard pytest online-data-tools/test_usb_vid_proto.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_espressif_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_raspberrypi_usb_pids.py -v
 uv run --no-project --with pytest pytest online-data-tools/test_nordic_usb_pids.py -v

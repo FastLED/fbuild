@@ -31,9 +31,9 @@
 // items here is preferable to having callers `use tokio::fs` directly —
 // the matching `ban_tokio_fs_direct_import` dylint enforces this.
 pub use tokio::fs::{
-    canonicalize, copy, create_dir, create_dir_all, hard_link, metadata, read, read_dir,
-    read_link, read_to_string, remove_dir, remove_dir_all, remove_file, rename,
-    set_permissions, symlink_metadata, write, DirEntry, File, OpenOptions, ReadDir,
+    canonicalize, copy, create_dir, create_dir_all, hard_link, metadata, read, read_dir, read_link,
+    read_to_string, remove_dir, remove_dir_all, remove_file, rename, set_permissions,
+    symlink_metadata, write, DirEntry, File, OpenOptions, ReadDir,
 };
 
 use std::path::Path;
@@ -82,7 +82,7 @@ pub async fn write_atomic(
     tmp_name.push(format!(".tmp.{pid}.{nonce}"));
     let tmp_path = match path.parent() {
         Some(parent) => parent.join(&tmp_name),
-        None => std::path::PathBuf::from(&tmp_name),
+        None => crate::path::NormalizedPath::new(Path::new(&tmp_name)).into_path_buf(),
     };
 
     // Ensure parent dir exists. Mirrors `tokio::fs::write`'s contract
@@ -156,10 +156,7 @@ pub async fn write_atomic(
 /// Use this from any sync caller (the daemon's status writer, in-process
 /// snapshots, test harnesses). Prefer [`write_atomic`] from async paths
 /// that need to avoid blocking the reactor on the fsync.
-pub fn write_atomic_sync(
-    path: impl AsRef<Path>,
-    content: impl AsRef<[u8]>,
-) -> std::io::Result<()> {
+pub fn write_atomic_sync(path: impl AsRef<Path>, content: impl AsRef<[u8]>) -> std::io::Result<()> {
     use std::io::Write as _;
 
     let path = path.as_ref();
@@ -179,7 +176,7 @@ pub fn write_atomic_sync(
     tmp_name.push(format!(".tmp.{pid}.{nonce}"));
     let tmp_path = match path.parent() {
         Some(parent) => parent.join(&tmp_name),
-        None => std::path::PathBuf::from(&tmp_name),
+        None => crate::path::NormalizedPath::new(Path::new(&tmp_name)).into_path_buf(),
     };
 
     // Mirror `write_atomic`'s parent-must-exist contract.
@@ -260,10 +257,7 @@ mod tests {
             count += 1;
             let name = entry.file_name();
             let name = name.to_string_lossy();
-            assert!(
-                !name.contains(".tmp."),
-                "leftover tempfile: {name}"
-            );
+            assert!(!name.contains(".tmp."), "leftover tempfile: {name}");
         }
         assert_eq!(count, 1);
     }

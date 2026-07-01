@@ -477,7 +477,7 @@ fn mark_package_touch_needed(key: String) -> bool {
 #[cfg(test)]
 fn clear_package_touch_cache_for_tests() {
     if let Some(touched) = PACKAGE_TOUCHES.get() {
-        touched.lock().unwrap().clear();
+        touched.lock().unwrap_or_else(|e| e.into_inner()).clear();
     }
 }
 

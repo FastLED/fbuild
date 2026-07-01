@@ -19,7 +19,7 @@ pub async fn run_clangd_config(
     environment: Option<String>,
     verbose: bool,
 ) -> fbuild_core::Result<()> {
-    let project_dir = normalize_path(&project_dir)?;
+    let project_dir = normalize_path(&project_dir).await?;
     let project_path = std::path::Path::new(&project_dir);
 
     // Step 1: Resolve the environment name (explicit -e wins, else default).
@@ -113,7 +113,9 @@ pub async fn run_clangd_config(
         ));
     }
     output::result("\nInstall the clangd extension (llvm-vs-code-extensions.vscode-clangd),");
-    output::result("then run \"clangd: Restart language server\" in VS Code to pick up the config.");
+    output::result(
+        "then run \"clangd: Restart language server\" in VS Code to pick up the config.",
+    );
 
     Ok(())
 }
@@ -341,11 +343,17 @@ mod tests {
         );
     }
 
-    #[cfg(windows)]
     #[test]
     fn clangd_yaml_mentions_compiler_and_database() {
-        let yaml = render_clangd_yaml(r"C:\tc\bin\avr-g++");
+        let yaml = render_clangd_yaml("/tc/bin/avr-g++");
         assert!(yaml.contains("CompilationDatabase: ."));
+        assert!(yaml.contains("Compiler: /tc/bin/avr-g++"));
+    }
+
+    #[test]
+    #[cfg(windows)]
+    fn clangd_yaml_rewrites_windows_backslashes() {
+        let yaml = render_clangd_yaml(r"C:\tc\bin\avr-g++");
         assert!(yaml.contains("Compiler: C:/tc/bin/avr-g++"));
     }
 

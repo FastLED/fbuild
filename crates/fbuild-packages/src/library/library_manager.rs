@@ -25,9 +25,8 @@ fn fallback_runtime() -> Result<&'static Runtime> {
     if let Some(rt) = RT.get() {
         return Ok(rt);
     }
-    let rt = Runtime::new().map_err(|e| {
-        FbuildError::PackageError(format!("failed to create tokio runtime: {}", e))
-    })?;
+    let rt = Runtime::new()
+        .map_err(|e| FbuildError::PackageError(format!("failed to create tokio runtime: {}", e)))?;
     // If another thread won the race, our `rt` is dropped and we use theirs.
     Ok(RT.get_or_init(|| rt))
 }
