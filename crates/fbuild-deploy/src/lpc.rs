@@ -150,6 +150,64 @@ pub(crate) fn lpc21isp_install_hint() -> String {
     )
 }
 
+/// Anything below the lowest legitimate lpc21isp baud is refused as a
+/// serial rate. Board JSONs that reuse `upload.speed` as an openocd /
+/// CMSIS-DAP adapter throughput knob (`lpc845brk.json` sets it to
+/// `1000`, i.e. 1 MHz SWD clock) fall well under this floor; the
+/// deployer treats those as "not really a baud" and falls back to the
+/// family default instead of passing kHz through to lpc21isp's autobaud.
+///
+/// Common lpc21isp baud rates on LPC8xx are 9600 → 230400, with 115200
+/// as the reference; picking 4800 as the floor keeps the deployer open
+/// to legacy 9600-only harnesses (2× headroom) while catching the
+/// CMSIS-DAP kHz values which are all ≤ 4000. FastLED/fbuild#927.
+pub(crate) const MIN_LPC21ISP_BAUD: u32 = 4800;
+
+/// FastLED/fbuild#927: resolve the baud that gets passed to lpc21isp.
+///
+/// - `None` → family default (`params.default_baud`).
+/// - `Some(s)` where `s` parses as a `u32 >= MIN_LPC21ISP_BAUD` → use it.
+/// - `Some(s)` where `s` parses as a `u32 < MIN_LPC21ISP_BAUD` → refuse
+///   and fall back to the family default. Emit a tracing warning so the
+///   misconfiguration surfaces on the next deploy run.
+/// - `Some(s)` that does not parse as a positive integer → pass through
+///   verbatim (lpc21isp's argument parser will complain). Kept lenient
+///   so this safety net does not turn into a validation layer.
+pub(crate) fn resolve_lpc21isp_baud(
+    board_upload_speed: Option<&str>,
+    family_default: &str,
+) -> String {
+    let Some(raw) = board_upload_speed else {
+        return family_default.to_string();
+    };
+    match raw.parse::<u32>() {
+        Ok(n) if n >= MIN_LPC21ISP_BAUD => raw.to_string(),
+        Ok(n) => {
+            tracing::warn!(
+                "board `upload.speed = {n}` is below the lpc21isp minimum baud \
+                 ({MIN_LPC21ISP_BAUD}); reverting to family default `{family_default}` \
+                 (this typically means the board JSON reused `upload.speed` for a \
+                 CMSIS-DAP / openocd throughput knob in kHz — see FastLED/fbuild#927)"
+            );
+            family_default.to_string()
+        }
+        Err(_) => raw.to_string(),
+    }
+}
+
+/// FastLED/fbuild#927: return true when the firmware path has the
+/// Intel-HEX extension. Case-insensitive so `.HEX` from Windows-authored
+/// tooling still hits. Anything else is treated as raw binary and gets
+/// spawned WITHOUT the `-hex` flag so lpc21isp does not try to parse
+/// binary bytes as Intel-HEX ASCII and abort with exit 1.
+pub(crate) fn firmware_is_intel_hex(firmware_path: &Path) -> bool {
+    firmware_path
+        .extension()
+        .and_then(|s| s.to_str())
+        .map(|ext| ext.eq_ignore_ascii_case("hex"))
+        .unwrap_or(false)
+}
+
 /// lpc21isp deploy parameters sourced from MCU config JSON.
 ///
 /// All LPC845 / LPC804 boards (including the LPC845-BRK and the
@@ -223,16 +281,21 @@ impl LpcDeployer {
     /// `"lpc21isp"` as its path) so unit tests can build one without
     /// hardware — the `deploy()` call surfaces the actionable "install
     /// lpc21isp" hint at flash time. FastLED/fbuild#921.
+    ///
+    /// FastLED/fbuild#927 safety net: `board.upload_speed` under 4800
+    /// is refused as a baud value. `lpc845brk.json` (and any board JSON
+    /// that reuses `upload.speed` as its openocd/CMSIS-DAP adapter
+    /// throughput knob) sets that field to values in kHz (e.g. `1000`),
+    /// which cannot legitimately be a UART baud. Fall back to the
+    /// family default (115200) rather than passing nonsense to lpc21isp.
     pub fn from_board_config(
         board: &fbuild_config::BoardConfig,
         params: &Lpc21IspParams,
         verbose: bool,
     ) -> Self {
+        let baud = resolve_lpc21isp_baud(board.upload_speed.as_deref(), &params.default_baud);
         Self::new(
-            board
-                .upload_speed
-                .as_deref()
-                .unwrap_or(&params.default_baud),
+            &baud,
             params.xtal_khz,
             params.timeout_secs,
             find_lpc21isp(),
@@ -316,7 +379,7 @@ impl Deployer for LpcDeployer {
         }
 
         // lpc21isp argv:
-        //   lpc21isp [-control] [-wipe] -hex <firmware> <port> <baud> <xtal_kHz>
+        //   lpc21isp [-control] [-wipe] [-hex] <firmware> <port> <baud> <xtal_kHz>
         //
         // -control : drive DTR/RTS to enter ISP mode and exit it after
         //            flashing. Required for auto-reset boards like the
@@ -326,18 +389,27 @@ impl Deployer for LpcDeployer {
         //            only erases the sectors it's about to write, which
         //            leaves stale data in sectors the new firmware happened
         //            to skip. Cheap on 64 KB / 32 KB parts (~250 ms).
-        // -hex     : firmware is in Intel HEX format. fbuild's nxplpc
-        //            orchestrator emits .hex (see nxplpc/orchestrator.rs).
-        let args = [
+        // -hex     : ONLY when firmware ends in `.hex` (Intel HEX).
+        //            FastLED/fbuild#927: the nxplpc orchestrator currently
+        //            emits raw `.bin`; feeding that to `lpc21isp -hex`
+        //            makes it try to parse Intel-HEX-formatted ASCII and
+        //            abort with exit 1 before touching the serial port.
+        //            Omit `-hex` for raw-binary paths so lpc21isp treats
+        //            the file as a plain memory image (its default).
+        let mut args = vec![
             self.lpc21isp_path.to_string_lossy().to_string(),
             "-control".to_string(),
             "-wipe".to_string(),
-            "-hex".to_string(),
+        ];
+        if firmware_is_intel_hex(firmware_path) {
+            args.push("-hex".to_string());
+        }
+        args.extend([
             firmware_path.to_string_lossy().to_string(),
             port.to_string(),
             self.baud_rate.clone(),
             self.xtal_khz.to_string(),
-        ];
+        ]);
 
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
 
@@ -516,6 +588,62 @@ mod tests {
              (never an out-of-tree C:\\tools\\ path or PATH-walk)"
         );
         assert!(hint.contains("#921"), "hint must cite the tracking issue");
+    }
+
+    // ---------- FastLED/fbuild#927 baud + hex-flag fixes ----------
+
+    #[test]
+    fn resolve_baud_none_falls_back_to_family_default() {
+        assert_eq!(resolve_lpc21isp_baud(None, "115200"), "115200");
+    }
+
+    #[test]
+    fn resolve_baud_ok_when_at_or_above_floor() {
+        assert_eq!(resolve_lpc21isp_baud(Some("115200"), "9600"), "115200");
+        assert_eq!(resolve_lpc21isp_baud(Some("57600"), "9600"), "57600");
+        // Right AT the floor: still accepted (>= comparison).
+        assert_eq!(
+            resolve_lpc21isp_baud(Some(&MIN_LPC21ISP_BAUD.to_string()), "9600"),
+            MIN_LPC21ISP_BAUD.to_string()
+        );
+    }
+
+    #[test]
+    fn resolve_baud_refuses_cmsis_dap_khz_and_falls_back() {
+        // FastLED/fbuild#927: lpc845brk.json ships `upload.speed = 1000`,
+        // which is a CMSIS-DAP adapter clock in kHz, not a serial baud.
+        // The safety net rejects it and uses the family default instead.
+        assert_eq!(resolve_lpc21isp_baud(Some("1000"), "115200"), "115200");
+        assert_eq!(resolve_lpc21isp_baud(Some("2000"), "115200"), "115200");
+        // Just under the floor: still refused.
+        assert_eq!(
+            resolve_lpc21isp_baud(Some(&(MIN_LPC21ISP_BAUD - 1).to_string()), "115200"),
+            "115200"
+        );
+    }
+
+    #[test]
+    fn resolve_baud_non_numeric_passes_through() {
+        // Something exotic like `"auto"` — leave it to lpc21isp to fail
+        // clearly rather than silently swap it for the family default.
+        assert_eq!(resolve_lpc21isp_baud(Some("auto"), "115200"), "auto");
+    }
+
+    #[test]
+    fn firmware_is_intel_hex_true_for_dot_hex_variants() {
+        assert!(firmware_is_intel_hex(Path::new("build/firmware.hex")));
+        assert!(firmware_is_intel_hex(Path::new("build/firmware.HEX")));
+        assert!(firmware_is_intel_hex(Path::new("firmware.Hex")));
+    }
+
+    #[test]
+    fn firmware_is_intel_hex_false_for_bin_and_other() {
+        // FastLED/fbuild#927: the nxplpc orchestrator emits `.bin`; the
+        // deployer must NOT pass `-hex` when that lands.
+        assert!(!firmware_is_intel_hex(Path::new("build/firmware.bin")));
+        assert!(!firmware_is_intel_hex(Path::new("build/firmware.elf")));
+        assert!(!firmware_is_intel_hex(Path::new("build/firmware")));
+        assert!(!firmware_is_intel_hex(Path::new("some.hex.zip")));
     }
 
     #[tokio::test]
