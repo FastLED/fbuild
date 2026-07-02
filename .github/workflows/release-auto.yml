@@ -164,30 +164,29 @@ jobs:
             linux_cross: true
             macos_cross: false
 
-          # FastLED/fbuild#XXX (TBD): aarch64-apple-darwin now
-          # cross-compiles from the linux runner via soldr + cargo-zigbuild
-          # + soldr's managed Apple SDK. This drops one macos-latest
-          # runner-minute from every release and removes the only
-          # mac-host dependency from the matrix.
-          - target: aarch64-apple-darwin
-            runner: ubuntu-latest
-            binary_ext: ""
-            linux_cross: false
-            macos_cross: false
-            mac_cross_linux: true
-
-          # x86_64-apple-darwin shares the mac_cross_linux template
-          # branch — soldr's apple_sdk fetcher auto-picks
-          # `darwin-x86_64` (thin-x86_64) when the target triple is
-          # `x86_64-apple-darwin`, and `cargo zigbuild --target
-          # x86_64-apple-darwin` resolves the SDKROOT + frameworks
-          # identically to the arm64 lane. Closes Lane 3 of soldr#1006.
-          - target: x86_64-apple-darwin
-            runner: ubuntu-latest
-            binary_ext: ""
-            linux_cross: false
-            macos_cross: false
-            mac_cross_linux: true
+          # macOS targets (aarch64-apple-darwin, x86_64-apple-darwin)
+          # temporarily excluded from the release matrix. Every
+          # setup-soldr@v0.9.63-compatible soldr version (<= v0.7.66)
+          # hardcodes the Apple SDK URL to the retired manifest
+          # branch of zackees/soldr (soldr#988 Phase 5 / soldr#992,
+          # merged 2026-06-27), so `Prepare Apple SDK (Linux → mac
+          # cross)` fails at "Apple SDK download failed: HTTP 404
+          # Not Found". soldr >= v0.7.87 fixes the SDK URL but
+          # setup-soldr@v0.9.63 chokes on its `version --json`
+          # output shape. Follow-up: pin a compatible pair, or wait
+          # for setup-soldr@v0.9.64+.
+          # - target: aarch64-apple-darwin
+          #   runner: ubuntu-latest
+          #   binary_ext: ""
+          #   linux_cross: false
+          #   macos_cross: false
+          #   mac_cross_linux: true
+          # - target: x86_64-apple-darwin
+          #   runner: ubuntu-latest
+          #   binary_ext: ""
+          #   linux_cross: false
+          #   macos_cross: false
+          #   mac_cross_linux: true
 
           # Windows x86_64 native build (windows-latest runner).
           # Cross-compile from Linux via cargo-xwin kept hitting
