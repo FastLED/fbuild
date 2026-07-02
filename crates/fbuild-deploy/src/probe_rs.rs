@@ -1,7 +1,7 @@
 //! probe-rs SWD flash path (FastLED/fbuild#935, #936).
 //!
 //! The FastLED fork of `probe-rs` — sources maintained on the `tools`
-//! branch of [`FastLED/framework-arduino-lpc8xx`], cross-compiled by
+//! branch of `FastLED/framework-arduino-lpc8xx`, cross-compiled by
 //! `.github/workflows/fastled-release-cross.yml` — carries three
 //! patches on top of upstream that together allow it to talk to the
 //! LPC-Link2 v1.0.7 CMSIS-DAP firmware that ships on the LPC845-BRK:
