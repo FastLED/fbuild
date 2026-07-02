@@ -1,8 +1,11 @@
 // Off-CPU wait-time profiler (FastLED/fbuild#942).
 //
 // Sums microseconds each thread spends blocked (not runnable), keyed by
-// comm + kernel/user stack at the point it went to sleep. Output feeds
-// FlameGraph's stackcollapse-bpftrace.pl → offcpu.svg.
+// comm + kernel/user stack captured AT THE POINT IT WENT TO SLEEP (at
+// sched_switch the current context is the outgoing prev task, so that
+// is where its sleep-site stack is visible; the wakeup edge only knows
+// the waker's context). Output feeds stackcollapse-bpftrace.pl →
+// offcpu.svg.
 //
 // prev_state != 0 filters to genuine blocking (D/S states); preemptions
 // of still-runnable threads (state 0 / TASK_RUNNING) are excluded so the
@@ -16,15 +19,26 @@ tracepoint:sched:sched_switch
 {
     if (args->prev_state != 0) {
         @sleep_start[args->prev_pid] = nsecs;
+        @sleep_comm[args->prev_pid] = comm;
+        @sleep_kstack[args->prev_pid] = kstack;
+        @sleep_ustack[args->prev_pid] = ustack;
     }
     $start = @sleep_start[args->next_pid];
     if ($start) {
-        @usecs[comm, kstack, ustack] = sum((nsecs - $start) / 1000);
+        @usecs[@sleep_comm[args->next_pid],
+               @sleep_kstack[args->next_pid],
+               @sleep_ustack[args->next_pid]] = sum((nsecs - $start) / 1000);
         delete(@sleep_start[args->next_pid]);
+        delete(@sleep_comm[args->next_pid]);
+        delete(@sleep_kstack[args->next_pid]);
+        delete(@sleep_ustack[args->next_pid]);
     }
 }
 
 END
 {
     clear(@sleep_start);
+    clear(@sleep_comm);
+    clear(@sleep_kstack);
+    clear(@sleep_ustack);
 }

@@ -51,7 +51,7 @@ mount -t debugfs debugfs /sys/kernel/debug 2>/dev/null || true
 # no-output watchdog on first run; ensure it explicitly (same pattern
 # as ci/docker-mac-cross/build.sh) with a generous timeout.
 export SOLDR_COMMAND_OUTPUT_TIMEOUT_SECS="${SOLDR_COMMAND_OUTPUT_TIMEOUT_SECS:-1800}"
-cd /work
+cd /work || { echo "FATAL: could not cd to /work" >&2; exit 1; }
 log "ensuring rust toolchain (soldr toolchain ensure)"
 soldr toolchain ensure 2>&1 | tail -5
 
