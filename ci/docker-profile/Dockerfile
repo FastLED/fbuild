@@ -48,6 +48,17 @@ RUN apt-get update \
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh \
  && cp /root/.local/bin/uv /usr/local/bin/
 
+# esptool: fbuild's ESP32 path shells out to it for elf2image (it is not
+# yet a managed fbuild package — see #942 findings). uv-managed install
+# with the console script linked onto PATH.
+RUN uv tool install esptool \
+ && ln -s /root/.local/bin/esptool* /usr/local/bin/ \
+ && esptool version | head -1
+
+# The running-process broker derives user identity from the machine id;
+# containers have none by default and fbuild logs a fallback warning.
+RUN test -f /etc/machine-id || cat /proc/sys/kernel/random/uuid | tr -d '-\n' > /etc/machine-id
+
 # Soldr binary tarball from GitHub Releases — same rationale and pin as
 # ci/docker-mac-cross/Dockerfile (pip wheel is manylinux_2_39-tagged and
 # falls back to a squatted placeholder on older glibc).
