@@ -74,26 +74,21 @@ jobs:
       - name: Setup soldr
         id: setup-soldr
         timeout-minutes: 10
-        # FastLED/fbuild#800 release: pinned back to v0.7.59 after
-        # observing two v0.7.65 release-archive bugs that block the
-        # release matrix:
-        #   1) `soldr prepare` for *-apple-darwin targets fails at
-        #      "zig binary not found after extract at .../zig-0.14.1/
-        #      zig-linux-x86_64-0.14.1/zig" — the zig 0.14.1 archive
-        #      layout doesn't match soldr's extractor.
-        #   2) Windows MSVC lanes need `soldr-clang-shim`, which is
-        #      missing from the v0.7.65 release archive ("soldr-
-        #      clang-shim binary not found ... expected next to the
-        #      running soldr exe. Reinstall soldr or rebuild from
-        #      source").
-        # v0.7.59 used zig 0.13.0 (extracts cleanly) and doesn't
-        # need the shim because the matrix is back to 5 lanes (no
-        # aarch64-pc-windows-msvc — ring 0.17.x's hardcoded clang
-        # path stays a blocker there). Restore to a newer soldr once
-        # the v0.7.65 archive issues are fixed upstream.
+        # FastLED/fbuild#800 release history:
+        #   - Was pinned to v0.7.59 because v0.7.65 shipped broken zig
+        #     0.14.1 extraction + missing soldr-clang-shim binary.
+        #   - v0.7.59's Apple SDK fetcher points at the retired
+        #     `manifest` branch of `zackees/soldr` (soldr#988 Phase 5,
+        #     merged 2026-06-27 via soldr#992) — that URL now 404s
+        #     and every `apple-darwin` build fails at
+        #     "Apple SDK download failed: HTTP 404 Not Found".
+        # Bumping to a soldr release that carries the manifest-branch
+        # retirement fix. v0.7.87 (2026-06-30) is the earliest post-
+        # retirement release; picking it over the very latest so this
+        # release cycle doesn't inherit unrelated soldr changes.
         uses: zackees/setup-soldr@v0.9.63
         with:
-          version: "0.7.59"
+          version: "0.7.87"
           cache: true
           build-cache: true
           target-cache: true
