@@ -22,9 +22,12 @@ uv run python ci/docker-profile/run_profile.py --wipe     # drop them (next run 
 
 Artifacts land in `ci/docker-profile/out/<timestamp>/` (gitignored):
 `timings.jsonl` + `summary.md` (median wall clock per scenario), and per
-run `oncpu.svg` / `offcpu.svg` flamegraphs, `.folded` stacks, raw
-`perf.data` files, CLI logs, `daemon.log`, and extracted
-`perf-log-lines.txt`.
+run `oncpu.svg` / `offcpu.svg` flamegraphs, `.folded` stacks, a gzipped
+`perf script` excerpt of the sched capture, CLI logs, `daemon.log`, and
+extracted `perf-log-lines.txt`. Raw `perf.data` files stay inside the
+container (perf cannot write its mmap-backed output onto the 9P Windows
+bind mount, and they run to hundreds of MB — the folded stacks carry
+the analysis-relevant content).
 
 ## Scenarios
 

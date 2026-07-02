@@ -114,13 +114,18 @@ EOF
 run_one() {
     local scenario="$1" iter="$2"
     local dir="$OUT/${scenario}-${iter}"
-    mkdir -p "$dir"
+    # perf record cannot write its mmap-backed data file onto the 9P
+    # Windows bind mount ("failed to write perf data, error: Bad
+    # address") — record into container-local scratch and copy the
+    # rendered products to /out afterwards.
+    local scratch="/tmp/prof-${scenario}-${iter}"
+    mkdir -p "$dir" "$scratch"
     log "=== $scenario iter $iter ==="
 
     # On-CPU sampler: system-wide so daemon + compiler subprocesses are
     # all visible. cpu-clock because WSL2 exposes no hardware PMU.
     "$PERF" record -F 99 -e cpu-clock -g --call-graph fp -a \
-        -o "$dir/oncpu.data" -- sleep "$BUILD_TIMEOUT" &>/dev/null &
+        -o "$scratch/oncpu.data" -- sleep "$BUILD_TIMEOUT" > "$dir/oncpu.perf.err" 2>&1 &
     local oncpu_pid=$!
 
     # Off-CPU sampler #1: bpftrace sched_switch wait-time sums. Known
@@ -130,7 +135,7 @@ run_one() {
 
     # Off-CPU sampler #2 (fallback): raw sched_switch events via perf.
     "$PERF" record -e sched:sched_switch -g --call-graph fp -a \
-        -o "$dir/offcpu-sched.data" -- sleep "$BUILD_TIMEOUT" &>/dev/null &
+        -o "$scratch/offcpu-sched.data" -- sleep "$BUILD_TIMEOUT" > "$dir/offcpu-sched.perf.err" 2>&1 &
     local sched_pid=$!
 
     sleep 1  # let samplers attach
@@ -159,21 +164,28 @@ run_one() {
     grep -h "perf-log" "$dir/cli-stderr.log" "$dir/daemon.log" 2>/dev/null > "$dir/perf-log-lines.txt" || true
 
     # Flamegraphs (best effort — never fail the run over rendering).
+    # Render in scratch, copy products to /out; the raw perf.data files
+    # stay in the container (they can reach hundreds of MB per run and
+    # the folded stacks carry the analysis-relevant content).
     (
-        cd "$dir"
+        cd "$scratch"
         "$PERF" script -i oncpu.data 2>/dev/null \
             | "$FG/stackcollapse-perf.pl" > oncpu.folded 2>/dev/null
         [[ -s oncpu.folded ]] && "$FG/flamegraph.pl" --title "$scenario-$iter on-CPU" \
             oncpu.folded > oncpu.svg 2>/dev/null
-        if [[ -s offcpu-bpftrace.txt ]]; then
-            "$FG/stackcollapse-bpftrace.pl" offcpu-bpftrace.txt > offcpu.folded 2>/dev/null
+        if [[ -s "$dir/offcpu-bpftrace.txt" ]]; then
+            "$FG/stackcollapse-bpftrace.pl" "$dir/offcpu-bpftrace.txt" > offcpu.folded 2>/dev/null
             [[ -s offcpu.folded ]] && "$FG/flamegraph.pl" --color=io --countname=us \
                 --title "$scenario-$iter off-CPU" offcpu.folded > offcpu.svg 2>/dev/null
         fi
-        # Raw sched data is kept for offline analysis; a rendered
-        # flamegraph from switch counts alone would be misleading.
-        rm -f oncpu.data.old
+        "$PERF" script -i offcpu-sched.data 2>/dev/null | head -200000 \
+            | gzip > sched-script.txt.gz 2>/dev/null
+        for f in oncpu.folded oncpu.svg offcpu.folded offcpu.svg sched-script.txt.gz; do
+            [[ -s "$f" ]] && cp "$f" "$dir/"
+        done
+        true
     ) || true
+    rm -rf "$scratch"
 
     return "$rc"
 }
