@@ -19,6 +19,7 @@ pub mod esp32_native;
 pub mod lpc;
 pub mod lpc_debugger_reflash;
 pub mod method_validation;
+pub mod probe_rs;
 pub mod reset;
 pub mod size_check;
 pub mod teensy;

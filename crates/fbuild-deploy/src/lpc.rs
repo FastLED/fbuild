@@ -232,6 +232,32 @@ pub(crate) fn normalize_lpc21isp_port(port: &str) -> String {
 /// tooling still hits. Anything else is treated as raw binary and gets
 /// spawned WITHOUT the `-hex` flag so lpc21isp does not try to parse
 /// binary bytes as Intel-HEX ASCII and abort with exit 1.
+/// Given the firmware path the caller handed us (which may be a
+/// `.bin` for lpc21isp or already-an-`.elf`), return the sibling
+/// `firmware.elf` when one exists on disk. Used by the probe-rs SWD
+/// path — probe-rs consumes ELF directly rather than the raw binary.
+///
+/// Returns `None` when no ELF is present, in which case the SWD path
+/// silently falls back to lpc21isp UART ISP.
+pub(crate) fn elf_sibling_of(firmware_path: &Path) -> Option<PathBuf> {
+    // If the caller already handed us an ELF, use it.
+    if firmware_path.extension().and_then(|e| e.to_str()) == Some("elf") && firmware_path.is_file()
+    {
+        return Some(firmware_path.to_path_buf());
+    }
+    // Otherwise look for the co-located ELF that the LPC build
+    // orchestrator (`fbuild-build` LPC target) always emits alongside
+    // the .bin.
+    let parent = firmware_path.parent()?;
+    let stem = firmware_path.file_stem().and_then(|s| s.to_str())?;
+    let candidate = parent.join(format!("{stem}.elf"));
+    if candidate.is_file() {
+        Some(candidate)
+    } else {
+        None
+    }
+}
+
 pub(crate) fn firmware_is_intel_hex(firmware_path: &Path) -> bool {
     firmware_path
         .extension()
@@ -276,6 +302,14 @@ impl Default for Lpc21IspParams {
 }
 
 /// NXP LPC8xx deployer using `lpc21isp` for ISP-over-UART flashing.
+///
+/// FastLED/fbuild#935 / #936: when the board has a probe-rs chip
+/// mapping AND a compiled probe-rs binary is on disk AND a CMSIS-DAP
+/// probe is attached, this deployer dispatches SWD flash via
+/// probe-rs FIRST and only falls back to lpc21isp when that path is
+/// unavailable or errors out. The probe-rs route is touchless (no
+/// SW3+SW4 button dance) and completes in ~2 seconds against the
+/// LPC845-BRK's stock CMSIS-DAP v1.0.7 firmware.
 pub struct LpcDeployer {
     /// Path to lpc21isp binary (if not in PATH).
     lpc21isp_path: PathBuf,
@@ -286,6 +320,11 @@ pub struct LpcDeployer {
     /// Deploy timeout in seconds.
     timeout_secs: u64,
     verbose: bool,
+    /// probe-rs `--chip` name for this board, or `None` when the
+    /// board's MCU family isn't in [`crate::probe_rs::map_board_to_probe_rs_chip`].
+    /// A `None` here disables the SWD path entirely for this
+    /// deployer instance.
+    probe_rs_chip: Option<String>,
 }
 
 impl LpcDeployer {
@@ -302,7 +341,19 @@ impl LpcDeployer {
             xtal_khz,
             timeout_secs,
             verbose,
+            probe_rs_chip: None,
         }
+    }
+
+    /// Attach a probe-rs `--chip` name so [`Deployer::deploy`] will
+    /// try the SWD path before lpc21isp. Callers set this to whatever
+    /// [`crate::probe_rs::map_board_to_probe_rs_chip`] returns for
+    /// the current board — a `None` result there means the SWD path
+    /// isn't wired for this MCU family and this deployer runs
+    /// lpc21isp-only.
+    pub fn with_probe_rs_chip(mut self, chip: Option<String>) -> Self {
+        self.probe_rs_chip = chip;
+        self
     }
 
     /// Build an LPC deployer from board config + lpc21isp params.
@@ -332,6 +383,9 @@ impl LpcDeployer {
             params.timeout_secs,
             find_lpc21isp(),
             verbose,
+        )
+        .with_probe_rs_chip(
+            crate::probe_rs::map_board_to_probe_rs_chip(board).map(str::to_string),
         )
     }
 
@@ -392,6 +446,101 @@ impl Deployer for LpcDeployer {
                 "serial port required for LPC deploy (use --port)".to_string(),
             )
         })?;
+
+        // FastLED/fbuild#935 / #936: try the probe-rs SWD path FIRST
+        // when we have a compiled probe-rs binary AND an LPC-Link2
+        // CMSIS-DAP probe is attached AND the firmware is an ELF.
+        // probe-rs speaks CMSIS-DAP over USB directly, so it doesn't
+        // need the target chip in ISP mode → no SW3+SW4 button dance,
+        // just a hands-off flash in ~2 seconds. When probe-rs isn't
+        // available OR the ELF isn't there OR probe-rs errors out, we
+        // fall through to the lpc21isp UART ISP path below.
+        let probe_rs_candidate = elf_sibling_of(firmware_path)
+            .and_then(|elf_path| {
+                crate::probe_rs::find_probe_rs()
+                    .map(|binary| (elf_path, binary))
+            })
+            .filter(|_| crate::probe_rs::lpc_link2_probe_attached());
+        if let Some((elf_path, probe_rs_binary)) = probe_rs_candidate {
+            if let Some(chip) = self.probe_rs_chip.as_deref() {
+                let selector = crate::probe_rs::lpc_link2_probe_selector();
+                let probe_rs_binary_dbg = probe_rs_binary.clone();
+                let elf_path_dbg = elf_path.clone();
+                let chip_owned = chip.to_string();
+                tracing::info!(
+                    "attempting SWD flash via probe-rs (binary={}, chip={}, probe={}, firmware={})",
+                    probe_rs_binary_dbg.display(),
+                    chip_owned,
+                    selector.as_deref().unwrap_or("(first attached)"),
+                    elf_path_dbg.display(),
+                );
+                let selector_owned = selector.clone();
+                let selector_ref = selector.clone();
+                let elf_for_task = elf_path.clone();
+                let probe_rs_for_task = probe_rs_binary.clone();
+                let dl = tokio::task::spawn_blocking(move || {
+                    crate::probe_rs::run_probe_rs_download(
+                        &probe_rs_for_task,
+                        &chip_owned,
+                        selector_owned.as_deref(),
+                        &elf_for_task,
+                    )
+                })
+                .await
+                .map_err(|e| {
+                    fbuild_core::FbuildError::DeployFailed(format!(
+                        "probe-rs spawn_blocking join error: {e}"
+                    ))
+                })??;
+
+                if dl.success() {
+                    // Follow the flash with a reset so the target
+                    // starts executing what we just wrote, matching
+                    // the lpc21isp `-control` post-flash behaviour.
+                    let probe_rs_reset = probe_rs_binary.clone();
+                    let chip_for_reset = chip.to_string();
+                    let reset = tokio::task::spawn_blocking(move || {
+                        crate::probe_rs::run_probe_rs_reset(
+                            &probe_rs_reset,
+                            &chip_for_reset,
+                            selector_ref.as_deref(),
+                        )
+                    })
+                    .await
+                    .map_err(|e| {
+                        fbuild_core::FbuildError::DeployFailed(format!(
+                            "probe-rs reset spawn_blocking join error: {e}"
+                        ))
+                    })??;
+
+                    let mut combined_stdout = dl.stdout;
+                    combined_stdout.push_str(&reset.stdout);
+                    let mut combined_stderr = dl.stderr;
+                    combined_stderr.push_str(&reset.stderr);
+
+                    return Ok(DeploymentResult {
+                        success: true,
+                        message: format!(
+                            "firmware flashed via probe-rs SWD (chip={chip}, probe={})",
+                            selector.as_deref().unwrap_or("first-attached")
+                        ),
+                        port: Some(port.to_string()),
+                        stdout: combined_stdout,
+                        stderr: combined_stderr,
+                        outcome: DeployOutcome::FullFlash,
+                    });
+                }
+
+                tracing::warn!(
+                    "probe-rs SWD flash exited {}, falling back to lpc21isp UART ISP",
+                    dl.exit_code
+                );
+            } else {
+                tracing::debug!(
+                    "no probe-rs chip mapping for this board; using lpc21isp path"
+                );
+            }
+        }
 
         // FastLED/fbuild#921: warn if the on-board LPC-Link2 debugger is
         // still on the factory CMSIS-DAP v1.0.7 firmware. That firmware
