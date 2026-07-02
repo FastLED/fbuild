@@ -82,15 +82,17 @@ jobs:
         #     merged 2026-06-27 via soldr#992) — that URL now 404s
         #     and every `apple-darwin` build fails at
         #     "Apple SDK download failed: HTTP 404 Not Found".
-        # Bumping to a soldr release that carries the manifest-branch
-        # retirement fix. v0.7.66 (2026-06-29) is the earliest release
-        # after soldr#992 merged (2026-06-27 17:22 UTC); picking it
-        # over v0.7.87+ because setup-soldr@v0.9.63's `verifySoldr`
-        # step chokes on newer soldr's `version --json` output shape
-        # ("returned non-JSON output: Unexpected end of JSON input").
+        # Pinned to v0.7.59, matching the last known-good Windows
+        # release run (28468456381, 2.3.14). Bumped v0.7.66 briefly
+        # to try to unblock the Apple SDK fetch (soldr#988 Phase 5
+        # / soldr#992 manifest-branch retirement), but that version
+        # introduced a persistent Windows "cargo diagnostic capture
+        # timed out after 1800 seconds" hang immediately after
+        # `Compiling fbuild-cli` — reverting since macOS is dropped
+        # from this cycle's matrix anyway (release-auto.yml).
         uses: zackees/setup-soldr@v0.9.63
         with:
-          version: "0.7.66"
+          version: "0.7.59"
           cache: true
           build-cache: true
           target-cache: true
