@@ -384,9 +384,7 @@ impl LpcDeployer {
             find_lpc21isp(),
             verbose,
         )
-        .with_probe_rs_chip(
-            crate::probe_rs::map_board_to_probe_rs_chip(board).map(str::to_string),
-        )
+        .with_probe_rs_chip(crate::probe_rs::map_board_to_probe_rs_chip(board).map(str::to_string))
     }
 
     /// Override the baud rate (e.g. from a CLI `--baud` flag). Mirrors
@@ -456,10 +454,7 @@ impl Deployer for LpcDeployer {
         // available OR the ELF isn't there OR probe-rs errors out, we
         // fall through to the lpc21isp UART ISP path below.
         let probe_rs_candidate = elf_sibling_of(firmware_path)
-            .and_then(|elf_path| {
-                crate::probe_rs::find_probe_rs()
-                    .map(|binary| (elf_path, binary))
-            })
+            .and_then(|elf_path| crate::probe_rs::find_probe_rs().map(|binary| (elf_path, binary)))
             .filter(|_| crate::probe_rs::lpc_link2_probe_attached());
         if let Some((elf_path, probe_rs_binary)) = probe_rs_candidate {
             if let Some(chip) = self.probe_rs_chip.as_deref() {
@@ -536,9 +531,7 @@ impl Deployer for LpcDeployer {
                     dl.exit_code
                 );
             } else {
-                tracing::debug!(
-                    "no probe-rs chip mapping for this board; using lpc21isp path"
-                );
+                tracing::debug!("no probe-rs chip mapping for this board; using lpc21isp path");
             }
         }
 
