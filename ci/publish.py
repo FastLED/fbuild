@@ -48,14 +48,18 @@ WHEEL_DIR = DIST_DIR / "wheels"
 PYTHON_SHIMS_DIR = ROOT / "python"
 
 # GitHub artifact name -> dist/ subdir
+#
+# Not every release-matrix lane maps to a wheel: the
+# x86_64-apple-darwin and aarch64-pc-windows-msvc artifacts ship via
+# the GitHub release archives only (Intel Macs install the ARM wheel
+# via the dual macosx tag below; ARM Windows uses the win_amd64 wheel
+# via emulation).
 ARTIFACT_MAP: dict[str, str] = {
     "binaries-x86_64-unknown-linux-musl": "linux-x86_64",
     "binaries-aarch64-unknown-linux-musl": "linux-aarch64",
-    # macOS temporarily dropped from the release matrix — see the
-    # matrix comment in .github/workflows/release-auto.yml. Restore
-    # `binaries-aarch64-apple-darwin: macos-aarch64` here (and the
-    # matrix entry) once soldr's Apple SDK URL migration lands in a
-    # setup-soldr@v0.9.63-compatible release.
+    # Restored alongside the release-auto.yml macOS matrix entries on
+    # soldr v0.7.98 + setup-soldr v0.9.64 (Apple SDK URL fix).
+    "binaries-aarch64-apple-darwin": "macos-aarch64",
     "binaries-x86_64-pc-windows-msvc": "windows-x86_64",
 }
 
@@ -63,7 +67,7 @@ ARTIFACT_MAP: dict[str, str] = {
 PLATFORMS: dict[str, list[str]] = {
     "linux-x86_64": ["manylinux_2_17_x86_64", "manylinux2014_x86_64"],
     "linux-aarch64": ["manylinux_2_17_aarch64", "manylinux2014_aarch64"],
-    # macos-aarch64 removed alongside ARTIFACT_MAP entry — see above.
+    "macos-aarch64": ["macosx_11_0_arm64", "macosx_10_12_x86_64"],
     "windows-x86_64": ["win_amd64"],
 }
 

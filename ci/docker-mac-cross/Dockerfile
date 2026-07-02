@@ -57,7 +57,7 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | sh \
 # to an unrelated squatted `soldr-0.1.0` placeholder package. The tarball
 # is built against glibc 2.17 (manylinux_2_17 floor) so it runs on every
 # remotely-recent distro. Issue tracked at zackees/soldr#1005 (forthcoming).
-ARG SOLDR_VERSION=0.7.59
+ARG SOLDR_VERSION=0.7.98
 RUN mkdir -p /opt/soldr-bin \
  && curl -fsSL \
         "https://github.com/zackees/soldr/releases/download/v${SOLDR_VERSION}/soldr-v${SOLDR_VERSION}-x86_64-unknown-linux-gnu.tar.zst" \
@@ -65,16 +65,19 @@ RUN mkdir -p /opt/soldr-bin \
     | tar -xf - -C /opt/soldr-bin \
  && ls -la /opt/soldr-bin
 
-RUN for bin in soldr cargo-chef crgx; do \
+# `soldr-clang-shim` must live next to the running soldr binary —
+# soldr's blessed cross-compile path resolves it relative to its own
+# exe (zackees/soldr#1015/#1016) and ships it in every release
+# archive as of v0.7.92+.
+RUN for bin in soldr soldr-clang-shim cargo-chef crgx; do \
         [ -f "/opt/soldr-bin/$bin" ] && cp "/opt/soldr-bin/$bin" "/usr/local/bin/$bin" && chmod +x "/usr/local/bin/$bin"; \
     done
 # Note: standalone `zccache` / `zccache-daemon` / `zccache-fp` binaries are
-# intentionally NOT copied. As of soldr 1.12.11+ / soldr#977 / #980 L1,
-# zccache is embedded into soldr-daemon and the new dedicated
-# `zccache-soldr` shim (soldr#1081) is the RUSTC_WRAPPER. The upstream
-# tarball stops shipping the standalone binaries past SOLDR_VERSION=0.7.59,
-# so the for-loop above would silently no-op anyway — explicit list now
-# documents the post-embedded-zccache architecture. See FastLED/fbuild#855.
+# intentionally NOT copied even though recent archives ship them again.
+# As of zccache 1.12.11+ / soldr#977 / #980 L1, zccache is embedded into
+# soldr-daemon and the dedicated `zccache-soldr` shim (soldr#1081) is the
+# RUSTC_WRAPPER — the explicit list above documents the
+# post-embedded-zccache architecture. See FastLED/fbuild#855.
 
 # Pre-seed soldr's home so its first-run setup is non-interactive +
 # the rustup auto-bootstrap has a writable HOME to drop ~/.cargo/ into.

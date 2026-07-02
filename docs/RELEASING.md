@@ -24,7 +24,7 @@ That's the entire happy path. Wait for the action to complete (~10-15 min for th
 ```
 release-auto.yml
 ├── prepare              ── compute candidate version, check tag + PyPI state
-├── build (matrix)       ── build native binaries for 4 targets
+├── build (matrix)       ── build native binaries for 6 targets
 ├── build-pypi           ── call `ci/publish.py::build_all_wheels` → 4 wheels
 ├── smoke test           ── pip-install one wheel, run `fbuild --version`
 ├── publish              ── create GitHub release + push v<version> tag
@@ -36,10 +36,10 @@ The `prepare` job is the trigger gate. It runs on every push that touches `Cargo
 ```
 should_build = true  IF  (tag does not exist)
                      AND (version on disk >= newest known PyPI version)
-                     AND (PyPI has < 4 files for this version)
+                     AND (PyPI has < len(PLATFORMS) files for this version)
 ```
 
-The "< 4 files" guard exists because PyPI requires exactly 4 platform wheels (Linux x86_64, Linux aarch64, macOS aarch64, Windows x86_64) for an `fbuild` release. Anything less is a partial / stranded release and the prep job will refuse to "fix it" by uploading more files to the same version.
+The file-count guard exists because a complete `fbuild` release means one wheel per `PLATFORMS` entry in `ci/publish.py` (currently 4: Linux x86_64, Linux aarch64, macOS aarch64, Windows x86_64). Anything less is a partial / stranded release and the prep job will refuse to "fix it" by uploading more files to the same version. Both this gate and the post-upload "Verify all wheels visible on PyPI" check derive their expected counts at run time (from `ci/publish.py::PLATFORMS` and the built wheels respectively) — a stale hardcoded 4 broke the verify gate during the 2.3.22-2.3.24 window. Note the build matrix has more lanes than wheels: the x86_64-apple-darwin and aarch64-pc-windows-msvc binaries ship via the GitHub release archives only (Intel Macs install the arm64 wheel via its dual macosx tag; ARM Windows uses the win_amd64 wheel via emulation).
 
 ## Common failure modes
 
@@ -62,7 +62,7 @@ The `prepare` job aborts with a non-zero exit if `[workspace.package].version` (
 
 ### A wheel built but never uploaded (partial release)
 
-Re-run via `workflow_dispatch`. The fallback branch in `prepare` allows builds when the tag exists but PyPI has fewer than 4 files — but only on a manual dispatch:
+Re-run via `workflow_dispatch`. The fallback branch in `prepare` allows builds when the tag exists but PyPI has fewer than the expected number of files — but only on a manual dispatch:
 
 ```bash
 gh workflow run release-auto.yml --repo FastLED/fbuild --ref main
@@ -72,7 +72,7 @@ The action will rebuild the missing wheels and upload, leaving the existing whee
 
 ### `prepare` says "no, already shipped"
 
-If `pypi_file_count` is already 4, the release is complete. Bump to the next version.
+If `pypi_file_count` already equals `len(PLATFORMS)` (currently 4), the release is complete. Bump to the next version.
 
 ## Library reference: `ci/publish.py`
 
@@ -96,4 +96,5 @@ The module intentionally has no CLI entry point, no `argparse`, no upload code, 
 1. Add the target to the `build` matrix in `release-auto.yml`.
 2. Add the artifact-name → subdir entry in `ARTIFACT_MAP` (`ci/publish.py`).
 3. Add the subdir → platform-tag entry in `PLATFORMS` (`ci/publish.py`).
-4. Bump the "< 4 files" check in `prepare` to the new count.
+
+The wheel-count gates in `prepare` and `publish-pypi` derive their expected counts from `ci/publish.py::PLATFORMS` and the built wheels, so no count needs bumping. Skip steps 2-3 if the new target should ship via the GitHub release archives only (no wheel) — every `binaries-*` artifact is packaged into the GitHub release regardless of `ARTIFACT_MAP`.
