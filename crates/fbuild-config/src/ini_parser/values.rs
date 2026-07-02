@@ -22,6 +22,13 @@ pub(super) fn strip_inline_comment(s: &str) -> String {
 /// - Multi-line: one flag per line
 /// - `-D FLAG` → `-DFLAG` normalization
 /// - Preserves arguments for `-include`, `-I`, `-L`, etc.
+/// - Consumes the INI shell-quoting layer (FastLED/fbuild#947): quote
+///   delimiters group and are stripped, and `\"` (outside single quotes)
+///   is an escaped literal `"`. PlatformIO feeds `build_flags` through
+///   Python `shlex`, so `-DNAME="\"Demo\""` must emerge here as the
+///   single direct-exec argv element `-DNAME="Demo"`. Backslashes not
+///   escaping a double quote stay literal (Windows paths) — the one
+///   deliberate divergence from POSIX shlex.
 pub(super) fn parse_flags(flags_str: &str) -> Vec<String> {
     let mut result = Vec::new();
 
@@ -31,21 +38,23 @@ pub(super) fn parse_flags(flags_str: &str) -> Vec<String> {
             continue;
         }
 
-        let chars = trimmed.chars();
+        let mut chars = trimmed.chars().peekable();
         let mut current = String::new();
         let mut in_quotes = false;
         let mut quote_char = ' ';
 
-        for c in chars {
+        while let Some(c) = chars.next() {
             match c {
+                '\\' if chars.peek() == Some(&'"') && !(in_quotes && quote_char == '\'') => {
+                    chars.next();
+                    current.push('"');
+                }
                 '"' | '\'' if !in_quotes => {
                     in_quotes = true;
                     quote_char = c;
-                    current.push(c);
                 }
                 c if in_quotes && c == quote_char => {
                     in_quotes = false;
-                    current.push(c);
                 }
                 ' ' | '\t' if !in_quotes => {
                     if !current.is_empty() {

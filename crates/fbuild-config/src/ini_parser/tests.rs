@@ -578,6 +578,36 @@ fn test_parse_flags() {
     );
 }
 
+/// FastLED/fbuild#947: the INI shell-quoting layer must be consumed here,
+/// exactly once, so string-valued defines reach the compiler as a single
+/// direct-exec argv element like `-DPROJECT_NAME="Demo"`.
+#[test]
+fn test_parse_flags_dequotes_shell_layer() {
+    // Outer-quoted escaped form (NightDriverStrip demo env).
+    assert_eq!(
+        parse_flags(r#"-DPROJECT_NAME="\"Demo\"" -DMATRIX_WIDTH=144"#),
+        vec![r#"-DPROJECT_NAME="Demo""#, "-DMATRIX_WIDTH=144"]
+    );
+    // Bare escaped form (no outer quotes) — common in other projects.
+    assert_eq!(parse_flags(r#"-DFOO=\"Bar\""#), vec![r#"-DFOO="Bar""#]);
+    // Quoted values with spaces group into one token.
+    assert_eq!(
+        parse_flags(r#"-DGREETING="\"Hello World\"""#),
+        vec![r#"-DGREETING="Hello World""#]
+    );
+    // Quote delimiters around paths are consumed; backslashes that are
+    // not escaping a double quote stay literal (Windows paths).
+    assert_eq!(
+        parse_flags(r#"-I"C:\Program Files\SDK" -Ifoo"#),
+        vec![r"-IC:\Program Files\SDK", "-Ifoo"]
+    );
+    // Single-quoted regions are fully literal.
+    assert_eq!(
+        parse_flags(r#"-DMSG='\"x\"' -DY=1"#),
+        vec![r#"-DMSG=\"x\""#, "-DY=1"]
+    );
+}
+
 #[test]
 fn test_parse_lib_deps() {
     assert_eq!(
