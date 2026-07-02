@@ -570,11 +570,6 @@
       "product": "SparkFun RedBoard Turbo",
       "source": "fastled-board-usb-pids",
       "vendor": "SparkFun"
-    },
-    {
-      "product": "SparkFun RedBoard Turbo / SparkFun RedBoard Turbo Board",
-      "source": "sparkfun-supplemental-usb-pids",
-      "vendor": "SparkFun"
     }
   ],
   "1b4f:0020": [
@@ -586,23 +581,6 @@
     {
       "product": "SparkFun SAMD51 MicroMod",
       "source": "fastled-board-usb-pids",
-      "vendor": "SparkFun"
-    },
-    {
-      "product": "SparkFun MicroMod SAMD51 Processor / SparkFun SAMD51 MicroMod",
-      "source": "sparkfun-supplemental-usb-pids",
-      "vendor": "SparkFun"
-    }
-  ],
-  "1b4f:0d21": [
-    {
-      "product": "SFE SAMD21",
-      "source": "sparkfun-first-party-usb-pids",
-      "vendor": "SparkFun"
-    },
-    {
-      "product": "SparkFun SAMD21 Dev Breakout / SparkFun SAMD21 Mini Breakout",
-      "source": "sparkfun-supplemental-usb-pids",
       "vendor": "SparkFun"
     }
   ],
@@ -616,23 +594,6 @@
       "product": "SparkFun SAMD21 Pro RF",
       "source": "fastled-board-usb-pids",
       "vendor": "SparkFun"
-    },
-    {
-      "product": "SparkFun SAMD21 Pro RF",
-      "source": "sparkfun-supplemental-usb-pids",
-      "vendor": "SparkFun"
-    }
-  ],
-  "1b4f:215f": [
-    {
-      "product": "SFE SAMD21 Pro RF",
-      "source": "sparkfun-first-party-usb-pids",
-      "vendor": "SparkFun"
-    },
-    {
-      "product": "SparkFun SAMD21 Pro RF",
-      "source": "sparkfun-supplemental-usb-pids",
-      "vendor": "SparkFun"
     }
   ],
   "1b4f:2b74": [
@@ -644,35 +605,6 @@
     {
       "product": "SparkFun Makey Makey",
       "source": "fastled-board-usb-pids",
-      "vendor": "SparkFun"
-    },
-    {
-      "product": "SparkFun Makey Makey",
-      "source": "sparkfun-supplemental-usb-pids",
-      "vendor": "SparkFun"
-    }
-  ],
-  "1b4f:2b75": [
-    {
-      "product": "SparkFun MaKey MaKey",
-      "source": "sparkfun-first-party-usb-pids",
-      "vendor": "SparkFun"
-    },
-    {
-      "product": "SparkFun Makey Makey",
-      "source": "sparkfun-supplemental-usb-pids",
-      "vendor": "SparkFun"
-    }
-  ],
-  "1b4f:514d": [
-    {
-      "product": "Qtechknow Qduino Mini",
-      "source": "sparkfun-first-party-usb-pids",
-      "vendor": "SparkFun"
-    },
-    {
-      "product": "SparkFun Qduino Mini",
-      "source": "sparkfun-supplemental-usb-pids",
       "vendor": "SparkFun"
     }
   ],
@@ -686,11 +618,6 @@
       "product": "SparkFun Qduino Mini",
       "source": "fastled-board-usb-pids",
       "vendor": "SparkFun"
-    },
-    {
-      "product": "SparkFun Qduino Mini",
-      "source": "sparkfun-supplemental-usb-pids",
-      "vendor": "SparkFun"
     }
   ],
   "1b4f:8d21": [
@@ -702,11 +629,6 @@
     {
       "product": "SparkFun SAMD21 Dev Breakout / SparkFun SAMD21 Mini Breakout",
       "source": "fastled-board-usb-pids",
-      "vendor": "SparkFun"
-    },
-    {
-      "product": "SparkFun SAMD21 Dev Breakout / SparkFun SAMD21 Mini Breakout",
-      "source": "sparkfun-supplemental-usb-pids",
       "vendor": "SparkFun"
     }
   ],
@@ -720,35 +642,6 @@
       "product": "SparkFun Pro Micro 3.3V/8MHz",
       "source": "fastled-board-usb-pids",
       "vendor": "SparkFun"
-    },
-    {
-      "product": "SparkFun Pro Micro 3.3V/8MHz",
-      "source": "sparkfun-supplemental-usb-pids",
-      "vendor": "SparkFun"
-    }
-  ],
-  "1b4f:9204": [
-    {
-      "product": "SparkFun Pro Micro ATmega32U4 (3.3V, 8 MHz)",
-      "source": "sparkfun-first-party-usb-pids",
-      "vendor": "SparkFun"
-    },
-    {
-      "product": "SparkFun Pro Micro 3.3V/8MHz",
-      "source": "sparkfun-supplemental-usb-pids",
-      "vendor": "SparkFun"
-    }
-  ],
-  "1b4f:9205": [
-    {
-      "product": "SparkFun Pro Micro ATmega32U4 (5V, 16 MHz)",
-      "source": "sparkfun-first-party-usb-pids",
-      "vendor": "SparkFun"
-    },
-    {
-      "product": "SparkFun Pro Micro 5V/16MHz",
-      "source": "sparkfun-supplemental-usb-pids",
-      "vendor": "SparkFun"
     }
   ],
   "1b4f:9206": [
@@ -760,11 +653,6 @@
     {
       "product": "SparkFun Pro Micro 5V/16MHz",
       "source": "fastled-board-usb-pids",
-      "vendor": "SparkFun"
-    },
-    {
-      "product": "SparkFun Pro Micro 5V/16MHz",
-      "source": "sparkfun-supplemental-usb-pids",
       "vendor": "SparkFun"
     }
   ],
@@ -778,35 +666,6 @@
       "product": "SparkFun 9DoF Razor IMU M0",
       "source": "fastled-board-usb-pids",
       "vendor": "SparkFun"
-    },
-    {
-      "product": "SparkFun 9DoF Razor IMU M0",
-      "source": "sparkfun-supplemental-usb-pids",
-      "vendor": "SparkFun"
-    }
-  ],
-  "1b4f:9d0f": [
-    {
-      "product": "SFE 9DOF-D21",
-      "source": "sparkfun-first-party-usb-pids",
-      "vendor": "SparkFun"
-    },
-    {
-      "product": "SparkFun 9DoF Razor IMU M0",
-      "source": "sparkfun-supplemental-usb-pids",
-      "vendor": "SparkFun"
-    }
-  ],
-  "1b4f:f015": [
-    {
-      "product": "RedBoard Turbo",
-      "source": "sparkfun-first-party-usb-pids",
-      "vendor": "SparkFun"
-    },
-    {
-      "product": "SparkFun RedBoard Turbo",
-      "source": "sparkfun-supplemental-usb-pids",
-      "vendor": "SparkFun"
     }
   ],
   "1b4f:f100": [
@@ -818,23 +677,6 @@
     {
       "product": "SparkFun Fio V3 3.3V/8MHz",
       "source": "fastled-board-usb-pids",
-      "vendor": "SparkFun"
-    },
-    {
-      "product": "SparkFun Fio V3 3.3V/8MHz",
-      "source": "sparkfun-supplemental-usb-pids",
-      "vendor": "SparkFun"
-    }
-  ],
-  "1b4f:f101": [
-    {
-      "product": "SparkFun Fio v3",
-      "source": "sparkfun-first-party-usb-pids",
-      "vendor": "SparkFun"
-    },
-    {
-      "product": "SparkFun Fio V3 3.3V/8MHz",
-      "source": "sparkfun-supplemental-usb-pids",
       "vendor": "SparkFun"
     }
   ],
@@ -2019,57 +1861,23 @@
   "2886:0046": [
     {
       "product": "Seeed Studio XIAO ESP32C3",
-      "source": "seeed-first-party-usb-pids",
-      "vendor": "Seeed Technology Co., Ltd."
-    },
-    {
-      "product": "Seeed Studio XIAO ESP32C3",
       "source": "fastled-board-usb-pids",
       "vendor": "Seeed Studio"
     },
     {
-      "product": "Pcbcupid GLYPH C3 / Seeed XIAO ESP32C3 / Seeed Studio XIAO ESP32C3",
-      "source": "seeed-supplemental-usb-pids",
-      "vendor": "Seeed Technology Co., Ltd."
-    }
-  ],
-  "2886:0048": [
-    {
-      "product": "Seeed Studio XIAO ESP32C6",
-      "source": "fastled-board-usb-pids",
-      "vendor": "Seeed Studio"
-    },
-    {
-      "product": "Seeed Studio XIAO ESP32C6",
+      "product": "Pcbcupid GLYPH C3 / Seeed XIAO ESP32C3",
       "source": "seeed-supplemental-usb-pids",
       "vendor": "Seeed Technology Co., Ltd."
     }
   ],
   "2886:0056": [
     {
-      "product": "Seeed Studio XIAO ESP32S3 Plus / Seeed Studio XIAO ESP32S3 Sense",
-      "source": "seeed-first-party-usb-pids",
-      "vendor": "Seeed Technology Co., Ltd."
-    },
-    {
       "product": "Seeed Studio XIAO ESP32S3",
       "source": "fastled-board-usb-pids",
       "vendor": "Seeed Studio"
     },
     {
-      "product": "Seeed Studio XIAO ESP32S3 / Seeed XIAO ESP32S3",
-      "source": "seeed-supplemental-usb-pids",
-      "vendor": "Seeed Technology Co., Ltd."
-    }
-  ],
-  "2886:0058": [
-    {
-      "product": "Seeed Studio XIAO RP2350",
-      "source": "seeed-first-party-usb-pids",
-      "vendor": "Seeed Technology Co., Ltd."
-    },
-    {
-      "product": "Seeed XIAO RP2350",
+      "product": "Seeed XIAO ESP32S3",
       "source": "seeed-supplemental-usb-pids",
       "vendor": "Seeed Technology Co., Ltd."
     }
@@ -2132,18 +1940,6 @@
       "product": "Seeeduino Femto M0 / Seeeduino XIAO",
       "source": "fastled-board-usb-pids",
       "vendor": "Seeed"
-    }
-  ],
-  "2886:8056": [
-    {
-      "product": "Seeed Studio XIAO ESP32S3 Plus / Seeed Studio XIAO ESP32S3 Sense",
-      "source": "seeed-first-party-usb-pids",
-      "vendor": "Seeed Technology Co., Ltd."
-    },
-    {
-      "product": "Seeed Studio XIAO ESP32S3 / Seeed XIAO ESP32S3 / Seeed Xiao ESP32-S3 Sense / Seeed XIAO ESP32-S3",
-      "source": "seeed-supplemental-usb-pids",
-      "vendor": "Seeed Technology Co., Ltd."
     }
   ],
   "2a03:0001": [
