@@ -362,6 +362,18 @@ print(\"post-append noise\")
         .global_compile
         .common
         .contains(&"-DPRINT_NOISE_OK".to_string()));
+    // Both capture layers must surface in notes: Python-level print()
+    // and raw fd-1 writes from spawned subprocesses.
+    let stdout_note = overlay
+        .notes
+        .iter()
+        .find(|n| n.starts_with("script stdout (noisy.py):"))
+        .expect("captured script stdout should be preserved in notes");
+    assert!(
+        stdout_note.contains("loud import-time banner"),
+        "{stdout_note}"
+    );
+    assert!(stdout_note.contains("raw fd noise"), "{stdout_note}");
 }
 
 /// Write a project whose `platformio.ini` carries extra `[env:demo]` lines

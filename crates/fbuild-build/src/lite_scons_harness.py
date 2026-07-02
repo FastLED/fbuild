@@ -69,6 +69,7 @@ import os
 import re
 import subprocess
 import sys
+import tempfile
 import time
 import traceback
 import types
@@ -682,18 +683,28 @@ def run_script(env, script_path):
 
 
 def run_script_captured(env, ledger, path):
-    """Run one user script with sys.stdout captured (FastLED/fbuild#945).
+    """Run one user script with its stdout captured (FastLED/fbuild#945).
 
     PlatformIO scripts routinely print progress banners; those must never
-    reach the JSON protocol channel. Captured text is preserved in
-    `notes` (truncated) and echoed to stderr for verbose logs.
+    reach the JSON protocol channel. Two capture layers: Python-level
+    `print()` goes to a `redirect_stdout` buffer, and raw fd 1 writes
+    (subprocesses, `os.write`) go to a temp file swapped in via `dup2`.
+    Both are preserved in `notes` (truncated) and echoed to stderr for
+    verbose logs.
     """
     buf = io.StringIO()
+    saved_fd = os.dup(1)
+    raw = tempfile.TemporaryFile(mode="w+", encoding="utf-8", errors="replace")
+    os.dup2(raw.fileno(), 1)
     try:
         with contextlib.redirect_stdout(buf):
             run_script(env, path)
     finally:
-        text = buf.getvalue()
+        os.dup2(saved_fd, 1)
+        os.close(saved_fd)
+        raw.seek(0)
+        text = buf.getvalue() + raw.read()
+        raw.close()
         if text:
             sys.stderr.write(text)
             ledger.notes.append(
