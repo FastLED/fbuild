@@ -1,0 +1,30 @@
+// Off-CPU wait-time profiler (FastLED/fbuild#942).
+//
+// Sums microseconds each thread spends blocked (not runnable), keyed by
+// comm + kernel/user stack at the point it went to sleep. Output feeds
+// FlameGraph's stackcollapse-bpftrace.pl → offcpu.svg.
+//
+// prev_state != 0 filters to genuine blocking (D/S states); preemptions
+// of still-runnable threads (state 0 / TASK_RUNNING) are excluded so the
+// graph shows waiting, not scheduler churn.
+//
+// Best effort on WSL2 kernels: stack-id lookups can come back empty
+// there, in which case profile_entry.sh falls back to the raw
+// `perf -e sched:sched_switch` recording taken concurrently.
+
+tracepoint:sched:sched_switch
+{
+    if (args->prev_state != 0) {
+        @sleep_start[args->prev_pid] = nsecs;
+    }
+    $start = @sleep_start[args->next_pid];
+    if ($start) {
+        @usecs[comm, kstack, ustack] = sum((nsecs - $start) / 1000);
+        delete(@sleep_start[args->next_pid]);
+    }
+}
+
+END
+{
+    clear(@sleep_start);
+}

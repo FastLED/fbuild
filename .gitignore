@@ -99,3 +99,7 @@ tasks/loop-runs/
 # the captures are local-only and should never be checked in.
 port_scan_stderr*.txt
 port_scan_stdout*.txt
+
+# Profiling harness artifacts (FastLED/fbuild#942) - local-only measurement
+# output: flamegraphs, perf.data, daemon logs, timing tables.
+ci/docker-profile/out/
