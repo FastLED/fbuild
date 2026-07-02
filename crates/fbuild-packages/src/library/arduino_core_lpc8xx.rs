@@ -42,14 +42,19 @@ use crate::{CacheSubdir, PackageBase, PackageInfo};
 /// FastLED/FastLED#3513 (merged). FastLED#3499 closed as INVALID.
 /// Preventive guardrail: FastLED/FastLED#3506 / #3507
 /// (`agents/docs/peripheral-existence.md`).
-const ACLPC_COMMIT: &str = "8836a9bb08c77273758776aa3e8a233e97ff97cf";
-const ACLPC_VERSION: &str = "0.2.2+g8836a9b";
+///
+/// 0.2.3+g9e8be02 (framework-arduino-lpc8xx#38): named weak IRQ
+/// handlers in the LPC845/LPC804 startup vector tables + weak NMI
+/// alias. Unblocks FastLED ISR-driven drivers (DMA chunk-chain refill
+/// for SPI/UART async streaming — FastLED/FastLED#3453 follow-up).
+const ACLPC_COMMIT: &str = "9e8be028892e6eeb4796b46d0069dbb1a39a47a9";
+const ACLPC_VERSION: &str = "0.2.3+g9e8be02";
 const ACLPC_URL: &str =
-    "https://github.com/FastLED/framework-arduino-lpc8xx/archive/8836a9bb08c77273758776aa3e8a233e97ff97cf.tar.gz";
+    "https://github.com/FastLED/framework-arduino-lpc8xx/archive/9e8be028892e6eeb4796b46d0069dbb1a39a47a9.tar.gz";
 // SHA256 of the archive GitHub currently serves for
-// `github.com/FastLED/framework-arduino-lpc8xx/archive/8836a9bb08…tar.gz`.
-// Verified 2026-07-01 via `curl … | sha256sum`.
-const ACLPC_CHECKSUM: &str = "e74c2226873ccf5676096b8e28c8a9acc4af39894c7fc651ea320628a69281ec";
+// `github.com/FastLED/framework-arduino-lpc8xx/archive/9e8be02889…tar.gz`.
+// Verified 2026-07-02 via `curl … | sha256sum`.
+const ACLPC_CHECKSUM: &str = "c295ed4204eb123f735538196dd431bc8ebbe3bac86b0ffde32d6bfbab484758";
 
 /// Arduino LPC8xx core framework manager.
 pub struct ArduinoCoreLpc8xx {
