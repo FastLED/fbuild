@@ -32,14 +32,22 @@
 //! which requires a `SW3 + SW4` button press to enter ISP mode.
 
 use std::path::{Path, PathBuf};
-use std::process::Command;
+use std::time::Duration;
 
+use fbuild_core::subprocess::run_command_blocking;
 use fbuild_core::{FbuildError, Result};
 
 /// Environment override that points at a specific `probe-rs` binary.
 /// Primarily useful during development against a locally-built
 /// probe-rs before the auto-download landing.
 pub const PROBE_RS_PATH_ENV_VAR: &str = "FBUILD_PROBE_RS_PATH";
+
+/// Hard ceiling on a single probe-rs invocation. A healthy LPC845-BRK
+/// flash completes in ~2 s; 120 s covers a slow cold HID enumerate plus
+/// full-chip program with margin. Past that, the probe is wedged and
+/// the deploy should fail with the captured stderr, not hang the
+/// daemon's spawn_blocking slot indefinitely.
+const PROBE_RS_TIMEOUT: Duration = Duration::from_secs(120);
 
 /// Locally-built probe-rs binary — the maintainer's dev tree. Kept as
 /// a documented convention so ad-hoc smoke tests can just drop the
@@ -215,14 +223,18 @@ pub fn run_probe_rs_download(
     firmware_path: &Path,
 ) -> Result<ProbeRsRun> {
     let argv = probe_rs_download_argv(probe_rs_path, chip, probe_selector, firmware_path);
-    let output = Command::new(&argv[0])
-        .args(&argv[1..])
-        .output()
+    let argv_refs: Vec<&str> = argv.iter().map(String::as_str).collect();
+    // run_command_blocking (not raw std::process::Command) so the spawn
+    // inherits CREATE_NO_WINDOW on Windows — the daemon is windowless,
+    // and a raw console-subsystem child pops a visible console for the
+    // duration of the flash. Also buys the standard timeout guard: a
+    // wedged probe fails the deploy in 120 s instead of hanging it.
+    let output = run_command_blocking(&argv_refs, None, None, Some(PROBE_RS_TIMEOUT))
         .map_err(|e| FbuildError::DeployFailed(format!("failed to spawn probe-rs: {e}")))?;
     Ok(ProbeRsRun {
-        exit_code: output.status.code().unwrap_or(-1),
-        stdout: String::from_utf8_lossy(&output.stdout).into_owned(),
-        stderr: String::from_utf8_lossy(&output.stderr).into_owned(),
+        exit_code: output.exit_code,
+        stdout: output.stdout,
+        stderr: output.stderr,
     })
 }
 
@@ -234,14 +246,14 @@ pub fn run_probe_rs_reset(
     probe_selector: Option<&str>,
 ) -> Result<ProbeRsRun> {
     let argv = probe_rs_reset_argv(probe_rs_path, chip, probe_selector);
-    let output = Command::new(&argv[0])
-        .args(&argv[1..])
-        .output()
+    let argv_refs: Vec<&str> = argv.iter().map(String::as_str).collect();
+    // Same CREATE_NO_WINDOW + timeout rationale as run_probe_rs_download.
+    let output = run_command_blocking(&argv_refs, None, None, Some(PROBE_RS_TIMEOUT))
         .map_err(|e| FbuildError::DeployFailed(format!("failed to spawn probe-rs reset: {e}")))?;
     Ok(ProbeRsRun {
-        exit_code: output.status.code().unwrap_or(-1),
-        stdout: String::from_utf8_lossy(&output.stdout).into_owned(),
-        stderr: String::from_utf8_lossy(&output.stderr).into_owned(),
+        exit_code: output.exit_code,
+        stdout: output.stdout,
+        stderr: output.stderr,
     })
 }
 
