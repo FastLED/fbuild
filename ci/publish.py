@@ -51,9 +51,11 @@ PYTHON_SHIMS_DIR = ROOT / "python"
 ARTIFACT_MAP: dict[str, str] = {
     "binaries-x86_64-unknown-linux-musl": "linux-x86_64",
     "binaries-aarch64-unknown-linux-musl": "linux-aarch64",
-    # x86_64-apple-darwin removed: Intel Macs use ARM wheel via Rosetta.
-    # Cross-compiling ring crate ARM→x86 fails and macos-13 runners are unavailable.
-    "binaries-aarch64-apple-darwin": "macos-aarch64",
+    # macOS temporarily dropped from the release matrix — see the
+    # matrix comment in .github/workflows/release-auto.yml. Restore
+    # `binaries-aarch64-apple-darwin: macos-aarch64` here (and the
+    # matrix entry) once soldr's Apple SDK URL migration lands in a
+    # setup-soldr@v0.9.63-compatible release.
     "binaries-x86_64-pc-windows-msvc": "windows-x86_64",
 }
 
@@ -61,7 +63,7 @@ ARTIFACT_MAP: dict[str, str] = {
 PLATFORMS: dict[str, list[str]] = {
     "linux-x86_64": ["manylinux_2_17_x86_64", "manylinux2014_x86_64"],
     "linux-aarch64": ["manylinux_2_17_aarch64", "manylinux2014_aarch64"],
-    "macos-aarch64": ["macosx_11_0_arm64", "macosx_10_12_x86_64"],
+    # macos-aarch64 removed alongside ARTIFACT_MAP entry — see above.
     "windows-x86_64": ["win_amd64"],
 }
 
