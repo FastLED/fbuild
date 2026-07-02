@@ -30,7 +30,11 @@ pub(super) const EMULATOR_TOOL_NAMES: &[&str] =
     &["simavr", "qemu", "renode", "ovpsim", "verilator"];
 
 /// Board configuration loaded from boards.txt or built-in defaults.
-#[derive(Debug, Clone, Serialize, Deserialize)]
+///
+/// `Default` exists for struct-update test construction
+/// (`BoardConfig { mcu: ..., ..Default::default() }`); a defaulted
+/// config is not a usable board definition.
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct BoardConfig {
     pub name: String,
     pub mcu: String,
