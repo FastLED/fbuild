@@ -177,7 +177,7 @@ jobs:
           # --json incompatibility" that blocked bumping soldr was a
           # misdiagnosis — soldr v0.7.85/v0.7.87 shipped silent
           # binaries. v0.7.98 fixes the Apple SDK URL and
-          # setup-soldr@v0.9.64 hardens against silent binaries.
+          # setup-soldr@v0.9.65 hardens against silent binaries.
           #
           # aarch64-apple-darwin cross-compiles from the Linux
           # runner via soldr + cargo-zigbuild + soldr's managed
