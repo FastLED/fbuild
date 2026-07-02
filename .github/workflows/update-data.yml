@@ -121,7 +121,7 @@ jobs:
             --worktree "${WWW_WORKTREE}" --branch "${WWW_BRANCH}"
 
       - name: Setup soldr
-        uses: zackees/setup-soldr@v0.9.62
+        uses: zackees/setup-soldr@v0.9.64
         with:
           cache: true
           build-cache: true

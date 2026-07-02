@@ -97,10 +97,16 @@ jobs:
           should_publish_pypi="false"
           newest="$(printf '%s\n%s\n' "$latest" "$cargo_version" | sort -V | tail -n1)"
 
+          # One wheel per PLATFORMS entry in ci/publish.py — derive the
+          # expected count from the SOT instead of hardcoding it, so
+          # matrix/lane changes can't silently break this gate
+          # (a stale hardcoded 4 bit the 2.3.22-2.3.24 window).
+          expected_wheels="$(python -c 'import ci.publish; print(len(ci.publish.PLATFORMS))')"
+
           if [ "${GITHUB_EVENT_NAME}" != "workflow_dispatch" ] \
             && [ "$tag_exists" != "true" ] \
             && [ "$newest" = "$cargo_version" ] \
-            && [ "$pypi_file_count" -lt 4 ]; then
+            && [ "$pypi_file_count" -lt "$expected_wheels" ]; then
             should_build="true"
             should_publish_github="true"
             should_publish_pypi="true"
@@ -164,29 +170,37 @@ jobs:
             linux_cross: true
             macos_cross: false
 
-          # macOS targets (aarch64-apple-darwin, x86_64-apple-darwin)
-          # temporarily excluded from the release matrix. Every
-          # setup-soldr@v0.9.63-compatible soldr version (<= v0.7.66)
-          # hardcodes the Apple SDK URL to the retired manifest
-          # branch of zackees/soldr (soldr#988 Phase 5 / soldr#992,
-          # merged 2026-06-27), so `Prepare Apple SDK (Linux → mac
-          # cross)` fails at "Apple SDK download failed: HTTP 404
-          # Not Found". soldr >= v0.7.87 fixes the SDK URL but
-          # setup-soldr@v0.9.63 chokes on its `version --json`
-          # output shape. Follow-up: pin a compatible pair, or wait
-          # for setup-soldr@v0.9.64+.
-          # - target: aarch64-apple-darwin
-          #   runner: ubuntu-latest
-          #   binary_ext: ""
-          #   linux_cross: false
-          #   macos_cross: false
-          #   mac_cross_linux: true
-          # - target: x86_64-apple-darwin
-          #   runner: ubuntu-latest
-          #   binary_ext: ""
-          #   linux_cross: false
-          #   macos_cross: false
-          #   mac_cross_linux: true
+          # macOS lanes restored on soldr v0.7.98 + setup-soldr
+          # v0.9.64. They were dropped when every usable soldr
+          # version still pointed the Apple SDK fetch at the retired
+          # manifest branch (HTTP 404); the "setup-soldr version
+          # --json incompatibility" that blocked bumping soldr was a
+          # misdiagnosis — soldr v0.7.85/v0.7.87 shipped silent
+          # binaries. v0.7.98 fixes the Apple SDK URL and
+          # setup-soldr@v0.9.64 hardens against silent binaries.
+          #
+          # aarch64-apple-darwin cross-compiles from the Linux
+          # runner via soldr + cargo-zigbuild + soldr's managed
+          # Apple SDK — no mac-host dependency in the matrix.
+          - target: aarch64-apple-darwin
+            runner: ubuntu-latest
+            binary_ext: ""
+            linux_cross: false
+            macos_cross: false
+            mac_cross_linux: true
+
+          # x86_64-apple-darwin shares the mac_cross_linux template
+          # branch — soldr's apple_sdk fetcher auto-picks
+          # `darwin-x86_64` (thin-x86_64) when the target triple is
+          # `x86_64-apple-darwin`, and `cargo zigbuild --target
+          # x86_64-apple-darwin` resolves the SDKROOT + frameworks
+          # identically to the arm64 lane. Closes Lane 3 of soldr#1006.
+          - target: x86_64-apple-darwin
+            runner: ubuntu-latest
+            binary_ext: ""
+            linux_cross: false
+            macos_cross: false
+            mac_cross_linux: true
 
           # Windows x86_64 native build (windows-latest runner).
           # Cross-compile from Linux via cargo-xwin kept hitting
@@ -203,13 +217,18 @@ jobs:
             linux_cross: false
             macos_cross: false
 
-          # aarch64-pc-windows-msvc removed again — soldr v0.7.65's
-          # release archive is missing the soldr-clang-shim binary,
-          # so the shim path that #797 was authored against doesn't
-          # work end-to-end. Without the shim, ring 0.17.x's
-          # build.rs:563 hardcoded `c.compiler("clang")` breaks
-          # cross-compile to aarch64-pc-windows-msvc. Restore once
-          # soldr ships a release with the shim binary in the archive.
+          # aarch64-pc-windows-msvc — restored on soldr v0.7.98,
+          # whose release archive ships the soldr-clang-shim that
+          # routes ring 0.17.x's hardcoded `c.compiler("clang")`
+          # to clang-cl when `--target=*-pc-windows-msvc` (the
+          # v0.7.65 archive was missing the shim binary, which is
+          # why this lane was dropped). See soldr#1015/#1016 for
+          # the shim mechanism and #797 for the lane recipe.
+          - target: aarch64-pc-windows-msvc
+            runner: ubuntu-latest
+            binary_ext: ".exe"
+            linux_cross: false
+            macos_cross: false
 
     uses: ./.github/workflows/template_native_build.yml
     with:
@@ -401,7 +420,15 @@ jobs:
           PYPI_VERSION: ${{ needs.prepare.outputs.project_version }}
         run: |
           set -euo pipefail
-          expected=4
+          # Derive the expected count from the wheels this run actually
+          # built (downloaded into dist/ above) instead of hardcoding
+          # it — a stale hardcoded 4 broke this gate when the release
+          # matrix changed (2.3.22-2.3.24 window).
+          expected="$(find dist -name '*.whl' | wc -l)"
+          if [ "$expected" -lt 1 ]; then
+            echo "No wheels found in dist/ — nothing to verify" >&2
+            exit 1
+          fi
           deadline=$(( $(date +%s) + 300 ))
           while :; do
             count="$(curl -fsSL --connect-timeout 5 --max-time 10 "https://pypi.org/pypi/fbuild/${PYPI_VERSION}/json" \

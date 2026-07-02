@@ -82,17 +82,19 @@ jobs:
         #     merged 2026-06-27 via soldr#992) — that URL now 404s
         #     and every `apple-darwin` build fails at
         #     "Apple SDK download failed: HTTP 404 Not Found".
-        # Pinned to v0.7.59, matching the last known-good Windows
-        # release run (28468456381, 2.3.14). Bumped v0.7.66 briefly
-        # to try to unblock the Apple SDK fetch (soldr#988 Phase 5
-        # / soldr#992 manifest-branch retirement), but that version
-        # introduced a persistent Windows "cargo diagnostic capture
-        # timed out after 1800 seconds" hang immediately after
-        # `Compiling fbuild-cli` — reverting since macOS is dropped
-        # from this cycle's matrix anyway (release-auto.yml).
-        uses: zackees/setup-soldr@v0.9.63
+        #   - The "setup-soldr version --json incompatibility" that
+        #     blocked bumping past v0.7.66 was a misdiagnosis: soldr
+        #     v0.7.85/v0.7.87 were broken releases that shipped silent
+        #     binaries (no output at all), which setup-soldr@v0.9.63
+        #     surfaced as a version-JSON parse failure.
+        # Now pinned to v0.7.98: Apple SDK URL fix, soldr-clang-shim
+        # shipped in every release archive, cargo:rustc-env wrapper
+        # forwarding, managed cmake/ninja — all 7 soldr cross lanes
+        # verified green upstream. setup-soldr@v0.9.64 hardens
+        # against the silent-binary failure mode.
+        uses: zackees/setup-soldr@v0.9.64
         with:
-          version: "0.7.59"
+          version: "0.7.98"
           cache: true
           build-cache: true
           target-cache: true
@@ -195,10 +197,10 @@ jobs:
           # on PATH — without it, ring + cc-rs fail with
           # `failed to find tool "clang-cl": No such file or
           # directory` during `cargo xwin build`. Create the symlink
-          # ourselves so the env vars resolve. See zackees/soldr#1032
-          # for the upstream blessed-cross-compile path that handles
-          # this via `soldr-clang-shim`; until that shim ships in a
-          # soldr release archive we install our own.
+          # ourselves so the env vars resolve. soldr >= v0.7.98 ships
+          # `soldr-clang-shim` in its release archive and `soldr build`
+          # installs it on PATH (zackees/soldr#1032); the symlink stays
+          # as a safety belt for any direct `cargo xwin` invocation.
           if ! command -v clang-cl >/dev/null 2>&1; then
             sudo ln -sf "$(command -v clang)" /usr/local/bin/clang-cl
           fi
@@ -270,12 +272,20 @@ jobs:
               -p fbuild-cli \
               -p fbuild-daemon
           elif [ "${{ runner.os }}" = "Linux" ] && [[ "${{ inputs.target }}" == *-pc-windows-msvc ]]; then
-            # Disabled — the 2.3.12 release runs the Windows MSVC
-            # lane on a native `windows-latest` runner (see
-            # release-auto.yml matrix). Falls into the `else` arm
-            # below via `cargo build --release --target …`.
-            echo "ERROR: this branch should not be reached on the v2.3.12 matrix" >&2
-            exit 1
+            # Blessed Linux→Windows MSVC path (soldr#1012 PR 6),
+            # used by the aarch64-pc-windows-msvc lane. `soldr build`
+            # installs the soldr-clang-shim ahead of system clang on
+            # PATH so ring's hardcoded `c.compiler("clang")`
+            # (build.rs:563) routes to clang-cl for
+            # aarch64-windows-msvc. For x64 the shim is harmless
+            # passthrough. cargo-xwin is still installed (handles
+            # SDK download); soldr build delegates to cargo-xwin via
+            # internal env vars when the catalogue xwin-cache row is
+            # absent for the target arch. Requires soldr >= v0.7.98
+            # (first pin whose release archive ships the shim).
+            soldr build --release --target ${{ inputs.target }} \
+              -p fbuild-cli \
+              -p fbuild-daemon
           elif [[ "${{ inputs.target }}" == *-unknown-linux-musl ]]; then
             # Direct `cargo zigbuild` (pip-installed wrapper) bypasses
             # soldr's bin cache, which has been serving a corrupted
@@ -285,9 +295,8 @@ jobs:
               -p fbuild-cli \
               -p fbuild-daemon
           else
-            # Default: `soldr cargo build` (pre-v0.7.61 `soldr build`
-            # blessed verb is unavailable in our v0.7.59 pin). On the
-            # native windows-latest runner this picks up MSVC's
+            # Default: `soldr cargo build`. On the native
+            # windows-latest runner this picks up MSVC's
             # link.exe / cl.exe automatically.
             soldr cargo build --release --target ${{ inputs.target }} \
               -p fbuild-cli \
@@ -324,9 +333,15 @@ jobs:
               --target ${{ inputs.target }} -p fbuild-python \
               --features extension-module
           elif [ "${{ runner.os }}" = "Linux" ] && [[ "${{ inputs.target }}" == *-pc-windows-msvc ]]; then
-            # Disabled for v2.3.12 — Windows MSVC runs on native
-            # windows-latest now.
-            echo "ERROR: unreachable on the v2.3.12 matrix" >&2; exit 1
+            # Blessed Linux→Windows MSVC path for the PyO3 ext
+            # (soldr#1012 PR 6, aarch64-pc-windows-msvc lane).
+            # `soldr build` installs the soldr-clang-shim so
+            # ring + cc-rs route through clang-cl correctly even
+            # for aarch64 PyO3 dylib compilation.
+            PYO3_NO_PYTHON=1 soldr build --release \
+              --target-dir "${PYTHON_TARGET_DIR}" \
+              --target ${{ inputs.target }} -p fbuild-python \
+              --features extension-module
           elif [ "${{ runner.os }}" = "Linux" ]; then
             TARGET="${{ inputs.target }}"
             ARCH="${TARGET%%-*}"
