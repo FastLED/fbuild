@@ -239,10 +239,21 @@ jobs:
       # Linux → mac cross — soldr fetches the Apple SDK ahead of the
       # cargo invocation so the SDKROOT export is debuggable independent
       # of the build itself.
+      #
+      # SOLDR_TOOLCHAIN_ORIGIN redirects soldr's toolchain catalogue
+      # fetch away from the retired `manifest` branch of
+      # zackees/soldr (soldr#988 Phase 5 / soldr#992, merged
+      # 2026-06-27) at the new soldr-toolchain origin. soldr v0.7.66
+      # honors this env var via the Phase 2 catalogue-first
+      # fetch_once (soldr#989); older versions ignore it (and fail
+      # against the retired manifest branch, which is what we're
+      # avoiding here).
       - name: Prepare Apple SDK (Linux → mac cross)
         if: inputs.mac_cross_linux
         timeout-minutes: 15
         shell: bash
+        env:
+          SOLDR_TOOLCHAIN_ORIGIN: https://zackees.github.io/soldr-toolchain
         run: soldr prepare --target ${{ inputs.target }}
 
       - name: Build release binaries
