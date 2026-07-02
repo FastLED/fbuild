@@ -47,14 +47,28 @@ sysctl -qw kernel.perf_event_paranoid=-1 2>/dev/null || log "WARN: could not set
 sysctl -qw kernel.kptr_restrict=0 2>/dev/null || true
 mount -t debugfs debugfs /sys/kernel/debug 2>/dev/null || true
 
-log "building fbuild + fbuild-daemon from /work (soldr cargo, frame pointers on)"
+# The pinned toolchain download can exceed soldr's default 60s
+# no-output watchdog on first run; ensure it explicitly (same pattern
+# as ci/docker-mac-cross/build.sh) with a generous timeout.
+export SOLDR_COMMAND_OUTPUT_TIMEOUT_SECS="${SOLDR_COMMAND_OUTPUT_TIMEOUT_SECS:-1800}"
 cd /work
+log "ensuring rust toolchain (soldr toolchain ensure)"
+soldr toolchain ensure 2>&1 | tail -5
+
+log "building fbuild + fbuild-daemon from /work (soldr cargo, frame pointers on)"
 # Frame pointers + debuginfo make perf's fp unwinder produce clean
 # stacks on WSL2 (dwarf unwinding there is unreliable). This changes
 # fbuild's OWN build only — firmware compile flags are untouched.
 export RUSTFLAGS="-C force-frame-pointers=yes -C debuginfo=2"
 soldr cargo build --release -p fbuild-cli -p fbuild-daemon 2>&1 | tail -20
 build_rc=${PIPESTATUS[0]}
+if [[ $build_rc -ne 0 ]]; then
+    # Full-parallel rustc with debuginfo=2 can OOM small Docker VMs;
+    # a -j2 resume finishes the survivors instead of aborting the run.
+    log "fbuild build failed (rc=$build_rc), retrying with -j2"
+    soldr cargo build --release -j 2 -p fbuild-cli -p fbuild-daemon 2>&1 | tail -20
+    build_rc=${PIPESTATUS[0]}
+fi
 if [[ $build_rc -ne 0 ]]; then
     echo "FATAL: fbuild build failed (rc=$build_rc)" >&2
     exit "$build_rc"
