@@ -90,9 +90,9 @@ jobs:
         # Now pinned to v0.7.98: Apple SDK URL fix, soldr-clang-shim
         # shipped in every release archive, cargo:rustc-env wrapper
         # forwarding, managed cmake/ninja — all 7 soldr cross lanes
-        # verified green upstream. setup-soldr@v0.9.64 hardens
+        # verified green upstream. setup-soldr@v0.9.65 hardens
         # against the silent-binary failure mode.
-        uses: zackees/setup-soldr@v0.9.64
+        uses: zackees/setup-soldr@v0.9.65
         with:
           version: "0.7.98"
           cache: true
