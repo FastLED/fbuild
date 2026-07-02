@@ -156,7 +156,11 @@ pub fn probe_rs_download_argv(
 /// Argv builder for `probe-rs reset` — separated so callers can chain
 /// a reset after `download` when the target needs to start executing
 /// from a clean state.
-pub fn probe_rs_reset_argv(probe_rs_path: &Path, chip: &str, probe_selector: Option<&str>) -> Vec<String> {
+pub fn probe_rs_reset_argv(
+    probe_rs_path: &Path,
+    chip: &str,
+    probe_selector: Option<&str>,
+) -> Vec<String> {
     let mut args = vec![
         probe_rs_path.to_string_lossy().to_string(),
         "reset".to_string(),
@@ -321,14 +325,17 @@ mod tests {
             "LPC845M301JBD48",
             Some("1fc9:0132"),
         );
-        assert_eq!(argv, vec![
-            "/x/probe-rs".to_string(),
-            "reset".to_string(),
-            "--chip".to_string(),
-            "LPC845M301JBD48".to_string(),
-            "--probe".to_string(),
-            "1fc9:0132".to_string(),
-        ]);
+        assert_eq!(
+            argv,
+            vec![
+                "/x/probe-rs".to_string(),
+                "reset".to_string(),
+                "--chip".to_string(),
+                "LPC845M301JBD48".to_string(),
+                "--probe".to_string(),
+                "1fc9:0132".to_string(),
+            ]
+        );
     }
 
     #[test]
