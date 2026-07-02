@@ -62,11 +62,14 @@ real-world repo sample.
 
 from __future__ import annotations
 
+import contextlib
+import io
 import json
 import os
 import re
 import subprocess
 import sys
+import tempfile
 import time
 import traceback
 import types
@@ -679,9 +682,49 @@ def run_script(env, script_path):
             env._vars["__CURRENT_SCRIPT_DIR__"] = prev_dir
 
 
+def run_script_captured(env, ledger, path):
+    """Run one user script with its stdout captured (FastLED/fbuild#945).
+
+    PlatformIO scripts routinely print progress banners; those must never
+    reach the JSON protocol channel. Two capture layers: Python-level
+    `print()` goes to a `redirect_stdout` buffer, and raw fd 1 writes
+    (subprocesses, `os.write`) go to a temp file swapped in via `dup2`.
+    Both are preserved in `notes` (truncated) and echoed to stderr for
+    verbose logs.
+    """
+    buf = io.StringIO()
+    saved_fd = os.dup(1)
+    raw = tempfile.TemporaryFile(mode="w+", encoding="utf-8", errors="replace")
+    os.dup2(raw.fileno(), 1)
+    try:
+        with contextlib.redirect_stdout(buf):
+            run_script(env, path)
+    finally:
+        os.dup2(saved_fd, 1)
+        os.close(saved_fd)
+        raw.seek(0)
+        text = buf.getvalue() + raw.read()
+        raw.close()
+        if text:
+            sys.stderr.write(text)
+            ledger.notes.append(
+                f"script stdout ({os.path.basename(path)}): {text[-4096:]}"
+            )
+
+
 def main():
     if len(sys.argv) != 2:
         raise RuntimeFailure("usage: lite_scons_harness.py <input.json>")
+
+    # Protocol guard (FastLED/fbuild#945): the JSON result is the ONLY
+    # thing allowed on the real stdout. User scripts may print, and may
+    # spawn subprocesses that inherit the raw stdout fd, so both layers
+    # are sealed: fd 1 is repointed at stderr for the whole run, and the
+    # duplicated original receives the final json.dump.
+    sys.stdout.flush()
+    protocol_fd = os.dup(sys.stdout.fileno())
+    os.dup2(sys.stderr.fileno(), sys.stdout.fileno())
+
     with open(sys.argv[1], "r", encoding="utf-8") as fh:
         data = json.load(fh)
 
@@ -714,9 +757,9 @@ def main():
         pre_scripts  = [path for scope, path in script_entries if scope == "pre"]
         post_scripts = [path for scope, path in script_entries if scope == "post"]
         for path in pre_scripts:
-            run_script(env, path)
+            run_script_captured(env, ledger, path)
         for path in post_scripts:
-            run_script(env, path)
+            run_script_captured(env, ledger, path)
     except RuntimeFailure as exc:
         unsupported.append(str(exc))
     except Exception as exc:
@@ -739,7 +782,9 @@ def main():
             "errors":                ledger.errors,
         },
     }
-    json.dump(result, sys.stdout, default=str)
+    sys.stdout.flush()
+    with os.fdopen(protocol_fd, "w", encoding="utf-8") as protocol_out:
+        json.dump(result, protocol_out, default=str)
 
 
 if __name__ == "__main__":

@@ -330,6 +330,52 @@ Import(\"env\")
     assert!(err.contains("Recommendation: use --platformio"), "{err}");
 }
 
+/// FastLED/fbuild#945: user scripts routinely `print()` progress banners
+/// (NightDriverStrip's pio_audit.py / bake_site.py do), and some spawn
+/// subprocesses that write to the inherited stdout fd. Neither may
+/// corrupt the harness's JSON-on-stdout protocol.
+#[tokio::test]
+async fn test_resolve_extra_script_overlay_tolerates_user_stdout_noise() {
+    if find_python().await.is_none() {
+        return;
+    }
+
+    let temp = write_runtime_project(
+        "pre:noisy.py",
+        "noisy.py",
+        "\
+Import(\"env\")
+import subprocess
+import sys
+print(\">>> loud import-time banner straight to stdout\")
+subprocess.run([sys.executable, \"-c\", \"print('raw fd noise')\"], check=True)
+env.Append(CPPDEFINES=[\"PRINT_NOISE_OK\"])
+print(\"post-append noise\")
+",
+    );
+    let config =
+        fbuild_config::PlatformIOConfig::from_path(&temp.path().join("platformio.ini")).unwrap();
+    let overlay = resolve_extra_script_overlay(temp.path(), "demo", &config)
+        .await
+        .unwrap();
+    assert!(overlay
+        .global_compile
+        .common
+        .contains(&"-DPRINT_NOISE_OK".to_string()));
+    // Both capture layers must surface in notes: Python-level print()
+    // and raw fd-1 writes from spawned subprocesses.
+    let stdout_note = overlay
+        .notes
+        .iter()
+        .find(|n| n.starts_with("script stdout (noisy.py):"))
+        .expect("captured script stdout should be preserved in notes");
+    assert!(
+        stdout_note.contains("loud import-time banner"),
+        "{stdout_note}"
+    );
+    assert!(stdout_note.contains("raw fd noise"), "{stdout_note}");
+}
+
 /// Write a project whose `platformio.ini` carries extra `[env:demo]` lines
 /// (e.g. `build_type = debug`) alongside a single `extra_scripts` entry.
 fn write_runtime_project_with_config(
