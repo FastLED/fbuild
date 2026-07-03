@@ -211,11 +211,19 @@ impl Compiler for Esp32Compiler {
             "c" | "s" => self.gcc_path(),
             _ => self.gxx_path(),
         };
+        // Mirror compile_c/compile_cpp: build_unflags are applied before
+        // the compile, so the checked signature must hash the same
+        // filtered flag set as the written one (FastLED/fbuild#951).
+        let (base_flags, extra_flags) = crate::compiler::apply_compile_unflags(
+            base_flags,
+            extra_flags,
+            Compiler::build_unflags(self),
+        );
         crate::compiler::build_rebuild_signature(
             compiler_path,
             &base_flags,
             &include_flags,
-            extra_flags,
+            &extra_flags,
         )
     }
 }
@@ -371,6 +379,39 @@ mod tests {
             !flags.contains(&"-std=gnu++2b".to_string()),
             "unflags must strip framework-contributed -std=gnu++2b"
         );
+    }
+
+    /// FastLED/fbuild#951: the staleness check's signature must equal the
+    /// one written after a compile. `compile_c`/`compile_cpp` apply
+    /// `build_unflags` before hashing, but `rebuild_signature` hashed the
+    /// raw flags — so any project with `build_unflags` (NightDriverStrip
+    /// sets `-std=gnu++11`) mismatched on every file and recompiled the
+    /// entire sketch + core on no-change rebuilds.
+    #[test]
+    fn rebuild_signature_matches_write_path_with_unflags() {
+        let compiler =
+            test_compiler("esp32c6").with_build_unflags(vec!["-std=gnu++2b".to_string()]);
+        let source = Path::new("src/main.cpp");
+        let extra = vec!["-DX=1".to_string()];
+
+        let check = compiler.rebuild_signature(source, &extra);
+
+        // Mirror the write path: compile_cpp applies unflags, then
+        // compile_source hashes (flags, include_flags, extra).
+        let (applied_flags, applied_extra) = crate::compiler::apply_compile_unflags(
+            compiler.cpp_flags(),
+            &extra,
+            Compiler::build_unflags(&compiler),
+        );
+        let include_flags = compiler.base.build_include_flags();
+        let written = crate::compiler::build_rebuild_signature(
+            compiler.gxx_path(),
+            &applied_flags,
+            &include_flags,
+            &applied_extra,
+        );
+
+        assert_eq!(check, written);
     }
 
     /// FastLED/fbuild#243: by default the compiler preserves eh_frame; the

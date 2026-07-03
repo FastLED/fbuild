@@ -168,7 +168,11 @@ pub trait Compiler: Send + Sync {
             "c" | "s" => (self.gcc_path(), self.c_flags()),
             _ => (self.gxx_path(), self.cpp_flags()),
         };
-        build_rebuild_signature(compiler_path, &flags, &[], extra_flags)
+        // Mirror compile_c/compile_cpp: build_unflags are applied before
+        // the compile, so the checked signature must hash the same
+        // filtered flag set as the written one (FastLED/fbuild#951).
+        let (flags, extra_flags) = apply_compile_unflags(flags, extra_flags, self.build_unflags());
+        build_rebuild_signature(compiler_path, &flags, &[], &extra_flags)
     }
 }
 
@@ -242,7 +246,16 @@ impl CompilerBase {
 
         let depfile = depfile_path(object);
         if depfile.exists() {
-            if dependency_is_newer_than_object(&depfile, obj_time).unwrap_or(true) {
+            // Compiles run with cwd = the project workspace (see
+            // zccache::compile_cwd_from_output), so -MMD depfiles list
+            // workspace-relative prerequisites. Resolve them against that
+            // same workspace — NOT the process cwd, which in the daemon is
+            // unrelated and made every stat fail → every TU "stale"
+            // (FastLED/fbuild#951).
+            let dep_base = crate::zccache::compile_cwd_from_output(object);
+            if dependency_is_newer_than_object(&depfile, obj_time, dep_base.as_deref())
+                .unwrap_or(true)
+            {
                 return true;
             }
             return false;
@@ -285,7 +298,7 @@ impl CompilerBase {
 /// Returns the filtered pair ready to pass to `compile_one`. Short-circuits
 /// when `unflags` is empty so platforms that don't opt in pay no overhead.
 /// See FastLED/fbuild#37.
-fn apply_compile_unflags(
+pub(crate) fn apply_compile_unflags(
     flags: Vec<String>,
     extra_flags: &[String],
     unflags: &[String],
@@ -496,6 +509,7 @@ fn compiler_version(path: &Path) -> String {
 fn dependency_is_newer_than_object(
     depfile: &Path,
     object_time: SystemTime,
+    base: Option<&Path>,
 ) -> std::io::Result<bool> {
     let depfile_time = depfile.metadata()?.modified()?;
     if depfile_time > object_time {
@@ -503,7 +517,11 @@ fn dependency_is_newer_than_object(
     }
 
     for dependency in parse_depfile_paths(depfile)? {
-        let dep_time = std::fs::metadata(&dependency)?.modified()?;
+        let resolved = match base {
+            Some(base) if dependency.is_relative() => base.join(&dependency),
+            _ => dependency,
+        };
+        let dep_time = std::fs::metadata(&resolved)?.modified()?;
         if dep_time > object_time {
             return Ok(true);
         }
