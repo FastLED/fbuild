@@ -309,6 +309,49 @@ fn test_needs_rebuild_uses_depfile_when_dependencies_are_current() {
     assert!(!CompilerBase::needs_rebuild(&src, &obj));
 }
 
+/// FastLED/fbuild#951: compiles run with cwd = the project workspace
+/// (see `zccache::compile_cwd_from_output`), so gcc's `-MMD` depfiles
+/// list *relative* prerequisites. The staleness walk runs inside the
+/// long-lived daemon whose process cwd is unrelated — resolving those
+/// prerequisites against the process cwd made `metadata()` fail and
+/// `.unwrap_or(true)` marked every TU stale, recompiling the whole
+/// sketch + core variant on no-change rebuilds (~103 s per build).
+#[test]
+fn test_needs_rebuild_resolves_relative_depfile_deps_against_workspace() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let ws = tmp.path();
+    let src_dir = ws.join("src");
+    let build_dir = ws.join(".fbuild/build/demo/release/src");
+    std::fs::create_dir_all(&src_dir).unwrap();
+    std::fs::create_dir_all(&build_dir).unwrap();
+
+    let src = src_dir.join("main.cpp");
+    let header = src_dir.join("config.h");
+    let obj = build_dir.join("main.cpp.o");
+    let dep = build_dir.join("main.cpp.d");
+
+    std::fs::write(&src, "#include \"config.h\"\n").unwrap();
+    std::fs::write(&header, "#define X 1\n").unwrap();
+    // Relative prerequisites, exactly as gcc -MMD emits them when the
+    // compile cwd is the workspace root.
+    std::fs::write(
+        &dep,
+        ".fbuild/build/demo/release/src/main.cpp.o: src/main.cpp src/config.h\n",
+    )
+    .unwrap();
+    std::thread::sleep(std::time::Duration::from_millis(20));
+    std::fs::write(&obj, "obj").unwrap();
+
+    // Everything is current — must NOT rebuild even though the deps are
+    // relative and the test process cwd is nowhere near the workspace.
+    assert!(!CompilerBase::needs_rebuild(&src, &obj));
+
+    // And a genuinely newer relative dep must still trigger a rebuild.
+    std::thread::sleep(std::time::Duration::from_millis(20));
+    std::fs::write(&header, "#define X 2\n").unwrap();
+    assert!(CompilerBase::needs_rebuild(&src, &obj));
+}
+
 #[test]
 fn test_needs_rebuild_when_command_hash_changes() {
     let tmp = tempfile::TempDir::new().unwrap();
