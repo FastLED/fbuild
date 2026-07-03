@@ -808,6 +808,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // 14. Prepare boot artifacts for deployment / emulation
         prepare_boot_artifacts(
             build_dir,
+            &params.project_dir,
             &framework,
             &ctx.board,
             &mcu_config,
