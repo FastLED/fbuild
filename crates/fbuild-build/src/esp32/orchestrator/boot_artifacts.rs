@@ -141,13 +141,19 @@ pub(super) async fn prepare_boot_artifacts(
             let gen_tool_str = gen_tool.to_string_lossy();
             let parts_csv_str = parts_csv.to_string_lossy();
             let parts_dst_str = parts_dst.to_string_lossy();
-            let args = [
-                "python",
-                &gen_tool_str,
+            // `python` doesn't exist on modern distros (ubuntu 24.04 ships
+            // only `python3`); resolve the interpreter the same way the
+            // extra_scripts runtime does.
+            let python = crate::script_runtime::find_python()
+                .await
+                .unwrap_or_else(|| vec!["python".to_string()]);
+            let mut args: Vec<&str> = python.iter().map(|s| s.as_str()).collect();
+            args.extend([
+                gen_tool_str.as_ref(),
                 "-q",
-                &parts_csv_str,
-                &parts_dst_str,
-            ];
+                parts_csv_str.as_ref(),
+                parts_dst_str.as_ref(),
+            ]);
             match fbuild_core::subprocess::run_command(
                 &args,
                 None,
