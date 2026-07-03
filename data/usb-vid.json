@@ -77582,12 +77582,32 @@
         "SparkFun SAMD51 Thing Plus / SparkFun SAMD51 Thing+"
       ],
       [
+        "0017",
+        "SparkFun LUMIDrive Board"
+      ],
+      [
         "0019",
         "SparkFun Qwiic Micro"
       ],
       [
         "0020",
         "SparkFun MicroMod SAMD51 Processor Board / SparkFun SAMD51 MicroMod"
+      ],
+      [
+        "0021",
+        "SparkFun MicroMod nRF52840 Processor"
+      ],
+      [
+        "0024",
+        "SparkFun MicroMod RP2040 Processor"
+      ],
+      [
+        "0025",
+        "SparkFun Thing Plus RP2040"
+      ],
+      [
+        "0026",
+        "SparkFun Pro Micro RP2040"
       ],
       [
         "0027",
@@ -77606,8 +77626,20 @@
         "LoRaSerial"
       ],
       [
+        "002e",
+        "Teensy MicroMod"
+      ],
+      [
         "0035",
         "SparkFun Pro Micro - ESP32C3"
+      ],
+      [
+        "0038",
+        "SparkFun Thing Plus RP2350"
+      ],
+      [
+        "0039",
+        "SparkFun Pro Micro RP2350"
       ],
       [
         "0100",
@@ -77662,6 +77694,10 @@
         "nRF52840 Mini Breakout"
       ],
       [
+        "5289",
+        "SparkFun SFE_nRF52840_Mini"
+      ],
+      [
         "8029",
         "nRF52840 Mini Breakout"
       ],
@@ -77672,6 +77708,14 @@
       [
         "8d21",
         "SFE SAMD21 / SFE SAMD21 Pro RF 1W"
+      ],
+      [
+        "8d22",
+        "SparkFun SAMD21 Mini Breakout"
+      ],
+      [
+        "8d23",
+        "SparkFun SAMD21 Dev Breakout"
       ],
       [
         "8d24",
@@ -88777,7 +88821,7 @@
       ],
       [
         "0056",
-        "Seeed Studio XIAO ESP32S3"
+        "Seeed Studio XIAO ESP32S3 Plus / Seeed Studio XIAO ESP32S3 Sense"
       ],
       [
         "0057",
@@ -88785,7 +88829,7 @@
       ],
       [
         "0058",
-        "Seeed XIAO RP2350"
+        "Seeed Studio XIAO RP2350"
       ],
       [
         "0062",
@@ -88868,6 +88912,10 @@
         "Seeed XIAO nRF52840 Sense"
       ],
       [
+        "8048",
+        "Seeed Studio XIAO ESP32C6"
+      ],
+      [
         "8049",
         "Seeed XIAO RA4M1"
       ],
@@ -88877,7 +88925,7 @@
       ],
       [
         "8056",
-        "Seeed XIAO ESP32S3"
+        "Seeed Studio XIAO ESP32S3 Plus / Seeed Studio XIAO ESP32S3 Sense"
       ],
       [
         "8057",
