@@ -298,7 +298,7 @@ fn libs_to_flags(
     Ok(flags)
 }
 
-async fn find_python() -> Option<Vec<String>> {
+pub(crate) async fn find_python() -> Option<Vec<String>> {
     let candidates: &[&[&str]] = if cfg!(windows) {
         &[&["python"], &["py", "-3"]]
     } else {
