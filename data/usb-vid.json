@@ -95645,6 +95645,18 @@
         "PCBCupid Cypher - UF2 Bootloader"
       ],
       [
+        "838b",
+        "TMR - CAN Interface"
+      ],
+      [
+        "838c",
+        "TMR - CAN Logger"
+      ],
+      [
+        "838d",
+        "TMR - GPSdevice"
+      ],
+      [
         "83cf",
         "DFRobot Firebeetle 2 ESP32-S3"
       ]
