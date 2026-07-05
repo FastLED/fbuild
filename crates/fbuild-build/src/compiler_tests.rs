@@ -374,11 +374,17 @@ fn test_needs_rebuild_when_command_hash_changes() {
 #[test]
 fn test_build_rebuild_signature_ignores_absolute_compiler_path() {
     let flags = vec!["-Os".to_string(), "-mmcu=atmega328p".to_string()];
-    let sig_a =
-        build_rebuild_signature(Path::new("/opt/toolchains/a/bin/avr-gcc"), &flags, &[], &[]);
+    let sig_a = build_rebuild_signature(
+        Path::new("/opt/toolchains/a/bin/avr-gcc"),
+        &flags,
+        &[],
+        &[],
+        &[],
+    );
     let sig_b = build_rebuild_signature(
         Path::new("/home/runner/.fbuild/packages/toolchain-atmelavr/bin/avr-gcc"),
         &flags,
+        &[],
         &[],
         &[],
     );
@@ -389,11 +395,17 @@ fn test_build_rebuild_signature_ignores_absolute_compiler_path() {
 #[test]
 fn test_build_rebuild_signature_changes_when_compiler_name_changes() {
     let flags = vec!["-Os".to_string()];
-    let sig_a =
-        build_rebuild_signature(Path::new("/tmp/toolchains/a/bin/avr-gcc"), &flags, &[], &[]);
+    let sig_a = build_rebuild_signature(
+        Path::new("/tmp/toolchains/a/bin/avr-gcc"),
+        &flags,
+        &[],
+        &[],
+        &[],
+    );
     let sig_b = build_rebuild_signature(
         Path::new("/tmp/toolchains/a/bin/xtensa-gcc"),
         &flags,
+        &[],
         &[],
         &[],
     );
@@ -412,10 +424,20 @@ fn test_build_rebuild_signature_ignores_attached_include_root() {
         "-I/Users/runner/.fbuild/packages/framework-arduinoavr/cores/arduino".to_string(),
     ];
 
-    let sig_a =
-        build_rebuild_signature(Path::new("/tmp/ws-a/tool/bin/avr-gcc"), &flags_a, &[], &[]);
-    let sig_b =
-        build_rebuild_signature(Path::new("/tmp/ws-b/tool/bin/avr-gcc"), &flags_b, &[], &[]);
+    let sig_a = build_rebuild_signature(
+        Path::new("/tmp/ws-a/tool/bin/avr-gcc"),
+        &flags_a,
+        &[],
+        &[],
+        &[],
+    );
+    let sig_b = build_rebuild_signature(
+        Path::new("/tmp/ws-b/tool/bin/avr-gcc"),
+        &flags_b,
+        &[],
+        &[],
+        &[],
+    );
 
     assert_eq!(sig_a, sig_b);
 }
@@ -436,10 +458,12 @@ fn test_build_rebuild_signature_ignores_split_path_flag_values() {
         &flags_a,
         &[],
         &[],
+        &[],
     );
     let sig_b = build_rebuild_signature(
         Path::new("/tmp/ws-b/tool/bin/xtensa-gcc"),
         &flags_b,
+        &[],
         &[],
         &[],
     );
@@ -452,10 +476,20 @@ fn test_build_rebuild_signature_changes_when_include_suffix_changes() {
     let flags_a = vec!["-I/tmp/ws-a/project/include".to_string()];
     let flags_b = vec!["-I/tmp/ws-a/project/generated".to_string()];
 
-    let sig_a =
-        build_rebuild_signature(Path::new("/tmp/ws-a/tool/bin/avr-gcc"), &flags_a, &[], &[]);
-    let sig_b =
-        build_rebuild_signature(Path::new("/tmp/ws-a/tool/bin/avr-gcc"), &flags_b, &[], &[]);
+    let sig_a = build_rebuild_signature(
+        Path::new("/tmp/ws-a/tool/bin/avr-gcc"),
+        &flags_a,
+        &[],
+        &[],
+        &[],
+    );
+    let sig_b = build_rebuild_signature(
+        Path::new("/tmp/ws-a/tool/bin/avr-gcc"),
+        &flags_b,
+        &[],
+        &[],
+        &[],
+    );
 
     assert_ne!(sig_a, sig_b);
 }
@@ -465,10 +499,20 @@ fn test_build_rebuild_signature_changes_when_non_path_flag_changes() {
     let flags_a = vec!["-Os".to_string()];
     let flags_b = vec!["-O2".to_string()];
 
-    let sig_a =
-        build_rebuild_signature(Path::new("/tmp/ws-a/tool/bin/avr-gcc"), &flags_a, &[], &[]);
-    let sig_b =
-        build_rebuild_signature(Path::new("/tmp/ws-a/tool/bin/avr-gcc"), &flags_b, &[], &[]);
+    let sig_a = build_rebuild_signature(
+        Path::new("/tmp/ws-a/tool/bin/avr-gcc"),
+        &flags_a,
+        &[],
+        &[],
+        &[],
+    );
+    let sig_b = build_rebuild_signature(
+        Path::new("/tmp/ws-a/tool/bin/avr-gcc"),
+        &flags_b,
+        &[],
+        &[],
+        &[],
+    );
 
     assert_ne!(sig_a, sig_b);
 }
@@ -535,5 +579,45 @@ fn test_depfile_newer_prerequisite_still_forces_rebuild() {
     assert!(
         stale,
         "a prerequisite newer than the object must force a rebuild"
+    );
+}
+
+#[test]
+fn test_build_rebuild_signature_strips_build_unflags() {
+    // FastLED/fbuild#970: build_unflags must be filtered from the flags and
+    // extra_flags groups INSIDE the shared signature fn, so every platform's
+    // rebuild_signature stays symmetric with the write side (which strips via
+    // compile_c/compile_cpp) regardless of whether the override remembered to
+    // pre-strip. Centralizing here is what makes ch32v/renesas correct.
+    let compiler = Path::new("/tmp/tc/bin/gcc");
+    let flags = vec!["-Os".to_string(), "-std=gnu++2b".to_string()];
+    let extra = vec!["-DX=1".to_string(), "-fno-rtti".to_string()];
+    let unflags = vec!["-std=gnu++2b".to_string(), "-fno-rtti".to_string()];
+
+    // Stripping inside == hashing the already-filtered set with no unflags.
+    let stripped = build_rebuild_signature(compiler, &flags, &[], &extra, &unflags);
+    let manual = build_rebuild_signature(
+        compiler,
+        &["-Os".to_string()],
+        &[],
+        &["-DX=1".to_string()],
+        &[],
+    );
+    assert_eq!(
+        stripped, manual,
+        "build_unflags must be stripped inside build_rebuild_signature (#970)"
+    );
+
+    // ...and the unflag actually changes the hash (proves it isn't a no-op).
+    let unstripped = build_rebuild_signature(compiler, &flags, &[], &extra, &[]);
+    assert_ne!(stripped, unstripped);
+
+    // pre_flags (group 2) are NOT unflag-filtered — mirrors the write side.
+    let pre = vec!["-std=gnu++2b".to_string()];
+    let with_pre = build_rebuild_signature(compiler, &[], &pre, &[], &unflags);
+    let without = build_rebuild_signature(compiler, &[], &[], &[], &unflags);
+    assert_ne!(
+        with_pre, without,
+        "pre_flags must survive unflag filtering (#970)"
     );
 }

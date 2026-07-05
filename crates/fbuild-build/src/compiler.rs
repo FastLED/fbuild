@@ -168,11 +168,16 @@ pub trait Compiler: Send + Sync {
             "c" | "s" => (self.gcc_path(), self.c_flags()),
             _ => (self.gxx_path(), self.cpp_flags()),
         };
-        // Mirror compile_c/compile_cpp: build_unflags are applied before
-        // the compile, so the checked signature must hash the same
-        // filtered flag set as the written one (FastLED/fbuild#951).
-        let (flags, extra_flags) = apply_compile_unflags(flags, extra_flags, self.build_unflags());
-        build_rebuild_signature(compiler_path, &flags, &[], &extra_flags)
+        // build_unflags are stripped inside build_rebuild_signature (the shared
+        // core), matching compile_c/compile_cpp on the write side
+        // (FastLED/fbuild#951, #970).
+        build_rebuild_signature(
+            compiler_path,
+            &flags,
+            &[],
+            extra_flags,
+            self.build_unflags(),
+        )
     }
 }
 
@@ -337,16 +342,41 @@ pub fn absolute_from_cwd(path: &Path) -> PathBuf {
     }
 }
 
+/// Stable fingerprint of a compile invocation, used for incremental rebuild
+/// invalidation.
+///
+/// `unflags` are applied to `flags` and `extra_flags` **inside** this function
+/// (matching the write side, where `compile_c`/`compile_cpp` run
+/// `apply_compile_unflags` over exactly those two groups before compiling).
+/// Centralizing the stripping here — rather than at each caller — is load
+/// bearing: every `Compiler::rebuild_signature` override funnels through this
+/// one function, so none of them can silently forget to strip `build_unflags`
+/// and drift from the written signature (FastLED/fbuild#970). `pre_flags`
+/// (e.g. ESP32 include flags) are **not** unflag-filtered, mirroring the write
+/// side. Platforms with no `build_unflags` pass an empty slice → the hash is
+/// byte-identical to before, so no signature churn for them.
 pub fn build_rebuild_signature(
     compiler_path: &Path,
     flags: &[String],
     pre_flags: &[String],
     extra_flags: &[String],
+    unflags: &[String],
 ) -> String {
+    let strip = |group: &[String]| -> Vec<String> {
+        if unflags.is_empty() {
+            return group.to_vec();
+        }
+        let mut filtered = group.to_vec();
+        crate::pipeline::remove_unflagged_tokens(&mut filtered, unflags);
+        filtered
+    };
+    let flags = strip(flags);
+    let extra_flags = strip(extra_flags);
+
     let mut hasher = Sha256::new();
     hasher.update(compiler_identity(compiler_path).as_bytes());
     hasher.update([0]);
-    for group in [flags, pre_flags, extra_flags] {
+    for group in [flags.as_slice(), pre_flags, extra_flags.as_slice()] {
         hash_signature_group(&mut hasher, group);
         hasher.update([0xff]);
     }
@@ -714,7 +744,12 @@ pub async fn compile_source(
         all_flags.extend(extra_pre_flags.iter().cloned());
         all_flags.extend(extra_flags.iter().cloned());
     }
-    let rebuild_signature = build_rebuild_signature(compiler, flags, extra_pre_flags, extra_flags);
+    // `flags`/`extra_flags` here are already unflag-filtered by
+    // compile_c/compile_cpp before reaching compile_one, so pass empty unflags
+    // (re-stripping would be a no-op). The read side reconstructs the same
+    // filtered set inside build_rebuild_signature (FastLED/fbuild#970).
+    let rebuild_signature =
+        build_rebuild_signature(compiler, flags, extra_pre_flags, extra_flags, &[]);
     all_flags.extend(["-c".to_string(), source_arg, "-o".to_string(), output_arg]);
 
     let global = crate::compile_backend::get_global().ok_or_else(|| {

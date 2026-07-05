@@ -211,19 +211,15 @@ impl Compiler for Esp32Compiler {
             "c" | "s" => self.gcc_path(),
             _ => self.gxx_path(),
         };
-        // Mirror compile_c/compile_cpp: build_unflags are applied before
-        // the compile, so the checked signature must hash the same
-        // filtered flag set as the written one (FastLED/fbuild#951).
-        let (base_flags, extra_flags) = crate::compiler::apply_compile_unflags(
-            base_flags,
-            extra_flags,
-            Compiler::build_unflags(self),
-        );
+        // build_unflags stripped inside build_rebuild_signature (shared core),
+        // matching compile_c/compile_cpp on the write side
+        // (FastLED/fbuild#951, #970).
         crate::compiler::build_rebuild_signature(
             compiler_path,
             &base_flags,
             &include_flags,
-            &extra_flags,
+            extra_flags,
+            Compiler::build_unflags(self),
         )
     }
 }
@@ -409,6 +405,7 @@ mod tests {
             &applied_flags,
             &include_flags,
             &applied_extra,
+            &[],
         );
 
         assert_eq!(check, written);
