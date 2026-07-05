@@ -1,0 +1,40 @@
+# Each non-empty, non-comment line is matched against the tail of each
+# source file path (slashes normalized to /). The lint only fires on
+# files whose path contains BOTH `crates/` and `/src/`; anywhere else
+# is out of scope and does not need an entry here.
+#
+# Add an entry ONLY for files whose raw Path::{starts_with, strip_prefix}
+# is legitimately safe: both sides are already in the same normal form,
+# or the result does not feed a cache key. Include an inline comment.
+#
+# FastLED/fbuild#952. The entries below are the pre-existing call sites
+# grandfathered when the lint was introduced (the lint enforces on new
+# code); several are candidate cleanups — normalizing them through
+# fbuild_core::path is a good follow-up.
+
+# The path-normalization bridge itself — defines normalize_for_key /
+# NormalizedPath and is where same-normal-form prefix logic lives.
+crates/fbuild-core/src/path.rs
+
+# Workspace relativization for zccache keys: strip_prefix here operates
+# on canonicalized-then-UNC-stripped paths already in the same normal
+# form (see path_arg_for_compile_cwd). The blessed relativization.
+crates/fbuild-build/src/zccache.rs
+
+# --- grandfathered pre-existing Path::{starts_with, strip_prefix} ---
+# strip_prefix (relativization for display / cache-relative paths):
+crates/fbuild-build/src/build_fingerprint/mod.rs
+crates/fbuild-build/src/pipeline/project_discovery.rs
+crates/fbuild-build/src/source_scanner.rs
+crates/fbuild-packages/src/lib.rs
+crates/fbuild-packages/src/lnk/materialize.rs
+# starts_with (containment checks; both sides same-origin today):
+crates/fbuild-build/src/ch32v/ch32v_compiler.rs
+crates/fbuild-build/src/nrf52/nrf52_compiler.rs
+crates/fbuild-build/src/renesas/renesas_compiler.rs
+crates/fbuild-cli/src/cli/clang_tools.rs
+crates/fbuild-header-scan/src/walker.rs
+crates/fbuild-library-select/src/lib.rs
+crates/fbuild-packages/src/cache.rs
+crates/fbuild-packages/src/disk_cache/paths.rs
+crates/fbuild-paths/src/lib.rs

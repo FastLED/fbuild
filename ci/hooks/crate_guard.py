@@ -96,6 +96,13 @@ APPROVED_CRATE_DIRS: frozenset[str] = frozenset(
         # Filed after PRs #890 and #912 both had to patch the same
         # anti-pattern at yet another call site.
         "dylints/ban_manual_slash_normalize",
+        # FastLED/fbuild#952 — bans raw Path::{starts_with, strip_prefix}
+        # in production code, directing callers at
+        # fbuild_core::path::normalize_for_key / NormalizedPath. Filed
+        # after a project-dir prefix comparison spelled differently from
+        # the canonicalized root silently defeated a cross-project cache
+        # key (the global cache never hit). See agents/docs/path-conventions.md.
+        "dylints/ban_raw_path_prefix_compare",
     }
 )
 
