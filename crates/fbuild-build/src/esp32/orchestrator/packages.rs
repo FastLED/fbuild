@@ -107,9 +107,19 @@ pub(super) async fn resolve_pioarduino_packages(
         }
         Ok::<(), fbuild_core::FbuildError>(())
     };
+    // Both futures run to completion; surface BOTH errors if both fail so the
+    // framework/SDK-libs failure (often the more actionable one) isn't dropped
+    // in favor of the toolchain error (CodeRabbit review on #967).
     let (toolchain_res, framework_res) = tokio::join!(toolchain_fut, framework_fut);
-    toolchain_res?;
-    framework_res?;
+    match (toolchain_res, framework_res) {
+        (Err(tc), Err(fw)) => {
+            return Err(fbuild_core::FbuildError::BuildFailed(format!(
+                "pioarduino package resolution failed — toolchain: {tc}; framework: {fw}"
+            )))
+        }
+        (Err(e), _) | (_, Err(e)) => return Err(e),
+        (Ok(_), Ok(_)) => {}
+    }
 
     Ok((toolchain, framework))
 }
