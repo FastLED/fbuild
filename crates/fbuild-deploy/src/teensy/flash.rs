@@ -95,17 +95,38 @@ pub async fn run_with_retry(
     subsequent_attempt_timeout: Duration,
     verbose: bool,
 ) -> Result<FlashRunOutcome> {
+    // Run the loader in the firmware's own build directory rather than
+    // inheriting the daemon's working directory (which is typically the
+    // user's project/repo root). `teensy_loader_cli` and any helper it
+    // spawns then read/write relative to the gitignored build tree, so a
+    // stray artifact never lands in the user's checkout. We therefore feed
+    // the loader an ABSOLUTE firmware path so the cwd change can't break the
+    // hex read. See `sweep_stray_dash_files` for the belt-and-suspenders
+    // cleanup of any dash-prefixed junk a tool leaves behind.
+    let firmware_abs = if cfg.firmware_path.is_absolute() {
+        cfg.firmware_path.clone()
+    } else {
+        std::env::current_dir()
+            .map(|d| d.join(&cfg.firmware_path))
+            .unwrap_or_else(|_| cfg.firmware_path.clone())
+    };
+    let flash_cwd = firmware_abs.parent();
+
     let args: Vec<String> = vec![
         cfg.loader_path.to_string_lossy().to_string(),
         format!("--mcu={}", cfg.mcu_name),
         cfg.wait_flag.clone(),
         cfg.verbose_flag.clone(),
-        cfg.firmware_path.to_string_lossy().to_string(),
+        firmware_abs.to_string_lossy().to_string(),
     ];
     let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
 
     if verbose {
-        tracing::info!("teensy flash: {}", args.join(" "));
+        tracing::info!(
+            "teensy flash: {} (cwd={})",
+            args.join(" "),
+            flash_cwd.map(|p| p.display().to_string()).unwrap_or_default()
+        );
     }
 
     // `retries` is the number of *additional* attempts after the first. The
@@ -119,7 +140,7 @@ pub async fn run_with_retry(
         } else {
             subsequent_attempt_timeout
         };
-        let result = run_command(&args_ref, None, None, Some(attempt_timeout)).await?;
+        let result = run_command(&args_ref, flash_cwd, None, Some(attempt_timeout)).await?;
         let success = result.success();
         let exit_code = result.exit_code;
         let stdout = result.stdout;
@@ -144,6 +165,7 @@ pub async fn run_with_retry(
         });
 
         if success {
+            sweep_stray_dash_files(flash_cwd);
             return Ok(FlashRunOutcome {
                 attempts,
                 success: true,
@@ -168,10 +190,72 @@ pub async fn run_with_retry(
         }
     }
 
+    sweep_stray_dash_files(flash_cwd);
     Ok(FlashRunOutcome {
         attempts,
         success: false,
     })
+}
+
+/// Remove (and loudly log) stray empty "dash-flag" files — e.g. a 0-byte
+/// `-r` — left in the daemon's working directory or the flash build dir.
+///
+/// Such a file is never created on purpose; it is the signature of a tool or
+/// shell mis-parse writing a flag token (`-r`, `-w`, …) as a
+/// redirect/output path. The teensy wrong-port flash path was observed to
+/// intermittently drop a 0-byte `-r` into the daemon's inherited cwd (the
+/// user's project root). The exact writer is not always attributable, so we
+/// defensively clean it up and log the context that would identify it.
+pub(crate) fn sweep_stray_dash_files(flash_cwd: Option<&std::path::Path>) {
+    use std::collections::BTreeSet;
+    let mut dirs: BTreeSet<std::path::PathBuf> = BTreeSet::new();
+    if let Ok(cwd) = std::env::current_dir() {
+        dirs.insert(cwd);
+    }
+    if let Some(p) = flash_cwd {
+        dirs.insert(p.to_path_buf());
+    }
+    for dir in dirs {
+        let entries = match std::fs::read_dir(&dir) {
+            Ok(e) => e,
+            Err(_) => continue,
+        };
+        for entry in entries.flatten() {
+            let raw = entry.file_name();
+            let name = raw.to_string_lossy();
+            // Flag-like junk: '-' followed by 1-2 ASCII alphanumerics.
+            let is_dash_flag = name.starts_with('-')
+                && (2..=3).contains(&name.len())
+                && name[1..].chars().all(|c| c.is_ascii_alphanumeric());
+            if !is_dash_flag {
+                continue;
+            }
+            // Only remove EMPTY files — never touch anything with content.
+            let is_empty_file = entry
+                .metadata()
+                .map(|m| m.is_file() && m.len() == 0)
+                .unwrap_or(false);
+            if !is_empty_file {
+                continue;
+            }
+            match std::fs::remove_file(entry.path()) {
+                Ok(()) => tracing::warn!(
+                    "teensy deploy: removed stray empty file {:?} in {} \
+                     (a flash tool wrote a flag token as a filename); \
+                     please report at FastLED/fbuild if this recurs",
+                    name.as_ref(),
+                    dir.display()
+                ),
+                Err(e) => tracing::warn!(
+                    "teensy deploy: found stray file {:?} in {} but could not \
+                     remove it: {}",
+                    name.as_ref(),
+                    dir.display(),
+                    e
+                ),
+            }
+        }
+    }
 }
 
 /// Pull a short, single-line excerpt out of multi-line stderr for log lines.
@@ -200,6 +284,28 @@ pub fn env_flash_retries_override() -> Option<u32> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn sweep_removes_empty_dash_flag_files_only() {
+        let dir = tempfile::tempdir().unwrap();
+        let p = |n: &str| dir.path().join(n);
+        // Stray empty dash-flag junk — should be removed.
+        std::fs::write(p("-r"), b"").unwrap();
+        std::fs::write(p("-w"), b"").unwrap();
+        // Must be preserved: non-empty dash file, a normal file, and a
+        // too-long dash name (not a 1-2 char flag token).
+        std::fs::write(p("-x"), b"content").unwrap();
+        std::fs::write(p("normal.txt"), b"").unwrap();
+        std::fs::write(p("-verbose"), b"").unwrap();
+
+        sweep_stray_dash_files(Some(dir.path()));
+
+        assert!(!p("-r").exists(), "-r should have been swept");
+        assert!(!p("-w").exists(), "-w should have been swept");
+        assert!(p("-x").exists(), "non-empty -x must be preserved");
+        assert!(p("normal.txt").exists(), "normal file must be preserved");
+        assert!(p("-verbose").exists(), "long dash-name must be preserved");
+    }
 
     #[test]
     fn short_one_line_handles_empty() {
