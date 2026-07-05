@@ -511,11 +511,14 @@ fn dependency_is_newer_than_object(
     object_time: SystemTime,
     base: Option<&Path>,
 ) -> std::io::Result<bool> {
-    let depfile_time = depfile.metadata()?.modified()?;
-    if depfile_time > object_time {
-        return Ok(true);
-    }
-
+    // The depfile's OWN mtime is deliberately NOT compared against the object.
+    // The `.d` is an *output* of the same gcc `-c -MMD` invocation that wrote
+    // the `.o` — gcc finalizes the `.d` right after the `.o`, so on a cold build
+    // the depfile is always slightly newer than its object. Treating that as
+    // "stale" made every TU recompile exactly once on the first rebuild after a
+    // cold build (FastLED/fbuild#957), settling only because the recompile bumps
+    // the object's mtime past the stale depfile. Staleness is determined solely
+    // by the real prerequisites (source + headers) the depfile *lists*, below.
     for dependency in parse_depfile_paths(depfile)? {
         let resolved = match base {
             Some(base) if dependency.is_relative() => base.join(&dependency),

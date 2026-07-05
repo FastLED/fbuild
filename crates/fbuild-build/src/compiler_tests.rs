@@ -472,3 +472,68 @@ fn test_build_rebuild_signature_changes_when_non_path_flag_changes() {
 
     assert_ne!(sig_a, sig_b);
 }
+
+#[test]
+fn test_depfile_own_mtime_does_not_force_rebuild() {
+    // Regression for FastLED/fbuild#957: gcc writes the `.d` AFTER the `.o`, so
+    // on a cold build the depfile is always slightly newer than its object.
+    // That must NOT be treated as stale — only the real prerequisites the
+    // depfile lists (source + headers) determine staleness. Before the fix,
+    // this returned `true` and forced every TU to recompile once on the first
+    // rebuild after a cold build.
+    use filetime::{set_file_mtime, FileTime};
+
+    let tmp = tempfile::tempdir().unwrap();
+    let dir = tmp.path();
+    let src = dir.join("src.cpp");
+    let hdr = dir.join("hdr.h");
+    let obj = dir.join("obj.o");
+    let dep = dir.join("obj.d");
+    std::fs::write(&src, "int main(){}").unwrap();
+    std::fs::write(&hdr, "#define X 1").unwrap();
+    std::fs::write(&obj, b"obj").unwrap();
+    // Relative prereqs (resolved against `base`) — avoids Windows drive-colon
+    // ambiguity in the depfile parser.
+    std::fs::write(&dep, "obj.o: src.cpp hdr.h\n").unwrap();
+
+    // Prerequisites OLDEST, object newer, depfile NEWEST (exactly as gcc emits).
+    let base = FileTime::from_unix_time(1_000_000, 0);
+    set_file_mtime(&src, base).unwrap();
+    set_file_mtime(&hdr, base).unwrap();
+    set_file_mtime(&obj, FileTime::from_unix_time(1_000_100, 0)).unwrap();
+    set_file_mtime(&dep, FileTime::from_unix_time(1_000_200, 0)).unwrap();
+
+    let object_time = std::fs::metadata(&obj).unwrap().modified().unwrap();
+    let stale = dependency_is_newer_than_object(&dep, object_time, Some(dir)).unwrap();
+    assert!(
+        !stale,
+        "depfile newer than object must not force a rebuild (#957)"
+    );
+}
+
+#[test]
+fn test_depfile_newer_prerequisite_still_forces_rebuild() {
+    // Complement: a real header edit (a prerequisite newer than the object) IS
+    // stale — the fix must not weaken genuine staleness detection.
+    use filetime::{set_file_mtime, FileTime};
+
+    let tmp = tempfile::tempdir().unwrap();
+    let dir = tmp.path();
+    let hdr = dir.join("hdr.h");
+    let obj = dir.join("obj.o");
+    let dep = dir.join("obj.d");
+    std::fs::write(&hdr, "#define X 2").unwrap();
+    std::fs::write(&obj, b"obj").unwrap();
+    std::fs::write(&dep, "obj.o: hdr.h\n").unwrap();
+
+    set_file_mtime(&obj, FileTime::from_unix_time(1_000_100, 0)).unwrap();
+    // Header edited AFTER the object was built.
+    set_file_mtime(&hdr, FileTime::from_unix_time(1_000_300, 0)).unwrap();
+
+    let object_time = std::fs::metadata(&obj).unwrap().modified().unwrap();
+    let stale = dependency_is_newer_than_object(&dep, object_time, Some(dir)).unwrap();
+    assert!(
+        stale,
+        "a prerequisite newer than the object must force a rebuild"
+    );
+}
