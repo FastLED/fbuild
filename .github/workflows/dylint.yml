@@ -56,11 +56,14 @@ jobs:
         timeout-minutes: 15
         run: uv run python ci/build_dylint_driver.py
       - name: Check dylint crate formatting
-        run: soldr cargo fmt --manifest-path dylints/ban_raw_subprocess/Cargo.toml --all -- --check
+        run: |
+          soldr cargo fmt --manifest-path dylints/ban_raw_subprocess/Cargo.toml --all -- --check
+          soldr cargo fmt --manifest-path dylints/ban_raw_path_prefix_compare/Cargo.toml --all -- --check
       - name: Test dylint crate
         run: |
           export PATH="${CARGO_HOME}/bin:${PATH}"
           cargo +nightly-2026-03-26 test --manifest-path dylints/ban_raw_subprocess/Cargo.toml
+          cargo +nightly-2026-03-26 test --manifest-path dylints/ban_raw_path_prefix_compare/Cargo.toml
       - name: Run dylint over workspace
         # cargo-dylint 5.0.0 expects libraries on disk as
         # `<name>@<toolchain>.<ext>` but cargo emits them as bare

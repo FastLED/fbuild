@@ -140,6 +140,19 @@ itself stays on stable 1.94.1).
   escape in the symbol-graph emitter, the glob-pattern helper in
   `source_scanner.rs`, and the lint's own UI fixture. See
   FastLED/fbuild#911.
+- **`ban_raw_path_prefix_compare/`** — forbids raw
+  `Path::{starts_with, strip_prefix}` in production code; steers
+  callers at `fbuild_core::path::normalize_for_key` /
+  `NormalizedPath`. These compare path components *as written*, so a
+  canonicalized-vs-raw spelling (or `\\?\` prefix, trailing slash, or
+  case difference) silently mismatches — which, when one side is a
+  cache root or project dir, encodes the project directory into a
+  cross-project cache key and the global cache never hits. Filed after
+  exactly that defeated the framework core-artifact / fw-libs caches.
+  Allowlist: the normalization bridge itself
+  (`fbuild-core/src/path.rs`) and the blessed workspace relativization
+  in `fbuild-build/src/zccache.rs`, plus same-normal-form call sites.
+  See FastLED/fbuild#952 and `agents/docs/path-conventions.md`.
 
 ## Running locally
 

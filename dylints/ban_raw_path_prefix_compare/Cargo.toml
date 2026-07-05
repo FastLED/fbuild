@@ -1,0 +1,22 @@
+[package]
+name = "ban_raw_path_prefix_compare"
+version = "0.1.0"
+description = "Ban raw Path::{starts_with, strip_prefix} in fbuild production code; steer to normalized comparison"
+edition = "2021"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+# Pinned to the same dylint_linting rev the other fbuild dylints use —
+# same rustup channel in rust-toolchain.toml, same upstream commit.
+dylint_linting = { git = "https://github.com/trailofbits/dylint", rev = "4bd91ce7729b74c7ee5664bbb588f7baf30b4a09" }
+
+# No `dylint_testing` dev-dependency: this lint's tests are plain unit
+# tests of the scope/allowlist helpers (no `ui/` compiletest fixtures),
+# and `dylint_testing` pulls in `compiletest_rs`, which needs
+# COMPILETEST_TARGET/HOST set at compile time.
+
+[package.metadata.rust-analyzer]
+rustc_private = true

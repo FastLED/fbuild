@@ -22,6 +22,7 @@ members = [
 # the pinned nightly via the discovery below. See #264.
 exclude = [
     "dylints/ban_raw_subprocess",
+    "dylints/ban_raw_path_prefix_compare",
     "dylints/ban_std_pathbuf",
     "dylints/ban_unrooted_tempdir",
     "dylints/ban_direct_serialport",
