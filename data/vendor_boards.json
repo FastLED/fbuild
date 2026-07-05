@@ -3082,6 +3082,11 @@
     "name": "Core board F401RCT6",
     "vendor": "ST"
   },
+  "cr3l": {
+    "mcu": "RTL8720CM",
+    "name": "CR3L Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
   "cricket_l082cz": {
     "mcu": "STM32L082CZY6",
     "name": "Cricket-L082CZ",
@@ -4127,14 +4132,29 @@
     "name": "4D Systems gen4 IoD Range",
     "vendor": "4D Systems"
   },
+  "generic-bk7231n-qfn32": {
+    "mcu": "BK7231N",
+    "name": "Generic - BK7231N",
+    "vendor": "Generic"
+  },
   "generic-bk7231n-qfn32-tuya": {
     "mcu": "BK7231N",
-    "name": "Generic - BK7231N (Tuya QFN32)",
+    "name": "Generic - BK7231N (Tuya)",
     "vendor": "Generic"
   },
   "generic-bk7231t-qfn32-tuya": {
     "mcu": "BK7231T",
-    "name": "Generic - BK7231T (Tuya QFN32)",
+    "name": "Generic - BK7231T (Tuya)",
+    "vendor": "Generic"
+  },
+  "generic-bk7238": {
+    "mcu": "BK7238",
+    "name": "Generic - BK7238",
+    "vendor": "Generic"
+  },
+  "generic-bk7238-tuya": {
+    "mcu": "BK7238",
+    "name": "Generic - BK7238 (Tuya T1)",
     "vendor": "Generic"
   },
   "generic-bk7252": {
@@ -4142,9 +4162,14 @@
     "name": "Generic - BK7252",
     "vendor": "Generic"
   },
-  "generic-ln882hki": {
+  "generic-ln882h": {
     "mcu": "LN882HK",
-    "name": "Generic - LN882HKI",
+    "name": "Generic - LN882H",
+    "vendor": "Generic"
+  },
+  "generic-ln882h-tuya": {
+    "mcu": "LN882HK",
+    "name": "Generic - LN882H (Tuya)",
     "vendor": "Generic"
   },
   "generic-rtl8710bn-2mb-468k": {
@@ -4170,6 +4195,11 @@
   "generic-rtl8720cf-2mb-992k": {
     "mcu": "RTL8720CF",
     "name": "Generic - RTL8720CF (2M/992k)",
+    "vendor": "Generic"
+  },
+  "generic-rtl8720cm-4mb-1712k": {
+    "mcu": "RTL8720CM",
+    "name": "Generic - RTL8720CM (4M/1712k)",
     "vendor": "Generic"
   },
   "genericSTM32F103C4": {
@@ -4905,6 +4935,11 @@
   "ln-02": {
     "mcu": "LN882HK",
     "name": "LN-02 Wi-Fi/BLE Module",
+    "vendor": "Unknown"
+  },
+  "ln-cb3s-v1.0": {
+    "mcu": "LN882HK",
+    "name": "LN-CB3S V1.0",
     "vendor": "Unknown"
   },
   "logicrom_spark": {
@@ -7005,6 +7040,26 @@
     "name": "RVfpga: Digilent Nexys A7",
     "vendor": "Digilent"
   },
+  "t1-2s": {
+    "mcu": "BK7238",
+    "name": "T1-2S Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "t1-3s": {
+    "mcu": "BK7238",
+    "name": "T1-3S Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "t1-m": {
+    "mcu": "BK7238",
+    "name": "T1-M Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "t1-u": {
+    "mcu": "BK7238",
+    "name": "T1-U Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
   "t102-v1.1": {
     "mcu": "RTL8710BN",
     "name": "T102_V1.1",
@@ -7480,6 +7535,21 @@
     "name": "WBLC5 Wi-Fi Module",
     "vendor": "Tuya Inc."
   },
+  "wbr1": {
+    "mcu": "RTL8720CF",
+    "name": "WBR1 Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "wbr3": {
+    "mcu": "RTL8720CF",
+    "name": "WBR3 Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "wbru": {
+    "mcu": "RTL8720CF",
+    "name": "WBRU Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
   "we_oceanus1": {
     "mcu": "STM32WLE5CCU6 ",
     "name": "WE Oceanus-I Module",
@@ -7600,6 +7670,11 @@
     "name": "Pycom WiPy3",
     "vendor": "Pycom Ltd."
   },
+  "wl2h-u": {
+    "mcu": "LN882HK",
+    "name": "WL2H-U Wi-Fi/BLE Module",
+    "vendor": "Tuya"
+  },
   "wl2s": {
     "mcu": "LN882HK",
     "name": "WL2S Wi-Fi/BLE Module",
@@ -7674,6 +7749,11 @@
     "mcu": "STM32L151CCU6",
     "name": "MultiTech xDot",
     "vendor": "MultiTech"
+  },
+  "xh-wb3s": {
+    "mcu": "BK7238",
+    "name": "NiceMCU XH-WB3S",
+    "vendor": "SparkleIoT"
   },
   "xinabox_cw01": {
     "mcu": "ESP8266",

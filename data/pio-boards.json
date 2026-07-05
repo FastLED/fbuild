@@ -10419,6 +10419,33 @@
     "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f401rc.html",
     "vendor": "ST"
   },
+  "cr3l": {
+    "connectivity": [
+      "wifi",
+      "ble"
+    ],
+    "debug": {
+      "tools": {
+        "custom": {},
+        "openocd": {
+          "default": true
+        }
+      }
+    },
+    "fcpu": 100000000,
+    "frameworks": [
+      "base",
+      "arduino"
+    ],
+    "id": "cr3l",
+    "mcu": "RTL8720CM",
+    "name": "CR3L Wi-Fi Module",
+    "platform": "libretiny",
+    "ram": 262144,
+    "rom": 1753088,
+    "url": "https://developer.tuya.com/en/docs/iot/cr3l-module-datasheet?id=Ka3gl6ria8f1t",
+    "vendor": "Tuya Inc."
+  },
   "cricket_l082cz": {
     "debug": {
       "tools": {
@@ -15885,6 +15912,33 @@
     "url": "http://www.4dsystems.com.au/product/gen4_IoD/",
     "vendor": "4D Systems"
   },
+  "generic-bk7231n-qfn32": {
+    "connectivity": [
+      "wifi",
+      "ble"
+    ],
+    "debug": {
+      "tools": {
+        "custom": {},
+        "openocd": {
+          "default": true
+        }
+      }
+    },
+    "fcpu": 120000000,
+    "frameworks": [
+      "base",
+      "arduino"
+    ],
+    "id": "generic-bk7231n-qfn32",
+    "mcu": "BK7231N",
+    "name": "Generic - BK7231N",
+    "platform": "libretiny",
+    "ram": 262144,
+    "rom": 1083136,
+    "url": "https://docs.libretiny.eu/boards/generic-bk7231n-qfn32/",
+    "vendor": "Generic"
+  },
   "generic-bk7231n-qfn32-tuya": {
     "connectivity": [
       "wifi",
@@ -15905,7 +15959,7 @@
     ],
     "id": "generic-bk7231n-qfn32-tuya",
     "mcu": "BK7231N",
-    "name": "Generic - BK7231N (Tuya QFN32)",
+    "name": "Generic - BK7231N (Tuya)",
     "platform": "libretiny",
     "ram": 262144,
     "rom": 1083136,
@@ -15932,11 +15986,65 @@
     ],
     "id": "generic-bk7231t-qfn32-tuya",
     "mcu": "BK7231T",
-    "name": "Generic - BK7231T (Tuya QFN32)",
+    "name": "Generic - BK7231T (Tuya)",
     "platform": "libretiny",
     "ram": 262144,
     "rom": 1083136,
     "url": "https://docs.libretiny.eu/boards/generic-bk7231t-qfn32-tuya/",
+    "vendor": "Generic"
+  },
+  "generic-bk7238": {
+    "connectivity": [
+      "wifi",
+      "ble"
+    ],
+    "debug": {
+      "tools": {
+        "custom": {},
+        "openocd": {
+          "default": true
+        }
+      }
+    },
+    "fcpu": 120000000,
+    "frameworks": [
+      "base",
+      "arduino"
+    ],
+    "id": "generic-bk7238",
+    "mcu": "BK7238",
+    "name": "Generic - BK7238",
+    "platform": "libretiny",
+    "ram": 262144,
+    "rom": 1083136,
+    "url": "https://docs.libretiny.eu/boards/generic-bk7238/",
+    "vendor": "Generic"
+  },
+  "generic-bk7238-tuya": {
+    "connectivity": [
+      "wifi",
+      "ble"
+    ],
+    "debug": {
+      "tools": {
+        "custom": {},
+        "openocd": {
+          "default": true
+        }
+      }
+    },
+    "fcpu": 120000000,
+    "frameworks": [
+      "base",
+      "arduino"
+    ],
+    "id": "generic-bk7238-tuya",
+    "mcu": "BK7238",
+    "name": "Generic - BK7238 (Tuya T1)",
+    "platform": "libretiny",
+    "ram": 262144,
+    "rom": 1083136,
+    "url": "https://docs.libretiny.eu/boards/generic-bk7238-tuya/",
     "vendor": "Generic"
   },
   "generic-bk7252": {
@@ -15966,7 +16074,7 @@
     "url": "https://docs.libretiny.eu/boards/generic-bk7252/",
     "vendor": "Generic"
   },
-  "generic-ln882hki": {
+  "generic-ln882h": {
     "connectivity": [
       "wifi",
       "ble"
@@ -15984,13 +16092,40 @@
       "base",
       "arduino"
     ],
-    "id": "generic-ln882hki",
+    "id": "generic-ln882h",
     "mcu": "LN882HK",
-    "name": "Generic - LN882HKI",
+    "name": "Generic - LN882H",
     "platform": "libretiny",
     "ram": 302080,
     "rom": 1228800,
-    "url": "https://docs.libretiny.eu/boards/generic-ln882hki/",
+    "url": "https://docs.libretiny.eu/boards/generic-ln882h/",
+    "vendor": "Generic"
+  },
+  "generic-ln882h-tuya": {
+    "connectivity": [
+      "wifi",
+      "ble"
+    ],
+    "debug": {
+      "tools": {
+        "custom": {},
+        "openocd": {
+          "default": true
+        }
+      }
+    },
+    "fcpu": 160000000,
+    "frameworks": [
+      "base",
+      "arduino"
+    ],
+    "id": "generic-ln882h-tuya",
+    "mcu": "LN882HK",
+    "name": "Generic - LN882H (Tuya)",
+    "platform": "libretiny",
+    "ram": 302080,
+    "rom": 1228800,
+    "url": "https://docs.libretiny.eu/boards/generic-ln882h-tuya/",
     "vendor": "Generic"
   },
   "generic-rtl8710bn-2mb-468k": {
@@ -16123,6 +16258,33 @@
     "ram": 262144,
     "rom": 1015808,
     "url": "https://docs.libretiny.eu/boards/generic-rtl8720cf-2mb-992k/",
+    "vendor": "Generic"
+  },
+  "generic-rtl8720cm-4mb-1712k": {
+    "connectivity": [
+      "wifi",
+      "ble"
+    ],
+    "debug": {
+      "tools": {
+        "custom": {},
+        "openocd": {
+          "default": true
+        }
+      }
+    },
+    "fcpu": 100000000,
+    "frameworks": [
+      "base",
+      "arduino"
+    ],
+    "id": "generic-rtl8720cm-4mb-1712k",
+    "mcu": "RTL8720CM",
+    "name": "Generic - RTL8720CM (4M/1712k)",
+    "platform": "libretiny",
+    "ram": 262144,
+    "rom": 1753088,
+    "url": "https://docs.libretiny.eu/boards/generic-rtl8720cm-4mb-1712k/",
     "vendor": "Generic"
   },
   "genericSTM32F103C4": {
@@ -19882,6 +20044,33 @@
     "ram": 302080,
     "rom": 1228800,
     "url": "https://docs.libretiny.eu/boards/ln-02/",
+    "vendor": "Unknown"
+  },
+  "ln-cb3s-v1.0": {
+    "connectivity": [
+      "wifi",
+      "ble"
+    ],
+    "debug": {
+      "tools": {
+        "custom": {},
+        "openocd": {
+          "default": true
+        }
+      }
+    },
+    "fcpu": 160000000,
+    "frameworks": [
+      "base",
+      "arduino"
+    ],
+    "id": "ln-cb3s-v1.0",
+    "mcu": "LN882HK",
+    "name": "LN-CB3S V1.0",
+    "platform": "libretiny",
+    "ram": 302080,
+    "rom": 1228800,
+    "url": "https://docs.libretiny.eu/boards/ln-cb3s-v1.0/",
     "vendor": "Unknown"
   },
   "logicrom_spark": {
@@ -30697,6 +30886,114 @@
     "url": "https://reference.digilentinc.com/reference/programmable-logic/nexys-a7/start",
     "vendor": "Digilent"
   },
+  "t1-2s": {
+    "connectivity": [
+      "wifi",
+      "ble"
+    ],
+    "debug": {
+      "tools": {
+        "custom": {},
+        "openocd": {
+          "default": true
+        }
+      }
+    },
+    "fcpu": 120000000,
+    "frameworks": [
+      "base",
+      "arduino"
+    ],
+    "id": "t1-2s",
+    "mcu": "BK7238",
+    "name": "T1-2S Wi-Fi Module",
+    "platform": "libretiny",
+    "ram": 262144,
+    "rom": 1083136,
+    "url": "https://developer.tuya.com/en/docs/iot/T1-2S-module-datasheet?id=Kcl2d5xjy1rly",
+    "vendor": "Tuya Inc."
+  },
+  "t1-3s": {
+    "connectivity": [
+      "wifi",
+      "ble"
+    ],
+    "debug": {
+      "tools": {
+        "custom": {},
+        "openocd": {
+          "default": true
+        }
+      }
+    },
+    "fcpu": 120000000,
+    "frameworks": [
+      "base",
+      "arduino"
+    ],
+    "id": "t1-3s",
+    "mcu": "BK7238",
+    "name": "T1-3S Wi-Fi Module",
+    "platform": "libretiny",
+    "ram": 262144,
+    "rom": 1083136,
+    "url": "https://developer.tuya.com/en/docs/iot/T1-3S-Module-Datasheet?id=Keesax53r0r2d",
+    "vendor": "Tuya Inc."
+  },
+  "t1-m": {
+    "connectivity": [
+      "wifi",
+      "ble"
+    ],
+    "debug": {
+      "tools": {
+        "custom": {},
+        "openocd": {
+          "default": true
+        }
+      }
+    },
+    "fcpu": 120000000,
+    "frameworks": [
+      "base",
+      "arduino"
+    ],
+    "id": "t1-m",
+    "mcu": "BK7238",
+    "name": "T1-M Wi-Fi Module",
+    "platform": "libretiny",
+    "ram": 262144,
+    "rom": 1083136,
+    "url": "https://developer.tuya.com/en/docs/iot/T1-M-Module-Datasheet?id=Ke33yw7g0vimt",
+    "vendor": "Tuya Inc."
+  },
+  "t1-u": {
+    "connectivity": [
+      "wifi",
+      "ble"
+    ],
+    "debug": {
+      "tools": {
+        "custom": {},
+        "openocd": {
+          "default": true
+        }
+      }
+    },
+    "fcpu": 120000000,
+    "frameworks": [
+      "base",
+      "arduino"
+    ],
+    "id": "t1-u",
+    "mcu": "BK7238",
+    "name": "T1-U Wi-Fi Module",
+    "platform": "libretiny",
+    "ram": 262144,
+    "rom": 1083136,
+    "url": "https://developer.tuya.com/en/docs/iot/T1-U-HL-Module-Datasheet?id=Kdfp5j893qwxg",
+    "vendor": "Tuya Inc."
+  },
   "t102-v1.1": {
     "connectivity": [
       "wifi"
@@ -33280,6 +33577,87 @@
     "url": "https://developer.tuya.com/en/docs/iot/wblc5-module-datasheet?id=K9duilns1f3gi",
     "vendor": "Tuya Inc."
   },
+  "wbr1": {
+    "connectivity": [
+      "wifi",
+      "ble"
+    ],
+    "debug": {
+      "tools": {
+        "custom": {},
+        "openocd": {
+          "default": true
+        }
+      }
+    },
+    "fcpu": 100000000,
+    "frameworks": [
+      "base",
+      "arduino"
+    ],
+    "id": "wbr1",
+    "mcu": "RTL8720CF",
+    "name": "WBR1 Wi-Fi Module",
+    "platform": "libretiny",
+    "ram": 262144,
+    "rom": 917504,
+    "url": "https://developer.tuya.com/en/docs/iot/wbr1-module-datasheet?id=K9duisiao4qpa",
+    "vendor": "Tuya Inc."
+  },
+  "wbr3": {
+    "connectivity": [
+      "wifi",
+      "ble"
+    ],
+    "debug": {
+      "tools": {
+        "custom": {},
+        "openocd": {
+          "default": true
+        }
+      }
+    },
+    "fcpu": 100000000,
+    "frameworks": [
+      "base",
+      "arduino"
+    ],
+    "id": "wbr3",
+    "mcu": "RTL8720CF",
+    "name": "WBR3 Wi-Fi Module",
+    "platform": "libretiny",
+    "ram": 262144,
+    "rom": 917504,
+    "url": "https://developer.tuya.com/en/docs/iot/wbr3-module-datasheet?id=K9dujs2k5nriy",
+    "vendor": "Tuya Inc."
+  },
+  "wbru": {
+    "connectivity": [
+      "wifi",
+      "ble"
+    ],
+    "debug": {
+      "tools": {
+        "custom": {},
+        "openocd": {
+          "default": true
+        }
+      }
+    },
+    "fcpu": 100000000,
+    "frameworks": [
+      "base",
+      "arduino"
+    ],
+    "id": "wbru",
+    "mcu": "RTL8720CF",
+    "name": "WBRU Wi-Fi Module",
+    "platform": "libretiny",
+    "ram": 262144,
+    "rom": 917504,
+    "url": "https://developer.tuya.com/en/docs/iot/wbru-module-datasheet?id=Kai1h5xb3dp98",
+    "vendor": "Tuya Inc."
+  },
   "we_oceanus1": {
     "debug": {
       "tools": {
@@ -33956,6 +34334,33 @@
     "url": "https://pycom.io/",
     "vendor": "Pycom Ltd."
   },
+  "wl2h-u": {
+    "connectivity": [
+      "wifi",
+      "ble"
+    ],
+    "debug": {
+      "tools": {
+        "custom": {},
+        "openocd": {
+          "default": true
+        }
+      }
+    },
+    "fcpu": 160000000,
+    "frameworks": [
+      "base",
+      "arduino"
+    ],
+    "id": "wl2h-u",
+    "mcu": "LN882HK",
+    "name": "WL2H-U Wi-Fi/BLE Module",
+    "platform": "libretiny",
+    "ram": 302080,
+    "rom": 1228800,
+    "url": "https://developer.tuya.com/en/docs/iot/WL2H-U-Module-Datasheet?id=Kbohlj8eg19u5",
+    "vendor": "Tuya"
+  },
   "wl2s": {
     "connectivity": [
       "wifi",
@@ -34354,6 +34759,33 @@
     "rom": 262144,
     "url": "https://developer.mbed.org/platforms/MTS-xDot-L151CC/",
     "vendor": "MultiTech"
+  },
+  "xh-wb3s": {
+    "connectivity": [
+      "wifi",
+      "ble"
+    ],
+    "debug": {
+      "tools": {
+        "custom": {},
+        "openocd": {
+          "default": true
+        }
+      }
+    },
+    "fcpu": 120000000,
+    "frameworks": [
+      "base",
+      "arduino"
+    ],
+    "id": "xh-wb3s",
+    "mcu": "BK7238",
+    "name": "NiceMCU XH-WB3S",
+    "platform": "libretiny",
+    "ram": 262144,
+    "rom": 1083136,
+    "url": "https://github.com/Sparkleiot",
+    "vendor": "SparkleIoT"
   },
   "xinabox_cw01": {
     "connectivity": [
