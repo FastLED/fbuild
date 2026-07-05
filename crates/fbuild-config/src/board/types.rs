@@ -30,7 +30,12 @@ pub(super) const EMULATOR_TOOL_NAMES: &[&str] =
     &["simavr", "qemu", "renode", "ovpsim", "verilator"];
 
 /// Board configuration loaded from boards.txt or built-in defaults.
-#[derive(Debug, Clone, Serialize, Deserialize)]
+///
+/// `Default` (all fields empty String / None) exists for test construction
+/// via `..Default::default()` — e.g. the probe-rs chip-map tests in
+/// `fbuild-deploy`. Every field is `String` or `Option<...>`, so the derive
+/// is total and harmless; production code always fully populates the config.
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct BoardConfig {
     pub name: String,
     pub mcu: String,
