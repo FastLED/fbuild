@@ -214,7 +214,15 @@ impl Compiler for Ch32vCompiler {
         } else {
             extra_flags.to_vec()
         };
-        crate::compiler::build_rebuild_signature(compiler_path, &flags, &[], &extra_owned)
+        // build_unflags stripped inside build_rebuild_signature (shared core),
+        // matching compile_c/compile_cpp on the write side (FastLED/fbuild#970).
+        crate::compiler::build_rebuild_signature(
+            compiler_path,
+            &flags,
+            &[],
+            &extra_owned,
+            self.build_unflags(),
+        )
     }
 }
 
