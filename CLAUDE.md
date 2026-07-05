@@ -12,6 +12,7 @@ When operating in this repo on a task that isn't covered by the architectural ov
 | "How does deploy actually get firmware to the board?" | [`agents/docs/deploy-architecture.md`](agents/docs/deploy-architecture.md) |
 | "What DTR/RTS state do I open this CDC port at?" | [`docs/usb-cdc-control-line-matrix.md`](docs/usb-cdc-control-line-matrix.md) |
 | "How do I run the serial detection code against a real ESP32?" | [`agents/docs/serial-testing.md`](agents/docs/serial-testing.md) (FastLED/fbuild#899 — Docker/WSL real-device harness) |
+| "Where does this path/cache/build dir live, and why won't my cache key hit?" | [`agents/docs/path-conventions.md`](agents/docs/path-conventions.md) |
 | "Which crate owns this code?" | [`crates/CLAUDE.md`](crates/CLAUDE.md) |
 | "Which architecture doc maps to my crate?" | [`docs/CLAUDE.md`](docs/CLAUDE.md) |
 | "Is this serial port the right device?" | `fbuild serial probe list` (FastLED/fbuild#686) |
