@@ -67,10 +67,18 @@ jobs:
       - name: Run dylint over workspace
         # cargo-dylint 5.0.0 expects libraries on disk as
         # `<name>@<toolchain>.<ext>` but cargo emits them as bare
-        # `<name>.<ext>` on first build. After each cargo-dylint
-        # invocation, alias any just-built libraries that lack the
-        # `@<toolchain>` suffix and retry. Same loop zccache uses in
-        # `ci/lint.py::lint_dylint_only`.
+        # `<name>.<ext>`. After each cargo-dylint invocation, alias any
+        # just-built libraries that lack the `@<toolchain>` suffix and retry.
+        #
+        # The alias MUST be a symlink, not a copy (FastLED/fbuild#964):
+        # cargo-dylint rebuilds the lint libs on every invocation, so a static
+        # `cp` alias created on attempt 1 goes stale against the freshly-built
+        # bare lib on attempt 2 and re-triggers "could not find
+        # `<name>@<toolchain>` despite successful build" — while the loop's
+        # `[ ! -e ]` guard refuses to refresh the existing (stale) copy, so it
+        # bails with "no new aliases to create". A relative symlink tracks the
+        # bare lib's mtime across rebuilds, so it stays fresh and the retry
+        # converges.
         run: |
           export PATH="${CARGO_HOME}/bin:${PATH}"
           set +e
@@ -94,8 +102,10 @@ jobs:
                     *"@"*) continue ;;
                   esac
                   alias_path="$lib_dir/${stem}@${toolchain}.${ext}"
-                  if [ ! -e "$alias_path" ]; then
-                    cp "$lib" "$alias_path"
+                  # Symlink (relative, force) so the alias always resolves to
+                  # the freshly-built bare lib rather than a stale snapshot.
+                  if [ ! -L "$alias_path" ]; then
+                    ln -sfn "$(basename "$lib")" "$alias_path"
                     created_any=1
                   fi
                 done
@@ -105,7 +115,7 @@ jobs:
               echo "::error::cargo dylint failed and no new aliases to create on attempt $attempt"
               exit $rc
             fi
-            echo "Created @<toolchain> aliases; retrying cargo dylint (attempt $((attempt+1)))..."
+            echo "Created @<toolchain> alias symlinks; retrying cargo dylint (attempt $((attempt+1)))..."
           done
           echo "::error::cargo dylint did not succeed after ${max_attempts} attempts"
           exit 1
