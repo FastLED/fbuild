@@ -50,6 +50,14 @@ pub(super) async fn compile_framework_builtin_libs(
     let fw_libs_build_dir = build_dir.join("fw_libs");
     std::fs::create_dir_all(&fw_libs_build_dir)?;
 
+    // Compile framework libs workspace-relative so their zccache keys are
+    // stable across project directories and hit the warm cache instead of
+    // recompiling ~150s on every fresh project (FastLED/fbuild#952). The
+    // object dir lives under `<project>/.fbuild/...`, so this resolves to
+    // the project workspace root (canonicalized).
+    let fw_compile_cwd =
+        fbuild_core::path::compile_cwd_from_output(&fw_libs_build_dir.join("obj").join("_probe.o"));
+
     // Build set of already-compiled library names
     let already_compiled: std::collections::HashSet<String> = library_archives
         .iter()
@@ -174,6 +182,7 @@ pub(super) async fn compile_framework_builtin_libs(
                 params.verbose,
                 fw_jobs,
                 compiler_cache,
+                fw_compile_cwd.clone(),
             )
             .await
             {

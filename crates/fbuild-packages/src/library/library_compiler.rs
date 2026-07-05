@@ -76,6 +76,7 @@ pub async fn compile_library(
         verbose,
         1,
         compiler_cache,
+        None,
     )
     .await
 }
@@ -95,6 +96,12 @@ pub async fn compile_library_with_jobs(
     verbose: bool,
     jobs: usize,
     compiler_cache: Option<&Path>,
+    // When `Some(workspace_root)`, compiles run workspace-relative (source
+    // / `-o` / project `-I` relativized, cwd = workspace) so their zccache
+    // keys are stable across project directories and hit the warm cache
+    // (FastLED/fbuild#952). `None` keeps the historical absolute-path,
+    // ambient-cwd invocation for every caller that hasn't opted in.
+    compile_cwd: Option<PathBuf>,
 ) -> Result<Option<PathBuf>> {
     if source_files.is_empty() {
         tracing::debug!("library {} is header-only, skipping compile", name);
@@ -123,6 +130,20 @@ pub async fn compile_library_with_jobs(
         .collect();
 
     let cpp_flags = cpp_flags.to_vec();
+
+    // When opted in, relativize project-rooted path flags (`-I`, `--sysroot`,
+    // ...) to the workspace once. Paths outside the workspace (toolchain,
+    // SDK) are already project-independent and pass through unchanged. This
+    // keeps the per-TU rebuild signature and the zccache key project-stable
+    // (FastLED/fbuild#952).
+    let (include_flags, c_safe_flags, cpp_flags) = match compile_cwd.as_deref() {
+        Some(cwd) => (
+            fbuild_core::path::normalize_flags_for_compile_cwd(&include_flags, cwd),
+            fbuild_core::path::normalize_flags_for_compile_cwd(&c_safe_flags, cwd),
+            fbuild_core::path::normalize_flags_for_compile_cwd(&cpp_flags, cwd),
+        ),
+        None => (include_flags, c_safe_flags, cpp_flags),
+    };
     let all_objects: Vec<PathBuf> = source_files
         .iter()
         .map(|source| object_path(source, &obj_dir))
@@ -176,6 +197,7 @@ pub async fn compile_library_with_jobs(
                 name,
                 verbose,
                 compiler_cache,
+                compile_cwd.as_deref(),
             )
             .await?;
         }
@@ -213,6 +235,7 @@ pub async fn compile_library_with_jobs(
     let include_flags_arc = std::sync::Arc::new(include_flags.clone());
     let name_owned = name.to_string();
     let compiler_cache_owned = compiler_cache.map(|p| p.to_path_buf());
+    let compile_cwd_owned = compile_cwd.clone();
 
     for source in stale_sources.clone() {
         let sem = sem.clone();
@@ -224,6 +247,7 @@ pub async fn compile_library_with_jobs(
         let inc_t = include_flags_arc.clone();
         let lib_name_t = name_owned.clone();
         let cache_t = compiler_cache_owned.clone();
+        let cwd_t = compile_cwd_owned.clone();
         let counter = compiled_count.clone();
         tasks.spawn(async move {
             let _permit = sem
@@ -242,6 +266,7 @@ pub async fn compile_library_with_jobs(
                 &lib_name_t,
                 verbose,
                 cache_ref,
+                cwd_t.as_deref(),
             )
             .await?;
             let count = counter.fetch_add(1, std::sync::atomic::Ordering::Relaxed) + 1;
@@ -313,6 +338,12 @@ async fn compile_one_source(
     lib_name: &str,
     verbose: bool,
     compiler_cache: Option<&Path>,
+    // When `Some`, run the compiler from this workspace root and pass
+    // source / `-o` as workspace-relative args, so the zccache key is
+    // stable across project directories (FastLED/fbuild#952). When `None`
+    // (every non-opted-in caller) the invocation is byte-identical to
+    // before: absolute paths, ambient cwd.
+    compile_cwd: Option<&Path>,
 ) -> Result<PathBuf> {
     let obj = object_path(source, obj_dir);
     let rsp_dir = obj_dir.parent().unwrap_or(obj_dir).join("tmp");
@@ -334,16 +365,24 @@ async fn compile_one_source(
         );
     }
 
+    // Source and object args: workspace-relative when opted in, else the
+    // historical absolute strings.
+    let (source_arg, obj_arg) = match compile_cwd {
+        Some(cwd) => (
+            fbuild_core::path::path_arg_for_compile_cwd(source, cwd),
+            fbuild_core::path::path_arg_for_compile_cwd(&obj, cwd),
+        ),
+        None => (
+            source.to_string_lossy().to_string(),
+            obj.to_string_lossy().to_string(),
+        ),
+    };
+
     // Collect all flags that follow the compiler executable
     let mut all_flags: Vec<String> = Vec::new();
     all_flags.extend_from_slice(flags);
     all_flags.extend_from_slice(include_flags);
-    all_flags.extend([
-        "-c".to_string(),
-        source.to_string_lossy().to_string(),
-        "-o".to_string(),
-        obj.to_string_lossy().to_string(),
-    ]);
+    all_flags.extend(["-c".to_string(), source_arg, "-o".to_string(), obj_arg]);
 
     // On Windows, put ALL flags in a response file to avoid command-line
     // length limits (OS error 206). The command becomes:
@@ -376,7 +415,7 @@ async fn compile_one_source(
     // anything beyond that is wedged toolchain rather than a slow build.
     let result = run_command(
         &args_ref,
-        None,
+        compile_cwd,
         None,
         Some(fbuild_core::time::REAL_BUILD_TIMEOUT),
     )

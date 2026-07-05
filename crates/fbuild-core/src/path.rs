@@ -340,6 +340,151 @@ pub fn normalize_for_key(path: &Path) -> String {
     }
 }
 
+// ---------------------------------------------------------------------------
+// Compile-CWD workspace relativization (FastLED/fbuild#952).
+//
+// These live here (rather than in fbuild-build) so both `fbuild-build`
+// (sketch/core compiles) and `fbuild-packages` (library compiles) can
+// relativize compile args to the workspace root. Keeping compile args
+// workspace-relative is what lets zccache keys stay stable across
+// different project directories — see agents/docs/path-conventions.md.
+// ---------------------------------------------------------------------------
+
+/// Return the workspace root to use as the CWD for zccache compiles.
+///
+/// fbuild object files live under `<workspace>/.fbuild/...`, so running
+/// the compile from `<workspace>` (and relativizing args to it) lets
+/// identically-shaped workspaces at different absolute paths share per-TU
+/// cache keys even when the raw args contain absolute paths.
+#[must_use]
+pub fn compile_cwd_from_output(output: &Path) -> Option<PathBuf> {
+    let mut dir = output.parent()?;
+    loop {
+        if dir
+            .file_name()
+            .and_then(|name| name.to_str())
+            .is_some_and(|name| name.eq_ignore_ascii_case(".fbuild"))
+        {
+            return dir.parent().map(|workspace| {
+                canonicalize_lexical(workspace).unwrap_or_else(|| workspace.to_path_buf())
+            });
+        }
+        dir = dir.parent()?;
+    }
+}
+
+/// Return a path argument that is stable relative to the zccache compile CWD.
+///
+/// Absolute args under the compile CWD are stripped to a workspace-relative
+/// tail; everything is finally routed through
+/// [`NormalizedPath::display_slash`], which owns the Windows `\` → `/`
+/// rewrite GCC's spec-file pass requires (FastLED/fbuild#875, #885, #890,
+/// #912). Do NOT hand-roll the slash rewrite — `ban_manual_slash_normalize`
+/// flags that.
+#[must_use]
+pub fn path_arg_for_compile_cwd(path: &Path, cwd: &Path) -> String {
+    let relative: PathBuf = if !path.is_absolute() {
+        path.to_path_buf()
+    } else {
+        let stable_path = canonicalize_lexical(path).unwrap_or_else(|| path.to_path_buf());
+        let stable_cwd = strip_unc_prefix(cwd);
+        stable_path
+            .strip_prefix(&stable_cwd)
+            .map(|tail| tail.to_path_buf())
+            .unwrap_or(stable_path)
+    };
+    let arg = NormalizedPath::from(relative).display_slash();
+    if arg.is_empty() {
+        ".".to_string()
+    } else {
+        arg
+    }
+}
+
+/// Normalize common path-bearing compiler flags (`-I`, `-isystem`,
+/// `--sysroot`, ...) for a zccache compile CWD.
+#[must_use]
+pub fn normalize_flags_for_compile_cwd(flags: &[String], cwd: &Path) -> Vec<String> {
+    let mut normalized = Vec::with_capacity(flags.len());
+    let mut next_is_path = false;
+
+    for flag in flags {
+        if next_is_path {
+            normalized.push(path_arg_for_compile_cwd(Path::new(flag), cwd));
+            next_is_path = false;
+            continue;
+        }
+        if flag_takes_path_argument(flag) {
+            normalized.push(flag.clone());
+            next_is_path = true;
+            continue;
+        }
+        if let Some(value) = flag.strip_prefix("--sysroot=") {
+            normalized.push(format!(
+                "--sysroot={}",
+                path_arg_for_compile_cwd(Path::new(value), cwd)
+            ));
+            continue;
+        }
+        if let Some((prefix, value)) = split_joined_path_flag(flag) {
+            normalized.push(format!(
+                "{}{}",
+                prefix,
+                path_arg_for_compile_cwd(Path::new(value), cwd)
+            ));
+            continue;
+        }
+        normalized.push(flag.clone());
+    }
+
+    normalized
+}
+
+/// Canonicalize an existing path (stripping the Windows `\\?\` prefix),
+/// falling back to canonicalizing the parent + rejoining the file name when
+/// the full path does not yet exist. Returns `None` if neither resolves.
+fn canonicalize_lexical(path: &Path) -> Option<PathBuf> {
+    if let Ok(canonical) = path.canonicalize() {
+        return Some(strip_unc_prefix(&canonical));
+    }
+    let parent = path.parent()?.canonicalize().ok()?;
+    let joined = match path.file_name() {
+        Some(name) => parent.join(name),
+        None => parent,
+    };
+    Some(strip_unc_prefix(&joined))
+}
+
+fn flag_takes_path_argument(flag: &str) -> bool {
+    matches!(
+        flag,
+        "-I" | "-isystem"
+            | "-iquote"
+            | "-idirafter"
+            | "-include"
+            | "-imacros"
+            | "-isysroot"
+            | "--sysroot"
+    )
+}
+
+fn split_joined_path_flag(flag: &str) -> Option<(&'static str, &str)> {
+    for prefix in [
+        "-I",
+        "-isystem",
+        "-iquote",
+        "-idirafter",
+        "-include",
+        "-imacros",
+        "-isysroot",
+    ] {
+        if let Some(value) = flag.strip_prefix(prefix).filter(|value| !value.is_empty()) {
+            return Some((prefix, value));
+        }
+    }
+    None
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -598,5 +743,108 @@ mod tests {
             .await
             .unwrap_err();
         assert_eq!(err.kind(), std::io::ErrorKind::NotFound);
+    }
+
+    // --- compile-CWD relativization (moved from zccache.rs, #952) ---
+
+    #[test]
+    fn compile_cwd_from_output_uses_workspace_before_fbuild() {
+        let output = Path::new("/work/project/.fbuild/build/env/release/src/main.o");
+        assert_eq!(
+            compile_cwd_from_output(output).as_deref(),
+            Some(Path::new("/work/project"))
+        );
+    }
+
+    #[test]
+    fn compile_cwd_from_output_returns_none_without_fbuild_component() {
+        let output = Path::new("/work/project/build/env/main.o");
+        assert!(compile_cwd_from_output(output).is_none());
+    }
+
+    #[test]
+    fn compile_cwd_from_output_canonicalizes_existing_workspace() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let workspace = tmp.path().join("project");
+        let output = workspace.join(".fbuild/build/main.o");
+        std::fs::create_dir_all(output.parent().unwrap()).unwrap();
+        let expected = strip_unc_prefix(&workspace.canonicalize().unwrap());
+        assert_eq!(
+            compile_cwd_from_output(&output).as_deref(),
+            Some(expected.as_path())
+        );
+    }
+
+    #[test]
+    fn path_arg_for_compile_cwd_returns_workspace_relative_path() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let cwd = tmp.path().join("project");
+        let source = cwd.join("src/main.cpp");
+        std::fs::create_dir_all(source.parent().unwrap()).unwrap();
+        std::fs::write(&source, "int main() { return 0; }\n").unwrap();
+        let cwd = cwd.canonicalize().unwrap();
+        // Forward-slash spelling is the invariant on every platform.
+        assert_eq!(path_arg_for_compile_cwd(&source, &cwd), "src/main.cpp");
+    }
+
+    #[test]
+    #[cfg(windows)]
+    fn path_arg_for_compile_cwd_forces_forward_slashes_on_windows() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let cwd = tmp.path().join("project");
+        let nested = cwd.join("src").join("sketch");
+        let source = nested.join("main.cpp");
+        std::fs::create_dir_all(&nested).unwrap();
+        std::fs::write(&source, "int main() { return 0; }\n").unwrap();
+        let cwd = cwd.canonicalize().unwrap();
+        let arg = path_arg_for_compile_cwd(&source, &cwd);
+        assert!(
+            !arg.contains('\\'),
+            "compile arg must not contain backslashes: {arg}"
+        );
+        assert_eq!(arg, "src/sketch/main.cpp");
+    }
+
+    #[test]
+    fn path_arg_for_compile_cwd_returns_dot_for_workspace_root() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let cwd = tmp.path().join("project");
+        std::fs::create_dir_all(&cwd).unwrap();
+        let cwd = cwd.canonicalize().unwrap();
+        assert_eq!(path_arg_for_compile_cwd(&cwd, &cwd), ".");
+    }
+
+    #[test]
+    fn normalize_flags_for_compile_cwd_rewrites_include_paths() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let cwd = tmp.path().join("project");
+        let include = cwd.join("include");
+        let vendor = cwd.join("vendor");
+        let sysroot = cwd.join("sysroot");
+        std::fs::create_dir_all(&include).unwrap();
+        std::fs::create_dir_all(&vendor).unwrap();
+        std::fs::create_dir_all(&sysroot).unwrap();
+        let cwd = cwd.canonicalize().unwrap();
+        let flags = vec![
+            "-I".to_string(),
+            include.to_string_lossy().to_string(),
+            "-I".to_string(),
+            cwd.to_string_lossy().to_string(),
+            format!("-I{}", vendor.display()),
+            format!("-I{}", cwd.display()),
+            format!("--sysroot={}", sysroot.display()),
+        ];
+        assert_eq!(
+            normalize_flags_for_compile_cwd(&flags, &cwd),
+            vec![
+                "-I".to_string(),
+                "include".to_string(),
+                "-I".to_string(),
+                ".".to_string(),
+                "-Ivendor".to_string(),
+                "-I.".to_string(),
+                "--sysroot=sysroot".to_string(),
+            ]
+        );
     }
 }
