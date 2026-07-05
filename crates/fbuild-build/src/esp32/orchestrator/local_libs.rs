@@ -83,6 +83,7 @@ pub(super) async fn compile_local_libraries(
             verbose,
             jobs,
             compiler_cache,
+            None,
         )
         .await
         {
