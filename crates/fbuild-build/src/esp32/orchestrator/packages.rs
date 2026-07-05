@@ -73,23 +73,43 @@ pub(super) async fn resolve_pioarduino_packages(
         },
     };
 
-    // Ensure framework is installed before trying to install libs
-    let _ = fbuild_packages::Package::ensure_installed(&framework).await?;
-
-    // Ensure SDK libs (split package in pioarduino 3.3.7+)
-    if let Ok(libs_url) = platform.get_package_url("framework-arduinoespressif32-libs") {
-        framework.ensure_libs(&libs_url).await?;
-    }
-
-    // Ensure MCU-specific skeleton libs (e.g. ESP32-C2, ESP32-C61).
-    // Some MCUs ship their SDK in a separate skeleton package.
+    // Download the GCC toolchain (~100+ MB) CONCURRENTLY with the framework +
+    // SDK libs (~hundreds of MB). Once the platform's metadata URLs are
+    // resolved, these are fully independent packages (different cache dirs,
+    // different install locks), so overlapping their download+extract removes
+    // the smaller of the two from the critical path instead of summing them —
+    // the dominant slice of the cold `pioarduino-resolve` time
+    // (FastLED/fbuild#953). The framework chain stays internally ordered:
+    // the framework must be installed before its SDK libs extract into
+    // `tools/`.
     let mcu_suffix = mcu.strip_prefix("esp32").unwrap_or("");
-    if !mcu_suffix.is_empty() {
-        let skeleton_name = format!("framework-arduino-{}-skeleton-lib", mcu_suffix);
-        if let Ok(skeleton_url) = platform.get_package_url(&skeleton_name) {
-            framework.ensure_mcu_libs(&skeleton_url, mcu).await?;
+    let libs_url = platform
+        .get_package_url("framework-arduinoespressif32-libs")
+        .ok();
+    let skeleton_url = if mcu_suffix.is_empty() {
+        None
+    } else {
+        platform
+            .get_package_url(&format!("framework-arduino-{}-skeleton-lib", mcu_suffix))
+            .ok()
+    };
+
+    let toolchain_fut = fbuild_packages::Package::ensure_installed(&toolchain);
+    let framework_fut = async {
+        fbuild_packages::Package::ensure_installed(&framework).await?;
+        // Ensure SDK libs (split package in pioarduino 3.3.7+).
+        if let Some(url) = &libs_url {
+            framework.ensure_libs(url).await?;
         }
-    }
+        // Ensure MCU-specific skeleton libs (e.g. ESP32-C2, ESP32-C61).
+        if let Some(url) = &skeleton_url {
+            framework.ensure_mcu_libs(url, mcu).await?;
+        }
+        Ok::<(), fbuild_core::FbuildError>(())
+    };
+    let (toolchain_res, framework_res) = tokio::join!(toolchain_fut, framework_fut);
+    toolchain_res?;
+    framework_res?;
 
     Ok((toolchain, framework))
 }
