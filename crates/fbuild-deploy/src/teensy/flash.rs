@@ -125,7 +125,9 @@ pub async fn run_with_retry(
         tracing::info!(
             "teensy flash: {} (cwd={})",
             args.join(" "),
-            flash_cwd.map(|p| p.display().to_string()).unwrap_or_default()
+            flash_cwd
+                .map(|p| p.display().to_string())
+                .unwrap_or_default()
         );
     }
 
