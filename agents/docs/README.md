@@ -7,6 +7,11 @@ routing table sends an agent here by task.
 
 - [`commands-reference.md`](commands-reference.md) — every `fbuild`
   subcommand with one-line purpose + "use this when …" guidance.
+- [`path-conventions.md`](path-conventions.md) — prefix roots
+  (`~/.fbuild/{dev|prod}/cache/…` vs `<project>/.fbuild/build/…`), the
+  factory functions that pick them, and why a mis-spelled/absolute path
+  silently defeats a cache key. **Read before touching any cache dir,
+  build dir, or cache-key/signature code** (FastLED/fbuild#952).
 - [`deploy-architecture.md`](deploy-architecture.md) — the
   `Deployer` trait, `post_deploy_recovery`, board-family dispatch
   model.
