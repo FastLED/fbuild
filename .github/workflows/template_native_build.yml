@@ -41,6 +41,12 @@ env:
   CARGO_TERM_COLOR: always
   RUSTFLAGS: "-D warnings"
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+  # Native Windows release builds can be quiet for longer than soldr's
+  # default 30 minute cargo diagnostic watchdog while rustc/link.exe are
+  # still active. Match the release-binary step's 45 minute timeout so
+  # GitHub Actions owns the outer deadline instead of soldr killing the
+  # build early.
+  SOLDR_CARGO_WAIT_TIMEOUT_SECS: "2700"
   # cc-rs env vars for the xwin lanes. ring's build.rs uses cc-rs;
   # without these, cc-rs invokes plain `clang` and the curve25519.c
   # compile fails with `error: no such file or directory: '/imsvc'`
