@@ -1,6 +1,6 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-07-05T05:41:42Z",
+  "generated_at": "2026-07-06T05:44:35Z",
   "datasets": {
     "mcu_to_vid": {
       "url": "https://raw.githubusercontent.com/FastLED/fbuild/online-data/data/mcu_to_vid.json",
@@ -15,7 +15,7 @@
       "status": "ok",
       "description": "PlatformIO board catalog \u2014 every board the PlatformIO registry knows about, keyed by board id, alphabetically sorted. Fields the previous dump carried are preserved across regressions in the live `pio boards` output.",
       "key_format": "board-id",
-      "generated_at": "2026-07-05T05:41:41Z",
+      "generated_at": "2026-07-06T05:44:34Z",
       "sources": [
         {
           "name": "platformio",
@@ -24,9 +24,9 @@
         }
       ],
       "merge_stats": {
-        "common": 1552,
-        "added": 17,
-        "dropped": 1,
+        "common": 1569,
+        "added": 0,
+        "dropped": 0,
         "fields_preserved": 56
       }
     },
@@ -52,7 +52,7 @@
         }
       },
       "conflicts_url": "https://raw.githubusercontent.com/FastLED/fbuild/online-data/data/usb-vid-conflicts.json",
-      "generated_at": "2026-07-05T05:41:41Z",
+      "generated_at": "2026-07-06T05:44:34Z",
       "sources": [
         {
           "name": "espressif-usb-pids",
@@ -173,7 +173,7 @@
       "status": "ok",
       "description": "Slim view of pio-boards keyed by board id \u2014 only {vendor, name, mcu} per board. Use this when only the human-readable identity is needed (\"what board is plugged in?\").",
       "key_format": "board-id",
-      "generated_at": "2026-07-05T05:41:41Z",
+      "generated_at": "2026-07-06T05:44:34Z",
       "sources": [
         {
           "name": "platformio",
@@ -193,7 +193,7 @@
   "databases": {
     "rotation": "daily",
     "stability_window_hours": 24,
-    "current": "https://fastled.github.io/fbuild/2026-07-05.db",
-    "previous": "https://fastled.github.io/fbuild/2026-07-04.db"
+    "current": "https://fastled.github.io/fbuild/2026-07-06.db",
+    "previous": "https://fastled.github.io/fbuild/2026-07-05.db"
   }
 }
