@@ -105,6 +105,12 @@ pub fn discover_extra_library_roots(project_dir: &Path, entries: &[String]) -> V
                     candidates.push(child_path);
                 }
             }
+            // FastLED/fbuild#966: `read_dir` yields entries in filesystem order,
+            // which differs between two checkouts of the same project. That
+            // non-determinism reorders the resulting `-I` flags, changing the
+            // per-TU zccache context key and defeating cross-project cache
+            // hits. Sort so the include order is stable across checkouts.
+            candidates.sort();
         }
 
         for candidate in candidates {

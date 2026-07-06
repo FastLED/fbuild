@@ -393,8 +393,16 @@ impl BuildOrchestrator for Esp32Orchestrator {
             )
             .await?;
 
-            // Add library include dirs to the main include list
-            include_dirs.extend(lib_result.include_dirs);
+            // Add library include dirs to the main include list. Sort them
+            // first (FastLED/fbuild#966): the library set is discovered via
+            // `read_dir`, whose filesystem order differs between two checkouts
+            // of the same project — leaving it unsorted reorders the resulting
+            // `-I` flags and changes each TU's zccache context key, defeating
+            // cross-project cache hits. Library includes are same-tier, so a
+            // stable sort is safe for include resolution.
+            let mut lib_include_dirs = lib_result.include_dirs;
+            lib_include_dirs.sort();
+            include_dirs.extend(lib_include_dirs);
             library_archives = lib_result.archives;
 
             tracing::info!(

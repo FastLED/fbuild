@@ -413,10 +413,19 @@ async fn compile_one_source(
     // (cold-cache, full templated FastLED translation unit) is the
     // worst-case path that still finishes inside REAL_BUILD_TIMEOUT;
     // anything beyond that is wedged toolchain rather than a slow build.
+    // FastLED/fbuild#966: fw-lib object compiles run via the `zccache wrap`
+    // CLI (not the embedded service), so — like the sketch/core embedded path —
+    // pin zccache's worktree_root to the project workspace so the per-TU cache
+    // key is project-directory-independent and hits cross-project. The env vec
+    // must outlive the borrow passed to run_command.
+    let worktree_root = compile_cwd.map(|cwd| cwd.to_string_lossy().to_string());
+    let env_pairs: Option<Vec<(&str, &str)>> = worktree_root
+        .as_deref()
+        .map(|root| vec![("ZCCACHE_WORKTREE_ROOT", root)]);
     let result = run_command(
         &args_ref,
         compile_cwd,
-        None,
+        env_pairs.as_deref(),
         Some(fbuild_core::time::REAL_BUILD_TIMEOUT),
     )
     .await?;
@@ -625,15 +634,40 @@ async fn archive_objects(ar_path: &Path, objects: &[PathBuf], output: &Path) -> 
 /// Compute the object file path for a source file.
 fn object_path(source: &Path, obj_dir: &Path) -> PathBuf {
     let stem = source.file_stem().unwrap_or_default().to_string_lossy();
-    // Use a hash of the full source path to avoid collisions
+    // FastLED/fbuild#966: the disambiguating hash must be
+    // project-directory-independent — the object filename becomes the `-o`
+    // arg that zccache folds into the per-TU context key, so hashing the
+    // absolute source path defeats cross-project cache hits. Hash the source
+    // relative to the project workspace (parent of `.fbuild/` in obj_dir);
+    // sources outside it (global framework/library cache) keep their absolute
+    // path, which is already project-independent.
     let hash = {
         use sha2::{Digest, Sha256};
         let mut hasher = Sha256::new();
-        hasher.update(source.to_string_lossy().as_bytes());
+        hasher.update(object_hash_key(source, obj_dir).as_bytes());
         let result = hasher.finalize();
         format!("{:02x}{:02x}", result[0], result[1])
     };
     obj_dir.join(format!("{}_{}.o", stem, hash))
+}
+
+/// Project-workspace-relative key for the object hash (FastLED/fbuild#966).
+fn object_hash_key(source: &Path, obj_dir: &Path) -> String {
+    for ancestor in obj_dir.ancestors() {
+        if ancestor
+            .file_name()
+            .map(|n| n == ".fbuild")
+            .unwrap_or(false)
+        {
+            if let Some(workspace) = ancestor.parent() {
+                if let Ok(rel) = source.strip_prefix(workspace) {
+                    return rel.to_string_lossy().replace('\\', "/");
+                }
+            }
+            break;
+        }
+    }
+    source.to_string_lossy().replace('\\', "/")
 }
 
 #[cfg(test)]

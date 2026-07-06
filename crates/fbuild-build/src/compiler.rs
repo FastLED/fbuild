@@ -284,7 +284,7 @@ impl CompilerBase {
         let hash = {
             use sha2::{Digest, Sha256};
             let mut hasher = Sha256::new();
-            hasher.update(source.to_string_lossy().as_bytes());
+            hasher.update(object_hash_key(source, build_dir).as_bytes());
             let result = hasher.finalize();
             format!("{:02x}{:02x}", result[0], result[1])
         };
@@ -296,6 +296,37 @@ impl CompilerBase {
             build_dir.join(format!("{}_{}.{}.o", stem, hash, source_ext))
         }
     }
+}
+
+/// Key used to derive an object file's disambiguating hash suffix.
+///
+/// FastLED/fbuild#966: this MUST be project-directory-independent. The object
+/// filename becomes the compiler's `-o` argument, which zccache folds into its
+/// per-TU context key — so if the hash is derived from the *absolute* source
+/// path (`/a/src/x.cpp` vs `/b/src/x.cpp`), two checkouts of the same project
+/// produce different object names → different keys → 0% cross-project cache
+/// hits. Hashing the source path *relative to the project workspace* (the
+/// parent of the `.fbuild/` component in `build_dir`) makes the object name —
+/// and therefore the key — identical across checkouts. Sources that live
+/// outside the workspace (the global framework/toolchain cache under
+/// `~/.fbuild/…`) fall back to their absolute path, which is already
+/// project-independent. Separators are normalized so Windows and POSIX agree.
+fn object_hash_key(source: &Path, build_dir: &Path) -> String {
+    for ancestor in build_dir.ancestors() {
+        if ancestor
+            .file_name()
+            .map(|n| n == ".fbuild")
+            .unwrap_or(false)
+        {
+            if let Some(workspace) = ancestor.parent() {
+                if let Ok(rel) = source.strip_prefix(workspace) {
+                    return rel.to_string_lossy().replace('\\', "/");
+                }
+            }
+            break;
+        }
+    }
+    source.to_string_lossy().replace('\\', "/")
 }
 
 /// Filter both `flags` and `extra_flags` through `unflags` using the shared
@@ -807,8 +838,33 @@ pub async fn compile_source(
         .clone()
         .or_else(|| output.parent().map(Path::to_path_buf))
         .unwrap_or_else(|| PathBuf::from("."));
-    let compile_env =
+    let mut compile_env =
         fbuild_core::subprocess::compile_env_for_build(&build_scratch_root).unwrap_or_default();
+    // FastLED/fbuild#966: pin zccache's worktree_root to the project workspace
+    // so per-TU cache keys are project-directory-independent — identical
+    // workspace-relative paths across `/proj-a` and `/proj-b` produce identical
+    // keys, so a second project (or a fresh checkout) hits the warm cache
+    // instead of recompiling. zccache's `resolve_worktree_root` honors this env
+    // ONLY when the value is an existing absolute directory (else it silently
+    // falls back to the git root / cwd, reintroducing project dependence), so
+    // guard on `is_dir()`.
+    if let Some(root) = compile_cwd.as_deref() {
+        if root.is_dir() {
+            compile_env.push((
+                "ZCCACHE_WORKTREE_ROOT".to_string(),
+                root.to_string_lossy().to_string(),
+            ));
+            if verbose {
+                tracing::info!("zccache worktree_root pinned to {}", root.display());
+            }
+        } else {
+            tracing::warn!(
+                "compile_cwd {} is not a directory; ZCCACHE_WORKTREE_ROOT unset \
+                 → cache keys stay project-specific (FastLED/fbuild#966)",
+                root.display()
+            );
+        }
+    }
     let compile_fut = svc.compile(compiler, sanitized, cwd, compile_env);
     let outcome = tokio::time::timeout(std::time::Duration::from_secs(300), compile_fut)
         .await
