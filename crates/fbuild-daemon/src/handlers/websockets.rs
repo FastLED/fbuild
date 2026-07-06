@@ -9,6 +9,7 @@ use axum::response::IntoResponse;
 use fbuild_core::channel as mpsc;
 use fbuild_serial::{SerialClientMessage, SerialServerMessage, SerialStreamEvent};
 use futures::{SinkExt, StreamExt};
+use std::future::Future;
 use std::sync::Arc;
 use std::time::Duration;
 use tokio::sync::oneshot;
@@ -114,6 +115,40 @@ async fn cleanup_ws_serial_session(
 /// for every dead connection. See FastLED/fbuild#808.
 const WS_ATTACH_HANDSHAKE_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(10);
 
+/// Cap on the WebSocket serial attach `open_port` await. HTTP monitor and
+/// post-deploy monitor paths already bound this call at 30 s; the WebSocket
+/// attach path needs the same ceiling so a wedged USB driver cannot leave a
+/// pending serial attach counted forever. See FastLED/fbuild#977.
+const WS_SERIAL_OPEN_PORT_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(30);
+
+fn format_timeout_for_error(timeout: Duration) -> String {
+    let millis = timeout.as_millis();
+    if millis > 0 && millis < 1_000 {
+        format!("{millis}ms")
+    } else {
+        format!("{}s", timeout.as_secs())
+    }
+}
+
+async fn await_ws_serial_open_port<F>(
+    port: &str,
+    open_future: F,
+    timeout: Duration,
+) -> Result<(), String>
+where
+    F: Future<Output = fbuild_core::Result<()>>,
+{
+    match tokio::time::timeout(timeout, open_future).await {
+        Ok(Ok(())) => Ok(()),
+        Ok(Err(e)) => Err(format!("failed to open port: {}", e)),
+        Err(_) => Err(format!(
+            "open_port({}) exceeded {}; serial driver may be wedged",
+            port,
+            format_timeout_for_error(timeout)
+        )),
+    }
+}
+
 async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
     // Mark this attach as pending so the self-eviction loop won't shut the
     // daemon down while we're waiting for `open_port` to finish (USB
@@ -151,14 +186,20 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                     attach_guard.set_target(client_id.clone(), port.clone());
                     // Open port if needed
                     if open_if_needed {
-                        if let Err(e) = ctx
-                            .serial_manager
-                            .open_port(&port, baud_rate, &client_id, None, client_metadata.clone())
-                            .await
-                        {
-                            let err_msg = SerialServerMessage::Error {
-                                message: format!("failed to open port: {}", e),
-                            };
+                        let open_result = await_ws_serial_open_port(
+                            &port,
+                            ctx.serial_manager.open_port(
+                                &port,
+                                baud_rate,
+                                &client_id,
+                                None,
+                                client_metadata.clone(),
+                            ),
+                            WS_SERIAL_OPEN_PORT_TIMEOUT,
+                        )
+                        .await;
+                        if let Err(message) = open_result {
+                            let err_msg = SerialServerMessage::Error { message };
                             let _ = socket
                                 .send(Message::Text(serialize_or_fallback(&err_msg)))
                                 .await;

@@ -18,6 +18,78 @@ fn now_unix_returns_reasonable_value() {
     assert!(ts > 1_577_836_800.0);
 }
 
+#[tokio::test]
+async fn ws_open_port_timeout_returns_error_with_deadline() {
+    let result = tokio::time::timeout(
+        std::time::Duration::from_secs(1),
+        await_ws_serial_open_port(
+            "COM_HUNG",
+            std::future::pending::<fbuild_core::Result<()>>(),
+            std::time::Duration::from_millis(10),
+        ),
+    )
+    .await
+    .expect("test helper should return at the injected deadline");
+
+    let message = result.expect_err("hung open_port must be reported as an error");
+    assert!(
+        message.contains("open_port(COM_HUNG) exceeded 10ms"),
+        "timeout error should name the port and deadline, got: {message}"
+    );
+    assert!(
+        message.contains("serial driver may be wedged"),
+        "timeout error should explain likely serial-driver wedge, got: {message}"
+    );
+}
+
+async fn run_pending_attach_timeout_scope(ctx: std::sync::Arc<DaemonContext>) -> String {
+    let attach_guard = PendingAttachGuard::new(ctx.clone());
+    attach_guard.set_target("client-hung".to_string(), "COM_HUNG".to_string());
+
+    assert_eq!(
+        ctx.pending_serial_attaches
+            .load(std::sync::atomic::Ordering::Relaxed),
+        1
+    );
+    assert_eq!(ctx.pending_serial_attach_infos().len(), 1);
+
+    let message = await_ws_serial_open_port(
+        "COM_HUNG",
+        std::future::pending::<fbuild_core::Result<()>>(),
+        std::time::Duration::from_millis(10),
+    )
+    .await
+    .expect_err("hung open_port must time out");
+
+    // `attach_guard` drops as this async function returns, matching the
+    // production handler's timeout/error return path.
+    message
+}
+
+#[tokio::test]
+async fn ws_open_port_timeout_drops_pending_attach_guard() {
+    let (tx, _rx) = tokio::sync::watch::channel(false);
+    let ctx = std::sync::Arc::new(DaemonContext::new(8765, tx, "test".to_string()));
+
+    let message = run_pending_attach_timeout_scope(ctx.clone()).await;
+    assert!(message.contains("open_port(COM_HUNG) exceeded 10ms"));
+
+    assert_eq!(
+        ctx.pending_serial_attaches
+            .load(std::sync::atomic::Ordering::Relaxed),
+        0
+    );
+    assert!(
+        ctx.pending_serial_attach_infos().is_empty(),
+        "pending attach details should be removed after timeout"
+    );
+    assert_eq!(
+        ctx.busy_reason(),
+        None,
+        "timed-out WebSocket attach must not keep the daemon busy"
+    );
+}
+
 // ---------------------------------------------------------------
 // ReaderControl + writer-batching topology tests (#757).
 //
