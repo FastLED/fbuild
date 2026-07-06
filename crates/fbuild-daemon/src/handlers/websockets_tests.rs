@@ -18,6 +18,14 @@ fn now_unix_returns_reasonable_value() {
     assert!(ts > 1_577_836_800.0);
 }
 
+#[test]
+fn ws_open_port_timeout_is_short_for_localhost_clients() {
+    assert_eq!(
+        WS_SERIAL_OPEN_PORT_TIMEOUT,
+        std::time::Duration::from_secs(3)
+    );
+}
+
 #[tokio::test]
 async fn ws_open_port_timeout_returns_error_with_deadline() {
     let result = tokio::time::timeout(

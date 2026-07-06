@@ -115,11 +115,12 @@ async fn cleanup_ws_serial_session(
 /// for every dead connection. See FastLED/fbuild#808.
 const WS_ATTACH_HANDSHAKE_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(10);
 
-/// Cap on the WebSocket serial attach `open_port` await. HTTP monitor and
-/// post-deploy monitor paths already bound this call at 30 s; the WebSocket
-/// attach path needs the same ceiling so a wedged USB driver cannot leave a
-/// pending serial attach counted forever. See FastLED/fbuild#977.
-const WS_SERIAL_OPEN_PORT_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(30);
+/// Cap on the WebSocket serial attach `open_port` await. WebSocket serial
+/// clients attach over localhost and should fail fast if the daemon cannot
+/// claim the port; this is intentionally shorter than the HTTP monitor paths
+/// so a wedged USB driver cannot leave a pending attach counted forever. See
+/// FastLED/fbuild#977.
+const WS_SERIAL_OPEN_PORT_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(3);
 
 fn format_timeout_for_error(timeout: Duration) -> String {
     let millis = timeout.as_millis();
