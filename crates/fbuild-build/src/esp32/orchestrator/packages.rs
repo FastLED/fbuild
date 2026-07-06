@@ -1,7 +1,7 @@
 //! Package resolution for pioarduino (platform.json, framework, toolchain).
 
 use std::collections::HashMap;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use fbuild_core::Result;
 
@@ -23,6 +23,7 @@ pub(super) async fn resolve_pioarduino_packages(
 ) -> Result<(
     fbuild_packages::toolchain::Esp32Toolchain,
     fbuild_packages::library::Esp32Framework,
+    Option<PathBuf>,
 )> {
     // Ensure pioarduino platform (contains platform.json with metadata URLs).
     // Honor `platform_packages = platform-espressif32@<URL>#<sha>` from the env
@@ -107,10 +108,20 @@ pub(super) async fn resolve_pioarduino_packages(
         }
         Ok::<(), fbuild_core::FbuildError>(())
     };
-    // Both futures run to completion; surface BOTH errors if both fail so the
-    // framework/SDK-libs failure (often the more actionable one) isn't dropped
-    // in favor of the toolchain error (CodeRabbit review on #967).
-    let (toolchain_res, framework_res) = tokio::join!(toolchain_fut, framework_fut);
+    // Provision the managed `tool-esptoolpy` package CONCURRENTLY with the
+    // toolchain + framework. esptool converts firmware.elf → firmware.bin at
+    // link time (FastLED/fbuild#954); provisioning it removes the pristine-
+    // machine "esptool not found — pip install esptool" failure. Best-effort:
+    // a resolution miss logs a warning and returns `None`, and the linker
+    // falls back to an `esptool` on PATH.
+    let esptool_fut = resolve_esptool(&platform, project_dir);
+
+    // The three futures run to completion; surface BOTH the toolchain and
+    // framework errors if both fail so the framework/SDK-libs failure (often
+    // the more actionable one) isn't dropped in favor of the toolchain error
+    // (CodeRabbit review on #967).
+    let (toolchain_res, framework_res, esptool_py) =
+        tokio::join!(toolchain_fut, framework_fut, esptool_fut);
     match (toolchain_res, framework_res) {
         (Err(tc), Err(fw)) => {
             return Err(fbuild_core::FbuildError::BuildFailed(format!(
@@ -121,7 +132,45 @@ pub(super) async fn resolve_pioarduino_packages(
         (Ok(_), Ok(_)) => {}
     }
 
-    Ok((toolchain, framework))
+    Ok((toolchain, framework, esptool_py))
+}
+
+/// Provision the managed `tool-esptoolpy` package (the tasmota PyInstaller
+/// standalone binary) from `platform.json` and return the path to the
+/// `esptool` executable.
+///
+/// Best-effort: any failure (missing `platform.json` entry, unsupported host,
+/// network error) is logged at warn level and yields `None`, so the linker's
+/// existing "esptool on PATH" fallback still applies. See FastLED/fbuild#954.
+async fn resolve_esptool(
+    platform: &fbuild_packages::library::Esp32Platform,
+    project_dir: &Path,
+) -> Option<PathBuf> {
+    let url = match platform.get_package_url("tool-esptoolpy") {
+        Ok(url) => url,
+        Err(e) => {
+            tracing::warn!(
+                "could not resolve tool-esptoolpy from platform.json: {} \
+                 (falling back to esptool on PATH)",
+                e
+            );
+            return None;
+        }
+    };
+    let esptool = fbuild_packages::library::Esptool::from_metadata_url(project_dir, &url);
+    match esptool.ensure_installed().await {
+        Ok(path) => {
+            tracing::info!("provisioned esptool at {}", path.display());
+            Some(path)
+        }
+        Err(e) => {
+            tracing::warn!(
+                "could not provision esptool: {} (falling back to esptool on PATH)",
+                e
+            );
+            None
+        }
+    }
 }
 
 /// Provision toolchain-* packages listed in `platform.json` other than the

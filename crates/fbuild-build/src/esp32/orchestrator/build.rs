@@ -75,7 +75,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // packages can honor consumer-pinned URLs (FastLED/fbuild#672).
         let env_config = ctx.config.get_env_config(&params.env_name).ok();
         let _resolve_phase = perf.phase("pioarduino-resolve");
-        let (toolchain, framework) = resolve_pioarduino_packages(
+        let (toolchain, framework, esptool_bin) = resolve_pioarduino_packages(
             &params.project_dir,
             &ctx.board.mcu,
             &mcu_config,
@@ -793,6 +793,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &flash_freq,
             ctx.board.max_flash,
             ctx.board.max_ram,
+            esptool_bin.clone(),
             params.verbose,
         );
 
@@ -821,6 +822,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &ctx.board,
             &mcu_config,
             &flash_freq,
+            esptool_bin.as_deref(),
             &mut perf,
         )
         .await?;

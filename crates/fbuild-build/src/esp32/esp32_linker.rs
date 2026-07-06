@@ -49,6 +49,46 @@ pub fn f_flash_to_esptool_freq(f_flash: Option<&str>, default_freq: &str) -> Str
     }
 }
 
+/// Build the argv for an esptool `elf2image` invocation.
+///
+/// When esptool was provisioned, the standalone binary is invoked directly;
+/// otherwise it falls back to an `esptool` on PATH. Shared by the firmware
+/// conversion path here and the bootloader conversion path in
+/// `orchestrator::boot_artifacts` so both honor the same provisioned tool
+/// (FastLED/fbuild#954). The `--chip` flag is a global option and therefore
+/// precedes the `elf2image` subcommand, matching the esptool v4/v5 CLI.
+#[allow(clippy::too_many_arguments)]
+pub(crate) fn esptool_elf2image_argv(
+    esptool_bin: Option<&Path>,
+    chip: &str,
+    flash_mode: &str,
+    flash_freq: &str,
+    flash_size: &str,
+    elf: &str,
+    out_bin: &str,
+) -> Vec<String> {
+    let mut argv: Vec<String> = Vec::new();
+    match esptool_bin {
+        Some(bin) => argv.push(bin.to_string_lossy().to_string()),
+        None => argv.push("esptool".to_string()),
+    }
+    argv.extend([
+        "--chip".to_string(),
+        chip.to_string(),
+        "elf2image".to_string(),
+        "--flash-mode".to_string(),
+        flash_mode.to_string(),
+        "--flash-freq".to_string(),
+        flash_freq.to_string(),
+        "--flash-size".to_string(),
+        flash_size.to_string(),
+        elf.to_string(),
+        "-o".to_string(),
+        out_bin.to_string(),
+    ]);
+    argv
+}
+
 /// ESP32-specific linker using RISC-V or Xtensa GCC as the link driver.
 pub struct Esp32Linker {
     gcc_path: PathBuf,
@@ -72,6 +112,9 @@ pub struct Esp32Linker {
     flash_freq: String,
     max_flash: Option<u64>,
     max_ram: Option<u64>,
+    /// Path to the provisioned standalone esptool binary, if available. `None`
+    /// falls back to an `esptool` on PATH. See FastLED/fbuild#954.
+    esptool_bin: Option<PathBuf>,
     verbose: bool,
 }
 
@@ -91,6 +134,7 @@ impl Esp32Linker {
         flash_freq: &str,
         max_flash: Option<u64>,
         max_ram: Option<u64>,
+        esptool_bin: Option<PathBuf>,
         verbose: bool,
     ) -> Self {
         let flash_mode = flash_mode.unwrap_or_else(|| mcu_config.default_flash_mode().to_string());
@@ -108,6 +152,7 @@ impl Esp32Linker {
             flash_freq: flash_freq.to_string(),
             max_flash,
             max_ram,
+            esptool_bin,
             verbose,
         }
     }
@@ -367,25 +412,22 @@ impl Linker for Esp32Linker {
         }
         // Determine flash size from max_flash config (bytes → human-readable).
         // elf2image doesn't support "detect" — needs an explicit size.
-        let args = [
-            "esptool",
-            "--chip",
+        // Prefer the provisioned standalone esptool binary; fall back to an
+        // `esptool` on PATH (FastLED/fbuild#954).
+        let argv = esptool_elf2image_argv(
+            self.esptool_bin.as_deref(),
             chip,
-            "elf2image",
-            "--flash-mode",
             &self.flash_mode,
-            "--flash-freq",
             &self.flash_freq,
-            "--flash-size",
             &flash_size,
             &elf_str,
-            "-o",
             &bin_str,
-        ];
+        );
+        let args: Vec<&str> = argv.iter().map(|s| s.as_str()).collect();
 
-        tracing::info!("elf2image: {}", args.join(" "));
+        tracing::info!("elf2image: {}", argv.join(" "));
 
-        match run_command(&args, None, None, Some(std::time::Duration::from_secs(30))).await {
+        match run_command(&args, None, None, Some(std::time::Duration::from_secs(60))).await {
             Ok(result) if result.success() => {
                 let cache = self.current_bin_cache(&elf_out, &flash_size)?;
                 if let Err(e) = save_json(&self.bin_cache_path(output_dir), &cache) {
@@ -400,7 +442,8 @@ impl Linker for Esp32Linker {
             ))),
             Err(e) => Err(fbuild_core::FbuildError::BuildFailed(format!(
                 "esptool not found — cannot convert firmware.elf to firmware.bin.\n\
-                 Install with: pip install esptool\nError: {}",
+                 fbuild normally provisions esptool automatically; if provisioning \
+                 failed, install with: pip install esptool\nError: {}",
                 e
             ))),
         }
@@ -475,6 +518,7 @@ mod tests {
             "80m",
             Some(3145728),
             Some(327680),
+            None,
             false,
         )
     }
@@ -504,6 +548,7 @@ mod tests {
             "80m",
             Some(4 * 1024 * 1024),
             Some(327680),
+            None,
             false,
         );
         let tmp = tempfile::TempDir::new().unwrap();
@@ -568,6 +613,7 @@ mod tests {
             "80m",
             Some(3145728),
             Some(327680),
+            None,
             false,
         );
         let flags = linker.linker_flags();
@@ -611,6 +657,7 @@ mod tests {
             "80m",
             Some(3145728),
             Some(327680),
+            None,
             false,
         );
         let flags = linker.linker_flags();
