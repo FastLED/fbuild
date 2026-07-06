@@ -13,6 +13,7 @@ use super::super::mcu_config::Esp32McuConfig;
 /// exception: an explicitly configured `board_build.partitions` CSV that
 /// resolves nowhere is a hard error (FastLED/fbuild#955) — silently flashing
 /// a different partition table is worse than failing.
+#[allow(clippy::too_many_arguments)]
 pub(super) async fn prepare_boot_artifacts(
     build_dir: &Path,
     project_dir: &Path,
@@ -20,6 +21,7 @@ pub(super) async fn prepare_boot_artifacts(
     board: &fbuild_config::BoardConfig,
     mcu_config: &Esp32McuConfig,
     flash_freq: &str,
+    esptool_bin: Option<&Path>,
     perf: &mut crate::perf_log::PerfTimer,
 ) -> Result<()> {
     let boot_artifacts_started = Instant::now();
@@ -76,26 +78,23 @@ pub(super) async fn prepare_boot_artifacts(
                 board.max_flash,
                 mcu_config.default_flash_size(),
             );
-            let args = [
-                "esptool",
-                "--chip",
+            // Prefer the provisioned standalone esptool binary; fall back to an
+            // `esptool` on PATH (FastLED/fbuild#954).
+            let argv = crate::esp32::esp32_linker::esptool_elf2image_argv(
+                esptool_bin,
                 &board.mcu,
-                "elf2image",
-                "--flash-mode",
                 boot_flash_mode,
-                "--flash-freq",
                 flash_freq,
-                "--flash-size",
                 flash_size,
                 &boot_elf_str,
-                "-o",
                 &boot_dst_str,
-            ];
+            );
+            let args: Vec<&str> = argv.iter().map(|s| s.as_str()).collect();
             match fbuild_core::subprocess::run_command(
                 &args,
                 None,
                 None,
-                Some(std::time::Duration::from_secs(30)),
+                Some(std::time::Duration::from_secs(60)),
             )
             .await
             {
