@@ -202,17 +202,14 @@ jobs:
             macos_cross: false
             mac_cross_linux: true
 
-          # Windows x86_64 native build (windows-latest runner).
-          # Cross-compile from Linux via cargo-xwin kept hitting
-          # Windows SDK header issues (assert.h missing during
-          # ring 0.17.x's cc-rs invocation) because cargo-xwin's
-          # CFLAGS injection isn't reaching build scripts on the
-          # current toolchain combo. Native Windows runner uses
-          # the real MSVC toolchain and avoids the xwin SDK
-          # extraction entirely. Trades cross-compile portability
-          # for release reliability on the 2.3.12 cut.
+          # Windows x86_64 now uses the same Linux -> MSVC soldr build path
+          # as aarch64-pc-windows-msvc. The native windows-latest release
+          # lane repeatedly exceeded the 45 minute release-binary step while
+          # compiling fbuild-cli, blocking the v2.4.0 publish. soldr v0.7.98's
+          # clang-cl shim fixes the earlier cargo-xwin/ring header routing
+          # issue that forced native Windows on the 2.3.12 cut.
           - target: x86_64-pc-windows-msvc
-            runner: windows-latest
+            runner: ubuntu-latest
             binary_ext: ".exe"
             linux_cross: false
             macos_cross: false
