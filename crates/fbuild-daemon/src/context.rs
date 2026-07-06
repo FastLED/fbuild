@@ -7,7 +7,7 @@ use fbuild_core::install_status::InstallStatus;
 use fbuild_core::DaemonState;
 use fbuild_serial::SharedSerialManager;
 use std::path::PathBuf;
-use std::sync::atomic::{AtomicBool, AtomicUsize};
+use std::sync::atomic::{AtomicBool, AtomicU64, AtomicUsize};
 use std::sync::{Arc, Weak};
 use std::time::Instant;
 use tokio::sync::Mutex;
@@ -124,6 +124,14 @@ fn compute_binary_mtime() -> f64 {
         .unwrap_or(0.0)
 }
 
+#[derive(Debug, Clone)]
+pub struct PendingSerialAttachInfo {
+    pub id: u64,
+    pub started_at: f64,
+    pub client_id: Option<String>,
+    pub port: Option<String>,
+}
+
 /// Shared state for the daemon, passed to all axum handlers via `State`.
 pub struct DaemonContext {
     /// When the daemon started.
@@ -145,6 +153,8 @@ pub struct DaemonContext {
     /// self-evict mid-attach and the client would see a forcibly-closed
     /// WebSocket. See ISSUES.md "Self-eviction during pending serial attach".
     pub pending_serial_attaches: Arc<AtomicUsize>,
+    pub pending_serial_attach_details: DashMap<u64, PendingSerialAttachInfo>,
+    pending_serial_attach_next_id: AtomicU64,
     /// Current daemon state (idle, building, deploying, etc.).
     pub daemon_state: Arc<std::sync::RwLock<DaemonState>>,
     /// Description of the current operation (e.g. project dir being built).
@@ -227,6 +237,8 @@ impl DaemonContext {
             is_shutting_down: Arc::new(AtomicBool::new(false)),
             operation_in_progress: Arc::new(AtomicBool::new(false)),
             pending_serial_attaches: Arc::new(AtomicUsize::new(0)),
+            pending_serial_attach_details: DashMap::new(),
+            pending_serial_attach_next_id: AtomicU64::new(1),
             daemon_state: Arc::new(std::sync::RwLock::new(DaemonState::Idle)),
             current_operation: Arc::new(std::sync::RwLock::new(None)),
             dependency_install: Arc::new(std::sync::RwLock::new(None)),
@@ -256,6 +268,52 @@ impl DaemonContext {
         if let Ok(mut t) = self.last_activity.lock() {
             *t = Instant::now();
         }
+    }
+
+    pub fn begin_pending_serial_attach(&self) -> u64 {
+        let id = self
+            .pending_serial_attach_next_id
+            .fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+        let started_at = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap_or_default()
+            .as_secs_f64();
+        self.pending_serial_attaches
+            .fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+        self.pending_serial_attach_details.insert(
+            id,
+            PendingSerialAttachInfo {
+                id,
+                started_at,
+                client_id: None,
+                port: None,
+            },
+        );
+        id
+    }
+
+    pub fn update_pending_serial_attach(&self, id: u64, client_id: String, port: String) {
+        if let Some(mut entry) = self.pending_serial_attach_details.get_mut(&id) {
+            entry.client_id = Some(client_id);
+            entry.port = Some(port);
+        }
+    }
+
+    pub fn end_pending_serial_attach(&self, id: u64) {
+        if self.pending_serial_attach_details.remove(&id).is_some() {
+            self.pending_serial_attaches
+                .fetch_sub(1, std::sync::atomic::Ordering::Relaxed);
+        }
+    }
+
+    pub fn pending_serial_attach_infos(&self) -> Vec<PendingSerialAttachInfo> {
+        let mut infos: Vec<_> = self
+            .pending_serial_attach_details
+            .iter()
+            .map(|entry| entry.value().clone())
+            .collect();
+        infos.sort_by_key(|info| info.id);
+        infos
     }
 
     /// Check whether the daemon is completely idle (no ops, no serial sessions,

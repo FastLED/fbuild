@@ -84,6 +84,7 @@ impl SerialMonitor {
             baud_rate: self.baud_rate,
             open_if_needed: true,
             pre_acquire_writer: true,
+            client_metadata: Some(crate::messages::ClientMetadata::current()),
         };
         let attach_json = serde_json::to_string(&attach)
             .expect("fbuild-python: ClientMessage::Attach serialization is infallible");

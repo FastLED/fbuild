@@ -6,6 +6,22 @@
 
 use serde::{Deserialize, Serialize};
 
+/// Best-effort owner metadata supplied by serial monitor clients.
+///
+/// Older clients omit this entirely; the daemon treats every field as
+/// optional so the attach protocol stays backward-compatible.
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+pub struct SerialClientMetadata {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub pid: Option<u32>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub exe: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub cwd: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub argv: Option<Vec<String>>,
+}
+
 /// Messages sent by the client to the daemon.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "type", rename_all = "snake_case")]
@@ -16,6 +32,8 @@ pub enum SerialClientMessage {
         baud_rate: u32,
         open_if_needed: bool,
         pre_acquire_writer: bool,
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        client_metadata: Option<SerialClientMetadata>,
     },
     Write {
         /// Base64-encoded data.
@@ -134,9 +152,16 @@ mod tests {
             baud_rate: 115200,
             open_if_needed: true,
             pre_acquire_writer: false,
+            client_metadata: Some(SerialClientMetadata {
+                pid: Some(1234),
+                exe: Some("python".into()),
+                cwd: Some("/work".into()),
+                argv: Some(vec!["python".into(), "-".into()]),
+            }),
         };
         let json = serde_json::to_string(&msg).unwrap();
         assert!(json.contains("\"type\":\"attach\""));
+        assert!(json.contains("\"pid\":1234"));
         let parsed: SerialClientMessage = serde_json::from_str(&json).unwrap();
         match parsed {
             SerialClientMessage::Attach {
@@ -145,13 +170,27 @@ mod tests {
                 baud_rate,
                 open_if_needed,
                 pre_acquire_writer,
+                client_metadata,
             } => {
                 assert_eq!(client_id, "c1");
                 assert_eq!(port, "COM3");
                 assert_eq!(baud_rate, 115200);
                 assert!(open_if_needed);
                 assert!(!pre_acquire_writer);
+                assert_eq!(client_metadata.unwrap().pid, Some(1234));
             }
+            _ => panic!("expected Attach"),
+        }
+    }
+
+    #[test]
+    fn client_attach_without_metadata_still_deserializes() {
+        let json = r#"{"type":"attach","client_id":"c1","port":"COM3","baud_rate":115200,"open_if_needed":true,"pre_acquire_writer":false}"#;
+        let parsed: SerialClientMessage = serde_json::from_str(json).unwrap();
+        match parsed {
+            SerialClientMessage::Attach {
+                client_metadata, ..
+            } => assert!(client_metadata.is_none()),
             _ => panic!("expected Attach"),
         }
     }

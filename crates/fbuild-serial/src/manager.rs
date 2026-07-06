@@ -5,7 +5,7 @@
 //! readers, exclusive writer) and the Windows USB-CDC write strategy.
 
 use crate::crash_decoder::CrashDecoder;
-use crate::messages::SerialStreamEvent;
+use crate::messages::{SerialClientMetadata, SerialStreamEvent};
 use crate::preemption::PreemptionTracker;
 use crate::session::SerialSession;
 use dashmap::DashMap;
@@ -19,11 +19,31 @@ const OUTPUT_BUFFER_CAP: usize = 10_000;
 const BROADCAST_CHANNEL_SIZE: usize = 1024;
 const READ_BUF_SIZE: usize = 4096;
 
+fn now_unix_secs() -> f64 {
+    std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap_or_default()
+        .as_secs_f64()
+}
+
+fn now_unix_millis() -> u64 {
+    std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap_or_default()
+        .as_millis()
+        .min(u128::from(u64::MAX)) as u64
+}
+
+fn millis_to_unix_secs(ms: u64) -> Option<f64> {
+    (ms > 0).then(|| ms as f64 / 1000.0)
+}
+
 /// Per-port output buffer shared with the background reader. Separate from
 /// `SerialSession` so we don't need `SerialSession: Clone`.
 struct PortOutputBuffer {
     buffer: std::sync::Mutex<VecDeque<String>>,
     total_bytes_read: std::sync::atomic::AtomicU64,
+    last_read_at_ms: std::sync::atomic::AtomicU64,
 }
 
 /// Central serial port manager. One instance per daemon.
@@ -76,11 +96,19 @@ impl SharedSerialManager {
         baud_rate: u32,
         client_id: &str,
         family: Option<crate::boards::BoardFamily>,
+        client_metadata: Option<SerialClientMetadata>,
     ) -> fbuild_core::Result<()> {
         let session_key = self.resolve_port_key(port);
         // If already open, just return Ok
-        if let Some(session) = self.sessions.get(&session_key) {
+        if let Some(mut session) = self.sessions.get_mut(&session_key) {
             if session.is_open {
+                session.last_activity_at = now_unix_secs();
+                if let Some(metadata) = client_metadata {
+                    session
+                        .client_metadata
+                        .insert(client_id.to_string(), metadata);
+                }
+                drop(session);
                 self.bump_close_generation(&session_key);
                 tracing::info!(port, client_id, "port already open, reusing");
                 return Ok(());
@@ -199,6 +227,7 @@ impl SharedSerialManager {
                     let port_buf = Arc::new(PortOutputBuffer {
                         buffer: std::sync::Mutex::new(VecDeque::with_capacity(OUTPUT_BUFFER_CAP)),
                         total_bytes_read: std::sync::atomic::AtomicU64::new(0),
+                        last_read_at_ms: std::sync::atomic::AtomicU64::new(0),
                     });
                     self.output_buffers
                         .insert(port_name.clone(), Arc::clone(&port_buf));
@@ -228,6 +257,9 @@ impl SharedSerialManager {
                                         port_buf
                                             .total_bytes_read
                                             .fetch_add(n as u64, Ordering::Relaxed);
+                                        port_buf
+                                            .last_read_at_ms
+                                            .store(now_unix_millis(), Ordering::Relaxed);
 
                                         // Split into complete lines
                                         while let Some(newline_pos) = partial_line.find('\n') {
@@ -284,15 +316,19 @@ impl SharedSerialManager {
                     };
 
                     let mut session = SerialSession::new(port_name.clone(), baud_rate);
+                    let now = now_unix_secs();
                     session.is_open = true;
                     session.owner_client_id = Some(client_id.to_string());
+                    if let Some(metadata) = client_metadata {
+                        session
+                            .client_metadata
+                            .insert(client_id.to_string(), metadata);
+                    }
                     session.serial_handle = Some(serial_handle);
                     session.reader_handle = Some(reader_handle);
                     session.stop_flag = stop_flag;
-                    session.started_at = std::time::SystemTime::now()
-                        .duration_since(std::time::UNIX_EPOCH)
-                        .unwrap_or_default()
-                        .as_secs_f64();
+                    session.started_at = now;
+                    session.last_activity_at = now;
 
                     self.sessions.insert(port_name.clone(), session);
                     self.bump_close_generation(&port_name);
@@ -399,7 +435,10 @@ impl SharedSerialManager {
 
         // Update stats
         if let Some(mut session) = self.sessions.get_mut(&session_key) {
+            let now = now_unix_secs();
             session.total_bytes_written += bytes_written as u64;
+            session.last_write_at = Some(now);
+            session.last_activity_at = now;
         }
 
         Ok(bytes_written)
@@ -604,6 +643,7 @@ impl SharedSerialManager {
         &self,
         port: &str,
         client_id: &str,
+        client_metadata: Option<SerialClientMetadata>,
     ) -> Option<broadcast::Receiver<SerialStreamEvent>> {
         let session_key = self.resolve_port_key(port);
         let rx = self
@@ -611,7 +651,13 @@ impl SharedSerialManager {
             .get(&session_key)
             .map(|tx| tx.subscribe())?;
         if let Some(mut session) = self.sessions.get_mut(&session_key) {
+            session.last_activity_at = now_unix_secs();
             session.reader_client_ids.insert(client_id.to_string());
+            if let Some(metadata) = client_metadata {
+                session
+                    .client_metadata
+                    .insert(client_id.to_string(), metadata);
+            }
             drop(session);
             self.bump_close_generation(&session_key);
         }
@@ -623,6 +669,7 @@ impl SharedSerialManager {
         let session_key = self.resolve_port_key(port);
         if let Some(mut session) = self.sessions.get_mut(&session_key) {
             session.reader_client_ids.remove(client_id);
+            session.last_activity_at = now_unix_secs();
         }
     }
 
@@ -729,6 +776,7 @@ impl SharedSerialManager {
                 Arc::new(PortOutputBuffer {
                     buffer: std::sync::Mutex::new(VecDeque::with_capacity(OUTPUT_BUFFER_CAP)),
                     total_bytes_read: std::sync::atomic::AtomicU64::new(0),
+                    last_read_at_ms: std::sync::atomic::AtomicU64::new(0),
                 })
             })
             .clone();
@@ -817,6 +865,7 @@ impl SharedSerialManager {
                 )));
             }
             session.writer_client_id = Some(client_id.to_string());
+            session.last_activity_at = now_unix_secs();
             drop(session);
             self.bump_close_generation(&session_key);
             Ok(())
@@ -834,6 +883,7 @@ impl SharedSerialManager {
         if let Some(mut session) = self.sessions.get_mut(&session_key) {
             if session.writer_client_id.as_deref() == Some(client_id) {
                 session.writer_client_id = None;
+                session.last_activity_at = now_unix_secs();
             }
         }
     }
@@ -907,16 +957,51 @@ impl SharedSerialManager {
             .iter()
             .map(|entry| {
                 let s = entry.value();
+                let last_read_at = self.output_buffers.get(entry.key()).and_then(|buf| {
+                    millis_to_unix_secs(buf.last_read_at_ms.load(Ordering::Relaxed))
+                });
+                let total_bytes_read = self
+                    .output_buffers
+                    .get(entry.key())
+                    .map(|buf| buf.total_bytes_read.load(Ordering::Relaxed))
+                    .unwrap_or(s.total_bytes_read);
+                let mut reader_client_ids: Vec<String> =
+                    s.reader_client_ids.iter().cloned().collect();
+                reader_client_ids.sort();
+                let mut clients: Vec<SerialClientInfo> = s
+                    .client_metadata
+                    .iter()
+                    .map(|(client_id, metadata)| SerialClientInfo {
+                        client_id: client_id.clone(),
+                        metadata: metadata.clone(),
+                    })
+                    .collect();
+                clients.sort_by(|a, b| a.client_id.cmp(&b.client_id));
                 PortSessionInfo {
                     port: s.port.clone(),
                     is_open: s.is_open,
                     writer_client_id: s.writer_client_id.clone(),
                     reader_count: s.reader_client_ids.len(),
+                    reader_client_ids,
                     owner_client_id: s.owner_client_id.clone(),
                     baud_rate: s.baud_rate,
+                    started_at: s.started_at,
+                    last_activity_at: s.last_activity_at,
+                    last_read_at,
+                    last_write_at: s.last_write_at,
+                    total_bytes_read,
+                    total_bytes_written: s.total_bytes_written,
+                    clients,
                 }
             })
             .collect()
+    }
+
+    /// Test hook for higher-level daemon handlers that need an in-memory
+    /// serial session without opening a real OS port.
+    #[cfg(any(test, debug_assertions))]
+    pub fn insert_session_for_test(&self, session: SerialSession) {
+        self.sessions.insert(session.port.clone(), session);
     }
 
     async fn open_physical_serial(
@@ -1006,6 +1091,9 @@ impl SharedSerialManager {
                         port_buf
                             .total_bytes_read
                             .fetch_add(n as u64, Ordering::Relaxed);
+                        port_buf
+                            .last_read_at_ms
+                            .store(now_unix_millis(), Ordering::Relaxed);
 
                         while let Some(newline_pos) = partial_line.find('\n') {
                             let line = partial_line[..newline_pos].trim_end().to_string();
@@ -1087,8 +1175,23 @@ pub struct PortSessionInfo {
     pub is_open: bool,
     pub writer_client_id: Option<String>,
     pub reader_count: usize,
+    pub reader_client_ids: Vec<String>,
     pub owner_client_id: Option<String>,
     pub baud_rate: u32,
+    pub started_at: f64,
+    pub last_activity_at: f64,
+    pub last_read_at: Option<f64>,
+    pub last_write_at: Option<f64>,
+    pub total_bytes_read: u64,
+    pub total_bytes_written: u64,
+    pub clients: Vec<SerialClientInfo>,
+}
+
+/// Snapshot of a serial client attached to a port session.
+#[derive(Debug, Clone)]
+pub struct SerialClientInfo {
+    pub client_id: String,
+    pub metadata: SerialClientMetadata,
 }
 
 impl Default for SharedSerialManager {

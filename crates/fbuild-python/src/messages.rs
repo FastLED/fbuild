@@ -9,6 +9,33 @@ pub(crate) type WsStream =
 pub(crate) type WsSink = futures::stream::SplitSink<WsStream, tungstenite::Message>;
 pub(crate) type WsSource = futures::stream::SplitStream<WsStream>;
 
+#[derive(Debug, Clone, Serialize)]
+pub(crate) struct ClientMetadata {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub pid: Option<u32>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub exe: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub cwd: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub argv: Option<Vec<String>>,
+}
+
+impl ClientMetadata {
+    pub(crate) fn current() -> Self {
+        Self {
+            pid: Some(std::process::id()),
+            exe: std::env::current_exe()
+                .ok()
+                .map(|p| p.to_string_lossy().into_owned()),
+            cwd: std::env::current_dir()
+                .ok()
+                .map(|p| p.to_string_lossy().into_owned()),
+            argv: Some(std::env::args().collect()),
+        }
+    }
+}
+
 /// Messages we receive from the daemon (subset we care about).
 #[derive(Debug, Deserialize)]
 #[serde(tag = "type", rename_all = "snake_case")]
@@ -99,6 +126,8 @@ pub(crate) enum ClientMessage {
         baud_rate: u32,
         open_if_needed: bool,
         pre_acquire_writer: bool,
+        #[serde(skip_serializing_if = "Option::is_none")]
+        client_metadata: Option<ClientMetadata>,
     },
     Write {
         data: String,

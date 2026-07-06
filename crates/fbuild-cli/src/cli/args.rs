@@ -729,7 +729,23 @@ pub enum DaemonAction {
     /// Show lock status (project locks, serial sessions)
     Locks,
     /// Clear stale locks
-    ClearLocks,
+    ClearLocks {
+        /// Include serial sessions in stale lock cleanup
+        #[arg(long)]
+        serial: bool,
+        /// Close only sessions that the daemon can classify as stale
+        #[arg(long)]
+        stale: bool,
+        /// Target a serial session by port (for example COM11 or /dev/ttyUSB0)
+        #[arg(long)]
+        port: Option<String>,
+        /// Target a serial session by client id
+        #[arg(long = "client-id")]
+        client_id: Option<String>,
+        /// Close a targeted live serial session; requires --port or --client-id
+        #[arg(long)]
+        force: bool,
+    },
     /// Show disk cache statistics
     CacheStats,
     /// Run disk cache garbage collection

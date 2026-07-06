@@ -227,6 +227,8 @@ pub struct LockStatusResponse {
     pub success: bool,
     pub port_locks: Vec<PortLockInfo>,
     pub project_locks: Vec<ProjectLockInfo>,
+    #[serde(default)]
+    pub pending_serial_attaches: Vec<PendingSerialAttachInfo>,
     pub stale_locks: Vec<String>,
 }
 
@@ -237,8 +239,70 @@ pub struct PortLockInfo {
     #[allow(dead_code)]
     pub holder_description: Option<String>,
     pub is_open: bool,
+    #[serde(default)]
+    pub owner_client_id: Option<String>,
     pub writer_client_id: Option<String>,
     pub reader_count: usize,
+    #[serde(default)]
+    #[allow(dead_code)]
+    pub reader_client_ids: Vec<String>,
+    #[serde(default)]
+    pub baud_rate: u32,
+    #[serde(default)]
+    #[allow(dead_code)]
+    pub started_at: f64,
+    #[serde(default)]
+    pub session_age_seconds: f64,
+    #[serde(default)]
+    #[allow(dead_code)]
+    pub last_activity_at: f64,
+    #[serde(default)]
+    pub last_activity_age_seconds: f64,
+    #[serde(default)]
+    #[allow(dead_code)]
+    pub last_read_at: Option<f64>,
+    #[serde(default)]
+    pub last_read_age_seconds: Option<f64>,
+    #[serde(default)]
+    #[allow(dead_code)]
+    pub last_write_at: Option<f64>,
+    #[serde(default)]
+    pub last_write_age_seconds: Option<f64>,
+    #[serde(default)]
+    pub total_bytes_read: u64,
+    #[serde(default)]
+    pub total_bytes_written: u64,
+    #[serde(default)]
+    pub clients: Vec<SerialClientLockInfo>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct SerialClientLockInfo {
+    pub client_id: String,
+    #[serde(default)]
+    pub pid: Option<u32>,
+    #[serde(default)]
+    pub process_alive: Option<bool>,
+    #[serde(default)]
+    pub exe: Option<String>,
+    #[serde(default)]
+    pub cwd: Option<String>,
+    #[serde(default)]
+    pub argv: Option<Vec<String>>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct PendingSerialAttachInfo {
+    pub id: u64,
+    #[serde(default)]
+    pub client_id: Option<String>,
+    #[serde(default)]
+    pub port: Option<String>,
+    #[serde(default)]
+    #[allow(dead_code)]
+    pub started_at: f64,
+    #[serde(default)]
+    pub age_seconds: f64,
 }
 
 #[derive(Debug, Deserialize)]
@@ -247,11 +311,33 @@ pub struct ProjectLockInfo {
     pub is_held: bool,
 }
 
+#[derive(Debug, Default, Serialize)]
+pub struct ClearLocksRequest {
+    #[serde(default)]
+    pub serial: bool,
+    #[serde(default)]
+    pub stale: bool,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub port: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub client_id: Option<String>,
+    #[serde(default)]
+    pub force: bool,
+}
+
 #[derive(Debug, Deserialize)]
 pub struct ClearLocksResponse {
     #[allow(dead_code)]
     pub success: bool,
     pub cleared_count: usize,
+    #[serde(default)]
+    pub cleared_project_count: usize,
+    #[serde(default)]
+    pub cleared_serial_count: usize,
+    #[serde(default)]
+    pub cleared_serial_sessions: Vec<String>,
+    #[serde(default)]
+    pub refused: Vec<String>,
     pub message: String,
 }
 
