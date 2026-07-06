@@ -434,10 +434,11 @@ pub(crate) fn embedded_lookup(vid: u16, pid: u16) -> Option<UsbInfo> {
     embedded().vidpid.get(&pack(vid, pid)).cloned()
 }
 
-/// Tier-2 lookup. Prefers the runtime-installed online overlay (freshest —
-/// refreshed nightly), then falls back to the compile-time embedded overlay
-/// so resolution still works fully offline. `None` only if the pair is in
-/// neither.
+/// Combined tier-2 lookup (online overlay, then embedded overlay). Retained
+/// for the test suite; production resolution goes through the layered
+/// [`super::resolver::try_resolve`], which consults `online_lookup` and
+/// `embedded_lookup` separately so it can source the vendor authoritatively.
+#[cfg(test)]
 pub(crate) fn lookup(vid: u16, pid: u16) -> Option<UsbInfo> {
     online_lookup(vid, pid).or_else(|| embedded_lookup(vid, pid))
 }
