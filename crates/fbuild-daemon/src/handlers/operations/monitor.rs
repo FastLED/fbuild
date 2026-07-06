@@ -260,7 +260,7 @@ pub async fn monitor(
     let open_result = tokio::time::timeout(
         std::time::Duration::from_secs(SERIAL_OPEN_PORT_TIMEOUT_SECS),
         ctx.serial_manager
-            .open_port(&port, baud_rate, &request_id, None),
+            .open_port(&port, baud_rate, &request_id, None, None),
     )
     .await;
     match open_result {
@@ -295,7 +295,7 @@ pub async fn monitor(
         || req.timeout.is_some();
 
     if has_conditions {
-        let mut rx = match ctx.serial_manager.attach_reader(&port, &request_id) {
+        let mut rx = match ctx.serial_manager.attach_reader(&port, &request_id, None) {
             Some(rx) => rx,
             None => {
                 return (

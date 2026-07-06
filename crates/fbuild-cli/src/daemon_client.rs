@@ -546,9 +546,18 @@ impl DaemonClient {
 
     /// Clear stale locks on the daemon.
     pub async fn clear_locks(&self) -> fbuild_core::Result<ClearLocksResponse> {
+        self.clear_locks_with(&ClearLocksRequest::default()).await
+    }
+
+    /// Clear stale locks on the daemon with targeting options.
+    pub async fn clear_locks_with(
+        &self,
+        request: &ClearLocksRequest,
+    ) -> fbuild_core::Result<ClearLocksResponse> {
         let resp = self
             .client
             .post(format!("{}/api/locks/clear", self.base_url))
+            .json(request)
             .timeout(fbuild_core::time::MEDIUM_HTTP_TIMEOUT)
             .send()
             .await

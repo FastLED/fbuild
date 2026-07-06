@@ -66,21 +66,24 @@ pub async fn ws_serial_monitor(
 /// `open_port` to complete its USB re-enumeration retries).
 struct PendingAttachGuard {
     ctx: Arc<DaemonContext>,
+    id: u64,
 }
 
 impl PendingAttachGuard {
     fn new(ctx: Arc<DaemonContext>) -> Self {
-        ctx.pending_serial_attaches
-            .fetch_add(1, std::sync::atomic::Ordering::Relaxed);
-        Self { ctx }
+        let id = ctx.begin_pending_serial_attach();
+        Self { ctx, id }
+    }
+
+    fn set_target(&self, client_id: String, port: String) {
+        self.ctx
+            .update_pending_serial_attach(self.id, client_id, port);
     }
 }
 
 impl Drop for PendingAttachGuard {
     fn drop(&mut self) {
-        self.ctx
-            .pending_serial_attaches
-            .fetch_sub(1, std::sync::atomic::Ordering::Relaxed);
+        self.ctx.end_pending_serial_attach(self.id);
     }
 }
 
@@ -115,7 +118,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
     // Mark this attach as pending so the self-eviction loop won't shut the
     // daemon down while we're waiting for `open_port` to finish (USB
     // re-enumeration on Windows can take 10+ seconds).
-    let _attach_guard = PendingAttachGuard::new(ctx.clone());
+    let attach_guard = PendingAttachGuard::new(ctx.clone());
 
     // Wait for the attach message (FastLED/fbuild#808: bounded so an
     // idle client cannot tie up a tokio task slot forever).
@@ -134,7 +137,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
             return;
         }
     };
-    let (client_id, port, baud_rate, pre_acquire_writer) = match first_frame {
+    let (client_id, port, baud_rate, pre_acquire_writer, client_metadata) = match first_frame {
         Some(Ok(Message::Text(text))) => {
             match serde_json::from_str::<SerialClientMessage>(&text) {
                 Ok(SerialClientMessage::Attach {
@@ -143,12 +146,14 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                     baud_rate,
                     open_if_needed,
                     pre_acquire_writer,
+                    client_metadata,
                 }) => {
+                    attach_guard.set_target(client_id.clone(), port.clone());
                     // Open port if needed
                     if open_if_needed {
                         if let Err(e) = ctx
                             .serial_manager
-                            .open_port(&port, baud_rate, &client_id, None)
+                            .open_port(&port, baud_rate, &client_id, None, client_metadata.clone())
                             .await
                         {
                             let err_msg = SerialServerMessage::Error {
@@ -160,7 +165,13 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                             return;
                         }
                     }
-                    (client_id, port, baud_rate, pre_acquire_writer)
+                    (
+                        client_id,
+                        port,
+                        baud_rate,
+                        pre_acquire_writer,
+                        client_metadata,
+                    )
                 }
                 Ok(_) => {
                     let err_msg = SerialServerMessage::Error {
@@ -202,7 +213,10 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
     };
 
     // Attach reader
-    let mut rx = match ctx.serial_manager.attach_reader(&port, &client_id) {
+    let mut rx = match ctx
+        .serial_manager
+        .attach_reader(&port, &client_id, client_metadata.clone())
+    {
         Some(rx) => rx,
         None => {
             let err_msg = SerialServerMessage::Error {
@@ -230,6 +244,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
         cleanup_ws_serial_session(&ctx, &port, &client_id, writer_acquired).await;
         return;
     }
+    drop(attach_guard);
 
     // Concurrent reader / writer / inbound split (issue #749).
     //

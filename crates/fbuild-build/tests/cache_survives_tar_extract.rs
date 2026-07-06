@@ -172,9 +172,10 @@ fn compiler_signature_survives_toolchain_path_change() {
     let flags = vec!["-O2".to_string(), "-DFOO=1".to_string()];
     let pre_flags = vec!["-Wall".to_string()];
     let extra_flags = vec!["-I/some/include".to_string()];
+    let build_unflags: Vec<String> = Vec::new();
 
-    let sig_a = build_rebuild_signature(&path_a, &flags, &pre_flags, &extra_flags);
-    let sig_b = build_rebuild_signature(&path_b, &flags, &pre_flags, &extra_flags);
+    let sig_a = build_rebuild_signature(&path_a, &flags, &pre_flags, &extra_flags, &build_unflags);
+    let sig_b = build_rebuild_signature(&path_b, &flags, &pre_flags, &extra_flags, &build_unflags);
 
     assert_eq!(
         sig_a, sig_b,
@@ -184,7 +185,7 @@ fn compiler_signature_survives_toolchain_path_change() {
 
     let alt_filename = if cfg!(windows) { "clang.exe" } else { "clang" };
     let path_c = toolchain_a.path().join(alt_filename);
-    let sig_c = build_rebuild_signature(&path_c, &flags, &pre_flags, &extra_flags);
+    let sig_c = build_rebuild_signature(&path_c, &flags, &pre_flags, &extra_flags, &build_unflags);
     assert_ne!(
         sig_a, sig_c,
         "build_rebuild_signature collapsed two different compilers to the same signature; \

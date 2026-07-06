@@ -151,7 +151,7 @@ fn open_port_does_not_starve_runtime_workers() {
 
         let open_task = tokio::spawn(async move {
             let _ = mgr_open
-                .open_port(&bogus_port, 115200, "test_client", None)
+                .open_port(&bogus_port, 115200, "test_client", None, None)
                 .await;
         });
 
@@ -215,7 +215,10 @@ fn attach_reader_missing_broadcaster_does_not_mutate_session_state() {
             total_bytes_read: 0,
             total_bytes_written: 0,
             started_at: 0.0,
+            last_activity_at: 0.0,
+            last_write_at: None,
             owner_client_id: None,
+            client_metadata: Default::default(),
             elf_path: None,
             serial_handle: None,
             reader_handle: None,
@@ -223,7 +226,7 @@ fn attach_reader_missing_broadcaster_does_not_mutate_session_state() {
         },
     );
 
-    let result = mgr.attach_reader(port, client);
+    let result = mgr.attach_reader(port, client, None);
     assert!(
         result.is_none(),
         "attach_reader must return None when broadcaster is absent"
@@ -273,7 +276,10 @@ async fn detach_then_close_releases_port_for_lone_monitor() {
             total_bytes_read: 0,
             total_bytes_written: 0,
             started_at: 0.0,
+            last_activity_at: 0.0,
+            last_write_at: None,
             owner_client_id: Some(client.to_string()),
+            client_metadata: Default::default(),
             elf_path: None,
             serial_handle: None,
             reader_handle: None,
@@ -325,7 +331,10 @@ async fn grace_close_removes_idle_port_after_delay() {
             total_bytes_read: 0,
             total_bytes_written: 0,
             started_at: 0.0,
+            last_activity_at: 0.0,
+            last_write_at: None,
             owner_client_id: Some(client.to_string()),
+            client_metadata: Default::default(),
             elf_path: None,
             serial_handle: None,
             reader_handle: None,
@@ -363,7 +372,10 @@ async fn grace_close_is_canceled_by_new_reader() {
             total_bytes_read: 0,
             total_bytes_written: 0,
             started_at: 0.0,
+            last_activity_at: 0.0,
+            last_write_at: None,
             owner_client_id: Some(client.to_string()),
+            client_metadata: Default::default(),
             elf_path: None,
             serial_handle: None,
             reader_handle: None,
@@ -372,7 +384,7 @@ async fn grace_close_is_canceled_by_new_reader() {
     );
 
     assert!(mgr.close_port_after_grace_if_idle(port, client, Duration::from_millis(25)));
-    let rx = mgr.attach_reader(port, next_client);
+    let rx = mgr.attach_reader(port, next_client, None);
     assert!(
         rx.is_some(),
         "new reader should attach during pending close grace window"
@@ -409,7 +421,10 @@ async fn stale_deploy_preemption_close_preserves_new_monitor_session() {
             total_bytes_read: 0,
             total_bytes_written: 0,
             started_at: 0.0,
+            last_activity_at: 0.0,
+            last_write_at: None,
             owner_client_id: Some(original_client.to_string()),
+            client_metadata: Default::default(),
             elf_path: None,
             serial_handle: Some(Arc::new(Mutex::new(Box::new(fake)))),
             reader_handle: None,
@@ -422,7 +437,7 @@ async fn stale_deploy_preemption_close_preserves_new_monitor_session() {
     // close must not remove the new monitor session or later writes fail
     // with "port not open" (FastLED/fbuild#811).
     let stale_generation = mgr.bump_close_generation(port);
-    assert!(mgr.attach_reader(port, monitor_client).is_some());
+    assert!(mgr.attach_reader(port, monitor_client, None).is_some());
     assert_ne!(mgr.close_generation(port), Some(stale_generation));
 
     let closed = mgr
@@ -494,6 +509,7 @@ async fn rebind_preserves_session_and_routes_writes_to_new_handle() {
         Arc::new(PortOutputBuffer {
             buffer: std::sync::Mutex::new(VecDeque::with_capacity(OUTPUT_BUFFER_CAP)),
             total_bytes_read: std::sync::atomic::AtomicU64::new(0),
+            last_read_at_ms: std::sync::atomic::AtomicU64::new(0),
         }),
     );
     let (old_fake, _old_writes) = FakeSerialPort::new(old_port);
@@ -511,7 +527,10 @@ async fn rebind_preserves_session_and_routes_writes_to_new_handle() {
             total_bytes_read: 0,
             total_bytes_written: 0,
             started_at: 0.0,
+            last_activity_at: 0.0,
+            last_write_at: None,
             owner_client_id: Some(writer.to_string()),
+            client_metadata: Default::default(),
             elf_path: None,
             serial_handle: Some(Arc::new(Mutex::new(Box::new(old_fake)))),
             reader_handle: None,
@@ -722,7 +741,10 @@ async fn write_to_port_completes_partial_writes_and_reports_full_length() {
             total_bytes_read: 0,
             total_bytes_written: 0,
             started_at: 0.0,
+            last_activity_at: 0.0,
+            last_write_at: None,
             owner_client_id: Some(writer.to_string()),
+            client_metadata: Default::default(),
             elf_path: None,
             serial_handle: Some(Arc::new(Mutex::new(Box::new(fake)))),
             reader_handle: None,

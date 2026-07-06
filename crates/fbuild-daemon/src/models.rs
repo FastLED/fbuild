@@ -4,6 +4,11 @@ use std::collections::BTreeMap;
 
 use serde::{Deserialize, Serialize};
 
+pub use crate::lock_models::{
+    ClearLocksRequest, ClearLocksResponse, LockStatusResponse, PendingSerialAttachLockInfo,
+    PortLockInfo, ProjectLockInfo, SerialClientLockInfo,
+};
+
 /// POST /api/build
 #[derive(Debug, Deserialize)]
 pub struct BuildRequest {
@@ -308,41 +313,6 @@ pub struct DeviceInfo {
 pub struct DeviceListResponse {
     pub success: bool,
     pub devices: Vec<DeviceInfo>,
-}
-
-/// GET /api/locks/status response.
-#[derive(Debug, Serialize)]
-pub struct LockStatusResponse {
-    pub success: bool,
-    pub port_locks: Vec<PortLockInfo>,
-    pub project_locks: Vec<ProjectLockInfo>,
-    pub stale_locks: Vec<String>,
-}
-
-/// Lock information for a serial port.
-#[derive(Debug, Serialize)]
-pub struct PortLockInfo {
-    pub port: String,
-    pub is_held: bool,
-    pub holder_description: Option<String>,
-    pub is_open: bool,
-    pub writer_client_id: Option<String>,
-    pub reader_count: usize,
-}
-
-/// Lock information for a project directory.
-#[derive(Debug, Serialize)]
-pub struct ProjectLockInfo {
-    pub project_dir: String,
-    pub is_held: bool,
-}
-
-/// POST /api/locks/clear response.
-#[derive(Debug, Serialize)]
-pub struct ClearLocksResponse {
-    pub success: bool,
-    pub cleared_count: usize,
-    pub message: String,
 }
 
 /// POST /api/install-deps request.

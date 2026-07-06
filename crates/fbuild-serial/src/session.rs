@@ -1,7 +1,8 @@
 //! Per-port serial session state.
 
-use std::collections::HashSet;
+use crate::messages::SerialClientMetadata;
 use std::collections::VecDeque;
+use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
 use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
@@ -22,8 +23,12 @@ pub struct SerialSession {
     pub total_bytes_read: u64,
     pub total_bytes_written: u64,
     pub started_at: f64,
+    pub last_activity_at: f64,
+    pub last_write_at: Option<f64>,
     /// Client that opened the port.
     pub owner_client_id: Option<String>,
+    /// Best-effort metadata keyed by serial client id.
+    pub client_metadata: HashMap<String, SerialClientMetadata>,
     /// Path to firmware ELF for crash decoding.
     pub elf_path: Option<PathBuf>,
     /// The underlying serial port handle.
@@ -36,6 +41,10 @@ pub struct SerialSession {
 
 impl SerialSession {
     pub fn new(port: String, baud_rate: u32) -> Self {
+        let now = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap_or_default()
+            .as_secs_f64();
         Self {
             port,
             baud_rate,
@@ -45,8 +54,11 @@ impl SerialSession {
             output_buffer: VecDeque::with_capacity(10_000),
             total_bytes_read: 0,
             total_bytes_written: 0,
-            started_at: 0.0,
+            started_at: now,
+            last_activity_at: now,
+            last_write_at: None,
             owner_client_id: None,
+            client_metadata: HashMap::new(),
             elf_path: None,
             serial_handle: None,
             reader_handle: None,

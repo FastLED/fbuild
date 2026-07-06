@@ -111,8 +111,21 @@ pub async fn run_daemon(action: DaemonAction) -> fbuild_core::Result<()> {
         DaemonAction::Locks => {
             run_daemon_locks(&client).await?;
         }
-        DaemonAction::ClearLocks => {
-            run_daemon_clear_locks(&client).await?;
+        DaemonAction::ClearLocks {
+            serial,
+            stale,
+            port,
+            client_id,
+            force,
+        } => {
+            let request = daemon_client::ClearLocksRequest {
+                serial,
+                stale,
+                port,
+                client_id,
+                force,
+            };
+            run_daemon_clear_locks(&client, request).await?;
         }
         DaemonAction::CacheStats => {
             run_daemon_cache_stats(&client).await?;
@@ -347,9 +360,64 @@ pub async fn run_daemon_locks(client: &DaemonClient) -> fbuild_core::Result<()> 
         for lock in &status.port_locks {
             let state = if lock.is_held { "HELD" } else { "FREE" };
             let writer = lock.writer_client_id.as_deref().unwrap_or("none");
+            let owner = lock.owner_client_id.as_deref().unwrap_or("none");
             output::result(format!(
-                "  {} [{}] open={} writer={} readers={}",
-                lock.port, state, lock.is_open, writer, lock.reader_count
+                "  {} [{}] open={} baud={} owner={} writer={} readers={} age={} last_activity={} rx={} tx={}",
+                lock.port,
+                state,
+                lock.is_open,
+                lock.baud_rate,
+                owner,
+                writer,
+                lock.reader_count,
+                format_age_seconds(lock.session_age_seconds),
+                format_age_seconds(lock.last_activity_age_seconds),
+                lock.total_bytes_read,
+                lock.total_bytes_written
+            ));
+            if let Some(age) = lock.last_read_age_seconds {
+                output::result(format!("    last_read: {}", format_age_seconds(age)));
+            }
+            if let Some(age) = lock.last_write_age_seconds {
+                output::result(format!("    last_write: {}", format_age_seconds(age)));
+            }
+            for client in &lock.clients {
+                let pid = client
+                    .pid
+                    .map(|pid| pid.to_string())
+                    .unwrap_or_else(|| "unknown".to_string());
+                let alive = client
+                    .process_alive
+                    .map(|alive| if alive { "alive" } else { "dead" })
+                    .unwrap_or("unknown");
+                output::result(format!(
+                    "    client {} pid={} ({})",
+                    client.client_id, pid, alive
+                ));
+                if let Some(exe) = &client.exe {
+                    output::result(format!("      exe: {}", exe));
+                }
+                if let Some(cwd) = &client.cwd {
+                    output::result(format!("      cwd: {}", cwd));
+                }
+                if let Some(argv) = &client.argv {
+                    if !argv.is_empty() {
+                        output::result(format!("      argv: {}", argv.join(" ")));
+                    }
+                }
+            }
+        }
+    }
+
+    if !status.pending_serial_attaches.is_empty() {
+        output::result("Pending Serial Attaches:");
+        for pending in &status.pending_serial_attaches {
+            output::result(format!(
+                "  #{} port={} client={} age={}",
+                pending.id,
+                pending.port.as_deref().unwrap_or("unknown"),
+                pending.client_id.as_deref().unwrap_or("unknown"),
+                format_age_seconds(pending.age_seconds)
             ));
         }
     }
@@ -375,16 +443,34 @@ pub async fn run_daemon_locks(client: &DaemonClient) -> fbuild_core::Result<()> 
     Ok(())
 }
 
-pub async fn run_daemon_clear_locks(client: &DaemonClient) -> fbuild_core::Result<()> {
+pub async fn run_daemon_clear_locks(
+    client: &DaemonClient,
+    request: daemon_client::ClearLocksRequest,
+) -> fbuild_core::Result<()> {
     if !client.health().await {
         output::result("daemon is not running");
         return Ok(());
     }
 
-    let result = client.clear_locks().await?;
+    let result = client.clear_locks_with(&request).await?;
     output::result(&result.message);
     if result.cleared_count > 0 {
         output::result(format!("Cleared {} lock(s)", result.cleared_count));
+    }
+    if result.cleared_project_count > 0 {
+        output::result(format!(
+            "Cleared {} project lock(s)",
+            result.cleared_project_count
+        ));
+    }
+    if result.cleared_serial_count > 0 {
+        output::result(format!(
+            "Cleared serial sessions: {}",
+            result.cleared_serial_sessions.join(", ")
+        ));
+    }
+    for refusal in result.refused {
+        output::warn(refusal);
     }
     Ok(())
 }
@@ -687,4 +773,8 @@ pub fn format_uptime(seconds: f64) -> String {
     } else {
         format!("{}h {}m", secs / 3600, (secs % 3600) / 60)
     }
+}
+
+fn format_age_seconds(seconds: f64) -> String {
+    format_uptime(seconds.max(0.0))
 }

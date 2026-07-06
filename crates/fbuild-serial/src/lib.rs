@@ -42,6 +42,8 @@ pub mod preemption;
 pub mod rpc_validate;
 pub mod session;
 
-pub use manager::{PortSessionInfo, SharedSerialManager};
-pub use messages::{SerialClientMessage, SerialServerMessage, SerialStreamEvent};
+pub use manager::{PortSessionInfo, SerialClientInfo, SharedSerialManager};
+pub use messages::{
+    SerialClientMessage, SerialClientMetadata, SerialServerMessage, SerialStreamEvent,
+};
 pub use session::SerialSession;

@@ -959,7 +959,7 @@ pub async fn deploy(
         let open_result = tokio::time::timeout(
             POST_DEPLOY_OPEN_TIMEOUT,
             ctx.serial_manager
-                .open_port(&monitor_port, baud_rate, &request_id, None),
+                .open_port(&monitor_port, baud_rate, &request_id, None, None),
         )
         .await;
         let open_err: Option<String> = match open_result {
@@ -989,7 +989,10 @@ pub async fn deploy(
         }
 
         // Subscribe to broadcast channel
-        let mut rx = match ctx.serial_manager.attach_reader(&monitor_port, &request_id) {
+        let mut rx = match ctx
+            .serial_manager
+            .attach_reader(&monitor_port, &request_id, None)
+        {
             Some(rx) => rx,
             None => {
                 return (

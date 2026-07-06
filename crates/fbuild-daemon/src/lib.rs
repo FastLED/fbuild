@@ -33,6 +33,7 @@ pub mod broker;
 pub mod context;
 pub mod device_manager;
 pub mod handlers;
+pub mod lock_models;
 pub mod log_layer;
 pub mod models;
 pub mod status_manager;
