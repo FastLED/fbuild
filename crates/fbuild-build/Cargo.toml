@@ -38,9 +38,12 @@ tree-sitter-cpp = { workspace = true }
 # child processes) was deleted in the same PR; there is no
 # `--no-default-features` escape hatch.
 #
-# Pinned at the same revision soldr uses (`73d3f84`,
-# zackees/soldr#994 + zccache#922/#923/#925/#926).
-zccache = { git = "https://github.com/zackees/zccache", rev = "73d3f84542deb16f762352668f3f2a8fb407462a" }
+# Pinned at zccache 1.12.14 (`4b13676`, the same revision soldr's
+# `_vender/zccache` submodule uses). Bumps 1.12.11 -> 1.12.14 to pick
+# up the embedded-path fixes: #950 (journal compile outcomes on the
+# embedded path), #955/#957/#958 (daemon-deadlock/full-codegen fix +
+# `run_cpu_blocking`), and #948 (mimalloc as sole allocator).
+zccache = { git = "https://github.com/zackees/zccache", rev = "4b13676bb3a76c87d2272b2d9ccb76e821734762" }
 
 [dev-dependencies]
 filetime = { workspace = true }
