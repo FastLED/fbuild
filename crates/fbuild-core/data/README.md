@@ -4,7 +4,27 @@ Binary blobs `include_bytes!`'d into `fbuild-core` at compile time.
 
 | File                    | Purpose                                                                                                                                                                                                                          |
 | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `usb-vendors.tar.zst`   | USB Vendor-ID → vendor-name map. Produced by `online-data-tools/build_vendor_archive.py` from the merged `online-data/data/usb-vid.json` (which already incorporates the curated `vendor_names_inlined.py` overlay). See `crate::usb::embedded`. |
+| `usb-vendors.tar.zst`   | USB Vendor-ID → vendor-name map (long-tail fallback, ~2.2k VIDs). Produced by `online-data-tools/build_vendor_archive.py`. See `crate::usb::embedded`. |
+| `usb-vids.proto.zstd`   | Compact VID:PID → {vendor, product} overlay **and** a VID → vendor map, in one artifact. Produced by the **FastLED/boards** data pipeline (`builders/build_usb_ids.py` over the `platformio`/`arduino`/`vendors`/`other` branches). Baked in so full VID + VID:PID resolution works OFFLINE with no hardcoded per-board tables. See `crate::usb::data` (`embedded()`), consumed by `usb::resolve`. |
+
+## How to refresh the VID:PID overlay (`usb-vids.proto.zstd`)
+
+This is the ingested product/board resolution. The source of truth is the
+[FastLED/boards](https://github.com/FastLED/boards) repo; its `site.yml`
+workflow regenerates the artifact on every push to a data branch
+(`platformio`/`arduino`/`vendors`/`other`).
+
+```bash
+# Regenerate from the boards repo (all four data branches), then copy in:
+#   cd ../boards && python builders/site.py ...   # or fetch the published artifact
+cp <boards-out>/usb-vids.proto.zstd crates/fbuild-core/data/usb-vids.proto.zstd
+soldr cargo test -p fbuild-core usb::
+```
+
+To add a new board/probe resolution (e.g. a debug-probe VID:PID), edit the
+data on the FastLED/boards `vendors` (or `other`) branch — NOT a hardcoded
+table in fbuild — and re-run the boards pipeline. The proto then carries it
+through to fbuild's `usb::resolve` on the next refresh.
 
 ## How to refresh the vendor archive
 

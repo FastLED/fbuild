@@ -59,7 +59,7 @@ use prost::Message;
 use serde::Deserialize;
 use std::collections::HashMap;
 use std::path::Path;
-use std::sync::RwLock;
+use std::sync::{OnceLock, RwLock};
 use std::time::Duration;
 
 /// Legacy URL of the dataset index produced by the `online-data` branch's
@@ -77,6 +77,83 @@ pub const USB_VIDS_PROTO_ZSTD_URL: &str =
     "https://raw.githubusercontent.com/fastled/fbuild/online-data/data/usb-vids.proto.zstd";
 
 static ONLINE_MAP: RwLock<Option<HashMap<u32, UsbInfo>>> = RwLock::new(None);
+
+/// Compile-time-embedded VID:PID → {vendor, product} overlay — the same
+/// compact `usb-vids.proto.zstd` the online path fetches, but baked into the
+/// binary so full VID:PID resolution works OFFLINE and needs no hardcoded
+/// per-board tables. Produced by the FastLED/boards data pipeline
+/// (`builders/build_usb_ids.py` over the `platformio`/`arduino`/`vendors`/
+/// `other` branches) and vendored here. Refresh workflow: see
+/// `crates/fbuild-core/data/README.md`.
+const EMBEDDED_PROTO: &[u8] = include_bytes!("../../data/usb-vids.proto.zstd");
+
+/// Both projections of the embedded proto. The compact `usb-vids.proto.zstd`
+/// carries a `Vendor{vid, name, [Product{pid, name}]}` tree, so a single
+/// artifact yields BOTH a VID→vendor map AND a VID:PID→{vendor, product}
+/// map — no separate per-VID blob or hardcoded table needed. Parsed exactly
+/// once on first use.
+#[derive(Default)]
+struct EmbeddedOverlay {
+    /// VID:PID → {vendor, product}.
+    vidpid: HashMap<u32, UsbInfo>,
+    /// VID → vendor name (from every `Vendor` entry, even those with no
+    /// products listed), so a VID whose exact PID isn't enumerated still
+    /// resolves its vendor from the same proto.
+    vendors: HashMap<u16, String>,
+}
+
+static EMBEDDED: OnceLock<EmbeddedOverlay> = OnceLock::new();
+
+fn embedded() -> &'static EmbeddedOverlay {
+    EMBEDDED.get_or_init(|| decode_embedded_overlay(EMBEDDED_PROTO).unwrap_or_default())
+}
+
+/// Inflate + parse the embedded proto into both projections. Errors bubble
+/// up to `unwrap_or_default()` (empty overlay) so a bad blob degrades to
+/// tier-1 vendor resolution rather than crashing.
+fn decode_embedded_overlay(raw: &[u8]) -> Result<EmbeddedOverlay, String> {
+    let mut decoded = Vec::with_capacity(raw.len() * 4);
+    zstd::stream::copy_decode(raw, &mut decoded).map_err(|e| format!("zstd: {e}"))?;
+    let db = UsbVidDatabase::decode(decoded.as_slice()).map_err(|e| format!("protobuf: {e}"))?;
+    let mut overlay = EmbeddedOverlay::default();
+    for vendor in db.vendors {
+        let Ok(vid) = u16::try_from(vendor.vid) else {
+            continue;
+        };
+        if !vendor.name.is_empty() {
+            overlay.vendors.insert(vid, vendor.name.clone());
+        }
+        for product in vendor.products {
+            let Ok(pid) = u16::try_from(product.pid) else {
+                continue;
+            };
+            overlay.vidpid.insert(
+                pack(vid, pid),
+                UsbInfo {
+                    vendor: vendor.name.clone(),
+                    product: product.name,
+                },
+            );
+        }
+    }
+    Ok(overlay)
+}
+
+/// The embedded VID→vendor map (from the same proto). `None` if the VID is
+/// absent from the embedded overlay.
+pub(crate) fn embedded_vendor(vid: u16) -> Option<&'static str> {
+    embedded().vendors.get(&vid).map(|s| s.as_str())
+}
+
+/// Number of VID:PID rows in the embedded overlay (test/introspection aid).
+pub fn embedded_vidpid_count() -> usize {
+    embedded().vidpid.len()
+}
+
+/// Number of VID→vendor rows in the embedded overlay (test/introspection aid).
+pub fn embedded_vendor_count() -> usize {
+    embedded().vendors.len()
+}
 
 /// 7-day cache TTL. The `online-data` branch refreshes nightly; a weekly
 /// local refresh gives useful freshness without adding network cost to every
@@ -345,11 +422,18 @@ pub(crate) fn install_online_cache_map(map: HashMap<u32, UsbInfo>) {
     *guard = Some(map);
 }
 
-/// Tier-2 lookup. `None` if no overlay is installed or the pair is missing.
+/// Tier-2 lookup. Prefers the runtime-installed online overlay (freshest —
+/// refreshed nightly), then falls back to the compile-time embedded overlay
+/// so resolution still works fully offline. `None` only if the pair is in
+/// neither.
 pub(crate) fn lookup(vid: u16, pid: u16) -> Option<UsbInfo> {
-    let guard = ONLINE_MAP.read().ok()?;
-    let map = guard.as_ref()?;
-    map.get(&pack(vid, pid)).cloned()
+    let key = pack(vid, pid);
+    if let Ok(guard) = ONLINE_MAP.read() {
+        if let Some(info) = guard.as_ref().and_then(|m| m.get(&key)) {
+            return Some(info.clone());
+        }
+    }
+    embedded().vidpid.get(&key).cloned()
 }
 
 /// Pack a (vid, pid) into a single `u32` key. The high half is the vendor.
@@ -464,7 +548,11 @@ mod tests {
         let path = tmp.path().join("bad.proto.zstd");
         std::fs::write(&path, b"not zstd").unwrap();
         install_online_cache_proto_zstd(&path);
-        assert!(lookup(0x303A, 0x1001).is_none());
+        // A bad file installs no ONLINE overlay. Probe a synthetic pair that
+        // is absent from the compile-time-embedded overlay too, so `None`
+        // proves the bad file was silently ignored (a real embedded pair
+        // would resolve from the base layer and mask the check).
+        assert!(lookup(0xEEEE, 0x1234).is_none());
     }
 
     #[test]

@@ -39,14 +39,26 @@ pub fn try_resolve(vid: u16, pid: u16) -> Option<UsbInfo> {
     resolve_bundled(vid, pid)
 }
 
-/// Tier-1 only (the compile-time-embedded vendor archive). The embedded
-/// archive carries vendor names only — see
-/// `crates/fbuild-core/data/usb-vendors.tar.zst`. For VIDs present in the
-/// archive, the returned `UsbInfo.product` is a synthetic `"Device 0xPPPP"`
-/// placeholder since per-PID resolution lives in the runtime overlay
-/// (tier-2) and the www-branch SQLite-over-HTTP database.
+/// Vendor-name-only tier (no per-PID product). Two compile-time-embedded
+/// sources, in priority order:
+///
+/// 1. The comprehensive `usb-vendors.tar.zst` archive (~2.2k VIDs) — the
+///    authoritative USB-IF vendor names (e.g. `10C4` → "Silicon Labs").
+/// 2. The `usb-vids.proto.zstd` VID→vendor map (FastLED/boards pipeline) as
+///    a fallback for VIDs not in the archive.
+///
+/// The archive is preferred because the boards pipeline's VID→vendor column
+/// is board-attributed (it can label a shared bridge VID with whichever
+/// board first claimed it); the per-VID:PID curated names still take effect
+/// through the tier-2 [`try_resolve`] path, which consults the proto's
+/// VID:PID map first.
+///
+/// For VIDs present in either, `UsbInfo.product` is a synthetic
+/// `"Device 0xPPPP"` placeholder since per-PID resolution lives in the
+/// VID:PID overlay (tier-2).
 pub fn resolve_bundled(vid: u16, pid: u16) -> Option<UsbInfo> {
-    embedded::vendor_name(vid).map(|vendor| UsbInfo {
+    let vendor = embedded::vendor_name(vid).or_else(|| super::data::embedded_vendor(vid))?;
+    Some(UsbInfo {
         vendor: vendor.to_string(),
         product: format!("Device 0x{pid:04X}"),
     })
@@ -68,6 +80,59 @@ mod tests {
     use std::sync::Mutex;
 
     static OVERLAY_LOCK: Mutex<()> = Mutex::new(());
+
+    #[test]
+    fn embedded_proto_resolves_lpc_link2_offline() {
+        // These VID:PIDs are not installed by any online-overlay test, so
+        // resolution falls through to the compile-time-embedded
+        // usb-vids.proto.zstd (FastLED/boards pipeline). We deliberately do
+        // NOT clear the online cache here — that shared state belongs to
+        // `data::tests` (guarded by a different lock); touching it would race
+        // those tests.
+        assert!(
+            super::super::data::embedded_vidpid_count() > 0,
+            "embedded VID:PID overlay should be non-empty"
+        );
+        let info = try_resolve(0x1FC9, 0x0132).expect("LPC-Link2 in embedded overlay");
+        assert!(
+            info.product.contains("LPC-Link2"),
+            "expected LPC-Link2 product, got {:?}",
+            info.product
+        );
+        // PJRC Teensy 16C0:0483 resolves from the same embedded overlay.
+        let teensy = try_resolve(0x16C0, 0x0483).expect("Teensy in embedded overlay");
+        assert!(
+            teensy.vendor.to_lowercase().contains("pjrc")
+                || teensy.product.to_lowercase().contains("teensy"),
+            "expected PJRC/Teensy, got {:?} / {:?}",
+            teensy.vendor,
+            teensy.product
+        );
+    }
+
+    #[test]
+    fn embedded_proto_carries_both_vid_and_vidpid_maps() {
+        // The single usb-vids.proto.zstd yields BOTH projections:
+        //  - a VID:PID → product map, and
+        //  - a VID → vendor map (used for VID-level resolution when the exact
+        //    PID isn't enumerated).
+        assert!(super::super::data::embedded_vidpid_count() > 0);
+        assert!(super::super::data::embedded_vendor_count() > 0);
+
+        // VID map: the proto's VID→vendor projection carries the curated
+        // FastLED/boards names (e.g. 16C0 → "PJRC (Teensy)", 1FC9 → "NXP …"),
+        // independent of the authoritative usb-vendors archive.
+        assert!(
+            super::super::data::embedded_vendor(0x1FC9)
+                .is_some_and(|v| v.to_lowercase().contains("nxp")),
+            "proto VID map should resolve 1FC9 → NXP"
+        );
+        assert!(
+            super::super::data::embedded_vendor(0x16C0)
+                .is_some_and(|v| v.to_lowercase().contains("pjrc")),
+            "proto VID map should resolve 16C0 → PJRC"
+        );
+    }
 
     #[test]
     fn embedded_resolves_ftdi_vendor() {
@@ -120,10 +185,12 @@ mod tests {
 
     #[test]
     fn pretty_format_uses_canonical_shape() {
-        // FTDI is in the embedded archive — vendor resolves, product is
-        // synthetic so the tail is deterministic.
-        let s = pretty(0x0403, 0x6001);
-        assert!(s.ends_with("(0403:6001)"), "tail format wrong: {s}");
+        // FTDI VID is in the embedded vendor archive, and this PID is NOT in
+        // the VID:PID proto overlay, so resolution falls to the vendor
+        // archive: vendor resolves, product is the synthetic placeholder so
+        // the tail is deterministic.
+        let s = pretty(0x0403, 0x6015);
+        assert!(s.ends_with("(0403:6015)"), "tail format wrong: {s}");
         assert!(
             s.to_lowercase().contains("future technology") || s.to_lowercase().contains("ftdi"),
             "missing vendor: {s}"
