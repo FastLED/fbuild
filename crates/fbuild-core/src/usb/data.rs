@@ -422,18 +422,24 @@ pub(crate) fn install_online_cache_map(map: HashMap<u32, UsbInfo>) {
     *guard = Some(map);
 }
 
+/// Runtime online overlay only (freshest, curated at workflow time).
+pub(crate) fn online_lookup(vid: u16, pid: u16) -> Option<UsbInfo> {
+    let key = pack(vid, pid);
+    let guard = ONLINE_MAP.read().ok()?;
+    guard.as_ref()?.get(&key).cloned()
+}
+
+/// Compile-time embedded overlay only (FastLED/boards curated device map).
+pub(crate) fn embedded_lookup(vid: u16, pid: u16) -> Option<UsbInfo> {
+    embedded().vidpid.get(&pack(vid, pid)).cloned()
+}
+
 /// Tier-2 lookup. Prefers the runtime-installed online overlay (freshest —
 /// refreshed nightly), then falls back to the compile-time embedded overlay
 /// so resolution still works fully offline. `None` only if the pair is in
 /// neither.
 pub(crate) fn lookup(vid: u16, pid: u16) -> Option<UsbInfo> {
-    let key = pack(vid, pid);
-    if let Ok(guard) = ONLINE_MAP.read() {
-        if let Some(info) = guard.as_ref().and_then(|m| m.get(&key)) {
-            return Some(info.clone());
-        }
-    }
-    embedded().vidpid.get(&key).cloned()
+    online_lookup(vid, pid).or_else(|| embedded_lookup(vid, pid))
 }
 
 /// Pack a (vid, pid) into a single `u32` key. The high half is the vendor.
