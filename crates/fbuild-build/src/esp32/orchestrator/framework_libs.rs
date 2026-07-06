@@ -58,6 +58,14 @@ pub(super) async fn compile_framework_builtin_libs(
     let fw_compile_cwd =
         fbuild_core::path::compile_cwd_from_output(&fw_libs_build_dir.join("obj").join("_probe.o"));
 
+    // FastLED/fbuild#986: route framework-lib TU compiles through the in-process
+    // embedded zccache service (the same path sketch/core use) so they are
+    // cached and hit cross-project via #985's project-independent keys, instead
+    // of the uncached direct-gcc fallback (`compiler_cache` is `None`).
+    let lib_backend: std::sync::Arc<
+        dyn fbuild_packages::library::library_compiler::LibCompileBackend,
+    > = std::sync::Arc::new(crate::compile_backend::EmbeddedLibBackend);
+
     // Build set of already-compiled library names
     let already_compiled: std::collections::HashSet<String> = library_archives
         .iter()
@@ -183,6 +191,7 @@ pub(super) async fn compile_framework_builtin_libs(
                 fw_jobs,
                 compiler_cache,
                 fw_compile_cwd.clone(),
+                Some(lib_backend.clone()),
             )
             .await
             {

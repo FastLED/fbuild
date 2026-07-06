@@ -95,6 +95,52 @@ pub fn get_global() -> Option<&'static CompileBackend> {
     GLOBAL.get()
 }
 
+/// Routes library-TU compiles through the in-process embedded zccache service
+/// (FastLED/fbuild#986) so they are cached like sketch/core compiles. Injected
+/// into `fbuild_packages`' library compiler as a trait object, since that crate
+/// cannot depend on `fbuild-build`.
+pub struct EmbeddedLibBackend;
+
+#[async_trait::async_trait]
+impl fbuild_packages::library::library_compiler::LibCompileBackend for EmbeddedLibBackend {
+    async fn compile(
+        &self,
+        compiler: &std::path::Path,
+        args: Vec<String>,
+        cwd: std::path::PathBuf,
+        env: Vec<(String, String)>,
+    ) -> fbuild_core::Result<fbuild_packages::library::library_compiler::LibCompileOutcome> {
+        let global = get_global().ok_or_else(|| {
+            fbuild_core::FbuildError::BuildFailed(
+                "compile_backend not installed — fbuild-daemon must call \
+                 compile_backend::install_global at startup (FastLED/fbuild#800)"
+                    .to_string(),
+            )
+        })?;
+        let svc = global.service();
+        let compile_fut = svc.compile(compiler, args, cwd, env);
+        let outcome = tokio::time::timeout(std::time::Duration::from_secs(300), compile_fut)
+            .await
+            .map_err(|_| {
+                fbuild_core::FbuildError::BuildFailed(
+                    "embedded library compile timed out after 300s".to_string(),
+                )
+            })?
+            .map_err(|e| {
+                fbuild_core::FbuildError::BuildFailed(format!(
+                    "embedded library compile failed: {e}"
+                ))
+            })?;
+        Ok(
+            fbuild_packages::library::library_compiler::LibCompileOutcome {
+                exit_code: outcome.exit_code,
+                stdout: outcome.stdout,
+                stderr: outcome.stderr,
+            },
+        )
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

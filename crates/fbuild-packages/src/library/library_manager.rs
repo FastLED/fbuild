@@ -155,6 +155,7 @@ pub async fn ensure_libraries(
             jobs,
             compiler_cache,
             None,
+            None,
         )
         .await?
         {
