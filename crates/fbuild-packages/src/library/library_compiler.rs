@@ -42,6 +42,37 @@ fn is_cxx_only_flag(flag: &str) -> bool {
     CXX_ONLY_PREFIXES.iter().any(|p| flag.starts_with(p))
 }
 
+/// Outcome of a single [`LibCompileBackend::compile`] dispatch.
+pub struct LibCompileOutcome {
+    pub exit_code: i32,
+    pub stdout: Vec<u8>,
+    pub stderr: Vec<u8>,
+}
+
+/// Pluggable compile dispatch for library TUs (FastLED/fbuild#986).
+///
+/// The #800 embedded-service migration routed sketch/core compiles through the
+/// in-process `ZccacheService`, but library compilation here still shells out
+/// via `run_command` (uncached — `compiler_cache` is `None`). `fbuild-packages`
+/// cannot depend on `fbuild-build` (which owns the embedded service), so an
+/// orchestrator injects the service as a trait object: when a backend is
+/// supplied, `compile_one_source` dispatches through it (cached, hits
+/// cross-project via #985's project-independent keys) instead of spawning gcc
+/// directly. `None` preserves the historical subprocess behavior exactly.
+#[async_trait::async_trait]
+pub trait LibCompileBackend: Send + Sync {
+    /// Compile one TU. `args` are the sanitized flags that follow the compiler
+    /// (source/`-o` included); `env` carries the scratch TMP/TEMP + any
+    /// `ZCCACHE_WORKTREE_ROOT`.
+    async fn compile(
+        &self,
+        compiler: &Path,
+        args: Vec<String>,
+        cwd: PathBuf,
+        env: Vec<(String, String)>,
+    ) -> Result<LibCompileOutcome>;
+}
+
 /// Compile all source files in a library and produce a static archive.
 ///
 /// - C files compiled with gcc + C-safe flags (no C++ flags)
@@ -77,6 +108,7 @@ pub async fn compile_library(
         1,
         compiler_cache,
         None,
+        None,
     )
     .await
 }
@@ -102,6 +134,10 @@ pub async fn compile_library_with_jobs(
     // (FastLED/fbuild#952). `None` keeps the historical absolute-path,
     // ambient-cwd invocation for every caller that hasn't opted in.
     compile_cwd: Option<PathBuf>,
+    // When `Some`, dispatch each TU through the embedded zccache service so lib
+    // compiles are cached and hit cross-project (FastLED/fbuild#986). `None`
+    // keeps the direct-subprocess path for every caller that hasn't opted in.
+    backend: Option<std::sync::Arc<dyn LibCompileBackend>>,
 ) -> Result<Option<PathBuf>> {
     if source_files.is_empty() {
         tracing::debug!("library {} is header-only, skipping compile", name);
@@ -198,6 +234,7 @@ pub async fn compile_library_with_jobs(
                 verbose,
                 compiler_cache,
                 compile_cwd.as_deref(),
+                backend.as_ref(),
             )
             .await?;
         }
@@ -236,6 +273,7 @@ pub async fn compile_library_with_jobs(
     let name_owned = name.to_string();
     let compiler_cache_owned = compiler_cache.map(|p| p.to_path_buf());
     let compile_cwd_owned = compile_cwd.clone();
+    let backend_owned = backend.clone();
 
     for source in stale_sources.clone() {
         let sem = sem.clone();
@@ -248,6 +286,7 @@ pub async fn compile_library_with_jobs(
         let lib_name_t = name_owned.clone();
         let cache_t = compiler_cache_owned.clone();
         let cwd_t = compile_cwd_owned.clone();
+        let backend_t = backend_owned.clone();
         let counter = compiled_count.clone();
         tasks.spawn(async move {
             let _permit = sem
@@ -267,6 +306,7 @@ pub async fn compile_library_with_jobs(
                 verbose,
                 cache_ref,
                 cwd_t.as_deref(),
+                backend_t.as_ref(),
             )
             .await?;
             let count = counter.fetch_add(1, std::sync::atomic::Ordering::Relaxed) + 1;
@@ -344,6 +384,9 @@ async fn compile_one_source(
     // (every non-opted-in caller) the invocation is byte-identical to
     // before: absolute paths, ambient cwd.
     compile_cwd: Option<&Path>,
+    // When `Some`, dispatch through the embedded zccache service instead of
+    // spawning gcc directly, so lib TUs are cached (FastLED/fbuild#986).
+    backend: Option<&std::sync::Arc<dyn LibCompileBackend>>,
 ) -> Result<PathBuf> {
     let obj = object_path(source, obj_dir);
     let rsp_dir = obj_dir.parent().unwrap_or(obj_dir).join("tmp");
@@ -384,58 +427,86 @@ async fn compile_one_source(
     all_flags.extend_from_slice(include_flags);
     all_flags.extend(["-c".to_string(), source_arg, "-o".to_string(), obj_arg]);
 
-    // On Windows, put ALL flags in a response file to avoid command-line
-    // length limits (OS error 206). The command becomes:
-    //   [zccache] <compiler> @response.rsp
-    // zccache >=1.1.7 passes @file references through to the compiler
-    // without expanding them, so this is safe.
-    let args = if cfg!(windows) {
-        let rsp_path =
-            fbuild_core::response_file::write_response_file(&all_flags, &rsp_dir, "lib_compile")
-                .await?;
-        let rsp_path = invocation_response_file_path(&rsp_path)?;
-        let raw_args = [
-            compiler.to_string_lossy().to_string(),
-            format!("@{}", rsp_path.display()),
-        ];
-        let raw_refs: Vec<&str> = raw_args.iter().map(|s| s.as_str()).collect();
-        wrap_compiler_args(&raw_refs, compiler_cache)
-    } else {
+    // Dispatch the compile. With a backend (FastLED/fbuild#986), route through
+    // the in-process zccache service — cached, and project-directory-independent
+    // via #985 — mirroring fbuild-build's compile_source. Without one, keep the
+    // historical direct-subprocess path byte-identical.
+    let (success, stderr) = if let Some(backend) = backend {
         let sanitized = fbuild_core::compiler_flags::prepare_flags_for_exec(all_flags);
-        let mut raw_args: Vec<String> = vec![compiler.to_string_lossy().to_string()];
-        raw_args.extend(sanitized);
-        let raw_refs: Vec<&str> = raw_args.iter().map(|s| s.as_str()).collect();
-        wrap_compiler_args(&raw_refs, compiler_cache)
+        // Scratch dir for the compiler's TMP/TEMP (fbuild-owned, off the
+        // system temp — mirrors compile_env_for_build usage on the sketch path).
+        let scratch = compile_cwd
+            .map(Path::to_path_buf)
+            .or_else(|| obj.parent().map(Path::to_path_buf))
+            .unwrap_or_else(|| PathBuf::from("."));
+        let mut env = fbuild_core::subprocess::compile_env_for_build(&scratch).unwrap_or_default();
+        if let Some(root) = compile_cwd {
+            if root.is_dir() {
+                env.push((
+                    "ZCCACHE_WORKTREE_ROOT".to_string(),
+                    root.to_string_lossy().to_string(),
+                ));
+            }
+        }
+        let cwd = compile_cwd
+            .map(Path::to_path_buf)
+            .or_else(|| std::env::current_dir().ok())
+            .unwrap_or_else(|| PathBuf::from("."));
+        // No @response-file: the embedded service manages long arg lists itself.
+        let outcome = backend.compile(compiler, sanitized, cwd, env).await?;
+        (
+            outcome.exit_code == 0,
+            String::from_utf8_lossy(&outcome.stderr).into_owned(),
+        )
+    } else {
+        // On Windows, put ALL flags in a response file to avoid command-line
+        // length limits (OS error 206): `[zccache] <compiler> @response.rsp`.
+        let args = if cfg!(windows) {
+            let rsp_path = fbuild_core::response_file::write_response_file(
+                &all_flags,
+                &rsp_dir,
+                "lib_compile",
+            )
+            .await?;
+            let rsp_path = invocation_response_file_path(&rsp_path)?;
+            let raw_args = [
+                compiler.to_string_lossy().to_string(),
+                format!("@{}", rsp_path.display()),
+            ];
+            let raw_refs: Vec<&str> = raw_args.iter().map(|s| s.as_str()).collect();
+            wrap_compiler_args(&raw_refs, compiler_cache)
+        } else {
+            let sanitized = fbuild_core::compiler_flags::prepare_flags_for_exec(all_flags);
+            let mut raw_args: Vec<String> = vec![compiler.to_string_lossy().to_string()];
+            raw_args.extend(sanitized);
+            let raw_refs: Vec<&str> = raw_args.iter().map(|s| s.as_str()).collect();
+            wrap_compiler_args(&raw_refs, compiler_cache)
+        };
+        let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
+        // FastLED/fbuild#966: pin worktree_root on the subprocess path too. The
+        // env vec must outlive the borrow passed to run_command.
+        let worktree_root = compile_cwd.map(|cwd| cwd.to_string_lossy().to_string());
+        let env_pairs: Option<Vec<(&str, &str)>> = worktree_root
+            .as_deref()
+            .map(|root| vec![("ZCCACHE_WORKTREE_ROOT", root)]);
+        // FastLED/fbuild#844: explicit 15 min cap — a single cold-cache
+        // templated TU is the worst case that still finishes inside it.
+        let result = run_command(
+            &args_ref,
+            compile_cwd,
+            env_pairs.as_deref(),
+            Some(fbuild_core::time::REAL_BUILD_TIMEOUT),
+        )
+        .await?;
+        (result.success(), result.stderr)
     };
 
-    let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-    // FastLED/fbuild#844: explicit 15 min cap. A single-file compile
-    // (cold-cache, full templated FastLED translation unit) is the
-    // worst-case path that still finishes inside REAL_BUILD_TIMEOUT;
-    // anything beyond that is wedged toolchain rather than a slow build.
-    // FastLED/fbuild#966: fw-lib object compiles run via the `zccache wrap`
-    // CLI (not the embedded service), so — like the sketch/core embedded path —
-    // pin zccache's worktree_root to the project workspace so the per-TU cache
-    // key is project-directory-independent and hits cross-project. The env vec
-    // must outlive the borrow passed to run_command.
-    let worktree_root = compile_cwd.map(|cwd| cwd.to_string_lossy().to_string());
-    let env_pairs: Option<Vec<(&str, &str)>> = worktree_root
-        .as_deref()
-        .map(|root| vec![("ZCCACHE_WORKTREE_ROOT", root)]);
-    let result = run_command(
-        &args_ref,
-        compile_cwd,
-        env_pairs.as_deref(),
-        Some(fbuild_core::time::REAL_BUILD_TIMEOUT),
-    )
-    .await?;
-
-    if !result.success() {
+    if !success {
         return Err(FbuildError::BuildFailed(format!(
             "failed to compile {} in library {}:\n{}",
             source.display(),
             lib_name,
-            result.stderr
+            stderr
         )));
     }
 

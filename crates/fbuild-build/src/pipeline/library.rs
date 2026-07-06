@@ -181,6 +181,7 @@ pub async fn compile_extra_libraries(
             env.jobs,
             env.compiler_cache,
             None,
+            None,
         )
         .await
         {
@@ -285,6 +286,7 @@ pub async fn compile_project_as_library(
         env.verbose,
         env.jobs,
         env.compiler_cache,
+        None,
         None,
     )
     .await
