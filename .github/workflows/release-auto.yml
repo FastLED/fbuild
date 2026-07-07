@@ -170,14 +170,14 @@ jobs:
             linux_cross: true
             macos_cross: false
 
-          # macOS lanes restored on soldr v0.7.98 + setup-soldr
-          # v0.9.64. They were dropped when every usable soldr
+          # macOS lanes restored on soldr v0.8.0 + setup-soldr
+          # v0.9.66. They were dropped when every usable soldr
           # version still pointed the Apple SDK fetch at the retired
           # manifest branch (HTTP 404); the "setup-soldr version
           # --json incompatibility" that blocked bumping soldr was a
           # misdiagnosis — soldr v0.7.85/v0.7.87 shipped silent
-          # binaries. v0.7.98 fixes the Apple SDK URL and
-          # setup-soldr@v0.9.65 hardens against silent binaries.
+          # binaries. v0.8.0 carries the Apple SDK URL fix and
+          # setup-soldr@v0.9.66 hardens against silent binaries.
           #
           # aarch64-apple-darwin cross-compiles from the Linux
           # runner via soldr + cargo-zigbuild + soldr's managed
@@ -205,7 +205,7 @@ jobs:
           # Windows x86_64 now uses the same Linux -> MSVC soldr build path
           # as aarch64-pc-windows-msvc. The native windows-latest release
           # lane repeatedly exceeded the 45 minute release-binary step while
-          # compiling fbuild-cli, blocking the v2.4.0 publish. soldr v0.7.98's
+          # compiling fbuild-cli, blocking the v2.4.0 publish. soldr v0.8.0's
           # clang-cl shim fixes the earlier cargo-xwin/ring header routing
           # issue that forced native Windows on the 2.3.12 cut.
           - target: x86_64-pc-windows-msvc
@@ -214,7 +214,7 @@ jobs:
             linux_cross: false
             macos_cross: false
 
-          # aarch64-pc-windows-msvc — restored on soldr v0.7.98,
+          # aarch64-pc-windows-msvc — restored on soldr v0.8.0,
           # whose release archive ships the soldr-clang-shim that
           # routes ring 0.17.x's hardcoded `c.compiler("clang")`
           # to clang-cl when `--target=*-pc-windows-msvc` (the
