@@ -1,33 +1,9 @@
-//! NXP LPC8xx deployer using `lpc21isp`.
+//! NXP LPC8xx deployer.
 //!
-//! Flashes firmware.hex to LPC8xx boards via ISP-over-UART. The on-die ROM
-//! boot loader handles the protocol; the host just spawns `lpc21isp` with
-//! the firmware path, port, baud rate, and crystal frequency.
-//!
-//! ## Why lpc21isp first (and not pyOCD / CMSIS-DAP)
-//!
-//! On the LPC845-BRK the on-board debug probe presents a *composite* USB
-//! device: CMSIS-DAP (HID) + Mass-Storage + CDC (the application's VCOM).
-//! pyOCD's SWD flash path opens the HID interface, and on Windows it
-//! leaves the CDC sibling in error 31 (requires a physical USB replug to
-//! recover) — see [FastLED/fbuild#565]. That breaks the flash-then-monitor
-//! cycle every FastLED test harness depends on (AutoResearch, JSON-RPC
-//! bring-up, etc.).
-//!
-//! lpc21isp uses ISP-over-UART. It never opens the composite-device HID
-//! interface, so the CDC sibling stays available across the flash. That's
-//! the primary path. SWD remains a future addition for boards without an
-//! exposed UART (rare on LPC8xx) — tracked separately.
-//!
-//! ## Reset / ISP-mode entry
-//!
-//! lpc21isp's `-control` flag drives DTR/RTS to put the chip into ISP
-//! mode before flashing and back into run-mode afterward. The LPC845-BRK
-//! wiring matches `-control` semantics out of the box. Boards without
-//! auto-reset wiring need the user to hold ISP+RESET manually; the same
-//! `-control` argument is harmless on those.
-//!
-//! [FastLED/fbuild#565]: https://github.com/FastLED/fbuild/issues/565
+//! Supported LPC845-BRK deploys prefer the pinned FastLED probe-rs SWD path
+//! for touchless flashing, then fall back to `lpc21isp` ISP-over-UART when
+//! probe-rs is disabled, unavailable, or fails. The `--no-probe-rs` CLI flag
+//! forces the UART path.
 
 use std::path::{Path, PathBuf};
 
@@ -325,6 +301,8 @@ pub struct LpcDeployer {
     /// A `None` here disables the SWD path entirely for this
     /// deployer instance.
     probe_rs_chip: Option<String>,
+    /// Explicit opt-out for users who need to force the UART ISP path.
+    probe_rs_enabled: bool,
 }
 
 impl LpcDeployer {
@@ -342,6 +320,7 @@ impl LpcDeployer {
             timeout_secs,
             verbose,
             probe_rs_chip: None,
+            probe_rs_enabled: true,
         }
     }
 
@@ -353,6 +332,13 @@ impl LpcDeployer {
     /// lpc21isp-only.
     pub fn with_probe_rs_chip(mut self, chip: Option<String>) -> Self {
         self.probe_rs_chip = chip;
+        self
+    }
+
+    /// Enable or disable the probe-rs SWD fast path while preserving
+    /// the board chip mapping for tests and diagnostics.
+    pub fn with_probe_rs_enabled(mut self, enabled: bool) -> Self {
+        self.probe_rs_enabled = enabled;
         self
     }
 
@@ -414,6 +400,7 @@ pub fn dispatch_box(
     board_overrides: &std::collections::HashMap<String, String>,
     project_path: &Path,
     baud_override: Option<u32>,
+    no_probe_rs: bool,
 ) -> Box<dyn Deployer> {
     let board_config = fbuild_config::BoardConfig::from_board_id_or_default(
         board_id,
@@ -422,7 +409,8 @@ pub fn dispatch_box(
         Some(project_path),
     );
     let params = Lpc21IspParams::default();
-    let deployer = LpcDeployer::from_board_config(&board_config, &params, false);
+    let deployer = LpcDeployer::from_board_config(&board_config, &params, false)
+        .with_probe_rs_enabled(!no_probe_rs);
     let deployer = match baud_override {
         Some(b) => deployer.with_baud_rate(&b.to_string()),
         None => deployer,
@@ -453,83 +441,102 @@ impl Deployer for LpcDeployer {
         // just a hands-off flash in ~2 seconds. When probe-rs isn't
         // available OR the ELF isn't there OR probe-rs errors out, we
         // fall through to the lpc21isp UART ISP path below.
-        let probe_rs_candidate = elf_sibling_of(firmware_path)
-            .and_then(|elf_path| crate::probe_rs::find_probe_rs().map(|binary| (elf_path, binary)))
-            .filter(|_| crate::probe_rs::lpc_link2_probe_attached());
-        if let Some((elf_path, probe_rs_binary)) = probe_rs_candidate {
+        let mut probe_rs_fallback_note: Option<String> = None;
+        if self.probe_rs_enabled {
             if let Some(chip) = self.probe_rs_chip.as_deref() {
-                let selector = crate::probe_rs::lpc_link2_probe_selector();
-                let probe_rs_binary_dbg = probe_rs_binary.clone();
-                let elf_path_dbg = elf_path.clone();
-                let chip_owned = chip.to_string();
-                tracing::info!(
-                    "attempting SWD flash via probe-rs (binary={}, chip={}, probe={}, firmware={})",
-                    probe_rs_binary_dbg.display(),
-                    chip_owned,
-                    selector.as_deref().unwrap_or("(first attached)"),
-                    elf_path_dbg.display(),
-                );
-                let selector_owned = selector.clone();
-                let selector_ref = selector.clone();
-                let elf_for_task = elf_path.clone();
-                let probe_rs_for_task = probe_rs_binary.clone();
-                let dl = tokio::task::spawn_blocking(move || {
-                    crate::probe_rs::run_probe_rs_download(
-                        &probe_rs_for_task,
-                        &chip_owned,
-                        selector_owned.as_deref(),
-                        &elf_for_task,
-                    )
-                })
-                .await
-                .map_err(|e| {
-                    fbuild_core::FbuildError::DeployFailed(format!(
-                        "probe-rs spawn_blocking join error: {e}"
-                    ))
-                })??;
+                if let Some(elf_path) = elf_sibling_of(firmware_path) {
+                    if let Some(selector) = crate::probe_rs::lpc_link2_probe_selector() {
+                        match crate::probe_rs::ensure_probe_rs_installed().await {
+                            Ok(probe_rs_binary) => {
+                                let probe_rs_binary_dbg = probe_rs_binary.clone();
+                                let elf_path_dbg = elf_path.clone();
+                                let chip_owned = chip.to_string();
+                                tracing::info!(
+                                    "attempting SWD flash via probe-rs (binary={}, chip={}, probe={}, firmware={})",
+                                    probe_rs_binary_dbg.display(),
+                                    chip_owned,
+                                    selector,
+                                    elf_path_dbg.display(),
+                                );
+                                let selector_owned = Some(selector.clone());
+                                let selector_ref = Some(selector.clone());
+                                let elf_for_task = elf_path.clone();
+                                let probe_rs_for_task = probe_rs_binary.clone();
+                                let dl = tokio::task::spawn_blocking(move || {
+                                    crate::probe_rs::run_probe_rs_download(
+                                        &probe_rs_for_task,
+                                        &chip_owned,
+                                        selector_owned.as_deref(),
+                                        &elf_for_task,
+                                    )
+                                })
+                                .await
+                                .map_err(|e| {
+                                    fbuild_core::FbuildError::DeployFailed(format!(
+                                        "probe-rs spawn_blocking join error: {e}"
+                                    ))
+                                })??;
 
-                if dl.success() {
-                    // Follow the flash with a reset so the target
-                    // starts executing what we just wrote, matching
-                    // the lpc21isp `-control` post-flash behaviour.
-                    let probe_rs_reset = probe_rs_binary.clone();
-                    let chip_for_reset = chip.to_string();
-                    let reset = tokio::task::spawn_blocking(move || {
-                        crate::probe_rs::run_probe_rs_reset(
-                            &probe_rs_reset,
-                            &chip_for_reset,
-                            selector_ref.as_deref(),
-                        )
-                    })
-                    .await
-                    .map_err(|e| {
-                        fbuild_core::FbuildError::DeployFailed(format!(
-                            "probe-rs reset spawn_blocking join error: {e}"
-                        ))
-                    })??;
+                                if dl.success() {
+                                    // Follow the flash with a reset so the target
+                                    // starts executing what we just wrote, matching
+                                    // the lpc21isp `-control` post-flash behaviour.
+                                    let probe_rs_reset = probe_rs_binary.clone();
+                                    let chip_for_reset = chip.to_string();
+                                    let reset = tokio::task::spawn_blocking(move || {
+                                        crate::probe_rs::run_probe_rs_reset(
+                                            &probe_rs_reset,
+                                            &chip_for_reset,
+                                            selector_ref.as_deref(),
+                                        )
+                                    })
+                                    .await
+                                    .map_err(|e| {
+                                        fbuild_core::FbuildError::DeployFailed(format!(
+                                            "probe-rs reset spawn_blocking join error: {e}"
+                                        ))
+                                    })??;
 
-                    let mut combined_stdout = dl.stdout;
-                    combined_stdout.push_str(&reset.stdout);
-                    let mut combined_stderr = dl.stderr;
-                    combined_stderr.push_str(&reset.stderr);
+                                    let mut combined_stdout = dl.stdout;
+                                    combined_stdout.push_str(&reset.stdout);
+                                    let mut combined_stderr = dl.stderr;
+                                    combined_stderr.push_str(&reset.stderr);
 
-                    return Ok(DeploymentResult {
-                        success: true,
-                        message: format!(
-                            "firmware flashed via probe-rs SWD (chip={chip}, probe={})",
-                            selector.as_deref().unwrap_or("first-attached")
-                        ),
-                        port: Some(port.to_string()),
-                        stdout: combined_stdout,
-                        stderr: combined_stderr,
-                        outcome: DeployOutcome::FullFlash,
-                    });
+                                    return Ok(DeploymentResult {
+                                        success: true,
+                                        message: format!(
+                                            "firmware flashed via probe-rs SWD (chip={chip}, probe={selector})"
+                                        ),
+                                        port: Some(port.to_string()),
+                                        stdout: combined_stdout,
+                                        stderr: combined_stderr,
+                                        outcome: DeployOutcome::FullFlash,
+                                    });
+                                }
+
+                                let note = format!(
+                                    "probe-rs SWD flash exited {}; falling back to lpc21isp UART ISP\n",
+                                    dl.exit_code
+                                );
+                                tracing::warn!("{}", note.trim_end());
+                                probe_rs_fallback_note = Some(note);
+                            }
+                            Err(e) => {
+                                let note = format!(
+                                    "probe-rs unavailable ({e}); falling back to lpc21isp UART ISP\n"
+                                );
+                                tracing::warn!("{}", note.trim_end());
+                                probe_rs_fallback_note = Some(note);
+                            }
+                        }
+                    } else {
+                        let note = "probe-rs CMSIS-DAP probe not detected; falling back to lpc21isp UART ISP\n".to_string();
+                        tracing::info!("{}", note.trim_end());
+                        probe_rs_fallback_note = Some(note);
+                    }
+                } else {
+                    tracing::debug!("no ELF sibling for probe-rs; using lpc21isp path");
                 }
-
-                tracing::warn!(
-                    "probe-rs SWD flash exited {}, falling back to lpc21isp UART ISP",
-                    dl.exit_code
-                );
             } else {
                 tracing::debug!("no probe-rs chip mapping for this board; using lpc21isp path");
             }
@@ -625,13 +632,21 @@ impl Deployer for LpcDeployer {
         )
         .await?;
 
-        if result.success() {
+        let success = result.success();
+        let exit_code = result.exit_code;
+        let stdout = result.stdout;
+        let mut stderr = result.stderr;
+        if let Some(note) = probe_rs_fallback_note {
+            stderr = format!("{note}{stderr}");
+        }
+
+        if success {
             Ok(DeploymentResult {
                 success: true,
                 message: format!("firmware flashed to {}", port),
                 port: Some(port.to_string()),
-                stdout: result.stdout,
-                stderr: result.stderr,
+                stdout,
+                stderr,
                 outcome: DeployOutcome::FullFlash,
             })
         } else {
@@ -640,10 +655,10 @@ impl Deployer for LpcDeployer {
             // client without losing the diagnostic surface.
             Ok(DeploymentResult {
                 success: false,
-                message: format!("lpc21isp failed (exit code {})", result.exit_code),
+                message: format!("lpc21isp failed (exit code {})", exit_code),
                 port: Some(port.to_string()),
-                stdout: result.stdout,
-                stderr: result.stderr,
+                stdout,
+                stderr,
                 outcome: DeployOutcome::FullFlash,
             })
         }
@@ -698,6 +713,7 @@ mod tests {
         assert_eq!(deployer.baud_rate, "115200");
         assert_eq!(deployer.xtal_khz, 12_000);
         assert_eq!(deployer.timeout_secs, 60);
+        assert!(deployer.probe_rs_enabled);
     }
 
     // ---------- FastLED/fbuild#921 firmware-old detection ----------
@@ -777,6 +793,13 @@ mod tests {
         // configured default.
         let deployer = LpcDeployer::new("115200", 12_000, 60, None, false).with_baud_rate("57600");
         assert_eq!(deployer.baud_rate, "57600");
+    }
+
+    #[test]
+    fn with_probe_rs_enabled_can_force_lpc21isp_path() {
+        let deployer =
+            LpcDeployer::new("115200", 12_000, 60, None, false).with_probe_rs_enabled(false);
+        assert!(!deployer.probe_rs_enabled);
     }
 
     #[tokio::test]

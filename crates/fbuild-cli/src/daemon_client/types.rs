@@ -76,6 +76,9 @@ pub struct DeployRequest {
     /// Override the board's default upload baud rate for flashing.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub baud_rate: Option<u32>,
+    /// Force LPC deploys through lpc21isp instead of the probe-rs SWD fast path.
+    #[serde(default)]
+    pub no_probe_rs: bool,
     /// Deploy destination: "device", "emu", or "emulator".
     #[serde(skip_serializing_if = "Option::is_none")]
     pub to: Option<String>,

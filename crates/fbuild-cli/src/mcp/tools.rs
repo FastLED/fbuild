@@ -168,6 +168,7 @@ pub(super) async fn execute_tool(
                 monitor_expect: None,
                 monitor_show_timestamp: true,
                 baud_rate: None,
+                no_probe_rs: false,
                 to: None,
                 emulator: None,
                 target: None,

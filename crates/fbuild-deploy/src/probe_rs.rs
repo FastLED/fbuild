@@ -31,8 +31,8 @@
 //! can dispatch to it in preference to the UART-ISP path (lpc21isp),
 //! which requires a `SW3 + SW4` button press to enter ISP mode.
 
-use std::path::Path;
-use std::time::Duration;
+use std::path::{Path, PathBuf};
+use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 use fbuild_core::path::NormalizedPath;
 use fbuild_core::subprocess::run_command_blocking;
@@ -43,6 +43,14 @@ use fbuild_core::{FbuildError, Result};
 /// probe-rs before the auto-download landing.
 pub const PROBE_RS_PATH_ENV_VAR: &str = "FBUILD_PROBE_RS_PATH";
 
+/// Pinned FastLED/probe-rs release consumed by fbuild. The patched
+/// fork and cross-compile workflow live in FastLED/framework-arduino-lpc8xx;
+/// fbuild only downloads and verifies the host artifact.
+pub const PROBE_RS_RELEASE_TAG: &str = "fastled-v0.31.2-nusb-v1-transport";
+
+const PROBE_RS_RELEASE_DOWNLOAD_BASE: &str =
+    "https://github.com/FastLED/framework-arduino-lpc8xx/releases/download";
+
 /// Hard ceiling on a single probe-rs invocation. A healthy LPC845-BRK
 /// flash completes in ~2 s; 120 s covers a slow cold HID enumerate plus
 /// full-chip program with margin. Past that, the probe is wedged and
@@ -50,18 +58,60 @@ pub const PROBE_RS_PATH_ENV_VAR: &str = "FBUILD_PROBE_RS_PATH";
 /// daemon's spawn_blocking slot indefinitely.
 const PROBE_RS_TIMEOUT: Duration = Duration::from_secs(120);
 
-/// Locally-built probe-rs binary — the maintainer's dev tree. Kept as
-/// a documented convention so ad-hoc smoke tests can just drop the
-/// binary in a well-known place instead of remembering the env var.
+/// Release asset metadata for the current host.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct ProbeRsReleaseAsset {
+    pub name: &'static str,
+    pub sha256: &'static str,
+}
+
+impl ProbeRsReleaseAsset {
+    pub fn url(&self) -> String {
+        format!(
+            "{}/{}/{}",
+            PROBE_RS_RELEASE_DOWNLOAD_BASE, PROBE_RS_RELEASE_TAG, self.name
+        )
+    }
+}
+
+/// Return the pinned FastLED/probe-rs release asset for this host.
+pub fn probe_rs_release_asset_for_host() -> Result<ProbeRsReleaseAsset> {
+    match (std::env::consts::OS, std::env::consts::ARCH) {
+        ("windows", "x86_64") => Ok(ProbeRsReleaseAsset {
+            name: "probe-rs-fastled-fastled-v0.31.2-nusb-v1-transport-x86_64-pc-windows-msvc.zip",
+            sha256: "257e294988498218cf350a852bf60e57313b19f492f8019b92905df59095c7a1",
+        }),
+        ("windows", "aarch64") => Ok(ProbeRsReleaseAsset {
+            name: "probe-rs-fastled-fastled-v0.31.2-nusb-v1-transport-aarch64-pc-windows-msvc.zip",
+            sha256: "f3bd8117b6a1de3e73791aa0ec980ed07a18482fffbc43b70af57750450cd854",
+        }),
+        ("linux", "x86_64") => Ok(ProbeRsReleaseAsset {
+            name: "probe-rs-fastled-fastled-v0.31.2-nusb-v1-transport-x86_64-unknown-linux-gnu.tar.zst",
+            sha256: "acd37d2a012fd7e12d83e951ea2489dcbc76011b6b9af0a8214ef399a8ec401b",
+        }),
+        ("linux", "aarch64") => Ok(ProbeRsReleaseAsset {
+            name: "probe-rs-fastled-fastled-v0.31.2-nusb-v1-transport-aarch64-unknown-linux-gnu.tar.zst",
+            sha256: "ea921ea77709640b4947c68646154a0e7e3edcdb6cd9f95270f28599929d0ac6",
+        }),
+        ("macos", "x86_64") => Ok(ProbeRsReleaseAsset {
+            name: "probe-rs-fastled-fastled-v0.31.2-nusb-v1-transport-x86_64-apple-darwin.tar.zst",
+            sha256: "d106888b816854c29b77af4e67982d6da1c9e2ef7c8203fa478adfb4065699df",
+        }),
+        ("macos", "aarch64") => Ok(ProbeRsReleaseAsset {
+            name: "probe-rs-fastled-fastled-v0.31.2-nusb-v1-transport-aarch64-apple-darwin.tar.zst",
+            sha256: "36e4dd61804a438eea37dbc68d62bc175c679af38c45f6008cd248169f20d2b5",
+        }),
+        (os, arch) => Err(FbuildError::PackageError(format!(
+            "no FastLED probe-rs artifact is published for {os}/{arch}"
+        ))),
+    }
+}
+
+/// fbuild-managed probe-rs install directory.
 ///
 /// Honors `FBUILD_DEV_MODE=1` → `~/.fbuild/dev/tools/probe-rs/` to
 /// match the isolation the rest of `fbuild-paths` applies.
-pub fn managed_probe_rs_path() -> Option<NormalizedPath> {
-    let exe = if cfg!(windows) {
-        "probe-rs.exe"
-    } else {
-        "probe-rs"
-    };
+pub fn managed_probe_rs_dir() -> Option<NormalizedPath> {
     let home = home_dir_local()?;
     let mode = if std::env::var_os("FBUILD_DEV_MODE").is_some() {
         "dev"
@@ -72,9 +122,17 @@ pub fn managed_probe_rs_path() -> Option<NormalizedPath> {
         home.join(".fbuild")
             .join(mode)
             .join("tools")
-            .join("probe-rs")
-            .join(exe),
+            .join("probe-rs"),
     )
+}
+
+pub fn managed_probe_rs_path() -> Option<NormalizedPath> {
+    let exe = if cfg!(windows) {
+        "probe-rs.exe"
+    } else {
+        "probe-rs"
+    };
+    Some(managed_probe_rs_dir()?.join(exe))
 }
 
 /// Resolve which `probe-rs` binary to invoke, or `None` when neither
@@ -86,8 +144,8 @@ pub fn managed_probe_rs_path() -> Option<NormalizedPath> {
 ///
 /// 1. `FBUILD_PROBE_RS_PATH` — explicit override.
 /// 2. `~/.fbuild/{prod|dev}/tools/probe-rs/probe-rs[.exe]` — the
-///    canonical fbuild-managed location the auto-download will
-///    populate (follow-up).
+///    canonical fbuild-managed location populated from the pinned
+///    FastLED/probe-rs release.
 ///
 /// Deliberately does NOT walk `PATH` — a system `probe-rs` from a
 /// distro package will lack the FastLED patches and will hang on the
@@ -104,6 +162,127 @@ pub fn find_probe_rs() -> Option<NormalizedPath> {
     let managed = managed_probe_rs_path()?;
     if managed.is_file() {
         return Some(managed);
+    }
+    None
+}
+
+/// Resolve and, if needed, install the pinned FastLED/probe-rs binary.
+pub async fn ensure_probe_rs_installed() -> Result<NormalizedPath> {
+    if let Some(existing) = find_probe_rs() {
+        return Ok(existing);
+    }
+
+    install_managed_probe_rs().await
+}
+
+/// Download, verify, extract, and install the pinned FastLED/probe-rs
+/// release artifact into the fbuild-managed tools directory.
+pub async fn install_managed_probe_rs() -> Result<NormalizedPath> {
+    let asset = probe_rs_release_asset_for_host()?;
+    let dest = managed_probe_rs_path().ok_or_else(|| {
+        FbuildError::PackageError("could not determine managed probe-rs path".to_string())
+    })?;
+
+    let staging_dir = probe_rs_staging_dir();
+    tokio::fs::create_dir_all(&staging_dir).await?;
+
+    let url = asset.url();
+    tracing::info!("installing FastLED probe-rs from {}", url);
+    let archive = fbuild_packages::downloader::download_file(&url, &staging_dir).await?;
+
+    fbuild_packages::downloader::verify_checksum_async(&archive, asset.sha256).await?;
+
+    let dest_path = dest.clone().into_path_buf();
+    let installed = tokio::task::spawn_blocking(move || {
+        extract_and_install_probe_rs(&archive, &staging_dir, &dest_path)
+    })
+    .await
+    .map_err(|e| FbuildError::PackageError(format!("probe-rs install task failed: {e}")))??;
+
+    Ok(NormalizedPath::new(installed))
+}
+
+fn probe_rs_staging_dir() -> PathBuf {
+    let millis = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .map(|d| d.as_millis())
+        .unwrap_or(0);
+    fbuild_paths::temp_subdir("probe-rs-install").join(format!(
+        "{}-{}-{}",
+        PROBE_RS_RELEASE_TAG,
+        std::process::id(),
+        millis
+    ))
+}
+
+fn extract_and_install_probe_rs(
+    archive: &Path,
+    staging_dir: &Path,
+    dest_path: &Path,
+) -> Result<PathBuf> {
+    let extract_dir = staging_dir.join("extract");
+    std::fs::create_dir_all(&extract_dir)?;
+    fbuild_packages::extractor::extract(archive, &extract_dir)?;
+
+    let found = find_extracted_probe_rs_binary(&extract_dir)?;
+    let dest_dir = dest_path.parent().ok_or_else(|| {
+        FbuildError::PackageError(format!(
+            "managed probe-rs path has no parent: {}",
+            dest_path.display()
+        ))
+    })?;
+    std::fs::create_dir_all(dest_dir)?;
+    std::fs::copy(&found, dest_path).map_err(|e| {
+        FbuildError::PackageError(format!(
+            "failed to install probe-rs from {} to {}: {}",
+            found.display(),
+            dest_path.display(),
+            e
+        ))
+    })?;
+
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::PermissionsExt;
+        let mut perms = std::fs::metadata(dest_path)?.permissions();
+        perms.set_mode(perms.mode() | 0o755);
+        std::fs::set_permissions(dest_path, perms)?;
+    }
+
+    Ok(dest_path.to_path_buf())
+}
+
+fn find_extracted_probe_rs_binary(root: &Path) -> Result<PathBuf> {
+    let exe = if cfg!(windows) {
+        "probe-rs.exe"
+    } else {
+        "probe-rs"
+    };
+    find_file_by_name(root, exe).ok_or_else(|| {
+        FbuildError::PackageError(format!(
+            "probe-rs binary `{exe}` not found after extracting {}",
+            root.display()
+        ))
+    })
+}
+
+fn find_file_by_name(root: &Path, file_name: &str) -> Option<PathBuf> {
+    let entries = std::fs::read_dir(root).ok()?;
+    for entry in entries.flatten() {
+        let path = entry.path();
+        if path.is_file()
+            && path
+                .file_name()
+                .and_then(|name| name.to_str())
+                .is_some_and(|name| name == file_name)
+        {
+            return Some(path);
+        }
+        if path.is_dir() {
+            if let Some(found) = find_file_by_name(&path, file_name) {
+                return Some(found);
+            }
+        }
     }
     None
 }
@@ -357,5 +536,19 @@ mod tests {
             ..Default::default()
         };
         assert_eq!(map_board_to_probe_rs_chip(&board), None);
+    }
+
+    #[test]
+    fn release_asset_for_host_has_pinned_checksum_and_url() {
+        let asset = probe_rs_release_asset_for_host().unwrap();
+        assert!(asset
+            .name
+            .starts_with("probe-rs-fastled-fastled-v0.31.2-nusb-v1-transport-"));
+        assert_eq!(asset.sha256.len(), 64);
+        assert!(asset.sha256.chars().all(|c| c.is_ascii_hexdigit()));
+
+        let url = asset.url();
+        assert!(url.contains(PROBE_RS_RELEASE_TAG));
+        assert!(url.ends_with(asset.name));
     }
 }

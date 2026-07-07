@@ -290,6 +290,9 @@ pub enum Commands {
         /// Override the board's default upload baud rate
         #[arg(short = 'b', long = "baud", alias = "baud-rate")]
         baud_rate: Option<u32>,
+        /// Force the LPC deployer to use lpc21isp instead of probe-rs SWD
+        #[arg(long = "no-probe-rs")]
+        no_probe_rs: bool,
         /// Deploy destination: device (default) or emulator
         #[arg(long = "to", value_parser = ["device", "emu", "emulator"])]
         to: Option<String>,
