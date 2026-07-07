@@ -1,8 +1,9 @@
 //! Package resolution for pioarduino (platform.json, framework, toolchain).
 
 use std::collections::HashMap;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::Result;
 
 /// Resolve framework + toolchain for pioarduino mode (GCC 14 + ESP-IDF 5.x).
@@ -23,7 +24,7 @@ pub(super) async fn resolve_pioarduino_packages(
 ) -> Result<(
     fbuild_packages::toolchain::Esp32Toolchain,
     fbuild_packages::library::Esp32Framework,
-    Option<PathBuf>,
+    Option<NormalizedPath>,
 )> {
     // Ensure pioarduino platform (contains platform.json with metadata URLs).
     // Honor `platform_packages = platform-espressif32@<URL>#<sha>` from the env
@@ -145,7 +146,7 @@ pub(super) async fn resolve_pioarduino_packages(
 async fn resolve_esptool(
     platform: &fbuild_packages::library::Esp32Platform,
     project_dir: &Path,
-) -> Option<PathBuf> {
+) -> Option<NormalizedPath> {
     let url = match platform.get_package_url("tool-esptoolpy") {
         Ok(url) => url,
         Err(e) => {

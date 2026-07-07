@@ -319,14 +319,14 @@ fn object_hash_key(source: &Path, build_dir: &Path) -> String {
             .unwrap_or(false)
         {
             if let Some(workspace) = ancestor.parent() {
-                if let Ok(rel) = source.strip_prefix(workspace) {
-                    return rel.to_string_lossy().replace('\\', "/");
-                }
+                // The blessed compile-CWD relativization owns the
+                // `strip_prefix` + slash normalization (see fbuild-core).
+                return fbuild_core::path::path_arg_for_compile_cwd(source, workspace);
             }
             break;
         }
     }
-    source.to_string_lossy().replace('\\', "/")
+    NormalizedPath::from(source).display_slash()
 }
 
 /// Filter both `flags` and `extra_flags` through `unflags` using the shared

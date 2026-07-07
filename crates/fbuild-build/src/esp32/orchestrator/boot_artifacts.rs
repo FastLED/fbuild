@@ -3,6 +3,7 @@
 use std::path::Path;
 use std::time::Instant;
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::Result;
 
 use super::super::mcu_config::Esp32McuConfig;
@@ -132,7 +133,7 @@ pub(super) async fn prepare_boot_artifacts(
         let partitions_name = board.partitions.as_deref().unwrap_or("default.csv");
         let parts_csv = resolve_partitions_csv(
             project_dir,
-            framework.get_partitions_csv(partitions_name),
+            framework.get_partitions_csv(partitions_name).into(),
             board.partitions.as_deref(),
         )?;
         let gen_tool = framework.get_gen_esp32part();
@@ -200,13 +201,13 @@ pub(super) async fn prepare_boot_artifacts(
 /// existence check keeps the historical warn-and-continue behavior.
 fn resolve_partitions_csv(
     project_dir: &Path,
-    framework_candidate: std::path::PathBuf,
+    framework_candidate: NormalizedPath,
     configured: Option<&str>,
-) -> Result<std::path::PathBuf> {
+) -> Result<NormalizedPath> {
     let Some(name) = configured else {
         return Ok(framework_candidate);
     };
-    let project_candidate = project_dir.join(name);
+    let project_candidate = NormalizedPath::new(project_dir.join(name));
     if project_candidate.exists() {
         return Ok(project_candidate);
     }
@@ -234,11 +235,13 @@ mod tests {
 
         let resolved = resolve_partitions_csv(
             project,
-            project.join("framework/tools/partitions/config/custom.csv"),
+            project
+                .join("framework/tools/partitions/config/custom.csv")
+                .into(),
             Some("config/custom.csv"),
         )
         .unwrap();
-        assert_eq!(resolved, project.join("config/custom.csv"));
+        assert_eq!(resolved.as_path(), project.join("config/custom.csv"));
     }
 
     #[test]
@@ -249,10 +252,13 @@ mod tests {
         std::fs::create_dir_all(&fw_dir).unwrap();
         std::fs::write(fw_dir.join("huge_app.csv"), "csv").unwrap();
 
-        let resolved =
-            resolve_partitions_csv(project, fw_dir.join("huge_app.csv"), Some("huge_app.csv"))
-                .unwrap();
-        assert_eq!(resolved, fw_dir.join("huge_app.csv"));
+        let resolved = resolve_partitions_csv(
+            project,
+            fw_dir.join("huge_app.csv").into(),
+            Some("huge_app.csv"),
+        )
+        .unwrap();
+        assert_eq!(resolved.as_path(), fw_dir.join("huge_app.csv"));
     }
 
     #[test]
@@ -262,7 +268,7 @@ mod tests {
 
         let err = resolve_partitions_csv(
             project,
-            project.join("framework/tools/partitions/nope.csv"),
+            project.join("framework/tools/partitions/nope.csv").into(),
             Some("nope.csv"),
         )
         .unwrap_err();
@@ -275,7 +281,8 @@ mod tests {
     fn unconfigured_default_keeps_warn_and_continue_semantics() {
         let tmp = tempfile::TempDir::new().unwrap();
         let missing_default = tmp.path().join("framework/tools/partitions/default.csv");
-        let resolved = resolve_partitions_csv(tmp.path(), missing_default.clone(), None).unwrap();
-        assert_eq!(resolved, missing_default);
+        let resolved =
+            resolve_partitions_csv(tmp.path(), missing_default.clone().into(), None).unwrap();
+        assert_eq!(resolved.as_path(), missing_default.as_path());
     }
 }

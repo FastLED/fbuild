@@ -107,7 +107,7 @@ impl fbuild_packages::library::library_compiler::LibCompileBackend for EmbeddedL
         &self,
         compiler: &std::path::Path,
         args: Vec<String>,
-        cwd: std::path::PathBuf,
+        cwd: fbuild_core::path::NormalizedPath,
         env: Vec<(String, String)>,
     ) -> fbuild_core::Result<fbuild_packages::library::library_compiler::LibCompileOutcome> {
         let global = get_global().ok_or_else(|| {
@@ -118,7 +118,7 @@ impl fbuild_packages::library::library_compiler::LibCompileBackend for EmbeddedL
             )
         })?;
         let svc = global.service();
-        let compile_fut = svc.compile(compiler, args, cwd, env);
+        let compile_fut = svc.compile(compiler, args, cwd.into_path_buf(), env);
         let outcome = tokio::time::timeout(std::time::Duration::from_secs(300), compile_fut)
             .await
             .map_err(|_| {

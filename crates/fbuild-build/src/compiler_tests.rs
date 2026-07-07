@@ -123,7 +123,7 @@ fn test_needs_rebuild_missing_object() {
 #[test]
 fn test_object_path() {
     let path = CompilerBase::object_path(Path::new("main.cpp"), Path::new("/build"));
-    assert!(path.starts_with("/build"));
+    assert_eq!(path.parent(), Some(Path::new("/build")));
     assert!(path
         .file_name()
         .unwrap_or_default()
