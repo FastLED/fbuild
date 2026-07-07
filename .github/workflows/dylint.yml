@@ -1,9 +1,9 @@
 name: Dylint
 
-# Runs the custom `ban_raw_subprocess` dylint over the workspace.
-# Lives in its own job (and uses its own nightly toolchain pin) so the
-# stable workspace check on `check-ubuntu.yml` isn't blocked by dylint
-# infrastructure issues. See #264.
+# Runs the custom dylints over the workspace. This is enforced as its own
+# required GitHub status check rather than being folded into `./lint`, because
+# Dylint builds the lint crates and rustc-dev driver and would force a heavy
+# recompile on every local lint call. See #264 and #994.
 
 on:
   workflow_dispatch: {}
@@ -69,8 +69,7 @@ jobs:
         # `<name>@<toolchain>.<ext>` but cargo emits them as bare
         # `<name>.<ext>` on first build. After each cargo-dylint
         # invocation, alias any just-built libraries that lack the
-        # `@<toolchain>` suffix and retry. Same loop zccache uses in
-        # `ci/lint.py::lint_dylint_only`.
+        # `@<toolchain>` suffix and retry.
         run: |
           export PATH="${CARGO_HOME}/bin:${PATH}"
           set +e

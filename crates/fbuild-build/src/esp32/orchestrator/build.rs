@@ -631,7 +631,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         };
         if let Some(cache) = core_cache.as_ref() {
             let _g = perf.phase("core-cache-hydrate");
-            match cache.hydrate(core_build_dir) {
+            match cache.hydrate(core_build_dir, &compiler, &all_core_sources, &user_overlay) {
                 Ok(stats) if stats.copied > 0 || stats.skipped > 0 => tracing::info!(
                     "framework core cache hydrate key={} copied={} skipped={} from {}",
                     cache.key(),

@@ -179,6 +179,39 @@ pub trait Compiler: Send + Sync {
             self.build_unflags(),
         )
     }
+
+    /// Project-independent fingerprint for reusable artifact caches.
+    ///
+    /// Unlike [`Self::rebuild_signature`], this normalizes absolute
+    /// project-local include/source paths relative to `project_dir`. The normal
+    /// rebuild signature remains project-local because it is written into a
+    /// project's own `.cmdhash`; global artifact caches need the same logical
+    /// project shape to hash identically even when copied to a different
+    /// absolute checkout path or basename.
+    fn artifact_cache_signature(
+        &self,
+        project_dir: &Path,
+        source: &Path,
+        extra_flags: &[String],
+    ) -> String {
+        let ext = source
+            .extension()
+            .unwrap_or_default()
+            .to_string_lossy()
+            .to_lowercase();
+        let (compiler_path, flags) = match ext.as_str() {
+            "c" | "s" => (self.gcc_path(), self.c_flags()),
+            _ => (self.gxx_path(), self.cpp_flags()),
+        };
+        build_rebuild_signature_for_project(
+            project_dir,
+            compiler_path,
+            &flags,
+            &[],
+            extra_flags,
+            self.build_unflags(),
+        )
+    }
 }
 
 /// Shared compiler utilities used by all platform-specific compilers.
@@ -393,6 +426,48 @@ pub fn build_rebuild_signature(
     extra_flags: &[String],
     unflags: &[String],
 ) -> String {
+    build_rebuild_signature_with_normalizer(
+        compiler_path,
+        flags,
+        pre_flags,
+        extra_flags,
+        unflags,
+        &normalize_signature_value,
+    )
+}
+
+/// Variant of [`build_rebuild_signature`] for global artifact cache keys.
+///
+/// Any absolute path under `project_dir` is reduced to `.project/<relative>`
+/// before hashing, so two fresh checkouts with the same project layout produce
+/// the same cache key even when their absolute roots or basenames differ.
+pub fn build_rebuild_signature_for_project(
+    project_dir: &Path,
+    compiler_path: &Path,
+    flags: &[String],
+    pre_flags: &[String],
+    extra_flags: &[String],
+    unflags: &[String],
+) -> String {
+    let normalize = |value: &str| normalize_signature_value_for_project(value, project_dir);
+    build_rebuild_signature_with_normalizer(
+        compiler_path,
+        flags,
+        pre_flags,
+        extra_flags,
+        unflags,
+        &normalize,
+    )
+}
+
+fn build_rebuild_signature_with_normalizer(
+    compiler_path: &Path,
+    flags: &[String],
+    pre_flags: &[String],
+    extra_flags: &[String],
+    unflags: &[String],
+    normalize_value: &dyn Fn(&str) -> String,
+) -> String {
     let strip = |group: &[String]| -> Vec<String> {
         if unflags.is_empty() {
             return group.to_vec();
@@ -408,21 +483,25 @@ pub fn build_rebuild_signature(
     hasher.update(compiler_identity(compiler_path).as_bytes());
     hasher.update([0]);
     for group in [flags.as_slice(), pre_flags, extra_flags.as_slice()] {
-        hash_signature_group(&mut hasher, group);
+        hash_signature_group(&mut hasher, group, normalize_value);
         hasher.update([0xff]);
     }
     format!("{:x}", hasher.finalize())
 }
 
-fn hash_signature_group(hasher: &mut Sha256, group: &[String]) {
+fn hash_signature_group(
+    hasher: &mut Sha256,
+    group: &[String],
+    normalize_value: &dyn Fn(&str) -> String,
+) {
     let mut expects_path_value = false;
     for flag in group {
         let normalized = if expects_path_value {
             expects_path_value = false;
-            normalize_signature_value(flag)
+            normalize_value(flag)
         } else {
             expects_path_value = is_split_path_flag(flag);
-            normalize_signature_flag(flag)
+            normalize_signature_flag(flag, normalize_value)
         };
         hasher.update(normalized.as_bytes());
         hasher.update([0]);
@@ -436,10 +515,10 @@ fn is_split_path_flag(flag: &str) -> bool {
     )
 }
 
-fn normalize_signature_flag(flag: &str) -> String {
+fn normalize_signature_flag(flag: &str, normalize_value: &dyn Fn(&str) -> String) -> String {
     for prefix in ["-I", "-isystem=", "-iquote=", "-include=", "--sysroot="] {
         if let Some(value) = flag.strip_prefix(prefix) {
-            return format!("{prefix}{}", normalize_signature_value(value));
+            return format!("{prefix}{}", normalize_value(value));
         }
     }
     flag.to_string()
@@ -454,6 +533,26 @@ fn normalize_signature_value(value: &str) -> String {
         return value.to_string();
     }
     normalize_signature_path(path)
+}
+
+fn normalize_signature_value_for_project(value: &str, project_dir: &Path) -> String {
+    if value.is_empty() {
+        return String::new();
+    }
+    let path = Path::new(value);
+    if !looks_like_absolute_path(path, value) {
+        return value.to_string();
+    }
+    let arg = fbuild_core::path::path_arg_for_compile_cwd(path, project_dir);
+    if !looks_like_absolute_path(Path::new(&arg), &arg) {
+        if arg == "." {
+            ".project".to_string()
+        } else {
+            format!(".project/{arg}")
+        }
+    } else {
+        normalize_signature_path(path)
+    }
 }
 
 fn normalize_signature_path(path: &Path) -> String {

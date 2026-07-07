@@ -6,13 +6,14 @@
 //! `~/.fbuild/{dev|prod}/cache/core/<hash>/` and hydrates project `core/` dirs
 //! before normal incremental rebuild checks run.
 
+use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 
 use fbuild_core::path::NormalizedPath;
 use fbuild_core::BuildProfile;
 use sha2::{Digest, Sha256};
 
-use crate::compiler::Compiler;
+use crate::compiler::{Compiler, CompilerBase};
 use crate::flag_overlay::LanguageExtraFlags;
 
 const CORE_CACHE_VERSION: &str = "fbuild-core-artifacts-v1";
@@ -40,6 +41,7 @@ impl FrameworkCoreCache {
         extra_flags: &LanguageExtraFlags,
     ) -> Self {
         let key = core_cache_key(
+            project_dir,
             platform_label,
             env_name,
             profile,
@@ -61,11 +63,26 @@ impl FrameworkCoreCache {
         &self.path
     }
 
-    pub fn hydrate(&self, core_build_dir: &Path) -> std::io::Result<ArtifactCopyStats> {
+    pub fn hydrate(
+        &self,
+        core_build_dir: &Path,
+        compiler: &dyn Compiler,
+        core_sources: &[PathBuf],
+        extra_flags: &LanguageExtraFlags,
+    ) -> std::io::Result<ArtifactCopyStats> {
         if !self.path.is_dir() {
             return Ok(ArtifactCopyStats::default());
         }
-        copy_artifacts(&self.path, core_build_dir, false)
+        let mut outcome = copy_artifacts(&self.path, core_build_dir, false, false)?;
+        let refreshed = refresh_command_hashes(
+            core_build_dir,
+            compiler,
+            core_sources,
+            extra_flags,
+            &outcome.copied_objects,
+        )?;
+        outcome.stats.copied += refreshed;
+        Ok(outcome.stats)
     }
 
     pub fn store(&self, core_build_dir: &Path) -> std::io::Result<ArtifactCopyStats> {
@@ -73,11 +90,12 @@ impl FrameworkCoreCache {
             return Ok(ArtifactCopyStats::default());
         }
         std::fs::create_dir_all(&self.path)?;
-        copy_artifacts(core_build_dir, &self.path, true)
+        Ok(copy_artifacts(core_build_dir, &self.path, true, true)?.stats)
     }
 }
 
 fn core_cache_key(
+    project_dir: &Path,
     platform_label: &str,
     env_name: &str,
     profile: BuildProfile,
@@ -102,9 +120,13 @@ fn core_cache_key(
         .map(|source| {
             // FastLED/fbuild#911 — path-shape slash normalization goes
             // through `NormalizedPath::display_slash()`.
-            let source_path = NormalizedPath::from(source.as_path()).display_slash();
+            let source_path = if source.is_absolute() {
+                fbuild_core::path::path_arg_for_compile_cwd(source, project_dir)
+            } else {
+                NormalizedPath::from(source.as_path()).display_slash()
+            };
             let source_flags = extra_flags.for_source(source);
-            let signature = compiler.rebuild_signature(source, &source_flags);
+            let signature = compiler.artifact_cache_signature(project_dir, source, &source_flags);
             let content = file_content_digest(source);
             (source_path, signature, content)
         })
@@ -138,37 +160,79 @@ fn copy_artifacts(
     src_dir: &Path,
     dst_dir: &Path,
     overwrite: bool,
-) -> std::io::Result<ArtifactCopyStats> {
+    include_cmdhash: bool,
+) -> std::io::Result<ArtifactCopyOutcome> {
     std::fs::create_dir_all(dst_dir)?;
-    let mut stats = ArtifactCopyStats::default();
+    let mut outcome = ArtifactCopyOutcome::default();
     for entry in std::fs::read_dir(src_dir)? {
         let entry = entry?;
         if !entry.file_type()?.is_file() {
             continue;
         }
         let src = entry.path();
-        if !is_core_artifact(&src) {
+        if !is_core_artifact(&src, include_cmdhash) {
             continue;
         }
         let dst = dst_dir.join(entry.file_name());
         if dst.exists() {
             if !overwrite {
-                stats.skipped += 1;
+                outcome.stats.skipped += 1;
                 continue;
             }
             std::fs::remove_file(&dst)?;
         }
         copy_preserving_mtime(&src, &dst)?;
-        stats.copied += 1;
+        if is_object_artifact(&src) {
+            outcome.copied_objects.insert(entry.file_name());
+        }
+        outcome.stats.copied += 1;
     }
-    Ok(stats)
+    Ok(outcome)
 }
 
-fn is_core_artifact(path: &Path) -> bool {
+#[derive(Default)]
+struct ArtifactCopyOutcome {
+    stats: ArtifactCopyStats,
+    copied_objects: HashSet<std::ffi::OsString>,
+}
+
+fn is_core_artifact(path: &Path, include_cmdhash: bool) -> bool {
     matches!(
         path.extension().and_then(|ext| ext.to_str()),
-        Some("o" | "d" | "cmdhash")
-    )
+        Some("o" | "d")
+    ) || (include_cmdhash
+        && matches!(
+            path.extension().and_then(|ext| ext.to_str()),
+            Some("cmdhash")
+        ))
+}
+
+fn is_object_artifact(path: &Path) -> bool {
+    matches!(path.extension().and_then(|ext| ext.to_str()), Some("o"))
+}
+
+fn refresh_command_hashes(
+    core_build_dir: &Path,
+    compiler: &dyn Compiler,
+    core_sources: &[PathBuf],
+    extra_flags: &LanguageExtraFlags,
+    copied_objects: &HashSet<std::ffi::OsString>,
+) -> std::io::Result<usize> {
+    let mut refreshed = 0;
+    for source in core_sources {
+        let obj = CompilerBase::object_path(source, core_build_dir);
+        let Some(name) = obj.file_name() else {
+            continue;
+        };
+        if !copied_objects.contains(name) {
+            continue;
+        }
+        let source_flags = extra_flags.for_source(source);
+        let signature = compiler.rebuild_signature(source, &source_flags);
+        std::fs::write(obj.with_extension("cmdhash"), signature)?;
+        refreshed += 1;
+    }
+    Ok(refreshed)
 }
 
 fn copy_preserving_mtime(src: &Path, dst: &Path) -> std::io::Result<u64> {
@@ -266,6 +330,7 @@ mod tests {
             asm: Vec::new(),
         };
         let a = core_cache_key(
+            Path::new("/project"),
             "avr",
             "uno",
             BuildProfile::Release,
@@ -274,6 +339,7 @@ mod tests {
             &plain,
         );
         let b = core_cache_key(
+            Path::new("/project"),
             "avr",
             "uno",
             BuildProfile::Release,
@@ -300,6 +366,7 @@ mod tests {
         };
 
         let a = core_cache_key(
+            tmp.path(),
             "avr",
             "uno",
             BuildProfile::Release,
@@ -308,6 +375,7 @@ mod tests {
             &plain,
         );
         let b = core_cache_key(
+            tmp.path(),
             "avr",
             "uno",
             BuildProfile::Release,
@@ -332,6 +400,7 @@ mod tests {
 
         std::fs::write(&source, b"first").unwrap();
         let first = core_cache_key(
+            tmp.path(),
             "avr",
             "uno",
             BuildProfile::Release,
@@ -341,6 +410,7 @@ mod tests {
         );
         std::fs::write(&source, b"second").unwrap();
         let second = core_cache_key(
+            tmp.path(),
             "avr",
             "uno",
             BuildProfile::Release,
@@ -349,6 +419,47 @@ mod tests {
             &plain,
         );
         assert_ne!(first, second);
+    }
+
+    #[test]
+    fn key_is_independent_of_project_directory_name() {
+        let compiler = FakeCompiler::new();
+        let tmp = tempfile::tempdir().unwrap();
+        let project_a = tmp.path().join("nds");
+        let project_b = tmp.path().join("nds-copy");
+        let source_a = project_a.join("src").join("main.cpp");
+        let source_b = project_b.join("src").join("main.cpp");
+        std::fs::create_dir_all(source_a.parent().unwrap()).unwrap();
+        std::fs::create_dir_all(source_b.parent().unwrap()).unwrap();
+        std::fs::write(&source_a, b"same core").unwrap();
+        std::fs::write(&source_b, b"same core").unwrap();
+        let plain = LanguageExtraFlags {
+            common: Vec::new(),
+            c: Vec::new(),
+            cxx: Vec::new(),
+            asm: Vec::new(),
+        };
+
+        let a = core_cache_key(
+            &project_a,
+            "esp32",
+            "esp32dev",
+            BuildProfile::Release,
+            &compiler,
+            &[source_a],
+            &plain,
+        );
+        let b = core_cache_key(
+            &project_b,
+            "esp32",
+            "esp32dev",
+            BuildProfile::Release,
+            &compiler,
+            &[source_b],
+            &plain,
+        );
+
+        assert_eq!(a, b);
     }
 
     #[test]
@@ -373,20 +484,42 @@ mod tests {
 
         let core = tmp.path().join("core");
         std::fs::create_dir_all(&core).unwrap();
-        std::fs::write(core.join("main.cpp.o"), b"obj").unwrap();
-        std::fs::write(core.join("main.cpp.d"), b"dep").unwrap();
-        std::fs::write(core.join("main.cpp.cmdhash"), b"hash").unwrap();
+        let source = project.join("src").join("main.cpp");
+        std::fs::create_dir_all(source.parent().unwrap()).unwrap();
+        std::fs::write(&source, b"int main() { return 0; }\n").unwrap();
+        let object = CompilerBase::object_path(&source, &core);
+        let depfile = object.with_extension("d");
+        let cmdhash = object.with_extension("cmdhash");
+        std::fs::write(&object, b"obj").unwrap();
+        std::fs::write(&depfile, b"dep").unwrap();
+        std::fs::write(&cmdhash, b"hash").unwrap();
         std::fs::write(core.join("note.txt"), b"ignore").unwrap();
 
         let stored = cache.store(&core).unwrap();
         assert_eq!(stored.copied, 3);
-        assert!(cache.path().join("main.cpp.o").exists());
+        assert!(cache.path().join(object.file_name().unwrap()).exists());
         assert!(!cache.path().join("note.txt").exists());
 
         let hydrated = tmp.path().join("hydrated");
-        let stats = cache.hydrate(&hydrated).unwrap();
+        let flags = LanguageExtraFlags {
+            common: Vec::new(),
+            c: Vec::new(),
+            cxx: Vec::new(),
+            asm: Vec::new(),
+        };
+        let compiler = FakeCompiler::new();
+        let sources = vec![source.clone()];
+        let stats = cache
+            .hydrate(&hydrated, &compiler, &sources, &flags)
+            .unwrap();
         assert_eq!(stats.copied, 3);
-        assert_eq!(std::fs::read(hydrated.join("main.cpp.o")).unwrap(), b"obj");
+        let hydrated_object = hydrated.join(object.file_name().unwrap());
+        let hydrated_cmdhash = hydrated_object.with_extension("cmdhash");
+        assert_eq!(std::fs::read(hydrated_object).unwrap(), b"obj");
+        assert_eq!(
+            std::fs::read_to_string(hydrated_cmdhash).unwrap(),
+            compiler.rebuild_signature(&source, &[])
+        );
     }
 
     #[test]
@@ -399,9 +532,9 @@ mod tests {
         std::fs::write(src.join("main.cpp.o"), b"cache").unwrap();
         std::fs::write(dst.join("main.cpp.o"), b"project").unwrap();
 
-        let stats = copy_artifacts(&src, &dst, false).unwrap();
-        assert_eq!(stats.copied, 0);
-        assert_eq!(stats.skipped, 1);
+        let outcome = copy_artifacts(&src, &dst, false, true).unwrap();
+        assert_eq!(outcome.stats.copied, 0);
+        assert_eq!(outcome.stats.skipped, 1);
         assert_eq!(std::fs::read(dst.join("main.cpp.o")).unwrap(), b"project");
     }
 }
