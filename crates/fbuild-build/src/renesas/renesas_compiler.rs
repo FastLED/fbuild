@@ -259,6 +259,44 @@ impl Compiler for RenesasCompiler {
             self.build_unflags(),
         )
     }
+
+    fn artifact_cache_signature(
+        &self,
+        project_dir: &Path,
+        source: &Path,
+        extra_flags: &[String],
+    ) -> String {
+        let ext = source
+            .extension()
+            .unwrap_or_default()
+            .to_string_lossy()
+            .to_lowercase();
+        let (compiler_path, flags) = match ext.as_str() {
+            "c" | "s" => (self.gcc_path(), self.c_flags()),
+            _ => (self.gxx_path(), self.cpp_flags()),
+        };
+        let extra_owned: Vec<String> = if is_c_source(source) && self.is_framework_source(source) {
+            extra_flags
+                .iter()
+                .cloned()
+                .chain(
+                    framework_c_suppression_flags()
+                        .iter()
+                        .map(|s| (*s).to_string()),
+                )
+                .collect()
+        } else {
+            extra_flags.to_vec()
+        };
+        crate::compiler::build_rebuild_signature_for_project(
+            project_dir,
+            compiler_path,
+            &flags,
+            &[],
+            &extra_owned,
+            self.build_unflags(),
+        )
+    }
 }
 
 #[cfg(test)]

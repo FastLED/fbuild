@@ -130,7 +130,12 @@ pub async fn run_sequential_build_with_libs(
     };
     if let Some(cache) = core_cache.as_ref() {
         let _g = perf.phase("core-cache-hydrate");
-        match cache.hydrate(&ctx.core_build_dir) {
+        match cache.hydrate(
+            &ctx.core_build_dir,
+            compiler,
+            &core_and_variant,
+            &user_overlay,
+        ) {
             Ok(stats) if stats.copied > 0 || stats.skipped > 0 => tracing::info!(
                 "framework core cache hydrate key={} copied={} skipped={} from {}",
                 cache.key(),

@@ -443,6 +443,41 @@ fn test_build_rebuild_signature_ignores_attached_include_root() {
 }
 
 #[test]
+fn test_artifact_cache_signature_ignores_project_directory_name() {
+    let tmp = tempfile::tempdir().unwrap();
+    let project_a = tmp.path().join("nds");
+    let project_b = tmp.path().join("nds-copy");
+    let include_a = project_a.join("src");
+    let include_b = project_b.join("src");
+    std::fs::create_dir_all(&include_a).unwrap();
+    std::fs::create_dir_all(&include_b).unwrap();
+    let flags_a = vec![format!("-I{}", include_a.display())];
+    let flags_b = vec![format!("-I{}", include_b.display())];
+
+    let sig_a = build_rebuild_signature_for_project(
+        &project_a,
+        Path::new("/tmp/tool/bin/xtensa-esp32-elf-g++"),
+        &flags_a,
+        &[],
+        &[],
+        &[],
+    );
+    let sig_b = build_rebuild_signature_for_project(
+        &project_b,
+        Path::new("/tmp/tool/bin/xtensa-esp32-elf-g++"),
+        &flags_b,
+        &[],
+        &[],
+        &[],
+    );
+
+    assert_eq!(
+        sig_a, sig_b,
+        "artifact cache keys must depend on project layout, not checkout basename"
+    );
+}
+
+#[test]
 fn test_build_rebuild_signature_ignores_split_path_flag_values() {
     let flags_a = vec![
         "-isystem".to_string(),

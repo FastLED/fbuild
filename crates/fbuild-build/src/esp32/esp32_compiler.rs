@@ -222,6 +222,36 @@ impl Compiler for Esp32Compiler {
             Compiler::build_unflags(self),
         )
     }
+
+    fn artifact_cache_signature(
+        &self,
+        project_dir: &Path,
+        source: &Path,
+        extra_flags: &[String],
+    ) -> String {
+        let ext = source
+            .extension()
+            .unwrap_or_default()
+            .to_string_lossy()
+            .to_lowercase();
+        let base_flags = match ext.as_str() {
+            "c" | "s" => self.c_flags(),
+            _ => self.cpp_flags(),
+        };
+        let include_flags = self.base.build_include_flags();
+        let compiler_path = match ext.as_str() {
+            "c" | "s" => self.gcc_path(),
+            _ => self.gxx_path(),
+        };
+        crate::compiler::build_rebuild_signature_for_project(
+            project_dir,
+            compiler_path,
+            &base_flags,
+            &include_flags,
+            extra_flags,
+            Compiler::build_unflags(self),
+        )
+    }
 }
 
 // Response file utilities (write_response_file, replace_path_backslashes)
