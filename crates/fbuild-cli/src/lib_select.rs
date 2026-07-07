@@ -448,3 +448,40 @@ fn emit_json(
             .expect("fbuild-cli: lib-select JSON payload is built from primitives, serialization is infallible")
     );
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn normalized_path_is_under_matches_exact_path() {
+        assert!(normalized_path_is_under(
+            Path::new("/foo/bar"),
+            Path::new("/foo/bar")
+        ));
+    }
+
+    #[test]
+    fn normalized_path_is_under_matches_nested_path() {
+        assert!(normalized_path_is_under(
+            Path::new("/foo/bar/baz.h"),
+            Path::new("/foo/bar")
+        ));
+    }
+
+    #[test]
+    fn normalized_path_is_under_handles_dir_trailing_slash() {
+        assert!(normalized_path_is_under(
+            Path::new("/foo/bar/baz.h"),
+            Path::new("/foo/bar/")
+        ));
+    }
+
+    #[test]
+    fn normalized_path_is_under_rejects_sibling_prefix() {
+        assert!(!normalized_path_is_under(
+            Path::new("/foo/barbaz/header.h"),
+            Path::new("/foo/bar")
+        ));
+    }
+}

@@ -277,12 +277,11 @@ pub fn require_installed() -> Result<(NormalizedPath, NormalizedPath)> {
 fn home_dir() -> Option<NormalizedPath> {
     #[cfg(target_os = "windows")]
     {
-        std::env::var_os("USERPROFILE").map(|value| NormalizedPath::new(Path::new(&value)))
+        if let Some(value) = std::env::var_os("USERPROFILE") {
+            return Some(NormalizedPath::new(Path::new(&value)));
+        }
     }
-    #[cfg(not(target_os = "windows"))]
-    {
-        std::env::var_os("HOME").map(|value| NormalizedPath::new(Path::new(&value)))
-    }
+    std::env::var_os("HOME").map(|value| NormalizedPath::new(Path::new(&value)))
 }
 
 #[cfg(test)]
