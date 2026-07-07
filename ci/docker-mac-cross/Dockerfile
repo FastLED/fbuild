@@ -57,7 +57,7 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | sh \
 # to an unrelated squatted `soldr-0.1.0` placeholder package. The tarball
 # is built against glibc 2.17 (manylinux_2_17 floor) so it runs on every
 # remotely-recent distro. Issue tracked at zackees/soldr#1005 (forthcoming).
-ARG SOLDR_VERSION=0.7.98
+ARG SOLDR_VERSION=0.8.0
 RUN mkdir -p /opt/soldr-bin \
  && curl -fsSL \
         "https://github.com/zackees/soldr/releases/download/v${SOLDR_VERSION}/soldr-v${SOLDR_VERSION}-x86_64-unknown-linux-gnu.tar.zst" \
@@ -68,7 +68,7 @@ RUN mkdir -p /opt/soldr-bin \
 # `soldr-clang-shim` must live next to the running soldr binary —
 # soldr's blessed cross-compile path resolves it relative to its own
 # exe (zackees/soldr#1015/#1016) and ships it in every release
-# archive as of v0.7.92+.
+# archive as of v0.8.0+.
 RUN for bin in soldr soldr-clang-shim cargo-chef crgx; do \
         [ -f "/opt/soldr-bin/$bin" ] && cp "/opt/soldr-bin/$bin" "/usr/local/bin/$bin" && chmod +x "/usr/local/bin/$bin"; \
     done

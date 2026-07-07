@@ -62,7 +62,7 @@ RUN test -f /etc/machine-id || cat /proc/sys/kernel/random/uuid | tr -d '-\n' > 
 # Soldr binary tarball from GitHub Releases — same rationale and pin as
 # ci/docker-mac-cross/Dockerfile (pip wheel is manylinux_2_39-tagged and
 # falls back to a squatted placeholder on older glibc).
-ARG SOLDR_VERSION=0.7.98
+ARG SOLDR_VERSION=0.8.0
 RUN mkdir -p /opt/soldr-bin \
  && curl -fsSL \
         "https://github.com/zackees/soldr/releases/download/v${SOLDR_VERSION}/soldr-v${SOLDR_VERSION}-x86_64-unknown-linux-gnu.tar.zst" \
