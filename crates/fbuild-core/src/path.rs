@@ -387,7 +387,7 @@ pub fn path_arg_for_compile_cwd(path: &Path, cwd: &Path) -> String {
         path.to_path_buf()
     } else {
         let stable_path = canonicalize_lexical(path).unwrap_or_else(|| path.to_path_buf());
-        let stable_cwd = strip_unc_prefix(cwd);
+        let stable_cwd = canonicalize_lexical(cwd).unwrap_or_else(|| strip_unc_prefix(cwd));
         stable_path
             .strip_prefix(&stable_cwd)
             .map(|tail| tail.to_path_buf())
@@ -784,6 +784,21 @@ mod tests {
         std::fs::write(&source, "int main() { return 0; }\n").unwrap();
         let cwd = cwd.canonicalize().unwrap();
         // Forward-slash spelling is the invariant on every platform.
+        assert_eq!(path_arg_for_compile_cwd(&source, &cwd), "src/main.cpp");
+    }
+
+    #[test]
+    #[cfg(unix)]
+    fn path_arg_for_compile_cwd_canonicalizes_symlinked_cwd() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let real = tmp.path().join("real");
+        let link = tmp.path().join("link");
+        let cwd = link.join("project");
+        let source = cwd.join("src/main.cpp");
+        std::fs::create_dir_all(real.join("project/src")).unwrap();
+        std::os::unix::fs::symlink(&real, &link).unwrap();
+        std::fs::write(&source, "int main() { return 0; }\n").unwrap();
+
         assert_eq!(path_arg_for_compile_cwd(&source, &cwd), "src/main.cpp");
     }
 
