@@ -22,8 +22,9 @@
 //! subsequent `fbuild deploy` reaches ISP mode automatically via
 //! `-control` alone — no more button dance.
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::{FbuildError, Result};
 
 /// The vendored asset base URL — points at
@@ -79,7 +80,7 @@ pub const LPC_LINK2_FIRMWARE_ENV_VAR: &str = "FBUILD_LPC_LINK2_FIRMWARE";
 /// The one canonical directory fbuild caches the LPC-Link2 debugger
 /// tools under. Honors `FBUILD_DEV_MODE=1` for `~/.fbuild/dev/…`
 /// isolation, same as `find_lpc21isp` and the rest of `fbuild-paths`.
-pub fn managed_tools_dir() -> Option<PathBuf> {
+pub fn managed_tools_dir() -> Option<NormalizedPath> {
     let home = home_dir()?;
     let mode = if std::env::var_os("FBUILD_DEV_MODE").is_some() {
         "dev"
@@ -109,9 +110,9 @@ pub fn asset_url(name: &str) -> String {
 /// Returns `None` if nothing is present; the caller emits the actionable
 /// "run `fbuild deploy --upgrade-debugger` once to install the tools"
 /// diagnostic.
-pub fn find_dfu_util() -> Option<PathBuf> {
+pub fn find_dfu_util() -> Option<NormalizedPath> {
     if let Some(env_hit) = std::env::var_os(DFU_UTIL_PATH_ENV_VAR) {
-        let p = PathBuf::from(env_hit);
+        let p = NormalizedPath::new(Path::new(&env_hit));
         if p.is_file() {
             return Some(p);
         }
@@ -134,9 +135,9 @@ pub fn find_dfu_util() -> Option<PathBuf> {
 /// 1. `FBUILD_LPC_LINK2_FIRMWARE` env override.
 /// 2. `<managed_tools_dir>/lpc-link2-cmsis-dap-v2.hex` (preferred).
 /// 3. `<managed_tools_dir>/lpc-link2-cmsis-dap-v1.hex` (legacy fallback).
-pub fn find_lpc_link2_firmware() -> Option<PathBuf> {
+pub fn find_lpc_link2_firmware() -> Option<NormalizedPath> {
     if let Some(env_hit) = std::env::var_os(LPC_LINK2_FIRMWARE_ENV_VAR) {
-        let p = PathBuf::from(env_hit);
+        let p = NormalizedPath::new(Path::new(&env_hit));
         if p.is_file() {
             return Some(p);
         }
@@ -264,7 +265,7 @@ pub fn required_asset_names() -> [&'static str; 2] {
 
 /// Errors specific to the reflash flow. Wrapped into `FbuildError` at
 /// the deploy layer.
-pub fn require_installed() -> Result<(PathBuf, PathBuf)> {
+pub fn require_installed() -> Result<(NormalizedPath, NormalizedPath)> {
     let dfu = find_dfu_util().ok_or_else(|| FbuildError::DeployFailed(install_hint()))?;
     let fw = find_lpc_link2_firmware().ok_or_else(|| FbuildError::DeployFailed(install_hint()))?;
     Ok((dfu, fw))
@@ -273,15 +274,14 @@ pub fn require_installed() -> Result<(PathBuf, PathBuf)> {
 /// Resolve `$HOME` / `%USERPROFILE%`. Kept local so this module does
 /// not gain a `dirs` dependency for one call site — mirrors the same
 /// helper in `fbuild_deploy::lpc`.
-fn home_dir() -> Option<PathBuf> {
+fn home_dir() -> Option<NormalizedPath> {
     #[cfg(target_os = "windows")]
     {
-        std::env::var_os("USERPROFILE").map(PathBuf::from)
+        if let Some(value) = std::env::var_os("USERPROFILE") {
+            return Some(NormalizedPath::new(Path::new(&value)));
+        }
     }
-    #[cfg(not(target_os = "windows"))]
-    {
-        std::env::var_os("HOME").map(PathBuf::from)
-    }
+    std::env::var_os("HOME").map(|value| NormalizedPath::new(Path::new(&value)))
 }
 
 #[cfg(test)]
@@ -355,7 +355,7 @@ mod tests {
             Some(v) => std::env::set_var(DFU_UTIL_PATH_ENV_VAR, v),
             None => std::env::remove_var(DFU_UTIL_PATH_ENV_VAR),
         }
-        assert_eq!(got.as_deref(), Some(fake.as_path()));
+        assert_eq!(got.as_ref().map(|p| p.as_path()), Some(fake.as_path()));
     }
 
     #[test]

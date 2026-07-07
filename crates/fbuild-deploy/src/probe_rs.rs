@@ -31,9 +31,10 @@
 //! can dispatch to it in preference to the UART-ISP path (lpc21isp),
 //! which requires a `SW3 + SW4` button press to enter ISP mode.
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::time::Duration;
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::subprocess::run_command_blocking;
 use fbuild_core::{FbuildError, Result};
 
@@ -55,7 +56,7 @@ const PROBE_RS_TIMEOUT: Duration = Duration::from_secs(120);
 ///
 /// Honors `FBUILD_DEV_MODE=1` → `~/.fbuild/dev/tools/probe-rs/` to
 /// match the isolation the rest of `fbuild-paths` applies.
-pub fn managed_probe_rs_path() -> Option<PathBuf> {
+pub fn managed_probe_rs_path() -> Option<NormalizedPath> {
     let exe = if cfg!(windows) {
         "probe-rs.exe"
     } else {
@@ -92,9 +93,9 @@ pub fn managed_probe_rs_path() -> Option<PathBuf> {
 /// distro package will lack the FastLED patches and will hang on the
 /// LPC-Link2 v1.0.7 firmware, which is the exact failure mode this
 /// module exists to avoid.
-pub fn find_probe_rs() -> Option<PathBuf> {
+pub fn find_probe_rs() -> Option<NormalizedPath> {
     if let Some(env_hit) = std::env::var_os(PROBE_RS_PATH_ENV_VAR) {
-        let p = PathBuf::from(env_hit);
+        let p = NormalizedPath::new(Path::new(&env_hit));
         if p.is_file() {
             return Some(p);
         }
@@ -275,14 +276,14 @@ impl ProbeRsRun {
     }
 }
 
-fn home_dir_local() -> Option<PathBuf> {
+fn home_dir_local() -> Option<NormalizedPath> {
     #[cfg(windows)]
     {
         if let Some(v) = std::env::var_os("USERPROFILE") {
-            return Some(PathBuf::from(v));
+            return Some(NormalizedPath::new(Path::new(&v)));
         }
     }
-    std::env::var_os("HOME").map(PathBuf::from)
+    std::env::var_os("HOME").map(|value| NormalizedPath::new(Path::new(&value)))
 }
 
 #[cfg(test)]

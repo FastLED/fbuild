@@ -18,7 +18,7 @@
 //!
 //! Flow:
 //! 1. The version is taken from the pioarduino `tool-esptoolpy` metadata URL
-//!    (`.../esptoolpy-v5.3.0.zip` → `5.3.0`) — see [`extract_esptool_version`].
+//!    (`.../esptoolpy-v5.3.0.zip` → `5.3.0`) — see `extract_esptool_version`.
 //! 2. The host `(OS, ARCH)` maps to a tasmota platform tag
 //!    (`linux-amd64`, `macos-arm64`, `windows-amd64`, …). An unsupported host
 //!    yields an error, and the caller falls back to an `esptool` on PATH.
@@ -26,9 +26,9 @@
 //!    is downloaded + extracted via the shared [`PackageBase::staged_install`]
 //!    pattern, and the `esptool` executable is located inside it.
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
-use fbuild_core::{FbuildError, Result};
+use fbuild_core::{path::NormalizedPath, FbuildError, Result};
 
 use crate::{CacheSubdir, PackageBase};
 
@@ -38,7 +38,7 @@ use crate::{CacheSubdir, PackageBase};
 /// pinned version) and resolved lazily in [`Self::ensure_installed`], which
 /// returns the path to the `esptool` executable.
 pub struct Esptool {
-    project_dir: PathBuf,
+    project_dir: NormalizedPath,
     version: String,
 }
 
@@ -48,7 +48,7 @@ impl Esptool {
     /// embedded in the URL filename is used.
     pub fn from_metadata_url(project_dir: &Path, metadata_url: &str) -> Self {
         Self {
-            project_dir: project_dir.to_path_buf(),
+            project_dir: NormalizedPath::from(project_dir),
             version: extract_esptool_version(metadata_url),
         }
     }
@@ -60,7 +60,7 @@ impl Esptool {
     /// pattern, so a warm cache costs no network I/O. Returns an error on an
     /// unsupported host or a missing binary, so the caller can fall back to an
     /// `esptool` on PATH.
-    pub async fn ensure_installed(&self) -> Result<PathBuf> {
+    pub async fn ensure_installed(&self) -> Result<NormalizedPath> {
         let platform = tasmota_platform_tag().ok_or_else(|| {
             FbuildError::PackageError(format!(
                 "no prebuilt esptool binary for {}/{}",
@@ -80,7 +80,7 @@ impl Esptool {
             &url,
             None,
             CacheSubdir::Toolchains,
-            &self.project_dir,
+            self.project_dir.as_path(),
         );
         let install_path = base.staged_install(validate_esptool).await?;
 
@@ -97,11 +97,11 @@ impl Esptool {
         #[cfg(unix)]
         {
             use std::os::unix::fs::PermissionsExt;
-            if let Ok(meta) = std::fs::metadata(&bin) {
+            if let Ok(meta) = std::fs::metadata(bin.as_path()) {
                 let mut perms = meta.permissions();
                 if perms.mode() & 0o111 == 0 {
                     perms.set_mode(0o755);
-                    let _ = std::fs::set_permissions(&bin, perms);
+                    let _ = std::fs::set_permissions(bin.as_path(), perms);
                 }
             }
         }
@@ -151,11 +151,11 @@ fn esptool_bin_name() -> &'static str {
 /// Locate the `esptool` executable in an extracted tree, searching the root and
 /// up to two levels deep (the tasmota zip nests it under
 /// `esptool-<platform>/esptool`).
-fn find_esptool_binary(root: &Path) -> Option<PathBuf> {
-    fn search(dir: &Path, depth: usize) -> Option<PathBuf> {
+fn find_esptool_binary(root: &Path) -> Option<NormalizedPath> {
+    fn search(dir: &Path, depth: usize) -> Option<NormalizedPath> {
         let candidate = dir.join(esptool_bin_name());
         if candidate.is_file() {
-            return Some(candidate);
+            return Some(NormalizedPath::from(candidate));
         }
         if depth == 0 {
             return None;
@@ -250,10 +250,8 @@ mod tests {
         let tmp = tempfile::TempDir::new().unwrap();
         let root = tmp.path();
         std::fs::write(root.join(esptool_bin_name()), b"bin").unwrap();
-        assert_eq!(
-            find_esptool_binary(root),
-            Some(root.join(esptool_bin_name()))
-        );
+        let found = find_esptool_binary(root).unwrap();
+        assert_eq!(found.as_path(), root.join(esptool_bin_name()));
     }
 
     #[test]
@@ -262,10 +260,8 @@ mod tests {
         let inner = tmp.path().join("esptool-linux-amd64");
         std::fs::create_dir_all(&inner).unwrap();
         std::fs::write(inner.join(esptool_bin_name()), b"bin").unwrap();
-        assert_eq!(
-            find_esptool_binary(tmp.path()),
-            Some(inner.join(esptool_bin_name()))
-        );
+        let found = find_esptool_binary(tmp.path()).unwrap();
+        assert_eq!(found.as_path(), inner.join(esptool_bin_name()));
     }
 
     #[test]

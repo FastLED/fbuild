@@ -18,6 +18,7 @@
 use std::path::{Path, PathBuf};
 
 use fbuild_config::PlatformIOConfig;
+use fbuild_core::path::normalize_for_key;
 use fbuild_core::Platform;
 use fbuild_library_select::{resolve, Selection};
 use fbuild_packages::library::framework_library::discover_framework_libraries;
@@ -333,8 +334,22 @@ fn first_reached_under(included: &[PathBuf], lib: &FrameworkLibrary) -> Option<P
         .collect();
     included
         .iter()
-        .find(|p| canon_dirs.iter().any(|d| p.starts_with(d)))
+        .find(|p| canon_dirs.iter().any(|d| normalized_path_is_under(p, d)))
         .cloned()
+}
+
+fn normalized_path_is_under(path: &Path, dir: &Path) -> bool {
+    let path_key = normalize_for_key(path);
+    let dir_key = normalize_for_key(dir);
+    if path_key == dir_key {
+        return true;
+    }
+    let dir_prefix = if dir_key.ends_with('/') {
+        dir_key
+    } else {
+        format!("{dir_key}/")
+    };
+    path_key.starts_with(&dir_prefix)
 }
 
 fn emit_explain(
@@ -432,4 +447,41 @@ fn emit_json(
         serde_json::to_string_pretty(&payload)
             .expect("fbuild-cli: lib-select JSON payload is built from primitives, serialization is infallible")
     );
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn normalized_path_is_under_matches_exact_path() {
+        assert!(normalized_path_is_under(
+            Path::new("/foo/bar"),
+            Path::new("/foo/bar")
+        ));
+    }
+
+    #[test]
+    fn normalized_path_is_under_matches_nested_path() {
+        assert!(normalized_path_is_under(
+            Path::new("/foo/bar/baz.h"),
+            Path::new("/foo/bar")
+        ));
+    }
+
+    #[test]
+    fn normalized_path_is_under_handles_dir_trailing_slash() {
+        assert!(normalized_path_is_under(
+            Path::new("/foo/bar/baz.h"),
+            Path::new("/foo/bar/")
+        ));
+    }
+
+    #[test]
+    fn normalized_path_is_under_rejects_sibling_prefix() {
+        assert!(!normalized_path_is_under(
+            Path::new("/foo/barbaz/header.h"),
+            Path::new("/foo/bar")
+        ));
+    }
 }
