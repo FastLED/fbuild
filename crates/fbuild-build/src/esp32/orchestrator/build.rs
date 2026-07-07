@@ -793,7 +793,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &flash_freq,
             ctx.board.max_flash,
             ctx.board.max_ram,
-            esptool_bin.clone(),
+            esptool_bin.clone().map(|path| path.into_path_buf()),
             params.verbose,
         );
 
@@ -822,7 +822,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &ctx.board,
             &mcu_config,
             &flash_freq,
-            esptool_bin.as_deref(),
+            esptool_bin.as_ref().map(|path| path.as_path()),
             &mut perf,
         )
         .await?;

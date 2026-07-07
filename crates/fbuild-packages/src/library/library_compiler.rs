@@ -8,6 +8,7 @@ use std::fs::Metadata;
 use std::path::{Path, PathBuf};
 use std::time::SystemTime;
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::subprocess::run_command;
 use fbuild_core::{FbuildError, Result};
 use sha2::{Digest, Sha256};
@@ -68,7 +69,7 @@ pub trait LibCompileBackend: Send + Sync {
         &self,
         compiler: &Path,
         args: Vec<String>,
-        cwd: PathBuf,
+        cwd: NormalizedPath,
         env: Vec<(String, String)>,
     ) -> Result<LibCompileOutcome>;
 }
@@ -452,6 +453,7 @@ async fn compile_one_source(
             .map(Path::to_path_buf)
             .or_else(|| std::env::current_dir().ok())
             .unwrap_or_else(|| PathBuf::from("."));
+        let cwd = NormalizedPath::new(cwd);
         // No @response-file: the embedded service manages long arg lists itself.
         let outcome = backend.compile(compiler, sanitized, cwd, env).await?;
         (
@@ -723,6 +725,14 @@ fn object_path(source: &Path, obj_dir: &Path) -> PathBuf {
 }
 
 /// Project-workspace-relative key for the object hash (FastLED/fbuild#966).
+///
+/// Relativizes the source against the project workspace (parent of the
+/// `.fbuild/` component in `obj_dir`) through the blessed
+/// [`fbuild_core::path::path_arg_for_compile_cwd`], which owns the
+/// `strip_prefix` + slash normalization so the object name — and therefore
+/// the zccache per-TU key — stays project-directory-independent. Sources
+/// outside the workspace (global framework/library cache) keep their
+/// absolute path, already project-independent.
 fn object_hash_key(source: &Path, obj_dir: &Path) -> String {
     for ancestor in obj_dir.ancestors() {
         if ancestor
@@ -731,14 +741,12 @@ fn object_hash_key(source: &Path, obj_dir: &Path) -> String {
             .unwrap_or(false)
         {
             if let Some(workspace) = ancestor.parent() {
-                if let Ok(rel) = source.strip_prefix(workspace) {
-                    return rel.to_string_lossy().replace('\\', "/");
-                }
+                return fbuild_core::path::path_arg_for_compile_cwd(source, workspace);
             }
             break;
         }
     }
-    source.to_string_lossy().replace('\\', "/")
+    fbuild_core::path::NormalizedPath::from(source).display_slash()
 }
 
 #[cfg(test)]

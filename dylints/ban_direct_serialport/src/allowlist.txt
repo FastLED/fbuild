@@ -39,6 +39,10 @@ crates/fbuild-deploy/src/reset.rs
 crates/fbuild-deploy/src/esp32_native/transport.rs
 crates/fbuild-deploy/src/esp32_native/verify.rs
 crates/fbuild-deploy/src/esp32_native/write.rs
+crates/fbuild-deploy/src/lpc.rs
+
+# LPC SWD path: read-only VID/PID enumeration to decide whether probe-rs can run; no serial handle is opened.
+crates/fbuild-deploy/src/probe_rs.rs
 crates/fbuild-deploy/src/teensy/first_byte_probe.rs
 crates/fbuild-deploy/src/teensy/mod.rs
 crates/fbuild-deploy/src/teensy/port_discovery.rs
