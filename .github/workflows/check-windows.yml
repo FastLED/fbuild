@@ -23,9 +23,6 @@ jobs:
         id: setup-soldr
         uses: zackees/setup-soldr@v0.9.66
         with:
-          # setup-soldr's tagged default can lag the soldr release stream; pin
-          # the current release so this job does not silently run an older tool.
-          version: "0.8.0"
           cache: true
           build-cache: true
           target-cache: true
@@ -46,7 +43,7 @@ jobs:
         run: |
           version="$(soldr --version)"
           echo "$version"
-          test "$version" = "soldr 0.8.0"
+          [[ "$version" == soldr\ * ]]
       - name: Check
         shell: bash
         run: soldr cargo check --workspace --all-targets

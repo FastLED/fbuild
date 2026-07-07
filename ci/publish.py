@@ -57,8 +57,8 @@ PYTHON_SHIMS_DIR = ROOT / "python"
 ARTIFACT_MAP: dict[str, str] = {
     "binaries-x86_64-unknown-linux-musl": "linux-x86_64",
     "binaries-aarch64-unknown-linux-musl": "linux-aarch64",
-    # Restored alongside the release-auto.yml macOS matrix entries on
-    # soldr v0.8.0 + setup-soldr v0.9.66 (Apple SDK URL fix).
+    # Restored alongside the release-auto.yml macOS matrix entries once
+    # setup-soldr v0.9.66 could float from the soldr v0.8.0 known-good floor.
     "binaries-aarch64-apple-darwin": "macos-aarch64",
     "binaries-x86_64-pc-windows-msvc": "windows-x86_64",
 }

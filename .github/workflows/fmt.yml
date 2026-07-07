@@ -21,7 +21,6 @@ jobs:
         id: setup-soldr
         uses: zackees/setup-soldr@v0.9.66
         with:
-          version: "0.8.0"
           cache: true
           build-cache: true
           target-cache: false
