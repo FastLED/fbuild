@@ -99,6 +99,9 @@ pub struct DeployRequest {
     pub monitor_show_timestamp: bool,
     /// Override the board's default upload baud rate for flashing.
     pub baud_rate: Option<u32>,
+    /// Force LPC deploys through lpc21isp instead of the probe-rs SWD fast path.
+    #[serde(default)]
+    pub no_probe_rs: bool,
     /// Deploy destination: "device", "emu", or "emulator".
     pub to: Option<String>,
     /// Emulator backend when deploying to `emu`/`emulator`.
@@ -587,6 +590,7 @@ mod tests {
             "monitor_halt_on_success": "PASS",
             "monitor_expect": "ready",
             "monitor_show_timestamp": false,
+            "no_probe_rs": true,
             "request_id": "deploy-1"
         }"#;
         let req: DeployRequest = serde_json::from_str(json).unwrap();
@@ -601,6 +605,7 @@ mod tests {
         assert_eq!(req.monitor_halt_on_success.unwrap(), "PASS");
         assert_eq!(req.monitor_expect.unwrap(), "ready");
         assert!(!req.monitor_show_timestamp);
+        assert!(req.no_probe_rs);
         assert_eq!(req.request_id.unwrap(), "deploy-1");
     }
 
@@ -624,6 +629,7 @@ mod tests {
         assert!(req.monitor_show_timestamp);
         assert!(req.to.is_none());
         assert!(req.emulator.is_none());
+        assert!(!req.no_probe_rs);
         assert!(!req.qemu);
         assert_eq!(req.qemu_timeout, 30);
         assert!(req.src_dir.is_none());

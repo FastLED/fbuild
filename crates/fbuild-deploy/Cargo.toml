@@ -16,6 +16,7 @@ espflash-native = ["dep:espflash", "dep:md-5"]
 [dependencies]
 fbuild-core = { path = "../fbuild-core" }
 fbuild-config = { path = "../fbuild-config" }
+fbuild-packages = { path = "../fbuild-packages" }
 fbuild-paths = { path = "../fbuild-paths" }
 fbuild-serial = { path = "../fbuild-serial" }
 serialport = { workspace = true }

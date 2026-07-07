@@ -437,6 +437,7 @@ pub async fn deploy(
     let deploy_port = deploy_port_str.clone();
     let deploy_fw = firmware_path.clone();
     let baud_override = req.baud_rate;
+    let no_probe_rs = req.no_probe_rs;
     let deploy_board_overrides = board_overrides.clone();
     // Snapshot the ctx pointer so the spawn_blocking closure can
     // consult / update the daemon's in-memory trusted-hash cache
@@ -780,6 +781,7 @@ pub async fn deploy(
                 &deploy_board_overrides,
                 deploy_project.as_path(),
                 baud_override,
+                no_probe_rs,
             ),
             _ => {
                 return Err(fbuild_core::FbuildError::DeployFailed(format!(
