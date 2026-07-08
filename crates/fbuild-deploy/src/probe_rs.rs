@@ -31,7 +31,7 @@
 //! can dispatch to it in preference to the UART-ISP path (lpc21isp),
 //! which requires a `SW3 + SW4` button press to enter ISP mode.
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 use fbuild_core::path::NormalizedPath;
@@ -202,12 +202,12 @@ pub async fn install_managed_probe_rs() -> Result<NormalizedPath> {
     Ok(NormalizedPath::new(installed))
 }
 
-fn probe_rs_staging_dir() -> PathBuf {
+fn probe_rs_staging_dir() -> NormalizedPath {
     let millis = SystemTime::now()
         .duration_since(UNIX_EPOCH)
         .map(|d| d.as_millis())
         .unwrap_or(0);
-    fbuild_paths::temp_subdir("probe-rs-install").join(format!(
+    NormalizedPath::from(fbuild_paths::temp_subdir("probe-rs-install")).join(format!(
         "{}-{}-{}",
         PROBE_RS_RELEASE_TAG,
         std::process::id(),
@@ -219,7 +219,7 @@ fn extract_and_install_probe_rs(
     archive: &Path,
     staging_dir: &Path,
     dest_path: &Path,
-) -> Result<PathBuf> {
+) -> Result<NormalizedPath> {
     let extract_dir = staging_dir.join("extract");
     std::fs::create_dir_all(&extract_dir)?;
     fbuild_packages::extractor::extract(archive, &extract_dir)?;
@@ -249,10 +249,10 @@ fn extract_and_install_probe_rs(
         std::fs::set_permissions(dest_path, perms)?;
     }
 
-    Ok(dest_path.to_path_buf())
+    Ok(NormalizedPath::new(dest_path))
 }
 
-fn find_extracted_probe_rs_binary(root: &Path) -> Result<PathBuf> {
+fn find_extracted_probe_rs_binary(root: &Path) -> Result<NormalizedPath> {
     let exe = if cfg!(windows) {
         "probe-rs.exe"
     } else {
@@ -266,7 +266,7 @@ fn find_extracted_probe_rs_binary(root: &Path) -> Result<PathBuf> {
     })
 }
 
-fn find_file_by_name(root: &Path, file_name: &str) -> Option<PathBuf> {
+fn find_file_by_name(root: &Path, file_name: &str) -> Option<NormalizedPath> {
     let entries = std::fs::read_dir(root).ok()?;
     for entry in entries.flatten() {
         let path = entry.path();
@@ -276,7 +276,7 @@ fn find_file_by_name(root: &Path, file_name: &str) -> Option<PathBuf> {
                 .and_then(|name| name.to_str())
                 .is_some_and(|name| name == file_name)
         {
-            return Some(path);
+            return Some(NormalizedPath::from(path));
         }
         if path.is_dir() {
             if let Some(found) = find_file_by_name(&path, file_name) {
