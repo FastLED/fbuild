@@ -95661,6 +95661,18 @@
         "TMR - GPSdevice"
       ],
       [
+        "838e",
+        "Pipo Interfaces - Pipo Motion"
+      ],
+      [
+        "838f",
+        "Pipo Interfaces - Pipo Range"
+      ],
+      [
+        "8390",
+        "Pipo Interfaces - Pipo Analog"
+      ],
+      [
         "83cf",
         "DFRobot Firebeetle 2 ESP32-S3"
       ]
