@@ -7,7 +7,9 @@ use running_process::broker::adopt::{AdoptError, AsyncBrokerSession, OwnedConnec
 use running_process::broker::client::RefusalKind;
 use serde::Serialize;
 
+mod identity;
 mod types;
+pub use identity::warn_if_daemon_identity_mismatch;
 pub use types::*;
 
 /// Daemon long-operation cap — re-exported as a local alias so existing

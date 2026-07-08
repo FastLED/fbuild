@@ -74,6 +74,7 @@ pub async fn run_build(
     }
 
     let client = DaemonClient::new();
+    daemon_client::warn_if_daemon_identity_mismatch(&client, &project_dir).await;
     if verbose {
         output::debug(daemon_client::runtime_diagnostic());
     }

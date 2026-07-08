@@ -163,6 +163,7 @@ pub async fn run_deploy(
 ) -> fbuild_core::Result<()> {
     daemon_client::ensure_daemon_running().await?;
     let client = DaemonClient::new();
+    daemon_client::warn_if_daemon_identity_mismatch(&client, &project_dir).await;
 
     let default_emulator = if matches!(to.as_deref(), Some("emu" | "emulator"))
         && emulator.is_none()
@@ -248,6 +249,7 @@ pub async fn run_test_emu(
 ) -> fbuild_core::Result<()> {
     daemon_client::ensure_daemon_running().await?;
     let client = DaemonClient::new();
+    daemon_client::warn_if_daemon_identity_mismatch(&client, &project_dir).await;
 
     let (caller_pid, caller_cwd) = daemon_client::caller_info();
     let req = TestEmuRequest {
@@ -323,6 +325,7 @@ pub async fn run_monitor(
 ) -> fbuild_core::Result<()> {
     daemon_client::ensure_daemon_running().await?;
     let client = DaemonClient::new();
+    daemon_client::warn_if_daemon_identity_mismatch(&client, &project_dir).await;
 
     let (caller_pid, caller_cwd) = daemon_client::caller_info();
     let req = MonitorRequest {
