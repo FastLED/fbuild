@@ -32,6 +32,7 @@
 //! which requires a `SW3 + SW4` button press to enter ISP mode.
 
 use std::path::Path;
+use std::sync::atomic::{AtomicU64, Ordering};
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 use fbuild_core::path::NormalizedPath;
@@ -57,6 +58,7 @@ const PROBE_RS_RELEASE_DOWNLOAD_BASE: &str =
 /// the deploy should fail with the captured stderr, not hang the
 /// daemon's spawn_blocking slot indefinitely.
 const PROBE_RS_TIMEOUT: Duration = Duration::from_secs(120);
+static PROBE_RS_INSTALL_COUNTER: AtomicU64 = AtomicU64::new(0);
 
 /// Release asset metadata for the current host.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -184,8 +186,18 @@ pub async fn install_managed_probe_rs() -> Result<NormalizedPath> {
     })?;
 
     let staging_dir = probe_rs_staging_dir();
-    tokio::fs::create_dir_all(&staging_dir).await?;
+    fbuild_core::fs::create_dir_all(&staging_dir).await?;
 
+    let result = install_managed_probe_rs_from_staging(asset, dest, staging_dir.clone()).await;
+    cleanup_probe_rs_staging_dir(&staging_dir).await;
+    result
+}
+
+async fn install_managed_probe_rs_from_staging(
+    asset: ProbeRsReleaseAsset,
+    dest: NormalizedPath,
+    staging_dir: NormalizedPath,
+) -> Result<NormalizedPath> {
     let url = asset.url();
     tracing::info!("installing FastLED probe-rs from {}", url);
     let archive = fbuild_packages::downloader::download_file(&url, &staging_dir).await?;
@@ -200,6 +212,20 @@ pub async fn install_managed_probe_rs() -> Result<NormalizedPath> {
     .map_err(|e| FbuildError::PackageError(format!("probe-rs install task failed: {e}")))??;
 
     Ok(NormalizedPath::new(installed))
+}
+
+async fn cleanup_probe_rs_staging_dir(staging_dir: &Path) {
+    match fbuild_core::fs::remove_dir_all(staging_dir).await {
+        Ok(()) => {}
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => {}
+        Err(e) => {
+            tracing::warn!(
+                "failed to remove probe-rs install staging dir {}: {}",
+                staging_dir.display(),
+                e
+            );
+        }
+    }
 }
 
 fn probe_rs_staging_dir() -> NormalizedPath {
@@ -232,11 +258,14 @@ fn extract_and_install_probe_rs(
         ))
     })?;
     std::fs::create_dir_all(dest_dir)?;
-    std::fs::copy(&found, dest_path).map_err(|e| {
+
+    let temp_path = probe_rs_temp_install_path(dest_path);
+    let _ = std::fs::remove_file(&temp_path);
+    std::fs::copy(&found, &temp_path).map_err(|e| {
         FbuildError::PackageError(format!(
-            "failed to install probe-rs from {} to {}: {}",
+            "failed to stage probe-rs from {} to {}: {}",
             found.display(),
-            dest_path.display(),
+            temp_path.display(),
             e
         ))
     })?;
@@ -244,12 +273,40 @@ fn extract_and_install_probe_rs(
     #[cfg(unix)]
     {
         use std::os::unix::fs::PermissionsExt;
-        let mut perms = std::fs::metadata(dest_path)?.permissions();
+        let mut perms = std::fs::metadata(&temp_path)?.permissions();
         perms.set_mode(perms.mode() | 0o755);
-        std::fs::set_permissions(dest_path, perms)?;
+        std::fs::set_permissions(&temp_path, perms)?;
     }
 
+    std::fs::rename(&temp_path, dest_path).map_err(|e| {
+        let _ = std::fs::remove_file(&temp_path);
+        FbuildError::PackageError(format!(
+            "failed to atomically install probe-rs from {} to {}: {}",
+            temp_path.display(),
+            dest_path.display(),
+            e
+        ))
+    })?;
+
     Ok(NormalizedPath::new(dest_path))
+}
+
+fn probe_rs_temp_install_path(dest_path: &Path) -> std::path::PathBuf {
+    let millis = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .map(|d| d.as_millis())
+        .unwrap_or(0);
+    let counter = PROBE_RS_INSTALL_COUNTER.fetch_add(1, Ordering::Relaxed);
+    let file_name = dest_path
+        .file_name()
+        .and_then(|name| name.to_str())
+        .unwrap_or("probe-rs");
+    dest_path.with_file_name(format!(
+        ".{file_name}.{}.{}.{}.tmp",
+        std::process::id(),
+        millis,
+        counter
+    ))
 }
 
 fn find_extracted_probe_rs_binary(root: &Path) -> Result<NormalizedPath> {
@@ -550,5 +607,69 @@ mod tests {
         let url = asset.url();
         assert!(url.contains(PROBE_RS_RELEASE_TAG));
         assert!(url.ends_with(asset.name));
+    }
+
+    #[tokio::test]
+    async fn cleanup_probe_rs_staging_dir_removes_staging_tree() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let staging = tmp.path().join("probe-rs-install");
+        std::fs::create_dir_all(staging.join("extract")).unwrap();
+        std::fs::write(staging.join("archive.zip"), b"zip").unwrap();
+        std::fs::write(staging.join("extract").join("probe-rs.exe"), b"exe").unwrap();
+
+        cleanup_probe_rs_staging_dir(&staging).await;
+
+        assert!(!staging.exists(), "staging dir should be removed");
+        cleanup_probe_rs_staging_dir(&staging).await;
+    }
+
+    #[test]
+    fn extract_and_install_probe_rs_replaces_existing_binary_via_temp_file() {
+        use std::io::Write;
+
+        let tmp = tempfile::TempDir::new().unwrap();
+        let archive = tmp.path().join("probe-rs.zip");
+        let staging = tmp.path().join("staging");
+        let dest_dir = tmp.path().join("managed");
+        let dest = dest_dir.join(if cfg!(windows) {
+            "probe-rs.exe"
+        } else {
+            "probe-rs"
+        });
+        std::fs::create_dir_all(&dest_dir).unwrap();
+        std::fs::write(&dest, b"old-probe-rs").unwrap();
+
+        let file = std::fs::File::create(&archive).unwrap();
+        let mut zip = zip::ZipWriter::new(file);
+        zip.start_file(
+            format!(
+                "nested/{}",
+                if cfg!(windows) {
+                    "probe-rs.exe"
+                } else {
+                    "probe-rs"
+                }
+            ),
+            zip::write::SimpleFileOptions::default(),
+        )
+        .unwrap();
+        zip.write_all(b"new-probe-rs").unwrap();
+        zip.finish().unwrap();
+
+        let installed = extract_and_install_probe_rs(&archive, &staging, &dest).unwrap();
+
+        assert_eq!(installed.into_path_buf(), dest);
+        assert_eq!(std::fs::read(&dest).unwrap(), b"new-probe-rs");
+        let leftovers: Vec<_> = std::fs::read_dir(&dest_dir)
+            .unwrap()
+            .flatten()
+            .filter(|entry| {
+                entry
+                    .file_name()
+                    .to_str()
+                    .is_some_and(|name| name.ends_with(".tmp"))
+            })
+            .collect();
+        assert!(leftovers.is_empty(), "temp install file should be renamed");
     }
 }
