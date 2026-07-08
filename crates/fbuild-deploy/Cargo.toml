@@ -40,3 +40,4 @@ md-5 = { version = "0.10", optional = true }
 [dev-dependencies]
 tempfile = { workspace = true }
 fbuild-test-support = { path = "../fbuild-test-support" }
+zip = { workspace = true }

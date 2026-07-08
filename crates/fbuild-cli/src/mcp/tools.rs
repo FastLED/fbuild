@@ -152,6 +152,7 @@ pub(super) async fn execute_tool(
                 .get("skip_build")
                 .and_then(|v| v.as_bool())
                 .unwrap_or(false);
+            let no_probe_rs = bool_arg(args, "no_probe_rs", false);
 
             let (caller_pid, caller_cwd) = crate::daemon_client::caller_info();
             let req = crate::daemon_client::DeployRequest {
@@ -168,7 +169,7 @@ pub(super) async fn execute_tool(
                 monitor_expect: None,
                 monitor_show_timestamp: true,
                 baud_rate: None,
-                no_probe_rs: false,
+                no_probe_rs,
                 to: None,
                 emulator: None,
                 target: None,
@@ -252,5 +253,30 @@ pub(super) async fn execute_tool(
             }))
         }
         _ => Err(format!("Unknown tool: {}", name)),
+    }
+}
+
+fn bool_arg(args: &Value, name: &str, default: bool) -> bool {
+    args.get(name)
+        .and_then(|value| value.as_bool())
+        .unwrap_or(default)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn bool_arg_reads_boolean_or_default() {
+        let args = serde_json::json!({
+            "no_probe_rs": true,
+            "skip_build": false,
+            "string_value": "true"
+        });
+
+        assert!(bool_arg(&args, "no_probe_rs", false));
+        assert!(!bool_arg(&args, "skip_build", true));
+        assert!(bool_arg(&args, "missing", true));
+        assert!(!bool_arg(&args, "string_value", false));
     }
 }

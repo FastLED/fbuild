@@ -107,6 +107,11 @@ pub(super) fn tool_definitions() -> Vec<ToolDefinition> {
                         "type": "boolean",
                         "description": "Skip the build step and flash existing firmware.",
                         "default": false
+                    },
+                    "no_probe_rs": {
+                        "type": "boolean",
+                        "description": "Force LPC deploys through lpc21isp instead of the probe-rs SWD fast path.",
+                        "default": false
                     }
                 },
                 "required": ["project_dir", "environment"]
@@ -226,6 +231,30 @@ mod tests {
             assert!(json.get("name").is_some());
             assert!(json.get("inputSchema").is_some());
         }
+    }
+
+    #[test]
+    fn trigger_deploy_exposes_probe_rs_opt_out() {
+        let tools = tool_definitions();
+        let deploy = tools
+            .iter()
+            .find(|tool| tool.name == "trigger_deploy")
+            .expect("trigger_deploy tool is advertised");
+
+        assert_eq!(
+            deploy
+                .input_schema
+                .pointer("/properties/no_probe_rs/type")
+                .and_then(|value| value.as_str()),
+            Some("boolean")
+        );
+        assert_eq!(
+            deploy
+                .input_schema
+                .pointer("/properties/no_probe_rs/default")
+                .and_then(|value| value.as_bool()),
+            Some(false)
+        );
     }
 
     #[test]
