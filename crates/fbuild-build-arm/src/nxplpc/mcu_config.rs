@@ -14,8 +14,8 @@ use fbuild_core::Result;
 use serde::Deserialize;
 
 use crate::compiler::{CompilerFlags, McuConfig, ObjcopyConfig, ProfileFlags};
-use crate::esp32::mcu_config::DefineEntry;
 use crate::generic_arm::ArmMcuConfig;
+use crate::mcu_config::DefineEntry;
 
 const NXPLPC_JSON: &str = include_str!("configs/nxplpc.json");
 
