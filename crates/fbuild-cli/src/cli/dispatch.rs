@@ -9,6 +9,7 @@ use super::args::{resolve_project_dir, rewrite_args, BloatCmd, Cli, Commands};
 use super::bloat_lookup::run_bloat_lookup;
 use super::bringup::run_bringup;
 use super::build::run_build;
+use super::cache::run_cache;
 use super::clang_tools::{run_clang_tool, run_iwyu};
 use super::clangd_config::run_clangd_config;
 use super::compile_many::{
@@ -577,6 +578,7 @@ pub async fn async_main() {
         Some(Commands::Serial { action }) => run_serial(action),
         Some(Commands::Bringup(args)) => run_bringup(args),
         Some(Commands::Port { action }) => run_port(action),
+        Some(Commands::Cache { action }) => run_cache(action),
     };
 
     if let Err(e) = result {

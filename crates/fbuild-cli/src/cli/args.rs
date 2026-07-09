@@ -629,6 +629,14 @@ pub enum Commands {
         #[command(subcommand)]
         action: super::port_scan::PortAction,
     },
+
+    /// Save / restore / list / verify the fbuild cache as a single
+    /// portable `.tar.zst` archive (toolchains, platforms, framework,
+    /// downloaded archives, sqlite index). FastLED/fbuild#527.
+    Cache {
+        #[command(subcommand)]
+        action: super::cache::CacheAction,
+    },
 }
 
 /// Subcommands for `fbuild lnk`.

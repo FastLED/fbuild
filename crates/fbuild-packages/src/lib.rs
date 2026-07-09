@@ -7,6 +7,7 @@
 //! - Package, Toolchain, and Framework traits
 
 pub mod cache;
+pub mod cache_archive;
 pub mod disk_cache;
 pub mod downloader;
 pub mod extractor;
