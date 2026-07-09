@@ -23,6 +23,7 @@ pub mod framework_core_cache;
 pub mod framework_libs;
 pub mod generic_arm;
 pub mod linker;
+pub mod mcu_config;
 pub mod nrf52;
 pub mod nxplpc;
 pub mod package_override;
