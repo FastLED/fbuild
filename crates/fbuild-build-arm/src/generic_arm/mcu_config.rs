@@ -9,7 +9,7 @@ use std::collections::HashMap;
 use serde::Deserialize;
 
 use crate::compiler::{CompilerFlags, McuConfig, ObjcopyConfig, ProfileFlags};
-use crate::esp32::mcu_config::DefineEntry;
+use crate::mcu_config::DefineEntry;
 
 /// Generic ARM MCU configuration parsed from JSON.
 ///

@@ -1,0 +1,42 @@
+[package]
+name = "fbuild-build-esp"
+description = "ESP32/ESP8266 build orchestrators for fbuild (parallel platform crate). FastLED/fbuild#1008."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+# Not published to crates.io — internal compile-parallelism split. FastLED/fbuild#1008.
+publish = false
+
+[dependencies]
+fbuild-build-engine = { path = "../fbuild-build-engine" }
+fbuild-core = { path = "../fbuild-core" }
+fbuild-config = { path = "../fbuild-config" }
+fbuild-paths = { path = "../fbuild-paths" }
+fbuild-packages = { path = "../fbuild-packages" }
+fbuild-library-select = { path = "../fbuild-library-select" }
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+async-trait = { workspace = true }
+regex = { workspace = true }
+walkdir = { workspace = true }
+sha2 = { workspace = true }
+blake3 = { workspace = true }
+tempfile = { workspace = true }
+object = { workspace = true }
+owo-colors = { workspace = true }
+reqwest = { workspace = true }
+flate2 = { workspace = true }
+tar = { workspace = true }
+zip = { workspace = true }
+tree-sitter = { workspace = true }
+tree-sitter-cpp = { workspace = true }
+zccache = { git = "https://github.com/zackees/zccache", rev = "4b13676bb3a76c87d2272b2d9ccb76e821734762" }
+
+[dev-dependencies]
+filetime = { workspace = true }
+fbuild-test-support = { path = "../fbuild-test-support" }
+tokio = { workspace = true, features = ["macros", "rt-multi-thread", "sync"] }

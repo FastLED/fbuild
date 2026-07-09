@@ -1,7 +1,7 @@
-//! Data-driven CH32V MCU configuration from embedded JSON.
+//! Data-driven Silicon Labs MCU configuration from embedded JSON.
 //!
-//! CH32V boards use RISC-V compiler/linker flags. Board-specific details
-//! (linker script, memory limits) come from `BoardConfig` at runtime.
+//! Silicon Labs boards use ARM Cortex-M33 compiler/linker flags. Board-specific
+//! details (linker script, memory limits) come from `BoardConfig` at runtime.
 
 use std::collections::HashMap;
 
@@ -9,13 +9,13 @@ use fbuild_core::Result;
 use serde::Deserialize;
 
 use crate::compiler::{CompilerFlags, McuConfig, ObjcopyConfig, ProfileFlags};
-use crate::esp32::mcu_config::DefineEntry;
+use crate::mcu_config::DefineEntry;
 
-const CH32V003_JSON: &str = include_str!("configs/ch32v003.json");
+const EFR32MG24_JSON: &str = include_str!("configs/efr32mg24.json");
 
-/// Complete CH32V MCU configuration parsed from JSON.
+/// Complete Silicon Labs MCU configuration parsed from JSON.
 #[derive(Debug, Clone, Deserialize)]
-pub struct Ch32vMcuConfig {
+pub struct SilabsMcuConfig {
     pub name: String,
     #[serde(default)]
     pub description: String,
@@ -29,7 +29,7 @@ pub struct Ch32vMcuConfig {
     pub defines: Vec<DefineEntry>,
 }
 
-impl Ch32vMcuConfig {
+impl SilabsMcuConfig {
     /// Get profile flags for a given profile name.
     pub fn get_profile(&self, name: &str) -> Option<&ProfileFlags> {
         self.profiles.get(name)
@@ -52,7 +52,7 @@ impl Ch32vMcuConfig {
     }
 }
 
-impl McuConfig for Ch32vMcuConfig {
+impl McuConfig for SilabsMcuConfig {
     fn compiler_flags(&self) -> &CompilerFlags {
         &self.compiler_flags
     }
@@ -62,25 +62,20 @@ impl McuConfig for Ch32vMcuConfig {
     }
 }
 
-/// Load the CH32V MCU configuration for a specific MCU series.
-///
-/// The series is derived from the board JSON `build.series` field
-/// (e.g. "ch32v003", "ch32v203", "ch32v307").
-pub fn get_ch32v_config_for_mcu(mcu: &str) -> Result<Ch32vMcuConfig> {
-    // All CH32V variants currently share the CH32V003 config as a base,
-    // with march/mabi overridden from the board JSON extra_flags.
+/// Load the Silicon Labs MCU configuration for a specific MCU.
+pub fn get_silabs_config_for_mcu(mcu: &str) -> Result<SilabsMcuConfig> {
     let json = match mcu {
-        "ch32v003" => CH32V003_JSON,
+        m if m.contains("cortex-m33") || m.contains("efr32") || m == "efr32mg24" => EFR32MG24_JSON,
         _ => {
-            // For other CH32V series, use the CH32V003 config as a base.
-            // The board JSON's extra_flags and march/mabi fields provide
-            // the series-specific differences.
-            CH32V003_JSON
+            return Err(fbuild_core::FbuildError::ConfigError(format!(
+                "unsupported Silicon Labs MCU: '{}' (supported: efr32mg24)",
+                mcu
+            )));
         }
     };
     serde_json::from_str(json).map_err(|e| {
         fbuild_core::FbuildError::ConfigError(format!(
-            "failed to parse CH32V MCU config for '{}': {}",
+            "failed to parse Silicon Labs MCU config for '{}': {}",
             mcu, e
         ))
     })
@@ -91,23 +86,31 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_ch32v003_config_parses() {
-        let config = get_ch32v_config_for_mcu("ch32v003").unwrap();
-        assert_eq!(config.name, "CH32V003");
-        assert_eq!(config.architecture, "riscv32");
+    fn test_efr32mg24_config_parses() {
+        let config = get_silabs_config_for_mcu("efr32mg24").unwrap();
+        assert_eq!(config.name, "EFR32MG24");
+        assert_eq!(config.architecture, "arm-cortex-m33");
     }
 
     #[test]
-    fn test_compiler_flags_contain_riscv() {
-        let config = get_ch32v_config_for_mcu("ch32v003").unwrap();
+    fn test_compiler_flags_content() {
+        let config = get_silabs_config_for_mcu("efr32mg24").unwrap();
         assert!(config
             .compiler_flags
             .common
-            .contains(&"-march=rv32ec_zicsr".to_string()));
+            .contains(&"-mcpu=cortex-m33".to_string()));
         assert!(config
             .compiler_flags
             .common
-            .contains(&"-mabi=ilp32e".to_string()));
+            .contains(&"-mthumb".to_string()));
+        assert!(config
+            .compiler_flags
+            .common
+            .contains(&"-mfloat-abi=hard".to_string()));
+        assert!(config
+            .compiler_flags
+            .common
+            .contains(&"-mfpu=fpv5-sp-d16".to_string()));
         assert!(config.compiler_flags.c.contains(&"-std=gnu11".to_string()));
         assert!(config
             .compiler_flags
@@ -117,10 +120,10 @@ mod tests {
 
     #[test]
     fn test_linker_flags() {
-        let config = get_ch32v_config_for_mcu("ch32v003").unwrap();
+        let config = get_silabs_config_for_mcu("efr32mg24").unwrap();
         assert!(config
             .linker_flags
-            .contains(&"-march=rv32ec_zicsr".to_string()));
+            .contains(&"-mcpu=cortex-m33".to_string()));
         assert!(config
             .linker_flags
             .contains(&"-Wl,--gc-sections".to_string()));
@@ -128,20 +131,22 @@ mod tests {
 
     #[test]
     fn test_linker_libs() {
-        let config = get_ch32v_config_for_mcu("ch32v003").unwrap();
+        let config = get_silabs_config_for_mcu("efr32mg24").unwrap();
         assert!(config.linker_libs.contains(&"-lgcc".to_string()));
-        assert!(config.linker_libs.contains(&"-lstdc++_nano".to_string()));
+        assert!(config.linker_libs.contains(&"-lstdc++".to_string()));
+        assert!(config.linker_libs.contains(&"-lm".to_string()));
+        assert!(config.linker_libs.contains(&"-lc".to_string()));
     }
 
     #[test]
     fn test_objcopy_config() {
-        let config = get_ch32v_config_for_mcu("ch32v003").unwrap();
+        let config = get_silabs_config_for_mcu("efr32mg24").unwrap();
         assert_eq!(config.objcopy.output_format, "binary");
     }
 
     #[test]
     fn test_profiles() {
-        let config = get_ch32v_config_for_mcu("ch32v003").unwrap();
+        let config = get_silabs_config_for_mcu("efr32mg24").unwrap();
         let release = config.get_profile("release").unwrap();
         assert!(release.compile_flags.contains(&"-Os".to_string()));
         assert!(release.compile_flags.contains(&"-flto".to_string()));
@@ -152,16 +157,29 @@ mod tests {
     }
 
     #[test]
-    fn test_ch32v_defines() {
-        let config = get_ch32v_config_for_mcu("ch32v003").unwrap();
+    fn test_silabs_config_unsupported_mcu() {
+        let result = get_silabs_config_for_mcu("unknown_mcu");
+        assert!(result.is_err());
+    }
+
+    #[test]
+    fn test_silabs_defines() {
+        let config = get_silabs_config_for_mcu("efr32mg24").unwrap();
         let defines = config.defines_map();
         assert_eq!(defines.get("ARDUINO"), Some(&"10808".to_string()));
     }
 
     #[test]
-    fn test_fallback_config() {
-        // Other CH32V series should fall back to CH32V003 config
-        let config = get_ch32v_config_for_mcu("ch32v307").unwrap();
-        assert_eq!(config.name, "CH32V003");
+    fn test_silabs_config_cortex_m33_mcu_match() {
+        // Should match MCU strings containing "cortex-m33"
+        let config = get_silabs_config_for_mcu("cortex-m33").unwrap();
+        assert_eq!(config.name, "EFR32MG24");
+    }
+
+    #[test]
+    fn test_silabs_config_efr32_prefix_match() {
+        // Should match MCU strings containing "efr32"
+        let config = get_silabs_config_for_mcu("efr32bg22").unwrap();
+        assert_eq!(config.name, "EFR32MG24");
     }
 }

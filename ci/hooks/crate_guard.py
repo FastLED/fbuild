@@ -53,6 +53,9 @@ APPROVED_CRATE_DIRS: frozenset[str] = frozenset(
         # FastLED/fbuild#1008: compile-parallelism split of fbuild-build into a
         # shared engine + per-platform crates behind the fbuild-build facade.
         "crates/fbuild-build-engine",
+        "crates/fbuild-build-esp",
+        "crates/fbuild-build-arm",
+        "crates/fbuild-build-mcu",
         "crates/fbuild-deploy",
         "crates/fbuild-daemon",
         "crates/fbuild-cli",

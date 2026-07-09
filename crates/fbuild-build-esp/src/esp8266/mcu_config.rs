@@ -9,7 +9,7 @@ use fbuild_core::Result;
 use serde::Deserialize;
 
 use crate::compiler::{CompilerFlags, McuConfig, ObjcopyConfig, ProfileFlags};
-use crate::esp32::mcu_config::DefineEntry;
+use crate::mcu_config::DefineEntry;
 
 const ESP8266_JSON: &str = include_str!("configs/esp8266.json");
 

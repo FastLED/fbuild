@@ -20,22 +20,15 @@ pub use fbuild_build_engine::*;
 // resolve through the `pub use fbuild_build_engine::*` re-export above.
 pub mod compile_many;
 
-// Platform orchestrators. These reference engine modules as `crate::<mod>`,
-// which resolve through the `pub use fbuild_build_engine::*` re-export above.
-pub mod apollo3;
-pub mod avr;
-pub mod ch32v;
-pub mod esp32;
-pub mod esp8266;
-pub mod generic_arm;
-pub mod nrf52;
-pub mod nxplpc;
-pub mod renesas;
-pub mod rp2040;
-pub mod sam;
-pub mod silabs;
-pub mod stm32;
-pub mod teensy;
+// Platform orchestrators, now in per-family crates that compile in parallel on
+// top of the engine (FastLED/fbuild#1008 A2). Re-exported here so every
+// existing `fbuild_build::esp32::…` / `fbuild_build::teensy::…` path — and the
+// `get_platform_support()` factory below — keeps resolving unchanged.
+pub use fbuild_build_arm::{
+    apollo3, generic_arm, nrf52, nxplpc, renesas, rp2040, sam, silabs, stm32, teensy,
+};
+pub use fbuild_build_esp::{esp32, esp8266};
+pub use fbuild_build_mcu::{avr, ch32v};
 
 use std::path::Path;
 

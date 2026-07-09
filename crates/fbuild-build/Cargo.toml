@@ -10,9 +10,13 @@ license.workspace = true
 publish = false
 
 [dependencies]
-# The shared build engine (pipeline, compiler, linker, analyzers, traits).
-# FastLED/fbuild#1008 — this crate is now a thin facade + platform factory.
+# The shared build engine (pipeline, compiler, linker, analyzers, traits) and
+# the three per-family platform crates. FastLED/fbuild#1008 — this crate is now
+# a thin facade re-exporting all four + the get_platform_support() factory.
 fbuild-build-engine = { path = "../fbuild-build-engine" }
+fbuild-build-esp = { path = "../fbuild-build-esp" }
+fbuild-build-arm = { path = "../fbuild-build-arm" }
+fbuild-build-mcu = { path = "../fbuild-build-mcu" }
 fbuild-core = { path = "../fbuild-core" }
 fbuild-config = { path = "../fbuild-config" }
 fbuild-paths = { path = "../fbuild-paths" }

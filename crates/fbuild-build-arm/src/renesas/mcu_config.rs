@@ -1,6 +1,6 @@
-//! Data-driven SAM MCU configuration from embedded JSON.
+//! Data-driven Renesas RA MCU configuration from embedded JSON.
 //!
-//! Atmel SAM boards use ARM Cortex-M3 compiler/linker flags. Board-specific
+//! Renesas RA boards use ARM Cortex-M4 compiler/linker flags. Board-specific
 //! details (linker script, memory limits) come from `BoardConfig` at runtime.
 
 use std::collections::HashMap;
@@ -9,15 +9,13 @@ use fbuild_core::Result;
 use serde::Deserialize;
 
 use crate::compiler::{CompilerFlags, McuConfig, ObjcopyConfig, ProfileFlags};
-use crate::esp32::mcu_config::DefineEntry;
+use crate::mcu_config::DefineEntry;
 
-const SAM3X_JSON: &str = include_str!("configs/sam3x.json");
-const SAMD21_JSON: &str = include_str!("configs/samd21.json");
-const SAMD51_JSON: &str = include_str!("configs/samd51.json");
+const RA4M1_JSON: &str = include_str!("configs/ra4m1.json");
 
-/// Complete SAM MCU configuration parsed from JSON.
+/// Complete Renesas RA MCU configuration parsed from JSON.
 #[derive(Debug, Clone, Deserialize)]
-pub struct SamMcuConfig {
+pub struct RenesasMcuConfig {
     pub name: String,
     #[serde(default)]
     pub description: String,
@@ -31,7 +29,7 @@ pub struct SamMcuConfig {
     pub defines: Vec<DefineEntry>,
 }
 
-impl SamMcuConfig {
+impl RenesasMcuConfig {
     /// Get profile flags for a given profile name.
     pub fn get_profile(&self, name: &str) -> Option<&ProfileFlags> {
         self.profiles.get(name)
@@ -54,7 +52,7 @@ impl SamMcuConfig {
     }
 }
 
-impl McuConfig for SamMcuConfig {
+impl McuConfig for RenesasMcuConfig {
     fn compiler_flags(&self) -> &CompilerFlags {
         &self.compiler_flags
     }
@@ -64,22 +62,20 @@ impl McuConfig for SamMcuConfig {
     }
 }
 
-/// Load the SAM MCU configuration for a specific MCU.
-pub fn get_sam_config_for_mcu(mcu: &str) -> Result<SamMcuConfig> {
+/// Load the Renesas RA MCU configuration for a specific MCU.
+pub fn get_renesas_config_for_mcu(mcu: &str) -> Result<RenesasMcuConfig> {
     let json = match mcu {
-        "at91sam3x8e" => SAM3X_JSON,
-        m if m.starts_with("samd21") => SAMD21_JSON,
-        m if m.starts_with("samd51") => SAMD51_JSON,
+        "ra4m1" => RA4M1_JSON,
         _ => {
             return Err(fbuild_core::FbuildError::ConfigError(format!(
-                "unsupported SAM MCU: '{}' (supported: at91sam3x8e, samd21*, samd51*)",
+                "unsupported Renesas RA MCU: '{}' (supported: ra4m1)",
                 mcu
             )));
         }
     };
     serde_json::from_str(json).map_err(|e| {
         fbuild_core::FbuildError::ConfigError(format!(
-            "failed to parse SAM MCU config for '{}': {}",
+            "failed to parse Renesas RA MCU config for '{}': {}",
             mcu, e
         ))
     })
@@ -90,23 +86,31 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_sam3x_config_parses() {
-        let config = get_sam_config_for_mcu("at91sam3x8e").unwrap();
-        assert_eq!(config.name, "SAM3X");
-        assert_eq!(config.architecture, "arm-cortex-m3");
+    fn test_ra4m1_config_parses() {
+        let config = get_renesas_config_for_mcu("ra4m1").unwrap();
+        assert_eq!(config.name, "RA4M1");
+        assert_eq!(config.architecture, "arm-cortex-m4");
     }
 
     #[test]
     fn test_compiler_flags_content() {
-        let config = get_sam_config_for_mcu("at91sam3x8e").unwrap();
+        let config = get_renesas_config_for_mcu("ra4m1").unwrap();
         assert!(config
             .compiler_flags
             .common
-            .contains(&"-mcpu=cortex-m3".to_string()));
+            .contains(&"-mcpu=cortex-m4".to_string()));
         assert!(config
             .compiler_flags
             .common
             .contains(&"-mthumb".to_string()));
+        assert!(config
+            .compiler_flags
+            .common
+            .contains(&"-mfloat-abi=hard".to_string()));
+        assert!(config
+            .compiler_flags
+            .common
+            .contains(&"-mfpu=fpv4-sp-d16".to_string()));
         assert!(config.compiler_flags.c.contains(&"-std=gnu11".to_string()));
         assert!(config
             .compiler_flags
@@ -116,8 +120,8 @@ mod tests {
 
     #[test]
     fn test_linker_flags() {
-        let config = get_sam_config_for_mcu("at91sam3x8e").unwrap();
-        assert!(config.linker_flags.contains(&"-mcpu=cortex-m3".to_string()));
+        let config = get_renesas_config_for_mcu("ra4m1").unwrap();
+        assert!(config.linker_flags.contains(&"-mcpu=cortex-m4".to_string()));
         assert!(config
             .linker_flags
             .contains(&"-Wl,--gc-sections".to_string()));
@@ -125,7 +129,7 @@ mod tests {
 
     #[test]
     fn test_linker_libs() {
-        let config = get_sam_config_for_mcu("at91sam3x8e").unwrap();
+        let config = get_renesas_config_for_mcu("ra4m1").unwrap();
         assert!(config.linker_libs.contains(&"-lgcc".to_string()));
         assert!(config.linker_libs.contains(&"-lstdc++".to_string()));
         assert!(config.linker_libs.contains(&"-lm".to_string()));
@@ -134,15 +138,16 @@ mod tests {
 
     #[test]
     fn test_objcopy_config() {
-        let config = get_sam_config_for_mcu("at91sam3x8e").unwrap();
+        let config = get_renesas_config_for_mcu("ra4m1").unwrap();
         assert_eq!(config.objcopy.output_format, "binary");
     }
 
     #[test]
     fn test_profiles() {
-        let config = get_sam_config_for_mcu("at91sam3x8e").unwrap();
+        let config = get_renesas_config_for_mcu("ra4m1").unwrap();
         let release = config.get_profile("release").unwrap();
         assert!(release.compile_flags.contains(&"-Os".to_string()));
+        assert!(release.compile_flags.contains(&"-flto".to_string()));
 
         let quick = config.get_profile("quick").unwrap();
         assert!(quick.compile_flags.contains(&"-Os".to_string()));
@@ -150,47 +155,15 @@ mod tests {
     }
 
     #[test]
-    fn test_sam_config_unsupported_mcu() {
-        let result = get_sam_config_for_mcu("unknown_mcu");
+    fn test_renesas_config_unsupported_mcu() {
+        let result = get_renesas_config_for_mcu("unknown_mcu");
         assert!(result.is_err());
     }
 
     #[test]
-    fn test_sam_defines() {
-        let config = get_sam_config_for_mcu("at91sam3x8e").unwrap();
+    fn test_renesas_defines() {
+        let config = get_renesas_config_for_mcu("ra4m1").unwrap();
         let defines = config.defines_map();
         assert_eq!(defines.get("ARDUINO"), Some(&"10808".to_string()));
-    }
-
-    #[test]
-    fn test_samd21_config_parses() {
-        let config = get_sam_config_for_mcu("samd21g18a").unwrap();
-        assert_eq!(config.name, "SAMD21");
-        assert_eq!(config.architecture, "arm-cortex-m0plus");
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mcpu=cortex-m0plus".to_string()));
-    }
-
-    #[test]
-    fn test_samd51_config_parses() {
-        let config = get_sam_config_for_mcu("samd51j19a").unwrap();
-        assert_eq!(config.name, "SAMD51");
-        assert_eq!(config.architecture, "arm-cortex-m4f");
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mcpu=cortex-m4".to_string()));
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mfloat-abi=hard".to_string()));
-    }
-
-    #[test]
-    fn test_samd51p_config_parses() {
-        let config = get_sam_config_for_mcu("samd51p20a").unwrap();
-        assert_eq!(config.name, "SAMD51");
     }
 }
