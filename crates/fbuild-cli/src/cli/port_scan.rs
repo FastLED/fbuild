@@ -223,7 +223,7 @@ fn render_usb_port_with_kernel_class(
         "{name:<10}{vid:04X}:{pid:04X}    {descriptor}{serial_field}{interface_field}",
     );
     let info = fbuild_core::usb::resolve(vid, pid);
-    let friendly_product = friendly_product_name(vid, pid, &info.product, product);
+    let friendly_product = friendly_product_name(pid, &info.product, product);
     let _ = writeln!(
         out,
         "          └─ {} / {}    cdc={}",
@@ -244,29 +244,23 @@ fn cdc_label(kernel_class: Option<fbuild_serial::port_class::PortKernelClass>) -
 /// Pick the most "friendly" product label for the resolver row.
 ///
 /// Preference order:
-///   1. Resolver's product if it's a real name (tier-2 overlay hit) —
-///      i.e. *not* the synthetic `Device 0xPPPP` placeholder.
-///   2. Small inline supplement table for common embedded CDC-ACM PIDs
-///      that FastLED/boards' canonical `vidpid` table doesn't yet
-///      cover (e.g. ESP32-S3 builtin USB-CDC at 303A:1001). Migrate
-///      these upstream as the canonical DB picks them up.
-///   3. The OS-supplied descriptor when it carries chip-specific
-///      detail (e.g. macOS / Linux often expose "CP2102 USB to UART
-///      Bridge Controller") — skip if it's the generic "USB Serial
-///      Device" Windows fallback.
-///   4. Synthetic `Device 0xPPPP` placeholder (tier-3 fallback).
-fn friendly_product_name(
-    vid: u16,
-    pid: u16,
-    resolved_product: &str,
-    os_descriptor: Option<&str>,
-) -> String {
+///   1. Resolver's product if it's a real name — i.e. *not* the synthetic
+///      `Device 0xPPPP` placeholder. This comes from the embedded
+///      FastLED/boards VID:PID archive (offline) or the online overlay.
+///   2. The OS-supplied descriptor when it carries chip-specific detail
+///      (e.g. macOS / Linux often expose "CP2102 USB to UART Bridge
+///      Controller") — skip if it's the generic "USB Serial Device"
+///      Windows fallback.
+///   3. Synthetic `Device 0xPPPP` placeholder.
+///
+/// There is intentionally NO hardcoded per-PID product table here: friendly
+/// product names are owned by the FastLED/boards VID:PID data and embedded at
+/// build time (FastLED/fbuild#722, #959). A missing name is a data gap to fix
+/// on the boards `other` branch, not in fbuild source.
+fn friendly_product_name(pid: u16, resolved_product: &str, os_descriptor: Option<&str>) -> String {
     let synthetic = format!("Device 0x{pid:04X}");
     if resolved_product != synthetic {
         return resolved_product.to_string();
-    }
-    if let Some(name) = friendly_supplement(vid, pid) {
-        return name.to_string();
     }
     if let Some(d) = os_descriptor {
         let trimmed = d.trim();
@@ -286,30 +280,6 @@ fn is_generic_descriptor(d: &str) -> bool {
         core.to_lowercase().as_str(),
         "usb serial device" | "usb serial port" | "serial usb device" | "usb-serial"
     )
-}
-
-/// Small inline supplement for common embedded VID:PIDs that the
-/// canonical online overlay may not carry in offline/test paths. Keep it
-/// short — anything that lands into the embedded product map should be
-/// removed here.
-const FRIENDLY_PRODUCTS: &[(u16, u16, &str)] = &[
-    // Espressif Systems (VID 0x303A) — ESP32 series USB-CDC ACM.
-    (0x303A, 0x1001, "ESP32-S3 USB-CDC"),
-    (0x303A, 0x1002, "ESP32-C3 USB-CDC"),
-    (0x303A, 0x4001, "ESP32-S2 USB-CDC"),
-    (0x303A, 0x0002, "ESP32-S2 ROM-DL"),
-    (0x303A, 0x0003, "ESP32-S3 ROM-DL"),
-    (0x303A, 0x1000, "ESP32-S2 USB-CDC"),
-    // NXP Semiconductors (VID 0x1FC9) — LPC-Link2 / MCU-Link CMSIS-DAP.
-    (0x1FC9, 0x0132, "LPC-Link2 CMSIS-DAP"),
-    (0x1FC9, 0x0143, "MCU-Link CMSIS-DAP"),
-];
-
-fn friendly_supplement(vid: u16, pid: u16) -> Option<&'static str> {
-    FRIENDLY_PRODUCTS
-        .iter()
-        .find(|&&(v, p, _)| v == vid && p == pid)
-        .map(|&(_, _, name)| name)
 }
 
 fn render_non_usb(out: &mut String, name: &str, kind: &str) {
@@ -649,10 +619,10 @@ mod tests {
     }
 
     #[test]
-    fn esp32_s3_cdc_pid_gets_friendly_supplement() {
-        // In the tier-1/offline path the embedded archive carries vendor
-        // names only; the inline supplement keeps this common PID friendly
-        // when the online product overlay is not installed.
+    fn common_esp32_cdc_pid_resolves_from_embedded_archive() {
+        // The common ESP32 USB-Serial-JTAG PID (303A:1001) resolves to a real
+        // product name from the embedded FastLED/boards archive — no hardcoded
+        // supplement table, and NOT the synthetic placeholder. FastLED/fbuild#722.
         let ports = vec![usb_port(
             "COM25",
             0x303A,
@@ -662,11 +632,20 @@ mod tests {
         )];
         let out = render_scan(&ports);
         assert!(
-            out.contains("ESP32-S3 USB-CDC"),
-            "expected friendly supplement product, got: {out}"
+            out.to_lowercase().contains("espressif"),
+            "expected Espressif vendor from the archive, got: {out}"
         );
-        // And we do NOT fall through to the synthetic placeholder.
-        assert!(!out.contains("Device 0x1001"));
+        // A real archive product name, not the synthetic placeholder or the
+        // generic Windows descriptor.
+        assert!(!out.contains("Device 0x1001"), "leaked placeholder: {out}");
+        let resolver_row = out
+            .lines()
+            .find(|l| l.contains("└─"))
+            .expect("resolver row");
+        assert!(
+            !resolver_row.contains("USB Serial Device"),
+            "generic descriptor leaked into resolver row: {resolver_row}"
+        );
     }
 
     #[test]

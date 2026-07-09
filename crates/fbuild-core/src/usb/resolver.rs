@@ -166,7 +166,7 @@ mod tests {
         // embedded FastLED/boards VID:PID archive — NOT a hardcoded table in
         // fbuild. Pin the round-trip for the PIDs a Teensy exposes as serial
         // ports. FastLED/fbuild#962.
-        for (pid, expect) in [(0x0483u16, "serial"), (0x0489, "midi")] {
+        for pid in [0x0483u16, 0x0489] {
             let info = try_resolve(0x16C0, pid).expect("Teensy PID in embedded archive");
             assert!(
                 info.vendor.to_lowercase().contains("pjrc")
@@ -174,12 +174,15 @@ mod tests {
                 "16C0:{pid:04X} vendor should be PJRC/Teensy, got {:?}",
                 info.vendor
             );
+            // Product name is archive-derived (a board or USB-mode label) and
+            // may change as the FastLED/boards data is refreshed — assert it is
+            // a real Teensy name, NOT the synthetic `Device 0xPPPP` placeholder.
             assert!(
-                info.product.to_lowercase().contains("teensy")
-                    && info.product.to_lowercase().contains(expect),
-                "16C0:{pid:04X} product should name the Teensy {expect} mode, got {:?}",
+                info.product.to_lowercase().contains("teensy"),
+                "16C0:{pid:04X} product should name Teensy, got {:?}",
                 info.product
             );
+            assert_ne!(info.product, format!("Device 0x{pid:04X}"));
         }
     }
 
