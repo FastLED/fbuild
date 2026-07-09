@@ -44,6 +44,9 @@ APPROVED_MEMBERS: frozenset[str] = frozenset(
         "crates/fbuild-packages",
         "crates/fbuild-serial",
         "crates/fbuild-build",
+        # FastLED/fbuild#1008: compile-parallelism split — shared build engine
+        # extracted from fbuild-build so per-platform crates compile in parallel.
+        "crates/fbuild-build-engine",
         "crates/fbuild-deploy",
         "crates/fbuild-daemon",
         "crates/fbuild-cli",

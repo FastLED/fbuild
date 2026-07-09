@@ -281,7 +281,7 @@ pub(crate) fn apply_user_flags(base_flags: &[String], user_flags: &[String]) -> 
 /// Apply a [`LanguageExtraFlags`] overlay onto a base flag set, picking the
 /// language-specific scope from `probe_name`'s extension (`dummy.c` for C,
 /// `dummy.cpp` for C++).
-pub(crate) fn apply_overlay_flags(
+pub fn apply_overlay_flags(
     base_flags: &[String],
     overlay: &LanguageExtraFlags,
     probe_name: &str,

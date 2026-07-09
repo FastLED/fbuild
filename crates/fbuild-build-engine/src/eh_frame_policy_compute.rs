@@ -16,7 +16,7 @@ use fbuild_core::BuildProfile;
 ///
 /// `sdkconfig` is `Some` only on ESP32 (where sdkconfig keys influence the
 /// policy); other platforms pass `None`.
-pub(crate) fn compute_eh_frame_policy(
+pub fn compute_eh_frame_policy(
     ctx: &BuildContext,
     profile: BuildProfile,
     sdkconfig: Option<&SdkConfigSummary>,
