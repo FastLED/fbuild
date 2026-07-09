@@ -130,7 +130,7 @@ The current inventory is auto-published to a stable tracking issue every Monday 
 ## Key Constraints
 
 - **No file-based locks** — all locking through daemon's in-memory managers
-- **Dev mode isolation** — `FBUILD_DEV_MODE=1` → port 8865, `~/.fbuild/dev/`
+- **Dev mode isolation** — `FBUILD_DEV_MODE=1` → `~/.fbuild/dev/`. The daemon endpoint is no longer a fixed port: it's derived per (backend version + cache identity) in the IANA dynamic range 49152–65535 (`fbuild_paths::default_daemon_port` / `daemon_endpoint_key`), so different-version checkouts get isolated daemons and can't serve each other wrong-version builds (FastLED/fbuild#1009). Override with `FBUILD_DAEMON_PORT`.
 - **HTTP API compatibility** — same endpoints and JSON schemas as the Python daemon
 - **Windows USB-CDC** — 30 retries, aggressive buffer drain, DTR/RTS toggling after flash
 - **Emulator CLI convention** — prefer `fbuild test-emu` for CI; `fbuild deploy --to emu [--emulator <kind>]` for interactive use; keep `--target` and `--qemu` only as compatibility aliases

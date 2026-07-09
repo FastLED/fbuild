@@ -2,7 +2,8 @@
 //! parent file under the 1000-LOC gate (see ci.yml LOC Gate workflow).
 
 use super::{
-    broker_refusal_is_fatal, daemon_cache_identity_error, DaemonAcquisition, DaemonInfoResponse,
+    broker_refusal_is_fatal, daemon_cache_identity_error, should_restart_daemon, DaemonAcquisition,
+    DaemonInfoResponse,
 };
 use running_process::broker::client::RefusalKind::{VersionBlocked, VersionUnsupported};
 
@@ -96,4 +97,37 @@ fn daemon_cache_identity_rejects_wrong_schema() {
 
     let err = daemon_cache_identity_error(&info).expect("schema mismatch must fail closed");
     assert!(err.contains("cache schema"));
+}
+
+// FastLED/fbuild#1009 — version-based daemon arbitration.
+
+#[test]
+fn older_cli_never_evicts_newer_daemon_regardless_of_mtime() {
+    // The bug: a freshly-built OLDER binary (newer mtime) displacing a running
+    // NEWER daemon. Must not restart even though cli_mtime > daemon_mtime.
+    assert!(!should_restart_daemon("2.4.0", "2.5.0", 9999.0, 1.0));
+    assert!(!should_restart_daemon("2.4.0", "2.4.1", 9999.0, 1.0));
+}
+
+#[test]
+fn newer_cli_upgrades_the_daemon() {
+    // CLI strictly newer → restart regardless of mtime.
+    assert!(should_restart_daemon("2.5.0", "2.4.0", 1.0, 9999.0));
+    assert!(should_restart_daemon("2.4.1", "2.4.0", 0.0, 0.0));
+}
+
+#[test]
+fn same_version_restarts_only_on_newer_binary_mtime() {
+    // Dev rebuild of the same version: restart iff the on-disk binary is newer.
+    assert!(should_restart_daemon("2.4.0", "2.4.0", 200.0, 100.0));
+    assert!(!should_restart_daemon("2.4.0", "2.4.0", 100.0, 200.0));
+    assert!(!should_restart_daemon("2.4.0", "2.4.0", 100.0, 100.0));
+    // No usable mtimes → don't churn.
+    assert!(!should_restart_daemon("2.4.0", "2.4.0", 0.0, 0.0));
+}
+
+#[test]
+fn unparseable_versions_fall_back_to_mtime() {
+    assert!(should_restart_daemon("not-semver", "2.4.0", 200.0, 100.0));
+    assert!(!should_restart_daemon("2.4.0", "garbage", 100.0, 200.0));
 }
