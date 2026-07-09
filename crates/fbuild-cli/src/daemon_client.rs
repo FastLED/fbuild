@@ -870,6 +870,17 @@ async fn ensure_direct_daemon_running() -> fbuild_core::Result<()> {
             tokio::time::sleep(std::time::Duration::from_secs_f64(delay)).await;
         }
 
+        // FastLED/fbuild#1010 single-flight: a concurrent `fbuild` invocation
+        // may have started the daemon in the interim (common in CI / parallel
+        // builds). Re-check health before spawning so we adopt the existing
+        // daemon instead of piling on a redundant spawn. The daemon side
+        // (bind-before-heavy-init + fast yield) makes any duplicate that does
+        // slip through cheap.
+        if client.health().await {
+            tracing::info!("adopted concurrently-started daemon");
+            return Ok(());
+        }
+
         if let Err(e) = spawn_daemon_process().await {
             tracing::warn!("daemon spawn attempt {} failed: {}", attempt + 1, e);
             if attempt + 1 >= backoff_delays.len() {
