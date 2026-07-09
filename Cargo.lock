@@ -1465,6 +1465,36 @@ dependencies = [
 ]
 
 [[package]]
+name = "fbuild-library"
+version = "2.4.0"
+dependencies = [
+ "async-trait",
+ "axum 0.7.9",
+ "bzip2",
+ "fbuild-config",
+ "fbuild-core",
+ "fbuild-packages-fetch",
+ "fbuild-paths",
+ "flate2",
+ "prost",
+ "reqwest",
+ "rusqlite",
+ "semver",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tar",
+ "tempfile",
+ "thiserror 2.0.18",
+ "tokio",
+ "tracing",
+ "walkdir",
+ "xz2",
+ "zip",
+ "zstd",
+]
+
+[[package]]
 name = "fbuild-library-select"
 version = "2.4.0"
 dependencies = [
@@ -1486,6 +1516,38 @@ dependencies = [
 
 [[package]]
 name = "fbuild-packages"
+version = "2.4.0"
+dependencies = [
+ "async-trait",
+ "axum 0.7.9",
+ "bzip2",
+ "fbuild-config",
+ "fbuild-core",
+ "fbuild-library",
+ "fbuild-packages-fetch",
+ "fbuild-paths",
+ "fbuild-toolchain",
+ "flate2",
+ "prost",
+ "reqwest",
+ "rusqlite",
+ "semver",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tar",
+ "tempfile",
+ "thiserror 2.0.18",
+ "tokio",
+ "tracing",
+ "walkdir",
+ "xz2",
+ "zip",
+ "zstd",
+]
+
+[[package]]
+name = "fbuild-packages-fetch"
 version = "2.4.0"
 dependencies = [
  "async-trait",
@@ -1584,6 +1646,36 @@ dependencies = [
  "tokio",
  "tracing",
  "tracing-subscriber",
+]
+
+[[package]]
+name = "fbuild-toolchain"
+version = "2.4.0"
+dependencies = [
+ "async-trait",
+ "axum 0.7.9",
+ "bzip2",
+ "fbuild-config",
+ "fbuild-core",
+ "fbuild-packages-fetch",
+ "fbuild-paths",
+ "flate2",
+ "prost",
+ "reqwest",
+ "rusqlite",
+ "semver",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tar",
+ "tempfile",
+ "thiserror 2.0.18",
+ "tokio",
+ "tracing",
+ "walkdir",
+ "xz2",
+ "zip",
+ "zstd",
 ]
 
 [[package]]

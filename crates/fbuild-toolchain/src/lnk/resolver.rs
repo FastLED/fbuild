@@ -29,7 +29,7 @@ use crate::DiskCache;
 
 /// Module-level fallback runtime for the sync `.lnk` resolver bridge.
 ///
-/// See [`crate::library::library_manager::fallback_runtime`] for the same
+/// See `fbuild_library::library::library_manager::fallback_runtime` for the same
 /// pattern — building a Tokio runtime per call is expensive and pointless
 /// when this module gets hit repeatedly during a build.
 fn fallback_runtime() -> Result<&'static Runtime> {

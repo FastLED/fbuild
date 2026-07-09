@@ -42,6 +42,11 @@ APPROVED_MEMBERS: frozenset[str] = frozenset(
         "crates/fbuild-config",
         "crates/fbuild-paths",
         "crates/fbuild-packages",
+        # FastLED/fbuild#1008 Phase B: fetch-primitives + parallel library /
+        # toolchain crates behind the fbuild-packages facade.
+        "crates/fbuild-packages-fetch",
+        "crates/fbuild-library",
+        "crates/fbuild-toolchain",
         "crates/fbuild-serial",
         "crates/fbuild-build",
         # FastLED/fbuild#1008: compile-parallelism split — shared build engine
