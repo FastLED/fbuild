@@ -82,7 +82,10 @@ hyper = { version = "1", features = ["full"] }
 reqwest = { version = "0.12", default-features = false, features = ["json", "blocking", "stream", "rustls-tls"] }
 semver = "1"
 tokio-serial = "5"
-serialport = { version = "4", default-features = false }
+# `usbportinfo-interface` exposes `UsbPortInfo.interface` (the composite
+# `MI_xx` index), used by fbuild-serial's Windows enumerator to disambiguate
+# multi-function devices (e.g. Teensy Serial vs Serial+MIDI). FastLED/fbuild#962.
+serialport = { version = "4", default-features = false, features = ["usbportinfo-interface"] }
 pyo3 = { version = "0.22", features = ["abi3-py310"] }
 tempfile = "3"
 filetime = "0.2"

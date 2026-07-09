@@ -57,7 +57,10 @@ fn run_scan(offline: bool) -> Result<()> {
         // tier-1 + tier-3 if the overlay can't load.
         populate_online_overlay();
     }
-    let ports = serialport::available_ports()
+    // Use fbuild-serial's blessed enumerator, not `serialport::available_ports()`
+    // directly: on Windows the latter drops every port whose PnP devnode reports
+    // a non-OK status (all PJRC/Teensy composite ports). FastLED/fbuild#962.
+    let ports = fbuild_serial::ports::available_ports()
         .map_err(|e| FbuildError::SerialError(format!("serial port enumeration failed: {e}")))?;
     let rendered = render_scan(&ports);
     // render_scan terminates every row with '\n'; strip the trailing newline
@@ -139,6 +142,7 @@ pub fn render_scan(ports: &[serialport::SerialPortInfo]) -> String {
                     info.pid,
                     info.product.as_deref(),
                     info.serial_number.as_deref(),
+                    info.interface,
                 );
             }
             serialport::SerialPortType::PciPort => {
@@ -175,11 +179,22 @@ fn render_usb_port(
     pid: u16,
     product: Option<&str>,
     serial: Option<&str>,
+    interface: Option<u8>,
 ) {
     let kernel_class = fbuild_serial::port_class::detect_port_kernel_class(name);
-    render_usb_port_with_kernel_class(out, name, vid, pid, product, serial, kernel_class);
+    render_usb_port_with_kernel_class(
+        out,
+        name,
+        vid,
+        pid,
+        product,
+        serial,
+        interface,
+        kernel_class,
+    );
 }
 
+#[allow(clippy::too_many_arguments)]
 fn render_usb_port_with_kernel_class(
     out: &mut String,
     name: &str,
@@ -187,6 +202,7 @@ fn render_usb_port_with_kernel_class(
     pid: u16,
     product: Option<&str>,
     serial: Option<&str>,
+    interface: Option<u8>,
     kernel_class: Option<fbuild_serial::port_class::PortKernelClass>,
 ) {
     use std::fmt::Write as _;
@@ -195,9 +211,16 @@ fn render_usb_port_with_kernel_class(
         Some(s) if !s.is_empty() => format!("    ser={s}"),
         _ => String::new(),
     };
+    // Surface the composite-interface index so multi-function devices (a
+    // Teensy exposing Serial + MIDI, say) make the data-bearing COM port
+    // obvious. FastLED/fbuild#962.
+    let interface_field = match interface {
+        Some(n) => format!("    if=MI_{n:02}"),
+        None => String::new(),
+    };
     let _ = writeln!(
         out,
-        "{name:<10}{vid:04X}:{pid:04X}    {descriptor}{serial_field}",
+        "{name:<10}{vid:04X}:{pid:04X}    {descriptor}{serial_field}{interface_field}",
     );
     let info = fbuild_core::usb::resolve(vid, pid);
     let friendly_product = friendly_product_name(vid, pid, &info.product, product);
@@ -345,6 +368,7 @@ mod tests {
                 serial_number: serial.map(String::from),
                 manufacturer: None,
                 product: product.map(String::from),
+                interface: None,
             }),
         }
     }
@@ -561,6 +585,7 @@ mod tests {
             0x1001,
             None,
             None,
+            None,
             Some(PortKernelClass::CdcAcm),
         );
         assert!(cdc.contains("cdc=yes"), "got: {cdc}");
@@ -573,13 +598,54 @@ mod tests {
             0xEA60,
             None,
             None,
+            None,
             Some(PortKernelClass::UsbSerialBridge),
         );
         assert!(bridge.contains("cdc=no"), "got: {bridge}");
 
         let mut unknown = String::new();
-        render_usb_port_with_kernel_class(&mut unknown, "COM3", 0x303A, 0x1001, None, None, None);
+        render_usb_port_with_kernel_class(
+            &mut unknown,
+            "COM3",
+            0x303A,
+            0x1001,
+            None,
+            None,
+            None,
+            None,
+        );
         assert!(unknown.contains("cdc=unknown"), "got: {unknown}");
+    }
+
+    #[test]
+    fn teensy_16c0_port_resolves_pjrc_from_embedded_archive() {
+        // The enumeration fix (fbuild-serial's Windows walk) is what makes a
+        // Teensy show up at all; here we pin that once it IS enumerated, the
+        // scan resolves VID 16C0 to PJRC. The vendor + product names come from
+        // the embedded FastLED/boards VID:PID archive, NOT a hardcoded table.
+        // FastLED/fbuild#962.
+        let ports = vec![usb_port(
+            "COM20",
+            0x16C0,
+            0x0483,
+            Some("USB Serial Device (COM20)"),
+            None,
+        )];
+        let out = render_scan(&ports);
+        assert!(out.contains("16C0:0483"), "got: {out}");
+        assert!(
+            out.to_lowercase().contains("pjrc") || out.to_lowercase().contains("teensy"),
+            "expected PJRC/Teensy from the embedded archive, got: {out}"
+        );
+    }
+
+    #[test]
+    fn composite_interface_index_is_surfaced() {
+        // MI_xx bonus: a Teensy Serial+MIDI composite exposes its interface
+        // index so the data-bearing COM port is obvious.
+        let mut out = String::new();
+        render_usb_port(&mut out, "COM7", 0x16C0, 0x0489, None, None, Some(0));
+        assert!(out.contains("if=MI_00"), "expected MI index, got: {out}");
     }
 
     #[test]

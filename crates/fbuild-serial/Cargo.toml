@@ -23,6 +23,16 @@ futures = { workspace = true }
 async-trait = { workspace = true }
 regex = { workspace = true }
 
+# Windows serial-port enumeration that (unlike upstream serialport) does not
+# drop devnodes with a non-OK PnP problem status — see `src/ports.rs`.
+# FastLED/fbuild#962. Version matches serialport 4.9's windows-sys pin.
+[target.'cfg(windows)'.dependencies]
+windows-sys = { version = "0.52", features = [
+    "Win32_Devices_DeviceAndDriverInstallation",
+    "Win32_Foundation",
+    "Win32_System_Registry",
+] }
+
 [dev-dependencies]
 tempfile = { workspace = true }
 tracing-test = { workspace = true }
