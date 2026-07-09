@@ -686,6 +686,38 @@ fn compute_daemon_binary_mtime() -> f64 {
     0.0
 }
 
+/// Decide whether the CLI should restart the running daemon it just probed.
+///
+/// FastLED/fbuild#1009 — arbitrate by version, not raw binary mtime:
+/// - CLI **newer** than the daemon → restart (legitimate upgrade).
+/// - CLI **older** than the daemon → **never** restart (an older CLI must not
+///   evict a newer daemon just because its freshly-built binary has a newer
+///   mtime — the exact bug #940/#1006 left open).
+/// - **Same** version → restart only if the CLI's sibling daemon binary is
+///   newer on disk than the running one (the dev rebuild-then-restart flow).
+///
+/// If either version string doesn't parse as semver, fall back to the legacy
+/// mtime heuristic.
+fn should_restart_daemon(
+    cli_version: &str,
+    daemon_version: &str,
+    cli_mtime: f64,
+    daemon_mtime: f64,
+) -> bool {
+    let newer_on_disk = cli_mtime > 0.0 && daemon_mtime > 0.0 && cli_mtime > daemon_mtime;
+    match (
+        semver::Version::parse(cli_version),
+        semver::Version::parse(daemon_version),
+    ) {
+        (Ok(cli), Ok(daemon)) => match cli.cmp(&daemon) {
+            std::cmp::Ordering::Greater => true,        // upgrade
+            std::cmp::Ordering::Less => false,          // never evict a newer daemon
+            std::cmp::Ordering::Equal => newer_on_disk, // dev rebuild
+        },
+        _ => newer_on_disk, // unparseable → legacy mtime behaviour
+    }
+}
+
 /// Ensure the daemon is running. Spawn it if not.
 /// If the daemon binary has been updated since the running daemon started,
 /// gracefully restart it (stale source detection, matching Python behavior).
@@ -784,29 +816,35 @@ async fn ensure_direct_daemon_running() -> fbuild_core::Result<()> {
 
     // Check if already running
     if client.health().await {
-        // Check if daemon binary is stale (updated since daemon started)
         if let Some(health) = client.health_full().await {
-            if health.source_mtime > 0.0 {
-                let current_mtime = compute_daemon_binary_mtime();
-                if current_mtime > 0.0 && current_mtime > health.source_mtime {
-                    tracing::info!(
-                        "daemon binary is stale (daemon={}, current={}), restarting...",
-                        health.source_mtime,
-                        current_mtime
-                    );
-                    eprintln!("daemon binary updated, restarting...");
-                    let _ = client.shutdown().await;
-                    // Wait for it to stop
-                    for _ in 0..50 {
-                        tokio::time::sleep(std::time::Duration::from_millis(100)).await;
-                        if !client.health().await {
-                            break;
-                        }
+            // FastLED/fbuild#1009: arbitrate by VERSION first, mtime second.
+            // Never let an older-version CLI evict a newer daemon (the old
+            // mtime-only check could, since a freshly-built older binary has a
+            // newer mtime). Restart only on an upgrade, or a same-version dev
+            // rebuild.
+            if should_restart_daemon(
+                env!("CARGO_PKG_VERSION"),
+                &health.version,
+                compute_daemon_binary_mtime(),
+                health.source_mtime,
+            ) {
+                tracing::info!(
+                    "daemon needs restart (daemon v{} mtime={}, cli v{} mtime={})",
+                    health.version,
+                    health.source_mtime,
+                    env!("CARGO_PKG_VERSION"),
+                    compute_daemon_binary_mtime(),
+                );
+                eprintln!("daemon binary updated, restarting...");
+                let _ = client.shutdown().await;
+                // Wait for it to stop
+                for _ in 0..50 {
+                    tokio::time::sleep(std::time::Duration::from_millis(100)).await;
+                    if !client.health().await {
+                        break;
                     }
-                    // Fall through to spawn a fresh daemon below
-                } else {
-                    return Ok(());
                 }
+                // Fall through to spawn a fresh daemon below
             } else {
                 return Ok(());
             }

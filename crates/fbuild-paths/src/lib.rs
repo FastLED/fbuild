@@ -43,9 +43,63 @@ pub fn get_daemon_pid_file() -> PathBuf {
     get_daemon_dir().join("fbuild_daemon.pid")
 }
 
+/// Short, stable hex key identifying this daemon *endpoint*: a hash of the
+/// backend version + the cache identity (mode + trust + cache-root + schema).
+///
+/// FastLED/fbuild#1009: the default endpoint used to be a fixed per-user port
+/// (8765/8865) shared by every checkout, so a daemon of a *different version*
+/// could silently serve another checkout's builds. Keying the endpoint on
+/// version+identity means daemons of different versions land on distinct ports
+/// and distinct port files — they can no longer serve each other. Two checkouts
+/// of the SAME version sharing the SAME cache still (correctly) share a daemon,
+/// which is not a wrong-version hazard.
+///
+/// `fbuild-paths` is workspace-versioned, so `env!("CARGO_PKG_VERSION")` here is
+/// identical to the value compiled into the CLI and the daemon — both sides
+/// derive the same key without any handshake.
+pub fn daemon_endpoint_key() -> String {
+    let identity = crate::running_process::DaemonCacheIdentity::discover();
+    let material = format!("{}|{}", env!("CARGO_PKG_VERSION"), identity.label_value());
+    endpoint_key_from_material(&material)
+}
+
+/// FNV-1a (64-bit) of `material`, formatted as 16 lowercase hex chars.
+/// Deterministic + dependency-free; pure (unit-tested).
+fn endpoint_key_from_material(material: &str) -> String {
+    let mut hash: u64 = 0xcbf2_9ce4_8422_2325;
+    for byte in material.as_bytes() {
+        hash ^= u64::from(*byte);
+        hash = hash.wrapping_mul(0x0000_0100_0000_01b3);
+    }
+    format!("{hash:016x}")
+}
+
+/// Deterministic default daemon port derived from [`daemon_endpoint_key`].
+///
+/// Lands in the IANA dynamic range (49152–65535) so it never collides with a
+/// well-known service, and is stable for a given version+identity. Distinct
+/// versions (and dev vs prod, since mode is part of the identity) get distinct
+/// ports. `FBUILD_DAEMON_PORT` still overrides this (see [`get_daemon_port`]).
+pub fn default_daemon_port() -> u16 {
+    port_from_endpoint_key(&daemon_endpoint_key())
+}
+
+/// Map a hex endpoint key into the IANA dynamic port window (49152–65535).
+/// Pure + deterministic (unit-tested).
+fn port_from_endpoint_key(key: &str) -> u16 {
+    const LOW: u32 = 49152;
+    const SPAN: u32 = 65536 - LOW; // 16384
+    let n = u64::from_str_radix(key, 16).unwrap_or(0);
+    (LOW + (n % u64::from(SPAN)) as u32) as u16
+}
+
 /// Daemon port file path (written by daemon so clients can discover the port).
+///
+/// Keyed by [`daemon_endpoint_key`] (FastLED/fbuild#1009) so daemons of
+/// different versions/identities write distinct files and never read each
+/// other's port.
 pub fn get_daemon_port_file() -> PathBuf {
-    get_daemon_dir().join("daemon.port")
+    get_daemon_dir().join(format!("daemon-{}.port", daemon_endpoint_key()))
 }
 
 /// Daemon log file path.
@@ -221,12 +275,18 @@ fn read_port_from_file(path: &Path) -> Option<u16> {
 ///
 /// Priority:
 /// 1. `FBUILD_DAEMON_PORT` environment variable (if set and valid 1–65535)
-/// 2. Port file in current mode's daemon dir (if exists and valid)
-/// 3. Port file in OTHER mode's daemon dir (cross-mode fallback —
-///    handles dev daemon running but client not in dev mode, or vice versa)
-/// 4. Mode-based default: 8865 (dev) or 8765 (prod)
+/// 2. Port file for this endpoint (if it exists and is valid)
+/// 3. [`default_daemon_port`] — a deterministic per-(version, cache-identity)
+///    port
+///
+/// FastLED/fbuild#1009: the endpoint is keyed by version+identity (via
+/// [`daemon_endpoint_key`]) rather than a fixed per-user port, so a daemon of a
+/// different version can no longer bind the same endpoint and serve another
+/// checkout's builds. The old cross-mode fallback (dev CLI adopting a prod
+/// daemon and vice-versa) was an *anti*-isolation bridge and is intentionally
+/// dropped — dev and prod already have separate roots and now separate ports.
 pub fn get_daemon_port() -> u16 {
-    // Priority 1: env var
+    // Priority 1: env var override.
     if let Ok(port_str) = std::env::var("FBUILD_DAEMON_PORT") {
         if let Ok(port) = port_str.parse::<u16>() {
             if port > 0 {
@@ -235,24 +295,13 @@ pub fn get_daemon_port() -> u16 {
         }
     }
 
-    // Priority 2: port file in current mode's daemon dir
-    let port_file = get_daemon_port_file();
-    if let Some(port) = read_port_from_file(&port_file) {
+    // Priority 2: this endpoint's port file.
+    if let Some(port) = read_port_from_file(&get_daemon_port_file()) {
         return port;
     }
 
-    // Priority 3: cross-mode fallback — check the OTHER mode's port file
-    let other_port_file = get_other_fbuild_root().join("daemon").join("daemon.port");
-    if let Some(port) = read_port_from_file(&other_port_file) {
-        return port;
-    }
-
-    // Priority 4: mode-based default
-    if is_dev_mode() {
-        8865
-    } else {
-        8765
-    }
+    // Priority 3: deterministic per-endpoint default.
+    default_daemon_port()
 }
 
 /// Daemon URL.
@@ -367,11 +416,73 @@ mod tests {
     #[test]
     fn dev_mode_port() {
         // Note: can't set env vars in parallel tests safely, and the
-        // function's own priority chain (env var > current-mode port file >
-        // other-mode port file > mode-default) legitimately returns any
-        // u16 > 0. Assert only the contract the function actually promises.
+        // function's own priority chain (env var > endpoint port file >
+        // per-endpoint default) legitimately returns any u16 > 0. Assert only
+        // the contract the function actually promises.
         let port = get_daemon_port();
         assert!(port > 0);
+    }
+
+    #[test]
+    fn endpoint_key_is_deterministic_16_hex() {
+        // FastLED/fbuild#1009: the key must be deterministic per (version,
+        // identity) so the CLI and daemon derive the same endpoint. Tested on
+        // the pure hasher so it's immune to parallel env-var mutation.
+        let a = endpoint_key_from_material("2.4.0|mode=prod;trust=local;schema=1;cache=/x");
+        let b = endpoint_key_from_material("2.4.0|mode=prod;trust=local;schema=1;cache=/x");
+        assert_eq!(a, b, "same material must hash identically");
+        assert_eq!(a.len(), 16, "expected 16 hex chars, got {a:?}");
+        assert!(a.chars().all(|c| c.is_ascii_hexdigit()));
+        // Different version → different key (this is the #1009 isolation).
+        let other_version =
+            endpoint_key_from_material("2.5.0|mode=prod;trust=local;schema=1;cache=/x");
+        assert_ne!(a, other_version, "different version must key differently");
+        // Live key is well-formed too.
+        let live = daemon_endpoint_key();
+        assert_eq!(live.len(), 16);
+        assert!(live.chars().all(|c| c.is_ascii_hexdigit()));
+    }
+
+    #[test]
+    fn default_daemon_port_is_in_dynamic_range() {
+        let p = default_daemon_port();
+        assert!(
+            (49152..=65535).contains(&p),
+            "port {p} outside dynamic range"
+        );
+    }
+
+    #[test]
+    fn port_from_key_is_deterministic_and_ranged() {
+        // Same key → same port; keys differing (e.g. by version or checkout)
+        // map into the dynamic range and generally differ.
+        assert_eq!(
+            port_from_endpoint_key("0123456789abcdef"),
+            port_from_endpoint_key("0123456789abcdef")
+        );
+        for key in ["0000000000000000", "ffffffffffffffff", "deadbeefcafef00d"] {
+            let p = port_from_endpoint_key(key);
+            assert!((49152..=65535).contains(&p), "key {key} → {p} out of range");
+        }
+        // Two distinct version/identity keys should not collapse to one port
+        // for these representative values.
+        assert_ne!(
+            port_from_endpoint_key("1111111111111111"),
+            port_from_endpoint_key("2222222222222222")
+        );
+    }
+
+    #[test]
+    fn port_file_name_is_endpoint_keyed() {
+        // The port file must carry the endpoint key so different versions /
+        // identities never read each other's port. FastLED/fbuild#1009.
+        let file = get_daemon_port_file();
+        let name = file.file_name().unwrap().to_string_lossy();
+        assert!(
+            name.starts_with("daemon-") && name.ends_with(".port"),
+            "unexpected port file name: {name}"
+        );
+        assert!(name.contains(&daemon_endpoint_key()));
     }
 
     #[test]
