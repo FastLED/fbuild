@@ -5,6 +5,9 @@ version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
+# Not published to crates.io — distribution is PyPI + GitHub Releases;
+# this member exists purely for internal compile parallelism. FastLED/fbuild#1008.
+publish = false
 
 [[bin]]
 name = "fbuild-daemon"
