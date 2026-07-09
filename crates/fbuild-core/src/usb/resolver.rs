@@ -161,6 +161,29 @@ mod tests {
     }
 
     #[test]
+    fn embedded_archive_resolves_pjrc_teensy_products() {
+        // The `fbuild port scan` Teensy rows get their product names from the
+        // embedded FastLED/boards VID:PID archive — NOT a hardcoded table in
+        // fbuild. Pin the round-trip for the PIDs a Teensy exposes as serial
+        // ports. FastLED/fbuild#962.
+        for (pid, expect) in [(0x0483u16, "serial"), (0x0489, "midi")] {
+            let info = try_resolve(0x16C0, pid).expect("Teensy PID in embedded archive");
+            assert!(
+                info.vendor.to_lowercase().contains("pjrc")
+                    || info.vendor.to_lowercase().contains("teensy"),
+                "16C0:{pid:04X} vendor should be PJRC/Teensy, got {:?}",
+                info.vendor
+            );
+            assert!(
+                info.product.to_lowercase().contains("teensy")
+                    && info.product.to_lowercase().contains(expect),
+                "16C0:{pid:04X} product should name the Teensy {expect} mode, got {:?}",
+                info.product
+            );
+        }
+    }
+
+    #[test]
     fn embedded_resolves_ftdi_vendor() {
         let info = resolve_bundled(0x0403, 0x6001).expect("FTDI VID in embedded archive");
         assert!(

@@ -93,6 +93,7 @@ pub(super) fn discover_usb_port_info(port: &str) -> UsbPortInfo {
         serial_number: None,
         manufacturer: None,
         product: None,
+        interface: None,
     }
 }
 

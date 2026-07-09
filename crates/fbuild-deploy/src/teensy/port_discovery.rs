@@ -26,8 +26,13 @@ pub const PJRC_VID: u16 = 0x16C0;
 /// for the snapshot/diff use case, "we couldn't ask the OS" is functionally
 /// the same as "no ports", and we don't want a transient enumeration glitch
 /// to break the deploy.
+///
+/// Uses fbuild-serial's blessed enumerator, which (unlike upstream
+/// `serialport::available_ports()`) lists Windows ports whose PnP devnode
+/// reports a non-OK status — every Teensy composite serial port. Without this
+/// the pre/post-flash port diff never sees the Teensy. FastLED/fbuild#962.
 pub fn list_ports() -> Vec<SerialPortInfo> {
-    match serialport::available_ports() {
+    match fbuild_serial::ports::available_ports() {
         Ok(ports) => ports,
         Err(e) => {
             tracing::warn!("port enumeration failed: {}", e);
