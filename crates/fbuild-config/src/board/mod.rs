@@ -19,6 +19,7 @@
 
 mod db;
 mod loaders;
+pub mod mcu_vid;
 mod methods;
 mod types;
 

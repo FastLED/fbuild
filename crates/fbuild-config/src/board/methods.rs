@@ -35,6 +35,30 @@ impl BoardConfig {
         self.chip_variant.as_deref().unwrap_or(&self.mcu)
     }
 
+    /// Resolve this board's USB VID **offline**: the explicit `build.vid`
+    /// when the board JSON ships one, otherwise the embedded MCU-family
+    /// heuristic ([`super::mcu_vid::vid_for_mcu`]).
+    ///
+    /// Returns a lowercase 4-hex string without the `0x` prefix (e.g.
+    /// `"303a"`), or `None` when neither source knows a VID.
+    ///
+    /// This is the build-time replacement for the old runtime `mcu_to_vid`
+    /// online fallback (FastLED/fbuild#959): boards whose JSON has null
+    /// `build.vid`/`build.pid` — ESP32-C6, LPC845-BRK, UNO R4, etc. — now
+    /// resolve a VID with no network access. It is a resolution/display
+    /// helper only and does **not** change the `-DUSB_VID` compile define,
+    /// which stays keyed on an explicit `build.vid`.
+    pub fn resolved_vid(&self) -> Option<String> {
+        if let Some(vid) = &self.vid {
+            let hex = vid
+                .strip_prefix("0x")
+                .or_else(|| vid.strip_prefix("0X"))
+                .unwrap_or(vid);
+            return Some(hex.to_ascii_lowercase());
+        }
+        super::mcu_vid::vid_for_mcu(&self.mcu).map(str::to_string)
+    }
+
     /// Check whether this board supports a specific emulator tool.
     pub fn has_emulator(&self, tool_name: &str) -> bool {
         self.debug_tools

@@ -332,3 +332,58 @@ fn issue_740_first_party_vid_pid_rows_all_resolve() {
         failures.join("\n")
     );
 }
+
+/// FastLED/fbuild#959 — the six boards whose JSON has null `build.vid`/`build.pid`
+/// used to resolve a VID only via the runtime `online-data` `mcu_to_vid` fetch.
+/// They must now resolve one **offline** through the compile-time-embedded
+/// MCU-family heuristic ([`BoardConfig::resolved_vid`]). No network here.
+#[test]
+fn issue_959_null_vid_boards_resolve_via_embedded_mcu_heuristic() {
+    // (board_id, expected heuristic VID) — the same VIDs the online-data
+    // pipeline would have published for each MCU family.
+    const NULL_VID_BOARDS: &[(&str, &str)] = &[
+        ("esp32-c3-devkitm-1", "303a"),
+        ("esp32-c6-devkitc-1", "303a"),
+        ("esp32-p4-evboard", "303a"),
+        ("esp32doit-devkit-v1", "10c4"),
+        ("uno_r4_wifi", "2341"),
+        ("lpc845brk", "1fc9"),
+    ];
+
+    let mut failures = Vec::new();
+    for (board_id, expected_vid) in NULL_VID_BOARDS {
+        let config = match BoardConfig::from_board_id(board_id, &HashMap::new()) {
+            Ok(c) => c,
+            Err(e) => {
+                failures.push(format!("{board_id}: failed to load: {e}"));
+                continue;
+            }
+        };
+        // Precondition: these boards genuinely lack an explicit build.vid, so
+        // the resolution is exercising the embedded heuristic, not JSON.
+        if config.vid.is_some() {
+            failures.push(format!(
+                "{board_id}: now ships an explicit build.vid ({:?}); move it to \
+                 FIRST_PARTY_VID_PID_ROWS instead",
+                config.vid
+            ));
+            continue;
+        }
+        match config.resolved_vid() {
+            Some(got) if norm_hex(&got) == norm_hex(expected_vid) => {}
+            Some(got) => failures.push(format!(
+                "{board_id}: heuristic VID {got} != expected {expected_vid}"
+            )),
+            None => failures.push(format!(
+                "{board_id}: resolved_vid() returned None — online-fallback \
+                 regression, the MCU heuristic did not embed/resolve"
+            )),
+        }
+    }
+
+    assert!(
+        failures.is_empty(),
+        "FastLED/fbuild#959 offline MCU→VID embedding regressed:\n{}",
+        failures.join("\n")
+    );
+}
