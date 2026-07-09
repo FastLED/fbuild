@@ -49,13 +49,11 @@ pub struct FlashOffsets {
     pub firmware: String,
 }
 
-/// A define entry: either a simple string or a [key, value] pair.
-#[derive(Debug, Clone, Deserialize)]
-#[serde(untagged)]
-pub enum DefineEntry {
-    Simple(String),
-    KeyValue(String, String),
-}
+// `DefineEntry` now lives at the shared engine layer (`crate::mcu_config`)
+// because every platform's `mcu_config` parses the same shape. Re-exported here
+// so existing `crate::esp32::mcu_config::DefineEntry` paths keep resolving.
+// FastLED/fbuild#1008 (Phase A0).
+pub use crate::mcu_config::DefineEntry;
 
 /// Complete MCU configuration parsed from JSON.
 #[derive(Debug, Clone, Deserialize)]

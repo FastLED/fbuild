@@ -1,6 +1,6 @@
 [package]
-name = "fbuild-build"
-description = "Build orchestration, compilation, linking for all platforms (AVR, ESP32, RP2040, STM32, Teensy, WASM)"
+name = "fbuild-build-engine"
+description = "Platform-agnostic build engine (pipeline, compiler, linker, analyzers) shared by fbuild's per-platform crates. FastLED/fbuild#1008."
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -10,9 +10,6 @@ license.workspace = true
 publish = false
 
 [dependencies]
-# The shared build engine (pipeline, compiler, linker, analyzers, traits).
-# FastLED/fbuild#1008 — this crate is now a thin facade + platform factory.
-fbuild-build-engine = { path = "../fbuild-build-engine" }
 fbuild-core = { path = "../fbuild-core" }
 fbuild-config = { path = "../fbuild-config" }
 fbuild-paths = { path = "../fbuild-paths" }
@@ -37,22 +34,9 @@ tar = { workspace = true }
 zip = { workspace = true }
 tree-sitter = { workspace = true }
 tree-sitter-cpp = { workspace = true }
-
-# FastLED/fbuild#800 (Phase 4 stage 2 of #789): zccache embedded
-# library is an unconditional dep. The wrapper-binary path
-# (`crates/fbuild-build/src/managed_zccache.rs`, `zccache wrap …`
-# child processes) was deleted in the same PR; there is no
-# `--no-default-features` escape hatch.
-#
-# Pinned at zccache 1.12.14 (`4b13676`, the same revision soldr's
-# `_vender/zccache` submodule uses). Bumps 1.12.11 -> 1.12.14 to pick
-# up the embedded-path fixes: #950 (journal compile outcomes on the
-# embedded path), #955/#957/#958 (daemon-deadlock/full-codegen fix +
-# `run_cpu_blocking`), and #948 (mimalloc as sole allocator).
 zccache = { git = "https://github.com/zackees/zccache", rev = "4b13676bb3a76c87d2272b2d9ccb76e821734762" }
 
 [dev-dependencies]
 filetime = { workspace = true }
 fbuild-test-support = { path = "../fbuild-test-support" }
-async-trait = { workspace = true }
 tokio = { workspace = true, features = ["macros", "rt-multi-thread", "sync"] }

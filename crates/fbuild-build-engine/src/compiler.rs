@@ -367,7 +367,7 @@ fn object_hash_key(source: &Path, build_dir: &Path) -> String {
 /// Returns the filtered pair ready to pass to `compile_one`. Short-circuits
 /// when `unflags` is empty so platforms that don't opt in pay no overhead.
 /// See FastLED/fbuild#37.
-pub(crate) fn apply_compile_unflags(
+pub fn apply_compile_unflags(
     flags: Vec<String>,
     extra_flags: &[String],
     unflags: &[String],
