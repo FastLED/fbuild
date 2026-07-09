@@ -77,6 +77,27 @@ async fn main() {
 
     tracing::info!("fbuild daemon starting on port {}", port);
 
+    // FastLED/fbuild#1010 — bind the endpoint BEFORE any heavy init (the
+    // embedded zccache service, DaemonContext, package/framework managers).
+    // When N `fbuild` invocations cold-start concurrently they each spawn a
+    // daemon; binding first means the losers detect the winner and exit(0)
+    // within milliseconds (see `bind_listener_with_retry` /
+    // `another_daemon_is_listening`) instead of paying for full initialization
+    // only to fail the bind at the very end. The winner keeps `listener` and
+    // serves everyone.
+    let addr = format!("0.0.0.0:{}", port);
+    // Clean up a stale PID file from a previous unclean kill so the bind-retry
+    // path (kernel TIME_WAIT) and `fbuild daemon list` reflect reality.
+    if let Some(stale_pid) = read_stale_daemon_pid().await {
+        tracing::warn!(
+            "found stale daemon PID file pointing at dead PID {}; cleaning up",
+            stale_pid
+        );
+        let _ = fbuild_core::fs::remove_file(fbuild_paths::get_daemon_pid_file()).await;
+    }
+    let listener = bind_listener_with_retry(&addr).await;
+    tracing::info!("listening on {}", addr);
+
     // Populate the tier-2 USB VID:PID overlay so `device list/status/deploy`
     // return full vendor + product names instead of the tier-1 vendor-only
     // + synthetic `Device 0xPPPP` placeholder. Best-effort: the resolver
@@ -170,24 +191,9 @@ async fn main() {
                 .allow_headers(tower_http::cors::Any),
         );
 
-    let addr = format!("0.0.0.0:{}", port);
-    // Before binding, check whether a stale PID file points at a dead
-    // process. If the previous daemon was killed uncleanly, its PID file
-    // still exists and any stale TCP state may linger for the protocol
-    // timeout. Cleaning up the PID file lets `fbuild daemon list` reflect
-    // reality, and the bind retry below handles the kernel-state case.
-    // See ISSUES.md "Issue B5a".
-    if let Some(stale_pid) = read_stale_daemon_pid().await {
-        tracing::warn!(
-            "found stale daemon PID file pointing at dead PID {}; cleaning up",
-            stale_pid
-        );
-        let _ = fbuild_core::fs::remove_file(fbuild_paths::get_daemon_pid_file()).await;
-    }
-
-    let listener = bind_listener_with_retry(&addr).await;
-
-    tracing::info!("listening on {}", addr);
+    // NOTE: the endpoint is already bound at the top of `main` (before any
+    // heavy init) — see the `bind_listener_with_retry` call after tracing
+    // setup. FastLED/fbuild#1010. `listener` is held from there.
 
     // Write PID file and port file
     let pid_file = fbuild_paths::get_daemon_pid_file();
@@ -554,6 +560,24 @@ fn is_pid_alive(pid: u32) -> bool {
 /// window where a hard-killed previous instance still has kernel TCP
 /// state. Permanent failures (port owned by a live process, permission
 /// denied) bubble up after the retries are exhausted.
+/// Is another process actually LISTENING on `addr` right now?
+///
+/// Used to distinguish "we lost the spawn race, a live daemon owns the port"
+/// (a successful connect → yield) from "the port is briefly unbindable due to
+/// stale kernel TIME_WAIT state after an unclean kill" (connect refused →
+/// retry). Because the endpoint is version+identity-keyed (FastLED/fbuild#1009),
+/// a live listener on it is necessarily an fbuild-daemon of our own version.
+async fn another_daemon_is_listening(addr: &std::net::SocketAddr) -> bool {
+    matches!(
+        tokio::time::timeout(
+            std::time::Duration::from_millis(500),
+            tokio::net::TcpStream::connect(addr),
+        )
+        .await,
+        Ok(Ok(_))
+    )
+}
+
 async fn bind_listener_with_retry(addr: &str) -> tokio::net::TcpListener {
     use socket2::{Domain, Protocol, Socket, Type};
     let std_addr: std::net::SocketAddr = addr.parse().unwrap_or_else(|e| {
@@ -612,9 +636,23 @@ async fn bind_listener_with_retry(addr: &str) -> tokio::net::TcpListener {
                 }
             },
             Err(e) => {
+                // FastLED/fbuild#1010 single-flight: the endpoint is now keyed
+                // by version+identity (#1009), so anything actually LISTENING on
+                // this port is another fbuild-daemon of our exact version — we
+                // lost the spawn race. Yield immediately (exit 0) instead of
+                // retrying + wasting heavy init; the winner serves everyone. Only
+                // a bind failure with NOTHING listening (stale TIME_WAIT kernel
+                // state after an unclean kill) is worth retrying.
+                if another_daemon_is_listening(&std_addr).await {
+                    tracing::info!(
+                        "another fbuild-daemon already owns {}; yielding (single-flight)",
+                        addr
+                    );
+                    std::process::exit(0);
+                }
                 tracing::warn!(
                     attempt,
-                    "bind to {} failed ({}); retrying in 500ms",
+                    "bind to {} failed ({}); no listener present (stale state), retrying in 500ms",
                     addr,
                     e
                 );
@@ -770,6 +808,29 @@ fn format_bytes_compact(bytes: u64) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[tokio::test]
+    async fn another_daemon_is_listening_detects_a_live_listener() {
+        // FastLED/fbuild#1010: a live listener on the endpoint → yield (true);
+        // a free port → retry (false).
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let bound = listener.local_addr().unwrap();
+        assert!(
+            another_daemon_is_listening(&bound).await,
+            "should detect the live listener we just bound"
+        );
+
+        // A port with nothing listening (we drop the listener first) → false.
+        let free = {
+            let l = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+            l.local_addr().unwrap()
+            // `l` dropped here → port no longer listening.
+        };
+        assert!(
+            !another_daemon_is_listening(&free).await,
+            "a free port must not be reported as owned"
+        );
+    }
 
     #[test]
     fn is_pid_alive_returns_true_for_self() {
