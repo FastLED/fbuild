@@ -1,20 +1,15 @@
 [package]
-name = "fbuild-packages"
-description = "Package management, toolchain resolution, library downloads for fbuild"
+name = "fbuild-toolchain"
+description = "Toolchain resolution + .lnk blob handling for fbuild (parallel with fbuild-library). FastLED/fbuild#1008."
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
-# Not published to crates.io — distribution is PyPI + GitHub Releases;
-# this member exists purely for internal compile parallelism. FastLED/fbuild#1008.
+# Not published to crates.io — internal compile-parallelism split. FastLED/fbuild#1008.
 publish = false
 
 [dependencies]
-# FastLED/fbuild#1008 Phase B — this crate is now a thin facade re-exporting
-# the fetch primitives + the parallel library / toolchain crates.
 fbuild-packages-fetch = { path = "../fbuild-packages-fetch" }
-fbuild-library = { path = "../fbuild-library" }
-fbuild-toolchain = { path = "../fbuild-toolchain" }
 fbuild-core = { path = "../fbuild-core" }
 fbuild-paths = { path = "../fbuild-paths" }
 fbuild-config = { path = "../fbuild-config" }

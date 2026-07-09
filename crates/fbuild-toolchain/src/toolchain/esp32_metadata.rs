@@ -13,7 +13,7 @@ use tokio::runtime::Runtime;
 
 /// Module-level fallback runtime for the sync `resolve_toolchain_url_sync`
 /// bridge. Same rationale as
-/// [`crate::library::library_manager::fallback_runtime`]: one process-wide
+/// `fbuild_library::library::library_manager::fallback_runtime`: one process-wide
 /// runtime is cheaper than a new one per call when legacy orchestrators
 /// hit this many times during a single build.
 fn fallback_runtime() -> Result<&'static Runtime> {
