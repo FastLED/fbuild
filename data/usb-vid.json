@@ -95673,6 +95673,26 @@
         "Pipo Interfaces - Pipo Analog"
       ],
       [
+        "8391",
+        "AglaiaSense - MS500 Face"
+      ],
+      [
+        "8392",
+        "AglaiaSense - MS500 Gaze"
+      ],
+      [
+        "8393",
+        "AglaiaSense - MS500 Pedestrian Detection"
+      ],
+      [
+        "8394",
+        "AglaiaSense - MS500 License Plate Recognition"
+      ],
+      [
+        "8395",
+        "AglaiaSense - MS500 Traffic"
+      ],
+      [
         "83cf",
         "DFRobot Firebeetle 2 ESP32-S3"
       ]
