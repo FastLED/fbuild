@@ -8,7 +8,6 @@ use fbuild_core::Result;
 
 use crate::compile_database::TargetArchitecture;
 use crate::compiler::Compiler;
-use crate::flag_overlay::LanguageExtraFlags;
 use crate::source_scanner::SourceCollection;
 use crate::{BuildParams, BuildResult};
 
@@ -54,27 +53,10 @@ pub async fn run_sequential_build_with_libs(
         .chain(sources.variant_sources.iter())
         .cloned()
         .collect();
-    let user_overlay = LanguageExtraFlags {
-        common: ctx
-            .user_flags
-            .iter()
-            .cloned()
-            .chain(ctx.global_compile_overlay.common.iter().cloned())
-            .collect(),
-        c: ctx.global_compile_overlay.c.clone(),
-        cxx: ctx.global_compile_overlay.cxx.clone(),
-        asm: ctx.global_compile_overlay.asm.clone(),
-    };
-    let src_overlay = LanguageExtraFlags::combined(&[
-        &user_overlay,
-        &LanguageExtraFlags {
-            common: ctx.src_flags.clone(),
-            c: Vec::new(),
-            cxx: Vec::new(),
-            asm: Vec::new(),
-        },
-        &ctx.project_compile_overlay,
-    ]);
+    // FastLED/fbuild#574: single source of truth for the compile overlays so
+    // `[env:*] build_flags` reach core/framework + libs (user_overlay) and
+    // sketch + local libs (src_overlay) uniformly.
+    let (user_overlay, src_overlay) = ctx.compile_overlays();
 
     // compiledb_only: generate compile_commands.json without compiling
     if params.compiledb_only {

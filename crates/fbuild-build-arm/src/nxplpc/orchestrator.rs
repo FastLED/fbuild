@@ -22,7 +22,7 @@ use std::time::Instant;
 use fbuild_core::{FbuildError, Platform, Result};
 
 use crate::compile_database::TargetArchitecture;
-use crate::flag_overlay::{apply_overlay_flags, LanguageExtraFlags};
+use crate::flag_overlay::apply_overlay_flags;
 use crate::generic_arm::{ArmCompiler, ArmLinker};
 use crate::pipeline;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
@@ -280,17 +280,10 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
         let gcc_ar_path = toolchain.get_gcc_ar_path();
         let raw_c_flags = crate::compiler::Compiler::c_flags(&compiler);
         let raw_cpp_flags = crate::compiler::Compiler::cpp_flags(&compiler);
-        let user_overlay = LanguageExtraFlags {
-            common: ctx
-                .user_flags
-                .iter()
-                .cloned()
-                .chain(ctx.global_compile_overlay.common.iter().cloned())
-                .collect(),
-            c: ctx.global_compile_overlay.c.clone(),
-            cxx: ctx.global_compile_overlay.cxx.clone(),
-            asm: ctx.global_compile_overlay.asm.clone(),
-        };
+        // FastLED/fbuild#574: shared overlay assembly (only the user overlay is
+        // needed here — the sketch/core/local-lib overlays are applied inside
+        // `run_sequential_build_with_libs`).
+        let (user_overlay, _src_overlay) = ctx.compile_overlays();
         let c_flags = apply_overlay_flags(&raw_c_flags, &user_overlay, "dummy.c");
         let cpp_flags = apply_overlay_flags(&raw_cpp_flags, &user_overlay, "dummy.cpp");
         let lib_ar_path = pipeline::pick_archiver(&ar_path, &gcc_ar_path, &c_flags, &cpp_flags);
