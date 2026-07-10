@@ -1139,7 +1139,7 @@ checksum = "37909eebbb50d72f9059c3b6d82c0463f2ff062c9e95845c43a6c9c0355411be"
 
 [[package]]
 name = "fbuild-bench-fastled-examples"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "fbuild-library-select",
  "fbuild-packages",
@@ -1151,7 +1151,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-build"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "async-trait",
  "blake3",
@@ -1188,7 +1188,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-build-arm"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "async-trait",
  "blake3",
@@ -1222,7 +1222,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-build-engine"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "async-trait",
  "blake3",
@@ -1255,7 +1255,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-build-esp"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "async-trait",
  "blake3",
@@ -1289,7 +1289,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-build-mcu"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "async-trait",
  "blake3",
@@ -1323,7 +1323,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-cli"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "blake3",
  "clap",
@@ -1354,7 +1354,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-config"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "fbuild-core",
  "fbuild-paths",
@@ -1369,7 +1369,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-core"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "async-trait",
  "libc",
@@ -1390,7 +1390,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-daemon"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "async-trait",
  "axum 0.7.9",
@@ -1430,7 +1430,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-deploy"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "async-trait",
  "espflash",
@@ -1455,7 +1455,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-header-scan"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "criterion",
  "fbuild-paths",
@@ -1466,7 +1466,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-library"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "async-trait",
  "axum 0.7.9",
@@ -1496,7 +1496,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-library-select"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "bincode",
  "blake3",
@@ -1516,7 +1516,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-packages"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "async-trait",
  "axum 0.7.9",
@@ -1548,7 +1548,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-packages-fetch"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "async-trait",
  "axum 0.7.9",
@@ -1577,14 +1577,14 @@ dependencies = [
 
 [[package]]
 name = "fbuild-paths"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "fbuild-core",
 ]
 
 [[package]]
 name = "fbuild-python"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "base64 0.22.1",
  "fbuild-core",
@@ -1606,7 +1606,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-serial"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "async-trait",
  "base64 0.22.1",
@@ -1630,7 +1630,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-test-support"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "fbuild-config",
  "fbuild-core",
@@ -1650,7 +1650,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-toolchain"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "async-trait",
  "axum 0.7.9",
