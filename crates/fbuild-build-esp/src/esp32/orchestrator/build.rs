@@ -26,7 +26,7 @@ use crate::build_fingerprint::{
     FastPathPersistInputs, BUILD_FINGERPRINT_VERSION,
 };
 use crate::compiler::Compiler as _;
-use crate::flag_overlay::{apply_overlay_flags, LanguageExtraFlags};
+use crate::flag_overlay::apply_overlay_flags;
 use crate::linker::LinkerScripts;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 
@@ -311,26 +311,9 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let mut user_build_flags = ctx.config.get_build_flags(&params.env_name)?;
         user_build_flags.extend(params.extra_build_flags.clone());
         user_flags.extend(user_build_flags.clone());
-        let user_overlay = LanguageExtraFlags {
-            common: user_flags
-                .iter()
-                .cloned()
-                .chain(ctx.global_compile_overlay.common.iter().cloned())
-                .collect(),
-            c: ctx.global_compile_overlay.c.clone(),
-            cxx: ctx.global_compile_overlay.cxx.clone(),
-            asm: ctx.global_compile_overlay.asm.clone(),
-        };
-        let src_overlay = LanguageExtraFlags::combined(&[
-            &user_overlay,
-            &LanguageExtraFlags {
-                common: ctx.src_flags.clone(),
-                c: Vec::new(),
-                cxx: Vec::new(),
-                asm: Vec::new(),
-            },
-            &ctx.project_compile_overlay,
-        ]);
+        // FastLED/fbuild#574: shared overlay assembly. ESP32 prepends SDK
+        // defines to the user flags, so it passes the combined base explicitly.
+        let (user_overlay, src_overlay) = ctx.compile_overlays_with_base(&user_flags);
 
         // Emit a warning if CDC on boot is effectively enabled (may cause Serial to block
         // when no USB host is connected).

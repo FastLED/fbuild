@@ -12,6 +12,7 @@ pub mod compiler_flags;
 pub mod containment;
 pub mod elapsed;
 pub mod emulator;
+pub mod env_namespace;
 pub mod fs;
 pub mod http;
 pub mod install_status;
@@ -24,6 +25,7 @@ pub mod time;
 pub mod usb;
 
 pub use build_log::BuildLog;
+pub use env_namespace::EnvNamespace;
 
 use serde::{Deserialize, Serialize};
 

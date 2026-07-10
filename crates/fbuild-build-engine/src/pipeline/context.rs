@@ -169,8 +169,16 @@ impl BuildContext {
             (user_flags, src_flags, overlay_link_flags)
         };
         let build_unflags = config.get_build_unflags(env_name)?;
-        let (user_flags, src_flags, all_src_flags) =
+        let (mut user_flags, src_flags, all_src_flags) =
             apply_build_unflags(user_flags, src_flags, &build_unflags);
+        // FastLED/fbuild#574: fold caller-injected one-off flags (e.g. the
+        // QEMU-emulation `extra_build_flags`) into `user_flags` so they
+        // propagate to framework + library + sketch compiles on EVERY
+        // orchestrator. The shared sequential pipeline previously dropped them
+        // (only the ESP32 path applied them), so the same build behaved
+        // differently across platforms. Appended last so they intentionally
+        // override board/user defaults, and NOT subject to `build_unflags`.
+        user_flags.extend(params.extra_build_flags.iter().cloned());
         remove_unflagged_tokens(&mut overlay_link_flags, &build_unflags);
         if let Some(p) = perf.as_mut() {
             p.record("flag-collect", t0.elapsed());
@@ -194,5 +202,125 @@ impl BuildContext {
             overlay_link_libs: overlay.link.libs,
             build_unflags,
         })
+    }
+
+    /// The `(user_overlay, src_overlay)` pair applied to every compile — the
+    /// single source of truth so `[env:*] build_flags` (and caller-injected
+    /// `extra_build_flags`, folded into `user_flags` at construction) reach
+    /// framework/core, library, AND sketch TUs uniformly on every orchestrator.
+    ///
+    /// - `user_overlay` → framework/core + library compiles (`build_flags`).
+    /// - `src_overlay`  → sketch + local-lib compiles (adds `build_src_flags`
+    ///   and the project script overlay on top of `user_overlay`).
+    ///
+    /// FastLED/fbuild#574 — replaces three hand-copied overlay blocks
+    /// (`pipeline::sequential`, `esp32` orchestrator, `nxplpc` orchestrator).
+    pub fn compile_overlays(&self) -> (LanguageExtraFlags, LanguageExtraFlags) {
+        self.compile_overlays_with_base(&self.user_flags)
+    }
+
+    /// As [`compile_overlays`](Self::compile_overlays) but with an explicit
+    /// base user-flag list — the ESP32 path prepends SDK defines to
+    /// `ctx.user_flags` and passes the combined list here.
+    pub fn compile_overlays_with_base(
+        &self,
+        user_flags: &[String],
+    ) -> (LanguageExtraFlags, LanguageExtraFlags) {
+        assemble_compile_overlays(
+            user_flags,
+            &self.global_compile_overlay,
+            &self.src_flags,
+            &self.project_compile_overlay,
+        )
+    }
+
+    /// Build the typed [`EnvNamespace`] routing key for `env_id` on `platform`
+    /// — the `(env_id, platform, board, framework)` triplet from
+    /// `platformio.ini [env:<id>]`. FastLED/fbuild#574. Package fetchers, cache
+    /// keys, and output dirs can route off this instead of ad-hoc strings.
+    pub fn env_namespace(
+        &self,
+        env_id: &str,
+        platform: fbuild_core::Platform,
+    ) -> fbuild_core::EnvNamespace {
+        let (board, framework) = self
+            .config
+            .get_env_config(env_id)
+            .map(|m| {
+                (
+                    m.get("board").cloned().unwrap_or_default(),
+                    m.get("framework").cloned().unwrap_or_default(),
+                )
+            })
+            .unwrap_or_default();
+        fbuild_core::EnvNamespace::new(env_id, platform, board, framework)
+    }
+}
+
+/// Pure overlay assembly (unit-tested). `user_flags` (which include
+/// `[env:*] build_flags` plus caller-injected `extra_build_flags`) land in BOTH
+/// the user overlay (core/framework and libraries) and — via the src overlay —
+/// the sketch and local libraries; `src_flags` (`build_src_flags`) land ONLY in
+/// the src overlay. FastLED/fbuild#574.
+fn assemble_compile_overlays(
+    user_flags: &[String],
+    global: &LanguageExtraFlags,
+    src_flags: &[String],
+    project: &LanguageExtraFlags,
+) -> (LanguageExtraFlags, LanguageExtraFlags) {
+    let user_overlay = LanguageExtraFlags {
+        common: user_flags
+            .iter()
+            .cloned()
+            .chain(global.common.iter().cloned())
+            .collect(),
+        c: global.c.clone(),
+        cxx: global.cxx.clone(),
+        asm: global.asm.clone(),
+    };
+    let src_overlay = LanguageExtraFlags::combined(&[
+        &user_overlay,
+        &LanguageExtraFlags {
+            common: src_flags.to_vec(),
+            c: Vec::new(),
+            cxx: Vec::new(),
+            asm: Vec::new(),
+        },
+        project,
+    ]);
+    (user_overlay, src_overlay)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn user_flags_reach_both_overlays_src_flags_only_src() {
+        // FastLED/fbuild#574: `[env:*] build_flags` (+ folded `extra_build_flags`)
+        // must reach framework/core, library AND sketch compiles; `build_src_flags`
+        // only the sketch/local-lib compiles.
+        let (user, src) = assemble_compile_overlays(
+            &["-DENV_FLAG".to_string()],
+            &LanguageExtraFlags::default(),
+            &["-DSRC_ONLY".to_string()],
+            &LanguageExtraFlags::default(),
+        );
+        assert!(
+            user.common.contains(&"-DENV_FLAG".to_string()),
+            "build_flags must reach the framework/library overlay"
+        );
+        assert!(
+            !user.common.contains(&"-DSRC_ONLY".to_string()),
+            "build_src_flags must NOT reach the framework overlay"
+        );
+        assert!(
+            src.common.contains(&"-DENV_FLAG".to_string()),
+            "build_flags must also reach the sketch overlay"
+        );
+        assert!(
+            src.common.contains(&"-DSRC_ONLY".to_string()),
+            "build_src_flags must reach the sketch overlay"
+        );
     }
 }
