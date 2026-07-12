@@ -1,6 +1,6 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-07-11T05:23:00Z",
+  "generated_at": "2026-07-12T05:27:15Z",
   "datasets": {
     "mcu_to_vid": {
       "url": "https://raw.githubusercontent.com/FastLED/fbuild/online-data/data/mcu_to_vid.json",
@@ -15,7 +15,7 @@
       "status": "ok",
       "description": "PlatformIO board catalog \u2014 every board the PlatformIO registry knows about, keyed by board id, alphabetically sorted. Fields the previous dump carried are preserved across regressions in the live `pio boards` output.",
       "key_format": "board-id",
-      "generated_at": "2026-07-11T05:22:59Z",
+      "generated_at": "2026-07-12T05:27:14Z",
       "sources": [
         {
           "name": "platformio",
@@ -52,7 +52,7 @@
         }
       },
       "conflicts_url": "https://raw.githubusercontent.com/FastLED/fbuild/online-data/data/usb-vid-conflicts.json",
-      "generated_at": "2026-07-11T05:22:58Z",
+      "generated_at": "2026-07-12T05:27:14Z",
       "sources": [
         {
           "name": "espressif-usb-pids",
@@ -173,7 +173,7 @@
       "status": "ok",
       "description": "Slim view of pio-boards keyed by board id \u2014 only {vendor, name, mcu} per board. Use this when only the human-readable identity is needed (\"what board is plugged in?\").",
       "key_format": "board-id",
-      "generated_at": "2026-07-11T05:22:59Z",
+      "generated_at": "2026-07-12T05:27:14Z",
       "sources": [
         {
           "name": "platformio",
@@ -193,7 +193,7 @@
   "databases": {
     "rotation": "daily",
     "stability_window_hours": 24,
-    "current": "https://fastled.github.io/fbuild/2026-07-11.db",
-    "previous": "https://fastled.github.io/fbuild/2026-07-10.db"
+    "current": "https://fastled.github.io/fbuild/2026-07-12.db",
+    "previous": "https://fastled.github.io/fbuild/2026-07-11.db"
   }
 }
