@@ -54,6 +54,7 @@ crates/fbuild-build-arm/src/generic_arm/arm_compiler.rs
 crates/fbuild-build-arm/src/generic_arm/arm_linker.rs
 crates/fbuild-build/src/lib.rs
 crates/fbuild-build-engine/src/linker.rs
+crates/fbuild-build-engine/src/lib.rs
 crates/fbuild-build-arm/src/nrf52/nrf52_compiler.rs
 crates/fbuild-build-arm/src/nrf52/nrf52_linker.rs
 crates/fbuild-build-arm/src/nrf52/orchestrator.rs
