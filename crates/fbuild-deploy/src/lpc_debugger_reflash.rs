@@ -111,7 +111,13 @@ pub fn asset_url(name: &str) -> String {
 /// "run `fbuild deploy --upgrade-debugger` once to install the tools"
 /// diagnostic.
 pub fn find_dfu_util() -> Option<NormalizedPath> {
-    if let Some(env_hit) = std::env::var_os(DFU_UTIL_PATH_ENV_VAR) {
+    find_dfu_util_with_override(std::env::var_os(DFU_UTIL_PATH_ENV_VAR))
+}
+
+fn find_dfu_util_with_override(
+    env_override: Option<std::ffi::OsString>,
+) -> Option<NormalizedPath> {
+    if let Some(env_hit) = env_override {
         let p = NormalizedPath::new(Path::new(&env_hit));
         if p.is_file() {
             return Some(p);
@@ -348,13 +354,7 @@ mod tests {
             "dfu-util"
         });
         std::fs::write(&fake, b"stub").unwrap();
-        let saved = std::env::var_os(DFU_UTIL_PATH_ENV_VAR);
-        std::env::set_var(DFU_UTIL_PATH_ENV_VAR, &fake);
-        let got = find_dfu_util();
-        match saved {
-            Some(v) => std::env::set_var(DFU_UTIL_PATH_ENV_VAR, v),
-            None => std::env::remove_var(DFU_UTIL_PATH_ENV_VAR),
-        }
+        let got = find_dfu_util_with_override(Some(fake.clone().into_os_string()));
         assert_eq!(got.as_ref().map(|p| p.as_path()), Some(fake.as_path()));
     }
 
