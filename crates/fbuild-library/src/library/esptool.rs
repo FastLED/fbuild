@@ -177,11 +177,11 @@ async fn verify_esptool_binary(bin: &Path) -> Result<()> {
     )
     .await
     .map_err(|e| {
-            FbuildError::PackageError(format!(
-                "cached esptool executable {} cannot run: {}",
-                bin.display(),
-                e
-            ))
+        FbuildError::PackageError(format!(
+            "cached esptool executable {} cannot run: {}",
+            bin.display(),
+            e
+        ))
     })?;
     if output.success() {
         Ok(())
