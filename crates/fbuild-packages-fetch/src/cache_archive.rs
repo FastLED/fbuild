@@ -26,9 +26,9 @@
 use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::{Read, Write};
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
-use fbuild_core::{FbuildError, Result};
+use fbuild_core::{path::NormalizedPath, FbuildError, Result};
 use prost::Message;
 use sha2::{Digest, Sha256};
 
@@ -186,26 +186,27 @@ impl CacheManifest {
 
 // ─── slice enumeration + hashing ─────────────────────────────────────────────
 
-fn root_path(root: Root, cache_dir: &Path) -> PathBuf {
+fn root_path(root: Root, cache_dir: &Path) -> NormalizedPath {
     match root {
-        Root::Cache => cache_dir.to_path_buf(),
+        Root::Cache => NormalizedPath::new(cache_dir),
         // The zccache store is a sibling of `cache/` under the fbuild root.
         Root::Fbuild => cache_dir
             .parent()
             .map(|p| p.to_path_buf())
-            .unwrap_or_else(fbuild_paths::get_fbuild_root),
+            .unwrap_or_else(fbuild_paths::get_fbuild_root)
+            .into(),
     }
 }
 
 /// Absolute source path of a slice on disk (may not exist).
-fn slice_source(slice: &SliceDef, cache_dir: &Path) -> PathBuf {
+fn slice_source(slice: &SliceDef, cache_dir: &Path) -> NormalizedPath {
     root_path(slice.root, cache_dir).join(slice.rel)
 }
 
 /// Sorted `(relpath, absolute_path)` list of every regular file under a slice.
 /// `relpath` uses forward slashes and is relative to the slice source dir
 /// (empty string for a single-file slice).
-fn slice_files(slice: &SliceDef, cache_dir: &Path) -> Result<Vec<(String, PathBuf)>> {
+fn slice_files(slice: &SliceDef, cache_dir: &Path) -> Result<Vec<(String, NormalizedPath)>> {
     let src = slice_source(slice, cache_dir);
     if slice.is_file {
         return Ok(if src.is_file() {
@@ -224,12 +225,12 @@ fn slice_files(slice: &SliceDef, cache_dir: &Path) -> Result<Vec<(String, PathBu
         if !entry.file_type().is_file() {
             continue;
         }
-        let rel = entry
-            .path()
-            .strip_prefix(&src)
-            .map_err(|e| FbuildError::PackageError(format!("relpath: {e}")))?;
-        let rel = rel.to_string_lossy().replace('\\', "/");
-        out.push((rel, entry.path().to_path_buf()));
+        let path = NormalizedPath::new(entry.path());
+        let rel = path
+            .relative_to(&src)
+            .ok_or_else(|| FbuildError::PackageError(format!("relpath: {} is outside {}", path.display(), src.display())))?
+            .display_slash();
+        out.push((rel, path));
     }
     out.sort_by(|a, b| a.0.cmp(&b.0));
     Ok(out)

@@ -19,22 +19,22 @@ crates/fbuild-core/src/path.rs
 # Workspace relativization for zccache keys: strip_prefix here operates
 # on canonicalized-then-UNC-stripped paths already in the same normal
 # form (see path_arg_for_compile_cwd). The blessed relativization.
-crates/fbuild-build/src/zccache.rs
+crates/fbuild-build-engine/src/zccache.rs
 
 # --- grandfathered pre-existing Path::{starts_with, strip_prefix} ---
 # strip_prefix (relativization for display / cache-relative paths):
-crates/fbuild-build/src/build_fingerprint/mod.rs
-crates/fbuild-build/src/pipeline/project_discovery.rs
-crates/fbuild-build/src/source_scanner.rs
-crates/fbuild-packages/src/lib.rs
-crates/fbuild-packages/src/lnk/materialize.rs
+crates/fbuild-build-engine/src/build_fingerprint/mod.rs
+crates/fbuild-build-engine/src/pipeline/project_discovery.rs
+crates/fbuild-build-engine/src/source_scanner.rs
+crates/fbuild-packages-fetch/src/lib.rs
+crates/fbuild-toolchain/src/lnk/materialize.rs
 # starts_with (containment checks; both sides same-origin today):
-crates/fbuild-build/src/ch32v/ch32v_compiler.rs
-crates/fbuild-build/src/nrf52/nrf52_compiler.rs
-crates/fbuild-build/src/renesas/renesas_compiler.rs
+crates/fbuild-build-mcu/src/ch32v/ch32v_compiler.rs
+crates/fbuild-build-arm/src/nrf52/nrf52_compiler.rs
+crates/fbuild-build-arm/src/renesas/renesas_compiler.rs
 crates/fbuild-cli/src/cli/clang_tools.rs
 crates/fbuild-header-scan/src/walker.rs
 crates/fbuild-library-select/src/lib.rs
-crates/fbuild-packages/src/cache.rs
-crates/fbuild-packages/src/disk_cache/paths.rs
+crates/fbuild-packages-fetch/src/cache.rs
+crates/fbuild-packages-fetch/src/disk_cache/paths.rs
 crates/fbuild-paths/src/lib.rs

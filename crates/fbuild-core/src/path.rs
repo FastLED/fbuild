@@ -130,6 +130,13 @@ impl NormalizedPath {
         Self::new(self.path.join(path))
     }
 
+    /// Return this path relative to `base` when `base` is a component-boundary
+    /// prefix. The returned path keeps normalized separators and casing.
+    #[must_use]
+    pub fn relative_to(&self, base: &Self) -> Option<Self> {
+        self.path.strip_prefix(base.as_path()).ok().map(Self::new)
+    }
+
     /// Render the path with forward slashes, preserving original case.
     ///
     /// This is the form used for serialization (`build_info.json`,

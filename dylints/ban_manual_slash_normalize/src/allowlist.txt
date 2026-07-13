@@ -27,7 +27,7 @@ crates/fbuild-core/src/symbol_analysis/graph/mod.rs
 # the wrong type. The one helper `normalize_glob_separators` lives
 # here and every other glob site delegates to it — see the
 # module-level comment for enforcement.
-crates/fbuild-build/src/source_scanner.rs
+crates/fbuild-build-engine/src/source_scanner.rs
 
 # Dylint's own UI test fixtures for other path-shape lints intentionally
 # include the anti-pattern to prove the lint fires. Same convention

@@ -13,4 +13,4 @@
 # any future addition of a non-install call to `OnceLock::set` outside
 # these files will trip the lint as intended.
 crates/fbuild-core/src/containment.rs
-crates/fbuild-build/src/compile_backend.rs
+crates/fbuild-build-engine/src/compile_backend.rs

@@ -38,7 +38,7 @@ crates/fbuild-python/src/daemon.rs
 # `fbuild-build/src/zccache.rs` starts the `zccache` daemon which must
 # outlive the fbuild daemon (cross-tool dependency: zccache is a
 # separate process, not subordinate to fbuild). Documented inline.
-crates/fbuild-build/src/zccache.rs
+crates/fbuild-build-engine/src/zccache.rs
 
 # Parallel async fan-out for clang-tidy/iwyu in the CLI binary. The
 # CLI doesn't install a global containment group, so going through
