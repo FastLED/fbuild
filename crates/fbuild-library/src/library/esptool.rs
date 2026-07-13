@@ -82,6 +82,7 @@ impl Esptool {
             CacheSubdir::Toolchains,
             self.project_dir.as_path(),
         );
+        remove_invalid_cached_install(&base.install_path())?;
         let install_path = base.staged_install(validate_esptool).await?;
 
         let bin = find_esptool_binary(&install_path).ok_or_else(|| {
@@ -121,6 +122,29 @@ fn validate_esptool(dir: &Path) -> Result<()> {
             dir.display()
         )))
     }
+}
+
+/// Remove a stale cache entry so [`PackageBase::staged_install`] can replace it.
+///
+/// `staged_install` trusts an existing install directory, while an Actions cache
+/// restore can leave that directory without the standalone executable. Validate
+/// this package-specific cache hit before taking that fast path.
+fn remove_invalid_cached_install(install_path: &Path) -> Result<()> {
+    if !install_path.exists() || validate_esptool(install_path).is_ok() {
+        return Ok(());
+    }
+
+    tracing::warn!(
+        path = %install_path.display(),
+        "removing cached esptool install without an executable"
+    );
+    std::fs::remove_dir_all(install_path).map_err(|e| {
+        FbuildError::PackageError(format!(
+            "failed to remove invalid cached esptool install {}: {}",
+            install_path.display(),
+            e
+        ))
+    })
 }
 
 /// Map the host `(OS, ARCH)` to a tasmota esptool release platform tag.
@@ -274,5 +298,30 @@ mod tests {
     fn validate_rejects_tree_without_binary() {
         let tmp = tempfile::TempDir::new().unwrap();
         assert!(validate_esptool(tmp.path()).is_err());
+    }
+
+    #[test]
+    fn invalid_cached_install_is_removed_for_reprovisioning() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let install = tmp.path().join("cached-esptool");
+        std::fs::create_dir_all(&install).unwrap();
+        std::fs::write(install.join("stale-marker"), b"incomplete").unwrap();
+
+        remove_invalid_cached_install(&install).unwrap();
+
+        assert!(
+            !install.exists(),
+            "an invalid cache hit must be removed before staged_install runs"
+        );
+    }
+
+    #[test]
+    fn valid_cached_install_is_preserved() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        std::fs::write(tmp.path().join(esptool_bin_name()), b"bin").unwrap();
+
+        remove_invalid_cached_install(tmp.path()).unwrap();
+
+        assert!(tmp.path().join(esptool_bin_name()).exists());
     }
 }
