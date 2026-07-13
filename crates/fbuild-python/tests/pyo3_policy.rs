@@ -1,12 +1,16 @@
 use std::fs;
-use std::path::PathBuf;
 
-fn repo_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+use fbuild_core::path::NormalizedPath;
+
+fn repo_root() -> NormalizedPath {
+    let manifest_dir = NormalizedPath::from(env!("CARGO_MANIFEST_DIR"));
+    NormalizedPath::new(
+        manifest_dir
+            .as_path()
         .parent()
         .and_then(|path| path.parent())
-        .expect("fbuild-python must remain under crates/")
-        .to_path_buf()
+        .expect("fbuild-python must remain under crates/"),
+    )
 }
 
 #[test]
