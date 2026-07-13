@@ -107,6 +107,17 @@ impl Esptool {
             }
         }
 
+        if let Err(error) = verify_esptool_binary(bin.as_path()) {
+            if let Err(remove_error) = remove_cached_install(&install_path) {
+                tracing::warn!(
+                    path = %install_path.display(),
+                    error = %remove_error,
+                    "failed to remove unusable cached esptool install"
+                );
+            }
+            return Err(error);
+        }
+
         Ok(bin)
     }
 }
@@ -138,13 +149,44 @@ fn remove_invalid_cached_install(install_path: &Path) -> Result<()> {
         path = %install_path.display(),
         "removing cached esptool install without an executable"
     );
+    remove_cached_install(install_path)
+}
+
+fn remove_cached_install(install_path: &Path) -> Result<()> {
     std::fs::remove_dir_all(install_path).map_err(|e| {
         FbuildError::PackageError(format!(
-            "failed to remove invalid cached esptool install {}: {}",
+            "failed to remove cached esptool install {}: {}",
             install_path.display(),
             e
         ))
     })
+}
+
+/// Verify that the standalone executable can actually be launched.
+///
+/// `Path::is_file` is insufficient: a restored cache can retain a regular
+/// file whose interpreter or dynamic loader is unavailable, which surfaces as
+/// `ENOENT` only when the later `elf2image` command is spawned.
+fn verify_esptool_binary(bin: &Path) -> Result<()> {
+    let status = std::process::Command::new(bin)
+        .arg("--version")
+        .status()
+        .map_err(|e| {
+            FbuildError::PackageError(format!(
+                "cached esptool executable {} cannot run: {}",
+                bin.display(),
+                e
+            ))
+        })?;
+    if status.success() {
+        Ok(())
+    } else {
+        Err(FbuildError::PackageError(format!(
+            "cached esptool executable {} exited with status {}",
+            bin.display(),
+            status
+        )))
+    }
 }
 
 /// Map the host `(OS, ARCH)` to a tasmota esptool release platform tag.
@@ -323,5 +365,20 @@ mod tests {
         remove_invalid_cached_install(tmp.path()).unwrap();
 
         assert!(tmp.path().join(esptool_bin_name()).exists());
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn verify_accepts_runnable_standalone_binary() {
+        use std::os::unix::fs::PermissionsExt;
+
+        let tmp = tempfile::TempDir::new().unwrap();
+        let bin = tmp.path().join(esptool_bin_name());
+        std::fs::write(&bin, b"#!/bin/sh\nexit 0\n").unwrap();
+        let mut permissions = std::fs::metadata(&bin).unwrap().permissions();
+        permissions.set_mode(0o755);
+        std::fs::set_permissions(&bin, permissions).unwrap();
+
+        verify_esptool_binary(&bin).unwrap();
     }
 }
