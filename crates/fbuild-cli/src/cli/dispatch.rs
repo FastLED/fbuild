@@ -48,12 +48,16 @@ pub async fn async_main() {
         tracing::warn!("{} is set but fbuild does not act on it", var);
     }
 
-    // Handle Ctrl+C with exit code 130 (standard POSIX SIGINT behavior, matches Python)
-    ctrlc::set_handler(move || {
-        output::warn("Interrupted");
-        std::process::exit(130);
-    })
-    .ok();
+    // Handle Ctrl+C with exit code 130 (standard POSIX SIGINT behavior, matches Python).
+    // Tokio's cross-platform signal driver avoids pulling the Objective-C runtime
+    // through ctrlc -> dispatch2 -> objc2 into the macOS CLI binary
+    // (FastLED/fbuild#1024).
+    tokio::spawn(async {
+        if tokio::signal::ctrl_c().await.is_ok() {
+            output::warn("Interrupted");
+            std::process::exit(130);
+        }
+    });
 
     // Notify when running in dev mode (matches Python behavior)
     if std::env::var("FBUILD_DEV_MODE").is_ok_and(|v| v == "1") {
