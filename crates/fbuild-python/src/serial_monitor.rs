@@ -29,7 +29,7 @@ pub(crate) struct SerialMonitor {
     baud_rate: u32,
     auto_reconnect: bool,
     verbose: bool,
-    hooks: Vec<PyObject>,
+    hooks: Vec<Py<PyAny>>,
     // FastLED/fbuild#844: avoid `Runtime::new()` outside main/tests by
     // borrowing the process-shared `pyo3_async_runtimes::tokio` runtime.
     // Stored as `Option<&'static Runtime>` so the existing
@@ -218,7 +218,7 @@ impl SerialMonitor {
     fn new(
         port: String,
         baud_rate: u32,
-        hooks: Option<Vec<PyObject>>,
+        hooks: Option<Vec<Py<PyAny>>>,
         auto_reconnect: bool,
         verbose: bool,
     ) -> Self {
@@ -290,7 +290,7 @@ impl SerialMonitor {
         let auto_reconnect = self.auto_reconnect;
 
         if lines.is_empty() {
-            py.allow_threads(|| {
+            py.detach(|| {
                 while std::time::Instant::now() < deadline {
                     let remaining = deadline - std::time::Instant::now();
                     let result = {
@@ -346,7 +346,7 @@ impl SerialMonitor {
 
         // Dispatch hooks for each line
         if !self.hooks.is_empty() && !lines.is_empty() {
-            Python::with_gil(|py| {
+            Python::attach(|py| {
                 for line in &lines {
                     for hook in &self.hooks {
                         let _ = hook.call1(py, (line,));
@@ -423,7 +423,7 @@ impl SerialMonitor {
     /// Calls `condition(line)` for each received line. Returns True if
     /// the condition was met, False on timeout.
     #[pyo3(signature = (condition, timeout=30.0))]
-    fn run_until(&mut self, py: Python<'_>, condition: PyObject, timeout: f64) -> PyResult<bool> {
+    fn run_until(&mut self, py: Python<'_>, condition: Py<PyAny>, timeout: f64) -> PyResult<bool> {
         let deadline = std::time::Instant::now() + std::time::Duration::from_secs_f64(timeout);
 
         while std::time::Instant::now() < deadline {
@@ -454,9 +454,9 @@ impl SerialMonitor {
         py: Python<'_>,
         request: &Bound<'_, PyAny>,
         timeout: f64,
-    ) -> PyResult<PyObject> {
+    ) -> PyResult<Py<PyAny>> {
         let json_str: String = py
-            .import_bound("json")?
+            .import("json")?
             .call_method1("dumps", (request,))?
             .extract()?;
 
@@ -468,9 +468,9 @@ impl SerialMonitor {
             // use the raw WS read directly.
             self.read_lines_inner(remaining.min(1.0))
         }) {
-            let json_module = py.import_bound("json")?;
+            let json_module = py.import("json")?;
             let result = json_module.call_method1("loads", (json_part.trim(),))?;
-            return Ok(result.to_object(py));
+            return Ok(result.unbind());
         }
 
         Err(pyo3::exceptions::PyTimeoutError::new_err(format!(

@@ -78,7 +78,7 @@ pub(crate) fn outcome_to_pydict<'py>(
     py: Python<'py>,
     outcome: &OperationOutcome,
 ) -> PyResult<Bound<'py, pyo3::types::PyDict>> {
-    let dict = pyo3::types::PyDict::new_bound(py);
+    let dict = pyo3::types::PyDict::new(py);
     dict.set_item("success", outcome.success)?;
     dict.set_item("message", outcome.message.clone())?;
     dict.set_item("exit_code", outcome.exit_code)?;

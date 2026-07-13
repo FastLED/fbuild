@@ -95,7 +95,7 @@ impl AsyncSerialMonitor {
         let ws_write_slot = slf.ws_write.clone();
         let ws_read_slot = slf.ws_read.clone();
         let pending_lines = slf.pending_lines.clone();
-        let slf_obj: PyObject = slf.into_py(py);
+        let slf_obj = slf.into_pyobject(py)?.unbind().into_any();
 
         pyo3_async_runtimes::tokio::future_into_py(py, async move {
             let daemon_port = fbuild_paths::get_daemon_port();
@@ -217,9 +217,9 @@ impl AsyncSerialMonitor {
     fn __aexit__<'py>(
         &self,
         py: Python<'py>,
-        _exc_type: Option<PyObject>,
-        _exc_val: Option<PyObject>,
-        _exc_tb: Option<PyObject>,
+        _exc_type: Option<Py<PyAny>>,
+        _exc_val: Option<Py<PyAny>>,
+        _exc_tb: Option<Py<PyAny>>,
     ) -> PyResult<Bound<'py, PyAny>> {
         let ws_write_slot = self.ws_write.clone();
         let ws_read_slot = self.ws_read.clone();
@@ -289,7 +289,7 @@ impl AsyncSerialMonitor {
         // pattern of moving only owned primitives across the .await
         // boundary.
         let json_str: String = py
-            .import_bound("json")?
+            .import("json")?
             .call_method1("dumps", (request,))?
             .extract()?;
         let data = format!("{}\n", json_str);
@@ -322,8 +322,8 @@ impl AsyncSerialMonitor {
             .await;
 
             match json_part {
-                Some(payload) => Python::with_gil(|py| {
-                    let json_module = py.import_bound("json")?;
+                Some(payload) => Python::attach(|py| {
+                    let json_module = py.import("json")?;
                     let parsed = json_module.call_method1("loads", (payload.trim(),))?;
                     Ok(parsed.unbind())
                 }),

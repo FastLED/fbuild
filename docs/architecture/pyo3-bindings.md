@@ -1,5 +1,18 @@
 # PyO3 Python Bindings
 
+## Build Contract
+
+The binding crate uses the PyO3 0.29 dependency family in lockstep:
+`pyo3`, `pyo3-build-config`, and `pyo3-async-runtimes`. It enables
+`abi3-py310`, so one extension binary supports CPython 3.10 and newer.
+
+Cross builds set `PYO3_NO_PYTHON=1` explicitly. PyO3 0.29 uses native
+raw-dylib linking for stable-ABI Windows extensions, so these builds do not
+download a target Python installation or set `PYO3_CROSS_LIB_DIR`,
+`PYO3_CROSS_PYTHON_VERSION`, or `PYO3_CROSS_PYTHON_IMPLEMENTATION`. Target OS
+SDKs and linkers are still required; those are separate from a target Python
+runtime or import library.
+
 ## Consumer Contract
 
 FastLED (`~/dev/fastled`) imports these from the `fbuild` Python package:
@@ -38,7 +51,8 @@ The PyO3 `SerialMonitor` wraps the Rust `SharedSerialManager` via WebSocket:
 4. `write_json_rpc`: Write JSON-RPC request, scan responses for matching `id`
 5. `__exit__`: Send `detach`, close WebSocket
 
-Internally uses a tokio runtime (`Runtime::new()`) with `block_on()` to bridge sync Python calls to async Rust.
+Internally uses the process-shared `pyo3-async-runtimes` tokio runtime with
+`block_on()` to bridge sync Python calls to async Rust.
 
 ## DaemonConnection API
 

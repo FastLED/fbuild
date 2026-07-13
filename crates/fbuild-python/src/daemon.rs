@@ -31,8 +31,8 @@ const DAEMON_BIN_NAME: &str = "fbuild-daemon";
 /// PATH-relative `DAEMON_BIN_NAME` when this returns `None`, preserving the
 /// previous behavior in non-venv installs.
 fn venv_adjacent_daemon() -> Option<PathBuf> {
-    Python::with_gil(|py| {
-        let sys = py.import_bound("sys").ok()?;
+    Python::attach(|py| {
+        let sys = py.import("sys").ok()?;
         let exe_obj = sys.getattr("executable").ok()?;
         let exe_str: String = exe_obj.extract().ok()?;
         if exe_str.is_empty() {
@@ -363,13 +363,13 @@ impl Daemon {
     }
 
     #[staticmethod]
-    fn status(py: Python<'_>) -> PyResult<PyObject> {
+    fn status(py: Python<'_>) -> PyResult<Py<PyAny>> {
         // FastLED/fbuild#817: sync wrapper around `status_async_impl`.
         let rt = one_shot_runtime().map_err(pyo3::exceptions::PyRuntimeError::new_err)?;
         let text = rt.block_on(status_async_impl())?;
-        let json_module = py.import_bound("json")?;
+        let json_module = py.import("json")?;
         let result = json_module.call_method1("loads", (text,))?;
-        Ok(result.to_object(py))
+        Ok(result.unbind())
     }
 }
 
@@ -401,8 +401,8 @@ impl AsyncDaemon {
     fn status(py: Python<'_>) -> PyResult<Bound<'_, PyAny>> {
         pyo3_async_runtimes::tokio::future_into_py(py, async move {
             let text = status_async_impl().await?;
-            Python::with_gil(|py| {
-                let json_module = py.import_bound("json")?;
+            Python::attach(|py| {
+                let json_module = py.import("json")?;
                 let parsed = json_module.call_method1("loads", (text,))?;
                 Ok(parsed.unbind())
             })
