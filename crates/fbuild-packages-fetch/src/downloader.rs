@@ -235,7 +235,9 @@ pub async fn download_file_with_progress(
     dest_dir: &Path,
     on_progress: &mut dyn FnMut(&DownloadProgress),
 ) -> Result<PathBuf> {
-    download_file_with_progress_using(http::client(), url, dest_dir, on_progress).await
+    download_file_with_progress_using(http::client(), url, dest_dir, on_progress).await?;
+    let filename = url.rsplit('/').next().unwrap_or("download");
+    Ok(dest_dir.join(filename))
 }
 
 async fn download_file_with_progress_using(
@@ -243,7 +245,7 @@ async fn download_file_with_progress_using(
     url: &str,
     dest_dir: &Path,
     on_progress: &mut dyn FnMut(&DownloadProgress),
-) -> Result<PathBuf> {
+) -> Result<()> {
     let filename = url.rsplit('/').next().unwrap_or("download").to_string();
     let dest_path = dest_dir.join(&filename);
 
@@ -325,7 +327,7 @@ async fn download_file_with_progress_using(
     })?;
 
     tracing::info!("downloaded {} ({} bytes)", filename, buf.len());
-    Ok(dest_path)
+    Ok(())
 }
 
 /// Download multiple files in parallel (async).
@@ -680,12 +682,11 @@ mod tests {
         let temp = tempfile::TempDir::new().unwrap();
         let mut progress = |_progress: &DownloadProgress| {};
 
-        let path =
-            download_file_with_progress_using(&test_client(), &url, temp.path(), &mut progress)
-                .await
-                .expect("the fifth complete response should succeed");
+        download_file_with_progress_using(&test_client(), &url, temp.path(), &mut progress)
+            .await
+            .expect("the fifth complete response should succeed");
 
-        assert_eq!(std::fs::read(path).unwrap(), b"hello");
+        assert_eq!(std::fs::read(temp.path().join("file")).unwrap(), b"hello");
         assert_eq!(request_count.load(Ordering::SeqCst), 5);
     }
 
