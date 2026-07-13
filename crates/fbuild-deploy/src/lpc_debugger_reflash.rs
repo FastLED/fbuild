@@ -114,9 +114,7 @@ pub fn find_dfu_util() -> Option<NormalizedPath> {
     find_dfu_util_with_override(std::env::var_os(DFU_UTIL_PATH_ENV_VAR))
 }
 
-fn find_dfu_util_with_override(
-    env_override: Option<std::ffi::OsString>,
-) -> Option<NormalizedPath> {
+fn find_dfu_util_with_override(env_override: Option<std::ffi::OsString>) -> Option<NormalizedPath> {
     if let Some(env_hit) = env_override {
         let p = NormalizedPath::new(Path::new(&env_hit));
         if p.is_file() {

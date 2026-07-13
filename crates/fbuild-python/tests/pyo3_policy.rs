@@ -66,14 +66,12 @@ fn pyo3_029_policy_stays_target_python_independent() {
     }
 
     assert!(
-        !workflow
-            .lines()
-            .any(|line| {
-                line.split_whitespace()
-                    .collect::<Vec<_>>()
-                    .windows(3)
-                    .any(|tokens| tokens == ["cargo", "xwin", "build"])
-            }),
+        !workflow.lines().any(|line| {
+            line.split_whitespace()
+                .collect::<Vec<_>>()
+                .windows(3)
+                .any(|tokens| tokens == ["cargo", "xwin", "build"])
+        }),
         "Windows MSVC commands must go through soldr build, not cargo-xwin directly"
     );
 
