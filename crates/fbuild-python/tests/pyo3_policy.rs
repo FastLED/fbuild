@@ -68,7 +68,12 @@ fn pyo3_029_policy_stays_target_python_independent() {
     assert!(
         !workflow
             .lines()
-            .any(|line| line.trim_start().starts_with("cargo xwin build")),
+            .any(|line| {
+                line.split_whitespace()
+                    .collect::<Vec<_>>()
+                    .windows(3)
+                    .any(|tokens| tokens == ["cargo", "xwin", "build"])
+            }),
         "Windows MSVC commands must go through soldr build, not cargo-xwin directly"
     );
 
@@ -76,7 +81,9 @@ fn pyo3_029_policy_stays_target_python_independent() {
         fs::read_to_string(root.join(".github/workflows/release-auto.yml")).unwrap();
     for target in ["x86_64-pc-windows-msvc", "aarch64-pc-windows-msvc"] {
         assert!(
-            release_workflow.contains(target),
+            release_workflow
+                .lines()
+                .any(|line| line.trim() == format!("- target: {target}")),
             "release matrix lost required Windows MSVC target: {target}"
         );
     }

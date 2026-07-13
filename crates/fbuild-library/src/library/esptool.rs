@@ -153,13 +153,15 @@ fn remove_invalid_cached_install(install_path: &Path) -> Result<()> {
 }
 
 fn remove_cached_install(install_path: &Path) -> Result<()> {
-    std::fs::remove_dir_all(install_path).map_err(|e| {
-        FbuildError::PackageError(format!(
+    match std::fs::remove_dir_all(install_path) {
+        Ok(()) => Ok(()),
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(()),
+        Err(e) => Err(FbuildError::PackageError(format!(
             "failed to remove cached esptool install {}: {}",
             install_path.display(),
             e
-        ))
-    })
+        ))),
+    }
 }
 
 /// Verify that the standalone executable can actually be launched.
