@@ -7,9 +7,9 @@ fn repo_root() -> NormalizedPath {
     NormalizedPath::new(
         manifest_dir
             .as_path()
-        .parent()
-        .and_then(|path| path.parent())
-        .expect("fbuild-python must remain under crates/"),
+            .parent()
+            .and_then(|path| path.parent())
+            .expect("fbuild-python must remain under crates/"),
     )
 }
 
