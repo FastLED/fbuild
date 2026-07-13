@@ -28,7 +28,7 @@
 
 use std::path::Path;
 
-use fbuild_core::{path::NormalizedPath, FbuildError, Result};
+use fbuild_core::{path::NormalizedPath, subprocess::run_command, FbuildError, Result};
 
 use crate::{CacheSubdir, PackageBase};
 
@@ -82,6 +82,7 @@ impl Esptool {
             CacheSubdir::Toolchains,
             self.project_dir.as_path(),
         );
+        remove_invalid_cached_install(&base.install_path())?;
         let install_path = base.staged_install(validate_esptool).await?;
 
         let bin = find_esptool_binary(&install_path).ok_or_else(|| {
@@ -106,6 +107,17 @@ impl Esptool {
             }
         }
 
+        if let Err(error) = verify_esptool_binary(bin.as_path()).await {
+            if let Err(remove_error) = remove_cached_install(&install_path) {
+                tracing::warn!(
+                    path = %install_path.display(),
+                    error = %remove_error,
+                    "failed to remove unusable cached esptool install"
+                );
+            }
+            return Err(error);
+        }
+
         Ok(bin)
     }
 }
@@ -119,6 +131,67 @@ fn validate_esptool(dir: &Path) -> Result<()> {
         Err(FbuildError::PackageError(format!(
             "extracted esptool package has no esptool executable (in {})",
             dir.display()
+        )))
+    }
+}
+
+/// Remove a stale cache entry so [`PackageBase::staged_install`] can replace it.
+///
+/// `staged_install` trusts an existing install directory, while an Actions cache
+/// restore can leave that directory without the standalone executable. Validate
+/// this package-specific cache hit before taking that fast path.
+fn remove_invalid_cached_install(install_path: &Path) -> Result<()> {
+    if !install_path.exists() || validate_esptool(install_path).is_ok() {
+        return Ok(());
+    }
+
+    tracing::warn!(
+        path = %install_path.display(),
+        "removing cached esptool install without an executable"
+    );
+    remove_cached_install(install_path)
+}
+
+fn remove_cached_install(install_path: &Path) -> Result<()> {
+    match std::fs::remove_dir_all(install_path) {
+        Ok(()) => Ok(()),
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(()),
+        Err(e) => Err(FbuildError::PackageError(format!(
+            "failed to remove cached esptool install {}: {}",
+            install_path.display(),
+            e
+        ))),
+    }
+}
+
+/// Verify that the standalone executable can actually be launched.
+///
+/// `Path::is_file` is insufficient: a restored cache can retain a regular
+/// file whose interpreter or dynamic loader is unavailable, which surfaces as
+/// `ENOENT` only when the later `elf2image` command is spawned.
+async fn verify_esptool_binary(bin: &Path) -> Result<()> {
+    let bin_arg = bin.to_string_lossy();
+    let output = run_command(
+        &[bin_arg.as_ref(), "--version"],
+        None,
+        None,
+        Some(std::time::Duration::from_secs(10)),
+    )
+    .await
+    .map_err(|e| {
+        FbuildError::PackageError(format!(
+            "cached esptool executable {} cannot run: {}",
+            bin.display(),
+            e
+        ))
+    })?;
+    if output.success() {
+        Ok(())
+    } else {
+        Err(FbuildError::PackageError(format!(
+            "cached esptool executable {} exited with status {}",
+            bin.display(),
+            output.exit_code
         )))
     }
 }
@@ -274,5 +347,45 @@ mod tests {
     fn validate_rejects_tree_without_binary() {
         let tmp = tempfile::TempDir::new().unwrap();
         assert!(validate_esptool(tmp.path()).is_err());
+    }
+
+    #[test]
+    fn invalid_cached_install_is_removed_for_reprovisioning() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let install = tmp.path().join("cached-esptool");
+        std::fs::create_dir_all(&install).unwrap();
+        std::fs::write(install.join("stale-marker"), b"incomplete").unwrap();
+
+        remove_invalid_cached_install(&install).unwrap();
+
+        assert!(
+            !install.exists(),
+            "an invalid cache hit must be removed before staged_install runs"
+        );
+    }
+
+    #[test]
+    fn valid_cached_install_is_preserved() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        std::fs::write(tmp.path().join(esptool_bin_name()), b"bin").unwrap();
+
+        remove_invalid_cached_install(tmp.path()).unwrap();
+
+        assert!(tmp.path().join(esptool_bin_name()).exists());
+    }
+
+    #[cfg(unix)]
+    #[tokio::test]
+    async fn verify_accepts_runnable_standalone_binary() {
+        use std::os::unix::fs::PermissionsExt;
+
+        let tmp = tempfile::TempDir::new().unwrap();
+        let bin = tmp.path().join(esptool_bin_name());
+        std::fs::write(&bin, b"#!/bin/sh\nexit 0\n").unwrap();
+        let mut permissions = std::fs::metadata(&bin).unwrap().permissions();
+        permissions.set_mode(0o755);
+        std::fs::set_permissions(&bin, permissions).unwrap();
+
+        verify_esptool_binary(&bin).await.unwrap();
     }
 }

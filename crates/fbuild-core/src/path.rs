@@ -130,6 +130,13 @@ impl NormalizedPath {
         Self::new(self.path.join(path))
     }
 
+    /// Return this path relative to `base` when `base` is a component-boundary
+    /// prefix. The returned path keeps normalized separators and casing.
+    #[must_use]
+    pub fn relative_to(&self, base: &Self) -> Option<Self> {
+        self.path.strip_prefix(base.as_path()).ok().map(Self::new)
+    }
+
     /// Render the path with forward slashes, preserving original case.
     ///
     /// This is the form used for serialization (`build_info.json`,
@@ -689,6 +696,26 @@ mod tests {
         }
         let n = NormalizedPath::new("/usr/bin/nm");
         assert!(takes_path(&n));
+    }
+
+    #[test]
+    fn relative_to_handles_equal_nested_and_non_prefix_paths() {
+        let base = NormalizedPath::new("cache/archive");
+        assert_eq!(
+            base.relative_to(&base),
+            Some(NormalizedPath::new("")),
+            "an equal path is relative to itself"
+        );
+
+        let nested = NormalizedPath::new("cache/archive/tool/esptool");
+        assert_eq!(
+            nested.relative_to(&base),
+            Some(NormalizedPath::new("tool/esptool")),
+            "a component-boundary prefix produces the nested relative path"
+        );
+
+        let similar_but_not_prefix = NormalizedPath::new("cache/archives/tool");
+        assert_eq!(similar_but_not_prefix.relative_to(&base), None);
     }
 
     /// On non-Windows `strip_unc_prefix` is a no-op.

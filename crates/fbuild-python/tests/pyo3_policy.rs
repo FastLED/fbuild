@@ -1,12 +1,16 @@
 use std::fs;
-use std::path::PathBuf;
 
-fn repo_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .parent()
-        .and_then(|path| path.parent())
-        .expect("fbuild-python must remain under crates/")
-        .to_path_buf()
+use fbuild_core::path::NormalizedPath;
+
+fn repo_root() -> NormalizedPath {
+    let manifest_dir = NormalizedPath::from(env!("CARGO_MANIFEST_DIR"));
+    NormalizedPath::new(
+        manifest_dir
+            .as_path()
+            .parent()
+            .and_then(|path| path.parent())
+            .expect("fbuild-python must remain under crates/"),
+    )
 }
 
 #[test]
@@ -48,6 +52,37 @@ fn pyo3_029_policy_stays_target_python_independent() {
         assert!(
             workflow.contains(command),
             "cross-build branch lost host-interpreter suppression: {command}"
+        );
+    }
+
+    for command in [
+        "soldr build --release --target ${{ inputs.target }} \\",
+        "PYO3_NO_PYTHON=1 soldr build --release \\",
+    ] {
+        assert!(
+            workflow.contains(command),
+            "Windows MSVC cross-build lost the blessed soldr entry point: {command}"
+        );
+    }
+
+    assert!(
+        !workflow.lines().any(|line| {
+            line.split_whitespace()
+                .collect::<Vec<_>>()
+                .windows(3)
+                .any(|tokens| tokens == ["cargo", "xwin", "build"])
+        }),
+        "Windows MSVC commands must go through soldr build, not cargo-xwin directly"
+    );
+
+    let release_workflow =
+        fs::read_to_string(root.join(".github/workflows/release-auto.yml")).unwrap();
+    for target in ["x86_64-pc-windows-msvc", "aarch64-pc-windows-msvc"] {
+        assert!(
+            release_workflow
+                .lines()
+                .any(|line| line.trim() == format!("- target: {target}")),
+            "release matrix lost required Windows MSVC target: {target}"
         );
     }
 }

@@ -234,7 +234,7 @@ impl BuildContext {
         )
     }
 
-    /// Build the typed [`EnvNamespace`] routing key for `env_id` on `platform`
+    /// Build the typed [`fbuild_core::EnvNamespace`] routing key for `env_id` on `platform`
     /// — the `(env_id, platform, board, framework)` triplet from
     /// `platformio.ini [env:<id>]`. FastLED/fbuild#574. Package fetchers, cache
     /// keys, and output dirs can route off this instead of ad-hoc strings.

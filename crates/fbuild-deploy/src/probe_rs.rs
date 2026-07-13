@@ -291,7 +291,7 @@ fn extract_and_install_probe_rs(
     Ok(NormalizedPath::new(dest_path))
 }
 
-fn probe_rs_temp_install_path(dest_path: &Path) -> std::path::PathBuf {
+fn probe_rs_temp_install_path(dest_path: &Path) -> NormalizedPath {
     let millis = SystemTime::now()
         .duration_since(UNIX_EPOCH)
         .map(|d| d.as_millis())
@@ -301,12 +301,12 @@ fn probe_rs_temp_install_path(dest_path: &Path) -> std::path::PathBuf {
         .file_name()
         .and_then(|name| name.to_str())
         .unwrap_or("probe-rs");
-    dest_path.with_file_name(format!(
+    NormalizedPath::new(dest_path.with_file_name(format!(
         ".{file_name}.{}.{}.{}.tmp",
         std::process::id(),
         millis,
         counter
-    ))
+    )))
 }
 
 fn find_extracted_probe_rs_binary(root: &Path) -> Result<NormalizedPath> {

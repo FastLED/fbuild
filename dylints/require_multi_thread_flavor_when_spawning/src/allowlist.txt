@@ -25,4 +25,4 @@ crates/fbuild-daemon/src/handlers/websockets_tests.rs
 # serialize the spawn relative to the parent's `.await`, which is
 # the timing the test asserts. Reworking for `multi_thread`
 # requires explicit synchronization. Tracked.
-crates/fbuild-packages/src/install_lock.rs
+crates/fbuild-packages-fetch/src/install_lock.rs
