@@ -40,6 +40,15 @@ CI/CD workflows for the fbuild project, covering lint, test, documentation, and 
 - **`template_build.yml`** -- Reusable workflow for per-board firmware builds
 - **`template_native_build.yml`** -- Reusable workflow for native Rust binary builds
 
+### Bumping soldr
+
+All `zackees/setup-soldr@v0` steps pin the installed soldr binary version.
+When bumping it, first confirm the proposed tag is a published, non-draft
+release with the required platform assets. Update every setup-soldr call site
+in one PR, retain the previous pin until that release exists, and require
+representative CI to pass before merging. Keep the action reference at `@v0`;
+the pin is for the binary it installs.
+
 ### Native Build Attestations
 
 Manual `build.yml` native artifacts include `SHA256SUMS.txt` and GitHub Artifact
