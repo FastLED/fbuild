@@ -50,7 +50,7 @@ impl AsyncDaemonConnection {
         let project_dir = slf.project_dir.clone();
         let environment = slf.environment.clone();
         pyo3_async_runtimes::tokio::future_into_py(py, async move {
-            Python::with_gil(|py| {
+            Python::attach(|py| {
                 let obj = Py::new(
                     py,
                     AsyncDaemonConnection {
@@ -58,7 +58,7 @@ impl AsyncDaemonConnection {
                         environment,
                     },
                 )?;
-                Ok(obj.to_object(py))
+                Ok(obj.into_any())
             })
         })
     }
@@ -67,9 +67,9 @@ impl AsyncDaemonConnection {
     fn __aexit__<'py>(
         &self,
         py: Python<'py>,
-        _exc_type: Option<PyObject>,
-        _exc_val: Option<PyObject>,
-        _exc_tb: Option<PyObject>,
+        _exc_type: Option<Py<PyAny>>,
+        _exc_val: Option<Py<PyAny>>,
+        _exc_tb: Option<Py<PyAny>>,
     ) -> PyResult<Bound<'py, PyAny>> {
         pyo3_async_runtimes::tokio::future_into_py(py, async move { Ok(false) })
     }
@@ -141,7 +141,7 @@ impl AsyncDaemonConnection {
         let req = self.build_request(clean, verbose);
         pyo3_async_runtimes::tokio::future_into_py(py, async move {
             let outcome = send_op_async(url, req, timeout).await;
-            Python::with_gil(|py| Ok(outcome_to_pydict(py, &outcome)?.unbind()))
+            Python::attach(|py| Ok(outcome_to_pydict(py, &outcome)?.unbind()))
         })
     }
 
@@ -160,7 +160,7 @@ impl AsyncDaemonConnection {
         let req = self.deploy_request(port, clean, skip_build, monitor_after);
         pyo3_async_runtimes::tokio::future_into_py(py, async move {
             let outcome = send_op_async(url, req, timeout).await;
-            Python::with_gil(|py| Ok(outcome_to_pydict(py, &outcome)?.unbind()))
+            Python::attach(|py| Ok(outcome_to_pydict(py, &outcome)?.unbind()))
         })
     }
 
@@ -178,7 +178,7 @@ impl AsyncDaemonConnection {
         let t = timeout.unwrap_or(1800.0);
         pyo3_async_runtimes::tokio::future_into_py(py, async move {
             let outcome = send_op_async(url, req, t).await;
-            Python::with_gil(|py| Ok(outcome_to_pydict(py, &outcome)?.unbind()))
+            Python::attach(|py| Ok(outcome_to_pydict(py, &outcome)?.unbind()))
         })
     }
 }

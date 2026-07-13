@@ -220,31 +220,6 @@ jobs:
         timeout-minutes: 10
         run: pip install --timeout 60 cargo-zigbuild
 
-      - name: Fetch Windows Python lib for PyO3 cross-compile
-        if: runner.os == 'Linux' && contains(inputs.target, 'pc-windows-msvc')
-        timeout-minutes: 5
-        shell: bash
-        run: |
-          set -euo pipefail
-          PYTHON_VERSION="3.13.0"
-          if [[ "${{ inputs.target }}" == aarch64-* ]]; then
-            PKG="pythonarm64"
-          else
-            PKG="python"
-          fi
-          curl -fsSL --connect-timeout 15 --max-time 120 --retry 3 --retry-delay 5 -o python.zip "https://www.nuget.org/api/v2/package/${PKG}/${PYTHON_VERSION}"
-          mkdir -p python-windows
-          unzip -q python.zip -d python-windows
-          libs_dir="$(pwd)/python-windows/tools/libs"
-          if [ ! -f "$libs_dir/python3.lib" ]; then
-            echo "ERROR: python3.lib not found in extracted NuGet package" >&2
-            find python-windows -name "python3*.lib" || true
-            exit 1
-          fi
-          echo "PYO3_CROSS_LIB_DIR=$libs_dir" >> "$GITHUB_ENV"
-          echo "PYO3_CROSS_PYTHON_VERSION=3.13" >> "$GITHUB_ENV"
-          echo "PYO3_CROSS_PYTHON_IMPLEMENTATION=CPython" >> "$GITHUB_ENV"
-
       # Linux → mac cross — soldr fetches the Apple SDK ahead of the
       # cargo invocation so the SDKROOT export is debuggable independent
       # of the build itself.
