@@ -16,3 +16,7 @@
 crates/fbuild-header-scan/src/walker.rs
 crates/fbuild-library-select/src/lib.rs
 crates/fbuild-cli/src/lib_select.rs
+# Daemon identity must compare an already-running process's caller CWD before
+# a daemon/runtime is available; this small sync compatibility check cannot use
+# the async canonicalize wrapper (FastLED/fbuild#1033).
+crates/fbuild-cli/src/daemon_client/identity.rs

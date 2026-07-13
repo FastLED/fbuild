@@ -211,3 +211,9 @@ crates/fbuild-serial/src/crash_decoder.rs
 crates/fbuild-serial/src/session.rs
 crates/fbuild-test-support/src/compile_db.rs
 crates/fbuild-test-support/src/mini_framework.rs
+# Clap command boundary: archive and cache-root values are parsed as PathBuf
+# before they enter the normalized cache-archive API (FastLED/fbuild#1033).
+crates/fbuild-cli/src/cli/cache.rs
+# Synchronous daemon-identity compatibility check; see the matching canonicalize
+# and slash-normalization entries (FastLED/fbuild#1033).
+crates/fbuild-cli/src/daemon_client/identity.rs
