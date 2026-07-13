@@ -93,13 +93,15 @@ jobs:
         #     v0.7.85/v0.7.87 were broken releases that shipped silent
         #     binaries (no output at all), which setup-soldr@v0.9.63
         #     surfaced as a version-JSON parse failure.
-        # setup-soldr@v0 floats the soldr binary and follows the latest
-        # v0 action updates. soldr v0.8.0 is the
+        # Pin the latest published soldr release; setup-soldr's current
+        # default can briefly lead a release that has not been published yet.
+        # soldr v0.8.0 is the
         # known-good floor for the Apple SDK URL fix, soldr-clang-shim
         # in every release archive, cargo:rustc-env wrapper forwarding,
         # and managed cmake/ninja.
         uses: zackees/setup-soldr@v0
         with:
+          version: 0.8.8
           cache: true
           build-cache: true
           target-cache: true
