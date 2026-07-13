@@ -228,7 +228,13 @@ fn slice_files(slice: &SliceDef, cache_dir: &Path) -> Result<Vec<(String, Normal
         let path = NormalizedPath::new(entry.path());
         let rel = path
             .relative_to(&src)
-            .ok_or_else(|| FbuildError::PackageError(format!("relpath: {} is outside {}", path.display(), src.display())))?
+            .ok_or_else(|| {
+                FbuildError::PackageError(format!(
+                    "relpath: {} is outside {}",
+                    path.display(),
+                    src.display()
+                ))
+            })?
             .display_slash();
         out.push((rel, path));
     }

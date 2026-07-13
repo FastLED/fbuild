@@ -68,7 +68,8 @@ fn pyo3_029_policy_stays_target_python_independent() {
         "Windows MSVC commands must go through soldr build, not cargo-xwin directly"
     );
 
-    let release_workflow = fs::read_to_string(root.join(".github/workflows/release-auto.yml")).unwrap();
+    let release_workflow =
+        fs::read_to_string(root.join(".github/workflows/release-auto.yml")).unwrap();
     for target in ["x86_64-pc-windows-msvc", "aarch64-pc-windows-msvc"] {
         assert!(
             release_workflow.contains(target),
