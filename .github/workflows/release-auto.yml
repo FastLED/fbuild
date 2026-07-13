@@ -215,6 +215,16 @@ jobs:
             linux_cross: false
             macos_cross: false
 
+          # ARM64 uses the same Linux -> MSVC soldr build path as x86_64.
+          # Keep this release lane: soldr's clang shim routes ring + cc-rs
+          # through clang-cl for the MSVC target while its internal xwin path
+          # supplies the Windows SDK.
+          - target: aarch64-pc-windows-msvc
+            runner: ubuntu-latest
+            binary_ext: ".exe"
+            linux_cross: false
+            macos_cross: false
+
     uses: ./.github/workflows/template_native_build.yml
     with:
       target: ${{ matrix.target }}
