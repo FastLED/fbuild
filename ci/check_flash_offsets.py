@@ -2,7 +2,8 @@
 """Assert each ESP32 chip config's flash offsets match an authoritative source.
 
 The second-stage **bootloader offset** (`esptool.flash_offsets.bootloader` in
-`crates/fbuild-build/src/esp32/configs/esp32*.json`) is a ROM-defined constant:
+`crates/fbuild-build-esp/src/esp32/configs/esp32*.json`) is a ROM-defined
+constant:
 get it wrong and the chip's ROM reads garbage at its fixed load address and
 enters an `invalid header: 0x...` reboot loop (see #278: esp32p4/esp32c5
 shipped `0x0` instead of `0x2000` and bricked boot).
@@ -77,7 +78,7 @@ def configs_dir() -> Path:
     return (
         Path(__file__).resolve().parent.parent
         / "crates"
-        / "fbuild-build"
+        / "fbuild-build-esp"
         / "src"
         / "esp32"
         / "configs"
