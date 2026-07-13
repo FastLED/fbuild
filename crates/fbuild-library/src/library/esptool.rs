@@ -28,7 +28,7 @@
 
 use std::path::Path;
 
-use fbuild_core::{path::NormalizedPath, FbuildError, Result};
+use fbuild_core::{path::NormalizedPath, subprocess::run_command, FbuildError, Result};
 
 use crate::{CacheSubdir, PackageBase};
 
@@ -107,7 +107,7 @@ impl Esptool {
             }
         }
 
-        if let Err(error) = verify_esptool_binary(bin.as_path()) {
+        if let Err(error) = verify_esptool_binary(bin.as_path()).await {
             if let Err(remove_error) = remove_cached_install(&install_path) {
                 tracing::warn!(
                     path = %install_path.display(),
@@ -167,24 +167,29 @@ fn remove_cached_install(install_path: &Path) -> Result<()> {
 /// `Path::is_file` is insufficient: a restored cache can retain a regular
 /// file whose interpreter or dynamic loader is unavailable, which surfaces as
 /// `ENOENT` only when the later `elf2image` command is spawned.
-fn verify_esptool_binary(bin: &Path) -> Result<()> {
-    let status = std::process::Command::new(bin)
-        .arg("--version")
-        .status()
-        .map_err(|e| {
+async fn verify_esptool_binary(bin: &Path) -> Result<()> {
+    let bin_arg = bin.to_string_lossy();
+    let output = run_command(
+        &[bin_arg.as_ref(), "--version"],
+        None,
+        None,
+        Some(std::time::Duration::from_secs(10)),
+    )
+    .await
+    .map_err(|e| {
             FbuildError::PackageError(format!(
                 "cached esptool executable {} cannot run: {}",
                 bin.display(),
                 e
             ))
-        })?;
-    if status.success() {
+    })?;
+    if output.success() {
         Ok(())
     } else {
         Err(FbuildError::PackageError(format!(
             "cached esptool executable {} exited with status {}",
             bin.display(),
-            status
+            output.exit_code
         )))
     }
 }
@@ -368,8 +373,8 @@ mod tests {
     }
 
     #[cfg(unix)]
-    #[test]
-    fn verify_accepts_runnable_standalone_binary() {
+    #[tokio::test]
+    async fn verify_accepts_runnable_standalone_binary() {
         use std::os::unix::fs::PermissionsExt;
 
         let tmp = tempfile::TempDir::new().unwrap();
@@ -379,6 +384,6 @@ mod tests {
         permissions.set_mode(0o755);
         std::fs::set_permissions(&bin, permissions).unwrap();
 
-        verify_esptool_binary(&bin).unwrap();
+        verify_esptool_binary(&bin).await.unwrap();
     }
 }
