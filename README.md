@@ -145,6 +145,56 @@ pip install fbuild
 For source installs, platform notes, and first-run cache behavior, start with
 the [getting started guide](docs/getting-started/README.md).
 
+## Command Quick Start
+
+fbuild reads the same `platformio.ini` files as PlatformIO. Use these commands
+as direct replacements for the most common PlatformIO workflows:
+
+| fbuild | PlatformIO equivalent | Use it to |
+|---|---|---|
+| `fbuild build` | `pio run` | Compile the project. |
+| `fbuild build --clean` | `pio run --target clean`, then `pio run` | Clean and compile the project. |
+| `fbuild deploy` | `pio run --target upload` | Build and upload firmware. |
+| `fbuild deploy --clean` | Clean, then `pio run --target upload` | Clean, build, and upload firmware. |
+| `fbuild monitor` | `pio device monitor` | Monitor serial output without flashing. |
+| `fbuild ci` | `pio ci` | Build one or more sketches for CI. |
+
+Pass `--platformio` to `build`, `deploy`, or `monitor` to delegate that
+workflow to the installed PlatformIO CLI. `fbuild ci` is a fbuild-native,
+PlatformIO-compatible CI command; detailed flags and nested commands are in
+the [CLI reference](docs/reference/cli.md).
+
+### fbuild-only commands
+
+These commands extend beyond the PlatformIO workflow surface:
+
+| Command | Purpose |
+|---|---|
+| `fbuild symbols` | Report per-symbol firmware size and bloat details. |
+| `fbuild bloat` | Inspect symbol back-references and generate bloat graphs. |
+| `fbuild reset` | Reset a device without flashing it. |
+| `fbuild purge` | Purge downloaded packages or run cache garbage collection. |
+| `fbuild sync` | Resolve `platformio.ini` dependencies into a deterministic lock file. |
+| `fbuild daemon` | Manage the background build daemon, locks, and cache. |
+| `fbuild show` | Show daemon logs and other runtime information. |
+| `fbuild device` | List devices and manage device leases. |
+| `fbuild mcp` | Start the Model Context Protocol server for AI integrations. |
+| `fbuild clang-tidy` | Run clang-tidy static analysis on project sources. |
+| `fbuild iwyu` | Run include-what-you-use analysis on project sources. |
+| `fbuild clangd-config` | Generate clangd and VS Code configuration for the project. |
+| `fbuild test-emu` | Build and run firmware in an emulator for testing. |
+| `fbuild clang-query` | Run a clang-query matcher against project sources. |
+| `fbuild lnk` | Fetch, verify, and create `.lnk` resource pointers. |
+| `fbuild lib-select` | Diagnose the LDF-style library selection result. |
+| `fbuild compile-many` | Compile many sketches against one board in parallel stages. |
+| `fbuild serial` | Probe serial ports and read them with board-aware settings. |
+| `fbuild bringup` | Orchestrate build, flash, reset, monitor, and bring-up steps. |
+| `fbuild port` | Scan serial ports with vendor and product identification. |
+| `fbuild cache` | Save, restore, list, and verify portable cache archives. |
+
+See `fbuild help <command>` or the [full CLI reference](docs/reference/cli.md)
+for options and nested subcommands.
+
 ## Quick Start
 
 Create a minimal Arduino project:
