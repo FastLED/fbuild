@@ -35,4 +35,4 @@ prost = { workspace = true }
 [dev-dependencies]
 tempfile = { workspace = true }
 axum = { workspace = true }
-tokio = { workspace = true }
+tokio = { workspace = true, features = ["test-util"] }

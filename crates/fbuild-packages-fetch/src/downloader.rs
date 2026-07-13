@@ -3,7 +3,7 @@
 //! Uses reqwest async client for parallel downloads. Supports streaming
 //! downloads with progress reporting for large files.
 
-use std::fmt::Write;
+use std::fmt::{Display, Formatter, Write};
 use std::path::{Path, PathBuf};
 use std::time::{Duration, Instant};
 
@@ -12,17 +12,21 @@ use sha2::{Digest, Sha256};
 
 use crate::http;
 
-/// Number of GET attempts before giving up on a transient failure.
-/// One initial attempt + two retries. Worst-case wall time at the
-/// default backoff schedule is ~4 s of sleep before the third
-/// attempt — barely registers on a healthy run, large enough to ride
-/// out the `dl.registry.platformio.org` hiccups we keep seeing in the
-/// nightly STM32 acceptance gate.
-const MAX_ATTEMPTS: u32 = 3;
+/// Number of complete GET attempts before giving up on a transient failure.
+/// The retry boundary covers both request setup and response-body transfer.
+const MAX_ATTEMPTS: u32 = 5;
 
-/// Per-attempt backoff sleeps: 1 s before attempt 2, 3 s before
-/// attempt 3.
-const RETRY_BACKOFFS: &[Duration] = &[Duration::from_secs(1), Duration::from_secs(3)];
+/// Exponential sleeps after failed attempts 1 through 4.
+const RETRY_BACKOFFS: &[Duration] = &[
+    Duration::from_secs(1),
+    Duration::from_secs(2),
+    Duration::from_secs(4),
+    Duration::from_secs(8),
+];
+
+/// Per-chunk deadline for streaming downloads. A stall fails the current
+/// attempt and is retried under the same budget as other transient failures.
+const CHUNK_READ_TIMEOUT: Duration = Duration::from_secs(60);
 
 /// Classify a `reqwest::Error` as worth retrying — anything that
 /// could plausibly succeed on a retry (connect timeout, request /
@@ -38,6 +42,94 @@ fn is_transient(err: &reqwest::Error) -> bool {
     // No HTTP status, not classified above → most likely a
     // network-stack transient (DNS, TLS handshake). Retry.
     true
+}
+
+#[derive(Debug)]
+enum DownloadAttemptError {
+    Request(reqwest::Error),
+    HttpStatus(reqwest::StatusCode),
+    Body(reqwest::Error),
+    BodyStalled { filename: String },
+}
+
+impl DownloadAttemptError {
+    fn is_retryable(&self) -> bool {
+        match self {
+            Self::Request(error) | Self::Body(error) => is_transient(error),
+            Self::HttpStatus(status) => status.is_server_error(),
+            Self::BodyStalled { .. } => true,
+        }
+    }
+
+    fn into_fbuild_error(self, url: &str) -> FbuildError {
+        match self {
+            Self::Request(error) => {
+                FbuildError::PackageError(format!("failed to download {}: {}", url, error))
+            }
+            Self::HttpStatus(status) => {
+                FbuildError::PackageError(format!("download failed for {}: HTTP {}", url, status))
+            }
+            Self::Body(error) => {
+                FbuildError::PackageError(format!("failed to read response body: {}", error))
+            }
+            Self::BodyStalled { filename } => FbuildError::PackageError(format!(
+                "body read stalled > {}s while downloading {}",
+                CHUNK_READ_TIMEOUT.as_secs(),
+                filename
+            )),
+        }
+    }
+}
+
+impl Display for DownloadAttemptError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Request(error) => write!(f, "request error: {error}"),
+            Self::HttpStatus(status) => write!(f, "HTTP {status}"),
+            Self::Body(error) => write!(f, "response body error: {error}"),
+            Self::BodyStalled { filename } => write!(
+                f,
+                "body read stalled > {}s while downloading {}",
+                CHUNK_READ_TIMEOUT.as_secs(),
+                filename
+            ),
+        }
+    }
+}
+
+async fn open_attempt(
+    client: &reqwest::Client,
+    url: &str,
+) -> std::result::Result<reqwest::Response, DownloadAttemptError> {
+    let response = client
+        .get(url)
+        .send()
+        .await
+        .map_err(DownloadAttemptError::Request)?;
+    let status = response.status();
+    if status.is_success() {
+        Ok(response)
+    } else {
+        Err(DownloadAttemptError::HttpStatus(status))
+    }
+}
+
+fn retry_backoff(attempt: u32) -> Duration {
+    debug_assert!((1..MAX_ATTEMPTS).contains(&attempt));
+    RETRY_BACKOFFS[(attempt - 1) as usize]
+}
+
+async fn wait_before_retry(url: &str, attempt: u32, error: &DownloadAttemptError) {
+    let delay = retry_backoff(attempt);
+    tracing::warn!(
+        "download {}: {} on attempt {}/{}, retrying after {:?}",
+        url,
+        error,
+        attempt,
+        MAX_ATTEMPTS,
+        delay
+    );
+    tokio::time::sleep(delay).await;
 }
 
 fn hex_encode(bytes: &[u8]) -> String {
@@ -109,123 +201,27 @@ pub async fn download_file(url: &str, dest_dir: &Path) -> Result<PathBuf> {
 /// attempts. A non-2xx HTTP status is treated as a hard failure
 /// (only server-side 5xx is retried).
 async fn get_with_retry(url: &str) -> Result<Vec<u8>> {
-    let mut attempt: u32 = 0;
-    loop {
-        attempt += 1;
-        match http::client().get(url).send().await {
-            Ok(response) => {
-                let status = response.status();
-                if !status.is_success() {
-                    // 4xx is deterministic, 5xx is retryable.
-                    if status.is_server_error() && attempt < MAX_ATTEMPTS {
-                        let sleep = RETRY_BACKOFFS
-                            .get(attempt as usize - 1)
-                            .copied()
-                            .unwrap_or(Duration::from_secs(5));
-                        tracing::warn!(
-                            "download {}: HTTP {} on attempt {}/{}, retrying after {:?}",
-                            url,
-                            status,
-                            attempt,
-                            MAX_ATTEMPTS,
-                            sleep
-                        );
-                        tokio::time::sleep(sleep).await;
-                        continue;
-                    }
-                    return Err(FbuildError::PackageError(format!(
-                        "download failed for {}: HTTP {}",
-                        url, status
-                    )));
-                }
-                return response.bytes().await.map(|b| b.to_vec()).map_err(|e| {
-                    FbuildError::PackageError(format!("failed to read response body: {}", e))
-                });
-            }
-            Err(e) => {
-                if is_transient(&e) && attempt < MAX_ATTEMPTS {
-                    let sleep = RETRY_BACKOFFS
-                        .get(attempt as usize - 1)
-                        .copied()
-                        .unwrap_or(Duration::from_secs(5));
-                    tracing::warn!(
-                        "download {}: transient error on attempt {}/{} ({}), retrying after {:?}",
-                        url,
-                        attempt,
-                        MAX_ATTEMPTS,
-                        e,
-                        sleep
-                    );
-                    tokio::time::sleep(sleep).await;
-                    continue;
-                }
-                return Err(FbuildError::PackageError(format!(
-                    "failed to download {}: {}",
-                    url, e
-                )));
-            }
-        }
-    }
+    get_with_retry_using(http::client(), url).await
 }
 
-/// GET `url` and return the `Response` for streaming, retrying
-/// transient failures on the initial fetch. Once the response body
-/// has started streaming, errors are terminal (we don't restart
-/// large downloads from byte 0 — that's a bigger lever than the
-/// transient `dl.registry.platformio.org` errors call for).
-async fn open_with_retry(url: &str) -> Result<reqwest::Response> {
+async fn get_with_retry_using(client: &reqwest::Client, url: &str) -> Result<Vec<u8>> {
     let mut attempt: u32 = 0;
     loop {
         attempt += 1;
-        match http::client().get(url).send().await {
-            Ok(response) => {
-                let status = response.status();
-                if status.is_success() {
-                    return Ok(response);
-                }
-                if status.is_server_error() && attempt < MAX_ATTEMPTS {
-                    let sleep = RETRY_BACKOFFS
-                        .get(attempt as usize - 1)
-                        .copied()
-                        .unwrap_or(Duration::from_secs(5));
-                    tracing::warn!(
-                        "download {}: HTTP {} on attempt {}/{}, retrying after {:?}",
-                        url,
-                        status,
-                        attempt,
-                        MAX_ATTEMPTS,
-                        sleep
-                    );
-                    tokio::time::sleep(sleep).await;
-                    continue;
-                }
-                return Err(FbuildError::PackageError(format!(
-                    "download failed for {}: HTTP {}",
-                    url, status
-                )));
+        let result = match open_attempt(client, url).await {
+            Ok(response) => response
+                .bytes()
+                .await
+                .map(|bytes| bytes.to_vec())
+                .map_err(DownloadAttemptError::Body),
+            Err(error) => Err(error),
+        };
+        match result {
+            Ok(bytes) => return Ok(bytes),
+            Err(error) if error.is_retryable() && attempt < MAX_ATTEMPTS => {
+                wait_before_retry(url, attempt, &error).await;
             }
-            Err(e) => {
-                if is_transient(&e) && attempt < MAX_ATTEMPTS {
-                    let sleep = RETRY_BACKOFFS
-                        .get(attempt as usize - 1)
-                        .copied()
-                        .unwrap_or(Duration::from_secs(5));
-                    tracing::warn!(
-                        "download {}: transient error on attempt {}/{} ({}), retrying after {:?}",
-                        url,
-                        attempt,
-                        MAX_ATTEMPTS,
-                        e,
-                        sleep
-                    );
-                    tokio::time::sleep(sleep).await;
-                    continue;
-                }
-                return Err(FbuildError::PackageError(format!(
-                    "failed to download {}: {}",
-                    url, e
-                )));
-            }
+            Err(error) => return Err(error.into_fbuild_error(url)),
         }
     }
 }
@@ -239,70 +235,88 @@ pub async fn download_file_with_progress(
     dest_dir: &Path,
     on_progress: &mut dyn FnMut(&DownloadProgress),
 ) -> Result<PathBuf> {
+    download_file_with_progress_using(http::client(), url, dest_dir, on_progress).await?;
+    let filename = url.rsplit('/').next().unwrap_or("download");
+    Ok(dest_dir.join(filename))
+}
+
+async fn download_file_with_progress_using(
+    client: &reqwest::Client,
+    url: &str,
+    dest_dir: &Path,
+    on_progress: &mut dyn FnMut(&DownloadProgress),
+) -> Result<()> {
     let filename = url.rsplit('/').next().unwrap_or("download").to_string();
     let dest_path = dest_dir.join(&filename);
 
-    let response = open_with_retry(url).await?;
+    let mut attempt: u32 = 0;
+    let buf = loop {
+        attempt += 1;
+        let result: std::result::Result<Vec<u8>, DownloadAttemptError> = async {
+            let response = open_attempt(client, url).await?;
+            let total_bytes = response.content_length();
+            let mut downloaded: u64 = 0;
+            let mut attempt_buf =
+                Vec::with_capacity(total_bytes.unwrap_or(8 * 1024 * 1024) as usize);
+            let mut last_report = Instant::now();
+            let mut last_pct: u32 = 0;
+            let mut stream = response;
+            // FastLED/fbuild#805 CRITICAL: per-chunk deadline. The shared
+            // `http::client()` already enforces a 300 s total-request timeout,
+            // but defense-in-depth — wrap each `chunk().await` in a 60 s
+            // tokio timeout so a stalled mid-download fails *this* attempt
+            // promptly instead of waiting out the 5 min total. This is what
+            // the audit calls out specifically: streaming body reads have no
+            // per-chunk wake-up signal otherwise.
+            loop {
+                let chunk = match tokio::time::timeout(CHUNK_READ_TIMEOUT, stream.chunk()).await {
+                    Ok(Ok(Some(chunk))) => chunk,
+                    Ok(Ok(None)) => break,
+                    Ok(Err(error)) => return Err(DownloadAttemptError::Body(error)),
+                    Err(_) => {
+                        return Err(DownloadAttemptError::BodyStalled {
+                            filename: filename.clone(),
+                        })
+                    }
+                };
+                attempt_buf.extend_from_slice(&chunk);
+                downloaded += chunk.len() as u64;
 
-    let total_bytes = response.content_length();
-    let mut downloaded: u64 = 0;
-    let mut buf = Vec::with_capacity(total_bytes.unwrap_or(8 * 1024 * 1024) as usize);
-    let mut last_report = Instant::now();
-    let mut last_pct: u32 = 0;
+                let elapsed = last_report.elapsed().as_secs();
+                let current_pct = total_bytes
+                    .map(|total| {
+                        if total > 0 {
+                            (downloaded as f64 / total as f64 * 100.0) as u32
+                        } else {
+                            0
+                        }
+                    })
+                    .unwrap_or(0);
+                let pct_jump = current_pct >= last_pct + 10;
 
-    let mut stream = response;
-    // FastLED/fbuild#805 CRITICAL: per-chunk deadline. The shared
-    // `http::client()` already enforces a 300 s total-request timeout,
-    // but defense-in-depth — wrap each `chunk().await` in a 60 s
-    // tokio timeout so a stalled mid-download fails *this* attempt
-    // promptly instead of waiting out the 5 min total. This is what
-    // the audit calls out specifically: streaming body reads have no
-    // per-chunk wake-up signal otherwise.
-    const CHUNK_READ_TIMEOUT: Duration = Duration::from_secs(60);
-    loop {
-        let chunk = match tokio::time::timeout(CHUNK_READ_TIMEOUT, stream.chunk()).await {
-            Ok(Ok(Some(chunk))) => chunk,
-            Ok(Ok(None)) => break, // end of stream
-            Ok(Err(e)) => {
-                return Err(FbuildError::PackageError(format!(
-                    "failed to read response body: {}",
-                    e
-                )));
-            }
-            Err(_) => {
-                return Err(FbuildError::PackageError(format!(
-                    "body read stalled > {}s while downloading {}",
-                    CHUNK_READ_TIMEOUT.as_secs(),
-                    filename
-                )));
-            }
-        };
-        buf.extend_from_slice(&chunk);
-        downloaded += chunk.len() as u64;
-
-        let elapsed = last_report.elapsed().as_secs();
-        let current_pct = total_bytes
-            .map(|t| {
-                if t > 0 {
-                    (downloaded as f64 / t as f64 * 100.0) as u32
-                } else {
-                    0
+                if elapsed >= 15 || pct_jump {
+                    let progress = DownloadProgress {
+                        downloaded,
+                        total_bytes,
+                        filename: filename.clone(),
+                    };
+                    on_progress(&progress);
+                    last_report = Instant::now();
+                    last_pct = current_pct;
                 }
-            })
-            .unwrap_or(0);
-        let pct_jump = current_pct >= last_pct + 10;
-
-        if elapsed >= 15 || pct_jump {
-            let progress = DownloadProgress {
-                downloaded,
-                total_bytes,
-                filename: filename.clone(),
-            };
-            on_progress(&progress);
-            last_report = Instant::now();
-            last_pct = current_pct;
+            }
+            Ok(attempt_buf)
         }
-    }
+        .await;
+
+        match result {
+            Ok(bytes) => break bytes,
+            Err(error) if error.is_retryable() && attempt < MAX_ATTEMPTS => {
+                wait_before_retry(url, attempt, &error).await;
+            }
+            Err(error) => return Err(error.into_fbuild_error(url)),
+        }
+    };
 
     tokio::fs::write(&dest_path, &buf).await.map_err(|e| {
         FbuildError::PackageError(format!(
@@ -312,8 +326,8 @@ pub async fn download_file_with_progress(
         ))
     })?;
 
-    tracing::info!("downloaded {} ({} bytes)", filename, downloaded);
-    Ok(dest_path)
+    tracing::info!("downloaded {} ({} bytes)", filename, buf.len());
+    Ok(())
 }
 
 /// Download multiple files in parallel (async).
@@ -385,13 +399,24 @@ pub async fn verify_checksum_async(path: &Path, expected: &str) -> Result<()> {
 mod tests {
     use super::*;
     use std::io::Write;
+    use std::sync::atomic::{AtomicUsize, Ordering};
     use tempfile::NamedTempFile;
+
+    static NETWORK_TEST_LOCK: tokio::sync::Mutex<()> = tokio::sync::Mutex::const_new(());
+
+    async fn network_test_guard() -> tokio::sync::MutexGuard<'static, ()> {
+        NETWORK_TEST_LOCK.lock().await
+    }
 
     fn named_temp_file() -> NamedTempFile {
         NamedTempFile::new_in(fbuild_paths::temp_subdir(
             "fbuild-packages-downloader-tests",
         ))
         .unwrap()
+    }
+
+    fn test_client() -> reqwest::Client {
+        fbuild_core::http::client_with_timeout(Duration::from_secs(300))
     }
 
     #[test]
@@ -432,6 +457,7 @@ mod tests {
     /// comes in. Keeps the deps to tokio (already required).
     async fn run_flaky_server(
         responses: std::sync::Arc<std::sync::Mutex<Vec<&'static str>>>,
+        request_count: std::sync::Arc<AtomicUsize>,
     ) -> u16 {
         use tokio::io::{AsyncReadExt, AsyncWriteExt};
         use tokio::net::TcpListener;
@@ -445,6 +471,7 @@ mod tests {
                     Ok(p) => p,
                     Err(_) => break,
                 };
+                request_count.fetch_add(1, Ordering::SeqCst);
                 let resp = {
                     let mut guard = responses.lock().unwrap_or_else(|err| err.into_inner());
                     if guard.is_empty() {
@@ -461,22 +488,87 @@ mod tests {
                 let _ = stream.shutdown().await;
             }
         });
+        tokio::task::yield_now().await;
         port
+    }
+
+    async fn run_stalling_server(request_count: std::sync::Arc<AtomicUsize>) -> u16 {
+        use tokio::io::{AsyncReadExt, AsyncWriteExt};
+        use tokio::net::TcpListener;
+
+        let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let port = listener.local_addr().unwrap().port();
+
+        tokio::spawn(async move {
+            loop {
+                let (stream, _) = match listener.accept().await {
+                    Ok(pair) => pair,
+                    Err(_) => break,
+                };
+                request_count.fetch_add(1, Ordering::SeqCst);
+                tokio::spawn(async move {
+                    let mut stream = stream;
+                    let mut request = [0u8; 1024];
+                    let _ =
+                        tokio::time::timeout(Duration::from_millis(200), stream.read(&mut request))
+                            .await;
+                    let _ = stream
+                        .write_all(
+                            b"HTTP/1.1 200 OK\r\nContent-Length: 5\r\nConnection: close\r\n\r\n",
+                        )
+                        .await;
+                    tokio::time::sleep(Duration::from_secs(120)).await;
+                    let _ = stream.shutdown().await;
+                });
+            }
+        });
+        tokio::task::yield_now().await;
+        port
+    }
+
+    fn truncated_response() -> &'static str {
+        "HTTP/1.1 200 OK\r\nContent-Length: 10\r\nConnection: close\r\n\r\nshort"
+    }
+
+    fn complete_response() -> &'static str {
+        "HTTP/1.1 200 OK\r\nContent-Length: 5\r\nConnection: close\r\n\r\nhello"
+    }
+
+    #[test]
+    fn retry_policy_is_five_attempts_with_exponential_backoff() {
+        assert_eq!(MAX_ATTEMPTS, 5);
+        assert_eq!(
+            RETRY_BACKOFFS,
+            &[
+                Duration::from_secs(1),
+                Duration::from_secs(2),
+                Duration::from_secs(4),
+                Duration::from_secs(8),
+            ]
+        );
     }
 
     /// #205 nightly STM32 acceptance gate started flaking on
     /// `dl.registry.platformio.org` transient errors. A 5xx must
     /// trigger a retry, and the retry must succeed.
-    #[tokio::test]
+    #[tokio::test(start_paused = true)]
     async fn get_with_retry_retries_on_5xx() {
+        let _guard = network_test_guard().await;
         let responses = std::sync::Arc::new(std::sync::Mutex::new(vec![
-            "HTTP/1.1 503 Service Unavailable\r\nContent-Length: 0\r\n\r\n",
-            "HTTP/1.1 200 OK\r\nContent-Length: 5\r\n\r\nhello",
+            "HTTP/1.1 503 Service Unavailable\r\nContent-Length: 0\r\nConnection: close\r\n\r\n",
+            "HTTP/1.1 503 Service Unavailable\r\nContent-Length: 0\r\nConnection: close\r\n\r\n",
+            "HTTP/1.1 503 Service Unavailable\r\nContent-Length: 0\r\nConnection: close\r\n\r\n",
+            "HTTP/1.1 503 Service Unavailable\r\nContent-Length: 0\r\nConnection: close\r\n\r\n",
+            complete_response(),
         ]));
-        let port = run_flaky_server(responses.clone()).await;
+        let request_count = std::sync::Arc::new(AtomicUsize::new(0));
+        let port = run_flaky_server(responses.clone(), request_count.clone()).await;
         let url = format!("http://127.0.0.1:{port}/file");
-        let bytes = get_with_retry(&url).await.expect("retry should succeed");
+        let bytes = get_with_retry_using(&test_client(), &url)
+            .await
+            .expect("retry should succeed");
         assert_eq!(bytes, b"hello");
+        assert_eq!(request_count.load(Ordering::SeqCst), 5);
     }
 
     /// 4xx is deterministic — it must NOT retry. The test queues a
@@ -484,35 +576,169 @@ mod tests {
     /// empty-queue branch and the test would hang or panic.
     #[tokio::test]
     async fn get_with_retry_does_not_retry_on_4xx() {
+        let _guard = network_test_guard().await;
         let responses = std::sync::Arc::new(std::sync::Mutex::new(vec![
-            "HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\n\r\n",
+            "HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\nConnection: close\r\n\r\n",
         ]));
-        let port = run_flaky_server(responses.clone()).await;
+        let request_count = std::sync::Arc::new(AtomicUsize::new(0));
+        let port = run_flaky_server(responses.clone(), request_count.clone()).await;
         let url = format!("http://127.0.0.1:{port}/missing");
-        let err = get_with_retry(&url).await.expect_err("should error");
+        let err = get_with_retry_using(&test_client(), &url)
+            .await
+            .expect_err("should error");
         assert!(
             err.to_string().contains("404"),
             "expected 404 in error, got: {err}"
         );
+        assert_eq!(request_count.load(Ordering::SeqCst), 1);
     }
 
     /// Repeated 5xx exhausts the budget and surfaces the last
     /// response.
-    #[tokio::test]
+    #[tokio::test(start_paused = true)]
     async fn get_with_retry_gives_up_after_max_attempts() {
+        let _guard = network_test_guard().await;
         let responses = std::sync::Arc::new(std::sync::Mutex::new(vec![
-            "HTTP/1.1 500 Internal Server Error\r\nContent-Length: 0\r\n\r\n",
-            "HTTP/1.1 502 Bad Gateway\r\nContent-Length: 0\r\n\r\n",
-            "HTTP/1.1 503 Service Unavailable\r\nContent-Length: 0\r\n\r\n",
+            "HTTP/1.1 500 Internal Server Error\r\nContent-Length: 0\r\nConnection: close\r\n\r\n",
+            "HTTP/1.1 502 Bad Gateway\r\nContent-Length: 0\r\nConnection: close\r\n\r\n",
+            "HTTP/1.1 500 Internal Server Error\r\nContent-Length: 0\r\nConnection: close\r\n\r\n",
+            "HTTP/1.1 502 Bad Gateway\r\nContent-Length: 0\r\nConnection: close\r\n\r\n",
+            "HTTP/1.1 503 Service Unavailable\r\nContent-Length: 0\r\nConnection: close\r\n\r\n",
         ]));
-        let port = run_flaky_server(responses.clone()).await;
+        let request_count = std::sync::Arc::new(AtomicUsize::new(0));
+        let port = run_flaky_server(responses.clone(), request_count.clone()).await;
         let url = format!("http://127.0.0.1:{port}/file");
-        let err = get_with_retry(&url).await.expect_err("should give up");
+        let err = get_with_retry_using(&test_client(), &url)
+            .await
+            .expect_err("should give up");
         // Last attempt was a 503; that's what gets surfaced.
         assert!(
             err.to_string().contains("503"),
             "expected last-attempt 503 in error, got: {err}"
         );
+        assert_eq!(request_count.load(Ordering::SeqCst), 5);
+    }
+
+    #[tokio::test(start_paused = true)]
+    async fn get_with_retry_retries_truncated_bodies_until_attempt_five() {
+        let _guard = network_test_guard().await;
+        let responses = std::sync::Arc::new(std::sync::Mutex::new(vec![
+            truncated_response(),
+            truncated_response(),
+            truncated_response(),
+            truncated_response(),
+            complete_response(),
+        ]));
+        let request_count = std::sync::Arc::new(AtomicUsize::new(0));
+        let port = run_flaky_server(responses, request_count.clone()).await;
+        let url = format!("http://127.0.0.1:{port}/file");
+
+        let bytes = get_with_retry_using(&test_client(), &url)
+            .await
+            .expect("the fifth complete response should succeed");
+
+        assert_eq!(bytes, b"hello");
+        assert_eq!(request_count.load(Ordering::SeqCst), 5);
+    }
+
+    #[tokio::test(start_paused = true)]
+    async fn get_with_retry_stops_after_five_truncated_bodies() {
+        let _guard = network_test_guard().await;
+        let responses = std::sync::Arc::new(std::sync::Mutex::new(vec![
+            truncated_response(),
+            truncated_response(),
+            truncated_response(),
+            truncated_response(),
+            truncated_response(),
+        ]));
+        let request_count = std::sync::Arc::new(AtomicUsize::new(0));
+        let port = run_flaky_server(responses, request_count.clone()).await;
+        let url = format!("http://127.0.0.1:{port}/file");
+
+        let err = get_with_retry_using(&test_client(), &url)
+            .await
+            .expect_err("the fifth truncated response should exhaust retries");
+
+        assert!(
+            err.to_string().contains("failed to read response body"),
+            "expected final body error, got: {err}"
+        );
+        assert_eq!(request_count.load(Ordering::SeqCst), 5);
+    }
+
+    #[tokio::test(start_paused = true)]
+    async fn streaming_download_retries_truncated_bodies_until_attempt_five() {
+        let _guard = network_test_guard().await;
+        let responses = std::sync::Arc::new(std::sync::Mutex::new(vec![
+            truncated_response(),
+            truncated_response(),
+            truncated_response(),
+            truncated_response(),
+            complete_response(),
+        ]));
+        let request_count = std::sync::Arc::new(AtomicUsize::new(0));
+        let port = run_flaky_server(responses, request_count.clone()).await;
+        let url = format!("http://127.0.0.1:{port}/file");
+        let temp = tempfile::TempDir::new().unwrap();
+        let mut progress = |_progress: &DownloadProgress| {};
+
+        download_file_with_progress_using(&test_client(), &url, temp.path(), &mut progress)
+            .await
+            .expect("the fifth complete response should succeed");
+
+        assert_eq!(std::fs::read(temp.path().join("file")).unwrap(), b"hello");
+        assert_eq!(request_count.load(Ordering::SeqCst), 5);
+    }
+
+    #[tokio::test(start_paused = true)]
+    async fn streaming_download_stops_after_five_truncated_bodies_without_output() {
+        let _guard = network_test_guard().await;
+        let responses = std::sync::Arc::new(std::sync::Mutex::new(vec![
+            truncated_response(),
+            truncated_response(),
+            truncated_response(),
+            truncated_response(),
+            truncated_response(),
+        ]));
+        let request_count = std::sync::Arc::new(AtomicUsize::new(0));
+        let port = run_flaky_server(responses, request_count.clone()).await;
+        let url = format!("http://127.0.0.1:{port}/file");
+        let temp = tempfile::TempDir::new().unwrap();
+        let mut progress = |_progress: &DownloadProgress| {};
+
+        let err =
+            download_file_with_progress_using(&test_client(), &url, temp.path(), &mut progress)
+                .await
+                .expect_err("the fifth truncated response should exhaust retries");
+
+        assert!(
+            err.to_string().contains("failed to read response body"),
+            "expected final body error, got: {err}"
+        );
+        assert_eq!(request_count.load(Ordering::SeqCst), 5);
+        assert!(!temp.path().join("file").exists());
+    }
+
+    #[tokio::test(start_paused = true)]
+    async fn streaming_download_retries_chunk_stalls_five_times_without_output() {
+        let _guard = network_test_guard().await;
+        let request_count = std::sync::Arc::new(AtomicUsize::new(0));
+        let port = run_stalling_server(request_count.clone()).await;
+        let url = format!("http://127.0.0.1:{port}/file");
+        let temp = tempfile::TempDir::new().unwrap();
+        let mut progress = |_progress: &DownloadProgress| {};
+
+        let err =
+            download_file_with_progress_using(&test_client(), &url, temp.path(), &mut progress)
+                .await
+                .expect_err("five chunk stalls should exhaust retries");
+
+        assert!(
+            err.to_string().contains("body read stalled > 60s"),
+            "expected final chunk-stall error, got: {err}"
+        );
+        assert_eq!(request_count.load(Ordering::SeqCst), 5);
+        assert!(!temp.path().join("file").exists());
     }
 
     #[test]
