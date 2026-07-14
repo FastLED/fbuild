@@ -193,34 +193,6 @@ fn write_uf2(firmware_path: &Path, volume: &Path, family_id: u32) -> Result<Path
     Ok(destination)
 }
 
-/// Ask Windows to flush and dismount the BOOTSEL volume after the UF2 is
-/// closed. The ROM watches the mass-storage session and reboots after a
-/// complete UF2 copy; leaving the host mount open can keep a stock Pico in
-/// BOOTSEL indefinitely on some Windows USB-storage stacks.
-#[cfg(windows)]
-fn dismount_uf2_volume(volume: &Path) -> Result<()> {
-    let Some(root) = volume.to_str() else {
-        return Ok(());
-    };
-    let status = std::process::Command::new("mountvol")
-        .args([root, "/p"])
-        .status()
-        .map_err(|error| {
-            FbuildError::DeployFailed(format!("failed to dismount RP2040 volume {root}: {error}"))
-        })?;
-    if !status.success() {
-        return Err(FbuildError::DeployFailed(format!(
-            "failed to dismount RP2040 volume {root} (mountvol exit {status})"
-        )));
-    }
-    Ok(())
-}
-
-#[cfg(not(windows))]
-fn dismount_uf2_volume(_volume: &Path) -> Result<()> {
-    Ok(())
-}
-
 /// Deploys RP2040-family firmware through the stock BOOTSEL mass-storage
 /// interface. `bootloader_timeout` is configurable for deterministic tests.
 pub struct Rp2040Deployer {
@@ -233,7 +205,10 @@ impl Default for Rp2040Deployer {
     fn default() -> Self {
         Self {
             bootloader_timeout: Duration::from_secs(10),
-            post_deploy_timeout: Duration::from_secs(5),
+            // Windows can take several seconds to enumerate the CDC interface
+            // after the ROM accepts the UF2. Keep this bounded but generous
+            // enough for a stock board on a busy USB hub.
+            post_deploy_timeout: Duration::from_secs(15),
             family_id: RP2040_FAMILY_ID,
         }
     }
@@ -312,7 +287,7 @@ impl Deployer for Rp2040Deployer {
             .map_err(|error| FbuildError::DeployFailed(format!("RP2040 volume watcher failed: {error}")))?
             ?
             .ok_or_else(|| FbuildError::DeployFailed(
-                "RP2040 BOOTSEL volume not found; hold BOOTSEL while reconnecting the stock board".into(),
+                "RP2040 BOOTSEL volume not found; check that the stock board is connected and retry".into(),
             ))?;
         let firmware = firmware_path.to_path_buf();
         let volume_for_copy = volume.clone();
@@ -323,13 +298,6 @@ impl Deployer for Rp2040Deployer {
                 .map_err(|error| {
                     FbuildError::DeployFailed(format!("RP2040 UF2 writer failed: {error}"))
                 })??;
-        if let Err(error) = dismount_uf2_volume(&volume) {
-            // The ROM normally ejects the volume itself after accepting a
-            // valid UF2. Host dismount is only a Windows fallback and may
-            // require elevation; never turn a successful copy into a deploy
-            // failure when the fallback is unavailable.
-            tracing::debug!(%error, "RP2040 host volume dismount unavailable");
-        }
         let recovery_port = original_port.clone();
         let post_timeout = self.post_deploy_timeout;
         let discovered_port = tokio::task::spawn_blocking(move || {
