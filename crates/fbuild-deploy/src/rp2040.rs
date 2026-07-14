@@ -40,7 +40,10 @@ pub fn encode_uf2_for_family(binary: &[u8], family_id: u32) -> Vec<u8> {
         put_u32(&mut block, 4, UF2_MAGIC_START1);
         put_u32(&mut block, 8, UF2_FLAG_FAMILY_ID_PRESENT);
         put_u32(&mut block, 12, start as u32 + 0x1000_0000);
-        put_u32(&mut block, 16, payload_len as u32);
+        // UF2 blocks always advertise a full 256-byte payload. The final
+        // block is zero-padded; advertising its short source length makes
+        // the ROM BOOTSEL parser reject an otherwise valid image.
+        put_u32(&mut block, 16, UF2_PAYLOAD_SIZE as u32);
         put_u32(&mut block, 20, block_no as u32);
         put_u32(&mut block, 24, block_count as u32);
         put_u32(&mut block, 28, family_id);
@@ -169,13 +172,53 @@ fn write_uf2(firmware_path: &Path, volume: &Path, family_id: u32) -> Result<Path
         encode_uf2_for_family(&bytes, family_id)
     };
     let destination = volume.join("firmware.uf2");
-    fs::write(&destination, uf2).map_err(|error| {
+    let mut file = fs::File::create(&destination).map_err(|error| {
+        FbuildError::DeployFailed(format!(
+            "failed to create UF2 at {}: {error}",
+            destination.display()
+        ))
+    })?;
+    std::io::Write::write_all(&mut file, &uf2).map_err(|error| {
         FbuildError::DeployFailed(format!(
             "failed to copy UF2 to {}: {error}",
             destination.display()
         ))
     })?;
+    file.sync_all().map_err(|error| {
+        FbuildError::DeployFailed(format!(
+            "failed to flush UF2 to {}: {error}",
+            destination.display()
+        ))
+    })?;
     Ok(destination)
+}
+
+/// Ask Windows to flush and dismount the BOOTSEL volume after the UF2 is
+/// closed. The ROM watches the mass-storage session and reboots after a
+/// complete UF2 copy; leaving the host mount open can keep a stock Pico in
+/// BOOTSEL indefinitely on some Windows USB-storage stacks.
+#[cfg(windows)]
+fn dismount_uf2_volume(volume: &Path) -> Result<()> {
+    let Some(root) = volume.to_str() else {
+        return Ok(());
+    };
+    let status = std::process::Command::new("mountvol")
+        .args([root, "/p"])
+        .status()
+        .map_err(|error| {
+            FbuildError::DeployFailed(format!("failed to dismount RP2040 volume {root}: {error}"))
+        })?;
+    if !status.success() {
+        return Err(FbuildError::DeployFailed(format!(
+            "failed to dismount RP2040 volume {root} (mountvol exit {status})"
+        )));
+    }
+    Ok(())
+}
+
+#[cfg(not(windows))]
+fn dismount_uf2_volume(_volume: &Path) -> Result<()> {
+    Ok(())
 }
 
 /// Deploys RP2040-family firmware through the stock BOOTSEL mass-storage
@@ -218,7 +261,17 @@ fn wait_for_cdc_port(previous: Option<&str>, timeout: Duration) -> Option<String
     let deadline = Instant::now() + timeout;
     loop {
         if let Ok(ports) = fbuild_serial::ports::available_ports() {
-            let names: Vec<String> = ports.into_iter().map(|p| p.port_name).collect();
+            let names: Vec<String> = ports
+                .into_iter()
+                .filter(|port| {
+                    matches!(
+                        port.port_type,
+                        serialport::SerialPortType::UsbPort(ref usb)
+                            if usb.vid == 0x2E8A
+                    )
+                })
+                .map(|port| port.port_name)
+                .collect();
             if let Some(old) = previous {
                 if names.iter().any(|name| name == old) {
                     return Some(old.to_string());
@@ -270,6 +323,13 @@ impl Deployer for Rp2040Deployer {
                 .map_err(|error| {
                     FbuildError::DeployFailed(format!("RP2040 UF2 writer failed: {error}"))
                 })??;
+        if let Err(error) = dismount_uf2_volume(&volume) {
+            // The ROM normally ejects the volume itself after accepting a
+            // valid UF2. Host dismount is only a Windows fallback and may
+            // require elevation; never turn a successful copy into a deploy
+            // failure when the fallback is unavailable.
+            tracing::debug!(%error, "RP2040 host volume dismount unavailable");
+        }
         let recovery_port = original_port.clone();
         let post_timeout = self.post_deploy_timeout;
         let discovered_port = tokio::task::spawn_blocking(move || {
@@ -334,6 +394,10 @@ mod tests {
         assert_eq!(
             u32::from_le_bytes(uf2[512 + 20..512 + 24].try_into().unwrap()),
             1
+        );
+        assert_eq!(
+            u32::from_le_bytes(uf2[512 + 16..512 + 20].try_into().unwrap()),
+            UF2_PAYLOAD_SIZE as u32
         );
         assert_eq!(&uf2[32..32 + 256], &image[..256]);
         assert_eq!(&uf2[512 + 32..512 + 32 + 44], &image[256..]);

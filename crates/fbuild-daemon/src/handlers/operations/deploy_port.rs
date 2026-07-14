@@ -29,6 +29,17 @@ pub(super) fn choose_deploy_port(
         };
     }
 
+    // RP2040/RP2350 stock boards deploy through the ROM BOOTSEL volume and
+    // may have no application CDC port at all before the UF2 copy. Never
+    // fall back to an unrelated serial endpoint (for example Windows COM1);
+    // the RP2040 deployer discovers the post-flash CDC port itself.
+    if platform == Platform::RaspberryPi {
+        return DeployPortChoice {
+            port: None,
+            warning: None,
+        };
+    }
+
     let expected_vids = expected_vids(platform, board);
     if expected_vids.is_empty() {
         return DeployPortChoice {
@@ -222,6 +233,18 @@ mod tests {
             vec![device("COM22", Some(0x303A), Some(0x1001))],
         );
         assert_eq!(choice.port.as_deref(), Some("COM21"));
+        assert!(choice.warning.is_none());
+    }
+
+    #[test]
+    fn stock_raspberry_pi_deploy_does_not_select_unrelated_serial_port() {
+        let choice = choose_deploy_port(
+            None,
+            Platform::RaspberryPi,
+            None,
+            vec![device("COM1", None, None), device("COM11", Some(0x10C4), Some(0xEA60))],
+        );
+        assert!(choice.port.is_none());
         assert!(choice.warning.is_none());
     }
 

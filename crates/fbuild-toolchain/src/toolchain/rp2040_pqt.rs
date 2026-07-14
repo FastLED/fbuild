@@ -156,7 +156,7 @@ fn all_platform_packages() -> [(&'static str, PlatformPackage); 5] {
             "windows",
             PlatformPackage {
                 filename: "x86_64-w64-mingw32.arm-none-eabi-8ec9d6f.240929.zip",
-                checksum: Some("f07ec7ac929f56ecadaeabeca67a406133b66ed0b0f5cc3d5ac0e6ffae8f92cf"),
+                checksum: Some("a1ac18cde856fa01aafc9985a719f3749abd3588ac6725d1781f02da94b84d54"),
             },
         ),
         (
