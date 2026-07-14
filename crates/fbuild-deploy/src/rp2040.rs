@@ -6,10 +6,12 @@
 //! file to that volume is the documented stock-board deployment path.
 
 use std::fs;
+use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 use std::time::{Duration, Instant};
 
 use fbuild_core::{FbuildError, Result};
+use object::{Object, ObjectSegment};
 
 use crate::{DeployOutcome, Deployer, DeploymentResult};
 
@@ -30,11 +32,15 @@ const UF2_BLOCK_SIZE: usize = 512;
 
 /// Build UF2 blocks for a raw RP2040 flash image.
 pub fn encode_uf2(binary: &[u8]) -> Vec<u8> {
-    encode_uf2_for_family(binary, RP2040_FAMILY_ID)
+    encode_uf2_at_address(binary, RP2040_UF2_BASE_ADDRESS, RP2040_FAMILY_ID)
 }
 
 /// Build UF2 blocks using an explicit Raspberry Pi family identifier.
 pub fn encode_uf2_for_family(binary: &[u8], family_id: u32) -> Vec<u8> {
+    encode_uf2_at_address(binary, RP2040_UF2_BASE_ADDRESS, family_id)
+}
+
+fn encode_uf2_at_address(binary: &[u8], base_address: u32, family_id: u32) -> Vec<u8> {
     let block_count = binary.len().div_ceil(UF2_PAYLOAD_SIZE).max(1);
     let mut output = Vec::with_capacity(block_count * UF2_BLOCK_SIZE);
     for block_no in 0..block_count {
@@ -45,7 +51,7 @@ pub fn encode_uf2_for_family(binary: &[u8], family_id: u32) -> Vec<u8> {
         put_u32(&mut block, 0, UF2_MAGIC_START0);
         put_u32(&mut block, 4, UF2_MAGIC_START1);
         put_u32(&mut block, 8, UF2_FLAG_FAMILY_ID_PRESENT);
-        put_u32(&mut block, 12, start as u32 + RP2040_UF2_BASE_ADDRESS);
+        put_u32(&mut block, 12, start as u32 + base_address);
         // UF2 blocks always advertise a full 256-byte payload. The final
         // block is zero-padded; advertising its short source length makes
         // the ROM BOOTSEL parser reject an otherwise valid image.
@@ -58,6 +64,55 @@ pub fn encode_uf2_for_family(binary: &[u8], family_id: u32) -> Vec<u8> {
         output.extend_from_slice(&block);
     }
     output
+}
+
+/// Convert the loadable flash segments of an ELF into a sparse-free UF2 image.
+///
+/// Arduino-Pico's managed `elf2uf2` path is the reference implementation. A
+/// raw BIN loses segment load addresses (and can flatten RAM sections after
+/// flash), so prefer this path whenever the linker emitted a sibling ELF.
+fn encode_uf2_from_elf(elf_bytes: &[u8], family_id: u32) -> Result<Vec<u8>> {
+    let file = object::File::parse(elf_bytes)
+        .map_err(|error| FbuildError::DeployFailed(format!("invalid RP2040 ELF: {error}")))?;
+    let mut flash: BTreeMap<u32, u8> = BTreeMap::new();
+    for segment in file.segments() {
+        let address = segment.address();
+        let data = segment.data().map_err(|error| {
+            FbuildError::DeployFailed(format!("failed to read RP2040 ELF segment: {error}"))
+        })?;
+        if data.is_empty() || address >= 0x1100_0000 || address.saturating_add(data.len() as u64) <= 0x1000_0000 {
+            continue;
+        }
+        let start = address.max(0x1000_0000) as usize;
+        let skip = start as u64 - address;
+        let max_len = 0x1100_0000usize.saturating_sub(start);
+        for (offset, byte) in data
+            .iter()
+            .enumerate()
+            .skip(skip as usize)
+            .take(max_len)
+        {
+            let target = start + offset - skip as usize;
+            flash.insert(target as u32, *byte);
+        }
+    }
+    let Some(((first, _), (last, _))) = flash.iter().next().zip(flash.iter().next_back()) else {
+        return Err(FbuildError::DeployFailed(
+            "RP2040 ELF contains no loadable flash segments".into(),
+        ));
+    };
+    let first = *first;
+    let last = *last;
+    if first != RP2040_UF2_BASE_ADDRESS {
+        return Err(FbuildError::DeployFailed(format!(
+            "RP2040 ELF flash starts at 0x{first:08X}, expected 0x{RP2040_UF2_BASE_ADDRESS:08X}"
+        )));
+    }
+    let mut image = vec![0u8; last as usize - first as usize + 1];
+    for (address, byte) in flash {
+        image[address as usize - first as usize] = byte;
+    }
+    Ok(encode_uf2_at_address(&image, first, family_id))
 }
 
 fn put_u32(buffer: &mut [u8], offset: usize, value: u32) {
@@ -174,6 +229,19 @@ fn write_uf2(firmware_path: &Path, volume: &Path, family_id: u32) -> Result<Path
         .is_some_and(|ext| ext.eq_ignore_ascii_case("uf2"))
     {
         bytes
+    } else if firmware_path
+        .extension()
+        .is_some_and(|ext| ext.eq_ignore_ascii_case("bin"))
+        && firmware_path.with_extension("elf").is_file()
+    {
+        let elf_path = firmware_path.with_extension("elf");
+        let elf_bytes = fs::read(&elf_path).map_err(|error| {
+            FbuildError::DeployFailed(format!(
+                "failed to read RP2040 ELF {}: {error}",
+                elf_path.display()
+            ))
+        })?;
+        encode_uf2_from_elf(&elf_bytes, family_id)?
     } else {
         encode_uf2_for_family(&bytes, family_id)
     };
