@@ -776,6 +776,9 @@ pub async fn deploy(
                 );
                 Box::new(deployer)
             }
+            fbuild_core::Platform::RaspberryPi => {
+                Box::new(fbuild_deploy::rp2040::Rp2040Deployer::for_board(&board_id))
+            }
             fbuild_core::Platform::NxpLpc => fbuild_deploy::lpc::dispatch_box(
                 &board_id,
                 &deploy_board_overrides,
@@ -857,7 +860,13 @@ pub async fn deploy(
         &deploy_result,
         Ok(r) if r.success && matches!(r.outcome, fbuild_deploy::DeployOutcome::VerifySkip)
     );
-    if let Some(ref p) = deploy_port_str {
+    let recovery_port = deploy_port_str.clone().or_else(|| {
+        deploy_result
+            .as_ref()
+            .ok()
+            .and_then(|result| result.port.clone())
+    });
+    if let Some(ref p) = recovery_port {
         ctx.serial_manager.clear_preemption(p).await;
         if !deploy_skipped_bus_work {
             if let Some(deployer) = deployer_for_recovery {
@@ -926,7 +935,11 @@ pub async fn deploy(
     // monitor-attached and non-monitor-attached response below. Stable
     // wording — see GitHub issue #76 and the DeployOutcome::describe
     // test in fbuild-deploy.
-    let deploy_prefix = format!("deploy succeeded ({})", deploy_outcome.describe());
+    let deploy_prefix = format!(
+        "deploy succeeded ({}); FBUILD_DEPLOY_PORT={}",
+        deploy_outcome.describe(),
+        deploy_post_port.as_deref().unwrap_or("")
+    );
 
     // Post-deploy monitoring: if monitor_after is set, open the serial port
     // and stream lines checking halt conditions (matching Python behavior).
