@@ -21,6 +21,15 @@ The four rules an agent must internalize before doing anything else (all listed 
 
 ## Essential Rules
 
+- **USB VID/PID source of truth:** Never add or embed a board/device VID or PID
+  in fbuild code, tests used by production, generated Rust tables, or release
+  artifacts. All VID/PID records must come from the published
+  [FastLED/boards](https://github.com/FastLED/boards) registry and be ingested
+  through its normal build/publish pipeline. Test-only fixtures may use
+  synthetic or copied IDs to exercise parsing and selection, but they must not
+  become runtime defaults. If a VID/PID is missing, fix the boards registry;
+  do not add an exception here.
+
 - **Modules-first for new functionality; crate splits only for compile parallelism (backed by `--timings`).** New *functionality* is still folded into an existing crate as a *module*, never a drive-by new crate — that original rule (no scope-creep crates) stands. The one sanctioned reason to add a workspace member is **splitting an existing giant crate to compile in parallel**, backed by `cargo build --timings` data and maintainer sign-off (FastLED/fbuild#1008 is that sign-off for the `fbuild-build` / `fbuild-packages` splits). Such splits keep the original crate as a thin **facade** that re-exports the extracted crates at their old paths, so consumers are unchanged. If code is needed by two crates that can't depend on each other (e.g. the CLI and the daemon), put the shared, dependency-free pieces in a crate both already depend on (`fbuild-core` / `fbuild-paths`). Enforced by CI (`crate-gate.yml` → `ci/check_workspace_crates.py`): adding a workspace member fails the build unless you also add it to the approved allowlist (and `ci/hooks/crate_guard.py`) with a maintainer-reviewed rationale.
 - **Always use a globally-installed `soldr` to execute Rust commands.** Bare cargo/rustc and legacy `uv run cargo` shims are blocked by hook. soldr uses `rustup which` to pick the rustup-managed toolchain from `rust-toolchain.toml`. The standard Cargo path is `soldr cargo ...`, so repo Rust builds get soldr's managed zccache path by default; do not add repo-specific `RUSTC_WRAPPER` wiring for normal builds. Install soldr globally via `uv tool install soldr` (or see https://github.com/zackees/soldr).
 - **Always use `uv` for Python.** Bare `python`/`pip` are blocked by hook. Use `uv run ...` or `uv pip ...`.
