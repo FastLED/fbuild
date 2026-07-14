@@ -19,6 +19,9 @@ const UF2_MAGIC_END: u32 = 0x0AB1_6F30;
 const UF2_FLAG_FAMILY_ID_PRESENT: u32 = 0x0000_2000;
 const RP2040_FAMILY_ID: u32 = 0xE48B_FF56;
 const RP2350_FAMILY_ID: u32 = 0xE48B_FF59;
+// The RP2040 ROM UF2 converter addresses flash as an offset. The official
+// Arduino-Pico converter defaults BIN input to 0x2000, not the MCU XIP alias.
+const RP2040_UF2_BASE_ADDRESS: u32 = 0x0000_2000;
 const UF2_PAYLOAD_SIZE: usize = 256;
 const UF2_BLOCK_SIZE: usize = 512;
 
@@ -39,7 +42,7 @@ pub fn encode_uf2_for_family(binary: &[u8], family_id: u32) -> Vec<u8> {
         put_u32(&mut block, 0, UF2_MAGIC_START0);
         put_u32(&mut block, 4, UF2_MAGIC_START1);
         put_u32(&mut block, 8, UF2_FLAG_FAMILY_ID_PRESENT);
-        put_u32(&mut block, 12, start as u32 + 0x1000_0000);
+        put_u32(&mut block, 12, start as u32 + RP2040_UF2_BASE_ADDRESS);
         // UF2 blocks always advertise a full 256-byte payload. The final
         // block is zero-padded; advertising its short source length makes
         // the ROM BOOTSEL parser reject an otherwise valid image.
@@ -358,6 +361,14 @@ mod tests {
         assert_eq!(
             u32::from_le_bytes(uf2[28..32].try_into().unwrap()),
             RP2040_FAMILY_ID
+        );
+        assert_eq!(
+            u32::from_le_bytes(uf2[12..16].try_into().unwrap()),
+            RP2040_UF2_BASE_ADDRESS
+        );
+        assert_eq!(
+            u32::from_le_bytes(uf2[512 + 12..512 + 16].try_into().unwrap()),
+            RP2040_UF2_BASE_ADDRESS + UF2_PAYLOAD_SIZE as u32
         );
         assert_eq!(
             u32::from_le_bytes(uf2[512 + 20..512 + 24].try_into().unwrap()),
