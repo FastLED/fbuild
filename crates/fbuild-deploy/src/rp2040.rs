@@ -19,9 +19,12 @@ const UF2_MAGIC_END: u32 = 0x0AB1_6F30;
 const UF2_FLAG_FAMILY_ID_PRESENT: u32 = 0x0000_2000;
 const RP2040_FAMILY_ID: u32 = 0xE48B_FF56;
 const RP2350_FAMILY_ID: u32 = 0xE48B_FF59;
-// The RP2040 ROM UF2 converter addresses flash as an offset. The official
-// Arduino-Pico converter defaults BIN input to 0x2000, not the MCU XIP alias.
-const RP2040_UF2_BASE_ADDRESS: u32 = 0x0000_2000;
+// fbuild's firmware.bin is the complete flash image: it starts with the
+// second-stage bootloader at the RP2040 XIP address 0x1000_0000. The 0x2000
+// default used by Arduino-Pico's uf2conv.py is only for app-only BINs whose
+// boot2 has already been stripped. Encoding this full image at 0x2000 leaves
+// stock ROM BOOTSEL in place after an apparently successful copy.
+const RP2040_UF2_BASE_ADDRESS: u32 = 0x1000_0000;
 const UF2_PAYLOAD_SIZE: usize = 256;
 const UF2_BLOCK_SIZE: usize = 512;
 
@@ -384,6 +387,19 @@ mod tests {
             u32::from_le_bytes(uf2[508..512].try_into().unwrap()),
             UF2_MAGIC_END
         );
+    }
+
+    #[test]
+    fn full_image_boot2_uses_xip_address() {
+        // Prefix emitted by the RP2040 second-stage bootloader in FastLED's
+        // complete firmware.bin artifact.
+        let boot2_prefix = [0x00, 0xB5, 0x32, 0x4B, 0x21, 0x20, 0x58, 0x60];
+        let uf2 = encode_uf2(&boot2_prefix);
+        assert_eq!(
+            u32::from_le_bytes(uf2[12..16].try_into().unwrap()),
+            0x1000_0000
+        );
+        assert_eq!(&uf2[32..40], &boot2_prefix);
     }
 
     #[test]

@@ -1,11 +1,13 @@
 # fbuild-core embedded data
 
-Binary blobs `include_bytes!`'d into `fbuild-core` at compile time.
+This directory contains test fixtures and build-cache documentation. Board USB
+VID/PID data is **not** a built-in fbuild runtime table: it is ingested from
+the published FastLED/boards artifacts during the build/cache phase.
 
 | File                    | Purpose                                                                                                                                                                                                                          |
 | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `usb-vendors.tar.zst`   | USB Vendor-ID → vendor-name map (long-tail fallback, ~2.2k VIDs). Produced by `online-data-tools/build_vendor_archive.py`. See `crate::usb::embedded`. |
-| `usb-vids.proto.zstd`   | Compact VID:PID → {vendor, product} overlay **and** a VID → vendor map, in one artifact. Produced by the **FastLED/boards** data pipeline (`builders/build_usb_ids.py` over the `platformio`/`arduino`/`vendors`/`other` branches). Baked in so full VID + VID:PID resolution works OFFLINE with no hardcoded per-board tables. See `crate::usb::data` (`embedded()`), consumed by `usb::resolve`. |
+| `usb-vids.proto.zstd`   | Test fixture for the compact VID:PID overlay produced by **FastLED/boards**. It must never be used as a production built-in catalogue. Production ingestion fetches/consumes the published boards artifact. |
 
 ## How to refresh the VID:PID overlay (`usb-vids.proto.zstd`)
 
@@ -15,16 +17,17 @@ workflow regenerates the artifact on every push to a data branch
 (`platformio`/`arduino`/`vendors`/`other`).
 
 ```bash
-# Regenerate from the boards repo (all four data branches), then copy in:
-#   cd ../boards && python builders/site.py ...   # or fetch the published artifact
-cp <boards-out>/usb-vids.proto.zstd crates/fbuild-core/data/usb-vids.proto.zstd
+# The production path consumes the published artifact directly; do not copy
+# it into a runtime source file or commit a refreshed built-in VID/PID table:
+curl -fsSLo <cache>/usb-vids.proto.zstd https://fastled.github.io/boards/usb-vids.proto.zstd
 soldr cargo test -p fbuild-core usb::
 ```
 
 To add a new board/probe resolution (e.g. a debug-probe VID:PID), edit the
-data on the FastLED/boards `vendors` (or `other`) branch — NOT a hardcoded
-table in fbuild — and re-run the boards pipeline. The proto then carries it
-through to fbuild's `usb::resolve` on the next refresh.
+data on the FastLED/boards `vendors` (or `other`) branch — **never** a
+hardcoded table or embedded runtime blob in fbuild — and re-run the boards
+pipeline. The published artifact then carries it through to fbuild's
+`usb::resolve` on the next ingestion.
 
 ## How to refresh the vendor archive
 
