@@ -56,25 +56,21 @@
 
 use super::UsbInfo;
 use prost::Message;
-use serde::Deserialize;
+use serde_json::Value;
 use std::collections::HashMap;
 use std::path::Path;
 use std::sync::{OnceLock, RwLock};
 use std::time::Duration;
 
-/// Legacy URL of the dataset index produced by the `online-data` branch's
-/// nightly workflow.
-pub const MANIFEST_URL: &str =
-    "https://raw.githubusercontent.com/fastled/fbuild/online-data/manifest.json";
+/// FastLED/boards published registry (canonical USB VID:PID source).
+pub const MANIFEST_URL: &str = "https://fastled.github.io/boards/_meta.json";
 
 /// Legacy JSON overlay URL. Kept for compatibility with older callers and
 /// tests; new code should use [`USB_VIDS_PROTO_ZSTD_URL`].
-pub const USB_VID_JSON_URL: &str =
-    "https://raw.githubusercontent.com/fastled/fbuild/online-data/data/usb-vid.json";
+pub const USB_VID_JSON_URL: &str = "https://fastled.github.io/boards/usb-ids.json";
 
 /// Current compact USB VID:PID overlay published by the `online-data` branch.
-pub const USB_VIDS_PROTO_ZSTD_URL: &str =
-    "https://raw.githubusercontent.com/fastled/fbuild/online-data/data/usb-vids.proto.zstd";
+pub const USB_VIDS_PROTO_ZSTD_URL: &str = "https://fastled.github.io/boards/usb-vids.proto.zstd";
 
 static ONLINE_MAP: RwLock<Option<HashMap<u32, UsbInfo>>> = RwLock::new(None);
 
@@ -85,7 +81,13 @@ static ONLINE_MAP: RwLock<Option<HashMap<u32, UsbInfo>>> = RwLock::new(None);
 /// (`builders/build_usb_ids.py` over the `platformio`/`arduino`/`vendors`/
 /// `other` branches) and vendored here. Refresh workflow: see
 /// `crates/fbuild-core/data/README.md`.
+// Production never ships a built-in VID/PID catalogue. The canonical
+// FastLED/boards artifact is fetched/ingested by the build/runtime cache
+// path. Keep the historical blob available only to unit tests as a fixture.
+#[cfg(test)]
 const EMBEDDED_PROTO: &[u8] = include_bytes!("../../data/usb-vids.proto.zstd");
+#[cfg(not(test))]
+const EMBEDDED_PROTO: &[u8] = &[];
 
 /// Both projections of the embedded proto. The compact `usb-vids.proto.zstd`
 /// carries a `Vendor{vid, name, [Product{pid, name}]}` tree, so a single
@@ -184,16 +186,6 @@ struct Product {
     name: String,
 }
 
-/// On-disk representation: one entry per VID, with the vendor name shared
-/// across all products of that VID. Each product is a two-element
-/// `[pid_hex, product_name]` tuple.
-#[derive(Debug, Deserialize)]
-struct VendorEntry {
-    vendor: String,
-    #[serde(default)]
-    products: Vec<(String, String)>,
-}
-
 /// Install the overlay from a JSON file on disk. Replaces any previously
 /// installed overlay. Silently no-ops on any IO or parse error so the
 /// resolver never crashes on a stale / partial cache file.
@@ -211,7 +203,7 @@ pub fn try_install_online_cache(path: &Path) -> bool {
             return false;
         }
     };
-    let parsed: HashMap<String, VendorEntry> = match serde_json::from_str(&raw) {
+    let parsed: Value = match serde_json::from_str(&raw) {
         Ok(m) => m,
         Err(e) => {
             tracing::warn!(?path, error = %e, "usb online overlay: parse failed");
@@ -220,22 +212,41 @@ pub fn try_install_online_cache(path: &Path) -> bool {
     };
     // Flatten the on-disk per-VID nested shape into the O(1) flat
     // `(vid, pid) -> UsbInfo` lookup table the resolver expects.
+    let Some(parsed) = parsed.as_object() else {
+        tracing::warn!(?path, "usb online overlay: root is not an object");
+        return false;
+    };
     let mut packed: HashMap<u32, UsbInfo> = HashMap::with_capacity(parsed.len() * 4);
-    for (vid_str, entry) in parsed {
+    for (vid_str, value) in parsed {
         let Some(vid) = parse_hex_u16(&vid_str) else {
             continue;
         };
-        for (pid_str, product_name) in entry.products {
-            let Some(pid) = parse_hex_u16(&pid_str) else {
-                continue;
-            };
-            packed.insert(
-                pack(vid, pid),
-                UsbInfo {
-                    vendor: entry.vendor.clone(),
-                    product: product_name,
-                },
-            );
+        // Accept fbuild's legacy {vendor, products:[[pid,name]]} shape and
+        // the canonical FastLED/boards {"Vendor name":..., "PIDs":[{pid:name}]}
+        // shape. Keeping this compatibility at the boundary lets boards remain
+        // the single source of truth without a second generated fbuild file.
+        let vendor = value.get("vendor").and_then(Value::as_str)
+            .or_else(|| value.get("Vendor name").and_then(Value::as_str))
+            .unwrap_or("Unknown USB vendor");
+        if let Some(products) = value.get("products").and_then(Value::as_array) {
+            for pair in products {
+                let Some(items) = pair.as_array() else { continue };
+                if items.len() != 2 { continue; }
+                let Some(pid_str) = items[0].as_str() else { continue };
+                let Some(product_name) = items[1].as_str() else { continue };
+                let Some(pid) = parse_hex_u16(pid_str) else { continue; };
+                packed.insert(pack(vid, pid), UsbInfo { vendor: vendor.to_string(), product: product_name.to_string() });
+            }
+        }
+        if let Some(products) = value.get("PIDs").and_then(Value::as_array) {
+            for item in products {
+                let Some(map) = item.as_object() else { continue };
+                for (pid_str, product_name) in map {
+                    let Some(product_name) = product_name.as_str() else { continue };
+                    let Some(pid) = parse_hex_u16(pid_str) else { continue; };
+                    packed.insert(pack(vid, pid), UsbInfo { vendor: vendor.to_string(), product: product_name.to_string() });
+                }
+            }
         }
     }
     let count = packed.len();
@@ -667,6 +678,23 @@ mod tests {
         std::fs::write(&path, r#"{"feed": {"vendor": "Foo", "products": []}}"#).unwrap();
         install_online_cache(&path);
         assert!(lookup(0xFEED, 0xC0DE).is_none());
+        clear_online_cache_for_tests();
+    }
+
+    #[test]
+    fn install_online_cache_accepts_fastled_boards_shape() {
+        let _guard = OVERLAY_LOCK.lock().unwrap();
+        clear_online_cache_for_tests();
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("boards-usb-ids.json");
+        std::fs::write(
+            &path,
+            r#"{"2e8a":{"Vendor name":"Raspberry Pi","PIDs":[{"0003":"Raspberry Pi RP2 BOOTSEL"},{"000a":"Raspberry Pi Pico"},{"000f":"Raspberry Pi Pico 2"}]}}"#,
+        )
+        .unwrap();
+        assert!(try_install_online_cache(&path));
+        assert_eq!(lookup(0x2e8a, 0x0003).unwrap().product, "Raspberry Pi RP2 BOOTSEL");
+        assert_eq!(lookup(0x2e8a, 0x000f).unwrap().product, "Raspberry Pi Pico 2");
         clear_online_cache_for_tests();
     }
 }
