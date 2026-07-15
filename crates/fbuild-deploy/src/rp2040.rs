@@ -2,6 +2,7 @@
 
 use std::collections::BTreeSet;
 use std::fs;
+use std::io::{self, Write};
 use std::path::{Path, PathBuf};
 use std::time::{Duration, Instant};
 
@@ -315,8 +316,74 @@ fn reject_stale_uf2(uf2: &Path) -> Result<()> {
 
 fn copy_uf2_artifact(artifact: &Path, destination: &Path, volume: &Path) -> Result<()> {
     copy_uf2_artifact_with(artifact, destination, volume, |source, target| {
-        fs::copy(source, target)
+        write_uf2_artifact_direct(source, target)
     })
+}
+
+#[derive(Debug)]
+struct Uf2WriteFailure {
+    error: io::Error,
+    bytes_written: u64,
+}
+
+impl Uf2WriteFailure {
+    fn new(error: io::Error, bytes_written: u64) -> Self {
+        Self {
+            error,
+            bytes_written,
+        }
+    }
+}
+
+fn write_uf2_artifact_direct(
+    artifact: &Path,
+    destination: &Path,
+) -> std::result::Result<u64, Uf2WriteFailure> {
+    // Match Arduino-Pico's uf2conv.py: hold the completed UF2 in memory,
+    // create/truncate NEW.UF2, write it sequentially, flush, and close. Avoid
+    // filesystem-level copy, metadata preservation, fsync, rename, or readback
+    // on the ROM-emulated FAT volume.
+    let bytes = fs::read(artifact).map_err(|error| Uf2WriteFailure::new(error, 0))?;
+    let output = fs::File::create(destination)
+        .map_err(|error| Uf2WriteFailure::new(error, 0))?;
+    write_uf2_bytes(output, &bytes)
+}
+
+struct CountingWriter<W> {
+    inner: W,
+    bytes_written: u64,
+}
+
+impl<W: Write> Write for CountingWriter<W> {
+    fn write(&mut self, buffer: &[u8]) -> io::Result<usize> {
+        let written = self.inner.write(buffer)?;
+        self.bytes_written += written as u64;
+        Ok(written)
+    }
+
+    fn flush(&mut self) -> io::Result<()> {
+        self.inner.flush()
+    }
+}
+
+fn write_uf2_bytes<W: Write>(
+    output: W,
+    bytes: &[u8],
+) -> std::result::Result<u64, Uf2WriteFailure> {
+    // A large CPython BufferedWriter write bypasses its small buffer and sends
+    // this whole byte slice to the raw file in one call. write_all has the
+    // same first-call shape and only retries if the OS reports a short write.
+    let mut output = CountingWriter {
+        inner: output,
+        bytes_written: 0,
+    };
+    if let Err(error) = output.write_all(bytes) {
+        return Err(Uf2WriteFailure::new(error, output.bytes_written));
+    }
+    output
+        .flush()
+        .map_err(|error| Uf2WriteFailure::new(error, output.bytes_written))?;
+    Ok(output.bytes_written)
 }
 
 fn copy_uf2_artifact_with<F>(
@@ -326,20 +393,35 @@ fn copy_uf2_artifact_with<F>(
     copy: F,
 ) -> Result<()>
 where
-    F: FnOnce(&Path, &Path) -> std::io::Result<u64>,
+    F: FnOnce(&Path, &Path) -> std::result::Result<u64, Uf2WriteFailure>,
 {
+    let expected_bytes = fs::metadata(artifact)
+        .map_err(|error| {
+            FbuildError::DeployFailed(format!(
+                "failed to inspect RP2040 UF2 {} before transfer: {error}",
+                artifact.display()
+            ))
+        })?
+        .len();
     match copy(artifact, destination) {
-        Ok(_) => Ok(()),
-        Err(copy_error) => {
+        Ok(bytes_written) if bytes_written == expected_bytes => Ok(()),
+        Ok(bytes_written) => Err(FbuildError::DeployFailed(format!(
+            "failed to copy RP2040 UF2 {} to {}: writer reported {bytes_written} of {expected_bytes} bytes without an error",
+            artifact.display(),
+            destination.display()
+        ))),
+        Err(write_failure) => {
             // Some hosts report a final I/O error when the ROM ejects the
             // virtual FAT volume immediately after accepting the last block.
-            // Disappearance is the ROM's positive transition signal; if the
-            // marker remains, preserve the original actionable copy error.
-            if is_device_disappearance_error(&copy_error)
+            // Only accept that race after the host reported every source byte
+            // written and the marker disappeared. Otherwise preserve the
+            // original actionable write error.
+            if write_failure.bytes_written == expected_bytes
+                && is_device_disappearance_error(&write_failure.error)
                 && wait_for_volume_disappearance(volume, Duration::from_secs(2)).is_ok()
             {
                 tracing::debug!(
-                    error = %copy_error,
+                    error = %write_failure.error,
                     volume = %volume.display(),
                     "RP2040 volume ejected while the host finalized NEW.UF2; treating transfer as accepted"
                 );
@@ -348,7 +430,7 @@ where
                 Err(FbuildError::DeployFailed(format_uf2_copy_error(
                     artifact,
                     destination,
-                    &copy_error,
+                    &write_failure.error,
                 )))
             }
         }
@@ -365,12 +447,18 @@ fn format_uf2_copy_error(
         artifact.display(),
         destination.display()
     );
-    if copy_error.raw_os_error() == Some(1392) {
-        return format!(
+    match copy_error.raw_os_error() {
+        Some(121) => format!(
+            "{base}. Windows timed out writing to the RP-series BOOTSEL storage transport (error 121), and fbuild did not observe the ROM eject transition. Reconnect the board in BOOTSEL on a direct USB port with a known data cable, avoid USB hubs for the retry, and do not retry the same timed-out enumeration"
+        ),
+        Some(1006) => format!(
+            "{base}. Windows invalidated the open handle to the RP-series BOOTSEL synthetic FAT volume (error 1006), and fbuild did not observe the ROM eject transition. Reconnect the board in BOOTSEL on a direct USB port and close software that scans or synchronizes removable drives before retrying"
+        ),
+        Some(1392) => format!(
             "{base}. Windows cannot access the RP-series BOOTSEL synthetic FAT volume (error 1392). Do not run chkdsk, filesystem repair, or format this ROM-emulated volume; reconnect the board in BOOTSEL and retry, or use fbuild's managed picotool fallback with the Raspberry Pi-documented WinUSB binding"
-        );
+        ),
+        _ => base,
     }
-    base
 }
 
 fn is_device_disappearance_error(error: &std::io::Error) -> bool {
@@ -807,6 +895,35 @@ mod tests {
     use super::*;
     use tempfile::tempdir;
 
+    struct ShortWriter {
+        max_write: usize,
+    }
+
+    impl Write for ShortWriter {
+        fn write(&mut self, buffer: &[u8]) -> io::Result<usize> {
+            Ok(buffer.len().min(self.max_write))
+        }
+
+        fn flush(&mut self) -> io::Result<()> {
+            Ok(())
+        }
+    }
+
+    struct FlushFailureWriter;
+
+    impl Write for FlushFailureWriter {
+        fn write(&mut self, buffer: &[u8]) -> io::Result<usize> {
+            Ok(buffer.len())
+        }
+
+        fn flush(&mut self) -> io::Result<()> {
+            Err(io::Error::new(
+                io::ErrorKind::NotFound,
+                "volume ejected during flush",
+            ))
+        }
+    }
+
     #[test]
     fn uf2_has_rp2040_family_and_expected_blocks() {
         let image = vec![0xA5; 300];
@@ -1100,31 +1217,93 @@ mod tests {
         fs::write(&marker, "Model: Raspberry Pi RP2").unwrap();
         fs::write(&artifact, encode_uf2(&[1, 2, 3])).unwrap();
 
+        let artifact_len = fs::metadata(&artifact).unwrap().len();
         copy_uf2_artifact_with(&artifact, &destination, root.path(), |_, _| {
             fs::remove_file(&marker).unwrap();
-            Err(std::io::Error::new(
-                std::io::ErrorKind::NotFound,
-                "device disappeared after final block",
+            Err(Uf2WriteFailure::new(
+                std::io::Error::new(
+                    std::io::ErrorKind::NotFound,
+                    "device disappeared after final block",
+                ),
+                artifact_len,
             ))
         })
         .unwrap();
 
         fs::write(&marker, "Model: Raspberry Pi RP2").unwrap();
         let error = copy_uf2_artifact_with(&artifact, &destination, root.path(), |_, _| {
-            Err(std::io::Error::other("corrupt volume"))
+            Err(Uf2WriteFailure::new(
+                std::io::Error::other("corrupt volume"),
+                artifact_len,
+            ))
         })
         .unwrap_err();
         assert!(error.to_string().contains("corrupt volume"));
 
         fs::remove_file(&marker).unwrap();
         let error = copy_uf2_artifact_with(&artifact, &destination, root.path(), |_, _| {
-            Err(std::io::Error::new(
-                std::io::ErrorKind::PermissionDenied,
-                "source permission denied",
+            Err(Uf2WriteFailure::new(
+                std::io::Error::new(
+                    std::io::ErrorKind::PermissionDenied,
+                    "source permission denied",
+                ),
+                0,
             ))
         })
         .unwrap_err();
         assert!(error.to_string().contains("source permission denied"));
+    }
+
+    #[test]
+    fn direct_uf2_write_preserves_bytes_and_truncates_destination() {
+        let root = tempdir().unwrap();
+        let artifact = root.path().join("firmware.uf2");
+        let destination = root.path().join("NEW.UF2");
+        let bytes = vec![0xA5; 128 * 1024 + UF2_BLOCK_SIZE];
+        fs::write(&artifact, &bytes).unwrap();
+        fs::write(&destination, vec![0xCC; bytes.len() * 2]).unwrap();
+
+        let written = write_uf2_artifact_direct(&artifact, &destination).unwrap();
+
+        assert_eq!(written, bytes.len() as u64);
+        assert_eq!(fs::read(destination).unwrap(), bytes);
+    }
+
+    #[test]
+    fn whole_buffer_writer_tracks_short_writes_and_flush_failures() {
+        let bytes = vec![0xA5; 4096];
+        assert_eq!(
+            write_uf2_bytes(ShortWriter { max_write: 17 }, &bytes).unwrap(),
+            bytes.len() as u64
+        );
+
+        let failure = write_uf2_bytes(FlushFailureWriter, &bytes).unwrap_err();
+        assert_eq!(failure.bytes_written, bytes.len() as u64);
+        assert_eq!(failure.error.kind(), io::ErrorKind::NotFound);
+    }
+
+    #[test]
+    fn eject_error_before_all_bytes_are_written_is_rejected() {
+        let root = tempdir().unwrap();
+        let marker = root.path().join("INFO_UF2.TXT");
+        let artifact = root.path().join("firmware.uf2");
+        let destination = root.path().join("NEW.UF2");
+        fs::write(&marker, "Model: Raspberry Pi RP2").unwrap();
+        fs::write(&artifact, encode_uf2(&[1, 2, 3])).unwrap();
+        fs::remove_file(&marker).unwrap();
+
+        let error = copy_uf2_artifact_with(&artifact, &destination, root.path(), |_, _| {
+            Err(Uf2WriteFailure::new(
+                std::io::Error::new(
+                    std::io::ErrorKind::NotFound,
+                    "device disappeared during transfer",
+                ),
+                0,
+            ))
+        })
+        .unwrap_err();
+
+        assert!(error.to_string().contains("device disappeared during transfer"));
     }
 
     #[test]
@@ -1139,5 +1318,47 @@ mod tests {
         assert!(message.contains("synthetic FAT volume"));
         assert!(message.contains("Do not run chkdsk"));
         assert!(message.contains("managed picotool fallback"));
+    }
+
+    #[test]
+    fn windows_1006_is_rejected_while_bootsel_marker_remains() {
+        let root = tempdir().unwrap();
+        let artifact = root.path().join("firmware.uf2");
+        let destination = root.path().join("NEW.UF2");
+        fs::write(
+            root.path().join("INFO_UF2.TXT"),
+            "Model: Raspberry Pi RP2",
+        )
+        .unwrap();
+        fs::write(&artifact, encode_uf2(&[1, 2, 3])).unwrap();
+        let artifact_len = fs::metadata(&artifact).unwrap().len();
+
+        let error = copy_uf2_artifact_with(&artifact, &destination, root.path(), |_, _| {
+            Err(Uf2WriteFailure::new(
+                io::Error::from_raw_os_error(1006),
+                artifact_len,
+            ))
+        })
+        .unwrap_err();
+
+        let message = error.to_string();
+        assert!(message.contains("error 1006"));
+        assert!(message.contains("did not observe the ROM eject transition"));
+        assert!(message.contains("scans or synchronizes removable drives"));
+        assert!(root.path().join("INFO_UF2.TXT").is_file());
+    }
+
+    #[test]
+    fn windows_121_write_timeout_recommends_a_direct_usb_retry() {
+        let error = io::Error::from_raw_os_error(121);
+        let message = format_uf2_copy_error(
+            Path::new("firmware.uf2"),
+            Path::new("G:/NEW.UF2"),
+            &error,
+        );
+        assert!(message.contains("error 121"));
+        assert!(message.contains("direct USB port"));
+        assert!(message.contains("avoid USB hubs"));
+        assert!(message.contains("do not retry the same timed-out enumeration"));
     }
 }
