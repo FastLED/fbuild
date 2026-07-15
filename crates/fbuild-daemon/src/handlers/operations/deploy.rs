@@ -414,11 +414,18 @@ pub async fn deploy(
         choose_deploy_port(
             None,
             platform,
+            Some(&board_id),
             board.as_ref(),
             ctx.device_manager.get_all_devices().into_values().collect(),
         )
     } else {
-        choose_deploy_port(req.port.clone(), platform, board.as_ref(), Vec::new())
+        choose_deploy_port(
+            req.port.clone(),
+            platform,
+            Some(&board_id),
+            board.as_ref(),
+            Vec::new(),
+        )
     };
     let deploy_port_warning = deploy_port_choice.warning.clone();
 

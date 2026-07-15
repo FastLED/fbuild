@@ -47,11 +47,6 @@ pub const CMSIS_DAP_V2_HEX_NAME: &str = "lpc-link2-cmsis-dap-v2.hex";
 /// environments).
 pub const CMSIS_DAP_V1_HEX_NAME: &str = "lpc-link2-cmsis-dap-v1.hex";
 
-/// LPC-Link2 in DFU (bootloader) mode. dfu-util expects `-d <vid>:<pid>`
-/// and this is the pair the LPC11U35 ROM exposes when the boot-select
-/// jumper is held low at power-up.
-pub const LPC_LINK2_DFU_VID_PID: &str = "1fc9:000c";
-
 /// Which per-platform dfu-util archive name lives under
 /// `ASSETS_BASE_URL`. Matches the filenames the framework repo PR
 /// (FastLED/framework-arduino-lpc8xx#37) committed.
@@ -160,11 +155,15 @@ pub fn find_lpc_link2_firmware() -> Option<NormalizedPath> {
 /// DFU mode, using the CMSIS-DAP V2 hex. Kept separate from the actual
 /// spawn so the CLI's `--dry-run` variant can show it (and tests can
 /// pin the shape).
-pub fn dfu_util_argv(dfu_util: &Path, firmware_hex: &Path) -> Vec<String> {
+pub fn dfu_util_argv(
+    dfu_util: &Path,
+    firmware_hex: &Path,
+    device_selector: &str,
+) -> Vec<String> {
     vec![
         dfu_util.to_string_lossy().to_string(),
         "-d".to_string(),
-        LPC_LINK2_DFU_VID_PID.to_string(),
+        device_selector.to_string(),
         "--alt".to_string(),
         "0".to_string(),
         "--download".to_string(),
@@ -212,7 +211,9 @@ pub fn install_hint() -> String {
 /// LPC845-BRK stock shipment. The debugger's PID changes to something
 /// ARM-defined once the CMSIS-DAP V2 upgrade lands, which is how the
 /// warning path detects "still on the old firmware".
+#[cfg(test)]
 pub const LPC_LINK2_V1_FIRMWARE_VID: u16 = 0x1FC9;
+#[cfg(test)]
 pub const LPC_LINK2_V1_FIRMWARE_PID: u16 = 0x0132;
 
 /// Return true when a USB device's VID:PID matches the stock LPC-Link2
@@ -222,7 +223,27 @@ pub const LPC_LINK2_V1_FIRMWARE_PID: u16 = 0x0132;
 /// This is the trigger for the yellow "please upgrade your debugger"
 /// warning printed by [`firmware_upgrade_warning_ansi`].
 pub fn looks_like_lpc_link2_v1_firmware(vid: u16, pid: u16) -> bool {
-    vid == LPC_LINK2_V1_FIRMWARE_VID && pid == LPC_LINK2_V1_FIRMWARE_PID
+    #[cfg(test)]
+    {
+        vid == LPC_LINK2_V1_FIRMWARE_VID && pid == LPC_LINK2_V1_FIRMWARE_PID
+    }
+    #[cfg(not(test))]
+    {
+        fbuild_core::usb::profiles::profiles_for(vid, pid)
+            .iter()
+            .any(profile_is_factory_lpc_link2_v1)
+    }
+}
+
+fn profile_is_factory_lpc_link2_v1(
+    profile: &fbuild_core::usb::profiles::UsbTransportProfile,
+) -> bool {
+    use fbuild_core::usb::profiles::{UsbDeviceRole, UsbPurpose};
+
+    profile.purpose == UsbPurpose::Probe
+        && profile.role == UsbDeviceRole::DebugProbe
+        && profile.family.as_deref() == Some("lpc-link2")
+        && profile.generation.as_deref() == Some("factory-cmsis-dap-v1")
 }
 
 /// The rendered warning users see on the terminal when we detect the
@@ -293,6 +314,38 @@ mod tests {
     use super::*;
 
     #[test]
+    fn factory_firmware_detection_uses_profile_generation() {
+        use fbuild_core::usb::profiles::{
+            UsbDeviceRole, UsbIdentityMatch, UsbProfileProvenance, UsbPurpose,
+            UsbTransportProfile,
+        };
+        let profile = UsbTransportProfile {
+            identity_match: UsbIdentityMatch {
+                vid: "feed".to_string(),
+                pid: Some("c0de".to_string()),
+                pid_mask: None,
+            },
+            purpose: UsbPurpose::Probe,
+            role: UsbDeviceRole::DebugProbe,
+            transport: "swd".to_string(),
+            reset: "hardware".to_string(),
+            handoff: "reconnect".to_string(),
+            platform: Some("nxplpc".to_string()),
+            family: Some("lpc-link2".to_string()),
+            generation: Some("factory-cmsis-dap-v1".to_string()),
+            interface: Some("hid".to_string()),
+            provenance: UsbProfileProvenance {
+                source_url: "test://fixture".to_string(),
+                source_revision: "a".repeat(40),
+                source_class: "test".to_string(),
+            },
+            priority: 100,
+            allow_ambiguous: false,
+        };
+        assert!(profile_is_factory_lpc_link2_v1(&profile));
+    }
+
+    #[test]
     fn asset_urls_point_at_fastled_framework_repo_tools_dir() {
         let url = asset_url(CMSIS_DAP_V2_HEX_NAME);
         assert!(
@@ -331,10 +384,11 @@ mod tests {
         let argv = dfu_util_argv(
             Path::new("/usr/bin/dfu-util"),
             Path::new("/tmp/lpc-link2-cmsis-dap-v2.hex"),
+            "feed:c0de",
         );
         assert_eq!(argv[0], "/usr/bin/dfu-util");
         assert_eq!(argv[1], "-d");
-        assert_eq!(argv[2], LPC_LINK2_DFU_VID_PID);
+        assert_eq!(argv[2], "feed:c0de");
         // Flash-content flags are `--alt 0 --download <hex> --reset` in that order.
         assert!(argv.iter().any(|a| a == "--alt"));
         assert!(argv.iter().any(|a| a == "0"));

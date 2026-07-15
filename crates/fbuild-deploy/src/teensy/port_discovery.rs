@@ -17,8 +17,34 @@ use std::time::{Duration, Instant};
 
 use serialport::{SerialPortInfo, SerialPortType};
 
-/// PJRC USB Vendor ID. Stable since 2008; covers every Teensy generation.
+/// Test-only identity fixture. Production Teensy classification is supplied by
+/// the verified FastLED/boards USB transport profiles.
+#[cfg(test)]
 pub const PJRC_VID: u16 = 0x16C0;
+
+fn profile_is_teensy_runtime(
+    profile: &fbuild_core::usb::profiles::UsbTransportProfile,
+) -> bool {
+    use fbuild_core::usb::profiles::{UsbDeviceRole, UsbPurpose};
+
+    profile.purpose == UsbPurpose::Runtime
+        && profile.role == UsbDeviceRole::RuntimeCdc
+        && (profile.platform.as_deref() == Some("teensy")
+            || profile.family.as_deref() == Some("teensy"))
+}
+
+fn is_teensy_runtime_identity(vid: u16, pid: u16) -> bool {
+    #[cfg(test)]
+    {
+        vid == PJRC_VID && pid != 0x0478
+    }
+    #[cfg(not(test))]
+    {
+        fbuild_core::usb::profiles::profiles_for(vid, pid)
+            .iter()
+            .any(profile_is_teensy_runtime)
+    }
+}
 
 /// Best-effort enumeration of currently-connected serial ports.
 ///
@@ -57,7 +83,7 @@ pub fn is_pjrc_cdc(port: &str) -> bool {
     for info in list_ports() {
         if info.port_name == port {
             if let SerialPortType::UsbPort(usb) = &info.port_type {
-                return usb.vid == PJRC_VID;
+                return is_teensy_runtime_identity(usb.vid, usb.pid);
             }
         }
     }
@@ -71,7 +97,7 @@ pub fn is_pjrc_cdc(port: &str) -> bool {
 pub fn first_pjrc_cdc_port() -> Option<String> {
     for info in list_ports() {
         if let SerialPortType::UsbPort(usb) = &info.port_type {
-            if usb.vid == PJRC_VID {
+            if is_teensy_runtime_identity(usb.vid, usb.pid) {
                 return Some(info.port_name);
             }
         }
@@ -97,7 +123,7 @@ pub enum NewPortOutcome {
 /// re-enumeration latency on Windows (~1.5 s typical) and CPU spin.
 ///
 /// Preference order for choosing among multiple new ports:
-/// 1. New port whose `SerialPortType::UsbPort` matches PJRC_VID.
+/// 1. New port whose USB identity has a Teensy runtime profile.
 /// 2. Any new port (lexicographically first).
 pub fn wait_for_new_cdc_port(pre_snapshot: &HashSet<String>, timeout: Duration) -> NewPortOutcome {
     let deadline = Instant::now() + timeout;
@@ -111,7 +137,7 @@ pub fn wait_for_new_cdc_port(pre_snapshot: &HashSet<String>, timeout: Duration) 
             if !pre_snapshot.contains(&info.port_name) {
                 any_new.push(info);
                 if let SerialPortType::UsbPort(usb) = &info.port_type {
-                    if usb.vid == PJRC_VID {
+                    if is_teensy_runtime_identity(usb.vid, usb.pid) {
                         pjrc_new.push(info);
                     }
                 }
@@ -131,6 +157,38 @@ pub fn wait_for_new_cdc_port(pre_snapshot: &HashSet<String>, timeout: Duration) 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn teensy_runtime_classification_uses_profile_semantics() {
+        use fbuild_core::usb::profiles::{
+            UsbDeviceRole, UsbIdentityMatch, UsbProfileProvenance, UsbPurpose,
+            UsbTransportProfile,
+        };
+        let profile = UsbTransportProfile {
+            identity_match: UsbIdentityMatch {
+                vid: "feed".to_string(),
+                pid: Some("c0de".to_string()),
+                pid_mask: None,
+            },
+            purpose: UsbPurpose::Runtime,
+            role: UsbDeviceRole::RuntimeCdc,
+            transport: "usb".to_string(),
+            reset: "touch-1200".to_string(),
+            handoff: "bootloader".to_string(),
+            platform: Some("teensy".to_string()),
+            family: Some("teensy".to_string()),
+            generation: None,
+            interface: Some("cdc".to_string()),
+            provenance: UsbProfileProvenance {
+                source_url: "test://fixture".to_string(),
+                source_revision: "a".repeat(40),
+                source_class: "test".to_string(),
+            },
+            priority: 100,
+            allow_ambiguous: false,
+        };
+        assert!(profile_is_teensy_runtime(&profile));
+    }
 
     #[test]
     fn snapshot_returns_something_or_empty() {
