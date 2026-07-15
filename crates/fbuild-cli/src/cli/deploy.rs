@@ -218,8 +218,11 @@ pub async fn run_deploy(
     // Physical deployers also return transport diagnostics in stdout/stderr
     // (for example the RP2040 mass-storage and managed-picotool errors). Keep
     // those visible instead of replaying streams only for emulator routes.
+    let message_is_streamed = operation_streams_include_message(&resp);
     print_operation_streams(&resp);
-    output::result(&resp.message);
+    if !message_is_streamed {
+        output::result(&resp.message);
+    }
     if !resp.success {
         // process::exit skips normal destructor-based stdio flushing. Preserve
         // the daemon's final stdout/stderr when fbuild is piped by automation.
@@ -273,14 +276,19 @@ pub async fn run_test_emu(
     };
 
     let resp = client.test_emu(&req).await?;
+    let message_is_streamed = operation_streams_include_message(&resp);
     print_operation_streams(&resp);
-    output::result(&resp.message);
+    if !message_is_streamed {
+        output::result(&resp.message);
+    }
     if !resp.success {
         // Guarantee a non-zero exit when the daemon reports failure. A
         // structured error response carries `exit_code`, but if the
         // daemon handler or an intermediate proxy returns 0 alongside
         // success=false (issue #130), we must still surface failure to
         // the shell rather than silently exiting 0.
+        let _ = std::io::stdout().flush();
+        let _ = std::io::stderr().flush();
         let code = if resp.exit_code == 0 {
             1
         } else {
@@ -312,6 +320,15 @@ pub fn print_operation_streams(resp: &OperationResponse) {
         // when the command exits non-zero.
         output::diagnostic(stderr.trim_end_matches('\n'));
     }
+}
+
+fn operation_streams_include_message(resp: &OperationResponse) -> bool {
+    let message = resp.message.trim();
+    !message.is_empty()
+        && [resp.stdout.as_deref(), resp.stderr.as_deref()]
+            .into_iter()
+            .flatten()
+            .any(|stream| stream.trim() == message)
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -352,4 +369,35 @@ pub async fn run_monitor(
         std::process::exit(resp.exit_code);
     }
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn response(message: &str, stdout: Option<&str>, stderr: Option<&str>) -> OperationResponse {
+        OperationResponse {
+            success: false,
+            request_id: "request-1".to_string(),
+            message: message.to_string(),
+            exit_code: 1,
+            output_file: None,
+            output_dir: None,
+            launch_url: None,
+            stdout: stdout.map(str::to_string),
+            stderr: stderr.map(str::to_string),
+        }
+    }
+
+    #[test]
+    fn identical_streamed_error_suppresses_duplicate_result_message() {
+        let resp = response("deploy error: transport failed", None, Some("deploy error: transport failed\n"));
+        assert!(operation_streams_include_message(&resp));
+    }
+
+    #[test]
+    fn distinct_result_message_is_not_suppressed() {
+        let resp = response("deploy failed", None, Some("transport detail"));
+        assert!(!operation_streams_include_message(&resp));
+    }
 }

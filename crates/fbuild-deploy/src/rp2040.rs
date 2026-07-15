@@ -496,8 +496,8 @@ fn is_device_disappearance_error(error: &std::io::Error) -> bool {
     ) || matches!(
         error.raw_os_error(),
         // Windows: FILE/PATH_NOT_FOUND, INVALID_HANDLE, NOT_READY,
-        // DEVICE_NOT_CONNECTED. Unix: ENODEV.
-        Some(2 | 3 | 6 | 21 | 1167 | 19)
+        // FILE_INVALID after eject, DEVICE_NOT_CONNECTED. Unix: ENODEV.
+        Some(2 | 3 | 6 | 21 | 1006 | 1167 | 19)
     )
 }
 
@@ -1389,6 +1389,26 @@ mod tests {
         assert!(message.contains("scans or synchronizes removable drives"));
         assert!(message.contains("do not press BOOTSEL"));
         assert!(root.path().join("INFO_UF2.TXT").is_file());
+    }
+
+    #[test]
+    fn windows_1006_after_complete_write_and_bootsel_eject_is_accepted() {
+        let root = tempdir().unwrap();
+        let marker = root.path().join("INFO_UF2.TXT");
+        let artifact = root.path().join("firmware.uf2");
+        let destination = root.path().join("NEW.UF2");
+        fs::write(&marker, "Model: Raspberry Pi RP2").unwrap();
+        fs::write(&artifact, encode_uf2(&[1, 2, 3])).unwrap();
+        let artifact_len = fs::metadata(&artifact).unwrap().len();
+
+        copy_uf2_artifact_with(&artifact, &destination, root.path(), |_, _| {
+            fs::remove_file(&marker).unwrap();
+            Err(Uf2WriteFailure::new(
+                io::Error::from_raw_os_error(1006),
+                artifact_len,
+            ))
+        })
+        .unwrap();
     }
 
     #[test]
