@@ -16,7 +16,7 @@ catalogue blob (`EMBEDDED_PROTO` is empty outside tests).
 | `crates/fbuild-core/src/usb/data.rs` (`MANIFEST_URL`, protobuf/JSON cache boundary) | Canonical ingestion | Runtime cache populated from FastLED/boards; legacy JSON URL remains compatibility-only and must be removed after consumers migrate. |
 | `crates/fbuild-core/data/usb-vendors.tar.zst` + `crates/fbuild-core/src/usb/embedded.rs` | Test-only fixture | The module, archive extraction dependency, and fallback are compiled only under `cfg(test)`. Release/runtime resolution uses the verified FastLED/boards cache or an explicit unknown-device label. |
 | `crates/fbuild-serial/src/boards.rs` (`BOARD_FINGERPRINTS`, `ENVIRONMENT_TO_VCOM`, `family_for_vid_pid`) | Migrated; test fixtures remain | Production hints, VCOM selection, and reset-family classification now derive from verified typed FastLED/boards profiles. Concrete tables and range matching are compiled only under `cfg(test)`. |
-| `crates/fbuild-serial/src/bootloader_watcher.rs` | Legacy bootloader VID/PID signatures | RP2040/SAMD/Teensy bootloader detection still uses concrete signatures; boards metadata needs a bootloader identity/role field before this can become data-driven. |
+| `crates/fbuild-serial/src/bootloader_watcher.rs` | Migrated; test fixtures remain | Production RP2040/SAMD/Teensy bootloader detection resolves the verified typed FastLED/boards profiles and matches their bootloader purpose, transport role, and family. Concrete signatures are compiled only under `cfg(test)`. |
 | `crates/fbuild-daemon/src/handlers/operations/deploy_port.rs` | Legacy runtime VID fallback | Expected vendor IDs are deploy-port selection heuristics, not names; they still duplicate identity knowledge and require boards-derived upload metadata before removal. |
 | `crates/fbuild-deploy/src/lpc_debugger_reflash.rs` | Protocol/device compatibility constants | LPC-Link2 firmware recovery requires the exact probe identity. Provenance is NXP/FastLED LPC-Link2 documentation; move to boards metadata when the probe schema supports non-board recovery targets. |
 | `crates/fbuild-deploy/src/probe_rs.rs`, `crates/fbuild-deploy/src/teensy/port_discovery.rs` | Legacy runtime probe/loader matching | Probe and HalfKay discovery have explicit VID/PID signatures; these need published role records or a protocol-level classifier before removal. |
@@ -38,7 +38,6 @@ above (test-only assertions are intentionally omitted):
 | Path | Pairs |
 | --- | --- |
 | `crates/fbuild-serial/src/boards.rs` | `1FC9:0132`, `16C0:0483`, `303A:1001`, `303A:0002`, `10C4:EA60`, `10C4:EA70`, `1A86:7523`, `1A86:55D4`, `0403:6001`, `0403:6015`, `2341:0043`, `2341:0001`, `2341:0010`, `2341:804E`, `2E8A:000A`, `2E8A:0003` |
-| `crates/fbuild-serial/src/bootloader_watcher.rs` | `2E8A:0003`, `03EB:6124`, `239A:*`, `16C0:0478` |
 | `crates/fbuild-daemon/src/handlers/operations/deploy_port.rs` | `16C0:*`, `303A:*`, `2341:*`, `2A03:*`, `1A86:*`, `10C4:*`, `0403:*`, `1FC9:*`, `0D28:*`, plus test-only concrete rows |
 | `crates/fbuild-deploy/src/lpc_debugger_reflash.rs` | `1FC9:0132` |
 | `crates/fbuild-deploy/src/probe_rs.rs` | `1FC9:0090`, `1FC9:0132` |
