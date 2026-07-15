@@ -442,6 +442,7 @@ mod tests {
 
     #[test]
     fn cache_data_root_is_stable_across_backend_versions() {
+        let _env = ENV_LOCK.lock().unwrap();
         let runtime_v1 = if cfg!(windows) {
             PathBuf::from(r"C:\opt\fbuild-1\bin")
         } else {

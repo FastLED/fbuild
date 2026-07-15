@@ -450,8 +450,9 @@ fn catalogue_pico_cdc_ports(expected_family: u32) -> Result<Vec<String>> {
             let serialport::SerialPortType::UsbPort(usb) = &port.port_type else {
                 return false;
             };
-            fbuild_core::usb::try_resolve(usb.vid, usb.pid)
-                .is_some_and(|identity| identity_matches_family(&identity, expected_family))
+            fbuild_core::usb::profiles::profiles_for(usb.vid, usb.pid)
+                .iter()
+                .any(|profile| profile_matches_family(profile, expected_family))
         })
         .map(|port| port.port_name)
         .collect();
@@ -481,16 +482,38 @@ fn wait_for_cdc_port(
     }
 }
 
-fn identity_matches_family(identity: &fbuild_core::usb::UsbInfo, family_id: u32) -> bool {
-    let product = identity.product.to_ascii_lowercase();
-    let generation = if product.contains("rp2350") || product.contains("pico 2") {
-        Some(RP2350_FAMILY_ID)
-    } else if product.contains("rp2040") || product.contains("raspberry pi pico") {
-        Some(RP2040_FAMILY_ID)
+fn profile_matches_family(
+    profile: &fbuild_core::usb::profiles::UsbTransportProfile,
+    family_id: u32,
+) -> bool {
+    use fbuild_core::usb::profiles::{UsbDeviceRole, UsbPurpose};
+
+    if profile.purpose != UsbPurpose::Runtime
+        || profile.role != UsbDeviceRole::RuntimeCdc
+        || profile.interface.as_deref() != Some("cdc")
+    {
+        return false;
+    }
+    let expected = if family_id == RP2350_FAMILY_ID {
+        "rp2350"
     } else {
-        None
+        "rp2040"
     };
-    generation == Some(family_id)
+    profile.family.as_deref() == Some(expected)
+}
+
+fn ensure_verified_usb_profiles() -> Result<()> {
+    let dir = fbuild_paths::get_cache_root().join("usb");
+    let meta_path = dir.join("_meta.json");
+    let profiles_path = dir.join("usb-profiles.json");
+    if fbuild_core::usb::profiles::populate_profiles_from_paths(&meta_path, &profiles_path) {
+        Ok(())
+    } else {
+        Err(FbuildError::DeployFailed(
+            "verified FastLED/boards USB profiles are unavailable; fbuild refuses to guess a Pico VID/PID or use a built-in fallback"
+                .to_string(),
+        ))
+    }
 }
 
 fn select_cdc_candidate(
@@ -527,6 +550,13 @@ impl Deployer for Rp2040Deployer {
         firmware_path: &Path,
         port: Option<&str>,
     ) -> Result<DeploymentResult> {
+        tokio::task::spawn_blocking(ensure_verified_usb_profiles)
+            .await
+            .map_err(|error| {
+                FbuildError::DeployFailed(format!(
+                    "failed to prepare the FastLED/boards USB profile cache: {error}"
+                ))
+            })??;
         let port = port.map(str::trim).filter(|value| !value.is_empty());
         let original_port = port.map(str::to_string);
         let family_id = self.family_id;
@@ -764,18 +794,41 @@ mod tests {
     }
 
     #[test]
-    fn catalogue_identity_must_match_target_generation() {
-        let pico = fbuild_core::usb::UsbInfo {
-            vendor: "Arduino".to_string(),
-            product: "Raspberry Pi Pico".to_string(),
+    fn typed_profile_must_match_runtime_role_interface_and_generation() {
+        use fbuild_core::usb::profiles::{
+            UsbDeviceRole, UsbIdentityMatch, UsbProfileProvenance, UsbPurpose,
+            UsbTransportProfile,
         };
-        let pico2 = fbuild_core::usb::UsbInfo {
-            vendor: "Arduino".to_string(),
-            product: "Raspberry Pi Pico 2".to_string(),
+
+        let mut profile = UsbTransportProfile {
+            identity_match: UsbIdentityMatch {
+                vid: "feed".to_string(),
+                pid: Some("c0de".to_string()),
+                pid_mask: None,
+            },
+            purpose: UsbPurpose::Runtime,
+            role: UsbDeviceRole::RuntimeCdc,
+            transport: "usb".to_string(),
+            reset: "touch-1200".to_string(),
+            handoff: "bootloader".to_string(),
+            platform: Some("synthetic".to_string()),
+            family: Some("rp2040".to_string()),
+            generation: Some("synthetic".to_string()),
+            interface: Some("cdc".to_string()),
+            provenance: UsbProfileProvenance {
+                source_url: "test://fixture".to_string(),
+                source_revision: "a".repeat(40),
+                source_class: "test".to_string(),
+            },
+            priority: 100,
+            allow_ambiguous: false,
         };
-        assert!(identity_matches_family(&pico, RP2040_FAMILY_ID));
-        assert!(!identity_matches_family(&pico2, RP2040_FAMILY_ID));
-        assert!(identity_matches_family(&pico2, RP2350_FAMILY_ID));
+        assert!(profile_matches_family(&profile, RP2040_FAMILY_ID));
+        assert!(!profile_matches_family(&profile, RP2350_FAMILY_ID));
+        profile.family = Some("rp2350".to_string());
+        assert!(profile_matches_family(&profile, RP2350_FAMILY_ID));
+        profile.role = UsbDeviceRole::BootloaderUf2;
+        assert!(!profile_matches_family(&profile, RP2350_FAMILY_ID));
     }
 
     #[test]
