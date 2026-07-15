@@ -17,9 +17,9 @@ catalogue blob (`EMBEDDED_PROTO` is empty outside tests).
 | `crates/fbuild-core/data/usb-vendors.tar.zst` + `crates/fbuild-core/src/usb/embedded.rs` | Test-only fixture | The module, archive extraction dependency, and fallback are compiled only under `cfg(test)`. Release/runtime resolution uses the verified FastLED/boards cache or an explicit unknown-device label. |
 | `crates/fbuild-serial/src/boards.rs` (`BOARD_FINGERPRINTS`, `ENVIRONMENT_TO_VCOM`, `family_for_vid_pid`) | Migrated; test fixtures remain | Production hints, VCOM selection, and reset-family classification now derive from verified typed FastLED/boards profiles. Concrete tables and range matching are compiled only under `cfg(test)`. |
 | `crates/fbuild-serial/src/bootloader_watcher.rs` | Migrated; test fixtures remain | Production RP2040/SAMD/Teensy bootloader detection resolves the verified typed FastLED/boards profiles and matches their bootloader purpose, transport role, and family. Concrete signatures are compiled only under `cfg(test)`. |
-| `crates/fbuild-daemon/src/handlers/operations/deploy_port.rs` | Legacy runtime VID fallback | Expected vendor IDs are deploy-port selection heuristics, not names; they still duplicate identity knowledge and require boards-derived upload metadata before removal. |
-| `crates/fbuild-deploy/src/lpc_debugger_reflash.rs` | Protocol/device compatibility constants | LPC-Link2 firmware recovery requires the exact probe identity. Provenance is NXP/FastLED LPC-Link2 documentation; move to boards metadata when the probe schema supports non-board recovery targets. |
-| `crates/fbuild-deploy/src/probe_rs.rs`, `crates/fbuild-deploy/src/teensy/port_discovery.rs` | Legacy runtime probe/loader matching | Probe and HalfKay discovery have explicit VID/PID signatures; these need published role records or a protocol-level classifier before removal. |
+| `crates/fbuild-daemon/src/handlers/operations/deploy_port.rs` | Migrated; test fixtures remain | Automatic deploy-port selection uses board membership plus typed runtime role/platform/family metadata. A missing profile now fails closed instead of selecting an unrelated COM port; explicit `--port` remains authoritative. |
+| `crates/fbuild-deploy/src/lpc_debugger_reflash.rs` | Migrated; test fixtures remain | The debugger-upgrade warning uses the published LPC-Link2 family/generation profile, and the dormant dfu-util argv builder requires a registry-derived selector from its caller instead of owning a default identity. |
+| `crates/fbuild-deploy/src/probe_rs.rs`, `crates/fbuild-deploy/src/teensy/port_discovery.rs` | Migrated; test fixtures remain | NXP probe and Teensy runtime CDC discovery use typed purpose/role/platform/family profiles. Concrete selectors are confined to argv and discovery unit-test fixtures. |
 | `ci/validate_boards.py` | CI validation fixtures | PlatformIO cross-check exceptions are CI-only and do not ship in fbuild. Each exception carries an issue/provenance comment. |
 | `crates/**/tests`, `ci/docker-test-serial`, and test-support fixtures | Test-only fixtures | Concrete IDs are intentionally isolated from production and must not be imported by runtime modules. Test-only paths are outside this preparatory diff guard; final #1047 cleanup will define the deny-all fixture policy. |
 | `online-data-tools/**` | Legacy data pipeline | Fetchers/builders are offline maintenance tooling, not a runtime dependency. They remain deprecated until the FastLED/boards publication pipeline fully replaces their outputs. |
@@ -38,10 +38,6 @@ above (test-only assertions are intentionally omitted):
 | Path | Pairs |
 | --- | --- |
 | `crates/fbuild-serial/src/boards.rs` | `1FC9:0132`, `16C0:0483`, `303A:1001`, `303A:0002`, `10C4:EA60`, `10C4:EA70`, `1A86:7523`, `1A86:55D4`, `0403:6001`, `0403:6015`, `2341:0043`, `2341:0001`, `2341:0010`, `2341:804E`, `2E8A:000A`, `2E8A:0003` |
-| `crates/fbuild-daemon/src/handlers/operations/deploy_port.rs` | `16C0:*`, `303A:*`, `2341:*`, `2A03:*`, `1A86:*`, `10C4:*`, `0403:*`, `1FC9:*`, `0D28:*`, plus test-only concrete rows |
-| `crates/fbuild-deploy/src/lpc_debugger_reflash.rs` | `1FC9:0132` |
-| `crates/fbuild-deploy/src/probe_rs.rs` | `1FC9:0090`, `1FC9:0132` |
-| `crates/fbuild-deploy/src/teensy/port_discovery.rs` | `16C0:*` |
 
 The wildcard rows are vendor-family fallbacks, not claims that every PID is
 valid for the named board. They are still production identity knowledge and

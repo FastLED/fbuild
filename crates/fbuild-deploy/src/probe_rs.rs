@@ -23,7 +23,7 @@
 //!
 //! ```text
 //! probe-rs.exe download --chip LPC845M301JBD48 \
-//!                       --probe 1fc9:0132 \
+//!                       --probe <FastLED/boards selector> \
 //!                       firmware.elf
 //! ```
 //!
@@ -411,29 +411,17 @@ pub fn probe_rs_reset_argv(
     args
 }
 
-/// Detect whether an LPC-Link2 CMSIS-DAP probe is currently attached
-/// by scanning available serial ports for the LPC-Link2's VID:PID.
-/// The debugger enumerates as a USB composite whose CDC side (COM
-/// port) carries the same VID:PID as the CMSIS-DAP HID interface, so
-/// a match on the serial-port list is a reliable proxy for probe
-/// presence — and lets us stay on the crate's existing `serialport`
-/// dep without pulling in a whole USB library just for enumeration.
-///
-/// Matches on the two LPC-Link2 VID:PID pairs that carry standard
-/// CMSIS-DAP HID firmware:
-///
-/// - `1FC9:0090` — standalone LPC-Link2 dongle.
-/// - `1FC9:0132` — on-board LPC-Link2 (LPC845-BRK v1.0.7 firmware).
-///
-/// Both are the exact set the probe-rs interface-picker patch
-/// (FastLED/fbuild#935) explicitly whitelists.
+/// Detect whether a FastLED/boards-identified NXP CMSIS-DAP probe is
+/// currently attached. The debugger's composite CDC side is a reliable proxy
+/// for probe presence and keeps enumeration on the existing `serialport`
+/// dependency.
 pub fn lpc_link2_probe_attached() -> bool {
     lpc_link2_probe_selector().is_some()
 }
 
-/// Compute the `--probe` selector string for the first attached
-/// LPC-Link2, in the `VID:PID` shorthand probe-rs accepts (e.g.
-/// `1fc9:0132`). Returns `None` when no probe is present.
+/// Compute the probe-rs selector for the first attached
+/// FastLED/boards-identified LPC-Link-family probe. Returns `None` when no
+/// matching probe is present.
 ///
 /// Serial-number disambiguation is intentionally omitted — the
 /// LPC845-BRK is the only debugger this dispatch path ever runs
@@ -446,11 +434,28 @@ pub fn lpc_link2_probe_selector() -> Option<String> {
         let serialport::SerialPortType::UsbPort(usb) = &p.port_type else {
             continue;
         };
-        if usb.vid == 0x1fc9 && matches!(usb.pid, 0x0090 | 0x0132) {
+        if fbuild_core::usb::profiles::profiles_for(usb.vid, usb.pid)
+            .iter()
+            .any(profile_is_nxp_debug_probe)
+        {
             return Some(format!("{:04x}:{:04x}", usb.vid, usb.pid));
         }
     }
     None
+}
+
+fn profile_is_nxp_debug_probe(
+    profile: &fbuild_core::usb::profiles::UsbTransportProfile,
+) -> bool {
+    use fbuild_core::usb::profiles::{UsbDeviceRole, UsbPurpose};
+
+    profile.purpose == UsbPurpose::Probe
+        && profile.role == UsbDeviceRole::DebugProbe
+        && profile.platform.as_deref() == Some("nxplpc")
+        && profile
+            .family
+            .as_deref()
+            .is_some_and(|family| family.starts_with("lpc-link"))
 }
 
 /// Blocking wrapper around `probe-rs download` returning a structured
@@ -525,6 +530,38 @@ fn home_dir_local() -> Option<NormalizedPath> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn nxp_probe_detection_uses_profile_semantics() {
+        use fbuild_core::usb::profiles::{
+            UsbDeviceRole, UsbIdentityMatch, UsbProfileProvenance, UsbPurpose,
+            UsbTransportProfile,
+        };
+        let profile = UsbTransportProfile {
+            identity_match: UsbIdentityMatch {
+                vid: "feed".to_string(),
+                pid: Some("c0de".to_string()),
+                pid_mask: None,
+            },
+            purpose: UsbPurpose::Probe,
+            role: UsbDeviceRole::DebugProbe,
+            transport: "swd".to_string(),
+            reset: "hardware".to_string(),
+            handoff: "reconnect".to_string(),
+            platform: Some("nxplpc".to_string()),
+            family: Some("lpc-link2".to_string()),
+            generation: Some("test".to_string()),
+            interface: Some("hid".to_string()),
+            provenance: UsbProfileProvenance {
+                source_url: "test://fixture".to_string(),
+                source_revision: "a".repeat(40),
+                source_class: "test".to_string(),
+            },
+            priority: 100,
+            allow_ambiguous: false,
+        };
+        assert!(profile_is_nxp_debug_probe(&profile));
+    }
 
     #[test]
     fn download_argv_shape() {
