@@ -101,7 +101,7 @@ jobs:
         # and managed cmake/ninja.
         uses: zackees/setup-soldr@v0
         with:
-          version: 0.8.8
+          version: 0.8.17
           cache: true
           build-cache: true
           target-cache: true
@@ -265,7 +265,7 @@ jobs:
             # internal env vars when the catalogue xwin-cache row is
             # absent for the target arch. Requires soldr >= v0.8.0
             # (first release whose archive ships the shim).
-            cargo xwin build --release --target ${{ inputs.target }} \
+            soldr build --release --target ${{ inputs.target }} \
               -p fbuild-cli \
               -p fbuild-daemon
           elif [[ "${{ inputs.target }}" == *-unknown-linux-musl ]]; then
@@ -320,7 +320,7 @@ jobs:
             # `soldr build` installs the soldr-clang-shim so
             # ring + cc-rs route through clang-cl correctly even
             # for aarch64 PyO3 dylib compilation.
-            PYO3_NO_PYTHON=1 cargo xwin build --release \
+            PYO3_NO_PYTHON=1 soldr build --release \
               --target-dir "${PYTHON_TARGET_DIR}" \
               --target ${{ inputs.target }} -p fbuild-python \
               --features extension-module
