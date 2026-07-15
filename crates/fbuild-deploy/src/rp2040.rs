@@ -666,7 +666,7 @@ fn wait_for_volume_disappearance(volume: &Path, timeout: Duration) -> Result<()>
         std::thread::sleep(Duration::from_millis(100));
     }
     Err(FbuildError::DeployFailed(format!(
-        "RP2040 BOOTSEL volume {} did not eject after NEW.UF2; the ROM did not accept the image",
+        "RP2040 BOOTSEL volume {} did not eject after NEW.UF2; deployment is unconfirmed. This symptom alone does not identify a QSPI flash fault or any other root cause; capture the transfer error and reproduce with an independently verified target before diagnosis",
         volume.display()
     )))
 }
@@ -1413,7 +1413,7 @@ mod tests {
     }
 
     #[test]
-    fn volume_disappearance_timeout_is_actionable() {
+    fn volume_disappearance_timeout_is_actionable_without_diagnosing_qspi() {
         let volume = tempdir().unwrap();
         fs::write(
             volume.path().join("INFO_UF2.TXT"),
@@ -1421,7 +1421,10 @@ mod tests {
         )
         .unwrap();
         let error = wait_for_volume_disappearance(volume.path(), Duration::ZERO).unwrap_err();
-        assert!(error.to_string().contains("did not eject after NEW.UF2"));
+        let message = error.to_string();
+        assert!(message.contains("did not eject after NEW.UF2"));
+        assert!(message.contains("deployment is unconfirmed"));
+        assert!(message.contains("does not identify a QSPI flash fault"));
     }
 
     #[test]
