@@ -1,28 +1,27 @@
 //! Curated user-facing CLI output API.
 //!
 //! FastLED/fbuild#844 ("Bridge pair 12"). All user-facing output from
-//! fbuild flows through one of these five functions. The matching
+//! fbuild flows through one of these six functions. The matching
 //! `ban_print_in_production` dylint forbids `println!` /  `eprintln!`
 //! in `crates/fbuild-cli/src/` and `crates/fbuild-build/src/` (this
 //! file is the sole exemption — it IS the bridge).
 //!
 //! The split is intentional:
 //!
-//! | Fn         | Sink              | Use for                          |
-//! |------------|-------------------|----------------------------------|
-//! | `progress` | `tracing::info!`  | "Building env X…", spinner-ish   |
-//! | `result`   | `println!`        | The final answer — what stdout-pipers see |
-//! | `warn`     | `tracing::warn!`  | Non-fatal recoverables           |
-//! | `error`    | `tracing::error!` | Fatal errors                     |
-//! | `debug`    | `tracing::debug!` | `--verbose` / `RUST_LOG=debug`   |
+//! | Fn           | Sink              | Use for                          |
+//! |--------------|-------------------|----------------------------------|
+//! | `progress`   | `tracing::info!`  | "Building env X…", spinner-ish   |
+//! | `result`     | `println!`        | The final answer — what stdout-pipers see |
+//! | `diagnostic` | `eprintln!`       | Final operation stderr returned by the daemon |
+//! | `warn`       | `tracing::warn!`  | Non-fatal recoverables           |
+//! | `error`      | `tracing::error!` | Fatal errors                     |
+//! | `debug`      | `tracing::debug!` | `--verbose` / `RUST_LOG=debug`   |
 //!
-//! Everything except `result` is routed through `tracing` so
-//! `--color={auto,always,never}`, `--quiet`, and `--verbose` flags
-//! flow through the level filter in one place. `result` stays on
-//! `println!` because it's the only output that must survive
-//! redirection / piping — `tracing` subscribers swallow it on
-//! `--quiet` and that's the right behavior for everything *except*
-//! the final answer.
+//! Everything except `result` and `diagnostic` is routed through `tracing` so
+//! `--color={auto,always,never}`, `--quiet`, and `--verbose` flow through the
+//! level filter in one place. Final results and daemon diagnostics use stdout
+//! and stderr directly so actionable operation output survives redirection,
+//! piping, and `--quiet`.
 
 use std::fmt::Display;
 
@@ -38,6 +37,13 @@ pub fn progress(msg: impl Display) {
 /// Use sparingly — most output is `progress`, not `result`.
 pub fn result(msg: impl Display) {
     println!("{msg}");
+}
+
+/// Final operation diagnostics returned by the daemon. Unlike transient
+/// tracing warnings, these must remain visible with the default filter,
+/// `--quiet`, and when stderr is redirected by automation.
+pub fn diagnostic(msg: impl Display) {
+    eprintln!("{msg}");
 }
 
 /// Non-fatal warning. Emits at `WARN`. Use for situations that don't

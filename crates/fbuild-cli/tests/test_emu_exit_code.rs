@@ -100,6 +100,7 @@ fn write_response(stream: &mut TcpStream, status_line: &str, body: &str) {
 /// - GET /api/daemon/info — 200 with `source_mtime=0` so the CLI does not
 ///   try to restart the "stale" daemon.
 /// - POST /api/test-emu — 500 + structured OperationResponse JSON.
+/// - POST /api/deploy — 500 + an actionable structured deploy failure.
 fn spawn_mock_daemon(stop: Arc<AtomicBool>) -> u16 {
     let listener = TcpListener::bind("127.0.0.1:0").expect("bind ephemeral");
     listener
@@ -112,6 +113,7 @@ fn spawn_mock_daemon(stop: Arc<AtomicBool>) -> u16 {
             "{\"status\":\"healthy\",\"uptime_seconds\":1.0,\"version\":\"test\",\"pid\":1,\"source_mtime\":0.0}";
         let info_body = "{\"status\":\"healthy\",\"uptime_seconds\":1.0,\"version\":\"test\",\"pid\":1,\"port\":0,\"dev_mode\":true,\"operation_in_progress\":false,\"daemon_state\":\"idle\",\"current_operation\":null,\"client_count\":0,\"spawner_cwd\":null,\"source_mtime\":0.0}";
         let fail_body = "{\"success\":false,\"request_id\":\"mock-1\",\"message\":\"mock daemon: simulated test-emu failure\",\"exit_code\":0,\"output_file\":null,\"output_dir\":null,\"launch_url\":null,\"stdout\":null,\"stderr\":null}";
+        let deploy_fail_body = "{\"success\":false,\"request_id\":\"mock-2\",\"message\":\"deploy failed\",\"exit_code\":1,\"output_file\":null,\"output_dir\":null,\"launch_url\":null,\"stdout\":null,\"stderr\":\"RP2040 UF2 transfer failed with Windows error 121\"}";
 
         while !stop.load(Ordering::Relaxed) {
             match listener.accept() {
@@ -133,6 +135,12 @@ fn spawn_mock_daemon(stop: Arc<AtomicBool>) -> u16 {
                             &mut stream,
                             "HTTP/1.1 500 Internal Server Error",
                             fail_body,
+                        );
+                    } else if request_line.starts_with("POST /api/deploy") {
+                        write_response(
+                            &mut stream,
+                            "HTTP/1.1 500 Internal Server Error",
+                            deploy_fail_body,
                         );
                     } else {
                         write_response(&mut stream, "HTTP/1.1 404 Not Found", "{}");
@@ -158,6 +166,48 @@ fn make_test_project() -> tempfile::TempDir {
     )
     .expect("write platformio.ini");
     dir
+}
+
+#[test]
+fn deploy_output_survives_nonzero_exit() {
+    let stop = Arc::new(AtomicBool::new(false));
+    let port = spawn_mock_daemon(Arc::clone(&stop));
+
+    let project = make_test_project();
+    let bin = env!("CARGO_BIN_EXE_fbuild");
+
+    // allow-direct-spawn: integration test driver that invokes the compiled fbuild binary.
+    let mut cmd = Command::new(bin);
+    cmd.args([
+        "deploy",
+        project.path().to_str().expect("utf-8 path"),
+        "-e",
+        "uno",
+        "--skip-build",
+    ])
+    .env("FBUILD_DAEMON_PORT", port.to_string())
+    .env_remove("FBUILD_DEV_MODE")
+    .stdin(Stdio::null())
+    .stdout(Stdio::piped())
+    .stderr(Stdio::piped());
+
+    let output = run_cli_with_timeout(cmd, Duration::from_secs(30)).expect("CLI wedged");
+
+    stop.store(true, Ordering::Relaxed);
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let stderr = String::from_utf8_lossy(&output.stderr);
+    let code = output.status.code().unwrap_or(-1);
+
+    assert_ne!(code, 0, "deploy failure must exit non-zero");
+    assert!(
+        stdout.contains("deploy failed"),
+        "daemon failure message must survive process exit on stdout.\nstdout: {stdout}\nstderr: {stderr}"
+    );
+    assert!(
+        stderr.contains("RP2040 UF2 transfer failed with Windows error 121"),
+        "actionable daemon failure must survive process exit on stderr.\nstdout: {stdout}\nstderr: {stderr}"
+    );
 }
 
 #[test]
