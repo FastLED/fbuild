@@ -36,6 +36,7 @@ use crate::esp32::FlashRegion;
 /// `/api/deploy` response message can distinguish between:
 ///
 /// * a full baseline write (all regions / non-ESP platforms),
+/// * a volatile RAM-only load,
 /// * a verify-skip (device already held the requested image), and
 /// * a selective rewrite (only some ESP32 flash regions were written
 ///   because bootloader/partitions already matched).
@@ -45,6 +46,9 @@ use crate::esp32::FlashRegion;
 pub enum DeployOutcome {
     /// All regions / the full image were written to the device.
     FullFlash,
+    /// A volatile image was accepted into MCU RAM for execution without
+    /// programming non-volatile flash. Runtime success is not implied.
+    RamLoad,
     /// `esptool verify-flash` matched every region — no write was
     /// performed. The device has been hard-reset by esptool.
     VerifySkip,
@@ -58,11 +62,13 @@ impl DeployOutcome {
     /// outcome. Stable — consumers may parse it.
     ///
     /// * `FullFlash`        → `"full flash"`
+    /// * `RamLoad`          → `"RAM load accepted"`
     /// * `VerifySkip`       → `"verify skipped, device already matched"`
     /// * `SelectiveFlash`   → `"selective flash: firmware"`, etc.
     pub fn describe(&self) -> String {
         match self {
             DeployOutcome::FullFlash => "full flash".to_string(),
+            DeployOutcome::RamLoad => "RAM load accepted".to_string(),
             DeployOutcome::VerifySkip => "verify skipped, device already matched".to_string(),
             DeployOutcome::SelectiveFlash { regions } => {
                 let names: Vec<&'static str> = regions
@@ -88,9 +94,9 @@ pub struct DeploymentResult {
     pub stdout: String,
     /// Captured stderr from the deploy tool.
     pub stderr: String,
-    /// What actually happened on the device (full / verify-skip /
-    /// selective). Surfaced in the daemon's HTTP response message so
-    /// consumers can tell an MD5-skip from a real write.
+    /// What actually happened on the device (full / RAM load / verify-skip /
+    /// selective). Surfaced in the daemon's HTTP response message so consumers
+    /// can tell an MD5-skip or volatile load from a real flash write.
     pub outcome: DeployOutcome,
 }
 
@@ -163,6 +169,11 @@ mod outcome_tests {
     #[test]
     fn full_flash_describe() {
         assert_eq!(DeployOutcome::FullFlash.describe(), "full flash");
+    }
+
+    #[test]
+    fn ram_load_describe() {
+        assert_eq!(DeployOutcome::RamLoad.describe(), "RAM load accepted");
     }
 
     #[test]
