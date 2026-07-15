@@ -275,9 +275,18 @@ jobs:
               xwin_root="$(find "$SOLDR_CACHE_DIR/sdk/${{ inputs.target }}/xwin" -mindepth 2 -maxdepth 2 -type d -name xwin -print -quit)"
               [ -n "$xwin_root" ] || { echo "managed xwin cache missing" >&2; exit 1; }
               msvcrt="$(find "$xwin_root/crt/lib" -type f -iname msvcrt.lib -print -quit)"
+              oldnames="$(find "$xwin_root/crt/lib" -type f -iname oldnames.lib -print -quit)"
               kernel32="$(find "$xwin_root/sdk/lib/um" -type f -iname kernel32.lib -print -quit)"
               ucrt="$(find "$xwin_root/sdk/lib/ucrt" -type f -iname ucrt.lib -print -quit)"
-              [ -n "$msvcrt" ] && [ -n "$kernel32" ] && [ -n "$ucrt" ] || { echo "managed xwin libraries missing" >&2; exit 1; }
+              [ -n "$msvcrt" ] && [ -n "$oldnames" ] && [ -n "$kernel32" ] && [ -n "$ucrt" ] || { echo "managed xwin libraries missing" >&2; exit 1; }
+              for library in "$msvcrt" "$oldnames"; do
+                directory="$(dirname "$library")"
+                base="$(basename "$library")"
+                lower="${base,,}"
+                upper="$(basename "$base" .lib | tr '[:lower:]' '[:upper:]').lib"
+                [ "$base" = "$lower" ] || ln -sf "$base" "$directory/$lower"
+                [ "$base" = "$upper" ] || ln -sf "$base" "$directory/$upper"
+              done
               export RUSTFLAGS="-D warnings -C link-arg=/LIBPATH:$(dirname "$msvcrt") -C link-arg=/LIBPATH:$(dirname "$kernel32") -C link-arg=/LIBPATH:$(dirname "$ucrt")"
             else
               # Cargo's global RUSTFLAGS takes precedence over soldr's
@@ -344,9 +353,18 @@ jobs:
               xwin_root="$(find "$SOLDR_CACHE_DIR/sdk/${{ inputs.target }}/xwin" -mindepth 2 -maxdepth 2 -type d -name xwin -print -quit)"
               [ -n "$xwin_root" ] || { echo "managed xwin cache missing" >&2; exit 1; }
               msvcrt="$(find "$xwin_root/crt/lib" -type f -iname msvcrt.lib -print -quit)"
+              oldnames="$(find "$xwin_root/crt/lib" -type f -iname oldnames.lib -print -quit)"
               kernel32="$(find "$xwin_root/sdk/lib/um" -type f -iname kernel32.lib -print -quit)"
               ucrt="$(find "$xwin_root/sdk/lib/ucrt" -type f -iname ucrt.lib -print -quit)"
-              [ -n "$msvcrt" ] && [ -n "$kernel32" ] && [ -n "$ucrt" ] || { echo "managed xwin libraries missing" >&2; exit 1; }
+              [ -n "$msvcrt" ] && [ -n "$oldnames" ] && [ -n "$kernel32" ] && [ -n "$ucrt" ] || { echo "managed xwin libraries missing" >&2; exit 1; }
+              for library in "$msvcrt" "$oldnames"; do
+                directory="$(dirname "$library")"
+                base="$(basename "$library")"
+                lower="${base,,}"
+                upper="$(basename "$base" .lib | tr '[:lower:]' '[:upper:]').lib"
+                [ "$base" = "$lower" ] || ln -sf "$base" "$directory/$lower"
+                [ "$base" = "$upper" ] || ln -sf "$base" "$directory/$upper"
+              done
               export RUSTFLAGS="-D warnings -C link-arg=/LIBPATH:$(dirname "$msvcrt") -C link-arg=/LIBPATH:$(dirname "$kernel32") -C link-arg=/LIBPATH:$(dirname "$ucrt")"
             else
               unset RUSTFLAGS
