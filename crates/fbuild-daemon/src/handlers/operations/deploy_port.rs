@@ -46,12 +46,14 @@ pub(super) fn choose_deploy_port(
                     .vid
                     .zip(device.pid)
                     .and_then(|(vid, pid)| fbuild_core::usb::try_resolve(vid, pid));
-                identity_matches_rp_generation(identity.as_ref(), expected_generation).then_some(PortCandidate {
-                    port: device.port,
-                    vid: device.vid,
-                    pid: device.pid,
-                    description: device.description,
-                })
+                identity_matches_rp_generation(identity.as_ref(), expected_generation).then_some(
+                    PortCandidate {
+                        port: device.port,
+                        vid: device.vid,
+                        pid: device.pid,
+                        description: device.description,
+                    },
+                )
             })
             .collect();
         matches.sort_by(|a, b| a.port.cmp(&b.port));
@@ -157,9 +159,7 @@ fn identity_matches_rp_generation(
     classify_rp_generation(identity) == Some(expected)
 }
 
-fn classify_rp_generation(
-    identity: Option<&fbuild_core::usb::UsbInfo>,
-) -> Option<RpGeneration> {
+fn classify_rp_generation(identity: Option<&fbuild_core::usb::UsbInfo>) -> Option<RpGeneration> {
     let product = identity?.product.to_ascii_lowercase();
     if product.contains("rp2350") || product.contains("pico 2") {
         Some(RpGeneration::Rp2350)
@@ -307,7 +307,10 @@ mod tests {
             None,
             Platform::RaspberryPi,
             None,
-            vec![device("COM1", None, None), device("COM11", Some(0x10C4), Some(0xEA60))],
+            vec![
+                device("COM1", None, None),
+                device("COM11", Some(0x10C4), Some(0xEA60)),
+            ],
         );
         assert!(choice.port.is_none());
         assert!(choice.warning.is_none());
