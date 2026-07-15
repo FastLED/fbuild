@@ -344,9 +344,31 @@ fn write_uf2_artifact_direct(
     // filesystem-level copy, metadata preservation, fsync, rename, or readback
     // on the ROM-emulated FAT volume.
     let bytes = fs::read(artifact).map_err(|error| Uf2WriteFailure::new(error, 0))?;
-    let output = fs::File::create(destination)
+    let output = open_uf2_destination(destination)
         .map_err(|error| Uf2WriteFailure::new(error, 0))?;
     write_uf2_bytes(output, &bytes)
+}
+
+fn open_uf2_destination(destination: &Path) -> io::Result<fs::File> {
+    let mut options = fs::OpenOptions::new();
+    options.write(true).create(true).truncate(true);
+
+    #[cfg(windows)]
+    {
+        use std::os::windows::fs::OpenOptionsExt;
+
+        // CPython's open(name, "wb") reaches UCRT _wopen(), whose default
+        // _SH_DENYNO mapping is FILE_SHARE_READ | FILE_SHARE_WRITE. Rust also
+        // enables FILE_SHARE_DELETE by default. Exclude that extra permission
+        // so removable-drive scanners cannot delete/replace NEW.UF2 while the
+        // ROM transfer handle is active and the Windows path matches the
+        // Arduino-Pico uploader exactly.
+        const FILE_SHARE_READ: u32 = 0x0000_0001;
+        const FILE_SHARE_WRITE: u32 = 0x0000_0002;
+        options.share_mode(FILE_SHARE_READ | FILE_SHARE_WRITE);
+    }
+
+    options.open(destination)
 }
 
 struct CountingWriter<W> {
@@ -449,13 +471,13 @@ fn format_uf2_copy_error(
     );
     match copy_error.raw_os_error() {
         Some(121) => format!(
-            "{base}. Windows timed out writing to the RP-series BOOTSEL storage transport (error 121), and fbuild did not observe the ROM eject transition. Reconnect the board in BOOTSEL on a direct USB port with a known data cable, avoid USB hubs for the retry, and do not retry the same timed-out enumeration"
+            "{base}. Windows timed out writing to the RP-series BOOTSEL storage transport (error 121), and fbuild did not observe the ROM eject transition. Request a fresh USB enumeration on a direct USB port with a known data cable, avoid USB hubs for the retry, and do not retry the same timed-out enumeration. A blank or invalid-flash Pico returns to ROM boot automatically: reconnect normally and do not press BOOTSEL"
         ),
         Some(1006) => format!(
-            "{base}. Windows invalidated the open handle to the RP-series BOOTSEL synthetic FAT volume (error 1006), and fbuild did not observe the ROM eject transition. Reconnect the board in BOOTSEL on a direct USB port and close software that scans or synchronizes removable drives before retrying"
+            "{base}. Windows invalidated the open handle to the RP-series BOOTSEL synthetic FAT volume (error 1006), and fbuild did not observe the ROM eject transition. Request a fresh USB enumeration on a direct USB port and close software that scans or synchronizes removable drives before retrying. A blank or invalid-flash Pico returns to ROM boot automatically: reconnect normally and do not press BOOTSEL"
         ),
         Some(1392) => format!(
-            "{base}. Windows cannot access the RP-series BOOTSEL synthetic FAT volume (error 1392). Do not run chkdsk, filesystem repair, or format this ROM-emulated volume; reconnect the board in BOOTSEL and retry, or use fbuild's managed picotool fallback with the Raspberry Pi-documented WinUSB binding"
+            "{base}. Windows cannot access the RP-series BOOTSEL synthetic FAT volume (error 1392). Do not run chkdsk, filesystem repair, or format this ROM-emulated volume; request a fresh USB enumeration and retry, or use fbuild's managed picotool fallback with the Raspberry Pi-documented WinUSB binding. A blank or invalid-flash Pico returns to ROM boot automatically: reconnect normally and do not press BOOTSEL"
         ),
         _ => base,
     }
@@ -1269,6 +1291,25 @@ mod tests {
         assert_eq!(fs::read(destination).unwrap(), bytes);
     }
 
+    #[cfg(windows)]
+    #[test]
+    fn uf2_destination_matches_ucrt_delete_sharing() {
+        use std::os::windows::fs::OpenOptionsExt;
+
+        const DELETE_ACCESS: u32 = 0x0001_0000;
+        const ERROR_SHARING_VIOLATION: i32 = 32;
+
+        let root = tempdir().unwrap();
+        let destination = root.path().join("NEW.UF2");
+        let _writer = open_uf2_destination(&destination).unwrap();
+
+        let error = fs::OpenOptions::new()
+            .access_mode(DELETE_ACCESS)
+            .open(&destination)
+            .unwrap_err();
+        assert_eq!(error.raw_os_error(), Some(ERROR_SHARING_VIOLATION));
+    }
+
     #[test]
     fn whole_buffer_writer_tracks_short_writes_and_flush_failures() {
         let bytes = vec![0xA5; 4096];
@@ -1318,6 +1359,7 @@ mod tests {
         assert!(message.contains("synthetic FAT volume"));
         assert!(message.contains("Do not run chkdsk"));
         assert!(message.contains("managed picotool fallback"));
+        assert!(message.contains("do not press BOOTSEL"));
     }
 
     #[test]
@@ -1345,6 +1387,7 @@ mod tests {
         assert!(message.contains("error 1006"));
         assert!(message.contains("did not observe the ROM eject transition"));
         assert!(message.contains("scans or synchronizes removable drives"));
+        assert!(message.contains("do not press BOOTSEL"));
         assert!(root.path().join("INFO_UF2.TXT").is_file());
     }
 
@@ -1360,5 +1403,6 @@ mod tests {
         assert!(message.contains("direct USB port"));
         assert!(message.contains("avoid USB hubs"));
         assert!(message.contains("do not retry the same timed-out enumeration"));
+        assert!(message.contains("do not press BOOTSEL"));
     }
 }
