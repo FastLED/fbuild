@@ -269,12 +269,16 @@ jobs:
             # the x64 CRT compatibility path below.
             soldr prepare --target ${{ inputs.target }}
             if [ "${{ inputs.target }}" = "x86_64-pc-windows-msvc" ]; then
-              # soldr's catalogue cache exposes the MSVC CRT under x64 but
-              # its Windows SDK uses x86_64. Keep the blessed compiler and
-              # supply only those verified managed paths.
+              # Keep the blessed compiler and derive the cache's actual CRT,
+              # UM, and UCRT library directories from their canonical files.
+              # The catalogue's directory labels differ between cache releases.
               xwin_root="$(find "$SOLDR_CACHE_DIR/sdk/${{ inputs.target }}/xwin" -mindepth 2 -maxdepth 2 -type d -name xwin -print -quit)"
               [ -n "$xwin_root" ] || { echo "managed xwin cache missing" >&2; exit 1; }
-              export RUSTFLAGS="-D warnings -C link-arg=/LIBPATH:$xwin_root/crt/lib/x64 -C link-arg=/LIBPATH:$xwin_root/sdk/lib/um/x86_64 -C link-arg=/LIBPATH:$xwin_root/sdk/lib/ucrt/x86_64"
+              msvcrt="$(find "$xwin_root/crt/lib" -type f -iname msvcrt.lib -print -quit)"
+              kernel32="$(find "$xwin_root/sdk/lib/um" -type f -iname kernel32.lib -print -quit)"
+              ucrt="$(find "$xwin_root/sdk/lib/ucrt" -type f -iname ucrt.lib -print -quit)"
+              [ -n "$msvcrt" ] && [ -n "$kernel32" ] && [ -n "$ucrt" ] || { echo "managed xwin libraries missing" >&2; exit 1; }
+              export RUSTFLAGS="-D warnings -C link-arg=/LIBPATH:$(dirname "$msvcrt") -C link-arg=/LIBPATH:$(dirname "$kernel32") -C link-arg=/LIBPATH:$(dirname "$ucrt")"
             else
               # Cargo's global RUSTFLAGS takes precedence over soldr's
               # target-specific xwin linker flags.
@@ -339,7 +343,11 @@ jobs:
             if [ "${{ inputs.target }}" = "x86_64-pc-windows-msvc" ]; then
               xwin_root="$(find "$SOLDR_CACHE_DIR/sdk/${{ inputs.target }}/xwin" -mindepth 2 -maxdepth 2 -type d -name xwin -print -quit)"
               [ -n "$xwin_root" ] || { echo "managed xwin cache missing" >&2; exit 1; }
-              export RUSTFLAGS="-D warnings -C link-arg=/LIBPATH:$xwin_root/crt/lib/x64 -C link-arg=/LIBPATH:$xwin_root/sdk/lib/um/x86_64 -C link-arg=/LIBPATH:$xwin_root/sdk/lib/ucrt/x86_64"
+              msvcrt="$(find "$xwin_root/crt/lib" -type f -iname msvcrt.lib -print -quit)"
+              kernel32="$(find "$xwin_root/sdk/lib/um" -type f -iname kernel32.lib -print -quit)"
+              ucrt="$(find "$xwin_root/sdk/lib/ucrt" -type f -iname ucrt.lib -print -quit)"
+              [ -n "$msvcrt" ] && [ -n "$kernel32" ] && [ -n "$ucrt" ] || { echo "managed xwin libraries missing" >&2; exit 1; }
+              export RUSTFLAGS="-D warnings -C link-arg=/LIBPATH:$(dirname "$msvcrt") -C link-arg=/LIBPATH:$(dirname "$kernel32") -C link-arg=/LIBPATH:$(dirname "$ucrt")"
             else
               unset RUSTFLAGS
             fi
