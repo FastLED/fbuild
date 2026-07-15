@@ -19,6 +19,8 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
       - uses: astral-sh/setup-uv@v3
       - name: Setup soldr
         id: setup-soldr
@@ -46,5 +48,7 @@ jobs:
         run: soldr cargo clippy --workspace --all-targets -- -D warnings
       - name: Lint subprocess spawns
         run: uv run python ci/find_direct_subprocess.py --fail
+      - name: Guard production USB VID/PID catalogue literals
+        run: uv run python ci/check_usb_vidpid_literals.py
       - name: Test
         run: soldr cargo test --workspace
