@@ -59,7 +59,9 @@ use prost::Message;
 use serde_json::Value;
 use std::collections::HashMap;
 use std::path::Path;
-use std::sync::{OnceLock, RwLock};
+#[cfg(test)]
+use std::sync::OnceLock;
+use std::sync::RwLock;
 use std::time::Duration;
 
 /// FastLED/boards published registry (canonical USB VID:PID source).
@@ -86,14 +88,13 @@ static ONLINE_MAP: RwLock<Option<HashMap<u32, UsbInfo>>> = RwLock::new(None);
 // path. Keep the historical blob available only to unit tests as a fixture.
 #[cfg(test)]
 const EMBEDDED_PROTO: &[u8] = include_bytes!("../../data/usb-vids.proto.zstd");
-#[cfg(not(test))]
-const EMBEDDED_PROTO: &[u8] = &[];
 
 /// Both projections of the embedded proto. The compact `usb-vids.proto.zstd`
 /// carries a `Vendor{vid, name, [Product{pid, name}]}` tree, so a single
 /// artifact yields BOTH a VID→vendor map AND a VID:PID→{vendor, product}
 /// map — no separate per-VID blob or hardcoded table needed. Parsed exactly
 /// once on first use.
+#[cfg(test)]
 #[derive(Default)]
 struct EmbeddedOverlay {
     /// VID:PID → {vendor, product}.
@@ -104,8 +105,10 @@ struct EmbeddedOverlay {
     vendors: HashMap<u16, String>,
 }
 
+#[cfg(test)]
 static EMBEDDED: OnceLock<EmbeddedOverlay> = OnceLock::new();
 
+#[cfg(test)]
 fn embedded() -> &'static EmbeddedOverlay {
     EMBEDDED.get_or_init(|| decode_embedded_overlay(EMBEDDED_PROTO).unwrap_or_default())
 }
@@ -113,6 +116,7 @@ fn embedded() -> &'static EmbeddedOverlay {
 /// Inflate + parse the embedded proto into both projections. Errors bubble
 /// up to `unwrap_or_default()` (empty overlay) so a bad blob degrades to
 /// tier-1 vendor resolution rather than crashing.
+#[cfg(test)]
 fn decode_embedded_overlay(raw: &[u8]) -> Result<EmbeddedOverlay, String> {
     let mut decoded = Vec::with_capacity(raw.len() * 4);
     zstd::stream::copy_decode(raw, &mut decoded).map_err(|e| format!("zstd: {e}"))?;
@@ -143,16 +147,19 @@ fn decode_embedded_overlay(raw: &[u8]) -> Result<EmbeddedOverlay, String> {
 
 /// The embedded VID→vendor map (from the same proto). `None` if the VID is
 /// absent from the embedded overlay.
+#[cfg(test)]
 pub(crate) fn embedded_vendor(vid: u16) -> Option<&'static str> {
     embedded().vendors.get(&vid).map(|s| s.as_str())
 }
 
 /// Number of VID:PID rows in the embedded overlay (test/introspection aid).
+#[cfg(test)]
 pub fn embedded_vidpid_count() -> usize {
     embedded().vidpid.len()
 }
 
 /// Number of VID→vendor rows in the embedded overlay (test/introspection aid).
+#[cfg(test)]
 pub fn embedded_vendor_count() -> usize {
     embedded().vendors.len()
 }
@@ -471,6 +478,7 @@ pub(crate) fn online_lookup(vid: u16, pid: u16) -> Option<UsbInfo> {
 }
 
 /// Compile-time embedded overlay only (FastLED/boards curated device map).
+#[cfg(test)]
 pub(crate) fn embedded_lookup(vid: u16, pid: u16) -> Option<UsbInfo> {
     embedded().vidpid.get(&pack(vid, pid)).cloned()
 }
