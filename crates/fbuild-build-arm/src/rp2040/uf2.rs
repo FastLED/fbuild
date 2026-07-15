@@ -25,6 +25,15 @@ pub(super) async fn convert_elf_to_uf2(
         Some(std::time::Duration::from_secs(30)),
     )
     .await?;
+    validate_conversion_result(&output, elf, uf2, family)
+}
+
+fn validate_conversion_result(
+    output: &fbuild_core::subprocess::ToolOutput,
+    elf: &Path,
+    uf2: &Path,
+    family: &str,
+) -> Result<()> {
     if !output.success() {
         return Err(fbuild_core::FbuildError::BuildFailed(format!(
             "managed picotool could not convert {} to {} for {family}: {}{}{}",
@@ -123,5 +132,41 @@ mod tests {
         );
         assert!(args.windows(2).any(|pair| pair == ["--platform", "rp2350"]));
         assert!(args.iter().any(|arg| arg == "--abs-block"));
+    }
+
+    #[test]
+    fn invalid_elf_diagnostics_are_preserved() {
+        let temp = tempfile::tempdir().unwrap();
+        let elf = temp.path().join("invalid.elf");
+        let uf2 = temp.path().join("firmware.uf2");
+        let output = fbuild_core::subprocess::ToolOutput {
+            stdout: String::new(),
+            stderr: "ELF has overlapping or out-of-range load segments".to_string(),
+            exit_code: 1,
+        };
+        let error = validate_conversion_result(&output, &elf, &uf2, "rp2040").unwrap_err();
+        let message = error.to_string();
+        assert!(message.contains("managed picotool could not convert"));
+        assert!(message.contains("overlapping or out-of-range load segments"));
+    }
+
+    #[test]
+    fn converter_success_without_uf2_is_rejected() {
+        let temp = tempfile::tempdir().unwrap();
+        let output = fbuild_core::subprocess::ToolOutput {
+            stdout: String::new(),
+            stderr: String::new(),
+            exit_code: 0,
+        };
+        let error = validate_conversion_result(
+            &output,
+            &temp.path().join("firmware.elf"),
+            &temp.path().join("missing.uf2"),
+            "rp2040",
+        )
+        .unwrap_err();
+        assert!(error
+            .to_string()
+            .contains("reported success without creating"));
     }
 }
