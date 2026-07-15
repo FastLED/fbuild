@@ -40,9 +40,9 @@ The four rules an agent must internalize before doing anything else (all listed 
 ## Commands
 
 ```bash
-uv run test                 # unit tests only
-uv run test --full          # unit + stress + integration tests
-uv run test -p <crate> -- <test_name>
+bash test                   # unit tests only
+bash test --full            # unit + stress + integration tests
+bash test -p <crate> -- <test_name>
 soldr cargo check --workspace --all-targets
 soldr cargo clippy --workspace --all-targets -- -D warnings
 soldr cargo fmt --all
