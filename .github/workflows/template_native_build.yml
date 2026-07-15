@@ -269,12 +269,12 @@ jobs:
             # the x64 CRT compatibility path below.
             soldr prepare --target ${{ inputs.target }}
             if [ "${{ inputs.target }}" = "x86_64-pc-windows-msvc" ]; then
-              # soldr's catalogue cache exposes the MSVC CRT under x64, while
-              # the current target flag injector requests x86_64. Keep the
-              # blessed compiler and supply only the corrected managed paths.
+              # soldr's catalogue cache exposes the MSVC CRT under x64 but
+              # its Windows SDK uses x86_64. Keep the blessed compiler and
+              # supply only those verified managed paths.
               xwin_root="$(find "$SOLDR_CACHE_DIR/sdk/${{ inputs.target }}/xwin" -type d -name xwin -print -quit)"
               [ -n "$xwin_root" ] || { echo "managed xwin cache missing" >&2; exit 1; }
-              export RUSTFLAGS="-D warnings -C link-arg=/LIBPATH:$xwin_root/crt/lib/x64 -C link-arg=/LIBPATH:$xwin_root/sdk/lib/um/x64 -C link-arg=/LIBPATH:$xwin_root/sdk/lib/ucrt/x64"
+              export RUSTFLAGS="-D warnings -C link-arg=/LIBPATH:$xwin_root/crt/lib/x64 -C link-arg=/LIBPATH:$xwin_root/sdk/lib/um/x86_64 -C link-arg=/LIBPATH:$xwin_root/sdk/lib/ucrt/x86_64"
             else
               # Cargo's global RUSTFLAGS takes precedence over soldr's
               # target-specific xwin linker flags.
@@ -339,7 +339,7 @@ jobs:
             if [ "${{ inputs.target }}" = "x86_64-pc-windows-msvc" ]; then
               xwin_root="$(find "$SOLDR_CACHE_DIR/sdk/${{ inputs.target }}/xwin" -type d -name xwin -print -quit)"
               [ -n "$xwin_root" ] || { echo "managed xwin cache missing" >&2; exit 1; }
-              export RUSTFLAGS="-D warnings -C link-arg=/LIBPATH:$xwin_root/crt/lib/x64 -C link-arg=/LIBPATH:$xwin_root/sdk/lib/um/x64 -C link-arg=/LIBPATH:$xwin_root/sdk/lib/ucrt/x64"
+              export RUSTFLAGS="-D warnings -C link-arg=/LIBPATH:$xwin_root/crt/lib/x64 -C link-arg=/LIBPATH:$xwin_root/sdk/lib/um/x86_64 -C link-arg=/LIBPATH:$xwin_root/sdk/lib/ucrt/x86_64"
             else
               unset RUSTFLAGS
             fi
