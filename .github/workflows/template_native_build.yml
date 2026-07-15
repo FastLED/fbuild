@@ -272,7 +272,7 @@ jobs:
               # soldr's catalogue cache exposes the MSVC CRT under x64 but
               # its Windows SDK uses x86_64. Keep the blessed compiler and
               # supply only those verified managed paths.
-              xwin_root="$(find "$SOLDR_CACHE_DIR/sdk/${{ inputs.target }}/xwin" -type d -name xwin -print -quit)"
+              xwin_root="$(find "$SOLDR_CACHE_DIR/sdk/${{ inputs.target }}/xwin" -mindepth 2 -maxdepth 2 -type d -name xwin -print -quit)"
               [ -n "$xwin_root" ] || { echo "managed xwin cache missing" >&2; exit 1; }
               export RUSTFLAGS="-D warnings -C link-arg=/LIBPATH:$xwin_root/crt/lib/x64 -C link-arg=/LIBPATH:$xwin_root/sdk/lib/um/x86_64 -C link-arg=/LIBPATH:$xwin_root/sdk/lib/ucrt/x86_64"
             else
@@ -337,7 +337,7 @@ jobs:
             # for aarch64 PyO3 dylib compilation.
             soldr prepare --target ${{ inputs.target }}
             if [ "${{ inputs.target }}" = "x86_64-pc-windows-msvc" ]; then
-              xwin_root="$(find "$SOLDR_CACHE_DIR/sdk/${{ inputs.target }}/xwin" -type d -name xwin -print -quit)"
+              xwin_root="$(find "$SOLDR_CACHE_DIR/sdk/${{ inputs.target }}/xwin" -mindepth 2 -maxdepth 2 -type d -name xwin -print -quit)"
               [ -n "$xwin_root" ] || { echo "managed xwin cache missing" >&2; exit 1; }
               export RUSTFLAGS="-D warnings -C link-arg=/LIBPATH:$xwin_root/crt/lib/x64 -C link-arg=/LIBPATH:$xwin_root/sdk/lib/um/x86_64 -C link-arg=/LIBPATH:$xwin_root/sdk/lib/ucrt/x86_64"
             else
