@@ -2,6 +2,7 @@
 
 pub mod mcu_config;
 pub mod orchestrator;
+mod uf2;
 
 pub use orchestrator::Rp2040Orchestrator;
 

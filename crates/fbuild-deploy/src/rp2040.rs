@@ -14,6 +14,15 @@ use fbuild_core::{FbuildError, Result};
 
 use crate::{DeployOutcome, Deployer, DeploymentResult};
 
+#[path = "rp2040_target.rs"]
+mod target;
+#[path = "rp2040_mount.rs"]
+mod mount;
+use mount::try_mount_linux_rom_device;
+use target::{
+    resolve_requested_runtime_target, select_cdc_candidate, serial_selector,
+};
+
 const UF2_MAGIC_START0: u32 = 0x0A32_4555;
 const UF2_MAGIC_START1: u32 = 0x9E5D_5157;
 const UF2_MAGIC_END: u32 = 0x0AB1_6F30;
@@ -130,26 +139,42 @@ fn find_uf2_volumes(roots: &[PathBuf]) -> Vec<PathBuf> {
 
 fn find_uf2_volume_until(timeout: Duration) -> Result<Option<PathBuf>> {
     let deadline = Instant::now() + timeout;
+    let mut mount_attempted = false;
     loop {
-        let matches = find_uf2_volumes(&volume_roots());
-        if matches.len() > 1 {
-            return Err(FbuildError::DeployFailed(format!(
-                "found multiple RP2040 BOOTSEL volumes: {}",
-                matches
-                    .iter()
-                    .map(|p| p.display().to_string())
-                    .collect::<Vec<_>>()
-                    .join(", ")
-            )));
-        }
-        if let Some(path) = matches.into_iter().next() {
+        if let Some(path) = select_single_uf2_volume(find_uf2_volumes(&volume_roots()))? {
             return Ok(Some(path));
+        }
+        if !mount_attempted {
+            mount_attempted = try_mount_linux_rom_device();
         }
         if Instant::now() >= deadline {
             return Ok(None);
         }
         std::thread::sleep(Duration::from_millis(100));
     }
+}
+
+fn select_single_uf2_volume(mut matches: Vec<PathBuf>) -> Result<Option<PathBuf>> {
+    if matches.len() > 1 {
+        return Err(FbuildError::DeployFailed(format!(
+            "found multiple RP2040 BOOTSEL volumes: {}; pass an explicit UF2 volume path to select one",
+            matches
+                .iter()
+                .map(|path| path.display().to_string())
+                .collect::<Vec<_>>()
+                .join(", ")
+        )));
+    }
+    Ok(matches.pop())
+}
+
+fn explicit_uf2_volume(selector: &str) -> Option<PathBuf> {
+    let candidate = selector
+        .strip_prefix("UF2=")
+        .or_else(|| selector.strip_prefix("uf2="))
+        .unwrap_or(selector);
+    let path = PathBuf::from(candidate);
+    has_uf2_marker(&path).then_some(path)
 }
 
 fn touch_1200bps(port: &str) -> Result<()> {
@@ -186,24 +211,29 @@ fn touch_1200bps(port: &str) -> Result<()> {
 }
 
 fn write_uf2(firmware_path: &Path, volume: &Path, family_id: u32) -> Result<PathBuf> {
+    let input_is_uf2 = firmware_path
+        .extension()
+        .is_some_and(|ext| ext.eq_ignore_ascii_case("uf2"));
+    let input_is_bin = firmware_path
+        .extension()
+        .is_some_and(|ext| ext.eq_ignore_ascii_case("bin"));
+    if !input_is_uf2 && !input_is_bin {
+        return Err(FbuildError::DeployFailed(format!(
+            "unsupported RP2040 firmware input {}; expected a managed .uf2 or raw .bin artifact",
+            firmware_path.display()
+        )));
+    }
     let input_bytes = fs::read(firmware_path).map_err(|error| {
         FbuildError::DeployFailed(format!(
             "failed to read {}: {error}",
             firmware_path.display()
         ))
     })?;
-    let input_is_uf2 = firmware_path
-        .extension()
-        .is_some_and(|ext| ext.eq_ignore_ascii_case("uf2"));
     let sibling_uf2 = firmware_path.with_extension("uf2");
     let (artifact, uf2) = if input_is_uf2 {
         reject_stale_uf2(firmware_path)?;
         (firmware_path.to_path_buf(), input_bytes)
-    } else if firmware_path
-        .extension()
-        .is_some_and(|ext| ext.eq_ignore_ascii_case("bin"))
-        && sibling_uf2.is_file()
-    {
+    } else if sibling_uf2.is_file() {
         reject_stale_uf2(&sibling_uf2)?;
         let bytes = fs::read(&sibling_uf2).map_err(|error| {
             FbuildError::DeployFailed(format!(
@@ -332,6 +362,7 @@ fn validate_uf2(bytes: &[u8], expected_family: u32) -> Result<()> {
     }
     let block_count = bytes.len() / UF2_BLOCK_SIZE;
     let mut seen = vec![false; block_count];
+    let mut seen_targets = BTreeSet::new();
     let flash_end = if expected_family == RP2350_FAMILY_ID {
         0x1400_0000u32
     } else {
@@ -374,6 +405,11 @@ fn validate_uf2(bytes: &[u8], expected_family: u32) -> Result<()> {
         if std::mem::replace(&mut seen[block_number], true) {
             return Err(FbuildError::DeployFailed(format!(
                 "malformed RP2040 UF2: duplicate block number {block_number}"
+            )));
+        }
+        if !seen_targets.insert(target_address) {
+            return Err(FbuildError::DeployFailed(format!(
+                "malformed RP2040 UF2: overlapping target address 0x{target_address:08X}"
             )));
         }
     }
@@ -429,47 +465,65 @@ impl Rp2040Deployer {
         }
     }
 
-    pub fn for_board(board_id: &str) -> Self {
+    pub fn for_mcu(mcu: &str) -> Result<Self> {
         let mut deployer = Self::default();
-        if board_id.to_ascii_lowercase().contains("pico2") {
-            deployer.family_id = RP2350_FAMILY_ID;
+        match mcu.to_ascii_lowercase().as_str() {
+            value if value.starts_with("rp2040") => {}
+            value if value.starts_with("rp2350") => deployer.family_id = RP2350_FAMILY_ID,
+            _ => {
+                return Err(FbuildError::DeployFailed(format!(
+                    "unsupported Raspberry Pi MCU {mcu:?}; expected rp2040 or rp2350"
+                )));
+            }
         }
-        deployer
+        Ok(deployer)
     }
 }
 
-fn catalogue_pico_cdc_ports(expected_family: u32) -> Result<Vec<String>> {
+#[derive(Debug, Clone, PartialEq, Eq)]
+struct PicoCdcPort {
+    name: String,
+    serial_number: Option<String>,
+}
+
+fn catalogue_pico_cdc_ports(expected_family: u32) -> Result<Vec<PicoCdcPort>> {
     let ports = fbuild_serial::ports::available_ports().map_err(|error| {
         FbuildError::SerialError(format!(
             "failed to enumerate post-deploy serial ports: {error}"
         ))
     })?;
-    let mut names: Vec<String> = ports
+    let mut matches: Vec<PicoCdcPort> = ports
         .into_iter()
-        .filter(|port| {
+        .filter_map(|port| {
             let serialport::SerialPortType::UsbPort(usb) = &port.port_type else {
-                return false;
+                return None;
             };
-            fbuild_core::usb::profiles::profiles_for(usb.vid, usb.pid)
+            let matches_family = fbuild_core::usb::profiles::profiles_for(usb.vid, usb.pid)
                 .iter()
-                .any(|profile| profile_matches_family(profile, expected_family))
+                .any(|profile| profile_matches_family(profile, expected_family));
+            matches_family.then(|| PicoCdcPort {
+                name: port.port_name,
+                serial_number: usb.serial_number.clone(),
+            })
         })
-        .map(|port| port.port_name)
         .collect();
-    names.sort();
-    Ok(names)
+    matches.sort_by(|left, right| left.name.cmp(&right.name));
+    Ok(matches)
 }
 
 fn wait_for_cdc_port(
     previous_port: Option<&str>,
+    requested_serial: Option<&str>,
     before: &BTreeSet<String>,
     expected_family: u32,
     timeout: Duration,
 ) -> Result<String> {
     let deadline = Instant::now() + timeout;
     loop {
-        let names = catalogue_pico_cdc_ports(expected_family)?;
-        if let Some(selected) = select_cdc_candidate(previous_port, before, &names)? {
+        let ports = catalogue_pico_cdc_ports(expected_family)?;
+        if let Some(selected) =
+            select_cdc_candidate(previous_port, requested_serial, before, &ports)?
+        {
             return Ok(selected);
         }
         if Instant::now() >= deadline {
@@ -516,31 +570,6 @@ fn ensure_verified_usb_profiles() -> Result<()> {
     }
 }
 
-fn select_cdc_candidate(
-    previous_port: Option<&str>,
-    before: &BTreeSet<String>,
-    names: &[String],
-) -> Result<Option<String>> {
-    if let Some(old) = previous_port {
-        if names.iter().any(|name| name == old) {
-            return Ok(Some(old.to_string()));
-        }
-    }
-    let new_names: Vec<_> = names
-        .iter()
-        .filter(|name| !before.contains(*name))
-        .cloned()
-        .collect();
-    match new_names.as_slice() {
-        [] => Ok(None),
-        [only] => Ok(Some(only.clone())),
-        many => Err(FbuildError::DeployFailed(format!(
-            "multiple new Raspberry Pi CDC ports appeared after deploy: {}; pass -p/--port to select one",
-            many.join(", ")
-        ))),
-    }
-}
-
 #[async_trait::async_trait]
 impl Deployer for Rp2040Deployer {
     async fn deploy(
@@ -557,35 +586,64 @@ impl Deployer for Rp2040Deployer {
                     "failed to prepare the FastLED/boards USB profile cache: {error}"
                 ))
             })??;
-        let port = port.map(str::trim).filter(|value| !value.is_empty());
-        let original_port = port.map(str::to_string);
+        let selector = port.map(str::trim).filter(|value| !value.is_empty());
         let family_id = self.family_id;
-        let ports_before: BTreeSet<String> =
+        let current_ports =
             tokio::task::spawn_blocking(move || catalogue_pico_cdc_ports(family_id))
                 .await
                 .map_err(|error| {
                     FbuildError::DeployFailed(format!(
                         "RP2040 serial snapshot task failed: {error}"
                     ))
-                })??
-                .into_iter()
-                .collect();
-        if let Some(port) = port {
-            let port = port.to_string();
+                })??;
+        let ports_before: BTreeSet<String> = current_ports
+            .iter()
+            .map(|port| port.name.clone())
+            .collect();
+        let explicit_volume = selector.and_then(explicit_uf2_volume);
+        if selector.is_some_and(|value| value.to_ascii_lowercase().starts_with("uf2="))
+            && explicit_volume.is_none()
+        {
+            return Err(FbuildError::DeployFailed(format!(
+                "explicit RP2040 UF2 volume {selector:?} does not contain INFO_UF2.TXT"
+            )));
+        }
+        let volume_before_reset = match explicit_volume {
+            Some(volume) => Some(volume),
+            None => select_single_uf2_volume(find_uf2_volumes(&volume_roots()))?,
+        };
+        let requested_serial = selector.and_then(serial_selector).map(str::to_string);
+        let runtime_target = if volume_before_reset.is_none() {
+            selector
+                .map(|value| resolve_requested_runtime_target(value, &current_ports))
+                .transpose()?
+        } else {
+            None
+        };
+        if let Some(target) = &runtime_target {
+            let port = target.port.clone();
             tokio::task::spawn_blocking(move || touch_1200bps(&port))
                 .await
                 .map_err(|error| {
                     FbuildError::DeployFailed(format!("RP2040 reset task failed: {error}"))
                 })??;
         }
-        let timeout = self.bootloader_timeout;
-        let volume = tokio::task::spawn_blocking(move || find_uf2_volume_until(timeout))
-            .await
-            .map_err(|error| FbuildError::DeployFailed(format!("RP2040 volume watcher failed: {error}")))?
-            ?
-            .ok_or_else(|| FbuildError::DeployFailed(
-                "RP2040 BOOTSEL volume not found; check that the stock board is connected and retry".into(),
-            ))?;
+        let volume = if let Some(volume) = volume_before_reset {
+            volume
+        } else {
+            let timeout = self.bootloader_timeout;
+            tokio::task::spawn_blocking(move || find_uf2_volume_until(timeout))
+                .await
+                .map_err(|error| {
+                    FbuildError::DeployFailed(format!("RP2040 volume watcher failed: {error}"))
+                })??
+                .ok_or_else(|| {
+                    FbuildError::DeployFailed(
+                        "RP2040 BOOTSEL volume not found; check that the stock board is connected and retry"
+                            .into(),
+                    )
+                })?
+        };
         let firmware = firmware_path.to_path_buf();
         let volume_for_copy = volume.clone();
         let family_id = self.family_id;
@@ -604,11 +662,16 @@ impl Deployer for Rp2040Deployer {
         .map_err(|error| {
             FbuildError::DeployFailed(format!("RP2040 eject watcher failed: {error}"))
         })??;
-        let recovery_port = original_port.clone();
+        let recovery_port = runtime_target.as_ref().map(|target| target.port.clone());
+        let recovery_serial = runtime_target
+            .as_ref()
+            .and_then(|target| target.serial_number.clone())
+            .or(requested_serial);
         let family_id = self.family_id;
         let discovered_port = tokio::task::spawn_blocking(move || {
             wait_for_cdc_port(
                 recovery_port.as_deref(),
+                recovery_serial.as_deref(),
                 &ports_before,
                 family_id,
                 post_timeout,
@@ -768,29 +831,45 @@ mod tests {
         bad_address[12..16].copy_from_slice(&0x2000_0000u32.to_le_bytes());
         let error = validate_uf2(&bad_address, RP2040_FAMILY_ID).unwrap_err();
         assert!(error.to_string().contains("block metadata"));
+
+        let mut overlapping = encode_uf2(&[0; 300]);
+        overlapping[512 + 12..512 + 16]
+            .copy_from_slice(&RP2040_UF2_BASE_ADDRESS.to_le_bytes());
+        let error = validate_uf2(&overlapping, RP2040_FAMILY_ID).unwrap_err();
+        assert!(error.to_string().contains("overlapping target address"));
     }
 
     #[test]
-    fn changed_cdc_port_is_returned_instead_of_stale_port() {
-        let before = BTreeSet::from(["COM7".to_string()]);
-        let after = vec!["COM12".to_string()];
+    fn refuses_to_encode_elf_or_unknown_input_as_raw_flash() {
+        let root = tempdir().unwrap();
+        fs::write(root.path().join("INFO_UF2.TXT"), "UF2 Bootloader").unwrap();
+        for filename in ["firmware.elf", "firmware.dat"] {
+            let firmware = root.path().join(filename);
+            fs::write(&firmware, [0x7f, b'E', b'L', b'F']).unwrap();
+            let error = write_uf2(&firmware, root.path(), RP2040_FAMILY_ID).unwrap_err();
+            assert!(error.to_string().contains("expected a managed .uf2 or raw .bin"));
+        }
+    }
+
+    #[test]
+    fn already_mounted_explicit_volume_wins_without_serial_selection() {
+        let root = tempdir().unwrap();
+        fs::write(root.path().join("INFO_UF2.TXT"), "Board-ID: RPI-RP2").unwrap();
+        let selector = format!("UF2={}", root.path().display());
+        assert_eq!(explicit_uf2_volume(&selector), Some(root.path().to_path_buf()));
+        assert!(resolve_requested_runtime_target(&selector, &[]).is_err());
+    }
+
+    #[test]
+    fn deploy_family_comes_from_mcu_not_board_name() {
         assert_eq!(
-            select_cdc_candidate(Some("COM7"), &before, &after).unwrap(),
-            Some("COM12".to_string())
+            Rp2040Deployer::for_mcu("rp2040").unwrap().family_id,
+            RP2040_FAMILY_ID
         );
-    }
-
-    #[test]
-    fn multiple_new_cdc_ports_are_rejected() {
-        let error = select_cdc_candidate(
-            None,
-            &BTreeSet::new(),
-            &["COM12".to_string(), "COM13".to_string()],
-        )
-        .unwrap_err();
-        assert!(error
-            .to_string()
-            .contains("multiple new Raspberry Pi CDC ports"));
+        assert_eq!(
+            Rp2040Deployer::for_mcu("rp2350").unwrap().family_id,
+            RP2350_FAMILY_ID
+        );
     }
 
     #[test]
