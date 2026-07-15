@@ -59,11 +59,15 @@ impl BootloaderSignature {
     /// `SamdUf2` is VID-only (PID varies); the others are exact-pair.
     #[must_use]
     pub fn matches(&self, vid: u16, pid: u16) -> bool {
-        match self {
-            BootloaderSignature::Rp2040BootSel => (vid, pid) == (0x2E8A, 0x0003),
-            BootloaderSignature::SamdDfu => (vid, pid) == (0x03EB, 0x6124),
-            BootloaderSignature::SamdUf2 => vid == 0x239A,
-            BootloaderSignature::TeensyHidBootloader => (vid, pid) == (0x16C0, 0x0478),
+        #[cfg(test)]
+        {
+            test_signature_match(*self, vid, pid)
+        }
+        #[cfg(not(test))]
+        {
+            fbuild_core::usb::profiles::profiles_for(vid, pid)
+                .iter()
+                .any(|profile| profile_matches_signature(*self, profile))
         }
     }
 
@@ -81,6 +85,55 @@ impl BootloaderSignature {
             NativeUsbCdcReset1200Bps => Some(Self::Rp2040BootSel),
             _ => None,
         }
+    }
+}
+
+fn profile_matches_signature(
+    signature: BootloaderSignature,
+    profile: &fbuild_core::usb::profiles::UsbTransportProfile,
+) -> bool {
+    use fbuild_core::usb::profiles::{UsbDeviceRole, UsbPurpose};
+
+    match signature {
+        BootloaderSignature::Rp2040BootSel => {
+            profile.purpose == UsbPurpose::Bootloader
+                && profile.role == UsbDeviceRole::BootloaderUf2
+                && profile.family.as_deref() == Some("rp2040")
+        }
+        BootloaderSignature::SamdDfu => {
+            profile.purpose == UsbPurpose::Bootloader
+                && matches!(
+                    profile.role,
+                    UsbDeviceRole::BootloaderDfu | UsbDeviceRole::RecoveryTransport
+                )
+                && profile
+                    .family
+                    .as_deref()
+                    .is_some_and(|family| family.contains("sam"))
+        }
+        BootloaderSignature::SamdUf2 => {
+            profile.purpose == UsbPurpose::Bootloader
+                && profile.role == UsbDeviceRole::BootloaderUf2
+                && profile
+                    .family
+                    .as_deref()
+                    .is_some_and(|family| family.contains("samd"))
+        }
+        BootloaderSignature::TeensyHidBootloader => {
+            profile.purpose == UsbPurpose::Bootloader
+                && profile.role == UsbDeviceRole::BootloaderHid
+                && profile.family.as_deref() == Some("teensy")
+        }
+    }
+}
+
+#[cfg(test)]
+fn test_signature_match(signature: BootloaderSignature, vid: u16, pid: u16) -> bool {
+    match signature {
+        BootloaderSignature::Rp2040BootSel => (vid, pid) == (0x2E8A, 0x0003),
+        BootloaderSignature::SamdDfu => (vid, pid) == (0x03EB, 0x6124),
+        BootloaderSignature::SamdUf2 => vid == 0x239A,
+        BootloaderSignature::TeensyHidBootloader => (vid, pid) == (0x16C0, 0x0478),
     }
 }
 
@@ -204,6 +257,59 @@ pub fn watch_for_bootloader<S: PortSource>(
 mod tests {
     use super::*;
     use std::cell::Cell;
+
+    fn boot_profile(
+        role: fbuild_core::usb::profiles::UsbDeviceRole,
+        family: &str,
+    ) -> fbuild_core::usb::profiles::UsbTransportProfile {
+        use fbuild_core::usb::profiles::{
+            UsbIdentityMatch, UsbProfileProvenance, UsbPurpose, UsbTransportProfile,
+        };
+        UsbTransportProfile {
+            identity_match: UsbIdentityMatch {
+                vid: "feed".to_string(),
+                pid: Some("c0de".to_string()),
+                pid_mask: None,
+            },
+            purpose: UsbPurpose::Bootloader,
+            role,
+            transport: "usb".to_string(),
+            reset: "manual".to_string(),
+            handoff: "bootloader".to_string(),
+            platform: None,
+            family: Some(family.to_string()),
+            generation: None,
+            interface: None,
+            provenance: UsbProfileProvenance {
+                source_url: "test://fixture".to_string(),
+                source_revision: "a".repeat(40),
+                source_class: "test".to_string(),
+            },
+            priority: 100,
+            allow_ambiguous: false,
+        }
+    }
+
+    #[test]
+    fn typed_profiles_drive_bootloader_signatures_without_identity_constants() {
+        use fbuild_core::usb::profiles::UsbDeviceRole;
+
+        let uf2 = boot_profile(UsbDeviceRole::BootloaderUf2, "rp2040");
+        assert!(profile_matches_signature(
+            BootloaderSignature::Rp2040BootSel,
+            &uf2
+        ));
+        assert!(!profile_matches_signature(
+            BootloaderSignature::TeensyHidBootloader,
+            &uf2
+        ));
+
+        let teensy = boot_profile(UsbDeviceRole::BootloaderHid, "teensy");
+        assert!(profile_matches_signature(
+            BootloaderSignature::TeensyHidBootloader,
+            &teensy
+        ));
+    }
 
     /// Scripted source — returns the snapshot at index `i` on the
     /// i'th call. Tests use this to model "port appears at T+1
