@@ -218,6 +218,7 @@ fn touch_1200bps(port: &str) -> Result<()> {
                     "failed to assert DTR while resetting {port}: {error}"
                 ))
             })?;
+            std::thread::sleep(Duration::from_millis(100));
             serial.write_data_terminal_ready(false).map_err(|error| {
                 FbuildError::SerialError(format!(
                     "failed to deassert DTR while resetting {port}: {error}"
@@ -228,7 +229,6 @@ fn touch_1200bps(port: &str) -> Result<()> {
                     "failed to set the RP2040 reset baud on {port}: {error}"
                 ))
             })?;
-            std::thread::sleep(Duration::from_millis(100));
             Ok(())
         }
         Err(error) if error.kind() == serialport::ErrorKind::NoDevice => Ok(()),
@@ -236,6 +236,37 @@ fn touch_1200bps(port: &str) -> Result<()> {
             "failed to enter RP2040 BOOTSEL on {port}: {error}"
         ))),
     }
+}
+
+fn select_volume_after_reset(
+    volume: Option<PathBuf>,
+    reset_error: Option<FbuildError>,
+) -> Result<PathBuf> {
+    if let Some(volume) = volume {
+        if let Some(error) = reset_error {
+            // Windows can invalidate the CDC handle while processing the
+            // final SET_LINE_CODING request because the device has already
+            // acted on the 1200-bps touch and disconnected. The newly
+            // discovered ROM volume is the authoritative success signal.
+            tracing::warn!(
+                reset_error = %error,
+                volume = %volume.display(),
+                "RP2040 1200-bps reset reported an error, but BOOTSEL appeared; continuing"
+            );
+        }
+        return Ok(volume);
+    }
+
+    if let Some(error) = reset_error {
+        return Err(FbuildError::DeployFailed(format!(
+            "{error}; no RP2040 BOOTSEL transition was observed after the 1200-bps reset"
+        )));
+    }
+
+    Err(FbuildError::DeployFailed(
+        "RP2040 BOOTSEL volume not found; check that the stock board is connected and retry"
+            .into(),
+    ))
 }
 
 fn prepare_uf2_artifact(firmware_path: &Path, family_id: u32) -> Result<(PathBuf, Uf2Target)> {
@@ -844,29 +875,27 @@ impl Deployer for Rp2040Deployer {
         } else {
             None
         };
-        if let Some(target) = &runtime_target {
+        let reset_error = if let Some(target) = &runtime_target {
             let port = target.port.clone();
             tokio::task::spawn_blocking(move || touch_1200bps(&port))
                 .await
                 .map_err(|error| {
                     FbuildError::DeployFailed(format!("RP2040 reset task failed: {error}"))
-                })??;
-        }
+                })?
+                .err()
+        } else {
+            None
+        };
         let volume = if let Some(volume) = volume_before_reset {
             volume
         } else {
             let timeout = self.bootloader_timeout;
-            tokio::task::spawn_blocking(move || find_uf2_volume_until(timeout))
+            let discovered = tokio::task::spawn_blocking(move || find_uf2_volume_until(timeout))
                 .await
                 .map_err(|error| {
                     FbuildError::DeployFailed(format!("RP2040 volume watcher failed: {error}"))
-                })??
-                .ok_or_else(|| {
-                    FbuildError::DeployFailed(
-                        "RP2040 BOOTSEL volume not found; check that the stock board is connected and retry"
-                            .into(),
-                    )
-                })?
+                })??;
+            select_volume_after_reset(discovered, reset_error)?
         };
         let firmware = firmware_path.to_path_buf();
         let family_id = self.family_id;
@@ -1123,6 +1152,34 @@ mod tests {
         assert_eq!(found, None);
         assert_eq!(scans, 1);
         assert_eq!(mounts, 1);
+    }
+
+    #[test]
+    fn reset_disconnect_error_is_accepted_only_after_bootsel_appears() {
+        let volume = PathBuf::from("G:/");
+        assert_eq!(
+            select_volume_after_reset(Some(volume.clone()), None).unwrap(),
+            volume
+        );
+
+        let reset_error = FbuildError::SerialError(
+            "failed to set the RP2040 reset baud on COM12: device disappeared".to_string(),
+        );
+
+        assert_eq!(
+            select_volume_after_reset(Some(volume.clone()), Some(reset_error)).unwrap(),
+            volume
+        );
+
+        let reset_error = FbuildError::SerialError(
+            "failed to set the RP2040 reset baud on COM12: device disappeared".to_string(),
+        );
+        let error = select_volume_after_reset(None, Some(reset_error)).unwrap_err();
+        assert!(error.to_string().contains("failed to set the RP2040 reset baud"));
+        assert!(error.to_string().contains("no RP2040 BOOTSEL transition"));
+
+        let error = select_volume_after_reset(None, None).unwrap_err();
+        assert!(error.to_string().contains("BOOTSEL volume not found"));
     }
 
     #[test]
