@@ -28,6 +28,7 @@
 
 pub mod data;
 pub mod embedded;
+pub mod profiles;
 pub mod resolver;
 
 pub use data::{

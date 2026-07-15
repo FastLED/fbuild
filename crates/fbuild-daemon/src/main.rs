@@ -469,10 +469,18 @@ fn populate_usb_overlay_best_effort() {
     let dir = fbuild_paths::get_cache_root().join("usb");
     let proto_path = dir.join("usb-vids.proto.zstd");
     let json_path = dir.join("usb-vid.json");
+    let profiles_meta_path = dir.join("_meta.json");
+    let profiles_path = dir.join("usb-profiles.json");
     if fbuild_core::usb::populate_online_cache_from_paths(&proto_path, &json_path) {
         tracing::info!("usb overlay: tier-2 VID:PID map installed");
     } else {
         tracing::warn!("usb overlay: tier-2 unavailable; falling back to embedded vendor archive");
+    }
+    if fbuild_core::usb::profiles::populate_profiles_from_paths(&profiles_meta_path, &profiles_path)
+    {
+        tracing::info!("usb profiles: verified FastLED/boards transport profiles installed");
+    } else {
+        tracing::warn!("usb profiles: verified FastLED/boards transport profiles unavailable");
     }
 }
 
