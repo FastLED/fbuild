@@ -121,13 +121,8 @@ object = { version = "0.36", default-features = false, features = ["read", "std"
 rusqlite = { version = "0.31", features = ["bundled"] }
 shell-words = "1"
 bincode = "1"
-# USB VID:PID -> {vendor, product} name lookup. Bundles the linux-usb.org
-# `usb.ids` snapshot at compile time into a `phf` perfect-hash table.
-# Pure Rust, no libusb / no udev. Versioning scheme `1.YYYY.N` tracks
-# upstream snapshots — `cargo update` pulls in new silicon. Tier-1 for
-# `fbuild_core::usb::resolve()`; the tier-2 online overlay is fetched
-# from the repo's `online-data` branch.
-usb-ids = "1.2025"
+# USB identity data is fetched from FastLED/boards at runtime. Do not add a
+# catalogue dependency here; dependency checks run through `soldr cargo`.
 # prost: hand-derived `#[derive(prost::Message)]` payload structs for the
 # fbuild v1 broker request/response lane (no .proto/build.rs needed). Pinned
 # to the version running-process 4.3.0 re-exports so the wire types stay

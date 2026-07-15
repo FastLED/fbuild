@@ -15,8 +15,7 @@ pub struct UsbInfo {
 
 /// Best-effort lookup. Never returns `None`: a synthetic
 /// `"Unknown vendor 0xVVVV"` / `"Unknown product 0xPPPP"` is produced
-/// when both tier-1 (embedded vendor archive) and tier-2 (online overlay)
-/// miss.
+/// when the verified FastLED/boards runtime cache misses.
 pub fn resolve(vid: u16, pid: u16) -> UsbInfo {
     try_resolve(vid, pid).unwrap_or_else(|| UsbInfo {
         vendor: format!("Unknown vendor 0x{vid:04X}"),
@@ -24,15 +23,9 @@ pub fn resolve(vid: u16, pid: u16) -> UsbInfo {
     })
 }
 
-/// Tier-1 + tier-2 only. Returns `None` if neither knows this pair.
-///
-/// Tier order is reversed from the old `usb-ids`-backed implementation:
-/// the online overlay carries the full `{vendor, product}` aggregate
-/// (it ingests the bundled Rust crate dump on the `online-data` branch
-/// at workflow time), while the embedded vendor archive is intentionally
-/// vendor-name-only. We consult the overlay first because it has more
-/// information; we only fall through to the embedded archive when the
-/// overlay misses the VID entirely.
+/// Returns `None` when the verified FastLED/boards cache does not know this
+/// pair. Test builds may fall through to frozen fixtures below; production
+/// builds never do.
 pub fn try_resolve(vid: u16, pid: u16) -> Option<UsbInfo> {
     if let Some(info) = super::data::online_lookup(vid, pid) {
         return Some(info);
@@ -75,37 +68,14 @@ pub fn try_resolve(vid: u16, pid: u16) -> Option<UsbInfo> {
     }
 }
 
-/// Vendor-name-only tier (no per-PID product). Two compile-time-embedded
-/// sources, in priority order:
-///
-/// 1. The comprehensive `usb-vendors.tar.zst` archive (~2.2k VIDs) — the
-///    authoritative USB-IF vendor names (e.g. `10C4` → "Silicon Labs").
-/// 2. The `usb-vids.proto.zstd` VID→vendor map (FastLED/boards pipeline) as
-///    a fallback for VIDs not in the archive.
-///
-/// The archive is preferred because the boards pipeline's VID→vendor column
-/// is board-attributed (it can label a shared bridge VID with whichever
-/// board first claimed it); the per-VID:PID curated names still take effect
-/// through the tier-2 [`try_resolve`] path, which consults the proto's
-/// VID:PID map first.
-///
-/// For VIDs present in either, `UsbInfo.product` is a synthetic
-/// `"Device 0xPPPP"` placeholder since per-PID resolution lives in the
-/// VID:PID overlay (tier-2).
+/// Resolve against frozen vendor-name fixtures in unit tests.
+#[cfg(test)]
 pub fn resolve_bundled(vid: u16, pid: u16) -> Option<UsbInfo> {
-    #[cfg(not(test))]
-    {
-        let _ = (vid, pid);
-        None
-    }
-    #[cfg(test)]
-    {
     let vendor = embedded::vendor_name(vid).or_else(|| super::data::embedded_vendor(vid))?;
     Some(UsbInfo {
         vendor: vendor.to_string(),
         product: format!("Device 0x{pid:04X}"),
     })
-    }
 }
 
 /// `"vendor product (VVVV:PPPP)"` — the canonical display format used by
@@ -231,12 +201,8 @@ mod tests {
 
     #[test]
     fn embedded_resolves_espressif_via_inlined_supplement() {
-        // 0x303a is missing from every canonical text database we mirror
-        // — the curated inlined supplement (online-data-tools/
-        // vendor_names_inlined.py) injects it during the workflow's
-        // merge step, and the resulting tar.zst is the embedded archive.
-        // This test pins the round-trip: curated overlay → embedded
-        // archive → fbuild runtime resolution.
+        // The frozen historical fixture carries this vendor. This test pins
+        // fixture parsing only; production resolves it from FastLED/boards.
         let info = resolve_bundled(0x303A, 0x4002).expect("Espressif in embedded archive");
         assert!(
             info.vendor.to_lowercase().contains("espressif"),
@@ -255,7 +221,7 @@ mod tests {
 
     #[test]
     fn pretty_format_uses_canonical_shape() {
-        // FTDI VID is in the embedded vendor archive, and this PID is NOT in
+        // FTDI VID is in the frozen vendor fixture, and this PID is NOT in
         // the VID:PID proto overlay, so resolution falls to the vendor
         // archive: vendor resolves, product is the synthetic placeholder so
         // the tail is deterministic.

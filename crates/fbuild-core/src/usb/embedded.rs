@@ -1,18 +1,14 @@
-//! Compile-time-embedded USB VID → vendor-name map.
+//! Frozen USB VID → vendor-name fixture for tests.
 //!
-//! Replaces the runtime dependency on the `usb-ids` Rust crate. The blob is
-//! produced by `online-data-tools/build_vendor_archive.py` and lives at
-//! `crates/fbuild-core/data/usb-vendors.tar.zst`. See that script + the
-//! `data/README.md` for the refresh workflow.
+//! This module is reachable only through `#[cfg(test)]`. Production builds use
+//! the verified FastLED/boards runtime cache and must never include this blob.
 //!
 //! Compact format inside the tar (`usb-vendors.txt`):
 //! ```text
 //! vid:vendor,vid:vendor,...
 //! ```
 //! where `vid` is 4-hex-digit lowercase and `vendor` has `,` and `%`
-//! escaped per RFC 3986. See `parse_compact` for the inflater and
-//! `online-data-tools/build_vendor_archive.py::pack_compact` for the
-//! producer counterpart.
+//! escaped per RFC 3986. See `parse_compact` for the inflater.
 //!
 //! Lookup is `O(1)` after the first call: the tar is decompressed +
 //! parsed exactly once into a `HashMap<u16, String>` behind a `OnceLock`.
@@ -23,9 +19,7 @@ use std::collections::HashMap;
 use std::io::Read;
 use std::sync::OnceLock;
 
-/// Lock-step with `build_vendor_archive.py::SCHEMA_VERSION`. Bump both
-/// sides whenever the archive layout changes; the consumer refuses to
-/// load an archive whose schema is newer than this constant.
+/// Maximum schema understood by the frozen test-fixture parser.
 pub const EMBEDDED_SCHEMA_VERSION: u64 = 2;
 
 const RAW_ARCHIVE: &[u8] = include_bytes!("../../data/usb-vendors.tar.zst");
@@ -33,8 +27,7 @@ const RAW_ARCHIVE: &[u8] = include_bytes!("../../data/usb-vendors.tar.zst");
 static VENDOR_MAP: OnceLock<HashMap<u16, String>> = OnceLock::new();
 
 /// Look up the vendor name for a USB VID. Returns `None` if the embedded
-/// archive doesn't carry that VID — callers should fall through to the
-/// online overlay (`usb::data::lookup`) before reporting "unknown".
+/// archive doesn't carry that VID.
 pub fn vendor_name(vid: u16) -> Option<&'static str> {
     VENDOR_MAP
         .get_or_init(load_or_panic)
@@ -211,14 +204,8 @@ mod tests {
 
     #[test]
     fn embedded_resolves_well_known_vids() {
-        // These are the headline VIDs the curated overlay was created to
-        // ensure — see issue FastLED/fbuild#718. If they vanish, the www
-        // page's headline "what board is this VID:PID?" query degrades.
-        // These need to be substrings the canonical upstream `usb.ids`
-        // text database actually emits (since vendor-override mode does
-        // not REPLACE names the upstream already has — see overlay
-        // mode semantics in online-data-tools/overlay_usb_vid.py). VIDs
-        // 0x303a and 0x2e8a are the ones the inlined supplement contributes.
+        // Pin representative rows in the frozen historical fixture. This
+        // validates the parser only; runtime identity comes from boards.
         for (vid, expected_substr) in [
             (0x303a_u16, "Espressif"),         // inlined supplement only
             (0x2e8a, "Raspberry Pi"),          // inlined supplement only
@@ -239,12 +226,11 @@ mod tests {
 
     #[test]
     fn embedded_resolves_every_issue_740_vendor() {
-        // FastLED/fbuild#740 hand-verified 19 vendor VIDs at each
-        // `online-data` publish. Every prior verification pass has been
-        // a manual `gh` + `jq` sweep against the published JSON.
+        // FastLED/fbuild#740 hand-verified these vendor rows in the retired
+        // publisher. Keep the frozen fixture coverage without reviving it.
         //
         // Codify the entire table here so CI catches any regression the
-        // moment the embedded vendor archive is rebuilt without one of
+        // moment the frozen vendor fixture loses one of
         // the headline VIDs — the exact class of drift that previously
         // required manually re-running the verification each cycle.
         //
@@ -254,10 +240,8 @@ mod tests {
         //
         // ## Overlay vs embedded drift (documented, not aspirational)
         //
-        // The #740 issue body's "Vendor-resolution results" table was
-        // taken from the PUBLISHED `online-data/data/usb-vid.json`,
-        // which has `vendor_names_inlined.py` applied via
-        // `overlay_usb_vid.py --mode vendor-override`. Three of the 19
+        // The #740 issue body's "Vendor-resolution results" table was taken
+        // from a historical generated dataset. Three of the 19
         // VIDs in that table were vendor-name-overridden by that
         // overlay pass (so the "Actual" column reads the overlay
         // value):

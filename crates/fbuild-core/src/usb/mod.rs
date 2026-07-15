@@ -30,4 +30,6 @@ pub use data::{
 };
 #[cfg(test)]
 pub use embedded::vendor_name as embedded_vendor_name;
-pub use resolver::{pretty, resolve, resolve_bundled, try_resolve, UsbInfo};
+#[cfg(test)]
+pub use resolver::resolve_bundled;
+pub use resolver::{pretty, resolve, try_resolve, UsbInfo};

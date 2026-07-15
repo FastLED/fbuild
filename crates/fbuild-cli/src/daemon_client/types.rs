@@ -403,8 +403,8 @@ pub struct DeviceInfoResponse {
     pub device_id: Option<String>,
     pub vid: Option<u16>,
     pub pid: Option<u16>,
-    /// Pretty USB vendor name resolved by the daemon (tier-1 bundled
-    /// `usb-ids` + tier-2 online overlay). `None` for non-USB ports.
+    /// Pretty USB vendor name resolved by the daemon from FastLED/boards.
+    /// `None` for non-USB ports.
     #[serde(default)]
     pub vendor_name: Option<String>,
     /// Pretty USB product name (same provenance as `vendor_name`).

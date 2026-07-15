@@ -98,12 +98,10 @@ async fn main() {
     let listener = bind_listener_with_retry(&addr).await;
     tracing::info!("listening on {}", addr);
 
-    // Populate the tier-2 USB VID:PID overlay so `device list/status/deploy`
-    // return full vendor + product names instead of the tier-1 vendor-only
-    // + synthetic `Device 0xPPPP` placeholder. Best-effort: the resolver
-    // silently degrades to the embedded vendor archive if the fetch or
-    // decode fails. Runs on a blocking thread so a slow network doesn't
-    // stall daemon bootstrap.
+    // Populate the FastLED/boards USB caches used by device discovery and
+    // deployment. Best-effort display-name failure degrades to deterministic
+    // unknown labels; identity-dependent behavior fails closed. Runs on a
+    // blocking thread so a slow network doesn't stall daemon bootstrap.
     tokio::task::spawn_blocking(populate_usb_overlay_best_effort);
 
     // FastLED/fbuild#800 (Phase 4 stage 2 of #789): start the embedded
@@ -457,9 +455,9 @@ async fn main() {
 ///
 /// The daemon's `/api/devices/*` handlers call `fbuild_core::usb::resolve`
 /// to render vendor/product names. Without this best-effort startup step
-/// the resolver only sees the compile-time embedded vendor archive
-/// (tier-1), so unknown PIDs render as `Device 0xPPPP`. Any I/O, network,
-/// or decode failure is swallowed — the resolver falls back to tier-1.
+/// unknown devices render with deterministic fallback labels. Any display-name
+/// I/O, network, or decode failure is swallowed; typed profile verification
+/// still fails closed for identity-dependent behavior.
 ///
 /// The `<cache-root>/usb/` directory is created lazily inside the shared
 /// `fbuild_core::usb::populate_online_cache_from_paths` helper (its fetch
@@ -472,9 +470,9 @@ fn populate_usb_overlay_best_effort() {
     let profiles_meta_path = dir.join("_meta.json");
     let profiles_path = dir.join("usb-profiles.json");
     if fbuild_core::usb::populate_online_cache_from_paths(&proto_path, &json_path) {
-        tracing::info!("usb overlay: tier-2 VID:PID map installed");
+        tracing::info!("usb overlay: FastLED/boards VID:PID map installed");
     } else {
-        tracing::warn!("usb overlay: tier-2 unavailable; falling back to embedded vendor archive");
+        tracing::warn!("usb overlay: FastLED/boards map unavailable; using unknown-device labels");
     }
     if fbuild_core::usb::profiles::populate_profiles_from_paths(&profiles_meta_path, &profiles_path)
     {
