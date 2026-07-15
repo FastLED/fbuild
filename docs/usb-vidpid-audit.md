@@ -30,29 +30,19 @@ Rust modules, `tests/` trees, CI hardware fixtures, and the archives under
 `crates/fbuild-core/data/` that are included only in test builds. Production
 modules must not import or enable these fixtures.
 
-## Remaining legacy publication surface
+## Retired legacy publication surface
 
-The following fbuild-owned data-publishing infrastructure is not used as a
-production runtime fallback, but still duplicates USB identity collection and
-publication that now belongs in FastLED/boards:
-
-- `.github/workflows/update-data.yml`;
-- `online-data-tools/**`, including `seed_mcu_to_vid.json`;
-- root `ids.json`, `ids2.json`, `ids3.json`, and `ids4.json`;
-- the `dump_usb_ids` maintenance example and old online-data documentation.
-
-It must be removed after confirming that no release, cache, or documentation
-consumer still points at the retired fbuild branches. FastLED/boards owns all
-future source collection and publication.
+The fbuild-owned refresh workflow, `online-data-tools/**`, root `ids*.json`
+files, maintenance dump example, and catalogue dependency have been removed.
+The old branch is not a runtime fallback. FastLED/boards owns all future source
+collection and publication.
 
 ## Guard status
 
-`ci/check_usb_vidpid_literals.py` currently prevents new same-line production
-pairs and bundled-board `vid`/`pid` fields. Final #1047 work must replace this
-preparatory diff check with a full-tree deny rule that understands Rust
-`cfg(test)` boundaries, permits explicit test fixtures, and rejects production
-catalogues, generated tables, board snapshots, and workflow-owned identity
-sources.
+`ci/check_usb_vidpid_literals.py` scans the full tracked tree. It understands
+Rust `cfg(test)` boundaries, permits explicit test fixtures, and rejects
+production literals, catalogues, generated tables, board snapshots, and
+embedded identity assets.
 
 Non-USB hexadecimal values such as memory addresses, protocol magic numbers,
 Windows flags, and UUID fields are outside this policy.

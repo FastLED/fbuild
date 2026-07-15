@@ -9,16 +9,9 @@
 //!          └─ Espressif Systems / ESP32-S3
 //! ```
 //!
-//! Different from [`super::serial_probe::SerialAction::Probe`]'s `list`
-//! action (FastLED/fbuild#686) which annotates from a tiny hardcoded
-//! `BOARD_FINGERPRINTS` table — `port scan` consults the fbuild online-data
-//! VID:PID overlay via the tiered resolver, so an unrecognized
-//! device shows the actual vendor + product name instead of a blank
-//! hint.
-//!
-//! The canonical runtime data source is the `fastled/fbuild` `online-data`
-//! branch. The resolver in `fbuild_core::usb` is wired to consume it via the
-//! tier-2 overlay; this command takes whatever the resolver returns.
+//! The resolver consumes the published FastLED/boards display-name artifact.
+//! Unknown devices receive deterministic fallback labels rather than a copied
+//! catalogue in fbuild.
 
 use clap::Subcommand;
 use fbuild_core::{FbuildError, Result};
@@ -31,11 +24,8 @@ pub enum PortAction {
     /// the OS-visible identity + a `└─ vendor / product` second row
     /// resolved via [`fbuild_core::usb::resolve`].
     Scan {
-        /// Skip the network fetch of the fbuild online-data overlay
-        /// (tier-2 of the resolver). Useful for offline runs — the
-        /// embedded vendor archive (tier-1) still provides vendor
-        /// names; product columns fall through to the synthetic
-        /// `Device 0xPPPP` placeholder.
+        /// Skip refreshing the FastLED/boards display-name cache. Useful for
+        /// offline runs; uncached identities receive `Unknown` labels.
         #[arg(long)]
         offline: bool,
     },
@@ -50,11 +40,8 @@ pub fn run_port(action: PortAction) -> Result<()> {
 
 fn run_scan(offline: bool) -> Result<()> {
     if !offline {
-        // Best-effort: populate the tier-2 online overlay so the
-        // resolver returns real product names (not just vendor +
-        // synthetic placeholder) for VID:PIDs the overlay carries.
-        // Errors are swallowed — the resolver always degrades to
-        // tier-1 + tier-3 if the overlay can't load.
+        // Best-effort: refresh the FastLED/boards display-name cache. Errors
+        // are swallowed because enumeration can still render unknown labels.
         populate_online_overlay();
     }
     // Use fbuild-serial's blessed enumerator, not `serialport::available_ports()`
@@ -69,12 +56,12 @@ fn run_scan(offline: bool) -> Result<()> {
     Ok(())
 }
 
-/// Fetch the fbuild online-data `usb-vids.proto.zstd` tier-2 overlay backing
+/// Fetch the FastLED/boards display-name artifact backing
 /// [`fbuild_core::usb::resolve`] into the local cache root, then install it.
 ///
 /// Best-effort: any I/O / network / parse failure is swallowed and the
-/// resolver degrades to tier-1 (embedded vendor archive). The cache is
-/// kept fresh on a 7-day cadence — older copies are refetched.
+/// resolver degrades to deterministic unknown labels. The cache is kept fresh
+/// on a 7-day cadence — older copies are refetched.
 fn populate_online_overlay() {
     populate_online_overlay_from_urls(
         fbuild_core::usb::USB_VIDS_PROTO_ZSTD_URL,
@@ -83,10 +70,19 @@ fn populate_online_overlay() {
 }
 
 fn populate_online_overlay_from_urls(proto_url: &str, json_url: &str) {
-    let Some(proto_cache_path) = overlay_cache_path() else {
+    let root = fbuild_paths::get_cache_root();
+    populate_online_overlay_from_urls_in(proto_url, json_url, &root);
+}
+
+fn populate_online_overlay_from_urls_in(
+    proto_url: &str,
+    json_url: &str,
+    root: &std::path::Path,
+) {
+    let Some(proto_cache_path) = overlay_cache_path_in(root) else {
         return;
     };
-    let Some(json_cache_path) = overlay_json_cache_path() else {
+    let Some(json_cache_path) = overlay_json_cache_path_in(root) else {
         return;
     };
     if !fbuild_core::usb::populate_online_cache_from_paths_and_urls(
@@ -95,19 +91,17 @@ fn populate_online_overlay_from_urls(proto_url: &str, json_url: &str) {
         proto_url,
         json_url,
     ) {
-        tracing::debug!("port scan: overlay unavailable; degrading to tier-1 only");
+        tracing::debug!("port scan: FastLED/boards display-name cache unavailable");
     }
 }
 
-fn overlay_cache_path() -> Option<std::path::PathBuf> {
-    let root = fbuild_paths::get_cache_root();
+fn overlay_cache_path_in(root: &std::path::Path) -> Option<std::path::PathBuf> {
     let dir = root.join("usb");
     std::fs::create_dir_all(&dir).ok()?;
     Some(dir.join("usb-vids.proto.zstd"))
 }
 
-fn overlay_json_cache_path() -> Option<std::path::PathBuf> {
-    let root = fbuild_paths::get_cache_root();
+fn overlay_json_cache_path_in(root: &std::path::Path) -> Option<std::path::PathBuf> {
     let dir = root.join("usb");
     std::fs::create_dir_all(&dir).ok()?;
     Some(dir.join("usb-vid.json"))
@@ -244,9 +238,8 @@ fn cdc_label(kernel_class: Option<fbuild_serial::port_class::PortKernelClass>) -
 /// Pick the most "friendly" product label for the resolver row.
 ///
 /// Preference order:
-///   1. Resolver's product if it's a real name — i.e. *not* the synthetic
-///      `Device 0xPPPP` placeholder. This comes from the embedded
-///      FastLED/boards VID:PID archive (offline) or the online overlay.
+///   1. Resolver's product if it is a real FastLED/boards name rather than a
+///      deterministic `Device` or `Unknown product` placeholder.
 ///   2. The OS-supplied descriptor when it carries chip-specific detail
 ///      (e.g. macOS / Linux often expose "CP2102 USB to UART Bridge
 ///      Controller") — skip if it's the generic "USB Serial Device"
@@ -254,12 +247,13 @@ fn cdc_label(kernel_class: Option<fbuild_serial::port_class::PortKernelClass>) -
 ///   3. Synthetic `Device 0xPPPP` placeholder.
 ///
 /// There is intentionally NO hardcoded per-PID product table here: friendly
-/// product names are owned by the FastLED/boards VID:PID data and embedded at
-/// build time (FastLED/fbuild#722, #959). A missing name is a data gap to fix
-/// on the boards `other` branch, not in fbuild source.
+/// product names are owned by FastLED/boards and fetched at runtime
+/// (FastLED/fbuild#722, #959). A missing name is a data gap to fix there, not
+/// in fbuild source.
 fn friendly_product_name(pid: u16, resolved_product: &str, os_descriptor: Option<&str>) -> String {
     let synthetic = format!("Device 0x{pid:04X}");
-    if resolved_product != synthetic {
+    let unknown = format!("Unknown product 0x{pid:04X}");
+    if resolved_product != synthetic && resolved_product != unknown {
         return resolved_product.to_string();
     }
     if let Some(d) = os_descriptor {
@@ -296,31 +290,27 @@ mod tests {
     use serialport::{SerialPortInfo, SerialPortType, UsbPortInfo};
     use std::io::{Read, Write};
     use std::net::TcpListener;
-    use std::sync::Mutex;
+    use std::sync::{Mutex, MutexGuard};
     use std::time::Duration;
 
-    static ENV_LOCK: Mutex<()> = Mutex::new(());
+    static USB_CACHE_LOCK: Mutex<()> = Mutex::new(());
 
-    struct EnvVarGuard {
-        name: &'static str,
-        previous: Option<std::ffi::OsString>,
-    }
-
-    impl EnvVarGuard {
-        fn set(name: &'static str, value: impl AsRef<std::ffi::OsStr>) -> Self {
-            let previous = std::env::var_os(name);
-            std::env::set_var(name, value);
-            Self { name, previous }
-        }
-    }
-
-    impl Drop for EnvVarGuard {
-        fn drop(&mut self) {
-            match self.previous.take() {
-                Some(value) => std::env::set_var(self.name, value),
-                None => std::env::remove_var(self.name),
-            }
-        }
+    fn install_name_fixture() -> MutexGuard<'static, ()> {
+        let guard = USB_CACHE_LOCK.lock().unwrap();
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("usb-ids.json");
+        std::fs::write(
+            &path,
+            r#"{
+                "303a":{"vendor":"Espressif Systems","products":[["1001","USB JTAG/serial debug unit"]]},
+                "0403":{"vendor":"Future Technology Devices International","products":[["6001","FT232 Serial UART"]]},
+                "10c4":{"vendor":"Silicon Labs","products":[["ea60","CP210x UART Bridge"]]},
+                "16c0":{"vendor":"PJRC","products":[["0483","Teensy USB Serial"]]}
+            }"#,
+        )
+        .unwrap();
+        assert!(fbuild_core::usb::try_install_online_cache(&path));
+        guard
     }
 
     fn usb_port(
@@ -344,13 +334,11 @@ mod tests {
     }
 
     #[test]
-    fn overlay_cache_path_uses_fbuild_cache_dir() {
-        let _env = ENV_LOCK.lock().unwrap();
+    fn overlay_cache_paths_use_supplied_cache_root() {
         let tmp = tempfile::tempdir().unwrap();
-        let _guard = EnvVarGuard::set("FBUILD_CACHE_DIR", tmp.path());
 
-        let path = overlay_cache_path().expect("cache path");
-        let json_path = overlay_json_cache_path().expect("json cache path");
+        let path = overlay_cache_path_in(tmp.path()).expect("cache path");
+        let json_path = overlay_json_cache_path_in(tmp.path()).expect("json cache path");
 
         assert_eq!(path, tmp.path().join("usb").join("usb-vids.proto.zstd"));
         assert_eq!(json_path, tmp.path().join("usb").join("usb-vid.json"));
@@ -359,9 +347,8 @@ mod tests {
 
     #[test]
     fn populate_overlay_falls_back_to_json_when_proto_is_missing() {
-        let _env = ENV_LOCK.lock().unwrap();
+        let _usb = USB_CACHE_LOCK.lock().unwrap();
         let tmp = tempfile::tempdir().unwrap();
-        let _guard = EnvVarGuard::set("FBUILD_CACHE_DIR", tmp.path());
 
         let listener = TcpListener::bind("127.0.0.1:0").unwrap();
         listener.set_nonblocking(true).unwrap();
@@ -405,9 +392,10 @@ mod tests {
             request_count
         });
 
-        populate_online_overlay_from_urls(
+        populate_online_overlay_from_urls_in(
             &format!("http://{addr}/usb-vids.proto.zstd"),
             &format!("http://{addr}/usb-vid.json"),
+            tmp.path(),
         );
 
         assert_eq!(handle.join().unwrap(), 2);
@@ -427,6 +415,7 @@ mod tests {
 
     #[test]
     fn single_usb_port_renders_two_rows_and_summary() {
+        let _usb = install_name_fixture();
         let ports = vec![usb_port(
             "COM25",
             0x303A,
@@ -441,8 +430,7 @@ mod tests {
         assert!(out.contains("USB Serial Device (COM25)"));
         assert!(out.contains("ser=80:F1:B2:D1:DF:B1"));
         // Row 2: the `└─` continuation prefix + vendor/product from the
-        // tiered resolver. Espressif is in the embedded archive via
-        // the inlined supplement.
+        // explicitly installed runtime fixture.
         assert!(out.contains("└─"));
         assert!(
             out.to_lowercase().contains("espressif"),
@@ -471,10 +459,11 @@ mod tests {
 
     #[test]
     fn missing_product_descriptor_falls_back_to_default_text() {
+        let _usb = install_name_fixture();
         let ports = vec![usb_port("COM7", 0x0403, 0x6001, None, None)];
         let out = render_scan(&ports);
         assert!(out.contains("USB Serial Device"));
-        // FTDI VID lives in the embedded archive.
+        // The explicit runtime fixture supplies the FTDI name.
         assert!(
             out.to_lowercase().contains("future technology") || out.to_lowercase().contains("ftdi")
         );
@@ -482,6 +471,7 @@ mod tests {
 
     #[test]
     fn multiple_ports_render_in_order_with_blank_separators() {
+        let _usb = install_name_fixture();
         let ports = vec![
             usb_port("COM1", 0x303A, 0x1001, None, None),
             usb_port("COM2", 0x10C4, 0xEA60, None, None),
@@ -588,11 +578,12 @@ mod tests {
     }
 
     #[test]
-    fn teensy_16c0_port_resolves_pjrc_from_embedded_archive() {
+    fn teensy_16c0_port_resolves_pjrc_from_runtime_fixture() {
+        let _usb = install_name_fixture();
         // The enumeration fix (fbuild-serial's Windows walk) is what makes a
         // Teensy show up at all; here we pin that once it IS enumerated, the
         // scan resolves VID 16C0 to PJRC. The vendor + product names come from
-        // the embedded FastLED/boards VID:PID archive, NOT a hardcoded table.
+        // an explicit runtime-cache fixture, not production constants.
         // FastLED/fbuild#962.
         let ports = vec![usb_port(
             "COM20",
@@ -605,7 +596,7 @@ mod tests {
         assert!(out.contains("16C0:0483"), "got: {out}");
         assert!(
             out.to_lowercase().contains("pjrc") || out.to_lowercase().contains("teensy"),
-            "expected PJRC/Teensy from the embedded archive, got: {out}"
+            "expected PJRC/Teensy from the runtime fixture, got: {out}"
         );
     }
 
@@ -619,10 +610,11 @@ mod tests {
     }
 
     #[test]
-    fn common_esp32_cdc_pid_resolves_from_embedded_archive() {
+    fn common_esp32_cdc_pid_resolves_from_runtime_fixture() {
+        let _usb = install_name_fixture();
         // The common ESP32 USB-Serial-JTAG PID (303A:1001) resolves to a real
-        // product name from the embedded FastLED/boards archive — no hardcoded
-        // supplement table, and NOT the synthetic placeholder. FastLED/fbuild#722.
+        // product name from an explicit runtime-cache fixture, not a production
+        // fallback table. FastLED/fbuild#722.
         let ports = vec![usb_port(
             "COM25",
             0x303A,
@@ -633,7 +625,7 @@ mod tests {
         let out = render_scan(&ports);
         assert!(
             out.to_lowercase().contains("espressif"),
-            "expected Espressif vendor from the archive, got: {out}"
+            "expected Espressif vendor from the runtime fixture, got: {out}"
         );
         // A real archive product name, not the synthetic placeholder or the
         // generic Windows descriptor.
@@ -667,8 +659,7 @@ mod tests {
     #[test]
     fn generic_windows_descriptor_does_not_override_synthetic() {
         // The bare "USB Serial Device (COM25)" Windows fallback is not
-        // chip-specific, so we keep the synthetic placeholder when no
-        // supplement applies.
+        // chip-specific, so we keep the deterministic unknown placeholder.
         let ports = vec![usb_port(
             "COM7",
             0x303A,
@@ -684,8 +675,8 @@ mod tests {
             .find(|l| l.contains("└─"))
             .expect("expected a resolver row");
         assert!(
-            resolver_row.contains("Device 0xFEED"),
-            "expected synthetic placeholder on the resolver row, got: {resolver_row}"
+            resolver_row.contains("Unknown product 0xFEED"),
+            "expected unknown placeholder on the resolver row, got: {resolver_row}"
         );
         assert!(
             !resolver_row.contains("USB Serial Device"),

@@ -269,6 +269,68 @@ fn elapsed_ms(started: Instant) -> u64 {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use sha2::{Digest, Sha256};
+    use std::sync::Once;
+
+    static USB_PROFILE_FIXTURE: Once = Once::new();
+
+    fn install_usb_profile_fixture() {
+        USB_PROFILE_FIXTURE.call_once(|| {
+            let artifact = serde_json::json!({
+                "schema_version": 1,
+                "metadata": {},
+                "identities": {
+                    "16c0:0483": [{
+                        "match": {"vid": "16c0", "pid": "0483", "pid_mask": null},
+                        "purpose": "runtime",
+                        "role": "runtime_cdc",
+                        "transport": "usb",
+                        "reset": "none",
+                        "handoff": "none",
+                        "platform": "nxplpc",
+                        "family": "lpc11u35-vcom",
+                        "generation": null,
+                        "interface": "cdc",
+                        "provenance": {
+                            "source_url": "test://fbuild-cli/bringup",
+                            "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                            "source_class": "test"
+                        },
+                        "priority": 100,
+                        "allow_ambiguous": false
+                    }]
+                },
+                "boards": {
+                    "lpc845brk": {
+                        "identities": {
+                            "bootloader": [],
+                            "compile": [],
+                            "probe": [],
+                            "runtime": ["16c0:0483"]
+                        },
+                        "aliases": ["lpc845", "lpc804", "lpcxpresso845max", "lpcxpresso804"]
+                    }
+                }
+            });
+            let artifact_bytes = serde_json::to_vec(&artifact).unwrap();
+            let digest = Sha256::digest(&artifact_bytes)
+                .iter()
+                .map(|byte| format!("{byte:02x}"))
+                .collect::<String>();
+            let metadata = serde_json::json!({
+                "usb_profiles": "usb-profiles.json",
+                "usb_profiles_schema_version": 1,
+                "usb_profiles_sha256": digest
+            });
+            let tmp = tempfile::tempdir().unwrap();
+            let meta_path = tmp.path().join("_meta.json");
+            let profiles_path = tmp.path().join("usb-profiles.json");
+            std::fs::write(&meta_path, serde_json::to_vec(&metadata).unwrap()).unwrap();
+            std::fs::write(&profiles_path, artifact_bytes).unwrap();
+            fbuild_core::usb::profiles::try_install_verified_cache(&meta_path, &profiles_path)
+                .unwrap();
+        });
+    }
 
     #[test]
     fn default_config_is_echo_4242() {
@@ -337,6 +399,7 @@ mod tests {
     /// surfaces all four.
     #[test]
     fn dry_run_reports_lpc845brk_resolved_state() {
+        install_usb_profile_fixture();
         let args = BringupArgs {
             env: "lpc845brk".to_string(),
             rpc_method: None,
@@ -383,6 +446,7 @@ mod tests {
 
     #[test]
     fn non_dry_run_returns_stubbed_result_with_resolved_state() {
+        install_usb_profile_fixture();
         let args = BringupArgs {
             env: "lpc845brk".to_string(),
             rpc_method: None,

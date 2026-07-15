@@ -29,9 +29,7 @@
 //! - `serialport-rs` — uses libudev on Linux internally but doesn't
 //!   surface class info; would need an upstream patch.
 //! - `udev` crate — clean wrapper but requires libudev at runtime.
-//!   fbuild deliberately avoids that runtime dep (see Cargo.toml
-//!   comment on `usb-ids = "1.2025"` line: "Pure Rust, no libusb /
-//!   no udev").
+//!   fbuild deliberately avoids that runtime dependency.
 //! - `nusb` / `rusb` — enumerate USB devices but can't link a
 //!   `/dev/ttyACM0` path back to its USB device; the linking step is
 //!   itself OS-specific.

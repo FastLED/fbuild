@@ -1,164 +1,42 @@
-# `online-data` branch + nightly refresh
+# USB identity data
 
-The repo carries a long-lived orphan branch called `online-data` that holds
-periodically-refreshed reference datasets fbuild reads at runtime. Datasets
-currently published:
+FastLED/boards is the only production source for USB VID/PID identities used
+by fbuild. fbuild consumes the published, verified artifacts at runtime; it
+does not collect, generate, embed, or publish a second catalogue.
 
-| Dataset | Path | Description |
-|---|---|---|
-| `usb-vid` | `data/usb-vid.json` | USB VID:PID → `{vendor, product}` (union of multiple sources) |
-| `usb-vids.proto.zstd` | `data/usb-vids.proto.zstd` | Compact protobuf/zstd form of `usb-vid.json` used by fbuild runtime scans |
-| `usb-vid-conflicts` | `data/usb-vid-conflicts.json` | Per-key disagreements between USB-VID sources (observability) |
-| `pio-boards` | `data/pio-boards.json` | Full PlatformIO board catalog (vendor, mcu, frameworks, debug tools, etc.) |
-| `vendor_boards` | `data/vendor_boards.json` | Slim view of `pio-boards` — only `{vendor, name, mcu}` per board id, for cheap "what board is plugged in?" lookups |
+## Published artifacts
 
-The format is **future-forward** — new datasets are added by writing a new
-JSON file under `data/`; `tools/build_manifest.py` auto-discovers them on
-the next workflow run. No client breakage when datasets are added.
-Binary companion files such as `usb-vids.proto.zstd` are published under
-`data/` too, but are consumed through explicit runtime constants rather than
-manifest auto-discovery.
+- Metadata and hashes: `https://fastled.github.io/boards/_meta.json`
+- Typed board profiles: `https://fastled.github.io/boards/usb-profiles.json`
+- Display-name catalogue: `https://fastled.github.io/boards/usb-ids.json`
+- Compact display-name catalogue:
+  `https://fastled.github.io/boards/usb-vids.proto.zstd`
 
-The companion in-process USB resolver lives at `fbuild_core::usb` — see
-`crates/fbuild-core/src/usb/`. The branch is the **tier-2 fallback** when
-the bundled `usb-ids` crate doesn't know a VID:PID.
+`fbuild_core::usb::profiles` verifies the typed profile artifact against the
+metadata document before installing it. `fbuild_core::usb::data` manages the
+display-name cache. Failed downloads or validation never authorize a bundled
+production fallback: identity-dependent behavior fails closed, while display
+labels degrade to deterministic `Unknown` text.
 
-VID/PID product rows are USB-name metadata, not board-support proof. Board
-existence remains governed by `crates/fbuild-config/assets/boards`; if a board
-is absent there, it may not be an fbuild-supported board. Local FastLED board
-VID/PID rows fill product-name gaps for checked-in boards after stronger USB
-owner and generic sources have won. Third-party SDK or board-package rows are
-weaker supplements after that.
+The files cached beneath fbuild's shared `usb/` cache directory are disposable
+copies of these published artifacts. They are not an additional source of
+truth and must not be edited or checked into this repository.
 
-## URLs
+## Ownership rule
 
-Always start from the manifest — direct dataset URLs may change in the
-future, but the manifest's `datasets.<name>.url` field is the contract.
+New boards, aliases, bootloader identities, runtime identities, compile-time
+identities, transports, and VID/PID corrections belong in
+[FastLED/boards](https://github.com/FastLED/boards). fbuild changes should
+consume the resulting schema rather than adding device constants.
 
-- Manifest (entry point — clients fetch this first):
-  `https://raw.githubusercontent.com/fastled/fbuild/online-data/manifest.json`
-- USB VID:PID dataset:
-  `https://raw.githubusercontent.com/fastled/fbuild/online-data/data/usb-vid.json`
-- Compact USB VID:PID protobuf/zstd runtime overlay:
-  `https://raw.githubusercontent.com/fastled/fbuild/online-data/data/usb-vids.proto.zstd`
-- USB-VID source-conflict log:
-  `https://raw.githubusercontent.com/fastled/fbuild/online-data/data/usb-vid-conflicts.json`
-- PlatformIO full board catalog:
-  `https://raw.githubusercontent.com/fastled/fbuild/online-data/data/pio-boards.json`
-- PlatformIO slim vendor-name lookup (small, ~200 KB):
-  `https://raw.githubusercontent.com/fastled/fbuild/online-data/data/vendor_boards.json`
+Concrete identities may exist only in explicit tests and fixtures. The frozen
+archives under `crates/fbuild-core/data/` are test inputs and are excluded from
+release/runtime builds. `ci/check_usb_vidpid_literals.py` enforces this boundary
+over the full tracked tree.
 
-The matching constants in code: `fbuild_core::usb::MANIFEST_URL`,
-`fbuild_core::usb::USB_VID_JSON_URL`, and
-`fbuild_core::usb::USB_VIDS_PROTO_ZSTD_URL`.
+## Retired publisher
 
-## Branch shape
-
-```
-online-data (orphan, NEVER merged into main)
-├── README.md
-├── manifest.json
-├── data/
-│   ├── usb-vid.json            # alphabetically sorted, lowercase hex keys
-│   ├── usb-vids.proto.zstd     # compact runtime overlay consumed by fbuild
-│   └── usb-vid-conflicts.json  # only keys where sources disagreed
-└── tools/
-    ├── README.md
-    └── merge_sources.py        # union + sort + manifest emit
-```
-
-There is **no `Cargo.toml`, no `src/`, no workspace member** on
-`online-data` — the dump-side tooling for the bundled `usb-ids` crate
-lives on `main` as an example (`crates/fbuild-core/examples/dump_usb_ids.rs`)
-so we don't have to add a new crate. The nightly workflow checks out main
-to build that example, then checks out `online-data` in a worktree to run
-the merger script and commit results.
-
-## How a refresh happens
-
-`.github/workflows/update-data.yml` is the only workflow that touches
-`online-data`. It lives on `main` because GitHub Actions requires `schedule`
-and `workflow_dispatch` triggers to be defined on the default branch.
-
-Per run:
-
-1. Checkout `main` (workflow + dump example live here).
-2. `git worktree add` the `online-data` branch into a sibling directory.
-3. Install uv + soldr.
-4. `soldr cargo build --release --example dump_usb_ids -p fbuild-core`
-   then run it → `/tmp/usb-ids-rs.json` (one input source).
-5. `curl --retry 5` two upstream `usb.ids` text mirrors:
-   `http://www.linux-usb.org/usb.ids` and
-   `https://raw.githubusercontent.com/usbids/usbids/master/usb.ids`
-   (independently fault-tolerant — one mirror going down does not break
-   the run).
-6. `uv run --no-project --script .online-data/tools/merge_sources.py …`
-   over whichever sources arrived intact. The merger:
-   - takes the union in workflow argument order; first-party/vendor-owned
-     sources are ordered before generic USB-ID feeds, local FastLED board rows
-     fill checked-in board gaps after those sources, and third-party SDK /
-     board-package supplements come last so they only fill remaining rows;
-   - sorts keys alphabetically (lowercase `vvvv:pppp`);
-   - writes `data/usb-vid.json`, `data/usb-vid-conflicts.json`,
-     `data/usb-vids.proto.zstd`, and the freshly-stamped `manifest.json`;
-   - **refuses to write** if the union has fewer than 1000 entries so a
-     truncated upstream cannot blow away a healthy committed dataset.
-7. If files actually changed, commit on `online-data`.
-8. Prune history: if `git rev-list --count HEAD > 200`, graft the
-   200-th-most-recent commit as the new root and `git filter-repo`.
-9. `git push --force-with-lease origin online-data` (the force is needed
-   only when history was pruned).
-
-Manual trigger: Actions → "Update data" → Run workflow.
-
-## Fault tolerance contract
-
-- **`usb-ids` build / dump fails** → workflow continues with text sources.
-- **One upstream mirror unreachable** → merger still runs against the
-  remaining sources.
-- **All upstream sources fail** → merger refuses to write → workflow
-  finishes with no commit; existing committed data is preserved.
-- **Merger writes too-small output** → same as above (sanity floor).
-- **Compact protobuf generation fails after a successful USB merge** →
-  workflow stops before publishing a mismatched `online-data` commit.
-- **Workflow itself fails before commit** → previous commit on
-  `online-data` remains the live data.
-
-In every failure mode the *previously committed* data on `online-data`
-stays as the live truth — fbuild keeps working against the last good
-snapshot.
-
-## Why orphan + force-push?
-
-- Orphan: `online-data` shares no history with `main`. We never want
-  data churn rebasing into the source tree.
-- Force-push: only after the history-prune step rewrites the chain to
-  cap at 200 commits. A non-pruning run produces a normal fast-forward.
-
-## Manifest schema (future-forward)
-
-```json
-{
-  "schema_version": "1.0",
-  "generated_at": "2026-06-20T04:17:00Z",
-  "datasets": {
-    "usb-vid": {
-      "description": "USB VID:PID → {vendor, product} ...",
-      "url": "https://raw.githubusercontent.com/fastled/fbuild/online-data/data/usb-vid.json",
-      "conflicts_url": "https://raw.githubusercontent.com/fastled/fbuild/online-data/data/usb-vid-conflicts.json",
-      "format": "json-object",
-      "key_format": "vvvv:pppp",
-      "entries": 20536,
-      "sources": [
-        {"name": "usb-ids-rs", "kind": "json",          "entries": "20480"},
-        {"name": "linux-usb.org", "kind": "usb.ids-text", "entries": "20536"},
-        {"name": "usbids-github", "kind": "usb.ids-text", "entries": "20536"}
-      ]
-    }
-  }
-}
-```
-
-Adding a new dataset (`pci-vid`, `board-features`, …) means appending
-another entry under `datasets` and shipping a parser in the consuming
-crate — no schema break.
+The former fbuild-owned `online-data` branch, refresh workflow, root `ids*.json`
+files, and `online-data-tools/` pipeline are retired. They must not be restored
+or used as runtime fallbacks. All future collection and publishing work belongs
+to FastLED/boards.

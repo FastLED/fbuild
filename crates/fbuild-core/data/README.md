@@ -6,7 +6,7 @@ the published FastLED/boards artifacts during the build/cache phase.
 
 | File                    | Purpose                                                                                                                                                                                                                          |
 | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `usb-vendors.tar.zst`   | USB Vendor-ID → vendor-name map (long-tail fallback, ~2.2k VIDs). Produced by `online-data-tools/build_vendor_archive.py`. See `crate::usb::embedded`. |
+| `usb-vendors.tar.zst`   | Frozen test-only USB Vendor-ID fixture used by `crate::usb::embedded` under `cfg(test)`. It is never a production fallback. |
 | `usb-vids.proto.zstd`   | Test fixture for the compact VID:PID overlay produced by **FastLED/boards**. It must never be used as a production built-in catalogue. Production ingestion fetches/consumes the published boards artifact. |
 
 ## How to refresh the VID:PID overlay (`usb-vids.proto.zstd`)
@@ -29,24 +29,7 @@ hardcoded table or embedded runtime blob in fbuild — and re-run the boards
 pipeline. The published artifact then carries it through to fbuild's
 `usb::resolve` on the next ingestion.
 
-## How to refresh the vendor archive
-
-The nightly `Update data` workflow on `main` produces a fresh
-`usb-vendors.tar.zst` under `online-data/data/`. To bump the embedded
-copy here (a deliberate manual step — see issue #718):
-
-```bash
-# 1. Pull the latest from the online-data branch.
-curl -sSLo crates/fbuild-core/data/usb-vendors.tar.zst \
-  https://raw.githubusercontent.com/FastLED/fbuild/online-data/data/usb-vendors.tar.zst
-
-# 2. Run the fbuild-core tests to confirm the archive parses + the
-#    well-known entries still resolve.
-soldr cargo test -p fbuild-core usb::embedded
-```
-
-`fbuild-core` will refuse to load the archive if its embedded
-`manifest.json` reports a schema version newer than the consumer knows
-about — bump `EMBEDDED_SCHEMA_VERSION` in `src/usb/embedded.rs` whenever
-the archive format changes (in lock-step with
-`online-data-tools/build_vendor_archive.py::SCHEMA_VERSION`).
+The vendor archive is intentionally frozen. New identities and corrections
+must be published through FastLED/boards; never refresh this fixture to solve a
+production lookup or deployment problem. Validate it only with `soldr cargo`
+tests.

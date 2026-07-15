@@ -257,9 +257,8 @@ impl DeviceManager {
                     serialport::SerialPortType::UsbPort(_) => detect_is_cdc(&port_info.port_name),
                     _ => None,
                 };
-                // Resolve VID:PID → pretty (vendor, product) via the bundled
-                // `usb-ids` snapshot + any online overlay the daemon has
-                // installed. When both are present, the resolver-derived
+                // Resolve VID:PID → pretty (vendor, product) via the verified
+                // FastLED/boards runtime cache. The resolver-derived
                 // description wins over the (often blank or generic) string
                 // returned by the OS-level enumerator. Bluetooth / PCI /
                 // unknown ports keep their static fallback descriptor.

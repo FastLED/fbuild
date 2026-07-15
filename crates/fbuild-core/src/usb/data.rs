@@ -1,8 +1,7 @@
-//! Tier-2 online overlay: an optional per-VID protobuf map loaded from disk
-//! at runtime.
+//! FastLED/boards display-name cache loaded from disk at runtime.
 //!
-//! Current on-disk schema is `usb-vids.proto.zstd`, published by the
-//! `fastled/fbuild` `online-data` branch:
+//! The compact on-disk schema is `usb-vids.proto.zstd`, published by
+//! FastLED/boards:
 //!
 //! ```protobuf
 //! message UsbVidDatabase {
@@ -45,14 +44,14 @@
 //! shape on disk just avoids duplicating the vendor name for every
 //! product entry under a VID (significantly smaller payload).
 //!
-//! The CLI downloads the zstd-compressed protobuf from `online-data`,
-//! writes it to the global fbuild cache root, and calls
+//! The CLI downloads the zstd-compressed protobuf from FastLED/boards, writes
+//! it to the global fbuild cache root, and calls
 //! [`install_online_cache_proto_zstd`] to plug it into the resolver.
 //! Replacing the cache is supported (`RwLock`, not `OnceLock`) so the
 //! daemon/CLI can refresh during a long-running session without a restart.
 //!
-//! All errors here are swallowed by design — if the overlay can't load, the
-//! resolver simply degrades to tier-1 + tier-3.
+//! Display-cache errors are swallowed by design; the resolver degrades to
+//! deterministic unknown labels.
 
 use super::UsbInfo;
 use prost::Message;
@@ -71,25 +70,17 @@ pub const MANIFEST_URL: &str = "https://fastled.github.io/boards/_meta.json";
 /// tests; new code should use [`USB_VIDS_PROTO_ZSTD_URL`].
 pub const USB_VID_JSON_URL: &str = "https://fastled.github.io/boards/usb-ids.json";
 
-/// Current compact USB VID:PID overlay published by the `online-data` branch.
+/// Compact USB VID:PID display-name artifact published by FastLED/boards.
 pub const USB_VIDS_PROTO_ZSTD_URL: &str = "https://fastled.github.io/boards/usb-vids.proto.zstd";
 
 static ONLINE_MAP: RwLock<Option<HashMap<u32, UsbInfo>>> = RwLock::new(None);
 
-/// Compile-time-embedded VID:PID → {vendor, product} overlay — the same
-/// compact `usb-vids.proto.zstd` the online path fetches, but baked into the
-/// binary so full VID:PID resolution works OFFLINE and needs no hardcoded
-/// per-board tables. Produced by the FastLED/boards data pipeline
-/// (`builders/build_usb_ids.py` over the `platformio`/`arduino`/`vendors`/
-/// `other` branches) and vendored here. Refresh workflow: see
-/// `crates/fbuild-core/data/README.md`.
-// Production never ships a built-in VID/PID catalogue. The canonical
-// FastLED/boards artifact is fetched/ingested by the build/runtime cache
-// path. Keep the historical blob available only to unit tests as a fixture.
+/// Frozen historical fixture used only by this module's unit tests.
+/// Production never includes it or falls back to it.
 #[cfg(test)]
 const EMBEDDED_PROTO: &[u8] = include_bytes!("../../data/usb-vids.proto.zstd");
 
-/// Both projections of the embedded proto. The compact `usb-vids.proto.zstd`
+/// Both projections of the frozen fixture. The compact protobuf
 /// carries a `Vendor{vid, name, [Product{pid, name}]}` tree, so a single
 /// artifact yields BOTH a VID→vendor map AND a VID:PID→{vendor, product}
 /// map — no separate per-VID blob or hardcoded table needed. Parsed exactly
@@ -114,8 +105,7 @@ fn embedded() -> &'static EmbeddedOverlay {
 }
 
 /// Inflate + parse the embedded proto into both projections. Errors bubble
-/// up to `unwrap_or_default()` (empty overlay) so a bad blob degrades to
-/// tier-1 vendor resolution rather than crashing.
+/// up to `unwrap_or_default()` so a bad fixture yields an empty test map.
 #[cfg(test)]
 fn decode_embedded_overlay(raw: &[u8]) -> Result<EmbeddedOverlay, String> {
     let mut decoded = Vec::with_capacity(raw.len() * 4);
@@ -164,9 +154,7 @@ pub fn embedded_vendor_count() -> usize {
     embedded().vendors.len()
 }
 
-/// 7-day cache TTL. The `online-data` branch refreshes nightly; a weekly
-/// local refresh gives useful freshness without adding network cost to every
-/// serial-port operation.
+/// A weekly local refresh balances freshness with serial-port scan latency.
 pub const ONLINE_CACHE_TTL_SECS: u64 = 7 * 24 * 60 * 60;
 
 #[derive(Clone, PartialEq, Message)]
@@ -294,8 +282,7 @@ pub fn try_install_online_cache(path: &Path) -> bool {
 
 /// Install the overlay from the current `usb-vids.proto.zstd` cache file.
 /// Silently no-ops on any IO, zstd, or protobuf decode error so USB
-/// resolution always degrades to the embedded vendor archive instead of
-/// failing port enumeration.
+/// resolution degrades to unknown labels instead of failing port enumeration.
 pub fn install_online_cache_proto_zstd(path: &Path) {
     let _ = try_install_online_cache_proto_zstd(path);
 }
@@ -477,16 +464,13 @@ pub(crate) fn online_lookup(vid: u16, pid: u16) -> Option<UsbInfo> {
     guard.as_ref()?.get(&key).cloned()
 }
 
-/// Compile-time embedded overlay only (FastLED/boards curated device map).
+/// Frozen fixture lookup available only to this crate's tests.
 #[cfg(test)]
 pub(crate) fn embedded_lookup(vid: u16, pid: u16) -> Option<UsbInfo> {
     embedded().vidpid.get(&pack(vid, pid)).cloned()
 }
 
-/// Combined tier-2 lookup (online overlay, then embedded overlay). Retained
-/// for the test suite; production resolution goes through the layered
-/// [`super::resolver::try_resolve`], which consults `online_lookup` and
-/// `embedded_lookup` separately so it can source the vendor authoritatively.
+/// Runtime-cache lookup followed by the frozen fixture, for tests only.
 #[cfg(test)]
 pub(crate) fn lookup(vid: u16, pid: u16) -> Option<UsbInfo> {
     online_lookup(vid, pid).or_else(|| embedded_lookup(vid, pid))
@@ -519,8 +503,7 @@ mod tests {
         let _guard = OVERLAY_LOCK.lock().unwrap();
         let tmp = tempfile::tempdir().unwrap();
         let path = tmp.path().join("usb-vid.json");
-        // Nested per-VID shape (the format published on the
-        // `online-data` branch starting with the multi-dataset rev).
+        // Nested per-VID shape used by the FastLED/boards JSON artifact.
         let json = r#"{
             "feed": {
                 "vendor": "Feedface Inc",

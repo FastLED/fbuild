@@ -15,12 +15,6 @@ tracing = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 sha2 = { workspace = true }
-# Aggregator backend for the `online-data` workflow only: `examples/dump_usb_ids.rs`
-# uses this to feed tier-1 into `online-data/data/usb-vid.json`. The fbuild
-# runtime resolver no longer touches this crate — it goes through the
-# compile-time-embedded `usb-vendors.tar.zst` archive instead (see
-# `crate::usb::embedded`).
-usb-ids = { workspace = true }
 # Runtime decompression for the downloaded FastLED/boards cache.
 zstd = { workspace = true }
 prost = { workspace = true }
