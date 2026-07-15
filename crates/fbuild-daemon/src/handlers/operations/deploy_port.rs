@@ -29,11 +29,48 @@ pub(super) fn choose_deploy_port(
         };
     }
 
-    // RP2040/RP2350 stock boards deploy through the ROM BOOTSEL volume and
-    // may have no application CDC port at all before the UF2 copy. Never
-    // fall back to an unrelated serial endpoint (for example Windows COM1);
-    // the RP2040 deployer discovers the post-flash CDC port itself.
+    // A stock/blank Pico may have no CDC port, but a previously flashed Pico
+    // needs its catalogue-identified CDC port passed through for the 1200-bps
+    // reset. Never select by a built-in VID or fall back to an unrelated COM
+    // port: FastLED/boards data is the sole identity source.
     if platform == Platform::RaspberryPi {
+        let expected_generation = board
+            .map(|board| board.mcu.to_ascii_lowercase())
+            .filter(|mcu| mcu.starts_with("rp2350"))
+            .map_or(RpGeneration::Rp2040, |_| RpGeneration::Rp2350);
+        let mut matches: Vec<_> = devices
+            .into_iter()
+            .filter(|device| device.is_connected)
+            .filter_map(|device| {
+                let identity = device
+                    .vid
+                    .zip(device.pid)
+                    .and_then(|(vid, pid)| fbuild_core::usb::try_resolve(vid, pid));
+                identity_matches_rp_generation(identity.as_ref(), expected_generation).then_some(PortCandidate {
+                    port: device.port,
+                    vid: device.vid,
+                    pid: device.pid,
+                    description: device.description,
+                })
+            })
+            .collect();
+        matches.sort_by(|a, b| a.port.cmp(&b.port));
+        if matches.len() == 1 {
+            log_connect("deploy", &matches[0]);
+            return DeployPortChoice {
+                port: Some(matches[0].port.clone()),
+                warning: None,
+            };
+        }
+        if matches.len() > 1 {
+            return DeployPortChoice {
+                port: None,
+                warning: Some(format!(
+                    "multiple FastLED/boards-identified Raspberry Pi CDC ports are connected: {}; pass -p/--port to select the deployment target",
+                    format_candidates(matches.iter())
+                )),
+            };
+        }
         return DeployPortChoice {
             port: None,
             warning: None,
@@ -107,6 +144,32 @@ pub(super) fn choose_deploy_port(
     }
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+enum RpGeneration {
+    Rp2040,
+    Rp2350,
+}
+
+fn identity_matches_rp_generation(
+    identity: Option<&fbuild_core::usb::UsbInfo>,
+    expected: RpGeneration,
+) -> bool {
+    classify_rp_generation(identity) == Some(expected)
+}
+
+fn classify_rp_generation(
+    identity: Option<&fbuild_core::usb::UsbInfo>,
+) -> Option<RpGeneration> {
+    let product = identity?.product.to_ascii_lowercase();
+    if product.contains("rp2350") || product.contains("pico 2") {
+        Some(RpGeneration::Rp2350)
+    } else if product.contains("rp2040") || product.contains("raspberry pi pico") {
+        Some(RpGeneration::Rp2040)
+    } else {
+        None
+    }
+}
+
 pub(super) fn append_warning_to_stderr(stderr: &mut Option<String>, warning: Option<String>) {
     let Some(warning) = warning else {
         return;
@@ -133,7 +196,9 @@ fn expected_vids(platform: Platform, board: Option<&BoardConfig>) -> Vec<u16> {
         Platform::Espressif32 => &[0x303A],
         Platform::AtmelAvr | Platform::AtmelMegaAvr => &[0x2341, 0x2A03, 0x1A86, 0x10C4, 0x0403],
         Platform::NxpLpc => &[0x1FC9, 0x0D28],
-        Platform::RaspberryPi => &[0x2E8A],
+        // Raspberry Pi identities are consumed from the FastLED/boards USB
+        // catalogue by the RP2040 deployer. Never embed a family VID here.
+        Platform::RaspberryPi => &[],
         _ => &[],
     };
 
@@ -246,6 +311,33 @@ mod tests {
         );
         assert!(choice.port.is_none());
         assert!(choice.warning.is_none());
+    }
+
+    #[test]
+    fn raspberry_pi_identity_is_catalogue_driven() {
+        let pico = fbuild_core::usb::UsbInfo {
+            // Dataset aggregation can preserve a framework/vendor label here;
+            // generation comes from the curated product identity.
+            vendor: "Arduino".to_string(),
+            product: "Raspberry Pi Pico".to_string(),
+        };
+        let pico2 = fbuild_core::usb::UsbInfo {
+            vendor: "Arduino".to_string(),
+            product: "Raspberry Pi Pico 2".to_string(),
+        };
+        assert!(identity_matches_rp_generation(
+            Some(&pico),
+            RpGeneration::Rp2040
+        ));
+        assert!(!identity_matches_rp_generation(
+            Some(&pico2),
+            RpGeneration::Rp2040
+        ));
+        assert!(identity_matches_rp_generation(
+            Some(&pico2),
+            RpGeneration::Rp2350
+        ));
+        assert!(!identity_matches_rp_generation(None, RpGeneration::Rp2040));
     }
 
     #[test]

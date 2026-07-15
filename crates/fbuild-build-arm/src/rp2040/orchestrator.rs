@@ -80,6 +80,13 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("rp2040 pqt-gcc toolchain at {}", toolchain_dir.display());
 
+        // Arduino-Pico generates its canonical UF2 from the linked ELF with
+        // the managed pqt-picotool package. Do the same here rather than
+        // flattening ELF segments in an fbuild-specific encoder.
+        let picotool = fbuild_packages::toolchain::Rp2040Picotool::new(&params.project_dir);
+        let picotool_dir = fbuild_packages::Package::ensure_installed(&picotool).await?;
+        tracing::info!("managed picotool at {}", picotool_dir.display());
+
         use fbuild_packages::Toolchain;
         pipeline::log_toolchain_version(
             &toolchain.get_gcc_path(),
@@ -134,12 +141,20 @@ impl BuildOrchestrator for Rp2040Orchestrator {
                 crate::eh_frame_policy::EhFramePolicy::Preserve => "preserve",
             },
         })?;
-        let (fast_elf, [fast_bin], fast_compile_db) =
-            expected_fast_path_artifacts(&build_dir, &params.project_dir, ["firmware.bin"]);
+        let (fast_elf, [fast_bin, fast_uf2], fast_compile_db) = expected_fast_path_artifacts(
+            &build_dir,
+            &params.project_dir,
+            ["firmware.bin", "firmware.uf2"],
+        );
         let fast_path = FastPathContract::for_project_outputs(
             &build_dir,
             &params.project_dir,
-            [fast_elf.clone(), fast_bin.clone(), fast_compile_db.clone()],
+            [
+                fast_elf.clone(),
+                fast_bin,
+                fast_uf2.clone(),
+                fast_compile_db.clone(),
+            ],
         );
 
         if !params.compiledb_only
@@ -159,7 +174,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
                 let elapsed = start.elapsed().as_secs_f64();
                 return Ok(BuildResult {
                     success: true,
-                    firmware_path: Some(fast_bin),
+                    firmware_path: Some(fast_uf2),
                     elf_path: Some(fast_elf),
                     size_info: hit.size_info,
                     symbol_map: None,
@@ -324,7 +339,8 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         support_link_inputs.push(boot2_object);
 
         // 9. Run shared sequential build pipeline
-        let build_result = pipeline::run_sequential_build_with_libs(
+        let board_mcu = ctx.board.mcu.clone();
+        let mut build_result = pipeline::run_sequential_build_with_libs(
             &compiler,
             &linker,
             ctx,
@@ -337,6 +353,23 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             start,
         )
         .await?;
+
+        if build_result.success && !params.compiledb_only {
+            let elf = build_result.elf_path.as_deref().ok_or_else(|| {
+                fbuild_core::FbuildError::BuildFailed(
+                    "RP2040 link succeeded without a firmware ELF artifact".to_string(),
+                )
+            })?;
+            let uf2 = elf.with_extension("uf2");
+            convert_elf_to_uf2(
+                &picotool.executable(),
+                elf,
+                &uf2,
+                &board_mcu,
+            )
+            .await?;
+            build_result.firmware_path = Some(uf2);
+        }
 
         if build_result.success
             && !params.compiledb_only
@@ -356,6 +389,60 @@ impl BuildOrchestrator for Rp2040Orchestrator {
 
         Ok(build_result)
     }
+}
+
+async fn convert_elf_to_uf2(
+    picotool: &Path,
+    elf: &Path,
+    uf2: &Path,
+    mcu: &str,
+) -> Result<()> {
+    let family = if mcu.to_ascii_lowercase().starts_with("rp2350") {
+        "rp2350-arm-s"
+    } else {
+        "rp2040"
+    };
+    let mut args = vec![
+        picotool.to_string_lossy().to_string(),
+        "uf2".to_string(),
+        "convert".to_string(),
+        elf.to_string_lossy().to_string(),
+        uf2.to_string_lossy().to_string(),
+        "--family".to_string(),
+        family.to_string(),
+    ];
+    if family.starts_with("rp2350") {
+        args.push("--abs-block".to_string());
+    }
+    let args_ref: Vec<&str> = args.iter().map(String::as_str).collect();
+    let output = fbuild_core::subprocess::run_command(
+        &args_ref,
+        None,
+        None,
+        Some(std::time::Duration::from_secs(30)),
+    )
+    .await?;
+    if !output.success() {
+        return Err(fbuild_core::FbuildError::BuildFailed(format!(
+            "managed picotool could not convert {} to {} for {family}: {}{}{}",
+            elf.display(),
+            uf2.display(),
+            output.stderr.trim(),
+            if output.stderr.is_empty() || output.stdout.is_empty() {
+                ""
+            } else {
+                "\n"
+            },
+            output.stdout.trim()
+        )));
+    }
+    if !uf2.is_file() {
+        return Err(fbuild_core::FbuildError::BuildFailed(format!(
+            "managed picotool reported success without creating {}",
+            uf2.display()
+        )));
+    }
+    Ok(())
 }
 
 /// Create an RP2040 orchestrator.

@@ -218,7 +218,7 @@ pub fn try_install_online_cache(path: &Path) -> bool {
     };
     let mut packed: HashMap<u32, UsbInfo> = HashMap::with_capacity(parsed.len() * 4);
     for (vid_str, value) in parsed {
-        let Some(vid) = parse_hex_u16(&vid_str) else {
+        let Some(vid) = parse_hex_u16(vid_str) else {
             continue;
         };
         // Accept fbuild's legacy {vendor, products:[[pid,name]]} shape and

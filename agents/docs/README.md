@@ -21,7 +21,7 @@ routing table sends an agent here by task.
   harness for `port_class` + `family_for_port` validation against an
   actual ESP32. **Reach for this** when you touch
   `crates/fbuild-serial/src/port_class.rs`,
-  `crates/fbuild-serial/src/boards.rs::family_for_vid_pid`, or any
+  FastLED/boards catalogue ingestion/family classification, or any
   DTR/RTS handling in `SharedSerialManager::open_port`. See
   FastLED/fbuild#899 (resolved).
 

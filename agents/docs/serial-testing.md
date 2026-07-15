@@ -8,10 +8,10 @@ when you need to validate one of:
 - A change to `crates/fbuild-serial/src/port_class.rs` — the OS-side
   kernel-class detection introduced in #895. Sysfs paths can drift
   between kernel versions; real-device validation catches it.
-- A new entry in the `crates/fbuild-serial/src/boards.rs::family_for_vid_pid`
-  table — the disagreement warning shipped in #897 will fire here if
-  the table's implied class disagrees with what the kernel actually
-  binds.
+- A new FastLED/boards USB catalogue record or data-driven family-classifier
+  change. The disagreement warning shipped in #897 will fire if the catalogue
+  identity's implied class disagrees with what the kernel actually binds. Never
+  add a production VID/PID literal to the legacy table.
 - Anything that touches `SharedSerialManager::open_port`'s DTR/RTS
   handling — getting `(false, false)` vs `(true, true)` wrong on
   attach is the difference between "firmware runs" and "firmware
@@ -75,7 +75,8 @@ The script:
 3. Ensures `cdc_acm` is loaded in Ubuntu.
 4. Builds + runs a small Rust program (the source code is in the
    script as a here-doc) that calls `port_class::detect_port_kernel_class`,
-   `family_for_vid_pid`, and `family_for_port` against `/dev/ttyACM0`,
+   the catalogue-backed family lookup and `family_for_port` against
+   `/dev/ttyACM0`,
    and asserts both signals return `Esp32NativeUsbCdc` / `CdcAcm`.
 5. `usbipd detach` (user-mode) — leaves the bind in place for the
    next session.
@@ -121,7 +122,8 @@ Expected last line:
    a "cdc_acm 1-1:1.0: ttyACM0: USB ACM device" line.
 3. Verify `readlink /sys/class/tty/ttyACM0/device/driver` resolves
    to `.../bus/usb/drivers/cdc_acm`. If it resolves to something
-   else, the VID/PID table or `port_class::linux::classify_driver`
-   may need updating.
+   else, the FastLED/boards record/ingestion or
+   `port_class::linux::classify_driver` may need updating. Do not patch in a
+   literal VID/PID fallback.
 4. Worst case, the kernel driver name changed across mainline Linux
    versions — bump the Microsoft WSL kernel and re-test.
