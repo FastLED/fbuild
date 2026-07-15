@@ -265,7 +265,12 @@ jobs:
             # internal env vars when the catalogue xwin-cache row is
             # absent for the target arch. Requires soldr >= v0.8.0
             # (first release whose archive ships the shim).
-            soldr --no-cache build --release --target ${{ inputs.target }} \
+            # Cargo's global RUSTFLAGS takes precedence over the target-specific
+            # CARGO_TARGET_<TRIPLE>_RUSTFLAGS that soldr injects for the xwin
+            # SDK's /LIBPATH entries. Clear it only here so lld-link receives
+            # the managed Windows libraries while the other targets retain
+            # their warnings-as-errors policy.
+            env -u RUSTFLAGS soldr --no-cache build --release --target ${{ inputs.target }} \
               -p fbuild-cli \
               -p fbuild-daemon
           elif [[ "${{ inputs.target }}" == *-unknown-linux-musl ]]; then
@@ -320,7 +325,7 @@ jobs:
             # `soldr build` installs the soldr-clang-shim so
             # ring + cc-rs route through clang-cl correctly even
             # for aarch64 PyO3 dylib compilation.
-            PYO3_NO_PYTHON=1 soldr --no-cache build --release \
+            PYO3_NO_PYTHON=1 env -u RUSTFLAGS soldr --no-cache build --release \
               --target-dir "${PYTHON_TARGET_DIR}" \
               --target ${{ inputs.target }} -p fbuild-python \
               --features extension-module
