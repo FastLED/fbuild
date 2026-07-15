@@ -345,14 +345,32 @@ where
                 );
                 Ok(())
             } else {
-                Err(FbuildError::DeployFailed(format!(
-                    "failed to copy RP2040 UF2 {} to {}: {copy_error}",
-                    artifact.display(),
-                    destination.display()
+                Err(FbuildError::DeployFailed(format_uf2_copy_error(
+                    artifact,
+                    destination,
+                    &copy_error,
                 )))
             }
         }
     }
+}
+
+fn format_uf2_copy_error(
+    artifact: &Path,
+    destination: &Path,
+    copy_error: &std::io::Error,
+) -> String {
+    let base = format!(
+        "failed to copy RP2040 UF2 {} to {}: {copy_error}",
+        artifact.display(),
+        destination.display()
+    );
+    if copy_error.raw_os_error() == Some(1392) {
+        return format!(
+            "{base}. Windows cannot access the RP-series BOOTSEL synthetic FAT volume (error 1392). Do not run chkdsk, filesystem repair, or format this ROM-emulated volume; reconnect the board in BOOTSEL and retry, or use fbuild's managed picotool fallback with the Raspberry Pi-documented WinUSB binding"
+        );
+    }
+    base
 }
 
 fn is_device_disappearance_error(error: &std::io::Error) -> bool {
@@ -1107,5 +1125,19 @@ mod tests {
         })
         .unwrap_err();
         assert!(error.to_string().contains("source permission denied"));
+    }
+
+    #[test]
+    fn windows_1392_copy_error_warns_against_repairing_synthetic_volume() {
+        let error = std::io::Error::from_raw_os_error(1392);
+        let message = format_uf2_copy_error(
+            Path::new("firmware.uf2"),
+            Path::new("G:/NEW.UF2"),
+            &error,
+        );
+        assert!(message.contains("error 1392"));
+        assert!(message.contains("synthetic FAT volume"));
+        assert!(message.contains("Do not run chkdsk"));
+        assert!(message.contains("managed picotool fallback"));
     }
 }
