@@ -6,6 +6,7 @@ use crate::daemon_client::{
     self, DaemonClient, DeployRequest, MonitorRequest, OperationResponse, TestEmuRequest,
 };
 use crate::output;
+use std::io::Write;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum CliEmulatorKind {
@@ -214,13 +215,16 @@ pub async fn run_deploy(
     };
 
     let resp = client.deploy(&req).await?;
-    if deploy_route == CliDeployRoute::Emulator(CliEmulatorKind::Qemu)
-        || deploy_route == CliDeployRoute::Emulator(CliEmulatorKind::Avr8js)
-    {
-        print_operation_streams(&resp);
-    }
+    // Physical deployers also return transport diagnostics in stdout/stderr
+    // (for example the RP2040 mass-storage and managed-picotool errors). Keep
+    // those visible instead of replaying streams only for emulator routes.
+    print_operation_streams(&resp);
     output::result(&resp.message);
     if !resp.success {
+        // process::exit skips normal destructor-based stdio flushing. Preserve
+        // the daemon's final stdout/stderr when fbuild is piped by automation.
+        let _ = std::io::stdout().flush();
+        let _ = std::io::stderr().flush();
         std::process::exit(resp.exit_code);
     }
     // Open browser for avr8js only when daemon returned a launch URL (non-headless mode)
@@ -303,11 +307,10 @@ pub fn print_operation_streams(resp: &OperationResponse) {
         .as_deref()
         .filter(|text| !text.trim().is_empty())
     {
-        // Operation stderr is in-progress diagnostic output from the emulator
-        // / build subprocess being replayed back. Route it through warn() so
-        // it shares the tracing level filter with progress(); --quiet hides it,
-        // colour/format flow through the same subscriber.
-        output::warn(stderr.trim_end_matches('\n'));
+        // This is final operation output returned by the daemon, not transient
+        // progress. It must remain visible under the default tracing filter and
+        // when the command exits non-zero.
+        output::diagnostic(stderr.trim_end_matches('\n'));
     }
 }
 
