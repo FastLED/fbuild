@@ -7,9 +7,7 @@
     "extra_flags": "-D__SAMD21G18A__ -DCRYSTALLESS -DARM_MATH_CM0PLUS -DARDUINO_SAMD_ZERO -DADAFRUIT_CIRCUITPLAYGROUND_M0 -DARDUINO_SAMD_CIRCUITPLAYGROUND_EXPRESS",
     "f_cpu": "48000000L",
     "mcu": "samd21g18a",
-    "pid": "0x8018",
-    "variant": "circuitplay",
-    "vid": "0x239A"
+    "variant": "circuitplay"
   },
   "debug": {
     "tools": {

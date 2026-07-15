@@ -7,9 +7,7 @@
     "extra_flags": "-DARDUINO_SAMD51_THING_PLUS -D__SAMD51J20A__ -D__SAMD51__ -D__FPU_PRESENT -DARM_MATH_CM4",
     "f_cpu": "120000000L",
     "mcu": "samd51j20a",
-    "pid": "0xF016",
-    "variant": "SparkFun_SAMD51_Thing_Plus",
-    "vid": "0x1B4F"
+    "variant": "SparkFun_SAMD51_Thing_Plus"
   },
   "debug": {
     "tools": {

@@ -7,9 +7,7 @@
     "extra_flags": "-DARDUINO_SAMD_CRICKIT_M0 -DADAFRUIT_CRICKIT_M0 -DARM_MATH_CM0PLUS -D__SAMD21G18A__ -DCRYSTALLESS",
     "f_cpu": "48000000L",
     "mcu": "samd21g18a",
-    "pid": "0x802D",
-    "variant": "crickit_m0",
-    "vid": "0x239A"
+    "variant": "crickit_m0"
   },
   "debug": {
     "tools": {

@@ -4,9 +4,7 @@
     "extra_flags": "-DARDUINO_AVR_FLORA8",
     "f_cpu": "8000000L",
     "mcu": "atmega32u4",
-    "pid": "0x8004",
-    "variant": "flora",
-    "vid": "0x239A"
+    "variant": "flora"
   },
   "debug": {
     "tools": {

@@ -7,9 +7,7 @@
     "extra_flags": "-DARDUINO_SAMD_ZERO -DARDUINO_SAMD_FEATHER_M0 -DARM_MATH_CM0PLUS -D__SAMD21G18A__",
     "f_cpu": "48000000L",
     "mcu": "samd21g18a",
-    "pid": "0x800B",
-    "variant": "feather_m0",
-    "vid": "0x239A"
+    "variant": "feather_m0"
   },
   "debug": {
     "tools": {

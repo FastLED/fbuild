@@ -36,6 +36,9 @@ pub(super) const EMULATOR_TOOL_NAMES: &[&str] =
 /// config is not a usable board definition.
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct BoardConfig {
+    /// Registry key used to resolve board-scoped metadata from FastLED/boards.
+    #[serde(default)]
+    pub board_id: String,
     pub name: String,
     pub mcu: String,
     pub f_cpu: String,

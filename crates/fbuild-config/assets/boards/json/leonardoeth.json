@@ -4,9 +4,7 @@
     "extra_flags": "-DARDUINO_AVR_LEONARDO",
     "f_cpu": "16000000L",
     "mcu": "atmega32u4",
-    "pid": "0x8040",
-    "variant": "leonardo",
-    "vid": "0x2A03"
+    "variant": "leonardo"
   },
   "connectivity": [
     "ethernet"

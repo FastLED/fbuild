@@ -7,9 +7,7 @@
     "extra_flags": "-DARDUINO_NRF52840_FEATHER -DARDUINO_NRF52840_METRO -DNRF52840_XXAA",
     "f_cpu": "64000000L",
     "mcu": "nrf52840",
-    "pid": "0x803F",
-    "variant": "metro_nrf52840_express",
-    "vid": "0x239A"
+    "variant": "metro_nrf52840_express"
   },
   "connectivity": [
     "bluetooth"

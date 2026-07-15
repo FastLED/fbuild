@@ -7,9 +7,7 @@
     "extra_flags": "-D__SAMD21G18A__ -DCRYSTALLESS -DARM_MATH_CM0PLUS -DARDUINO_SAMD_ZERO -DADAFRUIT_SAMD_HALLOWING",
     "f_cpu": "48000000L",
     "mcu": "samd21g18a",
-    "pid": "0xDEAD",
-    "variant": "hallowing_m0_express",
-    "vid": "0x239A"
+    "variant": "hallowing_m0_express"
   },
   "debug": {
     "tools": {

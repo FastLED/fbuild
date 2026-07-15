@@ -7,9 +7,7 @@
     "extra_flags": "-DVERY_LOW_POWER -D__SAMD21G18A__ -DARDUINO_SODAQ_SFF",
     "f_cpu": "48000000L",
     "mcu": "samd21g18a",
-    "pid": "0x804d",
-    "variant": "sodaq_sff",
-    "vid": "0x2341"
+    "variant": "sodaq_sff"
   },
   "connectivity": [
     "NB-IoT",

@@ -9,9 +9,7 @@
     "f_flash": "40000000L",
     "flash_mode": "dio",
     "mcu": "esp32",
-    "pid": "0x6010",
-    "variant": "esp32",
-    "vid": "0x0403"
+    "variant": "esp32"
   },
   "connectivity": [
     "wifi",

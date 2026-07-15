@@ -4,9 +4,7 @@
     "extra_flags": "-D ARDUINO_NANO_RP2040_CONNECT -DARDUINO_ARCH_RP2040",
     "f_cpu": "133000000L",
     "mcu": "rp2040",
-    "pid": "0x005E",
-    "variant": "NANO_RP2040_CONNECT",
-    "vid": "0x2341"
+    "variant": "NANO_RP2040_CONNECT"
   },
   "debug": {
     "tools": {

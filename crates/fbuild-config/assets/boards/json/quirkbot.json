@@ -4,9 +4,7 @@
     "extra_flags": "-DQUIRKBOT",
     "f_cpu": "8000000L",
     "mcu": "atmega32u4",
-    "pid": "0xf004",
-    "variant": "quirkbot",
-    "vid": "0x2886"
+    "variant": "quirkbot"
   },
   "debug": {
     "tools": {

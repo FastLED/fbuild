@@ -4,9 +4,7 @@
     "extra_flags": "-DARDUINO_AVR_DWENGUINO",
     "f_cpu": "16000000L",
     "mcu": "at90usb646",
-    "pid": "0x601b",
-    "variant": "dwenguino",
-    "vid": "0xd3e0"
+    "variant": "dwenguino"
   },
   "fcpu": 16000000,
   "frameworks": [

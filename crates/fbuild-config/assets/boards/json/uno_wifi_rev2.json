@@ -4,9 +4,7 @@
     "extra_flags": "-DARDUINO_AVR_UNO_WIFI_REV2 -DUNO_WIFI_REV2_328MODE -DMILLIS_USE_TIMERB3",
     "f_cpu": "16000000L",
     "mcu": "atmega4809",
-    "pid": "0x2145",
-    "variant": "uno2018",
-    "vid": "0x03eb"
+    "variant": "uno2018"
   },
   "fcpu": 16000000,
   "frameworks": [

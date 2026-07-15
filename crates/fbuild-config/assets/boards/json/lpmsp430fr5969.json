@@ -4,9 +4,7 @@
     "extra_flags": "-DENERGIA_ARCH_MSP430 -DENERGIA_MSP_EXP430FR5969LP",
     "f_cpu": "8000000L",
     "mcu": "msp430fr5969",
-    "pid": "0x0c9f",
-    "variant": "MSP-EXP430FR5969LP",
-    "vid": "0x2341"
+    "variant": "MSP-EXP430FR5969LP"
   },
   "debug": {
     "tools": {

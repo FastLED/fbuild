@@ -7,9 +7,7 @@
     "extra_flags": "-DARDUINO_SAMD_ZERO -D__SAMD21G18A__",
     "f_cpu": "48000000L",
     "mcu": "samd21g18a",
-    "pid": "0x804E",
-    "variant": "arduino_mzero",
-    "vid": "0x2A03"
+    "variant": "arduino_mzero"
   },
   "debug": {
     "tools": {

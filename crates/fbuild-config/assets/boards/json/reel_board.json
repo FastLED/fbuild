@@ -1,9 +1,7 @@
 {
   "build": {
     "f_cpu": "64000000L",
-    "mcu": "nrf52840",
-    "pid": "0x0204",
-    "vid": "0x0D28"
+    "mcu": "nrf52840"
   },
   "connectivity": [
     "bluetooth"

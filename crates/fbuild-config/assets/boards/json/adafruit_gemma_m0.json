@@ -7,9 +7,7 @@
     "extra_flags": "-DARDUINO_GEMMA_M0 -DARM_MATH_CM0PLUS -DCRYSTALLESS -DADAFRUIT_GEMMA_M0 -D__SAMD21E18A__",
     "f_cpu": "48000000L",
     "mcu": "samd21e18a",
-    "pid": "0x801C",
-    "variant": "gemma_m0",
-    "vid": "0x239A"
+    "variant": "gemma_m0"
   },
   "debug": {
     "tools": {

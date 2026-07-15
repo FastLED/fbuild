@@ -7,9 +7,7 @@
     "extra_flags": "-DARDUINO_SAMD_MKRFox1200 -D__SAMD21G18A__ -DUSE_ARDUINO_MKR_PIN_LAYOUT -DVERY_LOW_POWER",
     "f_cpu": "48000000L",
     "mcu": "samd21g18a",
-    "pid": "0x8050",
-    "variant": "mkrfox1200",
-    "vid": "0x2341"
+    "variant": "mkrfox1200"
   },
   "debug": {
     "tools": {

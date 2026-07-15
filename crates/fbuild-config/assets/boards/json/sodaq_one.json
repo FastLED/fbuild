@@ -7,9 +7,7 @@
     "extra_flags": "-DVERY_LOW_POWER -D__SAMD21G18A__ -DARDUINO_SODAQ_ONE",
     "f_cpu": "48000000L",
     "mcu": "samd21g18a",
-    "pid": "0x804d",
-    "variant": "sodaq_one",
-    "vid": "0x2341"
+    "variant": "sodaq_one"
   },
   "connectivity": [
     "LoRa",

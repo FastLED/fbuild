@@ -9,9 +9,7 @@
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32c3",
-    "pid": "0x1001",
-    "variant": "VALTRACK_V4_MFW_ESP32_C3",
-    "vid": "0x303A"
+    "variant": "VALTRACK_V4_MFW_ESP32_C3"
   },
   "connectivity": [
     "wifi"

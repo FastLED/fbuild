@@ -9,9 +9,7 @@
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32s3",
-    "pid": "0x81BB",
-    "variant": "esp32s3_powerfeather",
-    "vid": "0X303A"
+    "variant": "esp32s3_powerfeather"
   },
   "connectivity": [
     "bluetooth",

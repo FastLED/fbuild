@@ -159,6 +159,7 @@ impl BoardConfig {
         let is_esp32_family = mcu.starts_with("esp32");
 
         Ok(Self {
+            board_id: board_id.to_string(),
             name,
             mcu,
             f_cpu: get("f_cpu").unwrap_or_else(|| "16000000L".to_string()),
@@ -310,6 +311,7 @@ impl BoardConfig {
         let is_esp32_family = resolved_mcu.starts_with("esp32");
 
         Ok(Self {
+            board_id: board_id.to_string(),
             name: get("name", board_id),
             mcu: get("mcu", "unknown"),
             f_cpu: get("f_cpu", "16000000L"),

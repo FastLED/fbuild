@@ -11,9 +11,7 @@
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32s2",
-    "pid": "0x81B8",
-    "variant": "sensebox_mcu_esp32s2",
-    "vid": "0x303A"
+    "variant": "sensebox_mcu_esp32s2"
   },
   "connectivity": [
     "wifi"

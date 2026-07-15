@@ -7,9 +7,7 @@
     "extra_flags": "-DARDUINO_NICLA -DARDUINO_ARCH_NRF52832",
     "f_cpu": "64000000L",
     "mcu": "nrf52832",
-    "pid": "0x0060",
-    "variant": "NICLA",
-    "vid": "0x2341"
+    "variant": "NICLA"
   },
   "connectivity": [
     "bluetooth"

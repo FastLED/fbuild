@@ -7,9 +7,7 @@
     "extra_flags": "-DARDUINO_QTPY_M0 -DCRYSTALLESS -DADAFRUIT_QTPY_M0 -D__SAMD21E18A__ -DARM_MATH_CM0PLUS",
     "f_cpu": "48000000L",
     "mcu": "samd21e18a",
-    "pid": "0x80CB",
-    "variant": "qtpy_m0",
-    "vid": "0x239A"
+    "variant": "qtpy_m0"
   },
   "debug": {
     "tools": {

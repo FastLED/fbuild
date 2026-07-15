@@ -4,9 +4,7 @@
     "extra_flags": "-DSTM32F1 -DSTM32F103xE",
     "f_cpu": "72000000L",
     "mcu": "stm32f103ret6",
-    "pid": "0x0003",
-    "variant": "stm32f1",
-    "vid": "0x1EAF"
+    "variant": "stm32f1"
   },
   "debug": {
     "tools": {

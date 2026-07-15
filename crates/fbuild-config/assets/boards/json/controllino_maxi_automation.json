@@ -4,9 +4,7 @@
     "extra_flags": "-DARDUINO_AVR_MEGA2560",
     "f_cpu": "16000000L",
     "mcu": "atmega2560",
-    "pid": "0x0010",
-    "variant": "Controllino_maxi_automation",
-    "vid": "0x2341"
+    "variant": "Controllino_maxi_automation"
   },
   "debug": {
     "tools": {

@@ -3,9 +3,7 @@
     "core": "silabs",
     "f_cpu": "39000000L",
     "mcu": "cortex-m33",
-    "pid": "0x0101",
-    "variant": "thingplusmatter",
-    "vid": "0x1366"
+    "variant": "thingplusmatter"
   },
   "connectivity": [
     "bluetooth",

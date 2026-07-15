@@ -94,24 +94,6 @@ FBUILD_NATIVE_BOARDS = frozenset(
     }
 )
 
-# Intentional local corrections where fbuild's checked-in board asset is more
-# specific than the current PlatformIO registry row. Keep this narrow: it is
-# only for board-local facts that are also asserted by fbuild tests.
-FBUILD_BUILD_FIELD_OVERRIDES = {
-    # FastLED/fbuild#905 split Unexpected Maker TinyS3 and FeatherS3 USB PIDs.
-    # PlatformIO 6.13.0 still reports FeatherS3 as 303A:80D0, which collides
-    # with TinyS3. The local board asset and board::tests_usb_vid pin 80D6.
-    "um_feathers3": {"pid": "0x80D6"},
-    # FastLED/fbuild#740 back-fill: PlatformIO carries no USB hwids for
-    # these boards, but the runtime VID:PID is well-known upstream and
-    # fbuild needs it in the tier-1 supplement so `device list/status`
-    # can identify them by name instead of `Device 0xPPPP`. Sources
-    # tracked in issue #740 board-name match table.
-    "esp32-s2-saola-1": {"vid": "0x10C4", "pid": "0xEA60"},
-    "sparkfun_thingplusmatter": {"vid": "0x1366", "pid": "0x0101"},
-    "ch32v003f4p6_evt_r0": {"vid": "0x1A86", "pid": "0x8010"},
-}
-
 MEGATINYCORE_EXTRA_FLAGS = (
     "-DCLOCK_SOURCE=0",
     '-DMEGATINYCORE="2.6.11"',
@@ -193,14 +175,6 @@ def extract_build(pio_build: dict) -> dict:
                 val = merge_extra_flags(core if isinstance(core, str) else None, normalize_extra_flags(val))
             build[field] = val
 
-    # Extract VID/PID from hwids (array of [vid, pid] pairs — take the first)
-    hwids = pio_build.get("hwids")
-    if isinstance(hwids, list) and hwids:
-        first = hwids[0]
-        if isinstance(first, list) and len(first) >= 2:
-            build["vid"] = first[0]
-            build["pid"] = first[1]
-
     # Extract arduino sub-fields
     if "arduino" in pio_build and isinstance(pio_build["arduino"], dict):
         arduino = {}
@@ -281,7 +255,6 @@ def validate_board(board_path: Path, pio_dir: Path) -> list[str] | None:
     pio_build = pio_board.get("build", {})
     if isinstance(pio_build, dict):
         expected_build = extract_build(pio_build)
-        expected_build.update(FBUILD_BUILD_FIELD_OVERRIDES.get(board_id, {}))
         actual_build = board.get("build", {})
         # Strip intentional fbuild-only extensions from the actual side so
         # they aren't reported as drift (see FBUILD_EXTENSION_BUILD_FIELDS).

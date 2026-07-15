@@ -7,9 +7,7 @@
     "extra_flags": "-D_BOARD_UNO_",
     "f_cpu": "80000000L",
     "mcu": "32MX320F128H",
-    "pid": "0x6001",
-    "variant": "Uno32",
-    "vid": "0x0403"
+    "variant": "Uno32"
   },
   "fcpu": 80000000,
   "frameworks": [

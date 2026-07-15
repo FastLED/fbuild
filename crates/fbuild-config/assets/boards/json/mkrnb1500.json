@@ -7,9 +7,7 @@
     "extra_flags": "-DARDUINO_SAMD_MKRNB1500 -D__SAMD21G18A__ -DUSE_BQ24195L_PMIC -DUSE_ARDUINO_MKR_PIN_LAYOUT",
     "f_cpu": "48000000L",
     "mcu": "samd21g18a",
-    "pid": "0x8055",
-    "variant": "mkrnb1500",
-    "vid": "0x2341"
+    "variant": "mkrnb1500"
   },
   "debug": {
     "tools": {

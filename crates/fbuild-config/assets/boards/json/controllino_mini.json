@@ -4,9 +4,7 @@
     "extra_flags": "-DARDUINO_AVR_UNO",
     "f_cpu": "16000000L",
     "mcu": "atmega328p",
-    "pid": "0x0043",
-    "variant": "Controllino_mini",
-    "vid": "0x2341"
+    "variant": "Controllino_mini"
   },
   "debug": {
     "tools": {

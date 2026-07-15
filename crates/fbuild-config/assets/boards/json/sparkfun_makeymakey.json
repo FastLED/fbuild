@@ -4,9 +4,7 @@
     "extra_flags": "-DARDUINO_AVR_MAKEYMAKEY",
     "f_cpu": "16000000L",
     "mcu": "atmega32u4",
-    "pid": "0x2B74",
-    "variant": "sparkfun_promicro",
-    "vid": "0x1B4F"
+    "variant": "sparkfun_promicro"
   },
   "debug": {
     "tools": {

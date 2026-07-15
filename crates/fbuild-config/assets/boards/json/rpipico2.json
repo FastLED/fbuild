@@ -4,9 +4,7 @@
     "extra_flags": "-DARDUINO_RASPBERRY_PI_PICO_2 -DARDUINO_ARCH_RP2350 -DUSBD_MAX_POWER_MA=250",
     "f_cpu": "133000000L",
     "mcu": "rp2350",
-    "pid": "0x000B",
-    "variant": "rpipico2",
-    "vid": "0x2E8A"
+    "variant": "rpipico2"
   },
   "debug": {
     "tools": {

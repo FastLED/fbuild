@@ -4,9 +4,7 @@
     "extra_flags": "-DSTM32L0 -DARDUINO_STM32L0_CRICKET",
     "f_cpu": "32000000L",
     "mcu": "stm32l082czy6",
-    "pid": "0x6665",
-    "variant": "Cricket-L082CZ",
-    "vid": "0x1209"
+    "variant": "Cricket-L082CZ"
   },
   "debug": {
     "tools": {

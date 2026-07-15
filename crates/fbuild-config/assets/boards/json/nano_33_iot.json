@@ -7,9 +7,7 @@
     "extra_flags": "-DARDUINO_SAMD_NANO_33_IOT -DCRYSTALLESS -D__SAMD21G18A__",
     "f_cpu": "48000000L",
     "mcu": "samd21g18a",
-    "pid": "0x8057",
-    "variant": "nano_33_iot",
-    "vid": "0x2341"
+    "variant": "nano_33_iot"
   },
   "debug": {
     "tools": {

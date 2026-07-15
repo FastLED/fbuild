@@ -7,9 +7,7 @@
     "extra_flags": "-DSTM32H7 -DARDUINO_OPTA",
     "f_cpu": "480000000L",
     "mcu": "stm32h747xih6",
-    "pid": "0x0364",
-    "variant": "OPTA",
-    "vid": "0x2341"
+    "variant": "OPTA"
   },
   "connectivity": [
     "bluetooth",

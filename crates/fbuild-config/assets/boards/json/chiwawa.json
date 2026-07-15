@@ -4,9 +4,7 @@
     "extra_flags": "-DARDUINO_AVR_YUN",
     "f_cpu": "16000000L",
     "mcu": "atmega32u4",
-    "pid": "0x8056",
-    "variant": "yun",
-    "vid": "0x2A03"
+    "variant": "yun"
   },
   "debug": {
     "tools": {

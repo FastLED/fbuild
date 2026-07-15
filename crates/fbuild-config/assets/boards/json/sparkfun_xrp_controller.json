@@ -4,9 +4,7 @@
     "extra_flags": "-DARDUINO_SPARKFUN_XRP_CONTROLLER -DARDUINO_ARCH_RP2040 -DUSBD_MAX_POWER_MA=250 -DPICO_CYW43_SUPPORTED=1 -DCYW43_PIN_WL_DYNAMIC=1",
     "f_cpu": "150000000L",
     "mcu": "rp2350",
-    "pid": "0x00C0",
-    "variant": "sparkfun_xrp_controller",
-    "vid": "0x2E8A"
+    "variant": "sparkfun_xrp_controller"
   },
   "debug": {
     "tools": {

@@ -178,18 +178,6 @@ fn extract_build(pio_build: &Map<String, Value>) -> Map<String, Value> {
         }
     }
 
-    // Extract VID/PID from hwids (array of [vid, pid] pairs — take the first)
-    if let Some(Value::Array(hwids)) = pio_build.get("hwids") {
-        if let Some(Value::Array(first)) = hwids.first() {
-            if let Some(vid) = first.first().and_then(|v| v.as_str()) {
-                build.insert("vid".to_string(), Value::String(vid.to_string()));
-            }
-            if let Some(pid) = first.get(1).and_then(|v| v.as_str()) {
-                build.insert("pid".to_string(), Value::String(pid.to_string()));
-            }
-        }
-    }
-
     // Extract arduino sub-fields
     if let Some(Value::Object(arduino_src)) = pio_build.get("arduino") {
         let mut arduino = Map::new();
@@ -276,6 +264,10 @@ fn enrich_board(board_path: &Path, pio_dir: &Path) -> Result<bool, String> {
                 .entry("build".to_string())
                 .or_insert_with(|| Value::Object(Map::new()));
             if let Value::Object(existing_build) = existing {
+                // USB identity belongs exclusively to the published
+                // FastLED/boards registry, never this bundled snapshot.
+                existing_build.remove("vid");
+                existing_build.remove("pid");
                 merge_into(existing_build, build);
                 changed = true;
             }

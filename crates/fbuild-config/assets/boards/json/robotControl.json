@@ -4,9 +4,7 @@
     "extra_flags": "-DARDUINO_AVR_ROBOT_CONTROL",
     "f_cpu": "16000000L",
     "mcu": "atmega32u4",
-    "pid": "0x0038",
-    "variant": "robot_control",
-    "vid": "0x2341"
+    "variant": "robot_control"
   },
   "debug": {
     "tools": {

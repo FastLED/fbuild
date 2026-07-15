@@ -7,9 +7,7 @@
     "extra_flags": "-DVERY_LOW_POWER -D__SAMD21J18A__ -DARDUINO_SODAQ_AUTONOMO",
     "f_cpu": "48000000L",
     "mcu": "samd21j18a",
-    "pid": "0x804d",
-    "variant": "sodaq_autonomo",
-    "vid": "0x2341"
+    "variant": "sodaq_autonomo"
   },
   "debug": {
     "tools": {

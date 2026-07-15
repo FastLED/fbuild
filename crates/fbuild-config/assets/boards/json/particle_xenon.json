@@ -7,9 +7,7 @@
     "extra_flags": "-DARDUINO_NRF52840_FEATHER -DNRF52840_XXAA -DNRF52840_XXAA",
     "f_cpu": "64000000L",
     "mcu": "nrf52840",
-    "pid": "0x8029",
-    "variant": "particle_xenon",
-    "vid": "0x239A"
+    "variant": "particle_xenon"
   },
   "connectivity": [
     "bluetooth"

@@ -4,9 +4,7 @@
     "extra_flags": "-DARDUINO_AVR_SEEEDUINO",
     "f_cpu": "16000000L",
     "mcu": "atmega328p",
-    "pid": "0x0004",
-    "variant": "standard",
-    "vid": "0x2886"
+    "variant": "standard"
   },
   "debug": {
     "tools": {
