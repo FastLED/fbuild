@@ -33,8 +33,18 @@ const RP2350_FAMILY_ID: u32 = 0xE48B_FF59;
 // boot2 has already been stripped. Encoding this full image at 0x2000 leaves
 // stock ROM BOOTSEL in place after an apparently successful copy.
 const RP2040_UF2_BASE_ADDRESS: u32 = 0x1000_0000;
+const RP2040_XIP_SRAM_START: u32 = 0x1500_0000;
+const RP2040_XIP_SRAM_END: u32 = 0x1500_4000;
+const RP2040_SRAM_START: u32 = 0x2000_0000;
+const RP2040_SRAM_END: u32 = 0x2004_2000;
 const UF2_PAYLOAD_SIZE: usize = 256;
 const UF2_BLOCK_SIZE: usize = 512;
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum Uf2Target {
+    Flash,
+    Ram,
+}
 
 /// Build UF2 blocks for a raw RP2040 flash image.
 pub fn encode_uf2(binary: &[u8]) -> Vec<u8> {
@@ -228,7 +238,7 @@ fn touch_1200bps(port: &str) -> Result<()> {
     }
 }
 
-fn prepare_uf2_artifact(firmware_path: &Path, family_id: u32) -> Result<PathBuf> {
+fn prepare_uf2_artifact(firmware_path: &Path, family_id: u32) -> Result<(PathBuf, Uf2Target)> {
     let input_is_uf2 = firmware_path
         .extension()
         .is_some_and(|ext| ext.eq_ignore_ascii_case("uf2"));
@@ -271,9 +281,9 @@ fn prepare_uf2_artifact(firmware_path: &Path, family_id: u32) -> Result<PathBuf>
         })?;
         (artifact, bytes)
     };
-    validate_uf2(&uf2, family_id)?;
+    let target = validate_uf2(&uf2, family_id)?;
 
-    Ok(artifact)
+    Ok((artifact, target))
 }
 
 fn copy_prepared_uf2(artifact: &Path, volume: &Path) -> Result<PathBuf> {
@@ -284,7 +294,7 @@ fn copy_prepared_uf2(artifact: &Path, volume: &Path) -> Result<PathBuf> {
 
 #[cfg(test)]
 fn write_uf2(firmware_path: &Path, volume: &Path, family_id: u32) -> Result<PathBuf> {
-    let artifact = prepare_uf2_artifact(firmware_path, family_id)?;
+    let (artifact, _) = prepare_uf2_artifact(firmware_path, family_id)?;
     copy_prepared_uf2(&artifact, volume)
 }
 
@@ -501,7 +511,7 @@ fn is_device_disappearance_error(error: &std::io::Error) -> bool {
     )
 }
 
-fn validate_uf2(bytes: &[u8], expected_family: u32) -> Result<()> {
+fn validate_uf2(bytes: &[u8], expected_family: u32) -> Result<Uf2Target> {
     if bytes.is_empty() || bytes.len() % UF2_BLOCK_SIZE != 0 {
         return Err(FbuildError::DeployFailed(format!(
             "malformed RP2040 UF2: size {} is not a non-zero multiple of {UF2_BLOCK_SIZE}",
@@ -510,7 +520,8 @@ fn validate_uf2(bytes: &[u8], expected_family: u32) -> Result<()> {
     }
     let block_count = bytes.len() / UF2_BLOCK_SIZE;
     let mut seen = vec![false; block_count];
-    let mut seen_targets = BTreeSet::new();
+    let mut seen_ranges = Vec::with_capacity(block_count);
+    let mut image_target = None;
     let flash_end = if expected_family == RP2350_FAMILY_ID {
         0x1400_0000u32
     } else {
@@ -539,34 +550,80 @@ fn validate_uf2(bytes: &[u8], expected_family: u32) -> Result<()> {
             )));
         }
         let target_address = field(12);
+        let Some(target_end) = target_address.checked_add(UF2_PAYLOAD_SIZE as u32) else {
+            return Err(FbuildError::DeployFailed(format!(
+                "malformed RP2040 UF2 block metadata at block {index}"
+            )));
+        };
         let block_number = field(20) as usize;
+        let is_flash = target_address >= RP2040_UF2_BASE_ADDRESS
+            && target_end <= flash_end
+            && target_address % UF2_PAYLOAD_SIZE as u32 == 0;
+        let is_rp2040_ram = expected_family == RP2040_FAMILY_ID
+            && ((target_address >= RP2040_XIP_SRAM_START && target_end <= RP2040_XIP_SRAM_END)
+                || (target_address >= RP2040_SRAM_START && target_end <= RP2040_SRAM_END));
+        let block_target = if is_flash {
+            Uf2Target::Flash
+        } else if is_rp2040_ram {
+            Uf2Target::Ram
+        } else {
+            return Err(FbuildError::DeployFailed(format!(
+                "malformed RP2040 UF2 block metadata at block {index}"
+            )));
+        };
         if field(16) != UF2_PAYLOAD_SIZE as u32
             || block_number >= block_count
             || field(24) as usize != block_count
-            || target_address % UF2_PAYLOAD_SIZE as u32 != 0
-            || !(RP2040_UF2_BASE_ADDRESS..flash_end).contains(&target_address)
         {
             return Err(FbuildError::DeployFailed(format!(
                 "malformed RP2040 UF2 block metadata at block {index}"
             )));
         }
+        if image_target.is_some_and(|target| target != block_target) {
+            return Err(FbuildError::DeployFailed(
+                "malformed RP2040 UF2: image mixes flash and RAM target addresses".to_string(),
+            ));
+        }
+        image_target = Some(block_target);
         if std::mem::replace(&mut seen[block_number], true) {
             return Err(FbuildError::DeployFailed(format!(
                 "malformed RP2040 UF2: duplicate block number {block_number}"
             )));
         }
-        if !seen_targets.insert(target_address) {
-            return Err(FbuildError::DeployFailed(format!(
-                "malformed RP2040 UF2: overlapping target address 0x{target_address:08X}"
-            )));
-        }
+        seen_ranges.push((target_address, target_end));
     }
     if seen.iter().any(|present| !present) {
         return Err(FbuildError::DeployFailed(
             "malformed RP2040 UF2: block-number sequence is incomplete".to_string(),
         ));
     }
-    Ok(())
+    seen_ranges.sort_unstable_by_key(|&(start, _)| start);
+    if let Some(overlap) = seen_ranges.windows(2).find(|ranges| ranges[1].0 < ranges[0].1) {
+        return Err(FbuildError::DeployFailed(format!(
+            "malformed RP2040 UF2: overlapping target address 0x{:08X}",
+            overlap[1].0
+        )));
+    }
+    Ok(image_target.expect("non-empty UF2 has at least one block"))
+}
+
+fn ram_load_result(
+    volume: &Path,
+    transfer_method: &str,
+    stdout: String,
+    stderr: String,
+) -> DeploymentResult {
+    DeploymentResult {
+        success: true,
+        message: format!(
+            "RP2040 RAM image accepted for execution via {transfer_method} ({})",
+            volume.display(),
+        ),
+        port: None,
+        stdout,
+        stderr,
+        outcome: DeployOutcome::RamLoad,
+    }
 }
 
 fn wait_for_volume_disappearance(volume: &Path, timeout: Duration) -> Result<()> {
@@ -813,13 +870,14 @@ impl Deployer for Rp2040Deployer {
         };
         let firmware = firmware_path.to_path_buf();
         let family_id = self.family_id;
-        let artifact = tokio::task::spawn_blocking(move || {
-            prepare_uf2_artifact(&firmware, family_id)
-        })
-        .await
-        .map_err(|error| {
-            FbuildError::DeployFailed(format!("RP2040 UF2 preparation task failed: {error}"))
-        })??;
+        let (artifact, uf2_target) =
+            tokio::task::spawn_blocking(move || prepare_uf2_artifact(&firmware, family_id))
+                .await
+                .map_err(|error| {
+                    FbuildError::DeployFailed(format!(
+                        "RP2040 UF2 preparation task failed: {error}"
+                    ))
+                })??;
         let artifact_for_copy = artifact.clone();
         let volume_for_copy = volume.clone();
         let copy_result = tokio::task::spawn_blocking(move || {
@@ -858,6 +916,14 @@ impl Deployer for Rp2040Deployer {
         .map_err(|error| {
             FbuildError::DeployFailed(format!("RP2040 eject watcher failed: {error}"))
         })??;
+        if uf2_target == Uf2Target::Ram {
+            return Ok(ram_load_result(
+                &volume,
+                transfer_method,
+                transfer_stdout,
+                transfer_stderr,
+            ));
+        }
         let recovery_port = runtime_target.as_ref().map(|target| target.port.clone());
         let recovery_serial = runtime_target
             .as_ref()
@@ -1107,13 +1173,99 @@ mod tests {
         assert!(error.to_string().contains("duplicate block number"));
 
         let mut bad_address = encode_uf2(&[0; 1]);
-        bad_address[12..16].copy_from_slice(&0x2000_0000u32.to_le_bytes());
+        bad_address[12..16].copy_from_slice(&0x3000_0000u32.to_le_bytes());
         let error = validate_uf2(&bad_address, RP2040_FAMILY_ID).unwrap_err();
         assert!(error.to_string().contains("block metadata"));
 
         let mut overlapping = encode_uf2(&[0; 300]);
         overlapping[512 + 12..512 + 16]
             .copy_from_slice(&RP2040_UF2_BASE_ADDRESS.to_le_bytes());
+        let error = validate_uf2(&overlapping, RP2040_FAMILY_ID).unwrap_err();
+        assert!(error.to_string().contains("overlapping target address"));
+    }
+
+    #[test]
+    fn accepts_and_classifies_rp2040_ram_uf2() {
+        for target_address in [
+            RP2040_SRAM_START,
+            RP2040_SRAM_END - UF2_PAYLOAD_SIZE as u32,
+            RP2040_XIP_SRAM_START + 1,
+            RP2040_XIP_SRAM_END - UF2_PAYLOAD_SIZE as u32,
+        ] {
+            let mut ram = encode_uf2(&[0xFE, 0xE7]);
+            ram[12..16].copy_from_slice(&target_address.to_le_bytes());
+            assert_eq!(
+                validate_uf2(&ram, RP2040_FAMILY_ID).unwrap(),
+                Uf2Target::Ram
+            );
+        }
+
+        assert_eq!(
+            validate_uf2(&encode_uf2(&[1, 2, 3]), RP2040_FAMILY_ID).unwrap(),
+            Uf2Target::Flash
+        );
+    }
+
+    #[test]
+    fn prepared_artifact_preserves_ram_classification_and_bin_stays_flash() {
+        let root = tempdir().unwrap();
+        let ram_path = root.path().join("probe.uf2");
+        let mut ram = encode_uf2(&[0xFE, 0xE7]);
+        ram[12..16].copy_from_slice(&RP2040_SRAM_START.to_le_bytes());
+        fs::write(&ram_path, ram).unwrap();
+        let (prepared, target) = prepare_uf2_artifact(&ram_path, RP2040_FAMILY_ID).unwrap();
+        assert_eq!(prepared, ram_path);
+        assert_eq!(target, Uf2Target::Ram);
+
+        let bin_path = root.path().join("firmware.bin");
+        fs::write(&bin_path, [1, 2, 3]).unwrap();
+        let (_, target) = prepare_uf2_artifact(&bin_path, RP2040_FAMILY_ID).unwrap();
+        assert_eq!(target, Uf2Target::Flash);
+    }
+
+    #[test]
+    fn ram_load_result_is_success_without_claiming_a_runtime_port() {
+        let result = ram_load_result(
+            Path::new("G:/"),
+            "BOOTSEL mass-storage",
+            "wrote G:/NEW.UF2".to_string(),
+            String::new(),
+        );
+        assert!(result.success);
+        assert_eq!(result.port, None);
+        assert!(result.message.contains("accepted for execution"));
+        assert!(matches!(result.outcome, DeployOutcome::RamLoad));
+    }
+
+    #[test]
+    fn rejects_invalid_or_mixed_rp2040_ram_uf2() {
+        for target_address in [
+            RP2040_XIP_SRAM_END - UF2_PAYLOAD_SIZE as u32 + 1,
+            RP2040_SRAM_END - UF2_PAYLOAD_SIZE as u32 + 1,
+            RP2040_SRAM_END,
+        ] {
+            let mut invalid = encode_uf2(&[0xFE, 0xE7]);
+            invalid[12..16].copy_from_slice(&target_address.to_le_bytes());
+            let error = validate_uf2(&invalid, RP2040_FAMILY_ID).unwrap_err();
+            assert!(error.to_string().contains("block metadata"));
+        }
+
+        let mut mixed = encode_uf2(&[0; UF2_PAYLOAD_SIZE + 1]);
+        mixed[512 + 12..512 + 16].copy_from_slice(&RP2040_SRAM_START.to_le_bytes());
+        let error = validate_uf2(&mixed, RP2040_FAMILY_ID).unwrap_err();
+        assert!(error.to_string().contains("mixes flash and RAM"));
+
+        let mut rp2350_ram = encode_uf2_for_family(&[0xFE, 0xE7], RP2350_FAMILY_ID);
+        rp2350_ram[12..16].copy_from_slice(&RP2040_SRAM_START.to_le_bytes());
+        let error = validate_uf2(&rp2350_ram, RP2350_FAMILY_ID).unwrap_err();
+        assert!(error.to_string().contains("block metadata"));
+    }
+
+    #[test]
+    fn rejects_overlapping_unaligned_ram_pages() {
+        let mut overlapping = encode_uf2(&[0; UF2_PAYLOAD_SIZE + 1]);
+        overlapping[12..16].copy_from_slice(&(RP2040_SRAM_START + 1).to_le_bytes());
+        overlapping[512 + 12..512 + 16].copy_from_slice(&(RP2040_SRAM_START + 128).to_le_bytes());
         let error = validate_uf2(&overlapping, RP2040_FAMILY_ID).unwrap_err();
         assert!(error.to_string().contains("overlapping target address"));
     }
