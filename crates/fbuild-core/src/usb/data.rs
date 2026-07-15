@@ -225,26 +225,56 @@ pub fn try_install_online_cache(path: &Path) -> bool {
         // the canonical FastLED/boards {"Vendor name":..., "PIDs":[{pid:name}]}
         // shape. Keeping this compatibility at the boundary lets boards remain
         // the single source of truth without a second generated fbuild file.
-        let vendor = value.get("vendor").and_then(Value::as_str)
+        let vendor = value
+            .get("vendor")
+            .and_then(Value::as_str)
             .or_else(|| value.get("Vendor name").and_then(Value::as_str))
             .unwrap_or("Unknown USB vendor");
         if let Some(products) = value.get("products").and_then(Value::as_array) {
             for pair in products {
-                let Some(items) = pair.as_array() else { continue };
-                if items.len() != 2 { continue; }
-                let Some(pid_str) = items[0].as_str() else { continue };
-                let Some(product_name) = items[1].as_str() else { continue };
-                let Some(pid) = parse_hex_u16(pid_str) else { continue; };
-                packed.insert(pack(vid, pid), UsbInfo { vendor: vendor.to_string(), product: product_name.to_string() });
+                let Some(items) = pair.as_array() else {
+                    continue;
+                };
+                if items.len() != 2 {
+                    continue;
+                }
+                let Some(pid_str) = items[0].as_str() else {
+                    continue;
+                };
+                let Some(product_name) = items[1].as_str() else {
+                    continue;
+                };
+                let Some(pid) = parse_hex_u16(pid_str) else {
+                    continue;
+                };
+                packed.insert(
+                    pack(vid, pid),
+                    UsbInfo {
+                        vendor: vendor.to_string(),
+                        product: product_name.to_string(),
+                    },
+                );
             }
         }
         if let Some(products) = value.get("PIDs").and_then(Value::as_array) {
             for item in products {
-                let Some(map) = item.as_object() else { continue };
+                let Some(map) = item.as_object() else {
+                    continue;
+                };
                 for (pid_str, product_name) in map {
-                    let Some(product_name) = product_name.as_str() else { continue };
-                    let Some(pid) = parse_hex_u16(pid_str) else { continue; };
-                    packed.insert(pack(vid, pid), UsbInfo { vendor: vendor.to_string(), product: product_name.to_string() });
+                    let Some(product_name) = product_name.as_str() else {
+                        continue;
+                    };
+                    let Some(pid) = parse_hex_u16(pid_str) else {
+                        continue;
+                    };
+                    packed.insert(
+                        pack(vid, pid),
+                        UsbInfo {
+                            vendor: vendor.to_string(),
+                            product: product_name.to_string(),
+                        },
+                    );
                 }
             }
         }
@@ -693,8 +723,14 @@ mod tests {
         )
         .unwrap();
         assert!(try_install_online_cache(&path));
-        assert_eq!(lookup(0x2e8a, 0x0003).unwrap().product, "Raspberry Pi RP2 BOOTSEL");
-        assert_eq!(lookup(0x2e8a, 0x000f).unwrap().product, "Raspberry Pi Pico 2");
+        assert_eq!(
+            lookup(0x2e8a, 0x0003).unwrap().product,
+            "Raspberry Pi RP2 BOOTSEL"
+        );
+        assert_eq!(
+            lookup(0x2e8a, 0x000f).unwrap().product,
+            "Raspberry Pi Pico 2"
+        );
         clear_online_cache_for_tests();
     }
 }

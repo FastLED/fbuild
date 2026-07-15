@@ -339,7 +339,11 @@ fn validate_uf2(bytes: &[u8], expected_family: u32) -> Result<()> {
     };
     for (index, block) in bytes.chunks_exact(UF2_BLOCK_SIZE).enumerate() {
         let field = |offset: usize| {
-            u32::from_le_bytes(block[offset..offset + 4].try_into().expect("four-byte UF2 field"))
+            u32::from_le_bytes(
+                block[offset..offset + 4]
+                    .try_into()
+                    .expect("four-byte UF2 field"),
+            )
         };
         if field(0) != UF2_MAGIC_START0
             || field(4) != UF2_MAGIC_START1
@@ -436,7 +440,9 @@ impl Rp2040Deployer {
 
 fn catalogue_pico_cdc_ports(expected_family: u32) -> Result<Vec<String>> {
     let ports = fbuild_serial::ports::available_ports().map_err(|error| {
-        FbuildError::SerialError(format!("failed to enumerate post-deploy serial ports: {error}"))
+        FbuildError::SerialError(format!(
+            "failed to enumerate post-deploy serial ports: {error}"
+        ))
     })?;
     let mut names: Vec<String> = ports
         .into_iter()
@@ -704,7 +710,10 @@ mod tests {
         assert_eq!(destination.file_name().unwrap(), "NEW.UF2");
         let artifact = firmware.with_extension("uf2");
         assert!(artifact.is_file());
-        assert_eq!(fs::read(&artifact).unwrap(), fs::read(&destination).unwrap());
+        assert_eq!(
+            fs::read(&artifact).unwrap(),
+            fs::read(&destination).unwrap()
+        );
         assert_eq!(
             fs::metadata(destination).unwrap().len(),
             UF2_BLOCK_SIZE as u64
@@ -749,7 +758,9 @@ mod tests {
             &["COM12".to_string(), "COM13".to_string()],
         )
         .unwrap_err();
-        assert!(error.to_string().contains("multiple new Raspberry Pi CDC ports"));
+        assert!(error
+            .to_string()
+            .contains("multiple new Raspberry Pi CDC ports"));
     }
 
     #[test]

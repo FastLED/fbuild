@@ -361,13 +361,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
                 )
             })?;
             let uf2 = elf.with_extension("uf2");
-            convert_elf_to_uf2(
-                &picotool.executable(),
-                elf,
-                &uf2,
-                &board_mcu,
-            )
-            .await?;
+            convert_elf_to_uf2(&picotool.executable(), elf, &uf2, &board_mcu).await?;
             build_result.firmware_path = Some(uf2);
         }
 
@@ -391,12 +385,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
     }
 }
 
-async fn convert_elf_to_uf2(
-    picotool: &Path,
-    elf: &Path,
-    uf2: &Path,
-    mcu: &str,
-) -> Result<()> {
+async fn convert_elf_to_uf2(picotool: &Path, elf: &Path, uf2: &Path, mcu: &str) -> Result<()> {
     let family = if mcu.to_ascii_lowercase().starts_with("rp2350") {
         "rp2350-arm-s"
     } else {
