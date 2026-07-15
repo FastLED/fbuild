@@ -29,6 +29,8 @@ use crate::generic_arm::{ArmCompiler, ArmLinker};
 use crate::pipeline;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 
+use super::uf2::convert_elf_to_uf2;
+
 /// RP2040 platform build orchestrator.
 pub struct Rp2040Orchestrator;
 
@@ -383,55 +385,6 @@ impl BuildOrchestrator for Rp2040Orchestrator {
 
         Ok(build_result)
     }
-}
-
-async fn convert_elf_to_uf2(picotool: &Path, elf: &Path, uf2: &Path, mcu: &str) -> Result<()> {
-    let family = if mcu.to_ascii_lowercase().starts_with("rp2350") {
-        "rp2350-arm-s"
-    } else {
-        "rp2040"
-    };
-    let mut args = vec![
-        picotool.to_string_lossy().to_string(),
-        "uf2".to_string(),
-        "convert".to_string(),
-        elf.to_string_lossy().to_string(),
-        uf2.to_string_lossy().to_string(),
-        "--family".to_string(),
-        family.to_string(),
-    ];
-    if family.starts_with("rp2350") {
-        args.push("--abs-block".to_string());
-    }
-    let args_ref: Vec<&str> = args.iter().map(String::as_str).collect();
-    let output = fbuild_core::subprocess::run_command(
-        &args_ref,
-        None,
-        None,
-        Some(std::time::Duration::from_secs(30)),
-    )
-    .await?;
-    if !output.success() {
-        return Err(fbuild_core::FbuildError::BuildFailed(format!(
-            "managed picotool could not convert {} to {} for {family}: {}{}{}",
-            elf.display(),
-            uf2.display(),
-            output.stderr.trim(),
-            if output.stderr.is_empty() || output.stdout.is_empty() {
-                ""
-            } else {
-                "\n"
-            },
-            output.stdout.trim()
-        )));
-    }
-    if !uf2.is_file() {
-        return Err(fbuild_core::FbuildError::BuildFailed(format!(
-            "managed picotool reported success without creating {}",
-            uf2.display()
-        )));
-    }
-    Ok(())
 }
 
 /// Create an RP2040 orchestrator.
