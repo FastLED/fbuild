@@ -23,7 +23,7 @@ use target::{
     resolve_requested_runtime_target, select_cdc_candidate, serial_selector,
 };
 
-const UF2_MAGIC_START0: u32 = 0x0A32_4555;
+const UF2_MAGIC_START0: u32 = 0x0A32_4655;
 const UF2_MAGIC_START1: u32 = 0x9E5D_5157;
 const UF2_MAGIC_END: u32 = 0x0AB1_6F30;
 const UF2_FLAG_FAMILY_ID_PRESENT: u32 = 0x0000_2000;
@@ -756,6 +756,13 @@ mod tests {
             u32::from_le_bytes(uf2[508..512].try_into().unwrap()),
             UF2_MAGIC_END
         );
+    }
+
+    #[test]
+    fn uf2_magic_matches_the_published_byte_sequence() {
+        assert_eq!(UF2_MAGIC_START0.to_le_bytes(), [0x55, 0x46, 0x32, 0x0A]);
+        assert_eq!(UF2_MAGIC_START1.to_le_bytes(), [0x57, 0x51, 0x5D, 0x9E]);
+        assert_eq!(UF2_MAGIC_END.to_le_bytes(), [0x30, 0x6F, 0xB1, 0x0A]);
     }
 
     #[test]
