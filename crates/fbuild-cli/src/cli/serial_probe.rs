@@ -168,7 +168,7 @@ fn find_port(vid_pid: Option<&str>, env: Option<&str>) -> Result<()> {
         (None, Some(env_name)) => vcom_for_env(env_name).ok_or_else(|| {
             FbuildError::SerialError(format!(
                 "no VCOM mapping for env `{env_name}` — \
-                 add to ENVIRONMENT_TO_VCOM in fbuild-serial::boards"
+                 publish its runtime identity/alias through FastLED/boards"
             ))
         })?,
         (None, None) => {

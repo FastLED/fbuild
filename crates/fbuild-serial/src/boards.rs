@@ -42,7 +42,8 @@
 /// table elsewhere in the crate.
 ///
 /// Vendored from FastLED/FastLED#3339's `BOARD_FINGERPRINTS`.
-pub const BOARD_FINGERPRINTS: &[(u16, u16, &str)] = &[
+#[cfg(test)]
+const BOARD_FINGERPRINTS: &[(u16, u16, &str)] = &[
     // NXP — LPC8xx CMSIS-DAP debug + LPC11U35 VCOM bridge
     (
         0x1FC9,
@@ -94,7 +95,8 @@ pub const BOARD_FINGERPRINTS: &[(u16, u16, &str)] = &[
 /// the LPC11U35 VCOM bridge) and only the second is what fbuild
 /// monitor / esptool / pyOCD wants. Vendored from
 /// FastLED/FastLED#3339's `ENVIRONMENT_TO_VCOM_VID_PID`.
-pub const ENVIRONMENT_TO_VCOM: &[(&str, u16, u16)] = &[
+#[cfg(test)]
+const ENVIRONMENT_TO_VCOM: &[(&str, u16, u16)] = &[
     // LPC845-BRK and siblings — VCOM bridge is the LPC11U35
     ("lpc845brk", 0x16C0, 0x0483),
     ("lpc845", 0x16C0, 0x0483),
@@ -407,10 +409,23 @@ pub enum ResetMethod {
 /// assert_eq!(board_hint(0xDEAD, 0xBEEF), None);
 /// ```
 #[must_use]
-pub fn board_hint(vid: u16, pid: u16) -> Option<&'static str> {
-    BOARD_FINGERPRINTS
-        .iter()
-        .find_map(|(v, p, hint)| (*v == vid && *p == pid).then_some(*hint))
+pub fn board_hint(vid: u16, pid: u16) -> Option<String> {
+    #[cfg(test)]
+    {
+        BOARD_FINGERPRINTS
+            .iter()
+            .find_map(|(v, p, hint)| (*v == vid && *p == pid).then(|| (*hint).to_string()))
+    }
+    #[cfg(not(test))]
+    {
+        fbuild_core::usb::try_resolve(vid, pid).map(|identity| {
+            if identity.product.is_empty() {
+                identity.vendor
+            } else {
+                identity.product
+            }
+        })
+    }
 }
 
 /// Look up the `(vid, pid)` of the USB-VCOM bridge for a given
@@ -431,9 +446,47 @@ pub fn board_hint(vid: u16, pid: u16) -> Option<&'static str> {
 /// ```
 #[must_use]
 pub fn vcom_for_env(env: &str) -> Option<(u16, u16)> {
-    ENVIRONMENT_TO_VCOM
-        .iter()
-        .find_map(|(name, v, p)| (*name == env).then_some((*v, *p)))
+    #[cfg(test)]
+    {
+        ENVIRONMENT_TO_VCOM
+            .iter()
+            .find_map(|(name, v, p)| (*name == env).then_some((*v, *p)))
+    }
+    #[cfg(not(test))]
+    {
+        let normalized = env.trim().to_ascii_lowercase();
+        let canonical = match normalized.as_str() {
+            "lpc845" | "lpc804" | "lpcxpresso845max" | "lpcxpresso804" => "lpc845brk",
+            value => value,
+        };
+        let board = fbuild_core::usb::profiles::board_profile(canonical)?;
+        let mut matches = board
+            .identities
+            .get("runtime")?
+            .iter()
+            .filter_map(|identity| parse_exact_identity(identity))
+            .filter(|(vid, pid)| {
+                fbuild_core::usb::profiles::profiles_for(*vid, *pid)
+                    .iter()
+                    .any(|profile| {
+                        profile.role
+                            == fbuild_core::usb::profiles::UsbDeviceRole::RuntimeCdc
+                    })
+            });
+        let selected = matches.next()?;
+        matches.all(|candidate| candidate == selected).then_some(selected)
+    }
+}
+
+fn parse_exact_identity(identity: &str) -> Option<(u16, u16)> {
+    let (vid, pid) = identity.split_once(':')?;
+    if pid == "*" {
+        return None;
+    }
+    Some((
+        u16::from_str_radix(vid, 16).ok()?,
+        u16::from_str_radix(pid, 16).ok()?,
+    ))
 }
 
 /// Best-effort classification of a board family from a `(vid, pid)`
@@ -461,6 +514,59 @@ pub fn vcom_for_env(env: &str) -> Option<(u16, u16)> {
 /// ```
 #[must_use]
 pub fn family_for_vid_pid(vid: u16, pid: u16) -> Option<BoardFamily> {
+    #[cfg(test)]
+    {
+        test_family_for_vid_pid(vid, pid)
+    }
+    #[cfg(not(test))]
+    {
+        fbuild_core::usb::profiles::profiles_for(vid, pid)
+            .iter()
+            .find_map(family_from_usb_profile)
+    }
+}
+
+fn family_from_usb_profile(
+    profile: &fbuild_core::usb::profiles::UsbTransportProfile,
+) -> Option<BoardFamily> {
+    use BoardFamily::*;
+    use fbuild_core::usb::profiles::{UsbDeviceRole, UsbPurpose};
+
+    if profile.reset == "touch-1200" {
+        return Some(if profile.family.as_deref() == Some("teensy") {
+            Teensy
+        } else {
+            NativeUsbCdcReset1200Bps
+        });
+    }
+    if profile.role == UsbDeviceRole::UsbUartBridge {
+        return Some(Esp32ExternalUart);
+    }
+    if profile.platform.as_deref() == Some("espressif32")
+        && profile.role == UsbDeviceRole::RuntimeCdc
+    {
+        return Some(Esp32NativeUsbCdc);
+    }
+    if profile.platform.as_deref() == Some("arduino")
+        && profile.role == UsbDeviceRole::RuntimeCdc
+    {
+        return Some(ArduinoAutoReset);
+    }
+    if profile.purpose == UsbPurpose::Probe
+        || profile.role == UsbDeviceRole::DebugProbe
+        || (profile.role == UsbDeviceRole::RuntimeCdc
+            && profile
+                .family
+                .as_deref()
+                .is_some_and(|family| family.contains("vcom")))
+    {
+        return Some(CdcAcmBridge);
+    }
+    None
+}
+
+#[cfg(test)]
+fn test_family_for_vid_pid(vid: u16, pid: u16) -> Option<BoardFamily> {
     use BoardFamily::*;
     match (vid, pid) {
         // Espressif native USB
@@ -805,22 +911,95 @@ fn serial_port_name_matches(candidate: &str, requested: &str) -> bool {
 mod tests {
     use super::*;
 
+    fn transport_profile(
+        role: fbuild_core::usb::profiles::UsbDeviceRole,
+        platform: Option<&str>,
+        family: Option<&str>,
+        reset: &str,
+    ) -> fbuild_core::usb::profiles::UsbTransportProfile {
+        use fbuild_core::usb::profiles::{
+            UsbIdentityMatch, UsbProfileProvenance, UsbPurpose, UsbTransportProfile,
+        };
+        UsbTransportProfile {
+            identity_match: UsbIdentityMatch {
+                vid: "feed".to_string(),
+                pid: Some("c0de".to_string()),
+                pid_mask: None,
+            },
+            purpose: UsbPurpose::Runtime,
+            role,
+            transport: "usb".to_string(),
+            reset: reset.to_string(),
+            handoff: "reconnect".to_string(),
+            platform: platform.map(str::to_string),
+            family: family.map(str::to_string),
+            generation: None,
+            interface: Some("cdc".to_string()),
+            provenance: UsbProfileProvenance {
+                source_url: "test://fixture".to_string(),
+                source_revision: "a".repeat(40),
+                source_class: "test".to_string(),
+            },
+            priority: 100,
+            allow_ambiguous: false,
+        }
+    }
+
+    #[test]
+    fn catalogue_profile_semantics_drive_family_without_identity_constants() {
+        use fbuild_core::usb::profiles::UsbDeviceRole;
+
+        let pico = transport_profile(
+            UsbDeviceRole::RuntimeCdc,
+            Some("raspberrypi"),
+            Some("rp2040"),
+            "touch-1200",
+        );
+        assert_eq!(
+            family_from_usb_profile(&pico),
+            Some(BoardFamily::NativeUsbCdcReset1200Bps)
+        );
+
+        let bridge = transport_profile(
+            UsbDeviceRole::UsbUartBridge,
+            None,
+            Some("cp210x"),
+            "hardware",
+        );
+        assert_eq!(
+            family_from_usb_profile(&bridge),
+            Some(BoardFamily::Esp32ExternalUart)
+        );
+    }
+
+    #[test]
+    fn board_identity_parser_rejects_wildcards() {
+        assert_eq!(parse_exact_identity("feed:c0de"), Some((0xFEED, 0xC0DE)));
+        assert_eq!(parse_exact_identity("feed:*"), None);
+    }
+
     #[test]
     fn board_hint_known_pairs() {
         assert_eq!(
-            board_hint(0x303A, 0x1001),
+            board_hint(0x303A, 0x1001).as_deref(),
             Some("Espressif native USB CDC (ESP32-S3/C3/C6/H2/P4)")
         );
         assert_eq!(
-            board_hint(0x16C0, 0x0483),
+            board_hint(0x16C0, 0x0483).as_deref(),
             Some("LPC11U35 VCOM bridge (LPC845-BRK USART0) OR PJRC Teensy USB-Serial")
         );
         assert_eq!(
-            board_hint(0x1FC9, 0x0132),
+            board_hint(0x1FC9, 0x0132).as_deref(),
             Some("NXP CMSIS-DAP debug (LPC845-BRK / LPC11U35)")
         );
-        assert_eq!(board_hint(0x1A86, 0x7523), Some("WCH CH340 USB-Serial"));
-        assert_eq!(board_hint(0x0403, 0x6001), Some("FTDI FT232R USB-UART"));
+        assert_eq!(
+            board_hint(0x1A86, 0x7523).as_deref(),
+            Some("WCH CH340 USB-Serial")
+        );
+        assert_eq!(
+            board_hint(0x0403, 0x6001).as_deref(),
+            Some("FTDI FT232R USB-UART")
+        );
     }
 
     #[test]
