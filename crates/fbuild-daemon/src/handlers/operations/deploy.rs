@@ -938,10 +938,7 @@ pub async fn deploy(
             Err(e) => {
                 return (
                     StatusCode::INTERNAL_SERVER_ERROR,
-                    Json(OperationResponse::fail(
-                        request_id,
-                        format!("deploy error: {}", e),
-                    )),
+                    Json(deploy_error_response(request_id, &e)),
                 );
             }
         };
@@ -1152,4 +1149,43 @@ pub async fn deploy(
             stderr: deploy_stderr,
         }),
     )
+}
+
+fn deploy_error_response(
+    request_id: String,
+    error: &fbuild_core::FbuildError,
+) -> OperationResponse {
+    let message = format!("deploy error: {error}");
+    OperationResponse {
+        success: false,
+        request_id,
+        message: message.clone(),
+        exit_code: 1,
+        output_file: None,
+        output_dir: None,
+        launch_url: None,
+        stdout: None,
+        stderr: Some(message),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn deploy_error_response_preserves_transport_diagnostics() {
+        let response = deploy_error_response(
+            "request-1".to_string(),
+            &fbuild_core::FbuildError::DeployFailed("RP2040 mass-storage error 1006".to_string()),
+        );
+
+        assert!(!response.success);
+        assert_eq!(response.exit_code, 1);
+        assert_eq!(
+            response.message,
+            "deploy error: deploy failed: RP2040 mass-storage error 1006"
+        );
+        assert_eq!(response.stderr.as_deref(), Some(response.message.as_str()));
+    }
 }
