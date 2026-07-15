@@ -1,9 +1,4 @@
-//! RP2040/RP2350 deployment through the stock UF2 BOOTSEL volume.
-//!
-//! A Raspberry Pi Pico does not require a vendor flashing utility: opening
-//! its CDC port at 1200 baud and closing it enters BOOTSEL, where the ROM
-//! exposes a mass-storage volume containing `INFO_UF2.TXT`. Copying a UF2
-//! file to that volume is the documented stock-board deployment path.
+//! RP2040/RP2350 deployment through the stock UF2 BOOTSEL transports.
 
 use std::collections::BTreeSet;
 use std::fs;
@@ -18,6 +13,8 @@ use crate::{DeployOutcome, Deployer, DeploymentResult};
 mod target;
 #[path = "rp2040_mount.rs"]
 mod mount;
+#[path = "rp2040_picotool.rs"]
+mod picotool;
 use mount::try_mount_linux_rom_device;
 use target::{
     resolve_requested_runtime_target, select_cdc_candidate, serial_selector,
@@ -210,7 +207,7 @@ fn touch_1200bps(port: &str) -> Result<()> {
     }
 }
 
-fn write_uf2(firmware_path: &Path, volume: &Path, family_id: u32) -> Result<PathBuf> {
+fn prepare_uf2_artifact(firmware_path: &Path, family_id: u32) -> Result<PathBuf> {
     let input_is_uf2 = firmware_path
         .extension()
         .is_some_and(|ext| ext.eq_ignore_ascii_case("uf2"));
@@ -255,16 +252,19 @@ fn write_uf2(firmware_path: &Path, volume: &Path, family_id: u32) -> Result<Path
     };
     validate_uf2(&uf2, family_id)?;
 
-    // Match Arduino-Pico's proven ROM-volume upload path. RPI-RP2 is a
-    // virtual FAT volume, not ordinary persistent storage. Copying a local
-    // artifact to NEW.UF2 also follows the host's normal mass-storage copy
-    // path instead of treating the virtual volume as a persistent file.
+    Ok(artifact)
+}
+
+fn copy_prepared_uf2(artifact: &Path, volume: &Path) -> Result<PathBuf> {
     let destination = volume.join("NEW.UF2");
-    copy_uf2_artifact(&artifact, &destination, volume)?;
-    // Do not reopen or fsync the destination after the copy handle closes.
-    // A successful RP2040 ROM transfer ejects the virtual FAT volume at that
-    // point, so a post-copy open can turn success into a spurious failure.
+    copy_uf2_artifact(artifact, &destination, volume)?;
     Ok(destination)
+}
+
+#[cfg(test)]
+fn write_uf2(firmware_path: &Path, volume: &Path, family_id: u32) -> Result<PathBuf> {
+    let artifact = prepare_uf2_artifact(firmware_path, family_id)?;
+    copy_prepared_uf2(&artifact, volume)
 }
 
 fn reject_stale_uf2(uf2: &Path) -> Result<()> {
@@ -574,7 +574,7 @@ fn ensure_verified_usb_profiles() -> Result<()> {
 impl Deployer for Rp2040Deployer {
     async fn deploy(
         &self,
-        _project_dir: &Path,
+        project_dir: &Path,
         _env_name: &str,
         firmware_path: &Path,
         port: Option<&str>,
@@ -645,14 +645,43 @@ impl Deployer for Rp2040Deployer {
                 })?
         };
         let firmware = firmware_path.to_path_buf();
-        let volume_for_copy = volume.clone();
         let family_id = self.family_id;
-        let destination =
-            tokio::task::spawn_blocking(move || write_uf2(&firmware, &volume_for_copy, family_id))
-                .await
-                .map_err(|error| {
-                    FbuildError::DeployFailed(format!("RP2040 UF2 writer failed: {error}"))
-                })??;
+        let artifact = tokio::task::spawn_blocking(move || {
+            prepare_uf2_artifact(&firmware, family_id)
+        })
+        .await
+        .map_err(|error| {
+            FbuildError::DeployFailed(format!("RP2040 UF2 preparation task failed: {error}"))
+        })??;
+        let artifact_for_copy = artifact.clone();
+        let volume_for_copy = volume.clone();
+        let copy_result = tokio::task::spawn_blocking(move || {
+            copy_prepared_uf2(&artifact_for_copy, &volume_for_copy)
+        })
+        .await
+        .map_err(|error| {
+            FbuildError::DeployFailed(format!("RP2040 UF2 writer task failed: {error}"))
+        })?;
+        let (transfer_stdout, transfer_stderr, transfer_method) = match copy_result {
+            Ok(destination) => (
+                format!("wrote {}", destination.display()),
+                String::new(),
+                "BOOTSEL mass-storage",
+            ),
+            Err(copy_error) => {
+                let loaded = picotool::load_with_managed_picotool(
+                    project_dir,
+                    &artifact,
+                    &copy_error.to_string(),
+                )
+                .await?;
+                (
+                    loaded.stdout,
+                    loaded.stderr,
+                    "managed picotool fallback",
+                )
+            }
+        };
         let volume_for_wait = volume.clone();
         let post_timeout = self.post_deploy_timeout;
         tokio::task::spawn_blocking(move || {
@@ -684,12 +713,12 @@ impl Deployer for Rp2040Deployer {
         Ok(DeploymentResult {
             success: true,
             message: format!(
-                "firmware copied to RP2040 BOOTSEL volume {}",
-                volume.display()
+                "firmware deployed to RP2040 via {transfer_method} ({})",
+                volume.display(),
             ),
             port: Some(discovered_port),
-            stdout: format!("wrote {}", destination.display()),
-            stderr: String::new(),
+            stdout: transfer_stdout,
+            stderr: transfer_stderr,
             outcome: DeployOutcome::FullFlash,
         })
     }
