@@ -78,14 +78,18 @@ fn put_u32(buffer: &mut [u8], offset: usize, value: u32) {
 /// Return candidate removable roots for this host. Kept separate from the
 /// marker check so unit tests can use a temporary directory on every OS.
 fn volume_roots() -> Vec<PathBuf> {
+    let home = std::env::var_os("HOME").map(PathBuf::from);
+    volume_roots_for(cfg!(windows), home.as_deref())
+}
+
+fn volume_roots_for(windows: bool, home: Option<&Path>) -> Vec<PathBuf> {
     let mut roots = Vec::new();
-    if cfg!(windows) {
+    if windows {
         for letter in b'A'..=b'Z' {
             roots.push(PathBuf::from(format!("{}:\\", letter as char)));
         }
     } else {
-        if let Ok(home) = std::env::var("HOME") {
-            let home = PathBuf::from(home);
+        if let Some(home) = home {
             if let Some(user) = home.file_name() {
                 roots.push(PathBuf::from("/media").join(user));
                 roots.push(PathBuf::from("/run/media").join(user));
@@ -135,14 +139,30 @@ fn find_uf2_volumes(roots: &[PathBuf]) -> Vec<PathBuf> {
 }
 
 fn find_uf2_volume_until(timeout: Duration) -> Result<Option<PathBuf>> {
+    find_uf2_volume_until_with(
+        timeout,
+        || select_single_uf2_volume(find_uf2_volumes(&volume_roots())),
+        try_mount_linux_rom_device,
+    )
+}
+
+fn find_uf2_volume_until_with<F, M>(
+    timeout: Duration,
+    mut scan: F,
+    mut try_mount: M,
+) -> Result<Option<PathBuf>>
+where
+    F: FnMut() -> Result<Option<PathBuf>>,
+    M: FnMut() -> bool,
+{
     let deadline = Instant::now() + timeout;
     let mut mount_attempted = false;
     loop {
-        if let Some(path) = select_single_uf2_volume(find_uf2_volumes(&volume_roots()))? {
+        if let Some(path) = scan()? {
             return Ok(Some(path));
         }
         if !mount_attempted {
-            mount_attempted = try_mount_linux_rom_device();
+            mount_attempted = try_mount();
         }
         if Instant::now() >= deadline {
             return Ok(None);
@@ -518,9 +538,28 @@ fn wait_for_cdc_port(
     expected_family: u32,
     timeout: Duration,
 ) -> Result<String> {
+    wait_for_cdc_port_with(
+        previous_port,
+        requested_serial,
+        before,
+        timeout,
+        || catalogue_pico_cdc_ports(expected_family),
+    )
+}
+
+fn wait_for_cdc_port_with<F>(
+    previous_port: Option<&str>,
+    requested_serial: Option<&str>,
+    before: &BTreeSet<String>,
+    timeout: Duration,
+    mut catalogue: F,
+) -> Result<String>
+where
+    F: FnMut() -> Result<Vec<PicoCdcPort>>,
+{
     let deadline = Instant::now() + timeout;
     loop {
-        let ports = catalogue_pico_cdc_ports(expected_family)?;
+        let ports = catalogue()?;
         if let Some(selected) =
             select_cdc_candidate(previous_port, requested_serial, before, &ports)?
         {
@@ -817,6 +856,53 @@ mod tests {
     }
 
     #[test]
+    fn host_volume_roots_cover_windows_linux_and_macos_without_host_dependency() {
+        let windows = volume_roots_for(true, None);
+        assert_eq!(windows.len(), 26);
+        assert_eq!(windows.first(), Some(&PathBuf::from("A:\\")));
+        assert_eq!(windows.last(), Some(&PathBuf::from("Z:\\")));
+
+        let unix = volume_roots_for(false, Some(Path::new("/home/alice")));
+        assert!(unix.contains(&PathBuf::from("/media/alice")));
+        assert!(unix.contains(&PathBuf::from("/run/media/alice")));
+        assert!(unix.contains(&PathBuf::from("/Volumes")));
+        assert!(unix.contains(&PathBuf::from("/media")));
+        assert!(unix.contains(&PathBuf::from("/run/media")));
+    }
+
+    #[test]
+    fn zero_and_multiple_bootsel_volumes_fail_safely() {
+        assert_eq!(select_single_uf2_volume(Vec::new()).unwrap(), None);
+        let error = select_single_uf2_volume(vec![
+            PathBuf::from("first-rpi-rp2"),
+            PathBuf::from("second-rpi-rp2"),
+        ])
+        .unwrap_err();
+        assert!(error.to_string().contains("multiple RP2040 BOOTSEL volumes"));
+    }
+
+    #[test]
+    fn bootloader_watcher_timeout_is_deterministic() {
+        let mut scans = 0;
+        let mut mounts = 0;
+        let found = find_uf2_volume_until_with(
+            Duration::ZERO,
+            || {
+                scans += 1;
+                Ok(None)
+            },
+            || {
+                mounts += 1;
+                false
+            },
+        )
+        .unwrap();
+        assert_eq!(found, None);
+        assert_eq!(scans, 1);
+        assert_eq!(mounts, 1);
+    }
+
+    #[test]
     fn overlapping_linux_roots_do_not_duplicate_one_volume() {
         let root = tempdir().unwrap();
         let user_root = root.path().join("media").join("alice");
@@ -958,6 +1044,33 @@ mod tests {
         });
         wait_for_volume_disappearance(volume.path(), Duration::from_secs(1)).unwrap();
         remover.join().unwrap();
+    }
+
+    #[test]
+    fn volume_disappearance_timeout_is_actionable() {
+        let volume = tempdir().unwrap();
+        fs::write(
+            volume.path().join("INFO_UF2.TXT"),
+            "Model: Raspberry Pi RP2",
+        )
+        .unwrap();
+        let error = wait_for_volume_disappearance(volume.path(), Duration::ZERO).unwrap_err();
+        assert!(error.to_string().contains("did not eject after NEW.UF2"));
+    }
+
+    #[test]
+    fn cdc_timeout_after_transfer_is_an_actionable_failure() {
+        let error = wait_for_cdc_port_with(
+            Some("COM7"),
+            None,
+            &BTreeSet::from(["COM7".to_string()]),
+            Duration::ZERO,
+            || Ok(Vec::new()),
+        )
+        .unwrap_err();
+        let message = error.to_string();
+        assert!(message.contains("firmware was transferred"));
+        assert!(message.contains("no catalogue-identified runtime CDC port appeared"));
     }
 
     #[test]
