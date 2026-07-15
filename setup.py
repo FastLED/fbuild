@@ -89,8 +89,12 @@ from distutils.command.build_scripts import (  # type: ignore[import-untyped]
 
 REPO_ROOT = Path(__file__).resolve().parent
 TARGET_BINARY_NAME = "fbuild.exe" if sys.platform == "win32" else "fbuild"
+TARGET_DAEMON_NAME = (
+    "fbuild-daemon.exe" if sys.platform == "win32" else "fbuild-daemon"
+)
 STAGED_BIN_DIR = REPO_ROOT / "ci" / "bin"
 STAGED_BINARY_PATH = STAGED_BIN_DIR / TARGET_BINARY_NAME
+STAGED_DAEMON_PATH = STAGED_BIN_DIR / TARGET_DAEMON_NAME
 
 # FastLED/fbuild#829: PyO3 extension produced by `fbuild-python`. Python
 # extension module conventions: `.pyd` on Windows, `.so` on Linux/macOS.
@@ -146,6 +150,20 @@ def _staged_binary_is_up_to_date() -> bool:
                 return False
         except FileNotFoundError:
             # File disappeared between glob and stat — treat as changed.
+            return False
+    return True
+
+
+def _staged_daemon_is_up_to_date() -> bool:
+    """True if the staged daemon matches the current Rust workspace inputs."""
+    if not STAGED_DAEMON_PATH.is_file():
+        return False
+    staged_mtime = STAGED_DAEMON_PATH.stat().st_mtime
+    for path in _iter_cargo_inputs():
+        try:
+            if path.stat().st_mtime > staged_mtime:
+                return False
+        except FileNotFoundError:
             return False
     return True
 
@@ -219,6 +237,28 @@ def _find_fbuild_executable_from_json(stdout: str) -> Optional[Path]:
     return binary_path
 
 
+def _find_fbuild_daemon_from_json(stdout: str) -> Optional[Path]:
+    """Return the `fbuild-daemon` executable from cargo's artifact stream."""
+    binary_path: Optional[Path] = None
+    for line in stdout.splitlines():
+        line = line.strip()
+        if not line or not line.startswith("{"):
+            continue
+        try:
+            msg = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if msg.get("reason") != "compiler-artifact":
+            continue
+        target = msg.get("target") or {}
+        if target.get("name") != "fbuild-daemon":
+            continue
+        executable = msg.get("executable")
+        if executable:
+            binary_path = Path(executable)
+    return binary_path
+
+
 def _use_release_profile() -> bool:
     """True when this build should produce a release-optimized binary.
 
@@ -247,6 +287,22 @@ def _find_fbuild_executable_by_search() -> Optional[Path]:
     if target_root.is_dir():
         for child in target_root.iterdir():
             candidate = child / profile_dir / TARGET_BINARY_NAME
+            if candidate.is_file():
+                candidates.append(candidate)
+    for candidate in candidates:
+        if candidate.is_file():
+            return candidate
+    return None
+
+
+def _find_fbuild_daemon_by_search() -> Optional[Path]:
+    """Fallback lookup for the companion daemon binary."""
+    profile_dir = _profile_subdir()
+    target_root = Path(os.environ.get("CARGO_TARGET_DIR", REPO_ROOT / "target"))
+    candidates = [target_root / profile_dir / TARGET_DAEMON_NAME]
+    if target_root.is_dir():
+        for child in target_root.iterdir():
+            candidate = child / profile_dir / TARGET_DAEMON_NAME
             if candidate.is_file():
                 candidates.append(candidate)
     for candidate in candidates:
@@ -377,14 +433,16 @@ def _build_fbuild_python() -> Path:
     return cdylib_path
 
 
-def _build_fbuild_cli() -> Path:
-    """Run `soldr cargo build` and return the path to the built executable."""
+def _build_fbuild_binaries() -> tuple[Path, Path]:
+    """Build and return the CLI and its version-matched daemon."""
     cmd = [
         "soldr",
         "cargo",
         "build",
         "-p",
         "fbuild-cli",
+        "-p",
+        "fbuild-daemon",
         "--message-format=json-render-diagnostics",
     ]
     if _use_release_profile():
@@ -425,7 +483,18 @@ def _build_fbuild_cli() -> Path:
         )
         sys.exit(1)
 
-    return binary_path
+    daemon_path = _find_fbuild_daemon_from_json(proc.stdout)
+    if daemon_path is None or not daemon_path.is_file():
+        daemon_path = _find_fbuild_daemon_by_search()
+    if daemon_path is None or not daemon_path.is_file():
+        sys.stderr.write(
+            "ERROR: cargo build succeeded but no `fbuild-daemon` binary was found.\n"
+            "A source/editable install must stage CLI and daemon together; refusing\n"
+            "to install a combination that can silently run stale deploy code.\n"
+        )
+        sys.exit(1)
+
+    return binary_path, daemon_path
 
 
 class BuildWithCargo(build_py):
@@ -440,21 +509,25 @@ class BuildWithCargo(build_py):
         # change (e.g. version bump, lockfile churn, --reinstall-package).
         if (
             _staged_binary_is_up_to_date()
+            and _staged_daemon_is_up_to_date()
             and _staged_native_ext_is_up_to_date()
         ):
             sys.stderr.write(
                 f"  staged artifacts up-to-date "
-                f"({STAGED_BINARY_PATH.name}, {STAGED_NATIVE_EXT_PATH.name}); "
+                f"({STAGED_BINARY_PATH.name}, {STAGED_DAEMON_PATH.name}, "
+                f"{STAGED_NATIVE_EXT_PATH.name}); "
                 f"skipping cargo\n"
             )
             super().run()
             return
 
         _require_soldr()
-        binary_path = _build_fbuild_cli()
+        binary_path, daemon_path = _build_fbuild_binaries()
         STAGED_BIN_DIR.mkdir(parents=True, exist_ok=True)
         shutil.copy2(binary_path, STAGED_BINARY_PATH)
         sys.stderr.write(f"  staged binary -> {STAGED_BINARY_PATH}\n")
+        shutil.copy2(daemon_path, STAGED_DAEMON_PATH)
+        sys.stderr.write(f"  staged daemon -> {STAGED_DAEMON_PATH}\n")
 
         # FastLED/fbuild#829: also build + stage the PyO3 extension so
         # `from fbuild import ...` works after an editable / source install.
@@ -544,5 +617,5 @@ setup(
         "build_scripts": BuildBinaryScripts,
     },
     distclass=BinaryDistribution,
-    scripts=[str(STAGED_BINARY_PATH)],
+    scripts=[str(STAGED_BINARY_PATH), str(STAGED_DAEMON_PATH)],
 )

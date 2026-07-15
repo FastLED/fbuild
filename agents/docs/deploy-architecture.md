@@ -91,14 +91,17 @@ The follow-up issues track the full polymorphic version:
 
 The right sequence today:
 
-1. **VID:PID first.** Add the new board's USB endpoint to
-   `crates/fbuild-serial/src/boards.rs::BOARD_FINGERPRINTS`. If the
-   data port is a *different* USB endpoint from the bootloader, add
-   `ENVIRONMENT_TO_VCOM` too.
-2. **Family classification.** Add the new VID:PID to
-   `family_for_vid_pid`. RP2350 is almost certainly `CdcAcmBridge`
-   (1200-bps touch reset, host-ready idle); inherit the existing
-   RP2040 row's conventions.
+1. **VID:PID first.** Publish the board's bootloader and runtime USB
+   endpoints in [FastLED/boards](https://github.com/FastLED/boards), then
+   exercise fbuild's normal catalogue ingestion path. Never add a literal
+   VID/PID to `BOARD_FINGERPRINTS`, `ENVIRONMENT_TO_VCOM`, generated Rust, or
+   any other production fallback in this repository.
+2. **Family classification.** Resolve the published FastLED/boards product
+   identity and map that metadata to `CdcAcmBridge` (or the appropriate
+   family behavior). If the catalogue cannot express a needed distinction,
+   extend its published schema instead of embedding another ID table in
+   fbuild. RP2350 normally uses 1200-bps touch and host-ready idle, matching
+   the RP2040 convention.
 3. **DTR/RTS matrix.** Add a row to
    [`docs/usb-cdc-control-line-matrix.md`](../../docs/usb-cdc-control-line-matrix.md)
    for the new chip, with a datasheet citation and capture date.
