@@ -7,9 +7,7 @@
     "extra_flags": "-DSTM32H7 -DARDUINO_NICLA_VISION",
     "f_cpu": "480000000L",
     "mcu": "stm32h747xih6",
-    "pid": "0x035F",
-    "variant": "NICLA_VISION",
-    "vid": "0x2341"
+    "variant": "NICLA_VISION"
   },
   "connectivity": [
     "bluetooth",

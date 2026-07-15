@@ -9,9 +9,7 @@
     "f_flash": "80000000L",
     "flash_mode": "dio",
     "mcu": "esp32s3",
-    "pid": "0x1001",
-    "variant": "huidu_hd_wf4",
-    "vid": "0x303A"
+    "variant": "huidu_hd_wf4"
   },
   "connectivity": [
     "bluetooth",

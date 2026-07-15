@@ -27,43 +27,37 @@ fn test_get_defines_no_usb_when_absent() {
 }
 
 #[test]
-fn test_leonardo_board_has_vid_pid() {
-    let config = BoardConfig::from_board_id("leonardo", &HashMap::new()).unwrap();
-    assert_eq!(config.vid, Some("0x2341".to_string()));
-    assert_eq!(config.pid, Some("0x8036".to_string()));
+fn test_bundled_board_usb_ids_are_not_local_defaults() {
+    for board_id in ["leonardo", "due", "dueUSB", "um_feathers3"] {
+        let config = BoardConfig::from_board_id(board_id, &HashMap::new()).unwrap();
+        assert_eq!(config.vid, None, "{board_id} VID must come from FastLED/boards");
+        assert_eq!(config.pid, None, "{board_id} PID must come from FastLED/boards");
+    }
+}
+
+#[test]
+fn test_registry_compile_identity_define_format() {
+    assert_eq!(
+        BoardConfig::formatted_registry_compile_identity(Some((0xfeed, 0xc0de))),
+        Some(("0xFEED".to_string(), "0xC0DE".to_string()))
+    );
+    assert_eq!(BoardConfig::formatted_registry_compile_identity(None), None);
+}
+
+#[test]
+#[ignore = "live FastLED/boards publication smoke test"]
+fn live_registry_identity_drives_pico_compile_defines() {
+    let temp = tempfile::tempdir().unwrap();
+    let meta = temp.path().join("_meta.json");
+    let profiles = temp.path().join("usb-profiles.json");
+    assert!(fbuild_core::usb::profiles::populate_profiles_from_paths(
+        &meta, &profiles
+    ));
+
+    let config = BoardConfig::from_board_id("rpipico", &HashMap::new()).unwrap();
     let defines = config.get_defines();
-    assert_eq!(defines.get("USB_VID"), Some(&"0x2341".to_string()));
-    assert_eq!(defines.get("USB_PID"), Some(&"0x8036".to_string()));
-}
-
-#[test]
-fn test_due_port_specific_vid_pid_rows() {
-    for board_id in ["due", "sainSmartDue"] {
-        let config = BoardConfig::from_board_id(board_id, &HashMap::new()).unwrap();
-        assert_eq!(config.vid, Some("0x2341".to_string()));
-        assert_eq!(config.pid, Some("0x003D".to_string()));
-    }
-
-    for board_id in ["dueUSB", "sainSmartDueUSB"] {
-        let config = BoardConfig::from_board_id(board_id, &HashMap::new()).unwrap();
-        assert_eq!(config.vid, Some("0x2341".to_string()));
-        assert_eq!(config.pid, Some("0x003E".to_string()));
-    }
-}
-
-#[test]
-fn test_unexpected_maker_s3_usb_pid_rows_are_distinct() {
-    let expected = [
-        ("um_tinys3", "0X303A", "0x80D0"),
-        ("um_feathers3", "0X303A", "0x80D6"),
-        ("um_feathers3_neo", "0X303A", "0x81FB"),
-    ];
-
-    for (board_id, vid, pid) in expected {
-        let config = BoardConfig::from_board_id(board_id, &HashMap::new()).unwrap();
-        assert_eq!(config.vid, Some(vid.to_string()), "{board_id} VID");
-        assert_eq!(config.pid, Some(pid.to_string()), "{board_id} PID");
-    }
+    assert_eq!(defines.get("USB_VID"), Some(&"0x2E8A".to_string()));
+    assert_eq!(defines.get("USB_PID"), Some(&"0x000A".to_string()));
 }
 
 /// FastLED/fbuild#405: on ESP32-S2/S3 the Arduino framework's
@@ -71,19 +65,12 @@ fn test_unexpected_maker_s3_usb_pid_rows_are_distinct() {
 /// so injecting them again via `-D` produces a "USB_VID redefined" warning
 /// at every TU that includes `pins_arduino.h` (149-156 per build observed
 /// in CI). `get_defines()` must NOT emit them for ESP32-S2/S3 boards even
-/// when the board JSON carries `vid`/`pid` fields.
+/// when an explicit project override supplies `vid`/`pid` fields.
 #[test]
 fn test_esp32s3_board_skips_usb_vid_pid_injection() {
-    let config = BoardConfig::from_board_id("adafruit_feather_esp32s3", &HashMap::new()).unwrap();
-    // Board JSON has vid/pid set (Adafruit Feather ESP32-S3 = 0x239A/0x811B).
-    assert!(
-        config.vid.is_some(),
-        "esp32s3 board should have vid in JSON"
-    );
-    assert!(
-        config.pid.is_some(),
-        "esp32s3 board should have pid in JSON"
-    );
+    let mut config = BoardConfig::from_board_id("adafruit_feather_esp32s3", &HashMap::new()).unwrap();
+    config.vid = Some("0x1234".to_string());
+    config.pid = Some("0x5678".to_string());
     // get_defines() must NOT emit them — the framework variant header does.
     let defines = config.get_defines();
     assert!(
@@ -98,8 +85,7 @@ fn test_esp32s3_board_skips_usb_vid_pid_injection() {
 
 /// User override path: when a user sets `-DUSB_VID=...` via `build_flags`,
 /// the `extra_flags` processing must still propagate it. The skip rule
-/// only applies to the unconditional injection from the JSON `vid`/`pid`
-/// fields.
+/// only applies to the normal board compile identity path.
 #[test]
 fn test_esp32s3_board_extra_flag_usb_vid_override_wins() {
     let mut config =

@@ -4,9 +4,7 @@
     "extra_flags": "-DARDUINO_AVR_LILYPAD_USB",
     "f_cpu": "8000000L",
     "mcu": "atmega32u4",
-    "pid": "0x9208",
-    "variant": "leonardo",
-    "vid": "0x1B4F"
+    "variant": "leonardo"
   },
   "debug": {
     "tools": {

@@ -73,6 +73,7 @@ pub struct BoardUsbProfile {
     pub board_id: String,
     pub identities: BTreeMap<String, Vec<String>>,
     pub aliases: Vec<String>,
+    pub primary_compile_identity: Option<(u16, u16)>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -94,6 +95,8 @@ struct PublishedArtifact {
 struct PublishedBoardProfile {
     identities: BTreeMap<String, Vec<String>>,
     aliases: Vec<String>,
+    #[serde(default)]
+    primary_compile_identity: Option<String>,
 }
 
 #[derive(Debug)]
@@ -336,6 +339,25 @@ fn validate_and_index(artifact: PublishedArtifact) -> Result<InstalledProfiles, 
                 }
             }
         }
+        let primary_compile_identity = profile
+            .primary_compile_identity
+            .as_deref()
+            .map(|identity| {
+                let (vid, pid) = parse_identity_key(identity)?;
+                let pid = pid.ok_or_else(|| {
+                    format!("board {board_id} primary compile identity must use an exact PID")
+                })?;
+                let compile_identities = profile.identities.get("compile").ok_or_else(|| {
+                    format!("board {board_id} has no compile identity collection")
+                })?;
+                if !compile_identities.iter().any(|key| key == identity) {
+                    return Err(format!(
+                        "board {board_id} primary compile identity {identity} is not in its compile identities"
+                    ));
+                }
+                Ok((vid, pid))
+            })
+            .transpose()?;
         let normalized_id = board_id.to_ascii_lowercase();
         index_alias(&mut installed, normalized_id, &board_id);
         for alias in &profile.aliases {
@@ -350,6 +372,7 @@ fn validate_and_index(artifact: PublishedArtifact) -> Result<InstalledProfiles, 
                 board_id,
                 identities: profile.identities,
                 aliases: profile.aliases,
+                primary_compile_identity,
             },
         );
     }
@@ -480,7 +503,7 @@ mod tests {
 
     static PROFILE_TEST_LOCK: Mutex<()> = Mutex::new(());
 
-    const SYNTHETIC_ARTIFACT: &str = r#"{"boards":{"synthetic-board":{"aliases":["synthetic-alias"],"identities":{"bootloader":[],"compile":[],"probe":[],"runtime":["feed:c0de"]}}},"identities":{"feed:c0de":[{"allow_ambiguous":false,"family":"synthetic-family","generation":"one","handoff":"bootloader","interface":"cdc","match":{"pid":"c0de","pid_mask":null,"vid":"feed"},"platform":"synthetic","priority":100,"provenance":{"source_class":"test","source_revision":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","source_url":"test://fixture"},"purpose":"runtime","reset":"touch-1200","role":"runtime_cdc","transport":"usb"}]},"metadata":{"artifact":"usb-transport-profiles","compatibility":{}},"schema_version":1}"#;
+    const SYNTHETIC_ARTIFACT: &str = r#"{"boards":{"synthetic-board":{"aliases":["synthetic-alias"],"identities":{"bootloader":[],"compile":["feed:c0de"],"probe":[],"runtime":["feed:c0de"]},"primary_compile_identity":"feed:c0de"}},"identities":{"feed:c0de":[{"allow_ambiguous":false,"family":"synthetic-family","generation":"one","handoff":"bootloader","interface":"cdc","match":{"pid":"c0de","pid_mask":null,"vid":"feed"},"platform":"synthetic","priority":100,"provenance":{"source_class":"test","source_revision":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","source_url":"test://fixture"},"purpose":"runtime","reset":"touch-1200","role":"runtime_cdc","transport":"usb"}]},"metadata":{"artifact":"usb-transport-profiles","compatibility":{}},"schema_version":1}"#;
 
     fn fixture_meta(artifact: &str, schema: u64) -> String {
         let value: serde_json::Value = serde_json::from_str(artifact).unwrap();
@@ -507,7 +530,28 @@ mod tests {
         assert_eq!(profiles.len(), 1);
         assert_eq!(profiles[0].role, UsbDeviceRole::RuntimeCdc);
         assert_eq!(profiles[0].family.as_deref(), Some("synthetic-family"));
-        assert_eq!(board_profile("synthetic-alias").unwrap().board_id, "synthetic-board");
+        let board = board_profile("synthetic-alias").unwrap();
+        assert_eq!(board.board_id, "synthetic-board");
+        assert_eq!(board.primary_compile_identity, Some((0xfeed, 0xc0de)));
+    }
+
+    #[test]
+    fn primary_compile_identity_must_be_an_exact_board_compile_identity() {
+        let mut value: serde_json::Value = serde_json::from_str(SYNTHETIC_ARTIFACT).unwrap();
+        value["boards"]["synthetic-board"]["primary_compile_identity"] =
+            serde_json::json!("feed:beef");
+        let artifact: PublishedArtifact = serde_json::from_value(value).unwrap();
+        assert!(validate_and_index(artifact)
+            .unwrap_err()
+            .contains("is not in its compile identities"));
+
+        let mut value: serde_json::Value = serde_json::from_str(SYNTHETIC_ARTIFACT).unwrap();
+        value["boards"]["synthetic-board"]["primary_compile_identity"] =
+            serde_json::json!("feed:*");
+        let artifact: PublishedArtifact = serde_json::from_value(value).unwrap();
+        assert!(validate_and_index(artifact)
+            .unwrap_err()
+            .contains("must use an exact PID"));
     }
 
     #[test]
@@ -578,6 +622,14 @@ mod tests {
                 && profile.family.as_deref() == Some("rp2040")
                 && profile.interface.as_deref() == Some("msc")
         }));
+        assert_eq!(
+            board_profile("rpipico").and_then(|profile| profile.primary_compile_identity),
+            Some((0x2e8a, 0x000a))
+        );
+        assert_eq!(
+            board_profile("rpipico2").and_then(|profile| profile.primary_compile_identity),
+            Some((0x2e8a, 0x000f))
+        );
     }
 
     #[test]

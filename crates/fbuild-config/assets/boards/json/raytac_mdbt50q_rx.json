@@ -7,9 +7,7 @@
     "extra_flags": "-DARDUINO_MDBT50Q_RX -DNRF52840_XXAA",
     "f_cpu": "64000000L",
     "mcu": "nrf52840",
-    "pid": "0x810B",
-    "variant": "raytac_mdbt50q_rx",
-    "vid": "0x239A"
+    "variant": "raytac_mdbt50q_rx"
   },
   "connectivity": [
     "bluetooth"

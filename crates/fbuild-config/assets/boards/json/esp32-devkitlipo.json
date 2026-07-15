@@ -9,9 +9,7 @@
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32",
-    "pid": "0x7523",
-    "variant": "esp32-devkit-lipo",
-    "vid": "0x1A86"
+    "variant": "esp32-devkit-lipo"
   },
   "connectivity": [
     "wifi",

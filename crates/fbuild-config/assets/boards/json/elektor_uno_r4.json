@@ -4,9 +4,7 @@
     "extra_flags": "-DARDUINO_AVR_ELEKTOR_UNO_R4",
     "f_cpu": "16000000L",
     "mcu": "atmega328pb",
-    "pid": "0x0043",
-    "variant": "R4",
-    "vid": "0x2341"
+    "variant": "R4"
   },
   "fcpu": 16000000,
   "frameworks": [

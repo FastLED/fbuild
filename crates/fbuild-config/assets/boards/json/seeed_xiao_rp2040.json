@@ -4,9 +4,7 @@
     "extra_flags": "-DARDUINO_SEEED_XIAO_RP2040 -DARDUINO_ARCH_RP2040 -DUSBD_MAX_POWER_MA=250",
     "f_cpu": "133000000L",
     "mcu": "rp2040",
-    "pid": "0x000A",
-    "variant": "seeed_xiao_rp2040",
-    "vid": "0x2E8A"
+    "variant": "seeed_xiao_rp2040"
   },
   "debug": {
     "tools": {

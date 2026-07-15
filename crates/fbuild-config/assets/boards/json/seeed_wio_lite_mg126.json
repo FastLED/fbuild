@@ -7,9 +7,7 @@
     "extra_flags": "-DARDUINO_SAMD_ZERO -DARM_MATH_CM0PLUS -D__SAMD21__ -D__SAMD21G18A__ -DWio_Lite_MG126",
     "f_cpu": "48000000L",
     "mcu": "samd21g18a",
-    "pid": "0x802A",
-    "variant": "Wio_Lite_MG126",
-    "vid": "0x2886"
+    "variant": "Wio_Lite_MG126"
   },
   "debug": {
     "tools": {

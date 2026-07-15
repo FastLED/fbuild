@@ -11,9 +11,7 @@
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32s3",
-    "pid": "0x80D6",
-    "variant": "um_feathers3",
-    "vid": "0X303A"
+    "variant": "um_feathers3"
   },
   "connectivity": [
     "wifi"

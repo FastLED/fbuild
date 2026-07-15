@@ -7,9 +7,7 @@
     "extra_flags": "-DARDUINO_SAMD_MKRVIDOR4000 -DUSE_BQ24195L_PMIC -D__SAMD21G18A__",
     "f_cpu": "48000000L",
     "mcu": "samd21g18a",
-    "pid": "0x8056",
-    "variant": "mkrvidor4000",
-    "vid": "0x2341"
+    "variant": "mkrvidor4000"
   },
   "debug": {
     "tools": {

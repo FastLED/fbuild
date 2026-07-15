@@ -3,9 +3,7 @@
     "core": "silabs",
     "f_cpu": "39000000L",
     "mcu": "cortex-m33",
-    "pid": "0x0062",
-    "variant": "xiao_mg24",
-    "vid": "0x2886"
+    "variant": "xiao_mg24"
   },
   "connectivity": [
     "bluetooth",

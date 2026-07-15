@@ -10,9 +10,7 @@
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32s3",
-    "pid": "0x82DC",
-    "variant": "um_edges3_d",
-    "vid": "0X303A"
+    "variant": "um_edges3_d"
   },
   "connectivity": [
     "bluetooth",

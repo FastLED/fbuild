@@ -7,9 +7,7 @@
     "extra_flags": "-DARDUINO_ARDUINO_NANO33BLE -DARDUINO_ARCH_NRF52840",
     "f_cpu": "64000000L",
     "mcu": "nrf52840",
-    "pid": "0x005a",
-    "variant": "ARDUINO_NANO33BLE",
-    "vid": "0x2341"
+    "variant": "ARDUINO_NANO33BLE"
   },
   "connectivity": [
     "bluetooth"

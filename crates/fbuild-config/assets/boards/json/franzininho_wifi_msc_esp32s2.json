@@ -9,9 +9,7 @@
     "f_flash": "80000000L",
     "flash_mode": "dio",
     "mcu": "esp32s2",
-    "pid": "0x80A9",
-    "variant": "franzininho_wifi_msc_esp32s2",
-    "vid": "0x303A"
+    "variant": "franzininho_wifi_msc_esp32s2"
   },
   "connectivity": [
     "wifi"

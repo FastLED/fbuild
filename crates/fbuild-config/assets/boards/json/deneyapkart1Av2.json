@@ -10,9 +10,7 @@
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32s3",
-    "pid": "0x8147",
-    "variant": "deneyapkart1Av2",
-    "vid": "0x303A"
+    "variant": "deneyapkart1Av2"
   },
   "connectivity": [
     "wifi",

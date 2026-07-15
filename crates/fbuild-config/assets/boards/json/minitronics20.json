@@ -7,9 +7,7 @@
     "extra_flags": "-DARDUINO_SAMD_MINITRONICS20 -D__SAMD21J18A__ -DUSE_BQ24195L_PMIC",
     "f_cpu": "48000000L",
     "mcu": "samd21j18a",
-    "pid": "0x8054",
-    "variant": "minitronics20",
-    "vid": "0x2341"
+    "variant": "minitronics20"
   },
   "debug": {
     "tools": {

@@ -7,9 +7,7 @@
     "extra_flags": "-DARDUINO_PIRKEY -DARM_MATH_CM0PLUS -DCRYSTALLESS -DADAFRUIT_PIRKEY -D__SAMD21E18A__",
     "f_cpu": "48000000L",
     "mcu": "samd21e18a",
-    "pid": "0x801E",
-    "variant": "pirkey",
-    "vid": "0x239A"
+    "variant": "pirkey"
   },
   "debug": {
     "tools": {

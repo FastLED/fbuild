@@ -7,9 +7,7 @@
     "extra_flags": "-DARDUINO_SAMD_NEOKEYTRINKEY_M0 -DADAFRUIT_NEOKEYTRINKEY_M0 -DARM_MATH_CM0PLUS -D__SAMD21E18A__ -DCRYSTALLESS",
     "f_cpu": "48000000L",
     "mcu": "samd21e18a",
-    "pid": "0x80FF",
-    "variant": "neokeytrinkey_m0",
-    "vid": "0x239A"
+    "variant": "neokeytrinkey_m0"
   },
   "debug": {
     "tools": {

@@ -9,9 +9,7 @@
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32s2",
-    "pid": "0x810D",
-    "variant": "Bee_Motion",
-    "vid": "0x303A"
+    "variant": "Bee_Motion"
   },
   "connectivity": [
     "wifi"

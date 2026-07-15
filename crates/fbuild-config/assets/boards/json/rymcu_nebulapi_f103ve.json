@@ -4,9 +4,7 @@
     "extra_flags": "-DSTM32F103xE -DSTM32F1 -DARDUINO_GENERIC_F103VETX",
     "f_cpu": "72000000L",
     "mcu": "stm32f103vet6",
-    "pid": "0x0003",
-    "variant": "STM32F1xx/F103V(C-D-E)(H-T)",
-    "vid": "0x1EAF"
+    "variant": "STM32F1xx/F103V(C-D-E)(H-T)"
   },
   "debug": {
     "tools": {

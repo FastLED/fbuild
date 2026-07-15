@@ -7,9 +7,7 @@
     "extra_flags": "-D__SAMD21G18A__",
     "f_cpu": "48000000L",
     "mcu": "samd21g18a",
-    "pid": "0x2111",
-    "variant": "w25_xplained_pro",
-    "vid": "0x03EB"
+    "variant": "w25_xplained_pro"
   },
   "connectivity": [
     "wifi"

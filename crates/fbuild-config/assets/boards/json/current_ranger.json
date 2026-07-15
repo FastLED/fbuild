@@ -7,9 +7,7 @@
     "extra_flags": "-DARDUINO_SAMD_ZERO -D__SAMD21G18A__ -DVERY_LOW_POWER -DCRYSTALLESS",
     "f_cpu": "48000000L",
     "mcu": "samd21g18a",
-    "pid": "0xeee5",
-    "variant": "currentranger_m0",
-    "vid": "0x04d8"
+    "variant": "currentranger_m0"
   },
   "fcpu": 48000000,
   "frameworks": [

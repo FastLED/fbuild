@@ -4,9 +4,7 @@
     "extra_flags": "-DARDUINO_ADAFRUIT_QTPY_RP2040 -DARDUINO_ARCH_RP2040 -DUSBD_MAX_POWER_MA=250",
     "f_cpu": "133000000L",
     "mcu": "rp2040",
-    "pid": "0x80F8",
-    "variant": "adafruit_qtpy",
-    "vid": "0x239A"
+    "variant": "adafruit_qtpy"
   },
   "debug": {
     "tools": {

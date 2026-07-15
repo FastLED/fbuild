@@ -10,9 +10,7 @@
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32s3",
-    "pid": "0x7523",
-    "variant": "yb_esp32s3_amp_v2",
-    "vid": "0x1A86"
+    "variant": "yb_esp32s3_amp_v2"
   },
   "connectivity": [
     "wifi",

@@ -11,9 +11,7 @@
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32s3",
-    "pid": "0x811B",
-    "variant": "adafruit_feather_esp32s3_nopsram",
-    "vid": "0x239A"
+    "variant": "adafruit_feather_esp32s3_nopsram"
   },
   "connectivity": [
     "bluetooth",

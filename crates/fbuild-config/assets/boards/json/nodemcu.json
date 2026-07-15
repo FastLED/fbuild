@@ -9,9 +9,7 @@
     "f_flash": "40000000L",
     "flash_mode": "qio",
     "mcu": "esp8266",
-    "pid": "0xEA60",
-    "variant": "nodemcu",
-    "vid": "0x10C4"
+    "variant": "nodemcu"
   },
   "connectivity": [
     "wifi"

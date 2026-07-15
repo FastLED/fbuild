@@ -7,9 +7,7 @@
     "extra_flags": "-DARDUINO_TRINKET_M0 -DCRYSTALLESS -DADAFRUIT_TRINKET_M0 -DARM_MATH_CM0PLUS -D__SAMD21E18A__",
     "f_cpu": "48000000L",
     "mcu": "samd21e18a",
-    "pid": "0x801E",
-    "variant": "trinket_m0",
-    "vid": "0x239A"
+    "variant": "trinket_m0"
   },
   "debug": {
     "tools": {

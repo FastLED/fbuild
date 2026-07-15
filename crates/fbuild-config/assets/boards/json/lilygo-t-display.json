@@ -9,9 +9,7 @@
     "f_flash": "40000000L",
     "flash_mode": "dio",
     "mcu": "esp32",
-    "pid": "0x55D4",
-    "variant": "lilygo_t_display",
-    "vid": "0x1A86"
+    "variant": "lilygo_t_display"
   },
   "connectivity": [
     "wifi",

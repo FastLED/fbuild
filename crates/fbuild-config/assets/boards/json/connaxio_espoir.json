@@ -9,9 +9,7 @@
     "f_flash": "80000000L",
     "flash_mode": "dio",
     "mcu": "esp32",
-    "pid": "0x8D9A",
-    "variant": "connaxio_espoir",
-    "vid": "0x10C4"
+    "variant": "connaxio_espoir"
   },
   "connectivity": [
     "wifi",

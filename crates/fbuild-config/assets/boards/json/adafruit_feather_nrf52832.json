@@ -7,9 +7,7 @@
     "extra_flags": "-DNRF52832_XXAA -DNRF52",
     "f_cpu": "64000000L",
     "mcu": "nrf52832",
-    "pid": "0x8029",
-    "variant": "feather_nrf52832",
-    "vid": "0x239A"
+    "variant": "feather_nrf52832"
   },
   "connectivity": [
     "bluetooth"

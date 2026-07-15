@@ -10,9 +10,7 @@
     "f_flash": "80000000L",
     "flash_mode": "dio",
     "mcu": "esp32s2",
-    "pid": "0x80C5",
-    "variant": "micro_s2",
-    "vid": "0x239A"
+    "variant": "micro_s2"
   },
   "connectivity": [
     "wifi"

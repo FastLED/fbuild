@@ -9,9 +9,7 @@
     "f_flash": "40000000L",
     "flash_mode": "dio",
     "mcu": "esp32s2",
-    "pid": "0x80F6",
-    "variant": "um_rmp",
-    "vid": "0X303A"
+    "variant": "um_rmp"
   },
   "connectivity": [
     "wifi"

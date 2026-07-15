@@ -7,9 +7,7 @@
     "extra_flags": "-DARDUINO_SAMD_ZERO -D__SAMD21G18A__",
     "f_cpu": "48000000L",
     "mcu": "samd21g18a",
-    "pid": "0x0096",
-    "variant": "tuino_096",
-    "vid": "0x3116"
+    "variant": "tuino_096"
   },
   "debug": {
     "tools": {

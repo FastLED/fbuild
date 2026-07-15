@@ -4,9 +4,7 @@
     "extra_flags": "-DARDUINO_RASPBERRY_PI_PICO_W -DARDUINO_ARCH_RP2040 -DUSBD_MAX_POWER_MA=250",
     "f_cpu": "133000000L",
     "mcu": "rp2040",
-    "pid": "0xF00A",
-    "variant": "rpipicow",
-    "vid": "0x2E8A"
+    "variant": "rpipicow"
   },
   "debug": {
     "tools": {

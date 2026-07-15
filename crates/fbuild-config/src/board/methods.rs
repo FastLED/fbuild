@@ -35,19 +35,15 @@ impl BoardConfig {
         self.chip_variant.as_deref().unwrap_or(&self.mcu)
     }
 
-    /// Resolve this board's USB VID **offline**: the explicit `build.vid`
-    /// when the board JSON ships one, otherwise the embedded MCU-family
-    /// heuristic ([`super::mcu_vid::vid_for_mcu`]).
+    /// Resolve this board's USB VID from an explicit project override or the
+    /// verified FastLED/boards primary compile identity.
     ///
     /// Returns a lowercase 4-hex string without the `0x` prefix (e.g.
     /// `"303a"`), or `None` when neither source knows a VID.
     ///
-    /// This is the build-time replacement for the old runtime `mcu_to_vid`
-    /// online fallback (FastLED/fbuild#959): boards whose JSON has null
-    /// `build.vid`/`build.pid` — ESP32-C6, LPC845-BRK, UNO R4, etc. — now
-    /// resolve a VID with no network access. It is a resolution/display
-    /// helper only and does **not** change the `-DUSB_VID` compile define,
-    /// which stays keyed on an explicit `build.vid`.
+    /// The registry is downloaded, digest-verified, and installed by the
+    /// daemon before build handling. Missing or invalid registry data fails
+    /// closed instead of falling back to copied board JSON or MCU guesses.
     pub fn resolved_vid(&self) -> Option<String> {
         if let Some(vid) = &self.vid {
             let hex = vid
@@ -56,7 +52,18 @@ impl BoardConfig {
                 .unwrap_or(vid);
             return Some(hex.to_ascii_lowercase());
         }
-        super::mcu_vid::vid_for_mcu(&self.mcu).map(str::to_string)
+        self.registry_compile_identity()
+            .map(|(vid, _)| format!("{vid:04x}"))
+    }
+
+    fn registry_compile_identity(&self) -> Option<(u16, u16)> {
+        fbuild_core::usb::profiles::board_profile(&self.board_id)?.primary_compile_identity
+    }
+
+    pub(super) fn formatted_registry_compile_identity(
+        identity: Option<(u16, u16)>,
+    ) -> Option<(String, String)> {
+        identity.map(|(vid, pid)| (format!("0x{vid:04X}"), format!("0x{pid:04X}")))
     }
 
     /// Check whether this board supports a specific emulator tool.
@@ -241,11 +248,21 @@ impl BoardConfig {
         // they win via the loop below. See FastLED/fbuild#405.
         let framework_defines_usb = mcu_upper == "ESP32S2" || mcu_upper == "ESP32S3";
         if !framework_defines_usb {
-            if let Some(ref vid) = self.vid {
-                defines.insert("USB_VID".to_string(), vid.clone());
+            let registry_identity =
+                Self::formatted_registry_compile_identity(self.registry_compile_identity());
+            if let Some(vid) = self
+                .vid
+                .clone()
+                .or_else(|| registry_identity.as_ref().map(|(vid, _)| vid.clone()))
+            {
+                defines.insert("USB_VID".to_string(), vid);
             }
-            if let Some(ref pid) = self.pid {
-                defines.insert("USB_PID".to_string(), pid.clone());
+            if let Some(pid) = self
+                .pid
+                .clone()
+                .or_else(|| registry_identity.map(|(_, pid)| pid))
+            {
+                defines.insert("USB_PID".to_string(), pid);
             }
         }
 

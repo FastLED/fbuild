@@ -7,9 +7,7 @@
     "extra_flags": "-DARDUINO_NRFMICRO -DNRF52840_XXAA",
     "f_cpu": "64000000L",
     "mcu": "nrf52840",
-    "pid": "0x5284",
-    "variant": "nrfmicro",
-    "vid": "0x1209"
+    "variant": "nrfmicro"
   },
   "connectivity": [
     "bluetooth"
