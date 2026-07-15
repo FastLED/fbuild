@@ -21,11 +21,8 @@ sha2 = { workspace = true }
 # compile-time-embedded `usb-vendors.tar.zst` archive instead (see
 # `crate::usb::embedded`).
 usb-ids = { workspace = true }
-# Embedded USB-vendor archive decompression + extraction at first use.
-# Pulled in as workspace deps so other crates can share the same zstd / tar
-# wire format without per-crate version drift.
+# Runtime decompression for the downloaded FastLED/boards cache.
 zstd = { workspace = true }
-tar = { workspace = true }
 prost = { workspace = true }
 # Process containment primitive (Job Objects on Windows; process groups +
 # PR_SET_PDEATHSIG on Linux; process groups on macOS). The single global
@@ -55,3 +52,5 @@ libc = "0.2"
 
 [dev-dependencies]
 tempfile = { workspace = true }
+# Test-only embedded USB-vendor fixture extraction. Production never links it.
+tar = { workspace = true }

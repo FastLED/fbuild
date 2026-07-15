@@ -3,6 +3,7 @@
 
 use serde::{Deserialize, Serialize};
 
+#[cfg(test)]
 use super::embedded;
 
 /// Resolved USB device identity.
@@ -33,12 +34,20 @@ pub fn resolve(vid: u16, pid: u16) -> UsbInfo {
 /// information; we only fall through to the embedded archive when the
 /// overlay misses the VID entirely.
 pub fn try_resolve(vid: u16, pid: u16) -> Option<UsbInfo> {
-    // 1. Online overlay wins entirely (freshest, curated at workflow time).
     if let Some(info) = super::data::online_lookup(vid, pid) {
         return Some(info);
     }
 
-    // 2. Embedded overlay: take the PRODUCT from the FastLED/boards curated
+    #[cfg(not(test))]
+    {
+        None
+    }
+
+    #[cfg(test)]
+    {
+    // Test builds may exercise an embedded fixture. Release/runtime builds
+    // must use only the verified FastLED/boards cache above.
+    // Take the PRODUCT from the FastLED/boards curated
     //    device map (e.g. "NXP LPC-Link2", "Teensy (Serial mode)"), but
     //    resolve the VENDOR through the best available source rather than the
     //    proto's per-VID:PID vendor column (which can be blank, or — for the
@@ -63,6 +72,7 @@ pub fn try_resolve(vid: u16, pid: u16) -> Option<UsbInfo> {
         // the curated proto entirely.
         (None, _) => resolve_bundled(vid, pid),
     }
+    }
 }
 
 /// Vendor-name-only tier (no per-PID product). Two compile-time-embedded
@@ -83,11 +93,19 @@ pub fn try_resolve(vid: u16, pid: u16) -> Option<UsbInfo> {
 /// `"Device 0xPPPP"` placeholder since per-PID resolution lives in the
 /// VID:PID overlay (tier-2).
 pub fn resolve_bundled(vid: u16, pid: u16) -> Option<UsbInfo> {
+    #[cfg(not(test))]
+    {
+        let _ = (vid, pid);
+        None
+    }
+    #[cfg(test)]
+    {
     let vendor = embedded::vendor_name(vid).or_else(|| super::data::embedded_vendor(vid))?;
     Some(UsbInfo {
         vendor: vendor.to_string(),
         product: format!("Device 0x{pid:04X}"),
     })
+    }
 }
 
 /// `"vendor product (VVVV:PPPP)"` — the canonical display format used by
