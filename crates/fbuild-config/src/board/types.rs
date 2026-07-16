@@ -61,6 +61,16 @@ pub struct BoardConfig {
     pub vid: Option<String>,
     /// USB product ID (optional)
     pub pid: Option<String>,
+    /// USB product string from board JSON `build.usb_product`.
+    ///
+    /// Gates the `USB_PRODUCT`/`USB_MANUFACTURER` define pair for USB-native
+    /// Arduino cores, matching PlatformIO's atmelsam `arduino-common.py`.
+    /// A display string, not a USB identity — allowed in bundled snapshots.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub usb_product: Option<String>,
+    /// USB manufacturer string from the board JSON top-level `vendor` field.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub usb_manufacturer: Option<String>,
     /// Extra build flags from board definition
     pub extra_flags: Option<String>,
     /// Upload protocol (e.g. "arduino", "esptool", "teensy-gui")
