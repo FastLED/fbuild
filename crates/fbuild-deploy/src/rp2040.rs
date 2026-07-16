@@ -16,6 +16,8 @@ mod mount;
 mod picotool;
 #[path = "rp2040_target.rs"]
 mod target;
+#[path = "rp2040_topology.rs"]
+mod topology;
 use mount::try_mount_linux_rom_device;
 use target::{resolve_requested_runtime_target, select_cdc_candidate, serial_selector};
 
@@ -42,6 +44,40 @@ const UF2_BLOCK_SIZE: usize = 512;
 // of fresh-enumeration retries recovers those without stalling a genuinely
 // dead transport (FastLED/fbuild#1081).
 const UF2_TRANSFER_ATTEMPTS: usize = 3;
+// Stage-timeout env overrides (FastLED/fbuild#1082): first-plug driver
+// installs and deep hub chains legitimately exceed the defaults on foreign
+// machines. Values are integer seconds, accepted in 1..=600 by
+// `timeout_secs_from`.
+const BOOTLOADER_TIMEOUT_ENV: &str = "FBUILD_RP2040_BOOTLOADER_TIMEOUT_SECS";
+const POST_DEPLOY_TIMEOUT_ENV: &str = "FBUILD_RP2040_POST_DEPLOY_TIMEOUT_SECS";
+const UF2_WRITE_TIMEOUT_ENV: &str = "FBUILD_RP2040_UF2_WRITE_TIMEOUT_SECS";
+const DEFAULT_UF2_WRITE_TIMEOUT: Duration = Duration::from_secs(60);
+
+/// Parse an env-supplied stage timeout. Accepts integer seconds in 1..=600;
+/// an unset variable is silently the default, anything else warns and falls
+/// back to the default.
+fn timeout_secs_from(raw: Option<&str>, default: Duration, var_name: &str) -> Duration {
+    let Some(raw) = raw else {
+        return default;
+    };
+    match raw.trim().parse::<u64>() {
+        Ok(secs) if (1..=600).contains(&secs) => Duration::from_secs(secs),
+        _ => {
+            tracing::warn!(
+                value = raw,
+                var = var_name,
+                default_secs = default.as_secs(),
+                "ignoring invalid RP2040 timeout override; expected integer seconds in 1..=600"
+            );
+            default
+        }
+    }
+}
+
+fn timeout_from_env(var_name: &str, default: Duration) -> Duration {
+    let raw = std::env::var(var_name).ok();
+    timeout_secs_from(raw.as_deref(), default, var_name)
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum Uf2Target {
@@ -91,16 +127,48 @@ fn put_u32(buffer: &mut [u8], offset: usize, value: u32) {
 
 /// Return candidate removable roots for this host. Kept separate from the
 /// marker check so unit tests can use a temporary directory on every OS.
+///
+/// On Windows this is filtered to `DRIVE_REMOVABLE` roots only: a
+/// disconnected mapped network drive answers `fs::read_dir`/`read_to_string`
+/// tens of seconds late, which would otherwise eat the whole BOOTSEL
+/// discovery window before the real drive letter is reached
+/// (FastLED/fbuild#1082). `find_uf2_volumes` itself stays unfiltered so
+/// tests can keep passing explicit temp-dir roots.
 fn volume_roots() -> Vec<PathBuf> {
     let home = std::env::var_os("HOME").map(PathBuf::from);
-    volume_roots_for(cfg!(windows), home.as_deref())
+    #[cfg(windows)]
+    {
+        volume_roots_filtered(true, home.as_deref(), topology::is_removable_drive)
+    }
+    #[cfg(not(windows))]
+    {
+        volume_roots_filtered(false, home.as_deref(), |_: &Path| true)
+    }
 }
 
+/// Unfiltered root list, kept for the pre-existing cross-platform coverage
+/// test now that `volume_roots()` filters Windows letters through
+/// [`topology::is_removable_drive`].
+#[cfg(test)]
 fn volume_roots_for(windows: bool, home: Option<&Path>) -> Vec<PathBuf> {
+    volume_roots_filtered(windows, home, |_: &Path| true)
+}
+
+/// Build the default root list, applying `keep` to each Windows drive
+/// letter root before it is scanned. Non-Windows roots are never filtered:
+/// `keep` is only consulted in the `windows` branch.
+fn volume_roots_filtered<F: Fn(&Path) -> bool>(
+    windows: bool,
+    home: Option<&Path>,
+    keep: F,
+) -> Vec<PathBuf> {
     let mut roots = Vec::new();
     if windows {
         for letter in b'A'..=b'Z' {
-            roots.push(PathBuf::from(format!("{}:\\", letter as char)));
+            let root = PathBuf::from(format!("{}:\\", letter as char));
+            if keep(&root) {
+                roots.push(root);
+            }
         }
     } else {
         if let Some(home) = home {
@@ -152,10 +220,13 @@ fn find_uf2_volumes(roots: &[PathBuf]) -> Vec<PathBuf> {
     matches.into_iter().collect()
 }
 
-fn find_uf2_volume_until(timeout: Duration) -> Result<Option<PathBuf>> {
+fn find_uf2_volume_until(
+    timeout: Duration,
+    volumes_before: &BTreeSet<PathBuf>,
+) -> Result<Option<PathBuf>> {
     find_uf2_volume_until_with(
         timeout,
-        || select_single_uf2_volume(find_uf2_volumes(&volume_roots())),
+        || select_appeared_volume(volumes_before, find_uf2_volumes(&volume_roots())),
         try_mount_linux_rom_device,
     )
 }
@@ -185,18 +256,57 @@ where
     }
 }
 
+fn multiple_bootsel_volumes_error(matches: &[PathBuf]) -> FbuildError {
+    FbuildError::DeployFailed(format!(
+        "found multiple RP2040 BOOTSEL volumes: {}; pass an explicit UF2 volume path to select one",
+        matches
+            .iter()
+            .map(|path| path.display().to_string())
+            .collect::<Vec<_>>()
+            .join(", ")
+    ))
+}
+
 fn select_single_uf2_volume(mut matches: Vec<PathBuf>) -> Result<Option<PathBuf>> {
     if matches.len() > 1 {
-        return Err(FbuildError::DeployFailed(format!(
-            "found multiple RP2040 BOOTSEL volumes: {}; pass an explicit UF2 volume path to select one",
-            matches
-                .iter()
-                .map(|path| path.display().to_string())
-                .collect::<Vec<_>>()
-                .join(", ")
-        )));
+        return Err(multiple_bootsel_volumes_error(&matches));
     }
     Ok(matches.pop())
+}
+
+/// Attribute the BOOTSEL volume that appeared after the 1200-bps touch.
+/// Volumes recorded before the touch cannot belong to the board that was
+/// just reset, so they are ignored; exactly one new volume is attributable,
+/// several are not (one touch resets one board). With an empty `before` set
+/// this is exactly the historical single-volume selection.
+fn select_appeared_volume(
+    before: &BTreeSet<PathBuf>,
+    discovered: Vec<PathBuf>,
+) -> Result<Option<PathBuf>> {
+    let appeared: Vec<PathBuf> = discovered
+        .into_iter()
+        .filter(|volume| !before.contains(volume))
+        .collect();
+    select_single_uf2_volume(appeared)
+}
+
+/// Decide how the pre-touch BOOTSEL scan constrains the deploy. A single
+/// mounted volume wins outright — the manual-BOOTSEL recovery flow
+/// (FastLED/fbuild#1040) depends on that even when a runtime selector was
+/// passed. Several volumes are only tolerated when a runtime port is about
+/// to be touched, so the post-touch scan can attribute the volume that
+/// newly appears; otherwise the historical hard error stands.
+fn pretouch_volume_policy(
+    mounted: Vec<PathBuf>,
+    can_attribute: bool,
+) -> Result<(Option<PathBuf>, BTreeSet<PathBuf>)> {
+    if mounted.len() > 1 {
+        if can_attribute {
+            return Ok((None, mounted.into_iter().collect()));
+        }
+        return Err(multiple_bootsel_volumes_error(&mounted));
+    }
+    Ok((mounted.into_iter().next(), BTreeSet::new()))
 }
 
 fn explicit_uf2_volume(selector: &str) -> Option<PathBuf> {
@@ -241,6 +351,24 @@ fn touch_1200bps(port: &str) -> Result<()> {
     }
 }
 
+/// macOS 13+ on Apple Silicon holds a first-seen USB accessory off the bus
+/// until the user approves it, which reads as a silent BOOTSEL discovery
+/// timeout (FastLED/fbuild#1082).
+fn macos_accessory_hint(is_macos: bool) -> &'static str {
+    if is_macos {
+        ". On macOS 13+ (Apple Silicon), a first-seen USB accessory must be approved (\"Allow accessory to connect?\") before it enumerates; check for that prompt and System Settings > Privacy & Security > Accessories"
+    } else {
+        ""
+    }
+}
+
+fn bootsel_not_found_message(is_macos: bool) -> String {
+    format!(
+        "RP2040 BOOTSEL volume not found; check that the stock board is connected and retry (discovery window is extendable with {BOOTLOADER_TIMEOUT_ENV}){}",
+        macos_accessory_hint(is_macos)
+    )
+}
+
 fn select_volume_after_reset(
     volume: Option<PathBuf>,
     reset_error: Option<FbuildError>,
@@ -262,13 +390,14 @@ fn select_volume_after_reset(
 
     if let Some(error) = reset_error {
         return Err(FbuildError::DeployFailed(format!(
-            "{error}; no RP2040 BOOTSEL transition was observed after the 1200-bps reset"
+            "{error}; no RP2040 BOOTSEL transition was observed after the 1200-bps reset (discovery window is extendable with {BOOTLOADER_TIMEOUT_ENV}){}",
+            macos_accessory_hint(cfg!(target_os = "macos"))
         )));
     }
 
-    Err(FbuildError::DeployFailed(
-        "RP2040 BOOTSEL volume not found; check that the stock board is connected and retry".into(),
-    ))
+    Err(FbuildError::DeployFailed(bootsel_not_found_message(cfg!(
+        target_os = "macos"
+    ))))
 }
 
 fn prepare_uf2_artifact(firmware_path: &Path, family_id: u32) -> Result<(PathBuf, Uf2Target)> {
@@ -401,10 +530,46 @@ where
     }
 }
 
+/// Run `work` on a dedicated thread and give up after `budget`. A storport
+/// retry storm behind a sick hub can block the NEW.UF2 `write_all` for
+/// minutes with no output; this turns that hang into an actionable failure
+/// that feeds the fresh-enumeration retry gate. On timeout the worker thread
+/// is deliberately abandoned, not joined: it only touches its own locals and
+/// its channel send fails silently once this receiver is dropped, so the
+/// wedged kernel write can unblock (or not) without holding up the deploy.
+fn run_with_watchdog<T: Send + 'static>(
+    budget: Duration,
+    label: &str,
+    work: impl FnOnce() -> Result<T> + Send + 'static,
+) -> Result<T> {
+    let (sender, receiver) = std::sync::mpsc::channel();
+    std::thread::spawn(move || {
+        let _ = sender.send(work());
+    });
+    match receiver.recv_timeout(budget) {
+        Ok(result) => result,
+        Err(_) => Err(FbuildError::DeployFailed(format!(
+            "{label} did not complete within {}s; the storage transport is likely wedged — request a fresh USB enumeration before retrying (override the budget with {UF2_WRITE_TIMEOUT_ENV})",
+            budget.as_secs()
+        ))),
+    }
+}
+
 fn describe_transfer_location(volume: Option<&Path>) -> String {
     match volume {
         Some(volume) => volume.display().to_string(),
         None => "PICOBOOT vendor interface".to_string(),
+    }
+}
+
+/// Append a captured USB topology line (or an explicit "unavailable" marker
+/// when capture failed) to a failure context, so hub-path failures state
+/// what fbuild does and doesn't know about the physical connection
+/// (FastLED/fbuild#1081, #1082).
+fn with_topology(context: String, topology: Option<&str>) -> String {
+    match topology {
+        Some(topology) => format!("{context}. {topology}"),
+        None => format!("{context}. USB topology unavailable"),
     }
 }
 
@@ -593,6 +758,9 @@ fn format_uf2_copy_error(
         destination.display()
     );
     match copy_error.raw_os_error() {
+        Some(5) => format!(
+            "{base}. Windows denied write access to the RP-series BOOTSEL volume (error 5). This is characteristically a host removable-storage write-deny policy — Group Policy \"Removable Disks: Deny write access\" or BitLocker FDVDenyWriteAccess — or an aggressive endpoint-protection filter, not a board fault. Check with this machine's administrator; retrying on a direct USB port will not clear a policy block"
+        ),
         Some(121) => format!(
             "{base}. Windows timed out writing to the RP-series BOOTSEL storage transport (error 121), and fbuild did not observe the ROM eject transition. Request a fresh USB enumeration on a direct USB port with a known data cable, avoid USB hubs for the retry, and do not retry the same timed-out enumeration. A blank or invalid-flash Pico returns to ROM boot automatically: reconnect normally and do not press BOOTSEL"
         ),
@@ -761,17 +929,19 @@ fn wait_for_volume_disappearance(volume: &Path, timeout: Duration) -> Result<()>
 pub struct Rp2040Deployer {
     bootloader_timeout: Duration,
     post_deploy_timeout: Duration,
+    uf2_write_timeout: Duration,
     family_id: u32,
 }
 
 impl Default for Rp2040Deployer {
     fn default() -> Self {
         Self {
-            bootloader_timeout: Duration::from_secs(10),
+            bootloader_timeout: timeout_from_env(BOOTLOADER_TIMEOUT_ENV, Duration::from_secs(10)),
             // Windows can take several seconds to enumerate the CDC interface
             // after the ROM accepts the UF2. Keep this bounded but generous
             // enough for a stock board on a busy USB hub.
-            post_deploy_timeout: Duration::from_secs(15),
+            post_deploy_timeout: timeout_from_env(POST_DEPLOY_TIMEOUT_ENV, Duration::from_secs(15)),
+            uf2_write_timeout: timeout_from_env(UF2_WRITE_TIMEOUT_ENV, DEFAULT_UF2_WRITE_TIMEOUT),
             family_id: RP2040_FAMILY_ID,
         }
     }
@@ -782,7 +952,7 @@ impl Rp2040Deployer {
         Self {
             bootloader_timeout,
             post_deploy_timeout,
-            family_id: RP2040_FAMILY_ID,
+            ..Self::default()
         }
     }
 
@@ -832,13 +1002,22 @@ fn catalogue_pico_cdc_ports(expected_family: u32) -> Result<Vec<PicoCdcPort>> {
     Ok(matches)
 }
 
+/// CDC-wait failure classification: a quiet window (`Timeout`) is
+/// recoverable once the flash itself is confirmed, while an enumeration or
+/// selection error (`Enumeration`) always fails the deploy.
+#[derive(Debug)]
+enum CdcWaitError {
+    Timeout,
+    Enumeration(FbuildError),
+}
+
 fn wait_for_cdc_port(
     previous_port: Option<&str>,
     requested_serial: Option<&str>,
     before: &BTreeSet<String>,
     expected_family: u32,
     timeout: Duration,
-) -> Result<String> {
+) -> std::result::Result<String, CdcWaitError> {
     wait_for_cdc_port_with(previous_port, requested_serial, before, timeout, || {
         catalogue_pico_cdc_ports(expected_family)
     })
@@ -850,25 +1029,55 @@ fn wait_for_cdc_port_with<F>(
     before: &BTreeSet<String>,
     timeout: Duration,
     mut catalogue: F,
-) -> Result<String>
+) -> std::result::Result<String, CdcWaitError>
 where
     F: FnMut() -> Result<Vec<PicoCdcPort>>,
 {
     let deadline = Instant::now() + timeout;
     loop {
-        let ports = catalogue()?;
-        if let Some(selected) =
-            select_cdc_candidate(previous_port, requested_serial, before, &ports)?
-        {
-            return Ok(selected);
+        let ports = catalogue().map_err(CdcWaitError::Enumeration)?;
+        match select_cdc_candidate(previous_port, requested_serial, before, &ports) {
+            Ok(Some(selected)) => return Ok(selected),
+            Ok(None) => {}
+            Err(error) => return Err(CdcWaitError::Enumeration(error)),
         }
         if Instant::now() >= deadline {
-            return Err(FbuildError::DeployFailed(
-                "RP2040 firmware was transferred, but no catalogue-identified runtime CDC port appeared; verify that the firmware enables USB serial and that FastLED/boards USB data is current"
-                    .to_string(),
-            ));
+            return Err(CdcWaitError::Timeout);
         }
         std::thread::sleep(Duration::from_millis(100));
+    }
+}
+
+/// Post-flash CDC state: either the runtime port was re-identified, or the
+/// flash is confirmed good but the port never showed inside the window.
+#[derive(Debug)]
+enum PostFlashCdc {
+    Confirmed(String),
+    /// Carries the message fragment explaining the downgrade.
+    Unconfirmed(String),
+}
+
+/// Decide the deploy outcome after the runtime-CDC wait (FastLED/fbuild#1082
+/// stage 7). Once the eject watch (or a PICOBOOT load) confirmed the ROM
+/// accepted the image, a quiet CDC window must not fail the deploy: first-plug
+/// driver installation routinely exceeds it, and a hard failure makes CI
+/// re-flash a healthy board. Enumeration errors still fail regardless.
+fn resolve_post_flash_cdc(
+    flash_confirmed: bool,
+    wait_result: std::result::Result<String, CdcWaitError>,
+    window: Duration,
+) -> Result<PostFlashCdc> {
+    match wait_result {
+        Ok(port) => Ok(PostFlashCdc::Confirmed(port)),
+        Err(CdcWaitError::Enumeration(error)) => Err(error),
+        Err(CdcWaitError::Timeout) if flash_confirmed => Ok(PostFlashCdc::Unconfirmed(format!(
+            "the firmware was flashed and accepted, but the runtime CDC port did not reappear within {}s; first-plug driver installation can exceed this window — the board is likely healthy (extend the window with {POST_DEPLOY_TIMEOUT_ENV})",
+            window.as_secs()
+        ))),
+        Err(CdcWaitError::Timeout) => Err(FbuildError::DeployFailed(format!(
+            "RP2040 firmware was transferred, but no catalogue-identified runtime CDC port appeared within {}s; verify that the firmware enables USB serial and that FastLED/boards USB data is current (extend the window with {POST_DEPLOY_TIMEOUT_ENV})",
+            window.as_secs()
+        ))),
     }
 }
 
@@ -942,9 +1151,23 @@ impl Deployer for Rp2040Deployer {
                 "explicit RP2040 UF2 volume {selector:?} does not contain INFO_UF2.TXT"
             )));
         }
-        let volume_before_reset = match explicit_volume {
-            Some(volume) => Some(volume),
-            None => select_single_uf2_volume(find_uf2_volumes(&volume_roots()))?,
+        let (volume_before_reset, volumes_before) = match explicit_volume {
+            Some(volume) => (Some(volume), BTreeSet::new()),
+            None => {
+                let mounted = find_uf2_volumes(&volume_roots());
+                // Attribution needs a live port to touch. A resolution
+                // failure here falls back to the historical multi-volume
+                // hard error rather than surfacing a selector error that a
+                // single-volume deploy would never have raised.
+                let can_attribute = mounted.len() > 1
+                    && selector
+                        .map(|value| resolve_requested_runtime_target(value, &current_ports))
+                        .transpose()
+                        .ok()
+                        .flatten()
+                        .is_some();
+                pretouch_volume_policy(mounted, can_attribute)?
+            }
         };
         let requested_serial = selector.and_then(serial_selector).map(str::to_string);
         let runtime_target = if volume_before_reset.is_none() {
@@ -954,6 +1177,16 @@ impl Deployer for Rp2040Deployer {
         } else {
             None
         };
+        // Capture topology before the 1200-bps touch: once the board resets
+        // into BOOTSEL the runtime CDC devnode this looks up disappears.
+        // A join failure on this purely-diagnostic task must never fail the
+        // deploy, so it degrades to `None` rather than propagating.
+        let topology_port = runtime_target.as_ref().map(|target| target.port.clone());
+        let topology: Option<String> = tokio::task::spawn_blocking(move || {
+            topology_port.and_then(|port| topology::describe_port_topology(&port))
+        })
+        .await
+        .unwrap_or(None);
         let reset_error = if let Some(target) = &runtime_target {
             let port = target.port.clone();
             tokio::task::spawn_blocking(move || touch_1200bps(&port))
@@ -969,11 +1202,13 @@ impl Deployer for Rp2040Deployer {
             (Some(volume), None)
         } else {
             let timeout = self.bootloader_timeout;
-            let discovered = tokio::task::spawn_blocking(move || find_uf2_volume_until(timeout))
-                .await
-                .map_err(|error| {
-                    FbuildError::DeployFailed(format!("RP2040 volume watcher failed: {error}"))
-                })??;
+            let stale_volumes = volumes_before.clone();
+            let discovered =
+                tokio::task::spawn_blocking(move || find_uf2_volume_until(timeout, &stale_volumes))
+                    .await
+                    .map_err(|error| {
+                        FbuildError::DeployFailed(format!("RP2040 volume watcher failed: {error}"))
+                    })??;
             match select_volume_after_reset(discovered, reset_error) {
                 Ok(volume) => (Some(volume), None),
                 // The synthetic FAT never mounted (common behind USB hubs,
@@ -997,15 +1232,26 @@ impl Deployer for Rp2040Deployer {
             if let Some(volume) = volume {
                 let artifact_for_copy = artifact.clone();
                 let bootloader_timeout = self.bootloader_timeout;
+                let write_budget = self.uf2_write_timeout;
+                let stale_volumes = volumes_before.clone();
                 let transfer = tokio::task::spawn_blocking(move || {
                     transfer_uf2_with_retries(
                         volume,
                         UF2_TRANSFER_ATTEMPTS,
-                        |volume| copy_prepared_uf2(&artifact_for_copy, volume),
+                        // Watchdog per attempt: a timed-out (abandoned) write
+                        // flows into the same fresh-enumeration retry gate as
+                        // any other copy failure.
+                        |volume| {
+                            let artifact = artifact_for_copy.clone();
+                            let volume = volume.to_path_buf();
+                            run_with_watchdog(write_budget, "RP2040 UF2 write", move || {
+                                copy_prepared_uf2(&artifact, &volume)
+                            })
+                        },
                         |volume| {
                             wait_for_volume_disappearance(volume, Duration::from_secs(2)).is_ok()
                         },
-                        || find_uf2_volume_until(bootloader_timeout),
+                        || find_uf2_volume_until(bootloader_timeout, &stale_volumes),
                     )
                 })
                 .await
@@ -1020,9 +1266,12 @@ impl Deployer for Rp2040Deployer {
                         Some(transfer.volume),
                     ),
                     Err(failure) => {
-                        let context = format!(
-                            "{} (after {} BOOTSEL transfer attempt(s))",
-                            failure.error, failure.attempts
+                        let context = with_topology(
+                            format!(
+                                "{} (after {} BOOTSEL transfer attempt(s))",
+                                failure.error, failure.attempts
+                            ),
+                            topology.as_deref(),
                         );
                         let loaded =
                             picotool::load_with_managed_picotool(project_dir, &artifact, &context)
@@ -1036,9 +1285,12 @@ impl Deployer for Rp2040Deployer {
                     }
                 }
             } else {
-                let context = volume_discovery_error
-                    .expect("missing volume implies a discovery error")
-                    .to_string();
+                let context = with_topology(
+                    volume_discovery_error
+                        .expect("missing volume implies a discovery error")
+                        .to_string(),
+                    topology.as_deref(),
+                );
                 let loaded =
                     picotool::load_with_managed_picotool(project_dir, &artifact, &context).await?;
                 (
@@ -1073,7 +1325,7 @@ impl Deployer for Rp2040Deployer {
             .or(requested_serial);
         let family_id = self.family_id;
         let post_timeout = self.post_deploy_timeout;
-        let discovered_port = tokio::task::spawn_blocking(move || {
+        let wait_result = tokio::task::spawn_blocking(move || {
             wait_for_cdc_port(
                 recovery_port.as_deref(),
                 recovery_serial.as_deref(),
@@ -1085,14 +1337,27 @@ impl Deployer for Rp2040Deployer {
         .await
         .map_err(|error| {
             FbuildError::DeployFailed(format!("RP2040 CDC watcher failed: {error}"))
-        })??;
+        })?;
+        // Every mounted-volume path already passed the eject watch above, and
+        // the volume-less path loaded through PICOBOOT; either signal confirms
+        // the ROM accepted the image before the CDC wait started.
+        let flash_confirmed =
+            transfer_volume.is_some() || transfer_method.starts_with("managed picotool");
+        let location = describe_transfer_location(transfer_volume.as_deref());
+        let (message, port) = match resolve_post_flash_cdc(flash_confirmed, wait_result, post_timeout)? {
+            PostFlashCdc::Confirmed(port) => (
+                format!("firmware deployed to RP2040 via {transfer_method} ({location})"),
+                Some(port),
+            ),
+            PostFlashCdc::Unconfirmed(note) => (
+                format!("firmware deployed to RP2040 via {transfer_method} ({location}); {note}"),
+                None,
+            ),
+        };
         Ok(DeploymentResult {
             success: true,
-            message: format!(
-                "firmware deployed to RP2040 via {transfer_method} ({})",
-                describe_transfer_location(transfer_volume.as_deref()),
-            ),
-            port: Some(discovered_port),
+            message,
+            port,
             stdout: transfer_stdout,
             stderr: transfer_stderr,
             outcome: DeployOutcome::FullFlash,
@@ -1237,6 +1502,48 @@ mod tests {
     }
 
     #[test]
+    fn windows_roots_keep_only_predicate_approved_letters() {
+        let roots = volume_roots_filtered(true, None, |root| {
+            root == Path::new("D:\\") || root == Path::new("E:\\")
+        });
+        assert_eq!(roots, vec![PathBuf::from("D:\\"), PathBuf::from("E:\\")]);
+    }
+
+    #[test]
+    fn windows_roots_are_empty_when_predicate_rejects_every_letter() {
+        let roots = volume_roots_filtered(true, None, |_| false);
+        assert!(roots.is_empty());
+    }
+
+    #[test]
+    fn non_windows_roots_ignore_the_injected_predicate() {
+        let filtered = volume_roots_filtered(false, Some(Path::new("/home/alice")), |_| false);
+        let unfiltered = volume_roots_filtered(false, Some(Path::new("/home/alice")), |_| true);
+        assert_eq!(filtered, unfiltered);
+        assert!(filtered.contains(&PathBuf::from("/media/alice")));
+        assert!(filtered.contains(&PathBuf::from("/Volumes")));
+    }
+
+    #[test]
+    fn with_topology_appends_known_summary() {
+        assert_eq!(
+            with_topology(
+                "boom".to_string(),
+                Some("USB topology: direct root port")
+            ),
+            "boom. USB topology: direct root port"
+        );
+    }
+
+    #[test]
+    fn with_topology_falls_back_when_capture_failed() {
+        assert_eq!(
+            with_topology("boom".to_string(), None),
+            "boom. USB topology unavailable"
+        );
+    }
+
+    #[test]
     fn zero_and_multiple_bootsel_volumes_fail_safely() {
         assert_eq!(select_single_uf2_volume(Vec::new()).unwrap(), None);
         let error = select_single_uf2_volume(vec![
@@ -1247,6 +1554,124 @@ mod tests {
         assert!(error
             .to_string()
             .contains("multiple RP2040 BOOTSEL volumes"));
+    }
+
+    #[test]
+    fn appeared_volume_attribution_ignores_stale_volumes() {
+        let before = BTreeSet::from([PathBuf::from("stale-1"), PathBuf::from("stale-2")]);
+        assert_eq!(
+            select_appeared_volume(
+                &before,
+                vec![
+                    PathBuf::from("stale-1"),
+                    PathBuf::from("stale-2"),
+                    PathBuf::from("fresh"),
+                ],
+            )
+            .unwrap(),
+            Some(PathBuf::from("fresh"))
+        );
+        // Nothing new yet: keep polling rather than grabbing a stale volume.
+        assert_eq!(
+            select_appeared_volume(&before, vec![PathBuf::from("stale-1")]).unwrap(),
+            None
+        );
+        let error = select_appeared_volume(
+            &before,
+            vec![PathBuf::from("fresh-1"), PathBuf::from("fresh-2")],
+        )
+        .unwrap_err();
+        let message = error.to_string();
+        assert!(message.contains("multiple RP2040 BOOTSEL volumes"));
+        assert!(message.contains("fresh-1"));
+        assert!(message.contains("fresh-2"));
+    }
+
+    #[test]
+    fn empty_before_set_reduces_attribution_to_single_volume_selection() {
+        let before = BTreeSet::new();
+        assert_eq!(select_appeared_volume(&before, Vec::new()).unwrap(), None);
+        assert_eq!(
+            select_appeared_volume(&before, vec![PathBuf::from("only")]).unwrap(),
+            Some(PathBuf::from("only"))
+        );
+        let error = select_appeared_volume(&before, vec![PathBuf::from("a"), PathBuf::from("b")])
+            .unwrap_err();
+        assert!(error
+            .to_string()
+            .contains("multiple RP2040 BOOTSEL volumes"));
+    }
+
+    #[test]
+    fn pretouch_policy_keeps_single_volume_and_gates_multi_volume_on_attribution() {
+        assert_eq!(
+            pretouch_volume_policy(Vec::new(), false).unwrap(),
+            (None, BTreeSet::new())
+        );
+        // A single mounted volume wins outright, selector or not (#1040).
+        for can_attribute in [true, false] {
+            assert_eq!(
+                pretouch_volume_policy(vec![PathBuf::from("only")], can_attribute).unwrap(),
+                (Some(PathBuf::from("only")), BTreeSet::new())
+            );
+        }
+        let (volume, before) =
+            pretouch_volume_policy(vec![PathBuf::from("a"), PathBuf::from("b")], true).unwrap();
+        assert_eq!(volume, None);
+        assert_eq!(before, BTreeSet::from([PathBuf::from("a"), PathBuf::from("b")]));
+        let error = pretouch_volume_policy(vec![PathBuf::from("a"), PathBuf::from("b")], false)
+            .unwrap_err();
+        assert!(error
+            .to_string()
+            .contains("multiple RP2040 BOOTSEL volumes"));
+    }
+
+    #[test]
+    fn bootloader_watcher_attributes_the_volume_that_appears_after_the_touch() {
+        let stale = BTreeSet::from([PathBuf::from("stale")]);
+        let mut scans = 0;
+        let found = find_uf2_volume_until_with(
+            Duration::from_secs(1),
+            || {
+                scans += 1;
+                let discovered = if scans == 1 {
+                    vec![PathBuf::from("stale")]
+                } else {
+                    vec![PathBuf::from("stale"), PathBuf::from("fresh")]
+                };
+                select_appeared_volume(&stale, discovered)
+            },
+            || false,
+        )
+        .unwrap();
+        assert_eq!(found, Some(PathBuf::from("fresh")));
+        assert!(scans >= 2);
+    }
+
+    #[test]
+    fn bootsel_not_found_message_adds_macos_accessory_hint_only_on_macos() {
+        let plain = bootsel_not_found_message(false);
+        assert!(plain.contains("BOOTSEL volume not found"));
+        assert!(plain.contains(BOOTLOADER_TIMEOUT_ENV));
+        assert!(!plain.contains("Accessories"));
+
+        let macos = bootsel_not_found_message(true);
+        assert!(macos.starts_with(&plain));
+        assert!(macos.contains("Allow accessory to connect?"));
+        assert!(macos.contains("Privacy & Security > Accessories"));
+    }
+
+    #[test]
+    fn windows_5_write_denial_points_at_host_policy_not_the_board() {
+        let error = io::Error::from_raw_os_error(5);
+        let message =
+            format_uf2_copy_error(Path::new("firmware.uf2"), Path::new("G:/NEW.UF2"), &error);
+        assert!(message.contains("error 5"));
+        assert!(message.contains("Removable Disks: Deny write access"));
+        assert!(message.contains("FDVDenyWriteAccess"));
+        assert!(message.contains("not a board fault"));
+        assert!(message.contains("administrator"));
+        assert!(message.contains("will not clear a policy block"));
     }
 
     #[test]
@@ -1295,9 +1720,11 @@ mod tests {
             .to_string()
             .contains("failed to set the RP2040 reset baud"));
         assert!(error.to_string().contains("no RP2040 BOOTSEL transition"));
+        assert!(error.to_string().contains(BOOTLOADER_TIMEOUT_ENV));
 
         let error = select_volume_after_reset(None, None).unwrap_err();
         assert!(error.to_string().contains("BOOTSEL volume not found"));
+        assert!(error.to_string().contains(BOOTLOADER_TIMEOUT_ENV));
     }
 
     #[test]
@@ -1549,18 +1976,144 @@ mod tests {
     }
 
     #[test]
-    fn cdc_timeout_after_transfer_is_an_actionable_failure() {
-        let error = wait_for_cdc_port_with(
+    fn cdc_timeout_without_flash_confirmation_is_an_actionable_failure() {
+        let wait = wait_for_cdc_port_with(
             Some("COM7"),
             None,
             &BTreeSet::from(["COM7".to_string()]),
             Duration::ZERO,
             || Ok(Vec::new()),
-        )
-        .unwrap_err();
+        );
+        assert!(matches!(wait, Err(CdcWaitError::Timeout)));
+        let error = resolve_post_flash_cdc(false, wait, Duration::from_secs(15)).unwrap_err();
         let message = error.to_string();
         assert!(message.contains("firmware was transferred"));
         assert!(message.contains("no catalogue-identified runtime CDC port appeared"));
+        assert!(message.contains(POST_DEPLOY_TIMEOUT_ENV));
+    }
+
+    #[test]
+    fn cdc_timeout_after_confirmed_flash_downgrades_to_unconfirmed_success() {
+        let outcome =
+            resolve_post_flash_cdc(true, Err(CdcWaitError::Timeout), Duration::from_secs(15))
+                .unwrap();
+        let PostFlashCdc::Unconfirmed(note) = outcome else {
+            panic!("expected an unconfirmed-CDC downgrade, got {outcome:?}");
+        };
+        assert!(note.contains("flashed and accepted"));
+        assert!(note.contains("did not reappear within 15s"));
+        assert!(note.contains("first-plug driver installation"));
+        assert!(note.contains(POST_DEPLOY_TIMEOUT_ENV));
+    }
+
+    #[test]
+    fn cdc_enumeration_error_fails_even_after_confirmed_flash() {
+        let wait = wait_for_cdc_port_with(
+            None,
+            None,
+            &BTreeSet::new(),
+            Duration::from_secs(5),
+            || Err(FbuildError::SerialError("enumeration exploded".into())),
+        );
+        let error = resolve_post_flash_cdc(true, wait, Duration::from_secs(15)).unwrap_err();
+        assert!(error.to_string().contains("enumeration exploded"));
+    }
+
+    #[test]
+    fn cdc_port_found_is_confirmed_regardless_of_flash_state() {
+        for flash_confirmed in [true, false] {
+            let outcome = resolve_post_flash_cdc(
+                flash_confirmed,
+                Ok("COM9".to_string()),
+                Duration::from_secs(15),
+            )
+            .unwrap();
+            assert!(matches!(outcome, PostFlashCdc::Confirmed(port) if port == "COM9"));
+        }
+    }
+
+    #[test]
+    fn ambiguous_cdc_selection_is_an_enumeration_error_not_a_timeout() {
+        let wait = wait_for_cdc_port_with(None, None, &BTreeSet::new(), Duration::ZERO, || {
+            Ok(vec![
+                PicoCdcPort {
+                    name: "COM12".to_string(),
+                    serial_number: None,
+                },
+                PicoCdcPort {
+                    name: "COM13".to_string(),
+                    serial_number: None,
+                },
+            ])
+        });
+        let error = resolve_post_flash_cdc(true, wait, Duration::from_secs(15)).unwrap_err();
+        assert!(error
+            .to_string()
+            .contains("multiple new Raspberry Pi CDC ports"));
+    }
+
+    #[test]
+    fn timeout_override_accepts_integer_seconds_in_range() {
+        let default = Duration::from_secs(10);
+        assert_eq!(
+            timeout_secs_from(Some("30"), default, "VAR"),
+            Duration::from_secs(30)
+        );
+        assert_eq!(
+            timeout_secs_from(Some("1"), default, "VAR"),
+            Duration::from_secs(1)
+        );
+        assert_eq!(
+            timeout_secs_from(Some("600"), default, "VAR"),
+            Duration::from_secs(600)
+        );
+        assert_eq!(
+            timeout_secs_from(Some(" 45 "), default, "VAR"),
+            Duration::from_secs(45)
+        );
+    }
+
+    #[test]
+    fn timeout_override_falls_back_on_out_of_range_or_garbage() {
+        let default = Duration::from_secs(10);
+        for raw in [
+            None,
+            Some("0"),
+            Some("601"),
+            Some("-5"),
+            Some("abc"),
+            Some(""),
+            Some("1.5"),
+        ] {
+            assert_eq!(timeout_secs_from(raw, default, "VAR"), default);
+        }
+    }
+
+    #[test]
+    fn watchdog_passes_through_fast_results_and_errors() {
+        assert_eq!(
+            run_with_watchdog(Duration::from_secs(5), "probe", || Ok(7)).unwrap(),
+            7
+        );
+        let error = run_with_watchdog(Duration::from_secs(5), "probe", || -> Result<()> {
+            Err(FbuildError::DeployFailed("inner failure".into()))
+        })
+        .unwrap_err();
+        assert!(error.to_string().contains("inner failure"));
+    }
+
+    #[test]
+    fn watchdog_timeout_is_actionable_and_does_not_wait_for_the_worker() {
+        let started = Instant::now();
+        let error = run_with_watchdog(Duration::from_millis(50), "RP2040 UF2 write", || {
+            std::thread::sleep(Duration::from_secs(5));
+            Ok(())
+        })
+        .unwrap_err();
+        assert!(started.elapsed() < Duration::from_secs(2));
+        let message = error.to_string();
+        assert!(message.contains("RP2040 UF2 write did not complete within"));
+        assert!(message.contains(UF2_WRITE_TIMEOUT_ENV));
     }
 
     #[test]
