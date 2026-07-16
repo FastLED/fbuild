@@ -44,8 +44,8 @@ code changes.
 ## Sequence
 
 ```text
-project sources             framework libraries
-(src/, lib/, include/)      (e.g. Arduino_Core_STM32/libraries/*)
+project translation units       framework libraries
+(sketch, src/)                  (e.g. Arduino_Core_STM32/libraries/*)
         │                              │
         │ collect_project_seeds        │ FrameworkLibrary { name,
         ▼                              │   include_dirs, source_files }

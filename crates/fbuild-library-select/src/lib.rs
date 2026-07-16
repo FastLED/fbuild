@@ -1,7 +1,7 @@
 //! PlatformIO-LDF-style library resolver.
 //!
-//! Given a set of seed source files (the project's `src/`, `lib/`, `include/`
-//! trees), a list of discovered framework libraries, and the project's include
+//! Given a set of seed source files (the sketch and project's `src/` tree), a
+//! list of discovered framework libraries, and the project's include
 //! roots, `resolve()` returns the set of framework libraries transitively
 //! reachable from the seeds plus the compile-set for each selected library.
 //!
@@ -60,8 +60,9 @@ pub struct Selection {
 
 /// Resolve the transitive library selection for a project.
 ///
-/// `seeds` are the source files to walk from (sketch, project `src/`,
-/// `include/`, `lib/` trees).
+/// `seeds` are the source files to walk from (sketch and project `src/`).
+/// Local `lib/` and `include/` headers are discovered only through the
+/// transitive include graph; they are not independent LDF roots.
 /// `project_search_paths` are the project's own include roots — consulted for
 /// `<...>` includes before framework libs.
 /// `libraries` is the full set of framework libraries discovered under the
