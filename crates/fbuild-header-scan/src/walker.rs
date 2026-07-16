@@ -21,7 +21,7 @@ use std::path::{Path, PathBuf};
 
 use rayon::prelude::*;
 
-use crate::scanner::{IncludeKind, IncludeRef, scan};
+use crate::scanner::{IncludeKind, IncludeRef, scan, scan_active};
 
 /// Result of a walk. `reached` and `unresolved` are sorted for deterministic
 /// cache keys.
@@ -87,6 +87,19 @@ pub fn walk(seeds: &[PathBuf], search_paths: &[PathBuf]) -> WalkResult {
     walk_with_state(seeds, search_paths, &mut state)
 }
 
+/// Walk the include graph using only active preprocessor branches.
+///
+/// `defines` must be the build's compiler defines. This is the LDF entry
+/// point: headers behind a disabled branch do not become library dependencies.
+pub fn walk_active(
+    seeds: &[PathBuf],
+    search_paths: &[PathBuf],
+    defines: &HashMap<String, String>,
+) -> WalkResult {
+    let mut state = WalkState::new();
+    walk_with_state_active(seeds, search_paths, defines, &mut state)
+}
+
 /// Walk the include graph using a caller-owned [`WalkState`] so the scan cache
 /// and visited set persist across calls.
 ///
@@ -107,6 +120,28 @@ pub fn walk_with_state(
     search_paths: &[PathBuf],
     state: &mut WalkState,
 ) -> WalkResult {
+    walk_with_state_scanner(seeds, search_paths, state, &scan)
+}
+
+/// Active-branch counterpart to [`walk_with_state`].
+pub fn walk_with_state_active(
+    seeds: &[PathBuf],
+    search_paths: &[PathBuf],
+    defines: &HashMap<String, String>,
+    state: &mut WalkState,
+) -> WalkResult {
+    walk_with_state_scanner(seeds, search_paths, state, &|src| scan_active(src, defines))
+}
+
+fn walk_with_state_scanner<F>(
+    seeds: &[PathBuf],
+    search_paths: &[PathBuf],
+    state: &mut WalkState,
+    scanner: &F,
+) -> WalkResult
+where
+    F: Fn(&str) -> Vec<IncludeRef> + Sync,
+{
     tracing::debug!(
         seeds = seeds.len(),
         search_paths = search_paths.len(),
@@ -137,7 +172,7 @@ pub fn walk_with_state(
                 .par_iter()
                 .filter_map(|p| {
                     let text = std::fs::read_to_string(p).ok()?;
-                    Some((p.clone(), scan(&text)))
+                    Some((p.clone(), scanner(&text)))
                 })
                 .collect();
 

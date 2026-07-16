@@ -33,7 +33,7 @@ use fbuild_packages::{Framework, Toolchain};
 
 use crate::compile_database::TargetArchitecture;
 use crate::framework_libs::{
-    library_select_kv_store, resolve_framework_library_sources,
+    library_select_kv_store, resolve_framework_library_sources_active,
     resolve_framework_library_sources_cached,
 };
 use crate::generic_arm::{ArmCompiler, ArmLinker};
@@ -146,6 +146,33 @@ impl BuildOrchestrator for Stm32Orchestrator {
         // STM32duino only exposes bundled libraries via this framework-level
         // discovery (PlatformIO's LDF does the same for `framework = arduino`).
         let framework_libs = framework.get_framework_libraries();
+        let mut mcu_config =
+            super::mcu_config::get_stm32_config_for_mcu(&ctx.board.mcu.to_lowercase())?;
+        // Extract MCU family from variant path (e.g. "STM32F1xx" from
+        // "STM32F1xx/F103C8T_..."). LDF must see precisely the same defines
+        // as the compiler so it does not discard a conditional dependency.
+        let family = resolved_variant.split('/').next().unwrap_or("STM32F1xx");
+        let mut defines = ctx.board.get_defines();
+        defines.extend(mcu_config.defines_map());
+        if let Some(board_define) = framework_props
+            .as_ref()
+            .and_then(|props| props.get("board"))
+        {
+            defines.insert(format!("ARDUINO_{board_define}"), "1".to_string());
+        }
+        defines.insert(family.to_string(), "1".to_string());
+        let generic_board = stm32_generic_board_define(&ctx.board.mcu);
+        defines.insert(format!("ARDUINO_{generic_board}"), "1".to_string());
+        defines.insert("USE_HAL_DRIVER".to_string(), "1".to_string());
+        defines.insert("USE_FULL_LL_DRIVER".to_string(), "1".to_string());
+        defines.insert(
+            "VARIANT_H".to_string(),
+            format!("\\\"{}\\\"", selected_variant.header),
+        );
+        // UART HAL is disabled by default in stm32yyxx_hal_conf.h; enable it
+        // so WSerial can create Serial. USB PCD is needed by USB variants.
+        defines.insert("HAL_UART_MODULE_ENABLED".to_string(), "1".to_string());
+        defines.insert("HAL_PCD_MODULE_ENABLED".to_string(), "1".to_string());
         // WHY: STM32duino targets every Cortex-M family from M0 (F0xx) up
         // through M7 (H7xx) but the toolchain triple is constant
         // (`arm-none-eabi`). The cache key already includes
@@ -159,6 +186,7 @@ impl BuildOrchestrator for Stm32Orchestrator {
                     toolchain_triple: "stm32-arm-none-eabi",
                     framework_install_path: &framework_info.install_path,
                     framework_version: &framework_info.version,
+                    preprocessor_defines: &defines,
                 };
                 resolve_framework_library_sources_cached(
                     &framework_libs,
@@ -168,10 +196,11 @@ impl BuildOrchestrator for Stm32Orchestrator {
                     store,
                 )
             }
-            None => resolve_framework_library_sources(
+            None => resolve_framework_library_sources_active(
                 &framework_libs,
                 &params.project_dir,
                 &ctx.src_dir,
+                &defines,
             ),
         };
         if !framework_library_sources.is_empty() {
@@ -190,11 +219,6 @@ impl BuildOrchestrator for Stm32Orchestrator {
         );
 
         // 6. Build include dirs + compiler
-        // Extract MCU family from variant path (e.g. "STM32F1xx" from "STM32F1xx/F103C8T_...")
-        let family = resolved_variant.split('/').next().unwrap_or("STM32F1xx");
-
-        let mut mcu_config =
-            super::mcu_config::get_stm32_config_for_mcu(&ctx.board.mcu.to_lowercase())?;
         // STM32duino linker scripts reference LD_MAX_SIZE, LD_MAX_DATA_SIZE, and
         // LD_FLASH_OFFSET as symbols. Provide them via --defsym from board config.
         let max_flash = ctx.board.max_flash.unwrap_or(65536);
@@ -208,33 +232,6 @@ impl BuildOrchestrator for Stm32Orchestrator {
         mcu_config
             .linker_flags
             .push("-Wl,--defsym=LD_FLASH_OFFSET=0".to_string());
-        let mut defines = ctx.board.get_defines();
-        defines.extend(mcu_config.defines_map());
-        if let Some(board_define) = framework_props
-            .as_ref()
-            .and_then(|props| props.get("board"))
-        {
-            defines.insert(format!("ARDUINO_{board_define}"), "1".to_string());
-        }
-        // STM32duino's stm32_def.h checks for STM32YYxx (e.g. STM32F1xx). The board
-        // JSON extra_flags may only have STM32F1, so ensure the full family define.
-        defines.insert(family.to_string(), "1".to_string());
-        // STM32duino variant sources are guarded by ARDUINO_GENERIC_<MCU> defines.
-        // Derive from the MCU name: stm32f103c8t6 â†’ ARDUINO_GENERIC_F103C8TX
-        let generic_board = stm32_generic_board_define(&ctx.board.mcu);
-        defines.insert(format!("ARDUINO_{generic_board}"), "1".to_string());
-        // STM32duino requires these defines for HAL/LL and variant header resolution.
-        defines.insert("USE_HAL_DRIVER".to_string(), "1".to_string());
-        defines.insert("USE_FULL_LL_DRIVER".to_string(), "1".to_string());
-        defines.insert(
-            "VARIANT_H".to_string(),
-            format!("\\\"{}\\\"", selected_variant.header),
-        );
-        // UART HAL module is disabled by default in stm32yyxx_hal_conf.h â€” enable it
-        // so WSerial.h can create the Serial instance.
-        defines.insert("HAL_UART_MODULE_ENABLED".to_string(), "1".to_string());
-        defines.insert("HAL_PCD_MODULE_ENABLED".to_string(), "1".to_string());
-
         // Build include dirs manually (can't use get_include_paths because
         // STM32duino core dir is "arduino", not the board JSON's "stm32")
         let mut include_dirs = vec![core_dir.clone(), variant_dir.clone()];

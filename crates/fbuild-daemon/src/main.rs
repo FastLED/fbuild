@@ -99,10 +99,12 @@ async fn main() {
     tracing::info!("listening on {}", addr);
 
     // Populate the FastLED/boards USB caches used by device discovery and
-    // deployment. Best-effort display-name failure degrades to deterministic
-    // unknown labels; identity-dependent behavior fails closed. Runs on a
-    // blocking thread so a slow network doesn't stall daemon bootstrap.
-    tokio::task::spawn_blocking(populate_usb_overlay_best_effort);
+    // deployment before starting any compile work. The typed profile provides
+    // USB_VID/USB_PID for cores such as Adafruit SAMD, so serving a build
+    // before this blocking initialization finishes makes the result depend on
+    // a startup race. Display-name lookup remains best-effort; unavailable
+    // identity-dependent behavior still fails closed.
+    let _ = tokio::task::spawn_blocking(populate_usb_overlay_best_effort).await;
 
     // FastLED/fbuild#800 (Phase 4 stage 2 of #789): start the embedded
     // zccache service inside this tokio runtime and install the global

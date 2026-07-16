@@ -44,8 +44,8 @@ code changes.
 ## Sequence
 
 ```text
-project sources             framework libraries
-(src/, lib/, include/)      (e.g. Arduino_Core_STM32/libraries/*)
+project translation units       framework libraries
+(sketch, src/)                  (e.g. Arduino_Core_STM32/libraries/*)
         │                              │
         │ collect_project_seeds        │ FrameworkLibrary { name,
         ▼                              │   include_dirs, source_files }
@@ -84,6 +84,15 @@ the same. Concrete consequences:
 - STM32 `SPI.h` resolves through `Arduino_Core_STM32/libraries/SPI/src/`
   and prefix-attributes to the SPI library — no manual allowlist needed
   (#202).
+
+## Rooted at the sketch
+
+Only project translation units seed the include walk. Headers under a local
+`lib/` tree are searched normally, but are never independent roots: a local
+library header must be reached from the sketch's transitive include graph
+before its framework dependencies can be selected. This prevents an inactive
+header anywhere in a large library from self-selecting an unrelated framework
+library (FastLED/fbuild#1094).
 
 ## Why two-pass (not fixed-point)
 

@@ -25,3 +25,9 @@
 **Lesson**: When replicating an upstream tool's behavior (PlatformIO, Arduino-CLI, etc.), read the source first and match its semantics exactly. Users who flip between fbuild and the upstream tool should see byte-identical output, not a "more correct" reinterpretation.
 
 **Bonus**: Path-prefix attribution beats basename matching for library resolution. A library is selected only if the walker resolves an include *into* its `include_dirs`, not because some header shares a basename. Closes #202 and #204.
+
+## 2026-07-15: Explain in Human Terms First (#1076)
+
+**Problem**: Research summaries and issue comments written as compressed engineering notes ("byte-equivalent TU", "query-driver glob degenerates to ./*", file:line citations mid-sentence) made the user ask twice: "this is hard to understand" / "tell me in human terms".
+
+**Rule**: Lead with what it means for a person using the tool, in plain sentences. Put the mechanism in a worked example (real sketch → what gets generated → what the editor sees) instead of abstract nouns. Keep file:line references out of prose meant for humans — collect them in a details/sources section.

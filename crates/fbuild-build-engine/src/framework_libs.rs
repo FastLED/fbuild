@@ -12,12 +12,14 @@
 //! framework libraries (FNET/Snooze/RadioHead/mbedtls on teensyLC, for
 //! example) stay out of the compile set. See FastLED/fbuild#205.
 
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
 use fbuild_library_select::cache::{CacheKeyInputs, FileKvStore, resolve_cached};
-use fbuild_library_select::resolve as resolve_library_selection;
+use fbuild_library_select::{
+    resolve as resolve_library_selection, resolve_active as resolve_active_library_selection,
+};
 use fbuild_packages::library::FrameworkLibrary;
 use walkdir::{DirEntry, WalkDir};
 
@@ -30,6 +32,20 @@ pub fn resolve_framework_library_sources(
     let roots = framework_include_scan_roots(project_dir, src_dir);
     let filtered = filter_framework_libs_shadowed_by_project(libraries, &roots);
     resolve_framework_library_sources_from_libraries(&filtered, &roots)
+}
+
+/// Resolve framework libraries using active preprocessor branches only.
+pub fn resolve_framework_library_sources_active(
+    libraries: &[FrameworkLibrary],
+    project_dir: &Path,
+    src_dir: &Path,
+    defines: &HashMap<String, String>,
+) -> Vec<PathBuf> {
+    let roots = framework_include_scan_roots(project_dir, src_dir);
+    let filtered = filter_framework_libs_shadowed_by_project(libraries, &roots);
+    let seeds = collect_project_seeds(&roots);
+    let search_paths = project_search_paths(&roots);
+    resolve_active_library_selection(&seeds, &search_paths, &filtered, defines).source_files
 }
 
 /// Drop framework libraries whose primary header (`<lib_name>.h`) is
@@ -174,7 +190,7 @@ pub fn resolve_framework_library_sources_from_libraries(
     }
 
     let seeds = collect_project_seeds(roots);
-    let search_paths: Vec<PathBuf> = roots.to_vec();
+    let search_paths = project_search_paths(roots);
     let selection = resolve_library_selection(&seeds, &search_paths, libraries);
 
     for name in &selection.required_libraries {
@@ -239,7 +255,7 @@ pub(crate) fn resolve_framework_library_sources_cached_with_hit(
     }
 
     let seeds = collect_project_seeds(&roots);
-    let search_paths: Vec<PathBuf> = roots.clone();
+    let search_paths = project_search_paths(&roots);
 
     match resolve_cached(&seeds, &search_paths, &filtered, key_inputs, store) {
         Ok(cached) => {
@@ -266,7 +282,12 @@ pub(crate) fn resolve_framework_library_sources_cached_with_hit(
                 "library-select cache backend error; falling back to uncached resolve"
             );
             (
-                resolve_framework_library_sources_from_libraries(&filtered, &roots),
+                resolve_framework_library_sources_active(
+                    &filtered,
+                    project_dir,
+                    src_dir,
+                    key_inputs.preprocessor_defines,
+                ),
                 false,
             )
         }
@@ -333,13 +354,39 @@ fn push_existing_unique(roots: &mut Vec<PathBuf>, path: PathBuf) {
     }
 }
 
-/// Collect every source file under each root as a walker seed. Headers are
-/// intentionally included so libraries referenced only from a `.h` in the
-/// project tree still get picked up.
+/// Include search paths for the project and its local Arduino libraries.
+///
+/// Local libraries live under `lib/<name>/` (or `lib/<name>/src/`), but the
+/// `lib/` directory itself cannot resolve `<FastLED.h>`. Add each library's
+/// public root while retaining the project roots ahead of framework libraries.
+fn project_search_paths(roots: &[PathBuf]) -> Vec<PathBuf> {
+    let mut paths = roots.to_vec();
+    for root in roots {
+        if !is_library_root(root) {
+            continue;
+        }
+        let Ok(entries) = std::fs::read_dir(root) else {
+            continue;
+        };
+        for entry in entries.flatten() {
+            let dir = entry.path();
+            if !dir.is_dir() {
+                continue;
+            }
+            push_existing_unique(&mut paths, dir.clone());
+            push_existing_unique(&mut paths, dir.join("src"));
+        }
+    }
+    paths
+}
+
+/// Collect translation units as walker seeds. Headers must be reached through
+/// the sketch's transitive include graph; scanning every header under `lib/`
+/// turns inactive library code into false framework-library dependencies.
 fn collect_project_seeds(roots: &[PathBuf]) -> Vec<PathBuf> {
     let mut seeds = Vec::new();
     for root in roots {
-        if !root.exists() {
+        if !root.exists() || is_library_root(root) {
             continue;
         }
         for entry in WalkDir::new(root)
@@ -350,12 +397,19 @@ fn collect_project_seeds(roots: &[PathBuf]) -> Vec<PathBuf> {
             if !entry.file_type().is_file() {
                 continue;
             }
-            if is_source_or_header_file(entry.path()) {
+            if is_translation_unit(entry.path()) {
                 seeds.push(entry.path().to_path_buf());
             }
         }
     }
     seeds
+}
+
+fn is_library_root(path: &Path) -> bool {
+    path.file_name()
+        .and_then(|name| name.to_str())
+        .map(|name| name.eq_ignore_ascii_case("lib"))
+        .unwrap_or(false)
 }
 
 fn should_scan_entry(entry: &DirEntry) -> bool {
@@ -376,16 +430,13 @@ fn should_scan_entry(entry: &DirEntry) -> bool {
     )
 }
 
-fn is_source_or_header_file(path: &Path) -> bool {
+fn is_translation_unit(path: &Path) -> bool {
     let ext = path
         .extension()
         .and_then(|ext| ext.to_str())
         .unwrap_or_default()
         .to_lowercase();
-    matches!(
-        ext.as_str(),
-        "c" | "cpp" | "cc" | "cxx" | "s" | "ino" | "h" | "hh" | "hpp" | "hxx"
-    )
+    matches!(ext.as_str(), "c" | "cpp" | "cc" | "cxx" | "s" | "ino")
 }
 
 #[cfg(test)]
@@ -535,6 +586,53 @@ mod tests {
         let sources = resolve_framework_library_sources_from_libraries(
             &libraries,
             std::slice::from_ref(&project_src),
+        );
+        assert_eq!(sources, vec![spi_dir.join("SPI.cpp")]);
+    }
+
+    #[test]
+    fn inactive_local_library_header_cannot_select_framework_library() {
+        // FastLED/fbuild#1094: a header anywhere under project lib/ used to
+        // become an independent seed. Its inactive include then selected a
+        // framework library even though the sketch could not reach it.
+        let tmp = tempfile::TempDir::new().unwrap();
+        let project_src = tmp.path().join("project").join("src");
+        let project_lib = tmp.path().join("project").join("lib");
+        let fastled = project_lib.join("FastLED");
+        std::fs::create_dir_all(&project_src).unwrap();
+        std::fs::create_dir_all(&fastled).unwrap();
+        std::fs::write(project_src.join("main.cpp"), "#include <FastLED.h>\n").unwrap();
+        std::fs::write(fastled.join("FastLED.h"), "#include <SPI.h>\n").unwrap();
+        std::fs::write(fastled.join("inactive_audio.h"), "#include <Audio.h>\n").unwrap();
+
+        let spi_dir = tmp.path().join("framework").join("libraries").join("SPI");
+        std::fs::create_dir_all(&spi_dir).unwrap();
+        std::fs::write(spi_dir.join("SPI.h"), "").unwrap();
+        std::fs::write(spi_dir.join("SPI.cpp"), "").unwrap();
+
+        let audio_dir = tmp.path().join("framework").join("libraries").join("Audio");
+        std::fs::create_dir_all(&audio_dir).unwrap();
+        std::fs::write(audio_dir.join("Audio.h"), "").unwrap();
+        std::fs::write(audio_dir.join("Audio.cpp"), "").unwrap();
+
+        let libraries = vec![
+            FrameworkLibrary {
+                name: "Audio".to_string(),
+                dir: audio_dir.clone(),
+                include_dirs: vec![audio_dir.clone()],
+                source_files: vec![audio_dir.join("Audio.cpp")],
+            },
+            FrameworkLibrary {
+                name: "SPI".to_string(),
+                dir: spi_dir.clone(),
+                include_dirs: vec![spi_dir.clone()],
+                source_files: vec![spi_dir.join("SPI.cpp")],
+            },
+        ];
+
+        let sources = resolve_framework_library_sources_from_libraries(
+            &libraries,
+            &[project_src, project_lib],
         );
         assert_eq!(sources, vec![spi_dir.join("SPI.cpp")]);
     }
@@ -817,10 +915,12 @@ mod tests {
         }];
 
         let framework_root = tmp.path().join("framework");
+        let defines = HashMap::new();
         let key_inputs = CacheKeyInputs {
             toolchain_triple: "test-arm-none-eabi",
             framework_install_path: &framework_root,
             framework_version: "0.0.0-test",
+            preprocessor_defines: &defines,
         };
 
         let kv = FileKvStore::open(tmp.path().join("kv")).unwrap();

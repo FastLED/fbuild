@@ -1,7 +1,7 @@
 //! PlatformIO-LDF-style library resolver.
 //!
-//! Given a set of seed source files (the project's `src/`, `lib/`, `include/`
-//! trees), a list of discovered framework libraries, and the project's include
+//! Given a set of seed source files (the sketch and project's `src/` tree), a
+//! list of discovered framework libraries, and the project's include
 //! roots, `resolve()` returns the set of framework libraries transitively
 //! reachable from the seeds plus the compile-set for each selected library.
 //!
@@ -17,10 +17,10 @@
 //!    catch anything the header-only pass missed. Libraries newly reached in
 //!    pass 2 are also marked dependent.
 
-use std::collections::{BTreeMap, BTreeSet};
+use std::collections::{BTreeMap, BTreeSet, HashMap};
 use std::path::{Path, PathBuf};
 
-use fbuild_header_scan::{WalkState, walk_with_state};
+use fbuild_header_scan::{WalkState, active_defines, walk_with_state, walk_with_state_active};
 use fbuild_packages::library::FrameworkLibrary;
 use serde::{Deserialize, Serialize};
 
@@ -60,8 +60,9 @@ pub struct Selection {
 
 /// Resolve the transitive library selection for a project.
 ///
-/// `seeds` are the source files to walk from (sketch, project `src/`,
-/// `include/`, `lib/` trees).
+/// `seeds` are the source files to walk from (sketch and project `src/`).
+/// Local `lib/` and `include/` headers are discovered only through the
+/// transitive include graph; they are not independent LDF roots.
 /// `project_search_paths` are the project's own include roots — consulted for
 /// `<...>` includes before framework libs.
 /// `libraries` is the full set of framework libraries discovered under the
@@ -72,6 +73,19 @@ pub fn resolve(
     libraries: &[FrameworkLibrary],
 ) -> Selection {
     resolve_with_stats(seeds, project_search_paths, libraries).0
+}
+
+/// Resolve framework libraries using only includes active for `defines`.
+///
+/// Build orchestrators must use this entry point so optional framework headers
+/// in disabled `#if` branches cannot add object files to the link set.
+pub fn resolve_active(
+    seeds: &[PathBuf],
+    project_search_paths: &[PathBuf],
+    libraries: &[FrameworkLibrary],
+    defines: &HashMap<String, String>,
+) -> Selection {
+    resolve_with_stats_active(seeds, project_search_paths, libraries, defines).0
 }
 
 /// Same contract as [`resolve`] but also returns [`ResolveStats`] so callers
@@ -86,6 +100,46 @@ pub fn resolve_with_stats(
     seeds: &[PathBuf],
     project_search_paths: &[PathBuf],
     libraries: &[FrameworkLibrary],
+) -> (Selection, ResolveStats) {
+    resolve_with_stats_impl(seeds, project_search_paths, libraries, None)
+}
+
+/// Active-branch counterpart to [`resolve_with_stats`].
+pub fn resolve_with_stats_active(
+    seeds: &[PathBuf],
+    project_search_paths: &[PathBuf],
+    libraries: &[FrameworkLibrary],
+    defines: &HashMap<String, String>,
+) -> (Selection, ResolveStats) {
+    let effective_defines = seed_defines(seeds, defines);
+    resolve_with_stats_impl(
+        seeds,
+        project_search_paths,
+        libraries,
+        Some(&effective_defines),
+    )
+}
+
+fn seed_defines(
+    seeds: &[PathBuf],
+    compiler_defines: &HashMap<String, String>,
+) -> HashMap<String, String> {
+    let mut defines = compiler_defines.clone();
+    let mut ordered_seeds = seeds.to_vec();
+    ordered_seeds.sort();
+    for seed in ordered_seeds {
+        if let Ok(source) = std::fs::read_to_string(seed) {
+            defines = active_defines(&source, &defines);
+        }
+    }
+    defines
+}
+
+fn resolve_with_stats_impl(
+    seeds: &[PathBuf],
+    project_search_paths: &[PathBuf],
+    libraries: &[FrameworkLibrary],
+    defines: Option<&HashMap<String, String>>,
 ) -> (Selection, ResolveStats) {
     let mut selected: BTreeSet<usize> = BTreeSet::new();
     let mut all_included: BTreeSet<PathBuf> = BTreeSet::new();
@@ -117,7 +171,10 @@ pub fn resolve_with_stats(
         let _span = tracing::info_span!("ldf_pass", pass = 1u32).entered();
         pass_count += 1;
         tracing::info!(pass = 1u32, "ldf_pass");
-        let res = walk_with_state(seeds, &full_search_paths, &mut state);
+        let res = match defines {
+            Some(defines) => walk_with_state_active(seeds, &full_search_paths, defines, &mut state),
+            None => walk_with_state(seeds, &full_search_paths, &mut state),
+        };
         for p in &res.reached {
             all_included.insert(p.clone());
         }
@@ -149,7 +206,12 @@ pub fn resolve_with_stats(
                 recon_seeds.push(src.clone());
             }
         }
-        let res = walk_with_state(&recon_seeds, &full_search_paths, &mut state);
+        let res = match defines {
+            Some(defines) => {
+                walk_with_state_active(&recon_seeds, &full_search_paths, defines, &mut state)
+            }
+            None => walk_with_state(&recon_seeds, &full_search_paths, &mut state),
+        };
         for p in &res.reached {
             all_included.insert(p.clone());
         }
@@ -277,6 +339,36 @@ mod tests {
         let sel = resolve(&seeds, &[project_src], &[spi]);
         assert_eq!(sel.required_libraries, vec!["SPI".to_string()]);
         assert!(sel.source_files.contains(&canon(&spi_cpp)) || sel.source_files.contains(&spi_cpp));
+    }
+
+    #[test]
+    fn active_resolution_skips_library_in_disabled_branch() {
+        let tmp = tempdir();
+        let project_src = tmp.path().join("project").join("src");
+        write(
+            &project_src.join("main.cpp"),
+            "#define USE_SPI 1\n#include <FastLED.h>\n",
+        );
+        write(
+            &project_src.join("FastLED.h"),
+            "#if defined(USE_AUDIO)\n#include <Audio.h>\n#elif USE_SPI\n#include <SPI.h>\n#endif\n",
+        );
+
+        let mut audio = lib(tmp.path(), "Audio");
+        write(&audio.include_dirs[0].join("Audio.h"), "");
+        let audio_cpp = audio.include_dirs[0].join("Audio.cpp");
+        write(&audio_cpp, "");
+        audio.source_files.push(audio_cpp);
+
+        let mut spi = lib(tmp.path(), "SPI");
+        write(&spi.include_dirs[0].join("SPI.h"), "");
+        let spi_cpp = spi.include_dirs[0].join("SPI.cpp");
+        write(&spi_cpp, "");
+        spi.source_files.push(spi_cpp);
+
+        let seeds = vec![project_src.join("main.cpp")];
+        let selection = resolve_active(&seeds, &[project_src], &[audio, spi], &HashMap::new());
+        assert_eq!(selection.required_libraries, vec!["SPI".to_string()]);
     }
 
     #[test]

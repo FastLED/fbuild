@@ -25,7 +25,7 @@ use crate::build_fingerprint::{
 use crate::compile_database::TargetArchitecture;
 use crate::compiler::Compiler as _;
 use crate::framework_libs::{
-    library_select_kv_store, resolve_framework_library_sources,
+    library_select_kv_store, resolve_framework_library_sources_active,
     resolve_framework_library_sources_cached,
 };
 use crate::pipeline;
@@ -185,6 +185,10 @@ impl BuildOrchestrator for TeensyOrchestrator {
             .retain(|p| p.file_name().map(|f| f != "Blink.cc").unwrap_or(true));
 
         let framework_libs = framework.get_framework_libraries();
+        let ldf_mcu_config =
+            super::mcu_config::get_teensy_config_for_mcu(&ctx.board.mcu.to_lowercase())?;
+        let mut ldf_defines = ctx.board.get_defines();
+        ldf_defines.extend(ldf_mcu_config.defines_map());
         // WHY: Teensy 3.x/4.x and TeensyLC all share teensyduino's
         // arm-none-eabi toolchain â€” a single stable triple covers every
         // board this orchestrator handles. The triple feeds the cache key
@@ -197,6 +201,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
                     toolchain_triple: "teensy-arm-none-eabi",
                     framework_install_path: &framework_info.install_path,
                     framework_version: &framework_info.version,
+                    preprocessor_defines: &ldf_defines,
                 };
                 resolve_framework_library_sources_cached(
                     &framework_libs,
@@ -206,10 +211,11 @@ impl BuildOrchestrator for TeensyOrchestrator {
                     store,
                 )
             }
-            None => resolve_framework_library_sources(
+            None => resolve_framework_library_sources_active(
                 &framework_libs,
                 &params.project_dir,
                 &ctx.src_dir,
+                &ldf_defines,
             ),
         };
         if !framework_library_sources.is_empty() {
