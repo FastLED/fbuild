@@ -90,13 +90,13 @@ pub const SELF_EVICTION_TIMEOUT: Duration = SELF_EVICTION_TIMEOUT_DEFAULT;
 /// read from the `FBUILD_WATCH_SET_CACHE_SECS` env var at daemon
 /// startup (#122 follow-up).
 ///
-/// - Unset / unparseable → 2 s (the cache's own default).
+/// - Unset / unparseable → 0 s (the safe cache default).
 /// - Positive integer → that many seconds.
 /// - `0` → `Duration::ZERO`, i.e. every entry is stale the instant
 ///   it's stored. Lets an operator bypass the cache at runtime —
 ///   useful for A/B-ing a suspected regression without a rebuild.
 pub fn watch_set_cache_window_from_env() -> Duration {
-    const DEFAULT_SECS: u64 = 2;
+    const DEFAULT_SECS: u64 = 0;
     let secs = std::env::var("FBUILD_WATCH_SET_CACHE_SECS")
         .ok()
         .and_then(|s| s.trim().parse::<u64>().ok())
@@ -697,7 +697,7 @@ mod tests {
 
         // Unset → default.
         unsafe { std::env::remove_var("FBUILD_WATCH_SET_CACHE_SECS") };
-        assert_eq!(watch_set_cache_window_from_env(), Duration::from_secs(2));
+        assert_eq!(watch_set_cache_window_from_env(), Duration::ZERO);
 
         // Zero → zero duration (disables the cache by making every
         // entry stale on store).
@@ -710,7 +710,7 @@ mod tests {
 
         // Garbage → default (graceful degradation, not a panic).
         unsafe { std::env::set_var("FBUILD_WATCH_SET_CACHE_SECS", "not-a-number") };
-        assert_eq!(watch_set_cache_window_from_env(), Duration::from_secs(2));
+        assert_eq!(watch_set_cache_window_from_env(), Duration::ZERO);
 
         // Whitespace around a valid value → parsed after trim.
         unsafe { std::env::set_var("FBUILD_WATCH_SET_CACHE_SECS", "  9  ") };

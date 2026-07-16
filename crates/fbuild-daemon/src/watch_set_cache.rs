@@ -2,9 +2,9 @@
 //!
 //! Implements [`fbuild_build::build_fingerprint::WatchSetStampCache`]
 //! over a `DashMap` keyed by a stable hash of the watch set's root
-//! paths. Entries are invalidated by a freshness window so a long-
-//! running daemon doesn't serve a stale "no changes" answer to a
-//! warm-rebuild call that comes minutes after the last one.
+//! paths. The production default forces a fresh walk for every build:
+//! staging can happen immediately before deployment, and returning a
+//! cached "no changes" answer would flash stale firmware.
 //!
 //! # Why
 //!
@@ -14,14 +14,10 @@
 //! that walk is the dominant cost on warm rebuilds — see
 //! `docs/PERF_WARM_BUILD.md`.
 //!
-//! Within the same daemon lifetime a back-to-back `fbuild build` /
-//! `fbuild deploy` round-trip can reuse the previous walk's result if
-//! it's only a few seconds old: any source change a user just made
-//! arrived through the file system, which already advanced the watch
-//! root's mtime — but our heuristic deliberately doesn't try to be
-//! that precise. A short freshness window (default 2 s, see
-//! [`DEFAULT_FRESHNESS`]) is enough for the warm-loop case while
-//! keeping the worst-case "ignored a real change" window human-noticeable.
+//! Operators can explicitly configure a positive freshness window for
+//! controlled performance experiments. It is unsafe for normal deploys:
+//! an immediate source edit or AutoResearch staging step can otherwise reuse
+//! the preceding fingerprint.
 //!
 //! # Cycle / staleness model
 //!
@@ -59,12 +55,11 @@ pub struct WatchSetCacheStats {
     pub puts: u64,
 }
 
-/// Default freshness window for cache entries. Short enough that a
-/// user editing a file and immediately re-building still triggers
-/// the real walk (modulo edit speed), long enough to cover the
-/// back-to-back deploy / re-deploy interaction the sub-1 s budget
-/// targets. Override per-instance via [`DaemonWatchSetCache::with_max_age`].
-pub const DEFAULT_FRESHNESS: Duration = Duration::from_secs(2);
+/// Default freshness window for cache entries. Zero forces a source walk on
+/// every deploy so an immediate staging step cannot reuse a stale firmware
+/// fingerprint. Override per-instance via [`DaemonWatchSetCache::with_max_age`]
+/// only for controlled performance experiments.
+pub const DEFAULT_FRESHNESS: Duration = Duration::ZERO;
 
 /// In-memory cache. Cheap to clone via `Arc` because the only
 /// state is a `DashMap`. Counter fields are `AtomicU64` so the
@@ -211,7 +206,7 @@ mod tests {
     /// window. Two distinct watch sets must not collide.
     #[test]
     fn put_then_get_returns_same_hash() {
-        let cache = DaemonWatchSetCache::new();
+        let cache = DaemonWatchSetCache::with_max_age(Duration::from_secs(1));
         let ws_a = vec![watch("/a")];
         let ws_b = vec![watch("/b")];
         cache.put(&ws_a, "AAA".to_string());
@@ -220,11 +215,23 @@ mod tests {
         assert_eq!(cache.get(&ws_b).as_deref(), Some("BBB"));
     }
 
+    #[test]
+    fn default_cache_does_not_reuse_a_fresh_hash_after_staging() {
+        let cache = DaemonWatchSetCache::new();
+        let watches = vec![watch("/project/src/sketch")];
+        cache.put(&watches, "before-staging".to_string());
+
+        assert!(
+            cache.get(&watches).is_none(),
+            "the default must force a source walk so an immediate staged change cannot deploy stale firmware"
+        );
+    }
+
     /// Same set of paths in different order hashes to the same key —
     /// orchestrator can hand us watches without sorting.
     #[test]
     fn key_is_order_insensitive() {
-        let cache = DaemonWatchSetCache::new();
+        let cache = DaemonWatchSetCache::with_max_age(Duration::from_secs(1));
         let ws_ab = vec![watch("/a"), watch("/b")];
         let ws_ba = vec![watch("/b"), watch("/a")];
         cache.put(&ws_ab, "X".to_string());
