@@ -231,6 +231,26 @@ fn build_no_shrink_flag_is_accepted() {
 }
 
 #[test]
+fn build_clean_all_is_accepted() {
+    let argv = ["fbuild", "build", "--clean-all", "tests/platform/uno"];
+    let cli = Cli::try_parse_from(argv).expect("parse");
+    match cli.command {
+        Some(Commands::Build { clean_all, .. }) => assert!(clean_all),
+        _ => panic!("expected Build subcommand"),
+    }
+}
+
+#[test]
+fn deploy_clean_all_is_accepted() {
+    let argv = ["fbuild", "deploy", "--clean-all", "tests/platform/uno"];
+    let cli = Cli::try_parse_from(argv).expect("parse");
+    match cli.command {
+        Some(Commands::Deploy { clean_all, .. }) => assert!(clean_all),
+        _ => panic!("expected Deploy subcommand"),
+    }
+}
+
+#[test]
 fn shrink_and_no_shrink_together_is_rejected() {
     // clap's `conflicts_with` should turn this into a parse error.
     let argv = [

@@ -36,6 +36,7 @@ pub async fn run_clangd_config(
             project_dir.clone(),
             Some(env_name.clone()),
             false, // clean
+            false, // clean_all
             verbose,
             None,  // jobs
             false, // quick

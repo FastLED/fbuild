@@ -38,6 +38,7 @@ async fn build_core_repo(repo: &Path, env_name: &str) -> tempfile::TempDir {
     let params = BuildParams {
         project_dir: repo.to_path_buf(),
         env_name: env_name.to_string(),
+        clean_all: false,
         clean: true,
         profile: BuildProfile::Release,
         build_dir,

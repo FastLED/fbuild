@@ -263,7 +263,8 @@ pub async fn build(
         let params = fbuild_build::BuildParams {
             project_dir: project_dir.clone(),
             env_name: env_name.clone(),
-            clean: req.clean_build,
+            clean_all: req.clean_all,
+            clean: req.clean_build || req.clean_all,
             profile,
             build_dir,
             verbose: req.verbose,
@@ -706,7 +707,8 @@ pub async fn build(
         let params = fbuild_build::BuildParams {
             project_dir: project_dir.clone(),
             env_name: env_name.clone(),
-            clean: req.clean_build,
+            clean_all: req.clean_all,
+            clean: req.clean_build || req.clean_all,
             profile,
             build_dir,
             verbose: req.verbose,

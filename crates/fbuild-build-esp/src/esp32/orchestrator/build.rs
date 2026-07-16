@@ -599,38 +599,49 @@ impl BuildOrchestrator for Esp32Orchestrator {
 
         // Compile core + variant sources in parallel
         let build_log_mutex = std::sync::Mutex::new(ctx.build_log);
-        let core_cache = if params.clean {
-            None
-        } else {
-            Some(crate::framework_core_cache::FrameworkCoreCache::new(
-                &params.project_dir,
-                "esp32",
-                &params.env_name,
-                params.profile,
-                &compiler,
-                &all_core_sources,
-                &user_overlay,
-            ))
-        };
-        if let Some(cache) = core_cache.as_ref() {
+        // `--clean` resets only the project build directory. Framework core
+        // objects are content-addressed global artifacts, so hydrate them even
+        // for a clean build; `--clean-all` is the explicit cache eviction path.
+        let core_cache = crate::framework_core_cache::FrameworkCoreCache::new(
+            &params.project_dir,
+            "esp32",
+            &params.env_name,
+            params.profile,
+            &compiler,
+            &all_core_sources,
+            &user_overlay,
+        );
+        if params.clean_all {
+            let _g = perf.phase("core-cache-remove");
+            match std::fs::remove_dir_all(core_cache.path()) {
+                Ok(()) => tracing::info!("removed framework core cache {}", core_cache.path().display()),
+                Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
+                Err(error) => tracing::warn!(
+                    "failed to remove framework core cache {}: {}",
+                    core_cache.path().display(),
+                    error
+                ),
+            }
+        }
+        {
             let _g = perf.phase("core-cache-hydrate");
-            match cache.hydrate(core_build_dir, &compiler, &all_core_sources, &user_overlay) {
+            match core_cache.hydrate(core_build_dir, &compiler, &all_core_sources, &user_overlay) {
                 Ok(stats) if stats.copied > 0 || stats.skipped > 0 => tracing::info!(
                     "framework core cache hydrate key={} copied={} skipped={} from {}",
-                    cache.key(),
+                    core_cache.key(),
                     stats.copied,
                     stats.skipped,
-                    cache.path().display()
+                    core_cache.path().display()
                 ),
                 Ok(_) => tracing::debug!(
                     "framework core cache miss key={} at {}",
-                    cache.key(),
-                    cache.path().display()
+                    core_cache.key(),
+                    core_cache.path().display()
                 ),
                 Err(e) => tracing::warn!(
                     "framework core cache hydrate failed key={} at {}: {}",
-                    cache.key(),
-                    cache.path().display(),
+                    core_cache.key(),
+                    core_cache.path().display(),
                     e
                 ),
             }
@@ -647,23 +658,23 @@ impl BuildOrchestrator for Esp32Orchestrator {
             )
             .await?
         };
-        if let Some(cache) = core_cache.as_ref() {
+        {
             let _g = perf.phase("core-cache-store");
-            match cache.store(core_build_dir) {
+            match core_cache.store(core_build_dir) {
                 Ok(stats) if stats.copied > 0 => tracing::info!(
                     "framework core cache store key={} copied={} to {}",
-                    cache.key(),
+                    core_cache.key(),
                     stats.copied,
-                    cache.path().display()
+                    core_cache.path().display()
                 ),
                 Ok(_) => tracing::debug!(
                     "framework core cache store key={} had no new artifacts",
-                    cache.key()
+                    core_cache.key()
                 ),
                 Err(e) => tracing::warn!(
                     "framework core cache store failed key={} at {}: {}",
-                    cache.key(),
-                    cache.path().display(),
+                    core_cache.key(),
+                    core_cache.path().display(),
                     e
                 ),
             }

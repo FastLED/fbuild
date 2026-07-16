@@ -355,6 +355,7 @@ async fn build_one_sketch(inputs: SketchBuildInputs) -> SketchResult {
     let params = BuildParams {
         project_dir: sketch.clone(),
         env_name: env_name.clone(),
+        clean_all: false,
         clean: false,
         profile,
         build_dir,

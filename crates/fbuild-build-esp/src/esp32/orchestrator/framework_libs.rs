@@ -10,6 +10,7 @@ use fbuild_packages::Framework;
 
 use super::super::esp32_compiler::Esp32Compiler;
 use super::super::mcu_config::Esp32McuConfig;
+use super::framework_library_cache::FrameworkLibraryCache;
 use super::helpers::{
     framework_failure_marker, framework_signature, record_failed_framework_lib,
     should_skip_failed_framework_lib,
@@ -95,6 +96,26 @@ pub(super) async fn compile_framework_builtin_libs(
     let fw_c_flags = apply_overlay_flags(&fw_compiler.c_flags(), user_overlay, "dummy.c");
     let fw_cpp_flags = apply_overlay_flags(&fw_compiler.cpp_flags(), user_overlay, "dummy.cpp");
     let fw_signature = framework_signature(include_dirs, &fw_c_flags, &fw_cpp_flags);
+    let framework_cache = FrameworkLibraryCache::new(
+        &params.project_dir,
+        params.profile,
+        &fw_signature,
+        &builtin_libs_dir,
+    );
+    if params.clean_all {
+        match framework_cache.remove() {
+            Ok(()) => tracing::info!("removed ESP32 framework library cache"),
+            Err(error) => tracing::warn!("failed to remove ESP32 framework library cache: {}", error),
+        }
+    }
+    match framework_cache.hydrate(&fw_libs_build_dir) {
+        Ok(copied) if copied > 0 => tracing::info!(
+            "hydrated {} cached ESP32 framework library archives",
+            copied
+        ),
+        Ok(_) => {}
+        Err(error) => tracing::warn!("failed to hydrate ESP32 framework library cache: {}", error),
+    }
 
     let mut fw_lib_count = 0;
     let mut fw_lib_seen = 0;
@@ -157,6 +178,15 @@ pub(super) async fn compile_framework_builtin_libs(
                 );
                 continue;
             }
+            if framework_cache.has_failed(&lib_name) {
+                if perf.is_active() {
+                    perf.checkpoint(format!(
+                        "fw-lib-cache-skip-failed name={} index={}",
+                        lib_name, fw_lib_seen
+                    ));
+                }
+                continue;
+            }
 
             let fw_jobs = crate::parallel::effective_jobs(params.jobs);
             if perf.is_active() {
@@ -197,6 +227,9 @@ pub(super) async fn compile_framework_builtin_libs(
             {
                 Ok(Some(archive)) => {
                     let _ = std::fs::remove_file(&failure_marker);
+                    if let Err(error) = framework_cache.store_archive(&archive) {
+                        tracing::warn!("failed to cache framework library {}: {}", lib_name, error);
+                    }
                     library_archives.push(archive);
                     fw_lib_count += 1;
                     if perf.is_active() {
@@ -226,6 +259,9 @@ pub(super) async fn compile_framework_builtin_libs(
                     }
                     tracing::debug!("framework library {} failed to compile: {}", lib_name, e);
                     record_failed_framework_lib(&failure_marker, &fw_signature, &e.to_string());
+                    if let Err(error) = framework_cache.record_failure(&lib_name) {
+                        tracing::warn!("failed to cache framework library failure {}: {}", lib_name, error);
+                    }
                 }
             }
         }

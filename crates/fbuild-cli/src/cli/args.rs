@@ -211,6 +211,9 @@ pub enum Commands {
         environment: Option<String>,
         #[arg(short = 'c', long)]
         clean: bool,
+        /// Remove project output and matching reusable framework caches before building
+        #[arg(long)]
+        clean_all: bool,
         #[arg(short, long)]
         verbose: bool,
         #[arg(short = 'j', long, value_parser = parse_jobs)]
@@ -259,6 +262,9 @@ pub enum Commands {
         port: Option<String>,
         #[arg(short = 'c', long)]
         clean: bool,
+        /// Remove project output and matching reusable framework caches before deploying
+        #[arg(long)]
+        clean_all: bool,
         /// Monitor after deploy; optionally pass flags as a string
         /// e.g., --monitor="--timeout 60 --halt-on-success \"TEST PASSED\""
         #[arg(long, num_args = 0..=1, default_missing_value = "")]

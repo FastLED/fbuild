@@ -78,6 +78,7 @@ void loop() {
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
         env_name: "teensy41".to_string(),
+        clean_all: false,
         clean: true,
         profile: BuildProfile::Release,
         build_dir,
@@ -151,6 +152,7 @@ void loop() {}
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
         env_name: "teensy41".to_string(),
+        clean_all: false,
         clean: true,
         profile: BuildProfile::Release,
         build_dir,
@@ -202,6 +204,7 @@ async fn build_teensy41_fixture() {
     let params = BuildParams {
         project_dir: project_dir.clone(),
         env_name: "teensy41".to_string(),
+        clean_all: false,
         clean: true,
         profile: BuildProfile::Release,
         build_dir,
@@ -312,6 +315,7 @@ void loop() {
     let params = BuildParams {
         project_dir: project_dir.clone(),
         env_name: "teensy30".to_string(),
+        clean_all: false,
         clean: true,
         profile: BuildProfile::Release,
         build_dir: tmp.path().join(".fbuild/build/teensy30/release"),

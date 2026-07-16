@@ -176,6 +176,7 @@ pub async fn async_main() {
             project_dir,
             environment,
             clean,
+            clean_all,
             verbose,
             jobs,
             quick,
@@ -192,12 +193,13 @@ pub async fn async_main() {
         }) => {
             let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
             if platformio {
-                pio_build(&project_dir, environment.as_deref(), clean, verbose).await
+                pio_build(&project_dir, environment.as_deref(), clean || clean_all, verbose).await
             } else {
                 run_build(
                     project_dir,
                     environment,
                     clean,
+                    clean_all,
                     verbose,
                     jobs,
                     quick,
@@ -217,6 +219,7 @@ pub async fn async_main() {
             environment,
             port,
             clean,
+            clean_all,
             monitor,
             verbose,
             platformio,
@@ -243,7 +246,7 @@ pub async fn async_main() {
                     &project_dir,
                     environment.as_deref(),
                     port.as_deref(),
-                    clean,
+                    clean || clean_all,
                     verbose,
                 )
                 .await
@@ -259,6 +262,7 @@ pub async fn async_main() {
                     environment,
                     port,
                     clean,
+                    clean_all,
                     monitor_after,
                     verbose,
                     timeout.or(parsed.timeout),
@@ -559,6 +563,7 @@ pub async fn async_main() {
                     cli.environment,
                     cli.port,
                     cli.clean,
+                    false,
                     monitor_after,
                     cli.verbose,
                     cli.timeout.or(parsed.timeout),
