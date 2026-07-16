@@ -52,6 +52,7 @@ const BOOTLOADER_TIMEOUT_ENV: &str = "FBUILD_RP2040_BOOTLOADER_TIMEOUT_SECS";
 const POST_DEPLOY_TIMEOUT_ENV: &str = "FBUILD_RP2040_POST_DEPLOY_TIMEOUT_SECS";
 const UF2_WRITE_TIMEOUT_ENV: &str = "FBUILD_RP2040_UF2_WRITE_TIMEOUT_SECS";
 const DEFAULT_UF2_WRITE_TIMEOUT: Duration = Duration::from_secs(60);
+const CDC_POLL_INTERVAL: Duration = Duration::from_millis(100);
 
 /// Parse an env-supplied stage timeout. Accepts integer seconds in 1..=600;
 /// an unset variable is silently the default, anything else warns and falls
@@ -77,6 +78,15 @@ fn timeout_secs_from(raw: Option<&str>, default: Duration, var_name: &str) -> Du
 fn timeout_from_env(var_name: &str, default: Duration) -> Duration {
     let raw = std::env::var(var_name).ok();
     timeout_secs_from(raw.as_deref(), default, var_name)
+}
+
+fn rp2040_post_deploy_timeout() -> Duration {
+    let timing = fbuild_serial::boards::BoardFamily::NativeUsbCdcReset1200Bps
+        .handoff_timing();
+    timeout_from_env(
+        POST_DEPLOY_TIMEOUT_ENV,
+        Duration::from_millis(u64::from(timing.application_cdc_timeout_ms)),
+    )
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -937,10 +947,7 @@ impl Default for Rp2040Deployer {
     fn default() -> Self {
         Self {
             bootloader_timeout: timeout_from_env(BOOTLOADER_TIMEOUT_ENV, Duration::from_secs(10)),
-            // Windows can take several seconds to enumerate the CDC interface
-            // after the ROM accepts the UF2. Keep this bounded but generous
-            // enough for a stock board on a busy USB hub.
-            post_deploy_timeout: timeout_from_env(POST_DEPLOY_TIMEOUT_ENV, Duration::from_secs(15)),
+            post_deploy_timeout: rp2040_post_deploy_timeout(),
             uf2_write_timeout: timeout_from_env(UF2_WRITE_TIMEOUT_ENV, DEFAULT_UF2_WRITE_TIMEOUT),
             family_id: RP2040_FAMILY_ID,
         }
@@ -1007,8 +1014,39 @@ fn catalogue_pico_cdc_ports(expected_family: u32) -> Result<Vec<PicoCdcPort>> {
 /// selection error (`Enumeration`) always fails the deploy.
 #[derive(Debug)]
 enum CdcWaitError {
-    Timeout,
+    Timeout(CdcWaitTimeout),
     Enumeration(FbuildError),
+}
+
+#[derive(Debug)]
+struct CdcWaitTimeout {
+    elapsed: Duration,
+    previous_port: Option<String>,
+    requested_serial: Option<String>,
+    candidates: Vec<PicoCdcPort>,
+}
+
+impl CdcWaitTimeout {
+    fn diagnostics(&self) -> String {
+        let prior_port = self.previous_port.as_deref().unwrap_or("none");
+        let requested_serial = self.requested_serial.as_deref().unwrap_or("none");
+        let candidates = if self.candidates.is_empty() {
+            "none".to_string()
+        } else {
+            self.candidates
+                .iter()
+                .map(|candidate| match candidate.serial_number.as_deref() {
+                    Some(serial) => format!("{} (serial {serial})", candidate.name),
+                    None => format!("{} (serial unavailable)", candidate.name),
+                })
+                .collect::<Vec<_>>()
+                .join(", ")
+        };
+        format!(
+            "elapsed {}ms; prior port {prior_port}; requested serial {requested_serial}; catalogue candidates: {candidates}",
+            self.elapsed.as_millis()
+        )
+    }
 }
 
 fn wait_for_cdc_port(
@@ -1018,22 +1056,32 @@ fn wait_for_cdc_port(
     expected_family: u32,
     timeout: Duration,
 ) -> std::result::Result<String, CdcWaitError> {
-    wait_for_cdc_port_with(previous_port, requested_serial, before, timeout, || {
-        catalogue_pico_cdc_ports(expected_family)
-    })
+    let started = Instant::now();
+    wait_for_cdc_port_with_clock(
+        previous_port,
+        requested_serial,
+        before,
+        timeout,
+        || catalogue_pico_cdc_ports(expected_family),
+        || started.elapsed(),
+        std::thread::sleep,
+    )
 }
 
-fn wait_for_cdc_port_with<F>(
+fn wait_for_cdc_port_with_clock<F, E, S>(
     previous_port: Option<&str>,
     requested_serial: Option<&str>,
     before: &BTreeSet<String>,
     timeout: Duration,
     mut catalogue: F,
+    mut elapsed: E,
+    mut sleep: S,
 ) -> std::result::Result<String, CdcWaitError>
 where
     F: FnMut() -> Result<Vec<PicoCdcPort>>,
+    E: FnMut() -> Duration,
+    S: FnMut(Duration),
 {
-    let deadline = Instant::now() + timeout;
     loop {
         let ports = catalogue().map_err(CdcWaitError::Enumeration)?;
         match select_cdc_candidate(previous_port, requested_serial, before, &ports) {
@@ -1041,10 +1089,16 @@ where
             Ok(None) => {}
             Err(error) => return Err(CdcWaitError::Enumeration(error)),
         }
-        if Instant::now() >= deadline {
-            return Err(CdcWaitError::Timeout);
+        let waited = elapsed();
+        if waited >= timeout {
+            return Err(CdcWaitError::Timeout(CdcWaitTimeout {
+                elapsed: waited,
+                previous_port: previous_port.map(str::to_string),
+                requested_serial: requested_serial.map(str::to_string),
+                candidates: ports,
+            }));
         }
-        std::thread::sleep(Duration::from_millis(100));
+        sleep(CDC_POLL_INTERVAL.min(timeout.saturating_sub(waited)));
     }
 }
 
@@ -1070,14 +1124,20 @@ fn resolve_post_flash_cdc(
     match wait_result {
         Ok(port) => Ok(PostFlashCdc::Confirmed(port)),
         Err(CdcWaitError::Enumeration(error)) => Err(error),
-        Err(CdcWaitError::Timeout) if flash_confirmed => Ok(PostFlashCdc::Unconfirmed(format!(
+        Err(CdcWaitError::Timeout(diagnostics)) if flash_confirmed => {
+            tracing::warn!(diagnostics = %diagnostics.diagnostics(), "RP2040 runtime CDC did not return before the confirmed-flash deadline");
+            Ok(PostFlashCdc::Unconfirmed(format!(
             "the firmware was flashed and accepted, but the runtime CDC port did not reappear within {}s; first-plug driver installation can exceed this window — the board is likely healthy (extend the window with {POST_DEPLOY_TIMEOUT_ENV})",
             window.as_secs()
-        ))),
-        Err(CdcWaitError::Timeout) => Err(FbuildError::DeployFailed(format!(
+            )))
+        }
+        Err(CdcWaitError::Timeout(diagnostics)) => {
+            tracing::warn!(diagnostics = %diagnostics.diagnostics(), "RP2040 runtime CDC did not return before the unconfirmed-flash deadline");
+            Err(FbuildError::DeployFailed(format!(
             "RP2040 firmware was transferred, but no catalogue-identified runtime CDC port appeared within {}s; verify that the firmware enables USB serial and that FastLED/boards USB data is current (extend the window with {POST_DEPLOY_TIMEOUT_ENV})",
             window.as_secs()
-        ))),
+            )))
+        }
     }
 }
 
@@ -1990,14 +2050,16 @@ mod tests {
 
     #[test]
     fn cdc_timeout_without_flash_confirmation_is_an_actionable_failure() {
-        let wait = wait_for_cdc_port_with(
+        let wait = wait_for_cdc_port_with_clock(
             Some("COM7"),
             None,
             &BTreeSet::from(["COM7".to_string()]),
             Duration::ZERO,
             || Ok(Vec::new()),
+            || Duration::ZERO,
+            |_| {},
         );
-        assert!(matches!(wait, Err(CdcWaitError::Timeout)));
+        assert!(matches!(wait, Err(CdcWaitError::Timeout(_))));
         let error = resolve_post_flash_cdc(false, wait, Duration::from_secs(15)).unwrap_err();
         let message = error.to_string();
         assert!(message.contains("firmware was transferred"));
@@ -2008,8 +2070,17 @@ mod tests {
     #[test]
     fn cdc_timeout_after_confirmed_flash_downgrades_to_unconfirmed_success() {
         let outcome =
-            resolve_post_flash_cdc(true, Err(CdcWaitError::Timeout), Duration::from_secs(15))
-                .unwrap();
+            resolve_post_flash_cdc(
+                true,
+                Err(CdcWaitError::Timeout(CdcWaitTimeout {
+                    elapsed: Duration::from_secs(15),
+                    previous_port: Some("COM7".to_string()),
+                    requested_serial: Some("serial".to_string()),
+                    candidates: Vec::new(),
+                })),
+                Duration::from_secs(15),
+            )
+            .unwrap();
         let PostFlashCdc::Unconfirmed(note) = outcome else {
             panic!("expected an unconfirmed-CDC downgrade, got {outcome:?}");
         };
@@ -2020,11 +2091,35 @@ mod tests {
     }
 
     #[test]
+    fn cdc_timeout_diagnostics_identify_the_prior_target_and_catalogue_candidates() {
+        let diagnostics = CdcWaitTimeout {
+            elapsed: Duration::from_secs(30),
+            previous_port: Some("COM12".to_string()),
+            requested_serial: Some("5303284720C4641C".to_string()),
+            candidates: vec![PicoCdcPort {
+                name: "COM27".to_string(),
+                serial_number: Some("5303284720C4641C".to_string()),
+            }],
+        }
+        .diagnostics();
+
+        assert!(diagnostics.contains("elapsed 30000ms"));
+        assert!(diagnostics.contains("prior port COM12"));
+        assert!(diagnostics.contains("requested serial 5303284720C4641C"));
+        assert!(diagnostics.contains("COM27 (serial 5303284720C4641C)"));
+    }
+
+    #[test]
     fn cdc_enumeration_error_fails_even_after_confirmed_flash() {
-        let wait =
-            wait_for_cdc_port_with(None, None, &BTreeSet::new(), Duration::from_secs(5), || {
-                Err(FbuildError::SerialError("enumeration exploded".into()))
-            });
+        let wait = wait_for_cdc_port_with_clock(
+            None,
+            None,
+            &BTreeSet::new(),
+            Duration::from_secs(5),
+            || Err(FbuildError::SerialError("enumeration exploded".into())),
+            || Duration::ZERO,
+            |_| {},
+        );
         let error = resolve_post_flash_cdc(true, wait, Duration::from_secs(15)).unwrap_err();
         assert!(error.to_string().contains("enumeration exploded"));
     }
@@ -2043,9 +2138,72 @@ mod tests {
     }
 
     #[test]
+    fn delayed_matching_cdc_after_the_legacy_window_returns_its_new_port() {
+        let mut scans = 0;
+        let mut elapsed = [Duration::from_secs(16)].into_iter();
+        let port = wait_for_cdc_port_with_clock(
+            Some("COM12"),
+            Some("5303284720C4641C"),
+            &BTreeSet::from(["COM12".to_string()]),
+            Duration::from_secs(30),
+            || {
+                scans += 1;
+                Ok(if scans == 1 {
+                    Vec::new()
+                } else {
+                    vec![PicoCdcPort {
+                        name: "COM27".to_string(),
+                        serial_number: Some("5303284720C4641C".to_string()),
+                    }]
+                })
+            },
+            || elapsed.next().unwrap_or(Duration::from_secs(16)),
+            |_| {},
+        )
+        .expect("a matching delayed Pico CDC endpoint must be returned");
+
+        assert_eq!(port, "COM27");
+        assert_eq!(scans, 2);
+    }
+
+    #[test]
+    fn final_deadline_catalogue_scan_accepts_a_matching_renumbered_port() {
+        let mut scans = 0;
+        let mut elapsed = [Duration::from_secs(30)].into_iter();
+        let port = wait_for_cdc_port_with_clock(
+            Some("COM12"),
+            Some("5303284720C4641C"),
+            &BTreeSet::from(["COM12".to_string()]),
+            Duration::from_secs(30),
+            || {
+                scans += 1;
+                Ok(vec![PicoCdcPort {
+                    name: "COM27".to_string(),
+                    serial_number: Some("5303284720C4641C".to_string()),
+                }])
+            },
+            || elapsed.next().unwrap_or(Duration::from_secs(30)),
+            |_| {},
+        )
+        .expect("the final catalogue scan must accept a boundary arrival");
+
+        assert_eq!(port, "COM27");
+        assert_eq!(scans, 1);
+    }
+
+    #[test]
+    fn rp2040_post_flash_cdc_policy_exceeds_the_legacy_15_second_window() {
+        assert_eq!(rp2040_post_deploy_timeout(), Duration::from_secs(30));
+    }
+
+    #[test]
     fn ambiguous_cdc_selection_is_an_enumeration_error_not_a_timeout() {
-        let wait = wait_for_cdc_port_with(None, None, &BTreeSet::new(), Duration::ZERO, || {
-            Ok(vec![
+        let wait = wait_for_cdc_port_with_clock(
+            None,
+            None,
+            &BTreeSet::new(),
+            Duration::ZERO,
+            || Ok(vec![
                 PicoCdcPort {
                     name: "COM12".to_string(),
                     serial_number: None,
@@ -2054,8 +2212,10 @@ mod tests {
                     name: "COM13".to_string(),
                     serial_number: None,
                 },
-            ])
-        });
+            ]),
+            || Duration::ZERO,
+            |_| {},
+        );
         let error = resolve_post_flash_cdc(true, wait, Duration::from_secs(15)).unwrap_err();
         assert!(
             error

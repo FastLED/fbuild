@@ -290,6 +290,7 @@ impl BoardFamily {
                 post_reset_settle_ms: 200,
                 boot_drain_ms: 0,
                 port_reappear_timeout_ms: 3000,
+                application_cdc_timeout_ms: 3000,
                 open_retry_count: 5,
             },
             // CDC-ACM bridge (LPC11U35): pyOCD reset settles in ~500
@@ -300,6 +301,7 @@ impl BoardFamily {
                 post_reset_settle_ms: 500,
                 boot_drain_ms: 2000,
                 port_reappear_timeout_ms: 3000,
+                application_cdc_timeout_ms: 3000,
                 open_retry_count: 3,
             },
             // 1200-bps-touch bootloaders (Teensy HalfKay, SAMD UF2,
@@ -308,10 +310,21 @@ impl BoardFamily {
             // again and reappears at the app VID/PID after flash.
             // Tolerate up to 5 s reappear + 10 open retries to ride
             // out the double-enumeration window.
-            Teensy | NativeUsbCdcReset1200Bps => HandoffTiming {
+            Teensy => HandoffTiming {
                 post_reset_settle_ms: 100,
                 boot_drain_ms: 500,
                 port_reappear_timeout_ms: 5000,
+                application_cdc_timeout_ms: 5000,
+                open_retry_count: 10,
+            },
+            // RP2040/SAMD 1200-bps-touch targets enumerate once for the ROM
+            // bootloader and again for the application. Windows can defer the
+            // second driver bind well beyond the bootloader handoff window.
+            NativeUsbCdcReset1200Bps => HandoffTiming {
+                post_reset_settle_ms: 100,
+                boot_drain_ms: 500,
+                port_reappear_timeout_ms: 5000,
+                application_cdc_timeout_ms: 30_000,
                 open_retry_count: 10,
             },
             // Arduino auto-reset: the bootloader's "wait for upload"
@@ -323,6 +336,7 @@ impl BoardFamily {
                 post_reset_settle_ms: 1500,
                 boot_drain_ms: 0,
                 port_reappear_timeout_ms: 0,
+                application_cdc_timeout_ms: 0,
                 open_retry_count: 1,
             },
         }
@@ -356,6 +370,10 @@ pub struct HandoffTiming {
     /// to `0` for boards that don't drop the port at all (Arduino
     /// classic auto-reset).
     pub port_reappear_timeout_ms: u32,
+    /// How long to wait for the application CDC endpoint after a successful
+    /// flash. This can exceed the bootloader reappearance window when Windows
+    /// defers application-driver binding after the ROM volume disappears.
+    pub application_cdc_timeout_ms: u32,
     /// Max retries on transient open failures during the reappear
     /// window. Higher for boards with longer re-enumeration windows
     /// (Teensy / RP2040 — HalfKay / BOOTSEL).
@@ -1545,6 +1563,7 @@ mod tests {
         assert_eq!(t.post_reset_settle_ms, 500);
         assert_eq!(t.boot_drain_ms, 2000);
         assert_eq!(t.port_reappear_timeout_ms, 3000);
+        assert_eq!(t.application_cdc_timeout_ms, 3000);
         assert_eq!(t.open_retry_count, 3);
     }
 
@@ -1588,6 +1607,12 @@ mod tests {
             t.port_reappear_timeout_ms, 0,
             "Arduino USB endpoint stays on the bridge chip; no reappear"
         );
+    }
+
+    #[test]
+    fn handoff_timing_rp2040_allows_delayed_windows_application_cdc() {
+        let t = BoardFamily::NativeUsbCdcReset1200Bps.handoff_timing();
+        assert_eq!(t.application_cdc_timeout_ms, 30_000);
     }
 
     #[test]
