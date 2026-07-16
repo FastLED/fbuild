@@ -19,6 +19,18 @@ cd fbuild
 pip install -e .
 ```
 
+Source installs use Rust's fast dev profile by default (no Rust LTO), which
+keeps local rebuilds quick. To explicitly build an optimized Rust wheel, pass
+the PEP 517 backend setting:
+
+```bash
+pip install . --config-settings fbuild-profile=release
+```
+
+`pip install . -- --release` is not supported: pip does not forward arbitrary
+arguments after `--` to a PEP 517 backend. The `fbuild-profile` setting (or
+`FBUILD_BUILD_RELEASE=1`) is the supported release override.
+
 ## First Project
 
 Create a project with a PlatformIO-compatible layout:

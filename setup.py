@@ -267,7 +267,8 @@ def _use_release_profile() -> bool:
     3 via `[profile.dev.package."*"]`, only our own crates compile
     unoptimized). Set `FBUILD_BUILD_RELEASE=1` to opt into a release
     build when you actually want a fast binary (CI, packaging, perf
-    tests).
+    tests). PEP 517 callers can use `--config-settings fbuild-profile=release`;
+    `build_backend.py` translates that setting to this environment variable.
     """
     return os.environ.get("FBUILD_BUILD_RELEASE", "").lower() in ("1", "true", "yes")
 

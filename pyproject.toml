@@ -56,7 +56,14 @@ cache-keys = [
 
 [build-system]
 requires = ["setuptools>=64"]
-build-backend = "setuptools.build_meta"
+build-backend = "build_backend"
+backend-path = ["."]
+
+# Local/source installs use Cargo's dev profile (no LTO) by default.  To
+# request an optimized Rust wheel through pip, use:
+#   pip install . --config-settings fbuild-profile=release
+# A literal `pip install . -- --release` cannot be forwarded through the PEP
+# 517 interface; `--config-settings` is the standard backend override.
 
 [tool.setuptools]
 packages = ["fbuild", "fbuild.api"]
