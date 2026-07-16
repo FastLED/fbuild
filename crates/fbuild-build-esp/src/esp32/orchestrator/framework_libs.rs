@@ -105,7 +105,9 @@ pub(super) async fn compile_framework_builtin_libs(
     if params.clean_all {
         match framework_cache.remove() {
             Ok(()) => tracing::info!("removed ESP32 framework library cache"),
-            Err(error) => tracing::warn!("failed to remove ESP32 framework library cache: {}", error),
+            Err(error) => {
+                tracing::warn!("failed to remove ESP32 framework library cache: {}", error)
+            }
         }
     }
     match framework_cache.hydrate(&fw_libs_build_dir) {
@@ -260,7 +262,11 @@ pub(super) async fn compile_framework_builtin_libs(
                     tracing::debug!("framework library {} failed to compile: {}", lib_name, e);
                     record_failed_framework_lib(&failure_marker, &fw_signature, &e.to_string());
                     if let Err(error) = framework_cache.record_failure(&lib_name) {
-                        tracing::warn!("failed to cache framework library failure {}: {}", lib_name, error);
+                        tracing::warn!(
+                            "failed to cache framework library failure {}: {}",
+                            lib_name,
+                            error
+                        );
                     }
                 }
             }

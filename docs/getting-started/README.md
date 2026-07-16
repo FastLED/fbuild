@@ -24,11 +24,11 @@ keeps local rebuilds quick. To explicitly build an optimized Rust wheel, pass
 the PEP 517 backend setting:
 
 ```bash
-pip install . --config-settings fbuild-profile=release
+pip install . --config-settings profile=release
 ```
 
 `pip install . -- --release` is not supported: pip does not forward arbitrary
-arguments after `--` to a PEP 517 backend. The `fbuild-profile` setting (or
+arguments after `--` to a PEP 517 backend. The `profile=release` setting (or
 `FBUILD_BUILD_RELEASE=1`) is the supported release override.
 
 ## First Project

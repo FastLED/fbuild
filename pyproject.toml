@@ -23,9 +23,9 @@ dependencies = []
 # setuptools is in dev (not project deps) because fbuild uses
 # no-build-isolation: the build runs in the project venv, so setuptools
 # must already be installed when uv tries to (re)build the wheel.
-# default-groups below makes uv install dev (and hence setuptools)
+# default-groups below makes uv install dev (and hence setuptools and soldr)
 # before attempting to build, breaking the chicken-and-egg.
-dev = ["fbuild-dev-tools", "setuptools>=64"]
+dev = ["fbuild-dev-tools", "setuptools>=64", "soldr>=0.8.19"]
 
 [tool.uv.sources]
 fbuild-dev-tools = { path = "ci/dev-tools", editable = true }
@@ -43,6 +43,9 @@ fbuild-dev-tools = { path = "ci/dev-tools", editable = true }
 [tool.uv]
 no-build-isolation-package = ["fbuild"]
 default-groups = ["dev"]
+# `no-build-isolation-package` uses the project environment for fbuild's
+# setup.py. Inject soldr there as well as declaring it in build-system.requires
+# so `uv sync` has the delegated backend available before rebuilding fbuild.
 # Tell uv to re-sync the editable install when these change. Without
 # this, `uv run` after a .rs edit silently uses a stale _native.pyd
 # because uv's default cache-keys only watch pyproject.toml.
@@ -54,16 +57,22 @@ cache-keys = [
     { file = "crates/**/Cargo.toml" },
 ]
 
-[build-system]
-requires = ["setuptools>=64"]
-build-backend = "build_backend"
-backend-path = ["."]
+[tool.uv.extra-build-dependencies]
+fbuild = ["setuptools>=64", "soldr>=0.8.19"]
 
-# Local/source installs use Cargo's dev profile (no LTO) by default.  To
-# request an optimized Rust wheel through pip, use:
-#   pip install . --config-settings fbuild-profile=release
-# A literal `pip install . -- --release` cannot be forwarded through the PEP
-# 517 interface; `--config-settings` is the standard backend override.
+[build-system]
+# 0.8.19 is the first soldr release containing delegated PEP 517 hooks.
+requires = ["soldr>=0.8.19", "setuptools>=64"]
+build-backend = "soldr"
+
+# soldr owns the PEP 517 environment/profile/cache policy, while setuptools
+# retains fbuild's native CLI/daemon/PyO3 staging implementation in setup.py.
+[tool.soldr.pep517]
+delegate-backend = "setuptools.build_meta"
+
+# Local/source installs use soldr's fast dev profile by default. To request a
+# release-profile source build through PEP 517, use:
+#   pip install . --config-settings profile=release
 
 [tool.setuptools]
 packages = ["fbuild", "fbuild.api"]
