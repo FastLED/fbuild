@@ -62,8 +62,8 @@ pub enum ProbeAction {
         vid_pid: Option<String>,
         /// Filter by PlatformIO env name (`lpc845brk`, `lpc804`, …)
         /// — looks up the VCOM `(vid, pid)` in
-        /// [`fbuild_serial::boards::ENVIRONMENT_TO_VCOM`] and matches
-        /// that against the connected ports.
+        /// `fbuild_serial::boards::ENVIRONMENT_TO_VCOM` (private table
+        /// in that module) and matches that against the connected ports.
         #[arg(long)]
         env: Option<String>,
     },
