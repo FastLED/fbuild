@@ -444,9 +444,7 @@ pub fn lpc_link2_probe_selector() -> Option<String> {
     None
 }
 
-fn profile_is_nxp_debug_probe(
-    profile: &fbuild_core::usb::profiles::UsbTransportProfile,
-) -> bool {
+fn profile_is_nxp_debug_probe(profile: &fbuild_core::usb::profiles::UsbTransportProfile) -> bool {
     use fbuild_core::usb::profiles::{UsbDeviceRole, UsbPurpose};
 
     profile.purpose == UsbPurpose::Probe
@@ -534,8 +532,7 @@ mod tests {
     #[test]
     fn nxp_probe_detection_uses_profile_semantics() {
         use fbuild_core::usb::profiles::{
-            UsbDeviceRole, UsbIdentityMatch, UsbProfileProvenance, UsbPurpose,
-            UsbTransportProfile,
+            UsbDeviceRole, UsbIdentityMatch, UsbProfileProvenance, UsbPurpose, UsbTransportProfile,
         };
         let profile = UsbTransportProfile {
             identity_match: UsbIdentityMatch {

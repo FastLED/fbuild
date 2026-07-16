@@ -155,11 +155,7 @@ pub fn find_lpc_link2_firmware() -> Option<NormalizedPath> {
 /// DFU mode, using the CMSIS-DAP V2 hex. Kept separate from the actual
 /// spawn so the CLI's `--dry-run` variant can show it (and tests can
 /// pin the shape).
-pub fn dfu_util_argv(
-    dfu_util: &Path,
-    firmware_hex: &Path,
-    device_selector: &str,
-) -> Vec<String> {
+pub fn dfu_util_argv(dfu_util: &Path, firmware_hex: &Path, device_selector: &str) -> Vec<String> {
     vec![
         dfu_util.to_string_lossy().to_string(),
         "-d".to_string(),
@@ -316,8 +312,7 @@ mod tests {
     #[test]
     fn factory_firmware_detection_uses_profile_generation() {
         use fbuild_core::usb::profiles::{
-            UsbDeviceRole, UsbIdentityMatch, UsbProfileProvenance, UsbPurpose,
-            UsbTransportProfile,
+            UsbDeviceRole, UsbIdentityMatch, UsbProfileProvenance, UsbPurpose, UsbTransportProfile,
         };
         let profile = UsbTransportProfile {
             identity_match: UsbIdentityMatch {
