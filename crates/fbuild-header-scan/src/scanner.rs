@@ -3,9 +3,13 @@
 //! Tokenizes source byte-by-byte while tracking whether we are inside a line
 //! comment, block comment, string literal, raw string literal, or character
 //! literal. `#include` directives are recognized only in normal code state.
+//! [`scan`] preserves the legacy behavior and scans every conditional branch;
+//! [`scan_active`] evaluates active branches for LDF selection.
 //! Both branches of `#if` / `#ifdef` are scanned (we do not evaluate
 //! preprocessor conditionals — false positives are acceptable, false negatives
-//! are not).
+//! are not) when using `scan`.
+
+use std::collections::HashMap;
 
 /// Whether an include used `<...>` (system / search-path) or `"..."` (quoted /
 /// same-directory-first).
@@ -182,6 +186,257 @@ pub fn scan(src: &str) -> Vec<IncludeRef> {
     }
 
     out
+}
+
+/// Extract includes reachable through active preprocessor branches.
+///
+/// `defines` represents the compiler command line. Macros introduced by an
+/// active `#define` in the same file apply to subsequent lines, matching the
+/// part of preprocessing relevant to library discovery.
+pub fn scan_active(src: &str, defines: &HashMap<String, String>) -> Vec<IncludeRef> {
+    let mut macros = defines.clone();
+    scan(&active_source(src, &mut macros))
+}
+
+/// Return `defines` plus macros declared in active branches of `src`.
+///
+/// The LDF uses this for sketch translation units so a sketch-local feature
+/// define remains visible when its included headers are scanned.
+pub fn active_defines(src: &str, defines: &HashMap<String, String>) -> HashMap<String, String> {
+    let mut macros = defines.clone();
+    let _ = active_source(src, &mut macros);
+    macros
+}
+
+#[derive(Clone, Copy)]
+struct Conditional {
+    parent_active: bool,
+    branch_taken: bool,
+}
+
+fn active_source(src: &str, macros: &mut HashMap<String, String>) -> String {
+    let mut stack = Vec::new();
+    let mut active = true;
+    let mut output = String::with_capacity(src.len());
+    for line in src.split_inclusive('\n') {
+        let directive = line.trim_start().strip_prefix('#').map(str::trim_start);
+        let mut keep = active;
+        if let Some(directive) = directive {
+            let (name, rest) = split_directive(directive);
+            match name {
+                "if" => {
+                    let current = active && eval_condition(rest, macros);
+                    stack.push(Conditional {
+                        parent_active: active,
+                        branch_taken: current,
+                    });
+                    active = current;
+                    keep = false;
+                }
+                "ifdef" => {
+                    let current = active && macros.contains_key(first_token(rest));
+                    stack.push(Conditional {
+                        parent_active: active,
+                        branch_taken: current,
+                    });
+                    active = current;
+                    keep = false;
+                }
+                "ifndef" => {
+                    let current = active && !macros.contains_key(first_token(rest));
+                    stack.push(Conditional {
+                        parent_active: active,
+                        branch_taken: current,
+                    });
+                    active = current;
+                    keep = false;
+                }
+                "elif" => {
+                    if let Some(current) = stack.last_mut() {
+                        active = current.parent_active
+                            && !current.branch_taken
+                            && eval_condition(rest, macros);
+                        current.branch_taken |= active;
+                    }
+                    keep = false;
+                }
+                "else" => {
+                    if let Some(current) = stack.last_mut() {
+                        active = current.parent_active && !current.branch_taken;
+                        current.branch_taken = true;
+                    }
+                    keep = false;
+                }
+                "endif" => {
+                    if let Some(current) = stack.pop() {
+                        active = current.parent_active;
+                    }
+                    keep = false;
+                }
+                "define" if active => {
+                    let (name, value) = split_directive(rest);
+                    if !name.is_empty() && !name.contains('(') {
+                        macros.insert(name.to_string(), first_token(value).to_string());
+                    }
+                    keep = false;
+                }
+                "undef" if active => {
+                    macros.remove(first_token(rest));
+                    keep = false;
+                }
+                _ => {}
+            }
+        }
+        if keep {
+            output.push_str(line);
+        } else if line.ends_with('\n') {
+            output.push('\n');
+        }
+    }
+    output
+}
+
+fn split_directive(input: &str) -> (&str, &str) {
+    let trimmed = input.trim_start();
+    let end = trimmed.find(char::is_whitespace).unwrap_or(trimmed.len());
+    (&trimmed[..end], trimmed[end..].trim_start())
+}
+
+fn first_token(input: &str) -> &str {
+    input
+        .trim_start()
+        .split(|c: char| c.is_whitespace() || matches!(c, '/' | '*'))
+        .next()
+        .unwrap_or("")
+}
+
+fn eval_condition(input: &str, macros: &HashMap<String, String>) -> bool {
+    let mut parser = ConditionParser {
+        input: input.as_bytes(),
+        index: 0,
+        macros,
+    };
+    parser.parse_or() != 0
+}
+
+struct ConditionParser<'a> {
+    input: &'a [u8],
+    index: usize,
+    macros: &'a HashMap<String, String>,
+}
+
+impl<'a> ConditionParser<'a> {
+    fn parse_or(&mut self) -> i64 {
+        let mut value = self.parse_and();
+        while self.consume(b"||") {
+            let rhs = self.parse_and();
+            value = i64::from(value != 0 || rhs != 0);
+        }
+        value
+    }
+
+    fn parse_and(&mut self) -> i64 {
+        let mut value = self.parse_equality();
+        while self.consume(b"&&") {
+            let rhs = self.parse_equality();
+            value = i64::from(value != 0 && rhs != 0);
+        }
+        value
+    }
+
+    fn parse_equality(&mut self) -> i64 {
+        let mut value = self.parse_comparison();
+        loop {
+            if self.consume(b"==") {
+                value = i64::from(value == self.parse_comparison());
+            } else if self.consume(b"!=") {
+                value = i64::from(value != self.parse_comparison());
+            } else {
+                return value;
+            }
+        }
+    }
+
+    fn parse_comparison(&mut self) -> i64 {
+        let mut value = self.parse_unary();
+        loop {
+            if self.consume(b">=") {
+                value = i64::from(value >= self.parse_unary());
+            } else if self.consume(b"<=") {
+                value = i64::from(value <= self.parse_unary());
+            } else if self.consume(b">") {
+                value = i64::from(value > self.parse_unary());
+            } else if self.consume(b"<") {
+                value = i64::from(value < self.parse_unary());
+            } else {
+                return value;
+            }
+        }
+    }
+
+    fn parse_unary(&mut self) -> i64 {
+        if self.consume(b"!") {
+            return i64::from(self.parse_unary() == 0);
+        }
+        if self.consume(b"(") {
+            let value = self.parse_or();
+            self.consume(b")");
+            return value;
+        }
+        let token = self.token();
+        if token == "defined" {
+            self.consume(b"(");
+            let name = self.token();
+            self.consume(b")");
+            return i64::from(self.macros.contains_key(name));
+        }
+        if let Some(value) = parse_number(token) {
+            return value;
+        }
+        self.macros
+            .get(token)
+            .and_then(|value| parse_number(value))
+            .unwrap_or(0)
+    }
+
+    fn consume(&mut self, expected: &[u8]) -> bool {
+        self.skip_ws();
+        if self.input[self.index..].starts_with(expected) {
+            self.index += expected.len();
+            true
+        } else {
+            false
+        }
+    }
+
+    fn token(&mut self) -> &'a str {
+        self.skip_ws();
+        let start = self.index;
+        while self.index < self.input.len()
+            && (self.input[self.index].is_ascii_alphanumeric() || self.input[self.index] == b'_')
+        {
+            self.index += 1;
+        }
+        std::str::from_utf8(&self.input[start..self.index]).unwrap_or("")
+    }
+
+    fn skip_ws(&mut self) {
+        while self.index < self.input.len() && self.input[self.index].is_ascii_whitespace() {
+            self.index += 1;
+        }
+    }
+}
+
+fn parse_number(value: &str) -> Option<i64> {
+    let value = value.trim_end_matches(['u', 'U', 'l', 'L']);
+    if let Some(hex) = value
+        .strip_prefix("0x")
+        .or_else(|| value.strip_prefix("0X"))
+    {
+        i64::from_str_radix(hex, 16).ok()
+    } else {
+        value.parse().ok()
+    }
 }
 
 fn is_horizontal_ws(b: u8) -> bool {
@@ -592,5 +847,27 @@ mod tests {
         // After the first `*/`, we're back in code state, so the include
         // must be picked up.
         assert_eq!(refs.len(), 1);
+    }
+
+    #[test]
+    fn active_scan_ignores_disabled_branch() {
+        let refs = scan_active(
+            "#if 0\n#include <Audio.h>\n#else\n#include <SPI.h>\n#endif\n",
+            &HashMap::new(),
+        );
+        assert_eq!(refs.len(), 1);
+        assert_eq!(refs[0].path, "SPI.h");
+    }
+
+    #[test]
+    fn active_scan_uses_compiler_and_local_defines() {
+        let mut defines = HashMap::new();
+        defines.insert("ARDUINO".to_string(), "10819".to_string());
+        let refs = scan_active(
+            "#if defined(ARDUINO) && ARDUINO >= 100\n#define USE_SPI 1\n#endif\n#ifdef USE_SPI\n#include <SPI.h>\n#endif\n",
+            &defines,
+        );
+        assert_eq!(refs.len(), 1);
+        assert_eq!(refs[0].path, "SPI.h");
     }
 }

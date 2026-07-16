@@ -15,6 +15,7 @@
 //!   - toolchain_triple,
 //!   - framework_install_path,
 //!   - framework_version,
+//!   - sorted compiler preprocessor defines,
 //!   - [`SCANNER_VERSION`],
 //!   - [`LDF_MODE_VERSION`].
 //!
@@ -24,20 +25,21 @@
 //! and intentional — partial migration of a malformed cache is worse than
 //! a one-time recompute.
 
+use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
 use fbuild_packages::library::FrameworkLibrary;
 use prost::Message;
 
-use crate::{Selection, canon, resolve};
+use crate::{Selection, canon, resolve_active};
 
 /// Bump when the scanner's lexical grammar changes in a way that could change
 /// which `#include` directives it emits for the same source.
-pub const SCANNER_VERSION: u32 = 1;
+pub const SCANNER_VERSION: u32 = 2;
 
 /// Bump when the resolver's 2-pass LDF semantics change (seed expansion,
 /// attribution, convergence rule, etc.).
-pub const LDF_MODE_VERSION: u32 = 2;
+pub const LDF_MODE_VERSION: u32 = 3;
 
 /// Namespace for the library-selection file cache.
 pub const NAMESPACE: &str = "library-selection";
@@ -184,6 +186,9 @@ pub struct CacheKeyInputs<'a> {
     /// version file the framework carries — `package.json`, `platform.txt`,
     /// or a `framework-name@version` line).
     pub framework_version: &'a str,
+    /// Defines supplied to the compiler. They select the active include graph
+    /// and therefore must be part of the cache identity.
+    pub preprocessor_defines: &'a HashMap<String, String>,
 }
 
 /// Result of [`resolve_cached`]. `from_cache` distinguishes hit from miss so
@@ -226,6 +231,16 @@ pub fn cache_key(
     h.update(b"framework_version:");
     h.update(inputs.framework_version.as_bytes());
     h.update(b"\n");
+
+    let mut defines: Vec<(&String, &String)> = inputs.preprocessor_defines.iter().collect();
+    defines.sort_unstable_by(|left, right| left.0.cmp(right.0));
+    h.update(b"defines:");
+    for (name, value) in defines {
+        h.update(name.as_bytes());
+        h.update(b"=");
+        h.update(value.as_bytes());
+        h.update(b"\n");
+    }
 
     // Seeds: sorted by path, each contributes (canonical_path, content_hash).
     let mut seed_pairs: Vec<(String, [u8; 32])> = seeds
@@ -333,7 +348,7 @@ pub fn resolve_cached(
         }
     }
 
-    let selection = resolve(seeds, search_paths, libraries);
+    let selection = resolve_active(seeds, search_paths, libraries, inputs.preprocessor_defines);
     // serde's `PathBuf` Serialize impl errors when a path component is not
     // valid UTF-8 (legal on Unix, possible on Windows via canonicalize edge
     // cases). Treat that as a cache write miss — degraded performance is
@@ -362,7 +377,10 @@ pub fn resolve_cached(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::sync::LazyLock;
     use tempfile::TempDir;
+
+    static EMPTY_DEFINES: LazyLock<HashMap<String, String>> = LazyLock::new(HashMap::new);
 
     fn write(path: &Path, contents: &str) {
         if let Some(parent) = path.parent() {
@@ -388,6 +406,7 @@ mod tests {
             toolchain_triple: "avr-unknown-none",
             framework_install_path: framework_root,
             framework_version: "1.59.0",
+            preprocessor_defines: &EMPTY_DEFINES,
         }
     }
 
@@ -452,11 +471,13 @@ mod tests {
             toolchain_triple: "avr-unknown-none",
             framework_install_path: tmp.path(),
             framework_version: "1.59.0",
+            preprocessor_defines: &EMPTY_DEFINES,
         };
         let b = CacheKeyInputs {
             toolchain_triple: "xtensa-esp32-elf",
             framework_install_path: tmp.path(),
             framework_version: "1.59.0",
+            preprocessor_defines: &EMPTY_DEFINES,
         };
         assert_ne!(
             cache_key(&seeds, &search_paths, &libs, &a).as_bytes(),
@@ -472,6 +493,25 @@ mod tests {
             toolchain_triple: a.toolchain_triple,
             framework_install_path: a.framework_install_path,
             framework_version: "1.60.0",
+            preprocessor_defines: a.preprocessor_defines,
+        };
+        assert_ne!(
+            cache_key(&seeds, &search_paths, &libs, &a).as_bytes(),
+            cache_key(&seeds, &search_paths, &libs, &b).as_bytes()
+        );
+    }
+
+    #[test]
+    fn c04b_define_change_invalidates_key() {
+        let (tmp, seeds, search_paths, libs) = build_simple_project();
+        let a = fixture_inputs(tmp.path());
+        let mut defines = HashMap::new();
+        defines.insert("USE_AUDIO".to_string(), "1".to_string());
+        let b = CacheKeyInputs {
+            toolchain_triple: a.toolchain_triple,
+            framework_install_path: a.framework_install_path,
+            framework_version: a.framework_version,
+            preprocessor_defines: &defines,
         };
         assert_ne!(
             cache_key(&seeds, &search_paths, &libs, &a).as_bytes(),

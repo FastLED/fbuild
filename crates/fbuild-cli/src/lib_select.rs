@@ -15,12 +15,13 @@
 //! missing, it prints a clear "framework not installed; run `fbuild build`
 //! once first" message and exits 2. Downloading is the daemon's job.
 
+use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
 use fbuild_config::PlatformIOConfig;
 use fbuild_core::Platform;
 use fbuild_core::path::normalize_for_key;
-use fbuild_library_select::{Selection, resolve};
+use fbuild_library_select::{Selection, resolve_active};
 use fbuild_packages::Framework;
 use fbuild_packages::library::FrameworkLibrary;
 use fbuild_packages::library::framework_library::discover_framework_libraries;
@@ -107,7 +108,11 @@ pub fn run(project_dir: &Path, env: Option<&str>, explain: bool, json: bool) -> 
     let seeds = collect_project_seeds(&scan_roots);
     let search_paths = project_search_paths(&scan_roots);
 
-    let selection = resolve(&seeds, &search_paths, &libraries);
+    // The diagnostic must match build-time LDF behavior: optional headers in
+    // inactive branches are not library dependencies. Sketch-local defines
+    // are collected by `resolve_active`; board/compiler defines are supplied
+    // by platform orchestrators during an actual build.
+    let selection = resolve_active(&seeds, &search_paths, &libraries, &HashMap::new());
 
     if json {
         emit_json(

@@ -22,6 +22,7 @@
 //!
 //! Follows up #215 (mini bench) and #205 Phase 7 (perf budgets).
 
+use std::collections::HashMap;
 use std::path::PathBuf;
 
 use criterion::{Criterion, Throughput, black_box, criterion_group, criterion_main};
@@ -70,10 +71,12 @@ fn bench_resolve_warm(c: &mut Criterion) {
         .expect("resolve_warm: FileKvStore::open failed");
 
     let framework_root = mf.framework_root().to_path_buf();
+    let defines = HashMap::new();
     let inputs = CacheKeyInputs {
         toolchain_triple: "avr-unknown-none",
         framework_install_path: &framework_root,
         framework_version: "1.59.0",
+        preprocessor_defines: &defines,
     };
 
     // Prime the cache so the timed loop measures the hit path only.

@@ -12,12 +12,12 @@
 //! framework libraries (FNET/Snooze/RadioHead/mbedtls on teensyLC, for
 //! example) stay out of the compile set. See FastLED/fbuild#205.
 
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
 use fbuild_library_select::cache::{CacheKeyInputs, FileKvStore, resolve_cached};
-use fbuild_library_select::resolve as resolve_library_selection;
+use fbuild_library_select::{resolve as resolve_library_selection, resolve_active as resolve_active_library_selection};
 use fbuild_packages::library::FrameworkLibrary;
 use walkdir::{DirEntry, WalkDir};
 
@@ -30,6 +30,20 @@ pub fn resolve_framework_library_sources(
     let roots = framework_include_scan_roots(project_dir, src_dir);
     let filtered = filter_framework_libs_shadowed_by_project(libraries, &roots);
     resolve_framework_library_sources_from_libraries(&filtered, &roots)
+}
+
+/// Resolve framework libraries using active preprocessor branches only.
+pub fn resolve_framework_library_sources_active(
+    libraries: &[FrameworkLibrary],
+    project_dir: &Path,
+    src_dir: &Path,
+    defines: &HashMap<String, String>,
+) -> Vec<PathBuf> {
+    let roots = framework_include_scan_roots(project_dir, src_dir);
+    let filtered = filter_framework_libs_shadowed_by_project(libraries, &roots);
+    let seeds = collect_project_seeds(&roots);
+    let search_paths = project_search_paths(&roots);
+    resolve_active_library_selection(&seeds, &search_paths, &filtered, defines).source_files
 }
 
 /// Drop framework libraries whose primary header (`<lib_name>.h`) is
@@ -266,7 +280,12 @@ pub(crate) fn resolve_framework_library_sources_cached_with_hit(
                 "library-select cache backend error; falling back to uncached resolve"
             );
             (
-                resolve_framework_library_sources_from_libraries(&filtered, &roots),
+                resolve_framework_library_sources_active(
+                    &filtered,
+                    project_dir,
+                    src_dir,
+                    key_inputs.preprocessor_defines,
+                ),
                 false,
             )
         }
@@ -897,10 +916,12 @@ mod tests {
         }];
 
         let framework_root = tmp.path().join("framework");
+        let defines = HashMap::new();
         let key_inputs = CacheKeyInputs {
             toolchain_triple: "test-arm-none-eabi",
             framework_install_path: &framework_root,
             framework_version: "0.0.0-test",
+            preprocessor_defines: &defines,
         };
 
         let kv = FileKvStore::open(tmp.path().join("kv")).unwrap();

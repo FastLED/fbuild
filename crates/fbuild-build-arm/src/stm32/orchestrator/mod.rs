@@ -33,7 +33,7 @@ use fbuild_packages::{Framework, Toolchain};
 
 use crate::compile_database::TargetArchitecture;
 use crate::framework_libs::{
-    library_select_kv_store, resolve_framework_library_sources,
+    library_select_kv_store, resolve_framework_library_sources_active,
     resolve_framework_library_sources_cached,
 };
 use crate::generic_arm::{ArmCompiler, ArmLinker};
@@ -146,6 +146,10 @@ impl BuildOrchestrator for Stm32Orchestrator {
         // STM32duino only exposes bundled libraries via this framework-level
         // discovery (PlatformIO's LDF does the same for `framework = arduino`).
         let framework_libs = framework.get_framework_libraries();
+        let ldf_mcu_config =
+            super::mcu_config::get_stm32_config_for_mcu(&ctx.board.mcu.to_lowercase())?;
+        let mut ldf_defines = ctx.board.get_defines();
+        ldf_defines.extend(ldf_mcu_config.defines_map());
         // WHY: STM32duino targets every Cortex-M family from M0 (F0xx) up
         // through M7 (H7xx) but the toolchain triple is constant
         // (`arm-none-eabi`). The cache key already includes
@@ -159,6 +163,7 @@ impl BuildOrchestrator for Stm32Orchestrator {
                     toolchain_triple: "stm32-arm-none-eabi",
                     framework_install_path: &framework_info.install_path,
                     framework_version: &framework_info.version,
+                    preprocessor_defines: &ldf_defines,
                 };
                 resolve_framework_library_sources_cached(
                     &framework_libs,
@@ -168,10 +173,11 @@ impl BuildOrchestrator for Stm32Orchestrator {
                     store,
                 )
             }
-            None => resolve_framework_library_sources(
+            None => resolve_framework_library_sources_active(
                 &framework_libs,
                 &params.project_dir,
                 &ctx.src_dir,
+                &ldf_defines,
             ),
         };
         if !framework_library_sources.is_empty() {
