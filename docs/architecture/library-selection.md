@@ -85,6 +85,15 @@ the same. Concrete consequences:
   and prefix-attributes to the SPI library — no manual allowlist needed
   (#202).
 
+## Rooted at the sketch
+
+Only project translation units seed the include walk. Headers under a local
+`lib/` tree are searched normally, but are never independent roots: a local
+library header must be reached from the sketch's transitive include graph
+before its framework dependencies can be selected. This prevents an inactive
+header anywhere in a large library from self-selecting an unrelated framework
+library (FastLED/fbuild#1094).
+
 ## Why two-pass (not fixed-point)
 
 PlatformIO `chain` mode runs BFS from project sources, then ONE

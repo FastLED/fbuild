@@ -105,8 +105,9 @@ pub fn run(project_dir: &Path, env: Option<&str>, explain: bool, json: bool) -> 
 
     let scan_roots = project_scan_roots(&project_dir);
     let seeds = collect_project_seeds(&scan_roots);
+    let search_paths = project_search_paths(&scan_roots);
 
-    let selection = resolve(&seeds, &scan_roots, &libraries);
+    let selection = resolve(&seeds, &search_paths, &libraries);
 
     if json {
         emit_json(
@@ -273,9 +274,33 @@ fn project_scan_roots(project_dir: &Path) -> Vec<PathBuf> {
     roots
 }
 
+fn project_search_paths(roots: &[PathBuf]) -> Vec<PathBuf> {
+    let mut paths = roots.to_vec();
+    for root in roots {
+        if !is_library_root(root) {
+            continue;
+        }
+        let Ok(entries) = std::fs::read_dir(root) else {
+            continue;
+        };
+        for entry in entries.flatten() {
+            let dir = entry.path();
+            if !dir.is_dir() {
+                continue;
+            }
+            push_existing_unique(&mut paths, dir.clone());
+            push_existing_unique(&mut paths, dir.join("src"));
+        }
+    }
+    paths
+}
+
 fn collect_project_seeds(roots: &[PathBuf]) -> Vec<PathBuf> {
     let mut seeds = Vec::new();
     for root in roots {
+        if is_library_root(root) {
+            continue;
+        }
         for entry in WalkDir::new(root)
             .into_iter()
             .filter_entry(should_scan_entry)
@@ -284,12 +309,25 @@ fn collect_project_seeds(roots: &[PathBuf]) -> Vec<PathBuf> {
             if !entry.file_type().is_file() {
                 continue;
             }
-            if is_source_or_header(entry.path()) {
+            if is_translation_unit(entry.path()) {
                 seeds.push(entry.path().to_path_buf());
             }
         }
     }
     seeds
+}
+
+fn push_existing_unique(paths: &mut Vec<PathBuf>, path: PathBuf) {
+    if path.exists() && !paths.iter().any(|existing| existing == &path) {
+        paths.push(path);
+    }
+}
+
+fn is_library_root(path: &Path) -> bool {
+    path.file_name()
+        .and_then(|name| name.to_str())
+        .map(|name| name.eq_ignore_ascii_case("lib"))
+        .unwrap_or(false)
 }
 
 fn should_scan_entry(entry: &DirEntry) -> bool {
@@ -310,7 +348,7 @@ fn should_scan_entry(entry: &DirEntry) -> bool {
     )
 }
 
-fn is_source_or_header(path: &Path) -> bool {
+fn is_translation_unit(path: &Path) -> bool {
     let ext = path
         .extension()
         .and_then(|e| e.to_str())
@@ -318,7 +356,7 @@ fn is_source_or_header(path: &Path) -> bool {
         .to_lowercase();
     matches!(
         ext.as_str(),
-        "c" | "cpp" | "cc" | "cxx" | "s" | "ino" | "h" | "hh" | "hpp" | "hxx"
+        "c" | "cpp" | "cc" | "cxx" | "s" | "ino"
     )
 }
 
