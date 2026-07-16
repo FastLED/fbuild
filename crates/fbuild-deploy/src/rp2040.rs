@@ -81,8 +81,7 @@ fn timeout_from_env(var_name: &str, default: Duration) -> Duration {
 }
 
 fn rp2040_post_deploy_timeout() -> Duration {
-    let timing = fbuild_serial::boards::BoardFamily::NativeUsbCdcReset1200Bps
-        .handoff_timing();
+    let timing = fbuild_serial::boards::BoardFamily::NativeUsbCdcReset1200Bps.handoff_timing();
     timeout_from_env(
         POST_DEPLOY_TIMEOUT_ENV,
         Duration::from_millis(u64::from(timing.application_cdc_timeout_ms)),
@@ -1127,15 +1126,15 @@ fn resolve_post_flash_cdc(
         Err(CdcWaitError::Timeout(diagnostics)) if flash_confirmed => {
             tracing::warn!(diagnostics = %diagnostics.diagnostics(), "RP2040 runtime CDC did not return before the confirmed-flash deadline");
             Ok(PostFlashCdc::Unconfirmed(format!(
-            "the firmware was flashed and accepted, but the runtime CDC port did not reappear within {}s; first-plug driver installation can exceed this window — the board is likely healthy (extend the window with {POST_DEPLOY_TIMEOUT_ENV})",
-            window.as_secs()
+                "the firmware was flashed and accepted, but the runtime CDC port did not reappear within {}s; first-plug driver installation can exceed this window — the board is likely healthy (extend the window with {POST_DEPLOY_TIMEOUT_ENV})",
+                window.as_secs()
             )))
         }
         Err(CdcWaitError::Timeout(diagnostics)) => {
             tracing::warn!(diagnostics = %diagnostics.diagnostics(), "RP2040 runtime CDC did not return before the unconfirmed-flash deadline");
             Err(FbuildError::DeployFailed(format!(
-            "RP2040 firmware was transferred, but no catalogue-identified runtime CDC port appeared within {}s; verify that the firmware enables USB serial and that FastLED/boards USB data is current (extend the window with {POST_DEPLOY_TIMEOUT_ENV})",
-            window.as_secs()
+                "RP2040 firmware was transferred, but no catalogue-identified runtime CDC port appeared within {}s; verify that the firmware enables USB serial and that FastLED/boards USB data is current (extend the window with {POST_DEPLOY_TIMEOUT_ENV})",
+                window.as_secs()
             )))
         }
     }
@@ -2069,18 +2068,17 @@ mod tests {
 
     #[test]
     fn cdc_timeout_after_confirmed_flash_downgrades_to_unconfirmed_success() {
-        let outcome =
-            resolve_post_flash_cdc(
-                true,
-                Err(CdcWaitError::Timeout(CdcWaitTimeout {
-                    elapsed: Duration::from_secs(15),
-                    previous_port: Some("COM7".to_string()),
-                    requested_serial: Some("serial".to_string()),
-                    candidates: Vec::new(),
-                })),
-                Duration::from_secs(15),
-            )
-            .unwrap();
+        let outcome = resolve_post_flash_cdc(
+            true,
+            Err(CdcWaitError::Timeout(CdcWaitTimeout {
+                elapsed: Duration::from_secs(15),
+                previous_port: Some("COM7".to_string()),
+                requested_serial: Some("serial".to_string()),
+                candidates: Vec::new(),
+            })),
+            Duration::from_secs(15),
+        )
+        .unwrap();
         let PostFlashCdc::Unconfirmed(note) = outcome else {
             panic!("expected an unconfirmed-CDC downgrade, got {outcome:?}");
         };
@@ -2203,16 +2201,18 @@ mod tests {
             None,
             &BTreeSet::new(),
             Duration::ZERO,
-            || Ok(vec![
-                PicoCdcPort {
-                    name: "COM12".to_string(),
-                    serial_number: None,
-                },
-                PicoCdcPort {
-                    name: "COM13".to_string(),
-                    serial_number: None,
-                },
-            ]),
+            || {
+                Ok(vec![
+                    PicoCdcPort {
+                        name: "COM12".to_string(),
+                        serial_number: None,
+                    },
+                    PicoCdcPort {
+                        name: "COM13".to_string(),
+                        serial_number: None,
+                    },
+                ])
+            },
             || Duration::ZERO,
             |_| {},
         );
