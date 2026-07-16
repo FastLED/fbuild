@@ -97,19 +97,25 @@ mod tests {
     #[test]
     fn test_compiler_flags_content() {
         let config = get_esp8266_config().unwrap();
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mlongcalls".to_string()));
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mtext-section-literals".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mlongcalls".to_string())
+        );
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mtext-section-literals".to_string())
+        );
         assert!(config.compiler_flags.c.contains(&"-std=gnu17".to_string()));
-        assert!(config
-            .compiler_flags
-            .cxx
-            .contains(&"-std=gnu++17".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .cxx
+                .contains(&"-std=gnu++17".to_string())
+        );
         assert!(config.compiler_flags.cxx.contains(&"-fno-rtti".to_string()));
     }
 
@@ -117,9 +123,11 @@ mod tests {
     fn test_linker_flags() {
         let config = get_esp8266_config().unwrap();
         assert!(config.linker_flags.contains(&"-nostdlib".to_string()));
-        assert!(config
-            .linker_flags
-            .contains(&"-Wl,--gc-sections".to_string()));
+        assert!(
+            config
+                .linker_flags
+                .contains(&"-Wl,--gc-sections".to_string())
+        );
     }
 
     #[test]

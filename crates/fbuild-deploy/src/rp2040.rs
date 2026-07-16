@@ -497,7 +497,7 @@ where
                 return Ok(MscTransfer {
                     destination,
                     volume,
-                })
+                });
             }
             Err(error) => {
                 if attempts >= max_attempts || !volume_gone(&volume) {
@@ -1344,16 +1344,19 @@ impl Deployer for Rp2040Deployer {
         let flash_confirmed =
             transfer_volume.is_some() || transfer_method.starts_with("managed picotool");
         let location = describe_transfer_location(transfer_volume.as_deref());
-        let (message, port) = match resolve_post_flash_cdc(flash_confirmed, wait_result, post_timeout)? {
-            PostFlashCdc::Confirmed(port) => (
-                format!("firmware deployed to RP2040 via {transfer_method} ({location})"),
-                Some(port),
-            ),
-            PostFlashCdc::Unconfirmed(note) => (
-                format!("firmware deployed to RP2040 via {transfer_method} ({location}); {note}"),
-                None,
-            ),
-        };
+        let (message, port) =
+            match resolve_post_flash_cdc(flash_confirmed, wait_result, post_timeout)? {
+                PostFlashCdc::Confirmed(port) => (
+                    format!("firmware deployed to RP2040 via {transfer_method} ({location})"),
+                    Some(port),
+                ),
+                PostFlashCdc::Unconfirmed(note) => (
+                    format!(
+                        "firmware deployed to RP2040 via {transfer_method} ({location}); {note}"
+                    ),
+                    None,
+                ),
+            };
         Ok(DeploymentResult {
             success: true,
             message,
@@ -1527,10 +1530,7 @@ mod tests {
     #[test]
     fn with_topology_appends_known_summary() {
         assert_eq!(
-            with_topology(
-                "boom".to_string(),
-                Some("USB topology: direct root port")
-            ),
+            with_topology("boom".to_string(), Some("USB topology: direct root port")),
             "boom. USB topology: direct root port"
         );
     }
@@ -1551,9 +1551,11 @@ mod tests {
             PathBuf::from("second-rpi-rp2"),
         ])
         .unwrap_err();
-        assert!(error
-            .to_string()
-            .contains("multiple RP2040 BOOTSEL volumes"));
+        assert!(
+            error
+                .to_string()
+                .contains("multiple RP2040 BOOTSEL volumes")
+        );
     }
 
     #[test]
@@ -1597,9 +1599,11 @@ mod tests {
         );
         let error = select_appeared_volume(&before, vec![PathBuf::from("a"), PathBuf::from("b")])
             .unwrap_err();
-        assert!(error
-            .to_string()
-            .contains("multiple RP2040 BOOTSEL volumes"));
+        assert!(
+            error
+                .to_string()
+                .contains("multiple RP2040 BOOTSEL volumes")
+        );
     }
 
     #[test]
@@ -1618,12 +1622,17 @@ mod tests {
         let (volume, before) =
             pretouch_volume_policy(vec![PathBuf::from("a"), PathBuf::from("b")], true).unwrap();
         assert_eq!(volume, None);
-        assert_eq!(before, BTreeSet::from([PathBuf::from("a"), PathBuf::from("b")]));
+        assert_eq!(
+            before,
+            BTreeSet::from([PathBuf::from("a"), PathBuf::from("b")])
+        );
         let error = pretouch_volume_policy(vec![PathBuf::from("a"), PathBuf::from("b")], false)
             .unwrap_err();
-        assert!(error
-            .to_string()
-            .contains("multiple RP2040 BOOTSEL volumes"));
+        assert!(
+            error
+                .to_string()
+                .contains("multiple RP2040 BOOTSEL volumes")
+        );
     }
 
     #[test]
@@ -1716,9 +1725,11 @@ mod tests {
             "failed to set the RP2040 reset baud on COM12: device disappeared".to_string(),
         );
         let error = select_volume_after_reset(None, Some(reset_error)).unwrap_err();
-        assert!(error
-            .to_string()
-            .contains("failed to set the RP2040 reset baud"));
+        assert!(
+            error
+                .to_string()
+                .contains("failed to set the RP2040 reset baud")
+        );
         assert!(error.to_string().contains("no RP2040 BOOTSEL transition"));
         assert!(error.to_string().contains(BOOTLOADER_TIMEOUT_ENV));
 
@@ -1879,9 +1890,11 @@ mod tests {
             let firmware = root.path().join(filename);
             fs::write(&firmware, [0x7f, b'E', b'L', b'F']).unwrap();
             let error = write_uf2(&firmware, root.path(), RP2040_FAMILY_ID).unwrap_err();
-            assert!(error
-                .to_string()
-                .contains("expected a managed .uf2 or raw .bin"));
+            assert!(
+                error
+                    .to_string()
+                    .contains("expected a managed .uf2 or raw .bin")
+            );
         }
     }
 
@@ -2008,13 +2021,10 @@ mod tests {
 
     #[test]
     fn cdc_enumeration_error_fails_even_after_confirmed_flash() {
-        let wait = wait_for_cdc_port_with(
-            None,
-            None,
-            &BTreeSet::new(),
-            Duration::from_secs(5),
-            || Err(FbuildError::SerialError("enumeration exploded".into())),
-        );
+        let wait =
+            wait_for_cdc_port_with(None, None, &BTreeSet::new(), Duration::from_secs(5), || {
+                Err(FbuildError::SerialError("enumeration exploded".into()))
+            });
         let error = resolve_post_flash_cdc(true, wait, Duration::from_secs(15)).unwrap_err();
         assert!(error.to_string().contains("enumeration exploded"));
     }
@@ -2047,9 +2057,11 @@ mod tests {
             ])
         });
         let error = resolve_post_flash_cdc(true, wait, Duration::from_secs(15)).unwrap_err();
-        assert!(error
-            .to_string()
-            .contains("multiple new Raspberry Pi CDC ports"));
+        assert!(
+            error
+                .to_string()
+                .contains("multiple new Raspberry Pi CDC ports")
+        );
     }
 
     #[test]
@@ -2230,9 +2242,11 @@ mod tests {
         })
         .unwrap_err();
 
-        assert!(error
-            .to_string()
-            .contains("device disappeared during transfer"));
+        assert!(
+            error
+                .to_string()
+                .contains("device disappeared during transfer")
+        );
     }
 
     #[test]

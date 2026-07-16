@@ -304,12 +304,14 @@ mod tests {
     fn diagnostics_are_non_empty() {
         assert!(!BootModeSignal::WaitingForDownload.diagnostic().is_empty());
         assert!(!BootModeSignal::DownloadModeSelected.diagnostic().is_empty());
-        assert!(!BootModeSignal::ArmHardFault {
-            pc: Some(0x100),
-            lr: Some(0x200),
-        }
-        .diagnostic()
-        .is_empty());
+        assert!(
+            !BootModeSignal::ArmHardFault {
+                pc: Some(0x100),
+                lr: Some(0x200),
+            }
+            .diagnostic()
+            .is_empty()
+        );
     }
 
     // ─── FastLED/fbuild#688: ArmHardFault matcher ───────────────────
@@ -364,12 +366,16 @@ mod tests {
 
     #[test]
     fn arm_hardfault_ignores_unrelated_lines() {
-        assert!(ArmHardFaultClassifier
-            .classify("Hello from app_main")
-            .is_none());
-        assert!(ArmHardFaultClassifier
-            .classify("boot:0x13 SPI_FAST_FLASH_BOOT")
-            .is_none());
+        assert!(
+            ArmHardFaultClassifier
+                .classify("Hello from app_main")
+                .is_none()
+        );
+        assert!(
+            ArmHardFaultClassifier
+                .classify("boot:0x13 SPI_FAST_FLASH_BOOT")
+                .is_none()
+        );
         assert!(ArmHardFaultClassifier.classify("").is_none());
     }
 

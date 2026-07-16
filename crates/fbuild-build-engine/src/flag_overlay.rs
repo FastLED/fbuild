@@ -231,7 +231,7 @@ fn append_value_args(
                             _ => {
                                 return Err(fbuild_core::FbuildError::BuildFailed(
                                     "unsupported script runtime kv value".to_string(),
-                                ))
+                                ));
                             }
                         });
                     }
@@ -239,7 +239,7 @@ fn append_value_args(
                         return Err(fbuild_core::FbuildError::BuildFailed(format!(
                             "unsupported script runtime entry kind '{}'",
                             kind
-                        )))
+                        )));
                     }
                 }
             }
@@ -295,11 +295,7 @@ fn define_flag_name(flag: &str) -> Option<&str> {
         .split_once('=')
         .map_or(define, |(name, _)| name)
         .trim();
-    if name.is_empty() {
-        None
-    } else {
-        Some(name)
-    }
+    if name.is_empty() { None } else { Some(name) }
 }
 
 #[cfg(test)]

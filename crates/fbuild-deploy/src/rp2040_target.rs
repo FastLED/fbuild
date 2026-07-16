@@ -143,8 +143,10 @@ mod tests {
             &[cdc("COM12", None), cdc("COM13", None)],
         )
         .unwrap_err();
-        assert!(error
-            .to_string()
-            .contains("multiple new Raspberry Pi CDC ports"));
+        assert!(
+            error
+                .to_string()
+                .contains("multiple new Raspberry Pi CDC ports")
+        );
     }
 }

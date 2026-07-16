@@ -2,8 +2,8 @@
 
 use crate::context::DaemonContext;
 use crate::models::{CacheStatsResponse, GcResponse};
-use axum::extract::State;
 use axum::Json;
+use axum::extract::State;
 use std::sync::Arc;
 
 /// GET /api/cache/stats

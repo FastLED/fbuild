@@ -360,9 +360,11 @@ mod tests {
             Some(20480),
             false,
         );
-        assert!(linker
-            .linker_script_path
-            .to_string_lossy()
-            .contains("stm32f103"));
+        assert!(
+            linker
+                .linker_script_path
+                .to_string_lossy()
+                .contains("stm32f103")
+        );
     }
 }

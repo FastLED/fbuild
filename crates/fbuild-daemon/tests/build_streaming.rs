@@ -4,8 +4,8 @@ use std::net::SocketAddr;
 use std::sync::Arc;
 use std::time::Duration;
 
-use axum::routing::post;
 use axum::Router;
+use axum::routing::post;
 use fbuild_daemon::context::DaemonContext;
 use fbuild_daemon::handlers::operations;
 

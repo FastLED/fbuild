@@ -6,8 +6,8 @@
 //! actionable errors when `npm` is unreachable.
 
 use super::avr8js_npm::{
-    avr8js_cache_is_intact, ensure_avr8js_npm_in, prepare_avr8js_cache_for_install,
-    refresh_emu_cache_requested, Avr8jsCachePrep, REFRESH_EMU_CACHE_ENV,
+    Avr8jsCachePrep, REFRESH_EMU_CACHE_ENV, avr8js_cache_is_intact, ensure_avr8js_npm_in,
+    prepare_avr8js_cache_for_install, refresh_emu_cache_requested,
 };
 
 /// Serialises tests that mutate process-wide env vars (PATH). Without

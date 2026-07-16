@@ -14,7 +14,7 @@ use fbuild_core::subprocess::run_command;
 use fbuild_core::{BuildProfile, Result, SizeInfo};
 
 use crate::build_fingerprint::{
-    load_json, save_json, BinArtifactCache, FileStamp, SizeArtifactCache, BUILD_FINGERPRINT_VERSION,
+    BUILD_FINGERPRINT_VERSION, BinArtifactCache, FileStamp, SizeArtifactCache, load_json, save_json,
 };
 use crate::linker::{LinkExtraArgs, Linker, LinkerScripts};
 
@@ -670,12 +670,14 @@ mod tests {
         let linker = test_linker("esp32c6");
         // We can't actually run objcopy, but we can verify the method exists
         // and the linker is properly configured
-        assert!(linker
-            .mcu_config
-            .esptool
-            .flash_offsets
-            .firmware
-            .starts_with("0x"));
+        assert!(
+            linker
+                .mcu_config
+                .esptool
+                .flash_offsets
+                .firmware
+                .starts_with("0x")
+        );
     }
 
     #[test]

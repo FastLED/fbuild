@@ -4,8 +4,8 @@ use crate::messages::SerialClientMetadata;
 use std::collections::VecDeque;
 use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
-use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
+use std::sync::atomic::AtomicBool;
 use tokio::sync::Mutex;
 use tokio::task::JoinHandle;
 

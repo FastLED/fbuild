@@ -465,11 +465,15 @@ mod tests {
     fn test_mbedtls_compat_defines_in_flags() {
         let compiler = test_compiler("esp32c6");
         let flags = compiler.common_flags();
-        assert!(flags
-            .iter()
-            .any(|f| f == "-Dmbedtls_md5_starts_ret=mbedtls_md5_starts"));
-        assert!(flags
-            .iter()
-            .any(|f| f == "-Dmbedtls_sha1_finish_ret=mbedtls_sha1_finish"));
+        assert!(
+            flags
+                .iter()
+                .any(|f| f == "-Dmbedtls_md5_starts_ret=mbedtls_md5_starts")
+        );
+        assert!(
+            flags
+                .iter()
+                .any(|f| f == "-Dmbedtls_sha1_finish_ret=mbedtls_sha1_finish")
+        );
     }
 }

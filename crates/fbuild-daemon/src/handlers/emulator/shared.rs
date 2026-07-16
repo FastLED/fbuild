@@ -7,7 +7,7 @@
 //! flags, `monitor_outcome_to_emulator`).
 
 use crate::handlers::operations::{MonitorOutcome, MonitorState};
-use fbuild_core::channel::{unbounded, UnboundedSender};
+use fbuild_core::channel::{UnboundedSender, unbounded};
 use fbuild_core::emulator::EmulatorOutcome;
 use fbuild_packages::{Package, Toolchain};
 use std::path::{Path, PathBuf};

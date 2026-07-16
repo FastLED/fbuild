@@ -201,9 +201,7 @@ fn parse_vid_pid(s: &str) -> Result<(u16, u16)> {
         .split_once(':')
         .or_else(|| raw.split_once(','))
         .ok_or_else(|| {
-            FbuildError::SerialError(format!(
-                "expected a hexadecimal `VID:PID`, got `{raw}`"
-            ))
+            FbuildError::SerialError(format!("expected a hexadecimal `VID:PID`, got `{raw}`"))
         })?;
     let vid = u16::from_str_radix(vid_s.trim(), 16)
         .map_err(|e| FbuildError::SerialError(format!("bad VID hex `{vid_s}`: {e}")))?;

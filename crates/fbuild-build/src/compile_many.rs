@@ -1,4 +1,4 @@
-﻿//! Two-stage `compile-many` primitive (FastLED/fbuild#238).
+//! Two-stage `compile-many` primitive (FastLED/fbuild#238).
 //!
 //! Compiles a list of sketches against the same board with the framework +
 //! library archives built **once**, then fans out per-sketch compile + link
@@ -57,7 +57,7 @@ use std::time::Instant;
 
 use fbuild_core::{BuildProfile, FbuildError, Platform, Result};
 
-use crate::{get_orchestrator, BuildParams, BuildResult};
+use crate::{BuildParams, BuildResult, get_orchestrator};
 
 /// Default for `--framework-jobs` when not specified: `min(cores, 2)`.
 ///

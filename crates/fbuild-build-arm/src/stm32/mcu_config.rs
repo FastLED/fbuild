@@ -100,27 +100,35 @@ mod tests {
     #[test]
     fn test_stm32f4_has_fpu_flags() {
         let config = get_stm32_config_for_mcu("stm32f401re").unwrap();
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mfloat-abi=hard".to_string()));
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mfpu=fpv4-sp-d16".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mfloat-abi=hard".to_string())
+        );
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mfpu=fpv4-sp-d16".to_string())
+        );
     }
 
     #[test]
     fn test_stm32h7_has_fpu_flags() {
         let config = get_stm32_config_for_mcu("stm32h743zi").unwrap();
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mfloat-abi=hard".to_string()));
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mfpu=fpv5-d16".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mfloat-abi=hard".to_string())
+        );
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mfpu=fpv5-d16".to_string())
+        );
     }
 
     #[test]
@@ -153,28 +161,36 @@ mod tests {
     #[test]
     fn test_stm32f1_compiler_flags() {
         let config = get_stm32_config_for_mcu("stm32f103c8").unwrap();
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mcpu=cortex-m3".to_string()));
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mthumb".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mcpu=cortex-m3".to_string())
+        );
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mthumb".to_string())
+        );
         assert!(config.compiler_flags.c.contains(&"-std=gnu11".to_string()));
-        assert!(config
-            .compiler_flags
-            .cxx
-            .contains(&"-std=gnu++17".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .cxx
+                .contains(&"-std=gnu++17".to_string())
+        );
     }
 
     #[test]
     fn test_stm32f1_linker_flags() {
         let config = get_stm32_config_for_mcu("stm32f103c8").unwrap();
         assert!(config.linker_flags.contains(&"-mcpu=cortex-m3".to_string()));
-        assert!(config
-            .linker_flags
-            .contains(&"-Wl,--gc-sections".to_string()));
+        assert!(
+            config
+                .linker_flags
+                .contains(&"-Wl,--gc-sections".to_string())
+        );
     }
 
     #[test]

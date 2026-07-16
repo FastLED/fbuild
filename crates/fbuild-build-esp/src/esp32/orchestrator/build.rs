@@ -1,4 +1,4 @@
-﻿//! `impl BuildOrchestrator for Esp32Orchestrator` â€” the high-level build flow.
+//! `impl BuildOrchestrator for Esp32Orchestrator` â€” the high-level build flow.
 //!
 //! Most heavy work delegates to sibling submodules (`packages`, `framework_libs`,
 //! `local_libs`, `boot_artifacts`, `embed_stage`, `helpers`).
@@ -11,6 +11,7 @@ use fbuild_packages::Framework;
 use super::super::esp32_compiler::Esp32Compiler;
 use super::super::esp32_linker::Esp32Linker;
 use super::super::mcu_config::get_mcu_config;
+use super::Esp32Orchestrator;
 use super::boot_artifacts::prepare_boot_artifacts;
 use super::cdc::warn_if_cdc_on_boot;
 use super::embed_stage::stage_embed_files;
@@ -19,11 +20,10 @@ use super::framework_libs::compile_framework_builtin_libs;
 use super::helpers::{compile_db_is_current, profile_label};
 use super::local_libs::compile_local_libraries;
 use super::packages::resolve_pioarduino_packages;
-use super::Esp32Orchestrator;
 
 use crate::build_fingerprint::{
-    expected_fast_path_artifacts, stable_hash_json, FastPathCheckInputs, FastPathContract,
-    FastPathPersistInputs, BUILD_FINGERPRINT_VERSION,
+    BUILD_FINGERPRINT_VERSION, FastPathCheckInputs, FastPathContract, FastPathPersistInputs,
+    expected_fast_path_artifacts, stable_hash_json,
 };
 use crate::compiler::Compiler as _;
 use crate::flag_overlay::apply_overlay_flags;

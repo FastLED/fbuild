@@ -28,8 +28,8 @@ use std::path::{Path, PathBuf};
 use fbuild_core::{Result, SizeInfo};
 
 use super::{
-    hash_watch_set_stamps_cached, load_json, save_json, PersistedBuildFingerprint,
-    WatchSetStampCache, BUILD_FINGERPRINT_VERSION,
+    BUILD_FINGERPRINT_VERSION, PersistedBuildFingerprint, WatchSetStampCache,
+    hash_watch_set_stamps_cached, load_json, save_json,
 };
 use crate::compile_database::CompileDatabase;
 use crate::zccache::{self, FingerprintWatch};

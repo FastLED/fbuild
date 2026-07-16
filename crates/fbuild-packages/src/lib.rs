@@ -7,5 +7,5 @@
 
 pub use fbuild_library::library;
 pub use fbuild_packages_fetch::*;
-pub use fbuild_toolchain::{lnk, toolchain};
 pub use fbuild_toolchain::{ExtractMode, LnkFile};
+pub use fbuild_toolchain::{lnk, toolchain};

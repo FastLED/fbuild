@@ -469,12 +469,13 @@ pub fn vcom_for_env(env: &str) -> Option<(u16, u16)> {
                 fbuild_core::usb::profiles::profiles_for(*vid, *pid)
                     .iter()
                     .any(|profile| {
-                        profile.role
-                            == fbuild_core::usb::profiles::UsbDeviceRole::RuntimeCdc
+                        profile.role == fbuild_core::usb::profiles::UsbDeviceRole::RuntimeCdc
                     })
             });
         let selected = matches.next()?;
-        matches.all(|candidate| candidate == selected).then_some(selected)
+        matches
+            .all(|candidate| candidate == selected)
+            .then_some(selected)
     }
 }
 
@@ -547,9 +548,7 @@ fn family_from_usb_profile(
     {
         return Some(Esp32NativeUsbCdc);
     }
-    if profile.platform.as_deref() == Some("arduino")
-        && profile.role == UsbDeviceRole::RuntimeCdc
-    {
+    if profile.platform.as_deref() == Some("arduino") && profile.role == UsbDeviceRole::RuntimeCdc {
         return Some(ArduinoAutoReset);
     }
     if profile.purpose == UsbPurpose::Probe

@@ -276,7 +276,7 @@ async fn download_file_with_progress_using(
                     Err(_) => {
                         return Err(DownloadAttemptError::BodyStalled {
                             filename: filename.clone(),
-                        })
+                        });
                     }
                 };
                 attempt_buf.extend_from_slice(&chunk);
@@ -441,10 +441,12 @@ mod tests {
             "0000000000000000000000000000000000000000000000000000000000000000",
         );
         assert!(result.is_err());
-        assert!(result
-            .unwrap_err()
-            .to_string()
-            .contains("checksum mismatch"));
+        assert!(
+            result
+                .unwrap_err()
+                .to_string()
+                .contains("checksum mismatch")
+        );
     }
 
     // ---- transient-retry tests ----

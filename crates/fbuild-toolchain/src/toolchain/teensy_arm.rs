@@ -10,8 +10,7 @@ use crate::{CacheSubdir, PackageBase, PackageInfo, Toolchain};
 
 const TEENSY_ARM_TOOLCHAIN_NAME: &str = "toolchain-gccarmnoneeabi-teensy";
 const TEENSY_ARM_TOOLCHAIN_VERSION: &str = "1.110301.0";
-const TEENSY_ARM_TOOLCHAIN_BASE_URL: &str =
-    "https://dl.registry.platformio.org/download/platformio/tool/toolchain-gccarmnoneeabi-teensy/1.110301.0";
+const TEENSY_ARM_TOOLCHAIN_BASE_URL: &str = "https://dl.registry.platformio.org/download/platformio/tool/toolchain-gccarmnoneeabi-teensy/1.110301.0";
 
 /// Teensy-compatible ARM GCC toolchain manager.
 pub struct TeensyArmToolchain {

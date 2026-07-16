@@ -5,8 +5,8 @@ use std::path::PathBuf;
 
 use fbuild_core::{BuildLog, Result};
 
-use crate::flag_overlay::LanguageExtraFlags;
 use crate::BuildParams;
+use crate::flag_overlay::LanguageExtraFlags;
 
 use super::build_unflags::{apply_build_unflags, apply_debug_build_type, remove_unflagged_tokens};
 

@@ -98,15 +98,19 @@ mod tests {
     #[test]
     fn test_arm_mcu_config_compiler_flags() {
         let config: ArmMcuConfig = serde_json::from_str(sample_json()).unwrap();
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mcpu=cortex-m3".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mcpu=cortex-m3".to_string())
+        );
         assert!(config.compiler_flags.c.contains(&"-std=gnu11".to_string()));
-        assert!(config
-            .compiler_flags
-            .cxx
-            .contains(&"-fno-exceptions".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .cxx
+                .contains(&"-fno-exceptions".to_string())
+        );
     }
 
     #[test]

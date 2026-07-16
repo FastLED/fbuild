@@ -4,12 +4,12 @@ use crate::context::DaemonContext;
 use crate::models::{
     DaemonInfoResponse, HealthResponse, RootResponse, ShutdownParams, ShutdownResponse,
 };
+use axum::Json;
 use axum::extract::{ConnectInfo, Query, State};
 use axum::http::{HeaderMap, StatusCode};
-use axum::Json;
 use std::net::SocketAddr;
-use std::sync::atomic::Ordering;
 use std::sync::Arc;
+use std::sync::atomic::Ordering;
 
 /// GET /
 pub async fn root() -> Json<RootResponse> {

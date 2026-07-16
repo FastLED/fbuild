@@ -2,8 +2,8 @@
 //! shim and streams the simulated UART output through the same monitor
 //! state machine the real serial pipeline uses.
 
-use super::avr8js_npm::{avr8js_cache_is_intact, REFRESH_EMU_CACHE_ENV};
-use super::shared::{spawn_line_reader, ProcessEvent};
+use super::avr8js_npm::{REFRESH_EMU_CACHE_ENV, avr8js_cache_is_intact};
+use super::shared::{ProcessEvent, spawn_line_reader};
 use crate::handlers::operations::{MonitorOutcome, MonitorState};
 use fbuild_core::channel::unbounded;
 use std::path::Path;

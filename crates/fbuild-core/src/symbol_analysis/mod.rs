@@ -27,10 +27,10 @@ use std::collections::BTreeMap;
 
 use serde::{Deserialize, Serialize};
 
-pub use cref::{parse_cref_table, SymbolReference};
+pub use cref::{SymbolReference, parse_cref_table};
 pub use graph::{
-    sanitize_filename, sanitize_id, BackrefGraph, GraphConfig, GraphDepth, GraphEdge, GraphNode,
-    NodeKind, TuIndex,
+    BackrefGraph, GraphConfig, GraphDepth, GraphEdge, GraphNode, NodeKind, TuIndex,
+    sanitize_filename, sanitize_id,
 };
 
 use crate::MemoryRegion;

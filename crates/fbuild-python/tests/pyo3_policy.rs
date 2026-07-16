@@ -27,8 +27,11 @@ fn pyo3_029_policy_stays_target_python_independent() {
         workspace_manifest.contains("pyo3 = { version = \"0.29\", features = [\"abi3-py310\"] }")
     );
     assert!(crate_manifest.contains("pyo3-build-config = \"0.29\""));
-    assert!(crate_manifest
-        .contains("pyo3-async-runtimes = { version = \"0.29\", features = [\"tokio-runtime\"] }"));
+    assert!(
+        crate_manifest.contains(
+            "pyo3-async-runtimes = { version = \"0.29\", features = [\"tokio-runtime\"] }"
+        )
+    );
 
     for removed in [
         "PYO3_CROSS_LIB_DIR",

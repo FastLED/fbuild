@@ -1,8 +1,8 @@
 use std::path::Path;
 
+use super::Esp32Framework;
 use super::fs_utils::{collect_archive_files, find_framework_root};
 use super::parsing::{parse_include_flags, split_defines};
-use super::Esp32Framework;
 use crate::{CacheSubdir, Package, PackageBase};
 
 #[test]
@@ -195,12 +195,15 @@ fn test_sdk_include_dirs_prefers_requested_memory_variant() {
     };
 
     let dirs = fw.get_sdk_include_dirs("esp32s3", Some("dio_qspi"));
-    assert!(dirs
-        .iter()
-        .any(|d| d.ends_with(Path::new("dio_qspi").join("include"))));
-    assert!(!dirs
-        .iter()
-        .any(|d| d.ends_with(Path::new("qio_opi").join("include"))));
+    assert!(
+        dirs.iter()
+            .any(|d| d.ends_with(Path::new("dio_qspi").join("include")))
+    );
+    assert!(
+        !dirs
+            .iter()
+            .any(|d| d.ends_with(Path::new("qio_opi").join("include")))
+    );
 }
 
 #[test]
@@ -228,12 +231,16 @@ fn test_sdk_lib_flags_prefers_requested_memory_variant() {
     };
 
     let flags = fw.get_sdk_lib_flags("esp32s3", Some("dio_qspi"));
-    assert!(flags
-        .iter()
-        .any(|f| f.ends_with("\\esp32s3\\dio_qspi") || f.ends_with("/esp32s3/dio_qspi")));
-    assert!(!flags
-        .iter()
-        .any(|f| f.ends_with("\\esp32s3\\qio_opi") || f.ends_with("/esp32s3/qio_opi")));
+    assert!(
+        flags
+            .iter()
+            .any(|f| f.ends_with("\\esp32s3\\dio_qspi") || f.ends_with("/esp32s3/dio_qspi"))
+    );
+    assert!(
+        !flags
+            .iter()
+            .any(|f| f.ends_with("\\esp32s3\\qio_opi") || f.ends_with("/esp32s3/qio_opi"))
+    );
 }
 
 #[test]

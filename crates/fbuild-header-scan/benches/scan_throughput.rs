@@ -5,7 +5,7 @@
 //! recorded baseline. The aspirational threshold is ≥ 50 MB/s
 //! single-thread; this harness records the number but does not gate CI.
 
-use criterion::{black_box, criterion_group, criterion_main, Criterion, Throughput};
+use criterion::{Criterion, Throughput, black_box, criterion_group, criterion_main};
 use fbuild_header_scan::scan;
 
 /// Generate a synthetic C++ source string at least `target_bytes` long.

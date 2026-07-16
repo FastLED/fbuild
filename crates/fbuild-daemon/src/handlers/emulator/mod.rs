@@ -27,9 +27,9 @@ mod tests_select_runner;
 
 // --- Public API re-exports (preserve `handlers::emulator::*` paths) ---
 
-pub use avr8js_deploy::{deploy_avr8js, DeployAvr8jsRequest};
+pub use avr8js_deploy::{DeployAvr8jsRequest, deploy_avr8js};
 pub use avr8js_web::{avr8js_app_js, avr8js_firmware_hex, avr8js_page, avr8js_session_json};
-pub use qemu_deploy::{deploy_qemu, DeployQemuRequest};
+pub use qemu_deploy::{DeployQemuRequest, deploy_qemu};
 pub use runners::{Avr8jsRunner, EmulatorRunner, QemuRunner, SimavrRunner};
 pub use select::{select_runner, test_emu};
 pub use shared::EmulatorRunConfig;

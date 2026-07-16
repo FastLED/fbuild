@@ -1,6 +1,6 @@
 //! Serialization, container, and on-disk write tests.
 
-use crate::compile_database::{is_library_project, CompileDatabase, CompileEntry};
+use crate::compile_database::{CompileDatabase, CompileEntry, is_library_project};
 
 // --- Serialization tests ---
 

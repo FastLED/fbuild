@@ -18,9 +18,9 @@ use std::path::{Path, PathBuf};
 
 use fbuild_build::build_info::{find_build_info_near, load_build_info};
 use fbuild_build::symbol_analyzer::{
-    analyze_elf, default_map_path, derive_cppfilt_path, discover_elf_in_project,
-    format_markdown_report, format_markdown_report_with_graphs, format_text_report,
-    write_sidecar_dot_files, AnalyzeConfig, MarkdownGraphOptions, SidecarOptions,
+    AnalyzeConfig, MarkdownGraphOptions, SidecarOptions, analyze_elf, default_map_path,
+    derive_cppfilt_path, discover_elf_in_project, format_markdown_report,
+    format_markdown_report_with_graphs, format_text_report, write_sidecar_dot_files,
 };
 use fbuild_core::{FbuildError, Result};
 
@@ -383,7 +383,7 @@ fn option_path(p: &fbuild_core::path::NormalizedPath) -> Option<PathBuf> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use fbuild_build::build_info::{emit_build_info, BuildInfo};
+    use fbuild_build::build_info::{BuildInfo, emit_build_info};
 
     fn dummy_build_info(nm: &str, cppfilt: &str) -> BuildInfo {
         // size_path drives the four derived tool paths; pretend size has

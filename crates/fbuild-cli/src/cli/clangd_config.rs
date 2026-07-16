@@ -382,12 +382,14 @@ mod tests {
             serde_json::json!("disabled")
         );
         let args = parsed["clangd.arguments"].as_array().unwrap();
-        assert!(args
-            .iter()
-            .any(|a| a.as_str() == Some("--query-driver=C:/tc/bin/*")));
-        assert!(args
-            .iter()
-            .any(|a| a.as_str() == Some("--compile-commands-dir=${workspaceFolder}")));
+        assert!(
+            args.iter()
+                .any(|a| a.as_str() == Some("--query-driver=C:/tc/bin/*"))
+        );
+        assert!(
+            args.iter()
+                .any(|a| a.as_str() == Some("--compile-commands-dir=${workspaceFolder}"))
+        );
     }
 
     #[test]

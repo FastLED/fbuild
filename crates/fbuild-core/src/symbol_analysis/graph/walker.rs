@@ -9,8 +9,8 @@
 use std::collections::BTreeSet;
 
 use super::{
-    sanitize_id, EdgeDirection, FineGrainedSymbolMap, GraphConfig, GraphEdge, GraphNode, NodeKind,
-    SymbolReference, TuIndex,
+    EdgeDirection, FineGrainedSymbolMap, GraphConfig, GraphEdge, GraphNode, NodeKind,
+    SymbolReference, TuIndex, sanitize_id,
 };
 
 /// Result of ranking and capping a single layer of referencers.

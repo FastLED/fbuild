@@ -210,10 +210,7 @@ fn test_project_local_pio_manifest_hwids_drive_usb_defines() {
     let defines = config.get_defines();
     assert_eq!(defines.get("USB_VID"), Some(&"0x1111".to_string()));
     assert_eq!(defines.get("USB_PID"), Some(&"0x8222".to_string()));
-    assert_eq!(
-        defines.get("USB_PRODUCT"),
-        Some(&quoted("Synthetic Board"))
-    );
+    assert_eq!(defines.get("USB_PRODUCT"), Some(&quoted("Synthetic Board")));
     assert_eq!(
         defines.get("USB_MANUFACTURER"),
         Some(&quoted("Synthetic Vendor"))

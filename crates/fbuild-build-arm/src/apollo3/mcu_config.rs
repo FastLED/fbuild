@@ -57,21 +57,29 @@ mod tests {
     #[test]
     fn test_apollo3_compiler_flags() {
         let config = get_apollo3_config_for_mcu("apollo3").unwrap();
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mcpu=cortex-m4".to_string()));
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mthumb".to_string()));
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mfloat-abi=hard".to_string()));
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mfpu=fpv4-sp-d16".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mcpu=cortex-m4".to_string())
+        );
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mthumb".to_string())
+        );
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mfloat-abi=hard".to_string())
+        );
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mfpu=fpv4-sp-d16".to_string())
+        );
     }
 }

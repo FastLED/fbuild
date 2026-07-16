@@ -242,9 +242,11 @@ mod tests {
             Some(98304),
             false,
         );
-        assert!(linker
-            .linker_script_path
-            .to_string_lossy()
-            .contains("sam3x8e"));
+        assert!(
+            linker
+                .linker_script_path
+                .to_string_lossy()
+                .contains("sam3x8e")
+        );
     }
 }

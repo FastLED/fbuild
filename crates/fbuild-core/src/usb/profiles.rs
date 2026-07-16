@@ -4,8 +4,8 @@ use serde::Deserialize;
 use sha2::{Digest, Sha256};
 use std::collections::{BTreeMap, HashMap, HashSet};
 use std::path::Path;
-use std::sync::atomic::{AtomicU64, Ordering};
 use std::sync::RwLock;
+use std::sync::atomic::{AtomicU64, Ordering};
 use std::time::Duration;
 
 use super::data::ONLINE_CACHE_TTL_SECS;
@@ -215,8 +215,8 @@ fn fetch_verified_pair(
     let meta = fetch_bytes(&client, meta_url)?;
     // Metadata is deliberately fetched first. Its schema and digest bind the
     // second response so a site rebuild between requests fails closed.
-    let parsed_meta: PublishedMeta = serde_json::from_slice(&meta)
-        .map_err(|error| format!("metadata JSON: {error}"))?;
+    let parsed_meta: PublishedMeta =
+        serde_json::from_slice(&meta).map_err(|error| format!("metadata JSON: {error}"))?;
     validate_meta(&parsed_meta)?;
     let profiles = fetch_bytes(&client, profiles_url)?;
     let installed = decode_verified(&meta, &profiles)?;
@@ -238,14 +238,14 @@ fn fetch_bytes(client: &reqwest::blocking::Client, url: &str) -> Result<Vec<u8>,
 }
 
 fn decode_verified(meta_bytes: &[u8], profile_bytes: &[u8]) -> Result<InstalledProfiles, String> {
-    let meta: PublishedMeta = serde_json::from_slice(meta_bytes)
-        .map_err(|error| format!("metadata JSON: {error}"))?;
+    let meta: PublishedMeta =
+        serde_json::from_slice(meta_bytes).map_err(|error| format!("metadata JSON: {error}"))?;
     validate_meta(&meta)?;
 
-    let value: serde_json::Value = serde_json::from_slice(profile_bytes)
-        .map_err(|error| format!("profile JSON: {error}"))?;
-    let canonical = serde_json::to_vec(&value)
-        .map_err(|error| format!("canonical profile JSON: {error}"))?;
+    let value: serde_json::Value =
+        serde_json::from_slice(profile_bytes).map_err(|error| format!("profile JSON: {error}"))?;
+    let canonical =
+        serde_json::to_vec(&value).map_err(|error| format!("canonical profile JSON: {error}"))?;
     let actual_sha = hex_sha256(&canonical);
     if actual_sha != meta.usb_profiles_sha256 {
         return Err(format!(
@@ -254,8 +254,8 @@ fn decode_verified(meta_bytes: &[u8], profile_bytes: &[u8]) -> Result<InstalledP
         ));
     }
 
-    let artifact: PublishedArtifact = serde_json::from_value(value)
-        .map_err(|error| format!("USB profile schema: {error}"))?;
+    let artifact: PublishedArtifact =
+        serde_json::from_value(value).map_err(|error| format!("USB profile schema: {error}"))?;
     validate_and_index(artifact)
 }
 
@@ -307,7 +307,9 @@ fn validate_and_index(artifact: PublishedArtifact) -> Result<InstalledProfiles, 
                 .map(|value| parse_hex(value, "PID mask"))
                 .transpose()?;
             if vid != key_vid || pid != key_pid {
-                return Err(format!("identity key {identity_key} disagrees with match fields"));
+                return Err(format!(
+                    "identity key {identity_key} disagrees with match fields"
+                ));
             }
             if pid_mask == Some(0) {
                 return Err(format!("identity {identity_key} has a zero PID mask"));
@@ -315,7 +317,11 @@ fn validate_and_index(artifact: PublishedArtifact) -> Result<InstalledProfiles, 
             if profile.provenance.source_url.trim().is_empty()
                 || profile.provenance.source_class.trim().is_empty()
                 || !matches!(profile.provenance.source_revision.len(), 40 | 64)
-                || !profile.provenance.source_revision.bytes().all(|byte| byte.is_ascii_hexdigit())
+                || !profile
+                    .provenance
+                    .source_revision
+                    .bytes()
+                    .all(|byte| byte.is_ascii_hexdigit())
             {
                 return Err(format!("identity {identity_key} has invalid provenance"));
             }
@@ -335,7 +341,9 @@ fn validate_and_index(artifact: PublishedArtifact) -> Result<InstalledProfiles, 
         for keys in profile.identities.values() {
             for key in keys {
                 if !artifact.identities.contains_key(key) {
-                    return Err(format!("board {board_id} references unknown identity {key}"));
+                    return Err(format!(
+                        "board {board_id} references unknown identity {key}"
+                    ));
                 }
             }
         }
@@ -462,8 +470,7 @@ fn write_cache_pair(
         }
     }
     std::fs::write(&meta_tmp, meta).map_err(|error| format!("write metadata: {error}"))?;
-    std::fs::write(&profiles_tmp, profiles)
-        .map_err(|error| format!("write profiles: {error}"))?;
+    std::fs::write(&profiles_tmp, profiles).map_err(|error| format!("write profiles: {error}"))?;
     // Publish the artifact first and metadata last. A crash can therefore
     // leave only a mismatched pair, which validation rejects on next use.
     publish_cache_file(&profiles_tmp, profiles_path, "profiles")?;
@@ -509,7 +516,10 @@ mod tests {
         let value: serde_json::Value = serde_json::from_str(artifact).unwrap();
         let canonical = serde_json::to_vec(&value).unwrap();
         let digest = Sha256::digest(canonical);
-        let hash = digest.iter().map(|byte| format!("{byte:02x}")).collect::<String>();
+        let hash = digest
+            .iter()
+            .map(|byte| format!("{byte:02x}"))
+            .collect::<String>();
         format!(
             r#"{{"usb_profiles":"usb-profiles.json","usb_profiles_schema_version":{schema},"usb_profiles_sha256":"{hash}"}}"#
         )
@@ -541,17 +551,21 @@ mod tests {
         value["boards"]["synthetic-board"]["primary_compile_identity"] =
             serde_json::json!("feed:beef");
         let artifact: PublishedArtifact = serde_json::from_value(value).unwrap();
-        assert!(validate_and_index(artifact)
-            .unwrap_err()
-            .contains("is not in its compile identities"));
+        assert!(
+            validate_and_index(artifact)
+                .unwrap_err()
+                .contains("is not in its compile identities")
+        );
 
         let mut value: serde_json::Value = serde_json::from_str(SYNTHETIC_ARTIFACT).unwrap();
         value["boards"]["synthetic-board"]["primary_compile_identity"] =
             serde_json::json!("feed:*");
         let artifact: PublishedArtifact = serde_json::from_value(value).unwrap();
-        assert!(validate_and_index(artifact)
-            .unwrap_err()
-            .contains("must use an exact PID"));
+        assert!(
+            validate_and_index(artifact)
+                .unwrap_err()
+                .contains("must use an exact PID")
+        );
     }
 
     #[test]
@@ -640,17 +654,25 @@ mod tests {
         let meta = temp.path().join("_meta.json");
         let artifact = temp.path().join("usb-profiles.json");
         std::fs::write(&meta, fixture_meta(SYNTHETIC_ARTIFACT, 1)).unwrap();
-        std::fs::write(&artifact, SYNTHETIC_ARTIFACT.replace("synthetic-family", "tampered")).unwrap();
-        assert!(try_install_verified_cache(&meta, &artifact)
-            .unwrap_err()
-            .contains("sha256"));
+        std::fs::write(
+            &artifact,
+            SYNTHETIC_ARTIFACT.replace("synthetic-family", "tampered"),
+        )
+        .unwrap();
+        assert!(
+            try_install_verified_cache(&meta, &artifact)
+                .unwrap_err()
+                .contains("sha256")
+        );
         assert!(profiles_for(0xfeed, 0xc0de).is_empty());
 
         std::fs::write(&meta, fixture_meta(SYNTHETIC_ARTIFACT, 2)).unwrap();
         std::fs::write(&artifact, SYNTHETIC_ARTIFACT).unwrap();
-        assert!(try_install_verified_cache(&meta, &artifact)
-            .unwrap_err()
-            .contains("schema"));
+        assert!(
+            try_install_verified_cache(&meta, &artifact)
+                .unwrap_err()
+                .contains("schema")
+        );
     }
 
     #[test]

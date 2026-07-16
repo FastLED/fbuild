@@ -3,12 +3,12 @@
 
 use std::path::Path;
 
-use fbuild_core::subprocess::run_command;
 use fbuild_core::Result;
+use fbuild_core::subprocess::run_command;
 
 #[cfg(feature = "espflash-native")]
 use super::parse::parse_hex_offset_u32;
-use super::verify::{parse_verify_regions, FlashRegion, VerifyOutcome};
+use super::verify::{FlashRegion, VerifyOutcome, parse_verify_regions};
 use crate::{DeployOutcome, Deployer, DeploymentResult};
 
 /// Esptool flash parameters sourced from MCU config JSON.

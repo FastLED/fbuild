@@ -263,9 +263,11 @@ mod tests {
         let tmp = tempfile::TempDir::new().unwrap();
         let core = SamdCores::new(tmp.path());
         let script = core.get_linker_script("feather_m0");
-        assert!(script
-            .to_string_lossy()
-            .contains("flash_with_bootloader.ld"));
+        assert!(
+            script
+                .to_string_lossy()
+                .contains("flash_with_bootloader.ld")
+        );
         assert!(script.to_string_lossy().contains("linker_scripts"));
     }
 

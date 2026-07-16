@@ -49,8 +49,7 @@ use crate::{CacheSubdir, PackageBase, PackageInfo};
 /// for SPI/UART async streaming — FastLED/FastLED#3453 follow-up).
 const ACLPC_COMMIT: &str = "9e8be028892e6eeb4796b46d0069dbb1a39a47a9";
 const ACLPC_VERSION: &str = "0.2.3+g9e8be02";
-const ACLPC_URL: &str =
-    "https://github.com/FastLED/framework-arduino-lpc8xx/archive/9e8be028892e6eeb4796b46d0069dbb1a39a47a9.tar.gz";
+const ACLPC_URL: &str = "https://github.com/FastLED/framework-arduino-lpc8xx/archive/9e8be028892e6eeb4796b46d0069dbb1a39a47a9.tar.gz";
 // SHA256 of the archive GitHub currently serves for
 // `github.com/FastLED/framework-arduino-lpc8xx/archive/9e8be02889…tar.gz`.
 // Verified 2026-07-02 via `curl … | sha256sum`.
@@ -230,9 +229,10 @@ mod tests {
         let pkg = ArduinoCoreLpc8xx::with_cache_root(tmp.path(), &tmp.path().join("cache"));
         assert!(pkg.core_dir().ends_with("cores/lpc8xx"));
         assert!(pkg.variant_dir("lpc845brk").ends_with("variants/lpc845brk"));
-        assert!(pkg
-            .linker_script("linker_scripts/gcc/lpc845_flash.ld")
-            .ends_with("linker_scripts/gcc/lpc845_flash.ld"));
+        assert!(
+            pkg.linker_script("linker_scripts/gcc/lpc845_flash.ld")
+                .ends_with("linker_scripts/gcc/lpc845_flash.ld")
+        );
     }
 
     #[test]

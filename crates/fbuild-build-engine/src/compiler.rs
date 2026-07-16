@@ -3,8 +3,8 @@
 //! Defines the `Compiler` trait and `CompilerBase` shared logic for
 //! building compiler flags, invoking gcc/g++, and detecting rebuilds.
 
-use fbuild_core::path::NormalizedPath;
 use fbuild_core::Result;
+use fbuild_core::path::NormalizedPath;
 use serde::Deserialize;
 use sha2::{Digest, Sha256};
 use std::collections::HashMap;

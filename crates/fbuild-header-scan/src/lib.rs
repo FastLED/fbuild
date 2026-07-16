@@ -9,8 +9,8 @@
 mod scanner;
 mod walker;
 
-pub use scanner::{scan, IncludeKind, IncludeRef, Span};
-pub use walker::{walk, walk_with_state, WalkResult, WalkState};
+pub use scanner::{IncludeKind, IncludeRef, Span, scan};
+pub use walker::{WalkResult, WalkState, walk, walk_with_state};
 
 /// Bumped whenever the scanner output shape changes. Mixed into cache keys so a
 /// scanner change invalidates memoized library-selection results.

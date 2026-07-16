@@ -9,8 +9,8 @@
 use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 
-use fbuild_core::path::NormalizedPath;
 use fbuild_core::BuildProfile;
+use fbuild_core::path::NormalizedPath;
 use sha2::{Digest, Sha256};
 
 use crate::compiler::{Compiler, CompilerBase};

@@ -632,9 +632,11 @@ mod tests {
     #[test]
     fn release_asset_for_host_has_pinned_checksum_and_url() {
         let asset = probe_rs_release_asset_for_host().unwrap();
-        assert!(asset
-            .name
-            .starts_with("probe-rs-fastled-fastled-v0.31.2-nusb-v1-transport-"));
+        assert!(
+            asset
+                .name
+                .starts_with("probe-rs-fastled-fastled-v0.31.2-nusb-v1-transport-")
+        );
         assert_eq!(asset.sha256.len(), 64);
         assert!(asset.sha256.chars().all(|c| c.is_ascii_hexdigit()));
 

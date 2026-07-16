@@ -18,7 +18,7 @@ use std::fs;
 use std::io::Cursor;
 use std::path::{Path, PathBuf};
 
-use filetime::{set_file_mtime, FileTime};
+use filetime::{FileTime, set_file_mtime};
 use tar::{Archive, Builder};
 
 use fbuild_build::{BuildOrchestrator, BuildParams};
@@ -252,7 +252,9 @@ async fn compare_with_python_output() {
             ratio
         );
 
-        eprintln!("WARNING: hex files differ but sizes are similar — likely different compiler flag ordering");
+        eprintln!(
+            "WARNING: hex files differ but sizes are similar — likely different compiler flag ordering"
+        );
     }
 }
 

@@ -99,28 +99,36 @@ mod tests {
     #[test]
     fn test_compiler_flags_content() {
         let config = get_sam_config_for_mcu("at91sam3x8e").unwrap();
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mcpu=cortex-m3".to_string()));
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mthumb".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mcpu=cortex-m3".to_string())
+        );
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mthumb".to_string())
+        );
         assert!(config.compiler_flags.c.contains(&"-std=gnu11".to_string()));
-        assert!(config
-            .compiler_flags
-            .cxx
-            .contains(&"-std=gnu++17".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .cxx
+                .contains(&"-std=gnu++17".to_string())
+        );
     }
 
     #[test]
     fn test_linker_flags() {
         let config = get_sam_config_for_mcu("at91sam3x8e").unwrap();
         assert!(config.linker_flags.contains(&"-mcpu=cortex-m3".to_string()));
-        assert!(config
-            .linker_flags
-            .contains(&"-Wl,--gc-sections".to_string()));
+        assert!(
+            config
+                .linker_flags
+                .contains(&"-Wl,--gc-sections".to_string())
+        );
     }
 
     #[test]
@@ -167,10 +175,12 @@ mod tests {
         let config = get_sam_config_for_mcu("samd21g18a").unwrap();
         assert_eq!(config.name, "SAMD21");
         assert_eq!(config.architecture, "arm-cortex-m0plus");
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mcpu=cortex-m0plus".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mcpu=cortex-m0plus".to_string())
+        );
     }
 
     #[test]
@@ -178,14 +188,18 @@ mod tests {
         let config = get_sam_config_for_mcu("samd51j19a").unwrap();
         assert_eq!(config.name, "SAMD51");
         assert_eq!(config.architecture, "arm-cortex-m4f");
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mcpu=cortex-m4".to_string()));
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mfloat-abi=hard".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mcpu=cortex-m4".to_string())
+        );
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mfloat-abi=hard".to_string())
+        );
     }
 
     #[test]

@@ -31,9 +31,9 @@
 // items here is preferable to having callers `use tokio::fs` directly —
 // the matching `ban_tokio_fs_direct_import` dylint enforces this.
 pub use tokio::fs::{
-    canonicalize, copy, create_dir, create_dir_all, hard_link, metadata, read, read_dir, read_link,
-    read_to_string, remove_dir, remove_dir_all, remove_file, rename, set_permissions,
-    symlink_metadata, write, DirEntry, File, OpenOptions, ReadDir,
+    DirEntry, File, OpenOptions, ReadDir, canonicalize, copy, create_dir, create_dir_all,
+    hard_link, metadata, read, read_dir, read_link, read_to_string, remove_dir, remove_dir_all,
+    remove_file, rename, set_permissions, symlink_metadata, write,
 };
 
 use std::path::Path;

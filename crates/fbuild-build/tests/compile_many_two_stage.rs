@@ -13,8 +13,8 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::{Arc, Mutex};
 
 use fbuild_build::compile_many::{
-    compile_many_with, stage2_jobs_per_worker, CompileManyRequest, SketchBuildInputs,
-    SketchBuilder, SketchResult, Stage,
+    CompileManyRequest, SketchBuildInputs, SketchBuilder, SketchResult, Stage, compile_many_with,
+    stage2_jobs_per_worker,
 };
 use fbuild_core::BuildProfile;
 use tokio::sync::Barrier;

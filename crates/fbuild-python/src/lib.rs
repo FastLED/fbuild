@@ -82,9 +82,9 @@ fn _native(m: &Bound<'_, PyModule>) -> PyResult<()> {
 
 #[cfg(test)]
 mod tests {
-    use crate::json_rpc::{extract_remote_json_rpc_response, wait_for_remote_json_rpc_response};
-    use crate::outcome::{parse_outcome, platformio_src_dir_from_env, send_op_async, OpRequest};
     use crate::PYTHON_MODULE_VERSION;
+    use crate::json_rpc::{extract_remote_json_rpc_response, wait_for_remote_json_rpc_response};
+    use crate::outcome::{OpRequest, parse_outcome, platformio_src_dir_from_env, send_op_async};
     use std::sync::Mutex;
     use tokio::io::{AsyncReadExt, AsyncWriteExt};
 

@@ -82,28 +82,36 @@ mod tests {
     fn test_compiler_flags_content() {
         let config = get_avr_config().unwrap();
         // Optimization flags (-Os, -flto) are in profiles, not common
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-ffunction-sections".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-ffunction-sections".to_string())
+        );
         assert!(config.compiler_flags.c.contains(&"-std=gnu11".to_string()));
-        assert!(config
-            .compiler_flags
-            .cxx
-            .contains(&"-std=gnu++11".to_string()));
-        assert!(config
-            .compiler_flags
-            .cxx
-            .contains(&"-fno-exceptions".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .cxx
+                .contains(&"-std=gnu++11".to_string())
+        );
+        assert!(
+            config
+                .compiler_flags
+                .cxx
+                .contains(&"-fno-exceptions".to_string())
+        );
     }
 
     #[test]
     fn test_linker_flags() {
         let config = get_avr_config().unwrap();
         // Optimization flags (-Os, -flto) are in profiles, not linker_flags
-        assert!(config
-            .linker_flags
-            .contains(&"-Wl,--gc-sections".to_string()));
+        assert!(
+            config
+                .linker_flags
+                .contains(&"-Wl,--gc-sections".to_string())
+        );
     }
 
     #[test]
@@ -116,10 +124,12 @@ mod tests {
     fn test_objcopy_config() {
         let config = get_avr_config().unwrap();
         assert_eq!(config.objcopy.output_format, "ihex");
-        assert!(config
-            .objcopy
-            .remove_sections
-            .contains(&".eeprom".to_string()));
+        assert!(
+            config
+                .objcopy
+                .remove_sections
+                .contains(&".eeprom".to_string())
+        );
     }
 
     #[test]

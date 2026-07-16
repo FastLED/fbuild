@@ -6,8 +6,8 @@ use std::path::{Path, PathBuf};
 
 use tempfile::NamedTempFile;
 
-use super::loaders::parse_boards_txt;
 use super::BoardConfig;
+use super::loaders::parse_boards_txt;
 
 fn write_boards_txt(content: &str) -> NamedTempFile {
     let mut f =

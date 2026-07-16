@@ -16,7 +16,7 @@ use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
-use fbuild_library_select::cache::{resolve_cached, CacheKeyInputs, FileKvStore};
+use fbuild_library_select::cache::{CacheKeyInputs, FileKvStore, resolve_cached};
 use fbuild_library_select::resolve as resolve_library_selection;
 use fbuild_packages::library::FrameworkLibrary;
 use walkdir::{DirEntry, WalkDir};

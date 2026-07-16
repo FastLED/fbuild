@@ -7,8 +7,8 @@
 //!
 //! See: https://github.com/FastLED/fbuild/issues/124
 
-use fbuild_packages::disk_cache::Kind;
 use fbuild_packages::DiskCache;
+use fbuild_packages::disk_cache::Kind;
 use rusqlite::Connection;
 use std::path::PathBuf;
 

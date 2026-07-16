@@ -8,8 +8,7 @@ use std::path::{Path, PathBuf};
 use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 
 const SAM_CORE_VERSION: &str = "1.6.12";
-const SAM_CORE_URL: &str =
-    "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-sam/1.6.12/framework-arduino-sam-1.6.12.tar.gz";
+const SAM_CORE_URL: &str = "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-sam/1.6.12/framework-arduino-sam-1.6.12.tar.gz";
 
 /// Arduino SAM core framework manager.
 pub struct SamCores {

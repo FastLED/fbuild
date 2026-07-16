@@ -23,9 +23,9 @@ use tokio::runtime::Runtime;
 use tracing::{debug, info};
 
 use super::format::LnkFile;
+use crate::DiskCache;
 use crate::disk_cache::{CacheEntry, Kind, Lease};
 use crate::downloader::download_file;
-use crate::DiskCache;
 
 /// Module-level fallback runtime for the sync `.lnk` resolver bridge.
 ///

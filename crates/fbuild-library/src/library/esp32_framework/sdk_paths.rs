@@ -3,9 +3,9 @@
 
 use std::path::{Path, PathBuf};
 
+use super::Esp32Framework;
 use super::fs_utils::{collect_archive_files, scan_include_dirs_recursive};
 use super::parsing::{parse_include_flags, split_defines};
-use super::Esp32Framework;
 
 /// Get the SDK directory for a given MCU.
 ///
