@@ -6,7 +6,7 @@
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
-use super::types::{BoardConfig, DebugToolMeta, Esp32QemuPsramConfig, EMULATOR_TOOL_NAMES};
+use super::types::{BoardConfig, DebugToolMeta, EMULATOR_TOOL_NAMES, Esp32QemuPsramConfig};
 
 impl BoardConfig {
     /// Returns emulator/simulator tools available for this board.

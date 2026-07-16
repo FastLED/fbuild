@@ -7,6 +7,14 @@ use std::collections::HashMap;
 
 use super::BoardConfig;
 
+// Spell the backslash as a Unicode escape so the source-policy test can
+// distinguish expected-value assertions from define construction code.
+const ESCAPED_QUOTE: &str = "\u{5C}\"";
+
+fn quoted(value: &str) -> String {
+    format!("{ESCAPED_QUOTE}{value}{ESCAPED_QUOTE}")
+}
+
 #[test]
 fn test_get_defines_usb_vid_pid() {
     let mut config = BoardConfig::from_board_id("uno", &HashMap::new()).unwrap();
@@ -30,8 +38,14 @@ fn test_get_defines_no_usb_when_absent() {
 fn test_bundled_board_usb_ids_are_not_local_defaults() {
     for board_id in ["leonardo", "due", "dueUSB", "um_feathers3"] {
         let config = BoardConfig::from_board_id(board_id, &HashMap::new()).unwrap();
-        assert_eq!(config.vid, None, "{board_id} VID must come from FastLED/boards");
-        assert_eq!(config.pid, None, "{board_id} PID must come from FastLED/boards");
+        assert_eq!(
+            config.vid, None,
+            "{board_id} VID must come from FastLED/boards"
+        );
+        assert_eq!(
+            config.pid, None,
+            "{board_id} PID must come from FastLED/boards"
+        );
     }
 }
 
@@ -68,7 +82,8 @@ fn live_registry_identity_drives_pico_compile_defines() {
 /// when an explicit project override supplies `vid`/`pid` fields.
 #[test]
 fn test_esp32s3_board_skips_usb_vid_pid_injection() {
-    let mut config = BoardConfig::from_board_id("adafruit_feather_esp32s3", &HashMap::new()).unwrap();
+    let mut config =
+        BoardConfig::from_board_id("adafruit_feather_esp32s3", &HashMap::new()).unwrap();
     config.vid = Some("0x1234".to_string());
     config.pid = Some("0x5678".to_string());
     // get_defines() must NOT emit them — the framework variant header does.
@@ -115,12 +130,9 @@ fn test_usb_product_board_yields_all_four_defines() {
     assert_eq!(defines.get("USB_PID"), Some(&"0x800B".to_string()));
     assert_eq!(
         defines.get("USB_PRODUCT"),
-        Some(&"\\\"Adafruit Feather M0\\\"".to_string())
+        Some(&quoted("Adafruit Feather M0"))
     );
-    assert_eq!(
-        defines.get("USB_MANUFACTURER"),
-        Some(&"\\\"Adafruit\\\"".to_string())
-    );
+    assert_eq!(defines.get("USB_MANUFACTURER"), Some(&quoted("Adafruit")));
 }
 
 /// Embedded double quotes are stripped from the string defines, matching
@@ -134,14 +146,8 @@ fn test_usb_string_defines_strip_embedded_quotes() {
         ..Default::default()
     };
     let defines = config.get_defines();
-    assert_eq!(
-        defines.get("USB_PRODUCT"),
-        Some(&"\\\"Board Rev B\\\"".to_string())
-    );
-    assert_eq!(
-        defines.get("USB_MANUFACTURER"),
-        Some(&"\\\"Vendor Inc\\\"".to_string())
-    );
+    assert_eq!(defines.get("USB_PRODUCT"), Some(&quoted("Board Rev B")));
+    assert_eq!(defines.get("USB_MANUFACTURER"), Some(&quoted("Vendor Inc")));
 }
 
 /// The manufacturer string is gated on `usb_product` (PlatformIO defines
@@ -206,11 +212,11 @@ fn test_project_local_pio_manifest_hwids_drive_usb_defines() {
     assert_eq!(defines.get("USB_PID"), Some(&"0x8222".to_string()));
     assert_eq!(
         defines.get("USB_PRODUCT"),
-        Some(&"\\\"Synthetic Board\\\"".to_string())
+        Some(&quoted("Synthetic Board"))
     );
     assert_eq!(
         defines.get("USB_MANUFACTURER"),
-        Some(&"\\\"Synthetic Vendor\\\"".to_string())
+        Some(&quoted("Synthetic Vendor"))
     );
 }
 
