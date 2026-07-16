@@ -264,11 +264,7 @@ impl BuildLayout {
 fn read_port_from_file(path: &Path) -> Option<u16> {
     let content = std::fs::read_to_string(path).ok()?;
     let port: u16 = content.trim().parse().ok()?;
-    if port > 0 {
-        Some(port)
-    } else {
-        None
-    }
+    if port > 0 { Some(port) } else { None }
 }
 
 /// Daemon port.

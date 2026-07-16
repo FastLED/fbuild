@@ -15,7 +15,7 @@ pub async fn run_lnk(
     use std::io::Write;
     use std::path::PathBuf;
 
-    use fbuild_packages::lnk::{scan_for_lnk, ExtractMode, LnkFile};
+    use fbuild_packages::lnk::{ExtractMode, LnkFile, scan_for_lnk};
     use sha2::{Digest, Sha256};
 
     fn open_cache() -> fbuild_core::Result<fbuild_packages::DiskCache> {

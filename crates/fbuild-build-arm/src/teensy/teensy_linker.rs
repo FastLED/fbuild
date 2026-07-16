@@ -276,11 +276,13 @@ mod tests {
             None,
             false,
         );
-        assert!(linker
-            .linker_scripts
-            .scripts
-            .iter()
-            .any(|s| s.contains("imxrt1062")));
+        assert!(
+            linker
+                .linker_scripts
+                .scripts
+                .iter()
+                .any(|s| s.contains("imxrt1062"))
+        );
     }
 
     /// Regression test for FastLED/fbuild#300: when a CMSIS-DSP library is

@@ -1,7 +1,7 @@
 //! Tests for the shared subprocess runner (`run_qemu_process`) and an ignored
 //! integration test that exercises a real ESP32-S3 fixture under QEMU.
 
-use super::shared::{resolve_esp32_toolchain_gcc_path, run_qemu_process, RunQemuOptions};
+use super::shared::{RunQemuOptions, resolve_esp32_toolchain_gcc_path, run_qemu_process};
 use crate::handlers::operations::MonitorOutcome;
 use std::path::PathBuf;
 
@@ -81,9 +81,11 @@ async fn run_qemu_process_surfaces_crash_decoder_output() {
     .await
     .unwrap();
 
-    assert!(result
-        .stdout
-        .contains("abort() was called at PC 0x42002a3c"));
+    assert!(
+        result
+            .stdout
+            .contains("abort() was called at PC 0x42002a3c")
+    );
     assert!(result.stdout.contains("no firmware.elf found"));
     match result.outcome {
         MonitorOutcome::Error(message) => {

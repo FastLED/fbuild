@@ -578,8 +578,10 @@ fn test_scan_sketch_sources_filtered_includes_only_selected_files() {
         .unwrap();
     assert_eq!(sources.len(), 2);
     assert!(sources.iter().any(|p| p.ends_with("main.cpp")));
-    assert!(sources
-        .iter()
-        .any(|p| p.ends_with("sub\\util.c") || p.ends_with("sub/util.c")));
+    assert!(
+        sources
+            .iter()
+            .any(|p| p.ends_with("sub\\util.c") || p.ends_with("sub/util.c"))
+    );
     assert!(!sources.iter().any(|p| p.ends_with("helper.cpp")));
 }

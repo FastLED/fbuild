@@ -1,11 +1,11 @@
 //! Unit tests for the ESP32 orchestrator's helpers and public API.
 
+use super::Esp32Orchestrator;
 use super::cdc::{cdc_on_boot_enabled, is_esp32_project, warn_if_cdc_on_boot};
 use super::helpers::{
     framework_failure_marker, framework_signature, record_failed_framework_lib,
     should_skip_failed_framework_lib,
 };
-use super::Esp32Orchestrator;
 use crate::BuildOrchestrator;
 use fbuild_core::Platform;
 use std::path::PathBuf;

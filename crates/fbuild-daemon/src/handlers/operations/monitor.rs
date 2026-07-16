@@ -4,9 +4,9 @@
 
 use crate::context::DaemonContext;
 use crate::models::{MonitorRequest, OperationResponse};
+use axum::Json;
 use axum::extract::State;
 use axum::http::StatusCode;
-use axum::Json;
 use fbuild_serial::SerialStreamEvent;
 use std::sync::Arc;
 

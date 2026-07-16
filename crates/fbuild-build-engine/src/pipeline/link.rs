@@ -4,8 +4,8 @@ use std::path::{Path, PathBuf};
 
 use fbuild_core::BuildLog;
 
-use crate::linker::LinkResult;
 use crate::BuildResult;
+use crate::linker::LinkResult;
 
 /// Log size report and artifacts from a link result.
 ///

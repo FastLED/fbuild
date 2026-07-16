@@ -38,11 +38,11 @@ use std::collections::{BTreeMap, BTreeSet, VecDeque};
 use super::{FineGrainedSymbolMap, SymbolReference};
 
 mod walker;
+pub use walker::{CalleeRanked, CallerRanked, rank_callees_dual, rank_callers_dual};
 use walker::{
-    push_edge_dedup, rank_and_cap_referencers, walk_backward_per_symbol, walk_forward,
-    CappedReferencer,
+    CappedReferencer, push_edge_dedup, rank_and_cap_referencers, walk_backward_per_symbol,
+    walk_forward,
 };
-pub use walker::{rank_callees_dual, rank_callers_dual, CalleeRanked, CallerRanked};
 
 #[cfg(test)]
 mod tests;

@@ -21,7 +21,7 @@ use running_process::broker::builders::{CacheManifestBuilder, ServiceDefinitionB
 use running_process::broker::protocol::{CacheManifest, CacheRootKind, ServiceDefinition};
 
 pub use fbuild_paths::running_process::{
-    CacheRoots, DaemonCacheIdentity, CACHE_SCHEMA_VERSION, CI_TRUSTED_INSTANCE, MIN_VERSION,
+    CACHE_SCHEMA_VERSION, CI_TRUSTED_INSTANCE, CacheRoots, DaemonCacheIdentity, MIN_VERSION,
     SERVICE_NAME,
 };
 

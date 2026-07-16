@@ -7,8 +7,8 @@ use crate::models::{
     DeviceListResponse, DevicePreemptRequest, DevicePreemptResponse, DeviceReleaseRequest,
     DeviceReleaseResponse, DeviceStatusResponse,
 };
-use axum::extract::{Path, State};
 use axum::Json;
+use axum::extract::{Path, State};
 use std::sync::Arc;
 use uuid::Uuid;
 

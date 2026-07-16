@@ -34,8 +34,8 @@
 use std::time::Instant;
 
 use fbuild_library_select::resolve;
-use fbuild_packages::library::TeensyCores;
 use fbuild_packages::Package;
+use fbuild_packages::library::TeensyCores;
 
 /// 15-min wall-clock cap for `--ignored` real-toolchain tests (FastLED/fbuild#806).
 /// Covers `Package::ensure_installed` (Teensyduino download). The cold

@@ -10,7 +10,7 @@
 use std::path::PathBuf;
 
 use fbuild_build::symbol_analyzer::{
-    analyze_elf, default_map_path, discover_elf_in_project, AnalyzeConfig,
+    AnalyzeConfig, analyze_elf, default_map_path, discover_elf_in_project,
 };
 use fbuild_core::symbol_analysis::{
     FineGrainedSymbol, FineGrainedSymbolMap, SymbolLookup, SymbolQuery,

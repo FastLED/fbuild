@@ -16,8 +16,8 @@
 use std::io::{BufRead, BufReader, Read, Write};
 use std::net::{TcpListener, TcpStream};
 use std::process::{Command, Output, Stdio};
-use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
+use std::sync::atomic::{AtomicBool, Ordering};
 use std::time::{Duration, Instant};
 
 /// Run a `Command` with a hard wall-clock budget (FastLED/fbuild#806).
@@ -109,8 +109,7 @@ fn spawn_mock_daemon(stop: Arc<AtomicBool>) -> u16 {
     let port = listener.local_addr().expect("local_addr").port();
 
     std::thread::spawn(move || {
-        let healthy_body =
-            "{\"status\":\"healthy\",\"uptime_seconds\":1.0,\"version\":\"test\",\"pid\":1,\"source_mtime\":0.0}";
+        let healthy_body = "{\"status\":\"healthy\",\"uptime_seconds\":1.0,\"version\":\"test\",\"pid\":1,\"source_mtime\":0.0}";
         let info_body = "{\"status\":\"healthy\",\"uptime_seconds\":1.0,\"version\":\"test\",\"pid\":1,\"port\":0,\"dev_mode\":true,\"operation_in_progress\":false,\"daemon_state\":\"idle\",\"current_operation\":null,\"client_count\":0,\"spawner_cwd\":null,\"source_mtime\":0.0}";
         let fail_body = "{\"success\":false,\"request_id\":\"mock-1\",\"message\":\"mock daemon: simulated test-emu failure\",\"exit_code\":0,\"output_file\":null,\"output_dir\":null,\"launch_url\":null,\"stdout\":null,\"stderr\":null}";
         let deploy_fail_body = "{\"success\":false,\"request_id\":\"mock-2\",\"message\":\"deploy failed\",\"exit_code\":1,\"output_file\":null,\"output_dir\":null,\"launch_url\":null,\"stdout\":null,\"stderr\":\"RP2040 UF2 transfer failed with Windows error 121\"}";

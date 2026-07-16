@@ -34,8 +34,7 @@ use fbuild_core::{FbuildError, Result};
 /// Bump the branch/tag component if we ever move to a tagged release of
 /// the framework repo; the paths under `tools/lpc-link2-debugger/` are
 /// stable per the framework-repo README.
-pub const ASSETS_BASE_URL: &str =
-    "https://raw.githubusercontent.com/FastLED/framework-arduino-lpc8xx/main/tools/lpc-link2-debugger";
+pub const ASSETS_BASE_URL: &str = "https://raw.githubusercontent.com/FastLED/framework-arduino-lpc8xx/main/tools/lpc-link2-debugger";
 
 /// The primary CMSIS-DAP variant we upgrade to. V2 uses WinUSB (faster
 /// than V1 HID) AND forwards DTR/RTS to the target's `!RESET`/`!ISP`

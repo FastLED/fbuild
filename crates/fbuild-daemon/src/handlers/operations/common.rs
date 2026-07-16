@@ -6,8 +6,8 @@ use crate::context::DaemonContext;
 use crate::models::DeployRequest;
 use serde::Serialize;
 use std::path::{Path, PathBuf};
-use std::sync::atomic::Ordering;
 use std::sync::Arc;
+use std::sync::atomic::Ordering;
 
 /// Returns `true` when the daemon should route ESP32 `verify-flash`
 /// pre-checks through the native [`espflash`] crate (issue #66) instead
@@ -321,7 +321,7 @@ pub(crate) fn parse_deploy_route(
                             return Err(fbuild_core::FbuildError::DeployFailed(
                                 "--to emu requires an explicit --emulator for this board"
                                     .to_string(),
-                            ))
+                            ));
                         }
                     },
                 }

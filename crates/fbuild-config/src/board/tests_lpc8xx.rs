@@ -63,14 +63,18 @@ fn test_lpc8xx_arduino_core_board_configs() {
         assert_eq!(config.upload_protocol.as_deref(), Some("cmsis-dap"));
         assert_eq!(config.upload_speed.as_deref(), Some("1000"));
         assert_eq!(config.openocd_target.as_deref(), Some(*openocd_target));
-        assert!(config
-            .ldscript
-            .as_deref()
-            .is_some_and(|script| script.ends_with("_flash.ld")));
-        assert!(config
-            .debug_tools
-            .as_ref()
-            .is_some_and(|tools| tools.get("cmsis-dap").is_some_and(|tool| tool.onboard)));
+        assert!(
+            config
+                .ldscript
+                .as_deref()
+                .is_some_and(|script| script.ends_with("_flash.ld"))
+        );
+        assert!(
+            config
+                .debug_tools
+                .as_ref()
+                .is_some_and(|tools| tools.get("cmsis-dap").is_some_and(|tool| tool.onboard))
+        );
 
         let defines = config.get_defines();
         assert_eq!(

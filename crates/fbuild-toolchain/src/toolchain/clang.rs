@@ -388,15 +388,21 @@ mod tests {
 
     #[test]
     fn test_required_binaries() {
-        assert!(ClangComponentKind::ClangExtra
-            .required_binaries()
-            .contains(&"clang-tidy"));
-        assert!(ClangComponentKind::Iwyu
-            .required_binaries()
-            .contains(&"include-what-you-use"));
-        assert!(ClangComponentKind::Clang
-            .required_binaries()
-            .contains(&"clang"));
+        assert!(
+            ClangComponentKind::ClangExtra
+                .required_binaries()
+                .contains(&"clang-tidy")
+        );
+        assert!(
+            ClangComponentKind::Iwyu
+                .required_binaries()
+                .contains(&"include-what-you-use")
+        );
+        assert!(
+            ClangComponentKind::Clang
+                .required_binaries()
+                .contains(&"clang")
+        );
     }
 
     #[test]

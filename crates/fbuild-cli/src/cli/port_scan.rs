@@ -118,11 +118,7 @@ fn populate_online_overlay_from_urls(proto_url: &str, json_url: &str) {
     populate_online_overlay_from_urls_in(proto_url, json_url, &root);
 }
 
-fn populate_online_overlay_from_urls_in(
-    proto_url: &str,
-    json_url: &str,
-    root: &std::path::Path,
-) {
+fn populate_online_overlay_from_urls_in(proto_url: &str, json_url: &str, root: &std::path::Path) {
     let Some(proto_cache_path) = overlay_cache_path_in(root) else {
         return;
     };

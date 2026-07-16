@@ -95,36 +95,48 @@ mod tests {
     #[test]
     fn test_compiler_flags_content() {
         let config = get_renesas_config_for_mcu("ra4m1").unwrap();
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mcpu=cortex-m4".to_string()));
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mthumb".to_string()));
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mfloat-abi=hard".to_string()));
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mfpu=fpv4-sp-d16".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mcpu=cortex-m4".to_string())
+        );
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mthumb".to_string())
+        );
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mfloat-abi=hard".to_string())
+        );
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mfpu=fpv4-sp-d16".to_string())
+        );
         assert!(config.compiler_flags.c.contains(&"-std=gnu11".to_string()));
-        assert!(config
-            .compiler_flags
-            .cxx
-            .contains(&"-std=gnu++17".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .cxx
+                .contains(&"-std=gnu++17".to_string())
+        );
     }
 
     #[test]
     fn test_linker_flags() {
         let config = get_renesas_config_for_mcu("ra4m1").unwrap();
         assert!(config.linker_flags.contains(&"-mcpu=cortex-m4".to_string()));
-        assert!(config
-            .linker_flags
-            .contains(&"-Wl,--gc-sections".to_string()));
+        assert!(
+            config
+                .linker_flags
+                .contains(&"-Wl,--gc-sections".to_string())
+        );
     }
 
     #[test]

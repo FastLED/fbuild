@@ -36,7 +36,7 @@ use fbuild_config::PlatformIOConfig;
 use fbuild_core::path::NormalizedPath;
 
 use self::lockfile::{LockDiff, Lockfile, LockfileError};
-use self::source::{classify, ClassifiedDep};
+use self::source::{ClassifiedDep, classify};
 
 /// CLI arguments captured from `Commands::Sync`.
 #[derive(Debug, Clone, Default)]
@@ -561,21 +561,27 @@ lib_deps = FastLED
 
     #[test]
     fn skip_multi_env_prompt_matrix() {
-        assert!(SyncArgs {
-            yes: true,
-            ..Default::default()
-        }
-        .skip_multi_env_prompt());
-        assert!(SyncArgs {
-            environment: Some("uno".into()),
-            ..Default::default()
-        }
-        .skip_multi_env_prompt());
-        assert!(SyncArgs {
-            check: true,
-            ..Default::default()
-        }
-        .skip_multi_env_prompt());
+        assert!(
+            SyncArgs {
+                yes: true,
+                ..Default::default()
+            }
+            .skip_multi_env_prompt()
+        );
+        assert!(
+            SyncArgs {
+                environment: Some("uno".into()),
+                ..Default::default()
+            }
+            .skip_multi_env_prompt()
+        );
+        assert!(
+            SyncArgs {
+                check: true,
+                ..Default::default()
+            }
+            .skip_multi_env_prompt()
+        );
         assert!(!SyncArgs::default().skip_multi_env_prompt());
     }
 

@@ -223,9 +223,11 @@ mod tests {
             Some(262144),
             false,
         );
-        assert!(linker
-            .linker_script_path
-            .to_string_lossy()
-            .contains("nrf52840"));
+        assert!(
+            linker
+                .linker_script_path
+                .to_string_lossy()
+                .contains("nrf52840")
+        );
     }
 }

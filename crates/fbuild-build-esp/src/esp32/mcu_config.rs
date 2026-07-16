@@ -497,10 +497,12 @@ mod tests {
         assert!(esp32.linker_scripts.contains(&"sections.ld".to_string()));
 
         let esp32c6 = get_mcu_config("esp32c6").unwrap();
-        assert!(esp32c6
-            .linker_scripts
-            .iter()
-            .any(|s| s.contains("esp32c6.rom")));
+        assert!(
+            esp32c6
+                .linker_scripts
+                .iter()
+                .any(|s| s.contains("esp32c6.rom"))
+        );
     }
 
     #[test]
@@ -517,10 +519,12 @@ mod tests {
         assert!(config.is_xtensa(), "esp32s2 should be Xtensa");
         assert!(!config.is_riscv());
         assert_eq!(config.toolchain_prefix(), "xtensa-esp32s2-elf-");
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mlongcalls".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mlongcalls".to_string())
+        );
         assert_eq!(config.bootloader_offset(), "0x1000");
         assert_eq!(config.firmware_offset(), "0x10000");
         assert!(!config.linker_scripts.is_empty());
@@ -534,11 +538,13 @@ mod tests {
         assert!(config.is_riscv(), "esp32h2 should be RISC-V");
         assert!(!config.is_xtensa());
         assert_eq!(config.toolchain_prefix(), "riscv32-esp-elf-");
-        assert!(config
-            .compiler_flags
-            .c
-            .iter()
-            .any(|f| f.starts_with("-march=rv32")));
+        assert!(
+            config
+                .compiler_flags
+                .c
+                .iter()
+                .any(|f| f.starts_with("-march=rv32"))
+        );
         assert_eq!(config.bootloader_offset(), "0x0");
         assert_eq!(config.firmware_offset(), "0x10000");
         assert!(!config.linker_scripts.is_empty());
@@ -548,38 +554,48 @@ mod tests {
     #[test]
     fn test_esp32_xtensa_has_mlongcalls() {
         let esp32 = get_mcu_config("esp32").unwrap();
-        assert!(esp32
-            .compiler_flags
-            .common
-            .contains(&"-mlongcalls".to_string()));
+        assert!(
+            esp32
+                .compiler_flags
+                .common
+                .contains(&"-mlongcalls".to_string())
+        );
 
         let esp32s3 = get_mcu_config("esp32s3").unwrap();
-        assert!(esp32s3
-            .compiler_flags
-            .common
-            .contains(&"-mlongcalls".to_string()));
+        assert!(
+            esp32s3
+                .compiler_flags
+                .common
+                .contains(&"-mlongcalls".to_string())
+        );
     }
 
     #[test]
     fn test_riscv_has_march() {
         let esp32c6 = get_mcu_config("esp32c6").unwrap();
-        assert!(esp32c6
-            .compiler_flags
-            .c
-            .iter()
-            .any(|f| f.starts_with("-march=rv32")));
+        assert!(
+            esp32c6
+                .compiler_flags
+                .c
+                .iter()
+                .any(|f| f.starts_with("-march=rv32"))
+        );
 
         let esp32p4 = get_mcu_config("esp32p4").unwrap();
-        assert!(esp32p4
-            .compiler_flags
-            .c
-            .iter()
-            .any(|f| f.contains("rv32imafc")));
-        assert!(esp32p4
-            .compiler_flags
-            .c
-            .iter()
-            .any(|f| f.contains("ilp32f")));
+        assert!(
+            esp32p4
+                .compiler_flags
+                .c
+                .iter()
+                .any(|f| f.contains("rv32imafc"))
+        );
+        assert!(
+            esp32p4
+                .compiler_flags
+                .c
+                .iter()
+                .any(|f| f.contains("ilp32f"))
+        );
     }
 
     #[test]

@@ -118,7 +118,7 @@ pub fn resolve_cli_deploy_route(
                             return Err(fbuild_core::FbuildError::Other(
                                 "--to emu requires an explicit --emulator for this board"
                                     .to_string(),
-                            ))
+                            ));
                         }
                     },
                 }
@@ -391,7 +391,11 @@ mod tests {
 
     #[test]
     fn identical_streamed_error_suppresses_duplicate_result_message() {
-        let resp = response("deploy error: transport failed", None, Some("deploy error: transport failed\n"));
+        let resp = response(
+            "deploy error: transport failed",
+            None,
+            Some("deploy error: transport failed\n"),
+        );
         assert!(operation_streams_include_message(&resp));
     }
 

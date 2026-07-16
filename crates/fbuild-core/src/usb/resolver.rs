@@ -38,33 +38,33 @@ pub fn try_resolve(vid: u16, pid: u16) -> Option<UsbInfo> {
 
     #[cfg(test)]
     {
-    // Test builds may exercise an embedded fixture. Release/runtime builds
-    // must use only the verified FastLED/boards cache above.
-    // Take the PRODUCT from the FastLED/boards curated
-    //    device map (e.g. "NXP LPC-Link2", "Teensy (Serial mode)"), but
-    //    resolve the VENDOR through the best available source rather than the
-    //    proto's per-VID:PID vendor column (which can be blank, or — for the
-    //    generic-bridge attributions in the board layers — board-attributed).
-    //    Vendor priority: the proto's curated VID→vendor map (e.g. 16C0 →
-    //    "PJRC (Teensy)") when non-empty, then the authoritative
-    //    usb-vendors.tar.zst archive (e.g. 10C4 → "Silicon Labs").
-    let product = super::data::embedded_lookup(vid, pid).map(|i| i.product);
-    let vendor = super::data::embedded_vendor(vid)
-        .filter(|v| !v.is_empty())
-        .or_else(|| embedded::vendor_name(vid))
-        .map(str::to_string);
+        // Test builds may exercise an embedded fixture. Release/runtime builds
+        // must use only the verified FastLED/boards cache above.
+        // Take the PRODUCT from the FastLED/boards curated
+        //    device map (e.g. "NXP LPC-Link2", "Teensy (Serial mode)"), but
+        //    resolve the VENDOR through the best available source rather than the
+        //    proto's per-VID:PID vendor column (which can be blank, or — for the
+        //    generic-bridge attributions in the board layers — board-attributed).
+        //    Vendor priority: the proto's curated VID→vendor map (e.g. 16C0 →
+        //    "PJRC (Teensy)") when non-empty, then the authoritative
+        //    usb-vendors.tar.zst archive (e.g. 10C4 → "Silicon Labs").
+        let product = super::data::embedded_lookup(vid, pid).map(|i| i.product);
+        let vendor = super::data::embedded_vendor(vid)
+            .filter(|v| !v.is_empty())
+            .or_else(|| embedded::vendor_name(vid))
+            .map(str::to_string);
 
-    match (product, vendor) {
-        (Some(product), Some(vendor)) => Some(UsbInfo { vendor, product }),
-        (Some(product), None) => Some(UsbInfo {
-            vendor: String::new(),
-            product,
-        }),
-        // No product in the embedded overlay → vendor-only tier (archive +
-        // synthetic product placeholder), which also covers VIDs absent from
-        // the curated proto entirely.
-        (None, _) => resolve_bundled(vid, pid),
-    }
+        match (product, vendor) {
+            (Some(product), Some(vendor)) => Some(UsbInfo { vendor, product }),
+            (Some(product), None) => Some(UsbInfo {
+                vendor: String::new(),
+                product,
+            }),
+            // No product in the embedded overlay → vendor-only tier (archive +
+            // synthetic product placeholder), which also covers VIDs absent from
+            // the curated proto entirely.
+            (None, _) => resolve_bundled(vid, pid),
+        }
     }
 }
 

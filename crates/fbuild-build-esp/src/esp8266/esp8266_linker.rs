@@ -1,4 +1,4 @@
-﻿//! ESP8266 linker implementation.
+//! ESP8266 linker implementation.
 //!
 //! Links ESP8266 object files into `firmware.elf`, converts to `firmware.bin`
 //! using esptool (with objcopy fallback), and reports size.
@@ -362,11 +362,13 @@ mod tests {
             Some(81_920),
             false,
         );
-        assert!(linker
-            .linker_scripts
-            .scripts
-            .iter()
-            .any(|s| s.contains("eagle.flash.4m1m")));
+        assert!(
+            linker
+                .linker_scripts
+                .scripts
+                .iter()
+                .any(|s| s.contains("eagle.flash.4m1m"))
+        );
         assert_eq!(linker.max_flash, Some(4_194_304));
         assert_eq!(linker.max_ram, Some(81_920));
         assert_eq!(linker.flash_mode, "dio");

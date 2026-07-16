@@ -76,20 +76,20 @@ mod imp {
     use std::ptr;
 
     use serialport::{SerialPortInfo, SerialPortType, UsbPortInfo};
-    use windows_sys::core::GUID;
     use windows_sys::Win32::Devices::DeviceAndDriverInstallation::{
-        CM_Get_DevNode_Status, CM_Get_Device_IDW, CM_Get_Parent, SetupDiClassGuidsFromNameW,
-        SetupDiDestroyDeviceInfoList, SetupDiEnumDeviceInfo, SetupDiGetClassDevsW,
-        SetupDiGetDeviceInstanceIdW, SetupDiGetDeviceRegistryPropertyW, SetupDiOpenDevRegKey,
-        CR_SUCCESS, DICS_FLAG_GLOBAL, DIGCF_PRESENT, DIREG_DEV, GUID_DEVCLASS_USB, HDEVINFO,
-        MAX_DEVICE_ID_LEN, SPDRP_FRIENDLYNAME, SPDRP_HARDWAREID,
-        SPDRP_LOCATION_INFORMATION, SPDRP_MFG, SP_DEVINFO_DATA,
+        CM_Get_DevNode_Status, CM_Get_Device_IDW, CM_Get_Parent, CR_SUCCESS, DICS_FLAG_GLOBAL,
+        DIGCF_PRESENT, DIREG_DEV, GUID_DEVCLASS_USB, HDEVINFO, MAX_DEVICE_ID_LEN,
+        SP_DEVINFO_DATA, SPDRP_FRIENDLYNAME, SPDRP_HARDWAREID, SPDRP_LOCATION_INFORMATION,
+        SPDRP_MFG, SetupDiClassGuidsFromNameW, SetupDiDestroyDeviceInfoList, SetupDiEnumDeviceInfo,
+        SetupDiGetClassDevsW, SetupDiGetDeviceInstanceIdW, SetupDiGetDeviceRegistryPropertyW,
+        SetupDiOpenDevRegKey,
     };
     use windows_sys::Win32::Foundation::{FALSE, FILETIME, INVALID_HANDLE_VALUE, MAX_PATH};
     use windows_sys::Win32::System::Registry::{
-        RegCloseKey, RegEnumValueW, RegOpenKeyExW, RegQueryInfoKeyW, RegQueryValueExW, HKEY,
-        HKEY_LOCAL_MACHINE, KEY_READ, REG_SZ,
+        HKEY, HKEY_LOCAL_MACHINE, KEY_READ, REG_SZ, RegCloseKey, RegEnumValueW, RegOpenKeyExW,
+        RegQueryInfoKeyW, RegQueryValueExW,
     };
+    use windows_sys::core::GUID;
 
     const CONNECTOR_PUNCTUATION_SELECTION: &[char] = &[':', '_', '\u{ff3f}'];
 

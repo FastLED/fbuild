@@ -117,27 +117,37 @@ mod tests {
     #[test]
     fn test_compiler_flags_content() {
         let config = get_teensy_config().unwrap();
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mcpu=cortex-m7".to_string()));
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mthumb".to_string()));
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mfloat-abi=hard".to_string()));
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mfpu=fpv5-d16".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mcpu=cortex-m7".to_string())
+        );
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mthumb".to_string())
+        );
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mfloat-abi=hard".to_string())
+        );
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mfpu=fpv5-d16".to_string())
+        );
         assert!(config.compiler_flags.c.contains(&"-std=gnu11".to_string()));
-        assert!(config
-            .compiler_flags
-            .cxx
-            .contains(&"-std=gnu++17".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .cxx
+                .contains(&"-std=gnu++17".to_string())
+        );
         assert!(config.compiler_flags.cxx.contains(&"-fno-rtti".to_string()));
     }
 
@@ -145,9 +155,11 @@ mod tests {
     fn test_linker_flags() {
         let config = get_teensy_config().unwrap();
         assert!(config.linker_flags.contains(&"-mcpu=cortex-m7".to_string()));
-        assert!(config
-            .linker_flags
-            .contains(&"-Wl,--gc-sections".to_string()));
+        assert!(
+            config
+                .linker_flags
+                .contains(&"-Wl,--gc-sections".to_string())
+        );
     }
 
     #[test]
@@ -163,10 +175,12 @@ mod tests {
     fn test_objcopy_config() {
         let config = get_teensy_config().unwrap();
         assert_eq!(config.objcopy.output_format, "ihex");
-        assert!(config
-            .objcopy
-            .remove_sections
-            .contains(&".eeprom".to_string()));
+        assert!(
+            config
+                .objcopy
+                .remove_sections
+                .contains(&".eeprom".to_string())
+        );
     }
 
     #[test]
@@ -193,10 +207,12 @@ mod tests {
     fn test_teensy_config_for_mcu_imxrt1062() {
         let config = get_teensy_config_for_mcu("imxrt1062").expect("teensy4x config");
         assert_eq!(config.architecture, "arm-cortex-m7");
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mcpu=cortex-m7".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mcpu=cortex-m7".to_string())
+        );
     }
 
     /// Regression test for issues #257 and #300: Teensy boards that ship a
@@ -237,29 +253,37 @@ mod tests {
     fn test_teensy_config_for_mcu_mk20dx256() {
         let config = get_teensy_config_for_mcu("mk20dx256").expect("teensy3x config");
         assert_eq!(config.architecture, "arm-cortex-m4");
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mcpu=cortex-m4".to_string()));
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mthumb".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mcpu=cortex-m4".to_string())
+        );
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mthumb".to_string())
+        );
     }
 
     #[test]
     fn test_teensy_config_for_mcu_mkl26z64() {
         let config = get_teensy_config_for_mcu("mkl26z64").expect("teensylc config");
         assert_eq!(config.architecture, "arm-cortex-m0plus");
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mcpu=cortex-m0plus".to_string()));
-        assert!(!config
-            .compiler_flags
-            .common
-            .iter()
-            .any(|f| f.contains("fpv5")));
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mcpu=cortex-m0plus".to_string())
+        );
+        assert!(
+            !config
+                .compiler_flags
+                .common
+                .iter()
+                .any(|f| f.contains("fpv5"))
+        );
     }
 
     #[test]

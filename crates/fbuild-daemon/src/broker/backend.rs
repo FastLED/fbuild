@@ -10,12 +10,12 @@ use std::sync::Arc;
 
 use interprocess::local_socket::prelude::*;
 use prost::Message;
+use running_process::broker::backend_lifecycle::DaemonProcess;
 use running_process::broker::backend_lifecycle::probe::{
     endpoint_probe_request_from_frame, endpoint_probe_response_frame,
 };
-use running_process::broker::backend_lifecycle::DaemonProcess;
 use running_process::broker::protocol::{
-    read_frame, write_frame, Endpoint, Frame, FrameKind, FramingError,
+    Endpoint, Frame, FrameKind, FramingError, read_frame, write_frame,
 };
 use running_process::broker::server::backend_launcher::{
     BACKEND_ENV_ENDPOINT_NAMESPACE, BACKEND_ENV_ENDPOINT_PATH,

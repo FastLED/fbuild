@@ -10,5 +10,5 @@
 //! the bridge.
 
 pub use fbuild_core::http::{
-    blocking_client, client, client_with_timeout, DEFAULT_CONNECT_TIMEOUT, DEFAULT_TIMEOUT,
+    DEFAULT_CONNECT_TIMEOUT, DEFAULT_TIMEOUT, blocking_client, client, client_with_timeout,
 };

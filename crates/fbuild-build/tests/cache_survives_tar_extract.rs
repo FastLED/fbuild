@@ -13,7 +13,7 @@ use std::io::Cursor;
 use std::path::{Path, PathBuf};
 use std::time::SystemTime;
 
-use filetime::{set_file_mtime, FileTime};
+use filetime::{FileTime, set_file_mtime};
 use tar::{Archive, Builder};
 use tempfile::TempDir;
 

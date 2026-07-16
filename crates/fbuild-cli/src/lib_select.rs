@@ -18,12 +18,12 @@
 use std::path::{Path, PathBuf};
 
 use fbuild_config::PlatformIOConfig;
-use fbuild_core::path::normalize_for_key;
 use fbuild_core::Platform;
-use fbuild_library_select::{resolve, Selection};
-use fbuild_packages::library::framework_library::discover_framework_libraries;
-use fbuild_packages::library::FrameworkLibrary;
+use fbuild_core::path::normalize_for_key;
+use fbuild_library_select::{Selection, resolve};
 use fbuild_packages::Framework;
+use fbuild_packages::library::FrameworkLibrary;
+use fbuild_packages::library::framework_library::discover_framework_libraries;
 use serde_json::json;
 use walkdir::{DirEntry, WalkDir};
 

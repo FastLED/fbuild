@@ -10,10 +10,10 @@ use crate::preemption::PreemptionTracker;
 use crate::session::SerialSession;
 use dashmap::DashMap;
 use std::collections::VecDeque;
-use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
+use std::sync::atomic::{AtomicBool, Ordering};
 use std::time::Duration;
-use tokio::sync::{broadcast, Mutex};
+use tokio::sync::{Mutex, broadcast};
 
 const OUTPUT_BUFFER_CAP: usize = 10_000;
 const BROADCAST_CHANNEL_SIZE: usize = 1024;
@@ -429,7 +429,7 @@ impl SharedSerialManager {
                 return Err(fbuild_core::FbuildError::SerialError(format!(
                     "write task panicked on {}: {}",
                     port_owned, join_err
-                )))
+                )));
             }
         };
 

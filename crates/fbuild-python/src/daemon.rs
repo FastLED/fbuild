@@ -452,7 +452,7 @@ mod tests {
     //! what the bug hinged on. Mocking the Python interpreter just to
     //! re-test stdlib attribute access would dilute the signal.
     use super::{
-        broker_refusal_is_fatal, daemon_cache_identity_error, daemon_in_dir, DAEMON_BIN_NAME,
+        DAEMON_BIN_NAME, broker_refusal_is_fatal, daemon_cache_identity_error, daemon_in_dir,
     };
     use running_process::broker::client::RefusalKind;
     use std::fs;

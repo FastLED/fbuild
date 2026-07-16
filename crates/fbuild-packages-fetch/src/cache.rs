@@ -366,15 +366,21 @@ mod tests {
         assert_eq!(cache.platforms_dir(), cache_root.join("platforms"));
         assert_eq!(cache.libraries_dir(), cache_root.join("libraries"));
         assert_eq!(cache.core_artifacts_dir(), cache_root.join("core"));
-        assert!(cache
-            .get_package_path("https://example.test/pkg.tar.gz", "1.0.0")
-            .starts_with(cache_root.join("packages")));
-        assert!(cache
-            .get_toolchain_path("https://example.test/tool.tar.gz", "1.0.0")
-            .starts_with(cache_root.join("toolchains")));
-        assert!(cache
-            .get_platform_path("https://example.test/platform.tar.gz", "1.0.0")
-            .starts_with(cache_root.join("platforms")));
+        assert!(
+            cache
+                .get_package_path("https://example.test/pkg.tar.gz", "1.0.0")
+                .starts_with(cache_root.join("packages"))
+        );
+        assert!(
+            cache
+                .get_toolchain_path("https://example.test/tool.tar.gz", "1.0.0")
+                .starts_with(cache_root.join("toolchains"))
+        );
+        assert!(
+            cache
+                .get_platform_path("https://example.test/platform.tar.gz", "1.0.0")
+                .starts_with(cache_root.join("platforms"))
+        );
     }
 
     #[test]
@@ -446,12 +452,16 @@ mod tests {
         cache
             .ensure_build_directories("uno", BuildProfile::Release)
             .unwrap();
-        assert!(cache
-            .get_core_build_dir("uno", BuildProfile::Release)
-            .exists());
-        assert!(cache
-            .get_src_build_dir("uno", BuildProfile::Release)
-            .exists());
+        assert!(
+            cache
+                .get_core_build_dir("uno", BuildProfile::Release)
+                .exists()
+        );
+        assert!(
+            cache
+                .get_src_build_dir("uno", BuildProfile::Release)
+                .exists()
+        );
     }
 
     #[test]

@@ -17,9 +17,9 @@ pub use board::{BoardConfig, DebugToolMeta, Esp32QemuPsramConfig};
 pub use ini_parser::PlatformIOConfig;
 pub use mcu::McuSpec;
 pub use pio_env::{
-    scan_unsupported, scan_warn_only, PioEnvOverrides, SUPPORTED_PIO_ENV_VARS,
-    WARN_ONLY_PIO_ENV_VARS,
+    PioEnvOverrides, SUPPORTED_PIO_ENV_VARS, WARN_ONLY_PIO_ENV_VARS, scan_unsupported,
+    scan_warn_only,
 };
 pub use platform_packages::{
-    parse_platform_packages_entry, parse_platform_packages_value, PackageOverride,
+    PackageOverride, parse_platform_packages_entry, parse_platform_packages_value,
 };

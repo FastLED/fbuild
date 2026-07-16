@@ -23,8 +23,8 @@ use fbuild_core::{Platform, Result};
 use serde::Serialize;
 
 use crate::build_fingerprint::{
-    expected_fast_path_artifacts, stable_hash_json, FastPathCheckInputs, FastPathContract,
-    FastPathPersistInputs, BUILD_FINGERPRINT_VERSION,
+    BUILD_FINGERPRINT_VERSION, FastPathCheckInputs, FastPathContract, FastPathPersistInputs,
+    expected_fast_path_artifacts, stable_hash_json,
 };
 use crate::compile_database::TargetArchitecture;
 use crate::pipeline;
@@ -56,6 +56,8 @@ struct SamFingerprintMetadata {
     board_extra_flags: Option<String>,
     board_vid: Option<String>,
     board_pid: Option<String>,
+    board_usb_product: Option<String>,
+    board_usb_manufacturer: Option<String>,
     platform: String,
     max_flash: Option<u64>,
     max_ram: Option<u64>,
@@ -139,6 +141,8 @@ impl BuildOrchestrator for SamOrchestrator {
             board_extra_flags: ctx.board.extra_flags.clone(),
             board_vid: ctx.board.vid.clone(),
             board_pid: ctx.board.pid.clone(),
+            board_usb_product: ctx.board.usb_product.clone(),
+            board_usb_manufacturer: ctx.board.usb_manufacturer.clone(),
             platform: "atmelsam".to_string(),
             max_flash: ctx.board.max_flash,
             max_ram: ctx.board.max_ram,

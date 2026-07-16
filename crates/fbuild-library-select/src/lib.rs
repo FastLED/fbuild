@@ -20,13 +20,13 @@
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
 
-use fbuild_header_scan::{walk_with_state, WalkState};
+use fbuild_header_scan::{WalkState, walk_with_state};
 use fbuild_packages::library::FrameworkLibrary;
 use serde::{Deserialize, Serialize};
 
 pub mod cache;
 
-pub use cache::{cache_key, resolve_cached, CacheKeyInputs, CachedSelection};
+pub use cache::{CacheKeyInputs, CachedSelection, cache_key, resolve_cached};
 
 /// Stats emitted by [`resolve_with_stats`] for performance assertions and
 /// daemon-side observability. `files_read` is the total number of physical

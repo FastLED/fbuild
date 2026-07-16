@@ -228,9 +228,11 @@ mod tests {
     fn test_common_flags_contain_includes() {
         let compiler = test_compiler();
         let flags = compiler.common_flags();
-        assert!(flags
-            .iter()
-            .any(|f| f.contains("-I") && f.contains("nrf52")));
+        assert!(
+            flags
+                .iter()
+                .any(|f| f.contains("-I") && f.contains("nrf52"))
+        );
     }
 
     #[test]

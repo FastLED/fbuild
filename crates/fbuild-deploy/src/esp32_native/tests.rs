@@ -4,8 +4,8 @@
 
 use espflash::connection::{ResetAfterOperation, ResetBeforeOperation};
 
-use crate::esp32::{FlashRegion, RegionVerifyResult};
 use crate::DeployOutcome;
+use crate::esp32::{FlashRegion, RegionVerifyResult};
 
 use super::progress::LoggingProgressBridge;
 use super::transport::{

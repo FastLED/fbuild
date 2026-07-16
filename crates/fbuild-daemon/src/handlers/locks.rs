@@ -5,8 +5,8 @@ use crate::models::{
     ClearLocksRequest, ClearLocksResponse, LockStatusResponse, PendingSerialAttachLockInfo,
     PortLockInfo, ProjectLockInfo, SerialClientLockInfo,
 };
-use axum::extract::State;
 use axum::Json;
+use axum::extract::State;
 use fbuild_serial::{PortSessionInfo, SerialClientInfo};
 use std::sync::Arc;
 

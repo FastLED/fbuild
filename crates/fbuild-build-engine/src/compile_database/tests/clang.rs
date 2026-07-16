@@ -4,7 +4,7 @@ use std::path::{Path, PathBuf};
 
 use super::super::clang::should_remove_flag;
 use crate::compile_database::{
-    translate_flags_for_clang, CompileDatabase, CompileEntry, TargetArchitecture,
+    CompileDatabase, CompileEntry, TargetArchitecture, translate_flags_for_clang,
 };
 
 #[test]
@@ -203,20 +203,26 @@ fn test_database_translate_for_clang() {
         translated.entries[0].arguments[1],
         "--target=xtensa-esp-elf"
     );
-    assert!(!translated.entries[0]
-        .arguments
-        .contains(&"-mlongcalls".to_string()));
+    assert!(
+        !translated.entries[0]
+            .arguments
+            .contains(&"-mlongcalls".to_string())
+    );
     assert!(translated.entries[0].arguments.contains(&"-Os".to_string()));
     assert_eq!(translated.entries[0].file, "main.c");
 
     // Second entry: g++ → clang++
     assert_eq!(translated.entries[1].arguments[0], "clang++");
-    assert!(!translated.entries[1]
-        .arguments
-        .contains(&"-mlongcalls".to_string()));
-    assert!(translated.entries[1]
-        .arguments
-        .contains(&"-std=c++17".to_string()));
+    assert!(
+        !translated.entries[1]
+            .arguments
+            .contains(&"-mlongcalls".to_string())
+    );
+    assert!(
+        translated.entries[1]
+            .arguments
+            .contains(&"-std=c++17".to_string())
+    );
 }
 
 #[test]
@@ -289,10 +295,12 @@ fn test_prepare_for_iwyu_removes_target() {
         output: None,
     });
     let result = db.prepare_for_iwyu(Path::new("/project/src"), &[]);
-    assert!(!result.entries[0]
-        .arguments
-        .iter()
-        .any(|a| a.starts_with("--target=")));
+    assert!(
+        !result.entries[0]
+            .arguments
+            .iter()
+            .any(|a| a.starts_with("--target="))
+    );
 }
 
 #[test]

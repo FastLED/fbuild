@@ -475,7 +475,7 @@ async fn wait_and_capture(
                 return Err(FbuildError::Timeout(format!(
                     "command timed out after {}s",
                     d.as_secs()
-                )))
+                )));
             }
         },
         None => wait_fut

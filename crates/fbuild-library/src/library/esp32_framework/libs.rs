@@ -2,8 +2,8 @@
 
 use std::path::{Path, PathBuf};
 
-use super::fs_utils::copy_dir_recursive;
 use super::Esp32Framework;
+use super::fs_utils::copy_dir_recursive;
 
 const NEW_SDK_LAYOUT: &str = "esp32-arduino-libs";
 const OLD_SDK_LAYOUT: &str = "sdk";
@@ -281,13 +281,15 @@ mod tests {
 
         patch_mcu_compatibility(&mcu_dir, "esp32c2").unwrap();
 
-        assert!(mcu_dir
-            .join("include")
-            .join("hal")
-            .join("include")
-            .join("hal")
-            .join("touch_sensor_legacy_types.h")
-            .exists());
+        assert!(
+            mcu_dir
+                .join("include")
+                .join("hal")
+                .join("include")
+                .join("hal")
+                .join("touch_sensor_legacy_types.h")
+                .exists()
+        );
     }
 
     #[test]

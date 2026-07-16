@@ -217,6 +217,12 @@ fn flatten_board_entry(entry: &serde_json::Value, board_id: &str) -> HashMap<Str
         d.insert("platform_str".into(), platform.to_string());
     }
 
+    // USB manufacturer string; PlatformIO sources USB_MANUFACTURER from the
+    // top-level `vendor` field (define emission is gated on `usb_product`).
+    if let Some(vendor) = entry.get("vendor").and_then(|v| v.as_str()) {
+        d.insert("usb_manufacturer".into(), vendor.to_string());
+    }
+
     // Data-driven: read build section from enriched JSON
     if let Some(build) = entry.get("build").and_then(|v| v.as_object()) {
         if let Some(core) = build.get("core").and_then(|v| v.as_str()) {
@@ -242,6 +248,29 @@ fn flatten_board_entry(entry: &serde_json::Value, board_id: &str) -> HashMap<Str
         }
         if let Some(pid) = build.get("pid").and_then(|v| v.as_str()) {
             d.insert("pid".into(), pid.to_string());
+        }
+        // PlatformIO-format manifests carry USB identities as
+        // `build.hwids: [[vid, pid], ...]`; the first pair is the compile
+        // identity (platform-atmelsam arduino-common.py uses `hwids[0]`).
+        // Explicit `build.vid`/`build.pid` keys win. This only fires for
+        // project-local manifests: bundled snapshots are hwids-free, enforced
+        // by `bundled_board_snapshots_never_embed_usb_vid_or_pid`.
+        if let Some(first_hwid) = build
+            .get("hwids")
+            .and_then(|v| v.as_array())
+            .and_then(|hwids| hwids.first())
+            .and_then(|v| v.as_array())
+        {
+            if let (Some(vid), Some(pid)) = (
+                first_hwid.first().and_then(|v| v.as_str()),
+                first_hwid.get(1).and_then(|v| v.as_str()),
+            ) {
+                d.entry("vid".into()).or_insert_with(|| vid.to_string());
+                d.entry("pid".into()).or_insert_with(|| pid.to_string());
+            }
+        }
+        if let Some(usb_product) = build.get("usb_product").and_then(|v| v.as_str()) {
+            d.insert("usb_product".into(), usb_product.to_string());
         }
         if let Some(flash_mode) = build.get("flash_mode").and_then(|v| v.as_str()) {
             d.insert("flash_mode".into(), flash_mode.to_string());

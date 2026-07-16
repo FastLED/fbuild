@@ -172,6 +172,8 @@ impl BoardConfig {
             chip_variant: get("chip_variant"),
             vid: get("vid"),
             pid: get("pid"),
+            usb_product: get("usb_product"),
+            usb_manufacturer: get("usb_manufacturer"),
             extra_flags: get("extra_flags"),
             upload_protocol: get("upload.protocol")
                 .or_else(|| props.get("upload.protocol").cloned()),
@@ -334,6 +336,14 @@ impl BoardConfig {
                 .get("pid")
                 .cloned()
                 .or_else(|| defaults.get("pid").cloned()),
+            usb_product: overrides
+                .get("usb_product")
+                .cloned()
+                .or_else(|| defaults.get("usb_product").cloned()),
+            usb_manufacturer: overrides
+                .get("usb_manufacturer")
+                .cloned()
+                .or_else(|| defaults.get("usb_manufacturer").cloned()),
             extra_flags: overrides
                 .get("extra_flags")
                 .cloned()

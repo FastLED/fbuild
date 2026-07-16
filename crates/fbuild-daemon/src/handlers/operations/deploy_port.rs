@@ -250,8 +250,7 @@ fn profiles_match_deploy_target(
                     || profile.role == UsbDeviceRole::UsbUartBridge
             }
             Platform::AtmelAvr | Platform::AtmelMegaAvr => {
-                profile_platform == Some("arduino")
-                    || profile.role == UsbDeviceRole::UsbUartBridge
+                profile_platform == Some("arduino") || profile.role == UsbDeviceRole::UsbUartBridge
             }
             Platform::NxpLpc => profile_platform == Some("nxplpc"),
             _ => false,
@@ -326,8 +325,7 @@ mod tests {
         bridge: bool,
     ) -> fbuild_core::usb::profiles::UsbTransportProfile {
         use fbuild_core::usb::profiles::{
-            UsbDeviceRole, UsbIdentityMatch, UsbProfileProvenance, UsbPurpose,
-            UsbTransportProfile,
+            UsbDeviceRole, UsbIdentityMatch, UsbProfileProvenance, UsbPurpose, UsbTransportProfile,
         };
         UsbTransportProfile {
             identity_match: UsbIdentityMatch {
@@ -462,10 +460,12 @@ mod tests {
             ],
         );
         assert_eq!(choice.port.as_deref(), Some("COM22"));
-        assert!(choice
-            .warning
-            .unwrap()
-            .contains("multiple serial ports matched"));
+        assert!(
+            choice
+                .warning
+                .unwrap()
+                .contains("multiple serial ports matched")
+        );
     }
 
     #[test]

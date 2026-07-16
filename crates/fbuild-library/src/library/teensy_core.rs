@@ -6,7 +6,7 @@
 
 use std::path::{Path, PathBuf};
 
-use crate::library::framework_library::{discover_framework_libraries, FrameworkLibrary};
+use crate::library::framework_library::{FrameworkLibrary, discover_framework_libraries};
 use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 
 /// Framework package used by platform-teensy 5.1.0.
@@ -191,11 +191,7 @@ impl Framework for TeensyCores {
     fn get_cores_dir(&self) -> PathBuf {
         let root = self.resolved_dir();
         let cores = root.join("cores");
-        if cores.is_dir() {
-            cores
-        } else {
-            root
-        }
+        if cores.is_dir() { cores } else { root }
     }
 
     /// Teensy cores have no variants/ directory; returns the framework root as fallback.

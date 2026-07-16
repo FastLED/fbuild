@@ -21,7 +21,11 @@ fn bundled_board_snapshots_never_embed_usb_vid_or_pid() {
         let Some(build) = value.get("build").and_then(Value::as_object) else {
             continue;
         };
-        for field in ["vid", "pid"] {
+        // `hwids` is banned alongside `vid`/`pid`: the flattener parses
+        // PlatformIO-format `build.hwids` for project-local manifests, so a
+        // bundled snapshot carrying it would smuggle USB identities past the
+        // registry boundary.
+        for field in ["vid", "pid", "hwids"] {
             if build.contains_key(field) {
                 violations.push(format!("{}: build.{field}", path.display()));
             }

@@ -14,8 +14,8 @@
 use std::path::PathBuf;
 use std::time::Duration;
 
-use fbuild_core::subprocess::run_command;
 use fbuild_core::Result;
+use fbuild_core::subprocess::run_command;
 
 /// Static configuration for one flash attempt.
 pub struct FlashConfig {

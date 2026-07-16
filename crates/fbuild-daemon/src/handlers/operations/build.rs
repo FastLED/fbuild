@@ -1,17 +1,17 @@
 //! `POST /api/build` — kick off a build (streaming or buffered).
 
 use super::common::{
-    export_artifacts_bundle, resolve_build_dir, resolve_client_path, OperationGuard,
+    OperationGuard, export_artifacts_bundle, resolve_build_dir, resolve_client_path,
 };
 use crate::context::DaemonContext;
 use crate::models::{BuildRequest, OperationResponse};
+use axum::Json;
 use axum::extract::State;
 use axum::http::StatusCode;
-use axum::Json;
-use fbuild_core::channel::{unbounded, UnboundedReceiver, UnboundedSender};
+use fbuild_core::channel::{UnboundedReceiver, UnboundedSender, unbounded};
 use std::path::PathBuf;
-use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
+use std::sync::atomic::{AtomicBool, Ordering};
 use tokio::sync::Notify;
 
 /// Drop-guard that fires the cancel signal when the streaming response

@@ -24,10 +24,10 @@
 
 use std::path::PathBuf;
 
-use criterion::{black_box, criterion_group, criterion_main, Criterion, Throughput};
-use fbuild_library_select::cache::{resolve_cached, CacheKeyInputs, FileKvStore};
-use fbuild_packages::library::framework_library::discover_framework_libraries;
+use criterion::{Criterion, Throughput, black_box, criterion_group, criterion_main};
+use fbuild_library_select::cache::{CacheKeyInputs, FileKvStore, resolve_cached};
 use fbuild_packages::library::FrameworkLibrary;
+use fbuild_packages::library::framework_library::discover_framework_libraries;
 use fbuild_test_support::MiniFramework;
 
 const LIB_COUNT: usize = 30;

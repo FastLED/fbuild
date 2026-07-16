@@ -13,15 +13,15 @@
 use std::path::PathBuf;
 use std::sync::Arc;
 
+use axum::Router;
 use axum::body::Bytes;
 use axum::http::StatusCode;
 use axum::response::IntoResponse;
 use axum::routing::get;
-use axum::Router;
 use sha2::{Digest, Sha256};
 
-use fbuild_packages::lnk::{materialize_all, scan_for_lnk};
 use fbuild_packages::DiskCache;
+use fbuild_packages::lnk::{materialize_all, scan_for_lnk};
 
 /// Hard wall-clock budget for each lnk e2e tokio test (FastLED/fbuild#806).
 ///

@@ -6,7 +6,7 @@
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
-use super::types::{BoardConfig, DebugToolMeta, Esp32QemuPsramConfig, EMULATOR_TOOL_NAMES};
+use super::types::{BoardConfig, DebugToolMeta, EMULATOR_TOOL_NAMES, Esp32QemuPsramConfig};
 
 impl BoardConfig {
     /// Returns emulator/simulator tools available for this board.
@@ -263,6 +263,24 @@ impl BoardConfig {
                 .or_else(|| registry_identity.map(|(_, pid)| pid))
             {
                 defines.insert("USB_PID".to_string(), pid);
+            }
+            // USB product/manufacturer strings, gated on `usb_product` like
+            // PlatformIO's atmelsam arduino-common.py (every bundled board
+            // carries a top-level `vendor`; emitting USB_MANUFACTURER
+            // unconditionally would churn the defines of non-USB boards).
+            // Quoted like ARDUINO_BOARD above, embedded quotes stripped to
+            // match PlatformIO's `.replace('"', "")`.
+            if let Some(product) = self.usb_product.as_deref() {
+                defines.insert(
+                    "USB_PRODUCT".to_string(),
+                    format!("\\\"{}\\\"", product.replace('"', "")),
+                );
+                if let Some(manufacturer) = self.usb_manufacturer.as_deref() {
+                    defines.insert(
+                        "USB_MANUFACTURER".to_string(),
+                        format!("\\\"{}\\\"", manufacturer.replace('"', "")),
+                    );
+                }
             }
         }
 

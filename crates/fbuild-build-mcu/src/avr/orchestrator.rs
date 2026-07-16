@@ -1,4 +1,4 @@
-﻿//! AVR build orchestrator â€” wires together config, packages, compiler, linker.
+//! AVR build orchestrator â€” wires together config, packages, compiler, linker.
 //!
 //! Build phases:
 //! 1. Parse platformio.ini
@@ -19,8 +19,8 @@ use fbuild_core::{Platform, Result};
 use serde::Serialize;
 
 use crate::build_fingerprint::{
-    expected_fast_path_artifacts, stable_hash_json, FastPathCheckInputs, FastPathContract,
-    FastPathPersistInputs, BUILD_FINGERPRINT_VERSION,
+    BUILD_FINGERPRINT_VERSION, FastPathCheckInputs, FastPathContract, FastPathPersistInputs,
+    expected_fast_path_artifacts, stable_hash_json,
 };
 use crate::compile_database::TargetArchitecture;
 use crate::compiler::Compiler as _;

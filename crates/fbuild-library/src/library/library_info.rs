@@ -244,10 +244,11 @@ mod tests {
     #[test]
     fn test_archive_path() {
         let lib = InstalledLibrary::new(Path::new("/libs/fastled"), "fastled");
-        assert!(lib
-            .archive_path()
-            .to_string_lossy()
-            .contains("libfastled.a"));
+        assert!(
+            lib.archive_path()
+                .to_string_lossy()
+                .contains("libfastled.a")
+        );
     }
 
     #[test]

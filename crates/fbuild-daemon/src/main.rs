@@ -1,12 +1,12 @@
 #[global_allocator]
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
-use axum::routing::{get, post};
 use axum::Router;
+use axum::routing::{get, post};
 use clap::Parser;
 use fbuild_build::compile_backend::CompileBackend;
 use fbuild_daemon::context::{
-    self_eviction_timeout, BroadcastHub, DaemonContext, IDLE_TIMEOUT, STALE_LOCK_CHECK_INTERVAL,
+    BroadcastHub, DaemonContext, IDLE_TIMEOUT, STALE_LOCK_CHECK_INTERVAL, self_eviction_timeout,
 };
 use fbuild_daemon::handlers::{cache, devices, emulator, health, locks, operations, websockets};
 use fbuild_daemon::log_layer::BroadcastLogLayer;
@@ -494,11 +494,7 @@ async fn read_stale_daemon_pid() -> Option<u32> {
     let path = fbuild_paths::get_daemon_pid_file();
     let raw = fbuild_core::fs::read_to_string(&path).await.ok()?;
     let pid: u32 = raw.trim().parse().ok()?;
-    if is_pid_alive(pid) {
-        None
-    } else {
-        Some(pid)
-    }
+    if is_pid_alive(pid) { None } else { Some(pid) }
 }
 
 /// Cross-platform "is this PID still running?" check. Avoids dragging in

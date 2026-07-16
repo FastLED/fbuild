@@ -8,11 +8,7 @@ use crate::output;
 /// PlatformIO follows `PATH`-style conventions: ';' on Windows, ':' elsewhere.
 /// Centralized here so the CLI handler and the unit tests agree.
 pub fn ci_lib_extra_dirs_sep() -> &'static str {
-    if cfg!(windows) {
-        ";"
-    } else {
-        ":"
-    }
+    if cfg!(windows) { ";" } else { ":" }
 }
 
 /// Map a single `pio ci` positional argument to a project directory.
@@ -102,7 +98,7 @@ pub struct CompileManyArgs {
 }
 
 pub async fn run_compile_many(args: CompileManyArgs) -> fbuild_core::Result<()> {
-    use fbuild_build::compile_many::{compile_many, CompileManyRequest, Stage};
+    use fbuild_build::compile_many::{CompileManyRequest, Stage, compile_many};
 
     let CompileManyArgs {
         board,

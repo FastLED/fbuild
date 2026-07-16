@@ -2,9 +2,9 @@
 
 use std::path::PathBuf;
 
+use super::Esp32Framework;
 use super::fs_utils::collect_sources;
 use super::sdk_paths::sdk_mcu_dir;
-use super::Esp32Framework;
 
 impl Esp32Framework {
     /// Get the core source directory (e.g. `cores/esp32`).

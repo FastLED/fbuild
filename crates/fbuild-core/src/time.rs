@@ -9,7 +9,7 @@
 //! meaning. The set below covers the top 80% of the audit found in
 //! #844 — extend as new categories emerge.
 
-pub use tokio::time::{interval, sleep, timeout, Duration};
+pub use tokio::time::{Duration, interval, sleep, timeout};
 
 // ---- HTTP timeouts ----
 

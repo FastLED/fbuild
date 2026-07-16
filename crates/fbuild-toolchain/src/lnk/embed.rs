@@ -20,7 +20,7 @@ use std::path::{Path, PathBuf};
 use fbuild_core::{FbuildError, Result};
 
 use super::format::LnkFile;
-use super::materialize::{materialize_one, MaterializedLnk};
+use super::materialize::{MaterializedLnk, materialize_one};
 use crate::DiskCache;
 
 /// Resolve every entry to an absolute on-disk path. Entries ending in
