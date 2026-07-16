@@ -6,6 +6,7 @@
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
+use super::db::registry_board_id;
 use super::types::{BoardConfig, DebugToolMeta, EMULATOR_TOOL_NAMES, Esp32QemuPsramConfig};
 
 impl BoardConfig {
@@ -57,7 +58,8 @@ impl BoardConfig {
     }
 
     fn registry_compile_identity(&self) -> Option<(u16, u16)> {
-        fbuild_core::usb::profiles::board_profile(&self.board_id)?.primary_compile_identity
+        fbuild_core::usb::profiles::board_profile(registry_board_id(&self.board_id))?
+            .primary_compile_identity
     }
 
     pub(super) fn formatted_registry_compile_identity(

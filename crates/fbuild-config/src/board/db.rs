@@ -75,6 +75,15 @@ fn resolve_board_alias(board_id: &str) -> &str {
     }
 }
 
+/// Return the canonical bundled board ID used by FastLED/boards profiles.
+///
+/// Build configuration accepts a small number of PlatformIO compatibility
+/// aliases. Registry-backed metadata must use the corresponding canonical ID,
+/// or a valid board profile becomes invisible after the local alias resolves.
+pub(super) fn registry_board_id(board_id: &str) -> &str {
+    resolve_board_alias(board_id)
+}
+
 /// Extract debug tools from a board JSON entry's `debug.tools` section.
 pub(super) fn get_board_debug_tools(board_id: &str) -> Option<HashMap<String, DebugToolMeta>> {
     let db = get_board_db();

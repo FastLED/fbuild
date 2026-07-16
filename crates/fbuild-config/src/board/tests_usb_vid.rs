@@ -59,6 +59,14 @@ fn test_registry_compile_identity_define_format() {
 }
 
 #[test]
+fn test_registry_lookup_uses_canonical_bundled_board_id() {
+    assert_eq!(
+        super::db::registry_board_id("adafruit_grand_central_m4"),
+        "adafruit_grandcentral_m4"
+    );
+}
+
+#[test]
 #[ignore = "live FastLED/boards publication smoke test"]
 fn live_registry_identity_drives_pico_compile_defines() {
     let temp = tempfile::tempdir().unwrap();
