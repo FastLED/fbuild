@@ -17,7 +17,9 @@ use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
 use fbuild_library_select::cache::{CacheKeyInputs, FileKvStore, resolve_cached};
-use fbuild_library_select::{resolve as resolve_library_selection, resolve_active as resolve_active_library_selection};
+use fbuild_library_select::{
+    resolve as resolve_library_selection, resolve_active as resolve_active_library_selection,
+};
 use fbuild_packages::library::FrameworkLibrary;
 use walkdir::{DirEntry, WalkDir};
 
@@ -434,10 +436,7 @@ fn is_translation_unit(path: &Path) -> bool {
         .and_then(|ext| ext.to_str())
         .unwrap_or_default()
         .to_lowercase();
-    matches!(
-        ext.as_str(),
-        "c" | "cpp" | "cc" | "cxx" | "s" | "ino"
-    )
+        matches!(ext.as_str(), "c" | "cpp" | "cc" | "cxx" | "s" | "ino")
 }
 
 #[cfg(test)]
