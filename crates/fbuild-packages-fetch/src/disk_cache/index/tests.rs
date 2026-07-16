@@ -1,10 +1,10 @@
 //! Tests for the SQLite cache index.
 
-use rusqlite::{params, Connection, OptionalExtension};
+use rusqlite::{Connection, OptionalExtension, params};
 
 use super::super::paths::{self, Kind};
-use super::migrations::{leases_has_refcount, MIGRATIONS};
 use super::CacheIndex;
+use super::migrations::{MIGRATIONS, leases_has_refcount};
 
 #[test]
 fn test_index_open_creates_schema() {

@@ -21,7 +21,7 @@
 use std::fs;
 use std::path::{Path, PathBuf};
 
-use fbuild_build::compile_many::{compile_many, CompileManyRequest, Stage};
+use fbuild_build::compile_many::{CompileManyRequest, Stage, compile_many};
 use fbuild_core::BuildProfile;
 
 /// 15-min wall-clock cap for `--ignored` real-toolchain tests (FastLED/fbuild#806).

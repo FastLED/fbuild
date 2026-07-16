@@ -199,12 +199,16 @@ mod tests {
     fn test_common_flags_contain_includes() {
         let compiler = test_compiler();
         let flags = compiler.common_flags();
-        assert!(flags
-            .iter()
-            .any(|f| f.contains("-I") && f.contains("cores/arduino")));
-        assert!(flags
-            .iter()
-            .any(|f| f.contains("-I") && f.contains("variants/standard")));
+        assert!(
+            flags
+                .iter()
+                .any(|f| f.contains("-I") && f.contains("cores/arduino"))
+        );
+        assert!(
+            flags
+                .iter()
+                .any(|f| f.contains("-I") && f.contains("variants/standard"))
+        );
     }
 
     #[test]

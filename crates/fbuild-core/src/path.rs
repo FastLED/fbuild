@@ -401,11 +401,7 @@ pub fn path_arg_for_compile_cwd(path: &Path, cwd: &Path) -> String {
             .unwrap_or(stable_path)
     };
     let arg = NormalizedPath::from(relative).display_slash();
-    if arg.is_empty() {
-        ".".to_string()
-    } else {
-        arg
-    }
+    if arg.is_empty() { ".".to_string() } else { arg }
 }
 
 /// Normalize common path-bearing compiler flags (`-I`, `-isystem`,

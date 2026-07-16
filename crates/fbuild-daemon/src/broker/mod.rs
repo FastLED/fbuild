@@ -32,11 +32,11 @@ pub use protocol::{
     BrokerRequest, BrokerResponse, DaemonOp, FBUILD_PAYLOAD_PROTOCOL, FBUILD_PROTOCOL_VERSION,
 };
 pub use service::{
-    fbuild_cache_manifest, fbuild_ci_cache_manifest, fbuild_ci_service_definition,
+    ServiceError, fbuild_cache_manifest, fbuild_ci_cache_manifest, fbuild_ci_service_definition,
     fbuild_service_definition, install_fbuild_service_definition,
     install_fbuild_service_definition_in, publish_fbuild_cache_manifest,
     publish_fbuild_cache_manifest_in, publish_fbuild_ci_cache_manifest,
-    publish_fbuild_ci_cache_manifest_in, ServiceError,
+    publish_fbuild_ci_cache_manifest_in,
 };
 pub use session::{AdoptOutcome, BrokerError, FbuildBrokerSession};
 

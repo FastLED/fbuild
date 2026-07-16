@@ -27,8 +27,11 @@ fn pyo3_029_policy_stays_target_python_independent() {
         workspace_manifest.contains("pyo3 = { version = \"0.29\", features = [\"abi3-py310\"] }")
     );
     assert!(crate_manifest.contains("pyo3-build-config = \"0.29\""));
-    assert!(crate_manifest
-        .contains("pyo3-async-runtimes = { version = \"0.29\", features = [\"tokio-runtime\"] }"));
+    assert!(
+        crate_manifest.contains(
+            "pyo3-async-runtimes = { version = \"0.29\", features = [\"tokio-runtime\"] }"
+        )
+    );
 
     for removed in [
         "PYO3_CROSS_LIB_DIR",
@@ -45,7 +48,7 @@ fn pyo3_029_policy_stays_target_python_independent() {
 
     for command in [
         "PYO3_NO_PYTHON=1 soldr cargo zigbuild --release \\",
-        "PYO3_NO_PYTHON=1 soldr build --release \\",
+        "PYO3_NO_PYTHON=1 soldr --no-cache build --release \\",
         "PYO3_NO_PYTHON=1 cargo zigbuild --release \\",
         "PYO3_NO_PYTHON=1 soldr cargo build --release \\",
     ] {
@@ -55,9 +58,13 @@ fn pyo3_029_policy_stays_target_python_independent() {
         );
     }
 
+    // The Windows MSVC branches route through `soldr --no-cache build`
+    // (the xwin CRT-casing fixes made the cache bypass part of the
+    // blessed invocation); the policy is the soldr entry point plus
+    // host-interpreter suppression, not the exact cache flags.
     for command in [
-        "soldr build --release --target ${{ inputs.target }} \\",
-        "PYO3_NO_PYTHON=1 soldr build --release \\",
+        "soldr --no-cache build --release --target ${{ inputs.target }} \\",
+        "PYO3_NO_PYTHON=1 soldr --no-cache build --release \\",
     ] {
         assert!(
             workflow.contains(command),

@@ -5,7 +5,7 @@ use clap::Parser;
 
 use crate::{daemon_client, lib_select, mcp, output, update_check};
 
-use super::args::{resolve_project_dir, rewrite_args, BloatCmd, Cli, Commands};
+use super::args::{BloatCmd, Cli, Commands, resolve_project_dir, rewrite_args};
 use super::bloat_lookup::run_bloat_lookup;
 use super::bringup::run_bringup;
 use super::build::run_build;
@@ -13,7 +13,7 @@ use super::cache::run_cache;
 use super::clang_tools::{run_clang_tool, run_iwyu};
 use super::clangd_config::run_clangd_config;
 use super::compile_many::{
-    build_ci_pio_env, normalize_ci_sketches, run_compile_many, CompileManyArgs,
+    CompileManyArgs, build_ci_pio_env, normalize_ci_sketches, run_compile_many,
 };
 use super::daemon_cmd::run_daemon;
 use super::deploy::{run_deploy, run_monitor, run_test_emu};

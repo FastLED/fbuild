@@ -5,7 +5,7 @@
 //! `crates/fbuild-cli/src/sync/`; this file is intentionally thin so the
 //! CLI wiring is easy to audit.
 
-use crate::sync::{run_sync, SyncArgs, SyncOutcome};
+use crate::sync::{SyncArgs, SyncOutcome, run_sync};
 
 /// Adapter for `Commands::Sync` — invoked from `cli::dispatch`.
 #[allow(clippy::too_many_arguments)] // Matches clap's parsed variant fields 1:1.

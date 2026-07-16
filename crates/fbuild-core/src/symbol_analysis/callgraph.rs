@@ -434,9 +434,11 @@ Disassembly of section .data:
 ";
         let edges = parse_disasm(disasm);
         assert_eq!(edges.get("foo"), Some(&vec!["foo_callee".to_string()]));
-        assert!(!edges
-            .values()
-            .any(|callees| callees.contains(&"should_not_attach_to_foo".to_string())));
+        assert!(
+            !edges
+                .values()
+                .any(|callees| callees.contains(&"should_not_attach_to_foo".to_string()))
+        );
     }
 
     /// C++ mangled names contain `::`, `<>`, and parentheses. We

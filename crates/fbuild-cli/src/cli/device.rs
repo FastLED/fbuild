@@ -184,11 +184,7 @@ fn print_conflict(conflict: &DeviceLeaseConflictResponse) {
 }
 
 fn empty_dash(value: &str) -> &str {
-    if value.is_empty() {
-        "-"
-    } else {
-        value
-    }
+    if value.is_empty() { "-" } else { value }
 }
 
 fn device_description(description: &str, previous_port: Option<&str>) -> String {

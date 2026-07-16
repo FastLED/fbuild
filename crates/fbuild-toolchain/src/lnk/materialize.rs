@@ -15,10 +15,10 @@ use fbuild_core::{FbuildError, Result};
 use tracing::debug;
 
 use super::format::{ExtractMode, LnkFile};
-use super::resolver::{resolve, ResolvedBlob};
+use super::resolver::{ResolvedBlob, resolve};
 use super::scanner::DiscoveredLnk;
-use crate::extractor::{extract_tar_gz_public, extract_zip_public};
 use crate::DiskCache;
+use crate::extractor::{extract_tar_gz_public, extract_zip_public};
 
 /// One materialized `.lnk` ready for downstream consumers.
 pub struct MaterializedLnk {
@@ -413,8 +413,8 @@ mod tests {
     /// Minimal zip builder for tests — one entry, no compression.
     fn make_zip_with_entry(name: &str, contents: &[u8]) -> Vec<u8> {
         use std::io::{Cursor, Write};
-        use zip::write::SimpleFileOptions;
         use zip::CompressionMethod;
+        use zip::write::SimpleFileOptions;
         let mut buf = Cursor::new(Vec::new());
         {
             let mut w = zip::ZipWriter::new(&mut buf);

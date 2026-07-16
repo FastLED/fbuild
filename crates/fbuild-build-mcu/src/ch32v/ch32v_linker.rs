@@ -207,9 +207,11 @@ mod tests {
             Some(2048),
             false,
         );
-        assert!(linker
-            .linker_script_path
-            .to_string_lossy()
-            .contains("link.ld"));
+        assert!(
+            linker
+                .linker_script_path
+                .to_string_lossy()
+                .contains("link.ld")
+        );
     }
 }

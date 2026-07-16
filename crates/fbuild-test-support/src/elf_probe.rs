@@ -173,10 +173,10 @@ impl ElfProbe {
 mod tests {
     use super::*;
 
-    use object::elf;
-    use object::write::elf::{FileHeader, SectionHeader, Sym, Writer};
-    use object::write::StringId;
     use object::Endianness;
+    use object::elf;
+    use object::write::StringId;
+    use object::write::elf::{FileHeader, SectionHeader, Sym, Writer};
 
     /// Build a minimal little-endian 32-bit ARM ELF executable with the named
     /// sections (each filled with `size` zero bytes so `.text/.data` contribute

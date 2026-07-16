@@ -19,7 +19,7 @@
 //! should `tokio::spawn` / `mpsc::send` internally and return
 //! immediately — not block here.
 
-use std::panic::{catch_unwind, AssertUnwindSafe};
+use std::panic::{AssertUnwindSafe, catch_unwind};
 use std::sync::{Arc, OnceLock, RwLock};
 use std::{fmt, fmt::Display};
 

@@ -17,8 +17,8 @@
 use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 
-use fbuild_core::path::NormalizedPath;
 use fbuild_core::Result;
+use fbuild_core::path::NormalizedPath;
 use serde::{Deserialize, Serialize};
 
 /// PlatformIO-shape build metadata for one environment.

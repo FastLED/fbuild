@@ -90,7 +90,9 @@ fn vid_pid_token(instance_id: &str) -> Option<String> {
 
 #[cfg(any(windows, test))]
 fn is_root_hub_id(instance_id: &str) -> bool {
-    instance_id.to_ascii_uppercase().starts_with("USB\\ROOT_HUB")
+    instance_id
+        .to_ascii_uppercase()
+        .starts_with("USB\\ROOT_HUB")
 }
 
 #[cfg(any(windows, test))]
@@ -126,7 +128,7 @@ pub(super) fn format_topology(depth: HubDepth, location: Option<&str>) -> String
 
 #[cfg(windows)]
 mod windows_impl {
-    use std::ffi::{c_void, OsStr};
+    use std::ffi::{OsStr, c_void};
     use std::os::windows::ffi::OsStrExt;
     use std::path::Path;
 
@@ -449,10 +451,7 @@ mod tests {
     #[test]
     fn chain_that_never_reaches_a_root_hub_is_unavailable() {
         let ids = vec!["USB\\VID_1111&PID_2222\\5&AABB".to_string()];
-        assert_eq!(
-            classify_ancestor_chain(OWN_ID, &ids),
-            HubDepth::Unavailable
-        );
+        assert_eq!(classify_ancestor_chain(OWN_ID, &ids), HubDepth::Unavailable);
     }
 
     #[test]

@@ -56,26 +56,34 @@ mod tests {
     #[test]
     fn test_rp2040_compiler_flags() {
         let config = get_rp2040_config_for_mcu("rp2040").unwrap();
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mcpu=cortex-m0plus".to_string()));
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mthumb".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mcpu=cortex-m0plus".to_string())
+        );
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mthumb".to_string())
+        );
     }
 
     #[test]
     fn test_rp2350_has_fpu_flags() {
         let config = get_rp2040_config_for_mcu("rp2350").unwrap();
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mfloat-abi=softfp".to_string()));
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mfpu=fpv5-sp-d16".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mfloat-abi=softfp".to_string())
+        );
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mfpu=fpv5-sp-d16".to_string())
+        );
     }
 }

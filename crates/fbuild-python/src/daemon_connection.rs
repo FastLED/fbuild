@@ -3,8 +3,8 @@
 use pyo3::prelude::*;
 
 use crate::outcome::{
-    build_url, deploy_url, monitor_url, outcome_to_pydict, platformio_src_dir_from_env, send_op,
-    OpRequest,
+    OpRequest, build_url, deploy_url, monitor_url, outcome_to_pydict, platformio_src_dir_from_env,
+    send_op,
 };
 
 /// Python-visible DaemonConnection (context manager).

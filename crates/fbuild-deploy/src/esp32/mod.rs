@@ -35,4 +35,4 @@ pub use qemu::{
     build_qemu_args, build_qemu_esp32s3_args, create_qemu_flash_image,
     resolve_qemu_flash_size_bytes,
 };
-pub use verify::{parse_verify_regions, FlashRegion, RegionVerifyResult, VerifyOutcome};
+pub use verify::{FlashRegion, RegionVerifyResult, VerifyOutcome, parse_verify_regions};

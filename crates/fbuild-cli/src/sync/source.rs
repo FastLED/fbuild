@@ -245,11 +245,7 @@ fn last_segment(s: &str) -> &str {
     let end = s.trim_end_matches(['/', '\\']);
     let seg = end.rsplit(['/', '\\']).next().unwrap_or(end);
     let seg = seg.trim_end_matches(".git");
-    if seg.is_empty() {
-        end
-    } else {
-        seg
-    }
+    if seg.is_empty() { end } else { seg }
 }
 
 /// Split `url#ref` into `(url, Some(ref))`. Returns `(input, None)` when

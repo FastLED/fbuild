@@ -15,14 +15,14 @@
 //! 2. While the handler is running, `operation_in_progress` is set so the
 //!    self-eviction loop will not fire.
 
-use axum::routing::post;
 use axum::Router;
+use axum::routing::post;
 use fbuild_daemon::context::DaemonContext;
 use fbuild_daemon::handlers::emulator;
 use fbuild_daemon::models::TestEmuRequest;
 use std::net::SocketAddr;
-use std::sync::atomic::Ordering;
 use std::sync::Arc;
+use std::sync::atomic::Ordering;
 use std::time::Duration;
 
 /// Build an axum app wired to the `/api/test-emu` endpoint exactly like
@@ -128,8 +128,8 @@ async fn test_emu_endpoint_returns_structured_error_for_missing_project() {
 /// the guard, `last_activity` stays back-dated and this test fails.
 #[tokio::test]
 async fn test_emu_registers_operation_guard() {
-    use axum::extract::State;
     use axum::Json;
+    use axum::extract::State;
     use std::time::Instant;
 
     let ctx = make_test_context();

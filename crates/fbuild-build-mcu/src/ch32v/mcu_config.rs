@@ -100,30 +100,40 @@ mod tests {
     #[test]
     fn test_compiler_flags_contain_riscv() {
         let config = get_ch32v_config_for_mcu("ch32v003").unwrap();
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-march=rv32ec_zicsr".to_string()));
-        assert!(config
-            .compiler_flags
-            .common
-            .contains(&"-mabi=ilp32e".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-march=rv32ec_zicsr".to_string())
+        );
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mabi=ilp32e".to_string())
+        );
         assert!(config.compiler_flags.c.contains(&"-std=gnu11".to_string()));
-        assert!(config
-            .compiler_flags
-            .cxx
-            .contains(&"-std=gnu++17".to_string()));
+        assert!(
+            config
+                .compiler_flags
+                .cxx
+                .contains(&"-std=gnu++17".to_string())
+        );
     }
 
     #[test]
     fn test_linker_flags() {
         let config = get_ch32v_config_for_mcu("ch32v003").unwrap();
-        assert!(config
-            .linker_flags
-            .contains(&"-march=rv32ec_zicsr".to_string()));
-        assert!(config
-            .linker_flags
-            .contains(&"-Wl,--gc-sections".to_string()));
+        assert!(
+            config
+                .linker_flags
+                .contains(&"-march=rv32ec_zicsr".to_string())
+        );
+        assert!(
+            config
+                .linker_flags
+                .contains(&"-Wl,--gc-sections".to_string())
+        );
     }
 
     #[test]

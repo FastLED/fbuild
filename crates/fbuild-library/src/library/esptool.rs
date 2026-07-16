@@ -28,7 +28,7 @@
 
 use std::path::Path;
 
-use fbuild_core::{path::NormalizedPath, subprocess::run_command, FbuildError, Result};
+use fbuild_core::{FbuildError, Result, path::NormalizedPath, subprocess::run_command};
 
 use crate::{CacheSubdir, PackageBase};
 

@@ -16,8 +16,8 @@
 //! scope.
 
 pub use tokio::sync::mpsc::{
-    channel as bounded, unbounded_channel as unbounded, Receiver, Sender, UnboundedReceiver,
-    UnboundedSender,
+    Receiver, Sender, UnboundedReceiver, UnboundedSender, channel as bounded,
+    unbounded_channel as unbounded,
 };
 
 #[cfg(test)]

@@ -30,6 +30,6 @@ pub mod scanner;
 
 pub use embed::{expand_lnk_entries, has_lnk_extension, materialize_lnk_entry};
 pub use format::{ExtractMode, LnkFile};
-pub use materialize::{materialize_all, materialize_one, MaterializedLnk};
-pub use resolver::{resolve, ResolvedBlob};
-pub use scanner::{scan_for_lnk, DiscoveredLnk};
+pub use materialize::{MaterializedLnk, materialize_all, materialize_one};
+pub use resolver::{ResolvedBlob, resolve};
+pub use scanner::{DiscoveredLnk, scan_for_lnk};

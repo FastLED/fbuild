@@ -3,8 +3,8 @@
 
 use std::path::{Path, PathBuf};
 
-use fbuild_core::path::NormalizedPath;
 use fbuild_core::Result;
+use fbuild_core::path::NormalizedPath;
 
 use super::project_discovery::is_project_a_library;
 
@@ -46,11 +46,7 @@ pub fn pick_archiver<'a>(
 ) -> &'a Path {
     let has_lto = c_flags.iter().any(|f| f.starts_with("-flto"))
         || cpp_flags.iter().any(|f| f.starts_with("-flto"));
-    if has_lto {
-        gcc_ar_path
-    } else {
-        ar_path
-    }
+    if has_lto { gcc_ar_path } else { ar_path }
 }
 
 fn resolve_extra_library_path(project_dir: &Path, entry: &str) -> PathBuf {

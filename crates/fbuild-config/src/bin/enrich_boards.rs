@@ -26,6 +26,11 @@ const BUILD_FIELDS: &[&str] = &[
     "ldscript",
     "mcu",
     "openocd_target",
+    // USB product display string (drives USB_PRODUCT/USB_MANUFACTURER for
+    // USB-native cores). NOT a USB identity: `vid`/`pid`/`hwids` stay banned
+    // from bundled snapshots (see the explicit removal below and the
+    // `bundled_board_snapshots_never_embed_usb_vid_or_pid` guard).
+    "usb_product",
 ];
 
 const ARDUINO_FIELDS: &[&str] = &["ldscript", "partitions", "memory_type"];

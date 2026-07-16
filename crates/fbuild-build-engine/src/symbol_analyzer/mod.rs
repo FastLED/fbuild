@@ -14,8 +14,8 @@ use std::collections::BTreeMap;
 
 use fbuild_core::subprocess::run_command_with_stdin;
 use fbuild_core::symbol_analysis::{
-    build_fine_grained_map_with_synth, collect_map_derived_owners, parse_cref_table,
-    parse_linker_map, parse_nm_output, FineGrainedSymbolMap, LoadedRegion, SymbolReference,
+    FineGrainedSymbolMap, LoadedRegion, SymbolReference, build_fine_grained_map_with_synth,
+    collect_map_derived_owners, parse_cref_table, parse_linker_map, parse_nm_output,
 };
 use fbuild_core::{FbuildError, Result};
 
@@ -28,8 +28,8 @@ mod tests;
 // (`fbuild_build::symbol_analyzer::format_markdown_report`, etc.)
 // keep resolving unchanged after the split.
 pub use markdown::{
-    format_markdown_report, format_markdown_report_with_graphs, write_sidecar_dot_files,
-    MarkdownGraphOptions, SidecarOptions,
+    MarkdownGraphOptions, SidecarOptions, format_markdown_report,
+    format_markdown_report_with_graphs, write_sidecar_dot_files,
 };
 
 /// Read the `PT_LOAD` program-header ranges from an ELF. These are the

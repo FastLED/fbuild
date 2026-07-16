@@ -162,10 +162,12 @@ env.Append(CPPDEFINES=[\"DUMP_SHIM_OK\"])
     let overlay = resolve_extra_script_overlay(project_dir, "demo", &config)
         .await
         .unwrap();
-    assert!(overlay
-        .global_compile
-        .common
-        .contains(&"-DDUMP_SHIM_OK".to_string()));
+    assert!(
+        overlay
+            .global_compile
+            .common
+            .contains(&"-DDUMP_SHIM_OK".to_string())
+    );
 }
 
 #[tokio::test]
@@ -210,10 +212,12 @@ env.Append(CPPDEFINES=[\"HELPERS_SHIM_OK\"])
     let overlay = resolve_extra_script_overlay(project_dir, "demo", &config)
         .await
         .unwrap();
-    assert!(overlay
-        .global_compile
-        .common
-        .contains(&"-DHELPERS_SHIM_OK".to_string()));
+    assert!(
+        overlay
+            .global_compile
+            .common
+            .contains(&"-DHELPERS_SHIM_OK".to_string())
+    );
 }
 
 #[tokio::test]
@@ -255,10 +259,12 @@ env.Append(CPPDEFINES=[\"BOARD_CONFIG_SHIM_OK\"])
     let overlay = resolve_extra_script_overlay(project_dir, "demo", &config)
         .await
         .unwrap();
-    assert!(overlay
-        .global_compile
-        .common
-        .contains(&"-DBOARD_CONFIG_SHIM_OK".to_string()));
+    assert!(
+        overlay
+            .global_compile
+            .common
+            .contains(&"-DBOARD_CONFIG_SHIM_OK".to_string())
+    );
 }
 
 #[tokio::test]
@@ -303,10 +309,12 @@ env.Append(CPPDEFINES=[\"PIO_PLATFORM_SHIM_OK\"])
     let overlay = resolve_extra_script_overlay(project_dir, "demo", &config)
         .await
         .unwrap();
-    assert!(overlay
-        .global_compile
-        .common
-        .contains(&"-DPIO_PLATFORM_SHIM_OK".to_string()));
+    assert!(
+        overlay
+            .global_compile
+            .common
+            .contains(&"-DPIO_PLATFORM_SHIM_OK".to_string())
+    );
 }
 
 #[tokio::test]
@@ -358,10 +366,12 @@ print(\"post-append noise\")
     let overlay = resolve_extra_script_overlay(temp.path(), "demo", &config)
         .await
         .unwrap();
-    assert!(overlay
-        .global_compile
-        .common
-        .contains(&"-DPRINT_NOISE_OK".to_string()));
+    assert!(
+        overlay
+            .global_compile
+            .common
+            .contains(&"-DPRINT_NOISE_OK".to_string())
+    );
     // Both capture layers must surface in notes: Python-level print()
     // and raw fd-1 writes from spawned subprocesses.
     let stdout_note = overlay

@@ -46,7 +46,7 @@ use zccache::embedded::{
     AuditConfig, CompileRequest as ZccacheCompileRequest, HostIdentity, RuntimeHooks,
     ServiceLimits, ShutdownMode, ZccacheConfig, ZccacheService,
 };
-use zccache::fingerprint::{decision::CacheDecision, scan::walk_files, TwoLayerCache};
+use zccache::fingerprint::{TwoLayerCache, decision::CacheDecision, scan::walk_files};
 
 /// fbuild-side handle around a started [`ZccacheService`].
 ///

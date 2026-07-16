@@ -8,9 +8,9 @@
 
 use std::path::Path;
 
-use fbuild_core::symbol_analysis::graph::{rank_callees_dual, rank_callers_dual, Direction};
+use fbuild_core::symbol_analysis::graph::{Direction, rank_callees_dual, rank_callers_dual};
 use fbuild_core::symbol_analysis::{
-    sanitize_filename, BackrefGraph, FineGrainedSymbolMap, GraphConfig, TuIndex,
+    BackrefGraph, FineGrainedSymbolMap, GraphConfig, TuIndex, sanitize_filename,
 };
 use fbuild_core::{FbuildError, Result};
 

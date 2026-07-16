@@ -220,8 +220,8 @@ mod outcome_tests {
 #[cfg(test)]
 mod post_deploy_recovery_tests {
     use super::*;
-    use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
     use std::sync::Arc;
+    use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
 
     /// Test deployer whose `deploy()` is unimplemented (never invoked
     /// here) but whose `post_deploy_recovery` is observable: it records

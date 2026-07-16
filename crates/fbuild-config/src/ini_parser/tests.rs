@@ -1,7 +1,7 @@
 //! Tests for `ini_parser`.
 
-use super::values::{parse_flags, parse_lib_deps, strip_inline_comment};
 use super::PlatformIOConfig;
+use super::values::{parse_flags, parse_lib_deps, strip_inline_comment};
 use std::collections::BTreeMap;
 use std::io::Write;
 use std::path::Path;

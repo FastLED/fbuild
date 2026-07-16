@@ -13,7 +13,7 @@
 use std::path::PathBuf;
 
 use fbuild_build::symbol_analyzer::{
-    analyze_elf, default_map_path, discover_elf_in_project, AnalyzeConfig,
+    AnalyzeConfig, analyze_elf, default_map_path, discover_elf_in_project,
 };
 use fbuild_core::symbol_analysis::{BackrefGraph, GraphConfig, GraphDepth};
 use fbuild_core::{FbuildError, Result};
@@ -121,7 +121,7 @@ pub fn parse_graph_config(
                 return Err(FbuildError::BuildFailed(format!(
                     "graph --depth: expected 'adaptive' or a non-negative \
                      integer, got `{s}`"
-                )))
+                )));
             }
         },
     };

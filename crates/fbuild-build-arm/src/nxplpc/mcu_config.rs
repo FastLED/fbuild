@@ -168,17 +168,21 @@ mod tests {
     #[test]
     fn compiler_flags_target_cortex_m0plus() {
         let config = get_nxplpc_config("lpc845").unwrap();
-        assert!(config
-            .compiler_flags
-            .common
-            .iter()
-            .any(|f| f == "-mcpu=cortex-m0plus"));
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .iter()
+                .any(|f| f == "-mcpu=cortex-m0plus")
+        );
         assert!(config.compiler_flags.common.iter().any(|f| f == "-mthumb"));
-        assert!(config
-            .compiler_flags
-            .cxx
-            .iter()
-            .any(|f| f == "-std=gnu++11"));
+        assert!(
+            config
+                .compiler_flags
+                .cxx
+                .iter()
+                .any(|f| f == "-std=gnu++11")
+        );
         assert!(
             !config
                 .compiler_flags

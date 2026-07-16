@@ -104,11 +104,7 @@ pub trait Toolchain: Package {
             return ar;
         };
         let candidate = parent.join(format!("{}{}", gcc_ar_stem, ext));
-        if candidate.exists() {
-            candidate
-        } else {
-            ar
-        }
+        if candidate.exists() { candidate } else { ar }
     }
 
     /// Get all tool paths as a map.

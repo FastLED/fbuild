@@ -1,6 +1,6 @@
 use super::markdown::{
-    format_markdown_report, format_markdown_report_with_graphs, write_sidecar_dot_files,
-    MarkdownGraphOptions, SidecarOptions,
+    MarkdownGraphOptions, SidecarOptions, format_markdown_report,
+    format_markdown_report_with_graphs, write_sidecar_dot_files,
 };
 use super::*;
 
@@ -235,7 +235,9 @@ fn format_markdown_report_renders_referenced_by_column() {
     };
     let md = format_markdown_report(&map, 5);
     // Header includes the new column.
-    assert!(md.contains("| Bytes | Archive | Object | Section | Source | Referenced by | Symbol |"));
+    assert!(
+        md.contains("| Bytes | Archive | Object | Section | Source | Referenced by | Symbol |")
+    );
     // Cell shows top-3 referencers + "(… and 2 more)" overflow.
     assert!(
         md.contains("libc.a(libc_a-vprintf.o), libc.a(libc_a-printf.o), libc.a(libc_a-fprintf.o), (… and 2 more)"),

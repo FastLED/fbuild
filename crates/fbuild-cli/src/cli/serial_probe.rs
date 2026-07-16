@@ -62,8 +62,8 @@ pub enum ProbeAction {
         vid_pid: Option<String>,
         /// Filter by PlatformIO env name (`lpc845brk`, `lpc804`, …)
         /// — looks up the VCOM `(vid, pid)` in
-        /// [`fbuild_serial::boards::ENVIRONMENT_TO_VCOM`] and matches
-        /// that against the connected ports.
+        /// `fbuild_serial::boards::ENVIRONMENT_TO_VCOM` (private table
+        /// in that module) and matches that against the connected ports.
         #[arg(long)]
         env: Option<String>,
     },
@@ -201,9 +201,7 @@ fn parse_vid_pid(s: &str) -> Result<(u16, u16)> {
         .split_once(':')
         .or_else(|| raw.split_once(','))
         .ok_or_else(|| {
-            FbuildError::SerialError(format!(
-                "expected a hexadecimal `VID:PID`, got `{raw}`"
-            ))
+            FbuildError::SerialError(format!("expected a hexadecimal `VID:PID`, got `{raw}`"))
         })?;
     let vid = u16::from_str_radix(vid_s.trim(), 16)
         .map_err(|e| FbuildError::SerialError(format!("bad VID hex `{vid_s}`: {e}")))?;

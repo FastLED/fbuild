@@ -1,12 +1,12 @@
 //! `EmulatorRunner` trait and three concrete runners (`QemuRunner`,
 //! `Avr8jsRunner`, `SimavrRunner`) used by `select_runner` / `test_emu`.
 
-use super::avr8js_headless::{run_avr8js_headless, RunAvr8jsHeadlessOptions, AVR8JS_HEADLESS_MJS};
+use super::avr8js_headless::{AVR8JS_HEADLESS_MJS, RunAvr8jsHeadlessOptions, run_avr8js_headless};
 use super::avr8js_npm::{ensure_avr8js_npm, find_node};
 use super::qemu_deploy::resolve_esp_qemu_for_mcu;
 use super::shared::{
-    monitor_outcome_to_emulator, qemu_session_dir, resolve_esp32_toolchain_gcc_path,
-    run_qemu_process, EmulatorRunConfig, RunQemuOptions,
+    EmulatorRunConfig, RunQemuOptions, monitor_outcome_to_emulator, qemu_session_dir,
+    resolve_esp32_toolchain_gcc_path, run_qemu_process,
 };
 use fbuild_core::emulator::{EmulatorOutcome, EmulatorRunResult};
 use std::path::PathBuf;

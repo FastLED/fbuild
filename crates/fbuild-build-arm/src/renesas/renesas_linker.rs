@@ -226,9 +226,11 @@ mod tests {
             Some(32768),
             false,
         );
-        assert!(linker
-            .linker_script_path
-            .to_string_lossy()
-            .contains("ra4m1"));
+        assert!(
+            linker
+                .linker_script_path
+                .to_string_lossy()
+                .contains("ra4m1")
+        );
     }
 }

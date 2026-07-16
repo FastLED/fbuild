@@ -4,8 +4,8 @@
 
 use std::path::{Path, PathBuf};
 
-use fbuild_core::subprocess::run_command;
 use fbuild_core::Result;
+use fbuild_core::subprocess::run_command;
 
 use crate::{DeployOutcome, Deployer, DeploymentResult};
 
@@ -198,9 +198,11 @@ mod tests {
             .deploy(tmp.path(), "uno", Path::new("firmware.hex"), None)
             .await;
         assert!(result.is_err());
-        assert!(result
-            .unwrap_err()
-            .to_string()
-            .contains("serial port required"));
+        assert!(
+            result
+                .unwrap_err()
+                .to_string()
+                .contains("serial port required")
+        );
     }
 }

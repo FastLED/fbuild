@@ -124,11 +124,12 @@ fn test_needs_rebuild_missing_object() {
 fn test_object_path() {
     let path = CompilerBase::object_path(Path::new("main.cpp"), Path::new("/build"));
     assert_eq!(path.parent(), Some(Path::new("/build")));
-    assert!(path
-        .file_name()
-        .unwrap_or_default()
-        .to_string_lossy()
-        .starts_with("main_"));
+    assert!(
+        path.file_name()
+            .unwrap_or_default()
+            .to_string_lossy()
+            .starts_with("main_")
+    );
     assert_eq!(path.extension().unwrap(), "o");
 }
 
@@ -560,7 +561,7 @@ fn test_depfile_own_mtime_does_not_force_rebuild() {
     // depfile lists (source + headers) determine staleness. Before the fix,
     // this returned `true` and forced every TU to recompile once on the first
     // rebuild after a cold build.
-    use filetime::{set_file_mtime, FileTime};
+    use filetime::{FileTime, set_file_mtime};
 
     let tmp = tempfile::tempdir().unwrap();
     let dir = tmp.path();
@@ -594,7 +595,7 @@ fn test_depfile_own_mtime_does_not_force_rebuild() {
 fn test_depfile_newer_prerequisite_still_forces_rebuild() {
     // Complement: a real header edit (a prerequisite newer than the object) IS
     // stale — the fix must not weaken genuine staleness detection.
-    use filetime::{set_file_mtime, FileTime};
+    use filetime::{FileTime, set_file_mtime};
 
     let tmp = tempfile::tempdir().unwrap();
     let dir = tmp.path();

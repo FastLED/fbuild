@@ -6,10 +6,10 @@
 //! [`super::avr8js_deploy::deploy_avr8js`].
 
 use crate::context::DaemonContext;
-use axum::extract::{Path as AxumPath, State};
-use axum::http::{header, HeaderValue, StatusCode};
-use axum::response::{Html, IntoResponse};
 use axum::Json;
+use axum::extract::{Path as AxumPath, State};
+use axum::http::{HeaderValue, StatusCode, header};
+use axum::response::{Html, IntoResponse};
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 

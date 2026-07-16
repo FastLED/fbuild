@@ -192,8 +192,7 @@ mod tests {
 
     #[test]
     fn owner_repo_with_sha_expands_to_github_archive() {
-        let line =
-            "framework-arduino-lpc8xx@zackees/ArduinoCore-LPC8xx#1234567890abcdef1234567890abcdef12345678";
+        let line = "framework-arduino-lpc8xx@zackees/ArduinoCore-LPC8xx#1234567890abcdef1234567890abcdef12345678";
         let got = parse_platform_packages_entry(line, "framework-arduino-lpc8xx").unwrap();
         assert_eq!(
             got.url,

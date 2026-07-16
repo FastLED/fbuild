@@ -2,8 +2,8 @@
 //! parent file under the 1000-LOC gate (see ci.yml LOC Gate workflow).
 
 use super::{
-    broker_refusal_is_fatal, daemon_cache_identity_error, should_restart_daemon, DaemonAcquisition,
-    DaemonInfoResponse,
+    DaemonAcquisition, DaemonInfoResponse, broker_refusal_is_fatal, daemon_cache_identity_error,
+    should_restart_daemon,
 };
 use running_process::broker::client::RefusalKind::{VersionBlocked, VersionUnsupported};
 

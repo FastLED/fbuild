@@ -547,10 +547,12 @@ mod tests {
     #[tokio::test]
     async fn process_line_crash_start_begins_accumulating() {
         let mut decoder = CrashDecoder::new(None, None);
-        assert!(decoder
-            .process_line("Guru Meditation Error: Core  0 panic'ed (LoadProhibited)")
-            .await
-            .is_none());
+        assert!(
+            decoder
+                .process_line("Guru Meditation Error: Core  0 panic'ed (LoadProhibited)")
+                .await
+                .is_none()
+        );
         assert!(decoder.is_accumulating());
     }
 

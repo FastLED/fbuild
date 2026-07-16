@@ -142,8 +142,8 @@ mod tests {
 
     /// Helper: create a minimal .tar.gz archive containing a single file.
     fn make_tar_gz(dest: &Path, entry_name: &str, content: &[u8]) {
-        use flate2::write::GzEncoder;
         use flate2::Compression;
+        use flate2::write::GzEncoder;
 
         let file = std::fs::File::create(dest).expect("create tar.gz");
         let enc = GzEncoder::new(file, Compression::default());

@@ -13,7 +13,7 @@ use crate::{BuildParams, BuildResult};
 
 use super::compile::{compile_local_libraries, compile_sources, generate_compile_db};
 use super::context::BuildContext;
-use super::library::{compile_project_as_library, LibraryBuildEnv};
+use super::library::{LibraryBuildEnv, compile_project_as_library};
 use super::link::{assemble_build_result, handle_link_result};
 
 /// Run the sequential compile → link → result pipeline used by AVR, Teensy,

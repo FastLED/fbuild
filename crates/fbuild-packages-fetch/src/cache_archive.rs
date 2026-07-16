@@ -28,7 +28,7 @@ use std::fs::File;
 use std::io::{Read, Write};
 use std::path::Path;
 
-use fbuild_core::{path::NormalizedPath, FbuildError, Result};
+use fbuild_core::{FbuildError, Result, path::NormalizedPath};
 use prost::Message;
 use sha2::{Digest, Sha256};
 
@@ -602,14 +602,16 @@ mod tests {
         // list == read_manifest yields the same slices.
         let m2 = read_manifest(&archive).unwrap();
         assert_eq!(m, m2);
-        assert!(m
-            .slices
-            .iter()
-            .any(|s| s.name == "toolchains" && s.file_count == 2));
-        assert!(m
-            .slices
-            .iter()
-            .any(|s| s.name == "index" && s.file_count == 1));
+        assert!(
+            m.slices
+                .iter()
+                .any(|s| s.name == "toolchains" && s.file_count == 2)
+        );
+        assert!(
+            m.slices
+                .iter()
+                .any(|s| s.name == "index" && s.file_count == 1)
+        );
     }
 
     #[test]

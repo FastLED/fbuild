@@ -30,8 +30,7 @@ use fs_utils::find_framework_root;
 use parsing::extract_framework_version;
 
 const ESP32_FRAMEWORK_VERSION: &str = "3.1.1";
-const ESP32_FRAMEWORK_URL: &str =
-    "https://github.com/pioarduino/arduino-esp32/releases/download/3.1.1/framework-arduinoespressif32-3.1.1.tar.gz";
+const ESP32_FRAMEWORK_URL: &str = "https://github.com/pioarduino/arduino-esp32/releases/download/3.1.1/framework-arduinoespressif32-3.1.1.tar.gz";
 
 /// ESP32 Arduino framework manager.
 pub struct Esp32Framework {

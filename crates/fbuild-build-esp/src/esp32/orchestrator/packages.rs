@@ -3,8 +3,8 @@
 use std::collections::HashMap;
 use std::path::Path;
 
-use fbuild_core::path::NormalizedPath;
 use fbuild_core::Result;
+use fbuild_core::path::NormalizedPath;
 
 /// Resolve framework + toolchain for pioarduino mode (GCC 14 + ESP-IDF 5.x).
 ///
@@ -127,7 +127,7 @@ pub(super) async fn resolve_pioarduino_packages(
         (Err(tc), Err(fw)) => {
             return Err(fbuild_core::FbuildError::BuildFailed(format!(
                 "pioarduino package resolution failed — toolchain: {tc}; framework: {fw}"
-            )))
+            )));
         }
         (Err(e), _) | (_, Err(e)) => return Err(e),
         (Ok(_), Ok(_)) => {}

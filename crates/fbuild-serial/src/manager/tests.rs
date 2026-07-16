@@ -539,8 +539,8 @@ async fn rebind_preserves_session_and_routes_writes_to_new_handle() {
     );
     let (new_fake, new_writes) = FakeSerialPort::new(new_port);
 
-    assert!(mgr
-        .rebind_port_session_to_handle(
+    assert!(
+        mgr.rebind_port_session_to_handle(
             old_port,
             new_port,
             Arc::new(Mutex::new(Box::new(new_fake))),
@@ -548,7 +548,8 @@ async fn rebind_preserves_session_and_routes_writes_to_new_handle() {
             Some("15821020".to_string()),
         )
         .await
-        .unwrap());
+        .unwrap()
+    );
 
     let session = mgr.sessions.get(old_port).expect("logical session remains");
     assert_eq!(session.port, new_port);

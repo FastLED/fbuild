@@ -5,7 +5,7 @@
 
 use std::path::{Path, PathBuf};
 
-use crate::library::framework_library::{discover_framework_libraries, FrameworkLibrary};
+use crate::library::framework_library::{FrameworkLibrary, discover_framework_libraries};
 use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 
 const STM32_CORE_VERSION: &str = "2.9.0";

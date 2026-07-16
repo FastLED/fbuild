@@ -33,7 +33,7 @@
 //! `super::index::{CacheIndex, CacheEntry}`.
 
 use super::paths::{self, Kind};
-use rusqlite::{params, Connection, OptionalExtension};
+use rusqlite::{Connection, OptionalExtension, params};
 use std::path::{Path, PathBuf};
 use std::sync::Mutex;
 use std::time::{SystemTime, UNIX_EPOCH};

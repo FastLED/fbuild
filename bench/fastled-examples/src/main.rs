@@ -49,10 +49,10 @@
 use std::path::{Path, PathBuf};
 use std::time::Instant;
 
-use fbuild_library_select::cache::{resolve_cached, CacheKeyInputs, FileKvStore};
 use fbuild_library_select::CachedSelection;
-use fbuild_packages::library::framework_library::discover_framework_libraries;
+use fbuild_library_select::cache::{CacheKeyInputs, FileKvStore, resolve_cached};
 use fbuild_packages::library::FrameworkLibrary;
+use fbuild_packages::library::framework_library::discover_framework_libraries;
 use fbuild_test_support::MiniFramework;
 
 /// Curated subset that spans the simple/complex spectrum without dragging

@@ -20,8 +20,8 @@ use std::collections::HashMap;
 use std::path::Path;
 
 use crate::flag_overlay::{
-    absolutize_if_relative, values_to_args, BuildOverlay, LanguageExtraFlags, LinkExtraFlags,
-    ScriptRuntimeResult, ScriptScopeState,
+    BuildOverlay, LanguageExtraFlags, LinkExtraFlags, ScriptRuntimeResult, ScriptScopeState,
+    absolutize_if_relative, values_to_args,
 };
 
 const HARNESS: &str = include_str!("lite_scons_harness.py");
@@ -256,7 +256,7 @@ fn cppdefines_to_flags(values: &[serde_json::Value]) -> fbuild_core::Result<Vec<
                     _ => {
                         return Err(fbuild_core::FbuildError::BuildFailed(
                             "unsupported CPPDEFINES value type".to_string(),
-                        ))
+                        ));
                     }
                 };
                 flags.push(format!("-D{}={}", key, rendered));
@@ -264,7 +264,7 @@ fn cppdefines_to_flags(values: &[serde_json::Value]) -> fbuild_core::Result<Vec<
             _ => {
                 return Err(fbuild_core::FbuildError::BuildFailed(
                     "unsupported CPPDEFINES script runtime entry".to_string(),
-                ))
+                ));
             }
         }
     }

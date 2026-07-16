@@ -9,16 +9,16 @@ use sha2::{Digest, Sha256};
 use super::deployer::{Esp32Deployer, EsptoolParams};
 use super::image::patch_bytes;
 use super::image::{
-    repair_esp_image_checksum_and_hash, resolve_esp_image_file_offset, ESP_IMAGE_APPENDED_HASH_LEN,
-    ESP_IMAGE_HEADER_LEN, ESP_IMAGE_HEADER_MAGIC, ESP_IMAGE_SEGMENT_HEADER_LEN,
-    ESP_ROM_CHECKSUM_INITIAL, QEMU_ADC_CALIBRATION_EXPECTED_BYTES,
-    QEMU_ADC_CALIBRATION_PATCH_BYTES,
+    ESP_IMAGE_APPENDED_HASH_LEN, ESP_IMAGE_HEADER_LEN, ESP_IMAGE_HEADER_MAGIC,
+    ESP_IMAGE_SEGMENT_HEADER_LEN, ESP_ROM_CHECKSUM_INITIAL, QEMU_ADC_CALIBRATION_EXPECTED_BYTES,
+    QEMU_ADC_CALIBRATION_PATCH_BYTES, repair_esp_image_checksum_and_hash,
+    resolve_esp_image_file_offset,
 };
 use super::qemu::{
     build_qemu_args, build_qemu_esp32s3_args, create_qemu_flash_image,
     resolve_qemu_flash_size_bytes,
 };
-use super::verify::{parse_verify_regions, FlashRegion, RegionVerifyResult, VerifyOutcome};
+use super::verify::{FlashRegion, RegionVerifyResult, VerifyOutcome, parse_verify_regions};
 use crate::Deployer;
 
 /// Test params matching ESP32-C6 JSON config values.
@@ -63,9 +63,10 @@ fn qemu_flash_size_resolution_rejects_unsupported_size() {
     let mut board = fbuild_test_support::board_for_test("esp32-s3-devkitc-1");
     board.max_flash = Some(32 * 1024 * 1024);
     let err = resolve_qemu_flash_size_bytes(&board, "4MB").unwrap_err();
-    assert!(err
-        .to_string()
-        .contains("supports only 2MB, 4MB, 8MB, or 16MB"));
+    assert!(
+        err.to_string()
+            .contains("supports only 2MB, 4MB, 8MB, or 16MB")
+    );
 }
 
 #[test]
@@ -211,24 +212,28 @@ fn repair_esp_image_checksum_and_hash_updates_trailers_after_patch() {
 fn qemu_command_builder_uses_expected_machine_and_watchdog_override() {
     let args = build_qemu_esp32s3_args(Path::new("flash.bin"), None);
     assert!(args.contains(&"esp32s3".to_string()));
-    assert!(args
-        .iter()
-        .any(|arg| arg == "driver=timer.esp32s3.timg,property=wdt_disable,value=true"));
-    assert!(args
-        .iter()
-        .any(|arg| arg.contains("file=flash.bin,if=mtd,format=raw")));
+    assert!(
+        args.iter()
+            .any(|arg| arg == "driver=timer.esp32s3.timg,property=wdt_disable,value=true")
+    );
+    assert!(
+        args.iter()
+            .any(|arg| arg.contains("file=flash.bin,if=mtd,format=raw"))
+    );
 }
 
 #[test]
 fn qemu_command_builder_uses_esp32_machine_for_base_variant() {
     let args = build_qemu_args("esp32", Path::new("flash.bin"), None);
     assert!(args.contains(&"esp32".to_string()));
-    assert!(args
-        .iter()
-        .any(|arg| arg == "driver=timer.esp32.timg,property=wdt_disable,value=true"));
-    assert!(args
-        .iter()
-        .any(|arg| arg.contains("file=flash.bin,if=mtd,format=raw")));
+    assert!(
+        args.iter()
+            .any(|arg| arg == "driver=timer.esp32.timg,property=wdt_disable,value=true")
+    );
+    assert!(
+        args.iter()
+            .any(|arg| arg.contains("file=flash.bin,if=mtd,format=raw"))
+    );
 }
 
 #[test]
@@ -241,9 +246,10 @@ fn qemu_command_builder_adds_psram_args_when_requested() {
         }),
     );
     assert!(args.windows(2).any(|pair| pair == ["-m", "8M"]));
-    assert!(args
-        .iter()
-        .any(|arg| arg == "driver=ssi_psram,property=is_octal,value=true"));
+    assert!(
+        args.iter()
+            .any(|arg| arg == "driver=ssi_psram,property=is_octal,value=true")
+    );
 }
 
 #[test]
@@ -303,10 +309,12 @@ async fn test_deploy_requires_port() {
         .deploy(tmp.path(), "esp32c6", Path::new("firmware.bin"), None)
         .await;
     assert!(result.is_err());
-    assert!(result
-        .unwrap_err()
-        .to_string()
-        .contains("serial port required"));
+    assert!(
+        result
+            .unwrap_err()
+            .to_string()
+            .contains("serial port required")
+    );
 }
 
 /// Fast deploy: the verify-flash command line must include the

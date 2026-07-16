@@ -5,7 +5,7 @@
 //!
 //! See FastLED/fbuild#243 (ESP32) and FastLED/fbuild#244 (other GCC platforms).
 
-use crate::eh_frame_policy::{decide, EhFrameInputs, EhFramePolicy};
+use crate::eh_frame_policy::{EhFrameInputs, EhFramePolicy, decide};
 use crate::pipeline::BuildContext;
 use fbuild_config::sdkconfig::SdkConfigSummary;
 use fbuild_core::BuildProfile;

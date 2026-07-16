@@ -1,10 +1,10 @@
 use std::collections::BTreeSet;
 
 use super::*;
+use crate::MemoryRegion;
 use crate::symbol_analysis::{
     FineGrainedSymbol, FineGrainedSymbolMap, SectionBytes, SymbolReference,
 };
-use crate::MemoryRegion;
 
 fn sym(
     mangled: &str,
@@ -180,10 +180,11 @@ fn fastled_ctor_adaptive_terminates_at_app() {
     );
     // root + main.cpp.o
     assert_eq!(g.nodes.len(), 2);
-    assert!(g
-        .nodes
-        .iter()
-        .any(|n| n.object.as_deref() == Some("main.cpp.o")));
+    assert!(
+        g.nodes
+            .iter()
+            .any(|n| n.object.as_deref() == Some("main.cpp.o"))
+    );
 }
 
 #[test]
@@ -395,10 +396,11 @@ fn forward_only_emits_callee_nodes() {
         .collect();
     assert_eq!(callees.len(), 3, "expected three forward callees");
     // All edges should be forward.
-    assert!(g
-        .edges
-        .iter()
-        .all(|e| e.direction == EdgeDirection::Forward));
+    assert!(
+        g.edges
+            .iter()
+            .all(|e| e.direction == EdgeDirection::Forward)
+    );
     // Heaviest callee (esp_log_write @ 2000) ranks first by size.
     let heaviest = callees
         .iter()
@@ -705,14 +707,16 @@ fn default_direction_is_backward_only() {
         ),
     ];
     let g = BackrefGraph::build(&map(symbols), "ClocklessIdf5", &GraphConfig::default());
-    assert!(g
-        .nodes
-        .iter()
-        .all(|n| !matches!(n.kind, NodeKind::Callee { .. })));
-    assert!(g
-        .edges
-        .iter()
-        .all(|e| e.direction == EdgeDirection::Backward));
+    assert!(
+        g.nodes
+            .iter()
+            .all(|n| !matches!(n.kind, NodeKind::Callee { .. }))
+    );
+    assert!(
+        g.edges
+            .iter()
+            .all(|e| e.direction == EdgeDirection::Backward)
+    );
 }
 
 // ---- #478: per-symbol backward walker ----
@@ -802,10 +806,11 @@ fn backward_falls_back_to_tu_when_called_by_empty() {
         .filter(|n| matches!(n.kind, NodeKind::TranslationUnit { .. }))
         .collect();
     assert_eq!(tu_nodes.len(), 1, "TU fallback should kick in");
-    assert!(g
-        .nodes
-        .iter()
-        .all(|n| !matches!(n.kind, NodeKind::Caller { .. })));
+    assert!(
+        g.nodes
+            .iter()
+            .all(|n| !matches!(n.kind, NodeKind::Caller { .. }))
+    );
 }
 
 /// `rank_callers_dual` exposes both rankings the markdown sub-table

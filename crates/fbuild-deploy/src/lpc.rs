@@ -7,8 +7,8 @@
 
 use std::path::{Path, PathBuf};
 
-use fbuild_core::subprocess::run_command;
 use fbuild_core::Result;
+use fbuild_core::subprocess::run_command;
 
 use crate::{DeployOutcome, Deployer, DeploymentResult};
 
@@ -736,7 +736,7 @@ mod tests {
     #[test]
     fn lpc_link2_v1_firmware_detection_hits_only_expected_vid_pid() {
         use crate::lpc_debugger_reflash::{
-            looks_like_lpc_link2_v1_firmware, LPC_LINK2_V1_FIRMWARE_PID, LPC_LINK2_V1_FIRMWARE_VID,
+            LPC_LINK2_V1_FIRMWARE_PID, LPC_LINK2_V1_FIRMWARE_VID, looks_like_lpc_link2_v1_firmware,
         };
         assert!(looks_like_lpc_link2_v1_firmware(
             LPC_LINK2_V1_FIRMWARE_VID,
@@ -810,10 +810,12 @@ mod tests {
             .deploy(tmp.path(), "lpc845", Path::new("firmware.hex"), None)
             .await;
         assert!(result.is_err());
-        assert!(result
-            .unwrap_err()
-            .to_string()
-            .contains("serial port required"));
+        assert!(
+            result
+                .unwrap_err()
+                .to_string()
+                .contains("serial port required")
+        );
     }
 
     #[test]

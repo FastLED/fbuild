@@ -35,8 +35,8 @@ use std::fmt::Write as _;
 use tokio::sync::broadcast;
 use tracing::field::{Field, Visit};
 use tracing::{Event, Subscriber};
-use tracing_subscriber::layer::Context;
 use tracing_subscriber::Layer;
+use tracing_subscriber::layer::Context;
 
 /// Tracing layer that JSON-serializes each event and publishes it on
 /// the provided broadcast channel. Drop the layer (or drop every

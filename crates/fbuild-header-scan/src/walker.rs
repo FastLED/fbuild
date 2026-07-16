@@ -21,7 +21,7 @@ use std::path::{Path, PathBuf};
 
 use rayon::prelude::*;
 
-use crate::scanner::{scan, IncludeKind, IncludeRef};
+use crate::scanner::{IncludeKind, IncludeRef, scan};
 
 /// Result of a walk. `reached` and `unresolved` are sorted for deterministic
 /// cache keys.

@@ -35,7 +35,7 @@
 //! ELF section size and forbidden-symbol substring checks, not
 //! probes for `setup`/`loop`/`analogWrite` symbols.
 
-use fbuild_build::{compile_backend, BuildOrchestrator, BuildParams};
+use fbuild_build::{BuildOrchestrator, BuildParams, compile_backend};
 use fbuild_core::BuildProfile;
 use fbuild_test_support::{CompileDb, ElfProbe};
 

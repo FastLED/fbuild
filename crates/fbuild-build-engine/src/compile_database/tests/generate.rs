@@ -88,9 +88,11 @@ fn test_generate_entries_include_flags_in_args() {
         Path::new("/project"),
     );
     assert!(entries[0].arguments.contains(&"-I/sdk/include".to_string()));
-    assert!(entries[0]
-        .arguments
-        .contains(&"-I/core/include".to_string()));
+    assert!(
+        entries[0]
+            .arguments
+            .contains(&"-I/core/include".to_string())
+    );
 }
 
 #[test]
@@ -271,9 +273,11 @@ fn test_generate_entries_paths_with_spaces() {
     );
     assert_eq!(entries[0].directory, "/my project");
     assert_eq!(entries[0].file, "/my project/src/main.cpp");
-    assert!(entries[0]
-        .arguments
-        .contains(&"-I/path with spaces/include".to_string()));
+    assert!(
+        entries[0]
+            .arguments
+            .contains(&"-I/path with spaces/include".to_string())
+    );
 }
 
 #[test]
@@ -327,12 +331,16 @@ fn test_generate_entries_no_response_file_in_args() {
         );
     }
     // All 300 include flags should be present individually
-    assert!(entries[0]
-        .arguments
-        .contains(&"-I/sdk/include/0".to_string()));
-    assert!(entries[0]
-        .arguments
-        .contains(&"-I/sdk/include/299".to_string()));
+    assert!(
+        entries[0]
+            .arguments
+            .contains(&"-I/sdk/include/0".to_string())
+    );
+    assert!(
+        entries[0]
+            .arguments
+            .contains(&"-I/sdk/include/299".to_string())
+    );
 }
 
 // --- File field must be the source path, not the build path ---

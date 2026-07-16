@@ -10,7 +10,7 @@ mod deploy_message_tests {
     //!
     //! These tests cover only the pure string-formatting contract; the
     //! underlying outcome computation is tested in `fbuild-deploy`.
-    use fbuild_deploy::{esp32::FlashRegion, DeployOutcome};
+    use fbuild_deploy::{DeployOutcome, esp32::FlashRegion};
 
     fn prefix_for(outcome: &DeployOutcome) -> String {
         format!("deploy succeeded ({})", outcome.describe())

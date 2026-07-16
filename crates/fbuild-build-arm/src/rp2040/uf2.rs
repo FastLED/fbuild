@@ -92,17 +92,12 @@ fn uf2_conversion_args(
 async fn picotool_supports_platform_validation(picotool: &Path) -> bool {
     let executable = picotool.to_string_lossy().to_string();
     let args = [executable.as_str(), "help", "uf2", "convert"];
-    fbuild_core::subprocess::run_command(
-        &args,
-        None,
-        None,
-        Some(std::time::Duration::from_secs(5)),
-    )
-    .await
-    .is_ok_and(|output| {
-        output.success()
-            && (output.stdout.contains("--platform") || output.stderr.contains("--platform"))
-    })
+    fbuild_core::subprocess::run_command(&args, None, None, Some(std::time::Duration::from_secs(5)))
+        .await
+        .is_ok_and(|output| {
+            output.success()
+                && (output.stdout.contains("--platform") || output.stderr.contains("--platform"))
+        })
 }
 
 #[cfg(test)]
@@ -165,8 +160,10 @@ mod tests {
             "rp2040",
         )
         .unwrap_err();
-        assert!(error
-            .to_string()
-            .contains("reported success without creating"));
+        assert!(
+            error
+                .to_string()
+                .contains("reported success without creating")
+        );
     }
 }

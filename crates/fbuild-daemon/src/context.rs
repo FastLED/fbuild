@@ -3,8 +3,8 @@
 use crate::device_manager::DeviceManager;
 use crate::status_manager::StatusManager;
 use dashmap::DashMap;
-use fbuild_core::install_status::InstallStatus;
 use fbuild_core::DaemonState;
+use fbuild_core::install_status::InstallStatus;
 use fbuild_serial::SharedSerialManager;
 use std::path::PathBuf;
 use std::sync::atomic::{AtomicBool, AtomicU64, AtomicUsize};

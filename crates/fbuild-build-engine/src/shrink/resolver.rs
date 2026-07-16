@@ -18,8 +18,8 @@
 
 use fbuild_core::Platform;
 
-use super::probe::Libc;
 use super::ShrinkMode;
+use super::probe::Libc;
 
 /// Inputs the auto-resolver consults to turn [`ShrinkMode::Auto`] into a
 /// concrete decision.

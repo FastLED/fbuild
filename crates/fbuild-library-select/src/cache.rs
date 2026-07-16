@@ -29,7 +29,7 @@ use std::path::{Path, PathBuf};
 use fbuild_packages::library::FrameworkLibrary;
 use prost::Message;
 
-use crate::{canon, resolve, Selection};
+use crate::{Selection, canon, resolve};
 
 /// Bump when the scanner's lexical grammar changes in a way that could change
 /// which `#include` directives it emits for the same source.

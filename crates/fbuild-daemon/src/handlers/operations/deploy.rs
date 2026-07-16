@@ -1,17 +1,17 @@
 //! `POST /api/deploy` — build (or reuse) firmware, flash, optionally monitor.
 
 use super::common::{
-    compute_esp32_image_hash, export_artifacts_bundle, infer_default_emulator_kind,
-    parse_deploy_route, qemu_extra_build_flags, resolve_build_dir, resolve_client_path,
-    trust_device_hash_enabled, DeployRoute, EmulatorKind, OperationGuard,
+    DeployRoute, EmulatorKind, OperationGuard, compute_esp32_image_hash, export_artifacts_bundle,
+    infer_default_emulator_kind, parse_deploy_route, qemu_extra_build_flags, resolve_build_dir,
+    resolve_client_path, trust_device_hash_enabled,
 };
 use super::deploy_port::{append_warning_to_stderr, choose_deploy_port};
-use super::monitor::{run_monitor_loop, MonitorOutcome};
+use super::monitor::{MonitorOutcome, run_monitor_loop};
 use crate::context::DaemonContext;
 use crate::models::{DeployRequest, OperationResponse};
+use axum::Json;
 use axum::extract::State;
 use axum::http::StatusCode;
-use axum::Json;
 use std::path::PathBuf;
 use std::sync::Arc;
 
@@ -262,18 +262,15 @@ pub async fn deploy(
         const DEPLOY_BUILD_HARD_DEADLINE: std::time::Duration =
             std::time::Duration::from_secs(60 * 60);
         let build_result = match fbuild_build::get_orchestrator(platform) {
-            Ok(orch) => match tokio::time::timeout(
-                DEPLOY_BUILD_HARD_DEADLINE,
-                orch.build(&params),
-            )
-            .await
-            {
-                Ok(r) => r,
-                Err(_) => Err(fbuild_core::FbuildError::Other(format!(
-                    "pre-deploy build exceeded hard deadline ({}s); aborting — a compiler may be wedged",
-                    DEPLOY_BUILD_HARD_DEADLINE.as_secs()
-                ))),
-            },
+            Ok(orch) => {
+                match tokio::time::timeout(DEPLOY_BUILD_HARD_DEADLINE, orch.build(&params)).await {
+                    Ok(r) => r,
+                    Err(_) => Err(fbuild_core::FbuildError::Other(format!(
+                        "pre-deploy build exceeded hard deadline ({}s); aborting — a compiler may be wedged",
+                        DEPLOY_BUILD_HARD_DEADLINE.as_secs()
+                    ))),
+                }
+            }
             Err(e) => Err(e),
         };
 
@@ -610,17 +607,20 @@ pub async fn deploy(
                                     "trusted-hash: session-trusted match; skipping verify-flash entirely"
                                 );
                                 // VerifySkip → recovery skipped (#605).
-                                return Ok((None, fbuild_deploy::DeploymentResult {
-                                    success: true,
-                                    message: format!(
-                                        "firmware already current on {} (skipped via session trust)",
-                                        port
-                                    ),
-                                    port: Some(port.to_string()),
-                                    stdout: String::new(),
-                                    stderr: String::new(),
-                                    outcome: fbuild_deploy::DeployOutcome::VerifySkip,
-                                }));
+                                return Ok((
+                                    None,
+                                    fbuild_deploy::DeploymentResult {
+                                        success: true,
+                                        message: format!(
+                                            "firmware already current on {} (skipped via session trust)",
+                                            port
+                                        ),
+                                        port: Some(port.to_string()),
+                                        stdout: String::new(),
+                                        stderr: String::new(),
+                                        outcome: fbuild_deploy::DeployOutcome::VerifySkip,
+                                    },
+                                ));
                             }
                         }
                     }
@@ -805,7 +805,7 @@ pub async fn deploy(
                 return Err(fbuild_core::FbuildError::DeployFailed(format!(
                     "deployer for {:?} not yet implemented",
                     platform
-                )))
+                )));
             }
         };
         let result = deployer

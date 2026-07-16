@@ -31,7 +31,7 @@ use std::time::Instant;
 
 use clap::Args;
 use fbuild_core::{FbuildError, Result};
-use fbuild_serial::boards::{family_for_vid_pid, vcom_for_env, BoardFamily};
+use fbuild_serial::boards::{BoardFamily, family_for_vid_pid, vcom_for_env};
 
 use crate::output;
 

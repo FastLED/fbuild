@@ -23,13 +23,13 @@ pub mod profiles;
 pub mod resolver;
 
 pub use data::{
+    MANIFEST_URL, ONLINE_CACHE_TTL_SECS, USB_VID_JSON_URL, USB_VIDS_PROTO_ZSTD_URL,
     install_online_cache, install_online_cache_proto_zstd, populate_online_cache_from_paths,
     populate_online_cache_from_paths_and_urls, try_install_online_cache,
-    try_install_online_cache_proto_zstd, MANIFEST_URL, ONLINE_CACHE_TTL_SECS,
-    USB_VIDS_PROTO_ZSTD_URL, USB_VID_JSON_URL,
+    try_install_online_cache_proto_zstd,
 };
 #[cfg(test)]
 pub use embedded::vendor_name as embedded_vendor_name;
 #[cfg(test)]
 pub use resolver::resolve_bundled;
-pub use resolver::{pretty, resolve, try_resolve, UsbInfo};
+pub use resolver::{UsbInfo, pretty, resolve, try_resolve};

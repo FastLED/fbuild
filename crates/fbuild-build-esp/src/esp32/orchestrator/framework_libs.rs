@@ -14,9 +14,9 @@ use super::helpers::{
     framework_failure_marker, framework_signature, record_failed_framework_lib,
     should_skip_failed_framework_lib,
 };
-use crate::compiler::Compiler as _;
-use crate::flag_overlay::{apply_overlay_flags, LanguageExtraFlags};
 use crate::BuildParams;
+use crate::compiler::Compiler as _;
+use crate::flag_overlay::{LanguageExtraFlags, apply_overlay_flags};
 
 /// Compile every Arduino built-in library shipped with the ESP32 framework.
 /// Library archives are appended to `library_archives`.

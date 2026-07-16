@@ -3,8 +3,8 @@
 use std::path::Path;
 use std::time::Instant;
 
-use fbuild_core::path::NormalizedPath;
 use fbuild_core::Result;
+use fbuild_core::path::NormalizedPath;
 
 use super::super::mcu_config::Esp32McuConfig;
 
@@ -272,9 +272,10 @@ mod tests {
             Some("nope.csv"),
         )
         .unwrap_err();
-        assert!(err
-            .to_string()
-            .contains("board_build.partitions = nope.csv"));
+        assert!(
+            err.to_string()
+                .contains("board_build.partitions = nope.csv")
+        );
     }
 
     #[test]

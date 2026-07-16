@@ -11,7 +11,7 @@
 use running_process::broker::adopt::{AdoptError, AsyncBrokerSession, OwnedConnectRequest};
 use running_process::broker::client::RefusalKind;
 
-use super::protocol::{BrokerRequest, BrokerResponse, ProtocolError, FBUILD_PAYLOAD_PROTOCOL};
+use super::protocol::{BrokerRequest, BrokerResponse, FBUILD_PAYLOAD_PROTOCOL, ProtocolError};
 
 /// Cap on broker negotiation / dial. An unhealthy broker that accepts
 /// the connection but never replies to the negotiation frame used to
