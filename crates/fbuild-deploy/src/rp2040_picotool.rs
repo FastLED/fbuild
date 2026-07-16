@@ -29,6 +29,7 @@ pub(super) async fn load_with_managed_picotool(
             mass_storage_error,
             output.stdout.trim(),
             output.stderr.trim(),
+            cfg!(windows),
         )));
     }
     Ok(PicotoolLoad {
@@ -46,19 +47,19 @@ fn load_args(executable: &Path, artifact: &Path) -> Vec<String> {
     ]
 }
 
-fn format_failure(mass_storage_error: &str, stdout: &str, stderr: &str) -> String {
+fn format_failure(mass_storage_error: &str, stdout: &str, stderr: &str, windows: bool) -> String {
     let tool_output = [stderr, stdout]
         .into_iter()
         .filter(|value| !value.is_empty())
         .collect::<Vec<_>>()
         .join("\n");
-    let windows_hint = if cfg!(windows) {
+    let host_hint = if windows {
         " On Windows, close software that scans removable drives or bind WinUSB to RP2 Boot (Interface 1), as documented by Raspberry Pi; this changes only the host driver and does not pre-flash the board."
     } else {
         " Check host USB permissions for the RP-series BOOTSEL interface."
     };
     format!(
-        "RP-series deployment failed through both stock transports. Mass-storage error: {mass_storage_error}. Managed picotool error: {tool_output}.{windows_hint}"
+        "RP-series deployment failed through both stock transports. Mass-storage error: {mass_storage_error}. Managed picotool error: {tool_output}.{host_hint}"
     )
 }
 
@@ -74,9 +75,15 @@ mod tests {
 
     #[test]
     fn combined_failure_preserves_both_transport_diagnostics() {
-        let message = format_failure("volume dirty", "", "driver unavailable");
-        assert!(message.contains("volume dirty"));
-        assert!(message.contains("driver unavailable"));
-        assert!(message.contains("does not pre-flash the board"));
+        let windows = format_failure("volume dirty", "", "driver unavailable", true);
+        assert!(windows.contains("volume dirty"));
+        assert!(windows.contains("driver unavailable"));
+        assert!(windows.contains("does not pre-flash the board"));
+
+        let unix = format_failure("volume dirty", "", "driver unavailable", false);
+        assert!(unix.contains("volume dirty"));
+        assert!(unix.contains("driver unavailable"));
+        assert!(unix.contains("Check host USB permissions"));
+        assert!(!unix.contains("does not pre-flash the board"));
     }
 }
