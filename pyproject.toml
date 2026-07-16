@@ -23,9 +23,9 @@ dependencies = []
 # setuptools is in dev (not project deps) because fbuild uses
 # no-build-isolation: the build runs in the project venv, so setuptools
 # must already be installed when uv tries to (re)build the wheel.
-# default-groups below makes uv install dev (and hence setuptools)
+# default-groups below makes uv install dev (and hence setuptools and soldr)
 # before attempting to build, breaking the chicken-and-egg.
-dev = ["fbuild-dev-tools", "setuptools>=64"]
+dev = ["fbuild-dev-tools", "setuptools>=64", "soldr>=0.8.19"]
 
 [tool.uv.sources]
 fbuild-dev-tools = { path = "ci/dev-tools", editable = true }
