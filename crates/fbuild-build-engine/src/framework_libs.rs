@@ -436,7 +436,7 @@ fn is_translation_unit(path: &Path) -> bool {
         .and_then(|ext| ext.to_str())
         .unwrap_or_default()
         .to_lowercase();
-        matches!(ext.as_str(), "c" | "cpp" | "cc" | "cxx" | "s" | "ino")
+    matches!(ext.as_str(), "c" | "cpp" | "cc" | "cxx" | "s" | "ino")
 }
 
 #[cfg(test)]
