@@ -125,7 +125,6 @@ async fn build_uno_minimal() {
         src_dir: None,
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
-        clean_all: false,
         watch_set_cache: None,
         bloat_analysis: false,
     };
@@ -366,6 +365,7 @@ fn uno_build_params(project_dir: &Path, build_dir: PathBuf, clean: bool) -> Buil
         project_dir: project_dir.to_path_buf(),
         env_name: "uno".to_string(),
         clean,
+        clean_all: false,
         profile: BuildProfile::Release,
         build_dir,
         verbose: false,
