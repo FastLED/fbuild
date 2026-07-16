@@ -178,6 +178,16 @@ impl Esp32Linker {
             }
         }
 
+        // Keep section-level dead-code elimination enabled even when the SDK
+        // supplies a complete `flags/ld_flags` file.  The SDK flags replace
+        // the JSON fallback above, and older SDK packages do not all include
+        // `--gc-sections`.  This is the important size guard for quick/no-LTO
+        // builds: every function/data section can still be removed when it is
+        // unreachable from the firmware roots.
+        if !flags.iter().any(|flag| flag == "-Wl,--gc-sections") {
+            flags.push("-Wl,--gc-sections".to_string());
+        }
+
         flags
     }
 
@@ -590,6 +600,7 @@ mod tests {
         assert!(flags.contains(&"-nostartfiles".to_string()));
         assert!(flags.contains(&"-u".to_string()));
         assert!(flags.contains(&"app_main".to_string()));
+        assert!(flags.contains(&"-Wl,--gc-sections".to_string()));
         // Profile link flags should NOT be present when SDK flags are used
         assert!(!flags.contains(&"-flto=auto".to_string()));
     }
