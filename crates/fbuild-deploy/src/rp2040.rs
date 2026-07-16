@@ -10,16 +10,14 @@ use fbuild_core::{FbuildError, Result};
 
 use crate::{DeployOutcome, Deployer, DeploymentResult};
 
-#[path = "rp2040_target.rs"]
-mod target;
 #[path = "rp2040_mount.rs"]
 mod mount;
 #[path = "rp2040_picotool.rs"]
 mod picotool;
+#[path = "rp2040_target.rs"]
+mod target;
 use mount::try_mount_linux_rom_device;
-use target::{
-    resolve_requested_runtime_target, select_cdc_candidate, serial_selector,
-};
+use target::{resolve_requested_runtime_target, select_cdc_candidate, serial_selector};
 
 const UF2_MAGIC_START0: u32 = 0x0A32_4655;
 const UF2_MAGIC_START1: u32 = 0x9E5D_5157;
@@ -39,6 +37,11 @@ const RP2040_SRAM_START: u32 = 0x2000_0000;
 const RP2040_SRAM_END: u32 = 0x2004_2000;
 const UF2_PAYLOAD_SIZE: usize = 256;
 const UF2_BLOCK_SIZE: usize = 512;
+// Hub-path transients (storport timeouts, port resets) drop the BOOTSEL
+// volume mid-copy and the ROM re-enumerates within seconds; a bounded number
+// of fresh-enumeration retries recovers those without stalling a genuinely
+// dead transport (FastLED/fbuild#1081).
+const UF2_TRANSFER_ATTEMPTS: usize = 3;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum Uf2Target {
@@ -264,8 +267,7 @@ fn select_volume_after_reset(
     }
 
     Err(FbuildError::DeployFailed(
-        "RP2040 BOOTSEL volume not found; check that the stock board is connected and retry"
-            .into(),
+        "RP2040 BOOTSEL volume not found; check that the stock board is connected and retry".into(),
     ))
 }
 
@@ -321,6 +323,89 @@ fn copy_prepared_uf2(artifact: &Path, volume: &Path) -> Result<PathBuf> {
     let destination = volume.join("NEW.UF2");
     copy_uf2_artifact(artifact, &destination, volume)?;
     Ok(destination)
+}
+
+/// Successful mass-storage transfer: where NEW.UF2 landed and which mounted
+/// volume accepted it (a retry may land on a re-enumerated volume path).
+#[derive(Debug)]
+struct MscTransfer {
+    destination: PathBuf,
+    volume: PathBuf,
+}
+
+/// Mass-storage transfer failure that survived the retry policy.
+#[derive(Debug)]
+struct MscTransferFailure {
+    error: FbuildError,
+    volume: PathBuf,
+    attempts: usize,
+}
+
+/// Write NEW.UF2 with bounded retries. A retry is only taken across a fresh
+/// ROM enumeration: the failed volume must first drop off the host
+/// (`volume_gone`) and a BOOTSEL volume must then re-appear (`rediscover`).
+/// Re-writing into a mount that never dropped would repeat the same wedged
+/// transport (see the Windows error-121 guidance), so that case fails over
+/// to the managed picotool fallback instead.
+fn transfer_uf2_with_retries<C, G, R>(
+    initial_volume: PathBuf,
+    max_attempts: usize,
+    mut copy: C,
+    mut volume_gone: G,
+    mut rediscover: R,
+) -> std::result::Result<MscTransfer, MscTransferFailure>
+where
+    C: FnMut(&Path) -> Result<PathBuf>,
+    G: FnMut(&Path) -> bool,
+    R: FnMut() -> Result<Option<PathBuf>>,
+{
+    let mut volume = initial_volume;
+    let mut attempts = 0;
+    loop {
+        attempts += 1;
+        match copy(&volume) {
+            Ok(destination) => {
+                return Ok(MscTransfer {
+                    destination,
+                    volume,
+                })
+            }
+            Err(error) => {
+                if attempts >= max_attempts || !volume_gone(&volume) {
+                    return Err(MscTransferFailure {
+                        error,
+                        volume,
+                        attempts,
+                    });
+                }
+                match rediscover() {
+                    Ok(Some(next)) => {
+                        tracing::warn!(
+                            error = %error,
+                            volume = %next.display(),
+                            attempt = attempts,
+                            "RP2040 BOOTSEL re-enumerated after a failed UF2 transfer; retrying"
+                        );
+                        volume = next;
+                    }
+                    _ => {
+                        return Err(MscTransferFailure {
+                            error,
+                            volume,
+                            attempts,
+                        });
+                    }
+                }
+            }
+        }
+    }
+}
+
+fn describe_transfer_location(volume: Option<&Path>) -> String {
+    match volume {
+        Some(volume) => volume.display().to_string(),
+        None => "PICOBOOT vendor interface".to_string(),
+    }
 }
 
 #[cfg(test)]
@@ -385,8 +470,8 @@ fn write_uf2_artifact_direct(
     // filesystem-level copy, metadata preservation, fsync, rename, or readback
     // on the ROM-emulated FAT volume.
     let bytes = fs::read(artifact).map_err(|error| Uf2WriteFailure::new(error, 0))?;
-    let output = open_uf2_destination(destination)
-        .map_err(|error| Uf2WriteFailure::new(error, 0))?;
+    let output =
+        open_uf2_destination(destination).map_err(|error| Uf2WriteFailure::new(error, 0))?;
     write_uf2_bytes(output, &bytes)
 }
 
@@ -429,10 +514,7 @@ impl<W: Write> Write for CountingWriter<W> {
     }
 }
 
-fn write_uf2_bytes<W: Write>(
-    output: W,
-    bytes: &[u8],
-) -> std::result::Result<u64, Uf2WriteFailure> {
+fn write_uf2_bytes<W: Write>(output: W, bytes: &[u8]) -> std::result::Result<u64, Uf2WriteFailure> {
     // A large CPython BufferedWriter write bypasses its small buffer and sends
     // this whole byte slice to the raw file in one call. write_all has the
     // same first-call shape and only retries if the OS reports a short write.
@@ -629,7 +711,10 @@ fn validate_uf2(bytes: &[u8], expected_family: u32) -> Result<Uf2Target> {
         ));
     }
     seen_ranges.sort_unstable_by_key(|&(start, _)| start);
-    if let Some(overlap) = seen_ranges.windows(2).find(|ranges| ranges[1].0 < ranges[0].1) {
+    if let Some(overlap) = seen_ranges
+        .windows(2)
+        .find(|ranges| ranges[1].0 < ranges[0].1)
+    {
         return Err(FbuildError::DeployFailed(format!(
             "malformed RP2040 UF2: overlapping target address 0x{:08X}",
             overlap[1].0
@@ -639,7 +724,7 @@ fn validate_uf2(bytes: &[u8], expected_family: u32) -> Result<Uf2Target> {
 }
 
 fn ram_load_result(
-    volume: &Path,
+    volume: Option<&Path>,
     transfer_method: &str,
     stdout: String,
     stderr: String,
@@ -648,7 +733,7 @@ fn ram_load_result(
         success: true,
         message: format!(
             "RP2040 RAM image accepted for execution via {transfer_method} ({})",
-            volume.display(),
+            describe_transfer_location(volume),
         ),
         port: None,
         stdout,
@@ -754,13 +839,9 @@ fn wait_for_cdc_port(
     expected_family: u32,
     timeout: Duration,
 ) -> Result<String> {
-    wait_for_cdc_port_with(
-        previous_port,
-        requested_serial,
-        before,
-        timeout,
-        || catalogue_pico_cdc_ports(expected_family),
-    )
+    wait_for_cdc_port_with(previous_port, requested_serial, before, timeout, || {
+        catalogue_pico_cdc_ports(expected_family)
+    })
 }
 
 fn wait_for_cdc_port_with<F>(
@@ -851,10 +932,8 @@ impl Deployer for Rp2040Deployer {
                         "RP2040 serial snapshot task failed: {error}"
                     ))
                 })??;
-        let ports_before: BTreeSet<String> = current_ports
-            .iter()
-            .map(|port| port.name.clone())
-            .collect();
+        let ports_before: BTreeSet<String> =
+            current_ports.iter().map(|port| port.name.clone()).collect();
         let explicit_volume = selector.and_then(explicit_uf2_volume);
         if selector.is_some_and(|value| value.to_ascii_lowercase().starts_with("uf2="))
             && explicit_volume.is_none()
@@ -886,8 +965,8 @@ impl Deployer for Rp2040Deployer {
         } else {
             None
         };
-        let volume = if let Some(volume) = volume_before_reset {
-            volume
+        let (volume, volume_discovery_error) = if let Some(volume) = volume_before_reset {
+            (Some(volume), None)
         } else {
             let timeout = self.bootloader_timeout;
             let discovered = tokio::task::spawn_blocking(move || find_uf2_volume_until(timeout))
@@ -895,7 +974,14 @@ impl Deployer for Rp2040Deployer {
                 .map_err(|error| {
                     FbuildError::DeployFailed(format!("RP2040 volume watcher failed: {error}"))
                 })??;
-            select_volume_after_reset(discovered, reset_error)?
+            match select_volume_after_reset(discovered, reset_error) {
+                Ok(volume) => (Some(volume), None),
+                // The synthetic FAT never mounted (common behind USB hubs,
+                // FastLED/fbuild#1081). The PICOBOOT vendor interface may
+                // still be reachable, so defer the failure until the managed
+                // picotool fallback has had a chance.
+                Err(error) => (None, Some(error)),
+            }
         };
         let firmware = firmware_path.to_path_buf();
         let family_id = self.family_id;
@@ -907,47 +993,74 @@ impl Deployer for Rp2040Deployer {
                         "RP2040 UF2 preparation task failed: {error}"
                     ))
                 })??;
-        let artifact_for_copy = artifact.clone();
-        let volume_for_copy = volume.clone();
-        let copy_result = tokio::task::spawn_blocking(move || {
-            copy_prepared_uf2(&artifact_for_copy, &volume_for_copy)
-        })
-        .await
-        .map_err(|error| {
-            FbuildError::DeployFailed(format!("RP2040 UF2 writer task failed: {error}"))
-        })?;
-        let (transfer_stdout, transfer_stderr, transfer_method) = match copy_result {
-            Ok(destination) => (
-                format!("wrote {}", destination.display()),
-                String::new(),
-                "BOOTSEL mass-storage",
-            ),
-            Err(copy_error) => {
-                let loaded = picotool::load_with_managed_picotool(
-                    project_dir,
-                    &artifact,
-                    &copy_error.to_string(),
-                )
-                .await?;
+        let (transfer_stdout, transfer_stderr, transfer_method, transfer_volume) =
+            if let Some(volume) = volume {
+                let artifact_for_copy = artifact.clone();
+                let bootloader_timeout = self.bootloader_timeout;
+                let transfer = tokio::task::spawn_blocking(move || {
+                    transfer_uf2_with_retries(
+                        volume,
+                        UF2_TRANSFER_ATTEMPTS,
+                        |volume| copy_prepared_uf2(&artifact_for_copy, volume),
+                        |volume| {
+                            wait_for_volume_disappearance(volume, Duration::from_secs(2)).is_ok()
+                        },
+                        || find_uf2_volume_until(bootloader_timeout),
+                    )
+                })
+                .await
+                .map_err(|error| {
+                    FbuildError::DeployFailed(format!("RP2040 UF2 writer task failed: {error}"))
+                })?;
+                match transfer {
+                    Ok(transfer) => (
+                        format!("wrote {}", transfer.destination.display()),
+                        String::new(),
+                        "BOOTSEL mass-storage",
+                        Some(transfer.volume),
+                    ),
+                    Err(failure) => {
+                        let context = format!(
+                            "{} (after {} BOOTSEL transfer attempt(s))",
+                            failure.error, failure.attempts
+                        );
+                        let loaded =
+                            picotool::load_with_managed_picotool(project_dir, &artifact, &context)
+                                .await?;
+                        (
+                            loaded.stdout,
+                            loaded.stderr,
+                            "managed picotool fallback",
+                            Some(failure.volume),
+                        )
+                    }
+                }
+            } else {
+                let context = volume_discovery_error
+                    .expect("missing volume implies a discovery error")
+                    .to_string();
+                let loaded =
+                    picotool::load_with_managed_picotool(project_dir, &artifact, &context).await?;
                 (
                     loaded.stdout,
                     loaded.stderr,
-                    "managed picotool fallback",
+                    "managed picotool (BOOTSEL volume never mounted)",
+                    None,
                 )
-            }
-        };
-        let volume_for_wait = volume.clone();
-        let post_timeout = self.post_deploy_timeout;
-        tokio::task::spawn_blocking(move || {
-            wait_for_volume_disappearance(&volume_for_wait, post_timeout)
-        })
-        .await
-        .map_err(|error| {
-            FbuildError::DeployFailed(format!("RP2040 eject watcher failed: {error}"))
-        })??;
+            };
+        if let Some(volume_for_wait) = transfer_volume.clone() {
+            let post_timeout = self.post_deploy_timeout;
+            tokio::task::spawn_blocking(move || {
+                wait_for_volume_disappearance(&volume_for_wait, post_timeout)
+            })
+            .await
+            .map_err(|error| {
+                FbuildError::DeployFailed(format!("RP2040 eject watcher failed: {error}"))
+            })??;
+        }
         if uf2_target == Uf2Target::Ram {
             return Ok(ram_load_result(
-                &volume,
+                transfer_volume.as_deref(),
                 transfer_method,
                 transfer_stdout,
                 transfer_stderr,
@@ -959,6 +1072,7 @@ impl Deployer for Rp2040Deployer {
             .and_then(|target| target.serial_number.clone())
             .or(requested_serial);
         let family_id = self.family_id;
+        let post_timeout = self.post_deploy_timeout;
         let discovered_port = tokio::task::spawn_blocking(move || {
             wait_for_cdc_port(
                 recovery_port.as_deref(),
@@ -976,7 +1090,7 @@ impl Deployer for Rp2040Deployer {
             success: true,
             message: format!(
                 "firmware deployed to RP2040 via {transfer_method} ({})",
-                volume.display(),
+                describe_transfer_location(transfer_volume.as_deref()),
             ),
             port: Some(discovered_port),
             stdout: transfer_stdout,
@@ -1130,7 +1244,9 @@ mod tests {
             PathBuf::from("second-rpi-rp2"),
         ])
         .unwrap_err();
-        assert!(error.to_string().contains("multiple RP2040 BOOTSEL volumes"));
+        assert!(error
+            .to_string()
+            .contains("multiple RP2040 BOOTSEL volumes"));
     }
 
     #[test]
@@ -1175,7 +1291,9 @@ mod tests {
             "failed to set the RP2040 reset baud on COM12: device disappeared".to_string(),
         );
         let error = select_volume_after_reset(None, Some(reset_error)).unwrap_err();
-        assert!(error.to_string().contains("failed to set the RP2040 reset baud"));
+        assert!(error
+            .to_string()
+            .contains("failed to set the RP2040 reset baud"));
         assert!(error.to_string().contains("no RP2040 BOOTSEL transition"));
 
         let error = select_volume_after_reset(None, None).unwrap_err();
@@ -1235,8 +1353,7 @@ mod tests {
         assert!(error.to_string().contains("block metadata"));
 
         let mut overlapping = encode_uf2(&[0; 300]);
-        overlapping[512 + 12..512 + 16]
-            .copy_from_slice(&RP2040_UF2_BASE_ADDRESS.to_le_bytes());
+        overlapping[512 + 12..512 + 16].copy_from_slice(&RP2040_UF2_BASE_ADDRESS.to_le_bytes());
         let error = validate_uf2(&overlapping, RP2040_FAMILY_ID).unwrap_err();
         assert!(error.to_string().contains("overlapping target address"));
     }
@@ -1283,7 +1400,7 @@ mod tests {
     #[test]
     fn ram_load_result_is_success_without_claiming_a_runtime_port() {
         let result = ram_load_result(
-            Path::new("G:/"),
+            Some(Path::new("G:/")),
             "BOOTSEL mass-storage",
             "wrote G:/NEW.UF2".to_string(),
             String::new(),
@@ -1335,7 +1452,9 @@ mod tests {
             let firmware = root.path().join(filename);
             fs::write(&firmware, [0x7f, b'E', b'L', b'F']).unwrap();
             let error = write_uf2(&firmware, root.path(), RP2040_FAMILY_ID).unwrap_err();
-            assert!(error.to_string().contains("expected a managed .uf2 or raw .bin"));
+            assert!(error
+                .to_string()
+                .contains("expected a managed .uf2 or raw .bin"));
         }
     }
 
@@ -1344,7 +1463,10 @@ mod tests {
         let root = tempdir().unwrap();
         fs::write(root.path().join("INFO_UF2.TXT"), "Board-ID: RPI-RP2").unwrap();
         let selector = format!("UF2={}", root.path().display());
-        assert_eq!(explicit_uf2_volume(&selector), Some(root.path().to_path_buf()));
+        assert_eq!(
+            explicit_uf2_volume(&selector),
+            Some(root.path().to_path_buf())
+        );
         assert!(resolve_requested_runtime_target(&selector, &[]).is_err());
     }
 
@@ -1363,8 +1485,7 @@ mod tests {
     #[test]
     fn typed_profile_must_match_runtime_role_interface_and_generation() {
         use fbuild_core::usb::profiles::{
-            UsbDeviceRole, UsbIdentityMatch, UsbProfileProvenance, UsbPurpose,
-            UsbTransportProfile,
+            UsbDeviceRole, UsbIdentityMatch, UsbProfileProvenance, UsbPurpose, UsbTransportProfile,
         };
 
         let mut profile = UsbTransportProfile {
@@ -1556,17 +1677,16 @@ mod tests {
         })
         .unwrap_err();
 
-        assert!(error.to_string().contains("device disappeared during transfer"));
+        assert!(error
+            .to_string()
+            .contains("device disappeared during transfer"));
     }
 
     #[test]
     fn windows_1392_copy_error_warns_against_repairing_synthetic_volume() {
         let error = std::io::Error::from_raw_os_error(1392);
-        let message = format_uf2_copy_error(
-            Path::new("firmware.uf2"),
-            Path::new("G:/NEW.UF2"),
-            &error,
-        );
+        let message =
+            format_uf2_copy_error(Path::new("firmware.uf2"), Path::new("G:/NEW.UF2"), &error);
         assert!(message.contains("error 1392"));
         assert!(message.contains("synthetic FAT volume"));
         assert!(message.contains("Do not run chkdsk"));
@@ -1579,11 +1699,7 @@ mod tests {
         let root = tempdir().unwrap();
         let artifact = root.path().join("firmware.uf2");
         let destination = root.path().join("NEW.UF2");
-        fs::write(
-            root.path().join("INFO_UF2.TXT"),
-            "Model: Raspberry Pi RP2",
-        )
-        .unwrap();
+        fs::write(root.path().join("INFO_UF2.TXT"), "Model: Raspberry Pi RP2").unwrap();
         fs::write(&artifact, encode_uf2(&[1, 2, 3])).unwrap();
         let artifact_len = fs::metadata(&artifact).unwrap().len();
 
@@ -1624,13 +1740,126 @@ mod tests {
     }
 
     #[test]
+    fn msc_transfer_succeeds_first_attempt_without_rediscovery() {
+        let mut copies = 0;
+        let mut disappearance_checks = 0;
+        let mut rediscoveries = 0;
+        let transfer = transfer_uf2_with_retries(
+            PathBuf::from("vol-a"),
+            UF2_TRANSFER_ATTEMPTS,
+            |volume| {
+                copies += 1;
+                Ok(volume.join("NEW.UF2"))
+            },
+            |_| {
+                disappearance_checks += 1;
+                true
+            },
+            || {
+                rediscoveries += 1;
+                Ok(None)
+            },
+        )
+        .expect("first attempt succeeds");
+        assert_eq!(copies, 1);
+        assert_eq!(disappearance_checks, 0);
+        assert_eq!(rediscoveries, 0);
+        assert_eq!(transfer.volume, PathBuf::from("vol-a"));
+        assert_eq!(transfer.destination, Path::new("vol-a").join("NEW.UF2"));
+    }
+
+    #[test]
+    fn msc_transfer_retries_on_a_fresh_enumeration_and_writes_to_the_new_volume() {
+        let mut copies = 0;
+        let transfer = transfer_uf2_with_retries(
+            PathBuf::from("vol-old"),
+            UF2_TRANSFER_ATTEMPTS,
+            |volume| {
+                copies += 1;
+                if copies == 1 {
+                    assert_eq!(volume, Path::new("vol-old"));
+                    Err(FbuildError::DeployFailed("transient hub failure".into()))
+                } else {
+                    assert_eq!(volume, Path::new("vol-new"));
+                    Ok(volume.join("NEW.UF2"))
+                }
+            },
+            |_| true,
+            || Ok(Some(PathBuf::from("vol-new"))),
+        )
+        .expect("second attempt succeeds");
+        assert_eq!(copies, 2);
+        assert_eq!(transfer.volume, PathBuf::from("vol-new"));
+    }
+
+    #[test]
+    fn msc_transfer_does_not_retry_while_the_stale_volume_stays_mounted() {
+        let mut copies = 0;
+        let failure = transfer_uf2_with_retries(
+            PathBuf::from("vol-a"),
+            UF2_TRANSFER_ATTEMPTS,
+            |_| {
+                copies += 1;
+                Err(FbuildError::DeployFailed("error 121".into()))
+            },
+            |_| false,
+            || Ok(Some(PathBuf::from("vol-a"))),
+        )
+        .expect_err("a wedged mount must not be retried");
+        assert_eq!(copies, 1);
+        assert_eq!(failure.attempts, 1);
+        assert!(failure.error.to_string().contains("error 121"));
+    }
+
+    #[test]
+    fn msc_transfer_gives_up_when_no_bootsel_volume_reappears() {
+        let failure = transfer_uf2_with_retries(
+            PathBuf::from("vol-a"),
+            UF2_TRANSFER_ATTEMPTS,
+            |_| Err(FbuildError::DeployFailed("device dropped".into())),
+            |_| true,
+            || Ok(None),
+        )
+        .expect_err("no re-enumeration means no retry");
+        assert_eq!(failure.attempts, 1);
+        assert_eq!(failure.volume, PathBuf::from("vol-a"));
+    }
+
+    #[test]
+    fn msc_transfer_exhausts_the_attempt_budget() {
+        let mut copies = 0;
+        let failure = transfer_uf2_with_retries(
+            PathBuf::from("vol-a"),
+            UF2_TRANSFER_ATTEMPTS,
+            |_| {
+                copies += 1;
+                Err(FbuildError::DeployFailed("persistent failure".into()))
+            },
+            |_| true,
+            || Ok(Some(PathBuf::from("vol-a"))),
+        )
+        .expect_err("every attempt fails");
+        assert_eq!(copies, UF2_TRANSFER_ATTEMPTS);
+        assert_eq!(failure.attempts, UF2_TRANSFER_ATTEMPTS);
+    }
+
+    #[test]
+    fn transfer_location_reports_picoboot_when_no_volume_mounted() {
+        assert_eq!(
+            describe_transfer_location(Some(Path::new("vol-a"))),
+            Path::new("vol-a").display().to_string()
+        );
+        assert_eq!(
+            describe_transfer_location(None),
+            "PICOBOOT vendor interface"
+        );
+    }
+
+    #[test]
     fn windows_121_write_timeout_recommends_a_direct_usb_retry() {
         let error = io::Error::from_raw_os_error(121);
-        let message = format_uf2_copy_error(
-            Path::new("firmware.uf2"),
-            Path::new("G:/NEW.UF2"),
-            &error,
-        );
+        let message =
+            format_uf2_copy_error(Path::new("firmware.uf2"), Path::new("G:/NEW.UF2"), &error);
         assert!(message.contains("error 121"));
         assert!(message.contains("direct USB port"));
         assert!(message.contains("avoid USB hubs"));
