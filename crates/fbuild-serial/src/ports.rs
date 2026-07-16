@@ -78,9 +78,9 @@ mod imp {
     use serialport::{SerialPortInfo, SerialPortType, UsbPortInfo};
     use windows_sys::Win32::Devices::DeviceAndDriverInstallation::{
         CM_Get_DevNode_Status, CM_Get_Device_IDW, CM_Get_Parent, CR_SUCCESS, DICS_FLAG_GLOBAL,
-        DIGCF_PRESENT, DIREG_DEV, GUID_DEVCLASS_USB, HDEVINFO, MAX_DEVICE_ID_LEN,
-        SP_DEVINFO_DATA, SPDRP_FRIENDLYNAME, SPDRP_HARDWAREID, SPDRP_LOCATION_INFORMATION,
-        SPDRP_MFG, SetupDiClassGuidsFromNameW, SetupDiDestroyDeviceInfoList, SetupDiEnumDeviceInfo,
+        DIGCF_PRESENT, DIREG_DEV, GUID_DEVCLASS_USB, HDEVINFO, MAX_DEVICE_ID_LEN, SP_DEVINFO_DATA,
+        SPDRP_FRIENDLYNAME, SPDRP_HARDWAREID, SPDRP_LOCATION_INFORMATION, SPDRP_MFG,
+        SetupDiClassGuidsFromNameW, SetupDiDestroyDeviceInfoList, SetupDiEnumDeviceInfo,
         SetupDiGetClassDevsW, SetupDiGetDeviceInstanceIdW, SetupDiGetDeviceRegistryPropertyW,
         SetupDiOpenDevRegKey,
     };
@@ -440,13 +440,15 @@ mod imp {
                 break;
             }
             let mut buffer = [0u16; MAX_DEVICE_ID_LEN as usize];
-            let result = unsafe {
-                CM_Get_Device_IDW(parent, buffer.as_mut_ptr(), buffer.len() as u32, 0)
-            };
+            let result =
+                unsafe { CM_Get_Device_IDW(parent, buffer.as_mut_ptr(), buffer.len() as u32, 0) };
             if result != CR_SUCCESS {
                 break;
             }
-            let length = buffer.iter().position(|&unit| unit == 0).unwrap_or(buffer.len());
+            let length = buffer
+                .iter()
+                .position(|&unit| unit == 0)
+                .unwrap_or(buffer.len());
             ids.push(String::from_utf16_lossy(&buffer[..length]));
             current = parent;
         }
@@ -455,9 +457,9 @@ mod imp {
 
     fn classify_usb_ancestry(devinst: u32) -> Option<bool> {
         let ancestors = ancestor_ids(devinst);
-        let root_index = ancestors.iter().position(|id| {
-            id.to_ascii_uppercase().starts_with("USB\\ROOT_HUB")
-        })?;
+        let root_index = ancestors
+            .iter()
+            .position(|id| id.to_ascii_uppercase().starts_with("USB\\ROOT_HUB"))?;
         Some(ancestors[..root_index].iter().any(|id| {
             let upper = id.to_ascii_uppercase();
             upper.starts_with("USB\\VID_") && upper.contains("&PID_")
@@ -465,14 +467,8 @@ mod imp {
     }
 
     pub(super) fn present_usb_problem_devices() -> Vec<UsbProblemDevice> {
-        let hdi = unsafe {
-            SetupDiGetClassDevsW(
-                &GUID_DEVCLASS_USB,
-                std::ptr::null(),
-                0,
-                DIGCF_PRESENT,
-            )
-        };
+        let hdi =
+            unsafe { SetupDiGetClassDevsW(&GUID_DEVCLASS_USB, std::ptr::null(), 0, DIGCF_PRESENT) };
         if hdi == INVALID_HANDLE_VALUE {
             return Vec::new();
         }
@@ -535,7 +531,10 @@ mod imp {
         if ok == FALSE {
             return None;
         }
-        let length = buffer.iter().position(|&unit| unit == 0).unwrap_or(buffer.len());
+        let length = buffer
+            .iter()
+            .position(|&unit| unit == 0)
+            .unwrap_or(buffer.len());
         Some(String::from_utf16_lossy(&buffer[..length]))
     }
 
@@ -560,7 +559,10 @@ mod imp {
         if ok == FALSE || value_type != REG_SZ {
             return None;
         }
-        let length = buffer.iter().position(|&unit| unit == 0).unwrap_or(buffer.len());
+        let length = buffer
+            .iter()
+            .position(|&unit| unit == 0)
+            .unwrap_or(buffer.len());
         let value = String::from_utf16_lossy(&buffer[..length]);
         (!value.is_empty()).then_some(value)
     }
@@ -750,6 +752,5 @@ mod imp {
             assert_eq!(info.interface, None);
             assert_eq!(info.serial_number.as_deref(), Some("B4:3A:45:B0:08:24"));
         }
-
     }
 }
