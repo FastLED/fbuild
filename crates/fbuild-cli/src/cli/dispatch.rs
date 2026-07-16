@@ -193,7 +193,13 @@ pub async fn async_main() {
         }) => {
             let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
             if platformio {
-                pio_build(&project_dir, environment.as_deref(), clean || clean_all, verbose).await
+                pio_build(
+                    &project_dir,
+                    environment.as_deref(),
+                    clean || clean_all,
+                    verbose,
+                )
+                .await
             } else {
                 run_build(
                     project_dir,

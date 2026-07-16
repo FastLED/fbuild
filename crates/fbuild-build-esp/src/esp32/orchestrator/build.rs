@@ -614,7 +614,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
         if params.clean_all {
             let _g = perf.phase("core-cache-remove");
             match std::fs::remove_dir_all(core_cache.path()) {
-                Ok(()) => tracing::info!("removed framework core cache {}", core_cache.path().display()),
+                Ok(()) => tracing::info!(
+                    "removed framework core cache {}",
+                    core_cache.path().display()
+                ),
                 Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
                 Err(error) => tracing::warn!(
                     "failed to remove framework core cache {}: {}",
