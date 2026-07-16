@@ -43,6 +43,9 @@ fbuild-dev-tools = { path = "ci/dev-tools", editable = true }
 [tool.uv]
 no-build-isolation-package = ["fbuild"]
 default-groups = ["dev"]
+# `no-build-isolation-package` uses the project environment for fbuild's
+# setup.py. Inject soldr there as well as declaring it in build-system.requires
+# so `uv sync` has the delegated backend available before rebuilding fbuild.
 # Tell uv to re-sync the editable install when these change. Without
 # this, `uv run` after a .rs edit silently uses a stale _native.pyd
 # because uv's default cache-keys only watch pyproject.toml.
@@ -53,6 +56,9 @@ cache-keys = [
     { file = "crates/**/*.rs" },
     { file = "crates/**/Cargo.toml" },
 ]
+
+[tool.uv.extra-build-dependencies]
+fbuild = ["setuptools>=64", "soldr>=0.8.19"]
 
 [build-system]
 # 0.8.19 is the first soldr release containing delegated PEP 517 hooks.
