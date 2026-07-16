@@ -37,18 +37,52 @@ pub fn available_ports() -> serialport::Result<Vec<serialport::SerialPortInfo>> 
     }
 }
 
+/// A USB device that Windows has instantiated but could not start normally.
+///
+/// These nodes may not have a usable VID/PID or serial number (for example,
+/// Windows reports a descriptor failure as `VID_0000&PID_0002`).  The result
+/// is deliberately diagnostic only: callers must not treat one of these
+/// nodes as a particular target board.
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct UsbProblemDevice {
+    pub instance_id: String,
+    pub problem_code: u32,
+    pub friendly_name: Option<String>,
+    pub location: Option<String>,
+    /// `Some(true)` means a USB device ancestor exists before the root hub;
+    /// `Some(false)` means the node reaches a root hub directly; `None` means
+    /// the host could not provide enough ancestry to classify it.
+    pub behind_external_hub: Option<bool>,
+}
+
+/// Best-effort enumeration of present USB devnodes with a non-zero Windows
+/// problem code.  This is empty on non-Windows hosts and never makes a port
+/// scan fail merely because host diagnostics are unavailable.
+pub fn present_usb_problem_devices() -> Vec<UsbProblemDevice> {
+    #[cfg(windows)]
+    {
+        imp::present_usb_problem_devices()
+    }
+    #[cfg(not(windows))]
+    {
+        Vec::new()
+    }
+}
+
 #[cfg(windows)]
 mod imp {
+    use super::UsbProblemDevice;
     use std::collections::HashSet;
     use std::ptr;
 
     use serialport::{SerialPortInfo, SerialPortType, UsbPortInfo};
     use windows_sys::Win32::Devices::DeviceAndDriverInstallation::{
         CM_Get_DevNode_Status, CM_Get_Device_IDW, CM_Get_Parent, CR_SUCCESS, DICS_FLAG_GLOBAL,
-        DIREG_DEV, HDEVINFO, MAX_DEVICE_ID_LEN, SP_DEVINFO_DATA, SPDRP_FRIENDLYNAME,
-        SPDRP_HARDWAREID, SPDRP_MFG, SetupDiClassGuidsFromNameW, SetupDiDestroyDeviceInfoList,
-        SetupDiEnumDeviceInfo, SetupDiGetClassDevsW, SetupDiGetDeviceInstanceIdW,
-        SetupDiGetDeviceRegistryPropertyW, SetupDiOpenDevRegKey,
+        DIGCF_PRESENT, DIREG_DEV, GUID_DEVCLASS_USB, HDEVINFO, MAX_DEVICE_ID_LEN,
+        SP_DEVINFO_DATA, SPDRP_FRIENDLYNAME, SPDRP_HARDWAREID, SPDRP_LOCATION_INFORMATION,
+        SPDRP_MFG, SetupDiClassGuidsFromNameW, SetupDiDestroyDeviceInfoList, SetupDiEnumDeviceInfo,
+        SetupDiGetClassDevsW, SetupDiGetDeviceInstanceIdW, SetupDiGetDeviceRegistryPropertyW,
+        SetupDiOpenDevRegKey,
     };
     use windows_sys::Win32::Foundation::{FALSE, FILETIME, INVALID_HANDLE_VALUE, MAX_PATH};
     use windows_sys::Win32::System::Registry::{
@@ -396,6 +430,141 @@ mod imp {
         }
     }
 
+    fn ancestor_ids(devinst: u32) -> Vec<String> {
+        let mut ids = Vec::new();
+        let mut current = devinst;
+        for _ in 0..16 {
+            let mut parent = 0;
+            let result = unsafe { CM_Get_Parent(&mut parent, current, 0) };
+            if result != CR_SUCCESS {
+                break;
+            }
+            let mut buffer = [0u16; MAX_DEVICE_ID_LEN as usize];
+            let result = unsafe {
+                CM_Get_Device_IDW(parent, buffer.as_mut_ptr(), buffer.len() as u32, 0)
+            };
+            if result != CR_SUCCESS {
+                break;
+            }
+            let length = buffer.iter().position(|&unit| unit == 0).unwrap_or(buffer.len());
+            ids.push(String::from_utf16_lossy(&buffer[..length]));
+            current = parent;
+        }
+        ids
+    }
+
+    fn classify_usb_ancestry(devinst: u32) -> Option<bool> {
+        let ancestors = ancestor_ids(devinst);
+        let root_index = ancestors.iter().position(|id| {
+            id.to_ascii_uppercase().starts_with("USB\\ROOT_HUB")
+        })?;
+        Some(ancestors[..root_index].iter().any(|id| {
+            let upper = id.to_ascii_uppercase();
+            upper.starts_with("USB\\VID_") && upper.contains("&PID_")
+        }))
+    }
+
+    pub(super) fn present_usb_problem_devices() -> Vec<UsbProblemDevice> {
+        let hdi = unsafe {
+            SetupDiGetClassDevsW(
+                &GUID_DEVCLASS_USB,
+                std::ptr::null(),
+                0,
+                DIGCF_PRESENT,
+            )
+        };
+        if hdi == INVALID_HANDLE_VALUE {
+            return Vec::new();
+        }
+
+        let mut devices = Vec::new();
+        let mut index = 0u32;
+        loop {
+            let mut info = SP_DEVINFO_DATA {
+                cbSize: std::mem::size_of::<SP_DEVINFO_DATA>() as u32,
+                ClassGuid: GUID::from_u128(0),
+                DevInst: 0,
+                Reserved: 0,
+            };
+            if unsafe { SetupDiEnumDeviceInfo(hdi, index, &mut info) } == FALSE {
+                break;
+            }
+            index += 1;
+
+            let Some(instance_id) = device_instance_id_from_info(hdi, &info) else {
+                continue;
+            };
+            if !instance_id.to_ascii_uppercase().starts_with("USB\\") {
+                continue;
+            }
+            let mut status = 0u32;
+            let mut problem_code = 0u32;
+            if unsafe { CM_Get_DevNode_Status(&mut status, &mut problem_code, info.DevInst, 0) }
+                != CR_SUCCESS
+                || problem_code == 0
+            {
+                continue;
+            }
+
+            devices.push(UsbProblemDevice {
+                instance_id,
+                problem_code,
+                friendly_name: property_from_info(hdi, &info, SPDRP_FRIENDLYNAME),
+                location: property_from_info(hdi, &info, SPDRP_LOCATION_INFORMATION),
+                behind_external_hub: classify_usb_ancestry(info.DevInst),
+            });
+        }
+        unsafe {
+            SetupDiDestroyDeviceInfoList(hdi);
+        }
+        devices
+    }
+
+    fn device_instance_id_from_info(hdi: HDEVINFO, info: &SP_DEVINFO_DATA) -> Option<String> {
+        let mut buffer = [0u16; MAX_DEVICE_ID_LEN as usize];
+        let mut required = 0u32;
+        let ok = unsafe {
+            SetupDiGetDeviceInstanceIdW(
+                hdi,
+                info,
+                buffer.as_mut_ptr(),
+                buffer.len() as u32,
+                &mut required,
+            )
+        };
+        if ok == FALSE {
+            return None;
+        }
+        let length = buffer.iter().position(|&unit| unit == 0).unwrap_or(buffer.len());
+        Some(String::from_utf16_lossy(&buffer[..length]))
+    }
+
+    fn property_from_info(
+        hdi: HDEVINFO,
+        info: &SP_DEVINFO_DATA,
+        property_id: u32,
+    ) -> Option<String> {
+        let mut value_type = 0u32;
+        let mut buffer = [0u16; MAX_PATH as usize];
+        let ok = unsafe {
+            SetupDiGetDeviceRegistryPropertyW(
+                hdi,
+                info,
+                property_id,
+                &mut value_type,
+                buffer.as_mut_ptr() as *mut u8,
+                (buffer.len() * 2) as u32,
+                std::ptr::null_mut(),
+            )
+        };
+        if ok == FALSE || value_type != REG_SZ {
+            return None;
+        }
+        let length = buffer.iter().position(|&unit| unit == 0).unwrap_or(buffer.len());
+        let value = String::from_utf16_lossy(&buffer[..length]);
+        (!value.is_empty()).then_some(value)
+    }
+
     /// COM ports listed under `HKLM\HARDWARE\DEVICEMAP\SERIALCOMM` that the
     /// "Ports" class walk did not surface (parity with upstream serialport).
     fn get_registry_com_ports() -> HashSet<String> {
@@ -581,5 +750,6 @@ mod imp {
             assert_eq!(info.interface, None);
             assert_eq!(info.serial_number.as_deref(), Some("B4:3A:45:B0:08:24"));
         }
+
     }
 }

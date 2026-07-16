@@ -53,7 +53,51 @@ fn run_scan(offline: bool) -> Result<()> {
     // render_scan terminates every row with '\n'; strip the trailing newline
     // so result()'s newline doesn't double up.
     output::result(rendered.trim_end_matches('\n'));
+    let problem_devices = fbuild_serial::ports::present_usb_problem_devices();
+    if !problem_devices.is_empty() {
+        // This is actionable final command output. Keep it visible under the
+        // default tracing filter instead of requiring users to set RUST_LOG.
+        output::diagnostic(format!("warning: {}", format_usb_problem_warning(&problem_devices)));
+    }
     Ok(())
+}
+
+fn format_usb_problem_warning(devices: &[fbuild_serial::ports::UsbProblemDevice]) -> String {
+    use std::fmt::Write as _;
+    let mut warning = String::from(
+        "Windows reports present USB device(s) with hardware problems; fbuild cannot associate these unidentified nodes with a target board:",
+    );
+    let mut hub_seen = false;
+    for device in devices {
+        let location = device
+            .location
+            .as_deref()
+            .map(|value| format!(" at {value}"))
+            .unwrap_or_default();
+        let topology = match device.behind_external_hub {
+            Some(true) => {
+                hub_seen = true;
+                " behind an external USB hub"
+            }
+            Some(false) => " on a direct root USB port",
+            None => " (USB topology unavailable)",
+        };
+        let name = device
+            .friendly_name
+            .as_deref()
+            .unwrap_or("Unknown USB device");
+        let _ = write!(
+            warning,
+            "\n  - {name}: Windows problem code {}{location}{topology}",
+            device.problem_code
+        );
+    }
+    if hub_seen {
+        warning.push_str(
+            "\nRecommendation: connect platform USB devices directly to a motherboard USB port; external hubs can introduce power/reset/timing conditions that disrupt USB enumeration.",
+        );
+    }
+    warning
 }
 
 /// Fetch the FastLED/boards display-name artifact backing
@@ -571,6 +615,40 @@ mod tests {
             None,
         );
         assert!(unknown.contains("cdc=unknown"), "got: {unknown}");
+    }
+
+    #[test]
+    fn usb_problem_warning_recommends_root_port_for_hub_node() {
+        let devices = vec![fbuild_serial::ports::UsbProblemDevice {
+            instance_id: r"USB\VID_0000&PID_0002\failure".to_string(),
+            problem_code: 43,
+            friendly_name: Some(
+                "Unknown USB Device (Device Descriptor Request Failed)".to_string(),
+            ),
+            location: Some("Port_#0001.Hub_#0011".to_string()),
+            behind_external_hub: Some(true),
+        }];
+        let warning = format_usb_problem_warning(&devices);
+        assert!(warning.contains("problem code 43"));
+        assert!(warning.contains("behind an external USB hub"));
+        assert!(warning.contains("Port_#0001.Hub_#0011"));
+        assert!(warning.contains("connect platform USB devices directly"));
+        assert!(warning.contains("cannot associate"));
+    }
+
+    #[test]
+    fn usb_problem_warning_does_not_overclaim_direct_root_node() {
+        let devices = vec![fbuild_serial::ports::UsbProblemDevice {
+            instance_id: r"USB\VID_0000&PID_0002\failure".to_string(),
+            problem_code: 43,
+            friendly_name: None,
+            location: Some("Port_#0014.Hub_#0001".to_string()),
+            behind_external_hub: Some(false),
+        }];
+        let warning = format_usb_problem_warning(&devices);
+        assert!(warning.contains("Unknown USB device"));
+        assert!(warning.contains("on a direct root USB port"));
+        assert!(!warning.contains("connect platform USB devices directly"));
     }
 
     #[test]
