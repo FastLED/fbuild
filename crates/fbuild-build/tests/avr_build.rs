@@ -125,6 +125,7 @@ async fn build_uno_minimal() {
         src_dir: None,
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
+        clean_all: false,
         watch_set_cache: None,
         bloat_analysis: false,
     };
