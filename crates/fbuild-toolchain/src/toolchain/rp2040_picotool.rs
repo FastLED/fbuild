@@ -67,8 +67,9 @@ impl Rp2040Picotool {
         let executable = find_picotool_root(install_dir).join(picotool_name());
         if !executable.is_file() {
             return Err(fbuild_core::FbuildError::PackageError(format!(
-                "managed picotool executable not found at {}",
-                executable.display()
+                "managed picotool executable not found at {}; managed picotool assets exist for {} (the windows asset is x86_64 and is also what Windows ARM64 receives, relying on x64 emulation) — other host platforms are unsupported",
+                executable.display(),
+                supported_hosts()
             )));
         }
         Ok(())
@@ -137,6 +138,16 @@ fn all_platform_packages() -> [(&'static str, PlatformPackage); 5] {
             },
         ),
     ]
+}
+
+/// Comma-separated host keys with a pinned picotool asset; kept derived from
+/// `all_platform_packages` so failure messages never drift from the table.
+fn supported_hosts() -> String {
+    all_platform_packages()
+        .iter()
+        .map(|(key, _)| *key)
+        .collect::<Vec<_>>()
+        .join(", ")
 }
 
 fn platform_package() -> PlatformPackage {
@@ -208,5 +219,18 @@ mod tests {
         let temp = tempfile::tempdir().unwrap();
         let package = Rp2040Picotool::with_cache_root(temp.path(), &temp.path().join("cache"));
         assert!(!package.is_installed());
+    }
+
+    #[test]
+    fn validate_failure_names_the_supported_hosts() {
+        let temp = tempfile::tempdir().unwrap();
+        let error = Rp2040Picotool::validate(temp.path()).unwrap_err();
+        let message = error.to_string();
+        assert!(message.contains("windows"));
+        assert!(message.contains("macos-arm64"));
+        assert!(message.contains("macos-x86_64"));
+        assert!(message.contains("linux-aarch64"));
+        assert!(message.contains("linux-x86_64"));
+        assert!(message.contains("Windows ARM64"));
     }
 }

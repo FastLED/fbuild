@@ -13,8 +13,7 @@ fn rom_block_devices(by_id: &Path) -> Vec<PathBuf> {
         .filter_map(|entry| {
             let name = entry.file_name();
             let name = name.to_string_lossy();
-            (name.starts_with("usb-RPI_RP2") && name.ends_with("-part1"))
-                .then(|| entry.path())
+            (name.starts_with("usb-RPI_RP2") && name.ends_with("-part1")).then(|| entry.path())
         })
         .collect();
     devices.sort();

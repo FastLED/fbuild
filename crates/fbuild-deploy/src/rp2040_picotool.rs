@@ -21,13 +21,9 @@ pub(super) async fn load_with_managed_picotool(
     let executable = package.executable();
     let args = load_args(&executable, artifact);
     let args_ref: Vec<&str> = args.iter().map(String::as_str).collect();
-    let output = fbuild_core::subprocess::run_command(
-        &args_ref,
-        None,
-        None,
-        Some(Duration::from_secs(30)),
-    )
-    .await?;
+    let output =
+        fbuild_core::subprocess::run_command(&args_ref, None, None, Some(Duration::from_secs(30)))
+            .await?;
     if !output.success() {
         return Err(FbuildError::DeployFailed(format_failure(
             mass_storage_error,
@@ -73,10 +69,7 @@ mod tests {
     #[test]
     fn load_uses_managed_executable_and_reboots_after_success() {
         let args = load_args(Path::new("managed/picotool"), Path::new("firmware.uf2"));
-        assert_eq!(
-            args,
-            ["managed/picotool", "load", "firmware.uf2", "-x"]
-        );
+        assert_eq!(args, ["managed/picotool", "load", "firmware.uf2", "-x"]);
     }
 
     #[test]

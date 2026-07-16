@@ -22,9 +22,7 @@ use serialport::{SerialPortInfo, SerialPortType};
 #[cfg(test)]
 pub const PJRC_VID: u16 = 0x16C0;
 
-fn profile_is_teensy_runtime(
-    profile: &fbuild_core::usb::profiles::UsbTransportProfile,
-) -> bool {
+fn profile_is_teensy_runtime(profile: &fbuild_core::usb::profiles::UsbTransportProfile) -> bool {
     use fbuild_core::usb::profiles::{UsbDeviceRole, UsbPurpose};
 
     profile.purpose == UsbPurpose::Runtime
@@ -161,8 +159,7 @@ mod tests {
     #[test]
     fn teensy_runtime_classification_uses_profile_semantics() {
         use fbuild_core::usb::profiles::{
-            UsbDeviceRole, UsbIdentityMatch, UsbProfileProvenance, UsbPurpose,
-            UsbTransportProfile,
+            UsbDeviceRole, UsbIdentityMatch, UsbProfileProvenance, UsbPurpose, UsbTransportProfile,
         };
         let profile = UsbTransportProfile {
             identity_match: UsbIdentityMatch {

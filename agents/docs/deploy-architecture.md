@@ -87,6 +87,27 @@ The follow-up issues track the full polymorphic version:
 - **FastLED/fbuild#693** — USB-level bootloader re-enumeration
   detection (complement to #688).
 
+## RP2040/RP2350 deploy tunables
+
+The stock BOOTSEL path (`crates/fbuild-deploy/src/rp2040.rs`) has
+three stage budgets that foreign hosts — first-plug driver installs,
+deep hub chains — may legitimately exceed (FastLED/fbuild#1082).
+Each env var accepts integer seconds in 1..=600; anything else logs
+a warning and keeps the default:
+
+| Env var | Default | Governs |
+|---|---|---|
+| `FBUILD_RP2040_BOOTLOADER_TIMEOUT_SECS` | 10 s | BOOTSEL volume discovery after the 1200-bps touch (and re-discovery between transfer retries) |
+| `FBUILD_RP2040_UF2_WRITE_TIMEOUT_SECS` | 60 s | Per-attempt watchdog on the `NEW.UF2` write; a timed-out write feeds the normal retry/picotool-fallback path |
+| `FBUILD_RP2040_POST_DEPLOY_TIMEOUT_SECS` | 15 s | Eject watch after the write, and the runtime-CDC reappearance wait |
+
+Outcome note: once the eject watch (or a PICOBOOT load through the
+managed picotool fallback) has confirmed the ROM accepted the image,
+a quiet runtime-CDC window no longer fails the deploy — it reports
+**success with no port** ("flashed, CDC unconfirmed"), so CI does not
+re-flash a healthy board whose first-plug driver install outlived the
+window. A genuine port-enumeration error still fails.
+
 ## Worked example — "agent ports a new RP2350 board"
 
 The right sequence today:
