@@ -365,6 +365,7 @@ fn uno_build_params(project_dir: &Path, build_dir: PathBuf, clean: bool) -> Buil
         project_dir: project_dir.to_path_buf(),
         env_name: "uno".to_string(),
         clean,
+        clean_all: false,
         profile: BuildProfile::Release,
         build_dir,
         verbose: false,

@@ -254,7 +254,10 @@ mod tests {
 
         let hydrated = tmp.path().join("hydrated");
         assert_eq!(cache.hydrate(&hydrated).unwrap(), 1);
-        assert_eq!(std::fs::read(hydrated.join("libwifi.a")).unwrap(), b"archive");
+        assert_eq!(
+            std::fs::read(hydrated.join("libwifi.a")).unwrap(),
+            b"archive"
+        );
         assert!(cache.has_failed("matter"));
         cache.remove().unwrap();
         assert!(!cache.has_failed("matter"));

@@ -154,7 +154,7 @@ owo-colors = "4"
 running-process = { version = "4.5.7", default-features = false, features = ["client-async"] }
 
 [profile.dev]
-debug = 0
+debug = "line-tables-only"
 # Cargo's dev defaults: opt-level = 0 for first-party (fast compile +
 # fast link), incremental = true (cargo + linker keep state across
 # builds), codegen-units = 256 (parallel compile units). We accept

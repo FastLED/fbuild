@@ -1,8 +1,8 @@
 """Local source-install build driver for fbuild.
 
 `pip install ~/dev/fbuild` (or any `pip install .` from the repo root) goes
-through this file because `pyproject.toml` declares the setuptools build
-backend. The plain backend would ship only the `python/fbuild` Python
+through this file because soldr delegates the PEP 517 hooks to setuptools.
+The plain backend would ship only the `python/fbuild` Python
 package — no working `fbuild` command — because the actual CLI is a Rust
 crate (`fbuild-cli`) that lives in the cargo workspace under `crates/`.
 
@@ -267,10 +267,22 @@ def _use_release_profile() -> bool:
     3 via `[profile.dev.package."*"]`, only our own crates compile
     unoptimized). Set `FBUILD_BUILD_RELEASE=1` to opt into a release
     build when you actually want a fast binary (CI, packaging, perf
-    tests). PEP 517 callers can use `--config-settings fbuild-profile=release`;
-    `build_backend.py` translates that setting to this environment variable.
+    tests). PEP 517 callers can use `--config-settings profile=release`;
+    soldr translates that setting to the delegated build environment.
     """
-    return os.environ.get("FBUILD_BUILD_RELEASE", "").lower() in ("1", "true", "yes")
+    explicit_release = os.environ.get("FBUILD_BUILD_RELEASE")
+    if explicit_release is not None:
+        return explicit_release.lower() in ("1", "true", "yes")
+
+    soldr_profile = os.environ.get("SOLDR_PEP517_PROFILE", "").strip().lower()
+    if soldr_profile in ("", "dev", "debug"):
+        return False
+    if soldr_profile == "release":
+        return True
+    raise ValueError(
+        "fbuild source installs support soldr profiles 'dev'/'debug' and 'release'; "
+        f"got {soldr_profile!r}"
+    )
 
 
 def _profile_subdir() -> str:

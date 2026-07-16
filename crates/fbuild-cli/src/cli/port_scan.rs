@@ -57,7 +57,10 @@ fn run_scan(offline: bool) -> Result<()> {
     if !problem_devices.is_empty() {
         // This is actionable final command output. Keep it visible under the
         // default tracing filter instead of requiring users to set RUST_LOG.
-        output::diagnostic(format!("warning: {}", format_usb_problem_warning(&problem_devices)));
+        output::diagnostic(format!(
+            "warning: {}",
+            format_usb_problem_warning(&problem_devices)
+        ));
     }
     Ok(())
 }
