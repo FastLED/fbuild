@@ -38,6 +38,7 @@ pub async fn run_build(
     project_dir: String,
     environment: Option<String>,
     clean: bool,
+    clean_all: bool,
     verbose: bool,
     jobs: Option<usize>,
     quick: bool,
@@ -98,7 +99,8 @@ pub async fn run_build(
     let req = BuildRequest {
         project_dir: project_dir.clone(),
         environment,
-        clean_build: clean,
+        clean_build: clean || clean_all,
+        clean_all,
         verbose,
         jobs,
         profile,

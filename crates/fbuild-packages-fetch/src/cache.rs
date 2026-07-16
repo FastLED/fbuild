@@ -8,6 +8,7 @@
 //!   platforms/{stem}/{hash}/{version}/
 //!   libraries/{stem}/{hash}/{version}/
 //!   core/{hash}/
+//!   framework-libs/{hash}/
 //!
 //! <project>/.fbuild/build/{env}/{profile}/
 //!   core/   (compiled core .o files)
@@ -66,6 +67,13 @@ impl Cache {
 
     pub fn core_artifacts_dir(&self) -> PathBuf {
         self.cache_root.join("core")
+    }
+
+    /// Reusable framework-supplied library archives, keyed by their complete
+    /// compilation input signature. These are deliberately separate from
+    /// project `lib/` outputs: a normal clean removes only project artifacts.
+    pub fn framework_library_artifacts_dir(&self) -> PathBuf {
+        self.cache_root.join("framework-libs")
     }
 
     // --- Package path resolution (stem/hash) ---
@@ -140,6 +148,7 @@ impl Cache {
         std::fs::create_dir_all(self.platforms_dir())?;
         std::fs::create_dir_all(self.libraries_dir())?;
         std::fs::create_dir_all(self.core_artifacts_dir())?;
+        std::fs::create_dir_all(self.framework_library_artifacts_dir())?;
         Ok(())
     }
 
@@ -366,6 +375,10 @@ mod tests {
         assert_eq!(cache.platforms_dir(), cache_root.join("platforms"));
         assert_eq!(cache.libraries_dir(), cache_root.join("libraries"));
         assert_eq!(cache.core_artifacts_dir(), cache_root.join("core"));
+        assert_eq!(
+            cache.framework_library_artifacts_dir(),
+            cache_root.join("framework-libs")
+        );
         assert!(
             cache
                 .get_package_path("https://example.test/pkg.tar.gz", "1.0.0")

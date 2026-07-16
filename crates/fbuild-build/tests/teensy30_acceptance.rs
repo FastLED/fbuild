@@ -104,6 +104,7 @@ async fn teensy30_analog_output_meets_205_ac2() {
         // in the platformio.ini we just wrote. Same root-cause family
         // as #220 / #221.
         env_name: "teensy30".to_string(),
+        clean_all: false,
         clean: true,
         profile: BuildProfile::Release,
         build_dir,

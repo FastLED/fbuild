@@ -119,6 +119,9 @@ pub struct BuildResult {
 pub struct BuildParams {
     pub project_dir: PathBuf,
     pub env_name: String,
+    /// Remove the matching reusable framework caches before building. Implies
+    /// `clean` at the CLI boundary; normal `clean` only removes project output.
+    pub clean_all: bool,
     pub clean: bool,
     pub profile: BuildProfile,
     pub build_dir: PathBuf,

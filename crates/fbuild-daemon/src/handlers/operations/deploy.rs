@@ -227,7 +227,8 @@ pub async fn deploy(
         let params = fbuild_build::BuildParams {
             project_dir: project_dir.clone(),
             env_name: env_name.clone(),
-            clean: req.clean_build,
+            clean_all: req.clean_all,
+            clean: req.clean_build || req.clean_all,
             profile: fbuild_core::BuildProfile::Release,
             build_dir,
             verbose: req.verbose,

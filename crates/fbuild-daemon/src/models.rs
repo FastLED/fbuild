@@ -16,6 +16,9 @@ pub struct BuildRequest {
     pub environment: Option<String>,
     #[serde(default, alias = "clean")]
     pub clean_build: bool,
+    /// Remove matching reusable framework caches as well as project output.
+    #[serde(default)]
+    pub clean_all: bool,
     #[serde(default)]
     pub verbose: bool,
     pub jobs: Option<usize>,
@@ -89,6 +92,9 @@ pub struct DeployRequest {
     pub skip_build: bool,
     #[serde(default, alias = "clean")]
     pub clean_build: bool,
+    /// Remove matching reusable framework caches as well as project output.
+    #[serde(default)]
+    pub clean_all: bool,
     #[serde(default)]
     pub verbose: bool,
     pub monitor_timeout: Option<f64>,
@@ -534,9 +540,10 @@ mod tests {
 
     #[test]
     fn build_request_clean_build_field() {
-        let json = r#"{"project_dir": "/tmp/p", "clean_build": true}"#;
+        let json = r#"{"project_dir": "/tmp/p", "clean_build": true, "clean_all": true}"#;
         let req: BuildRequest = serde_json::from_str(json).unwrap();
         assert!(req.clean_build);
+        assert!(req.clean_all);
         assert_eq!(req.project_dir, "/tmp/p");
     }
 
@@ -552,6 +559,7 @@ mod tests {
         let json = r#"{"project_dir": "/tmp/p"}"#;
         let req: BuildRequest = serde_json::from_str(json).unwrap();
         assert!(!req.clean_build);
+        assert!(!req.clean_all);
         assert!(!req.verbose);
         assert!(req.environment.is_none());
         assert!(req.jobs.is_none());
@@ -584,6 +592,7 @@ mod tests {
             "monitor_after": true,
             "skip_build": true,
             "clean_build": true,
+            "clean_all": true,
             "verbose": true,
             "monitor_timeout": 30.0,
             "monitor_halt_on_error": "FAIL",
@@ -599,6 +608,7 @@ mod tests {
         assert!(req.monitor_after);
         assert!(req.skip_build);
         assert!(req.clean_build);
+        assert!(req.clean_all);
         assert!(req.verbose);
         assert_eq!(req.monitor_timeout.unwrap(), 30.0);
         assert_eq!(req.monitor_halt_on_error.unwrap(), "FAIL");
@@ -623,6 +633,7 @@ mod tests {
         assert!(!req.monitor_after);
         assert!(!req.skip_build);
         assert!(!req.clean_build);
+        assert!(!req.clean_all);
         assert!(!req.verbose);
         assert!(req.monitor_timeout.is_none());
         assert!(req.monitor_halt_on_error.is_none());

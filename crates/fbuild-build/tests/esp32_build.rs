@@ -80,6 +80,7 @@ void loop() {
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
         env_name: "esp32dev".to_string(),
+        clean_all: false,
         clean: true,
         profile: BuildProfile::Release,
         build_dir,
@@ -170,6 +171,7 @@ void loop() {
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
         env_name: "esp32c6".to_string(),
+        clean_all: false,
         clean: true,
         profile: BuildProfile::Release,
         build_dir,
@@ -253,6 +255,7 @@ void loop() {
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
         env_name: "esp32c3".to_string(),
+        clean_all: false,
         clean: true,
         profile: BuildProfile::Release,
         build_dir,
@@ -337,6 +340,7 @@ void loop() {
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
         env_name: "esp32s3".to_string(),
+        clean_all: false,
         clean: true,
         profile: BuildProfile::Release,
         build_dir,
@@ -411,6 +415,7 @@ async fn build_esp32s3_fixture() {
     let params = BuildParams {
         project_dir: project_dir.clone(),
         env_name: "esp32s3".to_string(),
+        clean_all: false,
         clean: true,
         profile: BuildProfile::Release,
         build_dir: build_dir.clone(),
@@ -477,6 +482,7 @@ async fn build_nightdriverstrip_demo() {
     let params = BuildParams {
         project_dir: project_dir.clone(),
         env_name: "demo".to_string(),
+        clean_all: false,
         clean: true,
         profile: BuildProfile::Release,
         build_dir,
@@ -569,6 +575,7 @@ async fn incremental_build_at(project_dir: &std::path::Path, env_name: &str) {
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
         env_name: env_name.to_string(),
+        clean_all: false,
         clean: false,
         profile: BuildProfile::Release,
         build_dir: fbuild_paths::BuildLayout::new(
@@ -666,6 +673,7 @@ async fn incremental_nightdriverstrip_one_file_changed() {
     let params = BuildParams {
         project_dir: project_dir.clone(),
         env_name: env_name.to_string(),
+        clean_all: false,
         clean: false,
         profile: BuildProfile::Release,
         build_dir: fbuild_paths::BuildLayout::new(

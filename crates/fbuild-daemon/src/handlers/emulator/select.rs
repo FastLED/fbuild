@@ -298,6 +298,7 @@ pub async fn test_emu(
         let params = fbuild_build::BuildParams {
             project_dir: project_dir.clone(),
             env_name: env_name.clone(),
+            clean_all: false,
             clean: false,
             profile: fbuild_core::BuildProfile::Release,
             build_dir,

@@ -29,6 +29,7 @@ mod embed;
 mod embed_stage;
 mod fingerprint;
 mod framework_libs;
+mod framework_library_cache;
 mod helpers;
 mod local_libs;
 mod packages;

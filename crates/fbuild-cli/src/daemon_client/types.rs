@@ -8,6 +8,8 @@ pub struct BuildRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub environment: Option<String>,
     pub clean_build: bool,
+    #[serde(default)]
+    pub clean_all: bool,
     pub verbose: bool,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub jobs: Option<usize>,
@@ -63,6 +65,8 @@ pub struct DeployRequest {
     pub monitor_after: bool,
     pub skip_build: bool,
     pub clean_build: bool,
+    #[serde(default)]
+    pub clean_all: bool,
     pub verbose: bool,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub monitor_timeout: Option<f64>,

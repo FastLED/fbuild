@@ -110,6 +110,7 @@ async fn build_uno_minimal() {
     let params = BuildParams {
         project_dir: project_dir.clone(),
         env_name: "uno".to_string(),
+        clean_all: false,
         clean: true,
         profile: BuildProfile::Release,
         build_dir,
@@ -206,6 +207,7 @@ async fn compare_with_python_output() {
     let params = BuildParams {
         project_dir: project_dir.clone(),
         env_name: "uno".to_string(),
+        clean_all: false,
         clean: true,
         profile: BuildProfile::Release,
         build_dir,
@@ -296,6 +298,7 @@ void loop() {
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
         env_name: "uno".to_string(),
+        clean_all: false,
         clean: true,
         profile: BuildProfile::Release,
         build_dir,

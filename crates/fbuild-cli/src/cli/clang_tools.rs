@@ -44,6 +44,7 @@ pub async fn run_iwyu(
             project_dir.clone(),
             environment.clone(),
             false,
+            false,
             verbose,
             None,
             false,
@@ -514,6 +515,7 @@ pub async fn run_clang_tool(
         project_dir.clone(),
         environment.clone(),
         false, // clean
+        false, // clean_all
         verbose,
         None,  // jobs
         false, // quick
