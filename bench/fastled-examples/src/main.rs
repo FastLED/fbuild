@@ -46,6 +46,7 @@
 //!
 //! Refs: #205 Phase 7 (AC#5), #218.
 
+use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 use std::time::Instant;
 
@@ -211,10 +212,12 @@ fn measure_example(
     let kv_dir = tempfile::tempdir_in(fbuild_paths::temp_subdir("fastled-examples-bench"))?;
     let kv = FileKvStore::open(kv_dir.path().join("kv"))?;
 
+    let preprocessor_defines = HashMap::new();
     let inputs = CacheKeyInputs {
         toolchain_triple: "teensy-arm-none-eabi",
         framework_install_path: framework_root,
         framework_version: "bench-fastled-examples-v1",
+        preprocessor_defines: &preprocessor_defines,
     };
 
     let (cold, cold_ms) = timed(|| resolve_cached(&seeds, &search_paths, libraries, &inputs, &kv))?;
