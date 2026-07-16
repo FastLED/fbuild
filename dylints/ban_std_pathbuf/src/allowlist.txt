@@ -200,6 +200,7 @@ crates/fbuild-toolchain/src/toolchain/esp32_metadata.rs
 crates/fbuild-toolchain/src/toolchain/esp8266.rs
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs
 crates/fbuild-toolchain/src/toolchain/riscv.rs
+crates/fbuild-toolchain/src/toolchain/rp2040_picotool.rs
 crates/fbuild-toolchain/src/toolchain/rp2040_pqt.rs
 crates/fbuild-toolchain/src/toolchain/teensy_arm.rs
 crates/fbuild-packages/tests/disk_cache_schema_migration.rs
