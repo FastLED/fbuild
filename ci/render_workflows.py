@@ -21,6 +21,7 @@ match the SOT. See FastLED/fbuild#835.
 from __future__ import annotations
 
 import argparse
+import glob
 import json
 import sys
 from pathlib import Path
@@ -47,6 +48,22 @@ def load_common_paths() -> list[str]:
 
 def load_sot() -> dict:
     return json.loads(SOT_PATH.read_text(encoding="utf-8"))
+
+
+def validate_source_paths(sot: dict, common_paths: list[str]) -> None:
+    """Reject stale source-of-truth paths before generating workflows."""
+    paths = list(common_paths)
+    for family in sot["families"].values():
+        paths.extend(family["crate_paths"])
+
+    dead: list[str] = []
+    for pattern in paths:
+        check_pattern = pattern[:-3] if pattern.endswith("/**") else pattern
+        if not glob.glob(str(REPO / check_pattern), recursive=True):
+            dead.append(pattern)
+    if dead:
+        details = "\n".join(f"  - {path}" for path in dead)
+        raise ValueError(f"SOT contains paths that match nothing:\n{details}")
 
 
 def render_paths_for_board(board: dict, families: dict, common_paths: list[str]) -> list[str]:
@@ -226,6 +243,11 @@ def main() -> int:
     families = sot["families"]
     boards = sot["boards"]
     common_paths = load_common_paths()
+    try:
+        validate_source_paths(sot, common_paths)
+    except ValueError as exc:
+        print(str(exc), file=sys.stderr)
+        return 1
 
     sot_workflows = {b["workflow"] for b in boards}
     on_disk = {p.name for p in WORKFLOWS_DIR.glob("build-*.yml")}
