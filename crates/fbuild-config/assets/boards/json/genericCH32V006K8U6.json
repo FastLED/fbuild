@@ -8,7 +8,7 @@
     },
     "clock_source": "hsi+pll",
     "core": "openwch",
-    "extra_flags": "-DCH32V006K8 -DCH32VM0X -DCH32VM0x -DCH32V006",
+    "extra_flags": "-DCH32V006K8 -DCH32VM00X -DCH32VM00x -DCH32V006",
     "f_cpu": "48000000L",
     "mabi": "ilp32e",
     "march": "rv32ec_zicsr",
