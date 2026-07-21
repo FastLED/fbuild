@@ -38,6 +38,13 @@ impl BuildOrchestrator for Ch32vOrchestrator {
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
         let mut ctx = pipeline::BuildContext::new(params).await?;
+        let framework_name = ctx
+            .config
+            .get_env_config(&params.env_name)
+            .ok()
+            .and_then(|env| env.get("framework"))
+            .map(String::as_str);
+        validate_ch32v_framework(framework_name)?;
 
         // 3. Ensure RISC-V GCC toolchain
         let toolchain = fbuild_packages::toolchain::RiscvToolchain::new(&params.project_dir);
@@ -243,6 +250,17 @@ pub fn create() -> Box<dyn BuildOrchestrator> {
     Box::new(Ch32vOrchestrator)
 }
 
+/// Only the Arduino framework is implemented for CH32V.
+fn validate_ch32v_framework(framework: Option<&str>) -> fbuild_core::Result<()> {
+    match framework.map(str::trim) {
+        None | Some("") | Some("arduino") => Ok(()),
+        Some(other) => Err(fbuild_core::FbuildError::ConfigError(format!(
+            "ch32v: framework = {other} is not supported yet; only `framework = arduino` "
+                "builds today (FastLED/fbuild#1108)"
+        ))),
+    }
+}
+
 /// Recursively add subdirectories that contain .h files as include paths.
 fn discover_header_subdirs(dir: &Path, include_dirs: &mut Vec<PathBuf>) {
     if let Ok(entries) = std::fs::read_dir(dir) {
@@ -407,6 +425,15 @@ mod tests {
         )
         .unwrap();
         assert!(!is_ch32v_project(tmp.path(), "uno"));
+    }
+
+    #[test]
+    fn test_validate_ch32v_framework() {
+        assert!(validate_ch32v_framework(None).is_ok());
+        assert!(validate_ch32v_framework(Some("arduino")).is_ok());
+        assert!(validate_ch32v_framework(Some(" arduino ")).is_ok());
+        let error = validate_ch32v_framework(Some("noneos-sdk")).unwrap_err();
+        assert!(error.to_string().contains("1108"));
     }
 
     #[test]
