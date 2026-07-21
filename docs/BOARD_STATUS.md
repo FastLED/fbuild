@@ -39,11 +39,14 @@ between files.
 
 ### CH32V (RISC-V)
 [![Build CH32V003](https://github.com/fastled/fbuild/actions/workflows/build-ch32v003.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-ch32v003.yml)
+[![Build CH32V006](https://github.com/fastled/fbuild/actions/workflows/build-ch32v006.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-ch32v006.yml)
 [![Build CH32V103](https://github.com/fastled/fbuild/actions/workflows/build-ch32v103.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-ch32v103.yml)
 [![Build CH32V203](https://github.com/fastled/fbuild/actions/workflows/build-ch32v203.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-ch32v203.yml)
 [![Build CH32V208](https://github.com/fastled/fbuild/actions/workflows/build-ch32v208.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-ch32v208.yml)
 [![Build CH32V303](https://github.com/fastled/fbuild/actions/workflows/build-ch32v303.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-ch32v303.yml)
 [![Build CH32V307](https://github.com/fastled/fbuild/actions/workflows/build-ch32v307.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-ch32v307.yml)
+[![Build CH32L103](https://github.com/fastled/fbuild/actions/workflows/build-ch32l103.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-ch32l103.yml)
+[![Build CH32X035](https://github.com/fastled/fbuild/actions/workflows/build-ch32x035.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-ch32x035.yml)
 
 ### CH32X (RISC-V, USB PD)
 [![Build CH32X035](https://github.com/fastled/fbuild/actions/workflows/build-ch32x035.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-ch32x035.yml)
@@ -206,8 +209,8 @@ The ESP32 is Espressif Systems' flagship family of wireless SoCs and the dominan
 
 </details>
 
-**CH32V (RISC-V) Platform** - Supported
-- **CH32V003** - Supported
+**CH32V (RISC-V) Platform** - Supported (build only — flashing tracked in #1105)
+- **CH32V003**, **CH32V006**, **CH32V103**, **CH32V203**, **CH32V208**, **CH32V303**, **CH32V307**, **CH32L103**, **CH32X035** - Build only
 
 <details>
 <summary><strong>About the CH32V Family</strong></summary>
