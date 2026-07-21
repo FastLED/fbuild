@@ -122,6 +122,8 @@ pub struct BuildParams {
     /// Remove the matching reusable framework caches before building. Implies
     /// `clean` at the CLI boundary; normal `clean` only removes project output.
     pub clean_all: bool,
+    /// When true, remove outputs/cache entries without compiling or linking.
+    pub clean_only: bool,
     pub clean: bool,
     pub profile: BuildProfile,
     pub build_dir: PathBuf,

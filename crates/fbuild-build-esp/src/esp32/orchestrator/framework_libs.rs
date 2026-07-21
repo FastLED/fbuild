@@ -110,6 +110,9 @@ pub(super) async fn compile_framework_builtin_libs(
             }
         }
     }
+    if params.clean_only {
+        return Ok(());
+    }
     match framework_cache.hydrate(&fw_libs_build_dir) {
         Ok(copied) if copied > 0 => tracing::info!(
             "hydrated {} cached ESP32 framework library archives",

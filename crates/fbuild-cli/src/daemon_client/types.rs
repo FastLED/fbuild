@@ -10,6 +10,8 @@ pub struct BuildRequest {
     pub clean_build: bool,
     #[serde(default)]
     pub clean_all: bool,
+    #[serde(default)]
+    pub clean_only: bool,
     pub verbose: bool,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub jobs: Option<usize>,

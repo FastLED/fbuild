@@ -103,6 +103,7 @@ pub(super) async fn execute_tool(
                 environment,
                 clean_build: clean,
                 clean_all: false,
+                clean_only: false,
                 verbose,
                 jobs,
                 profile: None,

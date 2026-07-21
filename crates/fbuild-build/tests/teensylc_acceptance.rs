@@ -57,6 +57,7 @@ async fn teensylc_blink_meets_205_acceptance_criteria() {
         // Same root-cause family as #220 / #221 in measure_baseline_205.py.
         env_name: "teensylc".to_string(),
         clean_all: false,
+        clean_only: false,
         clean: true,
         profile: BuildProfile::Release,
         build_dir: build_dir.path().join("teensylc").join("release"),

@@ -19,6 +19,9 @@ pub struct BuildRequest {
     /// Remove matching reusable framework caches as well as project output.
     #[serde(default)]
     pub clean_all: bool,
+    /// Remove outputs/cache entries without compiling or linking.
+    #[serde(default)]
+    pub clean_only: bool,
     #[serde(default)]
     pub verbose: bool,
     pub jobs: Option<usize>,
@@ -560,6 +563,7 @@ mod tests {
         let req: BuildRequest = serde_json::from_str(json).unwrap();
         assert!(!req.clean_build);
         assert!(!req.clean_all);
+        assert!(!req.clean_only);
         assert!(!req.verbose);
         assert!(req.environment.is_none());
         assert!(req.jobs.is_none());

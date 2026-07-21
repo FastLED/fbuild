@@ -68,6 +68,7 @@ async fn lpc845brk_propagates_build_flags_to_library_compile_587() {
         project_dir: fixture.clone(),
         env_name: "lpc845brk".to_string(),
         clean_all: false,
+        clean_only: false,
         clean: true,
         profile: BuildProfile::Release,
         build_dir,

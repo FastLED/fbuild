@@ -12,6 +12,7 @@ help text).
 | Command | Use this when | See more |
 |---|---|---|
 | `fbuild build` | You want to compile firmware for the env specified by `-e <env>` and `<project_dir>`. The default path; cache via daemon. | `fbuild help build` |
+| `fbuild clean sketch|all` | You want to remove one environment/profile's project outputs, optionally including its exact reusable framework-cache entries, without compiling or deploying. | `fbuild help clean`, FastLED/fbuild#1089 |
 | `fbuild deploy` | You want to build AND flash to a connected board. Pass `--monitor` to attach the monitor after flash. | `fbuild help deploy` |
 | `fbuild monitor` | You want to attach the serial monitor to an already-running board without re-flashing. | `fbuild help monitor` |
 | `fbuild reset` | You want to reset the device without re-flashing. | `fbuild help reset` |

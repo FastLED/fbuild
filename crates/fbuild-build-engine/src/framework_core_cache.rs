@@ -92,6 +92,18 @@ impl FrameworkCoreCache {
         std::fs::create_dir_all(&self.path)?;
         Ok(copy_artifacts(core_build_dir, &self.path, true, true)?.stats)
     }
+
+    /// Remove only this content-addressed cache entry.
+    ///
+    /// The parent cache root may contain entries for other projects,
+    /// environments, profiles, or compiler signatures and must remain intact.
+    pub fn remove(&self) -> std::io::Result<()> {
+        match std::fs::remove_dir_all(&self.path) {
+            Ok(()) => Ok(()),
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok(()),
+            Err(error) => Err(error),
+        }
+    }
 }
 
 fn core_cache_key(
@@ -536,5 +548,53 @@ mod tests {
         assert_eq!(outcome.stats.copied, 0);
         assert_eq!(outcome.stats.skipped, 1);
         assert_eq!(std::fs::read(dst.join("main.cpp.o")).unwrap(), b"project");
+    }
+
+    #[test]
+    fn remove_deletes_only_the_selected_cache_entry() {
+        let tmp = tempfile::tempdir().unwrap();
+        let project = tmp.path().join("project");
+        std::fs::create_dir_all(&project).unwrap();
+        let compiler = FakeCompiler::new();
+        let flags = LanguageExtraFlags {
+            common: Vec::new(),
+            c: Vec::new(),
+            cxx: Vec::new(),
+            asm: Vec::new(),
+        };
+        let source = project.join("src/main.cpp");
+        std::fs::create_dir_all(source.parent().unwrap()).unwrap();
+        std::fs::write(&source, b"same").unwrap();
+        let selected = FrameworkCoreCache::new(
+            &project,
+            "avr",
+            "uno",
+            BuildProfile::Release,
+            &compiler,
+            std::slice::from_ref(&source),
+            &flags,
+        );
+        let sibling = FrameworkCoreCache::new(
+            &project,
+            "avr",
+            "mega",
+            BuildProfile::Release,
+            &compiler,
+            std::slice::from_ref(&source),
+            &flags,
+        );
+        std::fs::create_dir_all(selected.path()).unwrap();
+        std::fs::create_dir_all(sibling.path()).unwrap();
+        std::fs::write(selected.path().join("marker"), b"selected").unwrap();
+        std::fs::write(sibling.path().join("marker"), b"sibling").unwrap();
+
+        selected.remove().unwrap();
+
+        assert!(!selected.path().exists());
+        assert_eq!(
+            std::fs::read(sibling.path().join("marker")).unwrap(),
+            b"sibling"
+        );
+        selected.remove().unwrap();
     }
 }

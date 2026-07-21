@@ -356,6 +356,7 @@ async fn build_one_sketch(inputs: SketchBuildInputs) -> SketchResult {
         project_dir: sketch.clone(),
         env_name: env_name.clone(),
         clean_all: false,
+        clean_only: false,
         clean: false,
         profile,
         build_dir,

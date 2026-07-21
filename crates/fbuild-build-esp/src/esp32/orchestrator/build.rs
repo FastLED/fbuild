@@ -598,7 +598,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
         }
 
         // Compile core + variant sources in parallel
-        let build_log_mutex = std::sync::Mutex::new(ctx.build_log);
         // `--clean` resets only the project build directory. Framework core
         // objects are content-addressed global artifacts, so hydrate them even
         // for a clean build; `--clean-all` is the explicit cache eviction path.
@@ -613,7 +612,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         );
         if params.clean_all {
             let _g = perf.phase("core-cache-remove");
-            match std::fs::remove_dir_all(core_cache.path()) {
+            match core_cache.remove() {
                 Ok(()) => tracing::info!(
                     "removed framework core cache {}",
                     core_cache.path().display()
@@ -626,6 +625,27 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 ),
             }
         }
+        if params.clean_only {
+            if params.build_dir.exists() {
+                std::fs::remove_dir_all(&params.build_dir)?;
+            }
+            return Ok(BuildResult {
+                success: true,
+                firmware_path: None,
+                elf_path: None,
+                size_info: None,
+                symbol_map: None,
+                build_time_secs: start.elapsed().as_secs_f64(),
+                message: format!(
+                    "cleaned {} ({})",
+                    params.env_name,
+                    params.profile.as_dir_name()
+                ),
+                compile_database_path: None,
+                build_log: ctx.build_log,
+            });
+        }
+        let build_log_mutex = std::sync::Mutex::new(ctx.build_log);
         {
             let _g = perf.phase("core-cache-hydrate");
             match core_cache.hydrate(core_build_dir, &compiler, &all_core_sources, &user_overlay) {

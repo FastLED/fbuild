@@ -12,6 +12,7 @@ use super::build::run_build;
 use super::cache::run_cache;
 use super::clang_tools::{run_clang_tool, run_iwyu};
 use super::clangd_config::run_clangd_config;
+use super::clean::run_clean;
 use super::compile_many::{
     CompileManyArgs, build_ci_pio_env, normalize_ci_sketches, run_compile_many,
 };
@@ -288,6 +289,16 @@ pub async fn async_main() {
                 )
                 .await
             }
+        }
+        Some(Commands::Clean {
+            scope,
+            project_dir,
+            environment,
+            quick,
+            release,
+        }) => {
+            let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
+            run_clean(project_dir, environment, scope, quick, release).await
         }
         Some(Commands::Monitor {
             project_dir,

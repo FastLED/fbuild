@@ -95,22 +95,54 @@ pub async fn run_sequential_build_with_libs(
     // libs → link), but each phase fans out file compilation across `jobs`
     // threads via `compile_sources_parallel`.
     let jobs = crate::parallel::effective_jobs(params.jobs);
+    let core_cache = crate::framework_core_cache::FrameworkCoreCache::new(
+        &params.project_dir,
+        platform_label,
+        &params.env_name,
+        params.profile,
+        compiler,
+        &core_and_variant,
+        &user_overlay,
+    );
+    if params.clean_all {
+        let _g = perf.phase("core-cache-remove");
+        match core_cache.remove() {
+            Ok(()) => tracing::info!(
+                "removed framework core cache key={} at {}",
+                core_cache.key(),
+                core_cache.path().display()
+            ),
+            Err(error) => tracing::warn!(
+                "failed to remove framework core cache key={} at {}: {}",
+                core_cache.key(),
+                core_cache.path().display(),
+                error
+            ),
+        }
+    }
+    if params.clean_only {
+        if params.build_dir.exists() {
+            std::fs::remove_dir_all(&params.build_dir)?;
+        }
+        return Ok(BuildResult {
+            success: true,
+            firmware_path: None,
+            elf_path: None,
+            size_info: None,
+            symbol_map: None,
+            build_time_secs: start.elapsed().as_secs_f64(),
+            message: format!(
+                "cleaned {} ({})",
+                params.env_name,
+                params.profile.as_dir_name()
+            ),
+            compile_database_path: None,
+            build_log: ctx.build_log,
+        });
+    }
     let build_log_mutex = std::sync::Mutex::new(ctx.build_log);
-
-    let core_cache = if params.clean {
-        None
-    } else {
-        Some(crate::framework_core_cache::FrameworkCoreCache::new(
-            &params.project_dir,
-            platform_label,
-            &params.env_name,
-            params.profile,
-            compiler,
-            &core_and_variant,
-            &user_overlay,
-        ))
-    };
-    if let Some(cache) = core_cache.as_ref() {
+    {
+        let cache = &core_cache;
         let _g = perf.phase("core-cache-hydrate");
         match cache.hydrate(
             &ctx.core_build_dir,
@@ -165,7 +197,8 @@ pub async fn run_sequential_build_with_libs(
         .await?
     };
     core_objects.extend(variant_objects);
-    if let Some(cache) = core_cache.as_ref() {
+    {
+        let cache = &core_cache;
         let _g = perf.phase("core-cache-store");
         match cache.store(&ctx.core_build_dir) {
             Ok(stats) if stats.copied > 0 => tracing::info!(
