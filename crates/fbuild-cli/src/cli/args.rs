@@ -36,6 +36,13 @@ impl From<CliShrinkMode> for ShrinkMode {
     }
 }
 
+#[derive(ValueEnum, Clone, Copy, Debug, PartialEq, Eq)]
+#[clap(rename_all = "kebab-case")]
+pub enum CleanScope {
+    Sketch,
+    All,
+}
+
 #[derive(Parser)]
 #[command(
     name = "fbuild",
@@ -252,6 +259,19 @@ pub enum Commands {
         /// but the ELF survives. See FastLED/fbuild#594.
         #[arg(long)]
         bloat_analysis: bool,
+    },
+    /// Remove project outputs and optionally reusable framework caches.
+    Clean {
+        /// Cleanup scope: project outputs only, or outputs plus matching caches.
+        #[arg(value_enum)]
+        scope: CleanScope,
+        project_dir: Option<String>,
+        #[arg(short = 'e', long)]
+        environment: Option<String>,
+        #[arg(long, group = "clean_profile")]
+        quick: bool,
+        #[arg(long, group = "clean_profile")]
+        release: bool,
     },
     /// Deploy firmware to device
     Deploy {
@@ -893,6 +913,7 @@ pub fn resolve_project_dir(
 /// Known subcommand names for arg rewriting.
 pub const KNOWN_SUBCOMMANDS: &[&str] = &[
     "build",
+    "clean",
     "deploy",
     "monitor",
     "reset",

@@ -16,6 +16,7 @@ pub mod build;
 pub mod cache;
 pub mod clang_tools;
 pub mod clangd_config;
+pub mod clean;
 pub mod compile_many;
 pub mod daemon_cmd;
 pub mod deploy;

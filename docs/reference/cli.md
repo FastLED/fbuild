@@ -38,6 +38,22 @@ Common options include `--clean`, `--jobs`, `--quick`, `--release`,
 `--platformio`, `--dry-run`, `--target compiledb`, `--symbol-analysis`,
 `--no-timestamp`, `--output-dir`, `--shrink`, and `--no-shrink`.
 
+### `fbuild clean`
+
+Remove project outputs without compiling or deploying. `sketch` removes only
+the selected environment/profile build directory. `all` also removes the exact
+matching reusable framework-cache entries. The operation is coordinated by the
+daemon, so it waits for any build holding the project lock.
+
+```bash
+fbuild clean sketch
+fbuild clean sketch examples/Blink -e uno --quick
+fbuild clean all -e esp32dev --release
+```
+
+The scope is required; `--quick` and `--release` are mutually exclusive and
+default to the release profile.
+
 ### `fbuild deploy`
 
 Build and flash firmware, or deploy an existing build with `--skip-build`.

@@ -37,6 +37,7 @@ fn make_params(project_dir: &Path) -> BuildParams {
         project_dir: project_dir.to_path_buf(),
         env_name: "esp32dev".to_string(),
         clean_all: false,
+        clean_only: false,
         clean: true,
         profile: BuildProfile::Release,
         build_dir,

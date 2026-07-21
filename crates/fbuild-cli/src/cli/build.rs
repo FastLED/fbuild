@@ -101,6 +101,7 @@ pub async fn run_build(
         environment,
         clean_build: clean || clean_all,
         clean_all,
+        clean_only: false,
         verbose,
         jobs,
         profile,

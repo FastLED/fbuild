@@ -299,6 +299,7 @@ pub async fn test_emu(
             project_dir: project_dir.clone(),
             env_name: env_name.clone(),
             clean_all: false,
+            clean_only: false,
             clean: false,
             profile: fbuild_core::BuildProfile::Release,
             build_dir,
