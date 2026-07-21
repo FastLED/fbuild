@@ -21,7 +21,7 @@
     }
   },
   "fcpu": 144000000,
-  "frameworks": ["noneos-sdk", "freertos", "harmony-liteos", "rt-thread", "tencent-os", "ch32v003fun"],
+  "frameworks": ["arduino", "noneos-sdk", "freertos", "harmony-liteos", "rt-thread", "tencent-os", "ch32v003fun"],
   "id": "genericCH32V208WBU6",
   "mcu": "CH32V208WBU6",
   "name": "Generic CH32V208WBU6",
