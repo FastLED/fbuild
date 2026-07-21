@@ -22,6 +22,7 @@ pub struct Ch32vLinker {
     profile: BuildProfile,
     max_flash: Option<u64>,
     max_ram: Option<u64>,
+    memory_defsyms: Vec<String>,
     verbose: bool,
 }
 
@@ -49,8 +50,54 @@ impl Ch32vLinker {
             profile,
             max_flash,
             max_ram,
+            memory_defsyms: Vec::new(),
             verbose,
         }
+    }
+
+    pub fn with_memory_defsyms(mut self, flags: Vec<String>) -> Self {
+        self.memory_defsyms = flags;
+        self
+    }
+
+    fn build_link_args(
+        &self,
+        objects: &[PathBuf],
+        archives: &[PathBuf],
+        elf_path: &Path,
+        map_path: &Path,
+        extra: &LinkExtraArgs,
+    ) -> Vec<String> {
+        let mut args: Vec<String> = vec![self.gcc_path.to_string_lossy().to_string()];
+
+        args.extend(self.mcu_config.linker_flags.iter().cloned());
+        args.extend(self.memory_defsyms.iter().cloned());
+
+        if let Some(profile) = self.mcu_config.get_profile(self.profile.as_dir_name()) {
+            args.extend(profile.link_flags.iter().cloned());
+        }
+        args.extend(extra.flags.iter().cloned());
+
+        args.extend([
+            format!("-T{}", self.linker_script_path.display()),
+            "-o".to_string(),
+            elf_path.to_string_lossy().to_string(),
+        ]);
+        args.push(format!("-Wl,-Map={}", map_path.to_string_lossy()));
+
+        args.extend(
+            objects
+                .iter()
+                .map(|path| path.to_string_lossy().to_string()),
+        );
+        args.extend(
+            archives
+                .iter()
+                .map(|path| path.to_string_lossy().to_string()),
+        );
+        args.extend(self.mcu_config.linker_libs.iter().cloned());
+        args.extend(extra.libs.iter().cloned());
+        args
     }
 }
 
@@ -71,40 +118,8 @@ impl Linker for Ch32vLinker {
         std::fs::create_dir_all(output_dir)?;
         let elf_path = output_dir.join("firmware.elf");
 
-        let mut args: Vec<String> = vec![self.gcc_path.to_string_lossy().to_string()];
-
-        // Linker flags from config
-        args.extend(self.mcu_config.linker_flags.iter().cloned());
-
-        // Profile-specific link flags
-        if let Some(profile) = self.mcu_config.get_profile(self.profile.as_dir_name()) {
-            args.extend(profile.link_flags.iter().cloned());
-        }
-        args.extend(extra.flags.iter().cloned());
-
-        args.extend([
-            format!("-T{}", self.linker_script_path.display()),
-            "-o".to_string(),
-            elf_path.to_string_lossy().to_string(),
-        ]);
-
-        // Always emit a linker map next to firmware.elf for debugging (#305).
         let map_path = output_dir.join("firmware.map");
-        args.push(format!("-Wl,-Map={}", map_path.to_string_lossy()));
-
-        // Sketch objects first
-        for obj in objects {
-            args.push(obj.to_string_lossy().to_string());
-        }
-
-        // Core objects passed directly (not archived) for LTO compatibility
-        for archive in archives {
-            args.push(archive.to_string_lossy().to_string());
-        }
-
-        // Linker libraries from config
-        args.extend(self.mcu_config.linker_libs.iter().cloned());
-        args.extend(extra.libs.iter().cloned());
+        let args = self.build_link_args(objects, archives, &elf_path, &map_path, extra);
 
         if self.verbose {
             tracing::debug!(target: "fbuild_build::linker::ch32v", "link: {}", args.join(" "));
@@ -213,5 +228,64 @@ mod tests {
                 .to_string_lossy()
                 .contains("link.ld")
         );
+    }
+
+    #[test]
+    fn test_build_link_args_includes_memory_defsyms_before_script() {
+        let linker = Ch32vLinker::new(
+            PathBuf::from("gcc"),
+            PathBuf::from("ar"),
+            PathBuf::from("objcopy"),
+            PathBuf::from("size"),
+            PathBuf::from("link.ld"),
+            get_ch32v_config_for_mcu("ch32v003").unwrap(),
+            BuildProfile::Release,
+            None,
+            None,
+            false,
+        )
+        .with_memory_defsyms(vec![
+            "-Wl,--defsym=__FLASH_SIZE=32768".into(),
+            "-Wl,--defsym=__RAM_SIZE=10240".into(),
+        ]);
+        let args = linker.build_link_args(
+            &[],
+            &[],
+            Path::new("firmware.elf"),
+            Path::new("firmware.map"),
+            &LinkExtraArgs::default(),
+        );
+        let script_index = args.iter().position(|arg| arg.starts_with("-T")).unwrap();
+        for flag in [
+            "-Wl,--defsym=__FLASH_SIZE=32768",
+            "-Wl,--defsym=__RAM_SIZE=10240",
+        ] {
+            let index = args.iter().position(|arg| arg == flag).unwrap();
+            assert!(index < script_index);
+        }
+    }
+
+    #[test]
+    fn test_build_link_args_without_memory_defsyms() {
+        let linker = Ch32vLinker::new(
+            PathBuf::from("gcc"),
+            PathBuf::from("ar"),
+            PathBuf::from("objcopy"),
+            PathBuf::from("size"),
+            PathBuf::from("link.ld"),
+            get_ch32v_config_for_mcu("ch32v003").unwrap(),
+            BuildProfile::Release,
+            None,
+            None,
+            false,
+        );
+        let args = linker.build_link_args(
+            &[],
+            &[],
+            Path::new("firmware.elf"),
+            Path::new("firmware.map"),
+            &LinkExtraArgs::default(),
+        );
+        assert!(!args.iter().any(|arg| arg.contains("--defsym")));
     }
 }
