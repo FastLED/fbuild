@@ -1,19 +1,19 @@
 {
   "_doc": "Single source of truth for per-board CI workflow path filters. Edit this file (and ci/ci_common_paths.txt), then run `uv run python ci/render_workflows.py` to regenerate the `on:` blocks of .github/workflows/build-*.yml. CI drift gate enforces this.",
   "families": {
-    "avr":     { "crate_paths": ["crates/fbuild-build/src/avr/**"] },
-    "esp32":   { "crate_paths": ["crates/fbuild-build/src/esp32/**"] },
-    "esp8266": { "crate_paths": ["crates/fbuild-build/src/esp8266/**"] },
-    "nxplpc":  { "crate_paths": ["crates/fbuild-build/src/nxplpc/**", "crates/fbuild-build/src/generic_arm/**"] },
-    "stm32":   { "crate_paths": ["crates/fbuild-build/src/stm32/**"] },
-    "teensy":  { "crate_paths": ["crates/fbuild-build/src/teensy/**"] },
-    "nrf52":   { "crate_paths": ["crates/fbuild-build/src/nrf52/**"] },
-    "rp2040":  { "crate_paths": ["crates/fbuild-build/src/rp2040/**"] },
-    "sam":     { "crate_paths": ["crates/fbuild-build/src/sam/**"] },
-    "ch32v":   { "crate_paths": ["crates/fbuild-build/src/ch32v/**"] },
-    "apollo3": { "crate_paths": ["crates/fbuild-build/src/apollo3/**"] },
-    "silabs":  { "crate_paths": ["crates/fbuild-build/src/silabs/**"] },
-    "renesas": { "crate_paths": ["crates/fbuild-build/src/renesas/**"] }
+    "avr":     { "crate_paths": ["crates/fbuild-build-mcu/src/avr/**"] },
+    "esp32":   { "crate_paths": ["crates/fbuild-build-esp/src/esp32/**"] },
+    "esp8266": { "crate_paths": ["crates/fbuild-build-esp/src/esp8266/**"] },
+    "nxplpc":  { "crate_paths": ["crates/fbuild-build-arm/src/nxplpc/**", "crates/fbuild-build-arm/src/generic_arm/**"] },
+    "stm32":   { "crate_paths": ["crates/fbuild-build-arm/src/stm32/**"] },
+    "teensy":  { "crate_paths": ["crates/fbuild-build-arm/src/teensy/**"] },
+    "nrf52":   { "crate_paths": ["crates/fbuild-build-arm/src/nrf52/**"] },
+    "rp2040":  { "crate_paths": ["crates/fbuild-build-arm/src/rp2040/**"] },
+    "sam":     { "crate_paths": ["crates/fbuild-build-arm/src/sam/**"] },
+    "ch32v":   { "crate_paths": ["crates/fbuild-build-mcu/src/ch32v/**"] },
+    "apollo3": { "crate_paths": ["crates/fbuild-build-arm/src/apollo3/**"] },
+    "silabs":  { "crate_paths": ["crates/fbuild-build-arm/src/silabs/**"] },
+    "renesas": { "crate_paths": ["crates/fbuild-build-arm/src/renesas/**"] }
   },
   "boards": [
     { "workflow": "build-apollo3_red.yml",                "workflow_name": "Ambiq Apollo3 Red",       "test_dir": "tests/platform/apollo3_red",                       "env_name": "apollo3_red",              "firmware_ext": "bin", "family": "apollo3" },

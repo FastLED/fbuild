@@ -10,43 +10,11 @@
 # Narrow filtering is only correct for family-specific code (handled by
 # board_families.json crate_paths).
 
-# fbuild-build top-level common code (excludes per-family subdirs, which
-# are listed per-family in board_families.json).
-crates/fbuild-build/src/arduino_props.rs
-crates/fbuild-build/src/build_info.rs
-crates/fbuild-build/src/build_output.rs
-crates/fbuild-build/src/compile_backend.rs
-crates/fbuild-build/src/compile_many.rs
-crates/fbuild-build/src/compiler.rs
-crates/fbuild-build/src/compiler_tests.rs
-crates/fbuild-build/src/eh_frame_policy.rs
-crates/fbuild-build/src/eh_frame_policy_compute.rs
-crates/fbuild-build/src/flag_overlay.rs
-crates/fbuild-build/src/framework_core_cache.rs
-crates/fbuild-build/src/framework_libs.rs
-crates/fbuild-build/src/lib.rs
-crates/fbuild-build/src/linker.rs
-crates/fbuild-build/src/package_override.rs
-crates/fbuild-build/src/parallel.rs
-crates/fbuild-build/src/perf_log.rs
-crates/fbuild-build/src/resolution.rs
-crates/fbuild-build/src/script_runtime.rs
-crates/fbuild-build/src/script_runtime_tests.rs
-crates/fbuild-build/src/source_scanner.rs
-crates/fbuild-build/src/zccache.rs
-crates/fbuild-build/src/zccache_embedded.rs
-crates/fbuild-build/src/build_fingerprint/**
-crates/fbuild-build/src/compile_database/**
-crates/fbuild-build/src/pipeline/**
-crates/fbuild-build/src/shrink/**
-crates/fbuild-build/src/source_scanner/**
-crates/fbuild-build/src/symbol_analyzer/**
+# Shared build pipeline crates. Keep family-specific directories in the
+# family map below so a change only runs the relevant board workflows.
+crates/fbuild-build/**
 
-# generic_arm is shared by multiple ARM families today (LPC declares it
-# explicitly). Conservative: any change there force-runs everything.
-crates/fbuild-build/src/generic_arm/**
 
-# fbuild-build crate-level files (Cargo.toml, README, etc.).
 crates/fbuild-build/Cargo.toml
 
 # Crates whose changes affect every board build.
@@ -71,3 +39,9 @@ rust-toolchain.toml
 ci/render_workflows.py
 ci/board_families.json
 ci/ci_common_paths.txt
+crates/fbuild-build-engine/**
+crates/fbuild-build-mcu/src/lib.rs
+crates/fbuild-build-mcu/*argo.toml
+crates/fbuild-toolchain/**
+crates/fbuild-library/**
+crates/fbuild-packages-fetch/**
