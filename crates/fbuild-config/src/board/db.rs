@@ -252,6 +252,12 @@ fn flatten_board_entry(entry: &serde_json::Value, board_id: &str) -> HashMap<Str
         if let Some(flags) = build.get("extra_flags").and_then(|v| v.as_str()) {
             d.insert("extra_flags".into(), flags.to_string());
         }
+        if let Some(v) = build.get("march").and_then(|v| v.as_str()) {
+            d.insert("march".into(), v.to_string());
+        }
+        if let Some(v) = build.get("mabi").and_then(|v| v.as_str()) {
+            d.insert("mabi".into(), v.to_string());
+        }
         if let Some(vid) = build.get("vid").and_then(|v| v.as_str()) {
             d.insert("vid".into(), vid.to_string());
         }

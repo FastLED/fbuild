@@ -66,29 +66,101 @@ impl McuConfig for Ch32vMcuConfig {
 ///
 /// The series is derived from the board JSON `build.series` field
 /// (e.g. "ch32v003", "ch32v203", "ch32v307").
-pub fn get_ch32v_config_for_mcu(mcu: &str) -> Result<Ch32vMcuConfig> {
+pub fn get_ch32v_config_for_mcu(series: &str) -> Result<Ch32vMcuConfig> {
     // All CH32V variants currently share the CH32V003 config as a base,
     // with march/mabi overridden from the board JSON extra_flags.
-    let json = match mcu {
+    let json = match series {
         "ch32v003" => CH32V003_JSON,
         _ => {
             // For other CH32V series, use the CH32V003 config as a base.
-            // The board JSON's extra_flags and march/mabi fields provide
-            // the series-specific differences.
             CH32V003_JSON
         }
     };
     serde_json::from_str(json).map_err(|e| {
         fbuild_core::FbuildError::ConfigError(format!(
             "failed to parse CH32V MCU config for '{}': {}",
-            mcu, e
+            series, e
         ))
     })
+}
+
+/// Normalize a board-JSON ISA string for the xPack RISC-V GCC toolchain.
+pub fn normalize_march(march: &str) -> String {
+    let mut normalized = march.to_ascii_lowercase();
+    if let Some(stripped) = normalized.strip_suffix("xw") {
+        normalized = stripped.to_string();
+    }
+    if !normalized.contains("zicsr") {
+        normalized.push_str("_zicsr");
+    }
+    normalized
+}
+
+/// Apply board ISA and ABI values to compiler and linker flags.
+pub fn apply_board_isa(config: &mut Ch32vMcuConfig, march: Option<&str>, mabi: Option<&str>) {
+    fn replace(flags: &mut [String], prefix: &str, value: &str) {
+        for flag in flags {
+            if flag.starts_with(prefix) {
+                *flag = format!("{prefix}{value}");
+            }
+        }
+    }
+
+    if let Some(march) = march {
+        let normalized = normalize_march(march);
+        replace(&mut config.compiler_flags.common, "-march=", &normalized);
+        replace(&mut config.linker_flags, "-march=", &normalized);
+    }
+    if let Some(mabi) = mabi {
+        replace(&mut config.compiler_flags.common, "-mabi=", mabi);
+        replace(&mut config.linker_flags, "-mabi=", mabi);
+    }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_normalize_march() {
+        assert_eq!(normalize_march("rv32imacxw"), "rv32imac_zicsr");
+        assert_eq!(normalize_march("rv32imac"), "rv32imac_zicsr");
+        assert_eq!(normalize_march("rv32ec_zicsr"), "rv32ec_zicsr");
+        assert_eq!(normalize_march("rv32ecxw"), "rv32ec_zicsr");
+    }
+
+    #[test]
+    fn test_apply_board_isa_updates_compiler_and_linker() {
+        let mut config = get_ch32v_config_for_mcu("ch32v003").unwrap();
+        apply_board_isa(&mut config, Some("rv32imacxw"), Some("ilp32"));
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-march=rv32imac_zicsr".to_string())
+        );
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mabi=ilp32".to_string())
+        );
+        assert!(
+            config
+                .linker_flags
+                .contains(&"-march=rv32imac_zicsr".to_string())
+        );
+        assert!(config.linker_flags.contains(&"-mabi=ilp32".to_string()));
+    }
+
+    #[test]
+    fn test_apply_board_isa_none_is_noop() {
+        let mut config = get_ch32v_config_for_mcu("ch32v003").unwrap();
+        let before = config.clone();
+        apply_board_isa(&mut config, None, None);
+        assert_eq!(config.compiler_flags.common, before.compiler_flags.common);
+        assert_eq!(config.linker_flags, before.linker_flags);
+    }
 
     #[test]
     fn test_ch32v003_config_parses() {

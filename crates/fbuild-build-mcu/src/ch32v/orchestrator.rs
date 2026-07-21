@@ -106,7 +106,12 @@ impl BuildOrchestrator for Ch32vOrchestrator {
         );
 
         // 7. Build include dirs + compiler
-        let mcu_config = super::mcu_config::get_ch32v_config_for_mcu(&series)?;
+        let mut mcu_config = super::mcu_config::get_ch32v_config_for_mcu(&series)?;
+        super::mcu_config::apply_board_isa(
+            &mut mcu_config,
+            ctx.board.march.as_deref(),
+            ctx.board.mabi.as_deref(),
+        );
         let mut defines = ctx.board.get_defines();
         defines.extend(mcu_config.defines_map());
         defines.insert(system_series.clone(), "1".to_string());
