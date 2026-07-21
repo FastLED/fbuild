@@ -129,21 +129,6 @@ impl Ch32vCores {
     pub fn get_variant_dir(&self, variant_name: &str) -> PathBuf {
         self.get_variants_dir().join(variant_name)
     }
-
-    /// Get the linker script for a variant.
-    ///
-    /// CH32V variants have .ld linker scripts in the variant directory.
-    pub fn get_linker_script(&self, variant_name: &str) -> PathBuf {
-        let variant_dir = self.get_variant_dir(variant_name);
-
-        // Search for .ld files in the variant directory
-        if let Some(ld) = find_ld_file(&variant_dir) {
-            return ld;
-        }
-
-        // Default fallback
-        variant_dir.join("link.ld")
-    }
 }
 
 #[async_trait::async_trait]
@@ -209,25 +194,6 @@ fn find_core_root(install_dir: &Path) -> PathBuf {
     install_dir.to_path_buf()
 }
 
-/// Find the first .ld file in a directory.
-fn find_ld_file(dir: &Path) -> Option<PathBuf> {
-    let mut ld_files = Vec::new();
-    if let Ok(entries) = std::fs::read_dir(dir) {
-        for entry in entries.flatten() {
-            let path = entry.path();
-            if path.is_file() {
-                if let Some(ext) = path.extension() {
-                    if ext == "ld" {
-                        ld_files.push(path);
-                    }
-                }
-            }
-        }
-    }
-    ld_files.sort();
-    ld_files.into_iter().next()
-}
-
 fn patch_backup_header(root: &Path) -> fbuild_core::Result<()> {
     let backup_h = root
         .join("cores")
@@ -286,26 +252,6 @@ mod tests {
         let nested = tmp.path().join("arduino_core_ch32-1.0.4");
         std::fs::create_dir_all(nested.join("cores/openwch")).unwrap();
         assert_eq!(find_core_root(tmp.path()), nested);
-    }
-
-    #[test]
-    fn test_get_linker_script_with_ld_file() {
-        let tmp = tempfile::TempDir::new().unwrap();
-        let variant_dir = tmp.path().join("variants/CH32V00x/CH32V003F4");
-        std::fs::create_dir_all(&variant_dir).unwrap();
-        std::fs::write(variant_dir.join("link.ld"), "").unwrap();
-
-        let ld = find_ld_file(&variant_dir);
-        assert!(ld.is_some());
-        assert!(ld.unwrap().to_string_lossy().contains("link.ld"));
-    }
-
-    #[test]
-    fn test_get_linker_script_fallback() {
-        let tmp = tempfile::TempDir::new().unwrap();
-        let core = Ch32vCores::new(tmp.path());
-        let script = core.get_linker_script("CH32V00x/CH32V003F4");
-        assert!(script.to_string_lossy().contains("link.ld"));
     }
 
     #[test]
