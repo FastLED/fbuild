@@ -306,20 +306,6 @@ fn resolve_variant_dir(
     requested_variant: &str,
     system_series: &str,
 ) -> PathBuf {
-    // OpenWCH d767162 adds CH32VM00X/CH32V006K8, but that variant currently
-    // references PB_* pins not defined by the CH32V006 build. Before that
-    // upstream directory existed, fbuild built this board with the CH32V003F4
-    // family fallback; keep that known-good path for the pinned core.
-    if requested_variant == "CH32VM00X/CH32V006K8" {
-        let fallback = framework_dir
-            .join("variants")
-            .join("CH32V00x")
-            .join("CH32V003F4");
-        if fallback.is_dir() {
-            return fallback;
-        }
-    }
-
     let requested = framework_dir.join("variants").join(requested_variant);
     if requested.is_dir() {
         return requested;
@@ -355,6 +341,12 @@ fn resolve_variant_dir(
 /// Map a series name to the system directory name in the OpenWCH core.
 /// e.g. "ch32v003" -> "CH32V00x", "ch32l103" -> "CH32L10x", "ch32x035" -> "CH32X035"
 fn series_to_system_dir(series: &str) -> String {
+    if matches!(
+        series,
+        "ch32v002" | "ch32v004" | "ch32v005" | "ch32v006" | "ch32v007" | "ch32m007"
+    ) {
+        return "CH32VM00X".to_string();
+    }
     let upper = series.to_uppercase();
     if upper.len() >= 7 {
         // CH32V/CH32L series use the "replace last digit with x" family
@@ -416,6 +408,7 @@ mod tests {
     fn test_series_to_system_dir() {
         // CH32V series: last digit replaced with 'x'
         assert_eq!(series_to_system_dir("ch32v003"), "CH32V00x");
+        assert_eq!(series_to_system_dir("ch32v006"), "CH32VM00X");
         assert_eq!(series_to_system_dir("ch32v103"), "CH32V10x");
         assert_eq!(series_to_system_dir("ch32v203"), "CH32V20x");
         assert_eq!(series_to_system_dir("ch32v303"), "CH32V30x");
@@ -437,26 +430,6 @@ mod tests {
         std::fs::create_dir_all(&fallback).unwrap();
 
         let resolved = resolve_variant_dir(tmp.path(), "CH32V00x/CH32V006K8", "CH32V00x");
-        assert_eq!(resolved, fallback);
-    }
-
-    #[test]
-    fn test_resolve_variant_dir_skips_broken_ch32v006_upstream_variant() {
-        let tmp = tempdir();
-        let requested = tmp
-            .path()
-            .join("variants")
-            .join("CH32VM00X")
-            .join("CH32V006K8");
-        let fallback = tmp
-            .path()
-            .join("variants")
-            .join("CH32V00x")
-            .join("CH32V003F4");
-        std::fs::create_dir_all(&requested).unwrap();
-        std::fs::create_dir_all(&fallback).unwrap();
-
-        let resolved = resolve_variant_dir(tmp.path(), "CH32VM00X/CH32V006K8", "CH32V00x");
         assert_eq!(resolved, fallback);
     }
 
