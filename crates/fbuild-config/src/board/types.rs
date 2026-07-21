@@ -73,6 +73,12 @@ pub struct BoardConfig {
     pub usb_manufacturer: Option<String>,
     /// Extra build flags from board definition
     pub extra_flags: Option<String>,
+    /// RISC-V ISA string from board JSON `build.march`.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub march: Option<String>,
+    /// RISC-V ABI string from board JSON `build.mabi`.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub mabi: Option<String>,
     /// Upload protocol (e.g. "arduino", "esptool", "teensy-gui")
     pub upload_protocol: Option<String>,
     /// Upload speed

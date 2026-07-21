@@ -175,6 +175,8 @@ impl BoardConfig {
             usb_product: get("usb_product"),
             usb_manufacturer: get("usb_manufacturer"),
             extra_flags: get("extra_flags"),
+            march: get("march"),
+            mabi: get("mabi"),
             upload_protocol: get("upload.protocol")
                 .or_else(|| props.get("upload.protocol").cloned()),
             upload_speed: get("upload.speed").or_else(|| props.get("upload.speed").cloned()),
@@ -348,6 +350,14 @@ impl BoardConfig {
                 .get("extra_flags")
                 .cloned()
                 .or_else(|| defaults.get("extra_flags").cloned()),
+            march: overrides
+                .get("march")
+                .cloned()
+                .or_else(|| defaults.get("march").cloned()),
+            mabi: overrides
+                .get("mabi")
+                .cloned()
+                .or_else(|| defaults.get("mabi").cloned()),
             upload_protocol: overrides
                 .get("upload.protocol")
                 .cloned()
