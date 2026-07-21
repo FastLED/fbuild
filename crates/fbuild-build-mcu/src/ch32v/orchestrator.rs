@@ -176,6 +176,11 @@ impl BuildOrchestrator for Ch32vOrchestrator {
             .join("SRC")
             .join("Ld")
             .join("Link.ld");
+        let mut memory_defsyms = Vec::new();
+        if let (Some(flash), Some(ram)) = (ctx.board.max_flash, ctx.board.max_ram) {
+            memory_defsyms.push(format!("-Wl,--defsym=__FLASH_SIZE={flash}"));
+            memory_defsyms.push(format!("-Wl,--defsym=__RAM_SIZE={ram}"));
+        }
         let linker = Ch32vLinker::new(
             toolchain.get_gcc_path(),
             toolchain.get_ar_path(),
@@ -187,7 +192,8 @@ impl BuildOrchestrator for Ch32vOrchestrator {
             ctx.board.max_flash,
             ctx.board.max_ram,
             params.verbose,
-        );
+        )
+        .with_memory_defsyms(memory_defsyms);
 
         // 8. Build LibraryBuildEnv for project-as-library compilation
         let gcc_path = toolchain.get_gcc_path();
