@@ -6,6 +6,7 @@
 //! riscv-none-elf-size.
 
 use std::path::{Path, PathBuf};
+use std::process::Command;
 
 use crate::{CacheSubdir, PackageBase, PackageInfo, Toolchain};
 
@@ -78,9 +79,11 @@ impl RiscvToolchain {
         let root = self.resolved_dir();
         let mut dirs = Vec::new();
 
-        // GCC multilib directories use only the base ISA (rv32ec), not sub-extensions
-        // like _zicsr. Strip everything from the first underscore.
-        let multilib_march = march.split('_').next().unwrap_or(march);
+        // Ask GCC for the selected multilib instead of deriving its directory from
+        // the ISA spelling. The default multilib is reported as `.`.
+        let multilib_dir = self
+            .get_gcc_multilib_dir(march, mabi)
+            .unwrap_or_else(|| PathBuf::from(march.split('_').next().unwrap_or(march)).join(mabi));
 
         // C++ headers: find the version directory dynamically
         let cxx_base = root.join("riscv-none-elf").join("include").join("c++");
@@ -91,10 +94,7 @@ impl RiscvToolchain {
                     // 1. Base C++ headers
                     dirs.push(version_dir.clone());
                     // 2. Multilib-specific
-                    let multilib = version_dir
-                        .join("riscv-none-elf")
-                        .join(multilib_march)
-                        .join(mabi);
+                    let multilib = multilib_include_path(&version_dir, &multilib_dir);
                     if multilib.is_dir() {
                         dirs.push(multilib);
                     }
@@ -138,6 +138,26 @@ impl RiscvToolchain {
         dirs
     }
 
+    fn get_gcc_multilib_dir(&self, march: &str, mabi: &str) -> Option<PathBuf> {
+        let output = Command::new(self.get_gcc_path())
+            .args([
+                format!("-march={march}"),
+                format!("-mabi={mabi}"),
+                "-print-multi-directory".into(),
+            ])
+            .output()
+            .ok()?;
+        if !output.status.success() {
+            return None;
+        }
+        let directory = String::from_utf8(output.stdout).ok()?.trim().to_owned();
+        if directory.is_empty() || directory == "." {
+            Some(PathBuf::new())
+        } else {
+            Some(PathBuf::from(directory))
+        }
+    }
+
     /// Validate that the toolchain installation has all required files.
     fn validate(install_dir: &Path) -> fbuild_core::Result<()> {
         let root = find_bin_root(install_dir);
@@ -170,6 +190,10 @@ impl RiscvToolchain {
 
         Ok(())
     }
+}
+
+fn multilib_include_path(version_dir: &Path, multilib_dir: &Path) -> PathBuf {
+    version_dir.join("riscv-none-elf").join(multilib_dir)
 }
 
 #[async_trait::async_trait]
@@ -386,6 +410,24 @@ mod tests {
         let tmp = tempfile::TempDir::new().unwrap();
         let tc = RiscvToolchain::with_cache_root(tmp.path(), &tmp.path().join("cache"));
         assert!(!tc.is_installed());
+    }
+
+    #[test]
+    fn test_multilib_include_path_maps_default_directory_to_sysroot() {
+        let version_dir = Path::new("toolchain/include/c++/14.2.0");
+        assert_eq!(
+            multilib_include_path(version_dir, Path::new("")),
+            PathBuf::from("toolchain/include/c++/14.2.0/riscv-none-elf")
+        );
+    }
+
+    #[test]
+    fn test_multilib_include_path_preserves_extension_directory() {
+        let version_dir = Path::new("toolchain/include/c++/14.2.0");
+        assert_eq!(
+            multilib_include_path(version_dir, Path::new("rv32imafc_zicsr/ilp32f")),
+            PathBuf::from("toolchain/include/c++/14.2.0/riscv-none-elf/rv32imafc_zicsr/ilp32f")
+        );
     }
 
     /// Every platform entry must have a valid URL.
