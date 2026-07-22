@@ -490,6 +490,11 @@ fn latest_payload(metadata: &Metadata, results: &[ToolResult]) -> Value {
             "fixture": metadata.project,
             "board": "Arduino Uno",
             "fqbn": "arduino:avr:uno",
+            "toolchain_pins": {
+                "arduino_core": "arduino:avr@1.8.8",
+                "platformio_platform": "atmelavr@5.1.0",
+                "note": "ecosystem framework distributions are pinned independently",
+            },
             "trials": metadata.trials,
             "statistic": "median",
             "cold_definition": "project outputs and matching compiled framework caches removed; installed packages and global download/compiler caches retained",
@@ -909,6 +914,24 @@ mod tests {
     fn median_handles_odd_and_even_trial_counts() {
         assert_eq!(median(&[9.0, 1.0, 5.0]), 5.0);
         assert_eq!(median(&[9.0, 1.0, 7.0, 3.0]), 5.0);
+    }
+
+    #[test]
+    fn remove_dir_within_guards_boundaries() {
+        let sandbox = tempfile::tempdir().unwrap();
+        let root = sandbox.path().join("root");
+        let nested = root.join("nested");
+        let sibling = sandbox.path().join("sibling");
+        fs::create_dir_all(&nested).unwrap();
+        fs::create_dir_all(&sibling).unwrap();
+
+        assert!(remove_dir_within(&root, &root).is_err());
+        assert!(remove_dir_within(&root, &sibling).is_err());
+        assert!(root.is_dir());
+        assert!(sibling.is_dir());
+
+        remove_dir_within(&root, &nested).unwrap();
+        assert!(!nested.exists());
     }
 
     #[test]
