@@ -143,6 +143,19 @@ Sources (captured 2026-06, primary source in Mandarin):
 - WCH CH340/CH341 datasheet —
   <https://www.wch.cn/downloads/CH340DS1_PDF.html>.
 
+### WCH — CH32V native USB CDC and WCH-LinkE CDC
+
+| Bit | Effect on device | Comment |
+|---|---|---|
+| DTR | informational / device-specific | The CH32V factory USB-ISP path does not use host DTR/RTS as a reset convention. Enter ISP with BOOT0/Download at reset. |
+| RTS | informational / device-specific | No documented host-driven reset convention for the native CH32V CDC or WCH-LinkE CDC interface. |
+
+- **Post-open safe default: `DTR=True, RTS=True`**. This is the same
+  conservative state used for unclassified WCH CDC devices.
+- WCH-LinkE's debug/DAP interface may enumerate separately from its CDC
+  endpoint; deployers should use the probe backend rather than infer reset
+  semantics from serial control lines.
+
 ### PJRC — Teensy USB-Serial (Teensy 3.x / 4.x)
 
 | Bit | Effect on device | Comment |

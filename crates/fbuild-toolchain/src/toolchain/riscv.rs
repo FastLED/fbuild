@@ -251,7 +251,7 @@ impl Toolchain for RiscvToolchain {
 /// A platform-specific RISC-V toolchain package entry.
 struct RiscvPlatformPackage {
     filename: &'static str,
-    /// SHA-256 checksum. `None` = skip verification (not yet captured).
+    /// SHA-256 checksum for the immutable upstream release asset.
     checksum: Option<&'static str>,
 }
 
@@ -262,32 +262,28 @@ fn all_platform_packages() -> [(&'static str, RiscvPlatformPackage); 4] {
             "windows",
             RiscvPlatformPackage {
                 filename: "xpack-riscv-none-elf-gcc-14.2.0-3-win32-x64.zip",
-                // TODO: capture real checksum from Windows CI run
-                checksum: None,
+                checksum: Some("9bb15efdeca256532c4a83ce6462c7dc1f9cfebe1f1f43d581b2ad7d077209b6"),
             },
         ),
         (
             "macos",
             RiscvPlatformPackage {
                 filename: "xpack-riscv-none-elf-gcc-14.2.0-3-darwin-x64.tar.gz",
-                // TODO: capture real checksum from macOS CI run
-                checksum: None,
+                checksum: Some("8a6e699f12876152d6386e777675d94529ccc21a57224a69d973f676949a1687"),
             },
         ),
         (
             "linux-aarch64",
             RiscvPlatformPackage {
                 filename: "xpack-riscv-none-elf-gcc-14.2.0-3-linux-arm64.tar.gz",
-                // TODO: capture real checksum from aarch64 CI run
-                checksum: None,
+                checksum: Some("0c0551986e30174af55f245e1c3a86c45233fc793bf36586567f266ada6fdd98"),
             },
         ),
         (
             "linux-x86_64",
             RiscvPlatformPackage {
                 filename: "xpack-riscv-none-elf-gcc-14.2.0-3-linux-x64.tar.gz",
-                // TODO: capture real checksum from Linux x86_64 CI run
-                checksum: None,
+                checksum: Some("f574415b63f12b09bdd3475223ab492a465d23810646c90c13a4c3b676c83503"),
             },
         ),
     ]
