@@ -561,7 +561,9 @@ fn family_from_usb_profile(
     if profile.role == UsbDeviceRole::UsbUartBridge {
         return Some(Esp32ExternalUart);
     }
-    if profile.platform.as_deref() == Some("espressif32")
+    // PlatformIO calls this platform `espressif32`, while the published
+    // FastLED/boards registry uses its shorter canonical value `esp32`.
+    if matches!(profile.platform.as_deref(), Some("espressif32" | "esp32"))
         && profile.role == UsbDeviceRole::RuntimeCdc
     {
         return Some(Esp32NativeUsbCdc);
@@ -986,6 +988,17 @@ mod tests {
         assert_eq!(
             family_from_usb_profile(&bridge),
             Some(BoardFamily::Esp32ExternalUart)
+        );
+
+        let registry_esp = transport_profile(
+            UsbDeviceRole::RuntimeCdc,
+            Some("esp32"),
+            Some("esp32-s3"),
+            "hardware",
+        );
+        assert_eq!(
+            family_from_usb_profile(&registry_esp),
+            Some(BoardFamily::Esp32NativeUsbCdc)
         );
     }
 
