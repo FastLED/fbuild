@@ -31,6 +31,9 @@ libiconv-2.dll
 
 # fbuild local build artifacts
 .fbuild/
+.pio/
+benchmark-output/
+benchmark-stats/
 tests/platform/*/build_info*.json
 
 # Local cargo cache

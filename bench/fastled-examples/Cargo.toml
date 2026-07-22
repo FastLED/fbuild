@@ -1,6 +1,6 @@
 [package]
 name = "fbuild-bench-fastled-examples"
-description = "Warm-cache library-selection bench across the FastLED examples matrix (#205 Phase 7)"
+description = "End-to-end benchmark harnesses for fbuild"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -11,10 +11,15 @@ publish = false
 name = "bench-fastled-examples"
 path = "src/main.rs"
 
+[[bin]]
+name = "bench-build-comparison"
+path = "src/build_comparison.rs"
+
 [dependencies]
 fbuild-library-select = { path = "../../crates/fbuild-library-select" }
 fbuild-packages = { path = "../../crates/fbuild-packages" }
 fbuild-paths = { path = "../../crates/fbuild-paths" }
 fbuild-test-support = { path = "../../crates/fbuild-test-support" }
 tempfile = { workspace = true }
+serde = { workspace = true }
 serde_json = { workspace = true }

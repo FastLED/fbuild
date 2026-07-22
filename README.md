@@ -136,6 +136,14 @@ that fbuild actively protects in CI.
 Board descriptions and family deep-dives live in
 [`docs/BOARD_STATUS.md`](docs/BOARD_STATUS.md).
 
+## Build performance
+
+[![Arduino CLI vs PlatformIO vs fbuild Blink build benchmark](https://raw.githubusercontent.com/FastLED/fbuild/benchmark-stats/benchmark.svg)](https://fastled.github.io/fbuild/)
+
+The chart is regenerated nightly from clean-output (cold) and immediate repeat
+(warm) Arduino Uno Blink builds. Raw measurements are discoverable through the
+[benchmark manifest](https://raw.githubusercontent.com/FastLED/fbuild/benchmark-stats/manifest.json).
+
 ## Installation
 
 ```bash

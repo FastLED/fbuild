@@ -10,6 +10,10 @@ CI/CD workflows for the fbuild project, covering lint, test, documentation, and 
 - **`loc-gate.yml`** -- Reject `.rs` files over 1000 LOC | **`lint-subprocess.yml`** -- Forbid direct subprocess spawns
 - **`crate-gate.yml`** -- Reject new workspace crates (monocrate policy, `ci/check_workspace_crates.py`)
 
+## Scheduled Benchmarks
+
+- **`benchmark-build-comparison.yml`** -- Arduino CLI vs PlatformIO vs fbuild Blink cold/warm benchmark; runs nightly, manually, and for relevant pushes to `main`, then force-publishes the one-commit `benchmark-stats` branch and deploys its site to GitHub Pages
+
 ## Per-Board Builds (push/PR)
 
 - **`build-esp32{c2,c3,c5,c6,dev,h2,p4,s2,s3}.yml`** -- ESP32 variants

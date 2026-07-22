@@ -19,6 +19,8 @@ soldr cargo bench -p fbuild-header-scan  --bench scan_throughput
 
 ## Subdirectories
 
+- [`blink/`](blink/README.md) — shared Arduino Uno Blink fixture used by the
+  nightly Arduino CLI vs PlatformIO vs fbuild whole-build benchmark.
 - [`fastled-examples/`](fastled-examples/README.md) — real-FastLED
   warm-cache library-selection matrix (`FastLED/fbuild#205` AC#5, P-01).
   Discovers examples under `$FASTLED_DIR` (default `~/dev/fastled`),
@@ -31,3 +33,7 @@ Other end-to-end matrices (whole-build wall-clock, deploy+flash latency,
 emulator boot) may join this directory in the future. Each subdirectory
 must carry its own `README.md` explaining what it measures, how to run it,
 and which CI gate (if any) it feeds.
+
+The nightly whole-build comparison is published at
+<https://fastled.github.io/fbuild/>. Its machine-readable discovery document
+is `manifest.json` on the one-commit `benchmark-stats` branch.
