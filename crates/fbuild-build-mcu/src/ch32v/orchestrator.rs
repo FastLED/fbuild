@@ -132,9 +132,6 @@ impl BuildOrchestrator for Ch32vOrchestrator {
         if let Some(vh) = resolve_variant_h(&variant_dir, ctx.board.variant_h.as_deref()) {
             defines.insert("VARIANT_H".to_string(), format!("\\\"{}\\\"", vh));
         }
-        if series == "ch32x035" {
-            defines.insert("RCC_BackupResetCmd(x)".to_string(), "((void)0)".to_string());
-        }
         // Use resolved core_dir/variant_dir directly â€” board.get_include_paths()
         // uses the raw board core name which may differ from the actual directory
         // (e.g. OpenWCH core dir is "arduino", not "openwch").
