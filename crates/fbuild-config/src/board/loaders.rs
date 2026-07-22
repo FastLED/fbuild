@@ -163,6 +163,7 @@ impl BoardConfig {
             name,
             mcu,
             f_cpu: get("f_cpu").unwrap_or_else(|| "16000000L".to_string()),
+            clock_source: get("clock_source"),
             board: get("board")
                 .or_else(|| props.get("board").cloned())
                 .unwrap_or_else(|| board_id_to_board_define(board_id)),
@@ -319,6 +320,8 @@ impl BoardConfig {
             name: get("name", board_id),
             mcu: get("mcu", "unknown"),
             f_cpu: get("f_cpu", "16000000L"),
+            clock_source: Some(get("clock_source", ""))
+                .filter(|source| !source.is_empty()),
             board: get("board", &board_id_to_board_define(board_id)),
             core: get("core", "arduino"),
             variant: get("variant", "standard"),

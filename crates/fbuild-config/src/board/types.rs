@@ -42,6 +42,9 @@ pub struct BoardConfig {
     pub name: String,
     pub mcu: String,
     pub f_cpu: String,
+    /// Clock source used by the MCU startup code (for example `hsi+pll`).
+    #[serde(default)]
+    pub clock_source: Option<String>,
     pub board: String,
     pub core: String,
     pub variant: String,

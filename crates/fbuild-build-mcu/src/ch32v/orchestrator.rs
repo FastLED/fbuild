@@ -1,4 +1,4 @@
-﻿//! CH32V build orchestrator â€” wires together config, packages, compiler, linker.
+//! CH32V build orchestrator â€” wires together config, packages, compiler, linker.
 //!
 //! Build phases:
 //! 1. Parse platformio.ini
@@ -122,6 +122,12 @@ impl BuildOrchestrator for Ch32vOrchestrator {
         let mut defines = ctx.board.get_defines();
         defines.extend(mcu_config.defines_map());
         defines.insert(system_series.clone(), "1".to_string());
+        let (sysclk_name, sysclk_value) = sysclk_define(
+            &series,
+            &ctx.board.f_cpu,
+            ctx.board.clock_source.as_deref().unwrap_or("hsi+pll"),
+        )?;
+        defines.insert(sysclk_name, sysclk_value);
         // CH32V cores use `#include VARIANT_H` â€” define it from the variant dir
         if let Some(vh) = resolve_variant_h(&variant_dir, ctx.board.variant_h.as_deref()) {
             defines.insert("VARIANT_H".to_string(), format!("\\\"{}\\\"", vh));
@@ -258,6 +264,52 @@ fn validate_ch32v_framework(framework: Option<&str>) -> fbuild_core::Result<()> 
             "ch32v: framework = {other} is not supported yet; only `framework = arduino` builds today (FastLED/fbuild#1108)"
         ))),
     }
+}
+
+fn sysclk_define(
+    series: &str,
+    f_cpu: &str,
+    clock_source: &str,
+) -> fbuild_core::Result<(String, String)> {
+    let hz = f_cpu.trim_end_matches('L').parse::<u64>().map_err(|_| {
+        fbuild_core::FbuildError::ConfigError(format!(
+            "ch32v: invalid f_cpu `{f_cpu}` for {series}"
+        ))
+    })?;
+    let mhz = hz / 1_000_000;
+    if mhz == 0 || hz % 1_000_000 != 0 {
+        return Err(fbuild_core::FbuildError::ConfigError(format!(
+            "ch32v: unsupported f_cpu `{f_cpu}` for {series}; expected a whole MHz value"
+        )));
+    }
+    let supported: &[u64] = match series {
+        "ch32v003" | "ch32v006" => &[24, 48],
+        "ch32v103" => &[48, 56, 72],
+        "ch32v203" | "ch32v208" | "ch32v303" | "ch32v307" => &[48, 56, 72, 96, 120, 144],
+        "ch32x035" => &[8, 12, 16, 24, 48],
+        "ch32l103" => &[48, 72, 96],
+        _ => &[],
+    };
+    if !supported.contains(&mhz) {
+        return Err(fbuild_core::FbuildError::ConfigError(format!(
+            "ch32v: unsupported f_cpu `{f_cpu}` for {series}; supported values: {supported:?} MHz"
+        )));
+    }
+    let source = match clock_source.trim().to_ascii_lowercase().as_str() {
+        "hsi" | "hsi+pll" => "HSI",
+        "hse" | "hse+pll" => "HSE",
+        other => {
+            return Err(fbuild_core::FbuildError::ConfigError(format!(
+                "ch32v: unsupported clock_source `{other}` for {series}; expected hsi, hsi+pll, hse, or hse+pll"
+            )));
+        }
+    };
+    let unit = if matches!(series, "ch32v003" | "ch32v006") && source == "HSI" {
+        "MHZ"
+    } else {
+        "MHz"
+    };
+    Ok((format!("SYSCLK_FREQ_{mhz}{unit}_{source}"), hz.to_string()))
 }
 
 /// Recursively add subdirectories that contain .h files as include paths.
@@ -433,6 +485,27 @@ mod tests {
         assert!(validate_ch32v_framework(Some(" arduino ")).is_ok());
         let error = validate_ch32v_framework(Some("noneos-sdk")).unwrap_err();
         assert!(error.to_string().contains("1108"));
+    }
+
+    #[test]
+    fn test_sysclk_define_uses_series_spelling_and_clock_source() {
+        assert_eq!(
+            sysclk_define("ch32v203", "144000000L", "hsi+pll").unwrap(),
+            (
+                "SYSCLK_FREQ_144MHz_HSI".to_string(),
+                "144000000".to_string()
+            )
+        );
+        assert_eq!(
+            sysclk_define("ch32v003", "48000000L", "hsi+pll").unwrap(),
+            ("SYSCLK_FREQ_48MHZ_HSI".to_string(), "48000000".to_string())
+        );
+    }
+
+    #[test]
+    fn test_sysclk_define_rejects_unsupported_frequency() {
+        let error = sysclk_define("ch32v203", "8000000L", "hsi").unwrap_err();
+        assert!(error.to_string().contains("supported values"));
     }
 
     #[test]

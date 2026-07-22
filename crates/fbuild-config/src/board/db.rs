@@ -200,6 +200,12 @@ fn flatten_board_entry(entry: &serde_json::Value, board_id: &str) -> HashMap<Str
     } else if let Some(f_cpu_str) = build.and_then(|b| b.get("f_cpu")).and_then(|v| v.as_str()) {
         d.insert("f_cpu".into(), f_cpu_str.to_string());
     }
+    if let Some(clock_source) = build
+        .and_then(|b| b.get("clock_source"))
+        .and_then(|v| v.as_str())
+    {
+        d.insert("clock_source".into(), clock_source.to_string());
+    }
 
     // ram/rom: enriched top-level wins; fall back to PIO `upload.maximum_ram_size`
     // and `upload.maximum_size` respectively.
