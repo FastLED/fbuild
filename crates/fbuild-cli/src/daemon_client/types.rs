@@ -64,6 +64,9 @@ pub struct DeployRequest {
     pub environment: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub port: Option<String>,
+    /// Explicit deploy protocol, currently `isp` or `wlink` for CH32V.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub protocol: Option<String>,
     pub monitor_after: bool,
     pub skip_build: bool,
     pub clean_build: bool,

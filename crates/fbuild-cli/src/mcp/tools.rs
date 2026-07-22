@@ -161,6 +161,7 @@ pub(super) async fn execute_tool(
                 project_dir,
                 environment,
                 port,
+                protocol: None,
                 monitor_after: false,
                 skip_build,
                 clean_build: false,
