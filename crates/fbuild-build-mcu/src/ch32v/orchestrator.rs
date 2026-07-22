@@ -90,7 +90,10 @@ impl BuildOrchestrator for Ch32vOrchestrator {
                 .unwrap_or(after_prefix.len());
             format!("ch32{}", &after_prefix[..series_end])
         } else {
-            "ch32v003".to_string()
+            return Err(fbuild_core::FbuildError::ConfigError(format!(
+                "CH32V board MCU must start with `ch32`; got `{}`",
+                ctx.board.mcu
+            )));
         };
         let system_series = series_to_system_dir(&series);
 
