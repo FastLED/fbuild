@@ -38,7 +38,6 @@
     "protocols": [
       "wch-link",
       "minichlink",
-      "isp",
       "wlink"
     ]
   },

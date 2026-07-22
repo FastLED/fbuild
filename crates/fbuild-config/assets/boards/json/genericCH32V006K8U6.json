@@ -31,7 +31,7 @@
   "rom": 63488,
   "upload": {
     "protocol": "wch-link",
-    "protocols": ["wch-link", "minichlink", "isp", "wlink"]
+    "protocols": ["wch-link", "minichlink", "wlink"]
   },
   "url": "http://www.wch-ic.com/products/CH32V006.html",
   "vendor": "W.CH"
