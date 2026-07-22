@@ -255,8 +255,7 @@ fn validate_ch32v_framework(framework: Option<&str>) -> fbuild_core::Result<()> 
     match framework.map(str::trim) {
         None | Some("") | Some("arduino") => Ok(()),
         Some(other) => Err(fbuild_core::FbuildError::ConfigError(format!(
-            "ch32v: framework = {other} is not supported yet; only `framework = arduino` "
-                "builds today (FastLED/fbuild#1108)"
+            "ch32v: framework = {other} is not supported yet; only `framework = arduino` builds today (FastLED/fbuild#1108)"
         ))),
     }
 }
