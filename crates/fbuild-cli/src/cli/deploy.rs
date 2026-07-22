@@ -2,11 +2,13 @@
 //! plus the destination/emulator resolution helpers they share.
 
 use super::build::open_in_browser;
-use crate::daemon_client::{
-    self, DaemonClient, DeployRequest, MonitorRequest, OperationResponse, TestEmuRequest,
-};
+use crate::daemon_client::{self, DaemonClient, DeployRequest, OperationResponse, TestEmuRequest};
 use crate::output;
+use fbuild_serial::{SerialClientMessage, SerialServerMessage};
+use futures::{SinkExt, StreamExt};
 use std::io::Write;
+use std::time::{Duration, Instant};
+use tokio_tungstenite::{connect_async, tungstenite::Message};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum CliEmulatorKind {
@@ -349,26 +351,138 @@ pub async fn run_monitor(
     let client = DaemonClient::new();
     daemon_client::warn_if_daemon_identity_mismatch(&client, &project_dir).await;
 
-    let (caller_pid, caller_cwd) = daemon_client::caller_info();
-    let req = MonitorRequest {
-        project_dir,
-        environment,
+    let _ = (project_dir, environment);
+    let port = match port {
+        Some(port) => port,
+        None => {
+            let ports = fbuild_serial::ports::available_ports().map_err(|e| {
+                fbuild_core::FbuildError::SerialError(format!(
+                    "failed to enumerate serial ports: {e}"
+                ))
+            })?;
+            match ports.as_slice() {
+                [port] => port.port_name.clone(),
+                [] => {
+                    return Err(fbuild_core::FbuildError::SerialError(
+                        "no serial ports detected; specify one with --port".to_string(),
+                    ));
+                }
+                ports => {
+                    let names = ports
+                        .iter()
+                        .map(|p| p.port_name.as_str())
+                        .collect::<Vec<_>>()
+                        .join(", ");
+                    return Err(fbuild_core::FbuildError::SerialError(format!(
+                        "multiple serial ports detected ({names}); specify one with --port"
+                    )));
+                }
+            }
+        }
+    };
+    let baud_rate = baud_rate.unwrap_or(115200);
+    let client_id = format!("fbuild-monitor-{}", std::process::id());
+    let (mut socket, _) = connect_async(client.websocket_url("/ws/serial-monitor"))
+        .await
+        .map_err(|e| {
+            fbuild_core::FbuildError::DaemonError(format!("monitor connection failed: {e}"))
+        })?;
+    let attach = SerialClientMessage::Attach {
+        client_id,
         port,
         baud_rate,
-        halt_on_error,
-        halt_on_success,
-        expect,
-        timeout,
-        show_timestamp: !no_timestamp,
-        request_id: None,
-        caller_pid,
-        caller_cwd,
+        open_if_needed: true,
+        pre_acquire_writer: false,
+        client_metadata: None,
     };
+    socket
+        .send(Message::Text(serde_json::to_string(&attach).map_err(
+            |e| fbuild_core::FbuildError::DaemonError(format!("monitor attach failed: {e}")),
+        )?))
+        .await
+        .map_err(|e| {
+            fbuild_core::FbuildError::DaemonError(format!("monitor attach failed: {e}"))
+        })?;
 
-    let resp = client.monitor(&req).await?;
-    output::result(&resp.message);
-    if !resp.success {
-        std::process::exit(resp.exit_code);
+    let halt_error = halt_on_error.and_then(|p| regex::Regex::new(&p).ok());
+    let halt_success = halt_on_success.and_then(|p| regex::Regex::new(&p).ok());
+    let expect_re = expect.and_then(|p| regex::Regex::new(&p).ok());
+    let started = Instant::now();
+    let deadline = timeout.map(|secs| started + Duration::from_secs_f64(secs));
+    let mut expect_found = false;
+    loop {
+        let next = async { socket.next().await };
+        let message = tokio::select! {
+            message = next => message,
+            _ = tokio::signal::ctrl_c() => break,
+            _ = async {
+                if let Some(deadline) = deadline {
+                    tokio::time::sleep_until(deadline.into()).await;
+                } else {
+                    std::future::pending::<()>().await;
+                }
+            } => break,
+        };
+        let Some(Ok(Message::Text(text))) = message else {
+            break;
+        };
+        let event: SerialServerMessage = serde_json::from_str(&text).map_err(|e| {
+            fbuild_core::FbuildError::DaemonError(format!("invalid monitor event: {e}"))
+        })?;
+        match event {
+            SerialServerMessage::Attached {
+                success: false,
+                message,
+                ..
+            }
+            | SerialServerMessage::Error { message } => {
+                return Err(fbuild_core::FbuildError::SerialError(message));
+            }
+            SerialServerMessage::Attached { success: true, .. } => {}
+            SerialServerMessage::Data { lines, .. } => {
+                for line in lines {
+                    if !no_timestamp {
+                        let elapsed = started.elapsed().as_secs_f64();
+                        println!(
+                            "{:02}:{:05.2} {}",
+                            (elapsed / 60.0) as u64,
+                            elapsed % 60.0,
+                            line
+                        );
+                    } else {
+                        println!("{line}");
+                    }
+                    if expect_re.as_ref().is_some_and(|re| re.is_match(&line)) {
+                        expect_found = true;
+                    }
+                    if halt_error.as_ref().is_some_and(|re| re.is_match(&line))
+                        || halt_success.as_ref().is_some_and(|re| re.is_match(&line))
+                    {
+                        let _ = socket
+                            .send(Message::Text(
+                                serde_json::to_string(&SerialClientMessage::Detach).unwrap(),
+                            ))
+                            .await;
+                        return Ok(());
+                    }
+                }
+            }
+            SerialServerMessage::PortDisconnected { message, .. }
+            | SerialServerMessage::PortRebindFailed { message, .. } => {
+                return Err(fbuild_core::FbuildError::SerialError(message));
+            }
+            _ => {}
+        }
+    }
+    let _ = socket
+        .send(Message::Text(
+            serde_json::to_string(&SerialClientMessage::Detach).unwrap(),
+        ))
+        .await;
+    if expect_re.is_some() && !expect_found {
+        return Err(fbuild_core::FbuildError::SerialError(
+            "monitor timeout reached before --expect matched".to_string(),
+        ));
     }
     Ok(())
 }

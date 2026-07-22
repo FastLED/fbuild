@@ -116,32 +116,6 @@ pub struct DeployRequest {
 }
 
 #[derive(Debug, Serialize)]
-pub struct MonitorRequest {
-    pub project_dir: String,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub environment: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub port: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub baud_rate: Option<u32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub halt_on_error: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub halt_on_success: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub expect: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub timeout: Option<f64>,
-    pub show_timestamp: bool,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub request_id: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub caller_pid: Option<u32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub caller_cwd: Option<String>,
-}
-
-#[derive(Debug, Serialize)]
 pub struct TestEmuRequest {
     pub project_dir: String,
     #[serde(skip_serializing_if = "Option::is_none")]
