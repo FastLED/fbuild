@@ -43,7 +43,9 @@ pub fn wait_for_disappearance(port: &str, timeout: Duration) -> DisappearOutcome
     let deadline = Instant::now() + timeout;
     let poll = Duration::from_millis(75);
     loop {
-        let present = list_ports().iter().any(|info| info.port_name == port);
+        let present = list_ports().iter().any(|detected| {
+            detected.info.port_name == port && !detected.health.is_known_unhealthy()
+        });
         if !present {
             return DisappearOutcome::Gone;
         }

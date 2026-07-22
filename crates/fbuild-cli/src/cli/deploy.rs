@@ -337,6 +337,59 @@ fn operation_streams_include_message(resp: &OperationResponse) -> bool {
             .any(|stream| stream.trim() == message)
 }
 
+fn select_monitor_port(
+    requested: Option<String>,
+    ports: &[fbuild_serial::ports::DetectedPort],
+) -> fbuild_core::Result<String> {
+    match requested {
+        Some(port) => {
+            if let Some(detected) = ports
+                .iter()
+                .find(|detected| detected.info.port_name == port)
+                .filter(|detected| detected.health.is_known_unhealthy())
+            {
+                return Err(fbuild_core::FbuildError::SerialError(format!(
+                    "refusing to monitor {port}: endpoint health is {}; run `fbuild port scan` for recovery details",
+                    detected.health.label()
+                )));
+            }
+            Ok(port)
+        }
+        None => {
+            let selectable = ports
+                .iter()
+                .filter(|port| !port.health.is_known_unhealthy())
+                .collect::<Vec<_>>();
+            match selectable.as_slice() {
+                [port] => Ok(port.info.port_name.clone()),
+                [] if ports.is_empty() => Err(fbuild_core::FbuildError::SerialError(
+                    "no serial ports detected; specify one with --port".to_string(),
+                )),
+                [] => {
+                    let unhealthy = ports
+                        .iter()
+                        .map(|port| format!("{} ({})", port.info.port_name, port.health.label()))
+                        .collect::<Vec<_>>()
+                        .join(", ");
+                    Err(fbuild_core::FbuildError::SerialError(format!(
+                        "no selectable serial ports detected ({unhealthy}); run `fbuild port scan` for recovery details"
+                    )))
+                }
+                selectable => {
+                    let names = selectable
+                        .iter()
+                        .map(|port| port.info.port_name.as_str())
+                        .collect::<Vec<_>>()
+                        .join(", ");
+                    Err(fbuild_core::FbuildError::SerialError(format!(
+                        "multiple serial ports detected ({names}); specify one with --port"
+                    )))
+                }
+            }
+        }
+    }
+}
+
 #[allow(clippy::too_many_arguments)]
 pub async fn run_monitor(
     project_dir: String,
@@ -354,34 +407,10 @@ pub async fn run_monitor(
     daemon_client::warn_if_daemon_identity_mismatch(&client, &project_dir).await;
 
     let _ = (project_dir, environment);
-    let port = match port {
-        Some(port) => port,
-        None => {
-            let ports = fbuild_serial::ports::available_ports().map_err(|e| {
-                fbuild_core::FbuildError::SerialError(format!(
-                    "failed to enumerate serial ports: {e}"
-                ))
-            })?;
-            match ports.as_slice() {
-                [port] => port.port_name.clone(),
-                [] => {
-                    return Err(fbuild_core::FbuildError::SerialError(
-                        "no serial ports detected; specify one with --port".to_string(),
-                    ));
-                }
-                ports => {
-                    let names = ports
-                        .iter()
-                        .map(|p| p.port_name.as_str())
-                        .collect::<Vec<_>>()
-                        .join(", ");
-                    return Err(fbuild_core::FbuildError::SerialError(format!(
-                        "multiple serial ports detected ({names}); specify one with --port"
-                    )));
-                }
-            }
-        }
-    };
+    let ports = fbuild_serial::ports::available_ports().map_err(|e| {
+        fbuild_core::FbuildError::SerialError(format!("failed to enumerate serial ports: {e}"))
+    })?;
+    let port = select_monitor_port(port, &ports)?;
     let baud_rate = baud_rate.unwrap_or(115200);
     let client_id = format!("fbuild-monitor-{}", std::process::id());
     let (mut socket, _) = connect_async(client.websocket_url("/ws/serial-monitor"))
@@ -493,6 +522,21 @@ pub async fn run_monitor(
 mod tests {
     use super::*;
 
+    fn detected_port(
+        name: &str,
+        health: fbuild_serial::ports::PortHealth,
+    ) -> fbuild_serial::ports::DetectedPort {
+        fbuild_serial::ports::DetectedPort {
+            info: serialport::SerialPortInfo {
+                port_name: name.to_string(),
+                port_type: serialport::SerialPortType::Unknown,
+            },
+            health,
+            instance_id: None,
+            parent_instance_id: None,
+        }
+    }
+
     fn response(message: &str, stdout: Option<&str>, stderr: Option<&str>) -> OperationResponse {
         OperationResponse {
             success: false,
@@ -521,5 +565,23 @@ mod tests {
     fn distinct_result_message_is_not_suppressed() {
         let resp = response("deploy failed", None, Some("transport detail"));
         assert!(!operation_streams_include_message(&resp));
+    }
+
+    #[test]
+    fn monitor_selection_never_chooses_a_known_unhealthy_endpoint() {
+        let ports = vec![detected_port(
+            "COM12",
+            fbuild_serial::ports::PortHealth::Phantom {
+                problem_code: Some(45),
+                status: Some(0),
+            },
+        )];
+
+        let auto_error = select_monitor_port(None, &ports).unwrap_err().to_string();
+        assert!(auto_error.contains("no selectable serial ports"));
+        let explicit_error = select_monitor_port(Some("COM12".to_string()), &ports)
+            .unwrap_err()
+            .to_string();
+        assert!(explicit_error.contains("endpoint health is phantom"));
     }
 }

@@ -190,12 +190,23 @@ fn tracked_serial_lease_moves_to_new_port_on_refresh() {
         product_name: Some("Test Device".to_string()),
         is_cdc: Some(true),
         serial_number: Some("TEST-SERIAL".to_string()),
+        port_health: fbuild_serial::ports::PortHealth::HealthyPresent,
+        instance_id: Some(r"USB\VID_1234&PID_5678\TEST-SERIAL".to_string()),
+        parent_instance_id: Some(r"USB\VID_1234&PID_5678\PARENT".to_string()),
     }]);
 
     assert!(mgr.get_device_status("COM3").is_none());
     let moved = mgr.get_device_status("COM4").unwrap();
     assert_eq!(moved.previous_port.as_deref(), Some("COM3"));
     assert_eq!(moved.is_cdc, Some(true));
+    assert_eq!(
+        moved.port_health,
+        fbuild_serial::ports::PortHealth::HealthyPresent
+    );
+    assert_eq!(
+        moved.instance_id.as_deref(),
+        Some(r"USB\VID_1234&PID_5678\TEST-SERIAL")
+    );
     assert_eq!(
         moved.exclusive_lease.as_ref().map(|l| l.client_id.as_str()),
         Some("c1")
@@ -234,6 +245,12 @@ fn untracked_serial_lease_stays_on_old_disconnected_port() {
         product_name: Some("Test Device".to_string()),
         is_cdc: Some(false),
         serial_number: Some("TEST-SERIAL".to_string()),
+        port_health: fbuild_serial::ports::PortHealth::PresentProblem {
+            problem_code: 31,
+            status: Some(0),
+        },
+        instance_id: Some(r"USB\VID_1234&PID_5678\TEST-SERIAL".to_string()),
+        parent_instance_id: Some(r"USB\VID_1234&PID_5678\PARENT".to_string()),
     }]);
 
     let old = mgr.get_device_status("COM3").unwrap();

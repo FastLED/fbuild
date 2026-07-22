@@ -15,7 +15,8 @@
 use std::collections::HashSet;
 use std::time::{Duration, Instant};
 
-use serialport::{SerialPortInfo, SerialPortType};
+use fbuild_serial::ports::DetectedPort;
+use serialport::SerialPortType;
 
 /// Test-only identity fixture. Production Teensy classification is supplied by
 /// the verified FastLED/boards USB transport profiles.
@@ -55,7 +56,7 @@ fn is_teensy_runtime_identity(vid: u16, pid: u16) -> bool {
 /// `serialport::available_ports()`) lists Windows ports whose PnP devnode
 /// reports a non-OK status — every Teensy composite serial port. Without this
 /// the pre/post-flash port diff never sees the Teensy. FastLED/fbuild#962.
-pub fn list_ports() -> Vec<SerialPortInfo> {
+pub fn list_ports() -> Vec<DetectedPort> {
     match fbuild_serial::ports::available_ports() {
         Ok(ports) => ports,
         Err(e) => {
@@ -71,7 +72,7 @@ pub fn list_ports() -> Vec<SerialPortInfo> {
 /// `wait_for_new_cdc_port` needs to compute the diff, and serialising
 /// `SerialPortInfo` across thread boundaries can be awkward.
 pub fn snapshot_port_names() -> HashSet<String> {
-    list_ports().into_iter().map(|p| p.port_name).collect()
+    list_ports().into_iter().map(|p| p.info.port_name).collect()
 }
 
 /// Return true if `port` is reported by `available_ports()` as a PJRC USB
@@ -79,8 +80,8 @@ pub fn snapshot_port_names() -> HashSet<String> {
 /// device is already HalfKay" from "the user gave us the wrong port entirely".
 pub fn is_pjrc_cdc(port: &str) -> bool {
     for info in list_ports() {
-        if info.port_name == port {
-            if let SerialPortType::UsbPort(usb) = &info.port_type {
+        if info.info.port_name == port {
+            if let SerialPortType::UsbPort(usb) = &info.info.port_type {
                 return is_teensy_runtime_identity(usb.vid, usb.pid);
             }
         }
@@ -94,9 +95,12 @@ pub fn is_pjrc_cdc(port: &str) -> bool {
 /// the baud-134 trigger.
 pub fn first_pjrc_cdc_port() -> Option<String> {
     for info in list_ports() {
-        if let SerialPortType::UsbPort(usb) = &info.port_type {
+        if info.health.is_known_unhealthy() {
+            continue;
+        }
+        if let SerialPortType::UsbPort(usb) = &info.info.port_type {
             if is_teensy_runtime_identity(usb.vid, usb.pid) {
-                return Some(info.port_name);
+                return Some(info.info.port_name);
             }
         }
     }
@@ -129,12 +133,12 @@ pub fn wait_for_new_cdc_port(pre_snapshot: &HashSet<String>, timeout: Duration) 
 
     while Instant::now() < deadline {
         let current = list_ports();
-        let mut pjrc_new: Vec<&SerialPortInfo> = Vec::new();
-        let mut any_new: Vec<&SerialPortInfo> = Vec::new();
+        let mut pjrc_new: Vec<&DetectedPort> = Vec::new();
+        let mut any_new: Vec<&DetectedPort> = Vec::new();
         for info in &current {
-            if !pre_snapshot.contains(&info.port_name) {
+            if !pre_snapshot.contains(&info.info.port_name) && !info.health.is_known_unhealthy() {
                 any_new.push(info);
-                if let SerialPortType::UsbPort(usb) = &info.port_type {
+                if let SerialPortType::UsbPort(usb) = &info.info.port_type {
                     if is_teensy_runtime_identity(usb.vid, usb.pid) {
                         pjrc_new.push(info);
                     }
@@ -142,10 +146,10 @@ pub fn wait_for_new_cdc_port(pre_snapshot: &HashSet<String>, timeout: Duration) 
             }
         }
         if let Some(info) = pjrc_new.first() {
-            return NewPortOutcome::Found(info.port_name.clone());
+            return NewPortOutcome::Found(info.info.port_name.clone());
         }
         if let Some(info) = any_new.first() {
-            return NewPortOutcome::Found(info.port_name.clone());
+            return NewPortOutcome::Found(info.info.port_name.clone());
         }
         std::thread::sleep(poll);
     }

@@ -112,7 +112,7 @@ fn run_probe(action: ProbeAction) -> Result<()> {
 
 /// `fbuild serial probe list` — enumerate every port with annotation.
 fn list_ports() -> Result<()> {
-    let ports = serialport::available_ports()
+    let ports = fbuild_serial::ports::available_ports()
         .map_err(|e| FbuildError::SerialError(format!("serial port enumeration failed: {e}")))?;
 
     if ports.is_empty() {
@@ -126,9 +126,10 @@ fn list_ports() -> Result<()> {
     Ok(())
 }
 
-fn print_port_summary(port: &serialport::SerialPortInfo) {
-    let name = &port.port_name;
-    match &port.port_type {
+fn print_port_summary(port: &fbuild_serial::ports::DetectedPort) {
+    let name = &port.info.port_name;
+    let health = port.health.label();
+    match &port.info.port_type {
         serialport::SerialPortType::UsbPort(info) => {
             let hint = board_hint(info.vid, info.pid)
                 .map(|h| format!("[{h}]"))
@@ -141,16 +142,20 @@ fn print_port_summary(port: &serialport::SerialPortInfo) {
                 format!("ser={serial}  ")
             };
             output::result(format!(
-                "{name:<10} {vid:04X}:{pid:04X}  {serial_field}{product}  {hint}",
+                "{name:<10} {vid:04X}:{pid:04X}  {serial_field}{product}  {hint} health={health}",
                 vid = info.vid,
                 pid = info.pid,
             ));
         }
-        serialport::SerialPortType::PciPort => output::result(format!("{name:<10} [PCI]")),
-        serialport::SerialPortType::BluetoothPort => {
-            output::result(format!("{name:<10} [Bluetooth]"))
+        serialport::SerialPortType::PciPort => {
+            output::result(format!("{name:<10} [PCI] health={health}"))
         }
-        serialport::SerialPortType::Unknown => output::result(format!("{name:<10} [Unknown]")),
+        serialport::SerialPortType::BluetoothPort => {
+            output::result(format!("{name:<10} [Bluetooth] health={health}"))
+        }
+        serialport::SerialPortType::Unknown => {
+            output::result(format!("{name:<10} [Unknown] health={health}"))
+        }
     }
 }
 
@@ -178,13 +183,13 @@ fn find_port(vid_pid: Option<&str>, env: Option<&str>) -> Result<()> {
         }
     };
 
-    let ports = serialport::available_ports()
+    let ports = fbuild_serial::ports::available_ports()
         .map_err(|e| FbuildError::SerialError(format!("serial port enumeration failed: {e}")))?;
 
     for port in ports {
-        if let serialport::SerialPortType::UsbPort(info) = &port.port_type {
-            if (info.vid, info.pid) == target {
-                output::result(&port.port_name);
+        if let serialport::SerialPortType::UsbPort(info) = &port.info.port_type {
+            if (info.vid, info.pid) == target && !port.health.is_known_unhealthy() {
+                output::result(&port.info.port_name);
                 return Ok(());
             }
         }
