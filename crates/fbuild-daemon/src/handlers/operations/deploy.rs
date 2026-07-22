@@ -70,9 +70,7 @@ fn find_teensy_loader_cli() -> Option<PathBuf> {
 /// CH32V flashing is tracked in FastLED/fbuild#1105.
 fn ch32v_deploy_unimplemented_message(firmware: &std::path::Path) -> String {
     format!(
-        "CH32V flashing is not implemented yet (FastLED/fbuild#1105). Firmware was built at {}. Flash it manually with a WCH-Link probe: "
-            "`wlink flash {}` (https://github.com/ch32-rs/wlink) or "
-            "`minichlink -w {} flash -b`.",
+        "CH32V flashing is not implemented yet (FastLED/fbuild#1105). Firmware was built at {}. Flash it manually with a WCH-Link probe: `wlink flash {}` (https://github.com/ch32-rs/wlink) or `minichlink -w {} flash -b`.",
         firmware.display(),
         firmware.display(),
         firmware.display()
