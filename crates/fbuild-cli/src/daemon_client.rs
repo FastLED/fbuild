@@ -222,6 +222,20 @@ impl DaemonClient {
         }
     }
 
+    pub fn websocket_url(&self, path: &str) -> String {
+        let scheme = if self.base_url.starts_with("https://") {
+            "wss://"
+        } else {
+            "ws://"
+        };
+        let host = self
+            .base_url
+            .strip_prefix("https://")
+            .or_else(|| self.base_url.strip_prefix("http://"))
+            .unwrap_or(&self.base_url);
+        format!("{scheme}{host}{path}")
+    }
+
     /// Check if the daemon is healthy.
     pub async fn health(&self) -> bool {
         self.client
@@ -374,12 +388,6 @@ impl DaemonClient {
     /// Send a deploy request.
     pub async fn deploy(&self, req: &DeployRequest) -> fbuild_core::Result<OperationResponse> {
         self.post_operation("/api/deploy", req, Some(LONG_OPERATION_TIMEOUT))
-            .await
-    }
-
-    /// Send a monitor request.
-    pub async fn monitor(&self, req: &MonitorRequest) -> fbuild_core::Result<OperationResponse> {
-        self.post_operation("/api/monitor", req, Some(LONG_OPERATION_TIMEOUT))
             .await
     }
 

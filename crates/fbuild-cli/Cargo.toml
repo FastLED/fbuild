@@ -31,6 +31,8 @@ clap = { workspace = true }
 tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
 futures = { workspace = true }
+tokio-tungstenite = { workspace = true }
+regex = { workspace = true }
 running-process = { workspace = true }
 blake3 = { workspace = true }
 sha2 = { workspace = true }
