@@ -1408,17 +1408,20 @@ dependencies = [
  "fbuild-paths",
  "fbuild-serial",
  "fbuild-test-support",
+ "flate2",
  "md-5 0.10.6",
  "object 0.36.7",
  "serde",
  "serde_json",
  "serialport",
  "sha2",
+ "tar",
  "tempfile",
  "thiserror 2.0.18",
  "tokio",
  "tracing",
  "zip",
+ "zstd",
 ]
 
 [[package]]
