@@ -10,8 +10,8 @@
     "core": "openwch",
     "extra_flags": "-DCH32V303VC -DCH32V30X -DCH32V30x -DCH32V303 -DCH32V30x_D8",
     "f_cpu": "144000000L",
-    "mabi": "ilp32",
-    "march": "rv32imacxw",
+    "mabi": "ilp32f",
+    "march": "rv32imafcxw",
     "mcu": "ch32v303vct6",
     "series": "ch32v303"
   },
