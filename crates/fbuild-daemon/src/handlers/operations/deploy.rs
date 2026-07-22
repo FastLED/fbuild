@@ -67,16 +67,6 @@ fn find_teensy_loader_cli() -> Option<PathBuf> {
     None
 }
 
-/// CH32V flashing is tracked in FastLED/fbuild#1105.
-fn ch32v_deploy_unimplemented_message(firmware: &std::path::Path) -> String {
-    format!(
-        "CH32V flashing is not implemented yet (FastLED/fbuild#1105). Firmware was built at {}. Flash it manually with a WCH-Link probe: `wlink flash {}` (https://github.com/ch32-rs/wlink) or `minichlink -w {} flash -b`.",
-        firmware.display(),
-        firmware.display(),
-        firmware.display()
-    )
-}
-
 /// POST /api/deploy
 pub async fn deploy(
     State(ctx): State<Arc<DaemonContext>>,
@@ -813,11 +803,7 @@ pub async fn deploy(
                 baud_override,
                 no_probe_rs,
             ),
-            fbuild_core::Platform::Ch32v => {
-                return Err(fbuild_core::FbuildError::DeployFailed(
-                    ch32v_deploy_unimplemented_message(&deploy_fw),
-                ));
-            }
+            fbuild_core::Platform::Ch32v => Box::new(fbuild_deploy::wlink::WlinkDeployer::new()),
             _ => {
                 return Err(fbuild_core::FbuildError::DeployFailed(format!(
                     "deployer for {:?} not yet implemented",
@@ -1204,13 +1190,5 @@ mod tests {
             "deploy error: deploy failed: RP2040 mass-storage error 1006"
         );
         assert_eq!(response.stderr.as_deref(), Some(response.message.as_str()));
-    }
-
-    #[test]
-    fn ch32v_deploy_error_names_supported_manual_flashers() {
-        let message = ch32v_deploy_unimplemented_message(std::path::Path::new("out/firmware.bin"));
-        assert!(message.contains("wlink"));
-        assert!(message.contains("#1105"));
-        assert!(message.contains("out/firmware.bin"));
     }
 }

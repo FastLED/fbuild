@@ -24,6 +24,7 @@ pub mod reset;
 pub mod rp2040;
 pub mod size_check;
 pub mod teensy;
+pub mod wlink;
 
 use fbuild_core::Result;
 use std::path::Path;
