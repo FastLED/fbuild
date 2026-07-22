@@ -803,7 +803,21 @@ pub async fn deploy(
                 baud_override,
                 no_probe_rs,
             ),
-            fbuild_core::Platform::Ch32v => Box::new(fbuild_deploy::wlink::WlinkDeployer::new()),
+            fbuild_core::Platform::Ch32v => {
+                match req.protocol.as_deref() {
+                    Some("isp") => {
+                        let mcu = board.as_ref().map(|b| b.mcu.as_str()).unwrap_or_default();
+                        if !fbuild_deploy::wchisp::supports_mcu(mcu) {
+                            return Err(fbuild_core::FbuildError::DeployFailed(format!(
+                                "no ISP bootloader on {mcu}; use a WCH-LinkE probe"
+                            )));
+                        }
+                        Box::new(fbuild_deploy::wchisp::WchispDeployer::new())
+                    }
+                    Some("wlink") | None => Box::new(fbuild_deploy::wlink::WlinkDeployer::new()),
+                    Some(protocol) => return Err(fbuild_core::FbuildError::DeployFailed(format!("unsupported CH32V deploy protocol: {protocol}"))),
+                }
+            }
             _ => {
                 return Err(fbuild_core::FbuildError::DeployFailed(format!(
                     "deployer for {:?} not yet implemented",

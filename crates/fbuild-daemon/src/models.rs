@@ -89,6 +89,9 @@ pub struct DeployRequest {
     pub project_dir: String,
     pub environment: Option<String>,
     pub port: Option<String>,
+    /// Explicit deploy protocol, currently `isp` or `wlink` for CH32V.
+    #[serde(default)]
+    pub protocol: Option<String>,
     #[serde(default)]
     pub monitor_after: bool,
     #[serde(default)]

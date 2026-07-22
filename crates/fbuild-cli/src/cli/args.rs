@@ -280,6 +280,9 @@ pub enum Commands {
         environment: Option<String>,
         #[arg(short = 'p', long)]
         port: Option<String>,
+        /// CH32V deploy protocol: `wlink` (default) or factory USB-ISP `isp`
+        #[arg(long, value_parser = ["wlink", "isp"])]
+        protocol: Option<String>,
         #[arg(short = 'c', long)]
         clean: bool,
         /// Remove project output and matching reusable framework caches before deploying
