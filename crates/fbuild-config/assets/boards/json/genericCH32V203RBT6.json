@@ -8,7 +8,7 @@
     },
     "clock_source": "hsi+pll",
     "core": "openwch",
-    "extra_flags": "-DCH32V203RB -DCH32V20X -DCH32V20x -DCH32V203 -DCH32V20x_D8",
+    "extra_flags": "-DCH32V203RB -DCH32V20X -DCH32V20x -DCH32V203xB -DCH32V20x_D8",
     "f_cpu": "144000000L",
     "mabi": "ilp32",
     "march": "rv32imacxw",
