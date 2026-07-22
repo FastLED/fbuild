@@ -161,15 +161,18 @@ pub struct SerialPortSource;
 
 impl PortSource for SerialPortSource {
     fn snapshot(&self) -> Vec<PortFingerprint> {
-        match serialport::available_ports() {
+        match crate::ports::available_ports() {
             Ok(ports) => ports
                 .into_iter()
                 .filter_map(|port| {
-                    if let serialport::SerialPortType::UsbPort(info) = port.port_type {
+                    if port.health.is_known_unhealthy() {
+                        return None;
+                    }
+                    if let serialport::SerialPortType::UsbPort(info) = port.info.port_type {
                         Some(PortFingerprint {
                             vid: info.vid,
                             pid: info.pid,
-                            name: port.port_name,
+                            name: port.info.port_name,
                         })
                     } else {
                         None

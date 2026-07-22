@@ -113,6 +113,11 @@ pub struct DeviceState {
     /// non-USB or unknown on this platform.
     pub is_cdc: Option<bool>,
     pub serial_number: Option<String>,
+    /// Host health retained from the blessed serial enumeration.
+    pub port_health: fbuild_serial::ports::PortHealth,
+    /// Canonical Plug and Play identity when the host exposes one.
+    pub instance_id: Option<String>,
+    pub parent_instance_id: Option<String>,
     pub previous_port: Option<String>,
     pub exclusive_lease: Option<DeviceLease>,
     pub monitor_leases: HashMap<String, DeviceLease>,
@@ -165,6 +170,9 @@ struct DiscoveredDevice {
     product_name: Option<String>,
     is_cdc: Option<bool>,
     serial_number: Option<String>,
+    port_health: fbuild_serial::ports::PortHealth,
+    instance_id: Option<String>,
+    parent_instance_id: Option<String>,
 }
 
 /// Thread-safe device manager.
@@ -228,7 +236,7 @@ impl DeviceManager {
     /// Refresh the device inventory from serial port enumeration.
     /// Preserves existing leases for devices that are still present.
     pub fn refresh_devices(&self) {
-        let ports = match serialport::available_ports() {
+        let ports = match fbuild_serial::ports::available_ports() {
             Ok(p) => p,
             Err(e) => {
                 tracing::warn!("failed to enumerate serial ports: {}", e);
@@ -238,7 +246,11 @@ impl DeviceManager {
 
         let discovered: Vec<DiscoveredDevice> = ports
             .into_iter()
-            .map(|port_info| {
+            .map(|detected| {
+                let port_health = detected.health.clone();
+                let instance_id = detected.instance_id.clone();
+                let parent_instance_id = detected.parent_instance_id.clone();
+                let port_info = detected.info;
                 let (vid, pid, fallback_desc) = match &port_info.port_type {
                     serialport::SerialPortType::UsbPort(usb) => (
                         Some(usb.vid),
@@ -288,6 +300,9 @@ impl DeviceManager {
                     product_name,
                     is_cdc,
                     serial_number,
+                    port_health,
+                    instance_id,
+                    parent_instance_id,
                 }
             })
             .collect();
@@ -341,6 +356,9 @@ impl DeviceManager {
                             state.product_name = device.product_name;
                             state.is_cdc = device.is_cdc;
                             state.serial_number = device.serial_number;
+                            state.port_health = device.port_health;
+                            state.instance_id = device.instance_id;
+                            state.parent_instance_id = device.parent_instance_id;
                             if let Some(previous_port) = state.previous_port.clone() {
                                 self.recent_port_moves
                                     .lock()
@@ -368,6 +386,9 @@ impl DeviceManager {
                 product_name: device.product_name.clone(),
                 is_cdc: device.is_cdc,
                 serial_number: device.serial_number.clone(),
+                port_health: device.port_health.clone(),
+                instance_id: device.instance_id.clone(),
+                parent_instance_id: device.parent_instance_id.clone(),
                 previous_port: None,
                 exclusive_lease: None,
                 monitor_leases: HashMap::new(),
@@ -387,6 +408,9 @@ impl DeviceManager {
             entry.product_name = device.product_name;
             entry.is_cdc = device.is_cdc;
             entry.serial_number = device.serial_number;
+            entry.port_health = device.port_health;
+            entry.instance_id = device.instance_id;
+            entry.parent_instance_id = device.parent_instance_id;
         }
 
         // Stamp `last_disconnect_at` for every device that went from
@@ -703,6 +727,9 @@ impl DeviceManager {
                 product_name: Some("Test Device".to_string()),
                 is_cdc: None,
                 serial_number: Some("TEST-SERIAL".to_string()),
+                port_health: fbuild_serial::ports::PortHealth::Unknown,
+                instance_id: None,
+                parent_instance_id: None,
                 previous_port: None,
                 exclusive_lease: None,
                 monitor_leases: HashMap::new(),

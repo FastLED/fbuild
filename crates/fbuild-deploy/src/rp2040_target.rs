@@ -104,6 +104,9 @@ mod tests {
         PicoCdcPort {
             name: name.to_string(),
             serial_number: serial_number.map(str::to_string),
+            health: fbuild_serial::ports::PortHealth::Unknown,
+            instance_id: None,
+            parent_instance_id: None,
         }
     }
 

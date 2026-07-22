@@ -820,18 +820,19 @@ pub fn family_for_port(name: &str) -> Option<BoardFamily> {
     family_for_port_via_kernel_class_inner(kernel_class)
 }
 
-/// Walk `serialport::available_ports()` for `name` and return the
+/// Walk the blessed port enumerator for `name` and return the
 /// USB port's `(vid, pid, family_lookup_result)`. Returns `None` when
 /// the port is not present in the live enumeration or is not a USB
 /// port (real UART, Bluetooth virtual serial, etc.). When the port IS
 /// USB but its VID/PID isn't in the table, returns `Some((vid, pid, None))`.
 fn lookup_port_vid_pid(name: &str) -> Option<(u16, u16, Option<BoardFamily>)> {
-    let ports = serialport::available_ports().ok()?;
+    let ports = crate::ports::available_ports().ok()?;
     for port in ports {
-        if !serial_port_name_matches(&port.port_name, name) {
+        if port.health.is_known_unhealthy() || !serial_port_name_matches(&port.info.port_name, name)
+        {
             continue;
         }
-        if let serialport::SerialPortType::UsbPort(info) = port.port_type {
+        if let serialport::SerialPortType::UsbPort(info) = port.info.port_type {
             return Some((info.vid, info.pid, family_for_vid_pid(info.vid, info.pid)));
         }
     }

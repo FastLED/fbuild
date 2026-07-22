@@ -981,6 +981,9 @@ impl Rp2040Deployer {
 struct PicoCdcPort {
     name: String,
     serial_number: Option<String>,
+    health: fbuild_serial::ports::PortHealth,
+    instance_id: Option<String>,
+    parent_instance_id: Option<String>,
 }
 
 fn catalogue_pico_cdc_ports(expected_family: u32) -> Result<Vec<PicoCdcPort>> {
@@ -992,15 +995,18 @@ fn catalogue_pico_cdc_ports(expected_family: u32) -> Result<Vec<PicoCdcPort>> {
     let mut matches: Vec<PicoCdcPort> = ports
         .into_iter()
         .filter_map(|port| {
-            let serialport::SerialPortType::UsbPort(usb) = &port.port_type else {
+            let serialport::SerialPortType::UsbPort(usb) = &port.info.port_type else {
                 return None;
             };
             let matches_family = fbuild_core::usb::profiles::profiles_for(usb.vid, usb.pid)
                 .iter()
                 .any(|profile| profile_matches_family(profile, expected_family));
             matches_family.then(|| PicoCdcPort {
-                name: port.port_name,
+                name: port.info.port_name,
                 serial_number: usb.serial_number.clone(),
+                health: port.health,
+                instance_id: port.instance_id,
+                parent_instance_id: port.parent_instance_id,
             })
         })
         .collect();
@@ -1034,9 +1040,27 @@ impl CdcWaitTimeout {
         } else {
             self.candidates
                 .iter()
-                .map(|candidate| match candidate.serial_number.as_deref() {
-                    Some(serial) => format!("{} (serial {serial})", candidate.name),
-                    None => format!("{} (serial unavailable)", candidate.name),
+                .map(|candidate| {
+                    let serial = candidate
+                        .serial_number
+                        .as_deref()
+                        .map(|value| format!("serial {value}"))
+                        .unwrap_or_else(|| "serial unavailable".to_string());
+                    let instance = candidate
+                        .instance_id
+                        .as_deref()
+                        .map(|value| format!("; instance {value}"))
+                        .unwrap_or_default();
+                    let parent = candidate
+                        .parent_instance_id
+                        .as_deref()
+                        .map(|value| format!("; parent {value}"))
+                        .unwrap_or_default();
+                    format!(
+                        "{} ({serial}; health {}{instance}{parent})",
+                        candidate.name,
+                        candidate.health.label()
+                    )
                 })
                 .collect::<Vec<_>>()
                 .join(", ")
@@ -2097,6 +2121,9 @@ mod tests {
             candidates: vec![PicoCdcPort {
                 name: "COM27".to_string(),
                 serial_number: Some("5303284720C4641C".to_string()),
+                health: fbuild_serial::ports::PortHealth::Unknown,
+                instance_id: None,
+                parent_instance_id: None,
             }],
         }
         .diagnostics();
@@ -2104,7 +2131,7 @@ mod tests {
         assert!(diagnostics.contains("elapsed 30000ms"));
         assert!(diagnostics.contains("prior port COM12"));
         assert!(diagnostics.contains("requested serial 5303284720C4641C"));
-        assert!(diagnostics.contains("COM27 (serial 5303284720C4641C)"));
+        assert!(diagnostics.contains("COM27 (serial 5303284720C4641C; health unknown)"));
     }
 
     #[test]
@@ -2152,6 +2179,9 @@ mod tests {
                     vec![PicoCdcPort {
                         name: "COM27".to_string(),
                         serial_number: Some("5303284720C4641C".to_string()),
+                        health: fbuild_serial::ports::PortHealth::Unknown,
+                        instance_id: None,
+                        parent_instance_id: None,
                     }]
                 })
             },
@@ -2178,6 +2208,9 @@ mod tests {
                 Ok(vec![PicoCdcPort {
                     name: "COM27".to_string(),
                     serial_number: Some("5303284720C4641C".to_string()),
+                    health: fbuild_serial::ports::PortHealth::Unknown,
+                    instance_id: None,
+                    parent_instance_id: None,
                 }])
             },
             || elapsed.next().unwrap_or(Duration::from_secs(30)),
@@ -2206,10 +2239,16 @@ mod tests {
                     PicoCdcPort {
                         name: "COM12".to_string(),
                         serial_number: None,
+                        health: fbuild_serial::ports::PortHealth::Unknown,
+                        instance_id: None,
+                        parent_instance_id: None,
                     },
                     PicoCdcPort {
                         name: "COM13".to_string(),
                         serial_number: None,
+                        health: fbuild_serial::ports::PortHealth::Unknown,
+                        instance_id: None,
+                        parent_instance_id: None,
                     },
                 ])
             },

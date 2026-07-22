@@ -22,11 +22,125 @@
 //! plus population of the composite-interface index (`MI_xx`) so callers can
 //! disambiguate a Teensy's Serial vs Serial+MIDI functions.
 
+/// Current host health for an enumerated serial endpoint.
+///
+/// Windows distinguishes a devnode that is present and healthy from a
+/// present-but-problematic devnode and a historical phantom record.  Those are
+/// facts about the endpoint, not selection policy: callers may keep an
+/// unhealthy record for diagnostics while rejecting it for deployment.
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub enum PortHealth {
+    /// The devnode is in the live tree and Config Manager reports no problem.
+    HealthyPresent,
+    /// The devnode is present but Config Manager returned a non-zero problem.
+    PresentProblem {
+        problem_code: u32,
+        status: Option<u32>,
+    },
+    /// The devnode is retained by Windows history but is not in the live tree.
+    Phantom {
+        problem_code: Option<u32>,
+        status: Option<u32>,
+    },
+    /// The host cannot provide equivalent health data (normal off Windows).
+    Unknown,
+}
+
+impl PortHealth {
+    /// True only for states that positively prove the endpoint is unhealthy.
+    pub fn is_known_unhealthy(&self) -> bool {
+        matches!(self, Self::PresentProblem { .. } | Self::Phantom { .. })
+    }
+
+    /// Stable lowercase label for diagnostics and machine-readable callers.
+    pub fn label(&self) -> &'static str {
+        match self {
+            Self::HealthyPresent => "healthy",
+            Self::PresentProblem { .. } => "present-problem",
+            Self::Phantom { .. } => "phantom",
+            Self::Unknown => "unknown",
+        }
+    }
+
+    /// Config Manager problem code when the operating system supplied one.
+    pub fn problem_code(&self) -> Option<u32> {
+        match self {
+            Self::PresentProblem { problem_code, .. } => Some(*problem_code),
+            Self::Phantom { problem_code, .. } => *problem_code,
+            Self::HealthyPresent | Self::Unknown => None,
+        }
+    }
+}
+
+/// A serial endpoint plus the host facts needed to decide whether it is safe
+/// to select.  [`Self::info`] retains the upstream `serialport` shape for
+/// callers that only need USB identity or a port name.
+#[derive(Clone, Debug)]
+pub struct DetectedPort {
+    pub info: serialport::SerialPortInfo,
+    pub health: PortHealth,
+    /// Canonical Plug and Play device instance ID when the host exposes one.
+    pub instance_id: Option<String>,
+    /// Immediate parent device instance ID when the host exposes one.
+    pub parent_instance_id: Option<String>,
+}
+
+impl DetectedPort {
+    pub fn unknown(info: serialport::SerialPortInfo) -> Self {
+        Self {
+            info,
+            health: PortHealth::Unknown,
+            instance_id: None,
+            parent_instance_id: None,
+        }
+    }
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+enum PnpObservation {
+    Present { status: u32, problem_code: u32 },
+    Phantom,
+    Unknown,
+}
+
+fn classify_port_health(observation: PnpObservation) -> PortHealth {
+    match observation {
+        PnpObservation::Present {
+            status: _,
+            problem_code: 0,
+        } => PortHealth::HealthyPresent,
+        PnpObservation::Present {
+            status,
+            problem_code,
+        } => PortHealth::PresentProblem {
+            problem_code,
+            status: Some(status),
+        },
+        PnpObservation::Phantom => PortHealth::Phantom {
+            problem_code: None,
+            status: None,
+        },
+        PnpObservation::Unknown => PortHealth::Unknown,
+    }
+}
+
+fn health_for_endpoint(observation: PnpObservation, is_usb: bool) -> PortHealth {
+    if is_usb {
+        classify_port_health(observation)
+    } else {
+        // A PnP status for a UART, Bluetooth, or other non-USB endpoint is
+        // not equivalent to the USB health contract consumers use for deploy
+        // selection. Preserve the cross-platform `Unknown` behavior instead.
+        PortHealth::Unknown
+    }
+}
+
 /// Enumerate every serial port currently visible to the OS.
 ///
 /// Unlike [`serialport::available_ports`], on Windows this includes ports
-/// whose devnode status is not "OK" (the Teensy / composite-device case).
-pub fn available_ports() -> serialport::Result<Vec<serialport::SerialPortInfo>> {
+/// whose devnode status is not "OK" (the Teensy / composite-device case) and
+/// preserves that health in the returned record.
+pub fn available_ports() -> serialport::Result<Vec<DetectedPort>> {
     #[cfg(windows)]
     {
         imp::available_ports()
@@ -34,6 +148,7 @@ pub fn available_ports() -> serialport::Result<Vec<serialport::SerialPortInfo>> 
     #[cfg(not(windows))]
     {
         serialport::available_ports()
+            .map(|ports| ports.into_iter().map(DetectedPort::unknown).collect())
     }
 }
 
@@ -69,18 +184,85 @@ pub fn present_usb_problem_devices() -> Vec<UsbProblemDevice> {
     }
 }
 
+#[cfg(test)]
+mod health_tests {
+    use super::*;
+
+    #[test]
+    fn classifies_healthy_problem_phantom_and_unknown_endpoints() {
+        assert_eq!(
+            classify_port_health(PnpObservation::Present {
+                status: 0,
+                problem_code: 0,
+            }),
+            PortHealth::HealthyPresent
+        );
+        assert_eq!(
+            classify_port_health(PnpObservation::Present {
+                status: 0x1234,
+                problem_code: 31,
+            }),
+            PortHealth::PresentProblem {
+                problem_code: 31,
+                status: Some(0x1234),
+            }
+        );
+        assert_eq!(
+            classify_port_health(PnpObservation::Phantom),
+            PortHealth::Phantom {
+                problem_code: None,
+                status: None,
+            }
+        );
+        assert_eq!(
+            classify_port_health(PnpObservation::Unknown),
+            PortHealth::Unknown
+        );
+        assert_eq!(
+            health_for_endpoint(
+                PnpObservation::Present {
+                    status: 0,
+                    problem_code: 31,
+                },
+                false,
+            ),
+            PortHealth::Unknown
+        );
+    }
+
+    #[test]
+    fn only_problem_and_phantom_states_are_known_unhealthy() {
+        assert!(!PortHealth::HealthyPresent.is_known_unhealthy());
+        assert!(!PortHealth::Unknown.is_known_unhealthy());
+        assert!(
+            PortHealth::PresentProblem {
+                problem_code: 43,
+                status: Some(0),
+            }
+            .is_known_unhealthy()
+        );
+        assert!(
+            PortHealth::Phantom {
+                problem_code: None,
+                status: None,
+            }
+            .is_known_unhealthy()
+        );
+    }
+}
+
 #[cfg(windows)]
 mod imp {
-    use super::UsbProblemDevice;
+    use super::{DetectedPort, PnpObservation, UsbProblemDevice, health_for_endpoint};
     use std::collections::HashSet;
     use std::ptr;
 
     use serialport::{SerialPortInfo, SerialPortType, UsbPortInfo};
     use windows_sys::Win32::Devices::DeviceAndDriverInstallation::{
-        CM_Get_DevNode_Status, CM_Get_Device_IDW, CM_Get_Parent, CR_SUCCESS, DICS_FLAG_GLOBAL,
-        DIGCF_PRESENT, DIREG_DEV, GUID_DEVCLASS_USB, HDEVINFO, MAX_DEVICE_ID_LEN, SP_DEVINFO_DATA,
-        SPDRP_FRIENDLYNAME, SPDRP_HARDWAREID, SPDRP_LOCATION_INFORMATION, SPDRP_MFG,
-        SetupDiClassGuidsFromNameW, SetupDiDestroyDeviceInfoList, SetupDiEnumDeviceInfo,
+        CM_Get_DevNode_Status, CM_Get_Device_IDW, CM_Get_Parent, CR_NO_SUCH_DEVINST, CR_SUCCESS,
+        DICS_FLAG_GLOBAL, DIGCF_PRESENT, DIREG_DEV, GUID_DEVCLASS_USB, HDEVINFO, MAX_DEVICE_ID_LEN,
+        SP_DEVINFO_DATA, SPDRP_FRIENDLYNAME, SPDRP_HARDWAREID, SPDRP_LOCATION_INFORMATION,
+        SPDRP_MFG, SetupDiClassGuidsFromNameW, SetupDiDestroyDeviceInfoList, SetupDiEnumDeviceInfo,
         SetupDiGetClassDevsW, SetupDiGetDeviceInstanceIdW, SetupDiGetDeviceRegistryPropertyW,
         SetupDiOpenDevRegKey,
     };
@@ -381,23 +563,36 @@ mod imp {
             from_utf16_lossy_trimmed(port_name)
         }
 
-        /// True when the devnode is instantiated in the live device tree.
-        /// A phantom devnode (unplugged, or a Status=Unknown Teensy interface
-        /// whose function driver never started) returns `CR_NO_SUCH_DEVINST`
-        /// here, i.e. `false`.
-        fn present(&mut self) -> bool {
+        /// Read the Config Manager observation without flattening its three
+        /// important outcomes.  A missing live devnode is a phantom; a query
+        /// failure that is not that explicit state remains unknown.
+        fn pnp_observation(&mut self) -> PnpObservation {
             let mut status = 0u32;
             let mut problem = 0u32;
+            // SAFETY: `DevInst` comes from the live SetupAPI record and both
+            // output pointers reference initialized writable local storage.
             let res = unsafe {
                 CM_Get_DevNode_Status(&mut status, &mut problem, self.devinfo_data.DevInst, 0)
             };
-            res == CR_SUCCESS
+            if res == CR_SUCCESS {
+                PnpObservation::Present {
+                    status,
+                    problem_code: problem,
+                }
+            } else if res == CR_NO_SUCH_DEVINST {
+                PnpObservation::Phantom
+            } else {
+                PnpObservation::Unknown
+            }
         }
 
-        fn port_type(&mut self) -> SerialPortType {
-            self.instance_id()
-                .map(|s| (s, self.parent_instance_id()))
-                .and_then(|(d, p)| parse_usb_port_info(&d, p.as_deref()))
+        fn port_type(
+            &mut self,
+            instance_id: Option<&str>,
+            parent_instance_id: Option<&str>,
+        ) -> SerialPortType {
+            instance_id
+                .and_then(|id| parse_usb_port_info(id, parent_instance_id))
                 .map(|mut info: UsbPortInfo| {
                     info.manufacturer = self.property(SPDRP_MFG);
                     info.product = self.property(SPDRP_FRIENDLYNAME);
@@ -652,7 +847,7 @@ mod imp {
         ports_list
     }
 
-    pub(super) fn available_ports() -> serialport::Result<Vec<SerialPortInfo>> {
+    pub(super) fn available_ports() -> serialport::Result<Vec<DetectedPort>> {
         let mut ports = Vec::new();
         let mut seen: HashSet<String> = HashSet::new();
         for guid in get_ports_guids()? {
@@ -667,8 +862,11 @@ mod imp {
                 if port_name.starts_with("LPT") {
                     continue;
                 }
-                let present = port_device.present();
-                let port_type = port_device.port_type();
+                let instance_id = port_device.instance_id();
+                let parent_instance_id = port_device.parent_instance_id();
+                let pnp_observation = port_device.pnp_observation();
+                let port_type =
+                    port_device.port_type(instance_id.as_deref(), parent_instance_id.as_deref());
                 let is_usb = matches!(port_type, SerialPortType::UsbPort(_));
                 // Include every present port (unchanged behaviour), PLUS
                 // non-present USB serial ports — the Status=Unknown Teensy
@@ -676,17 +874,23 @@ mod imp {
                 // devnode is a stale phantom with no VID:PID to act on, so we
                 // leave it out to avoid resurrecting ancient ACPI/BT junk.
                 // FastLED/fbuild#962.
-                if !present && !is_usb {
+                if matches!(pnp_observation, super::PnpObservation::Phantom) && !is_usb {
                     continue;
                 }
+                let health = health_for_endpoint(pnp_observation, is_usb);
                 // A phantom devnode can be enumerated once per matching class
                 // GUID; de-dup on the COM name.
                 if !seen.insert(port_name.clone()) {
                     continue;
                 }
-                ports.push(SerialPortInfo {
-                    port_name,
-                    port_type,
+                ports.push(DetectedPort {
+                    info: SerialPortInfo {
+                        port_name,
+                        port_type,
+                    },
+                    health,
+                    instance_id,
+                    parent_instance_id,
                 });
             }
         }
@@ -694,10 +898,10 @@ mod imp {
         // Fold in any DEVICEMAP\SERIALCOMM ports not already found.
         for raw_port in get_registry_com_ports() {
             if seen.insert(raw_port.clone()) {
-                ports.push(SerialPortInfo {
+                ports.push(DetectedPort::unknown(SerialPortInfo {
                     port_name: raw_port,
                     port_type: SerialPortType::Unknown,
-                });
+                }));
             }
         }
         Ok(ports)

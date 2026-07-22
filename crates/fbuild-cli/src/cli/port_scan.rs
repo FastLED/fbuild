@@ -159,7 +159,7 @@ fn overlay_json_cache_path_in(root: &std::path::Path) -> Option<std::path::PathB
 /// Each port produces two rows + a blank line. The trailing summary
 /// line is `N USB ports, M non-USB` for non-empty input, `no serial
 /// ports visible\n` for empty.
-pub fn render_scan(ports: &[serialport::SerialPortInfo]) -> String {
+pub fn render_scan(ports: &[fbuild_serial::ports::DetectedPort]) -> String {
     if ports.is_empty() {
         return "no serial ports visible\n".to_string();
     }
@@ -168,7 +168,8 @@ pub fn render_scan(ports: &[serialport::SerialPortInfo]) -> String {
     let mut usb_count = 0usize;
     let mut other_count = 0usize;
 
-    for port in ports {
+    for detected in ports {
+        let port = &detected.info;
         match &port.port_type {
             serialport::SerialPortType::UsbPort(info) => {
                 usb_count += 1;
@@ -195,6 +196,7 @@ pub fn render_scan(ports: &[serialport::SerialPortInfo]) -> String {
                 render_non_usb(&mut out, &port.port_name, "Unknown");
             }
         }
+        append_health_annotation(&mut out, detected);
         out.push('\n');
     }
 
@@ -207,6 +209,22 @@ pub fn render_scan(ports: &[serialport::SerialPortInfo]) -> String {
     );
 
     out
+}
+
+fn append_health_annotation(out: &mut String, port: &fbuild_serial::ports::DetectedPort) {
+    use std::fmt::Write as _;
+    let _ = out.pop();
+    let _ = write!(out, "    health={}", port.health.label());
+    if port.health.is_known_unhealthy() {
+        out.push_str(" selectable=no");
+    }
+    if let Some(problem_code) = port.health.problem_code() {
+        let _ = write!(out, " problem={problem_code}");
+    }
+    if let Some(instance_id) = port.instance_id.as_deref() {
+        let _ = write!(out, " instance={instance_id}");
+    }
+    out.push('\n');
 }
 
 fn render_usb_port(
@@ -362,8 +380,8 @@ mod tests {
         pid: u16,
         product: Option<&str>,
         serial: Option<&str>,
-    ) -> SerialPortInfo {
-        SerialPortInfo {
+    ) -> fbuild_serial::ports::DetectedPort {
+        fbuild_serial::ports::DetectedPort::unknown(SerialPortInfo {
             port_name: name.to_string(),
             port_type: SerialPortType::UsbPort(UsbPortInfo {
                 vid,
@@ -373,7 +391,14 @@ mod tests {
                 product: product.map(String::from),
                 interface: None,
             }),
-        }
+        })
+    }
+
+    fn non_usb_port(name: &str, port_type: SerialPortType) -> fbuild_serial::ports::DetectedPort {
+        fbuild_serial::ports::DetectedPort::unknown(SerialPortInfo {
+            port_name: name.to_string(),
+            port_type,
+        })
     }
 
     #[test]
@@ -543,18 +568,9 @@ mod tests {
     #[test]
     fn non_usb_ports_get_kind_label_and_uniform_two_rows() {
         let ports = vec![
-            SerialPortInfo {
-                port_name: "BT0".to_string(),
-                port_type: SerialPortType::BluetoothPort,
-            },
-            SerialPortInfo {
-                port_name: "PCI3".to_string(),
-                port_type: SerialPortType::PciPort,
-            },
-            SerialPortInfo {
-                port_name: "X1".to_string(),
-                port_type: SerialPortType::Unknown,
-            },
+            non_usb_port("BT0", SerialPortType::BluetoothPort),
+            non_usb_port("PCI3", SerialPortType::PciPort),
+            non_usb_port("X1", SerialPortType::Unknown),
         ];
         let out = render_scan(&ports);
         assert!(out.contains("[Bluetooth]"));
@@ -618,6 +634,22 @@ mod tests {
             None,
         );
         assert!(unknown.contains("cdc=unknown"), "got: {unknown}");
+    }
+
+    #[test]
+    fn scan_marks_phantom_ports_as_not_selectable_diagnostics() {
+        let mut port = usb_port("COM12", 0x2E8A, 0x000A, None, Some("PICO-1"));
+        port.health = fbuild_serial::ports::PortHealth::Phantom {
+            problem_code: Some(45),
+            status: Some(0),
+        };
+        port.instance_id = Some(r"USB\VID_2E8A&PID_000A\PICO-1".to_string());
+
+        let out = render_scan(&[port]);
+        assert!(out.contains("health=phantom"), "got: {out}");
+        assert!(out.contains("selectable=no"), "got: {out}");
+        assert!(out.contains("problem=45"), "got: {out}");
+        assert!(out.contains("instance=USB\\VID_2E8A&PID_000A\\PICO-1"));
     }
 
     #[test]
@@ -765,10 +797,7 @@ mod tests {
     fn mixed_port_list_summary_counts_correctly() {
         let ports = vec![
             usb_port("COM1", 0x303A, 0x1001, None, None),
-            SerialPortInfo {
-                port_name: "BT0".to_string(),
-                port_type: SerialPortType::BluetoothPort,
-            },
+            non_usb_port("BT0", SerialPortType::BluetoothPort),
             usb_port("COM2", 0x16C0, 0x0483, None, None),
         ];
         let out = render_scan(&ports);
