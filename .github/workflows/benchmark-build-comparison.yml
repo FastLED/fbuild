@@ -1,0 +1,193 @@
+name: Build Comparison Benchmark
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'bench/blink/**'
+      - 'bench/fastled-examples/src/build_comparison.rs'
+      - 'bench/fastled-examples/Cargo.toml'
+      - '.github/workflows/benchmark-build-comparison.yml'
+  schedule:
+    # Off-hour UTC slot avoids the hosted-runner top-of-hour surge.
+    - cron: '17 9 * * *'
+
+concurrency:
+  group: benchmark-build-comparison-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: '-D warnings'
+  PLATFORMIO_CORE_VERSION: '6.1.19'
+  ARDUINO_CLI_VERSION: '1.5.0'
+  ARDUINO_AVR_CORE_VERSION: '1.8.8'
+
+jobs:
+  benchmark:
+    name: Measure and publish Blink builds
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: astral-sh/setup-uv@v3
+
+      - name: Setup soldr
+        uses: zackees/setup-soldr@v0
+        with:
+          version: 0.8.8
+          cache: true
+          build-cache: true
+          target-cache: true
+          prebuild-deps: none
+          linker: platform-default
+          cache-payload-warn-bytes: 2GiB
+
+      - name: Install Arduino CLI
+        uses: arduino/setup-arduino-cli@v2
+        with:
+          version: ${{ env.ARDUINO_CLI_VERSION }}
+
+      - name: Install benchmark toolchains
+        shell: bash
+        run: |
+          set -euo pipefail
+          uv tool install "platformio==${PLATFORMIO_CORE_VERSION}"
+          arduino-cli core update-index
+          arduino-cli core install "arduino:avr@${ARDUINO_AVR_CORE_VERSION}"
+          pio pkg install --project-dir bench/blink --environment uno
+
+      - name: Build fbuild and benchmark runner
+        shell: bash
+        run: |
+          set -euo pipefail
+          soldr cargo build --release \
+            -p fbuild-cli --bin fbuild \
+            -p fbuild-daemon --bin fbuild-daemon \
+            -p fbuild-bench-fastled-examples --bin bench-build-comparison
+
+      - name: Prime package downloads outside timed measurements
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p benchmark-output/bootstrap-arduino
+          arduino-cli compile \
+            --fqbn arduino:avr:uno \
+            --build-path benchmark-output/bootstrap-arduino \
+            bench/blink
+          target/release/fbuild build bench/blink -e uno --release
+          target/release/fbuild clean all bench/blink -e uno --release
+          rm -rf benchmark-output/bootstrap-arduino
+
+      - name: Restore rolling history
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p benchmark-stats
+          if git ls-remote --exit-code origin refs/heads/benchmark-stats >/dev/null; then
+            git fetch --depth=1 origin refs/heads/benchmark-stats
+            git show FETCH_HEAD:history.jsonl > benchmark-stats/history.jsonl
+          else
+            status=$?
+            if [[ "${status}" -eq 2 ]]; then
+              : > benchmark-stats/history.jsonl
+            else
+              exit "${status}"
+            fi
+          fi
+
+      - name: Run cold/warm comparison and render site
+        shell: bash
+        run: |
+          set -euo pipefail
+          generated_at="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          target/release/bench-build-comparison \
+            --project-dir bench/blink \
+            --fbuild target/release/fbuild \
+            --output-dir benchmark-stats \
+            --trials 3 \
+            --repository "${GITHUB_REPOSITORY}" \
+            --git-sha "${GITHUB_SHA}" \
+            --generated-at "${generated_at}" \
+            --run-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
+            --pages-url https://fastled.github.io/fbuild/ \
+            --raw-base-url https://raw.githubusercontent.com/FastLED/fbuild/benchmark-stats
+
+      - name: Upload benchmark site snapshot
+        uses: actions/upload-artifact@v7
+        with:
+          name: build-comparison-site-${{ github.sha }}
+          path: benchmark-stats
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload benchmark log
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: build-comparison-log-${{ github.sha }}
+          path: benchmark-output/benchmark.log
+          if-no-files-found: warn
+          retention-days: 30
+
+  publish:
+    name: Publish benchmark artifacts
+    needs: benchmark
+    if: ${{ needs.benchmark.result == 'success' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      pages: write
+    steps:
+      - name: Download benchmark site snapshot
+        uses: actions/download-artifact@v8
+        with:
+          name: build-comparison-site-${{ github.sha }}
+          path: benchmark-stats
+
+      - name: Publish one-commit benchmark-stats branch
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          publish_dir="$(mktemp -d)"
+          cp -a benchmark-stats/. "${publish_dir}/"
+          git -C "${publish_dir}" init
+          git -C "${publish_dir}" checkout -b benchmark-stats
+          git -C "${publish_dir}" config user.name 'github-actions[bot]'
+          git -C "${publish_dir}" config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git -C "${publish_dir}" add .
+          git -C "${publish_dir}" commit -m "chore: publish build benchmark for ${GITHUB_SHA}"
+          git -C "${publish_dir}" remote add origin \
+            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git -C "${publish_dir}" push --force origin benchmark-stats
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: benchmark-stats
+
+  deploy-pages:
+    name: Deploy benchmark report
+    needs: publish
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
