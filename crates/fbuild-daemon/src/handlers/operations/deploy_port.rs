@@ -39,45 +39,13 @@ pub(super) fn choose_deploy_port(
             .map(|board| board.mcu.to_ascii_lowercase())
             .filter(|mcu| mcu.starts_with("rp2350"))
             .map_or(RpGeneration::Rp2040, |_| RpGeneration::Rp2350);
-        let mut matches: Vec<_> = devices
-            .into_iter()
-            .filter(|device| device.is_connected)
-            .filter_map(|device| {
-                let matches = device.vid.zip(device.pid).is_some_and(|(vid, pid)| {
-                    rp_profiles_match_generation(
-                        &fbuild_core::usb::profiles::profiles_for(vid, pid),
-                        expected_generation,
-                    )
-                });
-                matches.then_some(PortCandidate {
-                    port: device.port,
-                    vid: device.vid,
-                    pid: device.pid,
-                    description: device.description,
-                })
-            })
-            .collect();
-        matches.sort_by(|a, b| a.port.cmp(&b.port));
-        if matches.len() == 1 {
-            log_connect("deploy", &matches[0]);
-            return DeployPortChoice {
-                port: Some(matches[0].port.clone()),
-                warning: None,
-            };
-        }
-        if matches.len() > 1 {
-            return DeployPortChoice {
-                port: None,
-                warning: Some(format!(
-                    "multiple FastLED/boards-identified Raspberry Pi CDC ports are connected: {}; pass -p/--port to select the deployment target",
-                    format_candidates(matches.iter())
-                )),
-            };
-        }
-        return DeployPortChoice {
-            port: None,
-            warning: None,
-        };
+        let (matches, unhealthy) = partition_rp_candidates(devices, |vid, pid| {
+            rp_profiles_match_generation(
+                &fbuild_core::usb::profiles::profiles_for(vid, pid),
+                expected_generation,
+            )
+        });
+        return rp_deploy_choice(matches, unhealthy);
     }
 
     let mut candidates: Vec<_> = devices
@@ -132,6 +100,92 @@ pub(super) fn choose_deploy_port(
             port: None,
             warning: Some(format!("no serial ports found for {platform:?}")),
         }
+    }
+}
+
+/// Split connected Raspberry Pi family matches into deploy-eligible
+/// candidates and known-unhealthy records (FastLED/fbuild#1147). Phantom and
+/// present-problem devnodes stay visible for diagnostics but are never
+/// auto-selected: touching a stale COM name is guaranteed to fail, while the
+/// BOOTSEL-volume path can still deploy.
+fn partition_rp_candidates(
+    devices: Vec<DeviceState>,
+    mut family_match: impl FnMut(u16, u16) -> bool,
+) -> (Vec<PortCandidate>, Vec<String>) {
+    let mut matches = Vec::new();
+    let mut unhealthy = Vec::new();
+    for device in devices.into_iter().filter(|device| device.is_connected) {
+        let matched = device
+            .vid
+            .zip(device.pid)
+            .is_some_and(|(vid, pid)| family_match(vid, pid));
+        if !matched {
+            continue;
+        }
+        if device.port_health.is_known_unhealthy() {
+            unhealthy.push(describe_unhealthy_device(&device));
+            continue;
+        }
+        matches.push(PortCandidate {
+            port: device.port,
+            vid: device.vid,
+            pid: device.pid,
+            description: device.description,
+        });
+    }
+    matches.sort_by(|a, b| a.port.cmp(&b.port));
+    (matches, unhealthy)
+}
+
+fn describe_unhealthy_device(device: &DeviceState) -> String {
+    let problem = device
+        .port_health
+        .problem_code()
+        .map(|code| format!("; problem code {code}"))
+        .unwrap_or_default();
+    let instance = device
+        .instance_id
+        .as_deref()
+        .map(|value| format!("; instance {value}"))
+        .unwrap_or_default();
+    format!(
+        "{} (health {}{problem}{instance})",
+        device.port,
+        device.port_health.label()
+    )
+}
+
+/// Final Raspberry Pi deploy-port decision from the partitioned candidates.
+fn rp_deploy_choice(matches: Vec<PortCandidate>, unhealthy: Vec<String>) -> DeployPortChoice {
+    let unhealthy_note = (!unhealthy.is_empty()).then(|| {
+        format!(
+            "excluded known-unhealthy Raspberry Pi CDC record(s) from deploy selection: {}; they stay visible to `fbuild port scan`, and deploy continues via the BOOTSEL volume path",
+            unhealthy.join(", ")
+        )
+    });
+    if matches.len() == 1 {
+        log_connect("deploy", &matches[0]);
+        return DeployPortChoice {
+            port: Some(matches[0].port.clone()),
+            warning: unhealthy_note,
+        };
+    }
+    if matches.len() > 1 {
+        let ambiguity = format!(
+            "multiple FastLED/boards-identified Raspberry Pi CDC ports are connected: {}; pass -p/--port to select the deployment target",
+            format_candidates(matches.iter())
+        );
+        return DeployPortChoice {
+            port: None,
+            warning: Some(match unhealthy_note {
+                Some(note) => format!("{ambiguity}; {note}"),
+                None => ambiguity,
+            }),
+        };
+    }
+    DeployPortChoice {
+        port: None,
+        warning: unhealthy_note,
     }
 }
 
@@ -397,6 +451,82 @@ mod tests {
         );
         assert_eq!(choice.port.as_deref(), Some("COM21"));
         assert!(choice.warning.is_none());
+    }
+
+    fn phantom_device(port: &str, instance_id: &str) -> DeviceState {
+        let mut state = device(port, Some(0x2E8A), Some(0x000A));
+        state.port_health = fbuild_serial::ports::PortHealth::Phantom {
+            problem_code: Some(45),
+            status: None,
+        };
+        state.instance_id = Some(instance_id.to_string());
+        state
+    }
+
+    #[test]
+    fn phantom_rp2040_cdc_is_never_auto_selected() {
+        let (matches, unhealthy) = partition_rp_candidates(
+            vec![phantom_device(
+                "COM12",
+                "USB\\VID_2E8A&PID_000A\\5303284720C4641C",
+            )],
+            |_, _| true,
+        );
+        assert!(matches.is_empty());
+        let choice = rp_deploy_choice(matches, unhealthy);
+        assert!(choice.port.is_none());
+        let warning = choice.warning.expect("the exclusion must be diagnosed");
+        assert!(warning.contains("COM12"), "missing port: {warning}");
+        assert!(warning.contains("health phantom"), "missing health: {warning}");
+        assert!(warning.contains("problem code 45"), "missing code: {warning}");
+        assert!(
+            warning.contains("USB\\VID_2E8A&PID_000A\\5303284720C4641C"),
+            "missing instance: {warning}"
+        );
+        assert!(warning.contains("BOOTSEL volume path"), "missing path: {warning}");
+    }
+
+    #[test]
+    fn healthy_rp2040_cdc_is_selected_while_phantom_history_is_reported() {
+        let mut healthy = device("COM27", Some(0x2E8A), Some(0x000A));
+        healthy.port_health = fbuild_serial::ports::PortHealth::HealthyPresent;
+        let (matches, unhealthy) = partition_rp_candidates(
+            vec![
+                phantom_device("COM12", "USB\\VID_2E8A&PID_000A\\5303284720C4641C"),
+                healthy,
+            ],
+            |_, _| true,
+        );
+        let choice = rp_deploy_choice(matches, unhealthy);
+        assert_eq!(choice.port.as_deref(), Some("COM27"));
+        let warning = choice.warning.expect("the exclusion must still be diagnosed");
+        assert!(warning.contains("COM12"));
+    }
+
+    #[test]
+    fn present_problem_rp2040_cdc_is_excluded_from_selection() {
+        let mut broken = device("COM12", Some(0x2E8A), Some(0x000A));
+        broken.port_health = fbuild_serial::ports::PortHealth::PresentProblem {
+            problem_code: 31,
+            status: None,
+        };
+        let (matches, unhealthy) = partition_rp_candidates(vec![broken], |_, _| true);
+        assert!(matches.is_empty());
+        assert_eq!(unhealthy.len(), 1);
+        assert!(unhealthy[0].contains("health present-problem"));
+        assert!(unhealthy[0].contains("problem code 31"));
+    }
+
+    #[test]
+    fn unknown_health_rp2040_cdc_remains_eligible() {
+        let (matches, unhealthy) =
+            partition_rp_candidates(vec![device("COM5", Some(0x2E8A), Some(0x000A))], |_, _| true);
+        assert_eq!(matches.len(), 1);
+        assert!(unhealthy.is_empty());
+        assert_eq!(
+            rp_deploy_choice(matches, unhealthy).port.as_deref(),
+            Some("COM5")
+        );
     }
 
     #[test]

@@ -19,7 +19,9 @@ mod target;
 #[path = "rp2040_topology.rs"]
 mod topology;
 use mount::try_mount_linux_rom_device;
-use target::{resolve_requested_runtime_target, select_cdc_candidate, serial_selector};
+use target::{
+    describe_unhealthy, resolve_requested_runtime_target, select_cdc_candidate, serial_selector,
+};
 
 const UF2_MAGIC_START0: u32 = 0x0A32_4655;
 const UF2_MAGIC_START1: u32 = 0x9E5D_5157;
@@ -1029,6 +1031,10 @@ struct CdcWaitTimeout {
     previous_port: Option<String>,
     requested_serial: Option<String>,
     candidates: Vec<PicoCdcPort>,
+    /// The most recent bounded-open failure on an otherwise eligible
+    /// candidate, as `"<port>: <error>"` (FastLED/fbuild#1147: healthy
+    /// metadata alone never proves a live endpoint).
+    last_open_error: Option<String>,
 }
 
 impl CdcWaitTimeout {
@@ -1065,9 +1071,38 @@ impl CdcWaitTimeout {
                 .collect::<Vec<_>>()
                 .join(", ")
         };
+        let open_error = self
+            .last_open_error
+            .as_deref()
+            .map(|value| format!("; last open error {value}"))
+            .unwrap_or_default();
         format!(
-            "elapsed {}ms; prior port {prior_port}; requested serial {requested_serial}; catalogue candidates: {candidates}",
+            "elapsed {}ms; prior port {prior_port}; requested serial {requested_serial}; catalogue candidates: {candidates}{open_error}",
             self.elapsed.as_millis()
+        )
+    }
+
+    /// Manual recovery guidance for a confirmed flash whose runtime CDC never
+    /// became a healthy, openable endpoint (FastLED/fbuild#1147 step 5). When
+    /// Windows retained stale devnode records for this board, name them so the
+    /// user sees exactly why the historical COM port was not returned.
+    fn recovery_guidance(&self) -> String {
+        let stale: Vec<String> = self
+            .candidates
+            .iter()
+            .filter(|candidate| candidate.health.is_known_unhealthy())
+            .map(describe_unhealthy)
+            .collect();
+        let stale_note = if stale.is_empty() {
+            String::new()
+        } else {
+            format!(
+                " Windows retained stale/problem devnode record(s) for this board: {}; a historical COM name with a matching serial is not a live endpoint and was not returned.",
+                stale.join(", ")
+            )
+        };
+        format!(
+            "{stale_note} To recover manually: use a direct motherboard USB port and a known-good data cable, then 1) hold BOOT/BOOTSEL, 2) press and release RESET while still holding BOOT, 3) keep BOOT held for about two seconds, then release, 4) verify an RPI-RP2 volume appears and rerun the deploy."
         )
     }
 }
@@ -1078,7 +1113,7 @@ fn wait_for_cdc_port(
     before: &BTreeSet<String>,
     expected_family: u32,
     timeout: Duration,
-) -> std::result::Result<String, CdcWaitError> {
+) -> std::result::Result<PicoCdcPort, CdcWaitError> {
     let started = Instant::now();
     wait_for_cdc_port_with_clock(
         previous_port,
@@ -1086,29 +1121,54 @@ fn wait_for_cdc_port(
         before,
         timeout,
         || catalogue_pico_cdc_ports(expected_family),
+        probe_cdc_openable,
         || started.elapsed(),
         std::thread::sleep,
     )
 }
 
-fn wait_for_cdc_port_with_clock<F, E, S>(
+/// Bounded openability probe (FastLED/fbuild#1147): health metadata alone
+/// never proves a live endpoint, so the selected candidate must open before
+/// it may become `DeploymentResult::port`.
+fn probe_cdc_openable(port: &PicoCdcPort) -> std::result::Result<(), String> {
+    serialport::new(&port.name, 115_200)
+        .timeout(Duration::from_millis(250))
+        .open()
+        .map(drop)
+        .map_err(|error| error.to_string())
+}
+
+#[allow(clippy::too_many_arguments)]
+fn wait_for_cdc_port_with_clock<F, P, E, S>(
     previous_port: Option<&str>,
     requested_serial: Option<&str>,
     before: &BTreeSet<String>,
     timeout: Duration,
     mut catalogue: F,
+    mut probe: P,
     mut elapsed: E,
     mut sleep: S,
-) -> std::result::Result<String, CdcWaitError>
+) -> std::result::Result<PicoCdcPort, CdcWaitError>
 where
     F: FnMut() -> Result<Vec<PicoCdcPort>>,
+    P: FnMut(&PicoCdcPort) -> std::result::Result<(), String>,
     E: FnMut() -> Duration,
     S: FnMut(Duration),
 {
+    let mut last_open_error: Option<String> = None;
     loop {
         let ports = catalogue().map_err(CdcWaitError::Enumeration)?;
         match select_cdc_candidate(previous_port, requested_serial, before, &ports) {
-            Ok(Some(selected)) => return Ok(selected),
+            // A candidate that fails its bounded open probe is not returned;
+            // the loop keeps polling so a transient just-enumerated failure
+            // can clear, and the last failure lands in the timeout
+            // diagnostics (FastLED/fbuild#1147).
+            Ok(Some(selected)) => match probe(&selected) {
+                Ok(()) => return Ok(selected),
+                Err(error) => {
+                    last_open_error = Some(format!("{}: {error}", selected.name));
+                }
+            },
             Ok(None) => {}
             Err(error) => return Err(CdcWaitError::Enumeration(error)),
         }
@@ -1119,6 +1179,7 @@ where
                 previous_port: previous_port.map(str::to_string),
                 requested_serial: requested_serial.map(str::to_string),
                 candidates: ports,
+                last_open_error,
             }));
         }
         sleep(CDC_POLL_INTERVAL.min(timeout.saturating_sub(waited)));
@@ -1141,17 +1202,19 @@ enum PostFlashCdc {
 /// re-flash a healthy board. Enumeration errors still fail regardless.
 fn resolve_post_flash_cdc(
     flash_confirmed: bool,
-    wait_result: std::result::Result<String, CdcWaitError>,
+    wait_result: std::result::Result<PicoCdcPort, CdcWaitError>,
     window: Duration,
 ) -> Result<PostFlashCdc> {
     match wait_result {
-        Ok(port) => Ok(PostFlashCdc::Confirmed(port)),
+        Ok(port) => Ok(PostFlashCdc::Confirmed(port.name)),
         Err(CdcWaitError::Enumeration(error)) => Err(error),
         Err(CdcWaitError::Timeout(diagnostics)) if flash_confirmed => {
             tracing::warn!(diagnostics = %diagnostics.diagnostics(), "RP2040 runtime CDC did not return before the confirmed-flash deadline");
             Ok(PostFlashCdc::Unconfirmed(format!(
-                "the firmware was flashed and accepted, but the runtime CDC port did not reappear within {}s; first-plug driver installation can exceed this window — the board is likely healthy (extend the window with {POST_DEPLOY_TIMEOUT_ENV})",
-                window.as_secs()
+                "the firmware was flashed and accepted, but no healthy, openable runtime CDC port reappeared within {}s ({}).{} First-plug driver installation can also exceed this window (extend it with {POST_DEPLOY_TIMEOUT_ENV})",
+                window.as_secs(),
+                diagnostics.diagnostics(),
+                diagnostics.recovery_guidance(),
             )))
         }
         Err(CdcWaitError::Timeout(diagnostics)) => {
@@ -1448,6 +1511,14 @@ impl Deployer for Rp2040Deployer {
             stderr: transfer_stderr,
             outcome: DeployOutcome::FullFlash,
         })
+    }
+
+    /// The RP2040 deploy path rediscovers its post-flash endpoint through a
+    /// fresh, health-gated, open-probed catalogue scan (FastLED/fbuild#1147);
+    /// a `None` port after a successful flash means the runtime CDC was not
+    /// recovered, and the pre-flash name must never be substituted.
+    fn owns_post_flash_port_discovery(&self) -> bool {
+        true
     }
 
     async fn post_deploy_recovery(&self, port: &str) -> Result<()> {
@@ -2071,6 +2142,24 @@ mod tests {
         assert!(message.contains("does not identify a QSPI flash fault"));
     }
 
+    fn accept_probe(_port: &PicoCdcPort) -> std::result::Result<(), String> {
+        Ok(())
+    }
+
+    fn cdc_candidate(
+        name: &str,
+        serial: Option<&str>,
+        health: fbuild_serial::ports::PortHealth,
+    ) -> PicoCdcPort {
+        PicoCdcPort {
+            name: name.to_string(),
+            serial_number: serial.map(str::to_string),
+            health,
+            instance_id: Some(format!("USB\\VID_2E8A&PID_000A\\{name}")),
+            parent_instance_id: None,
+        }
+    }
+
     #[test]
     fn cdc_timeout_without_flash_confirmation_is_an_actionable_failure() {
         let wait = wait_for_cdc_port_with_clock(
@@ -2079,6 +2168,7 @@ mod tests {
             &BTreeSet::from(["COM7".to_string()]),
             Duration::ZERO,
             || Ok(Vec::new()),
+            accept_probe,
             || Duration::ZERO,
             |_| {},
         );
@@ -2099,6 +2189,7 @@ mod tests {
                 previous_port: Some("COM7".to_string()),
                 requested_serial: Some("serial".to_string()),
                 candidates: Vec::new(),
+                last_open_error: None,
             })),
             Duration::from_secs(15),
         )
@@ -2107,9 +2198,117 @@ mod tests {
             panic!("expected an unconfirmed-CDC downgrade, got {outcome:?}");
         };
         assert!(note.contains("flashed and accepted"));
-        assert!(note.contains("did not reappear within 15s"));
-        assert!(note.contains("first-plug driver installation"));
+        assert!(note.contains("reappeared within 15s"));
+        assert!(note.contains("irst-plug driver installation"));
         assert!(note.contains(POST_DEPLOY_TIMEOUT_ENV));
+        assert!(note.contains("hold BOOT/BOOTSEL"));
+    }
+
+    #[test]
+    fn confirmed_flash_with_phantom_history_reports_recovery_guidance() {
+        let outcome = resolve_post_flash_cdc(
+            true,
+            Err(CdcWaitError::Timeout(CdcWaitTimeout {
+                elapsed: Duration::from_secs(30),
+                previous_port: Some("COM12".to_string()),
+                requested_serial: Some("5303284720C4641C".to_string()),
+                candidates: vec![cdc_candidate(
+                    "COM12",
+                    Some("5303284720C4641C"),
+                    fbuild_serial::ports::PortHealth::Phantom {
+                        problem_code: Some(45),
+                        status: None,
+                    },
+                )],
+                last_open_error: Some("COM12: Access is denied.".to_string()),
+            })),
+            Duration::from_secs(30),
+        )
+        .unwrap();
+        let PostFlashCdc::Unconfirmed(note) = outcome else {
+            panic!("expected an unconfirmed-CDC downgrade, got {outcome:?}");
+        };
+        assert!(note.contains("health phantom"), "missing health: {note}");
+        assert!(note.contains("problem code 45"), "missing code: {note}");
+        assert!(
+            note.contains("USB\\VID_2E8A&PID_000A\\COM12"),
+            "missing instance: {note}"
+        );
+        assert!(
+            note.contains("last open error COM12: Access is denied."),
+            "missing open error: {note}"
+        );
+        assert!(
+            note.contains("not a live endpoint"),
+            "missing phantom explanation: {note}"
+        );
+        assert!(note.contains("RPI-RP2"), "missing BOOTSEL steps: {note}");
+    }
+
+    #[test]
+    fn open_probe_failure_is_never_returned_and_lands_in_diagnostics() {
+        let mut probes = 0;
+        let wait = wait_for_cdc_port_with_clock(
+            None,
+            Some("5303284720C4641C"),
+            &BTreeSet::new(),
+            Duration::from_secs(1),
+            || {
+                Ok(vec![cdc_candidate(
+                    "COM27",
+                    Some("5303284720C4641C"),
+                    fbuild_serial::ports::PortHealth::HealthyPresent,
+                )])
+            },
+            |port: &PicoCdcPort| {
+                probes += 1;
+                Err(format!("open {} timed out", port.name))
+            },
+            || Duration::from_secs(2),
+            |_| {},
+        );
+        let Err(CdcWaitError::Timeout(timeout)) = wait else {
+            panic!("an unopenable candidate must never be returned, got {wait:?}");
+        };
+        assert!(probes >= 1);
+        assert_eq!(
+            timeout.last_open_error.as_deref(),
+            Some("COM27: open COM27 timed out")
+        );
+        assert!(timeout.diagnostics().contains("last open error COM27"));
+    }
+
+    #[test]
+    fn candidate_that_turns_phantom_is_never_returned() {
+        let mut scans = 0;
+        let wait = wait_for_cdc_port_with_clock(
+            Some("COM12"),
+            Some("5303284720C4641C"),
+            &BTreeSet::from(["COM12".to_string()]),
+            Duration::from_secs(1),
+            || {
+                scans += 1;
+                Ok(vec![cdc_candidate(
+                    "COM12",
+                    Some("5303284720C4641C"),
+                    if scans == 1 {
+                        fbuild_serial::ports::PortHealth::Phantom {
+                            problem_code: None,
+                            status: None,
+                        }
+                    } else {
+                        fbuild_serial::ports::PortHealth::Phantom {
+                            problem_code: Some(45),
+                            status: None,
+                        }
+                    },
+                )])
+            },
+            |_port: &PicoCdcPort| panic!("a phantom record must never reach the open probe"),
+            || Duration::from_secs(2),
+            |_| {},
+        );
+        assert!(matches!(wait, Err(CdcWaitError::Timeout(_))));
     }
 
     #[test]
@@ -2125,6 +2324,7 @@ mod tests {
                 instance_id: None,
                 parent_instance_id: None,
             }],
+            last_open_error: None,
         }
         .diagnostics();
 
@@ -2142,6 +2342,7 @@ mod tests {
             &BTreeSet::new(),
             Duration::from_secs(5),
             || Err(FbuildError::SerialError("enumeration exploded".into())),
+            accept_probe,
             || Duration::ZERO,
             |_| {},
         );
@@ -2154,7 +2355,11 @@ mod tests {
         for flash_confirmed in [true, false] {
             let outcome = resolve_post_flash_cdc(
                 flash_confirmed,
-                Ok("COM9".to_string()),
+                Ok(cdc_candidate(
+                    "COM9",
+                    None,
+                    fbuild_serial::ports::PortHealth::HealthyPresent,
+                )),
                 Duration::from_secs(15),
             )
             .unwrap();
@@ -2185,12 +2390,13 @@ mod tests {
                     }]
                 })
             },
+            accept_probe,
             || elapsed.next().unwrap_or(Duration::from_secs(16)),
             |_| {},
         )
         .expect("a matching delayed Pico CDC endpoint must be returned");
 
-        assert_eq!(port, "COM27");
+        assert_eq!(port.name, "COM27");
         assert_eq!(scans, 2);
     }
 
@@ -2213,12 +2419,13 @@ mod tests {
                     parent_instance_id: None,
                 }])
             },
+            accept_probe,
             || elapsed.next().unwrap_or(Duration::from_secs(30)),
             |_| {},
         )
         .expect("the final catalogue scan must accept a boundary arrival");
 
-        assert_eq!(port, "COM27");
+        assert_eq!(port.name, "COM27");
         assert_eq!(scans, 1);
     }
 
@@ -2252,6 +2459,7 @@ mod tests {
                     },
                 ])
             },
+            accept_probe,
             || Duration::ZERO,
             |_| {},
         );

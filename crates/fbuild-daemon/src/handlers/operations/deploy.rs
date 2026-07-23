@@ -892,12 +892,23 @@ pub async fn deploy(
         &deploy_result,
         Ok(r) if r.success && matches!(r.outcome, fbuild_deploy::DeployOutcome::VerifySkip)
     );
-    let recovery_port = deploy_port_str.clone().or_else(|| {
+    // FastLED/fbuild#1147: when the deployer owns post-flash port discovery
+    // (RP2040), `DeploymentResult.port` is the only health-gated,
+    // open-verified endpoint. The historical `requested.or(result.port)`
+    // order re-blessed a stale pre-flash COM name (e.g. a retained
+    // CM_PROB_PHANTOM devnode whose serial still matches the board) whenever
+    // the runtime CDC failed to recover.
+    let port_discovery_owned = deployer_for_recovery
+        .as_ref()
+        .is_some_and(|deployer| deployer.owns_post_flash_port_discovery());
+    let recovery_port = resolve_recovery_port(
+        port_discovery_owned,
+        deploy_port_str.clone(),
         deploy_result
             .as_ref()
             .ok()
-            .and_then(|result| result.port.clone())
-    });
+            .and_then(|result| result.port.clone()),
+    );
     if let Some(ref p) = recovery_port {
         ctx.serial_manager.clear_preemption(p).await;
         if !deploy_skipped_bus_work {
@@ -933,9 +944,22 @@ pub async fn deploy(
         }
     }
 
-    let (deploy_success, deploy_stdout, mut deploy_stderr, deploy_outcome, deploy_post_port) =
-        match deploy_result {
-            Ok(r) if r.success => (true, Some(r.stdout), Some(r.stderr), r.outcome, r.port),
+    let (
+        deploy_success,
+        deploy_stdout,
+        mut deploy_stderr,
+        deploy_outcome,
+        deploy_post_port,
+        deploy_message,
+    ) = match deploy_result {
+        Ok(r) if r.success => (
+            true,
+            Some(r.stdout),
+            Some(r.stderr),
+            r.outcome,
+            r.port,
+            r.message,
+        ),
             Ok(r) => {
                 return (
                     StatusCode::INTERNAL_SERVER_ERROR,
@@ -964,11 +988,19 @@ pub async fn deploy(
     // monitor-attached and non-monitor-attached response below. Stable
     // wording — see GitHub issue #76 and the DeployOutcome::describe
     // test in fbuild-deploy.
-    let deploy_prefix = format!(
+    let mut deploy_prefix = format!(
         "deploy succeeded ({}); FBUILD_DEPLOY_PORT={}",
         deploy_outcome.describe(),
         deploy_post_port.as_deref().unwrap_or("")
     );
+    // FastLED/fbuild#1147: a port-discovery-owning deployer distinguishes
+    // "firmware transferred" from "runtime CDC recovered". When the flash
+    // succeeded but no healthy endpoint returned, its `message` carries the
+    // structured recovery diagnostic, which the success arms previously
+    // discarded — surface it instead of a bare empty port.
+    if port_discovery_owned && deploy_post_port.is_none() {
+        deploy_prefix = format!("{deploy_prefix}; {deploy_message}");
+    }
 
     // Post-deploy monitoring: if monitor_after is set, open the serial port
     // and stream lines checking halt conditions (matching Python behavior).
@@ -977,10 +1009,39 @@ pub async fn deploy(
         // Teensy state machine in #433 returns the freshly re-enumerated CDC
         // ACM port, which can differ from the pre-flash `--port`). Fall back
         // to the caller-supplied port, then to a platform default.
-        let monitor_port = deploy_post_port
-            .clone()
-            .or(deploy_port_str.clone())
-            .unwrap_or_else(|| "/dev/ttyUSB0".to_string());
+        // FastLED/fbuild#1147: when the deployer owns post-flash port
+        // discovery, an absent recovered port means there is nothing safe to
+        // monitor — attaching to the stale pre-flash name (or a guessed
+        // default) would target a known-dead endpoint.
+        let monitor_port = if port_discovery_owned {
+            match deploy_post_port.clone() {
+                Some(port) => port,
+                None => {
+                    return (
+                        StatusCode::OK,
+                        Json(OperationResponse {
+                            success: true,
+                            request_id,
+                            message: format!(
+                                "{} but monitor was skipped: no healthy runtime CDC endpoint was recovered after the flash",
+                                deploy_prefix
+                            ),
+                            exit_code: 0,
+                            output_file: Some(reported_output_file.clone()),
+                            output_dir: reported_output_dir.clone(),
+                            launch_url: None,
+                            stdout: deploy_stdout,
+                            stderr: deploy_stderr,
+                        }),
+                    );
+                }
+            }
+        } else {
+            deploy_post_port
+                .clone()
+                .or(deploy_port_str.clone())
+                .unwrap_or_else(|| "/dev/ttyUSB0".to_string())
+        };
         if deploy_post_port
             .as_deref()
             .zip(deploy_port_str.as_deref())
@@ -1168,6 +1229,25 @@ pub async fn deploy(
     )
 }
 
+/// Post-deploy recovery/monitor port choice (FastLED/fbuild#1147).
+///
+/// A deployer that owns post-flash port discovery returns the only endpoint
+/// that passed a fresh health + openability gate; the requested pre-flash
+/// name must never be substituted when that endpoint is absent, because on
+/// Windows it can be a retained `CM_PROB_PHANTOM` devnode record. Legacy
+/// deployers keep the historical requested-first order.
+fn resolve_recovery_port(
+    port_discovery_owned: bool,
+    requested: Option<String>,
+    deployer_port: Option<String>,
+) -> Option<String> {
+    if port_discovery_owned {
+        deployer_port
+    } else {
+        requested.or(deployer_port)
+    }
+}
+
 fn deploy_error_response(
     request_id: String,
     error: &fbuild_core::FbuildError,
@@ -1204,5 +1284,39 @@ mod tests {
             "deploy error: deploy failed: RP2040 mass-storage error 1006"
         );
         assert_eq!(response.stderr.as_deref(), Some(response.message.as_str()));
+    }
+
+    #[test]
+    fn owned_port_discovery_never_substitutes_the_requested_preflash_port() {
+        // FastLED/fbuild#1147: UF2 success + phantom CDC must not resurrect
+        // the historical COM name for recovery/monitor propagation.
+        assert_eq!(
+            resolve_recovery_port(true, Some("COM12".to_string()), None),
+            None
+        );
+        assert_eq!(
+            resolve_recovery_port(
+                true,
+                Some("COM12".to_string()),
+                Some("COM27".to_string())
+            ),
+            Some("COM27".to_string())
+        );
+    }
+
+    #[test]
+    fn legacy_deployers_keep_requested_first_recovery_order() {
+        assert_eq!(
+            resolve_recovery_port(false, Some("COM3".to_string()), None),
+            Some("COM3".to_string())
+        );
+        assert_eq!(
+            resolve_recovery_port(false, Some("COM3".to_string()), Some("COM4".to_string())),
+            Some("COM3".to_string())
+        );
+        assert_eq!(
+            resolve_recovery_port(false, None, Some("COM4".to_string())),
+            Some("COM4".to_string())
+        );
     }
 }
