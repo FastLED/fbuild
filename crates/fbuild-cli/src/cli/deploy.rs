@@ -275,7 +275,7 @@ async fn maybe_recover_and_retry(
     let Some(request) = resp.usb_recovery.clone() else {
         return Ok(resp);
     };
-    output::warn(format!(
+    output::diagnostic(format!(
         "deploy target {} is a known-unhealthy Windows devnode{}",
         request.instance_id,
         request
@@ -312,20 +312,22 @@ async fn maybe_recover_and_retry(
     match outcome {
         RecoveryRunOutcome::ManualGuidance => {
             if policy == fbuild_core::usb::UsbRecoveryPolicy::Default {
-                output::warn(
+                output::diagnostic(
                     "rerun with --admin to attempt a scoped one-shot Windows PnP recovery (UAC), or physically re-enter BOOTSEL (hold BOOT, tap RESET) and retry",
                 );
             } else {
-                output::warn("--no-admin: privileged recovery skipped by request");
+                output::diagnostic("--no-admin: privileged recovery skipped by request");
             }
             Ok(resp)
         }
         RecoveryRunOutcome::RefuseNonInteractive => {
-            output::warn("scoped PnP recovery needs an interactive Windows session; not elevating");
+            output::diagnostic(
+                "scoped PnP recovery needs an interactive Windows session; not elevating",
+            );
             Ok(resp)
         }
         RecoveryRunOutcome::Cancelled => {
-            output::warn("UAC prompt was cancelled; no recovery was attempted");
+            output::diagnostic("UAC prompt was cancelled; no recovery was attempted");
             Ok(resp)
         }
         RecoveryRunOutcome::Completed(result) => {
@@ -345,7 +347,7 @@ async fn maybe_recover_and_retry(
                 result.after,
             ));
             if !result.success {
-                output::warn(format!(
+                output::diagnostic(format!(
                     "recovery helper reported {}; physical BOOTSEL replug remains the fallback",
                     result
                         .error_code
@@ -381,7 +383,7 @@ async fn maybe_recover_and_retry(
                     ));
                 }
                 None => {
-                    output::warn(
+                    output::diagnostic(
                         "no healthy runtime CDC endpoint appeared after recovery; physical BOOTSEL replug remains the fallback",
                     );
                 }
