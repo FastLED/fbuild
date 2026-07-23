@@ -415,7 +415,10 @@ pub enum ResetMethod {
 ///
 /// # Examples
 ///
-/// ```
+/// (`no_run`: resolves through the FastLED/boards registry, which is
+/// fetched into the cache at runtime and absent on doctest hosts.)
+///
+/// ```no_run
 /// use fbuild_serial::boards::board_hint;
 ///
 /// assert!(board_hint(0x303A, 0x1001)
@@ -455,7 +458,10 @@ pub fn board_hint(vid: u16, pid: u16) -> Option<String> {
 ///
 /// # Examples
 ///
-/// ```
+/// (`no_run`: resolves through the FastLED/boards registry, which is
+/// fetched into the cache at runtime and absent on doctest hosts.)
+///
+/// ```no_run
 /// use fbuild_serial::boards::vcom_for_env;
 ///
 /// assert_eq!(vcom_for_env("lpc845brk"), Some((0x16C0, 0x0483)));
@@ -521,7 +527,10 @@ fn parse_exact_identity(identity: &str) -> Option<(u16, u16)> {
 ///
 /// # Examples
 ///
-/// ```
+/// (`no_run`: resolves through the FastLED/boards registry, which is
+/// fetched into the cache at runtime and absent on doctest hosts.)
+///
+/// ```no_run
 /// use fbuild_serial::boards::{family_for_vid_pid, BoardFamily};
 ///
 /// assert_eq!(family_for_vid_pid(0x303A, 0x1001), Some(BoardFamily::Esp32NativeUsbCdc));
