@@ -116,6 +116,14 @@ pub struct DeployRequest {
     /// Snapshot of all `PLATFORMIO_*` env vars from the caller's environment.
     #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
     pub pio_env: BTreeMap<String, String>,
+    /// Explicit user policy for a typed USB recovery response. The default is
+    /// intentionally non-elevating; #1147 is the first daemon consumer.
+    #[serde(default, skip_serializing_if = "is_default_usb_recovery_policy")]
+    pub usb_recovery_policy: fbuild_core::usb::UsbRecoveryPolicy,
+}
+
+fn is_default_usb_recovery_policy(policy: &fbuild_core::usb::UsbRecoveryPolicy) -> bool {
+    *policy == fbuild_core::usb::UsbRecoveryPolicy::Default
 }
 
 #[derive(Debug, Serialize)]

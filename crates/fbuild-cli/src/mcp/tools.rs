@@ -187,6 +187,7 @@ pub(super) async fn execute_tool(
                     .filter(|s| !s.is_empty()),
                 output_dir: None,
                 pio_env: crate::daemon_client::capture_pio_env(),
+                usb_recovery_policy: fbuild_core::usb::UsbRecoveryPolicy::Default,
             };
 
             let resp = client
