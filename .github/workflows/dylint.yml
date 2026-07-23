@@ -96,8 +96,13 @@ jobs:
                     *"@"*) continue ;;
                   esac
                   alias_path="$lib_dir/${stem}@${toolchain}.${ext}"
-                  if [ ! -e "$alias_path" ]; then
-                    cp "$lib" "$alias_path"
+                  # Refresh a stale alias too: cargo rebuilds the bare
+                  # library when a lint source/allowlist changes, but a
+                  # cache-restored `@<toolchain>` copy is what cargo-dylint
+                  # actually loads — never overwriting it pins every lint
+                  # to its first-ever compiled allowlist.
+                  if [ ! -e "$alias_path" ] || [ "$lib" -nt "$alias_path" ]; then
+                    cp -f "$lib" "$alias_path"
                     created_any=1
                   fi
                 done
