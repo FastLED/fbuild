@@ -220,5 +220,4 @@ mod tests {
         let result = Ch32vCores::validate(tmp.path());
         assert!(result.is_err());
     }
-
 }

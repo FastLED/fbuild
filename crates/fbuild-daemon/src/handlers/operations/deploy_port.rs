@@ -477,13 +477,22 @@ mod tests {
         assert!(choice.port.is_none());
         let warning = choice.warning.expect("the exclusion must be diagnosed");
         assert!(warning.contains("COM12"), "missing port: {warning}");
-        assert!(warning.contains("health phantom"), "missing health: {warning}");
-        assert!(warning.contains("problem code 45"), "missing code: {warning}");
+        assert!(
+            warning.contains("health phantom"),
+            "missing health: {warning}"
+        );
+        assert!(
+            warning.contains("problem code 45"),
+            "missing code: {warning}"
+        );
         assert!(
             warning.contains("USB\\VID_2E8A&PID_000A\\5303284720C4641C"),
             "missing instance: {warning}"
         );
-        assert!(warning.contains("BOOTSEL volume path"), "missing path: {warning}");
+        assert!(
+            warning.contains("BOOTSEL volume path"),
+            "missing path: {warning}"
+        );
     }
 
     #[test]
@@ -499,7 +508,9 @@ mod tests {
         );
         let choice = rp_deploy_choice(matches, unhealthy);
         assert_eq!(choice.port.as_deref(), Some("COM27"));
-        let warning = choice.warning.expect("the exclusion must still be diagnosed");
+        let warning = choice
+            .warning
+            .expect("the exclusion must still be diagnosed");
         assert!(warning.contains("COM12"));
     }
 
@@ -520,7 +531,9 @@ mod tests {
     #[test]
     fn unknown_health_rp2040_cdc_remains_eligible() {
         let (matches, unhealthy) =
-            partition_rp_candidates(vec![device("COM5", Some(0x2E8A), Some(0x000A))], |_, _| true);
+            partition_rp_candidates(vec![device("COM5", Some(0x2E8A), Some(0x000A))], |_, _| {
+                true
+            });
         assert_eq!(matches.len(), 1);
         assert!(unhealthy.is_empty());
         assert_eq!(

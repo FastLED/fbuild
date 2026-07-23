@@ -803,21 +803,23 @@ pub async fn deploy(
                 baud_override,
                 no_probe_rs,
             ),
-            fbuild_core::Platform::Ch32v => {
-                match req.protocol.as_deref() {
-                    Some("isp") => {
-                        let mcu = board.as_ref().map(|b| b.mcu.as_str()).unwrap_or_default();
-                        if !fbuild_deploy::wchisp::supports_mcu(mcu) {
-                            return Err(fbuild_core::FbuildError::DeployFailed(format!(
-                                "no ISP bootloader on {mcu}; use a WCH-LinkE probe"
-                            )));
-                        }
-                        Box::new(fbuild_deploy::wchisp::WchispDeployer::new())
+            fbuild_core::Platform::Ch32v => match req.protocol.as_deref() {
+                Some("isp") => {
+                    let mcu = board.as_ref().map(|b| b.mcu.as_str()).unwrap_or_default();
+                    if !fbuild_deploy::wchisp::supports_mcu(mcu) {
+                        return Err(fbuild_core::FbuildError::DeployFailed(format!(
+                            "no ISP bootloader on {mcu}; use a WCH-LinkE probe"
+                        )));
                     }
-                    Some("wlink") | None => Box::new(fbuild_deploy::wlink::WlinkDeployer::new()),
-                    Some(protocol) => return Err(fbuild_core::FbuildError::DeployFailed(format!("unsupported CH32V deploy protocol: {protocol}"))),
+                    Box::new(fbuild_deploy::wchisp::WchispDeployer::new())
                 }
-            }
+                Some("wlink") | None => Box::new(fbuild_deploy::wlink::WlinkDeployer::new()),
+                Some(protocol) => {
+                    return Err(fbuild_core::FbuildError::DeployFailed(format!(
+                        "unsupported CH32V deploy protocol: {protocol}"
+                    )));
+                }
+            },
             _ => {
                 return Err(fbuild_core::FbuildError::DeployFailed(format!(
                     "deployer for {:?} not yet implemented",
@@ -960,29 +962,29 @@ pub async fn deploy(
             r.port,
             r.message,
         ),
-            Ok(r) => {
-                return (
-                    StatusCode::INTERNAL_SERVER_ERROR,
-                    Json(OperationResponse {
-                        success: false,
-                        request_id,
-                        message: r.message,
-                        exit_code: 1,
-                        output_file: Some(reported_output_file.clone()),
-                        output_dir: reported_output_dir.clone(),
-                        launch_url: None,
-                        stdout: Some(r.stdout),
-                        stderr: Some(r.stderr),
-                    }),
-                );
-            }
-            Err(e) => {
-                return (
-                    StatusCode::INTERNAL_SERVER_ERROR,
-                    Json(deploy_error_response(request_id, &e)),
-                );
-            }
-        };
+        Ok(r) => {
+            return (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(OperationResponse {
+                    success: false,
+                    request_id,
+                    message: r.message,
+                    exit_code: 1,
+                    output_file: Some(reported_output_file.clone()),
+                    output_dir: reported_output_dir.clone(),
+                    launch_url: None,
+                    stdout: Some(r.stdout),
+                    stderr: Some(r.stderr),
+                }),
+            );
+        }
+        Err(e) => {
+            return (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(deploy_error_response(request_id, &e)),
+            );
+        }
+    };
     append_warning_to_stderr(&mut deploy_stderr, deploy_port_warning);
     // Build the "deploy succeeded (...)" prefix used by every
     // monitor-attached and non-monitor-attached response below. Stable
@@ -1295,11 +1297,7 @@ mod tests {
             None
         );
         assert_eq!(
-            resolve_recovery_port(
-                true,
-                Some("COM12".to_string()),
-                Some("COM27".to_string())
-            ),
+            resolve_recovery_port(true, Some("COM12".to_string()), Some("COM27".to_string())),
             Some("COM27".to_string())
         );
     }
