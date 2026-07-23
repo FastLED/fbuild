@@ -946,6 +946,48 @@ pub async fn deploy(
         }
     }
 
+    // FastLED/fbuild#1152: when an RP2040 deploy failed outright, or flashed
+    // but recovered no runtime CDC endpoint, compose a typed exact-device
+    // recovery request from FRESH scan facts (never from pre-deploy state).
+    // The daemon only reports it in the response; the normal CLI applies the
+    // `--admin`/`--no-admin` policy, and the one-shot elevated helper
+    // re-proves the identity live before its single allowlisted operation.
+    let deploy_flashed = matches!(&deploy_result, Ok(r) if r.success);
+    let cdc_unrecovered =
+        port_discovery_owned && matches!(&deploy_result, Ok(r) if r.success && r.port.is_none());
+    let usb_recovery_request = if cfg!(windows)
+        && platform == fbuild_core::Platform::RaspberryPi
+        && (!deploy_flashed || cdc_unrecovered)
+    {
+        ctx.refresh_devices_and_broadcast_serial_moves().await;
+        let devices: Vec<_> = ctx.device_manager.get_all_devices().into_values().collect();
+        let problem_devices =
+            tokio::task::spawn_blocking(fbuild_serial::ports::present_usb_problem_devices)
+                .await
+                .unwrap_or_default();
+        let generation = super::deploy_port::rp_generation_for(board.as_ref());
+        super::recovery_request::compose_rp2040_recovery_request(
+            &devices,
+            &problem_devices,
+            &request_id,
+            deploy_flashed,
+            |vid, pid| {
+                super::deploy_port::rp_bootloader_profiles_match_generation(
+                    &fbuild_core::usb::profiles::profiles_for(vid, pid),
+                    generation,
+                )
+            },
+            |vid, pid| {
+                super::deploy_port::rp_profiles_match_generation(
+                    &fbuild_core::usb::profiles::profiles_for(vid, pid),
+                    generation,
+                )
+            },
+        )
+    } else {
+        None
+    };
+
     let (
         deploy_success,
         deploy_stdout,
@@ -967,6 +1009,7 @@ pub async fn deploy(
                 StatusCode::INTERNAL_SERVER_ERROR,
                 Json(OperationResponse {
                     success: false,
+                    usb_recovery: usb_recovery_request,
                     request_id,
                     message: r.message,
                     exit_code: 1,
@@ -979,10 +1022,9 @@ pub async fn deploy(
             );
         }
         Err(e) => {
-            return (
-                StatusCode::INTERNAL_SERVER_ERROR,
-                Json(deploy_error_response(request_id, &e)),
-            );
+            let mut response = deploy_error_response(request_id, &e);
+            response.usb_recovery = usb_recovery_request;
+            return (StatusCode::INTERNAL_SERVER_ERROR, Json(response));
         }
     };
     append_warning_to_stderr(&mut deploy_stderr, deploy_port_warning);
@@ -1023,6 +1065,7 @@ pub async fn deploy(
                         StatusCode::OK,
                         Json(OperationResponse {
                             success: true,
+                            usb_recovery: usb_recovery_request,
                             request_id,
                             message: format!(
                                 "{} but monitor was skipped: no healthy runtime CDC endpoint was recovered after the flash",
@@ -1083,6 +1126,7 @@ pub async fn deploy(
                 StatusCode::OK,
                 Json(OperationResponse {
                     success: true,
+                    usb_recovery: None,
                     request_id,
                     message: format!("{} but monitor failed to open port: {}", deploy_prefix, e),
                     exit_code: 0,
@@ -1106,6 +1150,7 @@ pub async fn deploy(
                     StatusCode::OK,
                     Json(OperationResponse {
                         success: true,
+                        usb_recovery: None,
                         request_id,
                         message: format!("{} but monitor could not attach reader", deploy_prefix),
                         exit_code: 0,
@@ -1153,6 +1198,7 @@ pub async fn deploy(
                 StatusCode::OK,
                 Json(OperationResponse {
                     success: true,
+                    usb_recovery: None,
                     request_id,
                     message: format!("{}; monitor: {}", deploy_prefix, msg),
                     exit_code: 0,
@@ -1167,6 +1213,7 @@ pub async fn deploy(
                 StatusCode::OK,
                 Json(OperationResponse {
                     success: false,
+                    usb_recovery: None,
                     request_id,
                     message: format!("{}; monitor error: {}", deploy_prefix, msg),
                     exit_code: 1,
@@ -1192,6 +1239,7 @@ pub async fn deploy(
                 (
                     StatusCode::OK,
                     Json(OperationResponse {
+                        usb_recovery: None,
                         success,
                         request_id,
                         message: format!(
@@ -1219,6 +1267,7 @@ pub async fn deploy(
         StatusCode::OK,
         Json(OperationResponse {
             success: true,
+            usb_recovery: usb_recovery_request,
             request_id,
             message: deploy_prefix,
             exit_code: 0,
@@ -1257,6 +1306,7 @@ fn deploy_error_response(
     let message = format!("deploy error: {error}");
     OperationResponse {
         success: false,
+        usb_recovery: None,
         request_id,
         message: message.clone(),
         exit_code: 1,

@@ -264,6 +264,7 @@ pub async fn deploy_avr8js(
                 StatusCode::OK,
                 Json(OperationResponse {
                     success: true,
+                    usb_recovery: None,
                     request_id,
                     message: format!("avr8js run succeeded: {}", message),
                     exit_code: 0,
@@ -278,6 +279,7 @@ pub async fn deploy_avr8js(
                 StatusCode::OK,
                 Json(OperationResponse {
                     success: false,
+                    usb_recovery: None,
                     request_id,
                     message: format!("avr8js run failed: {}", message),
                     exit_code: 1,
@@ -294,6 +296,7 @@ pub async fn deploy_avr8js(
                 (
                     StatusCode::OK,
                     Json(OperationResponse {
+                        usb_recovery: None,
                         success,
                         request_id,
                         message: if success {
@@ -316,6 +319,7 @@ pub async fn deploy_avr8js(
                 StatusCode::OK,
                 Json(OperationResponse {
                     success: false,
+                    usb_recovery: None,
                     request_id,
                     message: format!(
                         "internal: avr8js emitted ESP RecoverDownloadMode ({})",
@@ -340,6 +344,7 @@ pub async fn deploy_avr8js(
             StatusCode::OK,
             Json(OperationResponse {
                 success: true,
+                usb_recovery: None,
                 request_id,
                 message: "deploy complete".to_string(),
                 exit_code: 0,

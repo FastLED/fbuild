@@ -24,17 +24,29 @@ pub enum UsbRecoveryPolicy {
     DenyAdmin,
 }
 
-/// The sole two Windows PnP operations a recovery helper can represent.
+/// The sole Windows PnP operations a recovery helper can represent.
 ///
 /// There is deliberately no generic command, executable, device-class, or
 /// "reset all USB" variant. A phantom endpoint may only re-enumerate its
-/// verified parent; a present problematic endpoint may only restart itself.
+/// verified parent; a present problematic endpoint may only restart itself;
+/// and a present problematic USB *interface* devnode (a `&MI_xx` child of a
+/// composite device, e.g. the RP2040 BOOTSEL PICOBOOT function) may only
+/// restart its verified healthy parent composite, because restarting the
+/// interface alone cannot re-initialize the sibling interfaces or remount
+/// the synthetic BOOTSEL volume (FastLED/fbuild#1152).
 #[derive(Clone, Copy, Debug, Deserialize, Eq, PartialEq, Serialize)]
 #[serde(rename_all = "kebab-case")]
 pub enum UsbRecoveryOperation {
     ReenumerateParent,
     RestartTarget,
+    RestartVerifiedParent,
 }
+
+/// Sentinel for a devnode with no Windows device class (typical for a
+/// driverless interface such as a BOOTSEL PICOBOOT function reporting
+/// `CM_PROB_FAILED_INSTALL`). Used on both sides of the identity
+/// revalidation so an absent class is an exact-match fact, not a wildcard.
+pub const UNCLASSED_DEVICE_CLASS: &str = "(none)";
 
 /// Host health observed before or after a recovery operation.
 ///
@@ -146,8 +158,9 @@ mod tests {
         let operations = [
             UsbRecoveryOperation::ReenumerateParent,
             UsbRecoveryOperation::RestartTarget,
+            UsbRecoveryOperation::RestartVerifiedParent,
         ];
-        assert_eq!(operations.len(), 2);
+        assert_eq!(operations.len(), 3);
     }
 
     #[test]

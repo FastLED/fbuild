@@ -662,6 +662,8 @@ mod tests {
             ),
             location: Some("Port_#0001.Hub_#0011".to_string()),
             behind_external_hub: Some(true),
+            parent_instance_id: None,
+            device_class: None,
         }];
         let warning = format_usb_problem_warning(&devices);
         assert!(warning.contains("problem code 43"));
@@ -679,6 +681,8 @@ mod tests {
             friendly_name: None,
             location: Some("Port_#0014.Hub_#0001".to_string()),
             behind_external_hub: Some(false),
+            parent_instance_id: None,
+            device_class: None,
         }];
         let warning = format_usb_problem_warning(&devices);
         assert!(warning.contains("Unknown USB device"));

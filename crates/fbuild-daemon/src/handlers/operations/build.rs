@@ -834,6 +834,7 @@ pub async fn build(
                     StatusCode::OK,
                     Json(OperationResponse {
                         success: build_result.success,
+                        usb_recovery: None,
                         request_id,
                         message: msg,
                         exit_code: code,

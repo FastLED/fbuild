@@ -199,6 +199,14 @@ pub struct OperationResponse {
     /// Captured stderr from the deploy/build tool.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub stderr: Option<String>,
+    /// Typed exact-device USB recovery request (FastLED/fbuild#1152).
+    ///
+    /// Present only when a deploy detected that its exact target is a
+    /// known-unhealthy Windows devnode that the scoped one-shot elevated
+    /// helper could recover. Diagnostic data for the CLI's `--admin` policy
+    /// decision — never an instruction the daemon acts on itself.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub usb_recovery: Option<fbuild_core::usb::UsbRecoveryRequest>,
 }
 
 impl OperationResponse {
@@ -213,6 +221,7 @@ impl OperationResponse {
             launch_url: None,
             stdout: None,
             stderr: None,
+            usb_recovery: None,
         }
     }
 
@@ -227,6 +236,7 @@ impl OperationResponse {
             launch_url: None,
             stdout: None,
             stderr: None,
+            usb_recovery: None,
         }
     }
 }

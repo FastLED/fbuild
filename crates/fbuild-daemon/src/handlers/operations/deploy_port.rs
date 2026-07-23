@@ -35,10 +35,7 @@ pub(super) fn choose_deploy_port(
     // reset. Never select by a built-in VID or fall back to an unrelated COM
     // port: FastLED/boards data is the sole identity source.
     if platform == Platform::RaspberryPi {
-        let expected_generation = board
-            .map(|board| board.mcu.to_ascii_lowercase())
-            .filter(|mcu| mcu.starts_with("rp2350"))
-            .map_or(RpGeneration::Rp2040, |_| RpGeneration::Rp2350);
+        let expected_generation = rp_generation_for(board);
         let (matches, unhealthy) = partition_rp_candidates(devices, |vid, pid| {
             rp_profiles_match_generation(
                 &fbuild_core::usb::profiles::profiles_for(vid, pid),
@@ -190,25 +187,53 @@ fn rp_deploy_choice(matches: Vec<PortCandidate>, unhealthy: Vec<String>) -> Depl
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-enum RpGeneration {
+pub(super) enum RpGeneration {
     Rp2040,
     Rp2350,
 }
 
-fn rp_profiles_match_generation(
+impl RpGeneration {
+    fn family(self) -> &'static str {
+        match self {
+            RpGeneration::Rp2040 => "rp2040",
+            RpGeneration::Rp2350 => "rp2350",
+        }
+    }
+}
+
+pub(super) fn rp_generation_for(board: Option<&BoardConfig>) -> RpGeneration {
+    board
+        .map(|board| board.mcu.to_ascii_lowercase())
+        .filter(|mcu| mcu.starts_with("rp2350"))
+        .map_or(RpGeneration::Rp2040, |_| RpGeneration::Rp2350)
+}
+
+pub(super) fn rp_profiles_match_generation(
     profiles: &[fbuild_core::usb::profiles::UsbTransportProfile],
     expected: RpGeneration,
 ) -> bool {
     use fbuild_core::usb::profiles::{UsbDeviceRole, UsbPurpose};
 
-    let family = match expected {
-        RpGeneration::Rp2040 => "rp2040",
-        RpGeneration::Rp2350 => "rp2350",
-    };
     profiles.iter().any(|profile| {
         profile.purpose == UsbPurpose::Runtime
             && profile.role == UsbDeviceRole::RuntimeCdc
-            && profile.family.as_deref() == Some(family)
+            && profile.family.as_deref() == Some(expected.family())
+    })
+}
+
+/// Match a BOOTSEL UF2 bootloader profile of the expected RP generation
+/// (FastLED/fbuild#1152: identifies the stock-ROM composite whose problem
+/// interface may carry a typed recovery request).
+pub(super) fn rp_bootloader_profiles_match_generation(
+    profiles: &[fbuild_core::usb::profiles::UsbTransportProfile],
+    expected: RpGeneration,
+) -> bool {
+    use fbuild_core::usb::profiles::{UsbDeviceRole, UsbPurpose};
+
+    profiles.iter().any(|profile| {
+        profile.purpose == UsbPurpose::Bootloader
+            && profile.role == UsbDeviceRole::BootloaderUf2
+            && profile.family.as_deref() == Some(expected.family())
     })
 }
 

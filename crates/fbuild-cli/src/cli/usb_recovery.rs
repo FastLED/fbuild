@@ -157,6 +157,69 @@ pub fn launch_once_for_typed_request<L: RecoveryHelperLauncher>(
     Ok(decision)
 }
 
+/// Terminal result of one policy-gated recovery attempt
+/// (FastLED/fbuild#1152).
+#[derive(Debug)]
+pub enum RecoveryRunOutcome {
+    ManualGuidance,
+    RefuseNonInteractive,
+    Cancelled,
+    Completed(UsbRecoveryResult),
+}
+
+/// Like [`launch_once_for_typed_request`], but consume the helper's result
+/// file before the rendezvous is dropped: the result must carry the exact
+/// rendezvous nonce and the request's operation ID, or the run fails closed.
+pub fn run_recovery_for_typed_request<L: RecoveryHelperLauncher>(
+    policy: UsbRecoveryPolicy,
+    request: &UsbRecoveryRequest,
+    context: RecoveryLaunchContext,
+    launcher: &mut L,
+) -> fbuild_core::Result<RecoveryRunOutcome> {
+    match decide_recovery_launch(policy, true, context) {
+        RecoveryLaunchDecision::ManualGuidance => return Ok(RecoveryRunOutcome::ManualGuidance),
+        RecoveryLaunchDecision::RefuseNonInteractive => {
+            return Ok(RecoveryRunOutcome::RefuseNonInteractive);
+        }
+        RecoveryLaunchDecision::LaunchOnce => {}
+    }
+    let rendezvous = create_rendezvous(request.clone())?;
+    match launcher.launch(&rendezvous.request_path, &rendezvous.result_path)? {
+        HelperLaunchOutcome::Cancelled => Ok(RecoveryRunOutcome::Cancelled),
+        HelperLaunchOutcome::Completed { .. } => {
+            let result = read_recovery_result(&rendezvous.result_path)?;
+            if result.nonce != rendezvous.nonce {
+                return Err(fbuild_core::FbuildError::Other(
+                    "recovery result nonce does not match this run's rendezvous".to_string(),
+                ));
+            }
+            if result.operation_id != request.operation_id {
+                return Err(fbuild_core::FbuildError::Other(
+                    "recovery result does not correlate to this operation".to_string(),
+                ));
+            }
+            Ok(RecoveryRunOutcome::Completed(result))
+        }
+    }
+}
+
+fn read_recovery_result(result_path: &Path) -> fbuild_core::Result<UsbRecoveryResult> {
+    let file = File::open(result_path).map_err(|error| {
+        fbuild_core::FbuildError::Other(format!(
+            "elevated helper completed without a readable result: {error}"
+        ))
+    })?;
+    let mut contents = String::new();
+    file.take(MAX_RENDEZVOUS_BYTES)
+        .read_to_string(&mut contents)
+        .map_err(|error| {
+            fbuild_core::FbuildError::Other(format!("cannot read recovery result: {error}"))
+        })?;
+    serde_json::from_str(&contents).map_err(|error| {
+        fbuild_core::FbuildError::Other(format!("cannot decode recovery result: {error}"))
+    })
+}
+
 /// Windows implementation that launches only the current fbuild executable
 /// with the fixed hidden helper shape. It is deliberately not a general
 /// command runner and never launches a daemon.
@@ -507,5 +570,130 @@ mod tests {
         assert_eq!(launcher.calls, 1);
         assert!(!launcher.request_path.expect("request path").exists());
         assert!(!launcher.result_path.expect("result path").exists());
+    }
+
+    /// Emulates the elevated helper: read the envelope like the real hidden
+    /// mode would, then write a result bound to the given nonce.
+    struct CompletingLauncher {
+        calls: usize,
+        nonce_override: Option<String>,
+    }
+    impl RecoveryHelperLauncher for CompletingLauncher {
+        fn launch(
+            &mut self,
+            request_path: &Path,
+            result_path: &Path,
+        ) -> fbuild_core::Result<HelperLaunchOutcome> {
+            self.calls += 1;
+            let envelope: RecoveryHelperEnvelope =
+                serde_json::from_reader(File::open(request_path).expect("request file"))
+                    .expect("request envelope");
+            let result = UsbRecoveryResult {
+                operation_id: envelope.request.operation_id.clone(),
+                nonce: self
+                    .nonce_override
+                    .clone()
+                    .unwrap_or_else(|| envelope.nonce.clone()),
+                validated_instance_id: Some(envelope.request.instance_id.clone()),
+                operation: Some(fbuild_core::usb::UsbRecoveryOperation::RestartVerifiedParent),
+                before: UsbRecoveryHealth::PresentProblem { problem_code: 28 },
+                after: UsbRecoveryHealth::HealthyPresent,
+                success: true,
+                error_code: None,
+            };
+            std::fs::write(result_path, serde_json::to_vec(&result).unwrap())
+                .expect("result write");
+            Ok(HelperLaunchOutcome::Completed { exit_code: 0 })
+        }
+    }
+
+    fn interactive_windows_context() -> RecoveryLaunchContext {
+        RecoveryLaunchContext {
+            is_windows: true,
+            is_ci: false,
+            is_interactive: true,
+        }
+    }
+
+    #[test]
+    fn completed_helper_result_is_validated_and_returned() {
+        let mut launcher = CompletingLauncher {
+            calls: 0,
+            nonce_override: None,
+        };
+        let outcome = run_recovery_for_typed_request(
+            UsbRecoveryPolicy::AllowAdmin,
+            &envelope().request,
+            interactive_windows_context(),
+            &mut launcher,
+        )
+        .expect("run once");
+        assert_eq!(launcher.calls, 1);
+        let RecoveryRunOutcome::Completed(result) = outcome else {
+            panic!("expected a completed result, got {outcome:?}");
+        };
+        assert!(result.success);
+        assert_eq!(result.operation_id, "deploy-1");
+        assert_eq!(
+            result.operation,
+            Some(fbuild_core::usb::UsbRecoveryOperation::RestartVerifiedParent)
+        );
+    }
+
+    #[test]
+    fn mismatched_result_nonce_fails_closed() {
+        let mut launcher = CompletingLauncher {
+            calls: 0,
+            nonce_override: Some("f".repeat(64)),
+        };
+        let error = run_recovery_for_typed_request(
+            UsbRecoveryPolicy::AllowAdmin,
+            &envelope().request,
+            interactive_windows_context(),
+            &mut launcher,
+        )
+        .expect_err("a foreign result must be rejected");
+        assert!(error.to_string().contains("nonce"), "{error}");
+    }
+
+    #[test]
+    fn cancelled_uac_is_expected_control_flow_not_an_error() {
+        struct CancellingLauncher;
+        impl RecoveryHelperLauncher for CancellingLauncher {
+            fn launch(
+                &mut self,
+                _request_path: &Path,
+                _result_path: &Path,
+            ) -> fbuild_core::Result<HelperLaunchOutcome> {
+                Ok(HelperLaunchOutcome::Cancelled)
+            }
+        }
+        let outcome = run_recovery_for_typed_request(
+            UsbRecoveryPolicy::AllowAdmin,
+            &envelope().request,
+            interactive_windows_context(),
+            &mut CancellingLauncher,
+        )
+        .expect("cancellation is not an error");
+        assert!(matches!(outcome, RecoveryRunOutcome::Cancelled));
+    }
+
+    #[test]
+    fn default_and_no_admin_policies_never_reach_the_launcher() {
+        for policy in [UsbRecoveryPolicy::Default, UsbRecoveryPolicy::DenyAdmin] {
+            let mut launcher = CompletingLauncher {
+                calls: 0,
+                nonce_override: None,
+            };
+            let outcome = run_recovery_for_typed_request(
+                policy,
+                &envelope().request,
+                interactive_windows_context(),
+                &mut launcher,
+            )
+            .expect("policy decision");
+            assert!(matches!(outcome, RecoveryRunOutcome::ManualGuidance));
+            assert_eq!(launcher.calls, 0);
+        }
     }
 }
