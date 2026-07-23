@@ -38,3 +38,8 @@ crates/fbuild-library-select/src/lib.rs
 crates/fbuild-packages-fetch/src/cache.rs
 crates/fbuild-packages-fetch/src/disk_cache/paths.rs
 crates/fbuild-paths/src/lib.rs
+
+# WalkDir-derived file paths are stripped against the exact root spelling
+# they were enumerated from (same-normalized by construction); the relative
+# result feeds a content hash, not a path-keyed cache lookup.
+crates/fbuild-build-esp/src/esp32/orchestrator/framework_library_cache.rs
