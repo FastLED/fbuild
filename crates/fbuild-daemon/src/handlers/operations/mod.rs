@@ -11,6 +11,7 @@ mod deploy;
 mod deploy_port;
 mod install_deps;
 mod monitor;
+mod recovery_request;
 mod reset;
 
 #[cfg(test)]

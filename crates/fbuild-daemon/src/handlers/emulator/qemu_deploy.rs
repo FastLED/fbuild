@@ -296,6 +296,7 @@ pub async fn deploy_qemu(
             StatusCode::OK,
             Json(OperationResponse {
                 success: true,
+                usb_recovery: None,
                 request_id,
                 message: format!("QEMU run succeeded: {}", message),
                 exit_code: real_exit_code.unwrap_or(0),
@@ -310,6 +311,7 @@ pub async fn deploy_qemu(
             StatusCode::OK,
             Json(OperationResponse {
                 success: false,
+                usb_recovery: None,
                 request_id,
                 message: format!("QEMU run failed: {}", message),
                 exit_code: real_exit_code.unwrap_or(1),
@@ -326,6 +328,7 @@ pub async fn deploy_qemu(
             (
                 StatusCode::OK,
                 Json(OperationResponse {
+                    usb_recovery: None,
                     success,
                     request_id,
                     message: if success {
@@ -348,6 +351,7 @@ pub async fn deploy_qemu(
             StatusCode::OK,
             Json(OperationResponse {
                 success: false,
+                usb_recovery: None,
                 request_id,
                 message: format!(
                     "internal: QEMU emitted ESP RecoverDownloadMode ({})",

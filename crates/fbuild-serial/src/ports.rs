@@ -175,6 +175,13 @@ pub struct UsbProblemDevice {
     /// `Some(false)` means the node reaches a root hub directly; `None` means
     /// the host could not provide enough ancestry to classify it.
     pub behind_external_hub: Option<bool>,
+    /// Immediate parent instance ID, when Config Manager can prove one.
+    /// Needed to compose an exact-device `UsbRecoveryRequest` for a problem
+    /// interface devnode (FastLED/fbuild#1152).
+    pub parent_instance_id: Option<String>,
+    /// Windows device class (e.g. `Ports`, `USB`); `None` for driverless
+    /// devnodes that never got a class assigned.
+    pub device_class: Option<String>,
 }
 
 /// Best-effort enumeration of present USB devnodes with a non-zero Windows
@@ -268,10 +275,10 @@ mod imp {
     use windows_sys::Win32::Devices::DeviceAndDriverInstallation::{
         CM_Get_DevNode_Status, CM_Get_Device_IDW, CM_Get_Parent, CR_NO_SUCH_DEVINST, CR_SUCCESS,
         DICS_FLAG_GLOBAL, DIGCF_PRESENT, DIREG_DEV, GUID_DEVCLASS_USB, HDEVINFO, MAX_DEVICE_ID_LEN,
-        SP_DEVINFO_DATA, SPDRP_FRIENDLYNAME, SPDRP_HARDWAREID, SPDRP_LOCATION_INFORMATION,
-        SPDRP_MFG, SetupDiClassGuidsFromNameW, SetupDiDestroyDeviceInfoList, SetupDiEnumDeviceInfo,
-        SetupDiGetClassDevsW, SetupDiGetDeviceInstanceIdW, SetupDiGetDeviceRegistryPropertyW,
-        SetupDiOpenDevRegKey,
+        SP_DEVINFO_DATA, SPDRP_CLASS, SPDRP_FRIENDLYNAME, SPDRP_HARDWAREID,
+        SPDRP_LOCATION_INFORMATION, SPDRP_MFG, SetupDiClassGuidsFromNameW,
+        SetupDiDestroyDeviceInfoList, SetupDiEnumDeviceInfo, SetupDiGetClassDevsW,
+        SetupDiGetDeviceInstanceIdW, SetupDiGetDeviceRegistryPropertyW, SetupDiOpenDevRegKey,
     };
     use windows_sys::Win32::Foundation::{FALSE, FILETIME, INVALID_HANDLE_VALUE, MAX_PATH};
     use windows_sys::Win32::System::Registry::{
@@ -710,6 +717,8 @@ mod imp {
                 friendly_name: property_from_info(hdi, &info, SPDRP_FRIENDLYNAME),
                 location: property_from_info(hdi, &info, SPDRP_LOCATION_INFORMATION),
                 behind_external_hub: classify_usb_ancestry(info.DevInst),
+                parent_instance_id: ancestor_ids(info.DevInst).into_iter().next(),
+                device_class: property_from_info(hdi, &info, SPDRP_CLASS),
             });
         }
         unsafe {

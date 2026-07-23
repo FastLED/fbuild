@@ -231,6 +231,11 @@ pub async fn run_deploy(
     if !message_is_streamed {
         output::result(&resp.message);
     }
+    // FastLED/fbuild#1152: the daemon may attach a typed exact-device USB
+    // recovery request. Apply the --admin/--no-admin policy here; with
+    // explicit --admin this launches the one-shot elevated helper at most
+    // once and then retries/rescans on freshly enumerated transports only.
+    let resp = maybe_recover_and_retry(resp, &client, &req, usb_recovery_policy).await?;
     if !resp.success {
         // process::exit skips normal destructor-based stdio flushing. Preserve
         // the daemon's final stdout/stderr when fbuild is piped by automation.
@@ -248,6 +253,190 @@ pub async fn run_deploy(
         }
     }
     Ok(())
+}
+
+/// FastLED/fbuild#1152: consume a typed exact-device recovery request from
+/// the daemon's deploy response.
+///
+/// Policy-gated: only an explicit interactive `--admin` launches the #1148
+/// one-shot elevated helper, exactly once. After a successful helper run all
+/// prior port/volume facts are discarded: a failed transfer is retried once
+/// through a fresh deployment (never rebuilding), while an already-confirmed
+/// flash only rescans for the recovered runtime endpoint. Default,
+/// `--no-admin`, CI, and non-interactive sessions never elevate.
+async fn maybe_recover_and_retry(
+    resp: OperationResponse,
+    client: &DaemonClient,
+    req: &DeployRequest,
+    policy: fbuild_core::usb::UsbRecoveryPolicy,
+) -> fbuild_core::Result<OperationResponse> {
+    use super::usb_recovery::{self, RecoveryRunOutcome};
+
+    let Some(request) = resp.usb_recovery.clone() else {
+        return Ok(resp);
+    };
+    output::warn(format!(
+        "deploy target {} is a known-unhealthy Windows devnode{}",
+        request.instance_id,
+        request
+            .problem_code
+            .map(|code| format!(" (problem code {code})"))
+            .unwrap_or_default()
+    ));
+    let context = usb_recovery::RecoveryLaunchContext {
+        is_windows: cfg!(windows),
+        is_ci: std::env::var_os("CI").is_some(),
+        is_interactive: std::io::IsTerminal::is_terminal(&std::io::stdin()),
+    };
+    #[cfg(windows)]
+    let outcome = {
+        let request = request.clone();
+        tokio::task::spawn_blocking(move || {
+            usb_recovery::run_recovery_for_typed_request(
+                policy,
+                &request,
+                context,
+                &mut usb_recovery::WindowsUacLauncher,
+            )
+        })
+        .await
+        .map_err(|error| {
+            fbuild_core::FbuildError::Other(format!("recovery helper task failed: {error}"))
+        })??
+    };
+    #[cfg(not(windows))]
+    let outcome = match usb_recovery::decide_recovery_launch(policy, true, context) {
+        usb_recovery::RecoveryLaunchDecision::ManualGuidance => RecoveryRunOutcome::ManualGuidance,
+        _ => RecoveryRunOutcome::RefuseNonInteractive,
+    };
+    match outcome {
+        RecoveryRunOutcome::ManualGuidance => {
+            if policy == fbuild_core::usb::UsbRecoveryPolicy::Default {
+                output::warn(
+                    "rerun with --admin to attempt a scoped one-shot Windows PnP recovery (UAC), or physically re-enter BOOTSEL (hold BOOT, tap RESET) and retry",
+                );
+            } else {
+                output::warn("--no-admin: privileged recovery skipped by request");
+            }
+            Ok(resp)
+        }
+        RecoveryRunOutcome::RefuseNonInteractive => {
+            output::warn("scoped PnP recovery needs an interactive Windows session; not elevating");
+            Ok(resp)
+        }
+        RecoveryRunOutcome::Cancelled => {
+            output::warn("UAC prompt was cancelled; no recovery was attempted");
+            Ok(resp)
+        }
+        RecoveryRunOutcome::Completed(result) => {
+            output::result(format!(
+                "one-shot PnP recovery {}: {:?} on {} ({:?} -> {:?})",
+                if result.success {
+                    "succeeded"
+                } else {
+                    "failed"
+                },
+                result.operation,
+                result
+                    .validated_instance_id
+                    .as_deref()
+                    .unwrap_or("(unvalidated)"),
+                result.before,
+                result.after,
+            ));
+            if !result.success {
+                output::warn(format!(
+                    "recovery helper reported {}; physical BOOTSEL replug remains the fallback",
+                    result
+                        .error_code
+                        .as_deref()
+                        .unwrap_or("an unspecified failure")
+                ));
+                return Ok(resp);
+            }
+            if !request.flash_completed {
+                // The transfer never succeeded: one fresh deployment attempt
+                // through freshly enumerated transports, never rebuilding and
+                // never re-entering recovery (the retry runs with DenyAdmin).
+                output::result("retrying the deployment once on freshly enumerated transports");
+                let mut retry_req = req.clone();
+                retry_req.usb_recovery_policy = fbuild_core::usb::UsbRecoveryPolicy::DenyAdmin;
+                retry_req.skip_build = true;
+                retry_req.clean_build = false;
+                retry_req.clean_all = false;
+                let retry = client.deploy(&retry_req).await?;
+                let retry_streamed = operation_streams_include_message(&retry);
+                print_operation_streams(&retry);
+                if !retry_streamed {
+                    output::result(&retry.message);
+                }
+                return Ok(retry);
+            }
+            // Flash already confirmed: never reflash for recovery. Rescan for
+            // the freshly enumerated, health-eligible, openable endpoint.
+            match reacquire_recovered_port(&request).await {
+                Some(port) => {
+                    output::result(format!(
+                        "recovered runtime CDC endpoint {port} after PnP recovery"
+                    ));
+                }
+                None => {
+                    output::warn(
+                        "no healthy runtime CDC endpoint appeared after recovery; physical BOOTSEL replug remains the fallback",
+                    );
+                }
+            }
+            Ok(resp)
+        }
+    }
+}
+
+/// Bounded post-recovery rescan (FastLED/fbuild#1152): fresh enumerations
+/// only, health-eligible records only, and a bounded open probe before any
+/// name is reported. Stale COM names and prior scan facts are never reused.
+async fn reacquire_recovered_port(
+    request: &fbuild_core::usb::UsbRecoveryRequest,
+) -> Option<String> {
+    const REACQUIRE_WINDOW: Duration = Duration::from_secs(10);
+    const REACQUIRE_POLL: Duration = Duration::from_millis(500);
+    let expected_serial = request.expected_serial.clone();
+    let expected_vid = request.expected_vid;
+    let expected_pid = request.expected_pid;
+    let started = Instant::now();
+    while started.elapsed() < REACQUIRE_WINDOW {
+        let expected_serial = expected_serial.clone();
+        let found = tokio::task::spawn_blocking(move || {
+            let ports = fbuild_serial::ports::available_ports().ok()?;
+            ports
+                .into_iter()
+                .filter(|port| !port.health.is_known_unhealthy())
+                .find_map(|port| {
+                    let serialport::SerialPortType::UsbPort(usb) = &port.info.port_type else {
+                        return None;
+                    };
+                    let identity_matches = match expected_serial.as_deref() {
+                        Some(serial) => usb.serial_number.as_deref() == Some(serial),
+                        None => (usb.vid, usb.pid) == (expected_vid, expected_pid),
+                    };
+                    if !identity_matches {
+                        return None;
+                    }
+                    serialport::new(&port.info.port_name, 115_200)
+                        .timeout(Duration::from_millis(250))
+                        .open()
+                        .ok()
+                        .map(|_| port.info.port_name)
+                })
+        })
+        .await
+        .ok()
+        .flatten();
+        if found.is_some() {
+            return found;
+        }
+        tokio::time::sleep(REACQUIRE_POLL).await;
+    }
+    None
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -541,6 +730,7 @@ mod tests {
 
     fn response(message: &str, stdout: Option<&str>, stderr: Option<&str>) -> OperationResponse {
         OperationResponse {
+            usb_recovery: None,
             success: false,
             request_id: "request-1".to_string(),
             message: message.to_string(),

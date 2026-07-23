@@ -415,6 +415,7 @@ pub async fn test_emu(
     (
         StatusCode::OK,
         Json(OperationResponse {
+            usb_recovery: None,
             success,
             request_id,
             message,

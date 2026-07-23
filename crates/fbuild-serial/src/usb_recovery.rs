@@ -45,6 +45,10 @@ pub trait UsbPnpBackend {
     /// Restart only the exact, verified present target child.
     fn restart_target(&mut self, instance_id: &str) -> Result<(), Self::Error>;
 
+    /// Restart only the exact, verified healthy parent composite of a
+    /// present problematic USB interface devnode (FastLED/fbuild#1152).
+    fn restart_verified_parent(&mut self, parent_instance_id: &str) -> Result<(), Self::Error>;
+
     /// Number of bounded post-operation observations. Fakes stay instant;
     /// Windows waits briefly between observations for re-enumeration to settle.
     fn post_operation_poll_attempts(&self) -> usize {
@@ -105,6 +109,32 @@ pub fn execute_recovery<B: UsbPnpBackend>(
             (
                 UsbRecoveryOperation::ReenumerateParent,
                 backend.reenumerate_parent(parent_instance_id),
+            )
+        }
+        // A composite-interface devnode (`...&MI_xx\...`) cannot recover
+        // alone: restarting it leaves the sibling interfaces and any mounted
+        // synthetic volume (e.g. the RP2040 BOOTSEL FAT) in their wedged
+        // state. When the request names a parent, restart the live-verified
+        // healthy parent composite instead (FastLED/fbuild#1152). A plain
+        // device target keeps the original exact-child restart.
+        UsbRecoveryHealth::PresentProblem { .. } if is_composite_interface(&target.instance_id) => {
+            let Some(parent_instance_id) = request.parent_instance_id.as_deref() else {
+                return failed(before, "missing-verified-parent");
+            };
+            let parent = match backend.inspect(parent_instance_id, false) {
+                Ok(device) => device,
+                Err(_) => return failed(before, "parent-not-live"),
+            };
+            if !matches!(parent.health, UsbRecoveryHealth::HealthyPresent)
+                || !same_id(&parent.instance_id, parent_instance_id)
+                || parent.vid != target.vid
+                || parent.pid != target.pid
+            {
+                return failed(before, "parent-not-live");
+            }
+            (
+                UsbRecoveryOperation::RestartVerifiedParent,
+                backend.restart_verified_parent(parent_instance_id),
             )
         }
         UsbRecoveryHealth::PresentProblem { .. } => (
@@ -191,6 +221,12 @@ fn same_id(left: &str, right: &str) -> bool {
     left.eq_ignore_ascii_case(right)
 }
 
+/// Whether the instance is a USB composite-interface devnode (`usbccgp`
+/// child), recognizable by the `&MI_xx` hardware-ID component.
+fn is_composite_interface(instance_id: &str) -> bool {
+    instance_id.to_ascii_uppercase().contains("&MI_")
+}
+
 /// Perform real host recovery when the one-shot helper is running on Windows.
 ///
 /// The non-Windows result deliberately fails closed. The CLI must render the
@@ -227,8 +263,8 @@ mod windows {
     use windows_sys::Win32::Devices::DeviceAndDriverInstallation::{
         CM_Disable_DevNode, CM_Enable_DevNode, CM_Get_DevNode_PropertyW, CM_Get_DevNode_Status,
         CM_Get_Device_IDW, CM_Get_Parent, CM_LOCATE_DEVNODE_NORMAL, CM_LOCATE_DEVNODE_PHANTOM,
-        CM_Locate_DevNodeW, CM_Reenumerate_DevNode, CR_NO_SUCH_DEVINST, CR_SUCCESS,
-        MAX_DEVICE_ID_LEN,
+        CM_Locate_DevNodeW, CM_Reenumerate_DevNode, CR_NO_SUCH_DEVINST, CR_NO_SUCH_VALUE,
+        CR_SUCCESS, MAX_DEVICE_ID_LEN,
     };
     use windows_sys::Win32::Devices::Properties::{DEVPKEY_Device_Class, DEVPROP_TYPE_STRING};
 
@@ -253,6 +289,14 @@ mod windows {
 
         fn restart_target(&mut self, instance_id: &str) -> Result<(), Self::Error> {
             restart_target(instance_id)
+        }
+
+        fn restart_verified_parent(&mut self, parent_instance_id: &str) -> Result<(), Self::Error> {
+            // Same bounded disable/enable as `restart_target`, applied to the
+            // parent composite that `execute_recovery` already re-proved live
+            // and identity-matched. Never reachable for a hub or controller:
+            // the ladder only passes a `USB\VID_...` composite here.
+            restart_target(parent_instance_id)
         }
 
         fn post_operation_poll_attempts(&self) -> usize {
@@ -387,6 +431,13 @@ mod windows {
                 0,
             )
         };
+        if result == CR_NO_SUCH_VALUE {
+            // Driverless devnodes (e.g. a BOOTSEL PICOBOOT interface stuck at
+            // CM_PROB_FAILED_INSTALL) have no Device_Class property at all.
+            // Report the shared sentinel so identity revalidation treats the
+            // absence as an exact-match fact (FastLED/fbuild#1152).
+            return Ok(fbuild_core::usb::UNCLASSED_DEVICE_CLASS.to_string());
+        }
         if result != CR_SUCCESS || property_type != DEVPROP_TYPE_STRING {
             return Err(format!(
                 "CM_Get_DevNode_PropertyW(Device_Class) failed ({result})"
@@ -498,6 +549,12 @@ mod tests {
 
         fn restart_target(&mut self, instance_id: &str) -> Result<(), Self::Error> {
             self.calls.push(format!("restart:{instance_id}"));
+            Ok(())
+        }
+
+        fn restart_verified_parent(&mut self, parent_instance_id: &str) -> Result<(), Self::Error> {
+            self.calls
+                .push(format!("restart-parent:{parent_instance_id}"));
             Ok(())
         }
     }
@@ -646,5 +703,141 @@ mod tests {
             UsbRecoveryHealth::PresentProblem { .. }
         ));
         assert!(result.validated_instance_id.is_some());
+    }
+
+    const BOOTSEL_INTERFACE: &str = "USB\\VID_2E8A&PID_0003&MI_01\\8&22CF742D&0&0001";
+    const BOOTSEL_COMPOSITE: &str = "USB\\VID_2E8A&PID_0003\\E0C9125B0D9B";
+
+    fn interface_request() -> UsbRecoveryRequest {
+        UsbRecoveryRequest {
+            operation_id: "deploy-2".to_string(),
+            instance_id: BOOTSEL_INTERFACE.to_string(),
+            expected_class: fbuild_core::usb::UNCLASSED_DEVICE_CLASS.to_string(),
+            parent_instance_id: Some(BOOTSEL_COMPOSITE.to_string()),
+            expected_vid: 0x2e8a,
+            expected_pid: 0x0003,
+            expected_serial: Some("E0C9125B0D9B".to_string()),
+            problem_code: Some(28),
+            flash_completed: false,
+        }
+    }
+
+    fn interface_target(health: UsbRecoveryHealth) -> UsbPnpDevice {
+        UsbPnpDevice {
+            instance_id: BOOTSEL_INTERFACE.to_string(),
+            parent_instance_id: Some(BOOTSEL_COMPOSITE.to_string()),
+            device_class: fbuild_core::usb::UNCLASSED_DEVICE_CLASS.to_string(),
+            vid: 0x2e8a,
+            pid: 0x0003,
+            serial: Some("E0C9125B0D9B".to_string()),
+            health,
+        }
+    }
+
+    fn composite_parent(health: UsbRecoveryHealth) -> UsbPnpDevice {
+        UsbPnpDevice {
+            instance_id: BOOTSEL_COMPOSITE.to_string(),
+            parent_instance_id: Some("USB\\ROOT_HUB30\\5&23f8e3f5&0&0".to_string()),
+            device_class: "USB".to_string(),
+            vid: 0x2e8a,
+            pid: 0x0003,
+            serial: Some("E0C9125B0D9B".to_string()),
+            health,
+        }
+    }
+
+    #[test]
+    fn problem_interface_restarts_only_its_verified_parent_composite() {
+        let mut backend = FakePnp::with_observations(vec![
+            interface_target(UsbRecoveryHealth::PresentProblem { problem_code: 28 }),
+            composite_parent(UsbRecoveryHealth::HealthyPresent),
+            interface_target(UsbRecoveryHealth::PresentProblem { problem_code: 28 }),
+        ]);
+
+        let result = execute_recovery(&interface_request(), "nonce".to_string(), &mut backend);
+
+        assert!(result.success, "{:?}", result.error_code);
+        assert_eq!(
+            result.operation,
+            Some(UsbRecoveryOperation::RestartVerifiedParent)
+        );
+        assert!(
+            backend
+                .calls
+                .iter()
+                .any(|call| call == &format!("restart-parent:{BOOTSEL_COMPOSITE}"))
+        );
+        assert!(
+            !backend
+                .calls
+                .iter()
+                .any(|call| call.starts_with("restart:USB"))
+        );
+    }
+
+    #[test]
+    fn problem_interface_with_unhealthy_parent_fails_closed() {
+        let mut backend = FakePnp::with_observations(vec![
+            interface_target(UsbRecoveryHealth::PresentProblem { problem_code: 28 }),
+            composite_parent(UsbRecoveryHealth::PresentProblem { problem_code: 31 }),
+        ]);
+
+        let result = execute_recovery(&interface_request(), "nonce".to_string(), &mut backend);
+
+        assert!(!result.success);
+        assert_eq!(result.error_code.as_deref(), Some("parent-not-live"));
+        assert!(
+            !backend
+                .calls
+                .iter()
+                .any(|call| call.starts_with("restart-parent:"))
+        );
+    }
+
+    #[test]
+    fn problem_interface_with_mismatched_parent_identity_fails_closed() {
+        let mut wrong_identity = composite_parent(UsbRecoveryHealth::HealthyPresent);
+        wrong_identity.pid = 0x000a;
+        let mut backend = FakePnp::with_observations(vec![
+            interface_target(UsbRecoveryHealth::PresentProblem { problem_code: 28 }),
+            wrong_identity,
+        ]);
+
+        let result = execute_recovery(&interface_request(), "nonce".to_string(), &mut backend);
+
+        assert!(!result.success);
+        assert_eq!(result.error_code.as_deref(), Some("parent-not-live"));
+    }
+
+    #[test]
+    fn problem_interface_without_parent_fact_fails_closed() {
+        let mut request = interface_request();
+        request.parent_instance_id = None;
+        let mut target = interface_target(UsbRecoveryHealth::PresentProblem { problem_code: 28 });
+        target.parent_instance_id = None;
+        let mut backend = FakePnp::with_observations(vec![target]);
+
+        let result = execute_recovery(&request, "nonce".to_string(), &mut backend);
+
+        assert!(!result.success);
+        assert_eq!(
+            result.error_code.as_deref(),
+            Some("missing-verified-parent")
+        );
+    }
+
+    #[test]
+    fn unclassed_sentinel_is_an_exact_class_match_not_a_wildcard() {
+        let mut request = interface_request();
+        request.expected_class = "Ports".to_string();
+        let mut backend =
+            FakePnp::with_observations(vec![interface_target(UsbRecoveryHealth::PresentProblem {
+                problem_code: 28,
+            })]);
+
+        let result = execute_recovery(&request, "nonce".to_string(), &mut backend);
+
+        assert!(!result.success);
+        assert_eq!(result.error_code.as_deref(), Some("device-class-mismatch"));
     }
 }

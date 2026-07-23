@@ -363,6 +363,7 @@ impl DaemonClient {
                         }
                         "result" => {
                             final_response = Some(OperationResponse {
+                                usb_recovery: None,
                                 success: event.success.unwrap_or(false),
                                 request_id: event.request_id.unwrap_or_default(),
                                 message: event.message.unwrap_or_default(),

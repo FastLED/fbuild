@@ -57,7 +57,7 @@ pub struct BuildRequest {
     pub bloat_analysis: bool,
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Clone, Debug, Serialize)]
 pub struct DeployRequest {
     pub project_dir: String,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -170,6 +170,12 @@ pub struct OperationResponse {
     pub stdout: Option<String>,
     #[serde(default)]
     pub stderr: Option<String>,
+    /// Typed exact-device USB recovery request from the daemon
+    /// (FastLED/fbuild#1152). `serde(default)` keeps older daemons
+    /// compatible; the CLI's `--admin`/`--no-admin` policy decides whether
+    /// the one-shot elevated helper is ever launched.
+    #[serde(default)]
+    pub usb_recovery: Option<fbuild_core::usb::UsbRecoveryRequest>,
 }
 
 /// NDJSON event from a streaming build response.
