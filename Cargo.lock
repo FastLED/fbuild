@@ -1555,6 +1555,9 @@ name = "fbuild-paths"
 version = "2.5.3"
 dependencies = [
  "fbuild-core",
+ "serde",
+ "serde_json",
+ "tempfile",
 ]
 
 [[package]]

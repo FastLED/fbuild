@@ -18,6 +18,7 @@ pub mod fs;
 pub mod http;
 pub mod install_status;
 pub mod path;
+pub mod process_identity;
 pub mod response_file;
 pub mod shell_split;
 pub mod subprocess;

@@ -40,9 +40,22 @@ pub fn try_acquire(path: &Path, mode: FileLockMode) -> io::Result<Option<FileLoc
     };
     match result {
         Ok(()) => Ok(Some(FileLockGuard { _file: file })),
-        Err(error) if error.kind() == io::ErrorKind::WouldBlock => Ok(None),
+        Err(error) if lock_is_held(&error) => Ok(None),
         Err(error) => Err(error),
     }
+}
+
+/// Does this error mean "another process holds a conflicting lock"?
+///
+/// Unix reports contention as `EWOULDBLOCK` (kind `WouldBlock`), but Windows
+/// `LockFileEx(LOCKFILE_FAIL_IMMEDIATELY)` reports `ERROR_LOCK_VIOLATION`
+/// (os error 33), which std maps to an uncategorized kind — so a kind check
+/// alone misclassifies contention as a hard error on Windows. Also compare
+/// against `fs2::lock_contended_error()` (the canonical per-platform
+/// contention error), mirroring soldr's `lock_is_held`.
+fn lock_is_held(error: &io::Error) -> bool {
+    error.kind() == io::ErrorKind::WouldBlock
+        || error.raw_os_error() == fs2::lock_contended_error().raw_os_error()
 }
 
 /// Wait up to `timeout` for a cross-process file lock.

@@ -42,14 +42,18 @@ Common options include `--clean`, `--jobs`, `--quick`, `--release`,
 
 Remove project outputs without compiling or deploying. `sketch` removes only
 the selected environment/profile build directory. `all` also removes the exact
-matching reusable framework-cache entries. `cache` first stops the daemon,
-clears the active dev/prod mode's entire global zccache compiler-object store,
-restarts the daemon, and then performs `all` for the selected target. Installed
-packages, platforms, frameworks, and toolchains are retained.
+matching reusable framework-cache entries. `cache` stops the current-version
+daemon and any other live `fbuild-daemon` processes that verifiably own the
+same cache root — including legacy pre-#1159 daemons — then takes exclusive
+ownership of the cache root, deletes only the active dev/prod mode's
+`<fbuild_root>/zccache` compiler-object store, and restarts the daemon.
+Installed packages, platforms, frameworks, toolchains, and downloaded fbuild
+archives are retained.
 
-The daemon refuses `cache` while an operation is active, so the compiler store
-is never removed from underneath a build. The command attempts to restore the
-daemon even if cache removal fails.
+The command refuses `cache` while a build operation is active, so the compiler
+store is never removed from underneath a build, and refuses if the running
+daemon's identity or mode doesn't match the target cache root. It attempts to
+restore daemon availability even if cache removal fails.
 
 ```bash
 fbuild clean sketch

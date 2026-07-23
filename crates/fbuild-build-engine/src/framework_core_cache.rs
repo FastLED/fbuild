@@ -55,6 +55,40 @@ impl FrameworkCoreCache {
         Self { key, path }
     }
 
+    /// Test seam: like [`FrameworkCoreCache::new`], but rooted at an explicit
+    /// cache root instead of the process-global `~/.fbuild/{dev|prod}/cache`.
+    /// Without this, unit tests write into (and read back from) the REAL user
+    /// cache, so leftover artifacts from earlier runs change hydrate counts
+    /// and make the tests both flaky and cache-polluting.
+    /// Mirrors [`FrameworkCoreCache::new`]'s full signature plus the cache
+    /// root, so the argument count is inherent to the seam.
+    #[cfg(test)]
+    #[allow(clippy::too_many_arguments)]
+    fn new_with_cache_root(
+        cache_root: &Path,
+        project_dir: &Path,
+        platform_label: &str,
+        env_name: &str,
+        profile: BuildProfile,
+        compiler: &dyn Compiler,
+        core_sources: &[PathBuf],
+        extra_flags: &LanguageExtraFlags,
+    ) -> Self {
+        let key = core_cache_key(
+            project_dir,
+            platform_label,
+            env_name,
+            profile,
+            compiler,
+            core_sources,
+            extra_flags,
+        );
+        let path = fbuild_packages::Cache::with_cache_root(project_dir, cache_root)
+            .core_artifacts_dir()
+            .join(&key);
+        Self { key, path }
+    }
+
     pub fn key(&self) -> &str {
         &self.key
     }
@@ -479,7 +513,13 @@ mod tests {
         let tmp = tempfile::tempdir().unwrap();
         let project = tmp.path().join("project");
         std::fs::create_dir_all(&project).unwrap();
-        let cache = FrameworkCoreCache::new(
+        // Hermetic cache root: rooting at the real user cache made this test
+        // accumulate one obj+dep pair per run (the object filename hashes the
+        // per-run tempdir source path while the cache key stays constant), so
+        // hydrate's copied count grew 3, 5, 7, ... across repeated runs.
+        let cache_root = tmp.path().join("cache-root");
+        let cache = FrameworkCoreCache::new_with_cache_root(
+            &cache_root,
             &project,
             "avr",
             "uno",
@@ -565,7 +605,11 @@ mod tests {
         let source = project.join("src/main.cpp");
         std::fs::create_dir_all(source.parent().unwrap()).unwrap();
         std::fs::write(&source, b"same").unwrap();
-        let selected = FrameworkCoreCache::new(
+        // Hermetic cache root (see hydrate_and_store_only_core_artifact_files):
+        // never create/remove entries under the real user cache from a test.
+        let cache_root = tmp.path().join("cache-root");
+        let selected = FrameworkCoreCache::new_with_cache_root(
+            &cache_root,
             &project,
             "avr",
             "uno",
@@ -574,7 +618,8 @@ mod tests {
             std::slice::from_ref(&source),
             &flags,
         );
-        let sibling = FrameworkCoreCache::new(
+        let sibling = FrameworkCoreCache::new_with_cache_root(
+            &cache_root,
             &project,
             "avr",
             "mega",

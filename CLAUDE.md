@@ -138,7 +138,7 @@ The current inventory is auto-published to a stable tracking issue every Monday 
 
 ## Key Constraints
 
-- **No file-based locks** — all locking through daemon's in-memory managers
+- **No file-based locks, with one sanctioned exception** — almost all synchronization is through the daemon's in-memory managers. The narrow exception is fbuild-daemon startup/lifetime root-ownership and spawn-herd election (soldr-style, FastLED/fbuild#1159): a version-blind `root-owner.lock` held for the daemon's whole lifetime, plus a `spawn.lock` single-flight election for concurrent CLI spawns. zccache compile/object access keeps its own zccache-internal in-memory synchronization — these locks never gate cache reads/writes. Locks are OS-released on process death and must never be manually broken or deleted.
 - **Dev mode isolation** — `FBUILD_DEV_MODE=1` → `~/.fbuild/dev/`. The daemon endpoint is no longer a fixed port: it's derived per (backend version + cache identity) in the IANA dynamic range 49152–65535 (`fbuild_paths::default_daemon_port` / `daemon_endpoint_key`), so different-version checkouts get isolated daemons and can't serve each other wrong-version builds (FastLED/fbuild#1009). Override with `FBUILD_DAEMON_PORT`.
 - **HTTP API compatibility** — same endpoints and JSON schemas as the Python daemon
 - **Windows USB-CDC** — 30 retries, aggressive buffer drain, DTR/RTS toggling after flash

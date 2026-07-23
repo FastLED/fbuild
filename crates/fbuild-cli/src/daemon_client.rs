@@ -222,6 +222,21 @@ impl DaemonClient {
         }
     }
 
+    /// Construct a client targeting an explicit port, bypassing the normal
+    /// endpoint-key port resolution in [`fbuild_paths::get_daemon_url`].
+    ///
+    /// Used by the legacy/rollout sweep in `fbuild clean cache`
+    /// (FastLED/fbuild#1159) to probe and shut down other live
+    /// `fbuild-daemon` processes discovered via `daemon-*.port` files, which
+    /// may not be at this process's own resolved endpoint.
+    pub fn with_port(port: u16) -> Self {
+        let client = fbuild_core::http::client().clone();
+        Self {
+            base_url: format!("http://127.0.0.1:{port}"),
+            client,
+        }
+    }
+
     pub fn websocket_url(&self, path: &str) -> String {
         let scheme = if self.base_url.starts_with("https://") {
             "wss://"
@@ -864,6 +879,25 @@ async fn ensure_direct_daemon_running() -> fbuild_core::Result<()> {
 
     tracing::info!("daemon not running, starting...");
 
+    // Spawn-herd election (FastLED/fbuild#1159): a fan-out of concurrent CLI
+    // invocations that all observe "daemon not running" must not each spawn
+    // their own daemon. Only the winner of this single-flight lock actually
+    // spawns; losers wait for the winner's daemon to become healthy instead.
+    let Some(_spawn_guard) = daemon_client_spawn_lock() else {
+        for _ in 0..50 {
+            tokio::time::sleep(std::time::Duration::from_millis(100)).await;
+            if client.health().await {
+                return Ok(());
+            }
+        }
+        return Err(fbuild_core::FbuildError::DaemonError(
+            "daemon did not become healthy while another process was spawning it".to_string(),
+        ));
+    };
+
+    // Winner: `_spawn_guard` is held alive through the spawn + readiness poll
+    // below so no other caller starts a redundant daemon while we're mid-spawn.
+
     // Retry daemon spawn up to 3 times with exponential backoff
     // (matches Python behavior: [0.0s, 0.5s, 2.0s] delays between attempts)
     let backoff_delays = [0.0, 0.5, 2.0];
@@ -916,6 +950,14 @@ async fn ensure_direct_daemon_running() -> fbuild_core::Result<()> {
     Err(fbuild_core::FbuildError::DaemonError(
         "daemon did not start after 3 attempts".to_string(),
     ))
+}
+
+/// Acquire the spawn-herd single-flight lock (FastLED/fbuild#1159). Thin
+/// wrapper kept local to this module so the call site above reads naturally;
+/// `try_acquire_spawn_lock` itself already fails safely to `None` on lock
+/// errors (never gates progress on a broken filesystem).
+fn daemon_client_spawn_lock() -> Option<fbuild_paths::daemon_ownership::SpawnLockGuard> {
+    fbuild_paths::daemon_ownership::try_acquire_spawn_lock()
 }
 
 /// Spawn a single daemon process instance.

@@ -5,7 +5,6 @@ use axum::Router;
 use axum::routing::{get, post};
 use clap::Parser;
 use fbuild_build::compile_backend::CompileBackend;
-use fbuild_core::file_lock::{self, FileLockGuard, FileLockMode};
 use fbuild_daemon::context::{
     BroadcastHub, DaemonContext, IDLE_TIMEOUT, STALE_LOCK_CHECK_INTERVAL, self_eviction_timeout,
 };
@@ -107,17 +106,37 @@ async fn main() {
     // identity-dependent behavior still fails closed.
     let _ = tokio::task::spawn_blocking(populate_usb_overlay_best_effort).await;
 
-    // These locks cover fbuild-daemon startup/lifetime only; zccache continues
-    // to synchronize object-cache access internally. A reset CLI holds the
-    // startup gate exclusively from before shutdown through deletion. Every
-    // daemon takes that gate shared, then keeps the lifecycle lock shared for
-    // its lifetime. This prevents a replacement daemon from starting between
-    // another daemon's stop and cache deletion (FastLED/fbuild#1154).
-    let _daemon_cache_lifecycle_lock = match acquire_daemon_cache_lifecycle_lock().await {
-        Ok(guard) => guard,
-        Err(error) => {
-            eprintln!("fatal: failed to acquire fbuild-daemon cache lifecycle lock: {error}");
-            std::process::exit(1);
+    // Soldr-style root ownership (FastLED/fbuild#1154 / #1159): this lock
+    // covers fbuild-daemon startup/lifetime only — zccache continues to
+    // synchronize object-cache access internally. The daemon holds this
+    // exclusively for its entire lifetime; `fbuild clean cache` takes it
+    // exclusively (after stopping every daemon it can find) as the final,
+    // version-blind proof that no daemon still owns the cache root before
+    // deleting it. Poll briefly rather than blocking forever: a wedged
+    // holder must produce a clear fatal error, not a silent hang.
+    let _root_ownership_guard = {
+        const POLL: std::time::Duration = std::time::Duration::from_millis(100);
+        const WAIT: std::time::Duration = std::time::Duration::from_secs(10);
+        let deadline = std::time::Instant::now() + WAIT;
+        loop {
+            match fbuild_paths::daemon_ownership::RootOwnershipGuard::try_acquire() {
+                Ok(Some(guard)) => break guard,
+                Ok(None) => {
+                    if std::time::Instant::now() >= deadline {
+                        eprintln!(
+                            "fatal: another fbuild-daemon owns the cache root (root-owner.lock busy)"
+                        );
+                        std::process::exit(1);
+                    }
+                    tokio::time::sleep(POLL).await;
+                }
+                Err(error) => {
+                    eprintln!(
+                        "fatal: failed to acquire fbuild-daemon root ownership lock: {error}"
+                    );
+                    std::process::exit(1);
+                }
+            }
         }
     };
 
@@ -221,6 +240,36 @@ async fn main() {
     }
     if let Err(e) = fbuild_core::fs::write(&port_file, port.to_string()).await {
         tracing::warn!("failed to write port file: {}", e);
+    }
+
+    // Write the soldr-style owner claim (FastLED/fbuild#1159) now that we
+    // know our port. This is advisory only — readers must always re-verify
+    // pid liveness + exe stem before trusting it — but it lets a
+    // `fbuild clean cache` sweep target this exact daemon by port without
+    // enumerating every `daemon-*.port` file. `current_exe()` failing is
+    // not treated as fatal: skip the claim write and keep the daemon
+    // running under the root-ownership lock alone.
+    match std::env::current_exe() {
+        Ok(exe) => {
+            let identity = fbuild_paths::running_process::DaemonCacheIdentity::discover();
+            let claim = fbuild_paths::daemon_ownership::OwnerClaim {
+                pid: std::process::id(),
+                exe,
+                version: env!("CARGO_PKG_VERSION").to_string(),
+                mode: identity.mode.to_string(),
+                cache_root_key: identity.cache_root_key.clone(),
+                port,
+            };
+            if let Err(e) = fbuild_paths::daemon_ownership::write_owner_claim(&claim) {
+                tracing::warn!("failed to write owner claim: {}", e);
+            }
+        }
+        Err(e) => {
+            tracing::warn!(
+                "cannot resolve current_exe() for owner claim; skipping claim write: {}",
+                e
+            );
+        }
     }
 
     // Install the running-process `fbuild.servicedef` so the broker can
@@ -460,33 +509,13 @@ async fn main() {
             tracing::error!("server error: {}", e);
         });
 
-    // Clean up PID and port files
+    // Clean up PID and port files, and the soldr-style owner claim.
     let _ = fbuild_core::fs::remove_file(&pid_file).await;
     let _ = fbuild_core::fs::remove_file(&port_file).await;
+    fbuild_paths::daemon_ownership::remove_owner_claim();
 
     tracing::info!("daemon exiting");
     std::process::exit(0);
-}
-
-async fn acquire_daemon_cache_lifecycle_lock() -> std::io::Result<FileLockGuard> {
-    const WAIT: std::time::Duration = std::time::Duration::from_secs(60);
-    const POLL: std::time::Duration = std::time::Duration::from_millis(100);
-    let reset_gate = file_lock::acquire(
-        &fbuild_paths::get_daemon_cache_reset_gate_file(),
-        FileLockMode::Shared,
-        WAIT,
-        POLL,
-    )
-    .await?;
-    let active = file_lock::acquire(
-        &fbuild_paths::get_daemon_cache_lifecycle_lock_file(),
-        FileLockMode::Shared,
-        WAIT,
-        POLL,
-    )
-    .await?;
-    drop(reset_gate);
-    Ok(active)
 }
 
 /// Populate the runtime USB VID:PID overlay from the shared cache root.
