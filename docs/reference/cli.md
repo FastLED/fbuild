@@ -42,17 +42,30 @@ Common options include `--clean`, `--jobs`, `--quick`, `--release`,
 
 Remove project outputs without compiling or deploying. `sketch` removes only
 the selected environment/profile build directory. `all` also removes the exact
-matching reusable framework-cache entries. The operation is coordinated by the
-daemon, so it waits for any build holding the project lock.
+matching reusable framework-cache entries. `cache` stops the current-version
+daemon and any other live `fbuild-daemon` processes that verifiably own the
+same cache root — including legacy pre-#1159 daemons — then takes exclusive
+ownership of the cache root, deletes only the active dev/prod mode's
+`<fbuild_root>/zccache` compiler-object store, and restarts the daemon.
+Installed packages, platforms, frameworks, toolchains, and downloaded fbuild
+archives are retained.
+
+The command refuses `cache` while a build operation is active, so the compiler
+store is never removed from underneath a build, and refuses if the running
+daemon's identity or mode doesn't match the target cache root. It attempts to
+restore daemon availability even if cache removal fails.
 
 ```bash
 fbuild clean sketch
 fbuild clean sketch examples/Blink -e uno --quick
 fbuild clean all -e esp32dev --release
+fbuild clean cache examples/Blink -e uno --release
 ```
 
 The scope is required; `--quick` and `--release` are mutually exclusive and
-default to the release profile.
+default to the release profile. Unlike `sketch` and `all`, `cache` has global
+scope within the active fbuild mode and affects compiler-cache hits for every
+project using that mode.
 
 ### `fbuild deploy`
 

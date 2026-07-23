@@ -37,11 +37,27 @@ struct Options {
     raw_base_url: String,
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 enum ToolKind {
     Arduino,
     PlatformIo,
     Fbuild,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+enum ColdCleanupStep {
+    Command {
+        program: OsString,
+        args: Vec<OsString>,
+    },
+    RemoveDir(PathBuf),
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+enum MeasurementStep {
+    PrepareCold(usize),
+    ColdBuild(usize),
+    WarmBuild(usize),
 }
 
 #[derive(Clone, Copy, Debug)]
@@ -212,42 +228,50 @@ fn measure_tool(
         )?;
     }
 
-    for trial in 1..=options.trials {
-        writeln!(
-            log,
-            "\n===== {} trial {trial}/{} =====",
-            kind.style().label,
-            options.trials
-        )?;
-        clean_tool(
-            kind,
-            options,
-            repo_root,
-            project_dir,
-            fbuild,
-            arduino_build_dir,
-            log,
-        )?;
-        let cold = timed_build(
-            kind,
-            options,
-            repo_root,
-            project_dir,
-            fbuild,
-            arduino_build_dir,
-            log,
-        )?;
-        let warm = timed_build(
-            kind,
-            options,
-            repo_root,
-            project_dir,
-            fbuild,
-            arduino_build_dir,
-            log,
-        )?;
-        cold_trials_ms.push(round_millis(cold));
-        warm_trials_ms.push(round_millis(warm));
+    for step in measurement_plan(options.trials) {
+        match step {
+            MeasurementStep::PrepareCold(trial) => {
+                writeln!(
+                    log,
+                    "\n===== {} trial {trial}/{} =====",
+                    kind.style().label,
+                    options.trials
+                )?;
+                prepare_cold(
+                    kind,
+                    options,
+                    repo_root,
+                    project_dir,
+                    fbuild,
+                    arduino_build_dir,
+                    log,
+                )?;
+            }
+            MeasurementStep::ColdBuild(_) => {
+                let elapsed = timed_build(
+                    kind,
+                    options,
+                    repo_root,
+                    project_dir,
+                    fbuild,
+                    arduino_build_dir,
+                    log,
+                )?;
+                cold_trials_ms.push(round_millis(elapsed));
+            }
+            MeasurementStep::WarmBuild(_) => {
+                let elapsed = timed_build(
+                    kind,
+                    options,
+                    repo_root,
+                    project_dir,
+                    fbuild,
+                    arduino_build_dir,
+                    log,
+                )?;
+                warm_trials_ms.push(round_millis(elapsed));
+            }
+        }
     }
 
     let cold_ms = round_millis(median(&cold_trials_ms));
@@ -270,7 +294,19 @@ fn measure_tool(
     })
 }
 
-fn clean_tool(
+fn measurement_plan(trials: usize) -> Vec<MeasurementStep> {
+    (1..=trials)
+        .flat_map(|trial| {
+            [
+                MeasurementStep::PrepareCold(trial),
+                MeasurementStep::ColdBuild(trial),
+                MeasurementStep::WarmBuild(trial),
+            ]
+        })
+        .collect()
+}
+
+fn prepare_cold(
     kind: ToolKind,
     options: &Options,
     repo_root: &Path,
@@ -279,31 +315,72 @@ fn clean_tool(
     arduino_build_dir: &Path,
     log: &mut File,
 ) -> AppResult<()> {
-    match kind {
-        ToolKind::Arduino => remove_dir_within(repo_root, arduino_build_dir),
-        ToolKind::PlatformIo => {
-            let args = os_args(&[
-                "run",
-                "--project-dir",
-                &project_dir.to_string_lossy(),
-                "--environment",
-                "uno",
-                "--target",
-                "clean",
-            ]);
-            run_logged(&options.platformio, &args, repo_root, log).map(|_| ())
+    writeln!(log, "----- untimed cold-cache preparation -----")?;
+    for step in cold_cleanup_steps(
+        kind,
+        &options.arduino_cli,
+        &options.platformio,
+        project_dir,
+        fbuild,
+        arduino_build_dir,
+    ) {
+        match step {
+            ColdCleanupStep::Command { program, args } => {
+                run_logged(&program, &args, repo_root, log)?;
+            }
+            ColdCleanupStep::RemoveDir(path) => remove_dir_within(repo_root, &path)?,
         }
-        ToolKind::Fbuild => {
-            let args = os_args(&[
+    }
+    writeln!(log, "----- timed cold build follows -----")?;
+    Ok(())
+}
+
+fn cold_cleanup_steps(
+    kind: ToolKind,
+    arduino_cli: &OsStr,
+    platformio: &OsStr,
+    project_dir: &Path,
+    fbuild: &Path,
+    arduino_build_dir: &Path,
+) -> Vec<ColdCleanupStep> {
+    let command = |program: &OsStr, args: Vec<OsString>| ColdCleanupStep::Command {
+        program: program.to_os_string(),
+        args,
+    };
+    match kind {
+        ToolKind::Arduino => vec![
+            command(arduino_cli, os_args(&["cache", "clean"])),
+            ColdCleanupStep::RemoveDir(arduino_build_dir.to_path_buf()),
+        ],
+        ToolKind::PlatformIo => vec![
+            command(
+                platformio,
+                os_args(&["system", "prune", "--cache", "--force"]),
+            ),
+            command(
+                platformio,
+                os_args(&[
+                    "run",
+                    "--project-dir",
+                    &project_dir.to_string_lossy(),
+                    "--environment",
+                    "uno",
+                    "--target",
+                    "clean",
+                ]),
+            ),
+        ],
+        ToolKind::Fbuild => vec![command(
+            fbuild.as_os_str(),
+            os_args(&[
                 "clean",
-                "all",
+                "cache",
                 &project_dir.to_string_lossy(),
                 "--environment",
                 "uno",
                 "--release",
-            ]);
-            run_logged(fbuild.as_os_str(), &args, repo_root, log).map(|_| ())
-        }
+            ]),
+        )],
     }
 }
 
@@ -497,7 +574,7 @@ fn latest_payload(metadata: &Metadata, results: &[ToolResult]) -> Value {
             },
             "trials": metadata.trials,
             "statistic": "median",
-            "cold_definition": "project outputs and matching compiled framework caches removed; installed packages and global download/compiler caches retained",
+            "cold_definition": "project outputs, reusable framework objects, compiler-object caches, and Arduino/PlatformIO download/HTTP caches removed; installed packages/toolchains and fbuild package archives retained",
             "warm_definition": "immediate no-change rebuild after the cold build",
         },
         "results": results,
@@ -717,7 +794,7 @@ fn render_html(metadata: &Metadata, results: &[ToolResult]) -> String {
     <main>
       <h1>fbuild Blink build benchmark</h1>
       <p class="meta">Generated {generated_at} from <code>{sha}</code>. Median of {trials} trials on {os}/{arch}.</p>
-      <p class="note">All three tools compile the same Arduino Uno <code>bench/blink/blink.ino</code>. Cold removes project outputs and matching compiled framework caches while retaining installed packages and global download/compiler caches. Warm is the immediate no-change rebuild. The narrower warm bar overlays the cold bar.</p>
+      <p class="note">All three tools compile the same Arduino Uno <code>bench/blink/blink.ino</code>. Cold removes project outputs, reusable framework objects, compiler-object caches, and Arduino/PlatformIO download/HTTP caches while retaining installed packages/toolchains and fbuild package archives. Warm is the immediate no-change rebuild. The narrower warm bar overlays the cold bar.</p>
       <a href="benchmark.svg"><img src="benchmark.svg" alt="Arduino CLI vs PlatformIO vs fbuild cold and warm Blink build timings" /></a>
       <div class="table-wrap">
         <table>
@@ -861,132 +938,5 @@ fn print_help() {
 }
 
 #[cfg(test)]
-mod tests {
-    use super::*;
-
-    fn sample_results() -> Vec<ToolResult> {
-        vec![
-            ToolResult {
-                tool: "arduino".into(),
-                display_name: "Arduino CLI".into(),
-                version: "arduino-cli 1.5.0".into(),
-                cold_ms: 1200.0,
-                warm_ms: 800.0,
-                speedup: 1.5,
-                cold_trials_ms: vec![1100.0, 1200.0, 1300.0],
-                warm_trials_ms: vec![750.0, 800.0, 850.0],
-            },
-            ToolResult {
-                tool: "platformio".into(),
-                display_name: "PlatformIO".into(),
-                version: "PlatformIO Core 6.1.19".into(),
-                cold_ms: 900.0,
-                warm_ms: 300.0,
-                speedup: 3.0,
-                cold_trials_ms: vec![850.0, 900.0, 950.0],
-                warm_trials_ms: vec![280.0, 300.0, 320.0],
-            },
-            ToolResult {
-                tool: "fbuild".into(),
-                display_name: "fbuild".into(),
-                version: "fbuild 0.1.0".into(),
-                cold_ms: 600.0,
-                warm_ms: 40.0,
-                speedup: 15.0,
-                cold_trials_ms: vec![580.0, 600.0, 620.0],
-                warm_trials_ms: vec![38.0, 40.0, 42.0],
-            },
-        ]
-    }
-
-    fn sample_metadata() -> Metadata {
-        Metadata {
-            generated_at: "2026-07-22T12:00:00Z".into(),
-            git_sha: "0123456789abcdef".into(),
-            repository: DEFAULT_REPOSITORY.into(),
-            run_url: "https://github.com/FastLED/fbuild/actions/runs/1".into(),
-            project: "bench/blink".into(),
-            trials: 3,
-        }
-    }
-
-    #[test]
-    fn median_handles_odd_and_even_trial_counts() {
-        assert_eq!(median(&[9.0, 1.0, 5.0]), 5.0);
-        assert_eq!(median(&[9.0, 1.0, 7.0, 3.0]), 5.0);
-    }
-
-    #[test]
-    fn remove_dir_within_guards_boundaries() {
-        let sandbox = tempfile::tempdir().unwrap();
-        let root = sandbox.path().join("root");
-        let nested = root.join("nested");
-        let sibling = sandbox.path().join("sibling");
-        fs::create_dir_all(&nested).unwrap();
-        fs::create_dir_all(&sibling).unwrap();
-
-        assert!(remove_dir_within(&root, &root).is_err());
-        assert!(remove_dir_within(&root, &sibling).is_err());
-        assert!(root.is_dir());
-        assert!(sibling.is_dir());
-
-        remove_dir_within(&root, &nested).unwrap();
-        assert!(!nested.exists());
-    }
-
-    #[test]
-    fn svg_uses_reference_palette_and_warm_overlay() {
-        let svg = render_svg(&sample_metadata(), &sample_results());
-        for color in [
-            "#3b4046", "#8b949e", "#1f3a7a", "#79c0ff", "#5b1f1c", "#f85149",
-        ] {
-            assert!(svg.contains(color), "missing {color}");
-        }
-        assert!(svg.contains("height=\"28\""));
-        assert!(svg.contains("height=\"14\""));
-        assert!(svg.contains("cold (back) + warm (front overlay)"));
-    }
-
-    #[test]
-    fn outputs_include_agent_discovery_and_bounded_history() {
-        let temp = tempfile::tempdir().unwrap();
-        let history = (0..HISTORY_MAX_LINES)
-            .map(|index| format!(r#"{{"old":{index}}}"#))
-            .collect::<Vec<_>>()
-            .join("\n")
-            + "\n";
-        fs::write(temp.path().join("history.jsonl"), history).unwrap();
-        write_outputs(
-            temp.path(),
-            &sample_metadata(),
-            &sample_results(),
-            DEFAULT_PAGES_URL,
-            DEFAULT_RAW_BASE_URL,
-        )
-        .unwrap();
-
-        for file in [
-            "manifest.json",
-            "latest.json",
-            "history.jsonl",
-            "benchmark.svg",
-            "index.html",
-            ".nojekyll",
-        ] {
-            assert!(temp.path().join(file).is_file(), "missing {file}");
-        }
-        let manifest: Value =
-            serde_json::from_str(&fs::read_to_string(temp.path().join("manifest.json")).unwrap())
-                .unwrap();
-        assert_eq!(manifest["branch"], "benchmark-stats");
-        assert_eq!(
-            manifest["artifacts"]["history"]["max_lines"],
-            HISTORY_MAX_LINES
-        );
-        let history = fs::read_to_string(temp.path().join("history.jsonl")).unwrap();
-        assert_eq!(history.lines().count(), HISTORY_MAX_LINES);
-        assert!(history.lines().last().unwrap().contains("0123456789abcdef"));
-        let html = fs::read_to_string(temp.path().join("index.html")).unwrap();
-        assert!(html.contains("stable discovery index for agents"));
-    }
-}
+#[path = "build_comparison_tests.rs"]
+mod tests;

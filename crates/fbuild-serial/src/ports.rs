@@ -274,7 +274,7 @@ mod imp {
     use serialport::{SerialPortInfo, SerialPortType, UsbPortInfo};
     use windows_sys::Win32::Devices::DeviceAndDriverInstallation::{
         CM_Get_DevNode_Status, CM_Get_Device_IDW, CM_Get_Parent, CR_NO_SUCH_DEVINST, CR_SUCCESS,
-        DICS_FLAG_GLOBAL, DIGCF_ALLCLASSES, DIGCF_PRESENT, DIREG_DEV, GUID_DEVCLASS_USB, HDEVINFO,
+        DICS_FLAG_GLOBAL, DIGCF_ALLCLASSES, DIGCF_PRESENT, DIREG_DEV, HDEVINFO,
         MAX_DEVICE_ID_LEN, SP_DEVINFO_DATA, SPDRP_CLASS, SPDRP_FRIENDLYNAME, SPDRP_HARDWAREID,
         SPDRP_LOCATION_INFORMATION, SPDRP_MFG, SetupDiClassGuidsFromNameW,
         SetupDiDestroyDeviceInfoList, SetupDiEnumDeviceInfo, SetupDiGetClassDevsW,

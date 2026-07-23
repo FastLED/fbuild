@@ -294,6 +294,33 @@ fn clean_scope_and_profile_are_accepted() {
 }
 
 #[test]
+fn clean_cache_scope_is_accepted() {
+    let argv = [
+        "fbuild",
+        "clean",
+        "cache",
+        "tests/platform/uno",
+        "--release",
+    ];
+    let cli = Cli::try_parse_from(argv).expect("parse");
+    match cli.command {
+        Some(Commands::Clean {
+            scope,
+            project_dir,
+            quick,
+            release,
+            ..
+        }) => {
+            assert_eq!(scope, super::args::CleanScope::Cache);
+            assert_eq!(project_dir.as_deref(), Some("tests/platform/uno"));
+            assert!(!quick);
+            assert!(release);
+        }
+        _ => panic!("expected Clean subcommand"),
+    }
+}
+
+#[test]
 fn clean_quick_and_release_conflict() {
     let argv = ["fbuild", "clean", "sketch", "--quick", "--release"];
     assert!(Cli::try_parse_from(argv).is_err());

@@ -11,7 +11,8 @@ The daemon runs on a multi-threaded tokio runtime:
 
 ## Lock Strategy
 
-All synchronization is in-memory within the daemon process. No file-based locks.
+Request-level synchronization is in-memory within the daemon process — no
+file-based locks are used for builds, serial, deploy, or config state.
 
 | Resource | Lock Type | Scope |
 |----------|-----------|-------|
@@ -20,6 +21,19 @@ All synchronization is in-memory within the daemon process. No file-based locks.
 | Serial port readers | DashMap | Lock-free concurrent reads via broadcast |
 | Device lease | Per-device RwLock | Exclusive (deploy) or shared (monitor) |
 | Config lock | Per-project Mutex | Prevents concurrent config changes |
+
+The one exception is daemon startup/lifetime ownership itself, which is
+process-level rather than request-level and so can't be arbitrated by an
+in-memory manager (there may be no daemon process yet). `fbuild-paths`'s
+`daemon_ownership` module (soldr-style, FastLED/fbuild#1159) provides a
+version-blind `root-owner.lock` that a daemon holds for its whole lifetime,
+plus a `spawn.lock` single-flight election so multiple CLI invocations racing
+to start a daemon don't spawn duplicates. `fbuild clean cache` acquires
+`root-owner.lock` exclusively (after verifying and displacing any daemon,
+including legacy ones, that still owns it) before deleting the zccache store.
+These are OS-released file locks, never manually broken or deleted, and they
+never gate zccache object reads/writes — those stay in-memory-synchronized
+inside zccache itself.
 
 ## Error Recovery
 

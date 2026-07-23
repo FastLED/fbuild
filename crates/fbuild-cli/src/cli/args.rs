@@ -39,8 +39,12 @@ impl From<CliShrinkMode> for ShrinkMode {
 #[derive(ValueEnum, Clone, Copy, Debug, PartialEq, Eq)]
 #[clap(rename_all = "kebab-case")]
 pub enum CleanScope {
+    /// Remove the selected project build outputs.
     Sketch,
+    /// Also remove the selected target's reusable framework objects.
     All,
+    /// Also clear the active fbuild mode's global compiler-object cache.
+    Cache,
 }
 
 #[derive(Parser)]
@@ -260,9 +264,9 @@ pub enum Commands {
         #[arg(long)]
         bloat_analysis: bool,
     },
-    /// Remove project outputs and optionally reusable framework caches.
+    /// Remove project outputs and optionally reusable or compiler caches.
     Clean {
-        /// Cleanup scope: project outputs only, or outputs plus matching caches.
+        /// Cleanup scope: project outputs only, matching caches, or all compiler objects.
         #[arg(value_enum)]
         scope: CleanScope,
         project_dir: Option<String>,

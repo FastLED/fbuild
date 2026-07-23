@@ -7,6 +7,7 @@ use std::path::{Path, PathBuf};
 
 use fbuild_core::BuildProfile;
 
+pub mod daemon_ownership;
 pub mod running_process;
 
 /// Check if running in development mode.
