@@ -274,8 +274,8 @@ mod imp {
     use serialport::{SerialPortInfo, SerialPortType, UsbPortInfo};
     use windows_sys::Win32::Devices::DeviceAndDriverInstallation::{
         CM_Get_DevNode_Status, CM_Get_Device_IDW, CM_Get_Parent, CR_NO_SUCH_DEVINST, CR_SUCCESS,
-        DICS_FLAG_GLOBAL, DIGCF_PRESENT, DIREG_DEV, GUID_DEVCLASS_USB, HDEVINFO, MAX_DEVICE_ID_LEN,
-        SP_DEVINFO_DATA, SPDRP_CLASS, SPDRP_FRIENDLYNAME, SPDRP_HARDWAREID,
+        DICS_FLAG_GLOBAL, DIGCF_ALLCLASSES, DIGCF_PRESENT, DIREG_DEV, GUID_DEVCLASS_USB, HDEVINFO,
+        MAX_DEVICE_ID_LEN, SP_DEVINFO_DATA, SPDRP_CLASS, SPDRP_FRIENDLYNAME, SPDRP_HARDWAREID,
         SPDRP_LOCATION_INFORMATION, SPDRP_MFG, SetupDiClassGuidsFromNameW,
         SetupDiDestroyDeviceInfoList, SetupDiEnumDeviceInfo, SetupDiGetClassDevsW,
         SetupDiGetDeviceInstanceIdW, SetupDiGetDeviceRegistryPropertyW, SetupDiOpenDevRegKey,
@@ -676,8 +676,21 @@ mod imp {
     }
 
     pub(super) fn present_usb_problem_devices() -> Vec<UsbProblemDevice> {
-        let hdi =
-            unsafe { SetupDiGetClassDevsW(&GUID_DEVCLASS_USB, std::ptr::null(), 0, DIGCF_PRESENT) };
+        // Enumerate by the `USB` *enumerator* with DIGCF_ALLCLASSES, not by
+        // the USB *setup class*: a driverless devnode (e.g. a BOOTSEL
+        // PICOBOOT interface stuck at CM_PROB_FAILED_INSTALL) has no setup
+        // class at all and is invisible to a class-scoped query, which hid
+        // exactly the problem interface the FastLED/fbuild#1152 recovery
+        // request needs to target.
+        let enumerator: Vec<u16> = "USB".encode_utf16().chain(Some(0)).collect();
+        let hdi = unsafe {
+            SetupDiGetClassDevsW(
+                std::ptr::null(),
+                enumerator.as_ptr(),
+                0,
+                DIGCF_PRESENT | DIGCF_ALLCLASSES,
+            )
+        };
         if hdi == INVALID_HANDLE_VALUE {
             return Vec::new();
         }
