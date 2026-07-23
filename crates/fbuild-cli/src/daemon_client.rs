@@ -42,7 +42,7 @@ fn stream_status_message(event: &StreamEvent) -> Option<String> {
         })
 }
 
-fn daemon_cache_identity_error(info: &DaemonInfoResponse) -> Option<String> {
+pub(crate) fn daemon_cache_identity_error(info: &DaemonInfoResponse) -> Option<String> {
     let expected = fbuild_paths::running_process::DaemonCacheIdentity::discover();
     let expected_label = expected.label_value();
     if info.cache_identity.as_deref() != Some(expected_label.as_str()) {

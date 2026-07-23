@@ -1343,6 +1343,7 @@ name = "fbuild-core"
 version = "2.5.3"
 dependencies = [
  "async-trait",
+ "fs2",
  "libc",
  "prost",
  "reqwest",

@@ -112,6 +112,20 @@ pub fn get_daemon_status_file() -> PathBuf {
     get_daemon_dir().join("daemon_status.json")
 }
 
+/// Gate that prevents an fbuild daemon from starting while its compiler cache
+/// is being reset. This is a daemon-lifecycle lock, not a zccache object lock.
+pub fn get_daemon_cache_reset_gate_file() -> PathBuf {
+    get_daemon_dir().join("fbuild-daemon-cache-reset.gate.lock")
+}
+
+/// Shared lifetime lock held by each fbuild daemon that owns the compiler cache.
+///
+/// A cache reset takes this exclusively after stopping the daemon, proving that
+/// all daemon processes have exited before removing the on-disk cache.
+pub fn get_daemon_cache_lifecycle_lock_file() -> PathBuf {
+    get_daemon_dir().join("fbuild-daemon-cache-lifecycle.lock")
+}
+
 /// Global cache root (or `FBUILD_CACHE_DIR` override).
 pub fn get_cache_root() -> PathBuf {
     if let Ok(dir) = std::env::var("FBUILD_CACHE_DIR") {

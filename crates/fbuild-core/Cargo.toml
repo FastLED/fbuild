@@ -38,6 +38,9 @@ async-trait = { workspace = true }
 # in the workspace has one source of truth. See `src/http.rs` and the
 # matching `ban_bare_reqwest` dylint.
 reqwest = { workspace = true }
+# Cross-process shared/exclusive fbuild-daemon lifecycle gates. These are not
+# used for zccache object access. Locks are released if a process exits.
+fs2 = { workspace = true }
 
 # `libc::setpgid` / `libc::prctl` for the Unix `pre_exec` hook used by
 # `containment::tokio_spawn::configure`. See FastLED/fbuild#32.

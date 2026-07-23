@@ -13,6 +13,7 @@ pub mod containment;
 pub mod elapsed;
 pub mod emulator;
 pub mod env_namespace;
+pub mod file_lock;
 pub mod fs;
 pub mod http;
 pub mod install_status;

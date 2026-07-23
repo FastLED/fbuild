@@ -5,6 +5,7 @@ use axum::Router;
 use axum::routing::{get, post};
 use clap::Parser;
 use fbuild_build::compile_backend::CompileBackend;
+use fbuild_core::file_lock::{self, FileLockGuard, FileLockMode};
 use fbuild_daemon::context::{
     BroadcastHub, DaemonContext, IDLE_TIMEOUT, STALE_LOCK_CHECK_INTERVAL, self_eviction_timeout,
 };
@@ -105,6 +106,20 @@ async fn main() {
     // a startup race. Display-name lookup remains best-effort; unavailable
     // identity-dependent behavior still fails closed.
     let _ = tokio::task::spawn_blocking(populate_usb_overlay_best_effort).await;
+
+    // These locks cover fbuild-daemon startup/lifetime only; zccache continues
+    // to synchronize object-cache access internally. A reset CLI holds the
+    // startup gate exclusively from before shutdown through deletion. Every
+    // daemon takes that gate shared, then keeps the lifecycle lock shared for
+    // its lifetime. This prevents a replacement daemon from starting between
+    // another daemon's stop and cache deletion (FastLED/fbuild#1154).
+    let _daemon_cache_lifecycle_lock = match acquire_daemon_cache_lifecycle_lock().await {
+        Ok(guard) => guard,
+        Err(error) => {
+            eprintln!("fatal: failed to acquire fbuild-daemon cache lifecycle lock: {error}");
+            std::process::exit(1);
+        }
+    };
 
     // FastLED/fbuild#800 (Phase 4 stage 2 of #789): start the embedded
     // zccache service inside this tokio runtime and install the global
@@ -451,6 +466,27 @@ async fn main() {
 
     tracing::info!("daemon exiting");
     std::process::exit(0);
+}
+
+async fn acquire_daemon_cache_lifecycle_lock() -> std::io::Result<FileLockGuard> {
+    const WAIT: std::time::Duration = std::time::Duration::from_secs(60);
+    const POLL: std::time::Duration = std::time::Duration::from_millis(100);
+    let reset_gate = file_lock::acquire(
+        &fbuild_paths::get_daemon_cache_reset_gate_file(),
+        FileLockMode::Shared,
+        WAIT,
+        POLL,
+    )
+    .await?;
+    let active = file_lock::acquire(
+        &fbuild_paths::get_daemon_cache_lifecycle_lock_file(),
+        FileLockMode::Shared,
+        WAIT,
+        POLL,
+    )
+    .await?;
+    drop(reset_gate);
+    Ok(active)
 }
 
 /// Populate the runtime USB VID:PID overlay from the shared cache root.

@@ -18,6 +18,7 @@ Core types, errors, and utilities shared across all fbuild crates.
 
 - **build_log** -- Centralized build output log with optional `mpsc::Sender` streaming
 - **compiler_flags** -- Platform-correct escaping for GCC `-D` define flags
+- **file_lock** -- OS-released shared/exclusive locks for fbuild-daemon lifecycle gates (not object-cache access)
 - **response_file** -- GCC `@file` response file writer for Windows command-line length limits
 - **shell_split** -- Quote-aware string splitting that treats backslashes as literal (Windows-safe)
 - **subprocess** -- Command runner with timeout, `CREATE_NO_WINDOW` on Windows, and MSYS environment stripping

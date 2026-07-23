@@ -8,6 +8,7 @@ Single source of truth for all `.fbuild` directory paths, with dev/prod isolatio
 - `get_fbuild_root()` -- Returns `~/.fbuild/dev` or `~/.fbuild/prod` based on mode
 - `get_other_fbuild_root()` -- Returns the opposite mode's root (for cross-mode daemon discovery)
 - `get_daemon_dir()` / `get_daemon_pid_file()` / `get_daemon_port_file()` / `get_daemon_log_file()` / `get_daemon_status_file()` -- Daemon file paths
+- `get_daemon_cache_reset_gate_file()` / `get_daemon_cache_lifecycle_lock_file()` -- Mode-scoped fbuild-daemon startup/lifetime locks used only to serialize a compiler-cache reset against daemon ownership (zccache object access keeps its internal synchronization)
 - `get_daemon_port()` -- Port resolution with four-level priority: env var, current mode port file, cross-mode port file, default (8865 dev / 8765 prod)
 - `get_daemon_url()` -- Daemon HTTP URL (`http://127.0.0.1:{port}`)
 - `get_cache_root()` -- Global cache dir (`FBUILD_CACHE_DIR` override or `~/.fbuild/{mode}/cache`)

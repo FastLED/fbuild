@@ -6,7 +6,7 @@ on:
     branches: [main]
     paths:
       - 'bench/blink/**'
-      - 'bench/fastled-examples/src/build_comparison.rs'
+      - 'bench/fastled-examples/src/build_comparison*.rs'
       - 'bench/fastled-examples/Cargo.toml'
       - '.github/workflows/benchmark-build-comparison.yml'
   schedule:
