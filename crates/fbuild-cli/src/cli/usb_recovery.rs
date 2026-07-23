@@ -75,6 +75,18 @@ pub fn rendezvous_dir() -> PathBuf {
     fbuild_paths::temp_subdir("usb-recovery")
 }
 
+/// The same private rendezvous root resolved under the OTHER dev/prod fbuild
+/// root. `ShellExecuteExW` does not propagate the launching process's
+/// environment, so the elevated helper cannot observe `FBUILD_DEV_MODE` and
+/// may resolve the opposite mode's root from the one the normal CLI used.
+/// Both are fbuild-owned, per-user private directories, so accepting either
+/// keeps the injection guarantee intact (FastLED/fbuild#1152).
+fn cross_mode_rendezvous_dir() -> PathBuf {
+    fbuild_paths::get_other_fbuild_root()
+        .join("tmp")
+        .join("usb-recovery")
+}
+
 pub fn decide_recovery_launch(
     policy: UsbRecoveryPolicy,
     has_typed_request: bool,
@@ -186,8 +198,10 @@ pub fn run_recovery_for_typed_request<L: RecoveryHelperLauncher>(
     let rendezvous = create_rendezvous(request.clone())?;
     match launcher.launch(&rendezvous.request_path, &rendezvous.result_path)? {
         HelperLaunchOutcome::Cancelled => Ok(RecoveryRunOutcome::Cancelled),
-        HelperLaunchOutcome::Completed { .. } => {
-            let result = read_recovery_result(&rendezvous.result_path)?;
+        HelperLaunchOutcome::Completed { exit_code } => {
+            let result = read_recovery_result(&rendezvous.result_path).map_err(|error| {
+                fbuild_core::FbuildError::Other(format!("{error} (helper exit code {exit_code})"))
+            })?;
             if result.nonce != rendezvous.nonce {
                 return Err(fbuild_core::FbuildError::Other(
                     "recovery result nonce does not match this run's rendezvous".to_string(),
@@ -384,12 +398,16 @@ fn write_result_create_new(path: &Path, result: &UsbRecoveryResult) -> fbuild_co
 }
 
 fn validate_rendezvous_paths(request_path: &Path, result_path: &Path) -> fbuild_core::Result<()> {
-    let root = rendezvous_dir();
-    reject_reparse_point(&root, "recovery rendezvous directory")?;
-    let request_parent = request_path.parent();
-    let result_parent = result_path.parent();
-    let valid_parent =
-        request_parent == Some(root.as_path()) && result_parent == Some(root.as_path());
+    // Accept the rendezvous directory of either dev/prod mode: the elevated
+    // helper does not inherit FBUILD_DEV_MODE (ShellExecuteExW drops the
+    // parent environment), so it may resolve the opposite mode's root from
+    // the normal CLI that created the rendezvous.
+    let roots = [rendezvous_dir(), cross_mode_rendezvous_dir()];
+    let valid_parent = roots.iter().any(|root| {
+        reject_reparse_point(root, "recovery rendezvous directory").is_ok()
+            && request_path.parent() == Some(root.as_path())
+            && result_path.parent() == Some(root.as_path())
+    });
     let request_name = request_path.file_name().and_then(|name| name.to_str());
     let result_name = result_path.file_name().and_then(|name| name.to_str());
     if !valid_parent
@@ -676,6 +694,18 @@ mod tests {
         )
         .expect("cancellation is not an error");
         assert!(matches!(outcome, RecoveryRunOutcome::Cancelled));
+    }
+
+    #[test]
+    fn cross_mode_rendezvous_paths_are_accepted() {
+        // The elevated helper resolves fbuild paths without FBUILD_DEV_MODE;
+        // a rendezvous created by the other mode's CLI must still validate.
+        let root = cross_mode_rendezvous_dir();
+        std::fs::create_dir_all(&root).expect("cross-mode rendezvous dir");
+        let request = root.join("request-cross-mode-test.json");
+        let result = root.join("result-cross-mode-test.json");
+        validate_rendezvous_paths(&request, &result)
+            .expect("cross-mode rendezvous paths must validate");
     }
 
     #[test]
