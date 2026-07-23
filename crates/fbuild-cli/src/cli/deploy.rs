@@ -165,6 +165,7 @@ pub async fn run_deploy(
     emulator: Option<String>,
     target: Option<String>,
     output_dir: Option<String>,
+    usb_recovery_policy: fbuild_core::usb::UsbRecoveryPolicy,
 ) -> fbuild_core::Result<()> {
     daemon_client::ensure_daemon_running().await?;
     let client = DaemonClient::new();
@@ -218,6 +219,7 @@ pub async fn run_deploy(
             .filter(|s| !s.is_empty()),
         output_dir,
         pio_env: daemon_client::capture_pio_env(),
+        usb_recovery_policy,
     };
 
     let resp = client.deploy(&req).await?;

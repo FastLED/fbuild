@@ -42,6 +42,7 @@ pub mod ports;
 pub mod preemption;
 pub mod rpc_validate;
 pub mod session;
+pub mod usb_recovery;
 
 pub use manager::{PortSessionInfo, SerialClientInfo, SharedSerialManager};
 pub use messages::{

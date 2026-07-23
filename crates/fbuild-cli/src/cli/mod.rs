@@ -33,6 +33,13 @@ pub mod serial_probe;
 pub mod show;
 pub mod symbols_cmd;
 pub mod sync_cmd;
+// #1148 supplies the helper foundation; #1147 is deliberately its first
+// production consumer once RP2040 deployment can emit a typed request.
+#[allow(
+    dead_code,
+    reason = "USB recovery integration belongs exclusively to #1147"
+)]
+pub mod usb_recovery;
 
 #[cfg(test)]
 mod tests;

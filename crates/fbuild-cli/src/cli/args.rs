@@ -341,6 +341,23 @@ pub enum Commands {
         /// Disable all shrink optimizations. Equivalent to `--shrink=off`.
         #[arg(long = "no-shrink", conflicts_with = "shrink")]
         no_shrink: bool,
+        /// Permit one UAC-gated, one-shot USB PnP recovery only when the
+        /// daemon returns a typed recoverable endpoint. This never elevates
+        /// the daemon, build, cache, or normal deployment process.
+        #[arg(long, conflicts_with = "no_admin")]
+        admin: bool,
+        /// Never request UAC; print physical recovery guidance instead.
+        #[arg(long = "no-admin", conflicts_with = "admin")]
+        no_admin: bool,
+    },
+    /// Internal one-shot elevated USB recovery entry point. It is hidden so
+    /// users cannot mistake it for general administrator mode.
+    #[command(name = "__usb-recovery-helper", hide = true)]
+    UsbRecoveryHelper {
+        #[arg(long)]
+        request: std::path::PathBuf,
+        #[arg(long)]
+        result: std::path::PathBuf,
     },
     /// Monitor serial output
     Monitor {

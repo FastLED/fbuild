@@ -20,6 +20,7 @@ pub mod data;
 #[cfg(test)]
 pub mod embedded;
 pub mod profiles;
+pub mod recovery;
 pub mod resolver;
 
 pub use data::{
@@ -30,6 +31,10 @@ pub use data::{
 };
 #[cfg(test)]
 pub use embedded::vendor_name as embedded_vendor_name;
+pub use recovery::{
+    UsbRecoveryHealth, UsbRecoveryOperation, UsbRecoveryPolicy, UsbRecoveryRequest,
+    UsbRecoveryResult,
+};
 #[cfg(test)]
 pub use resolver::resolve_bundled;
 pub use resolver::{UsbInfo, pretty, resolve, try_resolve};

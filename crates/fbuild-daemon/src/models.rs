@@ -142,6 +142,10 @@ pub struct DeployRequest {
     /// Drop the `<env>` segment of the build-dir path (see [`BuildRequest::flatten_env`]).
     #[serde(default)]
     pub flatten_env: bool,
+    /// User permission for the CLI-side one-shot USB recovery helper. The
+    /// daemon remains unprivileged and merely carries this typed policy.
+    #[serde(default)]
+    pub usb_recovery_policy: fbuild_core::usb::UsbRecoveryPolicy,
 }
 
 fn default_qemu_timeout() -> u32 {

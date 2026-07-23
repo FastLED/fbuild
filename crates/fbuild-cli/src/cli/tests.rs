@@ -5,6 +5,28 @@ use super::compile_many::{build_ci_pio_env, normalize_ci_sketch_entry, normalize
 use clap::Parser;
 
 #[test]
+fn deploy_admin_and_no_admin_conflict() {
+    assert!(Cli::try_parse_from(["fbuild", "deploy", "--admin", "--no-admin"]).is_err());
+}
+
+#[test]
+fn hidden_usb_recovery_helper_arguments_parse() {
+    let cli = Cli::try_parse_from([
+        "fbuild",
+        "__usb-recovery-helper",
+        "--request",
+        "request.json",
+        "--result",
+        "result.json",
+    ])
+    .expect("parse hidden helper");
+    assert!(matches!(
+        cli.command,
+        Some(Commands::UsbRecoveryHelper { .. })
+    ));
+}
+
+#[test]
 fn normalize_ino_path_strips_to_parent_dir() {
     let entry = "examples/Blink/Blink.ino";
     let got = normalize_ci_sketch_entry(entry);

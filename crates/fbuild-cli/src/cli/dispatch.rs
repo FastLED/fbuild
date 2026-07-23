@@ -30,9 +30,21 @@ use super::serial_probe::run_serial;
 use super::show::run_show;
 use super::symbols_cmd::run_symbols;
 use super::sync_cmd::run_sync_cmd;
+use super::usb_recovery::run_hidden_helper;
 
 pub async fn async_main() {
     let cli = Cli::parse_from(rewrite_args());
+
+    // This must remain before tracing, environment capture, update checks, or
+    // any daemon client call. The elevated helper is a one-shot PnP process,
+    // never an alternate daemon host. FastLED/fbuild#1148.
+    if let Some(Commands::UsbRecoveryHelper { request, result }) = &cli.command {
+        if let Err(error) = run_hidden_helper(request, result) {
+            eprintln!("USB recovery helper failed: {error}");
+            std::process::exit(1);
+        }
+        return;
+    }
 
     tracing_subscriber::fmt()
         .with_env_filter(tracing_subscriber::EnvFilter::from_default_env())
@@ -247,6 +259,8 @@ pub async fn async_main() {
             output_dir,
             shrink: _,
             no_shrink: _,
+            admin,
+            no_admin,
         }) => {
             let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
             if platformio {
@@ -288,6 +302,13 @@ pub async fn async_main() {
                     emulator,
                     target,
                     output_dir,
+                    if admin {
+                        fbuild_core::usb::UsbRecoveryPolicy::AllowAdmin
+                    } else if no_admin {
+                        fbuild_core::usb::UsbRecoveryPolicy::DenyAdmin
+                    } else {
+                        fbuild_core::usb::UsbRecoveryPolicy::Default
+                    },
                 )
                 .await
             }
@@ -600,6 +621,7 @@ pub async fn async_main() {
                     None,
                     None,
                     None,
+                    fbuild_core::usb::UsbRecoveryPolicy::Default,
                 )
                 .await
             }
@@ -608,6 +630,9 @@ pub async fn async_main() {
         Some(Commands::Bringup(args)) => run_bringup(args),
         Some(Commands::Port { action }) => run_port(action),
         Some(Commands::Cache { action }) => run_cache(action),
+        // Routed before any daemon-adjacent initialization above. This arm is
+        // unreachable but keeps the exhaustive command match honest.
+        Some(Commands::UsbRecoveryHelper { .. }) => unreachable!("helper was routed early"),
     };
 
     if let Err(e) = result {
