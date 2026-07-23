@@ -139,6 +139,7 @@ impl RiscvToolchain {
     }
 
     fn get_gcc_multilib_dir(&self, march: &str, mabi: &str) -> Option<PathBuf> {
+        // allow-direct-spawn: short synchronous GCC capability probe (-print-multi-directory).
         let output = Command::new(self.get_gcc_path())
             .args([
                 format!("-march={march}"),
