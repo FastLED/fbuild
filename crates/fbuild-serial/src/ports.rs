@@ -96,6 +96,11 @@ impl DetectedPort {
     }
 }
 
+// The classification pipeline below is fed by the Windows PnP enumeration in
+// `imp` and exercised cross-platform by `health_tests`; on non-Windows,
+// non-test builds it has no production caller, which `-D warnings` would
+// otherwise turn into a hard error.
+#[cfg_attr(not(windows), allow(dead_code))]
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 enum PnpObservation {
     Present { status: u32, problem_code: u32 },
@@ -103,6 +108,7 @@ enum PnpObservation {
     Unknown,
 }
 
+#[cfg_attr(not(windows), allow(dead_code))]
 fn classify_port_health(observation: PnpObservation) -> PortHealth {
     match observation {
         PnpObservation::Present {
@@ -124,6 +130,7 @@ fn classify_port_health(observation: PnpObservation) -> PortHealth {
     }
 }
 
+#[cfg_attr(not(windows), allow(dead_code))]
 fn health_for_endpoint(observation: PnpObservation, is_usb: bool) -> PortHealth {
     if is_usb {
         classify_port_health(observation)

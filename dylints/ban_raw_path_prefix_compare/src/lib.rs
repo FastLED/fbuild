@@ -5,9 +5,9 @@ extern crate rustc_hir;
 extern crate rustc_span;
 
 use rustc_errors::DiagDecorator;
-use rustc_hir::{def::Res, Expr, ExprKind};
+use rustc_hir::{Expr, ExprKind, def::Res};
 use rustc_lint::{LateContext, LateLintPass, LintContext};
-use rustc_span::{symbol::Symbol, FileName, RemapPathScopeComponents};
+use rustc_span::{FileName, RemapPathScopeComponents, symbol::Symbol};
 
 dylint_linting::declare_late_lint! {
     /// ### What it does
@@ -78,6 +78,9 @@ const BANNED_METHOD_PATHS: &[&[&str]] = &[
     &["std", "path", "Path", "strip_prefix"],
 ];
 
+// allowlist.txt is a compile-time input; CI build caches have been observed
+// serving a stale compiled lint after allowlist-only edits, so pair
+// allowlist updates with a source touch when the gate must move.
 const ALLOWLIST: &str = include_str!("allowlist.txt");
 
 /// Production-code scope. Only files whose path contains BOTH

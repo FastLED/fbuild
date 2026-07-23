@@ -217,7 +217,7 @@ impl crate::Deployer for WchispDeployer {
             "firmware flashed through wchisp".to_string()
         } else {
             format!(
-                "wchisp failed (exit code {}). If no USB-ISP device was found, hold BOOT0/Download while resetting; on Windows install a WinUSB/WCH USB driver for VID:PID 4348:55e0 or 1a86:55e0.{}",
+                "wchisp failed (exit code {}). If no USB-ISP device was found, hold BOOT0/Download while resetting; on Windows install a WinUSB/WCH USB driver for the WCH USB-ISP bootloader device (identify it with `fbuild port scan`).{}",
                 result.exit_code,
                 if result.stderr.is_empty() {
                     ""

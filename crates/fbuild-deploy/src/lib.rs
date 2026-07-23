@@ -121,6 +121,20 @@ pub trait Deployer: Send + Sync {
         port: Option<&str>,
     ) -> Result<DeploymentResult>;
 
+    /// Whether this deployer's `DeploymentResult::port` is the only valid
+    /// post-flash endpoint (FastLED/fbuild#1147).
+    ///
+    /// When `true`, the returned port came from a fresh post-flash catalogue
+    /// scan that passed health eligibility and a bounded open probe, and a
+    /// `None` port after a successful flash means the runtime endpoint was
+    /// not recovered. Callers must not substitute the requested/pre-flash
+    /// port name for recovery, monitoring, or environment propagation: on
+    /// Windows that name can be a retained `CM_PROB_PHANTOM` devnode record
+    /// whose serial still matches the board.
+    fn owns_post_flash_port_discovery(&self) -> bool {
+        false
+    }
+
     /// Post-deploy serial-port recovery.
     ///
     /// Called by the daemon's deploy handler after `clear_preemption()`
