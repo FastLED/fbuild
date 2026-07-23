@@ -966,7 +966,7 @@ pub async fn deploy(
                 .await
                 .unwrap_or_default();
         let generation = super::deploy_port::rp_generation_for(board.as_ref());
-        super::recovery_request::compose_rp2040_recovery_request(
+        let request = super::recovery_request::compose_rp2040_recovery_request(
             &devices,
             &problem_devices,
             &request_id,
@@ -983,7 +983,27 @@ pub async fn deploy(
                     generation,
                 )
             },
-        )
+        );
+        // Recovery decisions must be observable after the fact: the request
+        // (or the reason none was composed) drives the CLI's --admin flow.
+        match &request {
+            Some(request) => tracing::info!(
+                instance = %request.instance_id,
+                problem_code = ?request.problem_code,
+                flash_completed = request.flash_completed,
+                "rp2040 recovery: composed typed exact-device recovery request"
+            ),
+            None => tracing::info!(
+                devices = devices.len(),
+                unhealthy_devices = devices
+                    .iter()
+                    .filter(|device| device.port_health.is_known_unhealthy())
+                    .count(),
+                problem_devices = problem_devices.len(),
+                "rp2040 recovery: no eligible exact-device recovery target in fresh scan"
+            ),
+        }
+        request
     } else {
         None
     };
