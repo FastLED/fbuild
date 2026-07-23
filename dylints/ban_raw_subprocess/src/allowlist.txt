@@ -45,3 +45,8 @@ crates/fbuild-build-engine/src/zccache.rs
 # `containment::tokio_spawn::spawn_contained` would be a no-op anyway;
 # documented inline at each call site.
 crates/fbuild-cli/src/cli/clang_tools.rs
+
+# Short synchronous GCC capability probe (-print-multi-directory) during
+# RISC-V toolchain introspection; no long-lived child, nothing to contain.
+# Documented inline at the call site.
+crates/fbuild-toolchain/src/toolchain/riscv.rs
