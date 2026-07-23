@@ -44,6 +44,11 @@ espflash = { version = "4", default-features = false, features = ["serialport"],
 # since it is only used by the native verify path.
 md-5 = { version = "0.10", optional = true }
 
+[target.'cfg(windows)'.dependencies]
+# CancelSynchronousIo lets the RP2040 UF2 watchdog interrupt a kernel-blocked
+# WriteFile so the worker can close NEW.UF2 before the deploy retry path runs.
+windows-sys = { version = "0.52", features = ["Win32_System_IO"] }
+
 [dev-dependencies]
 tempfile = { workspace = true }
 fbuild-test-support = { path = "../fbuild-test-support" }

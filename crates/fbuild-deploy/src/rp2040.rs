@@ -1,9 +1,10 @@
 //! RP2040/RP2350 deployment through the stock UF2 BOOTSEL transports.
 
-use std::collections::BTreeSet;
+use std::collections::{BTreeSet, HashMap};
 use std::fs;
 use std::io::{self, Write};
 use std::path::{Path, PathBuf};
+use std::sync::{Mutex, OnceLock};
 use std::time::{Duration, Instant};
 
 use fbuild_core::{FbuildError, Result};
@@ -55,6 +56,7 @@ const POST_DEPLOY_TIMEOUT_ENV: &str = "FBUILD_RP2040_POST_DEPLOY_TIMEOUT_SECS";
 const UF2_WRITE_TIMEOUT_ENV: &str = "FBUILD_RP2040_UF2_WRITE_TIMEOUT_SECS";
 const DEFAULT_UF2_WRITE_TIMEOUT: Duration = Duration::from_secs(60);
 const CDC_POLL_INTERVAL: Duration = Duration::from_millis(100);
+const WATCHDOG_CANCELLATION_GRACE: Duration = Duration::from_millis(250);
 
 /// Parse an env-supplied stage timeout. Accepts integer seconds in 1..=600;
 /// an unset variable is silently the default, anything else warns and falls
@@ -541,28 +543,135 @@ where
     }
 }
 
+#[derive(Debug)]
+struct WatchdogWorker {
+    timed_out_at: Option<Instant>,
+}
+
+#[derive(Debug, Default)]
+struct WatchdogWorkers {
+    next_id: u64,
+    active: HashMap<u64, WatchdogWorker>,
+}
+
+fn watchdog_workers() -> &'static Mutex<WatchdogWorkers> {
+    static WORKERS: OnceLock<Mutex<WatchdogWorkers>> = OnceLock::new();
+    WORKERS.get_or_init(|| Mutex::new(WatchdogWorkers::default()))
+}
+
+fn watchdog_workers_lock() -> std::sync::MutexGuard<'static, WatchdogWorkers> {
+    watchdog_workers()
+        .lock()
+        .unwrap_or_else(|poisoned| poisoned.into_inner())
+}
+
+fn register_watchdog_worker() -> u64 {
+    let mut workers = watchdog_workers_lock();
+    let id = workers.next_id;
+    workers.next_id += 1;
+    workers
+        .active
+        .insert(id, WatchdogWorker { timed_out_at: None });
+    id
+}
+
+fn complete_watchdog_worker(id: u64) {
+    watchdog_workers_lock().active.remove(&id);
+}
+
+fn mark_watchdog_worker_abandoned(id: u64) {
+    if let Some(worker) = watchdog_workers_lock().active.get_mut(&id) {
+        worker.timed_out_at.get_or_insert_with(Instant::now);
+    }
+}
+
+/// A deploy-facing diagnostic for workers that outlived their watchdog grace
+/// period. The count is live, rather than historical: it returns to zero when
+/// a delayed kernel write finally unwinds and closes its destination handle.
+fn watchdog_diagnostics() -> String {
+    let workers = watchdog_workers_lock();
+    let now = Instant::now();
+    let mut abandoned = workers
+        .active
+        .values()
+        .filter_map(|worker| {
+            worker
+                .timed_out_at
+                .map(|at| now.saturating_duration_since(at))
+        })
+        .collect::<Vec<_>>();
+    abandoned.sort_unstable();
+    match abandoned.last() {
+        Some(oldest) => format!(
+            "RP2040 UF2 watchdog diagnostics: {} abandoned worker(s); oldest abandoned {}ms ago",
+            abandoned.len(),
+            oldest.as_millis()
+        ),
+        None => "RP2040 UF2 watchdog diagnostics: no abandoned workers".to_string(),
+    }
+}
+
+#[cfg(windows)]
+fn cancel_synchronous_io(worker: &std::thread::JoinHandle<()>) {
+    use std::os::windows::io::AsRawHandle;
+    use windows_sys::Win32::System::IO::CancelSynchronousIo;
+
+    // SAFETY: `as_raw_handle` is valid for the lifetime of `worker`; Windows
+    // documents CancelSynchronousIo as safe to call on another thread handle.
+    unsafe {
+        let _ = CancelSynchronousIo(worker.as_raw_handle() as isize);
+    }
+}
+
+#[cfg(not(windows))]
+fn cancel_synchronous_io(_worker: &std::thread::JoinHandle<()>) {}
+
 /// Run `work` on a dedicated thread and give up after `budget`. A storport
 /// retry storm behind a sick hub can block the NEW.UF2 `write_all` for
-/// minutes with no output; this turns that hang into an actionable failure
-/// that feeds the fresh-enumeration retry gate. On timeout the worker thread
-/// is deliberately abandoned, not joined: it only touches its own locals and
-/// its channel send fails silently once this receiver is dropped, so the
-/// wedged kernel write can unblock (or not) without holding up the deploy.
+/// minutes with no output. On Windows a timeout asks the kernel to cancel the
+/// synchronous I/O and gives the worker a bounded grace period to close the
+/// destination. If that is not possible, the daemon reports the live
+/// abandoned-worker count and age rather than hiding a possible held handle.
 fn run_with_watchdog<T: Send + 'static>(
     budget: Duration,
     label: &str,
     work: impl FnOnce() -> Result<T> + Send + 'static,
 ) -> Result<T> {
     let (sender, receiver) = std::sync::mpsc::channel();
-    std::thread::spawn(move || {
-        let _ = sender.send(work());
+    let worker_id = register_watchdog_worker();
+    let worker = std::thread::spawn(move || {
+        let result = work();
+        complete_watchdog_worker(worker_id);
+        let _ = sender.send(result);
     });
     match receiver.recv_timeout(budget) {
-        Ok(result) => result,
-        Err(_) => Err(FbuildError::DeployFailed(format!(
-            "{label} did not complete within {}s; the storage transport is likely wedged — request a fresh USB enumeration before retrying (override the budget with {UF2_WRITE_TIMEOUT_ENV})",
-            budget.as_secs()
-        ))),
+        Ok(result) => {
+            let _ = worker.join();
+            result
+        }
+        Err(error) => {
+            if matches!(error, std::sync::mpsc::RecvTimeoutError::Timeout) {
+                cancel_synchronous_io(&worker);
+                match receiver.recv_timeout(WATCHDOG_CANCELLATION_GRACE) {
+                    Ok(_) | Err(std::sync::mpsc::RecvTimeoutError::Disconnected) => {
+                        let _ = worker.join();
+                    }
+                    Err(std::sync::mpsc::RecvTimeoutError::Timeout) => {
+                        mark_watchdog_worker_abandoned(worker_id);
+                    }
+                }
+            } else {
+                let _ = worker.join();
+            }
+            let timeout_message = format!(
+                "{label} did not complete within {}s; the storage transport is likely wedged — request a fresh USB enumeration before retrying (override the budget with {UF2_WRITE_TIMEOUT_ENV})",
+                budget.as_secs()
+            );
+            Err(FbuildError::DeployFailed(format!(
+                "{timeout_message}; {}",
+                watchdog_diagnostics()
+            )))
+        }
     }
 }
 
@@ -2522,17 +2631,26 @@ mod tests {
     }
 
     #[test]
-    fn watchdog_timeout_is_actionable_and_does_not_wait_for_the_worker() {
+    fn watchdog_timeout_reports_a_live_abandoned_worker() {
+        let (release, wait_for_release) = std::sync::mpsc::channel();
         let started = Instant::now();
-        let error = run_with_watchdog(Duration::from_millis(50), "RP2040 UF2 write", || {
-            std::thread::sleep(Duration::from_secs(5));
+        let error = run_with_watchdog(Duration::from_millis(50), "RP2040 UF2 write", move || {
+            wait_for_release.recv().unwrap();
             Ok(())
         })
         .unwrap_err();
-        assert!(started.elapsed() < Duration::from_secs(2));
+        assert!(started.elapsed() < Duration::from_secs(1));
         let message = error.to_string();
         assert!(message.contains("RP2040 UF2 write did not complete within"));
         assert!(message.contains(UF2_WRITE_TIMEOUT_ENV));
+        assert!(message.contains("abandoned worker"));
+
+        release.send(()).unwrap();
+        let deadline = Instant::now() + Duration::from_secs(1);
+        while watchdog_diagnostics().contains("abandoned worker(s)") && Instant::now() < deadline {
+            std::thread::sleep(Duration::from_millis(10));
+        }
+        assert!(watchdog_diagnostics().contains("no abandoned workers"));
     }
 
     #[test]
