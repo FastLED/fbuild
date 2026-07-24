@@ -2,7 +2,9 @@
 
 use crate::daemon_client::{self, BuildRequest, DaemonClient};
 use crate::output;
-use fbuild_core::process_identity::{pid_exe_stem_matches, pid_is_alive, terminate_pid, wait_for_pid_exit};
+use fbuild_core::process_identity::{
+    pid_exe_stem_matches, pid_is_alive, terminate_pid, wait_for_pid_exit,
+};
 use fbuild_paths::daemon_ownership::{self, DAEMON_EXE_STEM, RootOwnershipGuard, SpawnLockGuard};
 use std::future::Future;
 use std::io;
@@ -323,7 +325,10 @@ fn should_signal_legacy_pid(is_alive: bool, exe_stem_matches: bool) -> bool {
 }
 
 async fn terminate_legacy_pid_if_verified(pid: u32) {
-    let verified = should_signal_legacy_pid(pid_is_alive(pid), pid_exe_stem_matches(pid, DAEMON_EXE_STEM));
+    let verified = should_signal_legacy_pid(
+        pid_is_alive(pid),
+        pid_exe_stem_matches(pid, DAEMON_EXE_STEM),
+    );
     if !verified {
         return;
     }
@@ -547,7 +552,10 @@ mod tests {
             parse_status_json_daemon_pid(r#"{"daemon_pid": 4321}"#),
             Some(4321)
         );
-        assert_eq!(parse_status_json_daemon_pid(r#"{"daemon_pid": null}"#), None);
+        assert_eq!(
+            parse_status_json_daemon_pid(r#"{"daemon_pid": null}"#),
+            None
+        );
         assert_eq!(parse_status_json_daemon_pid(r#"{}"#), None);
         assert_eq!(parse_status_json_daemon_pid("not json"), None);
     }
@@ -570,7 +578,10 @@ mod tests {
     fn recycled_or_unrelated_pid_is_never_signalled() {
         let own_pid = std::process::id();
         assert!(pid_is_alive(own_pid));
-        assert!(!pid_exe_stem_matches(own_pid, "definitely-not-fbuild-daemon"));
+        assert!(!pid_exe_stem_matches(
+            own_pid,
+            "definitely-not-fbuild-daemon"
+        ));
         assert!(!should_signal_legacy_pid(
             pid_is_alive(own_pid),
             pid_exe_stem_matches(own_pid, "definitely-not-fbuild-daemon")
