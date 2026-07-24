@@ -982,6 +982,14 @@ async fn spawn_daemon_process() -> fbuild_core::Result<()> {
         ))
     })?;
     cmd.env_clear().envs(baseline);
+    // Preserve fbuild's documented process-level controls as explicit daemon
+    // configuration while excluding unrelated lineage markers inherited by
+    // the CLI (for example CLUD_* and RUNNING_PROCESS_*).
+    cmd.envs(std::env::vars_os().filter(|(key, _)| {
+        key.to_string_lossy()
+            .to_ascii_uppercase()
+            .starts_with("FBUILD_")
+    }));
     tracing::debug!(
         "running-process broker adoption status: {}",
         fbuild_paths::running_process::running_process_adoption_summary()
