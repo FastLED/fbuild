@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>fbuild Blink build benchmark</title>
+    <style>
+      :root { color-scheme: dark; }
+      body { margin: 0; padding: 32px 20px 48px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #f0f6fc; background: #0d1117; }
+      main { max-width: 1000px; margin: 0 auto; }
+      h1 { margin-bottom: 8px; }
+      a { color: #58a6ff; }
+      .meta { color: #8b949e; }
+      .note { padding: 14px 16px; background: #161b22; border: 1px solid #30363d; border-radius: 6px; }
+      img { display: block; width: 100%; height: auto; margin: 24px 0; border: 1px solid #30363d; border-radius: 6px; }
+      .table-wrap { overflow-x: auto; }
+      table { width: 100%; border-collapse: collapse; background: #161b22; }
+      th, td { padding: 10px 12px; border: 1px solid #30363d; text-align: right; }
+      th:first-child, td:first-child, td:last-child { text-align: left; }
+      thead th { background: #21262d; }
+      code { color: #ffa657; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>fbuild Blink build benchmark</h1>
+      <p class="meta">Generated 2026-07-24T11:37:07Z from <code>4ae24016f08470bbbf9f25986c75ab95709bec4b</code>. Median of 3 trials on linux/x86_64.</p>
+      <p class="note">All three tools compile the same Arduino Uno <code>bench/blink/blink.ino</code>. Cold removes project outputs, reusable framework objects, compiler-object caches, and Arduino/PlatformIO download/HTTP caches while retaining installed packages/toolchains and fbuild package archives. Warm is the immediate no-change rebuild. The narrower warm bar overlays the cold bar.</p>
+      <a href="benchmark.svg"><img src="benchmark.svg" alt="Arduino CLI vs PlatformIO vs fbuild cold and warm Blink build timings" /></a>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Tool</th><th>Cold median</th><th>Warm median</th><th>Cold / warm</th><th>Version</th></tr></thead>
+          <tbody><tr><th>Arduino CLI</th><td>658.534 ms</td><td>320.738 ms</td><td>2.05x</td><td>arduino-cli  Version: 1.5.0 Commit: dd407d42d Date: 2026-05-19T14:07:51Z</td></tr>
+<tr><th>PlatformIO</th><td>884.914 ms</td><td>631.327 ms</td><td>1.40x</td><td>PlatformIO Core, version 6.1.19</td></tr>
+<tr><th>fbuild</th><td>372.218 ms</td><td>51.733 ms</td><td>7.20x</td><td>fbuild 2.5.4</td></tr></tbody>
+        </table>
+      </div>
+      <h2>Machine-readable data</h2>
+      <ul>
+        <li><a href="manifest.json">manifest.json</a> — stable discovery index for agents</li>
+        <li><a href="latest.json">latest.json</a> — metadata, raw trials, and medians</li>
+        <li><a href="history.jsonl">history.jsonl</a> — rolling 365-run history</li>
+      </ul>
+      <p><a href="https://github.com/FastLED/fbuild/actions/runs/30089726027">Benchmark workflow run</a> | <a href="https://github.com/FastLED/fbuild/tree/benchmark-stats">one-commit publication branch</a></p>
+    </main>
+  </body>
+</html>

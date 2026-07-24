@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="410" viewBox="0 0 960 410" role="img" aria-labelledby="title description">
+  <title id="title">Arduino CLI vs PlatformIO vs fbuild Blink build benchmark</title>
+  <desc id="description">Cold build bars with narrower warm build timing overlays for an Arduino Uno Blink sketch.</desc>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .heading { font-size: 30px; font-weight: 700; fill: #f0f6fc; }
+    .meta { font-size: 14px; fill: #8b949e; }
+    .legend { font-size: 14px; font-weight: 600; fill: #c9d1d9; }
+    .tool { font-size: 18px; font-weight: 700; }
+    .value { font-size: 14px; font-weight: 600; fill: #f0f6fc; }
+    .speed { font-size: 13px; fill: #8b949e; }
+  </style>
+  <rect width="960" height="410" fill="#0d1117" />
+  <rect width="960" height="112" fill="#161b22" />
+  <text x="24" y="43" class="heading">Arduino Uno Blink build times</text>
+  <text x="24" y="72" class="meta">Arduino CLI vs PlatformIO vs fbuild | median of 3 trials</text>
+  <text x="24" y="95" class="meta">Generated 2026-07-24T11:37:07Z | sha 4ae24016f084</text>
+  <rect x="24" y="128" width="76" height="24" rx="4" fill="#5b1f1c" />
+  <rect x="24" y="134" width="34" height="12" rx="3" fill="#f85149" />
+  <text x="112" y="146" class="legend">cold (back) + warm (front overlay)</text>
+  <text x="692" y="146" class="meta">scale: slowest median = 884.9 ms</text>
+  <g>
+    <text x="24" y="195.0" class="tool" fill="#8b949e">Arduino CLI</text>
+    <rect x="190.0" y="174.0" width="480.0" height="28" rx="4" fill="#21262d" />
+    <rect x="190.0" y="174.0" width="357.2" height="28" rx="4" fill="#3b4046">
+      <title>Arduino CLI cold median: 658.534 ms</title>
+    </rect>
+    <rect x="190.0" y="181.0" width="174.0" height="14" rx="3" fill="#8b949e">
+      <title>Arduino CLI warm median: 320.738 ms</title>
+    </rect>
+    <text x="692" y="187.0" class="value">cold 658.5 ms  |  warm 320.7 ms</text>
+    <text x="692" y="208.0" class="speed">2.05x cold / warm</text>
+  </g>
+  <g>
+    <text x="24" y="263.0" class="tool" fill="#79c0ff">PlatformIO</text>
+    <rect x="190.0" y="242.0" width="480.0" height="28" rx="4" fill="#21262d" />
+    <rect x="190.0" y="242.0" width="480.0" height="28" rx="4" fill="#1f3a7a">
+      <title>PlatformIO cold median: 884.914 ms</title>
+    </rect>
+    <rect x="190.0" y="249.0" width="342.4" height="14" rx="3" fill="#79c0ff">
+      <title>PlatformIO warm median: 631.327 ms</title>
+    </rect>
+    <text x="692" y="255.0" class="value">cold 884.9 ms  |  warm 631.3 ms</text>
+    <text x="692" y="276.0" class="speed">1.40x cold / warm</text>
+  </g>
+  <g>
+    <text x="24" y="331.0" class="tool" fill="#f85149">fbuild</text>
+    <rect x="190.0" y="310.0" width="480.0" height="28" rx="4" fill="#21262d" />
+    <rect x="190.0" y="310.0" width="201.9" height="28" rx="4" fill="#5b1f1c">
+      <title>fbuild cold median: 372.218 ms</title>
+    </rect>
+    <rect x="190.0" y="317.0" width="28.1" height="14" rx="3" fill="#f85149">
+      <title>fbuild warm median: 51.733 ms</title>
+    </rect>
+    <text x="692" y="323.0" class="value">cold 372.2 ms  |  warm 51.7 ms</text>
+    <text x="692" y="344.0" class="speed">7.20x cold / warm</text>
+  </g>
+  <line x1="24" y1="382" x2="936" y2="382" stroke="#30363d" stroke-width="2" />
+  <text x="24" y="402" class="meta">Machine data: manifest.json | latest.json | history.jsonl</text>
+</svg>
