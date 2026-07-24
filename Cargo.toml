@@ -151,7 +151,7 @@ owo-colors = "4"
 # `AsyncBrokerSession::adopt`). The `core` feature stays on for process
 # containment. `RUNNING_PROCESS_DISABLE=1` still selects the legacy direct
 # loopback-HTTP path (see crates/fbuild-daemon/src/broker).
-running-process = { version = "4.5.7", default-features = false, features = ["client-async"] }
+running-process = { version = "4.6.0", default-features = false, features = ["client-async"] }
 
 [profile.dev]
 debug = "line-tables-only"

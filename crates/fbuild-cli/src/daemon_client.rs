@@ -934,6 +934,12 @@ async fn spawn_daemon_process() -> fbuild_core::Result<()> {
     let daemon_exe = daemon_executable_hint();
     // allow-direct-spawn: daemon must outlive the CLI; see INTENTIONALLY DETACHED comment below.
     let mut cmd = tokio::process::Command::new(&daemon_exe);
+    let baseline = running_process::environment::user_baseline_environment().map_err(|error| {
+        fbuild_core::FbuildError::DaemonError(format!(
+            "failed to construct daemon user environment: {error}"
+        ))
+    })?;
+    cmd.env_clear().envs(baseline);
     tracing::debug!(
         "running-process broker adoption status: {}",
         fbuild_paths::running_process::running_process_adoption_summary()
