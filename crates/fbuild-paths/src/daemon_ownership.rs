@@ -307,6 +307,7 @@ mod tests {
         let path = temp.path().join("root-owner.lock");
 
         let run_probe = |expected: &str| {
+            // allow-direct-spawn: test helper re-executes this test binary to model another process.
             let output = std::process::Command::new(std::env::current_exe().unwrap())
                 .args([
                     "--ignored",

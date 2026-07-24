@@ -74,6 +74,7 @@ pub fn pid_executable_path(pid: u32) -> Option<PathBuf> {
 
 #[cfg(all(unix, not(target_os = "linux")))]
 pub fn pid_executable_path(pid: u32) -> Option<PathBuf> {
+    // allow-direct-spawn: portable BSD/macOS `ps` fallback; this module resolves process identity.
     let output = std::process::Command::new("/bin/ps")
         .args(["-p", &pid.to_string(), "-o", "comm="])
         .output()
