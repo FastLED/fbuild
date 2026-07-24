@@ -28,7 +28,7 @@ jobs:
         run: uv run --no-project python ci/check_dylint_allowlists.py
       - uses: zackees/setup-soldr@v0
         with:
-          version: 0.8.8
+          version: 0.8.23
           cache: true
           toolchain: 1.94.1
           cache-key-suffix: dylint
