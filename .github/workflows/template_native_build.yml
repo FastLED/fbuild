@@ -274,10 +274,10 @@ jobs:
               # The catalogue's directory labels differ between cache releases.
               xwin_root="$(find "$SOLDR_CACHE_DIR/sdk/${{ inputs.target }}/xwin" -mindepth 2 -maxdepth 2 -type d -name xwin -print -quit)"
               [ -n "$xwin_root" ] || { echo "managed xwin cache missing" >&2; exit 1; }
-              msvcrt="$(find "$xwin_root/crt/lib/x64" -type f -iname msvcrt.lib -print -quit)"
-              oldnames="$(find "$xwin_root/crt/lib/x64" -type f -iname oldnames.lib -print -quit)"
-              kernel32="$(find "$xwin_root/sdk/lib/um/x64" -type f -iname kernel32.lib -print -quit)"
-              ucrt="$(find "$xwin_root/sdk/lib/ucrt/x64" -type f -iname ucrt.lib -print -quit)"
+              msvcrt="$(find "$xwin_root/crt/lib/x86_64" -type f -iname msvcrt.lib -print -quit)"
+              oldnames="$(find "$xwin_root/crt/lib/x86_64" -type f -iname oldnames.lib -print -quit)"
+              kernel32="$(find "$xwin_root/sdk/lib/um/x86_64" -type f -iname kernel32.lib -print -quit)"
+              ucrt="$(find "$xwin_root/sdk/lib/ucrt/x86_64" -type f -iname ucrt.lib -print -quit)"
               [ -n "$msvcrt" ] && [ -n "$oldnames" ] && [ -n "$kernel32" ] && [ -n "$ucrt" ] || { echo "managed xwin libraries missing" >&2; exit 1; }
               for library in "$msvcrt" "$oldnames"; do
                 directory="$(dirname "$library")"
@@ -352,10 +352,10 @@ jobs:
             if [ "${{ inputs.target }}" = "x86_64-pc-windows-msvc" ]; then
               xwin_root="$(find "$SOLDR_CACHE_DIR/sdk/${{ inputs.target }}/xwin" -mindepth 2 -maxdepth 2 -type d -name xwin -print -quit)"
               [ -n "$xwin_root" ] || { echo "managed xwin cache missing" >&2; exit 1; }
-              msvcrt="$(find "$xwin_root/crt/lib/x64" -type f -iname msvcrt.lib -print -quit)"
-              oldnames="$(find "$xwin_root/crt/lib/x64" -type f -iname oldnames.lib -print -quit)"
-              kernel32="$(find "$xwin_root/sdk/lib/um/x64" -type f -iname kernel32.lib -print -quit)"
-              ucrt="$(find "$xwin_root/sdk/lib/ucrt/x64" -type f -iname ucrt.lib -print -quit)"
+              msvcrt="$(find "$xwin_root/crt/lib/x86_64" -type f -iname msvcrt.lib -print -quit)"
+              oldnames="$(find "$xwin_root/crt/lib/x86_64" -type f -iname oldnames.lib -print -quit)"
+              kernel32="$(find "$xwin_root/sdk/lib/um/x86_64" -type f -iname kernel32.lib -print -quit)"
+              ucrt="$(find "$xwin_root/sdk/lib/ucrt/x86_64" -type f -iname ucrt.lib -print -quit)"
               [ -n "$msvcrt" ] && [ -n "$oldnames" ] && [ -n "$kernel32" ] && [ -n "$ucrt" ] || { echo "managed xwin libraries missing" >&2; exit 1; }
               for library in "$msvcrt" "$oldnames"; do
                 directory="$(dirname "$library")"
