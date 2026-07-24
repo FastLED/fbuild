@@ -110,7 +110,12 @@ jobs:
       - name: Install esptool (ESP32 firmware conversion)
         if: inputs.firmware-ext == 'bin'
         timeout-minutes: 3
-        run: pip install --timeout 60 esptool
+        run: |
+          pip install --timeout 60 esptool
+          echo "${HOME}/.local/bin" >> "${GITHUB_PATH}"
+          export PATH="${HOME}/.local/bin:${PATH}"
+          command -v esptool
+          esptool version
 
       - name: Build fbuild binaries
         run: |
