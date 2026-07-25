@@ -14,8 +14,9 @@
 //! it returns `false` rather than assuming a match. Callers must never
 //! signal a PID whose identity they could not positively verify.
 
-use std::path::PathBuf;
 use std::time::{Duration, Instant};
+
+use crate::path::NormalizedPath;
 
 /// Is `pid` currently alive?
 ///
@@ -67,13 +68,14 @@ pub fn pid_is_alive(_pid: u32) -> bool {
 /// probe failure returns `None` — the caller treats that as "identity
 /// unverified", never as "assume match".
 #[cfg(target_os = "linux")]
-pub fn pid_executable_path(pid: u32) -> Option<PathBuf> {
-    let link = PathBuf::from(format!("/proc/{pid}/exe"));
-    std::fs::read_link(link).ok()
+pub fn pid_executable_path(pid: u32) -> Option<NormalizedPath> {
+    std::fs::read_link(format!("/proc/{pid}/exe"))
+        .ok()
+        .map(Into::into)
 }
 
 #[cfg(all(unix, not(target_os = "linux")))]
-pub fn pid_executable_path(pid: u32) -> Option<PathBuf> {
+pub fn pid_executable_path(pid: u32) -> Option<NormalizedPath> {
     // allow-direct-spawn: portable BSD/macOS `ps` fallback; this module resolves process identity.
     let output = std::process::Command::new("/bin/ps")
         .args(["-p", &pid.to_string(), "-o", "comm="])
@@ -84,12 +86,12 @@ pub fn pid_executable_path(pid: u32) -> Option<PathBuf> {
     }
     let image = String::from_utf8(output.stdout).ok()?;
     let image = image.trim();
-    (!image.is_empty()).then(|| PathBuf::from(image))
+    (!image.is_empty()).then(|| NormalizedPath::from(image))
 }
 
 #[cfg(windows)]
 #[allow(clippy::upper_case_acronyms, non_snake_case)]
-pub fn pid_executable_path(pid: u32) -> Option<PathBuf> {
+pub fn pid_executable_path(pid: u32) -> Option<NormalizedPath> {
     use std::os::windows::raw::HANDLE;
     #[allow(clippy::upper_case_acronyms)]
     type DWORD = u32;
@@ -119,11 +121,11 @@ pub fn pid_executable_path(pid: u32) -> Option<PathBuf> {
         return None;
     }
     let s = String::from_utf16_lossy(&buf[..size as usize]);
-    (!s.is_empty()).then(|| PathBuf::from(s))
+    (!s.is_empty()).then(|| NormalizedPath::from(s))
 }
 
 #[cfg(not(any(unix, windows)))]
-pub fn pid_executable_path(_pid: u32) -> Option<PathBuf> {
+pub fn pid_executable_path(_pid: u32) -> Option<NormalizedPath> {
     None
 }
 
