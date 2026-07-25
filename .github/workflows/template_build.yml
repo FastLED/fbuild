@@ -115,6 +115,10 @@ jobs:
           echo "${HOME}/.local/bin" >> "${GITHUB_PATH}"
           export PATH="${HOME}/.local/bin:${PATH}"
           command -v esptool
+          # The detached fbuild daemon starts from a clean login environment.
+          # Make this verified launcher visible through that baseline PATH.
+          sudo ln -sf "$(command -v esptool)" /usr/local/bin/esptool
+          /usr/local/bin/esptool version
           esptool version
 
       - name: Build fbuild binaries
