@@ -124,6 +124,14 @@ use std::env;
 
 fn main() -> Result<()> {
     env_logger::init();
+    if env::var_os("RUSTUP_TOOLCHAIN").is_none() {
+        // Dylint's runner sanitizes this variable before invoking the driver,
+        // but dylint_driver uses it at runtime to locate the nightly sysroot.
+        // SAFETY: this is the single-threaded driver entry point.
+        unsafe {
+            env::set_var("RUSTUP_TOOLCHAIN", env!("RUSTUP_TOOLCHAIN"));
+        }
+    }
     let args: Vec<_> = env::args_os().collect();
     dylint_driver::dylint_driver(&args)
 }
