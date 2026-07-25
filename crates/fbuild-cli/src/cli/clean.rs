@@ -64,8 +64,10 @@ pub async fn run_clean(
     let response = client.build_streaming(&req).await?;
     print_operation_streams(&response);
     if !response.success {
-        output::error(response.message);
-        std::process::exit(response.exit_code);
+        return Err(fbuild_core::FbuildError::CommandFailed {
+            message: response.message,
+            exit_code: response.exit_code,
+        });
     }
     Ok(())
 }

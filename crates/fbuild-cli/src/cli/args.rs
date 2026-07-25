@@ -359,9 +359,9 @@ pub enum Commands {
     #[command(name = "__usb-recovery-helper", hide = true)]
     UsbRecoveryHelper {
         #[arg(long)]
-        request: std::path::PathBuf,
+        request: String,
         #[arg(long)]
-        result: std::path::PathBuf,
+        result: String,
     },
     /// Monitor serial output
     Monitor {

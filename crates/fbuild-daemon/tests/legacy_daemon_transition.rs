@@ -23,10 +23,11 @@
 //!    killed — abrupt owner death releases ownership, exactly like an OS
 //!    file lock is supposed to.
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::process::{Child, Command, Stdio};
 use std::time::{Duration, Instant};
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::process_identity::{pid_exe_stem_matches, pid_is_alive};
 use fbuild_paths::daemon_ownership::{DAEMON_EXE_STEM, RootOwnershipGuard};
 
@@ -176,8 +177,8 @@ fn free_port() -> u16 {
 /// `std::env` here would race other tests. The child `fbuild-daemon`
 /// process gets `HOME`/`USERPROFILE` via `Command::env` instead, which is
 /// scoped to just that child.
-fn root_owner_lock_path_for(temp_home: &Path) -> PathBuf {
-    temp_home
+fn root_owner_lock_path_for(temp_home: &Path) -> NormalizedPath {
+    NormalizedPath::new(temp_home)
         .join(".fbuild")
         .join("dev")
         .join("daemon")
