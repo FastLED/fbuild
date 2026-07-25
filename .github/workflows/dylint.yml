@@ -75,6 +75,8 @@ jobs:
           done < <(find dylints -mindepth 2 -maxdepth 2 -name Cargo.toml | sort)
       - name: Run dylint over workspace
         run: |
+          # Keep the outer Cargo invocation on the workspace's pinned stable
+          # toolchain. Dylint selects the shared nightly from each registered
+          # library manifest and runs the matching driver built above.
           export PATH="${CARGO_HOME}/bin:${PATH}"
-          RUSTUP_TOOLCHAIN=nightly-2026-04-16 \
-            soldr cargo dylint --all -- --workspace --all-targets
+          soldr cargo dylint --all -- --workspace --all-targets
