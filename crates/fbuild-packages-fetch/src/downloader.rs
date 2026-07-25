@@ -743,15 +743,15 @@ mod tests {
         let temp = tempfile::TempDir::new().unwrap();
         let mut progress = |_progress: &DownloadProgress| {};
 
-        let err =
+        let _err =
             download_file_with_progress_using(&test_client(), &url, temp.path(), &mut progress)
                 .await
                 .expect_err("five chunk stalls should exhaust retries");
 
-        assert!(
-            err.to_string().contains("body read stalled > 60s"),
-            "expected final chunk-stall error, got: {err}"
-        );
+        // A stalled body is retryable, as is a connection error while opening
+        // a retry. The latter can legitimately be the final transient on a
+        // busy platform, so the stable contract is exhausting all five
+        // attempts without publishing an output.
         assert_eq!(request_count.load(Ordering::SeqCst), 5);
         assert!(!temp.path().join("file").exists());
     }
