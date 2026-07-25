@@ -9,8 +9,8 @@ use rustc_errors::DiagDecorator;
 use rustc_hir::{Expr, ExprKind, HirId};
 use rustc_lint::{LateContext, LateLintPass, LintContext};
 use rustc_span::{
-    symbol::{sym, Symbol},
     FileName, RemapPathScopeComponents,
+    symbol::{Symbol, sym},
 };
 
 dylint_linting::declare_late_lint! {
@@ -88,10 +88,7 @@ const BANNED_METHOD_PATHS: &[&[&str]] = &[
 
 /// In-scope path prefixes. A file is in scope if its (normalized,
 /// forward-slash) path contains any of these substrings.
-const IN_SCOPE_PREFIXES: &[&str] = &[
-    "crates/fbuild-daemon/src/",
-    "crates/fbuild-cli/src/cli/",
-];
+const IN_SCOPE_PREFIXES: &[&str] = &["crates/fbuild-daemon/src/", "crates/fbuild-cli/src/cli/"];
 
 impl<'tcx> LateLintPass<'tcx> for BanUnwrapInProduction {
     fn check_expr(&mut self, cx: &LateContext<'tcx>, expr: &'tcx Expr<'tcx>) {
@@ -132,9 +129,7 @@ impl<'tcx> LateLintPass<'tcx> for BanUnwrapInProduction {
 fn owned_by_cfg_test_module(cx: &LateContext<'_>, hir_id: HirId) -> bool {
     std::iter::once(hir_id)
         .chain(cx.tcx.hir_parent_id_iter(hir_id))
-        .any(|id| {
-            cx.tcx.hir_attrs(id).iter().any(attr_is_cfg_test) || is_test_module_node(cx, id)
-        })
+        .any(|id| cx.tcx.hir_attrs(id).iter().any(attr_is_cfg_test) || is_test_module_node(cx, id))
 }
 
 fn is_test_module_node(cx: &LateContext<'_>, hir_id: HirId) -> bool {

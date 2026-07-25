@@ -6,12 +6,12 @@ extern crate rustc_middle;
 extern crate rustc_span;
 
 use rustc_errors::DiagDecorator;
-use rustc_hir::{def::Res, Expr, ExprKind, HirId};
+use rustc_hir::{Expr, ExprKind, HirId, def::Res};
 use rustc_lint::{LateContext, LateLintPass, LintContext};
 use rustc_middle::ty;
 use rustc_span::{
-    symbol::{sym, Symbol},
     FileName, RemapPathScopeComponents,
+    symbol::{Symbol, sym},
 };
 
 dylint_linting::declare_late_lint! {
@@ -100,7 +100,10 @@ impl<'tcx> LateLintPass<'tcx> for BanPoisonPanic {
         let Some(unwrap_def) = cx.typeck_results().type_dependent_def_id(expr.hir_id) else {
             return;
         };
-        if !UNWRAP_PATHS.iter().any(|p| def_path_equals(cx, unwrap_def, p)) {
+        if !UNWRAP_PATHS
+            .iter()
+            .any(|p| def_path_equals(cx, unwrap_def, p))
+        {
             return;
         }
 
@@ -165,9 +168,7 @@ fn emit_lint(cx: &LateContext<'_>, span: rustc_span::Span) {
 fn owned_by_cfg_test_module(cx: &LateContext<'_>, hir_id: HirId) -> bool {
     std::iter::once(hir_id)
         .chain(cx.tcx.hir_parent_id_iter(hir_id))
-        .any(|id| {
-            cx.tcx.hir_attrs(id).iter().any(attr_is_cfg_test) || is_test_module_node(cx, id)
-        })
+        .any(|id| cx.tcx.hir_attrs(id).iter().any(attr_is_cfg_test) || is_test_module_node(cx, id))
 }
 
 fn is_test_module_node(cx: &LateContext<'_>, hir_id: HirId) -> bool {

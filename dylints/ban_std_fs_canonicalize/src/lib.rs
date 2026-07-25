@@ -5,9 +5,9 @@ extern crate rustc_hir;
 extern crate rustc_span;
 
 use rustc_errors::DiagDecorator;
-use rustc_hir::{def::Res, Expr, ExprKind};
+use rustc_hir::{Expr, ExprKind, def::Res};
 use rustc_lint::{LateContext, LateLintPass, LintContext};
-use rustc_span::{symbol::Symbol, FileName, RemapPathScopeComponents};
+use rustc_span::{FileName, RemapPathScopeComponents, symbol::Symbol};
 
 dylint_linting::declare_late_lint! {
     /// ### What it does
@@ -50,7 +50,10 @@ const BANNED_PATHS: &[&[&str]] = &[
 
 const ALLOWLIST: &str = include_str!("allowlist.txt");
 
-const BRIDGE_MODULES: &[&str] = &["crates/fbuild-core/src/path.rs", "crates/fbuild-core/src/fs.rs"];
+const BRIDGE_MODULES: &[&str] = &[
+    "crates/fbuild-core/src/path.rs",
+    "crates/fbuild-core/src/fs.rs",
+];
 
 const CRATES_PREFIX: &str = "crates/";
 const SRC_SEGMENT: &str = "/src/";

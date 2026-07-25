@@ -51,6 +51,5 @@ in `src/allowlist.txt`.
 
 ## Toolchain
 
-Pinned to `nightly-2026-03-26` to match every other dylint in this
-repo. See the top-level `dylints/README.md` for the full setup
-instructions and the rationale for `build_dylint_driver.py`.
+Pinned to `nightly-2026-04-16` and Dylint 6.0.1, matching every other
+Dylint library in this repository. See the top-level `dylints/README.md`.

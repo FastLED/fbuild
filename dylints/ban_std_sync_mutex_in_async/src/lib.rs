@@ -6,11 +6,11 @@ extern crate rustc_middle;
 extern crate rustc_span;
 
 use rustc_errors::DiagDecorator;
-use rustc_hir::{def::Res, AmbigArg, Expr, ExprKind, HirId, Ty, TyKind};
+use rustc_hir::{AmbigArg, Expr, ExprKind, HirId, Ty, TyKind, def::Res};
 use rustc_lint::{LateContext, LateLintPass, LintContext};
 use rustc_span::{
-    symbol::{sym, Symbol},
     FileName, RemapPathScopeComponents,
+    symbol::{Symbol, sym},
 };
 
 dylint_linting::declare_late_lint! {
@@ -87,10 +87,7 @@ const BANNED_PATHS: &[&[&str]] = &[
 const ALLOWLIST: &str = include_str!("allowlist.txt");
 
 /// Scope: any file path matching one of these directory prefixes.
-const SCOPES: &[&str] = &[
-    "crates/fbuild-daemon/src/",
-    "crates/fbuild-serial/src/",
-];
+const SCOPES: &[&str] = &["crates/fbuild-daemon/src/", "crates/fbuild-serial/src/"];
 
 impl<'tcx> LateLintPass<'tcx> for BanStdSyncMutexInAsync {
     fn check_ty(&mut self, cx: &LateContext<'tcx>, ty: &'tcx Ty<'tcx, AmbigArg>) {
@@ -135,9 +132,7 @@ impl<'tcx> LateLintPass<'tcx> for BanStdSyncMutexInAsync {
 fn owned_by_cfg_test_module(cx: &LateContext<'_>, hir_id: HirId) -> bool {
     std::iter::once(hir_id)
         .chain(cx.tcx.hir_parent_id_iter(hir_id))
-        .any(|id| {
-            cx.tcx.hir_attrs(id).iter().any(attr_is_cfg_test) || is_test_module_node(cx, id)
-        })
+        .any(|id| cx.tcx.hir_attrs(id).iter().any(attr_is_cfg_test) || is_test_module_node(cx, id))
 }
 
 fn is_test_module_node(cx: &LateContext<'_>, hir_id: HirId) -> bool {

@@ -44,5 +44,5 @@ result does not feed a cache key — are exempted file-by-file in
 
 Like the other fbuild dylints, this crate pins its own nightly in
 `rust-toolchain.toml` (the rustc internal API moves fast) while the
-workspace stays on stable. CI runs it via `cargo dylint --all` in
+workspace stays on stable. CI runs it via `soldr cargo dylint --all` in
 `.github/workflows/dylint.yml`.

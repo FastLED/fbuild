@@ -1,9 +1,12 @@
-"""Build a Dylint driver from the git revision used by the lint crate.
+"""Build the published Dylint driver with its toolchain environment intact.
 
-The published `dylint_driver` 5.0.0 crate does not build against the
-nightly toolchain pinned by CI. The lint crate already pins Dylint's git
-revision for `dylint_linting` and `dylint_testing`; this script builds the
-matching driver from that checkout and exports DYLINT_DRIVER_PATH.
+Dylint 6.0.1's driver builder clears ``RUSTUP_TOOLCHAIN`` before compiling
+``dylint_driver``, while that crate's build script requires the variable
+(trailofbits/dylint#1172 tracks the same missing-environment failure class).
+Build the published crate once and export its standard driver directory.
+
+Unlike the pre-6.0 workaround, this does not clone Dylint or select a git
+revision. Remove it when the published driver builder propagates its channel.
 """
 
 from __future__ import annotations
@@ -16,23 +19,14 @@ import sys
 import tempfile
 from pathlib import Path
 
-
-DYLINT_REPO = "https://github.com/trailofbits/dylint"
-DYLINT_REV = "4bd91ce7729b74c7ee5664bbb588f7baf30b4a09"
-TOOLCHAIN_CHANNEL = "nightly-2026-03-26"
+DYLINT_VERSION = "6.0.1"
+TOOLCHAIN_CHANNEL = "nightly-2026-04-16"
 
 
 def run(args: list[str], **kwargs) -> subprocess.CompletedProcess[str]:  # noqa: ANN003
+    """Run a bounded subprocess and terminate its process group on timeout."""
     print("+", " ".join(args), flush=True)
-    # FastLED/fbuild#812: every subprocess in this CI script gets a
-    # watchdog so a stuck `git clone` / cargo build can't burn the GHA
-    # job's full 6h default. Per-call timeout can be overridden via
-    # kwargs (e.g. cargo builds use 600s).
     timeout = kwargs.pop("timeout", 600)
-    # `subprocess.run(..., timeout=...)` terminates only its immediate child.
-    # Cargo can leave rustc/linker descendants running, which in turn keeps an
-    # Actions step alive after its declared timeout or cancellation. Give each
-    # invocation its own process group and tear down the whole group on timeout.
     if os.name == "nt":
         kwargs.setdefault("creationflags", subprocess.CREATE_NEW_PROCESS_GROUP)
     else:
@@ -41,9 +35,14 @@ def run(args: list[str], **kwargs) -> subprocess.CompletedProcess[str]:  # noqa:
     try:
         returncode = process.wait(timeout=timeout)
     except subprocess.TimeoutExpired:
-        print(f"::error::command exceeded {timeout}s; terminating its process group", flush=True)
+        print(
+            f"::error::command exceeded {timeout}s; terminating its process group",
+            flush=True,
+        )
         if os.name == "nt":
-            subprocess.run(["taskkill", "/PID", str(process.pid), "/T", "/F"], check=False)
+            subprocess.run(
+                ["taskkill", "/PID", str(process.pid), "/T", "/F"], check=False
+            )
         else:
             os.killpg(process.pid, signal.SIGTERM)
             try:
@@ -58,12 +57,12 @@ def run(args: list[str], **kwargs) -> subprocess.CompletedProcess[str]:  # noqa:
 
 
 def rustc_host() -> str:
-    # Invoke rustc through `rustup run` so the call works even when PATH
-    # is fronted by shims (e.g. soldr) that do not understand the
-    # `+<toolchain>` directive that only the rustup `cargo`/`rustc`
-    # wrappers parse.
+    """Return the host triple for the pinned nightly."""
+    env = os.environ.copy()
+    env["RUSTUP_TOOLCHAIN"] = TOOLCHAIN_CHANNEL
     output = subprocess.check_output(
-        ["rustup", "run", TOOLCHAIN_CHANNEL, "rustc", "-vV"],
+        ["soldr", "rustc", "-vV"],
+        env=env,
         text=True,
         timeout=60,
     )
@@ -74,38 +73,40 @@ def rustc_host() -> str:
 
 
 def rustc_toolchain_root(full_toolchain: str) -> Path:
+    """Return the selected nightly's installation root."""
     rustc = subprocess.check_output(
-        ["rustup", "which", "--toolchain", full_toolchain, "rustc"],
+        [
+            "soldr",
+            "rustup",
+            "which",
+            "--toolchain",
+            full_toolchain,
+            "rustc",
+        ],
         text=True,
-        timeout=30,
+        timeout=60,
     ).strip()
     return Path(rustc).resolve().parent.parent
 
 
-def write_driver_package(package: Path, dylint_checkout: Path, full_toolchain: str) -> None:
+def write_driver_package(package: Path, full_toolchain: str) -> None:
+    """Write a minimal binary package around the published driver crate."""
     src = package / "src"
     src.mkdir(parents=True)
-
-    driver_path = str((dylint_checkout / "driver").resolve()).replace("\\", "\\\\")
     (package / "Cargo.toml").write_text(
         f"""
 [package]
 name = "dylint_driver-{full_toolchain}"
 version = "0.1.0"
-edition = "2018"
+edition = "2021"
 
 [dependencies]
-anyhow = "1.0"
+anyhow = "1"
 env_logger = "0.11"
-dylint_driver = {{ path = "{driver_path}" }}
+dylint_driver = "={DYLINT_VERSION}"
 """.lstrip(),
         encoding="utf-8",
     )
-    # Use `.toml` extension so rustup unambiguously parses as TOML.
-    # The extensionless `rust-toolchain` form is ambiguous (single-line
-    # vs TOML) and on Windows hosts has been observed to silently fall
-    # through to the default toolchain, leaving the build script's
-    # `#![feature(...)]` rejected as "stable channel".
     (package / "rust-toolchain.toml").write_text(
         f"""
 [toolchain]
@@ -121,11 +122,9 @@ components = ["llvm-tools-preview", "rustc-dev"]
 use anyhow::Result;
 use std::env;
 
-pub fn main() -> Result<()> {
+fn main() -> Result<()> {
     env_logger::init();
-
     let args: Vec<_> = env::args_os().collect();
-
     dylint_driver::dylint_driver(&args)
 }
 """.lstrip(),
@@ -140,65 +139,55 @@ def append_github_env(name: str, value: Path) -> None:
             file.write(f"{name}={value}\n")
 
 
+def find_built_driver(target: Path, full_toolchain: str) -> Path:
+    suffix = ".exe" if os.name == "nt" else ""
+    expected = f"dylint_driver-{full_toolchain}{suffix}"
+    candidates = [
+        path
+        for path in target.rglob(expected)
+        if path.is_file() and path.parent.name != "deps"
+    ]
+    if len(candidates) != 1:
+        rendered = ", ".join(str(path) for path in candidates) or "none"
+        raise RuntimeError(f"expected one built Dylint driver, found: {rendered}")
+    return candidates[0]
+
+
 def main() -> int:
     full_toolchain = f"{TOOLCHAIN_CHANNEL}-{rustc_host()}"
     runner_temp = Path(os.environ.get("RUNNER_TEMP", tempfile.gettempdir())).resolve()
     driver_root = runner_temp / "dylint-drivers"
-    driver_dir = driver_root / full_toolchain
-    driver_dir.mkdir(parents=True, exist_ok=True)
+    driver_dirs = {
+        driver_root / TOOLCHAIN_CHANNEL,
+        driver_root / full_toolchain,
+    }
+    for driver_dir in driver_dirs:
+        driver_dir.mkdir(parents=True, exist_ok=True)
 
     with tempfile.TemporaryDirectory(prefix="fbuild-dylint-") as temp:
-        temp_path = Path(temp)
-        checkout = temp_path / "dylint"
-        package = temp_path / "driver-package"
-
-        run(["git", "clone", "--filter=blob:none", DYLINT_REPO, str(checkout)])
-        run(["git", "-C", str(checkout), "checkout", DYLINT_REV])
-
+        package = Path(temp) / "driver-package"
         package.mkdir()
-        write_driver_package(package, checkout, full_toolchain)
+        write_driver_package(package, full_toolchain)
 
         env = os.environ.copy()
-        # Force the rustup toolchain in the env so it propagates into
-        # nested cargo/rustc invocations (e.g. build-script compilation
-        # of dylint_driver which uses `#![feature(...)]` and requires
-        # nightly). Setting via env is more reliable than relying solely
-        # on the `rust-toolchain.toml` lookup, especially on Windows.
         env["RUSTUP_TOOLCHAIN"] = full_toolchain
-        # Anchor RUSTC and CARGO to the specific nightly binaries to
-        # defeat shadowing by any stable `rustc`/`cargo` that may appear
-        # earlier in PATH (e.g. a Chocolatey-installed stable on
-        # Windows). Without this, cargo's build-script rustc invocation
-        # may resolve to a stable rustc and fail on `#![feature(...)]`
-        # with E0554.
-        nightly_bin = rustc_toolchain_root(full_toolchain) / "bin"
-        rustc_exe = nightly_bin / ("rustc.exe" if os.name == "nt" else "rustc")
-        cargo_exe = nightly_bin / ("cargo.exe" if os.name == "nt" else "cargo")
-        if rustc_exe.exists():
-            env["RUSTC"] = str(rustc_exe)
-        if cargo_exe.exists():
-            env["CARGO"] = str(cargo_exe)
+        env["CARGO_TARGET_DIR"] = str(package / "target")
         if os.name != "nt":
-            toolchain_root = rustc_toolchain_root(full_toolchain)
-            rpath = f"-C link-args=-Wl,-rpath,{toolchain_root / 'lib'}"
+            rpath = f"-C link-args=-Wl,-rpath,{rustc_toolchain_root(full_toolchain) / 'lib'}"
             env["RUSTFLAGS"] = f"{env.get('RUSTFLAGS', '')} {rpath}".strip()
-
-        # Use `rustup run` instead of `cargo +<toolchain>` because the
-        # cargo on PATH may be a shim (e.g. soldr's) that does not parse
-        # the `+<toolchain>` directive — that directive is only honored
-        # by the rustup-managed cargo wrapper. `rustup run` selects the
-        # toolchain explicitly and works regardless of which `cargo`
-        # comes first on PATH.
         run(
-            ["rustup", "run", TOOLCHAIN_CHANNEL, "cargo", "build"],
+            ["soldr", "--no-cache", "cargo", "build"],
             cwd=package,
             env=env,
         )
 
-        exe_suffix = ".exe" if os.name == "nt" else ""
-        built_driver = package / "target" / "debug" / f"dylint_driver-{full_toolchain}{exe_suffix}"
-        installed_driver = driver_dir / f"dylint-driver{exe_suffix}"
-        shutil.copy2(built_driver, installed_driver)
+        built_driver = find_built_driver(package / "target", full_toolchain)
+        suffix = ".exe" if os.name == "nt" else ""
+        for driver_dir in driver_dirs:
+            # Dylint 6.0.1 probes the extensionless path even on Windows.
+            shutil.copy2(built_driver, driver_dir / "dylint-driver")
+            if suffix:
+                shutil.copy2(built_driver, driver_dir / f"dylint-driver{suffix}")
 
     append_github_env("DYLINT_DRIVER_PATH", driver_root)
     print(f"DYLINT_DRIVER_PATH={driver_root}")
