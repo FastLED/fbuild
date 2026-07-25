@@ -139,7 +139,11 @@ crates/fbuild-deploy/src/esp32/tests.rs
 crates/fbuild-deploy/src/esp32_native/tests.rs
 crates/fbuild-deploy/src/esp32_native/types.rs
 crates/fbuild-deploy/src/lpc.rs
+crates/fbuild-deploy/src/rp2040.rs
+crates/fbuild-deploy/src/rp2040_mount.rs
 crates/fbuild-deploy/src/size_check.rs
+crates/fbuild-deploy/src/wchisp.rs
+crates/fbuild-deploy/src/wlink.rs
 crates/fbuild-deploy/src/teensy/flash.rs
 crates/fbuild-deploy/src/teensy/mod.rs
 crates/fbuild-header-scan/src/walker.rs
