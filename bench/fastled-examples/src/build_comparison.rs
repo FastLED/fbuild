@@ -3,13 +3,14 @@
 //! The harness measures the same Arduino Uno Blink sketch with each real CLI,
 //! then renders the one-commit benchmark site's JSON, SVG, and HTML artifacts.
 
+use fbuild_core::path::NormalizedPath;
 use serde::Serialize;
 use serde_json::{Value, json};
 use std::env;
 use std::ffi::{OsStr, OsString};
 use std::fs::{self, File};
 use std::io::{self, Write};
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::process::{Command, Output};
 use std::time::{Instant, SystemTime, UNIX_EPOCH};
 
@@ -23,9 +24,9 @@ type AppResult<T> = Result<T, Box<dyn std::error::Error>>;
 
 #[derive(Debug)]
 struct Options {
-    output_dir: PathBuf,
-    project_dir: PathBuf,
-    fbuild: PathBuf,
+    output_dir: NormalizedPath,
+    project_dir: NormalizedPath,
+    fbuild: NormalizedPath,
     arduino_cli: OsString,
     platformio: OsString,
     trials: usize,
@@ -50,7 +51,7 @@ enum ColdCleanupStep {
         program: OsString,
         args: Vec<OsString>,
     },
-    RemoveDir(PathBuf),
+    RemoveDir(NormalizedPath),
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -190,7 +191,7 @@ fn run() -> AppResult<()> {
         git_sha: options.git_sha.clone(),
         repository: options.repository.clone(),
         run_url: options.run_url.clone(),
-        project: options.project_dir.to_string_lossy().replace('\\', "/"),
+        project: options.project_dir.display_slash(),
         trials: options.trials,
     };
     write_outputs(
@@ -350,7 +351,7 @@ fn cold_cleanup_steps(
     match kind {
         ToolKind::Arduino => vec![
             command(arduino_cli, os_args(&["cache", "clean"])),
-            ColdCleanupStep::RemoveDir(arduino_build_dir.to_path_buf()),
+            ColdCleanupStep::RemoveDir(NormalizedPath::new(arduino_build_dir)),
         ],
         ToolKind::PlatformIo => vec![
             command(
@@ -497,11 +498,11 @@ fn remove_dir_within(root: &Path, target: &Path) -> AppResult<()> {
     }
 }
 
-fn absolute_from(root: &Path, path: &Path) -> PathBuf {
+fn absolute_from(root: &Path, path: &Path) -> NormalizedPath {
     if path.is_absolute() {
-        path.to_path_buf()
+        NormalizedPath::new(path)
     } else {
-        root.join(path)
+        NormalizedPath::new(root.join(path))
     }
 }
 
@@ -534,10 +535,14 @@ fn write_outputs(
 ) -> AppResult<()> {
     fs::create_dir_all(output_dir)?;
     let latest = latest_payload(metadata, results);
-    write_json(output_dir.join("latest.json"), &latest)?;
-    write_history(output_dir.join("history.jsonl"), metadata, results)?;
+    write_json(NormalizedPath::new(output_dir.join("latest.json")), &latest)?;
+    write_history(
+        NormalizedPath::new(output_dir.join("history.jsonl")),
+        metadata,
+        results,
+    )?;
     write_json(
-        output_dir.join("manifest.json"),
+        NormalizedPath::new(output_dir.join("manifest.json")),
         &manifest_payload(metadata, pages_url, raw_base_url),
     )?;
     fs::write(
@@ -623,12 +628,16 @@ fn manifest_payload(metadata: &Metadata, pages_url: &str, raw_base_url: &str) ->
     })
 }
 
-fn write_json(path: PathBuf, payload: &Value) -> AppResult<()> {
+fn write_json(path: NormalizedPath, payload: &Value) -> AppResult<()> {
     fs::write(path, serde_json::to_string_pretty(payload)? + "\n")?;
     Ok(())
 }
 
-fn write_history(path: PathBuf, metadata: &Metadata, results: &[ToolResult]) -> AppResult<()> {
+fn write_history(
+    path: NormalizedPath,
+    metadata: &Metadata,
+    results: &[ToolResult],
+) -> AppResult<()> {
     let mut prior = if path.is_file() {
         fs::read_to_string(&path)?
             .lines()
@@ -839,9 +848,9 @@ fn html_escape(value: &str) -> String {
 
 fn parse_options() -> AppResult<Options> {
     let mut options = Options {
-        output_dir: PathBuf::from("benchmark-stats"),
-        project_dir: PathBuf::from("bench/blink"),
-        fbuild: PathBuf::from(if cfg!(windows) {
+        output_dir: NormalizedPath::new("benchmark-stats"),
+        project_dir: NormalizedPath::new("bench/blink"),
+        fbuild: NormalizedPath::new(if cfg!(windows) {
             "target/release/fbuild.exe"
         } else {
             "target/release/fbuild"
@@ -875,9 +884,9 @@ fn parse_options() -> AppResult<Options> {
             )
         })?;
         match flag_text.as_ref() {
-            "--output-dir" => options.output_dir = PathBuf::from(value),
-            "--project-dir" => options.project_dir = PathBuf::from(value),
-            "--fbuild" => options.fbuild = PathBuf::from(value),
+            "--output-dir" => options.output_dir = NormalizedPath::new(Path::new(&value)),
+            "--project-dir" => options.project_dir = NormalizedPath::new(Path::new(&value)),
+            "--fbuild" => options.fbuild = NormalizedPath::new(Path::new(&value)),
             "--arduino-cli" => options.arduino_cli = value,
             "--platformio" => options.platformio = value,
             "--trials" => {

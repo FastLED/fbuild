@@ -16,6 +16,7 @@ name = "bench-build-comparison"
 path = "src/build_comparison.rs"
 
 [dependencies]
+fbuild-core = { path = "../../crates/fbuild-core" }
 fbuild-library-select = { path = "../../crates/fbuild-library-select" }
 fbuild-packages = { path = "../../crates/fbuild-packages" }
 fbuild-paths = { path = "../../crates/fbuild-paths" }

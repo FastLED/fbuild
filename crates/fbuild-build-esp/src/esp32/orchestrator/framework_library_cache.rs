@@ -216,7 +216,7 @@ mod tests {
         std::fs::create_dir_all(project.join("include")).unwrap();
 
         let raw_signature = format!("-I{}", project.display());
-        let slash_signature = format!("-I{}", project.to_string_lossy().replace('\\', "/"));
+        let slash_signature = format!("-I{}", NormalizedPath::new(&project).display_slash());
         let raw = cache_key(&project, BuildProfile::Quick, &raw_signature, &framework);
         let slash = cache_key(&project, BuildProfile::Quick, &slash_signature, &framework);
         assert_eq!(raw, slash);
