@@ -4,16 +4,17 @@
 //! project's build directory, then hydrates these archives again; `--clean-all`
 //! explicitly evicts this cache entry.
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 use fbuild_core::BuildProfile;
+use fbuild_core::path::NormalizedPath;
 use sha2::{Digest, Sha256};
 use walkdir::WalkDir;
 
 const CACHE_VERSION: &str = "fbuild-esp32-framework-libraries-v1";
 
 pub(super) struct FrameworkLibraryCache {
-    path: PathBuf,
+    path: NormalizedPath,
 }
 
 impl FrameworkLibraryCache {
@@ -27,7 +28,9 @@ impl FrameworkLibraryCache {
         let path = fbuild_packages::Cache::new(project_dir)
             .framework_library_artifacts_dir()
             .join(key);
-        Self { path }
+        Self {
+            path: NormalizedPath::new(path),
+        }
     }
 
     #[cfg(test)]
@@ -42,7 +45,9 @@ impl FrameworkLibraryCache {
         let path = fbuild_packages::Cache::with_cache_root(project_dir, cache_root)
             .framework_library_artifacts_dir()
             .join(key);
-        Self { path }
+        Self {
+            path: NormalizedPath::new(path),
+        }
     }
 
     pub(super) fn hydrate(&self, target_dir: &Path) -> std::io::Result<usize> {
@@ -97,7 +102,7 @@ impl FrameworkLibraryCache {
         Ok(())
     }
 
-    fn failure_path(&self, library_name: &str) -> PathBuf {
+    fn failure_path(&self, library_name: &str) -> NormalizedPath {
         self.path.join("failed").join(library_name)
     }
 }
@@ -138,17 +143,17 @@ fn hash_tree(hasher: &mut Sha256, root: &Path, headers_only: bool) {
         hasher.update(b"missing");
         return;
     }
-    let mut files: Vec<PathBuf> = WalkDir::new(root)
+    let mut files: Vec<NormalizedPath> = WalkDir::new(root)
         .into_iter()
         .flatten()
         .filter(|entry| entry.file_type().is_file())
-        .map(|entry| entry.into_path())
-        .filter(|path| !headers_only || is_header(path))
+        .map(|entry| NormalizedPath::new(entry.into_path()))
+        .filter(|path| !headers_only || is_header(path.as_path()))
         .collect();
     files.sort();
     for path in files {
-        let relative = path.strip_prefix(root).unwrap_or(&path);
-        hasher.update(relative.to_string_lossy().replace('\\', "/").as_bytes());
+        let relative = path.as_path().strip_prefix(root).unwrap_or(path.as_path());
+        hasher.update(NormalizedPath::new(relative).display_slash().as_bytes());
         hasher.update([0]);
         match std::fs::read(&path) {
             Ok(bytes) => hasher.update(bytes),
