@@ -60,6 +60,13 @@ fn mcu_sdk_complete(mcu_dir: &Path) -> bool {
         && mcu_dir.join("lib").join("libfreertos.a").exists()
 }
 
+/// A skeleton archive's package manifest proves that its MCU payload was
+/// extracted. The archive is authoritative for package layout; use this only
+/// after extracting the requested skeleton, never to skip its download.
+fn mcu_skeleton_extracted(mcu_dir: &Path) -> bool {
+    mcu_dir.join("dependencies.lock").is_file()
+}
+
 fn patch_mcu_compatibility(mcu_dir: &Path, mcu: &str) -> fbuild_core::Result<()> {
     if mcu != "esp32c2" {
         return Ok(());
@@ -181,7 +188,7 @@ impl Esp32Framework {
         merge_sdk_archive_entries(temp_dir.path(), &tools_dir)?;
 
         for mcu_dir in mcu_sdk_dir_candidates(&tools_dir, mcu) {
-            if mcu_sdk_complete(&mcu_dir) {
+            if mcu_sdk_complete(&mcu_dir) || mcu_skeleton_extracted(&mcu_dir) {
                 patch_mcu_compatibility(&mcu_dir, mcu)?;
                 tracing::info!("{} skeleton libs installed", mcu);
                 return Ok(());
@@ -232,6 +239,16 @@ mod tests {
 
         seed_complete_mcu_sdk(&mcu_dir);
         assert!(mcu_sdk_complete(&mcu_dir));
+    }
+
+    #[test]
+    fn skeleton_marker_requires_package_manifest() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let mcu_dir = tmp.path().join("esp32c2");
+
+        assert!(!mcu_skeleton_extracted(&mcu_dir));
+        write(&mcu_dir.join("dependencies.lock"), "");
+        assert!(mcu_skeleton_extracted(&mcu_dir));
     }
 
     #[test]
