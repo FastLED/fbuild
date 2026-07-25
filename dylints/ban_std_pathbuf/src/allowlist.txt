@@ -222,3 +222,7 @@ crates/fbuild-cli/src/cli/cache.rs
 # Synchronous daemon-identity compatibility check; see the matching canonicalize
 # and slash-normalization entries (FastLED/fbuild#1033).
 crates/fbuild-cli/src/daemon_client/identity.rs
+
+# UAC helper process boundary: the short-lived, validated rendezvous filenames
+# are supplied to Windows APIs as raw OS paths (FastLED/fbuild#1148).
+crates/fbuild-cli/src/cli/usb_recovery.rs
