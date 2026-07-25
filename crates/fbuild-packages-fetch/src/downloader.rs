@@ -466,8 +466,14 @@ mod tests {
 
         let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
         let port = listener.local_addr().unwrap().port();
+        let (ready_tx, ready_rx) = tokio::sync::oneshot::channel();
 
         tokio::spawn(async move {
+            // A bound listener is not necessarily being polled yet.  Make
+            // the caller wait until this task has reached its accept loop so
+            // a retry test cannot burn an attempt during task startup on a
+            // loaded runner.
+            let _ = ready_tx.send(());
             loop {
                 let (mut stream, _) = match listener.accept().await {
                     Ok(p) => p,
@@ -493,7 +499,7 @@ mod tests {
                 let _ = stream.shutdown().await;
             }
         });
-        tokio::task::yield_now().await;
+        ready_rx.await.expect("flaky test server task should start");
         port
     }
 
@@ -503,8 +509,10 @@ mod tests {
 
         let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
         let port = listener.local_addr().unwrap().port();
+        let (ready_tx, ready_rx) = tokio::sync::oneshot::channel();
 
         tokio::spawn(async move {
+            let _ = ready_tx.send(());
             loop {
                 let (stream, _) = match listener.accept().await {
                     Ok(pair) => pair,
@@ -528,7 +536,9 @@ mod tests {
                 });
             }
         });
-        tokio::task::yield_now().await;
+        ready_rx
+            .await
+            .expect("stalling test server task should start");
         port
     }
 
@@ -557,7 +567,7 @@ mod tests {
     /// #205 nightly STM32 acceptance gate started flaking on
     /// `dl.registry.platformio.org` transient errors. A 5xx must
     /// trigger a retry, and the retry must succeed.
-    #[tokio::test(start_paused = true)]
+    #[tokio::test]
     async fn get_with_retry_retries_on_5xx() {
         let _guard = network_test_guard().await;
         let responses = std::sync::Arc::new(std::sync::Mutex::new(vec![
@@ -601,7 +611,7 @@ mod tests {
 
     /// Repeated 5xx exhausts the budget and surfaces the last
     /// response.
-    #[tokio::test(start_paused = true)]
+    #[tokio::test]
     async fn get_with_retry_gives_up_after_max_attempts() {
         let _guard = network_test_guard().await;
         let responses = std::sync::Arc::new(std::sync::Mutex::new(vec![
@@ -625,7 +635,7 @@ mod tests {
         assert_eq!(request_count.load(Ordering::SeqCst), 5);
     }
 
-    #[tokio::test(start_paused = true)]
+    #[tokio::test]
     async fn get_with_retry_retries_truncated_bodies_until_attempt_five() {
         let _guard = network_test_guard().await;
         let responses = std::sync::Arc::new(std::sync::Mutex::new(vec![
@@ -647,7 +657,7 @@ mod tests {
         assert_eq!(request_count.load(Ordering::SeqCst), 5);
     }
 
-    #[tokio::test(start_paused = true)]
+    #[tokio::test]
     async fn get_with_retry_stops_after_five_truncated_bodies() {
         let _guard = network_test_guard().await;
         let responses = std::sync::Arc::new(std::sync::Mutex::new(vec![
@@ -672,7 +682,7 @@ mod tests {
         assert_eq!(request_count.load(Ordering::SeqCst), 5);
     }
 
-    #[tokio::test(start_paused = true)]
+    #[tokio::test]
     async fn streaming_download_retries_truncated_bodies_until_attempt_five() {
         let _guard = network_test_guard().await;
         let responses = std::sync::Arc::new(std::sync::Mutex::new(vec![
@@ -696,7 +706,7 @@ mod tests {
         assert_eq!(request_count.load(Ordering::SeqCst), 5);
     }
 
-    #[tokio::test(start_paused = true)]
+    #[tokio::test]
     async fn streaming_download_stops_after_five_truncated_bodies_without_output() {
         let _guard = network_test_guard().await;
         let responses = std::sync::Arc::new(std::sync::Mutex::new(vec![
