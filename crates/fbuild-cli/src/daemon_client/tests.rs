@@ -3,9 +3,20 @@
 
 use super::{
     DaemonAcquisition, DaemonInfoResponse, broker_refusal_is_fatal, daemon_cache_identity_error,
-    should_restart_daemon,
+    launcher_path, should_restart_daemon,
 };
 use running_process::broker::client::RefusalKind::{VersionBlocked, VersionUnsupported};
+
+#[test]
+fn launcher_path_accepts_windows_spelling() {
+    let path = launcher_path([
+        ("UNRELATED".into(), "ignored".into()),
+        ("Path".into(), "C:\\tools".into()),
+    ])
+    .expect("PATH is present");
+
+    assert_eq!(path, "C:\\tools");
+}
 
 #[test]
 fn broker_version_refusals_are_fatal() {

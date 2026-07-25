@@ -1,6 +1,7 @@
 //! HTTP client for communicating with the fbuild daemon.
 
 use std::collections::BTreeMap;
+use std::ffi::OsString;
 use std::sync::{Mutex, OnceLock};
 
 use running_process::broker::adopt::{AdoptError, AsyncBrokerSession, OwnedConnectRequest};
@@ -960,6 +961,22 @@ fn daemon_client_spawn_lock() -> Option<fbuild_paths::daemon_ownership::SpawnLoc
     fbuild_paths::daemon_ownership::try_acquire_spawn_lock()
 }
 
+/// Return the launcher PATH, accepting Windows' case-insensitive spelling.
+///
+/// The daemon otherwise starts from a clean user baseline, but executable
+/// discovery is part of the caller's requested build environment. Retaining
+/// only PATH keeps the daemon insulated from unrelated parent-process state.
+fn launcher_path<I>(environment: I) -> Option<OsString>
+where
+    I: IntoIterator<Item = (OsString, OsString)>,
+{
+    environment.into_iter().find_map(|(key, value)| {
+        key.to_str()
+            .is_some_and(|key| key.eq_ignore_ascii_case("PATH"))
+            .then_some(value)
+    })
+}
+
 /// Spawn a single daemon process instance.
 async fn spawn_daemon_process() -> fbuild_core::Result<()> {
     // FastLED/fbuild#830: prefer a `fbuild-daemon` binary sitting next
@@ -982,6 +999,9 @@ async fn spawn_daemon_process() -> fbuild_core::Result<()> {
         ))
     })?;
     cmd.env_clear().envs(baseline);
+    if let Some(path) = launcher_path(std::env::vars_os()) {
+        cmd.env("PATH", path);
+    }
     // Preserve fbuild's documented process-level controls as explicit daemon
     // configuration while excluding unrelated lineage markers inherited by
     // the CLI (for example CLUD_* and RUNNING_PROCESS_*).
