@@ -707,6 +707,12 @@ fn port_names_match(sys: &str, user: &str) -> bool {
 mod tests {
     use super::*;
 
+    // The resolver tests below temporarily mutate the same process-wide
+    // override. Cargo runs unit tests in parallel, so serialize that narrow
+    // shared state rather than letting one test restore the other test's
+    // value (which was visible as a Windows-only intermittent miss).
+    static LPC21ISP_ENV_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
+
     #[test]
     fn test_lpc_deployer_creation() {
         let deployer = LpcDeployer::new("115200", 12_000, 60, None, false);
@@ -830,6 +836,9 @@ mod tests {
 
     #[test]
     fn find_lpc21isp_env_var_wins_when_pointing_at_real_file() {
+        let _guard = LPC21ISP_ENV_LOCK
+            .lock()
+            .unwrap_or_else(|error| error.into_inner());
         let tmp = tempfile::TempDir::new().unwrap();
         let fake = tmp.path().join(if cfg!(windows) {
             "lpc21isp.exe"
@@ -854,6 +863,9 @@ mod tests {
 
     #[test]
     fn find_lpc21isp_env_var_missing_file_falls_through() {
+        let _guard = LPC21ISP_ENV_LOCK
+            .lock()
+            .unwrap_or_else(|error| error.into_inner());
         // Env var pointing at a non-existent path should be treated as
         // "not configured" rather than a hard error — the resolver
         // continues to the next search location.
