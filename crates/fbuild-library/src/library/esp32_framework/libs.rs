@@ -60,16 +60,6 @@ fn mcu_sdk_complete(mcu_dir: &Path) -> bool {
         && mcu_dir.join("lib").join("libfreertos.a").exists()
 }
 
-fn sdk_layout_has_complete_mcu_sdk(sdk_dir: &Path) -> bool {
-    let Ok(entries) = std::fs::read_dir(sdk_dir) else {
-        return false;
-    };
-    entries.flatten().any(|entry| {
-        let path = entry.path();
-        looks_like_mcu_sdk_dir(&path) && mcu_sdk_complete(&path)
-    })
-}
-
 fn patch_mcu_compatibility(mcu_dir: &Path, mcu: &str) -> fbuild_core::Result<()> {
     if mcu != "esp32c2" {
         return Ok(());
@@ -98,15 +88,14 @@ fn patch_mcu_compatibility(mcu_dir: &Path, mcu: &str) -> fbuild_core::Result<()>
 
 impl Esp32Framework {
     /// Ensure the SDK libs are downloaded and extracted into the framework's `tools/` dir.
-    pub async fn ensure_libs(&self, libs_url: &str) -> fbuild_core::Result<()> {
+    pub async fn ensure_libs(&self, libs_url: &str, mcu: &str) -> fbuild_core::Result<()> {
         let root = self.resolved_dir();
         let tools_dir = root.join("tools");
 
         // Already have SDK libs? Check both old (sdk/) and new
         // (esp32-arduino-libs/) layouts.
-        for dir_name in &[NEW_SDK_LAYOUT, OLD_SDK_LAYOUT] {
-            let sdk_dir = tools_dir.join(dir_name);
-            if sdk_dir.exists() && sdk_layout_has_complete_mcu_sdk(&sdk_dir) {
+        for mcu_dir in mcu_sdk_dir_candidates(&tools_dir, mcu) {
+            if mcu_sdk_complete(&mcu_dir) {
                 return Ok(());
             }
         }
@@ -246,17 +235,13 @@ mod tests {
     }
 
     #[test]
-    fn sdk_layout_completion_ignores_metadata_only_layout() {
+    fn mcu_sdk_completion_requires_the_requested_mcu() {
         let tmp = tempfile::TempDir::new().unwrap();
         let sdk_dir = tmp.path().join(NEW_SDK_LAYOUT);
-        write(&sdk_dir.join("package.json"), "{}");
-        assert!(!sdk_layout_has_complete_mcu_sdk(&sdk_dir));
+        seed_complete_mcu_sdk(&sdk_dir.join("esp32c3"));
 
-        std::fs::create_dir_all(sdk_dir.join("esp32c2")).unwrap();
-        assert!(!sdk_layout_has_complete_mcu_sdk(&sdk_dir));
-
-        seed_complete_mcu_sdk(&sdk_dir.join("esp32c2"));
-        assert!(sdk_layout_has_complete_mcu_sdk(&sdk_dir));
+        assert!(mcu_sdk_complete(&sdk_dir.join("esp32c3")));
+        assert!(!mcu_sdk_complete(&sdk_dir.join("esp32c2")));
     }
 
     #[test]

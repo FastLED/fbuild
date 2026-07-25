@@ -101,7 +101,7 @@ pub(super) async fn resolve_pioarduino_packages(
         fbuild_packages::Package::ensure_installed(&framework).await?;
         // Ensure SDK libs (split package in pioarduino 3.3.7+).
         if let Some(url) = &libs_url {
-            framework.ensure_libs(url).await?;
+            framework.ensure_libs(url, mcu).await?;
         }
         // Ensure MCU-specific skeleton libs (e.g. ESP32-C2, ESP32-C61).
         if let Some(url) = &skeleton_url {
