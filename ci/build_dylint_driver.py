@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import os
 import shutil
+import signal
 import subprocess
 import sys
 import tempfile
@@ -27,8 +28,33 @@ def run(args: list[str], **kwargs) -> subprocess.CompletedProcess[str]:  # noqa:
     # watchdog so a stuck `git clone` / cargo build can't burn the GHA
     # job's full 6h default. Per-call timeout can be overridden via
     # kwargs (e.g. cargo builds use 600s).
-    kwargs.setdefault("timeout", 600)
-    return subprocess.run(args, check=True, text=True, **kwargs)
+    timeout = kwargs.pop("timeout", 600)
+    # `subprocess.run(..., timeout=...)` terminates only its immediate child.
+    # Cargo can leave rustc/linker descendants running, which in turn keeps an
+    # Actions step alive after its declared timeout or cancellation. Give each
+    # invocation its own process group and tear down the whole group on timeout.
+    if os.name == "nt":
+        kwargs.setdefault("creationflags", subprocess.CREATE_NEW_PROCESS_GROUP)
+    else:
+        kwargs.setdefault("start_new_session", True)
+    process = subprocess.Popen(args, text=True, **kwargs)
+    try:
+        returncode = process.wait(timeout=timeout)
+    except subprocess.TimeoutExpired:
+        print(f"::error::command exceeded {timeout}s; terminating its process group", flush=True)
+        if os.name == "nt":
+            subprocess.run(["taskkill", "/PID", str(process.pid), "/T", "/F"], check=False)
+        else:
+            os.killpg(process.pid, signal.SIGTERM)
+            try:
+                process.wait(timeout=30)
+            except subprocess.TimeoutExpired:
+                os.killpg(process.pid, signal.SIGKILL)
+        process.wait()
+        raise
+    if returncode:
+        raise subprocess.CalledProcessError(returncode, args)
+    return subprocess.CompletedProcess(args, returncode)
 
 
 def rustc_host() -> str:
