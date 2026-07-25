@@ -10,3 +10,8 @@
 # Do NOT add entries here without a maintainer-approved exception in
 # the PR description that justifies why the daemon's in-memory manager
 # cannot own the lock.
+
+# The daemon root/spawn ownership lock is acquired before any daemon exists
+# and must coordinate independently-started CLI processes. It is OS-released
+# on process exit, so an in-memory manager cannot provide this boundary.
+crates/fbuild-core/src/file_lock.rs
