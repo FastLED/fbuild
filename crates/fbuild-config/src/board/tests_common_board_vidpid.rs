@@ -1,12 +1,12 @@
 //! Regression tests for the FastLED/boards USB identity boundary.
 
 use std::fs;
-use std::path::PathBuf;
 
+use fbuild_core::path::NormalizedPath;
 use serde_json::Value;
 
-fn bundled_boards_dir() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("assets/boards/json")
+fn bundled_boards_dir() -> NormalizedPath {
+    NormalizedPath::new(env!("CARGO_MANIFEST_DIR")).join("assets/boards/json")
 }
 
 #[test]
