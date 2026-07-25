@@ -165,8 +165,8 @@ soldr cargo install cargo-dylint dylint-link --version 6.0.1 --locked
 uv run --no-project python ci/build_dylint_driver.py
 
 # Run all dylints over the workspace
-export PATH="${CARGO_HOME:-$HOME/.cargo}/bin:${PATH}"
-soldr cargo dylint --all -- --workspace --all-targets
+"${CARGO_HOME:-$HOME/.cargo}/bin/cargo-dylint" \
+    dylint --all -- --workspace --all-targets
 ```
 
 CI runs this on every push/PR via `.github/workflows/dylint.yml`.
@@ -186,7 +186,9 @@ The workspace registers the lint directory via:
 libraries = [{ path = "dylints/*" }]
 ```
 
-so `soldr cargo dylint --all` picks every dylint up automatically.
+so `cargo-dylint dylint --all` picks every dylint up automatically. The
+installed binary is invoked directly so Soldr's managed cargo-subcommand
+toolchain does not override the nightly pinned by each lint manifest.
 
 ## Why one published stack
 
