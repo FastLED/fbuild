@@ -254,7 +254,7 @@ async fn main() {
             let identity = fbuild_paths::running_process::DaemonCacheIdentity::discover();
             let claim = fbuild_paths::daemon_ownership::OwnerClaim {
                 pid: std::process::id(),
-                exe,
+                exe: exe.into(),
                 version: env!("CARGO_PKG_VERSION").to_string(),
                 mode: identity.mode.to_string(),
                 cache_root_key: identity.cache_root_key.clone(),

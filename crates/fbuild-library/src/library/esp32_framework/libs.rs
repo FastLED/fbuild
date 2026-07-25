@@ -60,13 +60,33 @@ fn mcu_sdk_complete(mcu_dir: &Path) -> bool {
         && mcu_dir.join("lib").join("libfreertos.a").exists()
 }
 
-/// A skeleton archive's package manifest proves that its MCU payload was
-/// extracted. Package metadata is merged beside the MCU directories, not
-/// inside them. Use this only after extracting the requested skeleton, never
-/// to skip its download.
-fn mcu_skeleton_extracted(tools_dir: &Path, mcu: &str) -> bool {
-    let sdk_dir = tools_dir.join(NEW_SDK_LAYOUT);
-    sdk_dir.join(mcu).is_dir() && sdk_dir.join("dependencies.lock").is_file()
+/// Merge a requested MCU directory from a skeleton archive, regardless of a
+/// package wrapper directory added by the archive producer. Returns whether
+/// the archive actually contained the requested MCU payload.
+fn merge_skeleton_mcu_entries(
+    temp_dir: &Path,
+    tools_dir: &Path,
+    mcu: &str,
+) -> fbuild_core::Result<bool> {
+    fn visit(dir: &Path, destination: &Path, mcu: &str) -> fbuild_core::Result<bool> {
+        let mut found = false;
+        for entry in std::fs::read_dir(dir)? {
+            let entry = entry?;
+            let path = entry.path();
+            if !path.is_dir() {
+                continue;
+            }
+            if entry.file_name() == mcu {
+                copy_dir_recursive(&path, destination)?;
+                found = true;
+            } else {
+                found |= visit(&path, destination, mcu)?;
+            }
+        }
+        Ok(found)
+    }
+
+    visit(temp_dir, &tools_dir.join(NEW_SDK_LAYOUT).join(mcu), mcu)
 }
 
 fn patch_mcu_compatibility(mcu_dir: &Path, mcu: &str) -> fbuild_core::Result<()> {
@@ -187,10 +207,10 @@ impl Esp32Framework {
         // Skeleton archives such as c2_arduino_compile_skeleton.zip extract as
         // a direct esp32c2/ directory. Merge direct MCU roots into the new SDK
         // layout so sdk_mcu_dir() finds the completed tree.
-        merge_sdk_archive_entries(temp_dir.path(), &tools_dir)?;
+        let merged_skeleton = merge_skeleton_mcu_entries(temp_dir.path(), &tools_dir, mcu)?;
 
         for mcu_dir in mcu_sdk_dir_candidates(&tools_dir, mcu) {
-            if mcu_sdk_complete(&mcu_dir) || mcu_skeleton_extracted(&tools_dir, mcu) {
+            if mcu_sdk_complete(&mcu_dir) || merged_skeleton {
                 patch_mcu_compatibility(&mcu_dir, mcu)?;
                 tracing::info!("{} skeleton libs installed", mcu);
                 return Ok(());
@@ -244,15 +264,22 @@ mod tests {
     }
 
     #[test]
-    fn skeleton_marker_requires_package_manifest() {
+    fn skeleton_merge_finds_mcu_under_package_wrapper() {
         let tmp = tempfile::TempDir::new().unwrap();
         let tools_dir = tmp.path().join("tools");
-        let sdk_dir = tools_dir.join(NEW_SDK_LAYOUT);
-        std::fs::create_dir_all(sdk_dir.join("esp32c2")).unwrap();
+        let archive = tmp.path().join("archive");
+        let source_mcu = archive.join("package-wrapper").join("esp32c2");
+        write(&source_mcu.join("lib").join("libfreertos.a"), "");
 
-        assert!(!mcu_skeleton_extracted(&tools_dir, "esp32c2"));
-        write(&sdk_dir.join("dependencies.lock"), "");
-        assert!(mcu_skeleton_extracted(&tools_dir, "esp32c2"));
+        assert!(merge_skeleton_mcu_entries(&archive, &tools_dir, "esp32c2").unwrap());
+        assert!(
+            tools_dir
+                .join(NEW_SDK_LAYOUT)
+                .join("esp32c2")
+                .join("lib")
+                .join("libfreertos.a")
+                .is_file()
+        );
     }
 
     #[test]

@@ -22,9 +22,10 @@
 //! the lock when the holding process exits (including a hard kill); the
 //! file itself is not the lock.
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 use fbuild_core::file_lock::{self, FileLockGuard, FileLockMode};
+use fbuild_core::path::NormalizedPath;
 
 use crate::get_daemon_dir;
 
@@ -91,18 +92,18 @@ pub fn try_acquire_spawn_lock_at(path: &Path) -> Option<SpawnLockGuard> {
 }
 
 /// Path to the root-ownership lock file.
-pub fn root_owner_lock_path() -> PathBuf {
-    get_daemon_dir().join(ROOT_OWNER_LOCK_NAME)
+pub fn root_owner_lock_path() -> NormalizedPath {
+    get_daemon_dir().join(ROOT_OWNER_LOCK_NAME).into()
 }
 
 /// Path to the spawn-herd lock file.
-pub fn spawn_lock_path() -> PathBuf {
-    get_daemon_dir().join(SPAWN_LOCK_NAME)
+pub fn spawn_lock_path() -> NormalizedPath {
+    get_daemon_dir().join(SPAWN_LOCK_NAME).into()
 }
 
 /// Path to the [`OwnerClaim`] JSON file.
-pub fn owner_claim_path() -> PathBuf {
-    get_daemon_dir().join(OWNER_CLAIM_NAME)
+pub fn owner_claim_path() -> NormalizedPath {
+    get_daemon_dir().join(OWNER_CLAIM_NAME).into()
 }
 
 /// Advisory claim written by the daemon after it has acquired root
@@ -117,7 +118,7 @@ pub fn owner_claim_path() -> PathBuf {
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct OwnerClaim {
     pub pid: u32,
-    pub exe: PathBuf,
+    pub exe: NormalizedPath,
     /// `env!("CARGO_PKG_VERSION")` of the daemon that wrote the claim.
     pub version: String,
     /// `"dev"` | `"prod"`.
@@ -157,6 +158,7 @@ pub fn remove_owner_claim() {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::path::PathBuf;
     use tempfile::TempDir;
 
     #[test]
@@ -241,7 +243,7 @@ mod tests {
         let path = temp.path().join(OWNER_CLAIM_NAME);
         let claim = OwnerClaim {
             pid: 4242,
-            exe: PathBuf::from("/usr/local/bin/fbuild-daemon"),
+            exe: PathBuf::from("/usr/local/bin/fbuild-daemon").into(),
             version: "9.9.9".to_string(),
             mode: "dev".to_string(),
             cache_root_key: "abc123".to_string(),
