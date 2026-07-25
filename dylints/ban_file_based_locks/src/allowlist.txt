@@ -15,3 +15,7 @@
 # and must coordinate independently-started CLI processes. It is OS-released
 # on process exit, so an in-memory manager cannot provide this boundary.
 crates/fbuild-core/src/file_lock.rs
+
+# This is not a lock: create-new publishes the nonce-bound one-shot result
+# from the elevated helper without replacing a caller-controlled file (#1148).
+crates/fbuild-cli/src/cli/usb_recovery.rs

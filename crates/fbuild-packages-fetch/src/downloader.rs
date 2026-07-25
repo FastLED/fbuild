@@ -484,8 +484,11 @@ mod tests {
                 let mut buf = [0u8; 1024];
                 // Read just the request headers — don't care about the
                 // body for these tests.
-                let _ =
-                    tokio::time::timeout(Duration::from_millis(200), stream.read(&mut buf)).await;
+                // The client under test always writes a request.  Do not use
+                // a paused-clock timeout here: it races the retry backoff and
+                // can make the mock emit a response before the request task
+                // has been scheduled on macOS.
+                let _ = stream.read(&mut buf).await;
                 let _ = stream.write_all(resp.as_bytes()).await;
                 let _ = stream.shutdown().await;
             }
@@ -511,9 +514,10 @@ mod tests {
                 tokio::spawn(async move {
                     let mut stream = stream;
                     let mut request = [0u8; 1024];
-                    let _ =
-                        tokio::time::timeout(Duration::from_millis(200), stream.read(&mut request))
-                            .await;
+                    // See `run_flaky_server`: this test owns the client, so
+                    // waiting for its request is deterministic under paused
+                    // Tokio time.
+                    let _ = stream.read(&mut request).await;
                     let _ = stream
                         .write_all(
                             b"HTTP/1.1 200 OK\r\nContent-Length: 5\r\nConnection: close\r\n\r\n",

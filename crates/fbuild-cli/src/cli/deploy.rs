@@ -684,7 +684,8 @@ pub async fn run_monitor(
                     {
                         let _ = socket
                             .send(Message::Text(
-                                serde_json::to_string(&SerialClientMessage::Detach).unwrap(),
+                                serde_json::to_string(&SerialClientMessage::Detach)
+                                    .unwrap_or_default(),
                             ))
                             .await;
                         return Ok(());
@@ -700,7 +701,7 @@ pub async fn run_monitor(
     }
     let _ = socket
         .send(Message::Text(
-            serde_json::to_string(&SerialClientMessage::Detach).unwrap(),
+            serde_json::to_string(&SerialClientMessage::Detach).unwrap_or_default(),
         ))
         .await;
     if expect_re.is_some() && !expect_found {

@@ -50,3 +50,8 @@ crates/fbuild-deploy/src/teensy/first_byte_probe.rs
 crates/fbuild-deploy/src/teensy/mod.rs
 crates/fbuild-deploy/src/teensy/port_discovery.rs
 crates/fbuild-deploy/src/teensy/soft_reboot.rs
+
+# Post-PnP-recovery CLI probe: opens a matching fresh CDC endpoint briefly
+# and drops it immediately; creating a manager session here would retain the
+# port and defeat the recovery handoff (FastLED/fbuild#1152).
+crates/fbuild-cli/src/cli/deploy.rs
