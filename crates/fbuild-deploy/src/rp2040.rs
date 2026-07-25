@@ -7,7 +7,10 @@ use std::path::{Path, PathBuf};
 use std::sync::{Mutex, OnceLock};
 use std::time::{Duration, Instant};
 
-use fbuild_core::{FbuildError, Result};
+use fbuild_core::{
+    FbuildError, Result,
+    channel::{Receiver, bounded},
+};
 
 use crate::{DeployOutcome, Deployer, DeploymentResult};
 
@@ -632,37 +635,25 @@ fn cancel_synchronous_io(_worker: &std::thread::JoinHandle<()>) {}
 /// synchronous I/O and gives the worker a bounded grace period to close the
 /// destination. If that is not possible, the daemon reports the live
 /// abandoned-worker count and age rather than hiding a possible held handle.
-fn run_with_watchdog<T: Send + 'static>(
+async fn run_with_watchdog<T: Send + 'static>(
     budget: Duration,
     label: &str,
     work: impl FnOnce() -> Result<T> + Send + 'static,
 ) -> Result<T> {
-    let (sender, receiver) = std::sync::mpsc::channel();
+    let (sender, mut receiver) = bounded(1);
     let worker_id = register_watchdog_worker();
     let worker = std::thread::spawn(move || {
         let result = work();
         complete_watchdog_worker(worker_id);
-        let _ = sender.send(result);
+        let _ = sender.blocking_send(result);
     });
-    match receiver.recv_timeout(budget) {
-        Ok(result) => {
+    match recv_with_timeout(&mut receiver, budget).await {
+        Ok(Some(result)) => {
             let _ = worker.join();
             result
         }
-        Err(error) => {
-            if matches!(error, std::sync::mpsc::RecvTimeoutError::Timeout) {
-                cancel_synchronous_io(&worker);
-                match receiver.recv_timeout(WATCHDOG_CANCELLATION_GRACE) {
-                    Ok(_) | Err(std::sync::mpsc::RecvTimeoutError::Disconnected) => {
-                        let _ = worker.join();
-                    }
-                    Err(std::sync::mpsc::RecvTimeoutError::Timeout) => {
-                        mark_watchdog_worker_abandoned(worker_id);
-                    }
-                }
-            } else {
-                let _ = worker.join();
-            }
+        Ok(None) => {
+            let _ = worker.join();
             let timeout_message = format!(
                 "{label} did not complete within {}s; the storage transport is likely wedged — request a fresh USB enumeration before retrying (override the budget with {UF2_WRITE_TIMEOUT_ENV})",
                 budget.as_secs()
@@ -672,7 +663,33 @@ fn run_with_watchdog<T: Send + 'static>(
                 watchdog_diagnostics()
             )))
         }
+        Err(()) => {
+            cancel_synchronous_io(&worker);
+            match recv_with_timeout(&mut receiver, WATCHDOG_CANCELLATION_GRACE).await {
+                Ok(_) => {
+                    let _ = worker.join();
+                }
+                Err(()) => mark_watchdog_worker_abandoned(worker_id),
+            }
+            let timeout_message = format!(
+                "{label} did not complete within {}s; the storage transport is likely wedged -- request a fresh USB enumeration before retrying (override the budget with {UF2_WRITE_TIMEOUT_ENV})",
+                budget.as_secs()
+            );
+            Err(FbuildError::DeployFailed(format!(
+                "{timeout_message}; {}",
+                watchdog_diagnostics()
+            )))
+        }
     }
+}
+
+async fn recv_with_timeout<T>(
+    receiver: &mut Receiver<T>,
+    budget: Duration,
+) -> std::result::Result<Option<T>, ()> {
+    tokio::time::timeout(budget, receiver.recv())
+        .await
+        .map_err(|_| ())
 }
 
 fn describe_transfer_location(volume: Option<&Path>) -> String {
@@ -1489,6 +1506,7 @@ impl Deployer for Rp2040Deployer {
                 let bootloader_timeout = self.bootloader_timeout;
                 let write_budget = self.uf2_write_timeout;
                 let stale_volumes = volumes_before.clone();
+                let runtime = tokio::runtime::Handle::current();
                 let transfer = tokio::task::spawn_blocking(move || {
                     transfer_uf2_with_retries(
                         volume,
@@ -1499,9 +1517,11 @@ impl Deployer for Rp2040Deployer {
                         |volume| {
                             let artifact = artifact_for_copy.clone();
                             let volume = volume.to_path_buf();
-                            run_with_watchdog(write_budget, "RP2040 UF2 write", move || {
-                                copy_prepared_uf2(&artifact, &volume)
-                            })
+                            runtime.block_on(run_with_watchdog(
+                                write_budget,
+                                "RP2040 UF2 write",
+                                move || copy_prepared_uf2(&artifact, &volume),
+                            ))
                         },
                         |volume| {
                             wait_for_volume_disappearance(volume, Duration::from_secs(2)).is_ok()
@@ -2617,27 +2637,31 @@ mod tests {
         }
     }
 
-    #[test]
-    fn watchdog_passes_through_fast_results_and_errors() {
+    #[tokio::test]
+    async fn watchdog_passes_through_fast_results_and_errors() {
         assert_eq!(
-            run_with_watchdog(Duration::from_secs(5), "probe", || Ok(7)).unwrap(),
+            run_with_watchdog(Duration::from_secs(5), "probe", || Ok(7))
+                .await
+                .unwrap(),
             7
         );
         let error = run_with_watchdog(Duration::from_secs(5), "probe", || -> Result<()> {
             Err(FbuildError::DeployFailed("inner failure".into()))
         })
+        .await
         .unwrap_err();
         assert!(error.to_string().contains("inner failure"));
     }
 
-    #[test]
-    fn watchdog_timeout_reports_a_live_abandoned_worker() {
-        let (release, wait_for_release) = std::sync::mpsc::channel();
+    #[tokio::test]
+    async fn watchdog_timeout_reports_a_live_abandoned_worker() {
+        let (release, wait_for_release) = tokio::sync::oneshot::channel();
         let started = Instant::now();
         let error = run_with_watchdog(Duration::from_millis(50), "RP2040 UF2 write", move || {
-            wait_for_release.recv().unwrap();
+            wait_for_release.blocking_recv().unwrap();
             Ok(())
         })
+        .await
         .unwrap_err();
         assert!(started.elapsed() < Duration::from_secs(1));
         let message = error.to_string();
