@@ -158,7 +158,6 @@ pub fn remove_owner_claim() {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::path::PathBuf;
     use tempfile::TempDir;
 
     #[test]
@@ -243,7 +242,7 @@ mod tests {
         let path = temp.path().join(OWNER_CLAIM_NAME);
         let claim = OwnerClaim {
             pid: 4242,
-            exe: PathBuf::from("/usr/local/bin/fbuild-daemon").into(),
+            exe: NormalizedPath::new("/usr/local/bin/fbuild-daemon"),
             version: "9.9.9".to_string(),
             mode: "dev".to_string(),
             cache_root_key: "abc123".to_string(),
@@ -296,7 +295,7 @@ mod tests {
     fn subprocess_probe_root_owner() {
         let root = std::env::var_os("FBUILD_TEST_ROOT_OWNER_PATH").expect("test lock path");
         let expected = std::env::var("FBUILD_TEST_ROOT_OWNER_EXPECT").expect("expectation");
-        let path = PathBuf::from(root);
+        let path = NormalizedPath::new(Path::new(&root));
         let acquired = RootOwnershipGuard::try_acquire_at(&path)
             .expect("root ownership probe io")
             .is_some();
@@ -309,22 +308,31 @@ mod tests {
         let path = temp.path().join("root-owner.lock");
 
         let run_probe = |expected: &str| {
-            // allow-direct-spawn: test helper re-executes this test binary to model another process.
-            let output = std::process::Command::new(std::env::current_exe().unwrap())
-                .args([
-                    "--ignored",
-                    "--exact",
-                    "daemon_ownership::tests::subprocess_probe_root_owner",
-                    "--nocapture",
-                ])
-                .env("FBUILD_TEST_ROOT_OWNER_PATH", &path)
-                .env("FBUILD_TEST_ROOT_OWNER_EXPECT", expected)
-                .output()
-                .expect("run subprocess probe");
+            let executable = std::env::current_exe().expect("current test executable");
+            let executable = executable.to_string_lossy();
+            let lock_path = path.to_string_lossy();
+            let args = [
+                executable.as_ref(),
+                "--ignored",
+                "--exact",
+                "daemon_ownership::tests::subprocess_probe_root_owner",
+                "--nocapture",
+            ];
+            let env = [
+                ("FBUILD_TEST_ROOT_OWNER_PATH", lock_path.as_ref()),
+                ("FBUILD_TEST_ROOT_OWNER_EXPECT", expected),
+            ];
+            let output = fbuild_core::subprocess::run_command_blocking(
+                &args,
+                None,
+                Some(&env),
+                Some(std::time::Duration::from_secs(30)),
+            )
+            .expect("run subprocess probe");
             assert!(
-                output.status.success(),
+                output.success(),
                 "subprocess root-owner probe failed: {}",
-                String::from_utf8_lossy(&output.stderr)
+                output.stderr
             );
         };
 
