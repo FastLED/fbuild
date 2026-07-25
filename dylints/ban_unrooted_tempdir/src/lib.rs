@@ -185,5 +185,7 @@ fn ui() {
     unsafe {
         std::env::remove_var("CARGO_BUILD_TARGET");
     }
-    dylint_testing::ui_test(env!("CARGO_PKG_NAME"), "ui");
+    // The leading `./` keeps compiletest's `$DIR` replacement from matching
+    // the `ui` inside diagnostic text such as `fbuild_core`.
+    dylint_testing::ui_test(env!("CARGO_PKG_NAME"), "./ui");
 }
