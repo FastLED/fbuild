@@ -158,15 +158,15 @@ itself stays on stable 1.94.1).
 
 ```bash
 # One-time setup
-rustup toolchain install nightly-2026-03-26 \
-    --component llvm-tools-preview --component rust-src --component rustc-dev \
+soldr rustup toolchain install nightly-2026-04-16 \
+    --component llvm-tools-preview --component rust-src --component rustc-dev --component rustfmt \
     --profile minimal
-soldr cargo install cargo-dylint dylint-link --version 5.0.0 --locked
-uv run python ci/build_dylint_driver.py   # builds a matching driver
+soldr cargo install cargo-dylint dylint-link --version 6.0.1 --locked
+uv run --no-project python ci/build_dylint_driver.py
 
 # Run all dylints over the workspace
-export PATH="${CARGO_HOME:-$HOME/.cargo}/bin:${PATH}"
-cargo dylint --all -- --workspace --all-targets
+"${CARGO_HOME:-$HOME/.cargo}/bin/cargo-dylint" \
+    dylint --all -- --workspace --all-targets
 ```
 
 CI runs this on every push/PR via `.github/workflows/dylint.yml`.
@@ -176,7 +176,7 @@ CI runs this on every push/PR via `.github/workflows/dylint.yml`.
 `dylint_linting` builds against a specific nightly rustc; the rustc
 internal API (`rustc_lint`, `rustc_hir`, `rustc_span`) changes between
 nightlies. Keeping each dylint crate out of the stable workspace lets
-it pin `nightly-2026-03-26` in its own `rust-toolchain.toml` without
+it pin `nightly-2026-04-16` in its own `rust-toolchain.toml` without
 forcing the entire workspace to nightly.
 
 The workspace registers the lint directory via:
@@ -186,15 +186,17 @@ The workspace registers the lint directory via:
 libraries = [{ path = "dylints/*" }]
 ```
 
-so `cargo dylint --all` picks every dylint up automatically.
+so `cargo-dylint dylint --all` picks every dylint up automatically. The
+installed binary is invoked directly so Soldr's managed cargo-subcommand
+toolchain does not override the nightly pinned by each lint manifest.
 
-## Why `build_dylint_driver.py`
+## Why one published stack
 
-Published `dylint_driver` 5.0.0 doesn't compile against the
-nightly-2026-03-26 toolchain (rustc internals drift). `cargo-dylint` would
-try to build it from crates.io and fail with `E0609: no field
-env_depinfo`. The script clones the dylint repo at the same git rev
-`dylint_linting` is pinned to (`4bd91ce…`) and builds a matching driver
-from that source, installing it where `cargo-dylint` expects.
-
-This mirrors zccache's approach 1:1; the script is a direct port.
+Every lint crate, the test harness, and the CI front-end use Dylint
+6.0.1 with `nightly-2026-04-16`. No git checkout or library alias is
+needed. One narrow bootstrap remains because Dylint 6.0.1 clears
+`RUSTUP_TOOLCHAIN` before building its published driver even though the
+driver's build script requires that variable (the same failure class as
+trailofbits/dylint#1172). `ci/build_dylint_driver.py` builds the crates.io
+driver with the channel preserved and exports its standard path; remove
+the script when upstream propagates the channel.

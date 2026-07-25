@@ -9,14 +9,14 @@ extern crate rustc_span;
 use rustc_ast::ast::LitKind;
 use rustc_errors::DiagDecorator;
 use rustc_hir::{
+    Attribute, Body, Expr, ExprKind, FnDecl,
     def::Res,
     def_id::LocalDefId,
-    intravisit::{walk_expr, Visitor},
-    Attribute, Body, Expr, ExprKind, FnDecl,
+    intravisit::{Visitor, walk_expr},
 };
 use rustc_lint::{LateContext, LateLintPass, LintContext};
 use rustc_middle::hir::nested_filter;
-use rustc_span::{symbol::Symbol, FileName, RemapPathScopeComponents, Span};
+use rustc_span::{FileName, RemapPathScopeComponents, Span, symbol::Symbol};
 
 dylint_linting::declare_late_lint! {
     /// ### What it does
@@ -104,10 +104,7 @@ impl<'tcx> LateLintPass<'tcx> for RequireMultiThreadFlavorWhenSpawning {
         }
 
         // Walk the body looking for `tokio::spawn(...)` calls.
-        let mut visitor = SpawnFinder {
-            cx,
-            found_at: None,
-        };
+        let mut visitor = SpawnFinder { cx, found_at: None };
         visitor.visit_expr(body.value);
 
         if let Some(spawn_span) = visitor.found_at {
@@ -123,10 +120,7 @@ fn is_async_fn(kind: &rustc_hir::intravisit::FnKind<'_>) -> bool {
         FnKind::Method(_, sig) => &sig.header,
         FnKind::Closure => return false,
     };
-    matches!(
-        header.asyncness,
-        rustc_hir::IsAsync::Async(_)
-    )
+    matches!(header.asyncness, rustc_hir::IsAsync::Async(_))
 }
 
 /// Locate an attribute whose path ends in `test` and whose preceding

@@ -2,6 +2,7 @@
 //! fan out to per-subcommand handlers in the topic modules.
 
 use clap::Parser;
+use std::path::Path;
 
 use crate::{daemon_client, lib_select, mcp, output, update_check};
 
@@ -39,7 +40,7 @@ pub async fn async_main() {
     // any daemon client call. The elevated helper is a one-shot PnP process,
     // never an alternate daemon host. FastLED/fbuild#1148.
     if let Some(Commands::UsbRecoveryHelper { request, result }) = &cli.command {
-        if let Err(error) = run_hidden_helper(request, result) {
+        if let Err(error) = run_hidden_helper(Path::new(request), Path::new(result)) {
             eprintln!("USB recovery helper failed: {error}");
             std::process::exit(1);
         }
@@ -636,7 +637,11 @@ pub async fn async_main() {
     };
 
     if let Err(e) = result {
+        let exit_code = match &e {
+            fbuild_core::FbuildError::CommandFailed { exit_code, .. } => *exit_code,
+            _ => 1,
+        };
         output::error(format!("{}", e));
-        std::process::exit(1);
+        std::process::exit(exit_code);
     }
 }

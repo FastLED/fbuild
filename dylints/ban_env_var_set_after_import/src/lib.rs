@@ -6,11 +6,11 @@ extern crate rustc_middle;
 extern crate rustc_span;
 
 use rustc_errors::DiagDecorator;
-use rustc_hir::{def::Res, Expr, ExprKind, HirId};
+use rustc_hir::{Expr, ExprKind, HirId, def::Res};
 use rustc_lint::{LateContext, LateLintPass, LintContext};
 use rustc_span::{
-    symbol::{sym, Symbol},
     FileName, RemapPathScopeComponents,
+    symbol::{Symbol, sym},
 };
 
 dylint_linting::declare_late_lint! {
@@ -69,9 +69,7 @@ dylint_linting::declare_late_lint! {
     "ban std::env::set_var outside binary entry points (FastLED/fbuild#840)"
 }
 
-const BANNED_PATHS: &[&[&str]] = &[
-    &["std", "env", "set_var"],
-];
+const BANNED_PATHS: &[&[&str]] = &[&["std", "env", "set_var"]];
 
 const CRATES_PREFIX: &str = "crates/";
 const SRC_SEGMENT: &str = "/src/";
@@ -142,9 +140,7 @@ fn emit_lint(cx: &LateContext<'_>, span: rustc_span::Span, banned: &[&str]) {
 fn owned_by_cfg_test_module(cx: &LateContext<'_>, hir_id: HirId) -> bool {
     std::iter::once(hir_id)
         .chain(cx.tcx.hir_parent_id_iter(hir_id))
-        .any(|id| {
-            cx.tcx.hir_attrs(id).iter().any(attr_is_cfg_test) || is_test_module_node(cx, id)
-        })
+        .any(|id| cx.tcx.hir_attrs(id).iter().any(attr_is_cfg_test) || is_test_module_node(cx, id))
 }
 
 fn is_test_module_node(cx: &LateContext<'_>, hir_id: HirId) -> bool {
@@ -200,8 +196,7 @@ fn in_production_scope(normalized: &str) -> bool {
 
 fn is_entry_point(normalized: &str) -> bool {
     // `**/main.rs` or `**/src/bin/**`.
-    normalized.ends_with("/main.rs")
-        || normalized.contains("/src/bin/")
+    normalized.ends_with("/main.rs") || normalized.contains("/src/bin/")
 }
 
 fn is_test_file(normalized: &str) -> bool {
@@ -240,8 +235,12 @@ mod tests {
     #[test]
     fn entry_points_are_exempt() {
         assert!(is_entry_point("crates/fbuild-cli/src/main.rs"));
-        assert!(is_entry_point("crates/fbuild-daemon/src/bin/containment_harness.rs"));
-        assert!(!is_entry_point("crates/fbuild-packages/src/library/library_manager.rs"));
+        assert!(is_entry_point(
+            "crates/fbuild-daemon/src/bin/containment_harness.rs"
+        ));
+        assert!(!is_entry_point(
+            "crates/fbuild-packages/src/library/library_manager.rs"
+        ));
     }
 
     #[test]

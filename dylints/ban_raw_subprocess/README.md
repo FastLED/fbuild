@@ -59,23 +59,19 @@ Current entries:
 
 ## Toolchain
 
-Pinned to the same `nightly-2026-03-26` channel and the same
-`trailofbits/dylint` git rev (`4bd91ce…`) that zccache uses for its own
-dylints — this keeps the `dylint_linting` / `dylint_driver` versions
-aligned across both repos and lets `ci/build_dylint_driver.py` (ported
-from zccache) build a matching driver for CI.
+Pinned to `nightly-2026-04-16` and Dylint 6.0.1, matching every other
+Dylint library in this repository.
 
 ## Running locally
 
 ```bash
 # One-time setup
-rustup toolchain install nightly-2026-03-26 --component llvm-tools-preview \
-    --component rust-src --component rustc-dev --profile minimal
-soldr cargo install cargo-dylint dylint-link --version 5.0.0
-uv run python ci/build_dylint_driver.py   # exports DYLINT_DRIVER_PATH
+soldr rustup toolchain install nightly-2026-04-16 --component llvm-tools-preview \
+    --component rust-src --component rustc-dev --component rustfmt --profile minimal
+soldr cargo install cargo-dylint dylint-link --version 6.0.1
 
 # Run the lint over the workspace
-cargo dylint --all -- --workspace --all-targets
+soldr cargo dylint --all -- --workspace --all-targets
 ```
 
 CI runs this on every push/PR via `.github/workflows/dylint.yml`.

@@ -20,7 +20,7 @@ jobs:
   dylint:
     name: Dylint
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v6
       - uses: astral-sh/setup-uv@v3
@@ -44,75 +44,38 @@ jobs:
           # at the action default (6 GiB).
           cache-payload-warn-bytes: 2GiB
       - name: Install Dylint nightly toolchain
-        # Pin matches `dylints/ban_raw_subprocess/rust-toolchain.toml`
-        # and zccache's `ci/build_dylint_driver.py::TOOLCHAIN_CHANNEL`.
+        # Pin matches every `dylints/*/rust-toolchain.toml`.
         timeout-minutes: 10
-        run: rustup toolchain install nightly-2026-03-26 --component llvm-tools-preview --component rust-src --component rustc-dev --profile minimal
+        run: soldr rustup toolchain install nightly-2026-04-16 --component llvm-tools-preview --component rust-src --component rustc-dev --component rustfmt --profile minimal
       - name: Install Dylint
         timeout-minutes: 10
-        run: soldr cargo install cargo-dylint dylint-link --version 5.0.0 --locked
-      - name: Build compatible Dylint driver
-        # Published dylint_driver 5.0.0 does not build against the
-        # nightly toolchain pinned by dylint_linting 5.0.0; this script
-        # builds a matching driver from the same git rev. Exports
-        # DYLINT_DRIVER_PATH into $GITHUB_ENV for subsequent steps.
+        run: soldr cargo install cargo-dylint dylint-link --version 6.0.1 --locked
+      - name: Build published Dylint driver
+        # Dylint 6.0.1 clears RUSTUP_TOOLCHAIN before its driver build even
+        # though the published driver's build script requires it. This narrow
+        # bootstrap uses the crates.io driver; it does not clone Dylint.
         timeout-minutes: 15
-        run: uv run python ci/build_dylint_driver.py
-      - name: Check dylint crate formatting
+        run: uv run --no-project python ci/build_dylint_driver.py
+      - name: Check Dylint library formatting
         run: |
-          soldr cargo fmt --manifest-path dylints/ban_raw_subprocess/Cargo.toml --all -- --check
-          soldr cargo fmt --manifest-path dylints/ban_raw_path_prefix_compare/Cargo.toml --all -- --check
-      - name: Test dylint crate
+          while IFS= read -r manifest; do
+            RUSTUP_TOOLCHAIN=nightly-2026-04-16 \
+              soldr cargo fmt --manifest-path "$manifest" --all -- --check
+          done < <(find dylints -mindepth 2 -maxdepth 2 -name Cargo.toml | sort)
+      - name: Test Dylint libraries
         run: |
+          # Dylint's driver builder intentionally clears RUSTUP_TOOLCHAIN and
+          # relies on the rustup cargo proxy to re-select each lint's pinned
+          # toolchain. Keep that proxy ahead of Soldr's compiler shim.
           export PATH="${CARGO_HOME}/bin:${PATH}"
-          cargo +nightly-2026-03-26 test --manifest-path dylints/ban_raw_subprocess/Cargo.toml
-          cargo +nightly-2026-03-26 test --manifest-path dylints/ban_raw_path_prefix_compare/Cargo.toml
+          export CARGO_TARGET_DIR="$PWD/target/dylint-tests"
+          while IFS= read -r manifest; do
+            RUSTUP_TOOLCHAIN=nightly-2026-04-16 \
+              soldr cargo test --manifest-path "$manifest"
+          done < <(find dylints -mindepth 2 -maxdepth 2 -name Cargo.toml | sort)
       - name: Run dylint over workspace
-        # cargo-dylint 5.0.0 expects libraries on disk as
-        # `<name>@<toolchain>.<ext>` but cargo emits them as bare
-        # `<name>.<ext>` on first build. After each cargo-dylint
-        # invocation, alias any just-built libraries that lack the
-        # `@<toolchain>` suffix and retry.
         run: |
-          export PATH="${CARGO_HOME}/bin:${PATH}"
-          set +e
-          lint_count="$(find dylints -mindepth 2 -maxdepth 2 -name Cargo.toml | wc -l | tr -d ' ')"
-          max_attempts=$((lint_count + 2))
-          for attempt in $(seq 1 "$max_attempts"); do
-            cargo dylint --all -- --workspace --all-targets
-            rc=$?
-            if [ $rc -eq 0 ]; then
-              exit 0
-            fi
-            created_any=0
-            for lib_dir in target/dylint/libraries/*/release; do
-              [ -d "$lib_dir" ] || continue
-              toolchain="$(basename "$(dirname "$lib_dir")")"
-              for ext in so dylib dll; do
-                for lib in "$lib_dir"/*."$ext"; do
-                  [ -f "$lib" ] || continue
-                  stem="$(basename "$lib" ".$ext")"
-                  case "$stem" in
-                    *"@"*) continue ;;
-                  esac
-                  alias_path="$lib_dir/${stem}@${toolchain}.${ext}"
-                  # Refresh a stale alias too: cargo rebuilds the bare
-                  # library when a lint source/allowlist changes, but a
-                  # cache-restored `@<toolchain>` copy is what cargo-dylint
-                  # actually loads — never overwriting it pins every lint
-                  # to its first-ever compiled allowlist.
-                  if [ ! -e "$alias_path" ] || [ "$lib" -nt "$alias_path" ]; then
-                    cp -f "$lib" "$alias_path"
-                    created_any=1
-                  fi
-                done
-              done
-            done
-            if [ "$created_any" -eq 0 ]; then
-              echo "::error::cargo dylint failed and no new aliases to create on attempt $attempt"
-              exit $rc
-            fi
-            echo "Created @<toolchain> aliases; retrying cargo dylint (attempt $((attempt+1)))..."
-          done
-          echo "::error::cargo dylint did not succeed after ${max_attempts} attempts"
-          exit 1
+          # Invoke the exact binary installed above. The Soldr cargo front
+          # door otherwise injects its managed cargo-dylint toolchain, which
+          # overrides the shared nightly pinned by the library manifests.
+          "${CARGO_HOME}/bin/cargo-dylint" dylint --all -- --workspace --all-targets

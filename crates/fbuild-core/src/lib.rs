@@ -89,6 +89,9 @@ pub enum FbuildError {
     #[error("daemon error: {0}")]
     DaemonError(String),
 
+    #[error("{message}")]
+    CommandFailed { message: String, exit_code: i32 },
+
     #[error("timeout: {0}")]
     Timeout(String),
 

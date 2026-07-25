@@ -9,7 +9,7 @@ use rustc_ast::ast::LitKind;
 use rustc_errors::DiagDecorator;
 use rustc_hir::{Expr, ExprKind};
 use rustc_lint::{LateContext, LateLintPass, LintContext};
-use rustc_span::{symbol::Symbol, FileName, RemapPathScopeComponents};
+use rustc_span::{FileName, RemapPathScopeComponents, symbol::Symbol};
 
 dylint_linting::declare_late_lint! {
     /// ### What it does

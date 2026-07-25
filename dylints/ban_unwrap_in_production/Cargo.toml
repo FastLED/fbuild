@@ -1,4 +1,4 @@
-﻿[package]
+[package]
 name = "ban_unwrap_in_production"
 version = "0.1.0"
 description = "Ban .unwrap() inside fbuild production code (daemon + cli/cli/**)"
@@ -9,12 +9,11 @@ publish = false
 crate-type = ["cdylib"]
 
 [dependencies]
-# Pinned to the same dylint_linting rev the other fbuild dylints use --
-# same rustup channel in rust-toolchain.toml, same upstream commit.
-dylint_linting = { git = "https://github.com/trailofbits/dylint", rev = "4bd91ce7729b74c7ee5664bbb588f7baf30b4a09" }
+# Keep the library and test harness on the repository-wide Dylint release.
+dylint_linting = "6.0.1"
 
 [dev-dependencies]
-dylint_testing = { git = "https://github.com/trailofbits/dylint", rev = "4bd91ce7729b74c7ee5664bbb588f7baf30b4a09" }
+dylint_testing = "6.0.1"
 
 [package.metadata.rust-analyzer]
 rustc_private = true

@@ -50,9 +50,8 @@ their allowlist entries should be removed.
 
 ## Toolchain
 
-Pinned to the same `nightly-2026-03-26` channel and the same
-`trailofbits/dylint` git rev (`4bd91ce…`) the other fbuild dylints
-use.
+Pinned to `nightly-2026-04-16` and Dylint 6.0.1, matching every other
+Dylint library in this repository.
 
 ## Running locally
 

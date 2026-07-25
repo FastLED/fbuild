@@ -5,9 +5,9 @@ extern crate rustc_hir;
 extern crate rustc_span;
 
 use rustc_errors::DiagDecorator;
-use rustc_hir::{def::Res, Expr, ExprKind};
+use rustc_hir::{Expr, ExprKind, def::Res};
 use rustc_lint::{LateContext, LateLintPass, LintContext};
-use rustc_span::{symbol::Symbol, ExpnKind, FileName, MacroKind, RemapPathScopeComponents};
+use rustc_span::{ExpnKind, FileName, MacroKind, RemapPathScopeComponents, symbol::Symbol};
 
 dylint_linting::declare_late_lint! {
     /// ### What it does
@@ -63,10 +63,7 @@ const PRINT_DEF_PATHS: &[&[&str]] = &[
 const ALLOWLIST: &str = include_str!("allowlist.txt");
 
 /// File-path scope. ONLY these two prefixes are linted.
-const SCOPES: &[&str] = &[
-    "crates/fbuild-cli/src/",
-    "crates/fbuild-build/src/",
-];
+const SCOPES: &[&str] = &["crates/fbuild-cli/src/", "crates/fbuild-build/src/"];
 
 /// The bridge IS exempt — it's the module everything else is migrating to.
 const BRIDGE_MODULES: &[&str] = &["crates/fbuild-cli/src/output.rs"];

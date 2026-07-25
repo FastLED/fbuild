@@ -5,9 +5,9 @@ extern crate rustc_hir;
 extern crate rustc_span;
 
 use rustc_errors::DiagDecorator;
-use rustc_hir::{def::Res, AmbigArg, Expr, ExprKind, Ty, TyKind};
+use rustc_hir::{AmbigArg, Expr, ExprKind, Ty, TyKind, def::Res};
 use rustc_lint::{LateContext, LateLintPass, LintContext};
-use rustc_span::{symbol::Symbol, FileName, RemapPathScopeComponents};
+use rustc_span::{FileName, RemapPathScopeComponents, symbol::Symbol};
 
 dylint_linting::declare_late_lint! {
     /// ### What it does
@@ -182,7 +182,9 @@ mod tests {
 
     #[test]
     fn in_production_scope_matches_src_files() {
-        assert!(in_production_scope("crates/fbuild-cli/src/cli/port_scan.rs"));
+        assert!(in_production_scope(
+            "crates/fbuild-cli/src/cli/port_scan.rs"
+        ));
         assert!(in_production_scope(
             "/home/runner/work/fbuild/crates/fbuild-deploy/src/teensy/mod.rs"
         ));

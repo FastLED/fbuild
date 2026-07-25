@@ -59,8 +59,9 @@ dependencies = [
 
 [[package]]
 name = "dylint_internal"
-version = "5.0.0"
-source = "git+https://github.com/trailofbits/dylint?rev=4bd91ce7729b74c7ee5664bbb588f7baf30b4a09#4bd91ce7729b74c7ee5664bbb588f7baf30b4a09"
+version = "6.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9796d3441d7894cbaf4992640799efffc1661978f0cc1266ec788c32254fdfb3"
 dependencies = [
  "anyhow",
  "cargo_metadata",
@@ -73,8 +74,9 @@ dependencies = [
 
 [[package]]
 name = "dylint_linting"
-version = "5.0.0"
-source = "git+https://github.com/trailofbits/dylint?rev=4bd91ce7729b74c7ee5664bbb588f7baf30b4a09#4bd91ce7729b74c7ee5664bbb588f7baf30b4a09"
+version = "6.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c213635b3eaa84f43b9b497377f17d9a8d4feb413bab1d82e03ad1c73e4f6d8c"
 dependencies = [
  "cargo_metadata",
  "dylint_internal",
