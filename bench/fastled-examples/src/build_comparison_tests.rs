@@ -112,7 +112,7 @@ fn each_tool_has_the_complete_cold_cleanup_sequence() {
         ),
         vec![
             command("arduino-cli", &["cache", "clean"]),
-            ColdCleanupStep::RemoveDir(arduino_build.to_path_buf()),
+            ColdCleanupStep::RemoveDir(NormalizedPath::new(arduino_build)),
         ]
     );
     assert_eq!(
