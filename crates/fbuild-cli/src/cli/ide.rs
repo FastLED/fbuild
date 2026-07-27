@@ -25,6 +25,7 @@ use crate::output;
 
 use super::build::normalize_path;
 use super::clangd_config::{Editor, emit_clangd_file, emit_editor_config, ensure_compile_db};
+use super::ide_debug::{self, PROBE_RS_DAP_PORT, probe_rs_chip_for_mcu, unsupported_debug_note};
 
 /// Label prefix that marks a Zed task as fbuild-owned. Merge logic replaces
 /// every task with this prefix and leaves everything else untouched.
@@ -114,27 +115,64 @@ struct ZedTask {
     args: Vec<String>,
 }
 
-/// The fbuild-owned tasks for a given environment. All are plain `fbuild`
-/// invocations so they render in Zed's terminal panel with clickable
-/// `file:line` diagnostics, same as running them by hand.
-fn build_fbuild_tasks(env_name: &str) -> Vec<ZedTask> {
-    let task = |label: &str, args: Vec<&str>| ZedTask {
+/// The fbuild-owned tasks for a given environment. All but the debug-server
+/// task are plain `fbuild` invocations so they render in Zed's terminal
+/// panel with clickable `file:line` diagnostics, same as running them by
+/// hand.
+///
+/// `debug_chip`, when `Some` (i.e. [`probe_rs_chip_for_mcu`] resolved a
+/// probe-rs chip for the current environment — FastLED/fbuild#1076 Phase
+/// 3), adds a task that runs `probe-rs dap-server` on
+/// [`PROBE_RS_DAP_PORT`], which `.zed/debug.json`'s attach entry connects
+/// to. fbuild does not install probe-rs itself in milestone 1 — if it's
+/// missing, the task fails in Zed's terminal panel with probe-rs's own
+/// "command not found" message.
+fn build_fbuild_tasks(env_name: &str, debug_chip: Option<&str>) -> Vec<ZedTask> {
+    let task = |label: &str, command: &str, args: Vec<String>| ZedTask {
         label: format!("{FBUILD_TASK_PREFIX}{label}"),
-        command: "fbuild".to_string(),
-        args: args.into_iter().map(str::to_string).collect(),
+        command: command.to_string(),
+        args,
     };
-    vec![
-        task("Build", vec!["build", "-e", env_name]),
-        task("Build (clean)", vec!["build", "-e", env_name, "--clean"]),
-        task("Deploy", vec!["deploy", "-e", env_name]),
+    let str_args = |args: Vec<&str>| args.into_iter().map(str::to_string).collect::<Vec<_>>();
+    let mut tasks = vec![
+        task("Build", "fbuild", str_args(vec!["build", "-e", env_name])),
+        task(
+            "Build (clean)",
+            "fbuild",
+            str_args(vec!["build", "-e", env_name, "--clean"]),
+        ),
+        task("Deploy", "fbuild", str_args(vec!["deploy", "-e", env_name])),
         task(
             "Deploy + Monitor",
-            vec!["deploy", "-e", env_name, "--monitor"],
+            "fbuild",
+            str_args(vec!["deploy", "-e", env_name, "--monitor"]),
         ),
-        task("Monitor", vec!["monitor", "-e", env_name]),
-        task("Reset", vec!["reset", "-e", env_name]),
-        task("Select environment", vec!["ide", "select"]),
-    ]
+        task(
+            "Monitor",
+            "fbuild",
+            str_args(vec!["monitor", "-e", env_name]),
+        ),
+        task("Reset", "fbuild", str_args(vec!["reset", "-e", env_name])),
+        task(
+            "Select environment",
+            "fbuild",
+            str_args(vec!["ide", "select"]),
+        ),
+    ];
+    if let Some(chip) = debug_chip {
+        tasks.push(task(
+            "Debug server (probe-rs)",
+            "probe-rs",
+            vec![
+                "dap-server".to_string(),
+                "--port".to_string(),
+                PROBE_RS_DAP_PORT.to_string(),
+                "--chip".to_string(),
+                chip.to_string(),
+            ],
+        ));
+    }
+    tasks
 }
 
 /// Merge fbuild's tasks into `.zed/tasks.json`: any existing task whose
@@ -163,14 +201,18 @@ fn read_tasks_file(path: &Path) -> Vec<ZedTask> {
 
 /// Write `.zed/tasks.json` with fbuild's tasks merged in, preserving any
 /// user-authored tasks. Returns the path written.
-fn emit_zed_tasks(project_path: &Path, env_name: &str) -> fbuild_core::Result<PathBuf> {
+fn emit_zed_tasks(
+    project_path: &Path,
+    env_name: &str,
+    debug_chip: Option<&str>,
+) -> fbuild_core::Result<PathBuf> {
     let zed_dir = project_path.join(".zed");
     std::fs::create_dir_all(&zed_dir).map_err(|e| {
         fbuild_core::FbuildError::Other(format!("failed to create {}: {}", zed_dir.display(), e))
     })?;
     let tasks_path = zed_dir.join("tasks.json");
     let existing = read_tasks_file(&tasks_path);
-    let merged = merge_tasks(&existing, &build_fbuild_tasks(env_name));
+    let merged = merge_tasks(&existing, &build_fbuild_tasks(env_name, debug_chip));
     let mut json = serde_json::to_string_pretty(&merged).map_err(|e| {
         fbuild_core::FbuildError::Other(format!("failed to serialize tasks.json: {}", e))
     })?;
@@ -260,6 +302,57 @@ fn launch_zed(zed_path: &Path, project_dir: &str) -> fbuild_core::Result<()> {
 }
 
 // ---------------------------------------------------------------------
+// debug.json (FastLED/fbuild#1076 Phase 3, milestone 1: probe-rs targets)
+// ---------------------------------------------------------------------
+
+/// Resolve the `BoardConfig::mcu` string for `env_name`, the same way
+/// `deploy::infer_cli_default_emulator_kind` resolves a board for emulator
+/// hints: `platform =` / `board =` from `platformio.ini`, plus any
+/// `board_build.*`/`board_upload.*` overrides, resolved against the
+/// built-in board DB (falling back to `<project>/boards/<id>.json`).
+/// Best-effort — returns `Ok(None)` (never an error) when the environment
+/// has no resolvable board, since a missing board just means "no debug
+/// config", not a hard failure.
+fn resolve_mcu_for_env(project_path: &Path, env_name: &str) -> fbuild_core::Result<Option<String>> {
+    let ini_path = project_path.join("platformio.ini");
+    let config = fbuild_config::PlatformIOConfig::from_path(&ini_path)?;
+    let Ok(env_config) = config.get_env_config(env_name) else {
+        return Ok(None);
+    };
+    let Some(board_id) = env_config.get("board") else {
+        return Ok(None);
+    };
+    let board_overrides = config.get_board_overrides(env_name).unwrap_or_default();
+    let board = fbuild_config::BoardConfig::from_board_id_with_override_fallback(
+        board_id,
+        &board_overrides,
+        Some(project_path),
+    );
+    Ok(board.map(|b| b.mcu))
+}
+
+/// Resolve the probe-rs chip (if any) for `env_name` and, when found, emit
+/// `.zed/debug.json`. Returns `(chip, debug_json_path)` — `chip` feeds the
+/// `.zed/tasks.json` debug-server task, `debug_json_path` feeds the
+/// generated-files summary. When the environment's board/MCU isn't a
+/// probe-rs target, prints the one-line unsupported note and returns
+/// `(None, None)` — this is a first-class outcome, not an error.
+fn regenerate_debug_config(
+    project_path: &Path,
+    env_name: &str,
+) -> fbuild_core::Result<(Option<String>, Option<PathBuf>)> {
+    let mcu = resolve_mcu_for_env(project_path, env_name)?;
+    let Some(chip) = mcu.as_deref().and_then(probe_rs_chip_for_mcu) else {
+        let label = mcu.as_deref().unwrap_or(env_name);
+        output::result(unsupported_debug_note(label));
+        return Ok((None, None));
+    };
+    let elf_path = ide_debug::expected_elf_path(project_path, env_name);
+    let debug_path = ide_debug::emit_zed_debug(project_path, env_name, Some(&elf_path))?;
+    Ok((Some(chip.to_string()), Some(debug_path)))
+}
+
+// ---------------------------------------------------------------------
 // daemon-backed steps
 // ---------------------------------------------------------------------
 
@@ -303,7 +396,16 @@ async fn regenerate_ide_config(
     for (path, _written) in emit_editor_config(Editor::Zed, project_path)? {
         written.push(path);
     }
-    written.push(emit_zed_tasks(project_path, env_name)?);
+
+    let (debug_chip, debug_path) = regenerate_debug_config(project_path, env_name)?;
+    if let Some(debug_path) = debug_path {
+        written.push(debug_path);
+    }
+    written.push(emit_zed_tasks(
+        project_path,
+        env_name,
+        debug_chip.as_deref(),
+    )?);
     Ok(written)
 }
 
@@ -507,11 +609,80 @@ mod tests {
         assert!(resolve_ide_env(tmp.path(), None).is_err());
     }
 
+    // ---------- mcu resolution + debug config (FastLED/fbuild#1076 Phase 3) ----------
+
+    #[test]
+    fn resolve_mcu_for_env_finds_rp2040_for_rpipico_board() {
+        let tmp = tempfile::tempdir().unwrap();
+        std::fs::write(
+            tmp.path().join("platformio.ini"),
+            "[env:pico]\nplatform = raspberrypi\nboard = rpipico\n",
+        )
+        .unwrap();
+        let mcu = resolve_mcu_for_env(tmp.path(), "pico").unwrap();
+        assert_eq!(mcu.as_deref(), Some("rp2040"));
+    }
+
+    #[test]
+    fn resolve_mcu_for_env_finds_atmega328p_for_uno_board() {
+        let tmp = tempfile::tempdir().unwrap();
+        std::fs::write(
+            tmp.path().join("platformio.ini"),
+            "[env:uno]\nplatform = atmelavr\nboard = uno\n",
+        )
+        .unwrap();
+        let mcu = resolve_mcu_for_env(tmp.path(), "uno").unwrap();
+        assert_eq!(mcu.as_deref(), Some("atmega328p"));
+    }
+
+    #[test]
+    fn resolve_mcu_for_env_none_for_missing_env() {
+        let tmp = tempfile::tempdir().unwrap();
+        std::fs::write(
+            tmp.path().join("platformio.ini"),
+            "[env:uno]\nplatform = atmelavr\nboard = uno\n",
+        )
+        .unwrap();
+        let mcu = resolve_mcu_for_env(tmp.path(), "not_an_env").unwrap();
+        assert_eq!(mcu, None);
+    }
+
+    #[test]
+    fn regenerate_debug_config_emits_debug_json_for_rp2040() {
+        let tmp = tempfile::tempdir().unwrap();
+        std::fs::write(
+            tmp.path().join("platformio.ini"),
+            "[env:pico]\nplatform = raspberrypi\nboard = rpipico\n",
+        )
+        .unwrap();
+        let (chip, debug_path) = regenerate_debug_config(tmp.path(), "pico").unwrap();
+        assert_eq!(chip.as_deref(), Some("RP2040"));
+        let debug_path = debug_path.expect("debug.json should be written");
+        assert!(debug_path.exists());
+        let content = std::fs::read_to_string(&debug_path).unwrap();
+        assert!(content.contains("probe-rs"));
+        assert!(content.contains("50101"));
+    }
+
+    #[test]
+    fn regenerate_debug_config_no_debug_json_for_avr() {
+        let tmp = tempfile::tempdir().unwrap();
+        std::fs::write(
+            tmp.path().join("platformio.ini"),
+            "[env:uno]\nplatform = atmelavr\nboard = uno\n",
+        )
+        .unwrap();
+        let (chip, debug_path) = regenerate_debug_config(tmp.path(), "uno").unwrap();
+        assert_eq!(chip, None);
+        assert_eq!(debug_path, None);
+        assert!(!tmp.path().join(".zed/debug.json").exists());
+    }
+
     // ---------- tasks.json merge ----------
 
     #[test]
     fn build_fbuild_tasks_pins_environment_in_args() {
-        let tasks = build_fbuild_tasks("esp32dev");
+        let tasks = build_fbuild_tasks("esp32dev", None);
         assert_eq!(tasks.len(), 7);
         for label in [
             "fbuild: Build",
@@ -534,6 +705,23 @@ mod tests {
             .find(|t| t.label == "fbuild: Select environment")
             .unwrap();
         assert_eq!(select.args, vec!["ide", "select"]);
+        // No debug-chip resolved -> no debug-server task.
+        assert!(!tasks.iter().any(|t| t.label.contains("Debug server")));
+    }
+
+    #[test]
+    fn build_fbuild_tasks_adds_debug_server_task_when_chip_resolved() {
+        let tasks = build_fbuild_tasks("rpipico", Some("RP2040"));
+        assert_eq!(tasks.len(), 8);
+        let debug = tasks
+            .iter()
+            .find(|t| t.label == "fbuild: Debug server (probe-rs)")
+            .unwrap();
+        assert_eq!(debug.command, "probe-rs");
+        assert_eq!(
+            debug.args,
+            vec!["dap-server", "--port", "50101", "--chip", "RP2040"]
+        );
     }
 
     #[test]
@@ -550,7 +738,7 @@ mod tests {
                 args: vec!["build".to_string(), "-e".to_string(), "stale".to_string()],
             },
         ];
-        let fresh = build_fbuild_tasks("esp32dev");
+        let fresh = build_fbuild_tasks("esp32dev", None);
         let merged = merge_tasks(&existing, &fresh);
 
         assert!(merged.iter().any(|t| t.label == "My custom task"));
@@ -565,7 +753,7 @@ mod tests {
 
     #[test]
     fn merge_tasks_is_idempotent() {
-        let fresh = build_fbuild_tasks("esp32dev");
+        let fresh = build_fbuild_tasks("esp32dev", None);
         let once = merge_tasks(&[], &fresh);
         let twice = merge_tasks(&once, &fresh);
         assert_eq!(once, twice);
@@ -582,7 +770,7 @@ mod tests {
         )
         .unwrap();
 
-        let path = emit_zed_tasks(tmp.path(), "esp32dev").unwrap();
+        let path = emit_zed_tasks(tmp.path(), "esp32dev", None).unwrap();
         let content = std::fs::read_to_string(path).unwrap();
         let tasks: Vec<ZedTask> = serde_json::from_str(&content).unwrap();
         assert!(tasks.iter().any(|t| t.label == "My custom task"));
