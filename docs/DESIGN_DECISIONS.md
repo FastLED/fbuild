@@ -60,7 +60,16 @@
 
 ## DD-008: compile_commands.json with Library Project Suppression
 
-**Decision**: Generate `compile_commands.json` after every build. Suppress the project-root copy when `library.json` exists at the project root.
+**Decision**: Generate `compile_commands.json` on demand — via `-t compiledb` / `fbuild clangd-config` (optionally `--refresh`) — not after every build. Suppress the project-root copy when `library.json` exists at the project root.
+
+> Update (FastLED/fbuild#1076 Phase 0): an earlier draft of this decision said
+> "after every build." That was never actually implemented — only
+> `compiledb_only` builds (`-t compiledb`) and `fbuild clangd-config` reach
+> the compile-DB generation gate (`pipeline/sequential.rs`,
+> `esp32/orchestrator/build.rs`). `fbuild clangd-config --refresh` is the
+> mechanism for forcing regeneration; without `--refresh` it's skipped when
+> `compile_commands.json` already exists. See
+> `crates/fbuild-cli/src/cli/clangd_config/mod.rs`.
 
 **Context**: clangd/VS Code IntelliSense needs a `compile_commands.json` at the project root to resolve `#include` paths. The old Python fbuild generates one with trampoline paths, which breaks "Go to Definition". Library projects (e.g. FastLED) have their own meson-based `compile_commands.json` that fbuild should not overwrite.
 

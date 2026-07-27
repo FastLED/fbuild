@@ -147,6 +147,7 @@ known limitations.
 | `fbuild bloat graph <input> --symbol <name>` | Render a Graphviz back-reference graph. |
 | `fbuild bloat lookup <input> --symbol <name>` | Inspect one symbol's size and references. |
 | `fbuild lib-select` | Debug LDF-style library selection. |
+| `fbuild clangd-config [--editor vscode\|zed] [--refresh]` | Emit `.clangd` (editor-neutral) plus per-editor project config (`.vscode/*` or `.zed/*`). `--editor` selects the emitter (default `vscode`); `--refresh` forces `compile_commands.json` regeneration even if it already exists. |
 | `fbuild clang-tidy` | Run clang-tidy against project sources. |
 | `fbuild iwyu` | Run include-what-you-use analysis. |
 | `fbuild clang-query` | Run a clang-query matcher. |
