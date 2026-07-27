@@ -2,7 +2,7 @@
 
 use std::path::{Path, PathBuf};
 
-use super::super::clang::should_remove_flag;
+use super::super::clang::{isystem_args_from_dirs, should_remove_flag};
 use crate::compile_database::{
     CompileDatabase, CompileEntry, TargetArchitecture, translate_flags_for_clang,
 };
@@ -223,6 +223,160 @@ fn test_database_translate_for_clang() {
             .arguments
             .contains(&"-std=c++17".to_string())
     );
+}
+
+// =========================================================================
+// FastLED/fbuild#1076 Phase 0: builtin include-dir baking + raw-.ino swap
+// =========================================================================
+
+#[test]
+fn test_isystem_args_from_dirs_sorted_and_deduped() {
+    let dirs = vec![
+        PathBuf::from("/tc/lib/gcc/xtensa/14/include"),
+        PathBuf::from("/tc/lib/gcc/avr/14/include"),
+        PathBuf::from("/tc/lib/gcc/xtensa/14/include"), // duplicate
+    ];
+    let args = isystem_args_from_dirs(dirs);
+    assert_eq!(
+        args,
+        vec![
+            "-isystem".to_string(),
+            "/tc/lib/gcc/avr/14/include".to_string(),
+            "-isystem".to_string(),
+            "/tc/lib/gcc/xtensa/14/include".to_string(),
+        ]
+    );
+}
+
+#[test]
+fn test_isystem_args_from_dirs_empty_is_no_op() {
+    assert!(isystem_args_from_dirs(Vec::new()).is_empty());
+}
+
+fn ino_cpp_template_entry() -> CompileEntry {
+    CompileEntry {
+        arguments: vec![
+            "clang++".to_string(),
+            "--target=xtensa-esp-elf".to_string(),
+            "-Isrc".to_string(),
+            "-c".to_string(),
+            "/project/.fbuild/build/env/src/sketch.ino.cpp".to_string(),
+            "-o".to_string(),
+            "/project/.fbuild/build/env/src/sketch.ino.cpp.o".to_string(),
+        ],
+        directory: "/project".to_string(),
+        file: "/project/.fbuild/build/env/src/sketch.ino.cpp".to_string(),
+        output: Some("/project/.fbuild/build/env/src/sketch.ino.cpp.o".to_string()),
+    }
+}
+
+#[test]
+fn test_swap_ino_entries_for_raw_replaces_generated_entry() {
+    let mut db = CompileDatabase::new();
+    db.add_entry(ino_cpp_template_entry());
+
+    let ino_preludes = vec![(
+        PathBuf::from("/project/src/sketch.ino"),
+        PathBuf::from("/project/.fbuild/build/env/src/sketch.ino.prelude.h"),
+    )];
+    let swapped = db.swap_ino_entries_for_raw(&ino_preludes);
+
+    // Generated .ino.cpp entry removed.
+    assert!(!swapped.entries.iter().any(|e| e.file.ends_with(".ino.cpp")));
+
+    // Raw .ino entry present with -x c++ -include <prelude> and the raw
+    // path swapped in for both `file` and the `-c <file>` argument.
+    assert_eq!(swapped.entries.len(), 1);
+    let entry = &swapped.entries[0];
+    assert_eq!(entry.file, "/project/src/sketch.ino");
+    assert!(entry.arguments.contains(&"-x".to_string()));
+    assert!(entry.arguments.contains(&"c++".to_string()));
+    let include_idx = entry
+        .arguments
+        .iter()
+        .position(|a| a == "-include")
+        .unwrap();
+    assert_eq!(
+        entry.arguments[include_idx + 1],
+        "/project/.fbuild/build/env/src/sketch.ino.prelude.h"
+    );
+    assert!(
+        entry
+            .arguments
+            .contains(&"/project/src/sketch.ino".to_string())
+    );
+    assert!(!entry.arguments.iter().any(|a| a.ends_with(".ino.cpp")));
+    // Flags from the template are preserved.
+    assert!(entry.arguments.contains(&"-Isrc".to_string()));
+    assert!(
+        entry
+            .arguments
+            .contains(&"--target=xtensa-esp-elf".to_string())
+    );
+}
+
+#[test]
+fn test_swap_ino_entries_for_raw_multi_tab() {
+    let mut db = CompileDatabase::new();
+    db.add_entry(ino_cpp_template_entry());
+
+    let ino_preludes = vec![
+        (
+            PathBuf::from("/project/src/main.ino"),
+            PathBuf::from("/project/.fbuild/build/env/src/main.ino.prelude.h"),
+        ),
+        (
+            PathBuf::from("/project/src/a_tab.ino"),
+            PathBuf::from("/project/.fbuild/build/env/src/a_tab.ino.prelude.h"),
+        ),
+    ];
+    let swapped = db.swap_ino_entries_for_raw(&ino_preludes);
+
+    assert_eq!(swapped.entries.len(), 2);
+    assert!(
+        swapped
+            .entries
+            .iter()
+            .any(|e| e.file == "/project/src/main.ino")
+    );
+    assert!(
+        swapped
+            .entries
+            .iter()
+            .any(|e| e.file == "/project/src/a_tab.ino")
+    );
+    assert!(!swapped.entries.iter().any(|e| e.file.ends_with(".ino.cpp")));
+}
+
+#[test]
+fn test_swap_ino_entries_for_raw_empty_preludes_is_no_op() {
+    let mut db = CompileDatabase::new();
+    db.add_entry(ino_cpp_template_entry());
+
+    let swapped = db.swap_ino_entries_for_raw(&[]);
+    // The generated entry survives untouched — this is the main.cpp-present
+    // / no-.ino-tabs case, where there is nothing to swap.
+    assert_eq!(swapped.entries.len(), 1);
+    assert!(swapped.entries[0].file.ends_with(".ino.cpp"));
+}
+
+#[test]
+fn test_swap_ino_entries_for_raw_no_generated_entry_leaves_db_untouched() {
+    let mut db = CompileDatabase::new();
+    db.add_entry(CompileEntry {
+        arguments: vec!["clang".to_string(), "-c".to_string(), "main.c".to_string()],
+        directory: "/project".to_string(),
+        file: "main.c".to_string(),
+        output: None,
+    });
+
+    let ino_preludes = vec![(
+        PathBuf::from("/project/src/sketch.ino"),
+        PathBuf::from("/project/.fbuild/build/env/src/sketch.ino.prelude.h"),
+    )];
+    let swapped = db.swap_ino_entries_for_raw(&ino_preludes);
+    assert_eq!(swapped.entries.len(), 1);
+    assert_eq!(swapped.entries[0].file, "main.c");
 }
 
 #[test]

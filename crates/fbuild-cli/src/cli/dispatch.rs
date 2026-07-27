@@ -453,9 +453,11 @@ pub async fn async_main() {
             project_dir,
             environment,
             verbose,
+            editor,
+            refresh,
         }) => {
             let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
-            run_clangd_config(project_dir, environment, verbose).await
+            run_clangd_config(project_dir, environment, verbose, editor, refresh).await
         }
         Some(Commands::TestEmu {
             project_dir,

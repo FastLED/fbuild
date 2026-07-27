@@ -45,6 +45,10 @@ fn normalize_glob_separators(pattern: &str) -> String {
     pattern.replace('\\', "/")
 }
 
+/// Raw-`.ino` path → prelude-header path pairs (FastLED/fbuild#1076 Phase 0).
+/// See [`SourceCollection::ino_preludes`].
+pub type InoPreludeMap = Vec<(PathBuf, PathBuf)>;
+
 /// Collection of source files found by the scanner.
 #[derive(Debug, Default)]
 pub struct SourceCollection {
@@ -56,6 +60,17 @@ pub struct SourceCollection {
     pub variant_sources: Vec<PathBuf>,
     /// All header files (.h, .hpp) for dependency tracking
     pub headers: Vec<PathBuf>,
+    /// Raw-`.ino` → prelude-header path mapping (FastLED/fbuild#1076 Phase 0).
+    ///
+    /// Populated only when `.ino` tabs were preprocessed (empty when the
+    /// sketch has no `.ino` files, or when `main.cpp` skips preprocessing).
+    /// Each prelude file holds the machine-written top half that the
+    /// generated `<stem>.ino.cpp` normally carries inline (the `Arduino.h`
+    /// include + extracted prototypes, plus — for non-primary tabs — the
+    /// full text of every preceding tab). IDE-flavored compile-DB generation
+    /// uses this to swap the generated `.ino.cpp` entry for one raw-`.ino`
+    /// entry per tab with `-x c++ -include <prelude>`.
+    pub ino_preludes: InoPreludeMap,
 }
 
 impl SourceCollection {
@@ -139,8 +154,25 @@ impl SourceScanner {
         filter_spec: Option<&str>,
         include_roots: &[&Path],
     ) -> fbuild_core::Result<Vec<PathBuf>> {
+        let (sources, _ino_preludes) = self
+            .scan_sketch_sources_filtered_with_include_roots_and_preludes(
+                filter_spec,
+                include_roots,
+            )?;
+        Ok(sources)
+    }
+
+    /// Same as [`Self::scan_sketch_sources_filtered_with_include_roots`] but
+    /// also returns the raw-`.ino` → prelude-header mapping (see
+    /// [`SourceCollection::ino_preludes`]) so IDE-flavored compile-DB
+    /// generation can swap in raw-`.ino` entries (FastLED/fbuild#1076 Phase 0).
+    pub fn scan_sketch_sources_filtered_with_include_roots_and_preludes(
+        &self,
+        filter_spec: Option<&str>,
+        include_roots: &[&Path],
+    ) -> fbuild_core::Result<(Vec<PathBuf>, InoPreludeMap)> {
         if !self.src_dir.exists() {
-            return Ok(Vec::new());
+            return Ok((Vec::new(), Vec::new()));
         }
 
         let mut sources = Vec::new();
@@ -176,14 +208,16 @@ impl SourceScanner {
 
         // If main.cpp exists, skip preprocessing to avoid duplicate symbols when
         // the .ino content is already compiled via #include in main.cpp.
+        let mut ino_preludes = Vec::new();
         if !ino_files.is_empty() && main_cpp_path.is_none() {
             let ino_files = order_ino_files(&self.src_dir, ino_files);
-            let preprocessed =
+            let (preprocessed, preludes) =
                 self.preprocess_ino_files(&ino_files, arduino_header_available(include_roots))?;
             sources.insert(0, preprocessed);
+            ino_preludes = preludes;
         }
 
-        Ok(sources)
+        Ok((sources, ino_preludes))
     }
 
     /// Scan an Arduino core directory for source files.
@@ -257,8 +291,11 @@ impl SourceScanner {
         filter_spec: Option<&str>,
     ) -> fbuild_core::Result<SourceCollection> {
         let include_roots: Vec<&Path> = [core_dir, variant_dir].into_iter().flatten().collect();
-        let sketch_sources =
-            self.scan_sketch_sources_filtered_with_include_roots(filter_spec, &include_roots)?;
+        let (sketch_sources, ino_preludes) = self
+            .scan_sketch_sources_filtered_with_include_roots_and_preludes(
+                filter_spec,
+                &include_roots,
+            )?;
         let core_sources = core_dir
             .map(|d| self.scan_core_sources(d))
             .unwrap_or_default();
@@ -279,63 +316,59 @@ impl SourceScanner {
             core_sources,
             variant_sources,
             headers,
+            ino_preludes,
         })
     }
 
-    /// Preprocess .ino files into a single .cpp file.
+    /// Preprocess .ino files into a single .cpp file, plus per-tab prelude
+    /// headers for IDE use (FastLED/fbuild#1076 Phase 0).
     ///
-    /// 1. Concatenate .ino files (primary sketch first, then tabs alphabetically)
-    /// 2. Add `#include <Arduino.h>` at top when available
-    /// 3. Extract function prototypes
-    /// 4. Add prototypes before first function definition
-    /// 5. Add `#line` directives for debugging
+    /// 1. Read + normalize every tab (primary sketch first, then tabs alphabetically)
+    /// 2. Extract function prototypes from the concatenated tab text
+    /// 3. Build the shared "prelude" text: `#include <Arduino.h>` (when
+    ///    available) + the auto-generated prototype block
+    /// 4. Emit `<build_dir>/<stem>.ino.cpp` = prelude + every tab's text, each
+    ///    preceded by its own `#line 1 "<tab path>"` directive (previously
+    ///    only the first tab got one — secondary-tab compile errors reported
+    ///    the wrong file/line)
+    /// 5. Emit prelude header(s) alongside it via [`Self::write_ino_preludes`]
+    ///
+    /// Returns the generated `.ino.cpp` path and the raw-`.ino` → prelude
+    /// path mapping.
     fn preprocess_ino_files(
         &self,
         ino_files: &[PathBuf],
         include_arduino_h: bool,
-    ) -> fbuild_core::Result<PathBuf> {
-        let mut combined = String::new();
-        let mut line_offsets: Vec<(usize, &Path)> = Vec::new();
-        let mut current_line = 1;
+    ) -> fbuild_core::Result<(PathBuf, InoPreludeMap)> {
+        let contents: Vec<String> = ino_files
+            .iter()
+            .map(|ino| -> fbuild_core::Result<String> {
+                Ok(normalize_generated_source_line_endings(
+                    &std::fs::read_to_string(ino)?,
+                ))
+            })
+            .collect::<fbuild_core::Result<Vec<_>>>()?;
 
-        for ino in ino_files {
-            let content = normalize_generated_source_line_endings(&std::fs::read_to_string(ino)?);
-            line_offsets.push((current_line, ino.as_path()));
-            current_line += content.lines().count();
-            if !combined.is_empty() {
-                combined.push('\n');
+        // Prototype extraction needs to see every tab's code, so it operates
+        // on the plain concatenation (no #line noise).
+        let combined_for_prototypes = contents.join("\n");
+        let prototypes = extract_function_prototypes(&combined_for_prototypes);
+
+        let prelude = self.build_ino_prelude(include_arduino_h, &prototypes);
+
+        // Body: every tab's own text with a `#line` directive at each
+        // boundary, so diagnostics in any tab — not just the first — map
+        // back to the right file/line.
+        let mut body = String::new();
+        for (ino, content) in ino_files.iter().zip(contents.iter()) {
+            body.push_str(&format!("#line 1 \"{}\"\n", self.line_directive_path(ino)));
+            body.push_str(content);
+            if !content.ends_with('\n') {
+                body.push('\n');
             }
-            combined.push_str(&content);
         }
 
-        let prototypes = extract_function_prototypes(&combined);
-
-        // Build output
-        let mut output = String::new();
-
-        if include_arduino_h {
-            output.push_str("#include <Arduino.h>\n");
-        }
-
-        // Function prototypes
-        if !prototypes.is_empty() {
-            output.push_str("// Auto-generated function prototypes\n");
-            for proto in &prototypes {
-                output.push_str(proto);
-                output.push_str(";\n");
-            }
-            output.push('\n');
-        }
-
-        // #line directive for first file
-        if let Some((_, first_file)) = line_offsets.first() {
-            output.push_str(&format!(
-                "#line 1 \"{}\"\n",
-                self.line_directive_path(first_file)
-            ));
-        }
-
-        output.push_str(&combined);
+        let output = format!("{prelude}{body}");
 
         // Write to build directory
         std::fs::create_dir_all(&self.build_dir)?;
@@ -344,11 +377,77 @@ impl SourceScanner {
         let stem = ino_files[0]
             .file_stem()
             .unwrap_or_default()
-            .to_string_lossy();
+            .to_string_lossy()
+            .to_string();
         let output_path = self.build_dir.join(format!("{}.ino.cpp", stem));
         write_if_changed(&output_path, &output)?;
 
-        Ok(output_path)
+        let ino_preludes = self.write_ino_preludes(ino_files, &contents, &prelude)?;
+
+        Ok((output_path, ino_preludes))
+    }
+
+    /// Build the shared prelude text: `#include <Arduino.h>` (when
+    /// available) + the auto-generated prototype block. This is exactly the
+    /// machine-written top half the generated `.ino.cpp` carries inline.
+    fn build_ino_prelude(&self, include_arduino_h: bool, prototypes: &[String]) -> String {
+        let mut prelude = String::new();
+        if include_arduino_h {
+            prelude.push_str("#include <Arduino.h>\n");
+        }
+        if !prototypes.is_empty() {
+            prelude.push_str("// Auto-generated function prototypes\n");
+            for proto in prototypes {
+                prelude.push_str(proto);
+                prelude.push_str(";\n");
+            }
+            prelude.push('\n');
+        }
+        prelude
+    }
+
+    /// Emit prelude header(s) so clangd can give the raw `.ino` files
+    /// first-class IntelliSense (FastLED/fbuild#1076 Phase 0 — direction
+    /// update: "use the converter's `.ino.cpp` output for clangd
+    /// IntelliSense").
+    ///
+    /// - Single tab: `<build_dir>/<stem>.ino.prelude.h` = exactly the shared
+    ///   prelude text, so `prelude + "#line 1 ..." + sketch text` is
+    ///   byte-identical to the generated `.ino.cpp`.
+    /// - Multi-tab: one prelude per tab, `<build_dir>/<tab_stem>.ino.prelude.h`
+    ///   = shared prelude + the full text of every tab that precedes this tab
+    ///   in build order, each preceded by its own `#line` directive — i.e.
+    ///   exactly what that tab would see in the real concatenated build.
+    ///
+    /// Returns the raw-`.ino` → prelude-path mapping in tab order.
+    fn write_ino_preludes(
+        &self,
+        ino_files: &[PathBuf],
+        contents: &[String],
+        prelude: &str,
+    ) -> fbuild_core::Result<InoPreludeMap> {
+        let mut mapping = Vec::with_capacity(ino_files.len());
+
+        for (i, ino) in ino_files.iter().enumerate() {
+            let mut tab_prelude = prelude.to_string();
+            for (prior_ino, prior_content) in ino_files[..i].iter().zip(contents[..i].iter()) {
+                tab_prelude.push_str(&format!(
+                    "#line 1 \"{}\"\n",
+                    self.line_directive_path(prior_ino)
+                ));
+                tab_prelude.push_str(prior_content);
+                if !prior_content.ends_with('\n') {
+                    tab_prelude.push('\n');
+                }
+            }
+
+            let tab_stem = ino.file_stem().unwrap_or_default().to_string_lossy();
+            let prelude_path = self.build_dir.join(format!("{}.ino.prelude.h", tab_stem));
+            write_if_changed(&prelude_path, &tab_prelude)?;
+            mapping.push((ino.clone(), prelude_path));
+        }
+
+        Ok(mapping)
     }
 
     fn line_directive_path(&self, path: &Path) -> String {

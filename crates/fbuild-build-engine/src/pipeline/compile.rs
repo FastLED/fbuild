@@ -116,6 +116,13 @@ pub async fn compile_local_libraries(
 }
 
 /// Generate `compile_commands.json` from core/variant and sketch sources.
+///
+/// IDE-flavored: when `ino_preludes` is non-empty (i.e. the sketch had
+/// `.ino` tabs preprocessed into a generated `<stem>.ino.cpp`), the
+/// generated file's entry is swapped for one raw-`.ino` entry per tab so
+/// clangd gives IntelliSense on the file the user actually edits
+/// (FastLED/fbuild#1076 Phase 0). See
+/// [`compile_database::CompileDatabase::swap_ino_entries_for_raw`].
 #[allow(clippy::too_many_arguments)]
 pub fn generate_compile_db(
     gcc_path: &Path,
@@ -127,6 +134,7 @@ pub fn generate_compile_db(
     all_src_flags: &LanguageExtraFlags,
     core_sources: &[PathBuf],
     sketch_sources: &[PathBuf],
+    ino_preludes: &[(PathBuf, PathBuf)],
     core_build_dir: &Path,
     src_build_dir: &Path,
     build_dir: &Path,
@@ -157,6 +165,7 @@ pub fn generate_compile_db(
         project_dir,
     ));
     let compile_db = compile_db.translate_for_clang(arch);
+    let compile_db = compile_db.swap_ino_entries_for_raw(ino_preludes);
     if compile_db.has_entries() {
         Ok(Some(compile_db.write_and_copy(build_dir, project_dir)?))
     } else {

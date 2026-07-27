@@ -585,3 +585,128 @@ fn test_scan_sketch_sources_filtered_includes_only_selected_files() {
     );
     assert!(!sources.iter().any(|p| p.ends_with("helper.cpp")));
 }
+
+// =========================================================================
+// FastLED/fbuild#1076 Phase 0: per-tab #line directives + prelude headers
+// =========================================================================
+
+#[test]
+fn test_every_tab_gets_a_line_directive() {
+    // Previously only the first tab got a `#line` directive — secondary-tab
+    // compile errors reported the wrong file/line.
+    let (_tmp, src_dir, build_dir) = setup_project(&[
+        ("main.ino", "void setup() {}\nvoid loop() {}\n"),
+        ("a_tab.ino", "void aTab() {}\n"),
+    ]);
+    let scanner = SourceScanner::new(&src_dir, &build_dir);
+    let sources = scanner.scan_sketch_sources().unwrap();
+    let content = fs::read_to_string(&sources[0]).unwrap();
+
+    assert!(content.contains("#line 1 \"src/main.ino\""));
+    assert!(content.contains("#line 1 \"src/a_tab.ino\""));
+    // Both directives, not just one.
+    assert_eq!(content.matches("#line 1").count(), 2);
+}
+
+#[test]
+fn test_single_tab_prelude_exact_match_with_generated_ino_cpp() {
+    let (_tmp, src_dir, build_dir) = setup_project(&[(
+        "sketch.ino",
+        "void loop() { blink(3); }\nvoid blink(int n) {}\n",
+    )]);
+    let core_dir = _tmp.path().join("core");
+    fs::create_dir_all(&core_dir).unwrap();
+    fs::write(core_dir.join("Arduino.h"), "#pragma once\n").unwrap();
+
+    let scanner = SourceScanner::new(&src_dir, &build_dir);
+    let collection = scanner.scan_all(Some(&core_dir), None).unwrap();
+    assert_eq!(collection.sketch_sources.len(), 1);
+    assert_eq!(collection.ino_preludes.len(), 1);
+
+    let ino_cpp_content = fs::read_to_string(&collection.sketch_sources[0]).unwrap();
+    let (raw_ino, prelude_path) = &collection.ino_preludes[0];
+    assert!(raw_ino.ends_with("sketch.ino"));
+    assert!(prelude_path.ends_with("sketch.ino.prelude.h"));
+
+    let prelude_content = fs::read_to_string(prelude_path).unwrap();
+    assert!(prelude_content.contains("#include <Arduino.h>"));
+    // `loop()`/`setup()` are Arduino entry points called by the runtime, not
+    // user code, so `extract_function_prototypes` deliberately excludes them
+    // (`is_arduino_entry_point_signature`) — only `blink` needs a prototype.
+    assert!(!prelude_content.contains("void loop();"));
+    assert!(prelude_content.contains("void blink(int n);"));
+    // No `#line` directive belongs in the prelude itself — it precedes the
+    // `#line`-tagged body.
+    assert!(!prelude_content.contains("#line"));
+
+    // prelude + "#line 1 ..." + sketch text == the generated .ino.cpp,
+    // byte-for-byte (the worked example from the direction-update comment).
+    let expected = format!(
+        "{prelude_content}#line 1 \"src/sketch.ino\"\nvoid loop() {{ blink(3); }}\nvoid blink(int n) {{}}\n"
+    );
+    assert_eq!(ino_cpp_content, expected);
+}
+
+#[test]
+fn test_multi_tab_prelude_includes_preceding_tabs_with_line_directives() {
+    let (_tmp, src_dir, build_dir) = setup_project(&[
+        ("main.ino", "void setup() {}\nvoid loop() { blink(1); }\n"),
+        ("a_tab.ino", "void blink(int n) {}\n"),
+    ]);
+    let scanner = SourceScanner::new(&src_dir, &build_dir);
+    let (sources, ino_preludes) = scanner
+        .scan_sketch_sources_filtered_with_include_roots_and_preludes(None, &[])
+        .unwrap();
+    assert_eq!(sources.len(), 1);
+    assert_eq!(ino_preludes.len(), 2);
+
+    // Primary tab (main.ino) is first in build order and has no preceding
+    // tabs, so its prelude carries no sketch text.
+    let (main_ino, main_prelude_path) = &ino_preludes[0];
+    assert!(main_ino.ends_with("main.ino"));
+    let main_prelude = fs::read_to_string(main_prelude_path).unwrap();
+    assert!(main_prelude.contains("void blink(int n);")); // prototypes from the whole set
+    assert!(!main_prelude.contains("void blink(int n) {}")); // no tab bodies yet
+    assert!(!main_prelude.contains("#line"));
+
+    // a_tab.ino comes after main.ino in build order, so its prelude carries
+    // main.ino's full text behind its own #line directive.
+    let (a_tab_ino, a_tab_prelude_path) = &ino_preludes[1];
+    assert!(a_tab_ino.ends_with("a_tab.ino"));
+    let a_tab_prelude = fs::read_to_string(a_tab_prelude_path).unwrap();
+    assert!(a_tab_prelude.contains("#line 1 \"src/main.ino\""));
+    assert!(a_tab_prelude.contains("void setup() {}"));
+    assert!(a_tab_prelude.contains("void loop() { blink(1); }"));
+}
+
+#[test]
+fn test_ino_prelude_write_if_changed_does_not_rewrite_unchanged_output() {
+    let (_tmp, src_dir, build_dir) =
+        setup_project(&[("sketch.ino", "void setup() {}\nvoid loop() {}\n")]);
+    let scanner = SourceScanner::new(&src_dir, &build_dir);
+
+    let first = scanner.scan_sketch_sources().unwrap();
+    let prelude_path = build_dir.join("sketch.ino.prelude.h");
+    assert!(prelude_path.exists());
+    let first_mtime = fs::metadata(&prelude_path).unwrap().modified().unwrap();
+
+    std::thread::sleep(std::time::Duration::from_millis(20));
+
+    let second = scanner.scan_sketch_sources().unwrap();
+    assert_eq!(first, second);
+    let second_mtime = fs::metadata(&prelude_path).unwrap().modified().unwrap();
+    assert_eq!(first_mtime, second_mtime);
+}
+
+#[test]
+fn test_main_cpp_mode_emits_no_preludes() {
+    let (_tmp, src_dir, build_dir) = setup_project(&[
+        ("main.cpp", "#include \"sketch.ino\"\n"),
+        ("sketch.ino", "void setup() {}\nvoid loop() {}\n"),
+    ]);
+    let scanner = SourceScanner::new(&src_dir, &build_dir);
+
+    let collection = scanner.scan_all(None, None).unwrap();
+    assert!(collection.ino_preludes.is_empty());
+    assert!(!build_dir.join("sketch.ino.prelude.h").exists());
+}

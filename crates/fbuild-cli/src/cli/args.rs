@@ -491,8 +491,9 @@ pub enum Commands {
         #[arg(short, long)]
         verbose: bool,
     },
-    /// Emit clangd / VS Code config (.clangd, .vscode/settings.json) for the
-    /// default env so go-to-definition and include resolution work in the IDE
+    /// Emit clangd / editor config (.clangd, plus per-editor project config)
+    /// for the default env so go-to-definition and include resolution work
+    /// in the IDE
     #[command(name = "clangd-config")]
     ClangdConfig {
         project_dir: Option<String>,
@@ -500,6 +501,14 @@ pub enum Commands {
         environment: Option<String>,
         #[arg(short, long)]
         verbose: bool,
+        /// Editor to emit per-editor project config for
+        #[arg(long, value_parser = ["vscode", "zed"], default_value = "vscode")]
+        editor: String,
+        /// Regenerate compile_commands.json even if it already exists
+        /// (FastLED/fbuild#1076 Phase 0: DB regeneration is a first-class,
+        /// cheap operation)
+        #[arg(long)]
+        refresh: bool,
     },
     /// Build firmware and run it in an emulator for testing
     TestEmu {

@@ -56,14 +56,17 @@ pub(super) async fn build_arduino_mbed_stm32(
     let variant_dir = framework.get_variant_dir(&ctx.board.variant);
 
     let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
-    let sources = SourceCollection {
-        sketch_sources: scanner.scan_sketch_sources_filtered_with_include_roots(
+    let (sketch_sources, ino_preludes) = scanner
+        .scan_sketch_sources_filtered_with_include_roots_and_preludes(
             ctx.source_filter.as_deref(),
             &[core_dir.as_path(), variant_dir.as_path()],
-        )?,
+        )?;
+    let sources = SourceCollection {
+        sketch_sources,
         core_sources: framework.get_core_sources(),
         variant_sources: framework.get_variant_sources(&ctx.board.variant),
         headers: Vec::new(),
+        ino_preludes,
     };
 
     tracing::info!(
