@@ -148,6 +148,8 @@ known limitations.
 | `fbuild bloat lookup <input> --symbol <name>` | Inspect one symbol's size and references. |
 | `fbuild lib-select` | Debug LDF-style library selection. |
 | `fbuild clangd-config [--editor vscode\|zed] [--refresh]` | Emit `.clangd` (editor-neutral) plus per-editor project config (`.vscode/*` or `.zed/*`). `--editor` selects the emitter (default `vscode`); `--refresh` forces `compile_commands.json` regeneration even if it already exists. |
+| `fbuild ide [project_dir] [-e <env>] [--no-launch]` | Open the project as an IDE workspace on stock Zed. See [`fbuild ide`](#fbuild-ide) below. |
+| `fbuild ide select [project_dir] [-e <env>]` | Interactively (or with `-e`) choose the environment used for the IDE config, persist it, and regenerate. |
 | `fbuild clang-tidy` | Run clang-tidy against project sources. |
 | `fbuild iwyu` | Run include-what-you-use analysis. |
 | `fbuild clang-query` | Run a clang-query matcher. |
@@ -155,6 +157,50 @@ known limitations.
 | `fbuild lnk check` | Verify cached `.lnk` resources. |
 | `fbuild lnk add <url>` | Create a `.lnk` manifest for a remote blob. |
 | `fbuild mcp` | Start the MCP server for AI assistant integration. |
+
+### `fbuild ide`
+
+Open (or configure) a project as an IDE workspace on stock Zed
+(FastLED/fbuild#1076 Phase 1). This installs the project's declared
+dependencies, refreshes `compile_commands.json`, writes the same
+editor-neutral `.clangd` as `fbuild clangd-config --editor zed`, merges an
+fbuild-owned `.zed/tasks.json`, and — unless `--no-launch` is given —
+launches Zed.
+
+```bash
+fbuild ide                       # current dir, resolved env, launches Zed
+fbuild ide tests/platform/uno -e uno
+fbuild ide --no-launch            # generate/refresh config only
+fbuild ide select                 # interactive environment picker
+fbuild ide select -e esp32dev     # non-interactive: pick esp32dev directly
+```
+
+Environment resolution, in order: an explicit `-e`, then the environment
+persisted by a previous `fbuild ide` / `fbuild ide select` run
+(`<project>/.fbuild/ide_state.json`), then `platformio.ini`'s default
+environment.
+
+Generated/updated files:
+
+- `compile_commands.json` — regenerated on every `fbuild ide` invocation
+  (equivalent to `fbuild build -t compiledb`). Machine-specific (absolute
+  paths) — **recommend adding it to `.gitignore`**.
+- `.clangd` — editor-neutral, safe to commit.
+- `.zed/settings.json` — merge-don't-clobber (maps `.ino` to C++, sets
+  `lsp.clangd.binary.arguments`); safe to commit.
+- `.zed/tasks.json` — merge-don't-clobber: fbuild only replaces tasks whose
+  label starts with `"fbuild: "` (Build, Build (clean), Deploy, Deploy +
+  Monitor, Monitor, Reset, Select environment); any other task you've added
+  is left untouched. Safe to commit.
+- `.fbuild/ide_state.json` — the persisted environment choice. Local
+  developer state; recommend `.gitignore`.
+
+If `zed` isn't found on `PATH` or in the usual per-OS install locations,
+`fbuild ide` still generates/refreshes every file above and exits
+successfully — it just prints install guidance (`winget install Zed.Zed`,
+`brew install --cask zed`, or <https://zed.dev/download>) instead of
+launching the editor. Config generation is the product; launching Zed is a
+convenience on top of it.
 
 ## Batch And CI Commands
 

@@ -510,6 +510,20 @@ pub enum Commands {
         #[arg(long)]
         refresh: bool,
     },
+    /// Open (or configure) this project as an IDE workspace on stock Zed:
+    /// installs declared deps, refreshes the clangd compile database, emits
+    /// `.clangd` / `.zed/settings.json` / `.zed/tasks.json`, then launches
+    /// Zed (FastLED/fbuild#1076 Phase 1)
+    Ide {
+        project_dir: Option<String>,
+        #[arg(short = 'e', long)]
+        environment: Option<String>,
+        /// Generate/refresh IDE config but don't launch the Zed process.
+        #[arg(long)]
+        no_launch: bool,
+        #[command(subcommand)]
+        action: Option<IdeAction>,
+    },
     /// Build firmware and run it in an emulator for testing
     TestEmu {
         project_dir: Option<String>,
@@ -936,6 +950,26 @@ pub enum BloatCmd {
     },
 }
 
+/// `fbuild ide <action>` — today only `select` (interactive environment
+/// picker). Nested under `Commands::Ide` alongside its own `project_dir` /
+/// `environment` / `no_launch` args: when the first token after `ide`
+/// doesn't match a known action name, clap falls back to treating it as
+/// `Commands::Ide`'s own `project_dir` positional (FastLED/fbuild#1076
+/// Phase 1).
+#[derive(Subcommand, Debug)]
+pub enum IdeAction {
+    /// Interactively choose (and persist) the PlatformIO environment used
+    /// for this project's IDE config, then regenerate the compile database
+    /// and `.clangd` / `.zed/*` files for it.
+    Select {
+        project_dir: Option<String>,
+        /// Non-interactive: pick this environment directly instead of
+        /// prompting.
+        #[arg(short = 'e', long)]
+        environment: Option<String>,
+    },
+}
+
 /// Resolve project_dir: prefer the subcommand's value, fall back to the top-level positional arg,
 /// then default to ".".  This lets callers write either `fbuild build <dir>` or `fbuild <dir> build`.
 pub fn resolve_project_dir(
@@ -962,6 +996,7 @@ pub const KNOWN_SUBCOMMANDS: &[&str] = &[
     "clang-tidy",
     "iwyu",
     "clangd-config",
+    "ide",
     "clang-query",
     "test-emu",
     "lib-select",

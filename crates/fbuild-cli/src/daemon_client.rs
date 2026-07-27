@@ -414,6 +414,18 @@ impl DaemonClient {
             .await
     }
 
+    /// Install declared platform/framework/library dependencies without
+    /// building (FastLED/fbuild#1076 Phase 1: `fbuild ide` runs this before
+    /// generating clangd/editor config so a fresh checkout has headers to
+    /// index).
+    pub async fn install_deps(
+        &self,
+        req: &InstallDepsRequest,
+    ) -> fbuild_core::Result<OperationResponse> {
+        self.post_operation("/api/install-deps", req, Some(LONG_OPERATION_TIMEOUT))
+            .await
+    }
+
     /// Get daemon info (PID, port, uptime, etc.).
     pub async fn daemon_info(&self) -> fbuild_core::Result<DaemonInfoResponse> {
         let resp = self
