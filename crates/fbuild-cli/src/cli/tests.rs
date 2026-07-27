@@ -72,6 +72,26 @@ fn ide_flags_parse() {
     }
 }
 
+// ---------- `fbuild plotter` CLI shape ----------
+
+#[test]
+fn plotter_with_no_args_has_no_port() {
+    let cli = Cli::try_parse_from(["fbuild", "plotter"]).expect("parse");
+    match cli.command {
+        Some(Commands::Plotter { port }) => assert_eq!(port, None),
+        _ => panic!("expected Commands::Plotter"),
+    }
+}
+
+#[test]
+fn plotter_port_flag_parses() {
+    let cli = Cli::try_parse_from(["fbuild", "plotter", "--port", "COM3"]).expect("parse");
+    match cli.command {
+        Some(Commands::Plotter { port }) => assert_eq!(port, Some("COM3".to_string())),
+        _ => panic!("expected Commands::Plotter"),
+    }
+}
+
 #[test]
 fn ide_select_with_no_project_dir_parses_as_select_action() {
     let cli = Cli::try_parse_from(["fbuild", "ide", "select"]).expect("parse");

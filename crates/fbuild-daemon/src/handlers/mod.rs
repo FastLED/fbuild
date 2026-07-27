@@ -6,4 +6,5 @@ pub mod emulator;
 pub mod health;
 pub mod locks;
 pub mod operations;
+pub mod plotter;
 pub mod websockets;

@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>fbuild Serial Plotter</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f4efe4;
+      --panel: #fffdf8;
+      --ink: #1f1b18;
+      --muted: #6d6258;
+      --line: #d9cdbd;
+      --accent: #bd4b2c;
+      --grid: rgba(31, 27, 24, 0.12);
+      --plot-bg: #231c16;
+      --plot-ink: #f4efe8;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #17130f;
+        --panel: #241e18;
+        --ink: #f1e9dd;
+        --muted: #a99c8c;
+        --line: #3a3129;
+        --accent: #e07a52;
+        --grid: rgba(241, 233, 221, 0.10);
+        --plot-bg: #100d0a;
+        --plot-ink: #f1e9dd;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, color-mix(in srgb, var(--panel) 60%, transparent) 0%, transparent 35%),
+        var(--bg);
+      color: var(--ink);
+      font-family: "Consolas", "Menlo", monospace;
+      padding: 20px;
+    }
+    .shell {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.16);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+    .bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, color-mix(in srgb, var(--panel) 90%, white 10%) 0%, var(--panel) 100%);
+    }
+    .title {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-right: auto;
+    }
+    select, input[type="text"], input[type="number"] {
+      font: inherit;
+      font-size: 12px;
+      color: var(--ink);
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 5px 8px;
+    }
+    button {
+      font: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink);
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+    button:hover { border-color: var(--accent); }
+    button:disabled { opacity: 0.5; cursor: default; }
+    button.primary {
+      background: var(--accent);
+      color: #fffaf2;
+      border-color: var(--accent);
+    }
+    label.field {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    input[type="number"] { width: 76px; }
+    .status {
+      font-size: 12px;
+      color: var(--muted);
+      padding: 0 18px;
+      padding-top: 8px;
+    }
+    .status .dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--muted);
+      margin-right: 6px;
+    }
+    .status.connected .dot { background: #4caf6b; }
+    .status.error .dot { background: #c0392b; }
+    .chart-wrap {
+      position: relative;
+      margin: 14px 18px 6px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+    canvas#chart {
+      display: block;
+      width: 100%;
+      height: 320px;
+      background: var(--plot-bg);
+    }
+    .legend {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 8px;
+      padding: 8px 10px;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--plot-ink);
+      white-space: nowrap;
+    }
+    .legend-swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      flex: none;
+    }
+    .tail-wrap {
+      margin: 6px 18px 18px;
+    }
+    .tail-wrap h2 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 10px 0 6px;
+    }
+    #tail {
+      margin: 0;
+      max-height: 140px;
+      overflow-y: auto;
+      background: var(--plot-bg);
+      color: var(--plot-ink);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font: 12px/1.5 "Consolas", "Menlo", monospace;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 18px 16px;
+      border-top: 1px solid var(--line);
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .accent { color: var(--accent); font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="bar">
+      <div class="title">fbuild Serial Plotter</div>
+      <label class="field">
+        Port
+        <select id="port-select"><option value="">(loading ports...)</option></select>
+      </label>
+      <button id="refresh-ports" title="Refresh port list">Refresh</button>
+      <label class="field">
+        Baud
+        <input type="number" id="baud" value="115200" min="300" step="1">
+      </label>
+      <button id="connect" class="primary">Connect</button>
+      <button id="disconnect" disabled>Disconnect</button>
+      <button id="pause" disabled>Pause</button>
+      <button id="clear">Clear</button>
+    </div>
+    <div class="status" id="status"><span class="dot"></span><span id="status-text">Not connected</span></div>
+    <div class="chart-wrap">
+      <canvas id="chart"></canvas>
+      <div class="legend" id="legend"></div>
+    </div>
+    <div class="tail-wrap">
+      <h2>Raw output</h2>
+      <pre id="tail"></pre>
+    </div>
+    <div class="footer">
+      <div>Numeric series parsed Arduino-Serial-Plotter style: whitespace/comma-separated numbers, optional <span class="accent">name:value</span> labels.</div>
+      <div>/ws/serial-monitor</div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    "use strict";
+
+    // -----------------------------------------------------------------
+    // Config / constants
+    // -----------------------------------------------------------------
+    const MAX_SAMPLES = 600;      // per-series scrolling window
+    const MAX_TAIL_LINES = 300;   // raw output scrollback
+    const SERIES_COLORS = [
+      "#e07a52", "#5aa8d6", "#7cc47f", "#e0c25a",
+      "#c07ad6", "#5ad6c2", "#d65a7a", "#a9c45a",
+    ];
+
+    // -----------------------------------------------------------------
+    // DOM
+    // -----------------------------------------------------------------
+    const portSelect = document.getElementById("port-select");
+    const refreshPortsBtn = document.getElementById("refresh-ports");
+    const baudInput = document.getElementById("baud");
+    const connectBtn = document.getElementById("connect");
+    const disconnectBtn = document.getElementById("disconnect");
+    const pauseBtn = document.getElementById("pause");
+    const clearBtn = document.getElementById("clear");
+    const statusEl = document.getElementById("status");
+    const statusText = document.getElementById("status-text");
+    const canvas = document.getElementById("chart");
+    const ctx2d = canvas.getContext("2d");
+    const legendEl = document.getElementById("legend");
+    const tailEl = document.getElementById("tail");
+
+    // -----------------------------------------------------------------
+    // State
+    // -----------------------------------------------------------------
+    /** @type {Map<string, number[]>} */
+    let series = new Map();
+    let seriesOrder = [];
+    let paused = false;
+    let ws = null;
+    let clientId = "plotter-" + Math.random().toString(36).slice(2) + Date.now().toString(36);
+    let dirty = false;
+
+    function setStatus(text, cls) {
+      statusText.textContent = text;
+      statusEl.className = "status" + (cls ? " " + cls : "");
+    }
+
+    // -----------------------------------------------------------------
+    // Port list (GET populated via POST /api/devices/list)
+    // -----------------------------------------------------------------
+    async function loadPorts(preselect) {
+      try {
+        const resp = await fetch("/api/devices/list", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: "{}",
+        });
+        const data = await resp.json();
+        const devices = (data && data.devices) || [];
+        portSelect.innerHTML = "";
+        if (devices.length === 0) {
+          const opt = document.createElement("option");
+          opt.value = "";
+          opt.textContent = "(no ports found)";
+          portSelect.appendChild(opt);
+        }
+        for (const d of devices) {
+          const opt = document.createElement("option");
+          opt.value = d.port;
+          const label = d.product_name ? `${d.port} — ${d.product_name}` : d.port;
+          opt.textContent = label;
+          portSelect.appendChild(opt);
+        }
+        if (preselect) {
+          const hasIt = Array.from(portSelect.options).some((o) => o.value === preselect);
+          if (!hasIt) {
+            const opt = document.createElement("option");
+            opt.value = preselect;
+            opt.textContent = preselect;
+            portSelect.insertBefore(opt, portSelect.firstChild);
+          }
+          portSelect.value = preselect;
+        }
+      } catch (e) {
+        setStatus("Failed to list ports: " + e, "error");
+      }
+    }
+
+    // -----------------------------------------------------------------
+    // Serial line parsing (Arduino Serial Plotter convention)
+    // -----------------------------------------------------------------
+    function parseLine(line) {
+      const trimmed = line.trim();
+      if (!trimmed) return;
+      const tokens = trimmed.split(/[\s,]+/).filter(Boolean);
+      let anonIndex = 0;
+      for (const token of tokens) {
+        let name, valueStr;
+        const colonIdx = token.lastIndexOf(":");
+        if (colonIdx > 0 && colonIdx < token.length - 1) {
+          name = token.slice(0, colonIdx);
+          valueStr = token.slice(colonIdx + 1);
+        } else {
+          name = "Value" + anonIndex;
+          valueStr = token;
+          anonIndex++;
+        }
+        const value = Number(valueStr);
+        if (!Number.isFinite(value)) continue;
+        if (!series.has(name)) {
+          series.set(name, []);
+          seriesOrder.push(name);
+        }
+        const buf = series.get(name);
+        buf.push(value);
+        if (buf.length > MAX_SAMPLES) buf.shift();
+      }
+      dirty = true;
+    }
+
+    function appendTail(line) {
+      const atBottom = tailEl.scrollTop + tailEl.clientHeight >= tailEl.scrollHeight - 4;
+      tailEl.textContent += line + "\n";
+      const lines = tailEl.textContent.split("\n");
+      if (lines.length > MAX_TAIL_LINES) {
+        tailEl.textContent = lines.slice(lines.length - MAX_TAIL_LINES).join("\n");
+      }
+      if (atBottom) tailEl.scrollTop = tailEl.scrollHeight;
+    }
+
+    function clearAll() {
+      series = new Map();
+      seriesOrder = [];
+      tailEl.textContent = "";
+      dirty = true;
+    }
+
+    // -----------------------------------------------------------------
+    // Canvas chart (hand-rolled, no dependencies)
+    // -----------------------------------------------------------------
+    function resizeCanvas() {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      const w = Math.max(1, Math.round(rect.width * dpr));
+      const h = Math.max(1, Math.round(rect.height * dpr));
+      if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w;
+        canvas.height = h;
+      }
+      dirty = true;
+    }
+
+    function colorFor(index) {
+      return SERIES_COLORS[index % SERIES_COLORS.length];
+    }
+
+    function drawChart() {
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx2d.clearRect(0, 0, w, h);
+
+      const styles = getComputedStyle(document.documentElement);
+      const plotBg = styles.getPropertyValue("--plot-bg").trim() || "#231c16";
+      const gridColor = "rgba(255,255,255,0.08)";
+      ctx2d.fillStyle = plotBg;
+      ctx2d.fillRect(0, 0, w, h);
+
+      if (seriesOrder.length === 0) {
+        renderLegend();
+        return;
+      }
+
+      let min = Infinity;
+      let max = -Infinity;
+      for (const name of seriesOrder) {
+        for (const v of series.get(name)) {
+          if (v < min) min = v;
+          if (v > max) max = v;
+        }
+      }
+      if (!Number.isFinite(min) || !Number.isFinite(max)) {
+        renderLegend();
+        return;
+      }
+      if (min === max) {
+        min -= 1;
+        max += 1;
+      }
+      const pad = (max - min) * 0.08;
+      min -= pad;
+      max += pad;
+
+      const marginLeft = 46;
+      const marginRight = 8;
+      const marginTop = 10;
+      const marginBottom = 10;
+      const plotW = Math.max(1, w - marginLeft - marginRight);
+      const plotH = Math.max(1, h - marginTop - marginBottom);
+
+      // Grid + axis labels (4 horizontal lines)
+      ctx2d.strokeStyle = gridColor;
+      ctx2d.lineWidth = 1;
+      ctx2d.font = `${11 * (window.devicePixelRatio || 1)}px Consolas, Menlo, monospace`;
+      ctx2d.fillStyle = "rgba(255,255,255,0.55)";
+      ctx2d.textBaseline = "middle";
+      const gridLines = 4;
+      for (let i = 0; i <= gridLines; i++) {
+        const y = marginTop + (plotH * i) / gridLines;
+        ctx2d.beginPath();
+        ctx2d.moveTo(marginLeft, y);
+        ctx2d.lineTo(w - marginRight, y);
+        ctx2d.stroke();
+        const value = max - ((max - min) * i) / gridLines;
+        ctx2d.fillText(value.toFixed(2), 4, y);
+      }
+
+      // Series polylines
+      for (let s = 0; s < seriesOrder.length; s++) {
+        const name = seriesOrder[s];
+        const buf = series.get(name);
+        if (buf.length < 2) continue;
+        ctx2d.strokeStyle = colorFor(s);
+        ctx2d.lineWidth = 1.6 * (window.devicePixelRatio || 1);
+        ctx2d.beginPath();
+        for (let i = 0; i < buf.length; i++) {
+          const x = marginLeft + (plotW * i) / (MAX_SAMPLES - 1);
+          const t = (buf[i] - min) / (max - min);
+          const y = marginTop + plotH * (1 - t);
+          if (i === 0) ctx2d.moveTo(x, y);
+          else ctx2d.lineTo(x, y);
+        }
+        ctx2d.stroke();
+      }
+
+      renderLegend();
+    }
+
+    function renderLegend() {
+      legendEl.innerHTML = "";
+      for (let s = 0; s < seriesOrder.length; s++) {
+        const name = seriesOrder[s];
+        const buf = series.get(name);
+        const last = buf.length ? buf[buf.length - 1] : 0;
+        const item = document.createElement("div");
+        item.className = "legend-item";
+        const swatch = document.createElement("span");
+        swatch.className = "legend-swatch";
+        swatch.style.background = colorFor(s);
+        item.appendChild(swatch);
+        const text = document.createElement("span");
+        text.textContent = `${name}: ${Number.isFinite(last) ? last.toFixed(2) : "—"}`;
+        item.appendChild(text);
+        legendEl.appendChild(item);
+      }
+      if (seriesOrder.length === 0) {
+        const item = document.createElement("div");
+        item.className = "legend-item";
+        item.textContent = "Waiting for numeric data...";
+        legendEl.appendChild(item);
+      }
+    }
+
+    function animationLoop() {
+      if (dirty) {
+        drawChart();
+        dirty = false;
+      }
+      requestAnimationFrame(animationLoop);
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+    requestAnimationFrame(animationLoop);
+
+    // -----------------------------------------------------------------
+    // WebSocket connection to /ws/serial-monitor
+    // -----------------------------------------------------------------
+    function wsUrl() {
+      const proto = location.protocol === "https:" ? "wss:" : "ws:";
+      return `${proto}//${location.host}/ws/serial-monitor`;
+    }
+
+    function connect() {
+      const port = portSelect.value;
+      if (!port) {
+        setStatus("Select a port first", "error");
+        return;
+      }
+      const baudRate = parseInt(baudInput.value, 10) || 115200;
+
+      setStatus("Connecting to " + port + "...", "");
+      ws = new WebSocket(wsUrl());
+
+      ws.addEventListener("open", () => {
+        ws.send(JSON.stringify({
+          type: "attach",
+          client_id: clientId,
+          port: port,
+          baud_rate: baudRate,
+          open_if_needed: true,
+          pre_acquire_writer: false,
+        }));
+      });
+
+      ws.addEventListener("message", (event) => {
+        let msg;
+        try {
+          msg = JSON.parse(event.data);
+        } catch (e) {
+          return;
+        }
+        switch (msg.type) {
+          case "attached":
+            if (msg.success) {
+              setStatus("Connected to " + port + " @ " + baudRate, "connected");
+              connectBtn.disabled = true;
+              disconnectBtn.disabled = false;
+              pauseBtn.disabled = false;
+              portSelect.disabled = true;
+              baudInput.disabled = true;
+            } else {
+              setStatus("Attach failed: " + msg.message, "error");
+            }
+            break;
+          case "data":
+            for (const line of msg.lines || []) {
+              appendTail(line);
+              if (!paused) parseLine(line);
+            }
+            break;
+          case "port_disconnected":
+            setStatus("Port disconnected: " + (msg.message || msg.reason || ""), "error");
+            teardownConnection();
+            break;
+          case "error":
+            setStatus("Error: " + msg.message, "error");
+            break;
+          default:
+            break;
+        }
+      });
+
+      ws.addEventListener("close", () => {
+        if (!disconnectBtn.disabled) {
+          setStatus("Connection closed", "");
+        }
+        teardownConnection();
+      });
+
+      ws.addEventListener("error", () => {
+        setStatus("WebSocket error", "error");
+      });
+    }
+
+    function teardownConnection() {
+      connectBtn.disabled = false;
+      disconnectBtn.disabled = true;
+      pauseBtn.disabled = true;
+      portSelect.disabled = false;
+      baudInput.disabled = false;
+    }
+
+    function disconnect() {
+      if (ws) {
+        try {
+          ws.send(JSON.stringify({ type: "detach" }));
+        } catch (e) {
+          // socket may already be closing
+        }
+        ws.close();
+        ws = null;
+      }
+      teardownConnection();
+      setStatus("Not connected", "");
+    }
+
+    // -----------------------------------------------------------------
+    // Controls
+    // -----------------------------------------------------------------
+    connectBtn.addEventListener("click", connect);
+    disconnectBtn.addEventListener("click", disconnect);
+    clearBtn.addEventListener("click", clearAll);
+    refreshPortsBtn.addEventListener("click", () => loadPorts(portSelect.value));
+    pauseBtn.addEventListener("click", () => {
+      paused = !paused;
+      pauseBtn.textContent = paused ? "Resume" : "Pause";
+    });
+
+    // -----------------------------------------------------------------
+    // Init: parse ?port= from the query string (set by `fbuild plotter
+    // --port <port>`), populate the selector, and auto-connect if a
+    // port was pinned.
+    // -----------------------------------------------------------------
+    const params = new URLSearchParams(location.search);
+    const initialPort = params.get("port") || "";
+    loadPorts(initialPort).then(() => {
+      if (initialPort) connect();
+    });
+  })();
+  </script>
+</body>
+</html>

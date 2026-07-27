@@ -153,6 +153,12 @@ fn build_fbuild_tasks(env_name: &str, debug_chip: Option<&str>) -> Vec<ZedTask> 
             str_args(vec!["monitor", "-e", env_name]),
         ),
         task("Reset", "fbuild", str_args(vec!["reset", "-e", env_name])),
+        // Opens the daemon-served Serial Plotter page in the default
+        // browser (FastLED/fbuild#1076 Phase 2). No port pinned here --
+        // the page's own port selector (populated from
+        // /api/devices/list) is how the user picks a port, so this task
+        // works regardless of which environment/port is active.
+        task("Serial Plotter", "fbuild", str_args(vec!["plotter"])),
         task(
             "Select environment",
             "fbuild",
@@ -683,7 +689,7 @@ mod tests {
     #[test]
     fn build_fbuild_tasks_pins_environment_in_args() {
         let tasks = build_fbuild_tasks("esp32dev", None);
-        assert_eq!(tasks.len(), 7);
+        assert_eq!(tasks.len(), 8);
         for label in [
             "fbuild: Build",
             "fbuild: Build (clean)",
@@ -691,6 +697,7 @@ mod tests {
             "fbuild: Deploy + Monitor",
             "fbuild: Monitor",
             "fbuild: Reset",
+            "fbuild: Serial Plotter",
             "fbuild: Select environment",
         ] {
             assert!(
@@ -705,6 +712,11 @@ mod tests {
             .find(|t| t.label == "fbuild: Select environment")
             .unwrap();
         assert_eq!(select.args, vec!["ide", "select"]);
+        let plotter = tasks
+            .iter()
+            .find(|t| t.label == "fbuild: Serial Plotter")
+            .unwrap();
+        assert_eq!(plotter.args, vec!["plotter"]);
         // No debug-chip resolved -> no debug-server task.
         assert!(!tasks.iter().any(|t| t.label.contains("Debug server")));
     }
@@ -712,7 +724,7 @@ mod tests {
     #[test]
     fn build_fbuild_tasks_adds_debug_server_task_when_chip_resolved() {
         let tasks = build_fbuild_tasks("rpipico", Some("RP2040"));
-        assert_eq!(tasks.len(), 8);
+        assert_eq!(tasks.len(), 9);
         let debug = tasks
             .iter()
             .find(|t| t.label == "fbuild: Debug server (probe-rs)")

@@ -25,6 +25,7 @@ use super::ide::{run_ide, run_ide_select};
 use super::lnk::run_lnk;
 use super::monitor_parse::parse_monitor_flags;
 use super::pio::{pio_build, pio_deploy, pio_monitor};
+use super::plotter::run_plotter;
 use super::port_scan::run_port;
 use super::purge::{run_purge, run_purge_gc};
 use super::reset::run_reset;
@@ -479,6 +480,7 @@ pub async fn async_main() {
                 run_ide(project_dir, environment, no_launch).await
             }
         },
+        Some(Commands::Plotter { port }) => run_plotter(port).await,
         Some(Commands::TestEmu {
             project_dir,
             environment,

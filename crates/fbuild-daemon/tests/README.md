@@ -19,3 +19,6 @@ cargo test --release -p fbuild-daemon -- --ignored
   a daemon with an open client connection, a fresh daemon must still be
   able to bind the same port. The test is `#[ignore]` because it leaves
   port state lingering and depends on `taskkill`/`kill` being on PATH.
+- `test_plotter_route.rs` — asserts `GET /plotter` (FastLED/fbuild#1076
+  Phase 2) is registered and serves the self-contained Serial Plotter
+  page that attaches to the existing `/ws/serial-monitor` WebSocket.
