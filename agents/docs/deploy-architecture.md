@@ -89,21 +89,40 @@ The follow-up issues track the full polymorphic version:
 
 ## RP2040/RP2350 deploy tunables
 
-The stock BOOTSEL path (`crates/fbuild-deploy/src/rp2040.rs`) has
-three stage budgets that foreign hosts — first-plug driver installs,
-deep hub chains — may legitimately exceed (FastLED/fbuild#1082).
-Each env var accepts integer seconds in 1..=600; anything else logs
-a warning and keeps the default:
+`crates/fbuild-deploy/src/rp2040.rs` (`--transport picotool|uf2`,
+FastLED/fbuild#1162) selects which stock transport is tried first:
+
+- **`picotool` (default).** After the unchanged pre-touch/1200-bps-touch/
+  UF2-preparation steps and a best-effort bounded BOOTSEL volume wait
+  (mounting is not required — failure to mount only affects the
+  mass-storage fallback), fbuild runs a Windows-only PICOBOOT driver
+  preflight (`crates/fbuild-deploy/src/rp2040_preflight.rs`,
+  FastLED/fbuild#1163: classifies `present_usb_problem_devices()` for a
+  `VID_2E8A&PID_0003` composite-interface devnode stuck at a
+  `CM_PROB_FAILED_INSTALL`-family Config Manager code), then a bounded
+  `picotool info` probe, then `picotool load <uf2> -f -x`. A driver-missing
+  preflight result skips picotool outright (no probe/load timeout burned)
+  and names the exact devnode + WinUSB (Zadig) guidance. Any picotool
+  failure — preflight skip, probe failure, or load failure — falls back to
+  the BOOTSEL mass-storage path below; if that also fails, the combined
+  error names both transports' failures.
+- **`uf2`.** Preserves the historical order exactly: BOOTSEL mass-storage
+  first (with bounded transfer retries across fresh enumerations), managed
+  picotool as the fallback.
+
+Each stage-timeout env var accepts integer seconds in 1..=600; anything
+else logs a warning and keeps the default:
 
 | Env var | Default | Governs |
 |---|---|---|
 | `FBUILD_RP2040_BOOTLOADER_TIMEOUT_SECS` | 10 s | BOOTSEL volume discovery after the 1200-bps touch (and re-discovery between transfer retries) |
 | `FBUILD_RP2040_UF2_WRITE_TIMEOUT_SECS` | 60 s | Per-attempt watchdog on the `NEW.UF2` write; a timed-out write feeds the normal retry/picotool-fallback path |
 | `FBUILD_RP2040_POST_DEPLOY_TIMEOUT_SECS` | 15 s | Eject watch after the write, and the runtime-CDC reappearance wait |
+| `FBUILD_RP2040_PICOTOOL_TIMEOUT_SECS` | 60 s | `picotool load -f -x` budget, both as the picotool-primary load and the picotool-fallback load |
 
-Outcome note: once the eject watch (or a PICOBOOT load through the
-managed picotool fallback) has confirmed the ROM accepted the image,
-a quiet runtime-CDC window no longer fails the deploy — it reports
+Outcome note: once the eject watch (mass-storage path) or a successful
+picotool load (primary or fallback) has confirmed the ROM accepted the
+image, a quiet runtime-CDC window no longer fails the deploy — it reports
 **success with no port** ("flashed, CDC unconfirmed"), so CI does not
 re-flash a healthy board whose first-plug driver install outlived the
 window. A genuine port-enumeration error still fails.

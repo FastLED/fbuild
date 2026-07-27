@@ -84,6 +84,15 @@ Common options include `--port`, `--clean`, `--monitor`, `--timeout`,
 `--skip-build`, `--baud`, `--to device|emu|emulator`, `--emulator`, and
 `--output-dir`.
 
+`--transport picotool|uf2` selects the RP2040/RP2350 deploy transport
+(FastLED/fbuild#1162). `picotool` is the default: fbuild tries the PICOBOOT
+vendor interface first (Windows preflight checks for a missing WinUSB driver
+before attempting it, then a bounded `picotool info` probe, then
+`picotool load -f -x`) and falls back to BOOTSEL mass-storage on any
+failure. `uf2` preserves the historical mass-storage-first order with
+picotool as the fallback. The picotool load timeout defaults to 60s and is
+configurable with `FBUILD_RP2040_PICOTOOL_TIMEOUT_SECS`.
+
 ### `fbuild monitor`
 
 Attach to serial output.
