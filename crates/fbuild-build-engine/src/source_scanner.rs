@@ -762,13 +762,24 @@ fn walk_sources(dir: &Path) -> Vec<PathBuf> {
 }
 
 /// Extract function prototypes from concatenated .ino source using a C++ parser.
+///
+/// Skips any prototype whose return type or parameter types reference a
+/// type declared elsewhere in `source` (struct/class/union/enum, `typedef`,
+/// or `using` alias) — see [`collect_sketch_defined_type_names`] and
+/// [`signature_references_sketch_type`] for FastLED/fbuild#1196's rationale:
+/// emitting such a prototype at the top of the file (ahead of the type
+/// declaration) is *always* a compile error, so skipping it just means the
+/// function falls back to ordinary declare-before-use — exactly the
+/// documented arduino-cli workaround, minus the error.
 pub fn extract_function_prototypes(source: &str) -> Vec<String> {
     let Some(tree) = parse_cpp_source(source) else {
         return Vec::new();
     };
 
+    let sketch_types = collect_sketch_defined_type_names(tree.root_node(), source);
+
     let mut raw_prototypes = Vec::new();
-    collect_function_prototypes(tree.root_node(), source, &mut raw_prototypes);
+    collect_function_prototypes(tree.root_node(), source, &sketch_types, &mut raw_prototypes);
     let mut seen = HashSet::new();
     raw_prototypes
         .into_iter()
@@ -783,9 +794,14 @@ fn parse_cpp_source(source: &str) -> Option<tree_sitter::Tree> {
     parser.parse(source, None)
 }
 
-fn collect_function_prototypes(node: Node<'_>, source: &str, prototypes: &mut Vec<String>) {
+fn collect_function_prototypes(
+    node: Node<'_>,
+    source: &str,
+    sketch_types: &HashSet<String>,
+    prototypes: &mut Vec<String>,
+) {
     if node.kind() == "function_definition" {
-        if let Some(prototype) = prototype_from_function_definition(node, source) {
+        if let Some(prototype) = prototype_from_function_definition(node, source, sketch_types) {
             prototypes.push(prototype);
         }
         return;
@@ -793,12 +809,145 @@ fn collect_function_prototypes(node: Node<'_>, source: &str, prototypes: &mut Ve
 
     let mut cursor = node.walk();
     for child in node.children(&mut cursor) {
-        collect_function_prototypes(child, source, prototypes);
+        collect_function_prototypes(child, source, sketch_types, prototypes);
     }
 }
 
-fn prototype_from_function_definition(node: Node<'_>, source: &str) -> Option<String> {
+/// Collect the names of every type the sketch itself declares:
+/// `struct`/`class`/`union`/`enum` names, `typedef` target names, and
+/// `using X = ...` alias names. Operates on the root of the *combined*
+/// (multi-tab-concatenated) parse tree, so a type declared in one tab
+/// suppresses prototypes referencing it from any other tab.
+fn collect_sketch_defined_type_names(node: Node<'_>, source: &str) -> HashSet<String> {
+    let mut names = HashSet::new();
+    collect_sketch_defined_type_names_into(node, source, &mut names);
+    names
+}
+
+fn collect_sketch_defined_type_names_into(
+    node: Node<'_>,
+    source: &str,
+    names: &mut HashSet<String>,
+) {
+    match node.kind() {
+        "struct_specifier" | "class_specifier" | "union_specifier" | "enum_specifier" => {
+            if let Some(name_node) = node.child_by_field_name("name") {
+                collect_type_identifiers(name_node, source, names);
+            }
+        }
+        "type_definition" => {
+            let mut cursor = node.walk();
+            for declarator in node.children_by_field_name("declarator", &mut cursor) {
+                if let Some(name) = declared_type_identifier_name(declarator, source) {
+                    names.insert(name);
+                }
+            }
+        }
+        "alias_declaration" => {
+            if let Some(name_node) = node.child_by_field_name("name") {
+                collect_type_identifiers(name_node, source, names);
+            }
+        }
+        _ => {}
+    }
+
+    let mut cursor = node.walk();
+    for child in node.children(&mut cursor) {
+        collect_sketch_defined_type_names_into(child, source, names);
+    }
+}
+
+/// Unwrap declarator wrapper nodes (`pointer_declarator`, `array_declarator`,
+/// `function_declarator`, etc.) down to the bare `type_identifier` naming
+/// the declared type, without descending into a `function_declarator`'s
+/// `parameters` field (that subtree names *other* types, not this one).
+fn declared_type_identifier_name(node: Node<'_>, source: &str) -> Option<String> {
+    match node.kind() {
+        "type_identifier" => Some(node_text(node, source)),
+        "pointer_declarator"
+        | "reference_declarator"
+        | "array_declarator"
+        | "function_declarator"
+        | "parenthesized_declarator"
+        | "attributed_declarator" => node
+            .child_by_field_name("declarator")
+            .and_then(|child| declared_type_identifier_name(child, source)),
+        _ => None,
+    }
+}
+
+/// Collect every `type_identifier` token's text within a subtree. Used both
+/// to read struct/class/union/enum/using names (where the name field may be
+/// a `template_type` wrapping a `type_identifier`) and, in
+/// [`signature_references_sketch_type`], to scan a function's return/parameter
+/// *type* subtrees for references to sketch-defined types.
+fn collect_type_identifiers(node: Node<'_>, source: &str, out: &mut HashSet<String>) {
+    if node.kind() == "type_identifier" {
+        out.insert(node_text(node, source));
+    }
+    let mut cursor = node.walk();
+    for child in node.children(&mut cursor) {
+        collect_type_identifiers(child, source, out);
+    }
+}
+
+fn node_text(node: Node<'_>, source: &str) -> String {
+    source
+        .get(node.start_byte()..node.end_byte())
+        .unwrap_or_default()
+        .to_string()
+}
+
+/// Whether a function's return type or any parameter type references one of
+/// `sketch_types`.
+///
+/// Type-position based (not substring/token matching on the rendered
+/// signature): walks only the `type` field of the function's declarator
+/// (the return type) and the `type` field of each `parameter_declaration`
+/// / `optional_parameter_declaration` in its `parameter_list`. This avoids
+/// false positives from parameter *names* that happen to collide with a
+/// declared type name (e.g. `void ok(int myStruct)` keeps its prototype
+/// even if a `MyStruct` type exists elsewhere, since `myStruct` never
+/// appears in a type position and the identifiers differ in case anyway).
+fn signature_references_sketch_type(
+    node: Node<'_>,
+    source: &str,
+    sketch_types: &HashSet<String>,
+) -> bool {
+    if sketch_types.is_empty() {
+        return false;
+    }
+
+    let mut referenced = HashSet::new();
+    if let Some(return_type) = node.child_by_field_name("type") {
+        collect_type_identifiers(return_type, source, &mut referenced);
+    }
+    if let Some(parameter_list) = find_descendant_kind(node, "parameter_list") {
+        let mut cursor = parameter_list.walk();
+        for param in parameter_list.children(&mut cursor) {
+            if matches!(
+                param.kind(),
+                "parameter_declaration" | "optional_parameter_declaration"
+            ) {
+                if let Some(param_type) = param.child_by_field_name("type") {
+                    collect_type_identifiers(param_type, source, &mut referenced);
+                }
+            }
+        }
+    }
+
+    referenced.iter().any(|name| sketch_types.contains(name))
+}
+
+fn prototype_from_function_definition(
+    node: Node<'_>,
+    source: &str,
+    sketch_types: &HashSet<String>,
+) -> Option<String> {
     if has_skipped_function_context(node) {
+        return None;
+    }
+    if signature_references_sketch_type(node, source, sketch_types) {
         return None;
     }
 

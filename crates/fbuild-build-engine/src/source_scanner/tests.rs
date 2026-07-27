@@ -424,6 +424,80 @@ void Controller::external_tick() {}
     assert!(!protos.iter().any(|p| p.contains("MAKE_FUNC")));
 }
 
+// =========================================================================
+// FastLED/fbuild#1196: skip auto-prototypes referencing sketch-defined
+// types (arduino-cli's placement bug class — arduino-cli#2161/#2977/#2931 —
+// is avoided by never emitting the broken prototype rather than by moving
+// the insertion point).
+// =========================================================================
+
+#[test]
+fn test_prototype_skipped_when_parameter_type_is_sketch_defined_struct() {
+    let source =
+        "struct MyStruct { int value; };\n\nvoid draw(MyStruct s) {\n}\n\nvoid tick(int n) {\n}\n";
+    let protos = extract_function_prototypes(source);
+    assert!(
+        !protos.iter().any(|p| p.contains("draw")),
+        "draw(MyStruct) references a sketch-defined type and must not get an auto-prototype: {protos:?}"
+    );
+    assert!(
+        protos.iter().any(|p| p == "void tick(int n)"),
+        "builtin-typed sibling function should still get its prototype: {protos:?}"
+    );
+}
+
+#[test]
+fn test_prototype_skipped_when_return_type_is_sketch_defined_struct() {
+    let source = "struct MyStruct { int value; };\n\nMyStruct make() {\n  return MyStruct{};\n}\n";
+    let protos = extract_function_prototypes(source);
+    assert!(
+        !protos.iter().any(|p| p.contains("make")),
+        "make() returning MyStruct must not get an auto-prototype: {protos:?}"
+    );
+}
+
+#[test]
+fn test_prototype_skipped_for_typedef_type() {
+    let source = "typedef struct { int value; } MyStruct;\n\nvoid draw(MyStruct s) {\n}\n";
+    let protos = extract_function_prototypes(source);
+    assert!(
+        !protos.iter().any(|p| p.contains("draw")),
+        "draw(MyStruct) where MyStruct is a typedef must not get an auto-prototype: {protos:?}"
+    );
+}
+
+#[test]
+fn test_prototype_skipped_for_using_alias_type() {
+    let source = "using MyAlias = int[4];\n\nvoid draw(MyAlias s) {\n}\n";
+    let protos = extract_function_prototypes(source);
+    assert!(
+        !protos.iter().any(|p| p.contains("draw")),
+        "draw(MyAlias) where MyAlias is a using-alias must not get an auto-prototype: {protos:?}"
+    );
+}
+
+#[test]
+fn test_prototype_skipped_for_pointer_and_reference_to_sketch_type() {
+    let source = "struct MyStruct { int value; };\n\nvoid byPointer(MyStruct* p) {\n}\n\nvoid byRef(MyStruct& r) {\n}\n";
+    let protos = extract_function_prototypes(source);
+    assert!(!protos.iter().any(|p| p.contains("byPointer")));
+    assert!(!protos.iter().any(|p| p.contains("byRef")));
+}
+
+#[test]
+fn test_prototype_kept_when_parameter_name_only_collides_with_type_name() {
+    // Type-position-based detection: `myStruct` here is a parameter *name*
+    // (lowercase, differs from `MyStruct`), never appears in a type
+    // position, so it must not suppress the prototype even though a
+    // `MyStruct` type exists elsewhere in the sketch.
+    let source = "struct MyStruct { int value; };\n\nvoid ok(int myStruct) {\n}\n";
+    let protos = extract_function_prototypes(source);
+    assert!(
+        protos.iter().any(|p| p == "void ok(int myStruct)"),
+        "parameter name colliding with a type name must not suppress the prototype: {protos:?}"
+    );
+}
+
 #[test]
 fn test_line_numbers_preserved() {
     let (_tmp, src_dir, build_dir) =
@@ -709,4 +783,48 @@ fn test_main_cpp_mode_emits_no_preludes() {
     let collection = scanner.scan_all(None, None).unwrap();
     assert!(collection.ino_preludes.is_empty());
     assert!(!build_dir.join("sketch.ino.prelude.h").exists());
+}
+
+#[test]
+fn test_multi_tab_type_declared_in_one_tab_suppresses_prototype_in_another() {
+    // FastLED/fbuild#1196: the sketch-defined-type set must be collected
+    // from the FULL concatenated (multi-tab) text, so a type declared in
+    // tab A suppresses a prototype for a function in tab B that uses it.
+    let (_tmp, src_dir, build_dir) = setup_project(&[
+        (
+            "main.ino",
+            "struct MyStruct { int value; };\n\nvoid setup() {}\nvoid loop() {}\n",
+        ),
+        (
+            "a_tab.ino",
+            "void draw(MyStruct s) {}\nvoid tick(int n) {}\n",
+        ),
+    ]);
+    let scanner = SourceScanner::new(&src_dir, &build_dir);
+    let (sources, ino_preludes) = scanner
+        .scan_sketch_sources_filtered_with_include_roots_and_preludes(None, &[])
+        .unwrap();
+    assert_eq!(sources.len(), 1);
+
+    let ino_cpp_content = fs::read_to_string(&sources[0]).unwrap();
+    assert!(
+        !ino_cpp_content.contains("void draw(MyStruct s);"),
+        "draw(MyStruct) prototype must be suppressed even though MyStruct is declared in a different tab: {ino_cpp_content}"
+    );
+    assert!(ino_cpp_content.contains("void tick(int n);"));
+
+    // Prelude/IDE parity: the machine-written prefix in every tab's prelude
+    // header must be an exact prefix of the generated `.ino.cpp` (same
+    // prototype list feeds both, per `extract_function_prototypes`).
+    for (raw_ino, prelude_path) in &ino_preludes {
+        let prelude_content = fs::read_to_string(prelude_path).unwrap();
+        assert!(
+            !prelude_content.contains("void draw(MyStruct s);"),
+            "prelude for {raw_ino:?} must not carry the suppressed prototype"
+        );
+    }
+    let (main_ino, main_prelude_path) = &ino_preludes[0];
+    assert!(main_ino.ends_with("main.ino"));
+    let main_prelude = fs::read_to_string(main_prelude_path).unwrap();
+    assert!(ino_cpp_content.starts_with(&main_prelude));
 }
