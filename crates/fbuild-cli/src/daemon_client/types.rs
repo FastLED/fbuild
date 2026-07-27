@@ -57,6 +57,21 @@ pub struct BuildRequest {
     pub bloat_analysis: bool,
 }
 
+/// `POST /api/install-deps` request. Mirrors
+/// `fbuild_daemon::models::InstallDepsRequest` field-for-field.
+#[derive(Clone, Debug, Serialize)]
+pub struct InstallDepsRequest {
+    pub project_dir: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub environment: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub request_id: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub caller_pid: Option<u32>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub caller_cwd: Option<String>,
+}
+
 #[derive(Clone, Debug, Serialize)]
 pub struct DeployRequest {
     pub project_dir: String,

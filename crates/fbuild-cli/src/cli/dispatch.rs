@@ -6,7 +6,7 @@ use std::path::Path;
 
 use crate::{daemon_client, lib_select, mcp, output, update_check};
 
-use super::args::{BloatCmd, Cli, Commands, resolve_project_dir, rewrite_args};
+use super::args::{BloatCmd, Cli, Commands, IdeAction, resolve_project_dir, rewrite_args};
 use super::bloat_lookup::run_bloat_lookup;
 use super::bringup::run_bringup;
 use super::build::run_build;
@@ -21,6 +21,7 @@ use super::daemon_cmd::run_daemon;
 use super::deploy::{run_deploy, run_monitor, run_test_emu};
 use super::device::run_device;
 use super::graph_cmd::run_bloat_graph;
+use super::ide::{run_ide, run_ide_select};
 use super::lnk::run_lnk;
 use super::monitor_parse::parse_monitor_flags;
 use super::pio::{pio_build, pio_deploy, pio_monitor};
@@ -459,6 +460,25 @@ pub async fn async_main() {
             let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
             run_clangd_config(project_dir, environment, verbose, editor, refresh).await
         }
+        Some(Commands::Ide {
+            project_dir,
+            environment,
+            no_launch,
+            action,
+        }) => match action {
+            Some(IdeAction::Select {
+                project_dir: select_project_dir,
+                environment: select_environment,
+            }) => {
+                let project_dir =
+                    resolve_project_dir(select_project_dir.or(project_dir), &top_level_project_dir);
+                run_ide_select(project_dir, select_environment.or(environment)).await
+            }
+            None => {
+                let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
+                run_ide(project_dir, environment, no_launch).await
+            }
+        },
         Some(Commands::TestEmu {
             project_dir,
             environment,

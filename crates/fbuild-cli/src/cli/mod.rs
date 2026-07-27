@@ -23,6 +23,7 @@ pub mod deploy;
 pub mod device;
 pub mod dispatch;
 pub mod graph_cmd;
+pub mod ide;
 pub mod lnk;
 pub mod monitor_parse;
 pub mod pio;

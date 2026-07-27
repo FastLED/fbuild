@@ -1,12 +1,111 @@
 //! Unit tests for CLI argument normalization and `fbuild ci` parsing.
 
-use super::args::{Cli, Commands, DaemonAction};
+use super::args::{Cli, Commands, DaemonAction, IdeAction};
 use super::compile_many::{build_ci_pio_env, normalize_ci_sketch_entry, normalize_ci_sketches};
 use clap::Parser;
 
 #[test]
 fn deploy_admin_and_no_admin_conflict() {
     assert!(Cli::try_parse_from(["fbuild", "deploy", "--admin", "--no-admin"]).is_err());
+}
+
+// ---------- `fbuild ide` / `fbuild ide select` CLI shape ----------
+
+#[test]
+fn ide_with_no_args_has_no_project_dir_and_no_action() {
+    let cli = Cli::try_parse_from(["fbuild", "ide"]).expect("parse");
+    match cli.command {
+        Some(Commands::Ide {
+            project_dir,
+            action,
+            no_launch,
+            ..
+        }) => {
+            assert_eq!(project_dir, None);
+            assert!(action.is_none());
+            assert!(!no_launch);
+        }
+        _ => panic!("expected Commands::Ide"),
+    }
+}
+
+#[test]
+fn ide_with_project_dir_is_not_mistaken_for_select() {
+    let cli = Cli::try_parse_from(["fbuild", "ide", "myproject"]).expect("parse");
+    match cli.command {
+        Some(Commands::Ide {
+            project_dir,
+            action,
+            ..
+        }) => {
+            assert_eq!(project_dir, Some("myproject".to_string()));
+            assert!(action.is_none());
+        }
+        _ => panic!("expected Commands::Ide"),
+    }
+}
+
+#[test]
+fn ide_flags_parse() {
+    let cli = Cli::try_parse_from([
+        "fbuild",
+        "ide",
+        "myproject",
+        "-e",
+        "esp32dev",
+        "--no-launch",
+    ])
+    .expect("parse");
+    match cli.command {
+        Some(Commands::Ide {
+            project_dir,
+            environment,
+            no_launch,
+            action,
+        }) => {
+            assert_eq!(project_dir, Some("myproject".to_string()));
+            assert_eq!(environment, Some("esp32dev".to_string()));
+            assert!(no_launch);
+            assert!(action.is_none());
+        }
+        _ => panic!("expected Commands::Ide"),
+    }
+}
+
+#[test]
+fn ide_select_with_no_project_dir_parses_as_select_action() {
+    let cli = Cli::try_parse_from(["fbuild", "ide", "select"]).expect("parse");
+    match cli.command {
+        Some(Commands::Ide { action, .. }) => {
+            assert!(matches!(
+                action,
+                Some(IdeAction::Select {
+                    project_dir: None,
+                    environment: None
+                })
+            ));
+        }
+        _ => panic!("expected Commands::Ide"),
+    }
+}
+
+#[test]
+fn ide_select_with_project_dir_and_environment_parses() {
+    let cli =
+        Cli::try_parse_from(["fbuild", "ide", "select", "myproject", "-e", "uno"]).expect("parse");
+    match cli.command {
+        Some(Commands::Ide { action, .. }) => match action {
+            Some(IdeAction::Select {
+                project_dir,
+                environment,
+            }) => {
+                assert_eq!(project_dir, Some("myproject".to_string()));
+                assert_eq!(environment, Some("uno".to_string()));
+            }
+            other => panic!("expected IdeAction::Select, got {other:?}"),
+        },
+        _ => panic!("expected Commands::Ide"),
+    }
 }
 
 #[test]
