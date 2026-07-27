@@ -524,6 +524,16 @@ pub enum Commands {
         #[command(subcommand)]
         action: Option<IdeAction>,
     },
+    /// Open the daemon-served Serial Plotter web page in the default
+    /// browser (FastLED/fbuild#1076 Phase 2): a live scrolling chart of
+    /// numeric values parsed from serial output, over the existing
+    /// `/ws/serial-monitor` WebSocket
+    Plotter {
+        /// Pin the page to this serial port (e.g. "COM3", "/dev/ttyUSB0")
+        /// instead of requiring a manual pick in the page's port selector.
+        #[arg(short = 'p', long)]
+        port: Option<String>,
+    },
     /// Build firmware and run it in an emulator for testing
     TestEmu {
         project_dir: Option<String>,
@@ -997,6 +1007,7 @@ pub const KNOWN_SUBCOMMANDS: &[&str] = &[
     "iwyu",
     "clangd-config",
     "ide",
+    "plotter",
     "clang-query",
     "test-emu",
     "lib-select",

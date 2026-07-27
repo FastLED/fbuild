@@ -150,6 +150,7 @@ known limitations.
 | `fbuild clangd-config [--editor vscode\|zed] [--refresh]` | Emit `.clangd` (editor-neutral) plus per-editor project config (`.vscode/*` or `.zed/*`). `--editor` selects the emitter (default `vscode`); `--refresh` forces `compile_commands.json` regeneration even if it already exists. |
 | `fbuild ide [project_dir] [-e <env>] [--no-launch]` | Open the project as an IDE workspace on stock Zed. See [`fbuild ide`](#fbuild-ide) below. |
 | `fbuild ide select [project_dir] [-e <env>]` | Interactively (or with `-e`) choose the environment used for the IDE config, persist it, and regenerate. |
+| `fbuild plotter [-p <port>]` | Open the daemon-served Serial Plotter web page in the default browser. See [`fbuild plotter`](#fbuild-plotter) below. |
 | `fbuild clang-tidy` | Run clang-tidy against project sources. |
 | `fbuild iwyu` | Run include-what-you-use analysis. |
 | `fbuild clang-query` | Run a clang-query matcher. |
@@ -190,8 +191,8 @@ Generated/updated files:
   `lsp.clangd.binary.arguments`); safe to commit.
 - `.zed/tasks.json` — merge-don't-clobber: fbuild only replaces tasks whose
   label starts with `"fbuild: "` (Build, Build (clean), Deploy, Deploy +
-  Monitor, Monitor, Reset, Select environment); any other task you've added
-  is left untouched. Safe to commit.
+  Monitor, Monitor, Reset, Serial Plotter, Select environment); any other
+  task you've added is left untouched. Safe to commit.
 - `.fbuild/ide_state.json` — the persisted environment choice. Local
   developer state; recommend `.gitignore`.
 - `.zed/debug.json` — merge-don't-clobber, **only written when the
@@ -240,6 +241,31 @@ Port `50101` is fixed today (not yet configurable via a flag). The
 `program` field in the generated debug entry points at the expected
 `fbuild build -e <env>` ELF output location, whether or not it exists yet —
 build once before attaching.
+
+### `fbuild plotter`
+
+Open the daemon-served Serial Plotter web page in the default browser
+(FastLED/fbuild#1076 Phase 2). The page (`GET /plotter` on the daemon,
+`crates/fbuild-daemon/web/plotter/index.html`) is a single self-contained
+HTML file with no external dependencies: it connects to the existing
+`/ws/serial-monitor` WebSocket (the same one `fbuild monitor` uses),
+populates its port selector from `POST /api/devices/list`, parses numeric
+series out of incoming lines Arduino-Serial-Plotter style
+(whitespace/comma-separated numbers, optional `name:value` labels), and
+renders a live scrolling line chart on a `<canvas>` — pause/resume, clear,
+and a raw-output tail are all built in.
+
+```bash
+fbuild plotter                # opens the page; pick a port in the UI
+fbuild plotter --port COM3    # pins the page to a port and auto-connects
+```
+
+`fbuild plotter` itself does no parsing or rendering — its only job is to
+make sure the daemon is running and open `http://127.0.0.1:<daemon
+port>/plotter[?port=<port>]` in the OS default browser. `fbuild ide`
+generates a `"fbuild: Serial Plotter"` Zed task that just runs `fbuild
+plotter` (see [`fbuild ide`](#fbuild-ide) above), so the same command works
+whether or not you're using Zed.
 
 ## Batch And CI Commands
 
