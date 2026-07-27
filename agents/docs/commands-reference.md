@@ -35,7 +35,7 @@ help text).
 | `fbuild iwyu` | Run `include-what-you-use` analysis. | `fbuild help iwyu` |
 | `fbuild clang-query` | Run a clang-query matcher script over the project. | `fbuild help clang-query` |
 | `fbuild clangd-config` | Emit `.clangd` / `.vscode/settings.json` for the default env. | `fbuild help clangd-config` |
-| `fbuild ide` / `fbuild ide select` | You want to open a project as an IDE workspace on stock Zed: installs declared deps, refreshes the compile DB, emits `.clangd` + `.zed/settings.json` + `.zed/tasks.json`, launches Zed. `ide select` interactively (or via `-e`) switches the persisted environment and regenerates. | `fbuild help ide`, FastLED/fbuild#1076 Phase 1, `docs/reference/cli.md#fbuild-ide` |
+| `fbuild ide` / `fbuild ide select` | You want to open a project as an IDE workspace on stock Zed: installs declared deps, refreshes the compile DB, emits `.clangd` + `.zed/settings.json` + `.zed/tasks.json`, and — for probe-rs-supported boards only (RP2040/RP2350, a small ARM Cortex-M set) — `.zed/debug.json` plus a `probe-rs dap-server` task, then launches Zed. Unsupported targets (ESP32, AVR) get a one-line "not supported" note, not a failure. `ide select` interactively (or via `-e`) switches the persisted environment and regenerates. | `fbuild help ide`, FastLED/fbuild#1076 Phase 1 & Phase 3 milestone 1, `docs/reference/cli.md#fbuild-ide` |
 | `fbuild lib-select` | Drive the LDF-style library-selection resolver and print the selected library set. Use this when debugging "library not found" without a full build. | FastLED/fbuild#202 / #204 |
 
 ## Daemon & cache

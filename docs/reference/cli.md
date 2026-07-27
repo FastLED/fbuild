@@ -194,6 +194,9 @@ Generated/updated files:
   is left untouched. Safe to commit.
 - `.fbuild/ide_state.json` — the persisted environment choice. Local
   developer state; recommend `.gitignore`.
+- `.zed/debug.json` — merge-don't-clobber, **only written when the
+  environment's board resolves to a probe-rs-supported chip** (see
+  "Debugging" below). Safe to commit.
 
 If `zed` isn't found on `PATH` or in the usual per-OS install locations,
 `fbuild ide` still generates/refreshes every file above and exits
@@ -201,6 +204,42 @@ successfully — it just prints install guidance (`winget install Zed.Zed`,
 `brew install --cask zed`, or <https://zed.dev/download>) instead of
 launching the editor. Config generation is the product; launching Zed is a
 convenience on top of it.
+
+#### Debugging (FastLED/fbuild#1076 Phase 3, milestone 1)
+
+`fbuild ide` also tries to wire up Zed's debugger for the current
+environment. **Milestone 1 covers probe-rs-supported targets only** — RP2040
+(and, best-effort, RP2350), and a small, deliberately conservative set of
+ARM Cortex-M chips (currently: nRF52840 and the STM32F103C8 "Blue Pill").
+ESP32 and AVR are **not** probe-rs targets (ESP32 debugging goes through
+OpenOCD, which speaks GDB-remote, not DAP; AVR has no comparable open
+debug-adapter story) and are explicitly out of scope for this milestone —
+for those environments `fbuild ide` prints a one-line note (`debug config
+not supported for <board/mcu> (milestone 1 is probe-rs targets)`) and moves
+on. This is a normal, expected outcome, not a failure.
+
+When the environment's board resolves to a mapped chip, `fbuild ide`:
+
+- Writes `.zed/debug.json` with an fbuild-owned entry
+  (`"fbuild: Debug (probe-rs attach)"`) that attaches Zed's debugger to a
+  TCP DAP server at `127.0.0.1:50101` — the same merge-don't-clobber
+  ownership convention as `.zed/tasks.json` (fbuild only ever touches
+  entries whose label starts with `"fbuild: "`).
+- Adds a `"fbuild: Debug server (probe-rs)"` task to `.zed/tasks.json` that
+  runs `probe-rs dap-server --port 50101 --chip <CHIP>`. Run this task
+  first (it's a long-lived server), then start the "Debug (probe-rs
+  attach)" debug config to connect.
+
+fbuild does **not** install `probe-rs` itself in milestone 1 — install it
+yourself (`cargo install probe-rs-tools`, see
+<https://probe.rs/docs/getting-started/installation/>). If it's missing,
+the debug-server task fails in Zed's terminal panel with probe-rs's own
+"command not found" message.
+
+Port `50101` is fixed today (not yet configurable via a flag). The
+`program` field in the generated debug entry points at the expected
+`fbuild build -e <env>` ELF output location, whether or not it exists yet —
+build once before attaching.
 
 ## Batch And CI Commands
 
