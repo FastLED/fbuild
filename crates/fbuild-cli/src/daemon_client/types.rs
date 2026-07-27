@@ -67,6 +67,9 @@ pub struct DeployRequest {
     /// Explicit deploy protocol, currently `isp` or `wlink` for CH32V.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub protocol: Option<String>,
+    /// RP2040 deploy transport, `picotool` (default) or `uf2`.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub transport: Option<String>,
     pub monitor_after: bool,
     pub skip_build: bool,
     pub clean_build: bool,

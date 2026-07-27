@@ -792,9 +792,12 @@ pub async fn deploy(
                     &deploy_board_overrides,
                     Some(deploy_project.as_path()),
                 );
-                Box::new(fbuild_deploy::rp2040::Rp2040Deployer::for_mcu(
-                    &board_config.mcu,
-                )?)
+                let rp2040_transport =
+                    fbuild_deploy::rp2040::parse_rp2040_transport(req.transport.as_deref())?;
+                Box::new(
+                    fbuild_deploy::rp2040::Rp2040Deployer::for_mcu(&board_config.mcu)?
+                        .with_transport(rp2040_transport),
+                )
             }
             fbuild_core::Platform::NxpLpc => fbuild_deploy::lpc::dispatch_box(
                 &board_id,
