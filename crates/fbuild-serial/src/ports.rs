@@ -146,7 +146,12 @@ fn health_for_endpoint(observation: PnpObservation, is_usb: bool) -> PortHealth 
 ///
 /// Unlike [`serialport::available_ports`], on Windows this includes ports
 /// whose devnode status is not "OK" (the Teensy / composite-device case) and
-/// preserves that health in the returned record.
+/// preserves that health in the returned record. On Linux, ports backed by a
+/// USB tty are additionally enriched with [`PortHealth`] from `sysfs` when
+/// `sysfs` gives a concrete healthy/problem signal (see
+/// [`crate::sysfs_usb`]); anything ambiguous is left at the default
+/// `PortHealth::Unknown`, matching current (pre-#1091) behavior. macOS is
+/// unchanged (`Unknown`) — see the module doc comment on `sysfs_usb` for why.
 pub fn available_ports() -> serialport::Result<Vec<DetectedPort>> {
     #[cfg(windows)]
     {
@@ -154,8 +159,32 @@ pub fn available_ports() -> serialport::Result<Vec<DetectedPort>> {
     }
     #[cfg(not(windows))]
     {
-        serialport::available_ports()
-            .map(|ports| ports.into_iter().map(DetectedPort::unknown).collect())
+        let mut ports: Vec<DetectedPort> = serialport::available_ports()?
+            .into_iter()
+            .map(DetectedPort::unknown)
+            .collect();
+        #[cfg(target_os = "linux")]
+        {
+            enrich_linux_port_health(&mut ports);
+        }
+        Ok(ports)
+    }
+}
+
+/// Overwrite `PortHealth::Unknown` entries with a concrete sysfs-derived
+/// signal, for ports whose name is a `/dev/ttyXXX` device. Ports that sysfs
+/// has no opinion about (non-USB ttys, ambiguous state) are left untouched.
+#[cfg(target_os = "linux")]
+fn enrich_linux_port_health(ports: &mut [DetectedPort]) {
+    let root = crate::sysfs_usb::live_root();
+    for port in ports.iter_mut() {
+        let Some(tty_name) = port.info.port_name.strip_prefix("/dev/") else {
+            continue;
+        };
+        let health = crate::sysfs_usb::health_for_tty_from_root(&root, tty_name);
+        if health != PortHealth::Unknown {
+            port.health = health;
+        }
     }
 }
 
@@ -187,6 +216,12 @@ pub struct UsbProblemDevice {
 /// Best-effort enumeration of present USB devnodes with a non-zero Windows
 /// problem code.  This is empty on non-Windows hosts and never makes a port
 /// scan fail merely because host diagnostics are unavailable.
+///
+/// Linux has an equivalent diagnostic (`sysfs`-derived, not Windows PnP
+/// problem codes), but the `UsbProblemDevice` shape doesn't fit it honestly
+/// (no PnP instance id, no Windows setup class) — see
+/// [`present_usb_problem_devices_linux`] instead. macOS has no equivalent
+/// implemented yet (IOKit work is out of scope without a macOS host).
 pub fn present_usb_problem_devices() -> Vec<UsbProblemDevice> {
     #[cfg(windows)]
     {
@@ -196,6 +231,16 @@ pub fn present_usb_problem_devices() -> Vec<UsbProblemDevice> {
     {
         Vec::new()
     }
+}
+
+/// Linux sibling of [`present_usb_problem_devices`]: `sysfs`-derived USB
+/// devices with a concrete, observed fault (unauthorized, unconfigured, or a
+/// CDC interface with no bound driver). Diagnostics only — never used to
+/// drive `PortHealth` selection directly (that happens per-tty via
+/// [`available_ports`]'s Linux enrichment).
+#[cfg(target_os = "linux")]
+pub fn present_usb_problem_devices_linux() -> Vec<crate::sysfs_usb::LinuxUsbProblemDevice> {
+    crate::sysfs_usb::linux_usb_problem_devices_from_root(&crate::sysfs_usb::live_root())
 }
 
 #[cfg(test)]

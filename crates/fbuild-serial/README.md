@@ -18,5 +18,7 @@ Centralized serial port I/O manager for the fbuild daemon. All serial access rou
 - **messages** -- Serde-tagged WebSocket message types matching the Python protocol
 - **preemption** -- `PreemptionTracker` for deploy preemption lifecycle
 - **crash_decoder** -- `CrashDecoder` for Xtensa/RISC-V crash dumps, `derive_addr2line_path`
+- **ports** -- `DetectedPort`/`PortHealth` enumeration; Windows SetupAPI/CfgMgr32 problem-devnode diagnostics, Linux `sysfs` enrichment (see `sysfs_usb`)
+- **sysfs_usb** -- platform-neutral Linux `/sys/bus/usb/devices` topology/health parsing (fixture-testable on any OS; FastLED/fbuild#1091)
 
 See `docs/architecture/serial.md` and `docs/architecture/deploy-preemption.md` for architecture details.
