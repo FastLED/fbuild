@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>fbuild Build Progress</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f4efe4;
+      --panel: #fffdf8;
+      --ink: #1f1b18;
+      --muted: #6d6258;
+      --line: #d9cdbd;
+      --accent: #bd4b2c;
+      --plot-bg: #231c16;
+      --plot-ink: #f4efe8;
+      --ok: #3f8f5f;
+      --warn: #c8962c;
+      --err: #c0392b;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #17130f;
+        --panel: #241e18;
+        --ink: #f1e9dd;
+        --muted: #a99c8c;
+        --line: #3a3129;
+        --accent: #e07a52;
+        --plot-bg: #100d0a;
+        --plot-ink: #f1e9dd;
+        --ok: #5fb37f;
+        --warn: #e0ac4c;
+        --err: #e0685a;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, color-mix(in srgb, var(--panel) 60%, transparent) 0%, transparent 35%),
+        var(--bg);
+      color: var(--ink);
+      font-family: "Consolas", "Menlo", monospace;
+      padding: 20px;
+    }
+    .shell {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.16);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+    .bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, color-mix(in srgb, var(--panel) 90%, white 10%) 0%, var(--panel) 100%);
+    }
+    .title {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-right: auto;
+    }
+    button {
+      font: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink);
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+    button:hover { border-color: var(--accent); }
+    button.active {
+      background: var(--accent);
+      color: #fffaf2;
+      border-color: var(--accent);
+    }
+    label.field {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .header-panel {
+      padding: 16px 18px 6px;
+    }
+    .state-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+    }
+    .state-row .dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--muted);
+      flex: none;
+    }
+    .state-row.idle .dot { background: var(--muted); }
+    .state-row.building .dot,
+    .state-row.deploying .dot,
+    .state-row.monitoring .dot {
+      background: var(--warn);
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+    .state-row.completed .dot { background: var(--ok); }
+    .state-row.failed .dot,
+    .state-row.cancelled .dot { background: var(--err); }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+    .state-label {
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 12px;
+    }
+    .state-op {
+      color: var(--muted);
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .dep-row {
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--muted);
+      display: none;
+    }
+    .dep-row.visible { display: block; }
+    .meta-row {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .meta-row span.accent { color: var(--accent); font-weight: 700; }
+    .log-wrap {
+      margin: 14px 18px 6px;
+    }
+    .log-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .log-header h2 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0;
+      margin-right: auto;
+    }
+    #log {
+      margin: 0;
+      height: 380px;
+      overflow-y: auto;
+      background: var(--plot-bg);
+      color: var(--plot-ink);
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      font: 12px/1.5 "Consolas", "Menlo", monospace;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .log-line { }
+    .log-line.level-WARN { color: var(--warn); }
+    .log-line.level-ERROR { color: var(--err); }
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 18px 16px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="bar">
+      <div class="title">fbuild Build Progress</div>
+      <label class="field">
+        <input type="checkbox" id="autoscroll" checked>
+        Autoscroll
+      </label>
+      <button id="clear-log">Clear log</button>
+    </div>
+    <div class="header-panel">
+      <div class="state-row idle" id="state-row">
+        <span class="dot"></span>
+        <span class="state-label" id="state-label">Connecting…</span>
+        <span class="state-op" id="state-op"></span>
+      </div>
+      <div class="dep-row" id="dep-row"></div>
+      <div class="meta-row" id="meta-row"></div>
+    </div>
+    <div class="log-wrap">
+      <div class="log-header">
+        <h2>Daemon activity</h2>
+        <span id="ws-status" style="font-size: 11px; color: var(--muted);">connecting…</span>
+      </div>
+      <pre id="log"></pre>
+    </div>
+    <div class="footer">
+      <div>Status polled from <span class="accent">/api/daemon/info</span> every 2s; activity streamed from <span class="accent">/ws/logs</span> (daemon-wide, not per-build compiler output).</div>
+      <div>fbuild-daemon</div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    "use strict";
+
+    // -----------------------------------------------------------------
+    // Config
+    // -----------------------------------------------------------------
+    const STATUS_POLL_INTERVAL_MS = 2000;
+    const MAX_LOG_LINES = 1000;
+
+    // -----------------------------------------------------------------
+    // DOM
+    // -----------------------------------------------------------------
+    const stateRow = document.getElementById("state-row");
+    const stateLabel = document.getElementById("state-label");
+    const stateOp = document.getElementById("state-op");
+    const depRow = document.getElementById("dep-row");
+    const metaRow = document.getElementById("meta-row");
+    const logEl = document.getElementById("log");
+    const wsStatusEl = document.getElementById("ws-status");
+    const autoscrollCheckbox = document.getElementById("autoscroll");
+    const clearLogBtn = document.getElementById("clear-log");
+
+    // -----------------------------------------------------------------
+    // Status polling: GET /api/daemon/info every ~2s
+    // -----------------------------------------------------------------
+    async function pollStatus() {
+      try {
+        const resp = await fetch("/api/daemon/info");
+        if (!resp.ok) throw new Error("HTTP " + resp.status);
+        const info = await resp.json();
+        renderStatus(info);
+      } catch (e) {
+        stateLabel.textContent = "Unreachable";
+        stateOp.textContent = String(e);
+        stateRow.className = "state-row failed";
+      }
+    }
+
+    function renderStatus(info) {
+      const state = (info.daemon_state || "unknown").toLowerCase();
+      stateRow.className = "state-row " + state;
+      stateLabel.textContent = state;
+      stateOp.textContent = info.current_operation || "";
+
+      if (info.dependency_install) {
+        const d = info.dependency_install;
+        const version = d.version ? " " + d.version : "";
+        depRow.textContent = `Installing ${d.name}${version}: ${d.message}`;
+        depRow.classList.add("visible");
+      } else {
+        depRow.textContent = "";
+        depRow.classList.remove("visible");
+      }
+
+      metaRow.innerHTML = "";
+      const items = [
+        ["operation_in_progress", info.operation_in_progress ? "yes" : "no"],
+        ["uptime", info.uptime_seconds != null ? info.uptime_seconds.toFixed(0) + "s" : "—"],
+        ["pid", info.pid != null ? String(info.pid) : "—"],
+        ["version", info.version || "—"],
+      ];
+      for (const [label, value] of items) {
+        const span = document.createElement("span");
+        span.innerHTML = `${label}: <span class="accent">${escapeHtml(value)}</span>`;
+        metaRow.appendChild(span);
+      }
+    }
+
+    function escapeHtml(s) {
+      return String(s)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+    }
+
+    pollStatus();
+    setInterval(pollStatus, STATUS_POLL_INTERVAL_MS);
+
+    // -----------------------------------------------------------------
+    // Log tail: /ws/logs (existing broadcast channel, daemon-wide)
+    // -----------------------------------------------------------------
+    let ws = null;
+    let reconnectTimer = null;
+
+    function wsUrl() {
+      const proto = location.protocol === "https:" ? "wss:" : "ws:";
+      return `${proto}//${location.host}/ws/logs`;
+    }
+
+    function appendLogLine(text, level) {
+      const atBottom = logEl.scrollTop + logEl.clientHeight >= logEl.scrollHeight - 4;
+      const line = document.createElement("div");
+      line.className = "log-line" + (level ? " level-" + level : "");
+      line.textContent = text;
+      logEl.appendChild(line);
+      while (logEl.childElementCount > MAX_LOG_LINES) {
+        logEl.removeChild(logEl.firstChild);
+      }
+      if (autoscrollCheckbox.checked && atBottom) {
+        logEl.scrollTop = logEl.scrollHeight;
+      }
+    }
+
+    function connectLogs() {
+      wsStatusEl.textContent = "connecting…";
+      ws = new WebSocket(wsUrl());
+
+      ws.addEventListener("open", () => {
+        wsStatusEl.textContent = "connected";
+      });
+
+      ws.addEventListener("message", (event) => {
+        let msg;
+        try {
+          msg = JSON.parse(event.data);
+        } catch (e) {
+          return;
+        }
+        if (msg.type === "log") {
+          const ts = msg.timestamp
+            ? new Date(msg.timestamp * 1000).toLocaleTimeString()
+            : "";
+          const level = msg.level || "INFO";
+          const module = msg.module ? `[${msg.module}] ` : "";
+          appendLogLine(`${ts} ${level} ${module}${msg.message || ""}`.trim(), level);
+        }
+      });
+
+      ws.addEventListener("close", () => {
+        wsStatusEl.textContent = "disconnected — reconnecting…";
+        scheduleReconnect();
+      });
+
+      ws.addEventListener("error", () => {
+        wsStatusEl.textContent = "error — reconnecting…";
+      });
+    }
+
+    function scheduleReconnect() {
+      if (reconnectTimer) return;
+      reconnectTimer = setTimeout(() => {
+        reconnectTimer = null;
+        connectLogs();
+      }, 2000);
+    }
+
+    clearLogBtn.addEventListener("click", () => {
+      logEl.textContent = "";
+    });
+
+    connectLogs();
+  })();
+  </script>
+</body>
+</html>

@@ -10,6 +10,7 @@ use super::args::{BloatCmd, Cli, Commands, IdeAction, resolve_project_dir, rewri
 use super::bloat_lookup::run_bloat_lookup;
 use super::bringup::run_bringup;
 use super::build::run_build;
+use super::build_progress::run_build_progress;
 use super::cache::run_cache;
 use super::clang_tools::{run_clang_tool, run_iwyu};
 use super::clangd_config::run_clangd_config;
@@ -481,6 +482,7 @@ pub async fn async_main() {
             }
         },
         Some(Commands::Plotter { port }) => run_plotter(port).await,
+        Some(Commands::BuildProgress) => run_build_progress().await,
         Some(Commands::TestEmu {
             project_dir,
             environment,
