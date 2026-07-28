@@ -248,6 +248,92 @@ Port `50101` is fixed today (not yet configurable via a flag). The
 `fbuild build -e <env>` ELF output location, whether or not it exists yet —
 build once before attaching.
 
+### `fbuild debug`
+
+No-probe GDB debugging orchestration (FastLED/fbuild#1144): build → flash →
+find the port → launch `gdb` against the exact build's ELF. This is a
+separate command from `fbuild ide`'s probe-rs-based `.zed/debug.json`
+generation above — `fbuild debug` targets GDB-remote-speaking on-device
+stubs (ESP32's native gdbstub) rather than probe-rs's DAP server, and it
+launches `gdb` directly instead of wiring up an editor.
+
+```bash
+fbuild debug -e esp32dev                  # build, flash, attach gdb
+fbuild debug -e esp32dev --no-flash       # attach to the existing build
+fbuild debug -e esp32dev --port COM5      # skip port auto-detection
+```
+
+#### Capability matrix
+
+| Target | Mechanism | Status in `fbuild debug` |
+|---|---|---|
+| ESP32 family (`espressif32`) | Orchestrates the framework's native IDF/ROM gdbstub — no code injection needed. | **Implemented.** |
+| CH32V (`ch32v`) | Injected stub (EBREAK + trap handler, CDC transport). | Planned, not yet implemented — depends on the on-device side in FastLED/soundwave#38. Prints an explanatory message and exits nonzero-but-clean. |
+| AVR (`atmelavr`, `atmelmegaavr`) | None. | Honestly unsupported: AVR has no trap architecture to host a debug monitor. Prints an explanatory message and exits nonzero-but-clean. |
+| Everything else (ARM Cortex-M families, RP2040, ...) | Per-family DebugMon/BKPT stubs exist but haven't been evaluated for this command. | Not yet supported by `fbuild debug`; see `fbuild ide`'s probe-rs path above for RP2040/RP2350 and the small ARM chip set it covers. |
+
+Unsupported/planned targets never attempt to build or flash — the
+capability check runs first and the command exits cleanly (no stack
+trace, no partial build).
+
+#### What works today on ESP32, and what's still pending sdkconfig support
+
+The ROM/IDF gdbstub component itself is a stock part of every Arduino-ESP32
+build — `fbuild debug` doesn't need to inject anything for it to exist.
+What's still pending is *panic-triggers-gdbstub* behavior
+(`CONFIG_ESP_SYSTEM_PANIC_GDBSTUB=y`): fbuild's sdkconfig-override story
+(`docs/sdkconfig.md`) is a **design proposal, not yet implemented**, so
+`fbuild debug` cannot flip that flag for you today. Every invocation
+prints an honest readiness note:
+
+- If the project's `sdkconfig`/`sdkconfig.defaults` already sets
+  `CONFIG_ESP_SYSTEM_PANIC_GDBSTUB=y`, the note says panics will drop
+  straight into gdb.
+  - Otherwise (the common case — Arduino-ESP32's framework default is
+  `panic=print`), the note says panics only print a backtrace and reboot;
+  gdb can still attach and control a *live* break (Ctrl+C in gdb, or a
+  deliberate breakpoint), and the note points at the existing
+  general-purpose escape hatch — `build_flags = -D
+  CONFIG_ESP_SYSTEM_PANIC_GDBSTUB=1` in the environment's
+  `platformio.ini` section — as the way to get panic-triggered gdbstub
+  today, ahead of the proper sdkconfig-override layer landing.
+
+The orchestration half (build/flash/port-discovery/ELF-and-toolchain
+resolution/gdb launch) is what this command implements; #1144 stays open
+for CH32V's injected stub and `fbuild crashdump`.
+
+#### Mechanics
+
+- **ELF resolution** reuses `fbuild symbols`' discovery
+  (`build_info.json` → `.fbuild/build/**/firmware.elf` →
+  `.pio/build/**/firmware.elf` → loose `*.elf`), so gdb always gets the
+  exact build's symbols.
+- **Port discovery**: `--port` wins; otherwise `fbuild debug` asks the
+  daemon for the device list (`POST /api/devices/list`) and uses the port
+  automatically if exactly one serial device is present, else it asks you
+  to pass `--port`.
+- **gdb resolution**: prefers deriving `gdb` from the build's own `gcc`
+  path (`build_info.json`'s `cc_path`, GCC cross-toolchain naming
+  convention: `<prefix>gcc` → `<prefix>gdb` in the same directory), then
+  falls back to searching `PATH` for the architecture's conventional name
+  (`riscv32-esp-elf-gdb` for RISC-V ESP32 chips, `xtensa-<mcu>-elf-gdb` /
+  `xtensa-esp32-elf-gdb` for Xtensa chips). If neither resolves, the error
+  names the toolchain prefix so you know what to install/add to `PATH` —
+  the ESP32 GCC toolchain ships `gdb` alongside `gcc`.
+- **Launch**: `gdb -ex "set serial baud 115200" -ex "target remote <port>"
+  <elf>`, spawned interactively with the parent's stdio (so it behaves
+  exactly like running `gdb` yourself). On Windows, bare `COMx` names are
+  rewritten to `\\.\COMx` for the `target remote` argument.
+
+#### Hardware validation caveat
+
+The capability matrix, argv construction, gdb/ELF resolution, and CLI
+parsing are covered by unit tests (`crates/fbuild-cli/src/cli/debug.rs`)
+against fake toolchain/project fixtures — no hardware or real `gdb`
+required. The interactive `gdb` attach itself has not been validated
+against real ESP32 hardware as part of this change; treat it as
+implemented-but-unvalidated until it's been run against a physical board.
+
 ### `fbuild plotter`
 
 Open the daemon-served Serial Plotter web page in the default browser

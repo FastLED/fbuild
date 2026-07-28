@@ -20,6 +20,7 @@ use super::compile_many::{
     CompileManyArgs, build_ci_pio_env, normalize_ci_sketches, run_compile_many,
 };
 use super::daemon_cmd::run_daemon;
+use super::debug::run_debug;
 use super::deploy::{run_deploy, run_monitor, run_test_emu};
 use super::device::run_device;
 use super::graph_cmd::run_bloat_graph;
@@ -483,6 +484,15 @@ pub async fn async_main() {
                 run_ide(project_dir, environment, no_launch).await
             }
         },
+        Some(Commands::Debug {
+            project_dir,
+            environment,
+            no_flash,
+            port,
+        }) => {
+            let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
+            run_debug(project_dir, environment, no_flash, port).await
+        }
         Some(Commands::Plotter { port }) => run_plotter(port).await,
         Some(Commands::BuildProgress) => run_build_progress().await,
         Some(Commands::Boards) => run_boards().await,
