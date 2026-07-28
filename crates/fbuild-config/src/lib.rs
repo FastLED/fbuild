@@ -8,13 +8,15 @@
 
 pub mod board;
 pub mod ini_parser;
+pub mod lib_source;
 pub mod mcu;
 pub mod pio_env;
 pub mod platform_packages;
 pub mod sdkconfig;
 
-pub use board::{BoardConfig, DebugToolMeta, Esp32QemuPsramConfig};
+pub use board::{BoardConfig, BoardSummary, DebugToolMeta, Esp32QemuPsramConfig, search_boards};
 pub use ini_parser::PlatformIOConfig;
+pub use lib_source::{ClassifiedDep, LockStatus, SourceType, classify as classify_lib_dep};
 pub use mcu::McuSpec;
 pub use pio_env::{
     PioEnvOverrides, SUPPORTED_PIO_ENV_VARS, WARN_ONLY_PIO_ENV_VARS, scan_unsupported,

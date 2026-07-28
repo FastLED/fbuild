@@ -8,6 +8,7 @@ use crate::{daemon_client, lib_select, mcp, output, update_check};
 
 use super::args::{BloatCmd, Cli, Commands, IdeAction, resolve_project_dir, rewrite_args};
 use super::bloat_lookup::run_bloat_lookup;
+use super::boards::run_boards;
 use super::bringup::run_bringup;
 use super::build::run_build;
 use super::build_progress::run_build_progress;
@@ -23,6 +24,7 @@ use super::deploy::{run_deploy, run_monitor, run_test_emu};
 use super::device::run_device;
 use super::graph_cmd::run_bloat_graph;
 use super::ide::{run_ide, run_ide_select};
+use super::libraries::run_libraries;
 use super::lnk::run_lnk;
 use super::monitor_parse::parse_monitor_flags;
 use super::pio::{pio_build, pio_deploy, pio_monitor};
@@ -483,6 +485,14 @@ pub async fn async_main() {
         },
         Some(Commands::Plotter { port }) => run_plotter(port).await,
         Some(Commands::BuildProgress) => run_build_progress().await,
+        Some(Commands::Boards) => run_boards().await,
+        Some(Commands::Libraries {
+            project_dir,
+            environment,
+        }) => {
+            let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
+            run_libraries(project_dir, environment).await
+        }
         Some(Commands::TestEmu {
             project_dir,
             environment,

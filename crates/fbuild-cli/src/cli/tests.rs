@@ -100,6 +100,47 @@ fn build_progress_parses_with_no_args() {
     assert!(matches!(cli.command, Some(Commands::BuildProgress)));
 }
 
+// ---------- `fbuild boards` CLI shape ----------
+
+#[test]
+fn boards_parses_with_no_args() {
+    let cli = Cli::try_parse_from(["fbuild", "boards"]).expect("parse");
+    assert!(matches!(cli.command, Some(Commands::Boards)));
+}
+
+// ---------- `fbuild libraries` CLI shape ----------
+
+#[test]
+fn libraries_with_no_args_has_no_project_dir_or_env() {
+    let cli = Cli::try_parse_from(["fbuild", "libraries"]).expect("parse");
+    match cli.command {
+        Some(Commands::Libraries {
+            project_dir,
+            environment,
+        }) => {
+            assert_eq!(project_dir, None);
+            assert_eq!(environment, None);
+        }
+        _ => panic!("expected Commands::Libraries"),
+    }
+}
+
+#[test]
+fn libraries_accepts_project_dir_and_environment_flag() {
+    let cli =
+        Cli::try_parse_from(["fbuild", "libraries", "/tmp/proj", "-e", "uno"]).expect("parse");
+    match cli.command {
+        Some(Commands::Libraries {
+            project_dir,
+            environment,
+        }) => {
+            assert_eq!(project_dir, Some("/tmp/proj".to_string()));
+            assert_eq!(environment, Some("uno".to_string()));
+        }
+        _ => panic!("expected Commands::Libraries"),
+    }
+}
+
 #[test]
 fn ide_select_with_no_project_dir_parses_as_select_action() {
     let cli = Cli::try_parse_from(["fbuild", "ide", "select"]).expect("parse");

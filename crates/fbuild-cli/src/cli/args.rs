@@ -540,6 +540,23 @@ pub enum Commands {
     /// plus a live activity tail over the existing `/ws/logs` broadcast
     /// websocket
     BuildProgress,
+    /// Open the daemon-served Board Manager web page in the default
+    /// browser (FastLED/fbuild#1076 Phase 2): a read-only, searchable
+    /// table over fbuild's embedded board database
+    /// (`GET /api/ide/boards`). Browsing/inspection only — no
+    /// install/mutation actions.
+    Boards,
+    /// Open the daemon-served Library Manager web page in the default
+    /// browser (FastLED/fbuild#1076 Phase 2): a read-only table of the
+    /// current project/environment's declared `lib_deps`, classified by
+    /// source and annotated with best-effort install state
+    /// (`GET /api/ide/libraries?project=&env=`). Browsing/inspection
+    /// only — no install/mutation actions.
+    Libraries {
+        project_dir: Option<String>,
+        #[arg(short = 'e', long)]
+        environment: Option<String>,
+    },
     /// Build firmware and run it in an emulator for testing
     TestEmu {
         project_dir: Option<String>,
@@ -1015,6 +1032,8 @@ pub const KNOWN_SUBCOMMANDS: &[&str] = &[
     "ide",
     "plotter",
     "build-progress",
+    "boards",
+    "libraries",
     "clang-query",
     "test-emu",
     "lib-select",

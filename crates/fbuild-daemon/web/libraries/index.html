@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>fbuild Library Manager</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f4efe4;
+      --panel: #fffdf8;
+      --ink: #1f1b18;
+      --muted: #6d6258;
+      --line: #d9cdbd;
+      --accent: #bd4b2c;
+      --ok: #3f8f5f;
+      --warn: #c8962c;
+      --row-hover: color-mix(in srgb, var(--accent) 8%, transparent);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #17130f;
+        --panel: #241e18;
+        --ink: #f1e9dd;
+        --muted: #a99c8c;
+        --line: #3a3129;
+        --accent: #e07a52;
+        --ok: #5fb37f;
+        --warn: #e0ac4c;
+        --row-hover: color-mix(in srgb, var(--accent) 14%, transparent);
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Consolas", "Menlo", monospace;
+      padding: 20px;
+    }
+    .shell {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.16);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+    .bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--line);
+    }
+    .title { font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-right: auto; }
+    .meta { font-size: 11px; color: var(--muted); }
+    .meta .accent { color: var(--accent); font-weight: 700; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    thead th {
+      text-align: left;
+      padding: 8px 14px;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--line);
+    }
+    tbody tr { border-bottom: 1px solid var(--line); }
+    tbody tr:hover { background: var(--row-hover); }
+    tbody td { padding: 8px 14px; vertical-align: top; word-break: break-word; }
+    .pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      border: 1px solid var(--line);
+    }
+    .pill.installed { color: var(--ok); border-color: var(--ok); }
+    .pill.not-installed { color: var(--muted); }
+    .source-tag { color: var(--muted); font-size: 11px; }
+    .howto, .empty, .error {
+      padding: 40px 24px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 13px;
+    }
+    .howto code, .error code {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 1px 6px;
+    }
+    .error { color: var(--accent); }
+    .note {
+      padding: 10px 18px;
+      font-size: 11px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="bar">
+      <div class="title">fbuild Library Manager</div>
+      <div class="meta" id="meta"></div>
+    </div>
+    <div id="content">
+      <div class="howto" id="howto" style="display:none;">
+        <p>This page needs a project and environment to know which <code>platformio.ini</code> to read.</p>
+        <p>Open it from a project directory with:</p>
+        <p><code>fbuild libraries</code></p>
+        <p>— that resolves the current project/env and passes them as
+        <code>?project=&amp;env=</code> query params automatically. You can also
+        pass them manually, e.g. <code>?project=/path/to/project&amp;env=uno</code>.</p>
+      </div>
+      <div class="error" id="error" style="display:none;"></div>
+      <table id="table" style="display:none;">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Source</th>
+            <th>Version / Ref</th>
+            <th>Raw spec</th>
+            <th>Installed</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div class="empty" id="empty" style="display:none;">
+        No <code>lib_deps</code> declared for this environment.
+      </div>
+    </div>
+    <div class="note" id="note" style="display:none;"></div>
+  </div>
+
+  <script>
+  (function () {
+    "use strict";
+
+    const metaEl = document.getElementById("meta");
+    const howtoEl = document.getElementById("howto");
+    const errorEl = document.getElementById("error");
+    const tableEl = document.getElementById("table");
+    const rowsEl = document.getElementById("rows");
+    const emptyEl = document.getElementById("empty");
+    const noteEl = document.getElementById("note");
+
+    function escapeHtml(s) {
+      return String(s)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+    }
+
+    function show(el, on) {
+      el.style.display = on ? "" : "none";
+    }
+
+    const params = new URLSearchParams(location.search);
+    const project = params.get("project");
+    const env = params.get("env");
+
+    if (!project) {
+      show(howtoEl, true);
+    } else {
+      metaEl.innerHTML =
+        `project: <span class="accent">${escapeHtml(project)}</span>` +
+        (env ? ` &nbsp; env: <span class="accent">${escapeHtml(env)}</span>` : "");
+
+      const url = "/api/ide/libraries?" + params.toString();
+      fetch(url)
+        .then((r) => r.json().then((data) => ({ ok: r.ok, data })))
+        .then(({ ok, data }) => {
+          if (!ok || !data.success) {
+            show(errorEl, true);
+            errorEl.innerHTML = `<code>${escapeHtml(data.error || "request failed")}</code>`;
+            return;
+          }
+          if (data.environment) {
+            metaEl.innerHTML =
+              `project: <span class="accent">${escapeHtml(data.project)}</span> &nbsp; ` +
+              `env: <span class="accent">${escapeHtml(data.environment)}</span>`;
+          }
+          if (!data.libraries || data.libraries.length === 0) {
+            show(emptyEl, true);
+          } else {
+            renderLibraries(data.libraries);
+            show(tableEl, true);
+          }
+          if (data.install_state_note) {
+            show(noteEl, true);
+            noteEl.textContent = data.install_state_note;
+          }
+        })
+        .catch((e) => {
+          show(errorEl, true);
+          errorEl.textContent = "Failed to load libraries: " + e;
+        });
+    }
+
+    function renderLibraries(libs) {
+      rowsEl.innerHTML = "";
+      for (const lib of libs) {
+        const tr = document.createElement("tr");
+        const versionOrRef = lib.version_spec || "—";
+        const pillClass = lib.installed ? "pill installed" : "pill not-installed";
+        const pillText = lib.installed ? "installed" : "not installed";
+        tr.innerHTML = `
+          <td>${escapeHtml(lib.name)}</td>
+          <td><span class="source-tag">${escapeHtml(lib.source_type)}</span></td>
+          <td>${escapeHtml(versionOrRef)}</td>
+          <td><code>${escapeHtml(lib.raw)}</code></td>
+          <td><span class="${pillClass}">${pillText}</span></td>
+        `;
+        rowsEl.appendChild(tr);
+      }
+    }
+  })();
+  </script>
+</body>
+</html>

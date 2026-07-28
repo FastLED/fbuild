@@ -163,6 +163,18 @@ fn build_fbuild_tasks(env_name: &str, debug_chip: Option<&str>) -> Vec<ZedTask> 
         // Phase 2, second panel): status polled from /api/daemon/info,
         // activity tail over the existing /ws/logs broadcast websocket.
         task("Build Progress", "fbuild", str_args(vec!["build-progress"])),
+        // Opens the daemon-served Board Manager page (FastLED/fbuild#1076
+        // Phase 2, third/fourth panels): read-only, searchable table over
+        // fbuild's embedded board database. Daemon-global, no env needed.
+        task("Board Manager", "fbuild", str_args(vec!["boards"])),
+        // Opens the daemon-served Library Manager page for this
+        // environment's declared lib_deps, classified + annotated with
+        // best-effort install state.
+        task(
+            "Library Manager",
+            "fbuild",
+            str_args(vec!["libraries", "-e", env_name]),
+        ),
         task(
             "Select environment",
             "fbuild",
@@ -693,7 +705,7 @@ mod tests {
     #[test]
     fn build_fbuild_tasks_pins_environment_in_args() {
         let tasks = build_fbuild_tasks("esp32dev", None);
-        assert_eq!(tasks.len(), 9);
+        assert_eq!(tasks.len(), 11);
         for label in [
             "fbuild: Build",
             "fbuild: Build (clean)",
@@ -703,6 +715,8 @@ mod tests {
             "fbuild: Reset",
             "fbuild: Serial Plotter",
             "fbuild: Build Progress",
+            "fbuild: Board Manager",
+            "fbuild: Library Manager",
             "fbuild: Select environment",
         ] {
             assert!(
@@ -727,6 +741,16 @@ mod tests {
             .find(|t| t.label == "fbuild: Build Progress")
             .unwrap();
         assert_eq!(build_progress.args, vec!["build-progress"]);
+        let board_manager = tasks
+            .iter()
+            .find(|t| t.label == "fbuild: Board Manager")
+            .unwrap();
+        assert_eq!(board_manager.args, vec!["boards"]);
+        let library_manager = tasks
+            .iter()
+            .find(|t| t.label == "fbuild: Library Manager")
+            .unwrap();
+        assert_eq!(library_manager.args, vec!["libraries", "-e", "esp32dev"]);
         // No debug-chip resolved -> no debug-server task.
         assert!(!tasks.iter().any(|t| t.label.contains("Debug server")));
     }
@@ -734,7 +758,7 @@ mod tests {
     #[test]
     fn build_fbuild_tasks_adds_debug_server_task_when_chip_resolved() {
         let tasks = build_fbuild_tasks("rpipico", Some("RP2040"));
-        assert_eq!(tasks.len(), 10);
+        assert_eq!(tasks.len(), 12);
         let debug = tasks
             .iter()
             .find(|t| t.label == "fbuild: Debug server (probe-rs)")
