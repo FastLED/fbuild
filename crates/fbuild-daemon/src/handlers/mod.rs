@@ -1,5 +1,6 @@
 //! HTTP and WebSocket route handlers for the daemon.
 
+pub mod build_progress;
 pub mod cache;
 pub mod devices;
 pub mod emulator;

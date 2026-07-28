@@ -151,6 +151,7 @@ known limitations.
 | `fbuild ide [project_dir] [-e <env>] [--no-launch]` | Open the project as an IDE workspace on stock Zed. See [`fbuild ide`](#fbuild-ide) below. |
 | `fbuild ide select [project_dir] [-e <env>]` | Interactively (or with `-e`) choose the environment used for the IDE config, persist it, and regenerate. |
 | `fbuild plotter [-p <port>]` | Open the daemon-served Serial Plotter web page in the default browser. See [`fbuild plotter`](#fbuild-plotter) below. |
+| `fbuild build-progress` | Open the daemon-served Build Progress web page in the default browser. See [`fbuild build-progress`](#fbuild-build-progress) below. |
 | `fbuild clang-tidy` | Run clang-tidy against project sources. |
 | `fbuild iwyu` | Run include-what-you-use analysis. |
 | `fbuild clang-query` | Run a clang-query matcher. |
@@ -191,7 +192,8 @@ Generated/updated files:
   `lsp.clangd.binary.arguments`); safe to commit.
 - `.zed/tasks.json` — merge-don't-clobber: fbuild only replaces tasks whose
   label starts with `"fbuild: "` (Build, Build (clean), Deploy, Deploy +
-  Monitor, Monitor, Reset, Serial Plotter, Select environment); any other
+  Monitor, Monitor, Reset, Serial Plotter, Build Progress, Select
+  environment); any other
   task you've added is left untouched. Safe to commit.
 - `.fbuild/ide_state.json` — the persisted environment choice. Local
   developer state; recommend `.gitignore`.
@@ -266,6 +268,41 @@ port>/plotter[?port=<port>]` in the OS default browser. `fbuild ide`
 generates a `"fbuild: Serial Plotter"` Zed task that just runs `fbuild
 plotter` (see [`fbuild ide`](#fbuild-ide) above), so the same command works
 whether or not you're using Zed.
+
+### `fbuild build-progress`
+
+Open the daemon-served Build Progress web page in the default browser
+(FastLED/fbuild#1076 Phase 2, second panel). The page (`GET
+/build-progress` on the daemon,
+`crates/fbuild-daemon/web/build-progress/index.html`) is a single
+self-contained HTML file with no external dependencies. It is built
+entirely out of existing, unmodified daemon endpoints:
+
+- `GET /api/daemon/info`, polled every ~2s, for a status header (idle /
+  building / deploying / ..., the current operation description, and any
+  in-progress dependency install).
+- `GET /ws/logs`, the existing daemon-wide broadcast log WebSocket, for a
+  live scrolling activity pane with an autoscroll toggle and a clear
+  button.
+
+Note this is daemon-wide activity, not a literal line-by-line tail of one
+build's compiler output: the build's own NDJSON log stream
+(`POST /api/build`) is scoped to the HTTP request that started it and
+isn't broadcast to other clients, so a second page can't attach to
+"someone else's" in-flight build output without new server-side broadcast
+plumbing. `/ws/logs` and `/api/daemon/info` are the observable,
+already-broadcast alternative this page uses instead — see the
+"Observability reality" comment in
+`crates/fbuild-daemon/src/handlers/build_progress.rs` for the full
+rationale.
+
+```bash
+fbuild build-progress   # opens the page
+```
+
+`fbuild ide` generates a `"fbuild: Build Progress"` Zed task that just runs
+`fbuild build-progress`, so the same command works whether or not you're
+using Zed.
 
 ## Batch And CI Commands
 

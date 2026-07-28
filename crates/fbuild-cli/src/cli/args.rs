@@ -534,6 +534,12 @@ pub enum Commands {
         #[arg(short = 'p', long)]
         port: Option<String>,
     },
+    /// Open the daemon-served Build Progress web page in the default
+    /// browser (FastLED/fbuild#1076 Phase 2, second panel): daemon
+    /// state/current-operation polled from `/api/daemon/info` every ~2s
+    /// plus a live activity tail over the existing `/ws/logs` broadcast
+    /// websocket
+    BuildProgress,
     /// Build firmware and run it in an emulator for testing
     TestEmu {
         project_dir: Option<String>,
@@ -1008,6 +1014,7 @@ pub const KNOWN_SUBCOMMANDS: &[&str] = &[
     "clangd-config",
     "ide",
     "plotter",
+    "build-progress",
     "clang-query",
     "test-emu",
     "lib-select",

@@ -92,6 +92,14 @@ fn plotter_port_flag_parses() {
     }
 }
 
+// ---------- `fbuild build-progress` CLI shape ----------
+
+#[test]
+fn build_progress_parses_with_no_args() {
+    let cli = Cli::try_parse_from(["fbuild", "build-progress"]).expect("parse");
+    assert!(matches!(cli.command, Some(Commands::BuildProgress)));
+}
+
 #[test]
 fn ide_select_with_no_project_dir_parses_as_select_action() {
     let cli = Cli::try_parse_from(["fbuild", "ide", "select"]).expect("parse");
