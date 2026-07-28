@@ -212,8 +212,10 @@ convenience on top of it.
 
 `fbuild ide` also tries to wire up Zed's debugger for the current
 environment. **Milestone 1 covers probe-rs-supported targets only** — RP2040
-(and, best-effort, RP2350), and a small, deliberately conservative set of
-ARM Cortex-M chips (currently: nRF52840 and the STM32F103C8 "Blue Pill").
+and RP2350 (probe-rs chip `RP235x`), and a small, deliberately conservative
+set of ARM Cortex-M chips (currently: Teensy 4.x — iMXRT1062, probe-rs chip
+`MIMXRT1060`, requires the debug pads wired to a probe — plus nRF52840 and
+the STM32F103C8 "Blue Pill"; names verified against probe-rs's target files).
 ESP32 and AVR are **not** probe-rs targets (ESP32 debugging goes through
 OpenOCD, which speaks GDB-remote, not DAP; AVR has no comparable open
 debug-adapter story) and are explicitly out of scope for this milestone —

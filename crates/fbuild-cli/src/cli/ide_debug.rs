@@ -29,16 +29,14 @@
 //! | fbuild `mcu` | probe-rs chip | confidence |
 //! |---|---|---|
 //! | `rp2040` | `RP2040` | high — probe-rs's flagship supported target |
-//! | `rp2350` | `RP2350` | medium — probe-rs added RP2350 support; exact variant suffix (`RP2350A`/`RP2350B`) not distinguished by fbuild's board data, so this uses the bare family name |
+//! | `rp2350` | `RP235x` | high — probe-rs's target file is `RP235x.yaml` and the ARM-core chip entry is named `RP235x` (verified against probe-rs/probe-rs master targets) |
+//! | `imxrt1062` | `MIMXRT1060` | high — probe-rs ships `MIMXRT1060.yaml` whose single chip entry `MIMXRT1060` covers the 1061/1062 parts (Teensy 4.x). Note Teensy boards need the debug pads wired to a probe; the config is still correct when they are |
 //! | `nrf52840` | `nRF52840_xxAA` | high — standard probe-rs-target naming for Nordic parts (package-suffixed SVD-derived name) |
-//! | `stm32f103c8t6` | `STM32F103C8` | medium — common "Blue Pill" chip; probe-rs-target STM32 names track the bare part number (no package/temperature suffix) for this family |
+//! | `stm32f103c8t6` | `STM32F103C8` | high — `STM32F1_Series.yaml` names chips by bare part number (`STM32F103C8`), verified against probe-rs master targets |
 //!
 //! Deliberately **not** mapped even though fbuild has board data for them:
-//! Teensy 4.x (`imxrt1062` — unclear whether probe-rs's iMX RT target name
-//! is `MIMXRT1062xxxxA` or a variant-specific string; Teensy also has no
-//! standard SWD debug header wired to CMSIS-DAP/J-Link out of the box), any
-//! other STM32 family/package not in the table above, and anything AVR or
-//! ESP32 (not probe-rs targets at all).
+//! any other STM32 family/package not in the table above, and anything AVR
+//! or ESP32 (not probe-rs targets at all).
 
 use std::path::{Path, PathBuf};
 
@@ -59,7 +57,8 @@ const FBUILD_DEBUG_PREFIX: &str = "fbuild: ";
 pub(crate) fn probe_rs_chip_for_mcu(mcu: &str) -> Option<&'static str> {
     match mcu.to_ascii_lowercase().as_str() {
         "rp2040" => Some("RP2040"),
-        "rp2350" => Some("RP2350"),
+        "rp2350" => Some("RP235x"),
+        "imxrt1062" => Some("MIMXRT1060"),
         "nrf52840" => Some("nRF52840_xxAA"),
         "stm32f103c8t6" | "stm32f103c8" => Some("STM32F103C8"),
         _ => None,
@@ -191,7 +190,8 @@ mod tests {
     fn maps_known_probe_rs_chips() {
         assert_eq!(probe_rs_chip_for_mcu("rp2040"), Some("RP2040"));
         assert_eq!(probe_rs_chip_for_mcu("RP2040"), Some("RP2040"));
-        assert_eq!(probe_rs_chip_for_mcu("rp2350"), Some("RP2350"));
+        assert_eq!(probe_rs_chip_for_mcu("rp2350"), Some("RP235x"));
+        assert_eq!(probe_rs_chip_for_mcu("imxrt1062"), Some("MIMXRT1060"));
         assert_eq!(probe_rs_chip_for_mcu("nrf52840"), Some("nRF52840_xxAA"));
         assert_eq!(probe_rs_chip_for_mcu("stm32f103c8t6"), Some("STM32F103C8"));
         assert_eq!(probe_rs_chip_for_mcu("stm32f103c8"), Some("STM32F103C8"));
@@ -205,7 +205,6 @@ mod tests {
             "esp32",
             "esp32s3",
             "esp8266",
-            "imxrt1062", // Teensy 4.x — deliberately left out, see module docs
             "attiny85",
             "",
             "totally-unknown-chip",
