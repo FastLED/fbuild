@@ -9,7 +9,8 @@ use fbuild_daemon::context::{
     BroadcastHub, DaemonContext, IDLE_TIMEOUT, STALE_LOCK_CHECK_INTERVAL, self_eviction_timeout,
 };
 use fbuild_daemon::handlers::{
-    build_progress, cache, devices, emulator, health, locks, operations, plotter, websockets,
+    boards, build_progress, cache, devices, emulator, health, libraries, locks, operations,
+    plotter, websockets,
 };
 use fbuild_daemon::log_layer::BroadcastLogLayer;
 use std::sync::Arc;
@@ -207,6 +208,10 @@ async fn main() {
         .route("/emulator/avr8js/:session_id", get(emulator::avr8js_page))
         .route("/plotter", get(plotter::plotter_page))
         .route("/build-progress", get(build_progress::build_progress_page))
+        .route("/boards", get(boards::boards_page))
+        .route("/api/ide/boards", get(boards::list_boards))
+        .route("/libraries", get(libraries::libraries_page))
+        .route("/api/ide/libraries", get(libraries::list_libraries))
         .route("/ws/serial-monitor", get(websockets::ws_serial_monitor))
         .route("/ws/status", get(websockets::ws_status))
         .route("/ws/logs", get(websockets::ws_logs))

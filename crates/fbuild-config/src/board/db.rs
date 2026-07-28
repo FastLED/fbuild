@@ -45,6 +45,85 @@ pub(super) fn get_board_db() -> &'static HashMap<String, serde_json::Value> {
     })
 }
 
+/// One row of the flattened board database, as served by the daemon's
+/// read-only `GET /api/ide/boards` endpoint (FastLED/fbuild#1076 Phase 2).
+///
+/// Deliberately a small projection of the full board JSON (not
+/// [`super::types::BoardConfig`], which requires resolving an env's
+/// `board_build.*` overrides): this is a browsing/inspection view over the
+/// raw embedded registry, so it only carries fields that are cheaply
+/// available directly off the JSON entry.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub struct BoardSummary {
+    pub id: String,
+    pub name: String,
+    pub platform: String,
+    pub mcu: String,
+    /// CPU clock frequency in Hz, when the registry entry carries one.
+    pub f_cpu: Option<u64>,
+    /// RAM size in bytes, when the registry entry carries one.
+    pub ram: Option<u64>,
+    /// Flash/ROM size in bytes, when the registry entry carries one.
+    pub flash: Option<u64>,
+}
+
+/// List every board in the embedded database, optionally filtered by a
+/// case-insensitive substring match against `id` or `name`.
+///
+/// Pure and in-memory — the database is loaded once via `OnceLock` and this
+/// does zero I/O beyond that first load. Results are sorted by `id` so the
+/// output (and therefore the daemon's JSON response) is deterministic.
+pub fn search_boards(query: Option<&str>) -> Vec<BoardSummary> {
+    let db = get_board_db();
+    let needle = query.map(|q| q.to_ascii_lowercase());
+
+    let mut out: Vec<BoardSummary> = db
+        .iter()
+        .filter_map(|(stem, entry)| {
+            let id = entry
+                .get("id")
+                .and_then(|v| v.as_str())
+                .unwrap_or(stem)
+                .to_string();
+            let name = entry
+                .get("name")
+                .and_then(|v| v.as_str())
+                .unwrap_or(&id)
+                .to_string();
+
+            if let Some(ref needle) = needle {
+                if !needle.is_empty()
+                    && !id.to_ascii_lowercase().contains(needle.as_str())
+                    && !name.to_ascii_lowercase().contains(needle.as_str())
+                {
+                    return None;
+                }
+            }
+
+            Some(BoardSummary {
+                id,
+                name,
+                platform: entry
+                    .get("platform")
+                    .and_then(|v| v.as_str())
+                    .unwrap_or_default()
+                    .to_string(),
+                mcu: entry
+                    .get("mcu")
+                    .and_then(|v| v.as_str())
+                    .unwrap_or_default()
+                    .to_string(),
+                f_cpu: entry.get("fcpu").and_then(|v| v.as_u64()),
+                ram: entry.get("ram").and_then(|v| v.as_u64()),
+                flash: entry.get("rom").and_then(|v| v.as_u64()),
+            })
+        })
+        .collect();
+
+    out.sort_by(|a, b| a.id.cmp(&b.id));
+    out
+}
+
 /// Convert a board_id like "uno" to a board define like "UNO".
 pub(super) fn board_id_to_board_define(board_id: &str) -> String {
     board_id.to_uppercase().replace('-', "_")
@@ -383,4 +462,76 @@ fn flatten_board_entry(entry: &serde_json::Value, board_id: &str) -> HashMap<Str
         .or_insert_with(|| board_id_to_board_define(board_id));
 
     d
+}
+
+#[cfg(test)]
+mod tests_search_boards {
+    use super::search_boards;
+
+    #[test]
+    fn no_query_returns_every_board_sorted_by_id() {
+        let all = search_boards(None);
+        assert!(!all.is_empty(), "embedded board database must not be empty");
+        let mut ids: Vec<&str> = all.iter().map(|b| b.id.as_str()).collect();
+        let mut sorted = ids.clone();
+        sorted.sort();
+        assert_eq!(ids, sorted, "search_boards(None) must be sorted by id");
+        ids.dedup();
+        assert_eq!(ids.len(), all.len(), "board ids must be unique");
+    }
+
+    #[test]
+    fn query_filters_by_id_substring_case_insensitively() {
+        let uno = search_boards(Some("UNO"));
+        assert!(
+            uno.iter().any(|b| b.id == "uno"),
+            "expected the 'uno' board id in results"
+        );
+        for b in &uno {
+            let hay_id = b.id.to_ascii_lowercase();
+            let hay_name = b.name.to_ascii_lowercase();
+            assert!(
+                hay_id.contains("uno") || hay_name.contains("uno"),
+                "board {:?} does not match query 'UNO'",
+                b
+            );
+        }
+    }
+
+    #[test]
+    fn query_filters_by_name_substring() {
+        let results = search_boards(Some("Microduino"));
+        assert!(
+            results.iter().any(|b| b.id == "1284p16m"),
+            "expected a Microduino board to match a name substring query"
+        );
+    }
+
+    #[test]
+    fn empty_query_string_behaves_like_no_query() {
+        let all = search_boards(None);
+        let empty = search_boards(Some(""));
+        assert_eq!(all.len(), empty.len());
+    }
+
+    #[test]
+    fn unmatched_query_returns_empty() {
+        let results = search_boards(Some("definitely-not-a-real-board-xyz"));
+        assert!(results.is_empty());
+    }
+
+    #[test]
+    fn known_board_has_expected_fields() {
+        let results = search_boards(Some("1284p16m"));
+        let board = results
+            .iter()
+            .find(|b| b.id == "1284p16m")
+            .expect("1284p16m board should be present");
+        assert_eq!(board.name, "Microduino Core+ (ATmega1284P@16M,5V)");
+        assert_eq!(board.platform, "atmelavr");
+        assert_eq!(board.mcu, "ATMEGA1284P");
+        assert_eq!(board.f_cpu, Some(16_000_000));
+        assert_eq!(board.ram, Some(16384));
+        assert_eq!(board.flash, Some(130048));
+    }
 }

@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>fbuild Board Manager</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f4efe4;
+      --panel: #fffdf8;
+      --ink: #1f1b18;
+      --muted: #6d6258;
+      --line: #d9cdbd;
+      --accent: #bd4b2c;
+      --row-hover: color-mix(in srgb, var(--accent) 8%, transparent);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #17130f;
+        --panel: #241e18;
+        --ink: #f1e9dd;
+        --muted: #a99c8c;
+        --line: #3a3129;
+        --accent: #e07a52;
+        --row-hover: color-mix(in srgb, var(--accent) 14%, transparent);
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Consolas", "Menlo", monospace;
+      padding: 20px;
+    }
+    .shell {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.16);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+    .bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--line);
+    }
+    .title {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-right: auto;
+    }
+    input[type="search"] {
+      font: inherit;
+      font-size: 13px;
+      color: var(--ink);
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 6px 10px;
+      width: 260px;
+    }
+    input[type="search"]:focus { outline: 1px solid var(--accent); }
+    .count {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    thead th {
+      text-align: left;
+      padding: 8px 14px;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      background: var(--panel);
+    }
+    tbody tr {
+      border-bottom: 1px solid var(--line);
+      cursor: pointer;
+    }
+    tbody tr:hover { background: var(--row-hover); }
+    tbody td { padding: 8px 14px; vertical-align: top; }
+    .table-wrap { max-height: 70vh; overflow-y: auto; }
+    .details {
+      display: none;
+      background: var(--bg);
+    }
+    .details.open { display: table-row; }
+    .details pre {
+      margin: 0;
+      padding: 10px 14px;
+      font-size: 11px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: var(--muted);
+    }
+    .empty, .error {
+      padding: 40px 20px;
+      text-align: center;
+      color: var(--muted);
+    }
+    .error { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="bar">
+      <div class="title">fbuild Board Manager</div>
+      <input type="search" id="search" placeholder="Filter by id or name…" autofocus>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Board ID</th>
+            <th>Name</th>
+            <th>Platform</th>
+            <th>MCU</th>
+            <th>F_CPU</th>
+            <th>RAM</th>
+            <th>Flash</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div class="empty" id="empty" style="display:none;">No boards match this filter.</div>
+      <div class="error" id="error" style="display:none;"></div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    "use strict";
+
+    const searchInput = document.getElementById("search");
+    const rowsEl = document.getElementById("rows");
+    const countEl = document.getElementById("count");
+    const emptyEl = document.getElementById("empty");
+    const errorEl = document.getElementById("error");
+
+    let allBoards = [];
+    let openDetailsId = null;
+    let debounceTimer = null;
+
+    function fmtNum(n) {
+      return n === null || n === undefined ? "—" : String(n);
+    }
+
+    function fmtHz(n) {
+      if (n === null || n === undefined) return "—";
+      if (n >= 1000000) return (n / 1000000) + " MHz";
+      if (n >= 1000) return (n / 1000) + " kHz";
+      return n + " Hz";
+    }
+
+    function fmtBytes(n) {
+      if (n === null || n === undefined) return "—";
+      if (n >= 1024 * 1024) return (n / (1024 * 1024)).toFixed(1) + " MB";
+      if (n >= 1024) return (n / 1024).toFixed(1) + " KB";
+      return n + " B";
+    }
+
+    function escapeHtml(s) {
+      return String(s)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+    }
+
+    function render(boards) {
+      rowsEl.innerHTML = "";
+      countEl.textContent = boards.length + " board" + (boards.length === 1 ? "" : "s");
+      emptyEl.style.display = boards.length === 0 ? "block" : "none";
+
+      for (const b of boards) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${escapeHtml(b.id)}</td>
+          <td>${escapeHtml(b.name)}</td>
+          <td>${escapeHtml(b.platform)}</td>
+          <td>${escapeHtml(b.mcu)}</td>
+          <td>${fmtHz(b.f_cpu)}</td>
+          <td>${fmtBytes(b.ram)}</td>
+          <td>${fmtBytes(b.flash)}</td>
+        `;
+        tr.addEventListener("click", () => toggleDetails(b, tr));
+        rowsEl.appendChild(tr);
+
+        if (openDetailsId === b.id) {
+          rowsEl.appendChild(detailsRow(b));
+        }
+      }
+    }
+
+    function detailsRow(b) {
+      const tr = document.createElement("tr");
+      tr.className = "details open";
+      const td = document.createElement("td");
+      td.colSpan = 7;
+      const pre = document.createElement("pre");
+      pre.textContent = JSON.stringify(b, null, 2);
+      td.appendChild(pre);
+      tr.appendChild(td);
+      return tr;
+    }
+
+    function toggleDetails(b, tr) {
+      const next = tr.nextSibling;
+      if (next && next.classList && next.classList.contains("details")) {
+        next.remove();
+        openDetailsId = null;
+        return;
+      }
+      document.querySelectorAll(".details").forEach((el) => el.remove());
+      openDetailsId = b.id;
+      tr.after(detailsRow(b));
+    }
+
+    function applyFilter() {
+      const q = searchInput.value.trim().toLowerCase();
+      if (!q) {
+        render(allBoards);
+        return;
+      }
+      render(
+        allBoards.filter(
+          (b) => b.id.toLowerCase().includes(q) || b.name.toLowerCase().includes(q)
+        )
+      );
+    }
+
+    async function load(query) {
+      try {
+        const url = "/api/ide/boards" + (query ? "?query=" + encodeURIComponent(query) : "");
+        const resp = await fetch(url);
+        if (!resp.ok) throw new Error("HTTP " + resp.status);
+        const data = await resp.json();
+        allBoards = data.boards || [];
+        errorEl.style.display = "none";
+        render(allBoards);
+      } catch (e) {
+        errorEl.style.display = "block";
+        errorEl.textContent = "Failed to load board database: " + e;
+      }
+    }
+
+    searchInput.addEventListener("input", () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(applyFilter, 120);
+    });
+
+    // Load the full board list once; filtering happens client-side so
+    // typing doesn't re-fetch on every keystroke.
+    load(null);
+  })();
+  </script>
+</body>
+</html>

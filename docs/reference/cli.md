@@ -152,6 +152,8 @@ known limitations.
 | `fbuild ide select [project_dir] [-e <env>]` | Interactively (or with `-e`) choose the environment used for the IDE config, persist it, and regenerate. |
 | `fbuild plotter [-p <port>]` | Open the daemon-served Serial Plotter web page in the default browser. See [`fbuild plotter`](#fbuild-plotter) below. |
 | `fbuild build-progress` | Open the daemon-served Build Progress web page in the default browser. See [`fbuild build-progress`](#fbuild-build-progress) below. |
+| `fbuild boards` | Open the daemon-served, read-only Board Manager web page in the default browser. See [`fbuild boards`](#fbuild-boards) below. |
+| `fbuild libraries [project_dir] [-e <env>]` | Open the daemon-served, read-only Library Manager web page for this project/environment's declared `lib_deps`. See [`fbuild libraries`](#fbuild-libraries) below. |
 | `fbuild clang-tidy` | Run clang-tidy against project sources. |
 | `fbuild iwyu` | Run include-what-you-use analysis. |
 | `fbuild clang-query` | Run a clang-query matcher. |
@@ -192,8 +194,8 @@ Generated/updated files:
   `lsp.clangd.binary.arguments`); safe to commit.
 - `.zed/tasks.json` — merge-don't-clobber: fbuild only replaces tasks whose
   label starts with `"fbuild: "` (Build, Build (clean), Deploy, Deploy +
-  Monitor, Monitor, Reset, Serial Plotter, Build Progress, Select
-  environment); any other
+  Monitor, Monitor, Reset, Serial Plotter, Build Progress, Board Manager,
+  Library Manager, Select environment); any other
   task you've added is left untouched. Safe to commit.
 - `.fbuild/ide_state.json` — the persisted environment choice. Local
   developer state; recommend `.gitignore`.
@@ -305,6 +307,68 @@ fbuild build-progress   # opens the page
 `fbuild ide` generates a `"fbuild: Build Progress"` Zed task that just runs
 `fbuild build-progress`, so the same command works whether or not you're
 using Zed.
+
+### `fbuild boards`
+
+Open the daemon-served Board Manager web page in the default browser
+(FastLED/fbuild#1076 Phase 2, third panel). **Read-only first cut**:
+browsing/inspection only, no install/mutation actions. The page (`GET
+/boards` on the daemon, `crates/fbuild-daemon/web/boards/index.html`) is a
+single self-contained HTML file with no external dependencies. It fetches
+the full board list once from `GET /api/ide/boards` — backed by
+`fbuild_config::search_boards` over the same embedded PlatformIO-registry
+board database `fbuild build`/`fbuild deploy` already use — then filters
+and expands rows entirely client-side. `?query=<substring>` also narrows
+the endpoint's response server-side (case-insensitive match on id/name),
+for programmatic callers.
+
+```bash
+fbuild boards   # opens the page
+```
+
+Daemon-global — no project context needed, so this command takes no
+arguments. `fbuild ide` generates a `"fbuild: Board Manager"` Zed task
+that just runs `fbuild boards`.
+
+### `fbuild libraries`
+
+Open the daemon-served Library Manager web page in the default browser
+(FastLED/fbuild#1076 Phase 2, fourth panel). **Read-only first cut**:
+browsing/inspection only, no install/mutation actions. Unlike `fbuild
+boards`/`fbuild plotter`/`fbuild build-progress`, this page is not
+daemon-global — it needs a project directory and environment to know
+which `platformio.ini` to read.
+
+```bash
+fbuild libraries                    # current dir, resolved env
+fbuild libraries tests/platform/uno -e uno
+```
+
+`fbuild libraries` resolves the project dir the same way `fbuild
+build`/`fbuild ide` do (subcommand arg, else the top-level positional,
+else `.`) and the environment the same way (`-e`, else
+`platformio.ini`'s default environment), then opens `http://127.0.0.1:<daemon
+port>/libraries?project=<dir>&env=<env>` — the page reads those two query
+params straight back out of its own URL to call `GET
+/api/ide/libraries?project=&env=`. Opening the page without `?project=`
+(e.g. navigating to `/libraries` directly) renders a short how-to pointing
+back at this command.
+
+The data endpoint parses the environment's `lib_deps`, classifies each
+entry with the same classifier `fbuild sync` uses (registry / GitHub /
+git / HTTP archive / symlink / `file://` / local path —
+`fbuild_config::classify_lib_dep`, moved there from `fbuild-cli::sync` so
+the daemon can reuse it), and reports a best-effort installed/not-installed
+flag per entry: it checks the *release* build profile's `<project>/.fbuild/
+build/<env>/release/libs/` directory for a same-named subdirectory. That
+directory only exists after a build that needed dependencies has actually
+run, so on a fresh checkout every entry reports "not installed" even
+though the source is perfectly resolvable — the response's
+`install_state_note` field (also rendered on the page) spells this out.
+
+`fbuild ide` generates a `"fbuild: Library Manager"` Zed task that runs
+`fbuild libraries -e <env>` for the environment the IDE config was
+generated for.
 
 ## Batch And CI Commands
 

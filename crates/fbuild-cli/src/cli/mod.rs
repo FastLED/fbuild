@@ -11,6 +11,7 @@
 
 pub mod args;
 pub mod bloat_lookup;
+pub mod boards;
 pub mod bringup;
 pub mod build;
 pub mod build_progress;
@@ -26,6 +27,7 @@ pub mod dispatch;
 pub mod graph_cmd;
 pub mod ide;
 pub mod ide_debug;
+pub mod libraries;
 pub mod lnk;
 pub mod monitor_parse;
 pub mod pio;

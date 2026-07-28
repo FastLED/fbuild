@@ -555,6 +555,75 @@ pub struct ResetRequest {
     pub caller_cwd: Option<String>,
 }
 
+/// GET /api/ide/boards query params (FastLED/fbuild#1076 Phase 2).
+#[derive(Debug, Deserialize)]
+pub struct IdeBoardsQuery {
+    /// Case-insensitive substring filter on board id/name. `None` or an
+    /// empty string returns every board.
+    pub query: Option<String>,
+}
+
+/// GET /api/ide/boards response.
+#[derive(Debug, Serialize)]
+pub struct IdeBoardsResponse {
+    pub success: bool,
+    pub boards: Vec<fbuild_config::BoardSummary>,
+}
+
+/// GET /api/ide/libraries query params (FastLED/fbuild#1076 Phase 2).
+#[derive(Debug, Deserialize)]
+pub struct IdeLibrariesQuery {
+    /// Absolute path to the project directory (must contain `platformio.ini`).
+    pub project: Option<String>,
+    /// Environment name within `platformio.ini`. Falls back to the config's
+    /// default environment when omitted.
+    pub env: Option<String>,
+}
+
+/// One `lib_deps` entry, classified, plus best-effort install state.
+#[derive(Debug, Clone, Serialize)]
+pub struct IdeLibraryEntry {
+    /// The exact `lib_deps` string as it appears in `platformio.ini`.
+    pub raw: String,
+    /// Best-effort human-facing name (see `fbuild_config::classify_lib_dep`).
+    pub name: String,
+    /// Source classification: `registry`, `github`, `git`, `http-archive`,
+    /// `symlink`, `file`, or `local-path`.
+    pub source_type: fbuild_config::SourceType,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub version_spec: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub owner: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub url: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub local_path: Option<String>,
+    /// Best-effort: `true` when a same-named directory was found under the
+    /// project's resolved `libs/` build directory for this environment. See
+    /// `install_state_note` on the response for the caveats.
+    pub installed: bool,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub installed_path: Option<String>,
+}
+
+/// GET /api/ide/libraries response.
+#[derive(Debug, Serialize)]
+pub struct IdeLibrariesResponse {
+    pub success: bool,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub project: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub environment: Option<String>,
+    pub libraries: Vec<IdeLibraryEntry>,
+    /// Explains what "installed" does and does not mean here — the install
+    /// dir is only populated by a prior successful build, and is only
+    /// checked for the `release` build profile. Always present so callers
+    /// don't have to guess at the detection's reliability.
+    pub install_state_note: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub error: Option<String>,
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
