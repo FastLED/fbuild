@@ -80,6 +80,45 @@ If slower, check:
 
 See [architecture/overview.md](architecture/overview.md) for additional architecture-level troubleshooting.
 
+### `clangd --check` parity harness (FastLED/fbuild#1076)
+
+CI cannot launch Zed to exercise the `fbuild ide` experience end-to-end (Zed
+requires a DX11-capable GPU on Windows and a display everywhere else), so the
+IDE-integration acceptance test is a headless proxy: generate the
+IDE-flavored `compile_commands.json` for a representative project (the same
+raw-`.ino` + `-include <prelude>` entries `fbuild clangd-config` / `fbuild
+ide` emit — see `crates/fbuild-build-engine/src/compile_database/clang.rs`
+→ `swap_ino_entries_for_raw`), then run `clangd --check=<sketch.ino>`
+headlessly and assert no unexpected error-severity diagnostics. A clean
+check here is definitionally a clean check of what the real build compiles,
+since the raw-`.ino` entry carries the same flags the generated `.ino.cpp`
+entry would have carried.
+
+The harness lives at
+`crates/fbuild-build/tests/clangd_check_parity.rs` and is `#[ignore]`d
+(needs a real AVR toolchain — commonly already cached from other AVR tests
+— and `clangd` on `PATH`, which fbuild does not manage/download itself; Zed
+manages its own clangd, so fbuild deliberately doesn't duplicate that).
+
+To run it locally:
+
+1. Install `clangd` — via Zed (bundles its own, but doesn't put it on
+   `PATH`), `winget install LLVM.LLVM` (Windows), `apt install clangd`
+   (Debian/Ubuntu), or `brew install llvm` (macOS), and make sure the
+   binary is discoverable on `PATH` (`clangd --version`).
+2. Run the ignored test by name:
+
+   ```bash
+   soldr cargo test -p fbuild-build --test clangd_check_parity -- --ignored --nocapture
+   ```
+
+If `clangd` isn't found on `PATH`, the test prints a `SKIP:` message and
+passes trivially rather than failing — this is a real skip, not a silent
+false-positive, so check the printed message when validating the harness
+itself. The test writes only into a temp build directory plus
+`tests/platform/uno/compile_commands.json` (gitignored), matching what a
+normal `fbuild build -t compiledb` against that project already does.
+
 ## Development setup
 
 To develop fbuild, run `. ./activate.sh`
