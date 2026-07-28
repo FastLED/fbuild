@@ -524,6 +524,25 @@ pub enum Commands {
         #[command(subcommand)]
         action: Option<IdeAction>,
     },
+    /// Attach GDB to a device's on-chip debug stub (FastLED/fbuild#1144).
+    /// ESP32 family only in this release: build (unless --no-flash) →
+    /// flash via the existing deploy path → find the port → launch gdb
+    /// against the exact build's ELF. Other platforms print a first-class
+    /// "not supported"/"planned" message and exit nonzero-but-clean — see
+    /// the capability matrix in `docs/reference/cli.md`.
+    Debug {
+        project_dir: Option<String>,
+        #[arg(short = 'e', long)]
+        environment: Option<String>,
+        /// Attach to the existing build/flash instead of rebuilding and
+        /// reflashing first. Fails with a clear message if no ELF exists yet.
+        #[arg(long)]
+        no_flash: bool,
+        /// Serial port to attach gdb over (e.g. "COM5", "/dev/ttyUSB0").
+        /// Auto-detected when omitted and exactly one CDC device is present.
+        #[arg(short = 'p', long)]
+        port: Option<String>,
+    },
     /// Open the daemon-served Serial Plotter web page in the default
     /// browser (FastLED/fbuild#1076 Phase 2): a live scrolling chart of
     /// numeric values parsed from serial output, over the existing
@@ -1030,6 +1049,7 @@ pub const KNOWN_SUBCOMMANDS: &[&str] = &[
     "iwyu",
     "clangd-config",
     "ide",
+    "debug",
     "plotter",
     "build-progress",
     "boards",

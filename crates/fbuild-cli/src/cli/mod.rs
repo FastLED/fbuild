@@ -21,6 +21,7 @@ pub mod clangd_config;
 pub mod clean;
 pub mod compile_many;
 pub mod daemon_cmd;
+pub mod debug;
 pub mod deploy;
 pub mod device;
 pub mod dispatch;
