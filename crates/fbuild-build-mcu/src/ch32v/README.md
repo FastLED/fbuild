@@ -30,9 +30,17 @@ The WCH-LinkE has two personalities:
 | **RV** | `1A86:8010` | CH32V RISC-V targets — **this is the one you want** |
 | DAP | `1A86:8012` | ARM CMSIS-DAP targets |
 
-**Hold the button on the probe while plugging in the USB cable** to
-toggle between them. Confirm the mode from the enumerated PID before
-debugging anything else.
+Switch modes **in software** — no button press needed once `wlink` can
+already reach the probe:
+
+```bash
+wlink mode-switch --rv     # or --dap
+```
+
+**Hold the button on the probe while plugging in the USB cable** to force
+the toggle when `wlink` *can't* reach it (wrong mode and no driver bound
+is the usual chicken-and-egg). Confirm the mode from the enumerated PID
+before debugging anything else.
 
 ### 2. Bind WinUSB (Windows only)
 
@@ -60,6 +68,26 @@ This must print a CH32V chip ID and the correct flash size. Record the
 WCH-Link firmware version — the pinned `wlink` v0.1.2 is tested against
 probe firmware 2.15.
 
+**Use `status`, not `list`, to detect a probe.** Verified against wlink
+v0.1.2 with no probe attached:
+
+| Command | Exit | Output |
+|---|---|---|
+| `wlink status` | **1** | `Error: WCH-Link not found, please check your connection` |
+| `wlink flash <file>` | **1** | `Error: WCH-Link not found, please check your connection` |
+| `wlink list` | **0** | *(nothing)* |
+
+`list` exiting 0 on an empty probe set is a false-negative trap for
+scripts — presence checks must key off `status`. The non-zero exits on
+`flash` are also why `WlinkDeployer`'s `result.success()` is trustworthy:
+a missing probe can never be reported as a successful flash.
+
+If the probe can power the target, you don't need an external 3V3 supply:
+
+```bash
+wlink set-power enable3v3     # also enable5v / disable3v3 / disable5v
+```
+
 If enumeration fails entirely — the device appears as *Unknown USB Device
 (Device Descriptor Request Failed)*, or under a null VID such as
 `0000:0002` — that is a cable, port, or hub fault, not a driver issue.
@@ -73,7 +101,56 @@ directly into a root port before troubleshooting anything downstream.
 - Wire SWIO / GND / 3V3 to the target. SWIO is a single-wire debug line,
   not SWD.
 - Any serial port present while a V003 is on the bench belongs to the
-  *probe*, not the target. Console output is either SDI-print over the
-  debug link or a USART pin routed to a separate bridge.
+  *probe*, not the target.
 - 16 KB flash / 2 KB SRAM, and RV32EC has **no hardware multiply** —
   every `*`, `/`, `%` becomes a libgcc call. Watch the flash budget.
+- Measured footprint of the `tests/platform/ch32v003` blink with the
+  OpenWCH core (FastLED/fbuild#1208 Phase 1): **flash 8896 / 16384 B
+  (54.3%), RAM 1180 / 2048 B (57.6%)**. A bare blink already takes over
+  half of both budgets — roughly 7.5 KB flash and 868 bytes of SRAM are
+  left for application code.
+
+## Console output on a part with no USB
+
+CH32V003 has no USB peripheral, so there is no native CDC port to open
+and `fbuild monitor` has no target-side device to attach to. There are
+two options, and they are not equivalent:
+
+### SDI-print over the debug link (recommended)
+
+The QingKe debug module can carry a virtual serial channel over the same
+single-wire SWIO connection used for flashing, so it costs **no extra
+pins and no USART peripheral**:
+
+```bash
+wlink sdi-print enable      # implies --no-detach; the probe stays attached
+```
+
+This is the right default for a 2 KB / 16 KB part — a USART driver plus
+its buffers is real budget against the ~868 bytes measured above, and the
+V003's pins are scarce.
+
+Caveats worth knowing before relying on it:
+
+- `enable` **implies `--no-detach`**, so the probe holds the chip
+  attached. That conflicts with a flash operation on the same probe —
+  expect to sequence print and flash, not run them concurrently.
+- The channel is a debug-module facility, not a UART. There is no baud
+  rate, no DTR/RTS, and therefore nothing for the control-line matrix in
+  [`docs/usb-cdc-control-line-matrix.md`](../../../../docs/usb-cdc-control-line-matrix.md)
+  to govern.
+- It is **not** wired into `fbuild monitor` today. Consuming it means
+  invoking `wlink sdi-print enable` directly. Integrating it would mean
+  teaching the serial layer about a non-serial transport, which is a
+  larger change than this bring-up.
+
+### A USART pin to a separate bridge
+
+Route a V003 USART TX pin to an external CH340/CP2102/FTDI bridge. That
+yields an ordinary serial port `fbuild monitor` can already open, at the
+cost of a pin, a peripheral, code space, and a second USB device on the
+bench. Prefer this only when SDI-print's attach behaviour gets in the
+way, or when the console must survive without the probe connected.
+
+**Either way, do not expect `fbuild serial` to discover the target.** The
+only USB device present is the probe.
