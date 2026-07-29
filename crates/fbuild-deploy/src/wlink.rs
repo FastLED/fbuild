@@ -253,10 +253,18 @@ mod tests {
     /// Phase 0 of the FastLED/fbuild#1208 bring-up: prove the probe sees
     /// the part before trusting anything downstream.
     ///
-    /// Requires a WCH-LinkE in **RV mode** (`1A86:8010` — hold the button
-    /// while plugging in to toggle out of DAP mode `1A86:8012`) with
-    /// SWIO/GND/3V3 wired to a CH32V003. On Windows the probe interface
-    /// must have WinUSB bound via Zadig or libusb cannot claim it.
+    /// Requires a WCH-LinkE in **RV mode** (`1A86:8010`) with SWIO/GND/3V3
+    /// wired to a CH32V003. On Windows the probe interface must have WinUSB
+    /// bound via Zadig or libusb cannot claim it.
+    ///
+    /// Out of DAP mode (`1A86:8012`): `wlink mode-switch --rv` if `wlink`
+    /// can already reach the probe, otherwise hold the button while
+    /// plugging in. `wlink set-power enable3v3` powers the target off the
+    /// probe if it has no supply of its own.
+    ///
+    /// Presence is checked with `status`, deliberately not `list` — with no
+    /// probe attached `wlink list` exits **0** and prints nothing, so it
+    /// cannot distinguish "no probe" from success. `status` exits 1.
     ///
     /// ```text
     /// soldr cargo test -p fbuild-deploy wlink::tests::try_wlink_status_detects_ch32v003 -- --ignored --nocapture
