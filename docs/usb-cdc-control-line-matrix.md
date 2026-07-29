@@ -155,6 +155,22 @@ Sources (captured 2026-06, primary source in Mandarin):
 - WCH-LinkE's debug/DAP interface may enumerate separately from its CDC
   endpoint; deployers should use the probe backend rather than infer reset
   semantics from serial control lines.
+- **The WCH-LinkE is a probe, not an ESP32 autoreset bridge — and it
+  shares WCH's `0x1A86` vendor ID with the CH340 row above.** It
+  enumerates as `0x1A86:0x8010` in RV mode and `0x1A86:0x8012` in DAP
+  mode (hold the button while plugging in to toggle). Classifying either
+  as `Esp32ExternalUart` would drive the CH340 row's BOOT/EN autoreset
+  sequence into a probe that has no such transistor pair. The registry
+  publishes `purpose: probe` for these, and
+  `family_from_usb_profile` checks probe identity **before** the
+  `usb_uart_bridge` role so a probe that also exposes a CDC UART still
+  resolves to `CdcAcmBridge` (FastLED/fbuild#1208).
+- **CH32V003 specifically has no USB peripheral at all.** There is no
+  native CDC to open and no factory USB-ISP bootloader — `wchisp` is
+  correctly rejected for this part. Console output is either SDI-print
+  over the debug link or a USART pin routed to a separate bridge, so any
+  serial port you see while a V003 is on the bench belongs to the
+  *probe*, not the target.
 
 ### PJRC — Teensy USB-Serial (Teensy 3.x / 4.x)
 

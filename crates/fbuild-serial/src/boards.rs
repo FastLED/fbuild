@@ -567,6 +567,16 @@ fn family_from_usb_profile(
             NativeUsbCdcReset1200Bps
         });
     }
+    // Probe identity wins over transport shape. `purpose` and `role` are
+    // orthogonal in the registry schema, and a debug probe commonly also
+    // exposes a CDC UART — a WCH-LinkE publishes `purpose: probe` while
+    // its serial interface is a `usb_uart_bridge`. Classifying that as
+    // `Esp32ExternalUart` would drive ESP32 BOOT/EN autoreset toggling
+    // into a probe that has no such transistor pair, so this check must
+    // stay ahead of the bridge check below (FastLED/fbuild#1208).
+    if profile.purpose == UsbPurpose::Probe || profile.role == UsbDeviceRole::DebugProbe {
+        return Some(CdcAcmBridge);
+    }
     if profile.role == UsbDeviceRole::UsbUartBridge {
         return Some(Esp32ExternalUart);
     }
@@ -580,13 +590,11 @@ fn family_from_usb_profile(
     if profile.platform.as_deref() == Some("arduino") && profile.role == UsbDeviceRole::RuntimeCdc {
         return Some(ArduinoAutoReset);
     }
-    if profile.purpose == UsbPurpose::Probe
-        || profile.role == UsbDeviceRole::DebugProbe
-        || (profile.role == UsbDeviceRole::RuntimeCdc
-            && profile
-                .family
-                .as_deref()
-                .is_some_and(|family| family.contains("vcom")))
+    if profile.role == UsbDeviceRole::RuntimeCdc
+        && profile
+            .family
+            .as_deref()
+            .is_some_and(|family| family.contains("vcom"))
     {
         return Some(CdcAcmBridge);
     }
@@ -606,6 +614,13 @@ fn test_family_for_vid_pid(vid: u16, pid: u16) -> Option<BoardFamily> {
         // NXP CMSIS-DAP debug probes — not a data port but if a caller
         // hits this we don't want them assuming ESP defaults
         (0x1FC9, _) => Some(CdcAcmBridge),
+        // WCH-LinkE debug probe (RV mode 0x8010 / DAP mode 0x8012). Shares
+        // WCH's 0x1A86 vendor ID with the CH340 bridge below, but is a
+        // probe, not an ESP32 autoreset UART — it has no BOOT/EN
+        // transistor pair to drive. Must precede the 0x1A86 wildcard.
+        // Test-only fixture mirroring the FastLED/boards registry, per the
+        // CLAUDE.md VID/PID rule (FastLED/fbuild#1208).
+        (0x1A86, 0x8010 | 0x8012) => Some(CdcAcmBridge),
         // CP2102 / CH340 / FTDI — almost always paired with an ESP32
         // classic DevKit in the FastLED ecosystem; the chip's RS-232
         // line-control bits drive ESP32 BOOT/EN through the autoreset
@@ -1009,6 +1024,77 @@ mod tests {
         assert_eq!(
             family_from_usb_profile(&registry_esp),
             Some(BoardFamily::Esp32NativeUsbCdc)
+        );
+    }
+
+    /// A debug probe that also exposes a CDC UART must classify as a
+    /// probe, not as an ESP32 autoreset bridge. `purpose` and `role` are
+    /// orthogonal in the registry schema, so the WCH-LinkE publishes
+    /// `purpose: probe` alongside `role: usb_uart_bridge`. Before
+    /// FastLED/fbuild#1208 the bridge arm ran first and returned
+    /// `Esp32ExternalUart`, which would drive BOOT/EN autoreset toggling
+    /// into a probe that has no such transistor pair.
+    #[test]
+    fn probe_purpose_outranks_uart_bridge_role() {
+        use fbuild_core::usb::profiles::{UsbDeviceRole, UsbPurpose};
+
+        let mut wch_link = transport_profile(
+            UsbDeviceRole::UsbUartBridge,
+            None,
+            Some("wch-link"),
+            "hardware",
+        );
+        wch_link.purpose = UsbPurpose::Probe;
+        assert_eq!(
+            family_from_usb_profile(&wch_link),
+            Some(BoardFamily::CdcAcmBridge),
+            "probe purpose must win over the usb_uart_bridge role"
+        );
+
+        // The DebugProbe role alone is equally sufficient.
+        let dap = transport_profile(
+            UsbDeviceRole::DebugProbe,
+            None,
+            Some("cmsis-dap"),
+            "hardware",
+        );
+        assert_eq!(
+            family_from_usb_profile(&dap),
+            Some(BoardFamily::CdcAcmBridge)
+        );
+
+        // A plain bridge with no probe signal still resolves as before.
+        let plain = transport_profile(
+            UsbDeviceRole::UsbUartBridge,
+            None,
+            Some("ch340"),
+            "hardware",
+        );
+        assert_eq!(
+            family_from_usb_profile(&plain),
+            Some(BoardFamily::Esp32ExternalUart)
+        );
+    }
+
+    /// WCH ships the CH340 bridge and the WCH-LinkE probe under the same
+    /// 0x1A86 vendor ID, so the vendor-wide wildcard must not swallow the
+    /// probe PIDs (FastLED/fbuild#1208).
+    #[test]
+    fn wch_link_probe_pids_are_not_esp32_uarts() {
+        assert_eq!(
+            family_for_vid_pid(0x1A86, 0x8010),
+            Some(BoardFamily::CdcAcmBridge),
+            "WCH-LinkE RV mode is a probe"
+        );
+        assert_eq!(
+            family_for_vid_pid(0x1A86, 0x8012),
+            Some(BoardFamily::CdcAcmBridge),
+            "WCH-LinkE DAP mode is a probe"
+        );
+        // CH340 is a genuine ESP32-DevKit bridge and keeps its behaviour.
+        assert_eq!(
+            family_for_vid_pid(0x1A86, 0x7523),
+            Some(BoardFamily::Esp32ExternalUart)
         );
     }
 
