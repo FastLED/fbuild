@@ -345,4 +345,146 @@ mod tests {
         assert!(result.success, "flash failed: {}", result.message);
         eprintln!("flashed OK — now verify the blink on a scope or LED");
     }
+
+    /// CH32V003 code-flash is aliased at the CPU's boot address.
+    const CH32V003_FLASH_BASE: u32 = 0x0800_0000;
+
+    async fn run_wlink(args: &[&str]) -> fbuild_core::subprocess::ToolOutput {
+        let executable = ensure_wlink_installed()
+            .await
+            .expect("wlink install must succeed");
+        let mut argv = vec![executable.to_string_lossy().into_owned()];
+        argv.extend(args.iter().map(|a| (*a).to_string()));
+        let refs = argv.iter().map(String::as_str).collect::<Vec<_>>();
+        run_command(&refs, None, None, Some(WLINK_TIMEOUT))
+            .await
+            .unwrap_or_else(|e| panic!("failed to run wlink {args:?}: {e}"))
+    }
+
+    /// Read the image back off the chip and byte-compare it.
+    ///
+    /// `wlink flash` reporting success only means the tool accepted the
+    /// write. This proves the bytes actually landed — it catches a partial
+    /// write, a wrong base address, or write-protected flash, none of which
+    /// the exit code distinguishes. Run after `try_flash_real_ch32v003`.
+    ///
+    /// Still short of the Phase 2 milestone: verified flash contents are not
+    /// a running program. Observe the blink.
+    ///
+    /// ```text
+    /// CH32V003_FIRMWARE=C:\path\to\firmware.bin \
+    ///   soldr cargo test -p fbuild-deploy wlink::tests::try_verify_flash_readback_ch32v003 -- --ignored --nocapture
+    /// ```
+    #[tokio::test]
+    #[ignore = "requires CH32V003 + WCH-LinkE probe — set CH32V003_FIRMWARE"]
+    async fn try_verify_flash_readback_ch32v003() {
+        let firmware = PathBuf::from(
+            std::env::var("CH32V003_FIRMWARE")
+                .expect("set CH32V003_FIRMWARE to the .bin that was flashed"),
+        );
+        let expected = std::fs::read(&firmware).expect("read firmware image");
+        assert!(!expected.is_empty(), "firmware image is empty");
+
+        let dump_dir = fbuild_paths::temp_subdir("ch32v003-readback");
+        fbuild_core::fs::create_dir_all(&dump_dir)
+            .await
+            .expect("create dump dir");
+        let dump_path = dump_dir.join("readback.bin");
+
+        // `dump` rounds the length up to the next multiple of 4.
+        let length = expected.len().div_ceil(4) * 4;
+        let out = run_wlink(&[
+            "dump",
+            &format!("0x{CH32V003_FLASH_BASE:08x}"),
+            &length.to_string(),
+            "-o",
+            &dump_path.to_string_lossy(),
+        ])
+        .await;
+        assert!(
+            out.success(),
+            "wlink dump failed (exit {}): {}",
+            out.exit_code,
+            out.stderr
+        );
+
+        let actual = std::fs::read(&dump_path).expect("read dumped flash");
+        assert!(
+            actual.len() >= expected.len(),
+            "dump returned {} bytes, expected at least {}",
+            actual.len(),
+            expected.len()
+        );
+
+        if let Some(offset) = (0..expected.len()).find(|&i| actual[i] != expected[i]) {
+            panic!(
+                "flash readback differs from image at offset 0x{offset:04x} \
+                 (chip 0x{:02x} != image 0x{:02x}); {} of {} bytes matched. \
+                 A successful `wlink flash` exit code does not imply the write landed.",
+                actual[offset],
+                expected[offset],
+                offset,
+                expected.len()
+            );
+        }
+        eprintln!(
+            "readback verified: {} bytes on-chip match {}",
+            expected.len(),
+            firmware.display()
+        );
+    }
+
+    /// Prove the core is *executing*, not just programmed.
+    ///
+    /// Resumes the MCU and samples the program counter twice. A PC that
+    /// advances between samples means the CPU is retiring instructions —
+    /// the strongest evidence available without physical instrumentation,
+    /// and it distinguishes "flashed but halted / stuck in a fault loop"
+    /// from "running", which readback alone cannot.
+    ///
+    /// This is a **proxy**, not the Phase 2 milestone. It cannot tell you
+    /// the GPIO is toggling at the right rate; only a scope or LED can.
+    ///
+    /// ```text
+    /// soldr cargo test -p fbuild-deploy wlink::tests::try_ch32v003_core_is_executing -- --ignored --nocapture
+    /// ```
+    #[tokio::test]
+    #[ignore = "requires CH32V003 + WCH-LinkE probe in RV mode (1A86:8010)"]
+    async fn try_ch32v003_core_is_executing() {
+        let resume = run_wlink(&["resume"]).await;
+        assert!(
+            resume.success(),
+            "wlink resume failed (exit {}): {}",
+            resume.exit_code,
+            resume.stderr
+        );
+
+        let sample = || async {
+            let out = run_wlink(&["regs"]).await;
+            assert!(
+                out.success(),
+                "wlink regs failed (exit {}): {}",
+                out.exit_code,
+                out.stderr
+            );
+            format!("{}{}", out.stdout, out.stderr)
+        };
+
+        let first = sample().await;
+        tokio::time::sleep(std::time::Duration::from_millis(250)).await;
+        let second = sample().await;
+
+        eprintln!("--- regs sample 1 ---\n{first}\n--- regs sample 2 ---\n{second}");
+        assert_ne!(
+            first.trim(),
+            second.trim(),
+            "register state identical across a 250ms gap — the core looks halted \
+             or stuck. A flashed-but-not-running chip reaches this state, so treat \
+             it as a bring-up failure rather than a flaky read."
+        );
+        eprintln!(
+            "core is executing (register state advanced) — \
+             still confirm the blink rate on a scope or LED"
+        );
+    }
 }

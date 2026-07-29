@@ -110,6 +110,44 @@ directly into a root port before troubleshooting anything downstream.
   half of both budgets — roughly 7.5 KB flash and 868 bytes of SRAM are
   left for application code.
 
+## Bench verification sequence
+
+Once the probe enumerates, run these in order. Each rules out a distinct
+failure the previous step cannot see:
+
+```bash
+# 0. probe + target visible (use `status`, never `list` — see table above)
+soldr cargo test -p fbuild-deploy wlink::tests::try_wlink_status_detects_ch32v003 -- --ignored --nocapture
+
+# 1. build
+soldr cargo run -p fbuild-cli -- build tests/platform/ch32v003 -e ch32v003
+
+export CH32V003_FIRMWARE=tests/platform/ch32v003/.fbuild/build/release/firmware.bin
+
+# 2. flash
+soldr cargo test -p fbuild-deploy wlink::tests::try_flash_real_ch32v003 -- --ignored --nocapture
+
+# 3. the bytes actually landed (catches partial write / wrong base / protected flash)
+soldr cargo test -p fbuild-deploy wlink::tests::try_verify_flash_readback_ch32v003 -- --ignored --nocapture
+
+# 4. the core is executing, not halted or fault-looping
+soldr cargo test -p fbuild-deploy wlink::tests::try_ch32v003_core_is_executing -- --ignored --nocapture
+```
+
+**Steps 3 and 4 are proxies, not the milestone.** A clean run proves the
+image is on-chip and the CPU is retiring instructions; it says nothing
+about whether the GPIO toggles at the right rate. **Bring-up is complete
+only when the blink is observed on a scope or LED** — that is the one
+step no automation can perform, and `docs/BOARD_STATUS.md` should not be
+promoted to hardware-verified until someone has watched it.
+
+There is also a network-only test that catches a rotted `wlink` release
+URL or stale checksum with no hardware attached:
+
+```bash
+soldr cargo test -p fbuild-deploy wlink::tests::try_install_wlink_from_pinned_release -- --ignored --nocapture
+```
+
 ## Console output on a part with no USB
 
 CH32V003 has no USB peripheral, so there is no native CDC port to open
