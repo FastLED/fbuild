@@ -945,8 +945,22 @@ async fn ensure_direct_daemon_running() -> fbuild_core::Result<()> {
             continue;
         }
 
-        // Poll health for up to 10 seconds
-        for _ in 0..100 {
+        // Poll health until the readiness deadline.
+        //
+        // FastLED/fbuild#1208: this budget must be wall-clock, not
+        // iteration-count. The previous `for _ in 0..100` with a 100ms sleep
+        // was documented as "up to 10 seconds", which only holds when
+        // `health()` returns immediately — true when the port is *refused*.
+        // When the endpoint instead *times out* (the CLI polling a port no
+        // daemon of its own version owns — e.g. a locally-built 2.5.4 CLI
+        // that spawned a PATH-resolved 2.5.2 `fbuild-daemon`, since
+        // `daemon_endpoint_key` hashes the crate version), each `health()`
+        // burns its own ~2s request timeout. 100 iterations then took ~3.5
+        // minutes per attempt and ~10 minutes across all three, with no
+        // output — indistinguishable from a wedged build.
+        let deadline =
+            std::time::Instant::now() + std::time::Duration::from_secs(READINESS_TIMEOUT_SECS);
+        while std::time::Instant::now() < deadline {
             tokio::time::sleep(std::time::Duration::from_millis(100)).await;
             if client.health().await {
                 tracing::info!("daemon started successfully");
@@ -955,15 +969,26 @@ async fn ensure_direct_daemon_running() -> fbuild_core::Result<()> {
         }
 
         tracing::warn!(
-            "daemon did not become healthy after spawn attempt {}",
+            "daemon did not become healthy within {}s after spawn attempt {}",
+            READINESS_TIMEOUT_SECS,
             attempt + 1
         );
     }
 
-    Err(fbuild_core::FbuildError::DaemonError(
-        "daemon did not start after 3 attempts".to_string(),
-    ))
+    Err(fbuild_core::FbuildError::DaemonError(format!(
+        "daemon did not become healthy after 3 spawn attempts \
+         ({READINESS_TIMEOUT_SECS}s each).\n{}\n\nIf the daemon executable above is not the one \
+         you expect, that is the likely cause: the endpoint port is derived from the daemon \
+         version (FastLED/fbuild#1009), so a version-mismatched daemon listens on a different \
+         port than this CLI polls and can never be reached. When running a locally-built CLI, \
+         build the daemon too (`soldr cargo build -p fbuild-daemon`) so a sibling binary exists \
+         instead of resolving `fbuild-daemon` from PATH.",
+        runtime_diagnostic()
+    )))
 }
+
+/// Wall-clock budget for a spawned daemon to answer `health()`.
+const READINESS_TIMEOUT_SECS: u64 = 10;
 
 /// Acquire the spawn-herd single-flight lock (FastLED/fbuild#1159). Thin
 /// wrapper kept local to this module so the call site above reads naturally;

@@ -215,4 +215,126 @@ mod tests {
             ["wlink", "flash", "build/firmware.bin"]
         );
     }
+
+    /// Exercises the pinned-asset download + SHA-256 verification +
+    /// extraction path end to end. Needs the network but **no hardware**,
+    /// so it catches a rotted release URL or a stale checksum without a
+    /// probe on the bench.
+    ///
+    /// ```text
+    /// soldr cargo test -p fbuild-deploy wlink::tests::try_install_wlink_from_pinned_release -- --ignored --nocapture
+    /// ```
+    #[tokio::test]
+    #[ignore = "downloads the pinned wlink release from GitHub (~2 MB)"]
+    async fn try_install_wlink_from_pinned_release() {
+        let asset = release_asset().expect("host must have a pinned wlink asset");
+        eprintln!("installing {} ({})", asset.name, WLINK_RELEASE_TAG);
+
+        let path = ensure_wlink_installed()
+            .await
+            .expect("wlink install must succeed: download + checksum + extract");
+
+        assert!(path.is_file(), "wlink binary missing at {}", path.display());
+
+        let argv = [path.to_string_lossy().into_owned(), "--version".to_string()];
+        let refs = argv.iter().map(String::as_str).collect::<Vec<_>>();
+        let out = run_command(&refs, None, None, Some(WLINK_TIMEOUT))
+            .await
+            .expect("installed wlink must be executable");
+        assert!(
+            out.success(),
+            "wlink --version failed (exit {}): {}",
+            out.exit_code,
+            out.stderr
+        );
+        eprintln!("wlink --version: {}", out.stdout.trim());
+    }
+
+    /// Phase 0 of the FastLED/fbuild#1208 bring-up: prove the probe sees
+    /// the part before trusting anything downstream.
+    ///
+    /// Requires a WCH-LinkE in **RV mode** (`1A86:8010` — hold the button
+    /// while plugging in to toggle out of DAP mode `1A86:8012`) with
+    /// SWIO/GND/3V3 wired to a CH32V003. On Windows the probe interface
+    /// must have WinUSB bound via Zadig or libusb cannot claim it.
+    ///
+    /// ```text
+    /// soldr cargo test -p fbuild-deploy wlink::tests::try_wlink_status_detects_ch32v003 -- --ignored --nocapture
+    /// ```
+    #[tokio::test]
+    #[ignore = "requires CH32V003 + WCH-LinkE probe in RV mode (1A86:8010)"]
+    async fn try_wlink_status_detects_ch32v003() {
+        let executable = ensure_wlink_installed()
+            .await
+            .expect("wlink install must succeed");
+        let argv = [
+            executable.to_string_lossy().into_owned(),
+            "status".to_string(),
+        ];
+        let refs = argv.iter().map(String::as_str).collect::<Vec<_>>();
+        let out = run_command(&refs, None, None, Some(WLINK_TIMEOUT))
+            .await
+            .expect("failed to run wlink status");
+
+        eprintln!("--- wlink status ---\n{}\n{}", out.stdout, out.stderr);
+        assert!(
+            out.success(),
+            "wlink status failed (exit {}). Probe not in RV mode, WinUSB not bound, \
+             or target not wired. See crates/fbuild-build-mcu/src/ch32v/README.md.\n{}",
+            out.exit_code,
+            out.stderr
+        );
+
+        let combined = format!("{}{}", out.stdout, out.stderr).to_ascii_lowercase();
+        assert!(
+            combined.contains("ch32v003") || combined.contains("chip id"),
+            "wlink status did not report a chip id; probe may be connected \
+             without a target attached. Output:\n{combined}"
+        );
+    }
+
+    /// Phase 2 of the bring-up — the actual flash. Point `CH32V003_FIRMWARE`
+    /// at a `.bin` built by
+    /// `fbuild build tests/platform/ch32v003 -e ch32v003`.
+    ///
+    /// A passing flash is **not** proof of bring-up: confirm the blink on a
+    /// scope or LED afterwards. This test only asserts that `wlink` accepted
+    /// and wrote the image.
+    ///
+    /// ```text
+    /// CH32V003_FIRMWARE=C:\path\to\firmware.bin \
+    ///   soldr cargo test -p fbuild-deploy wlink::tests::try_flash_real_ch32v003 -- --ignored --nocapture
+    /// ```
+    #[tokio::test]
+    #[ignore = "requires CH32V003 + WCH-LinkE probe — set CH32V003_FIRMWARE"]
+    async fn try_flash_real_ch32v003() {
+        use crate::Deployer;
+
+        let firmware = std::env::var("CH32V003_FIRMWARE")
+            .expect("set CH32V003_FIRMWARE to a .bin built for ch32v003");
+        let firmware = PathBuf::from(firmware);
+        assert!(
+            firmware.is_file(),
+            "CH32V003_FIRMWARE does not exist: {}",
+            firmware.display()
+        );
+
+        // The part has 16 KB of flash; a larger image cannot be a valid
+        // V003 build and would fail confusingly deeper in wlink.
+        let size = std::fs::metadata(&firmware).expect("stat firmware").len();
+        assert!(
+            size <= 16 * 1024,
+            "firmware is {size} bytes, over the CH32V003 16384-byte flash budget"
+        );
+        eprintln!("flashing {} ({size} bytes)", firmware.display());
+
+        let result = WlinkDeployer::new()
+            .deploy(Path::new("."), "ch32v003", &firmware, None)
+            .await
+            .expect("deploy must not error");
+
+        eprintln!("--- wlink flash ---\n{}\n{}", result.stdout, result.stderr);
+        assert!(result.success, "flash failed: {}", result.message);
+        eprintln!("flashed OK — now verify the blink on a scope or LED");
+    }
 }
