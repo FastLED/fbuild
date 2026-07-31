@@ -248,16 +248,11 @@ fn find_esptool_binary(root: &Path) -> Option<NormalizedPath> {
     search(root, 2)
 }
 
-/// Extract a version string (e.g. `"5.3.0"`) from the pioarduino
-/// `tool-esptoolpy` metadata URL. The URL looks like
-/// `.../releases/download/0.0.1/esptoolpy-v5.3.0.zip`, where `0.0.1` is the
-/// registry release tag and the real esptool version lives in the filename —
-/// so we parse the **filename**, not an earlier path segment. Falls back to
-/// `"unknown"` (which then fails to resolve a release and triggers the PATH
-/// fallback) rather than silently using the wrong version.
-fn extract_esptool_version(url: &str) -> String {
-    let filename = url.rsplit('/').next().unwrap_or(url);
-    let stem = filename.trim_end_matches(".zip");
+/// Scan a single path component for the first dotted numeric run, e.g.
+/// `esptoolpy-v5.3.0` -> `5.3.0`, `v4.8.5` -> `4.8.5`. Returns `None` when the
+/// component carries no dotted version (a bare `esptool` or a single `0`).
+fn dotted_version_in(component: &str) -> Option<String> {
+    let stem = component.trim_end_matches(".zip");
     let bytes = stem.as_bytes();
     let mut i = 0;
     while i < bytes.len() {
@@ -268,11 +263,44 @@ fn extract_esptool_version(url: &str) -> String {
             }
             let cand = stem[start..i].trim_end_matches('.');
             if cand.contains('.') {
-                return cand.to_string();
+                return Some(cand.to_string());
             }
         } else {
             i += 1;
         }
+    }
+    None
+}
+
+/// Extract a version string (e.g. `"5.3.0"`) from the pioarduino
+/// `tool-esptoolpy` metadata URL.
+///
+/// Two URL shapes exist in the wild and they put the version in opposite
+/// places, so we try them in a fixed order:
+///
+/// 1. **Filename first** — `.../releases/download/0.0.1/esptoolpy-v5.3.0.zip`,
+///    where `0.0.1` is the *registry release tag* and the real esptool version
+///    is in the filename. Parsing the filename first is what keeps the tag from
+///    winning here.
+/// 2. **Parent path segment as fallback** — `platform-espressif32 53.03.10`
+///    publishes `.../releases/download/v4.8.5/esptool.zip`, where the filename
+///    is generic and the version is the release tag. Before this fallback
+///    existed the parse returned `"unknown"` for every build on that platform,
+///    which 404s the download and silently degrades to a bare `esptool` PATH
+///    lookup (FastLED/fbuild#1217).
+///
+/// Still falls back to `"unknown"` when neither component carries a dotted
+/// version, rather than silently using the wrong one.
+fn extract_esptool_version(url: &str) -> String {
+    let mut segments = url.rsplit('/');
+    let filename = segments.next().unwrap_or(url);
+    if let Some(version) = dotted_version_in(filename) {
+        return version;
+    }
+    // Only consulted when the filename carries no version of its own, so the
+    // registry-tag case above is unaffected.
+    if let Some(version) = segments.next().and_then(dotted_version_in) {
+        return version;
     }
     "unknown".to_string()
 }
@@ -296,6 +324,32 @@ mod tests {
     #[test]
     fn extract_version_from_bare_filename() {
         assert_eq!(extract_esptool_version("esptoolpy-v4.8.1.zip"), "4.8.1");
+    }
+
+    #[test]
+    fn extract_version_from_release_tag_when_filename_is_generic() {
+        // platform-espressif32 53.03.10 publishes the opposite shape: generic
+        // filename, version in the release tag. Returning "unknown" here 404s
+        // the download and degrades to a bare `esptool` PATH lookup, which
+        // broke every ESP32 build on FastLED master (FastLED/fbuild#1217).
+        assert_eq!(
+            extract_esptool_version(
+                "https://github.com/pioarduino/esptool/releases/download/v4.8.5/esptool.zip"
+            ),
+            "4.8.5"
+        );
+    }
+
+    #[test]
+    fn filename_version_still_wins_over_release_tag() {
+        // Guards the ordering: both components carry a dotted version here, and
+        // the filename's must win or we regress the registry-tag case.
+        assert_eq!(
+            extract_esptool_version(
+                "https://github.com/pioarduino/registry/releases/download/0.0.1/esptoolpy-v5.3.0.zip"
+            ),
+            "5.3.0"
+        );
     }
 
     #[test]
