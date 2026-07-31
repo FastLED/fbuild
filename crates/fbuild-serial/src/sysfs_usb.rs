@@ -467,9 +467,6 @@ pub fn live_root() -> NormalizedPath {
 mod tests {
     use super::*;
     use std::fs;
-    // Fixture builders below hand back owned paths into a `TempDir`; raw
-    // `PathBuf` is fine here because it never crosses into library code.
-    use std::path::PathBuf;
     use tempfile::TempDir;
 
     /// Minimal fixture builder for a `/sys/bus/usb/devices`-shaped tree.
@@ -488,10 +485,10 @@ mod tests {
             self.root.path()
         }
 
-        fn device_dir(&self, name: &str) -> PathBuf {
+        fn device_dir(&self, name: &str) -> NormalizedPath {
             let dir = self.root.path().join(name);
             fs::create_dir_all(&dir).expect("mkdir device");
-            dir
+            NormalizedPath::from(dir)
         }
 
         fn write_attr(&self, dir: &Path, name: &str, value: &str) {
@@ -499,7 +496,7 @@ mod tests {
         }
 
         /// A root hub, e.g. `usb1`.
-        fn root_hub(&self, name: &str, vendor: &str, product: &str) -> PathBuf {
+        fn root_hub(&self, name: &str, vendor: &str, product: &str) -> NormalizedPath {
             let dir = self.device_dir(name);
             self.write_attr(&dir, "idVendor", vendor);
             self.write_attr(&dir, "idProduct", product);
@@ -519,7 +516,7 @@ mod tests {
             pid: &str,
             serial: Option<&str>,
             product: Option<&str>,
-        ) -> PathBuf {
+        ) -> NormalizedPath {
             let dir = self.device_dir(name);
             self.write_attr(&dir, "idVendor", vid);
             self.write_attr(&dir, "idProduct", pid);

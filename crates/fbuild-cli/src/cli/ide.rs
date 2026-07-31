@@ -16,8 +16,9 @@
 //! `.zed/tasks.json` (merge-don't-clobber: fbuild only touches tasks whose
 //! label starts with `"fbuild: "`), and launching the `zed` process.
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
+use fbuild_core::path::NormalizedPath;
 use serde::{Deserialize, Serialize};
 
 use crate::daemon_client::{self, DaemonClient, InstallDepsRequest};
@@ -42,8 +43,8 @@ struct IdeState {
     environment: Option<String>,
 }
 
-fn ide_state_path(project_path: &Path) -> PathBuf {
-    project_path.join(".fbuild").join("ide_state.json")
+fn ide_state_path(project_path: &Path) -> NormalizedPath {
+    NormalizedPath::from(project_path.join(".fbuild").join("ide_state.json"))
 }
 
 /// Read the persisted environment. Tolerates an absent file, an empty file,
@@ -227,12 +228,12 @@ fn emit_zed_tasks(
     project_path: &Path,
     env_name: &str,
     debug_chip: Option<&str>,
-) -> fbuild_core::Result<PathBuf> {
+) -> fbuild_core::Result<NormalizedPath> {
     let zed_dir = project_path.join(".zed");
     std::fs::create_dir_all(&zed_dir).map_err(|e| {
         fbuild_core::FbuildError::Other(format!("failed to create {}: {}", zed_dir.display(), e))
     })?;
-    let tasks_path = zed_dir.join("tasks.json");
+    let tasks_path = NormalizedPath::from(zed_dir.join("tasks.json"));
     let existing = read_tasks_file(&tasks_path);
     let merged = merge_tasks(&existing, &build_fbuild_tasks(env_name, debug_chip));
     let mut json = serde_json::to_string_pretty(&merged).map_err(|e| {
@@ -252,22 +253,29 @@ fn emit_zed_tasks(
 /// Known install-location candidates for the `zed` executable, beyond
 /// PATH, in probe order. Pure (no filesystem access) so it's directly
 /// testable; callers are responsible for checking `.exists()`.
-fn known_zed_install_candidates() -> Vec<PathBuf> {
+fn known_zed_install_candidates() -> Vec<NormalizedPath> {
     let mut candidates = Vec::new();
     if cfg!(windows) {
         if let Some(local_appdata) = std::env::var_os("LOCALAPPDATA") {
-            let base = PathBuf::from(local_appdata);
+            let base = NormalizedPath::new(local_appdata);
             candidates.push(base.join("Programs").join("Zed").join("zed.exe"));
             candidates.push(base.join("Zed").join("zed.exe"));
         }
     } else if cfg!(target_os = "macos") {
-        candidates.push(PathBuf::from("/Applications/Zed.app/Contents/MacOS/cli"));
-        candidates.push(PathBuf::from("/usr/local/bin/zed"));
+        candidates.push(NormalizedPath::new(
+            "/Applications/Zed.app/Contents/MacOS/cli",
+        ));
+        candidates.push(NormalizedPath::new("/usr/local/bin/zed"));
     } else {
         if let Some(home) = std::env::var_os("HOME") {
-            candidates.push(PathBuf::from(home).join(".local").join("bin").join("zed"));
+            candidates.push(
+                NormalizedPath::new(home)
+                    .join(".local")
+                    .join("bin")
+                    .join("zed"),
+            );
         }
-        candidates.push(PathBuf::from("/usr/bin/zed"));
+        candidates.push(NormalizedPath::new("/usr/bin/zed"));
     }
     candidates
 }
@@ -277,13 +285,13 @@ fn zed_exe_name() -> &'static str {
 }
 
 /// Find `zed` on PATH first, then fall back to known install locations.
-fn find_zed_executable() -> Option<PathBuf> {
+fn find_zed_executable() -> Option<NormalizedPath> {
     if let Some(path) = std::env::var_os("PATH") {
         let exe_name = zed_exe_name();
         for dir in std::env::split_paths(&path) {
             let candidate = dir.join(exe_name);
             if candidate.is_file() {
-                return Some(candidate);
+                return Some(NormalizedPath::from(candidate));
             }
         }
     }
@@ -363,7 +371,7 @@ fn resolve_mcu_for_env(project_path: &Path, env_name: &str) -> fbuild_core::Resu
 fn regenerate_debug_config(
     project_path: &Path,
     env_name: &str,
-) -> fbuild_core::Result<(Option<String>, Option<PathBuf>)> {
+) -> fbuild_core::Result<(Option<String>, Option<NormalizedPath>)> {
     let mcu = resolve_mcu_for_env(project_path, env_name)?;
     let Some(chip) = mcu.as_deref().and_then(probe_rs_chip_for_mcu) else {
         let label = mcu.as_deref().unwrap_or(env_name);
@@ -411,7 +419,7 @@ async fn regenerate_ide_config(
     project_path: &Path,
     env_name: &str,
     verbose: bool,
-) -> fbuild_core::Result<Vec<PathBuf>> {
+) -> fbuild_core::Result<Vec<NormalizedPath>> {
     let mut written = Vec::new();
     let db_path = ensure_compile_db(project_dir, project_path, env_name, verbose, true).await?;
     written.push(db_path);

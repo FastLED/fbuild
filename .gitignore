@@ -43,6 +43,18 @@ tests/platform/*/build_info*.json
 .cargo/git/
 .cargo/registry/
 
+# Same caches, at any depth. The patterns above contain a slash, so git
+# anchors them to the repo root and they do NOT cover nested crates.
+# Running any cargo command inside `dylints/<lint>/` (each is its own
+# workspace with its own `.cargo/config.toml`) materializes a full registry
+# cache there — thousands of vendored files that a `git add -A` will happily
+# stage.
+**/.cargo/.global-cache
+**/.cargo/.package-cache
+**/.cargo/.package-cache-mutate
+**/.cargo/git/
+**/.cargo/registry/
+
 # Cargo lock is checked in for binaries
 # (workspace contains binary crates)
 .loop

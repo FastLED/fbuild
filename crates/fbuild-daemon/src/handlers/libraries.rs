@@ -29,7 +29,9 @@
 //! `install_state_note` field spells out so a client doesn't misread that
 //! as "this library isn't available anywhere."
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
+
+use fbuild_core::path::NormalizedPath;
 
 use axum::Json;
 use axum::extract::Query;
@@ -92,17 +94,24 @@ fn resolve_env_name(config: &PlatformIOConfig, env: Option<&str>) -> Result<Stri
 /// for case-insensitive matching. Returns an empty set (not an error) when
 /// the directory doesn't exist — that's the normal "no build has run yet"
 /// state, not a failure.
-fn installed_dir_names(libs_dir: &Path) -> Vec<(String, PathBuf)> {
+async fn installed_dir_names(libs_dir: &Path) -> Vec<(String, NormalizedPath)> {
     let mut out = Vec::new();
-    let Ok(entries) = std::fs::read_dir(libs_dir) else {
+    let Ok(mut entries) = fbuild_core::fs::read_dir(libs_dir).await else {
         return out;
     };
-    for entry in entries.flatten() {
+    while let Ok(Some(entry)) = entries.next_entry().await {
+        // `file_type()` rather than `Path::is_dir()`: the latter issues a
+        // blocking `stat` on the async worker, which is the whole reason
+        // this function moved off `std::fs` (FastLED/fbuild#844).
+        let Ok(file_type) = entry.file_type().await else {
+            continue;
+        };
+        if !file_type.is_dir() {
+            continue;
+        }
         let path = entry.path();
-        if path.is_dir() {
-            if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
-                out.push((name.to_ascii_lowercase(), path));
-            }
+        if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
+            out.push((name.to_ascii_lowercase(), path.into()));
         }
     }
     out
@@ -111,7 +120,7 @@ fn installed_dir_names(libs_dir: &Path) -> Vec<(String, PathBuf)> {
 /// Build the classified + install-state-annotated entry list for one
 /// environment's `lib_deps`. Pure given its inputs — no I/O beyond the one
 /// `libs_dir` read baked into `installed`, which callers already resolved.
-fn build_library_entries(
+async fn build_library_entries(
     config: &PlatformIOConfig,
     env_name: &str,
     libs_dir: &Path,
@@ -120,7 +129,7 @@ fn build_library_entries(
         .get_lib_deps(env_name)
         .map_err(|e| format!("invalid environment '{}': {}", env_name, e))?;
 
-    let installed = installed_dir_names(libs_dir);
+    let installed = installed_dir_names(libs_dir).await;
 
     Ok(raw_deps
         .iter()
@@ -167,7 +176,7 @@ pub async fn list_libraries(
         );
     };
 
-    let project_dir = PathBuf::from(&project);
+    let project_dir = NormalizedPath::from(&project);
     if let Err(e) = validate_project_dir(&project_dir) {
         return (
             StatusCode::BAD_REQUEST,
@@ -217,14 +226,14 @@ pub async fn list_libraries(
     };
 
     let libs_dir = fbuild_paths::BuildLayout::new(
-        project_dir.clone(),
+        project_dir.to_path_buf(),
         env_name.clone(),
         fbuild_core::BuildProfile::Release,
     )
     .resolve()
     .join("libs");
 
-    match build_library_entries(&config, &env_name, &libs_dir) {
+    match build_library_entries(&config, &env_name, &libs_dir).await {
         Ok(libraries) => (
             StatusCode::OK,
             Json(IdeLibrariesResponse {
@@ -323,8 +332,8 @@ lib_deps =
         assert_eq!(resolve_env_name(&config, None).unwrap(), "uno");
     }
 
-    #[test]
-    fn build_library_entries_classifies_and_marks_installed() {
+    #[tokio::test]
+    async fn build_library_entries_classifies_and_marks_installed() {
         let tmp = tempfile::tempdir().unwrap();
         write_project(tmp.path(), SAMPLE_INI);
         let config = PlatformIOConfig::from_path(&tmp.path().join("platformio.ini")).unwrap();
@@ -332,7 +341,9 @@ lib_deps =
         let libs_dir = tmp.path().join("libs");
         fs::create_dir_all(libs_dir.join("FastLED")).unwrap();
 
-        let entries = build_library_entries(&config, "uno", &libs_dir).unwrap();
+        let entries = build_library_entries(&config, "uno", &libs_dir)
+            .await
+            .unwrap();
         assert_eq!(entries.len(), 3);
 
         let fastled = entries.iter().find(|e| e.name == "FastLED").unwrap();
@@ -352,25 +363,28 @@ lib_deps =
         assert_eq!(local.source_type, fbuild_config::SourceType::LocalPath);
     }
 
-    #[test]
-    fn build_library_entries_no_libs_dir_marks_all_uninstalled() {
+    #[tokio::test]
+    async fn build_library_entries_no_libs_dir_marks_all_uninstalled() {
         let tmp = tempfile::tempdir().unwrap();
         write_project(tmp.path(), SAMPLE_INI);
         let config = PlatformIOConfig::from_path(&tmp.path().join("platformio.ini")).unwrap();
 
         let libs_dir = tmp.path().join("does-not-exist").join("libs");
-        let entries = build_library_entries(&config, "uno", &libs_dir).unwrap();
+        let entries = build_library_entries(&config, "uno", &libs_dir)
+            .await
+            .unwrap();
         assert_eq!(entries.len(), 3);
         assert!(entries.iter().all(|e| !e.installed));
     }
 
-    #[test]
-    fn build_library_entries_rejects_unknown_environment() {
+    #[tokio::test]
+    async fn build_library_entries_rejects_unknown_environment() {
         let tmp = tempfile::tempdir().unwrap();
         write_project(tmp.path(), SAMPLE_INI);
         let config = PlatformIOConfig::from_path(&tmp.path().join("platformio.ini")).unwrap();
-        let err =
-            build_library_entries(&config, "not-an-env", Path::new("/nonexistent")).unwrap_err();
+        let err = build_library_entries(&config, "not-an-env", Path::new("/nonexistent"))
+            .await
+            .unwrap_err();
         assert!(err.contains("not-an-env"));
     }
 

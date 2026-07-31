@@ -50,3 +50,15 @@ crates/fbuild-cli/src/cli/clang_tools.rs
 # RISC-V toolchain introspection; no long-lived child, nothing to contain.
 # Documented inline at the call site.
 crates/fbuild-toolchain/src/toolchain/riscv.rs
+
+# `fbuild debug` hands the terminal to gdb. The session is interactive, so
+# the child must inherit this process's stdio; the capturing wrappers in
+# `fbuild_core::subprocess` would swallow the prompt and make gdb unusable.
+# Documented inline at the call site.
+crates/fbuild-cli/src/cli/debug.rs
+
+# `fbuild ide` launches the user's editor detached and returns immediately.
+# The editor must OUTLIVE the CLI, which is the opposite of what a
+# containment group guarantees, so `spawn_contained` is wrong here by
+# design. Documented inline at the call site.
+crates/fbuild-cli/src/cli/ide.rs

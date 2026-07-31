@@ -1,17 +1,19 @@
 //! VS Code emitter: `.vscode/settings.json` (merge-don't-clobber) and
 //! `.vscode/extensions.json` (write-once).
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
+
+use fbuild_core::path::NormalizedPath;
 
 /// Write/merge `.vscode/settings.json` and (if absent) `.vscode/extensions.json`.
 /// Returns `(path, was_written)` pairs for the caller's summary output.
-pub(super) fn emit(project_path: &Path) -> fbuild_core::Result<Vec<(PathBuf, bool)>> {
+pub(super) fn emit(project_path: &Path) -> fbuild_core::Result<Vec<(NormalizedPath, bool)>> {
     let vscode_dir = project_path.join(".vscode");
     std::fs::create_dir_all(&vscode_dir).map_err(|e| {
         fbuild_core::FbuildError::Other(format!("failed to create {}: {}", vscode_dir.display(), e))
     })?;
 
-    let settings_path = vscode_dir.join("settings.json");
+    let settings_path = NormalizedPath::from(vscode_dir.join("settings.json"));
     let merged_settings = merge_vscode_settings(&settings_path)?;
     std::fs::write(&settings_path, merged_settings).map_err(|e| {
         fbuild_core::FbuildError::Other(format!(
@@ -22,7 +24,7 @@ pub(super) fn emit(project_path: &Path) -> fbuild_core::Result<Vec<(PathBuf, boo
     })?;
 
     // Atomic write — FastLED/fbuild#844 bridge pair 6 (state-file write).
-    let extensions_path = vscode_dir.join("extensions.json");
+    let extensions_path = NormalizedPath::from(vscode_dir.join("extensions.json"));
     let wrote_extensions = if extensions_path.exists() {
         false
     } else {

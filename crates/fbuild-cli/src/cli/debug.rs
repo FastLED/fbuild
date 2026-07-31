@@ -80,12 +80,13 @@
 //!    `std::process::Command` when stdio isn't otherwise configured) with
 //!    `-ex "set serial baud <baud>" -ex "target remote <port>" <elf>`.
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::process::Command;
 
 use fbuild_build::build_info::{find_build_info_near, load_build_info};
 use fbuild_build::symbol_analyzer::discover_elf_in_project;
 use fbuild_config::sdkconfig::SdkConfigSummary;
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::{FbuildError, Platform, Result};
 
 use crate::daemon_client::{self, DaemonClient};
@@ -204,7 +205,7 @@ pub(crate) fn gdbstub_readiness_note(summary: &SdkConfigSummary) -> String {
 /// naming convention (`<prefix>gcc` → `<prefix>gdb`, same directory, same
 /// extension). Mirrors `fbuild_build::symbol_analyzer::derive_cppfilt_path`'s
 /// `nm` → `c++filt` derivation. Pure — doesn't check the result exists.
-pub(crate) fn derive_gdb_path(gcc_path: &Path) -> PathBuf {
+pub(crate) fn derive_gdb_path(gcc_path: &Path) -> NormalizedPath {
     let parent = gcc_path.parent().unwrap_or_else(|| Path::new("."));
     let stem = gcc_path
         .file_stem()
@@ -220,9 +221,9 @@ pub(crate) fn derive_gdb_path(gcc_path: &Path) -> PathBuf {
         format!("{stem}-gdb")
     };
     if ext.is_empty() {
-        parent.join(gdb_stem)
+        NormalizedPath::from(parent.join(gdb_stem))
     } else {
-        parent.join(format!("{gdb_stem}.{ext}"))
+        NormalizedPath::from(parent.join(format!("{gdb_stem}.{ext}")))
     }
 }
 
@@ -257,7 +258,10 @@ fn exe_name(name: &str) -> String {
 /// candidate binary name. Pure function of its inputs — I/O-free beyond
 /// `Path::exists`, so tests can point it at a `tempdir` fixture instead of
 /// the real `PATH`/toolchain cache.
-pub(crate) fn find_gdb_in_dirs(dirs: &[PathBuf], candidate_names: &[String]) -> Option<PathBuf> {
+pub(crate) fn find_gdb_in_dirs(
+    dirs: &[NormalizedPath],
+    candidate_names: &[String],
+) -> Option<NormalizedPath> {
     for dir in dirs {
         for name in candidate_names {
             let candidate = dir.join(exe_name(name));
@@ -269,9 +273,13 @@ pub(crate) fn find_gdb_in_dirs(dirs: &[PathBuf], candidate_names: &[String]) -> 
     None
 }
 
-fn path_dirs() -> Vec<PathBuf> {
+fn path_dirs() -> Vec<NormalizedPath> {
     std::env::var_os("PATH")
-        .map(|p| std::env::split_paths(&p).collect())
+        .map(|p| {
+            std::env::split_paths(&p)
+                .map(NormalizedPath::from)
+                .collect()
+        })
         .unwrap_or_default()
 }
 
@@ -281,7 +289,7 @@ fn path_dirs() -> Vec<PathBuf> {
 /// back to `PATH`. Returns a clear install-guidance error when neither
 /// resolves, naming the toolchain prefix so the user knows what to
 /// install/add to `PATH`.
-fn resolve_gdb_path(elf_path: &Path, toolchain_prefix: &str) -> Result<PathBuf> {
+fn resolve_gdb_path(elf_path: &Path, toolchain_prefix: &str) -> Result<NormalizedPath> {
     if let Some(build_info_path) = elf_path.parent().and_then(find_build_info_near) {
         if let Ok((_env, info)) = load_build_info(&build_info_path) {
             let cc_path = info.cc_path.as_path();
@@ -349,14 +357,16 @@ pub(crate) fn build_gdb_argv(elf_path: &Path, serial_target: &str, baud: u32) ->
 /// `.pio/build/**/firmware.elf` → loose `*.elf`). Returns a clear error
 /// naming `--no-flash` and `fbuild build` as the two ways to get an ELF in
 /// place.
-fn resolve_debug_elf(project_dir: &Path) -> Result<PathBuf> {
-    discover_elf_in_project(project_dir).ok_or_else(|| {
-        FbuildError::Other(format!(
-            "no ELF found under {} — run `fbuild debug` without --no-flash to build one, \
+fn resolve_debug_elf(project_dir: &Path) -> Result<NormalizedPath> {
+    discover_elf_in_project(project_dir)
+        .map(NormalizedPath::from)
+        .ok_or_else(|| {
+            FbuildError::Other(format!(
+                "no ELF found under {} — run `fbuild debug` without --no-flash to build one, \
              or run `fbuild build` first",
-            project_dir.display()
-        ))
-    })
+                project_dir.display()
+            ))
+        })
 }
 
 // ---------------------------------------------------------------------
@@ -456,7 +466,7 @@ pub async fn run_debug(
     no_flash: bool,
     port: Option<String>,
 ) -> Result<()> {
-    let project_path = PathBuf::from(&project_dir);
+    let project_path = NormalizedPath::from(project_dir.as_str());
     let target = resolve_debug_target(&project_path, environment.as_deref())?;
 
     let support = debug_support_for_platform(target.platform);
@@ -648,7 +658,7 @@ mod tests {
         let gcc = Path::new("/opt/toolchain/bin/xtensa-esp32-elf-gcc");
         assert_eq!(
             derive_gdb_path(gcc),
-            PathBuf::from("/opt/toolchain/bin/xtensa-esp32-elf-gdb")
+            NormalizedPath::from("/opt/toolchain/bin/xtensa-esp32-elf-gdb")
         );
     }
 
@@ -657,7 +667,7 @@ mod tests {
         let gcc = Path::new(r"C:\toolchain\bin\riscv32-esp-elf-gcc.exe");
         assert_eq!(
             derive_gdb_path(gcc),
-            PathBuf::from(r"C:\toolchain\bin\riscv32-esp-elf-gdb.exe")
+            NormalizedPath::from(r"C:\toolchain\bin\riscv32-esp-elf-gdb.exe")
         );
     }
 
@@ -679,7 +689,7 @@ mod tests {
     #[test]
     fn find_gdb_in_dirs_finds_first_match() {
         let tmp = tempfile::tempdir().unwrap();
-        let bin_dir = tmp.path().join("toolchain").join("bin");
+        let bin_dir = NormalizedPath::from(tmp.path().join("toolchain").join("bin"));
         std::fs::create_dir_all(&bin_dir).unwrap();
         let gdb_name = exe_name("xtensa-esp32-elf-gdb");
         std::fs::write(bin_dir.join(&gdb_name), b"").unwrap();
@@ -694,7 +704,7 @@ mod tests {
     #[test]
     fn find_gdb_in_dirs_returns_none_when_absent() {
         let tmp = tempfile::tempdir().unwrap();
-        let bin_dir = tmp.path().join("empty-bin");
+        let bin_dir = NormalizedPath::from(tmp.path().join("empty-bin"));
         std::fs::create_dir_all(&bin_dir).unwrap();
         let found = find_gdb_in_dirs(&[bin_dir], &gdb_candidate_names("riscv32-esp-elf-"));
         assert_eq!(found, None);
@@ -703,8 +713,8 @@ mod tests {
     #[test]
     fn find_gdb_in_dirs_searches_dirs_in_order() {
         let tmp = tempfile::tempdir().unwrap();
-        let dir_a = tmp.path().join("a");
-        let dir_b = tmp.path().join("b");
+        let dir_a = NormalizedPath::from(tmp.path().join("a"));
+        let dir_b = NormalizedPath::from(tmp.path().join("b"));
         std::fs::create_dir_all(&dir_a).unwrap();
         std::fs::create_dir_all(&dir_b).unwrap();
         let names = gdb_candidate_names("riscv32-esp-elf-");
@@ -756,7 +766,10 @@ mod tests {
         let tmp = tempfile::tempdir().unwrap();
         std::fs::write(tmp.path().join("firmware.elf"), b"\x7fELF").unwrap();
         let resolved = resolve_debug_elf(tmp.path()).unwrap();
-        assert_eq!(resolved, tmp.path().join("firmware.elf"));
+        assert_eq!(
+            resolved,
+            NormalizedPath::from(tmp.path().join("firmware.elf"))
+        );
     }
 
     #[test]
