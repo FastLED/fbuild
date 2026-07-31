@@ -17,8 +17,11 @@
 //! standalone binary needs no Python interpreter and no network at build time.
 //!
 //! Flow:
-//! 1. The version is taken from the pioarduino `tool-esptoolpy` metadata URL
-//!    (`.../esptoolpy-v5.3.0.zip` → `5.3.0`) — see `extract_esptool_version`.
+//! 1. The version is taken from the pioarduino `tool-esptoolpy` metadata URL,
+//!    which comes in two shapes: version-in-filename
+//!    (`.../download/0.0.1/esptoolpy-v5.3.0.zip` → `5.3.0`) and
+//!    version-in-release-tag (`.../download/v4.8.5/esptool.zip` → `4.8.5`).
+//!    See `extract_esptool_version`.
 //! 2. The host `(OS, ARCH)` maps to a tasmota platform tag
 //!    (`linux-amd64`, `macos-arm64`, `windows-amd64`, …). An unsupported host
 //!    yields an error, and the caller falls back to an `esptool` on PATH.
@@ -45,7 +48,8 @@ pub struct Esptool {
 impl Esptool {
     /// Create from the `platform.json`-derived `tool-esptoolpy` URL
     /// (`Esp32Platform::get_package_url("tool-esptoolpy")`). Only the version
-    /// embedded in the URL filename is used.
+    /// embedded in the URL is used — from the filename, or from the release
+    /// tag when the filename is generic.
     pub fn from_metadata_url(project_dir: &Path, metadata_url: &str) -> Self {
         Self {
             project_dir: NormalizedPath::from(project_dir),
