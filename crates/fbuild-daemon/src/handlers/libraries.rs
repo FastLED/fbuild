@@ -262,10 +262,11 @@ pub async fn list_libraries(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::fs;
 
-    fn write_project(dir: &Path, ini: &str) {
-        fs::write(dir.join("platformio.ini"), ini).unwrap();
+    async fn write_project(dir: &Path, ini: &str) {
+        fbuild_core::fs::write(dir.join("platformio.ini"), ini)
+            .await
+            .unwrap();
     }
 
     const SAMPLE_INI: &str = "\
@@ -309,25 +310,25 @@ lib_deps =
         assert!(err.contains("platformio.ini"));
     }
 
-    #[test]
-    fn validate_project_dir_accepts_dir_with_platformio_ini() {
+    #[tokio::test]
+    async fn validate_project_dir_accepts_dir_with_platformio_ini() {
         let tmp = tempfile::tempdir().unwrap();
-        write_project(tmp.path(), SAMPLE_INI);
+        write_project(tmp.path(), SAMPLE_INI).await;
         assert!(validate_project_dir(tmp.path()).is_ok());
     }
 
-    #[test]
-    fn resolve_env_name_prefers_explicit_env() {
+    #[tokio::test]
+    async fn resolve_env_name_prefers_explicit_env() {
         let tmp = tempfile::tempdir().unwrap();
-        write_project(tmp.path(), SAMPLE_INI);
+        write_project(tmp.path(), SAMPLE_INI).await;
         let config = PlatformIOConfig::from_path(&tmp.path().join("platformio.ini")).unwrap();
         assert_eq!(resolve_env_name(&config, Some("uno")).unwrap(), "uno");
     }
 
-    #[test]
-    fn resolve_env_name_falls_back_to_default() {
+    #[tokio::test]
+    async fn resolve_env_name_falls_back_to_default() {
         let tmp = tempfile::tempdir().unwrap();
-        write_project(tmp.path(), SAMPLE_INI);
+        write_project(tmp.path(), SAMPLE_INI).await;
         let config = PlatformIOConfig::from_path(&tmp.path().join("platformio.ini")).unwrap();
         assert_eq!(resolve_env_name(&config, None).unwrap(), "uno");
     }
@@ -335,11 +336,13 @@ lib_deps =
     #[tokio::test]
     async fn build_library_entries_classifies_and_marks_installed() {
         let tmp = tempfile::tempdir().unwrap();
-        write_project(tmp.path(), SAMPLE_INI);
+        write_project(tmp.path(), SAMPLE_INI).await;
         let config = PlatformIOConfig::from_path(&tmp.path().join("platformio.ini")).unwrap();
 
         let libs_dir = tmp.path().join("libs");
-        fs::create_dir_all(libs_dir.join("FastLED")).unwrap();
+        fbuild_core::fs::create_dir_all(libs_dir.join("FastLED"))
+            .await
+            .unwrap();
 
         let entries = build_library_entries(&config, "uno", &libs_dir)
             .await
@@ -366,7 +369,7 @@ lib_deps =
     #[tokio::test]
     async fn build_library_entries_no_libs_dir_marks_all_uninstalled() {
         let tmp = tempfile::tempdir().unwrap();
-        write_project(tmp.path(), SAMPLE_INI);
+        write_project(tmp.path(), SAMPLE_INI).await;
         let config = PlatformIOConfig::from_path(&tmp.path().join("platformio.ini")).unwrap();
 
         let libs_dir = tmp.path().join("does-not-exist").join("libs");
@@ -380,7 +383,7 @@ lib_deps =
     #[tokio::test]
     async fn build_library_entries_rejects_unknown_environment() {
         let tmp = tempfile::tempdir().unwrap();
-        write_project(tmp.path(), SAMPLE_INI);
+        write_project(tmp.path(), SAMPLE_INI).await;
         let config = PlatformIOConfig::from_path(&tmp.path().join("platformio.ini")).unwrap();
         let err = build_library_entries(&config, "not-an-env", Path::new("/nonexistent"))
             .await
@@ -416,7 +419,7 @@ lib_deps =
     #[tokio::test]
     async fn list_libraries_happy_path_returns_classified_deps() {
         let tmp = tempfile::tempdir().unwrap();
-        write_project(tmp.path(), SAMPLE_INI);
+        write_project(tmp.path(), SAMPLE_INI).await;
 
         let (status, response) = list_libraries(Query(IdeLibrariesQuery {
             project: Some(tmp.path().display().to_string()),
