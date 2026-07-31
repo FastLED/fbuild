@@ -71,7 +71,7 @@ version = "1.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "40c48f72fd53cd289104fc64099abca73db4166ad86ea0b4341abe65af83dadc"
 dependencies = [
- "windows-sys 0.61.2",
+ "windows-sys 0.60.2",
 ]
 
 [[package]]
@@ -82,7 +82,7 @@ checksum = "291e6a250ff86cd4a820112fb8898808a366d8f9f58ce16d1f538353ad55747d"
 dependencies = [
  "anstyle",
  "once_cell_polyfill",
- "windows-sys 0.61.2",
+ "windows-sys 0.60.2",
 ]
 
 [[package]]
@@ -842,7 +842,7 @@ dependencies = [
  "libc",
  "option-ext",
  "redox_users",
- "windows-sys 0.61.2",
+ "windows-sys 0.60.2",
 ]
 
 [[package]]
@@ -881,7 +881,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "39cab71617ae0d63f51a36d69f866391735b51691dbda63cf6f96d042b63efeb"
 dependencies = [
  "libc",
- "windows-sys 0.61.2",
+ "windows-sys 0.60.2",
 ]
 
 [[package]]
@@ -951,7 +951,7 @@ checksum = "37909eebbb50d72f9059c3b6d82c0463f2ff062c9e95845c43a6c9c0355411be"
 
 [[package]]
 name = "fbuild-bench-fastled-examples"
-version = "2.5.4"
+version = "2.5.5"
 dependencies = [
  "fbuild-core",
  "fbuild-library-select",
@@ -965,7 +965,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-build"
-version = "2.5.4"
+version = "2.5.5"
 dependencies = [
  "async-trait",
  "blake3",
@@ -1002,7 +1002,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-build-arm"
-version = "2.5.4"
+version = "2.5.5"
 dependencies = [
  "async-trait",
  "blake3",
@@ -1036,7 +1036,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-build-engine"
-version = "2.5.4"
+version = "2.5.5"
 dependencies = [
  "async-trait",
  "blake3",
@@ -1069,7 +1069,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-build-esp"
-version = "2.5.4"
+version = "2.5.5"
 dependencies = [
  "async-trait",
  "blake3",
@@ -1103,7 +1103,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-build-mcu"
-version = "2.5.4"
+version = "2.5.5"
 dependencies = [
  "async-trait",
  "blake3",
@@ -1137,7 +1137,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-cli"
-version = "2.5.4"
+version = "2.5.5"
 dependencies = [
  "blake3",
  "clap",
@@ -1170,7 +1170,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-config"
-version = "2.5.4"
+version = "2.5.5"
 dependencies = [
  "fbuild-core",
  "fbuild-paths",
@@ -1185,7 +1185,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-core"
-version = "2.5.4"
+version = "2.5.5"
 dependencies = [
  "async-trait",
  "fs2",
@@ -1206,7 +1206,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-daemon"
-version = "2.5.4"
+version = "2.5.5"
 dependencies = [
  "async-trait",
  "axum",
@@ -1246,7 +1246,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-deploy"
-version = "2.5.4"
+version = "2.5.5"
 dependencies = [
  "async-trait",
  "espflash",
@@ -1275,7 +1275,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-header-scan"
-version = "2.5.4"
+version = "2.5.5"
 dependencies = [
  "criterion",
  "fbuild-paths",
@@ -1286,7 +1286,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-library"
-version = "2.5.4"
+version = "2.5.5"
 dependencies = [
  "async-trait",
  "axum",
@@ -1316,7 +1316,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-library-select"
-version = "2.5.4"
+version = "2.5.5"
 dependencies = [
  "bincode",
  "blake3",
@@ -1336,7 +1336,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-packages"
-version = "2.5.4"
+version = "2.5.5"
 dependencies = [
  "async-trait",
  "axum",
@@ -1368,7 +1368,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-packages-fetch"
-version = "2.5.4"
+version = "2.5.5"
 dependencies = [
  "async-trait",
  "axum",
@@ -1397,7 +1397,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-paths"
-version = "2.5.4"
+version = "2.5.5"
 dependencies = [
  "fbuild-core",
  "serde",
@@ -1407,7 +1407,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-python"
-version = "2.5.4"
+version = "2.5.5"
 dependencies = [
  "base64",
  "fbuild-core",
@@ -1429,7 +1429,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-serial"
-version = "2.5.4"
+version = "2.5.5"
 dependencies = [
  "async-trait",
  "base64",
@@ -1453,7 +1453,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-test-support"
-version = "2.5.4"
+version = "2.5.5"
 dependencies = [
  "fbuild-config",
  "fbuild-core",
@@ -1473,7 +1473,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-toolchain"
-version = "2.5.4"
+version = "2.5.5"
 dependencies = [
  "async-trait",
  "axum",
@@ -2147,7 +2147,7 @@ checksum = "3640c1c38b8e4e43584d8df18be5fc6b0aa314ce6ebf51b53313d4306cca8e46"
 dependencies = [
  "hermit-abi",
  "libc",
- "windows-sys 0.61.2",
+ "windows-sys 0.60.2",
 ]
 
 [[package]]
@@ -2581,7 +2581,7 @@ version = "0.50.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7957b9740744892f114936ab4a57b3f487491bbeafaf8083688b16841a4240e5"
 dependencies = [
- "windows-sys 0.61.2",
+ "windows-sys 0.60.2",
 ]
 
 [[package]]
@@ -3378,9 +3378,8 @@ dependencies = [
 
 [[package]]
 name = "running-process"
-version = "4.6.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3d5325b33edc17445ec07177a2fb78136045207d3d1864373e1404d055e4f9c2"
+version = "4.6.4"
+source = "git+https://github.com/zackees/running-process.git?rev=59556ebbb779a66a95811c75bb1533cf3db1c525#59556ebbb779a66a95811c75bb1533cf3db1c525"
 dependencies = [
  "anyhow",
  "blake3",
@@ -3443,7 +3442,7 @@ dependencies = [
  "errno",
  "libc",
  "linux-raw-sys",
- "windows-sys 0.61.2",
+ "windows-sys 0.60.2",
 ]
 
 [[package]]
@@ -3725,7 +3724,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3a766e1110788c36f4fa1c2b71b387a7815aa65f88ce0229841826633d93723e"
 dependencies = [
  "libc",
- "windows-sys 0.61.2",
+ "windows-sys 0.60.2",
 ]
 
 [[package]]
@@ -3879,7 +3878,7 @@ dependencies = [
  "getrandom 0.4.2",
  "once_cell",
  "rustix",
- "windows-sys 0.61.2",
+ "windows-sys 0.60.2",
 ]
 
 [[package]]
@@ -4628,7 +4627,7 @@ version = "0.1.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c2a7b1c03c876122aa43f3020e6c3c3ee5c05081c9a00739faf7503aeba10d22"
 dependencies = [
- "windows-sys 0.61.2",
+ "windows-sys 0.60.2",
 ]
 
 [[package]]
@@ -5097,7 +5096,7 @@ dependencies = [
 [[package]]
 name = "zccache"
 version = "1.12.17"
-source = "git+https://github.com/zackees/zccache?rev=a16f10e2c3813f0582e0e51eb3b9932c727435f1#a16f10e2c3813f0582e0e51eb3b9932c727435f1"
+source = "git+https://github.com/zackees/zccache?rev=5ee292ff61e0f5909e1893916efe3bd963db8032#5ee292ff61e0f5909e1893916efe3bd963db8032"
 dependencies = [
  "arc-swap",
  "bincode",
@@ -5151,7 +5150,7 @@ dependencies = [
 [[package]]
 name = "zccache-artifact"
 version = "1.12.17"
-source = "git+https://github.com/zackees/zccache?rev=a16f10e2c3813f0582e0e51eb3b9932c727435f1#a16f10e2c3813f0582e0e51eb3b9932c727435f1"
+source = "git+https://github.com/zackees/zccache?rev=5ee292ff61e0f5909e1893916efe3bd963db8032#5ee292ff61e0f5909e1893916efe3bd963db8032"
 dependencies = [
  "bincode",
  "blake3",
@@ -5173,7 +5172,7 @@ dependencies = [
 [[package]]
 name = "zccache-audit"
 version = "1.12.17"
-source = "git+https://github.com/zackees/zccache?rev=a16f10e2c3813f0582e0e51eb3b9932c727435f1#a16f10e2c3813f0582e0e51eb3b9932c727435f1"
+source = "git+https://github.com/zackees/zccache?rev=5ee292ff61e0f5909e1893916efe3bd963db8032#5ee292ff61e0f5909e1893916efe3bd963db8032"
 dependencies = [
  "serde",
  "serde_json",
@@ -5183,7 +5182,7 @@ dependencies = [
 [[package]]
 name = "zccache-compile-trace"
 version = "1.12.17"
-source = "git+https://github.com/zackees/zccache?rev=a16f10e2c3813f0582e0e51eb3b9932c727435f1#a16f10e2c3813f0582e0e51eb3b9932c727435f1"
+source = "git+https://github.com/zackees/zccache?rev=5ee292ff61e0f5909e1893916efe3bd963db8032#5ee292ff61e0f5909e1893916efe3bd963db8032"
 dependencies = [
  "zccache-audit",
 ]
@@ -5191,9 +5190,10 @@ dependencies = [
 [[package]]
 name = "zccache-compiler"
 version = "1.12.17"
-source = "git+https://github.com/zackees/zccache?rev=a16f10e2c3813f0582e0e51eb3b9932c727435f1#a16f10e2c3813f0582e0e51eb3b9932c727435f1"
+source = "git+https://github.com/zackees/zccache?rev=5ee292ff61e0f5909e1893916efe3bd963db8032#5ee292ff61e0f5909e1893916efe3bd963db8032"
 dependencies = [
  "clang",
+ "serde_json",
  "thiserror 2.0.18",
  "zccache-core",
  "zccache-hash",
@@ -5202,7 +5202,7 @@ dependencies = [
 [[package]]
 name = "zccache-core"
 version = "1.12.17"
-source = "git+https://github.com/zackees/zccache?rev=a16f10e2c3813f0582e0e51eb3b9932c727435f1#a16f10e2c3813f0582e0e51eb3b9932c727435f1"
+source = "git+https://github.com/zackees/zccache?rev=5ee292ff61e0f5909e1893916efe3bd963db8032#5ee292ff61e0f5909e1893916efe3bd963db8032"
 dependencies = [
  "crash-handler",
  "libc",
@@ -5216,7 +5216,7 @@ dependencies = [
 [[package]]
 name = "zccache-daemon-core"
 version = "1.12.17"
-source = "git+https://github.com/zackees/zccache?rev=a16f10e2c3813f0582e0e51eb3b9932c727435f1#a16f10e2c3813f0582e0e51eb3b9932c727435f1"
+source = "git+https://github.com/zackees/zccache?rev=5ee292ff61e0f5909e1893916efe3bd963db8032#5ee292ff61e0f5909e1893916efe3bd963db8032"
 dependencies = [
  "arc-swap",
  "bincode",
@@ -5266,7 +5266,7 @@ dependencies = [
 [[package]]
 name = "zccache-depgraph"
 version = "1.12.17"
-source = "git+https://github.com/zackees/zccache?rev=a16f10e2c3813f0582e0e51eb3b9932c727435f1#a16f10e2c3813f0582e0e51eb3b9932c727435f1"
+source = "git+https://github.com/zackees/zccache?rev=5ee292ff61e0f5909e1893916efe3bd963db8032#5ee292ff61e0f5909e1893916efe3bd963db8032"
 dependencies = [
  "bincode",
  "blake3",
@@ -5278,6 +5278,7 @@ dependencies = [
  "thiserror 2.0.18",
  "tracing",
  "uuid",
+ "zccache-compiler",
  "zccache-core",
  "zccache-hash",
 ]
@@ -5285,7 +5286,7 @@ dependencies = [
 [[package]]
 name = "zccache-fingerprint"
 version = "1.12.17"
-source = "git+https://github.com/zackees/zccache?rev=a16f10e2c3813f0582e0e51eb3b9932c727435f1#a16f10e2c3813f0582e0e51eb3b9932c727435f1"
+source = "git+https://github.com/zackees/zccache?rev=5ee292ff61e0f5909e1893916efe3bd963db8032#5ee292ff61e0f5909e1893916efe3bd963db8032"
 dependencies = [
  "fs2",
  "globset",
@@ -5303,7 +5304,7 @@ dependencies = [
 [[package]]
 name = "zccache-fscache"
 version = "1.12.17"
-source = "git+https://github.com/zackees/zccache?rev=a16f10e2c3813f0582e0e51eb3b9932c727435f1#a16f10e2c3813f0582e0e51eb3b9932c727435f1"
+source = "git+https://github.com/zackees/zccache?rev=5ee292ff61e0f5909e1893916efe3bd963db8032#5ee292ff61e0f5909e1893916efe3bd963db8032"
 dependencies = [
  "bincode",
  "dashmap",
@@ -5318,7 +5319,7 @@ dependencies = [
 [[package]]
 name = "zccache-hash"
 version = "1.12.17"
-source = "git+https://github.com/zackees/zccache?rev=a16f10e2c3813f0582e0e51eb3b9932c727435f1#a16f10e2c3813f0582e0e51eb3b9932c727435f1"
+source = "git+https://github.com/zackees/zccache?rev=5ee292ff61e0f5909e1893916efe3bd963db8032#5ee292ff61e0f5909e1893916efe3bd963db8032"
 dependencies = [
  "blake3",
  "memmap2",
@@ -5328,11 +5329,12 @@ dependencies = [
 [[package]]
 name = "zccache-ipc"
 version = "1.12.17"
-source = "git+https://github.com/zackees/zccache?rev=a16f10e2c3813f0582e0e51eb3b9932c727435f1#a16f10e2c3813f0582e0e51eb3b9932c727435f1"
+source = "git+https://github.com/zackees/zccache?rev=5ee292ff61e0f5909e1893916efe3bd963db8032#5ee292ff61e0f5909e1893916efe3bd963db8032"
 dependencies = [
  "bytes",
  "dashmap",
  "interprocess",
+ "libc",
  "prost",
  "running-process",
  "serde",
@@ -5347,7 +5349,7 @@ dependencies = [
 [[package]]
 name = "zccache-protocol"
 version = "1.12.17"
-source = "git+https://github.com/zackees/zccache?rev=a16f10e2c3813f0582e0e51eb3b9932c727435f1#a16f10e2c3813f0582e0e51eb3b9932c727435f1"
+source = "git+https://github.com/zackees/zccache?rev=5ee292ff61e0f5909e1893916efe3bd963db8032#5ee292ff61e0f5909e1893916efe3bd963db8032"
 dependencies = [
  "bincode",
  "bytes",
@@ -5364,7 +5366,7 @@ dependencies = [
 [[package]]
 name = "zccache-watcher"
 version = "1.12.17"
-source = "git+https://github.com/zackees/zccache?rev=a16f10e2c3813f0582e0e51eb3b9932c727435f1#a16f10e2c3813f0582e0e51eb3b9932c727435f1"
+source = "git+https://github.com/zackees/zccache?rev=5ee292ff61e0f5909e1893916efe3bd963db8032#5ee292ff61e0f5909e1893916efe3bd963db8032"
 dependencies = [
  "globset",
  "jwalk",

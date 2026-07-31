@@ -69,7 +69,7 @@ exclude = [
 libraries = [{ path = "dylints/*" }]
 
 [workspace.package]
-version = "2.5.4"
+version = "2.5.5"
 edition = "2021"
 rust-version = "1.94.1"
 license = "MIT OR Apache-2.0"
@@ -152,7 +152,16 @@ owo-colors = "4"
 # `AsyncBrokerSession::adopt`). The `core` feature stays on for process
 # containment. `RUNNING_PROCESS_DISABLE=1` still selects the legacy direct
 # loopback-HTTP path (see crates/fbuild-daemon/src/broker).
-running-process = { version = "4.6.1", default-features = false, features = ["client-async"] }
+#
+# Source must match zccache's `running-process` pin exactly (same git rev, not
+# just the same semver). `running-process` exports unmangled `rp_*_public` C
+# symbols; Cargo treats a registry package and a git package as two distinct
+# packages, so a registry pin here plus zccache's git pin puts BOTH copies in
+# the link and every one of those symbols collides (`rust-lld: error:
+# duplicate symbol: rp_native_process_start_public`, …). Keep this rev in
+# lockstep with the `rev` in zccache's workspace Cargo.toml when repinning
+# zccache.
+running-process = { version = "4.6.0", git = "https://github.com/zackees/running-process.git", rev = "59556ebbb779a66a95811c75bb1533cf3db1c525", default-features = false, features = ["client-async"] }
 
 [profile.dev]
 debug = "line-tables-only"
