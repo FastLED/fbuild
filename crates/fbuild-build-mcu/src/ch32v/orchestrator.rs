@@ -304,7 +304,27 @@ fn sysclk_define(
             )));
         }
     };
-    let unit = if matches!(series, "ch32v003" | "ch32v006") && source == "HSI" {
+    // Spelling is per-series because the vendor headers are not self-consistent.
+    //
+    // `system/CH32V00x/USER/system_ch32v00x.c` (ch32v003) tests the uppercase
+    // `SYSCLK_FREQ_<n>MHZ_HSI` where it dispatches, so that series keeps `MHZ`.
+    //
+    // ch32v006 (`system/CH32VM00X/USER/system_ch32v00X.c`) is a *different*
+    // file with a typo: it declares and defines `SetSysClockTo_48MHz_HSI`
+    // under the lowercase `SYSCLK_FREQ_48MHz_HSI`, but its `SetSysClock()`
+    // dispatcher tests the uppercase `SYSCLK_FREQ_48MHZ_HSI` and calls
+    // `SetSysClockTo_48MHZ_HSI()` -- an identifier that exists nowhere in the
+    // tree. Defining the uppercase spelling therefore takes a branch whose
+    // callee was never declared:
+    //
+    //     error: implicit declaration of function 'SetSysClockTo_48MHZ_HSI'
+    //
+    // Emitting the lowercase spelling leaves that broken branch unselected, so
+    // the file compiles and the part runs on the reset-default HSI clock --
+    // the same outcome the vendor core produces for any unrecognized setting.
+    // Actually applying 48 MHz on ch32v006 needs a vendor-side fix to that
+    // dispatcher; it cannot be reached from a `-D` flag.
+    let unit = if series == "ch32v003" && source == "HSI" {
         "MHZ"
     } else {
         "MHz"
@@ -499,6 +519,23 @@ mod tests {
         assert_eq!(
             sysclk_define("ch32v003", "48000000L", "hsi+pll").unwrap(),
             ("SYSCLK_FREQ_48MHZ_HSI".to_string(), "48000000".to_string())
+        );
+    }
+
+    /// ch32v006 must NOT get ch32v003's uppercase spelling. Its vendor file
+    /// declares the setter under `SYSCLK_FREQ_48MHz_HSI` but dispatches on
+    /// `SYSCLK_FREQ_48MHZ_HSI`, so the uppercase form selects a call to an
+    /// undeclared `SetSysClockTo_48MHZ_HSI` and the core fails to compile.
+    #[test]
+    fn test_sysclk_define_ch32v006_uses_lowercase_mhz() {
+        assert_eq!(
+            sysclk_define("ch32v006", "48000000L", "hsi+pll").unwrap(),
+            ("SYSCLK_FREQ_48MHz_HSI".to_string(), "48000000".to_string())
+        );
+        // HSE was never part of the uppercase carve-out; keep it lowercase too.
+        assert_eq!(
+            sysclk_define("ch32v006", "24000000L", "hse").unwrap(),
+            ("SYSCLK_FREQ_24MHz_HSE".to_string(), "24000000".to_string())
         );
     }
 
