@@ -159,14 +159,19 @@ pub fn available_ports() -> serialport::Result<Vec<DetectedPort>> {
     }
     #[cfg(not(windows))]
     {
-        let mut ports: Vec<DetectedPort> = serialport::available_ports()?
+        let ports: Vec<DetectedPort> = serialport::available_ports()?
             .into_iter()
             .map(DetectedPort::unknown)
             .collect();
+        // Only Linux mutates the list (sysfs health enrichment). Binding the
+        // `mut` inside the cfg keeps non-Linux unix targets — macOS, the BSDs —
+        // from tripping `-D unused-mut`.
         #[cfg(target_os = "linux")]
-        {
+        let ports = {
+            let mut ports = ports;
             enrich_linux_port_health(&mut ports);
-        }
+            ports
+        };
         Ok(ports)
     }
 }
@@ -220,7 +225,10 @@ pub struct UsbProblemDevice {
 /// Linux has an equivalent diagnostic (`sysfs`-derived, not Windows PnP
 /// problem codes), but the `UsbProblemDevice` shape doesn't fit it honestly
 /// (no PnP instance id, no Windows setup class) — see
-/// [`present_usb_problem_devices_linux`] instead. macOS has no equivalent
+/// `present_usb_problem_devices_linux` instead (not an intra-doc link: that
+/// item is `cfg(target_os = "linux")`, so it does not exist to resolve
+/// against when these docs are built on a non-Linux host). macOS has no
+/// equivalent
 /// implemented yet (IOKit work is out of scope without a macOS host).
 pub fn present_usb_problem_devices() -> Vec<UsbProblemDevice> {
     #[cfg(windows)]

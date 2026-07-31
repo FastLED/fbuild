@@ -6,7 +6,8 @@
 //! `"1-1"`). Each device directory nests its USB interfaces as real
 //! subdirectories (Linux additionally names those `"<device>:<cfg>.<iface>"`
 //! and colon-symlinks them at the top level too, but this module never
-//! parses that name — see [`scan_device_interfaces`] for why). This module
+//! parses that name — see `scan_device_interfaces` for why; it is private, so
+//! this is deliberately not an intra-doc link). This module
 //! walks that shape and turns it into the same kind of facts Windows gets
 //! from SetupAPI/CfgMgr32 in `ports.rs::imp` — but it never touches a live
 //! filesystem itself. Every parsing function takes a `root: &Path`, so the
@@ -16,7 +17,7 @@
 //! exactly why interface directories are identified structurally instead
 //! of by name).
 //!
-//! The one `cfg(target_os = "linux")` boundary is [`live_root`] plus the
+//! The one `cfg(target_os = "linux")` boundary is `live_root` plus the
 //! two thin wrappers that call it — everything else here is pure parsing
 //! and runs (and is tested) everywhere.
 //!
@@ -41,7 +42,8 @@
 //!   (`fbuild port scan` / future CLI surfacing), not for the
 //!   `PortHealth` selection path. `ports::present_usb_problem_devices()`
 //!   stays an empty `Vec` on Linux for that reason; see
-//!   [`crate::ports::present_usb_problem_devices_linux`] for the sibling.
+//!   `ports::present_usb_problem_devices_linux` for the sibling (Linux-only
+//!   item, so not an intra-doc link — this module's docs build everywhere).
 //!
 //! ## macOS
 //!

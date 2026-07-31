@@ -112,7 +112,7 @@ pub(super) fn isystem_args_from_dirs(mut dirs: Vec<PathBuf>) -> Vec<String> {
 impl CompileDatabase {
     /// Create a new compile database with GCC flags translated to clang
     /// equivalents, with the toolchain's GCC builtin include dirs baked in
-    /// as `-isystem` (see [`builtin_isystem_args`]).
+    /// as `-isystem` (see `builtin_isystem_args`, private to this module).
     pub fn translate_for_clang(&self, arch: TargetArchitecture) -> CompileDatabase {
         let builtin_includes = builtin_isystem_args();
         let entries = self

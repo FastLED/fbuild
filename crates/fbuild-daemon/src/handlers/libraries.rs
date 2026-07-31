@@ -144,7 +144,7 @@ fn build_library_entries(
         .collect())
 }
 
-/// GET /api/ide/libraries?project=<dir>&env=<name>
+/// `GET /api/ide/libraries?project=<dir>&env=<name>`
 pub async fn list_libraries(
     Query(params): Query<IdeLibrariesQuery>,
 ) -> (StatusCode, Json<IdeLibrariesResponse>) {
