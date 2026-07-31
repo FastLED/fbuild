@@ -226,3 +226,15 @@ crates/fbuild-cli/src/daemon_client/identity.rs
 # UAC helper process boundary: the short-lived, validated rendezvous filenames
 # are supplied to Windows APIs as raw OS paths (FastLED/fbuild#1148).
 crates/fbuild-cli/src/cli/usb_recovery.rs
+
+# clangd parity harness: this test deliberately controls the *textual form* of
+# the project path. It avoids `canonicalize()` because the `\\?\` prefix that
+# adds on Windows breaks clangd's `--check=<file>` path parsing, which would
+# silently turn every diagnostic-location mismatch into a no-op match instead
+# of a real assertion. `NormalizedPath` resolves `..` lexically and would
+# likewise change the strings baked into `compile_commands.json` and compared
+# against clangd's output. The test is `#[ignore]`d behind "clangd on PATH +
+# installed toolchains", so neither CI nor a normal `bash test` run can
+# validate such a change — allowlisted rather than migrated blind.
+# Revisit together with FastLED/fbuild#1076's parity work.
+crates/fbuild-build/tests/clangd_check_parity.rs
