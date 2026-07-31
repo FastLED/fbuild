@@ -150,22 +150,55 @@ def _job_id(workflow: str) -> str:
 def render_nightly(boards: list[dict]) -> str:
     """Render .github/workflows/nightly-platforms.yml from the SOT.
 
-    Fan-out: one `uses:` job per board. A single guard job decides
-    whether the matrix runs at all -- if no commits landed in the last
-    24h, every downstream job is skipped via `if:`. workflow_dispatch
-    exposes a `force` boolean to bypass the guard for manual reruns.
+    Fan-out: ONE matrix job that calls `template_build.yml` directly, once
+    per board. A single guard job decides whether the sweep runs at all --
+    if no commits landed in the last 24h, the build job is skipped via
+    `if:`. workflow_dispatch exposes a `force` boolean to bypass the guard
+    for manual reruns.
+
+    This deliberately does NOT do the obvious thing of emitting one
+    `uses: ./.github/workflows/build-<board>.yml` job per board. GitHub caps
+    a single workflow file at **20 unique reusable workflows**, counting the
+    whole nested tree. Referencing all ~79 per-board workflows blew straight
+    past that cap, and the failure mode gives you nothing to debug: the run
+    is created, immediately reports "This run likely failed because of a
+    workflow file issue", and produces **zero jobs** and no logs. The YAML is
+    perfectly valid, so neither a linter nor `yaml.safe_load` flags it.
+
+    Calling the shared template with a matrix keeps the unique-reusable count
+    at 1 no matter how many boards the SOT grows to.
+
+    Matrix keys use underscores, not hyphens, on purpose: `matrix.test-dir`
+    parses as a subtraction in a GitHub expression, silently yielding an
+    empty value rather than an error. The hyphenated names are reintroduced
+    only in the `with:` block, where they are input keys rather than
+    expressions.
     """
-    job_blocks: list[str] = []
+    matrix_entries: list[str] = []
     for b in boards:
-        jid = _job_id(b["workflow"])
-        job_blocks.append(
-            f"  {jid}:\n"
-            f"    name: {b['workflow_name']}\n"
-            f"    needs: guard\n"
-            f"    if: needs.guard.outputs.should_run == 'true'\n"
-            f"    uses: ./.github/workflows/{b['workflow']}\n"
+        matrix_entries.append(
+            f"          - workflow_name: {json.dumps(b['workflow_name'])}\n"
+            f"            test_dir: {json.dumps(b['test_dir'])}\n"
+            f"            env_name: {json.dumps(b['env_name'])}\n"
+            f"            firmware_ext: {json.dumps(b['firmware_ext'])}\n"
         )
-    jobs_yaml = "\n".join(job_blocks)
+    jobs_yaml = (
+        "  build:\n"
+        "    name: ${{ matrix.workflow_name }}\n"
+        "    needs: guard\n"
+        "    if: needs.guard.outputs.should_run == 'true'\n"
+        "    strategy:\n"
+        # One broken board must not cancel the other 78 -- the whole point of
+        # a nightly sweep is a complete picture of what is red.
+        "      fail-fast: false\n"
+        "      matrix:\n"
+        "        include:\n" + "".join(matrix_entries) + "    uses: ./.github/workflows/template_build.yml\n"
+        "    with:\n"
+        "      workflow-name: ${{ matrix.workflow_name }}\n"
+        "      test-dir: ${{ matrix.test_dir }}\n"
+        "      env-name: ${{ matrix.env_name }}\n"
+        "      firmware-ext: ${{ matrix.firmware_ext }}\n"
+    )
     header = (
         "# Daily safety-net sweep of every per-board build workflow.\n"
         "# See FastLED/fbuild#835.\n"
