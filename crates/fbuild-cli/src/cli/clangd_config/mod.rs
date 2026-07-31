@@ -36,6 +36,8 @@
 mod vscode;
 mod zed;
 
+use fbuild_core::path::NormalizedPath;
+
 use crate::output;
 
 use super::build::{normalize_path, run_build};
@@ -158,8 +160,8 @@ pub(crate) async fn ensure_compile_db(
     env_name: &str,
     verbose: bool,
     refresh: bool,
-) -> fbuild_core::Result<std::path::PathBuf> {
-    let db_path = project_path.join("compile_commands.json");
+) -> fbuild_core::Result<NormalizedPath> {
+    let db_path = NormalizedPath::from(project_path.join("compile_commands.json"));
     if !refresh && db_path.exists() {
         output::progress("Using existing compile_commands.json");
         return Ok(db_path);
@@ -195,8 +197,8 @@ pub(crate) async fn ensure_compile_db(
 /// future `fbuild ide` module can reuse it directly.
 pub(crate) fn emit_clangd_file(
     project_path: &std::path::Path,
-) -> fbuild_core::Result<std::path::PathBuf> {
-    let clangd_path = project_path.join(".clangd");
+) -> fbuild_core::Result<NormalizedPath> {
+    let clangd_path = NormalizedPath::from(project_path.join(".clangd"));
     std::fs::write(&clangd_path, render_clangd_yaml()).map_err(|e| {
         fbuild_core::FbuildError::Other(format!("failed to write {}: {}", clangd_path.display(), e))
     })?;
@@ -239,7 +241,7 @@ pub(crate) fn shared_clangd_arguments() -> Vec<String> {
 pub(crate) fn emit_editor_config(
     editor: Editor,
     project_path: &std::path::Path,
-) -> fbuild_core::Result<Vec<(std::path::PathBuf, bool)>> {
+) -> fbuild_core::Result<Vec<(NormalizedPath, bool)>> {
     match editor {
         Editor::VsCode => vscode::emit(project_path),
         Editor::Zed => zed::emit(project_path),

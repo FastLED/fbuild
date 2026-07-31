@@ -38,8 +38,9 @@
 //! any other STM32 family/package not in the table above, and anything AVR
 //! or ESP32 (not probe-rs targets at all).
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
+use fbuild_core::path::NormalizedPath;
 use serde::{Deserialize, Serialize};
 
 /// Fixed default port `fbuild ide` tells `probe-rs dap-server` to listen on
@@ -147,12 +148,12 @@ pub(crate) fn emit_zed_debug(
     project_path: &Path,
     env_name: &str,
     elf_path: Option<&Path>,
-) -> fbuild_core::Result<PathBuf> {
+) -> fbuild_core::Result<NormalizedPath> {
     let zed_dir = project_path.join(".zed");
     std::fs::create_dir_all(&zed_dir).map_err(|e| {
         fbuild_core::FbuildError::Other(format!("failed to create {}: {}", zed_dir.display(), e))
     })?;
-    let debug_path = zed_dir.join("debug.json");
+    let debug_path = NormalizedPath::from(zed_dir.join("debug.json"));
     let existing = read_debug_file(&debug_path);
     let fresh = vec![build_debug_entry(env_name, elf_path)];
     let merged = merge_debug_entries(&existing, &fresh);
@@ -170,14 +171,16 @@ pub(crate) fn emit_zed_debug(
 /// build`'s release-profile layout. Doesn't check existence — it's a
 /// placeholder for the user to have built once before attaching, same as
 /// any DAP `program` field.
-pub(crate) fn expected_elf_path(project_path: &Path, env_name: &str) -> PathBuf {
-    fbuild_paths::BuildLayout::new(
-        project_path.to_path_buf(),
-        env_name.to_string(),
-        fbuild_core::BuildProfile::Release,
+pub(crate) fn expected_elf_path(project_path: &Path, env_name: &str) -> NormalizedPath {
+    NormalizedPath::from(
+        fbuild_paths::BuildLayout::new(
+            project_path.to_path_buf(),
+            env_name.to_string(),
+            fbuild_core::BuildProfile::Release,
+        )
+        .resolve()
+        .join("firmware.elf"),
     )
-    .resolve()
-    .join("firmware.elf")
 }
 
 #[cfg(test)]

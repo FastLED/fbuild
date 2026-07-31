@@ -8,19 +8,21 @@
 //! relative to wherever clangd's working directory is (the project root
 //! Zed launches it from).
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
+
+use fbuild_core::path::NormalizedPath;
 
 /// Write/merge `.zed/settings.json`. Returns `(path, was_written)` pairs
 /// for the caller's summary output — always `true` here since the merge
 /// itself is the "write" (there is no separate write-once file like VS
 /// Code's `extensions.json`).
-pub(super) fn emit(project_path: &Path) -> fbuild_core::Result<Vec<(PathBuf, bool)>> {
+pub(super) fn emit(project_path: &Path) -> fbuild_core::Result<Vec<(NormalizedPath, bool)>> {
     let zed_dir = project_path.join(".zed");
     std::fs::create_dir_all(&zed_dir).map_err(|e| {
         fbuild_core::FbuildError::Other(format!("failed to create {}: {}", zed_dir.display(), e))
     })?;
 
-    let settings_path = zed_dir.join("settings.json");
+    let settings_path = NormalizedPath::from(zed_dir.join("settings.json"));
     let merged = merge_zed_settings(&settings_path)?;
     std::fs::write(&settings_path, merged).map_err(|e| {
         fbuild_core::FbuildError::Other(format!(
