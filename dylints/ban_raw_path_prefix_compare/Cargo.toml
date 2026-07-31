@@ -10,7 +10,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 # Keep the library and test harness on the repository-wide Dylint release.
-dylint_linting = "6.0.1"
+dylint_linting = "=6.0.1"
 
 # No `dylint_testing` dev-dependency: this lint's tests are plain unit
 # tests of the scope/allowlist helpers (no `ui/` compiletest fixtures),
