@@ -765,8 +765,9 @@ fn walk_sources(dir: &Path) -> Vec<PathBuf> {
 ///
 /// Skips any prototype whose return type or parameter types reference a
 /// type declared elsewhere in `source` (struct/class/union/enum, `typedef`,
-/// or `using` alias) — see [`collect_sketch_defined_type_names`] and
-/// [`signature_references_sketch_type`] for FastLED/fbuild#1196's rationale:
+/// or `using` alias) — see `collect_sketch_defined_type_names` and
+/// `signature_references_sketch_type` (both private) for FastLED/fbuild#1196's
+/// rationale:
 /// emitting such a prototype at the top of the file (ahead of the type
 /// declaration) is *always* a compile error, so skipping it just means the
 /// function falls back to ordinary declare-before-use — exactly the

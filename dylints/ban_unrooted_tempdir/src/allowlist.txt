@@ -50,7 +50,6 @@ crates/fbuild-build-arm/src/stm32/orchestrator/mod.rs
 crates/fbuild-build-engine/src/symbol_analyzer/tests.rs
 crates/fbuild-build-arm/src/teensy/orchestrator.rs
 crates/fbuild-build-engine/src/zccache.rs
-crates/fbuild-cli/src/cli/clangd_config.rs
 crates/fbuild-cli/src/cli/port_scan.rs
 crates/fbuild-cli/src/cli/symbols_cmd.rs
 crates/fbuild-config/src/board/tests_project_local.rs

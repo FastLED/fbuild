@@ -23,7 +23,7 @@ pub async fn boards_page() -> impl IntoResponse {
     Html(BOARDS_PAGE_HTML)
 }
 
-/// GET /api/ide/boards?query=<optional filter>
+/// `GET /api/ide/boards?query=<optional filter>`
 pub async fn list_boards(Query(params): Query<IdeBoardsQuery>) -> Json<IdeBoardsResponse> {
     let boards = fbuild_config::search_boards(params.query.as_deref());
     Json(IdeBoardsResponse {

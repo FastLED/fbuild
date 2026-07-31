@@ -238,6 +238,7 @@ async fn clangd_check_parity_uno() {
     // relying on a `.clangd` file's `CompilationDatabase: .` discovery, so
     // this harness has no dependency on `fbuild clangd-config` having been
     // run first.
+    // allow-direct-spawn: integration test driver invoking the clangd binary.
     let mut cmd = tokio::process::Command::new(&clangd_path);
     cmd.arg(format!("--check={sketch_path}"))
         .arg(format!("--compile-commands-dir={}", project_dir.display()))

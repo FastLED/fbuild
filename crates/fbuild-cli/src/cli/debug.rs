@@ -533,6 +533,7 @@ pub async fn run_debug(
     // stdin/stdout/stderr aren't explicitly redirected) — gdb runs
     // interactively in the user's terminal exactly as if they'd typed the
     // command themselves.
+    // allow-direct-spawn: interactive gdb must inherit the user's terminal stdio; the capturing subprocess helpers would break the session.
     let status = Command::new(&gdb_path)
         .args(&argv)
         .status()
