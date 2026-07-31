@@ -54,9 +54,10 @@
 //! `present_usb_problem_devices() == []`, which is the correct
 //! never-fabricate behavior in the meantime (FastLED/fbuild#1091).
 
+use fbuild_core::path::NormalizedPath;
 use std::collections::HashMap;
 use std::fs;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 use crate::ports::PortHealth;
 
@@ -349,7 +350,7 @@ pub fn scan_usb_devices(root: &Path) -> Vec<UsbDeviceNode> {
         return Vec::new();
     };
 
-    let mut device_dirs: Vec<(String, PathBuf)> = Vec::new();
+    let mut device_dirs: Vec<(String, NormalizedPath)> = Vec::new();
     for entry in entries.flatten() {
         let path = entry.path();
         if !path.is_dir() {
@@ -367,7 +368,7 @@ pub fn scan_usb_devices(root: &Path) -> Vec<UsbDeviceNode> {
         if name.contains(':') {
             continue;
         }
-        device_dirs.push((name, path));
+        device_dirs.push((name, path.into()));
     }
 
     let mut devices: HashMap<String, UsbDeviceNode> = HashMap::new();
@@ -458,14 +459,17 @@ pub fn health_for_tty_from_root(root: &Path, tty_name: &str) -> PortHealth {
 /// exists. Every other function in this module takes an explicit `root`
 /// and has no idea what OS it's running on.
 #[cfg(target_os = "linux")]
-pub fn live_root() -> PathBuf {
-    PathBuf::from(DEFAULT_SYSFS_USB_ROOT)
+pub fn live_root() -> NormalizedPath {
+    NormalizedPath::from(DEFAULT_SYSFS_USB_ROOT)
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
     use std::fs;
+    // Fixture builders below hand back owned paths into a `TempDir`; raw
+    // `PathBuf` is fine here because it never crosses into library code.
+    use std::path::PathBuf;
     use tempfile::TempDir;
 
     /// Minimal fixture builder for a `/sys/bus/usb/devices`-shaped tree.
