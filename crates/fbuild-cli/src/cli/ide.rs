@@ -840,10 +840,13 @@ mod tests {
                     .all(|p| p.to_string_lossy().ends_with("zed.exe"))
             );
         } else {
+            // Case-insensitive: the macOS candidate is
+            // `/Applications/Zed.app/Contents/MacOS/cli`, which names the app
+            // with a capital Z and does not contain the lowercase substring.
             assert!(
                 candidates
                     .iter()
-                    .all(|p| p.to_string_lossy().contains("zed"))
+                    .all(|p| p.to_string_lossy().to_ascii_lowercase().contains("zed"))
             );
         }
     }
