@@ -1,4 +1,4 @@
-﻿//! STM32 build orchestrator â€” wires together config, packages, compiler, linker.
+//! STM32 build orchestrator â€” wires together config, packages, compiler, linker.
 //!
 //! Build phases:
 //! 1. Parse platformio.ini
@@ -33,8 +33,8 @@ use fbuild_packages::{Framework, Toolchain};
 
 use crate::compile_database::TargetArchitecture;
 use crate::framework_libs::{
-    library_select_kv_store, resolve_framework_library_sources_active,
-    resolve_framework_library_sources_cached,
+    library_select_kv_store, resolve_framework_library_sources_active_declared,
+    resolve_framework_library_sources_cached, warn_if_lib_ldf_mode_unsupported,
 };
 use crate::generic_arm::{ArmCompiler, ArmLinker};
 use crate::pipeline;
@@ -180,6 +180,20 @@ impl BuildOrchestrator for Stm32Orchestrator {
         // is handled there â€” this string only needs to disambiguate stm32
         // from teensy etc. so cross-platform key collisions are impossible.
         let framework_info = fbuild_packages::Package::get_info(&framework);
+        // See the Teensy orchestrator: `lib_deps` is an explicit declaration,
+        // the only lever a project has for a framework library the shallow
+        // scan cannot infer (FastLED/fbuild#1214).
+        let declared_deps = ctx
+            .config
+            .get_lib_deps(&params.env_name)
+            .unwrap_or_default();
+        warn_if_lib_ldf_mode_unsupported(
+            ctx.config
+                .get_lib_ldf_mode(&params.env_name)
+                .ok()
+                .flatten()
+                .as_deref(),
+        );
         let framework_library_sources = match library_select_kv_store() {
             Some(store) => {
                 let key_inputs = fbuild_library_select::cache::CacheKeyInputs {
@@ -187,6 +201,7 @@ impl BuildOrchestrator for Stm32Orchestrator {
                     framework_install_path: &framework_info.install_path,
                     framework_version: &framework_info.version,
                     preprocessor_defines: &defines,
+                    declared_deps: &declared_deps,
                 };
                 resolve_framework_library_sources_cached(
                     &framework_libs,
@@ -196,11 +211,12 @@ impl BuildOrchestrator for Stm32Orchestrator {
                     store,
                 )
             }
-            None => resolve_framework_library_sources_active(
+            None => resolve_framework_library_sources_active_declared(
                 &framework_libs,
                 &params.project_dir,
                 &ctx.src_dir,
                 &defines,
+                &declared_deps,
             ),
         };
         if !framework_library_sources.is_empty() {

@@ -254,6 +254,18 @@ impl PlatformIOConfig {
         }
     }
 
+    /// Get `lib_ldf_mode` for an environment, if set.
+    ///
+    /// fbuild does not implement PlatformIO's LDF modes — the resolver is
+    /// fixed at a `chain`-style scan from project sources. This getter exists
+    /// so callers can *warn* that the setting is inert rather than silently
+    /// ignoring it, which is how a project ends up believing `deep` is in
+    /// effect (FastLED/fbuild#1214).
+    pub fn get_lib_ldf_mode(&self, env_name: &str) -> fbuild_core::Result<Option<String>> {
+        let config = self.get_env_config(env_name)?;
+        Ok(config.get("lib_ldf_mode").map(|m| m.trim().to_string()))
+    }
+
     /// Get extra library search directories for an environment.
     pub fn get_lib_extra_dirs(&self, env_name: &str) -> fbuild_core::Result<Vec<String>> {
         if let Some(dirs) = self.overrides.get_lib_extra_dirs() {
