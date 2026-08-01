@@ -256,11 +256,28 @@ impl Linker for Esp8266Linker {
     async fn convert_firmware(&self, elf_path: &Path, output_dir: &Path) -> Result<PathBuf> {
         let bin_path = output_dir.join("firmware.bin");
 
-        // Try esptool first
+        // Try esptool first.
+        //
+        // FastLED/fbuild#1219: this used to spawn a bare `esptool` and nothing
+        // else, so *which* esptool ran — or whether one ran at all — depended
+        // entirely on the PATH the daemon happened to be spawned with, up to
+        // 12 h earlier. That matters more here than on ESP32 because the
+        // fallback below is a different tool (objcopy), so a stray esptool on
+        // PATH silently changes how the firmware is produced.
+        //
+        // `FBUILD_ESPTOOL_PATH` is the same override the ESP32 path honors
+        // (FastLED/fbuild#1220) and the only one that survives the daemon's
+        // env scrub. A value that doesn't name a file is a hard error there
+        // and must not be quietly ignored here either.
+        let esptool_override = fbuild_packages::library::esptool_path_override()?;
+        let esptool_bin = match &esptool_override {
+            Some(path) => path.as_path().to_string_lossy().into_owned(),
+            None => "esptool".to_string(),
+        };
         let elf_str = elf_path.to_string_lossy();
         let bin_str = bin_path.to_string_lossy();
         let args = [
-            "esptool",
+            esptool_bin.as_str(),
             "--chip",
             &self.mcu_config.esptool.chip,
             "elf2image",
@@ -282,19 +299,29 @@ impl Linker for Esp8266Linker {
                 // instead of a single firmware.bin, leaving it empty.
                 let size = std::fs::metadata(&bin_path).map(|m| m.len()).unwrap_or(0);
                 if size > 0 {
-                    tracing::info!("converted ELF â†’ firmware.bin via esptool");
+                    tracing::info!("converted ELF â†’ firmware.bin via esptool {esptool_bin}");
                     return Ok(bin_path);
                 }
-                tracing::debug!("esptool produced empty firmware.bin (falling back to objcopy)");
+                // These three were all `debug!`, which is why an
+                // environment-dependent change of firmware-producing tool was
+                // invisible at default verbosity (FastLED/fbuild#1219).
+                tracing::warn!(
+                    "esptool {esptool_bin} produced an empty firmware.bin; \
+                     falling back to objcopy"
+                );
             }
             Ok(result) => {
-                tracing::debug!(
-                    "esptool elf2image failed (falling back to objcopy): {}",
+                tracing::warn!(
+                    "esptool {esptool_bin} elf2image failed; falling back to objcopy: {}",
                     result.stderr
                 );
             }
             Err(e) => {
-                tracing::debug!("esptool not found (falling back to objcopy): {}", e);
+                tracing::warn!(
+                    "esptool {esptool_bin} could not be launched; falling back to objcopy \
+                     (set {} to select one): {e}",
+                    fbuild_packages::library::ESPTOOL_PATH_ENV_VAR
+                );
             }
         }
 
