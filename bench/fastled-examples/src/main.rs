@@ -218,6 +218,8 @@ fn measure_example(
         framework_install_path: framework_root,
         framework_version: "bench-fastled-examples-v1",
         preprocessor_defines: &preprocessor_defines,
+        // The bench measures scan/cache throughput, not declaration handling.
+        declared_deps: &[],
     };
 
     let (cold, cold_ms) = timed(|| resolve_cached(&seeds, &search_paths, libraries, &inputs, &kv))?;
