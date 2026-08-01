@@ -28,20 +28,50 @@ pub fn try_acquire(path: &Path, mode: FileLockMode) -> io::Result<Option<FileLoc
     if let Some(parent) = path.parent() {
         std::fs::create_dir_all(parent)?;
     }
-    let file = OpenOptions::new()
-        .create(true)
-        .truncate(false)
-        .read(true)
-        .write(true)
-        .open(path)?;
-    let result = match mode {
+    let file = retry_on_interrupt(|| {
+        OpenOptions::new()
+            .create(true)
+            .truncate(false)
+            .read(true)
+            .write(true)
+            .open(path)
+    })?;
+    let result = retry_on_interrupt(|| match mode {
         FileLockMode::Shared => FileExt::try_lock_shared(&file),
         FileLockMode::Exclusive => FileExt::try_lock_exclusive(&file),
-    };
+    });
     match result {
         Ok(()) => Ok(Some(FileLockGuard { _file: file })),
         Err(error) if lock_is_held(&error) => Ok(None),
         Err(error) => Err(error),
+    }
+}
+
+/// How many times an `EINTR` is retried before giving up. `EINTR` means a
+/// signal arrived, not that anything is wrong; a handful of retries covers a
+/// burst without spinning forever if something is delivering signals
+/// continuously.
+const INTERRUPT_RETRIES: usize = 8;
+
+/// Retry `op` while it fails with `ErrorKind::Interrupted`.
+///
+/// `flock()` is interruptible by signals on macOS/BSD, and `fs2` returns the
+/// raw OS error, so an `EINTR` propagates out as a hard error — which callers
+/// that collapse errors into "lock unavailable" then report as routine
+/// contention. `open()` is interruptible for the same reason. Neither is a
+/// real failure, so neither should surface as one (FastLED/fbuild#1222).
+fn retry_on_interrupt<T>(mut op: impl FnMut() -> io::Result<T>) -> io::Result<T> {
+    let mut attempts = 0;
+    loop {
+        match op() {
+            Err(error) if error.kind() == io::ErrorKind::Interrupted => {
+                attempts += 1;
+                if attempts >= INTERRUPT_RETRIES {
+                    return Err(error);
+                }
+            }
+            other => return other,
+        }
     }
 }
 

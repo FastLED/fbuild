@@ -28,6 +28,33 @@ const RETRY_BACKOFFS: &[Duration] = &[
 /// attempt and is retried under the same budget as other transient failures.
 const CHUNK_READ_TIMEOUT: Duration = Duration::from_secs(60);
 
+/// The wall-clock durations the retry loop waits on.
+///
+/// Extracted so tests can drive the *same* retry logic on millisecond
+/// durations instead of reaching for `#[tokio::test(start_paused = true)]`.
+/// Paused time and a real `TcpListener` don't mix: socket readiness is driven
+/// by the OS reactor, not the virtual clock, so when every task parks the
+/// clock can jump past a socket operation that was about to become ready —
+/// which is what made the chunk-stall test flake on loaded macOS runners
+/// (FastLED/fbuild#1222).
+#[derive(Clone, Copy, Debug)]
+struct RetryTiming {
+    chunk_read_timeout: Duration,
+    backoffs: &'static [Duration],
+}
+
+impl RetryTiming {
+    const PRODUCTION: Self = Self {
+        chunk_read_timeout: CHUNK_READ_TIMEOUT,
+        backoffs: RETRY_BACKOFFS,
+    };
+
+    fn backoff(&self, attempt: u32) -> Duration {
+        debug_assert!((1..MAX_ATTEMPTS).contains(&attempt));
+        self.backoffs[(attempt - 1) as usize]
+    }
+}
+
 /// Classify a `reqwest::Error` as worth retrying — anything that
 /// could plausibly succeed on a retry (connect timeout, request /
 /// body recv error, server-side 5xx). Deterministic-looking failures
@@ -114,13 +141,13 @@ async fn open_attempt(
     }
 }
 
-fn retry_backoff(attempt: u32) -> Duration {
-    debug_assert!((1..MAX_ATTEMPTS).contains(&attempt));
-    RETRY_BACKOFFS[(attempt - 1) as usize]
-}
-
-async fn wait_before_retry(url: &str, attempt: u32, error: &DownloadAttemptError) {
-    let delay = retry_backoff(attempt);
+async fn wait_before_retry(
+    url: &str,
+    attempt: u32,
+    error: &DownloadAttemptError,
+    timing: RetryTiming,
+) {
+    let delay = timing.backoff(attempt);
     tracing::warn!(
         "download {}: {} on attempt {}/{}, retrying after {:?}",
         url,
@@ -219,7 +246,7 @@ async fn get_with_retry_using(client: &reqwest::Client, url: &str) -> Result<Vec
         match result {
             Ok(bytes) => return Ok(bytes),
             Err(error) if error.is_retryable() && attempt < MAX_ATTEMPTS => {
-                wait_before_retry(url, attempt, &error).await;
+                wait_before_retry(url, attempt, &error, RetryTiming::PRODUCTION).await;
             }
             Err(error) => return Err(error.into_fbuild_error(url)),
         }
@@ -246,6 +273,19 @@ async fn download_file_with_progress_using(
     dest_dir: &Path,
     on_progress: &mut dyn FnMut(&DownloadProgress),
 ) -> Result<()> {
+    download_file_with_progress_timed(client, url, dest_dir, on_progress, RetryTiming::PRODUCTION)
+        .await
+}
+
+/// [`download_file_with_progress_using`] with the retry durations injected.
+/// See [`RetryTiming`] for why tests need this instead of paused Tokio time.
+async fn download_file_with_progress_timed(
+    client: &reqwest::Client,
+    url: &str,
+    dest_dir: &Path,
+    on_progress: &mut dyn FnMut(&DownloadProgress),
+    timing: RetryTiming,
+) -> Result<()> {
     let filename = url.rsplit('/').next().unwrap_or("download").to_string();
     let dest_path = dest_dir.join(&filename);
 
@@ -269,16 +309,17 @@ async fn download_file_with_progress_using(
             // the audit calls out specifically: streaming body reads have no
             // per-chunk wake-up signal otherwise.
             loop {
-                let chunk = match tokio::time::timeout(CHUNK_READ_TIMEOUT, stream.chunk()).await {
-                    Ok(Ok(Some(chunk))) => chunk,
-                    Ok(Ok(None)) => break,
-                    Ok(Err(error)) => return Err(DownloadAttemptError::Body(error)),
-                    Err(_) => {
-                        return Err(DownloadAttemptError::BodyStalled {
-                            filename: filename.clone(),
-                        });
-                    }
-                };
+                let chunk =
+                    match tokio::time::timeout(timing.chunk_read_timeout, stream.chunk()).await {
+                        Ok(Ok(Some(chunk))) => chunk,
+                        Ok(Ok(None)) => break,
+                        Ok(Err(error)) => return Err(DownloadAttemptError::Body(error)),
+                        Err(_) => {
+                            return Err(DownloadAttemptError::BodyStalled {
+                                filename: filename.clone(),
+                            });
+                        }
+                    };
                 attempt_buf.extend_from_slice(&chunk);
                 downloaded += chunk.len() as u64;
 
@@ -312,7 +353,7 @@ async fn download_file_with_progress_using(
         match result {
             Ok(bytes) => break bytes,
             Err(error) if error.is_retryable() && attempt < MAX_ATTEMPTS => {
-                wait_before_retry(url, attempt, &error).await;
+                wait_before_retry(url, attempt, &error, timing).await;
             }
             Err(error) => return Err(error.into_fbuild_error(url)),
         }
@@ -503,6 +544,10 @@ mod tests {
         port
     }
 
+    /// How long `run_stalling_server` withholds the announced body. Only has
+    /// to comfortably exceed `FAST_RETRY_TIMING.chunk_read_timeout`.
+    const STALL_DURATION: Duration = Duration::from_secs(30);
+
     async fn run_stalling_server(request_count: std::sync::Arc<AtomicUsize>) -> u16 {
         use tokio::io::{AsyncReadExt, AsyncWriteExt};
         use tokio::net::TcpListener;
@@ -523,15 +568,19 @@ mod tests {
                     let mut stream = stream;
                     let mut request = [0u8; 1024];
                     // See `run_flaky_server`: this test owns the client, so
-                    // waiting for its request is deterministic under paused
-                    // Tokio time.
+                    // waiting for its request is deterministic.
                     let _ = stream.read(&mut request).await;
                     let _ = stream
                         .write_all(
                             b"HTTP/1.1 200 OK\r\nContent-Length: 5\r\nConnection: close\r\n\r\n",
                         )
                         .await;
-                    tokio::time::sleep(Duration::from_secs(120)).await;
+                    // Announce a body, then never send it. Just needs to
+                    // outlast the client's per-chunk deadline; the task is
+                    // dropped at runtime shutdown, so the test doesn't wait
+                    // on it (FastLED/fbuild#1222 — this runs in real time
+                    // now, not paused time).
+                    tokio::time::sleep(STALL_DURATION).await;
                     let _ = stream.shutdown().await;
                 });
             }
@@ -734,7 +783,24 @@ mod tests {
         assert!(!temp.path().join("file").exists());
     }
 
-    #[tokio::test(start_paused = true)]
+    /// Retry timings short enough to run in real time. This test previously
+    /// used `#[tokio::test(start_paused = true)]` against a real
+    /// `TcpListener`, which flaked on loaded macOS runners: paused time
+    /// auto-advances whenever the runtime looks idle, but socket readiness
+    /// comes from the OS reactor, so the clock could jump past a connection
+    /// that was about to reach `accept()` — leaving `request_count` short of
+    /// 5. Real durations remove the race entirely (FastLED/fbuild#1222).
+    const FAST_RETRY_TIMING: RetryTiming = RetryTiming {
+        chunk_read_timeout: Duration::from_millis(150),
+        backoffs: &[
+            Duration::from_millis(10),
+            Duration::from_millis(10),
+            Duration::from_millis(10),
+            Duration::from_millis(10),
+        ],
+    };
+
+    #[tokio::test]
     async fn streaming_download_retries_chunk_stalls_five_times_without_output() {
         let _guard = network_test_guard().await;
         let request_count = std::sync::Arc::new(AtomicUsize::new(0));
@@ -743,10 +809,15 @@ mod tests {
         let temp = tempfile::TempDir::new().unwrap();
         let mut progress = |_progress: &DownloadProgress| {};
 
-        let _err =
-            download_file_with_progress_using(&test_client(), &url, temp.path(), &mut progress)
-                .await
-                .expect_err("five chunk stalls should exhaust retries");
+        let _err = download_file_with_progress_timed(
+            &test_client(),
+            &url,
+            temp.path(),
+            &mut progress,
+            FAST_RETRY_TIMING,
+        )
+        .await
+        .expect_err("five chunk stalls should exhaust retries");
 
         // A stalled body is retryable, as is a connection error while opening
         // a retry. The latter can legitimately be the final transient on a
@@ -754,6 +825,23 @@ mod tests {
         // attempts without publishing an output.
         assert_eq!(request_count.load(Ordering::SeqCst), 5);
         assert!(!temp.path().join("file").exists());
+    }
+
+    /// The injected timings are a test seam, not a behavior change: the
+    /// production path must still carry the real constants.
+    #[test]
+    fn production_retry_timing_matches_the_constants() {
+        assert_eq!(
+            RetryTiming::PRODUCTION.chunk_read_timeout,
+            CHUNK_READ_TIMEOUT
+        );
+        assert_eq!(RetryTiming::PRODUCTION.backoffs, RETRY_BACKOFFS);
+        for attempt in 1..MAX_ATTEMPTS {
+            assert_eq!(
+                RetryTiming::PRODUCTION.backoff(attempt),
+                RETRY_BACKOFFS[(attempt - 1) as usize]
+            );
+        }
     }
 
     #[test]

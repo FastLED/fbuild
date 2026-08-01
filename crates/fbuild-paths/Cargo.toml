@@ -13,6 +13,9 @@ publish = false
 fbuild-core = { path = "../fbuild-core" }
 serde = { workspace = true }
 serde_json = { workspace = true }
+# Spawn-lock acquire errors are logged rather than propagated, so the errno
+# stays visible without gating progress (FastLED/fbuild#1222).
+tracing = { workspace = true }
 
 [dev-dependencies]
 tempfile = { workspace = true }
