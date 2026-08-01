@@ -14,7 +14,20 @@ pub async fn run_daemon(action: DaemonAction) -> fbuild_core::Result<()> {
     match action {
         DaemonAction::Stop => {
             if !client.health().await {
-                output::result("daemon is not running");
+                // FastLED/fbuild#1213 part 2: this used to return here without
+                // touching anything, so a crashed daemon's port/pid/status
+                // records survived `daemon stop` indefinitely and every later
+                // `daemon status` kept describing a dead PID. "Not running" is
+                // exactly when those records are known to be garbage.
+                let removed = clear_daemon_records();
+                if removed.is_empty() {
+                    output::result("daemon is not running");
+                } else {
+                    output::result(&format!(
+                        "daemon is not running (cleared stale records: {})",
+                        removed.join(", ")
+                    ));
+                }
                 return Ok(());
             }
             client.shutdown().await?;
@@ -22,6 +35,10 @@ pub async fn run_daemon(action: DaemonAction) -> fbuild_core::Result<()> {
             for _ in 0..50 {
                 tokio::time::sleep(std::time::Duration::from_millis(100)).await;
                 if !client.health().await {
+                    // The daemon removes its own pid/port/claim on a graceful
+                    // exit; sweep anything it left behind (notably
+                    // daemon_status.json) so `stop` always leaves a clean dir.
+                    clear_daemon_records();
                     output::result("daemon stopped");
                     return Ok(());
                 }
@@ -777,4 +794,40 @@ pub fn format_uptime(seconds: f64) -> String {
 
 fn format_age_seconds(seconds: f64) -> String {
     format_uptime(seconds.max(0.0))
+}
+
+/// Remove the on-disk records that describe a daemon endpoint, returning the
+/// names of the ones that actually existed.
+///
+/// These are advisory records, never the source of truth: the port is derived
+/// deterministically from (version, cache identity), and the daemon rewrites
+/// all of them at startup. Deleting them cannot orphan a live daemon — a
+/// running daemon keeps serving, and the next `fbuild` invocation re-derives
+/// the same endpoint. What it does fix is a crashed daemon's records
+/// outliving it and describing a dead PID forever (FastLED/fbuild#1213).
+///
+/// Note the owner claim is deliberately included: it is what `daemon status`
+/// and the spawn path consult to decide whether a live daemon owns the cache
+/// root.
+fn clear_daemon_records() -> Vec<&'static str> {
+    let targets: [(&'static str, std::path::PathBuf); 3] = [
+        ("pid", fbuild_paths::get_daemon_pid_file()),
+        ("port", fbuild_paths::get_daemon_port_file()),
+        ("status", fbuild_paths::get_daemon_status_file()),
+    ];
+    let mut removed = Vec::new();
+    for (label, path) in targets {
+        match std::fs::remove_file(&path) {
+            Ok(()) => removed.push(label),
+            Err(e) if e.kind() == std::io::ErrorKind::NotFound => {}
+            Err(e) => {
+                tracing::warn!(path = %path.display(), error = %e, "failed to remove daemon record");
+            }
+        }
+    }
+    if fbuild_paths::daemon_ownership::owner_claim_path().exists() {
+        fbuild_paths::daemon_ownership::remove_owner_claim();
+        removed.push("owner-claim");
+    }
+    removed
 }

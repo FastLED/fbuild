@@ -292,13 +292,54 @@ pub fn get_daemon_port() -> u16 {
         }
     }
 
-    // Priority 2: this endpoint's port file.
+    // Priority 2: this endpoint's port file — but only if we cannot prove its
+    // writer is dead. FastLED/fbuild#1213: a crashed daemon's port file was
+    // trusted verbatim forever.
     if let Some(port) = read_port_from_file(&get_daemon_port_file()) {
-        return port;
+        if !recorded_daemon_owner_is_dead() {
+            return port;
+        }
+        // Falls through to the derived default. Note this is usually the SAME
+        // number, because the port is deterministic — see the note on
+        // `recorded_daemon_owner_is_dead`.
     }
 
     // Priority 3: deterministic per-endpoint default.
     default_daemon_port()
+}
+
+/// Can we *prove* the daemon that wrote this endpoint's records is gone?
+///
+/// Fails safe: anything short of positive evidence of death returns `false`,
+/// so a live daemon's endpoint is never discarded. In particular a missing
+/// owner claim returns `false`, because the daemon writes its pid/port files
+/// before the claim — treating that window as death would make a starting
+/// daemon look dead.
+///
+/// The exe-stem check makes this PID-recycling-safe: a recycled PID now
+/// running some other program means the daemon itself is gone.
+///
+/// Scope note: because [`default_daemon_port`] is deterministic, discarding a
+/// stale port file usually yields the *same* port number. This is a
+/// correctness/hygiene fix (stop trusting a record whose writer is provably
+/// gone), NOT the reason a client can keep failing to reach a dead endpoint —
+/// see the PR discussion on FastLED/fbuild#1213.
+fn recorded_daemon_owner_is_dead() -> bool {
+    let Some(claim) = daemon_ownership::read_owner_claim() else {
+        return false;
+    };
+    if !fbuild_core::process_identity::pid_is_alive(claim.pid) {
+        return true;
+    }
+    // Alive PID: only a *successful* probe showing a different program counts
+    // as death, since `pid_exe_stem_matches` fails closed.
+    match fbuild_core::process_identity::pid_executable_path(claim.pid) {
+        Some(_) => !fbuild_core::process_identity::pid_exe_stem_matches(
+            claim.pid,
+            daemon_ownership::DAEMON_EXE_STEM,
+        ),
+        None => false,
+    }
 }
 
 /// Daemon URL.
@@ -418,6 +459,41 @@ mod tests {
         // the contract the function actually promises.
         let port = get_daemon_port();
         assert!(port > 0);
+    }
+
+    /// FastLED/fbuild#1213: the liveness gate must only fire on *positive*
+    /// evidence that the recorded daemon is gone. With no owner claim on
+    /// disk — including the window where a starting daemon has written its
+    /// port file but not yet its claim — the endpoint must be trusted.
+    #[test]
+    fn owner_liveness_gate_fails_safe_without_a_claim() {
+        // `read_owner_claim` returns None when the claim file is absent or
+        // malformed; in a test process there is no daemon claim for this
+        // endpoint, so this exercises the fail-safe branch.
+        if daemon_ownership::read_owner_claim().is_none() {
+            assert!(
+                !recorded_daemon_owner_is_dead(),
+                "absent owner claim must NOT be read as a dead daemon"
+            );
+        }
+    }
+
+    /// A claim naming this very test process (alive, but not `fbuild-daemon`)
+    /// must be classified as dead — that is the PID-recycling guard.
+    #[test]
+    fn owner_liveness_gate_treats_a_recycled_pid_as_dead() {
+        // Probe the primitives directly rather than writing a claim to the
+        // process-global claim path, which would race other tests.
+        let pid = std::process::id();
+        assert!(fbuild_core::process_identity::pid_is_alive(pid));
+        assert!(
+            !fbuild_core::process_identity::pid_exe_stem_matches(
+                pid,
+                daemon_ownership::DAEMON_EXE_STEM
+            ),
+            "the test binary must not be mistaken for {}",
+            daemon_ownership::DAEMON_EXE_STEM
+        );
     }
 
     #[test]

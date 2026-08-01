@@ -522,6 +522,9 @@ async fn main() {
     let _ = fbuild_core::fs::remove_file(&pid_file).await;
     let _ = fbuild_core::fs::remove_file(&port_file).await;
     fbuild_paths::daemon_ownership::remove_owner_claim();
+    // ...and the status file, which was previously left behind on every clean
+    // shutdown, so `daemon status` kept reporting a dead PID (#1213 part 2).
+    let _ = fbuild_core::fs::remove_file(&fbuild_paths::get_daemon_status_file()).await;
 
     tracing::info!("daemon exiting");
     std::process::exit(0);
