@@ -23,7 +23,7 @@ pub async fn run_daemon(action: DaemonAction) -> fbuild_core::Result<()> {
                 if removed.is_empty() {
                     output::result("daemon is not running");
                 } else {
-                    output::result(&format!(
+                    output::result(format!(
                         "daemon is not running (cleared stale records: {})",
                         removed.join(", ")
                     ));
