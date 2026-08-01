@@ -31,7 +31,7 @@ use std::path::{Path, PathBuf};
 use fbuild_packages::library::FrameworkLibrary;
 use prost::Message;
 
-use crate::{Selection, canon, resolve_active};
+use crate::{Selection, canon};
 
 /// Bump when the scanner's lexical grammar changes in a way that could change
 /// which `#include` directives it emits for the same source.
@@ -189,6 +189,12 @@ pub struct CacheKeyInputs<'a> {
     /// Defines supplied to the compiler. They select the active include graph
     /// and therefore must be part of the cache identity.
     pub preprocessor_defines: &'a HashMap<String, String>,
+    /// `lib_deps` entries from `platformio.ini`. These force-select framework
+    /// libraries the header scan never reaches, so editing them changes the
+    /// selection with no change to any scanned file — meaning they MUST be
+    /// part of the key or the edit is invisible behind a warm cache
+    /// (FastLED/fbuild#1214).
+    pub declared_deps: &'a [String],
 }
 
 /// Result of [`resolve_cached`]. `from_cache` distinguishes hit from miss so
@@ -231,6 +237,18 @@ pub fn cache_key(
     h.update(b"framework_version:");
     h.update(inputs.framework_version.as_bytes());
     h.update(b"\n");
+
+    // Sorted: `lib_deps` is a set of declarations, so reordering the ini
+    // lines must not invalidate the cache.
+    let mut declared: Vec<&str> = inputs.declared_deps.iter().map(String::as_str).collect();
+    declared.sort_unstable();
+    declared.dedup();
+    h.update(b"declared_deps:");
+    h.update(&(declared.len() as u64).to_le_bytes());
+    for dep in declared {
+        h.update(&(dep.len() as u64).to_le_bytes());
+        h.update(dep.as_bytes());
+    }
 
     let mut defines: Vec<(&String, &String)> = inputs.preprocessor_defines.iter().collect();
     defines.sort_unstable_by(|left, right| left.0.cmp(right.0));
@@ -348,7 +366,14 @@ pub fn resolve_cached(
         }
     }
 
-    let selection = resolve_active(seeds, search_paths, libraries, inputs.preprocessor_defines);
+    let selection = crate::resolve_with_stats_active_declared(
+        seeds,
+        search_paths,
+        libraries,
+        inputs.preprocessor_defines,
+        inputs.declared_deps,
+    )
+    .0;
     // serde's `PathBuf` Serialize impl errors when a path component is not
     // valid UTF-8 (legal on Unix, possible on Windows via canonicalize edge
     // cases). Treat that as a cache write miss — degraded performance is
@@ -407,6 +432,7 @@ mod tests {
             framework_install_path: framework_root,
             framework_version: "1.59.0",
             preprocessor_defines: &EMPTY_DEFINES,
+            declared_deps: &[],
         }
     }
 
@@ -472,12 +498,14 @@ mod tests {
             framework_install_path: tmp.path(),
             framework_version: "1.59.0",
             preprocessor_defines: &EMPTY_DEFINES,
+            declared_deps: &[],
         };
         let b = CacheKeyInputs {
             toolchain_triple: "xtensa-esp32-elf",
             framework_install_path: tmp.path(),
             framework_version: "1.59.0",
             preprocessor_defines: &EMPTY_DEFINES,
+            declared_deps: &[],
         };
         assert_ne!(
             cache_key(&seeds, &search_paths, &libs, &a).as_bytes(),
@@ -494,8 +522,49 @@ mod tests {
             framework_install_path: a.framework_install_path,
             framework_version: "1.60.0",
             preprocessor_defines: a.preprocessor_defines,
+            declared_deps: &[],
         };
         assert_ne!(
+            cache_key(&seeds, &search_paths, &libs, &a).as_bytes(),
+            cache_key(&seeds, &search_paths, &libs, &b).as_bytes()
+        );
+    }
+
+    /// A `lib_deps` edit changes the selection without touching any scanned
+    /// file, so if it weren't in the key a warm cache would silently serve the
+    /// old selection — exactly the "latent until a cold resolution" failure
+    /// mode described in FastLED/fbuild#1214.
+    #[test]
+    fn c04c_declared_deps_change_invalidates_key() {
+        let (tmp, seeds, search_paths, libs) = build_simple_project();
+        let none = fixture_inputs(tmp.path());
+        let declared = vec!["SPI".to_string()];
+        let with_spi = CacheKeyInputs {
+            declared_deps: &declared,
+            ..fixture_inputs(tmp.path())
+        };
+        assert_ne!(
+            cache_key(&seeds, &search_paths, &libs, &none).as_bytes(),
+            cache_key(&seeds, &search_paths, &libs, &with_spi).as_bytes()
+        );
+    }
+
+    /// `lib_deps` is a set of declarations: reordering the ini lines must not
+    /// throw away a valid cache entry.
+    #[test]
+    fn c04d_declared_deps_order_does_not_affect_key() {
+        let (tmp, seeds, search_paths, libs) = build_simple_project();
+        let forward = vec!["SPI".to_string(), "Wire".to_string()];
+        let reversed = vec!["Wire".to_string(), "SPI".to_string()];
+        let a = CacheKeyInputs {
+            declared_deps: &forward,
+            ..fixture_inputs(tmp.path())
+        };
+        let b = CacheKeyInputs {
+            declared_deps: &reversed,
+            ..fixture_inputs(tmp.path())
+        };
+        assert_eq!(
             cache_key(&seeds, &search_paths, &libs, &a).as_bytes(),
             cache_key(&seeds, &search_paths, &libs, &b).as_bytes()
         );
@@ -512,6 +581,7 @@ mod tests {
             framework_install_path: a.framework_install_path,
             framework_version: a.framework_version,
             preprocessor_defines: &defines,
+            declared_deps: &[],
         };
         assert_ne!(
             cache_key(&seeds, &search_paths, &libs, &a).as_bytes(),

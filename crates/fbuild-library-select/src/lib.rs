@@ -111,13 +111,71 @@ pub fn resolve_with_stats_active(
     libraries: &[FrameworkLibrary],
     defines: &HashMap<String, String>,
 ) -> (Selection, ResolveStats) {
+    resolve_with_stats_active_declared(seeds, project_search_paths, libraries, defines, &[])
+}
+
+/// [`resolve_with_stats_active`] plus explicitly declared dependencies.
+///
+/// `declared` holds `lib_deps` entries from `platformio.ini`. Any framework
+/// library whose name matches one is selected **regardless of whether the
+/// header scan reaches it**, then participates in the reconciliation passes so
+/// its own transitive dependencies come along — PlatformIO's semantics for an
+/// explicit declaration.
+///
+/// This is deliberately NOT a deeper LDF. The scan still starts only at
+/// project seeds, so the FastLED/fbuild#1094 invariant — an inactive local
+/// library header must not select a framework library — is untouched. The
+/// only new way in is a user writing the dependency down (FastLED/fbuild#1214).
+pub fn resolve_with_stats_active_declared(
+    seeds: &[PathBuf],
+    project_search_paths: &[PathBuf],
+    libraries: &[FrameworkLibrary],
+    defines: &HashMap<String, String>,
+    declared: &[String],
+) -> (Selection, ResolveStats) {
     let effective_defines = seed_defines(seeds, defines);
-    resolve_with_stats_impl(
+    resolve_with_stats_impl_declared(
         seeds,
         project_search_paths,
         libraries,
         Some(&effective_defines),
+        declared,
     )
+}
+
+/// Normalize a `lib_deps` entry to the bare library name used for matching.
+///
+/// `lib_deps` entries carry owner prefixes and version specs that a framework
+/// library's directory name never has:
+///
+/// ```text
+/// SPI                      -> spi
+/// Wire@^1.0                -> wire
+/// adafruit/Adafruit GFX    -> adafruit gfx
+/// ```
+///
+/// Entries that are URLs or local paths (`https://…`, `file://…`, `./vendor`)
+/// name something that has to be *fetched*, not a framework library that is
+/// already on disk, so they never match and are left to the installer path.
+fn declared_dep_name(entry: &str) -> Option<String> {
+    let entry = entry.trim();
+    if entry.is_empty() || entry.contains("://") || entry.starts_with('.') || entry.starts_with('/')
+    {
+        return None;
+    }
+    // Strip a version spec (`@^1.0`, `@1.2.3`) and then an owner prefix
+    // (`owner/Name`), in that order — a version spec can contain `/`.
+    let without_version = entry.split('@').next().unwrap_or(entry);
+    let bare = without_version
+        .rsplit('/')
+        .next()
+        .unwrap_or(without_version)
+        .trim();
+    if bare.is_empty() {
+        None
+    } else {
+        Some(bare.to_ascii_lowercase())
+    }
 }
 
 fn seed_defines(
@@ -141,6 +199,16 @@ fn resolve_with_stats_impl(
     libraries: &[FrameworkLibrary],
     defines: Option<&HashMap<String, String>>,
 ) -> (Selection, ResolveStats) {
+    resolve_with_stats_impl_declared(seeds, project_search_paths, libraries, defines, &[])
+}
+
+fn resolve_with_stats_impl_declared(
+    seeds: &[PathBuf],
+    project_search_paths: &[PathBuf],
+    libraries: &[FrameworkLibrary],
+    defines: Option<&HashMap<String, String>>,
+    declared: &[String],
+) -> (Selection, ResolveStats) {
     let mut selected: BTreeSet<usize> = BTreeSet::new();
     let mut all_included: BTreeSet<PathBuf> = BTreeSet::new();
     let mut all_unresolved: BTreeSet<String> = BTreeSet::new();
@@ -163,6 +231,36 @@ fn resolve_with_stats_impl(
             if !full_search_paths.contains(d) {
                 full_search_paths.push(d.clone());
             }
+        }
+    }
+
+    // Pass 0: explicit `lib_deps` declarations. Selected before any scanning
+    // so the reconciliation loop treats them exactly like a scan-selected
+    // library and walks their sources for transitive deps
+    // (FastLED/fbuild#1214).
+    if !declared.is_empty() {
+        let wanted: BTreeSet<String> = declared
+            .iter()
+            .filter_map(|d| declared_dep_name(d))
+            .collect();
+        for (idx, lib) in libraries.iter().enumerate() {
+            if wanted.contains(&lib.name.to_ascii_lowercase()) {
+                tracing::info!(library = %lib.name, "ldf: selected by lib_deps declaration");
+                selected.insert(idx);
+            }
+        }
+        // A declared entry that matches no framework library is not an error:
+        // it is most likely a registry package handled by the installer path.
+        // Log it so a typo isn't completely silent.
+        let matched: BTreeSet<String> = selected
+            .iter()
+            .map(|idx| libraries[*idx].name.to_ascii_lowercase())
+            .collect();
+        for name in wanted.difference(&matched) {
+            tracing::debug!(
+                dependency = %name,
+                "ldf: lib_deps entry matched no framework library"
+            );
         }
     }
 
@@ -610,5 +708,171 @@ mod tests {
             sel.required_libraries,
             vec!["SPI".to_string(), "Wire".to_string()]
         );
+    }
+
+    // ---- lib_deps declarations (FastLED/fbuild#1214) ------------------------
+
+    /// Build the exact shape from the issue: a sketch that reaches SPI only
+    /// through a *library* header, which the shallow scan deliberately does
+    /// not follow. Returns (seeds, search paths, libs, SPI's .cpp).
+    fn unreachable_spi_fixture(
+        tmp: &Path,
+    ) -> (Vec<PathBuf>, Vec<PathBuf>, Vec<FrameworkLibrary>, PathBuf) {
+        let project_src = tmp.join("project").join("src");
+        write(&project_src.join("main.cpp"), "// no includes at all\n");
+
+        let mut spi = lib(tmp, "SPI");
+        write(&spi.include_dirs[0].join("SPI.h"), "");
+        let spi_cpp = spi.include_dirs[0].join("SPI.cpp");
+        write(&spi_cpp, "");
+        spi.source_files.push(spi_cpp.clone());
+
+        (
+            vec![project_src.join("main.cpp")],
+            vec![project_src],
+            vec![spi],
+            spi_cpp,
+        )
+    }
+
+    /// Baseline: without a declaration the library is NOT selected. This is
+    /// the shallow-LDF default (#1094) and must stay that way — the fix adds
+    /// an opt-in, it does not deepen the scan.
+    #[test]
+    fn unreached_library_is_not_selected_without_a_declaration() {
+        let tmp = tempdir();
+        let (seeds, paths, libs, _) = unreachable_spi_fixture(tmp.path());
+
+        let sel = resolve_with_stats_active_declared(&seeds, &paths, &libs, &HashMap::new(), &[]).0;
+
+        assert!(sel.required_libraries.is_empty(), "{sel:?}");
+    }
+
+    #[test]
+    fn lib_deps_declaration_selects_an_unreached_library() {
+        let tmp = tempdir();
+        let (seeds, paths, libs, spi_cpp) = unreachable_spi_fixture(tmp.path());
+
+        let sel = resolve_with_stats_active_declared(
+            &seeds,
+            &paths,
+            &libs,
+            &HashMap::new(),
+            &["SPI".to_string()],
+        )
+        .0;
+
+        assert_eq!(sel.required_libraries, vec!["SPI".to_string()]);
+        assert!(
+            sel.source_files.contains(&canon(&spi_cpp)) || sel.source_files.contains(&spi_cpp),
+            "declared library's sources must reach the link line: {sel:?}"
+        );
+    }
+
+    /// PlatformIO matches `lib_deps` entries case-insensitively and tolerates
+    /// owner prefixes and version specs. A declaration that doesn't match
+    /// because of a `@^1.0` suffix would look like the feature is broken.
+    #[test]
+    fn lib_deps_matching_ignores_case_owner_and_version() {
+        for entry in ["spi", "SPI@^1.0", "arduino/SPI", "arduino/SPI@1.2.3"] {
+            let tmp = tempdir();
+            let (seeds, paths, libs, _) = unreachable_spi_fixture(tmp.path());
+
+            let sel = resolve_with_stats_active_declared(
+                &seeds,
+                &paths,
+                &libs,
+                &HashMap::new(),
+                &[entry.to_string()],
+            )
+            .0;
+
+            assert_eq!(
+                sel.required_libraries,
+                vec!["SPI".to_string()],
+                "entry {entry:?} should match the SPI framework library"
+            );
+        }
+    }
+
+    /// URLs and local paths name something to be *fetched*; they must not be
+    /// mangled into a bare name that accidentally matches a framework library.
+    #[test]
+    fn lib_deps_urls_and_paths_never_match_a_framework_library() {
+        for entry in [
+            "https://github.com/example/SPI.git",
+            "file:///opt/SPI",
+            "./vendor/SPI",
+        ] {
+            let tmp = tempdir();
+            let (seeds, paths, libs, _) = unreachable_spi_fixture(tmp.path());
+
+            let sel = resolve_with_stats_active_declared(
+                &seeds,
+                &paths,
+                &libs,
+                &HashMap::new(),
+                &[entry.to_string()],
+            )
+            .0;
+
+            assert!(
+                sel.required_libraries.is_empty(),
+                "entry {entry:?} must be left to the installer path, got {sel:?}"
+            );
+        }
+    }
+
+    /// An explicit declaration gets its own dependency chain resolved, exactly
+    /// as PlatformIO does — the declared library participates in the
+    /// reconciliation passes rather than being bolted on at the end.
+    #[test]
+    fn declared_library_pulls_in_its_own_transitive_dependency() {
+        let tmp = tempdir();
+        let project_src = tmp.path().join("project").join("src");
+        write(&project_src.join("main.cpp"), "// no includes\n");
+
+        let mut wire = lib(tmp.path(), "Wire");
+        write(&wire.include_dirs[0].join("Wire.h"), "");
+        let wire_cpp = wire.include_dirs[0].join("Wire.cpp");
+        write(&wire_cpp, "");
+        wire.source_files.push(wire_cpp);
+
+        // SPI.cpp — not its header — is what reaches Wire, so only the
+        // reconciliation pass can find it.
+        let mut spi = lib(tmp.path(), "SPI");
+        write(&spi.include_dirs[0].join("SPI.h"), "");
+        let spi_cpp = spi.include_dirs[0].join("SPI.cpp");
+        write(&spi_cpp, "#include <Wire.h>\n");
+        spi.source_files.push(spi_cpp);
+
+        let seeds = vec![project_src.join("main.cpp")];
+        let sel = resolve_with_stats_active_declared(
+            &seeds,
+            &[project_src],
+            &[spi, wire],
+            &HashMap::new(),
+            &["SPI".to_string()],
+        )
+        .0;
+
+        assert_eq!(
+            sel.required_libraries,
+            vec!["SPI".to_string(), "Wire".to_string()],
+            "declaring SPI must also bring in the Wire it depends on"
+        );
+    }
+
+    #[test]
+    fn declared_dep_name_normalization() {
+        assert_eq!(declared_dep_name("SPI").as_deref(), Some("spi"));
+        assert_eq!(declared_dep_name("  Wire@^1.0  ").as_deref(), Some("wire"));
+        assert_eq!(
+            declared_dep_name("adafruit/Adafruit GFX").as_deref(),
+            Some("adafruit gfx")
+        );
+        assert_eq!(declared_dep_name(""), None);
+        assert_eq!(declared_dep_name("https://example.com/x.git"), None);
+        assert_eq!(declared_dep_name("./local"), None);
     }
 }

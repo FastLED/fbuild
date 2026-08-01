@@ -17,9 +17,7 @@ use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
 use fbuild_library_select::cache::{CacheKeyInputs, FileKvStore, resolve_cached};
-use fbuild_library_select::{
-    resolve as resolve_library_selection, resolve_active as resolve_active_library_selection,
-};
+use fbuild_library_select::resolve as resolve_library_selection;
 use fbuild_packages::library::FrameworkLibrary;
 use walkdir::{DirEntry, WalkDir};
 
@@ -41,11 +39,62 @@ pub fn resolve_framework_library_sources_active(
     src_dir: &Path,
     defines: &HashMap<String, String>,
 ) -> Vec<PathBuf> {
+    resolve_framework_library_sources_active_declared(libraries, project_dir, src_dir, defines, &[])
+}
+
+/// [`resolve_framework_library_sources_active`] honoring `lib_deps`.
+///
+/// `declared` are the `platformio.ini` `lib_deps` entries for the env being
+/// built. A framework library named there is selected even though the header
+/// scan never reaches it — the escape hatch for a dependency the finder
+/// cannot infer, which previously had no lever at all on the Teensy/STM32
+/// path (FastLED/fbuild#1214).
+///
+/// The scan itself is unchanged: seeds are still project translation units
+/// only, so #1094's "an inactive local library header must not select a
+/// framework library" invariant still holds.
+pub fn resolve_framework_library_sources_active_declared(
+    libraries: &[FrameworkLibrary],
+    project_dir: &Path,
+    src_dir: &Path,
+    defines: &HashMap<String, String>,
+    declared: &[String],
+) -> Vec<PathBuf> {
     let roots = framework_include_scan_roots(project_dir, src_dir);
     let filtered = filter_framework_libs_shadowed_by_project(libraries, &roots);
     let seeds = collect_project_seeds(&roots);
     let search_paths = project_search_paths(&roots);
-    resolve_active_library_selection(&seeds, &search_paths, &filtered, defines).source_files
+    fbuild_library_select::resolve_with_stats_active_declared(
+        &seeds,
+        &search_paths,
+        &filtered,
+        defines,
+        declared,
+    )
+    .0
+    .source_files
+}
+
+/// Warn when a project sets `lib_ldf_mode`, which fbuild does not implement.
+///
+/// The resolver is fixed at a `chain`-style scan seeded from project sources.
+/// Accepting the key silently lets a project believe `deep` is in effect and
+/// spend a debugging session wondering why it changed nothing
+/// (FastLED/fbuild#1214). `chain` and `off` are close enough to the actual
+/// behavior to pass without noise.
+pub fn warn_if_lib_ldf_mode_unsupported(mode: Option<&str>) {
+    let Some(mode) = mode.map(str::trim).filter(|m| !m.is_empty()) else {
+        return;
+    };
+    if mode.eq_ignore_ascii_case("chain") || mode.eq_ignore_ascii_case("off") {
+        return;
+    }
+    tracing::warn!(
+        lib_ldf_mode = %mode,
+        "lib_ldf_mode is not implemented and has no effect; fbuild always \
+         resolves libraries with a chain-style scan seeded from project \
+         sources. Declare the dependency with `lib_deps` instead."
+    );
 }
 
 /// Drop framework libraries whose primary header (`<lib_name>.h`) is
@@ -921,6 +970,7 @@ mod tests {
             framework_install_path: &framework_root,
             framework_version: "0.0.0-test",
             preprocessor_defines: &defines,
+            declared_deps: &[],
         };
 
         let kv = FileKvStore::open(tmp.path().join("kv")).unwrap();

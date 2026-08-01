@@ -25,8 +25,8 @@ use crate::build_fingerprint::{
 use crate::compile_database::TargetArchitecture;
 use crate::compiler::Compiler as _;
 use crate::framework_libs::{
-    library_select_kv_store, resolve_framework_library_sources_active,
-    resolve_framework_library_sources_cached,
+    library_select_kv_store, resolve_framework_library_sources_active_declared,
+    resolve_framework_library_sources_cached, warn_if_lib_ldf_mode_unsupported,
 };
 use crate::pipeline;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
@@ -195,6 +195,21 @@ impl BuildOrchestrator for TeensyOrchestrator {
         // so bumping it invalidates the entire teensy slice without
         // touching SCANNER_VERSION / LDF_MODE_VERSION.
         let framework_info = fbuild_packages::Package::get_info(&framework);
+        // `lib_deps` is an explicit user declaration, not a deeper LDF: it
+        // lets a project name a framework library the shallow scan cannot
+        // infer. Previously only the ESP32 orchestrator consumed it, so on
+        // Teensy a project had no lever at all (FastLED/fbuild#1214).
+        let declared_deps = ctx
+            .config
+            .get_lib_deps(&params.env_name)
+            .unwrap_or_default();
+        warn_if_lib_ldf_mode_unsupported(
+            ctx.config
+                .get_lib_ldf_mode(&params.env_name)
+                .ok()
+                .flatten()
+                .as_deref(),
+        );
         let framework_library_sources = match library_select_kv_store() {
             Some(store) => {
                 let key_inputs = fbuild_library_select::cache::CacheKeyInputs {
@@ -202,6 +217,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
                     framework_install_path: &framework_info.install_path,
                     framework_version: &framework_info.version,
                     preprocessor_defines: &ldf_defines,
+                    declared_deps: &declared_deps,
                 };
                 resolve_framework_library_sources_cached(
                     &framework_libs,
@@ -211,11 +227,12 @@ impl BuildOrchestrator for TeensyOrchestrator {
                     store,
                 )
             }
-            None => resolve_framework_library_sources_active(
+            None => resolve_framework_library_sources_active_declared(
                 &framework_libs,
                 &params.project_dir,
                 &ctx.src_dir,
                 &ldf_defines,
+                &declared_deps,
             ),
         };
         if !framework_library_sources.is_empty() {

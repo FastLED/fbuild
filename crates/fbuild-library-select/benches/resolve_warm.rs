@@ -77,6 +77,7 @@ fn bench_resolve_warm(c: &mut Criterion) {
         framework_install_path: &framework_root,
         framework_version: "1.59.0",
         preprocessor_defines: &defines,
+        declared_deps: &[],
     };
 
     // Prime the cache so the timed loop measures the hit path only.
