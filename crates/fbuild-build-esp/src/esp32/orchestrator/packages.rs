@@ -113,15 +113,16 @@ pub(super) async fn resolve_pioarduino_packages(
     // toolchain + framework. esptool converts firmware.elf → firmware.bin at
     // link time (FastLED/fbuild#954); provisioning it removes the pristine-
     // machine "esptool not found — pip install esptool" failure. Best-effort:
-    // a resolution miss logs a warning and returns `None`, and the linker
-    // falls back to an `esptool` on PATH.
+    // a resolution miss is reported at error level and returns `None`, and the
+    // linker falls back to an `esptool` on PATH. Only a bad
+    // `FBUILD_ESPTOOL_PATH` is fatal (FastLED/fbuild#1220).
     let esptool_fut = resolve_esptool(&platform, project_dir);
 
     // The three futures run to completion; surface BOTH the toolchain and
     // framework errors if both fail so the framework/SDK-libs failure (often
     // the more actionable one) isn't dropped in favor of the toolchain error
     // (CodeRabbit review on #967).
-    let (toolchain_res, framework_res, esptool_py) =
+    let (toolchain_res, framework_res, esptool_res) =
         tokio::join!(toolchain_fut, framework_fut, esptool_fut);
     match (toolchain_res, framework_res) {
         (Err(tc), Err(fw)) => {
@@ -132,6 +133,9 @@ pub(super) async fn resolve_pioarduino_packages(
         (Err(e), _) | (_, Err(e)) => return Err(e),
         (Ok(_), Ok(_)) => {}
     }
+    // Checked after the toolchain/framework errors so a genuine package
+    // failure still wins over a misconfigured override.
+    let esptool_py = esptool_res?;
 
     Ok((toolchain, framework, esptool_py))
 }
@@ -140,36 +144,62 @@ pub(super) async fn resolve_pioarduino_packages(
 /// standalone binary) from `platform.json` and return the path to the
 /// `esptool` executable.
 ///
-/// Best-effort: any failure (missing `platform.json` entry, unsupported host,
-/// network error) is logged at warn level and yields `None`, so the linker's
-/// existing "esptool on PATH" fallback still applies. See FastLED/fbuild#954.
+/// Best-effort: a provisioning failure (missing `platform.json` entry,
+/// unsupported host, network error) is reported at error level — naming the
+/// parsed version and the URL that was tried — and yields `Ok(None)`, so the
+/// linker's existing "esptool on PATH" fallback still applies. See
+/// FastLED/fbuild#954.
+///
+/// The one *fatal* case is a bad `FBUILD_ESPTOOL_PATH`: an explicit override
+/// that pointed nowhere used to be indistinguishable from no override at all.
+/// It now fails the build immediately (FastLED/fbuild#1220).
 async fn resolve_esptool(
     platform: &fbuild_packages::library::Esp32Platform,
     project_dir: &Path,
-) -> Option<NormalizedPath> {
+) -> Result<Option<NormalizedPath>> {
+    // Check the override before touching platform.json: when provisioning is
+    // the thing that's broken, the metadata lookup on the way to it should not
+    // be able to fail the resolution first.
+    if let Some(path) = fbuild_packages::library::esptool_path_override()? {
+        return Ok(Some(path));
+    }
+
     let url = match platform.get_package_url("tool-esptoolpy") {
         Ok(url) => url,
         Err(e) => {
-            tracing::warn!(
-                "could not resolve tool-esptoolpy from platform.json: {} \
-                 (falling back to esptool on PATH)",
-                e
+            tracing::error!(
+                "esptool provisioning failed: could not resolve tool-esptoolpy \
+                 from platform.json: {e}. Falling back to an `esptool` on PATH; \
+                 set {} to override.",
+                fbuild_packages::library::ESPTOOL_PATH_ENV_VAR
             );
-            return None;
+            return Ok(None);
         }
     };
     let esptool = fbuild_packages::library::Esptool::from_metadata_url(project_dir, &url);
     match esptool.ensure_installed().await {
         Ok(path) => {
             tracing::info!("provisioned esptool at {}", path.display());
-            Some(path)
+            Ok(Some(path))
         }
         Err(e) => {
-            tracing::warn!(
-                "could not provision esptool: {} (falling back to esptool on PATH)",
-                e
+            // Name the parsed version and the exact URL. In #1217 the real
+            // fault was a 404 on a `vunknown` URL — invisible at default
+            // verbosity, and three minutes later the build died claiming
+            // esptool simply wasn't installed.
+            let attempted = esptool
+                .download_url()
+                .unwrap_or_else(|_| "<no prebuilt binary for this host>".to_string());
+            tracing::error!(
+                "esptool provisioning failed: {e}\n  \
+                 metadata URL:  {url}\n  \
+                 parsed version: {}\n  \
+                 download URL:   {attempted}\n  \
+                 Falling back to an `esptool` on PATH; set {} to override.",
+                esptool.version(),
+                fbuild_packages::library::ESPTOOL_PATH_ENV_VAR
             );
-            None
+            Ok(None)
         }
     }
 }

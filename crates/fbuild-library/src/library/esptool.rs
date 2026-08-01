@@ -28,12 +28,48 @@
 //! 3. `https://github.com/tasmota/esptool/releases/download/v{version}/esptool-{platform}.zip`
 //!    is downloaded + extracted via the shared [`PackageBase::staged_install`]
 //!    pattern, and the `esptool` executable is located inside it.
+//!
+//! [`ESPTOOL_PATH_ENV_VAR`] (`FBUILD_ESPTOOL_PATH`) short-circuits the whole
+//! flow with a caller-supplied executable, matching the override every other
+//! provisioned tool already has (`FBUILD_WCHISP_PATH`, `FBUILD_PROBE_RS_PATH`,
+//! …). It is the only escape hatch that survives the daemon's `env_clear`,
+//! which strips everything but the `FBUILD_` prefix (FastLED/fbuild#1220).
 
 use std::path::Path;
 
 use fbuild_core::{FbuildError, Result, path::NormalizedPath, subprocess::run_command};
 
 use crate::{CacheSubdir, PackageBase};
+
+/// Environment variable that overrides esptool resolution with an explicit
+/// executable path, bypassing provisioning entirely (FastLED/fbuild#1220).
+pub const ESPTOOL_PATH_ENV_VAR: &str = "FBUILD_ESPTOOL_PATH";
+
+/// Resolve [`ESPTOOL_PATH_ENV_VAR`] into an executable path.
+///
+/// * unset (or set to an empty/whitespace-only value) → `Ok(None)`, provision
+///   normally.
+/// * set and naming a file → `Ok(Some(path))`.
+/// * set and NOT naming a file → `Err`. An explicit override that silently
+///   degraded to provisioning would defeat the purpose of the escape hatch:
+///   the user set it precisely because provisioning is what's broken.
+pub fn esptool_path_override() -> Result<Option<NormalizedPath>> {
+    let raw = match std::env::var_os(ESPTOOL_PATH_ENV_VAR) {
+        Some(v) => v,
+        None => return Ok(None),
+    };
+    let path = Path::new(&raw);
+    if path.as_os_str().is_empty() || raw.to_string_lossy().trim().is_empty() {
+        return Ok(None);
+    }
+    if path.is_file() {
+        return Ok(Some(NormalizedPath::from(path)));
+    }
+    Err(FbuildError::PackageError(format!(
+        "{ESPTOOL_PATH_ENV_VAR} does not name a file: {}",
+        path.display()
+    )))
+}
 
 /// Managed `tool-esptoolpy` package (tasmota standalone binary).
 ///
@@ -57,25 +93,49 @@ impl Esptool {
         }
     }
 
+    /// The esptool version parsed out of the metadata URL, or `"unknown"` when
+    /// neither URL shape carried a dotted version. Reported in provisioning
+    /// diagnostics so a bad parse is visible at the point of failure rather
+    /// than three minutes later at `elf2image` (FastLED/fbuild#1220).
+    pub fn version(&self) -> &str {
+        &self.version
+    }
+
+    /// The tasmota release URL this package would download, or an error when
+    /// the host has no prebuilt binary. Reported alongside [`Self::version`]
+    /// when provisioning fails.
+    pub fn download_url(&self) -> Result<String> {
+        Ok(Self::release_url(&self.version, host_platform_tag()?))
+    }
+
+    fn release_url(version: &str, platform: &str) -> String {
+        format!(
+            "https://github.com/tasmota/esptool/releases/download/v{version}/esptool-{platform}.zip"
+        )
+    }
+
     /// Ensure the standalone esptool binary is installed and return its path.
     /// The caller runs it directly as `<bin> --chip <chip> elf2image …`.
+    ///
+    /// [`ESPTOOL_PATH_ENV_VAR`] short-circuits provisioning when set; a value
+    /// that doesn't name a file is a hard error, not a silent fallback.
     ///
     /// Cache-aware: installs via the shared [`PackageBase::staged_install`]
     /// pattern, so a warm cache costs no network I/O. Returns an error on an
     /// unsupported host or a missing binary, so the caller can fall back to an
     /// `esptool` on PATH.
     pub async fn ensure_installed(&self) -> Result<NormalizedPath> {
-        let platform = tasmota_platform_tag().ok_or_else(|| {
-            FbuildError::PackageError(format!(
-                "no prebuilt esptool binary for {}/{}",
-                std::env::consts::OS,
-                std::env::consts::ARCH
-            ))
-        })?;
-        let url = format!(
-            "https://github.com/tasmota/esptool/releases/download/v{}/esptool-{}.zip",
-            self.version, platform
-        );
+        if let Some(override_path) = esptool_path_override()? {
+            tracing::info!(
+                "using esptool from {}: {}",
+                ESPTOOL_PATH_ENV_VAR,
+                override_path.display()
+            );
+            return Ok(override_path);
+        }
+
+        let platform = host_platform_tag()?;
+        let url = Self::release_url(&self.version, platform);
 
         let base = PackageBase::new(
             "tool-esptoolpy",
@@ -214,6 +274,19 @@ fn tasmota_platform_tag() -> Option<&'static str> {
         ("windows", "x86_64") => Some("windows-amd64"),
         _ => None,
     }
+}
+
+/// [`tasmota_platform_tag`] with the unsupported-host case turned into the
+/// error both `ensure_installed` and `download_url` report.
+fn host_platform_tag() -> Result<&'static str> {
+    tasmota_platform_tag().ok_or_else(|| {
+        FbuildError::PackageError(format!(
+            "no prebuilt esptool binary for {}/{} — set {ESPTOOL_PATH_ENV_VAR} \
+             to an esptool executable",
+            std::env::consts::OS,
+            std::env::consts::ARCH
+        ))
+    })
 }
 
 /// Executable name for the current platform.
@@ -445,5 +518,121 @@ mod tests {
         std::fs::set_permissions(&bin, permissions).unwrap();
 
         verify_esptool_binary(&bin).await.unwrap();
+    }
+
+    /// `FBUILD_ESPTOOL_PATH` is process-global; serialize the tests that touch
+    /// it so a parallel run can't observe another test's value.
+    static ESPTOOL_ENV_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
+
+    /// Run `f` with `FBUILD_ESPTOOL_PATH` set to `value` (or unset for `None`),
+    /// restoring whatever the environment had before.
+    fn with_env_override<T>(value: Option<&Path>, f: impl FnOnce() -> T) -> T {
+        let _guard = ESPTOOL_ENV_LOCK
+            .lock()
+            .unwrap_or_else(|error| error.into_inner());
+        let saved = std::env::var_os(ESPTOOL_PATH_ENV_VAR);
+        match value {
+            Some(v) => std::env::set_var(ESPTOOL_PATH_ENV_VAR, v),
+            None => std::env::remove_var(ESPTOOL_PATH_ENV_VAR),
+        }
+        let out = f();
+        match saved {
+            Some(v) => std::env::set_var(ESPTOOL_PATH_ENV_VAR, v),
+            None => std::env::remove_var(ESPTOOL_PATH_ENV_VAR),
+        }
+        out
+    }
+
+    #[test]
+    fn override_unset_provisions_normally() {
+        assert!(
+            with_env_override(None, esptool_path_override)
+                .unwrap()
+                .is_none()
+        );
+    }
+
+    #[test]
+    fn override_pointing_at_a_file_wins() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let bin = tmp.path().join(esptool_bin_name());
+        std::fs::write(&bin, b"stub").unwrap();
+
+        let got = with_env_override(Some(&bin), esptool_path_override).unwrap();
+
+        assert_eq!(got.map(|p| p.as_path().to_path_buf()), Some(bin));
+    }
+
+    /// The whole point of the escape hatch is that it's used when provisioning
+    /// is broken; silently falling back to provisioning would hide the typo.
+    #[test]
+    fn override_pointing_nowhere_is_an_error_not_a_fallback() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let ghost = tmp.path().join("does-not-exist");
+
+        let err = with_env_override(Some(&ghost), esptool_path_override).unwrap_err();
+
+        let msg = err.to_string();
+        assert!(msg.contains(ESPTOOL_PATH_ENV_VAR), "{msg}");
+        assert!(msg.contains("does-not-exist"), "{msg}");
+    }
+
+    /// A directory is not an executable — treat it like any other non-file.
+    #[test]
+    fn override_pointing_at_a_directory_is_an_error() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        assert!(with_env_override(Some(tmp.path()), esptool_path_override).is_err());
+    }
+
+    #[test]
+    fn empty_override_is_treated_as_unset() {
+        assert!(
+            with_env_override(Some(Path::new("")), esptool_path_override)
+                .unwrap()
+                .is_none()
+        );
+    }
+
+    /// The #1217 fault: an unparseable metadata URL yields version `unknown`,
+    /// which builds a `vunknown` download URL that 404s. Reporting that URL is
+    /// what makes the failure diagnosable at the point it happens.
+    /// A value that is present but blank is a shell artifact
+    /// (`FBUILD_ESPTOOL_PATH="$SOMETHING_UNSET"`), not a deliberate override,
+    /// so it must read as unset rather than as a path that doesn't exist.
+    #[test]
+    fn whitespace_only_override_is_treated_as_unset() {
+        assert!(
+            with_env_override(Some(Path::new(" \t")), esptool_path_override)
+                .unwrap()
+                .is_none()
+        );
+    }
+
+    #[test]
+    fn download_url_reports_the_parsed_version() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let esptool = Esptool::from_metadata_url(tmp.path(), "https://example.com/esptool.zip");
+
+        assert_eq!(esptool.version(), "unknown");
+        if let Ok(url) = esptool.download_url() {
+            assert!(url.contains("/download/vunknown/"), "{url}");
+        }
+    }
+
+    #[test]
+    fn download_url_matches_the_url_ensure_installed_uses() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let esptool = Esptool::from_metadata_url(
+            tmp.path(),
+            "https://github.com/pioarduino/registry/releases/download/0.0.1/esptoolpy-v5.3.0.zip",
+        );
+
+        assert_eq!(esptool.version(), "5.3.0");
+        if let Some(tag) = tasmota_platform_tag() {
+            assert_eq!(
+                esptool.download_url().unwrap(),
+                Esptool::release_url("5.3.0", tag)
+            );
+        }
     }
 }
