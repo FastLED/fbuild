@@ -596,6 +596,18 @@ mod tests {
     /// The #1217 fault: an unparseable metadata URL yields version `unknown`,
     /// which builds a `vunknown` download URL that 404s. Reporting that URL is
     /// what makes the failure diagnosable at the point it happens.
+    /// A value that is present but blank is a shell artifact
+    /// (`FBUILD_ESPTOOL_PATH="$SOMETHING_UNSET"`), not a deliberate override,
+    /// so it must read as unset rather than as a path that doesn't exist.
+    #[test]
+    fn whitespace_only_override_is_treated_as_unset() {
+        assert!(
+            with_env_override(Some(Path::new(" \t")), esptool_path_override)
+                .unwrap()
+                .is_none()
+        );
+    }
+
     #[test]
     fn download_url_reports_the_parsed_version() {
         let tmp = tempfile::TempDir::new().unwrap();

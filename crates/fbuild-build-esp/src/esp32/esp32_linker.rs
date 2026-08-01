@@ -94,8 +94,9 @@ pub(crate) fn esptool_elf2image_argv(
 /// The two cases are genuinely different faults and used to share one
 /// misleading message (FastLED/fbuild#1220):
 ///
-/// * `Some(bin)` — esptool WAS provisioned; the provisioned executable itself
-///   won't launch. Telling the user to `pip install esptool` is wrong.
+/// * `Some(bin)` — a selected executable, provisioned OR supplied via
+///   `FBUILD_ESPTOOL_PATH`, won't launch. Telling the user to
+///   `pip install esptool` is wrong either way.
 /// * `None` — provisioning already failed (and said so, at error level, with
 ///   the URL it tried), and the bare-`esptool` PATH fallback found nothing.
 ///   The actionable fix is the override, not a `pip install` that the daemon's
@@ -103,7 +104,7 @@ pub(crate) fn esptool_elf2image_argv(
 pub(crate) fn esptool_spawn_failure_message(esptool_bin: Option<&Path>, error: &str) -> String {
     match esptool_bin {
         Some(bin) => format!(
-            "provisioned esptool could not be launched — cannot convert \
+            "selected esptool executable could not be launched — cannot convert \
              firmware.elf to firmware.bin.\n  \
              executable: {}\n  \
              Set {} to a working esptool to override.\nError: {error}",
