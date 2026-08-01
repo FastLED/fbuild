@@ -84,11 +84,37 @@ pub fn try_acquire_spawn_lock() -> Option<SpawnLockGuard> {
 }
 
 /// Test seam: try to acquire the spawn-herd lock at an arbitrary path.
+///
+/// Never-fails-hard wrapper around [`try_acquire_spawn_lock_result_at`]: an
+/// I/O error is logged (with its errno) and reported as "no lock available",
+/// preserving the "a broken filesystem must never gate progress" contract.
+/// The log line is what distinguishes a hard error from routine contention —
+/// before it, the two were indistinguishable in both prod and tests
+/// (FastLED/fbuild#1222).
 pub fn try_acquire_spawn_lock_at(path: &Path) -> Option<SpawnLockGuard> {
-    file_lock::try_acquire(path, FileLockMode::Exclusive)
-        .ok()
-        .flatten()
-        .map(|_guard| SpawnLockGuard { _guard })
+    match try_acquire_spawn_lock_result_at(path) {
+        Ok(guard) => guard,
+        Err(error) => {
+            tracing::warn!(
+                path = %path.display(),
+                errno = ?error.raw_os_error(),
+                kind = ?error.kind(),
+                "spawn lock acquire failed with an I/O error; treating as unavailable: {error}"
+            );
+            None
+        }
+    }
+}
+
+/// Error-preserving variant of [`try_acquire_spawn_lock_at`].
+///
+/// `Ok(None)` means another holder has the lock; `Err` means the acquire
+/// itself failed. Production uses the swallowing wrapper above; tests use this
+/// so a hard error fails with the actual errno instead of being mistaken for
+/// contention.
+pub fn try_acquire_spawn_lock_result_at(path: &Path) -> std::io::Result<Option<SpawnLockGuard>> {
+    Ok(file_lock::try_acquire(path, FileLockMode::Exclusive)?
+        .map(|_guard| SpawnLockGuard { _guard }))
 }
 
 /// Path to the root-ownership lock file.
@@ -185,12 +211,39 @@ mod tests {
         let temp = TempDir::new().expect("tempdir");
         let path = temp.path().join("spawn.lock");
 
-        let first = try_acquire_spawn_lock_at(&path).expect("first acquire");
-        let second = try_acquire_spawn_lock_at(&path);
+        // Use the error-preserving variant: the swallowing wrapper turns a
+        // hard I/O error into the same `None` that means "contended", so a
+        // failure here used to report a bare `assertion failed` with no errno
+        // (FastLED/fbuild#1222).
+        let first = try_acquire_spawn_lock_result_at(&path)
+            .expect("first acquire io")
+            .expect("first acquire must succeed");
+        let second = try_acquire_spawn_lock_result_at(&path).expect("second acquire io");
         assert!(second.is_none(), "second acquire while held must be None");
         drop(first);
-        let third = try_acquire_spawn_lock_at(&path);
-        assert!(third.is_some(), "lock must be available after release");
+        let third = try_acquire_spawn_lock_result_at(&path)
+            .expect("third acquire io")
+            .expect("lock must be available after release");
+        drop(third);
+    }
+
+    /// The swallowing wrapper must still behave identically on the happy and
+    /// contended paths — the #1222 change only affects the error path.
+    #[test]
+    fn swallowing_spawn_lock_wrapper_matches_the_result_variant() {
+        let temp = TempDir::new().expect("tempdir");
+        let path = temp.path().join("spawn.lock");
+
+        let first = try_acquire_spawn_lock_at(&path).expect("first acquire");
+        assert!(
+            try_acquire_spawn_lock_at(&path).is_none(),
+            "second acquire while held must be None"
+        );
+        drop(first);
+        assert!(
+            try_acquire_spawn_lock_at(&path).is_some(),
+            "lock must be available after release"
+        );
     }
 
     /// Soldr pattern (`spawn_lock_serializes_concurrent_threads`): fire a
