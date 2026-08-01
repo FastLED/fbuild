@@ -229,6 +229,15 @@ mod tests {
 
     /// The swallowing wrapper must still behave identically on the happy and
     /// contended paths — the #1222 change only affects the error path.
+    ///
+    /// The post-release re-acquire is deliberately checked through the
+    /// error-propagating variant. An earlier draft of this test asserted
+    /// `try_acquire_spawn_lock_at(&path).is_some()` there and promptly
+    /// reproduced the very flake this PR is about — on Linux, not just macOS
+    /// — as a bare `assertion failed` with no errno, because the swallowing
+    /// wrapper cannot distinguish "I/O error" from "contended". Asserting a
+    /// re-acquire through the wrapper is therefore untestable by
+    /// construction, and that is the defect, not the test.
     #[test]
     fn swallowing_spawn_lock_wrapper_matches_the_result_variant() {
         let temp = TempDir::new().expect("tempdir");
@@ -240,10 +249,9 @@ mod tests {
             "second acquire while held must be None"
         );
         drop(first);
-        assert!(
-            try_acquire_spawn_lock_at(&path).is_some(),
-            "lock must be available after release"
-        );
+        try_acquire_spawn_lock_result_at(&path)
+            .expect("re-acquire io")
+            .expect("lock must be available after release");
     }
 
     /// Soldr pattern (`spawn_lock_serializes_concurrent_threads`): fire a
