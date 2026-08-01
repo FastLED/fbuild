@@ -151,6 +151,9 @@ pub struct Esp32Linker {
     /// falls back to an `esptool` on PATH. See FastLED/fbuild#954.
     esptool_bin: Option<PathBuf>,
     verbose: bool,
+    /// Caller CLI's PATH snapshot for bare-name esptool resolution
+    /// (FastLED/fbuild#1219).
+    caller_path: Option<String>,
 }
 
 impl Esp32Linker {
@@ -171,6 +174,7 @@ impl Esp32Linker {
         max_ram: Option<u64>,
         esptool_bin: Option<PathBuf>,
         verbose: bool,
+        caller_path: Option<String>,
     ) -> Self {
         let flash_mode = flash_mode.unwrap_or_else(|| mcu_config.default_flash_mode().to_string());
         Self {
@@ -189,6 +193,7 @@ impl Esp32Linker {
             max_ram,
             esptool_bin,
             verbose,
+            caller_path,
         }
     }
 
@@ -472,7 +477,18 @@ impl Linker for Esp32Linker {
 
         tracing::info!("elf2image: {}", argv.join(" "));
 
-        match run_command(&args, None, None, Some(std::time::Duration::from_secs(60))).await {
+        // Resolve a bare `esptool` fallback against the caller's PATH; the
+        // overlay no-ops when a provisioned absolute path is in use (#1219).
+        let env =
+            fbuild_core::subprocess::bare_name_path_overlay(args[0], self.caller_path.as_deref());
+        match run_command(
+            &args,
+            None,
+            env.as_ref().map(|e| &e[..]),
+            Some(std::time::Duration::from_secs(60)),
+        )
+        .await
+        {
             Ok(result) if result.success() => {
                 let cache = self.current_bin_cache(&elf_out, &flash_size)?;
                 if let Err(e) = save_json(&self.bin_cache_path(output_dir), &cache) {
@@ -562,6 +578,7 @@ mod tests {
             Some(327680),
             None,
             false,
+            None,
         )
     }
 
@@ -592,6 +609,7 @@ mod tests {
             Some(327680),
             None,
             false,
+            None,
         );
         let tmp = tempfile::TempDir::new().unwrap();
         let elf = tmp.path().join("firmware.elf");
@@ -658,6 +676,7 @@ mod tests {
             Some(327680),
             None,
             false,
+            None,
         );
         let flags = linker.linker_flags();
         assert!(flags.iter().any(|f| f.contains("IDF_TARGET_ESP32C6")));
@@ -702,6 +721,7 @@ mod tests {
             Some(327680),
             None,
             false,
+            None,
         );
         let flags = linker.linker_flags();
         assert!(flags.contains(&"-mlongcalls".to_string()));

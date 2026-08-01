@@ -120,6 +120,7 @@ pub async fn run_build(
         output_dir,
         pio_env: daemon_client::capture_pio_env(),
         bloat_analysis,
+        caller_path: daemon_client::capture_caller_path(),
     };
 
     let stream_start = std::time::Instant::now();

@@ -252,6 +252,7 @@ pub async fn deploy(
             },
             watch_set_cache: Some(Arc::clone(&ctx.watch_set_cache) as Arc<_>),
             bloat_analysis: false,
+            caller_path: req.caller_path.clone(),
         };
 
         // fbuild#813: orchestrator.build is now async — call directly,

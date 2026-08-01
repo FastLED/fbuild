@@ -23,6 +23,7 @@ pub(super) async fn prepare_boot_artifacts(
     mcu_config: &Esp32McuConfig,
     flash_freq: &str,
     esptool_bin: Option<&Path>,
+    caller_path: Option<&str>,
     perf: &mut crate::perf_log::PerfTimer,
 ) -> Result<()> {
     let boot_artifacts_started = Instant::now();
@@ -91,10 +92,13 @@ pub(super) async fn prepare_boot_artifacts(
                 &boot_dst_str,
             );
             let args: Vec<&str> = argv.iter().map(|s| s.as_str()).collect();
+            // A bare `esptool` fallback resolves against the caller's PATH;
+            // provisioned absolute paths are unaffected (#1219).
+            let env = fbuild_core::subprocess::bare_name_path_overlay(args[0], caller_path);
             match fbuild_core::subprocess::run_command(
                 &args,
                 None,
-                None,
+                env.as_ref().map(|e| &e[..]),
                 Some(std::time::Duration::from_secs(60)),
             )
             .await
@@ -144,7 +148,7 @@ pub(super) async fn prepare_boot_artifacts(
             // `python` doesn't exist on modern distros (ubuntu 24.04 ships
             // only `python3`); resolve the interpreter the same way the
             // extra_scripts runtime does.
-            let python = crate::script_runtime::find_python()
+            let python = crate::script_runtime::find_python(caller_path)
                 .await
                 .unwrap_or_else(|| vec!["python".to_string()]);
             let mut args: Vec<&str> = python.iter().map(|s| s.as_str()).collect();
@@ -154,10 +158,12 @@ pub(super) async fn prepare_boot_artifacts(
                 parts_csv_str.as_ref(),
                 parts_dst_str.as_ref(),
             ]);
+            // Bare `python` spawn — resolve against the caller's PATH (#1219).
+            let env = fbuild_core::subprocess::bare_name_path_overlay(args[0], caller_path);
             match fbuild_core::subprocess::run_command(
                 &args,
                 None,
-                None,
+                env.as_ref().map(|e| &e[..]),
                 Some(std::time::Duration::from_secs(10)),
             )
             .await

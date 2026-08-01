@@ -30,7 +30,7 @@ extra_scripts = {}
 async fn resolve_runtime_error(project_dir: &Path) -> String {
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
-    resolve_extra_script_overlay(project_dir, "demo", &config)
+    resolve_extra_script_overlay(project_dir, "demo", &config, None)
         .await
         .unwrap_err()
         .to_string()
@@ -126,7 +126,7 @@ fn test_scope_to_link_overlay_maps_libpath_and_libs() {
 
 #[tokio::test]
 async fn test_resolve_extra_script_overlay_supports_dump_shim() {
-    if find_python().await.is_none() {
+    if find_python(None).await.is_none() {
         return;
     }
 
@@ -159,7 +159,7 @@ env.Append(CPPDEFINES=[\"DUMP_SHIM_OK\"])
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
     // Pinned to MockEnv (see resolve_runtime_overlay note).
-    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config)
+    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config, None)
         .await
         .unwrap();
     assert!(
@@ -172,7 +172,7 @@ env.Append(CPPDEFINES=[\"DUMP_SHIM_OK\"])
 
 #[tokio::test]
 async fn test_resolve_extra_script_overlay_supports_common_noop_scons_helpers() {
-    if find_python().await.is_none() {
+    if find_python(None).await.is_none() {
         return;
     }
 
@@ -209,7 +209,7 @@ env.Append(CPPDEFINES=[\"HELPERS_SHIM_OK\"])
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
     // Pinned to MockEnv (see resolve_runtime_overlay note).
-    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config)
+    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config, None)
         .await
         .unwrap();
     assert!(
@@ -222,7 +222,7 @@ env.Append(CPPDEFINES=[\"HELPERS_SHIM_OK\"])
 
 #[tokio::test]
 async fn test_resolve_extra_script_overlay_supports_board_config_shim() {
-    if find_python().await.is_none() {
+    if find_python(None).await.is_none() {
         return;
     }
 
@@ -256,7 +256,7 @@ env.Append(CPPDEFINES=[\"BOARD_CONFIG_SHIM_OK\"])
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
     // Pinned to MockEnv (see resolve_runtime_overlay note).
-    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config)
+    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config, None)
         .await
         .unwrap();
     assert!(
@@ -269,7 +269,7 @@ env.Append(CPPDEFINES=[\"BOARD_CONFIG_SHIM_OK\"])
 
 #[tokio::test]
 async fn test_resolve_extra_script_overlay_supports_pio_platform_shim() {
-    if find_python().await.is_none() {
+    if find_python(None).await.is_none() {
         return;
     }
 
@@ -306,7 +306,7 @@ env.Append(CPPDEFINES=[\"PIO_PLATFORM_SHIM_OK\"])
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
     // Pinned to MockEnv (see resolve_runtime_overlay note).
-    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config)
+    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config, None)
         .await
         .unwrap();
     assert!(
@@ -319,7 +319,7 @@ env.Append(CPPDEFINES=[\"PIO_PLATFORM_SHIM_OK\"])
 
 #[tokio::test]
 async fn test_resolve_extra_script_overlay_rejects_unsupported_script_prefix() {
-    if find_python().await.is_none() {
+    if find_python(None).await.is_none() {
         return;
     }
 
@@ -344,7 +344,7 @@ Import(\"env\")
 /// corrupt the harness's JSON-on-stdout protocol.
 #[tokio::test]
 async fn test_resolve_extra_script_overlay_tolerates_user_stdout_noise() {
-    if find_python().await.is_none() {
+    if find_python(None).await.is_none() {
         return;
     }
 
@@ -363,7 +363,7 @@ print(\"post-append noise\")
     );
     let config =
         fbuild_config::PlatformIOConfig::from_path(&temp.path().join("platformio.ini")).unwrap();
-    let overlay = resolve_extra_script_overlay(temp.path(), "demo", &config)
+    let overlay = resolve_extra_script_overlay(temp.path(), "demo", &config, None)
         .await
         .unwrap();
     assert!(
@@ -416,7 +416,7 @@ framework = arduino
 async fn resolve_runtime_overlay(project_dir: &Path) -> BuildOverlay {
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
-    resolve_extra_script_overlay(project_dir, "demo", &config)
+    resolve_extra_script_overlay(project_dir, "demo", &config, None)
         .await
         .unwrap()
 }
@@ -428,7 +428,7 @@ async fn resolve_runtime_overlay(project_dir: &Path) -> BuildOverlay {
 /// `AddPostAction`. Source: MarlinFirmware/Marlin buildroot scripts.
 #[tokio::test]
 async fn test_shim_simple_marlin_cxxflags_style() {
-    if find_python().await.is_none() {
+    if find_python(None).await.is_none() {
         return;
     }
 
@@ -477,7 +477,7 @@ env.AddPostAction(\"$PROGPATH\", lambda *a, **k: None)
 /// emit `-Dkey=value`, not a malformed array entry.
 #[tokio::test]
 async fn test_shim_simple_inplace_tuple_cppdefine() {
-    if find_python().await.is_none() {
+    if find_python(None).await.is_none() {
         return;
     }
 
@@ -516,7 +516,7 @@ env.Append(CPPDEFINES=[\"PLAIN\"])
 /// `LINKFLAGS`, and registers a no-op post action.
 #[tokio::test]
 async fn test_shim_medium_default_environment_linkflags() {
-    if find_python().await.is_none() {
+    if find_python(None).await.is_none() {
         return;
     }
 
@@ -554,7 +554,7 @@ env.AddPostAction(\"$BUILD_DIR/firmware.bin\", after_build)
 /// script must not hard-fail and the parallel flag mutation must land.
 #[tokio::test]
 async fn test_shim_medium_nonflag_scope_does_not_reject() {
-    if find_python().await.is_none() {
+    if find_python(None).await.is_none() {
         return;
     }
 

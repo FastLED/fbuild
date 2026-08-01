@@ -55,6 +55,10 @@ pub struct BuildRequest {
     /// See FastLED/fbuild#594.
     #[serde(default)]
     pub bloat_analysis: bool,
+    /// Snapshot of the caller's PATH so the daemon resolves bare-name tool
+    /// spawns against it instead of its own stale PATH (FastLED/fbuild#1219).
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub caller_path: Option<String>,
 }
 
 /// `POST /api/install-deps` request. Mirrors
@@ -138,6 +142,10 @@ pub struct DeployRequest {
     /// intentionally non-elevating; #1147 is the first daemon consumer.
     #[serde(default, skip_serializing_if = "is_default_usb_recovery_policy")]
     pub usb_recovery_policy: fbuild_core::usb::UsbRecoveryPolicy,
+    /// Snapshot of the caller's PATH so the daemon resolves bare-name tool
+    /// spawns against it instead of its own stale PATH (FastLED/fbuild#1219).
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub caller_path: Option<String>,
 }
 
 fn is_default_usb_recovery_policy(policy: &fbuild_core::usb::UsbRecoveryPolicy) -> bool {

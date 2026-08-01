@@ -24,6 +24,9 @@ pub struct Ch32vLinker {
     max_ram: Option<u64>,
     memory_defsyms: Vec<String>,
     verbose: bool,
+    /// Caller CLI's PATH snapshot for bare-name objcopy resolution
+    /// (FastLED/fbuild#1219).
+    caller_path: Option<String>,
 }
 
 impl Ch32vLinker {
@@ -39,6 +42,7 @@ impl Ch32vLinker {
         max_flash: Option<u64>,
         max_ram: Option<u64>,
         verbose: bool,
+        caller_path: Option<String>,
     ) -> Self {
         Self {
             gcc_path,
@@ -52,6 +56,7 @@ impl Ch32vLinker {
             max_ram,
             memory_defsyms: Vec::new(),
             verbose,
+            caller_path,
         }
     }
 
@@ -153,6 +158,7 @@ impl Linker for Ch32vLinker {
             &self.mcu_config.objcopy.output_format,
             &self.mcu_config.objcopy.remove_sections,
             "riscv-none-elf-objcopy",
+            self.caller_path.as_deref(),
         )
         .await
     }
@@ -203,6 +209,7 @@ mod tests {
             Some(16384),
             Some(2048),
             false,
+            None,
         );
         assert_eq!(linker.max_flash, Some(16384));
         assert_eq!(linker.max_ram, Some(2048));
@@ -221,6 +228,7 @@ mod tests {
             Some(16384),
             Some(2048),
             false,
+            None,
         );
         assert!(
             linker
@@ -243,6 +251,7 @@ mod tests {
             None,
             None,
             false,
+            None,
         )
         .with_memory_defsyms(vec![
             "-Wl,--defsym=__FLASH_SIZE=32768".into(),
@@ -278,6 +287,7 @@ mod tests {
             None,
             None,
             false,
+            None,
         );
         let args = linker.build_link_args(
             &[],

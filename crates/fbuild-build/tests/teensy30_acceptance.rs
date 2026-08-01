@@ -122,6 +122,7 @@ async fn teensy30_analog_output_meets_205_ac2() {
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
         bloat_analysis: false,
+        caller_path: None,
     };
 
     let result =

@@ -122,6 +122,7 @@ pub(super) async fn execute_tool(
                 output_dir: None,
                 pio_env: crate::daemon_client::capture_pio_env(),
                 bloat_analysis: false,
+                caller_path: crate::daemon_client::capture_caller_path(),
             };
 
             let resp = client
@@ -189,6 +190,7 @@ pub(super) async fn execute_tool(
                 output_dir: None,
                 pio_env: crate::daemon_client::capture_pio_env(),
                 usb_recovery_policy: fbuild_core::usb::UsbRecoveryPolicy::Default,
+                caller_path: crate::daemon_client::capture_caller_path(),
             };
 
             let resp = client

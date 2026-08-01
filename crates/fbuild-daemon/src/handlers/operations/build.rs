@@ -237,6 +237,20 @@ pub async fn build(
         .as_deref()
         .map(|p| resolve_client_path(p, req.caller_cwd.as_deref(), &project_dir));
 
+    // FastLED/fbuild#1219: surface PATH drift between the caller and the
+    // daemon — bare-name tool spawns resolve against the caller's PATH.
+    if let Some(caller_path) = req.caller_path.as_deref() {
+        let daemon_path = std::env::var("PATH").unwrap_or_default();
+        if caller_path != daemon_path {
+            tracing::info!(
+                "caller PATH differs from daemon PATH (caller {} chars, daemon {} chars); \
+                 bare-name tools resolve against the caller's (see #1219)",
+                caller_path.len(),
+                daemon_path.len()
+            );
+        }
+    }
+
     if stream {
         // --- STREAMING PATH ---
         // Build runs in a background task; log lines stream to client as NDJSON.
@@ -281,6 +295,7 @@ pub async fn build(
             extra_build_flags: Vec::new(),
             watch_set_cache: Some(Arc::clone(&ctx.watch_set_cache) as Arc<_>),
             bloat_analysis: req.bloat_analysis,
+            caller_path: req.caller_path.clone(),
         };
 
         let project_dir_desc = req.project_dir.clone();
@@ -726,6 +741,7 @@ pub async fn build(
             extra_build_flags: Vec::new(),
             watch_set_cache: Some(Arc::clone(&ctx.watch_set_cache) as Arc<_>),
             bloat_analysis: req.bloat_analysis,
+            caller_path: req.caller_path,
         };
 
         // fbuild#813 / #815: orchestrator.build is async, call directly.

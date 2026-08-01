@@ -660,9 +660,7 @@ fn compute_env(program: &str, overlay: Option<&[(&str, &str)]>) -> Option<Vec<(S
         }
 
         if let Some(vars) = overlay {
-            for (k, v) in vars {
-                env_map.insert((*k).to_string(), (*v).to_string());
-            }
+            apply_overlay_windows(&mut env_map, vars);
         }
 
         Some(env_map.into_iter().collect())
@@ -681,6 +679,41 @@ fn compute_env(program: &str, overlay: Option<&[(&str, &str)]>) -> Option<Vec<(S
             }
             _ => None,
         }
+    }
+}
+
+/// Merge an env overlay into the Windows env map.
+///
+/// Windows env keys are case-insensitive but the map here is not:
+/// remove any case-variant of the overlay key first, otherwise an
+/// overlay "PATH" coexists with the inherited "Path" and the child's
+/// last-insert-wins env map silently keeps the inherited value
+/// (FastLED/fbuild#1219).
+#[cfg(windows)]
+fn apply_overlay_windows(
+    env_map: &mut std::collections::BTreeMap<String, String>,
+    vars: &[(&str, &str)],
+) {
+    for (k, v) in vars {
+        env_map.retain(|existing, _| !existing.eq_ignore_ascii_case(k));
+        env_map.insert((*k).to_string(), (*v).to_string());
+    }
+}
+
+/// PATH overlay for a bare-name program spawn: when `program` has no
+/// path separator and a caller PATH snapshot is available, resolve the
+/// spawn against the caller's PATH instead of the daemon's. Absolute
+/// or relative-path programs never need it.
+pub fn bare_name_path_overlay<'a>(
+    program: &str,
+    caller_path: Option<&'a str>,
+) -> Option<[(&'static str, &'a str); 1]> {
+    if program.contains('/') || program.contains('\\') {
+        return None;
+    }
+    match caller_path {
+        Some(p) if !p.is_empty() => Some([("PATH", p)]),
+        _ => None,
     }
 }
 
@@ -991,6 +1024,68 @@ mod tests {
         let result = run_command_no_timeout(&args, None, None).await.unwrap();
         assert!(result.success());
         assert!(result.stdout.trim().contains("no-timeout"));
+    }
+
+    // FastLED/fbuild#1219: a caller-supplied PATH overlay must replace
+    // the inherited Windows "Path" entry, not coexist with it — the
+    // Command env map is case-insensitive last-insert-wins, so a
+    // duplicate lets the daemon's stale Path silently win.
+    #[cfg(windows)]
+    #[test]
+    fn path_overlay_replaces_inherited_path_case_insensitively() {
+        let env = compute_env("esptool", Some(&[("PATH", "X-marker")]))
+            .expect("windows always returns a full env vector");
+        let path_entries: Vec<&(String, String)> = env
+            .iter()
+            .filter(|(k, _)| k.eq_ignore_ascii_case("path"))
+            .collect();
+        assert_eq!(
+            path_entries.len(),
+            1,
+            "exactly one PATH-ish key expected, got {path_entries:?}"
+        );
+        assert_eq!(path_entries[0].1, "X-marker");
+    }
+
+    // Deterministic form of the #1219 regression: the test process env
+    // may already spell the key "PATH" (bash/soldr do), which masks the
+    // duplicate-key bug in the end-to-end test above. Seed the map with
+    // the Windows-typical "Path" casing explicitly.
+    #[cfg(windows)]
+    #[test]
+    fn path_overlay_wins_over_differently_cased_inherited_key() {
+        let mut env_map = std::collections::BTreeMap::new();
+        env_map.insert("Path".to_string(), "stale-daemon-path".to_string());
+        apply_overlay_windows(&mut env_map, &[("PATH", "X-marker")]);
+
+        let path_entries: Vec<(&String, &String)> = env_map
+            .iter()
+            .filter(|(k, _)| k.eq_ignore_ascii_case("path"))
+            .collect();
+        assert_eq!(
+            path_entries.len(),
+            1,
+            "exactly one PATH-ish key expected, got {path_entries:?}"
+        );
+        assert_eq!(path_entries[0].1, "X-marker");
+    }
+
+    #[test]
+    fn bare_name_path_overlay_applies_only_to_bare_names() {
+        assert_eq!(
+            bare_name_path_overlay("esptool", Some("C:\\caller\\bin")),
+            Some([("PATH", "C:\\caller\\bin")])
+        );
+        assert_eq!(
+            bare_name_path_overlay("C:\\tools\\esptool.exe", Some("C:\\caller\\bin")),
+            None
+        );
+        assert_eq!(
+            bare_name_path_overlay("tools/esptool", Some("C:\\caller\\bin")),
+            None
+        );
+        assert_eq!(bare_name_path_overlay("esptool", None), None);
+        assert_eq!(bare_name_path_overlay("esptool", Some("")), None);
     }
 
     #[tokio::test]

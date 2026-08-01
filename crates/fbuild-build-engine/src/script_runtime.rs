@@ -41,6 +41,7 @@ pub async fn resolve_extra_script_overlay(
     project_dir: &Path,
     env_name: &str,
     config: &fbuild_config::PlatformIOConfig,
+    caller_path: Option<&str>,
 ) -> fbuild_core::Result<BuildOverlay> {
     let extra_scripts = config.get_extra_scripts(env_name)?;
     if extra_scripts.is_empty() {
@@ -61,7 +62,7 @@ pub async fn resolve_extra_script_overlay(
             .to_string(),
     };
 
-    let python = find_python().await.ok_or_else(|| {
+    let python = find_python(caller_path).await.ok_or_else(|| {
         fbuild_core::FbuildError::BuildFailed(
             "extra_scripts detected but no Python interpreter was found; \
              install Python or use --platformio"
@@ -116,10 +117,13 @@ pub async fn resolve_extra_script_overlay(
     // — config-time evaluation, never legitimately long. Bound to 60s
     // so a buggy or hostile script cannot wedge the daemon's build
     // pipeline indefinitely.
+    // The interpreter was resolved against the caller's PATH when it is a
+    // bare name — spawn it against the same PATH (FastLED/fbuild#1219).
+    let env = fbuild_core::subprocess::bare_name_path_overlay(argv[0], caller_path);
     let output = fbuild_core::subprocess::run_command(
         &argv,
         Some(project_dir),
-        None,
+        env.as_ref().map(|e| &e[..]),
         Some(std::time::Duration::from_secs(60)),
     )
     .await
@@ -298,7 +302,7 @@ fn libs_to_flags(
     Ok(flags)
 }
 
-pub async fn find_python() -> Option<Vec<String>> {
+pub async fn find_python(caller_path: Option<&str>) -> Option<Vec<String>> {
     let candidates: &[&[&str]] = if cfg!(windows) {
         &[&["python"], &["py", "-3"]]
     } else {
@@ -308,12 +312,15 @@ pub async fn find_python() -> Option<Vec<String>> {
     for candidate in candidates {
         let mut argv: Vec<&str> = candidate.to_vec();
         argv.push("--version");
+        // Probe against the caller's PATH so the daemon finds the same
+        // interpreter the CLI's environment would (FastLED/fbuild#1219).
+        let env = fbuild_core::subprocess::bare_name_path_overlay(candidate[0], caller_path);
         // FastLED/fbuild#809: `python --version` on the startup path —
         // bound tightly so a hung interpreter cannot wedge build init.
         if let Ok(output) = fbuild_core::subprocess::run_command(
             &argv,
             None,
-            None,
+            env.as_ref().map(|e| &e[..]),
             Some(std::time::Duration::from_secs(5)),
         )
         .await

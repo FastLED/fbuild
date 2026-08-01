@@ -157,6 +157,8 @@ impl Linker for RenesasLinker {
             &self.mcu_config.objcopy.output_format,
             &self.mcu_config.objcopy.remove_sections,
             "arm-none-eabi-objcopy",
+            // Absolute toolchain path; no caller-PATH overlay needed (#1219).
+            None,
         )
         .await
     }

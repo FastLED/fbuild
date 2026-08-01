@@ -54,6 +54,7 @@ fn make_params(project_dir: &Path) -> BuildParams {
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
         bloat_analysis: false,
+        caller_path: None,
     }
 }
 

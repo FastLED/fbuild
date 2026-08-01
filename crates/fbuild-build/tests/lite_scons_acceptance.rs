@@ -95,7 +95,7 @@ fn write_project(extra_scripts: &str, scripts: &[(&str, &str)]) -> tempfile::Tem
 async fn resolve_lite(project_dir: &Path) -> BuildOverlay {
     let config = fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini"))
         .expect("parse platformio.ini");
-    resolve_extra_script_overlay(project_dir, "demo", &config)
+    resolve_extra_script_overlay(project_dir, "demo", &config, None)
         .await
         .expect("lite-SCons harness must succeed for the 5 spike patterns")
 }

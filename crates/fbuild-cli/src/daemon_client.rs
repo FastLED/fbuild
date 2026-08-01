@@ -1014,6 +1014,12 @@ where
     })
 }
 
+/// Snapshot the calling CLI's PATH for per-request forwarding so the daemon
+/// can resolve bare-name tool spawns against it (FastLED/fbuild#1219).
+pub(crate) fn capture_caller_path() -> Option<String> {
+    launcher_path(std::env::vars_os()).map(|p| p.to_string_lossy().into_owned())
+}
+
 /// Spawn a single daemon process instance.
 async fn spawn_daemon_process() -> fbuild_core::Result<()> {
     // FastLED/fbuild#830: prefer a `fbuild-daemon` binary sitting next

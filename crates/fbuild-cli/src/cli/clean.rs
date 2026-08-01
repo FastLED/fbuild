@@ -59,6 +59,7 @@ pub async fn run_clean(
         output_dir: None,
         pio_env: daemon_client::capture_pio_env(),
         bloat_analysis: false,
+        caller_path: daemon_client::capture_caller_path(),
     };
 
     let response = client.build_streaming(&req).await?;

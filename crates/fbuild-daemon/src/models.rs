@@ -81,6 +81,10 @@ pub struct BuildRequest {
     /// See FastLED/fbuild#594.
     #[serde(default)]
     pub bloat_analysis: bool,
+    /// Snapshot of the caller's PATH so bare-name tool spawns resolve
+    /// against it instead of the daemon's stale PATH (FastLED/fbuild#1219).
+    #[serde(default)]
+    pub caller_path: Option<String>,
 }
 
 /// POST /api/deploy
@@ -149,6 +153,10 @@ pub struct DeployRequest {
     /// daemon remains unprivileged and merely carries this typed policy.
     #[serde(default)]
     pub usb_recovery_policy: fbuild_core::usb::UsbRecoveryPolicy,
+    /// Snapshot of the caller's PATH so bare-name tool spawns resolve
+    /// against it instead of the daemon's stale PATH (FastLED/fbuild#1219).
+    #[serde(default)]
+    pub caller_path: Option<String>,
 }
 
 fn default_qemu_timeout() -> u32 {
@@ -666,6 +674,39 @@ mod tests {
         let json = r#"{"project_dir": "/tmp/p", "src_dir": "examples/AutoResearch"}"#;
         let req: BuildRequest = serde_json::from_str(json).unwrap();
         assert_eq!(req.src_dir.unwrap(), "examples/AutoResearch");
+    }
+
+    // --- caller_path forwarding (FastLED/fbuild#1219) ---
+
+    #[test]
+    fn build_request_caller_path_defaults_to_none() {
+        let json = r#"{"project_dir": "/tmp/p"}"#;
+        let req: BuildRequest = serde_json::from_str(json).unwrap();
+        assert!(req.caller_path.is_none());
+    }
+
+    #[test]
+    fn build_request_caller_path_round_trips() {
+        let json = r#"{"project_dir": "/tmp/p", "caller_path": "C:\\venv\\Scripts;C:\\bin"}"#;
+        let req: BuildRequest = serde_json::from_str(json).unwrap();
+        assert_eq!(
+            req.caller_path.as_deref(),
+            Some("C:\\venv\\Scripts;C:\\bin")
+        );
+    }
+
+    #[test]
+    fn deploy_request_caller_path_defaults_to_none() {
+        let json = r#"{"project_dir": "/tmp/p"}"#;
+        let req: DeployRequest = serde_json::from_str(json).unwrap();
+        assert!(req.caller_path.is_none());
+    }
+
+    #[test]
+    fn deploy_request_caller_path_round_trips() {
+        let json = r#"{"project_dir": "/tmp/p", "caller_path": "/opt/venv/bin:/usr/bin"}"#;
+        let req: DeployRequest = serde_json::from_str(json).unwrap();
+        assert_eq!(req.caller_path.as_deref(), Some("/opt/venv/bin:/usr/bin"));
     }
 
     #[test]

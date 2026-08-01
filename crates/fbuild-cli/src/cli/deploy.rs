@@ -222,6 +222,7 @@ pub async fn run_deploy(
         output_dir,
         pio_env: daemon_client::capture_pio_env(),
         usb_recovery_policy,
+        caller_path: daemon_client::capture_caller_path(),
     };
 
     let resp = client.deploy(&req).await?;

@@ -37,6 +37,9 @@ pub struct Esp8266Linker {
     max_flash: Option<u64>,
     max_ram: Option<u64>,
     verbose: bool,
+    /// Caller CLI's PATH snapshot for bare-name esptool resolution
+    /// (FastLED/fbuild#1219).
+    caller_path: Option<String>,
 }
 
 impl Esp8266Linker {
@@ -57,6 +60,7 @@ impl Esp8266Linker {
         max_flash: Option<u64>,
         max_ram: Option<u64>,
         verbose: bool,
+        caller_path: Option<String>,
     ) -> Self {
         let flash_mode =
             flash_mode.unwrap_or_else(|| mcu_config.esptool.default_flash_mode.clone());
@@ -76,6 +80,7 @@ impl Esp8266Linker {
             max_flash,
             max_ram,
             verbose,
+            caller_path,
         }
     }
 }
@@ -275,7 +280,17 @@ impl Linker for Esp8266Linker {
             &bin_str,
         ];
 
-        match run_command(&args, None, None, Some(std::time::Duration::from_secs(30))).await {
+        // Bare `esptool` spawn — resolve it against the caller's PATH (#1219).
+        let env =
+            fbuild_core::subprocess::bare_name_path_overlay(args[0], self.caller_path.as_deref());
+        match run_command(
+            &args,
+            None,
+            env.as_ref().map(|e| &e[..]),
+            Some(std::time::Duration::from_secs(30)),
+        )
+        .await
+        {
             Ok(result) if result.success() => {
                 // Verify the output file was actually created with content.
                 // ESP8266 esptool may create segmented files (firmware.bin-0x00000.bin)
@@ -306,6 +321,7 @@ impl Linker for Esp8266Linker {
             &self.mcu_config.objcopy.output_format,
             &self.mcu_config.objcopy.remove_sections,
             "xtensa-lx106-elf-objcopy",
+            self.caller_path.as_deref(),
         )
         .await
     }
@@ -361,6 +377,7 @@ mod tests {
             Some(4_194_304),
             Some(81_920),
             false,
+            None,
         );
         assert!(
             linker

@@ -104,6 +104,7 @@ async fn stm32f103c8_blink_with_spi_auto_discovers_library_205_ac4() {
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
         bloat_analysis: false,
+        caller_path: None,
     };
 
     let orchestrator = fbuild_build::stm32::orchestrator::Stm32Orchestrator;

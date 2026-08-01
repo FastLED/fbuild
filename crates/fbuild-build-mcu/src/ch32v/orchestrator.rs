@@ -210,6 +210,7 @@ impl BuildOrchestrator for Ch32vOrchestrator {
             ctx.board.max_flash,
             ctx.board.max_ram,
             params.verbose,
+            params.caller_path.clone(),
         )
         .with_memory_defsyms(memory_defsyms);
 

@@ -466,6 +466,7 @@ impl LinkerBase {
         output_format: &str,
         remove_sections: &[String],
         tool_label: &str,
+        caller_path: Option<&str>,
     ) -> Result<PathBuf> {
         use fbuild_core::subprocess::run_command;
 
@@ -490,11 +491,14 @@ impl LinkerBase {
         args.push(hex_path.to_string_lossy().to_string());
 
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
+        // A bare objcopy name resolves against the caller's PATH; absolute
+        // toolchain paths are unaffected (FastLED/fbuild#1219).
+        let env = fbuild_core::subprocess::bare_name_path_overlay(args_ref[0], caller_path);
         // FastLED/fbuild#809: objcopy ELF→HEX/BIN bounded at 1 min.
         let result = run_command(
             &args_ref,
             None,
-            None,
+            env.as_ref().map(|e| &e[..]),
             Some(std::time::Duration::from_secs(60)),
         )
         .await?;

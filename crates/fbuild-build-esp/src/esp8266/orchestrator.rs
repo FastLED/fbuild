@@ -197,6 +197,7 @@ impl BuildOrchestrator for Esp8266Orchestrator {
             ctx.board.max_flash,
             ctx.board.max_ram,
             params.verbose,
+            params.caller_path.clone(),
         );
 
         // 8. Build LibraryBuildEnv for project-as-library compilation

@@ -814,6 +814,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             ctx.board.max_ram,
             esptool_bin.clone().map(|path| path.into_path_buf()),
             params.verbose,
+            params.caller_path.clone(),
         );
 
         let link_result = {
@@ -842,6 +843,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &mcu_config,
             &flash_freq,
             esptool_bin.as_ref().map(|path| path.as_path()),
+            params.caller_path.as_deref(),
             &mut perf,
         )
         .await?;
