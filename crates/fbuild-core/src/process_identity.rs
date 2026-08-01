@@ -25,6 +25,12 @@ use crate::path::NormalizedPath;
 /// `STILL_ACTIVE`.
 #[cfg(unix)]
 pub fn pid_is_alive(pid: u32) -> bool {
+    // kill() with pid 0 targets the caller's own process GROUP, not a
+    // process, so probing 0 would always report "alive". No legitimate
+    // owner record ever holds pid 0 — treat it as dead.
+    if pid == 0 {
+        return false;
+    }
     // SAFETY: kill(pid, 0) is a well-defined liveness probe — no signal is
     // delivered, the syscall just returns 0 if the pid exists and the
     // caller has permission to signal it.
@@ -232,6 +238,14 @@ mod tests {
         // processes" wildcard) on Unix and would spuriously look alive.
         let dead = i32::MAX as u32;
         assert!(!pid_is_alive(dead));
+    }
+
+    #[test]
+    fn pid_zero_is_never_alive() {
+        // Unix kill(0, 0) probes the caller's own process group and
+        // succeeds, which read as "alive" before the explicit guard —
+        // wedging any lock whose owner record held pid 0 (#1213).
+        assert!(!pid_is_alive(0));
     }
 
     #[test]
