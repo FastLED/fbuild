@@ -252,8 +252,21 @@ async fn verify_esptool_binary(bin: &Path) -> Result<()> {
     if output.success() {
         Ok(())
     } else {
+        // Include the captured output. A bare "exited with status 2" is
+        // undiagnosable, and that is exactly what a real user hit on Windows
+        // with a freshly-installed 5.3.0 (FastLED/fbuild#1213 part 3).
+        let mut detail = String::new();
+        for (label, stream) in [("stderr", &output.stderr), ("stdout", &output.stdout)] {
+            let text = stream.trim();
+            if !text.is_empty() {
+                detail.push_str(&format!("\n  {label}: {text}"));
+            }
+        }
+        if detail.is_empty() {
+            detail.push_str("\n  (no output on stdout or stderr)");
+        }
         Err(FbuildError::PackageError(format!(
-            "cached esptool executable {} exited with status {}",
+            "cached esptool executable {} exited with status {}{detail}",
             bin.display(),
             output.exit_code
         )))

@@ -145,6 +145,14 @@ async fn acquire_install_lock_at(
     }
 }
 
+/// Grace period for a lock directory that has no readable `owner.txt`.
+///
+/// `create_dir` and [`write_lock_owner`] are two steps, so a waiter can
+/// legitimately observe the directory in between. Anything older than this
+/// without an owner record was abandoned mid-creation (the writer died
+/// between the two calls) and would otherwise wedge until the 2 h ceiling.
+const MISSING_OWNER_GRACE: Duration = Duration::from_secs(30);
+
 fn write_lock_owner(lock_dir: &Path, package_name: &str, package_version: &str) -> Result<()> {
     let mut file = OpenOptions::new()
         .create(true)
@@ -153,8 +161,9 @@ fn write_lock_owner(lock_dir: &Path, package_name: &str, package_version: &str) 
         .open(lock_dir.join("owner.txt"))?;
     writeln!(
         file,
-        "pid={}\npackage={}\nversion={}\nstarted_unix_nanos={}",
+        "pid={}\nexe_stem={}\npackage={}\nversion={}\nstarted_unix_nanos={}",
         std::process::id(),
+        current_exe_stem().unwrap_or_default(),
         package_name,
         package_version,
         unique_suffix()
@@ -162,17 +171,132 @@ fn write_lock_owner(lock_dir: &Path, package_name: &str, package_version: &str) 
     Ok(())
 }
 
+/// File stem of the running executable, used to make the liveness probe
+/// PID-recycling-safe.
+fn current_exe_stem() -> Option<String> {
+    std::env::current_exe()
+        .ok()?
+        .file_stem()
+        .and_then(|s| s.to_str())
+        .map(str::to_string)
+}
+
+/// Owner record parsed out of a lock directory's `owner.txt`.
+struct LockOwner {
+    pid: Option<u32>,
+    exe_stem: Option<String>,
+}
+
+fn read_lock_owner(lock_dir: &Path) -> Option<LockOwner> {
+    let raw = std::fs::read_to_string(lock_dir.join("owner.txt")).ok()?;
+    let mut pid = None;
+    let mut exe_stem = None;
+    for line in raw.lines() {
+        if let Some(v) = line.strip_prefix("pid=") {
+            pid = v.trim().parse::<u32>().ok();
+        } else if let Some(v) = line.strip_prefix("exe_stem=") {
+            let v = v.trim();
+            if !v.is_empty() {
+                exe_stem = Some(v.to_string());
+            }
+        }
+    }
+    Some(LockOwner { pid, exe_stem })
+}
+
+/// Is the process that created this lock gone?
+///
+/// Returns `false` unless we have positive evidence of death — an
+/// uninspectable owner is treated as alive so a live install is never torn
+/// out from under itself.
+///
+/// PID recycling is handled by also comparing the recorded executable stem:
+/// if the PID is alive but is now some unrelated program, the original owner
+/// is gone. When the record predates the `exe_stem` field, liveness alone is
+/// used (the old behavior, minus the deadlock).
+fn owner_is_dead(owner: &LockOwner) -> bool {
+    let Some(pid) = owner.pid else {
+        return false;
+    };
+    if !fbuild_core::process_identity::pid_is_alive(pid) {
+        return true;
+    }
+    match &owner.exe_stem {
+        // `pid_exe_stem_matches` fails closed on an uninspectable image, so
+        // only treat a *successful* probe of a different program as death.
+        Some(stem) => match fbuild_core::process_identity::pid_executable_path(pid) {
+            Some(path) => match path.file_stem().and_then(|s| s.to_str()) {
+                Some(actual) => !stem_eq(actual, stem),
+                None => false,
+            },
+            None => false,
+        },
+        None => false,
+    }
+}
+
+fn stem_eq(left: &str, right: &str) -> bool {
+    if cfg!(windows) {
+        left.eq_ignore_ascii_case(right)
+    } else {
+        left == right
+    }
+}
+
+/// Should a waiter tear this lock down?
+///
+/// Three independent reasons, in order of confidence:
+/// 1. The directory vanished — nothing to wait for.
+/// 2. The owning process is gone. This is the FastLED/fbuild#1213 deadlock:
+///    the PID was already being written to `owner.txt` and simply never
+///    read, so a crashed install wedged every later build until the 2 h
+///    ceiling expired.
+/// 3. The age ceiling — the pre-existing backstop, kept for the cases PID
+///    liveness cannot answer (owner record missing on a foreign filesystem,
+///    a genuinely hung but still-running peer).
 fn lock_is_stale(lock_dir: &Path, stale_after: Duration) -> bool {
+    lock_is_stale_with_grace(lock_dir, stale_after, MISSING_OWNER_GRACE)
+}
+
+/// [`lock_is_stale`] with the missing-owner grace injected, so tests can
+/// exercise the abandoned-mid-creation branch without sleeping 30 s.
+fn lock_is_stale_with_grace(
+    lock_dir: &Path,
+    stale_after: Duration,
+    missing_owner_grace: Duration,
+) -> bool {
     let Ok(metadata) = std::fs::metadata(lock_dir) else {
         return true;
     };
-    let Ok(modified) = metadata.modified() else {
-        return false;
-    };
-    modified
-        .elapsed()
-        .map(|age| age > stale_after)
-        .unwrap_or(false)
+    let age = metadata.modified().ok().and_then(|m| m.elapsed().ok());
+
+    match read_lock_owner(lock_dir) {
+        Some(owner) => {
+            if owner_is_dead(&owner) {
+                tracing::warn!(
+                    pid = ?owner.pid,
+                    lock = %lock_dir.display(),
+                    "install lock owner is no longer running; reclaiming"
+                );
+                return true;
+            }
+        }
+        None => {
+            // No owner record. Only meaningful once the create/write window
+            // has comfortably passed.
+            if age.map(|a| a >= missing_owner_grace).unwrap_or(false) {
+                tracing::warn!(
+                    lock = %lock_dir.display(),
+                    "install lock has no owner record after {:?}; reclaiming",
+                    missing_owner_grace
+                );
+                return true;
+            }
+            return false;
+        }
+    }
+
+    age.map(|a| a > stale_after).unwrap_or(false)
 }
 
 fn unique_suffix() -> u128 {
@@ -209,6 +333,117 @@ mod tests {
         fn drop(&mut self) {
             fbuild_core::install_status::clear_install_status_subscriber();
         }
+    }
+
+    /// Write a lock directory owned by `pid` with an optional exe stem,
+    /// mimicking what a crashed peer leaves behind.
+    fn plant_lock(lock_dir: &Path, pid: u32, exe_stem: Option<&str>) {
+        std::fs::create_dir_all(lock_dir).unwrap();
+        let mut body = format!("pid={pid}\n");
+        if let Some(stem) = exe_stem {
+            body.push_str(&format!("exe_stem={stem}\n"));
+        }
+        body.push_str("package=toolchain\nversion=1.0\n");
+        std::fs::write(lock_dir.join("owner.txt"), body).unwrap();
+    }
+
+    /// A PID that is (almost certainly) not running. PID 0 is never a normal
+    /// user process on either platform, and `pid_is_alive` reports it dead.
+    const DEAD_PID: u32 = 0;
+
+    /// The FastLED/fbuild#1213 deadlock: a crashed owner used to wedge every
+    /// later build for the full 2 h ceiling, even though its PID was already
+    /// recorded in `owner.txt` — it was simply never read.
+    #[test]
+    fn lock_owned_by_a_dead_pid_is_stale_immediately() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let lock_dir = tmp.path().join(".1.0.install.lock");
+        plant_lock(&lock_dir, DEAD_PID, None);
+
+        assert!(lock_is_stale(&lock_dir, Duration::from_secs(2 * 60 * 60)));
+    }
+
+    /// The complement, and the one that matters for safety: a live owner's
+    /// lock must never be reclaimed, however long the ceiling is.
+    #[test]
+    fn lock_owned_by_a_live_pid_is_not_stale() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let lock_dir = tmp.path().join(".1.0.install.lock");
+        plant_lock(&lock_dir, std::process::id(), current_exe_stem().as_deref());
+
+        assert!(!lock_is_stale(&lock_dir, Duration::from_secs(2 * 60 * 60)));
+    }
+
+    /// PID recycling: the recorded PID is alive but is now a different
+    /// program, so the original owner is gone.
+    #[test]
+    fn lock_whose_pid_was_recycled_by_another_program_is_stale() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let lock_dir = tmp.path().join(".1.0.install.lock");
+        plant_lock(
+            &lock_dir,
+            std::process::id(),
+            Some("definitely-not-this-test-binary"),
+        );
+
+        assert!(lock_is_stale(&lock_dir, Duration::from_secs(2 * 60 * 60)));
+    }
+
+    /// A record written before the `exe_stem` field existed must still work:
+    /// liveness alone decides, which is the pre-#1213 data plus the fix.
+    #[test]
+    fn legacy_owner_record_without_exe_stem_still_uses_liveness() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let live = tmp.path().join(".live.install.lock");
+        let dead = tmp.path().join(".dead.install.lock");
+        plant_lock(&live, std::process::id(), None);
+        plant_lock(&dead, DEAD_PID, None);
+
+        assert!(!lock_is_stale(&live, Duration::from_secs(2 * 60 * 60)));
+        assert!(lock_is_stale(&dead, Duration::from_secs(2 * 60 * 60)));
+    }
+
+    /// `create_dir` then `write_lock_owner` is two steps; a waiter that
+    /// catches the gap must NOT tear down a lock that is being created.
+    #[test]
+    fn freshly_created_lock_without_owner_record_is_not_stale() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let lock_dir = tmp.path().join(".1.0.install.lock");
+        std::fs::create_dir_all(&lock_dir).unwrap();
+
+        assert!(!lock_is_stale(&lock_dir, Duration::from_secs(2 * 60 * 60)));
+    }
+
+    /// ...but a lock stuck without an owner record past the grace period was
+    /// abandoned mid-creation and must be reclaimed rather than waiting out
+    /// the 2 h ceiling.
+    #[test]
+    fn owner_record_missing_past_the_grace_period_is_stale() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let lock_dir = tmp.path().join(".1.0.install.lock");
+        std::fs::create_dir_all(&lock_dir).unwrap();
+
+        // `lock_is_stale` compares against MISSING_OWNER_GRACE using the
+        // directory mtime; a zero grace makes any existing dir qualify
+        // without sleeping in the test.
+        assert!(super::lock_is_stale_with_grace(
+            &lock_dir,
+            Duration::from_secs(2 * 60 * 60),
+            Duration::ZERO
+        ));
+    }
+
+    #[test]
+    fn written_owner_record_round_trips() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let lock_dir = tmp.path().join(".1.0.install.lock");
+        std::fs::create_dir_all(&lock_dir).unwrap();
+        write_lock_owner(&lock_dir, "toolchain", "1.0").unwrap();
+
+        let owner = read_lock_owner(&lock_dir).expect("owner record");
+        assert_eq!(owner.pid, Some(std::process::id()));
+        assert_eq!(owner.exe_stem, current_exe_stem());
+        assert!(!owner_is_dead(&owner), "this process is alive");
     }
 
     #[test]
