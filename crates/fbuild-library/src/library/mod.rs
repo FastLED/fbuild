@@ -42,7 +42,7 @@ pub use cmsis_framework::CmsisFramework;
 pub use esp32_framework::Esp32Framework;
 pub use esp32_platform::Esp32Platform;
 pub use esp8266_framework::Esp8266Framework;
-pub use esptool::Esptool;
+pub use esptool::{ESPTOOL_PATH_ENV_VAR, Esptool, esptool_path_override};
 pub use framework_library::FrameworkLibrary;
 pub use library_manager::LibraryResult;
 pub use library_spec::LibrarySpec;

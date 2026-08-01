@@ -89,6 +89,40 @@ pub(crate) fn esptool_elf2image_argv(
     argv
 }
 
+/// Build the error message for an esptool `elf2image` spawn failure.
+///
+/// The two cases are genuinely different faults and used to share one
+/// misleading message (FastLED/fbuild#1220):
+///
+/// * `Some(bin)` — esptool WAS provisioned; the provisioned executable itself
+///   won't launch. Telling the user to `pip install esptool` is wrong.
+/// * `None` — provisioning already failed (and said so, at error level, with
+///   the URL it tried), and the bare-`esptool` PATH fallback found nothing.
+///   The actionable fix is the override, not a `pip install` that the daemon's
+///   `env_clear`ed PATH may not even see.
+pub(crate) fn esptool_spawn_failure_message(esptool_bin: Option<&Path>, error: &str) -> String {
+    match esptool_bin {
+        Some(bin) => format!(
+            "provisioned esptool could not be launched — cannot convert \
+             firmware.elf to firmware.bin.\n  \
+             executable: {}\n  \
+             Set {} to a working esptool to override.\nError: {error}",
+            bin.display(),
+            fbuild_packages::library::ESPTOOL_PATH_ENV_VAR,
+        ),
+        None => format!(
+            "esptool provisioning failed earlier in this build and the fallback \
+             `esptool` on PATH could not be launched either — cannot convert \
+             firmware.elf to firmware.bin.\n  \
+             See the earlier `esptool provisioning failed` log line for the URL \
+             that was tried and the version that was parsed.\n  \
+             Set {} to an esptool executable to bypass provisioning (this is the \
+             only override that survives the daemon's environment scrub).\nError: {error}",
+            fbuild_packages::library::ESPTOOL_PATH_ENV_VAR,
+        ),
+    }
+}
+
 /// ESP32-specific linker using RISC-V or Xtensa GCC as the link driver.
 pub struct Esp32Linker {
     gcc_path: PathBuf,
@@ -450,12 +484,9 @@ impl Linker for Esp32Linker {
                 "esptool elf2image failed (exit={}):\n{}{}",
                 result.exit_code, result.stderr, result.stdout
             ))),
-            Err(e) => Err(fbuild_core::FbuildError::BuildFailed(format!(
-                "esptool not found — cannot convert firmware.elf to firmware.bin.\n\
-                 fbuild normally provisions esptool automatically; if provisioning \
-                 failed, install with: pip install esptool\nError: {}",
-                e
-            ))),
+            Err(e) => Err(fbuild_core::FbuildError::BuildFailed(
+                esptool_spawn_failure_message(self.esptool_bin.as_deref(), &e.to_string()),
+            )),
         }
     }
 
@@ -689,6 +720,39 @@ mod tests {
                 .firmware
                 .starts_with("0x")
         );
+    }
+
+    /// FastLED/fbuild#1220: during the #1217 outage esptool 5.1.0 WAS
+    /// installed — it just wasn't on the daemon's PATH — and the build told
+    /// the user to `pip install esptool`. The message must never say that
+    /// again, in either branch.
+    #[test]
+    fn esptool_spawn_failure_never_recommends_pip_install() {
+        let provisioned =
+            esptool_spawn_failure_message(Some(Path::new("/cache/esptool")), "ENOENT");
+        let fallback = esptool_spawn_failure_message(None, "ENOENT");
+
+        for msg in [&provisioned, &fallback] {
+            assert!(!msg.contains("pip install"), "{msg}");
+            assert!(msg.contains("FBUILD_ESPTOOL_PATH"), "{msg}");
+            assert!(msg.contains("ENOENT"), "{msg}");
+        }
+    }
+
+    /// The provisioned branch is a *different fault* from the PATH-fallback
+    /// branch and must not claim provisioning failed.
+    #[test]
+    fn esptool_spawn_failure_distinguishes_provisioned_from_fallback() {
+        let provisioned = esptool_spawn_failure_message(Some(Path::new("/cache/esptool")), "boom");
+        assert!(provisioned.contains("/cache/esptool"), "{provisioned}");
+        assert!(
+            !provisioned.contains("provisioning failed"),
+            "{provisioned}"
+        );
+
+        let fallback = esptool_spawn_failure_message(None, "boom");
+        assert!(fallback.contains("provisioning failed"), "{fallback}");
+        assert!(fallback.contains("on PATH"), "{fallback}");
     }
 
     #[test]
