@@ -5,9 +5,10 @@
 //! with it).
 
 use fbuild_build::zccache_embedded::FbuildZccacheService;
+use fbuild_core::path::NormalizedPath;
 use zccache::embedded::ShutdownMode;
 
-fn find_c_compiler() -> std::path::PathBuf {
+fn find_c_compiler() -> NormalizedPath {
     let path_dirs: Vec<_> =
         std::env::split_paths(&std::env::var_os("PATH").expect("PATH should be set")).collect();
     let on_path = |name: &str| {
@@ -15,13 +16,14 @@ fn find_c_compiler() -> std::path::PathBuf {
             .iter()
             .map(|dir| dir.join(name))
             .find(|candidate| candidate.is_file())
+            .map(NormalizedPath::from)
     };
     if cfg!(windows) {
         if let Some(candidate) = on_path("clang.exe") {
             return candidate;
         }
         if let Some(program_files) = std::env::var_os("ProgramFiles") {
-            let candidate = std::path::PathBuf::from(program_files)
+            let candidate = NormalizedPath::new(std::path::Path::new(&program_files))
                 .join("LLVM")
                 .join("bin")
                 .join("clang.exe");
@@ -39,6 +41,7 @@ fn find_c_compiler() -> std::path::PathBuf {
             .iter()
             .map(|dir| dir.join(name))
             .find(|candidate| candidate.is_file())
+            .map(NormalizedPath::from)
         {
             return candidate;
         }
