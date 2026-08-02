@@ -48,11 +48,9 @@ tree-sitter-cpp = { workspace = true }
 # child processes) was deleted in the same PR; there is no
 # `--no-default-features` escape hatch.
 #
-# Pinned at zccache 1.12.17 (`5ee292f`, upstream main). soldr's
-# `_vender/zccache` submodule currently sits 3 commits behind this at
-# `4180af8`; both revs speak the same shared-broker protocol, so the two
-# embedded services still interoperate. Re-check that submodule when
-# repinning — a protocol-affecting zccache change must land in both.
+# Pinned at zccache 1.13.1 (`8cf6dd0`, release tag), which pins
+# running-process 4.8.1 at `359b4e3`. Keep both revisions aligned when
+# repinning so fbuild links exactly one copy of the exported broker symbols.
 #
 # `running-process` in the workspace root must be pinned to the SAME git rev
 # zccache uses, or its unmangled `rp_*_public` C symbols get linked twice.
