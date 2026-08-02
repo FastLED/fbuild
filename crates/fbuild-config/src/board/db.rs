@@ -137,6 +137,7 @@ fn resolve_board_alias(board_id: &str) -> &str {
         "pico" | "rpipico" => "rpipico",
         "picow" | "rpipicow" => "rpipicow",
         "pico2" | "rpipico2" => "rpipico2",
+        "pico2w" | "pico2wh" | "rpipico2w" | "rpipico2wh" => "rpipico2w",
         "esp32c3" => "esp32-c3-devkitm-1",
         "esp32c6" => "esp32-c6-devkitm-1",
         "esp32s3" => "esp32-s3-devkitc-1",
@@ -466,7 +467,14 @@ fn flatten_board_entry(entry: &serde_json::Value, board_id: &str) -> HashMap<Str
 
 #[cfg(test)]
 mod tests_search_boards {
-    use super::search_boards;
+    use super::{registry_board_id, search_boards};
+
+    #[test]
+    fn pico_2_w_aliases_resolve_to_registry_board_id() {
+        for alias in ["pico2w", "pico2wh", "rpipico2w", "rpipico2wh"] {
+            assert_eq!(registry_board_id(alias), "rpipico2w");
+        }
+    }
 
     #[test]
     fn no_query_returns_every_board_sorted_by_id() {

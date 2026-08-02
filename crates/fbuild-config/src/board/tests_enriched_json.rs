@@ -330,6 +330,28 @@ fn test_pico_enriched_fields() {
 }
 
 #[test]
+fn test_pico_2_w_enriched_fields() {
+    let config = BoardConfig::from_board_id("rpipico2w", &HashMap::new()).unwrap();
+    assert_eq!(config.mcu, "rp2350");
+    assert_eq!(config.f_cpu, "125000000L");
+    assert_eq!(config.core, "earlephilhower");
+    assert_eq!(config.variant, "rpipico2w");
+    assert_eq!(config.max_flash, Some(4_194_304));
+    assert_eq!(config.max_ram, Some(524_288));
+    assert_eq!(config.upload_protocol, Some("picotool".to_string()));
+
+    let defines = config.get_defines();
+    for define in [
+        "ARDUINO_ARCH_RP2040",
+        "ARDUINO_RASPBERRY_PI_PICO_2W",
+        "PICO_CYW43_SUPPORTED",
+        "CYW43_PIN_WL_DYNAMIC",
+    ] {
+        assert_eq!(defines.get(define), Some(&"1".to_string()));
+    }
+}
+
+#[test]
 fn test_sparkfun_xrp_controller_board_config() {
     // SparkFun XRP Controller (RP2350B); maxgerhardt/platform-raspberrypi.
     // Regression for FastLED `rp2350B SparkfunXRP` workflow (#295).
