@@ -59,6 +59,15 @@ pub struct BinArtifactCache {
     pub flash_mode: String,
     pub flash_freq: String,
     pub flash_size: String,
+    /// Which esptool produced the cached bin (FastLED/fbuild#1238): empty
+    /// for a provisioned absolute-path esptool or when no caller PATH was
+    /// forwarded (pre-#1236 behavior, so old records stay valid); otherwise
+    /// a short hash of the caller PATH the bare-name spawn resolved
+    /// against. `serde(default)` deserializes old records as `""`, which
+    /// mismatches any caller-PATH fingerprint — invalidation in the
+    /// correct direction only.
+    #[serde(default)]
+    pub esptool_fingerprint: String,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

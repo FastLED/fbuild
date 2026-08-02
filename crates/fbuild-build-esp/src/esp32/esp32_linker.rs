@@ -259,7 +259,32 @@ impl Esp32Linker {
             flash_mode: self.flash_mode.clone(),
             flash_freq: self.flash_freq.clone(),
             flash_size: flash_size.to_string(),
+            esptool_fingerprint: self.esptool_fingerprint(),
         })
+    }
+
+    /// Key the bin cache on which esptool a bare-name spawn would resolve
+    /// (FastLED/fbuild#1238). A provisioned absolute-path esptool (or no
+    /// forwarded caller PATH) fingerprints as `""` — exactly the pre-#1236
+    /// behavior, so existing caches stay valid. A bare-name spawn under a
+    /// caller PATH fingerprints that PATH, so two requests whose PATHs
+    /// resolve different esptool binaries never share a `firmware.bin`.
+    fn esptool_fingerprint(&self) -> String {
+        if self.esptool_bin.is_some() {
+            return String::new();
+        }
+        match self.caller_path.as_deref() {
+            None => String::new(),
+            Some(path) => {
+                use sha2::{Digest, Sha256};
+                let digest = Sha256::digest(path.as_bytes());
+                let hex = digest
+                    .iter()
+                    .map(|b| format!("{b:02x}"))
+                    .collect::<String>();
+                hex[..16].to_string()
+            }
+        }
     }
 
     fn can_reuse_bin(&self, elf_path: &Path, output_dir: &Path, flash_size: &str) -> bool {
@@ -592,6 +617,51 @@ mod tests {
         let linker = test_linker("esp32c6");
         assert_eq!(linker.max_flash, Some(3145728));
         assert_eq!(linker.max_ram, Some(327680));
+    }
+
+    /// FastLED/fbuild#1238: seed a reusable bin cache written by `linker`,
+    /// returning the elf path whose stamp the cache records.
+    fn seed_bin_cache(linker: &Esp32Linker, dir: &Path) -> PathBuf {
+        let elf = dir.join("firmware.elf");
+        std::fs::write(&elf, b"elf").unwrap();
+        std::fs::write(dir.join("firmware.bin"), b"bin").unwrap();
+        let cache = linker.current_bin_cache(&elf, "4MB").unwrap();
+        save_json(&linker.bin_cache_path(dir), &cache).unwrap();
+        elf
+    }
+
+    #[test]
+    fn bare_name_esptool_bin_reuse_is_keyed_by_caller_path() {
+        let dir = tempfile::tempdir().unwrap();
+        // Bare-name esptool (no provisioned path) resolved under PATH_A.
+        let writer = test_linker("esp32c6").with_caller_path(Some("PATH_A".into()));
+        assert!(writer.esptool_bin.is_none(), "test premise: bare-name spawn");
+        let elf = seed_bin_cache(&writer, dir.path());
+
+        // Same caller PATH → same esptool → reuse.
+        assert!(writer.can_reuse_bin(&elf, dir.path(), "4MB"));
+        // Different caller PATH may resolve a different esptool → no reuse.
+        let other = test_linker("esp32c6").with_caller_path(Some("PATH_B".into()));
+        assert!(!other.can_reuse_bin(&elf, dir.path(), "4MB"));
+        // No caller PATH (daemon env) must not reuse a caller-PATH bin.
+        let legacy = test_linker("esp32c6");
+        assert!(!legacy.can_reuse_bin(&elf, dir.path(), "4MB"));
+    }
+
+    #[test]
+    fn absolute_esptool_bin_reuse_ignores_caller_path() {
+        let dir = tempfile::tempdir().unwrap();
+        // Provisioned absolute esptool: caller PATH is irrelevant to which
+        // tool runs, so the fingerprint stays empty and caching keeps
+        // working across requests with different PATHs.
+        let mut writer = test_linker("esp32c6").with_caller_path(Some("PATH_A".into()));
+        writer.esptool_bin = Some(PathBuf::from("/tools/esptool"));
+        assert_eq!(writer.esptool_fingerprint(), "");
+        let elf = seed_bin_cache(&writer, dir.path());
+
+        let mut reader = test_linker("esp32c6").with_caller_path(Some("PATH_B".into()));
+        reader.esptool_bin = Some(PathBuf::from("/tools/esptool"));
+        assert!(reader.can_reuse_bin(&elf, dir.path(), "4MB"));
     }
 
     #[test]
