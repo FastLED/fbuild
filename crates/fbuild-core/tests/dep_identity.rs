@@ -38,10 +38,7 @@ fn locked_packages(lock: &str, name: &str) -> Vec<(String, String)> {
             }
         }
         if pkg_name.as_deref() == Some(name) {
-            found.push((
-                version.unwrap_or_default(),
-                source.unwrap_or_default(),
-            ));
+            found.push((version.unwrap_or_default(), source.unwrap_or_default()));
         }
     }
     found
