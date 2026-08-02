@@ -21,24 +21,24 @@
 //!   the test deterministically exercises `ensure_direct_daemon_running`
 //!   (the path traced in #1228) rather than broker adoption.
 
-use std::path::PathBuf;
 use std::process::Command;
 use std::time::{Duration, Instant};
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::process_identity::{pid_is_alive, terminate_pid, wait_for_pid_exit};
 use fbuild_paths::daemon_ownership::RootOwnershipGuard;
 
 /// The real user home, the same way the spawned daemon will resolve it.
-fn real_home() -> Option<PathBuf> {
+fn real_home() -> Option<NormalizedPath> {
     let key = if cfg!(windows) { "USERPROFILE" } else { "HOME" };
-    std::env::var_os(key).map(PathBuf::from)
+    std::env::var_os(key).map(NormalizedPath::new)
 }
 
 /// `<real home>/.fbuild/dev/daemon/root-owner.lock` — the dev-mode root
 /// ownership lock the spawned daemon will contend for. Mirrors
 /// `fbuild_paths` layout without mutating this process's env (env vars are
 /// process-global and tests run multi-threaded).
-fn dev_root_owner_lock(home: &std::path::Path) -> PathBuf {
+fn dev_root_owner_lock(home: &NormalizedPath) -> NormalizedPath {
     home.join(".fbuild")
         .join("dev")
         .join("daemon")
@@ -99,15 +99,19 @@ fn client_recovers_after_daemon_is_killed_uncleanly() {
     // The production spawn path resolves the daemon binary as a sibling of
     // the CLI. Under `cargo test --workspace` (and any full build) it exists;
     // under an isolated `-p fbuild-cli` test run it may not — skip then.
-    let cli = PathBuf::from(env!("CARGO_BIN_EXE_fbuild"));
+    let cli = NormalizedPath::new(env!("CARGO_BIN_EXE_fbuild"));
     let daemon_name = if cfg!(windows) {
         "fbuild-daemon.exe"
     } else {
         "fbuild-daemon"
     };
-    let sibling = cli.parent().map(|d| d.join(daemon_name));
-    if !sibling.as_deref().is_some_and(std::path::Path::exists) {
-        eprintln!("skip: no sibling fbuild-daemon binary at {sibling:?} — build fbuild-daemon first");
+    let sibling = cli
+        .parent()
+        .map(|d| NormalizedPath::new(d).join(daemon_name));
+    if !sibling.as_ref().is_some_and(|path| path.as_path().exists()) {
+        eprintln!(
+            "skip: no sibling fbuild-daemon binary at {sibling:?} — build fbuild-daemon first"
+        );
         return;
     }
 
@@ -115,7 +119,7 @@ fn client_recovers_after_daemon_is_killed_uncleanly() {
     // real ~/.fbuild/dev root (see module docs), so if something already owns
     // it, running this test would try to displace a daemon we don't own.
     let lock_path = dev_root_owner_lock(&home);
-    match RootOwnershipGuard::try_acquire_at(&lock_path) {
+    match RootOwnershipGuard::try_acquire_at(lock_path.as_path()) {
         Ok(Some(guard)) => drop(guard), // free — safe to proceed
         Ok(None) => {
             eprintln!("skip: a live dev daemon holds {lock_path:?}");
@@ -141,7 +145,10 @@ fn client_recovers_after_daemon_is_killed_uncleanly() {
     assert!(ok, "daemon status must succeed while daemon is up");
     let old_pid = parse_status_pid(&status)
         .unwrap_or_else(|| panic!("no PID in daemon status output:\n{status}"));
-    assert!(pid_is_alive(old_pid), "freshly started daemon must be alive");
+    assert!(
+        pid_is_alive(old_pid),
+        "freshly started daemon must be alive"
+    );
 
     // 2. Crash it. This is the #1213/#1228 scenario: unclean death that
     //    leaves the port/pid/status records in place.
