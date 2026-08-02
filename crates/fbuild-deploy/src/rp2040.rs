@@ -1701,6 +1701,7 @@ impl Deployer for Rp2040Deployer {
             transfer_method,
             transfer_volume,
             picotool_confirmed,
+            prior_transport_failure,
         ) = match self.transport {
             Rp2040Transport::Uf2 => {
                 if let Some(volume) = volume {
@@ -1719,6 +1720,7 @@ impl Deployer for Rp2040Deployer {
                             "BOOTSEL mass-storage",
                             Some(transfer.volume),
                             false,
+                            None,
                         ),
                         Err(failure) => {
                             let context = with_topology(
@@ -1742,6 +1744,7 @@ impl Deployer for Rp2040Deployer {
                                 "managed picotool fallback",
                                 Some(failure.volume),
                                 true,
+                                Some(picotool::PriorTransportFailure::MassStoragePrimary(context)),
                             )
                         }
                     }
@@ -1766,6 +1769,7 @@ impl Deployer for Rp2040Deployer {
                         "managed picotool (BOOTSEL volume never mounted)",
                         None,
                         true,
+                        None,
                     )
                 }
             }
@@ -1778,6 +1782,7 @@ impl Deployer for Rp2040Deployer {
                         "PICOBOOT (managed picotool)",
                         volume.clone(),
                         true,
+                        None,
                     ),
                     Err(picotool_error_text) => match volume {
                         Some(volume) => {
@@ -1796,6 +1801,9 @@ impl Deployer for Rp2040Deployer {
                                     "BOOTSEL mass-storage (picotool fallback)",
                                     Some(transfer.volume),
                                     false,
+                                    Some(picotool::PriorTransportFailure::PicotoolPrimary(
+                                        picotool_error_text,
+                                    )),
                                 ),
                                 Err(failure) => {
                                     let mass_storage_context = with_topology(
@@ -1838,13 +1846,24 @@ impl Deployer for Rp2040Deployer {
         };
         if let Some(volume_for_wait) = transfer_volume.clone() {
             let post_timeout = self.post_deploy_timeout;
-            tokio::task::spawn_blocking(move || {
+            let eject_result = tokio::task::spawn_blocking(move || {
                 wait_for_volume_disappearance(&volume_for_wait, post_timeout)
             })
             .await
             .map_err(|error| {
                 FbuildError::DeployFailed(format!("RP2040 eject watcher failed: {error}"))
-            })??;
+            })?;
+            if let Err(eject_error) = eject_result {
+                let uf2_diagnostic =
+                    picotool::probe_uf2_rejection_info(project_dir, PICOTOOL_INFO_PROBE_TIMEOUT)
+                        .await
+                        .ok();
+                return Err(FbuildError::DeployFailed(picotool::format_eject_failure(
+                    &eject_error.to_string(),
+                    prior_transport_failure.as_ref(),
+                    uf2_diagnostic.as_deref(),
+                )));
+            }
         }
         if uf2_target == Uf2Target::Ram {
             return Ok(ram_load_result(
