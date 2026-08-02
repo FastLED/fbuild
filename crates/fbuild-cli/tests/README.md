@@ -8,6 +8,13 @@ and message contracts are covered end-to-end.
   HTTP daemon on an ephemeral loopback port, points the CLI at it via
   `FBUILD_DEV_MODE=1` + `FBUILD_DAEMON_PORT`, and asserts the CLI exits
   non-zero when the daemon returns a structured failure response.
+- **`daemon_crash_recovery.rs`** -- regression for FastLED/fbuild#1228.
+  `#[ignore]`-gated (runs under `bash test --full`): spawns the real
+  `fbuild` + sibling `fbuild-daemon` binaries, kills the daemon uncleanly,
+  and asserts the very next CLI invocation respawns a fresh daemon and
+  reaches it instead of redialing the dead endpoint. Skips when a live dev
+  daemon owns the real `~/.fbuild/dev` root or no sibling daemon binary
+  exists.
 - **`ci_command.rs`** -- regression for FastLED/fbuild#242. Spawns the
   compiled `fbuild` binary and asserts that `ci --help` documents the
   PlatformIO-compatible flags (`--board`, `--lib`, `--project-conf`,
