@@ -161,7 +161,7 @@ owo-colors = "4"
 # duplicate symbol: rp_native_process_start_public`, …). Keep this rev in
 # lockstep with the `rev` in zccache's workspace Cargo.toml when repinning
 # zccache.
-running-process = { version = "4.6.0", git = "https://github.com/zackees/running-process.git", rev = "59556ebbb779a66a95811c75bb1533cf3db1c525", default-features = false, features = ["client-async"] }
+running-process = { version = "4.8.1", git = "https://github.com/zackees/running-process.git", rev = "359b4e3d92660e54eb9b16b6e83de8ce26932ff8", default-features = false, features = ["client-async"] }
 
 [profile.dev]
 debug = "line-tables-only"
