@@ -39,6 +39,12 @@ pub(super) enum FailureDirection {
     PicotoolPrimary,
 }
 
+#[derive(Debug)]
+pub(super) enum PriorTransportFailure {
+    PicotoolPrimary(String),
+    MassStoragePrimary(String),
+}
+
 /// Bounded `picotool info` probe: proves the PICOBOOT vendor interface is
 /// reachable before committing to the (longer) load timeout. Failure here is
 /// classified as a transport/device failure by the caller, which falls back
@@ -57,6 +63,32 @@ pub(super) async fn probe_picotool_info(project_dir: &Path, timeout: Duration) -
         )));
     }
     Ok(())
+}
+
+/// Ask the already-installed managed picotool for its most recent UF2
+/// diagnostic. This must never trigger a package download; it shares the
+/// caller's bounded subprocess timeout (FastLED/fbuild#1245).
+pub(super) async fn probe_uf2_rejection_info(
+    project_dir: &Path,
+    timeout: Duration,
+) -> Result<String> {
+    let package = fbuild_packages::toolchain::Rp2040Picotool::new(project_dir);
+    let executable = package.executable();
+    if !executable.is_file() {
+        return Err(FbuildError::DeployFailed(
+            "managed picotool is not installed; skipping ROM UF2 diagnostic".to_string(),
+        ));
+    }
+    let args = uf2_info_args(&executable);
+    let args_ref: Vec<&str> = args.iter().map(String::as_str).collect();
+    let output = fbuild_core::subprocess::run_command(&args_ref, None, None, Some(timeout)).await?;
+    let diagnostic = combined_tool_output(output.stdout.trim(), output.stderr.trim());
+    if diagnostic.is_empty() {
+        return Err(FbuildError::DeployFailed(
+            "managed picotool uf2 info returned no diagnostic".to_string(),
+        ));
+    }
+    Ok(diagnostic)
 }
 
 pub(super) async fn load_with_managed_picotool(
@@ -115,6 +147,14 @@ fn info_probe_args(executable: &Path) -> Vec<String> {
     vec![executable.to_string_lossy().to_string(), "info".to_string()]
 }
 
+fn uf2_info_args(executable: &Path) -> Vec<String> {
+    vec![
+        executable.to_string_lossy().to_string(),
+        "uf2".to_string(),
+        "info".to_string(),
+    ]
+}
+
 fn host_hint(windows: bool) -> &'static str {
     if windows {
         " On Windows, close software that scans removable drives or bind WinUSB to RP2 Boot (Interface 1), as documented by Raspberry Pi; this changes only the host driver and does not pre-flash the board."
@@ -146,6 +186,35 @@ pub(super) fn format_failure(
     }
 }
 
+pub(super) fn format_eject_failure(
+    mass_storage_error: &str,
+    prior_failure: Option<&PriorTransportFailure>,
+    uf2_diagnostic: Option<&str>,
+) -> String {
+    let mut message = match prior_failure {
+        Some(PriorTransportFailure::PicotoolPrimary(picotool_error)) => format_failure(
+            FailureDirection::PicotoolPrimary,
+            mass_storage_error,
+            picotool_error,
+            cfg!(windows),
+        ),
+        Some(PriorTransportFailure::MassStoragePrimary(prior_mass_storage_error)) => {
+            format_failure(
+                FailureDirection::PicotoolFallback,
+                prior_mass_storage_error,
+                mass_storage_error,
+                cfg!(windows),
+            )
+        }
+        None => mass_storage_error.to_string(),
+    };
+    if let Some(diagnostic) = uf2_diagnostic {
+        message.push_str(" Managed picotool UF2 diagnostic: ");
+        message.push_str(diagnostic);
+    }
+    message
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -163,6 +232,47 @@ mod tests {
     fn info_probe_uses_managed_executable() {
         let args = info_probe_args(Path::new("managed/picotool"));
         assert_eq!(args, ["managed/picotool", "info"]);
+    }
+
+    #[test]
+    fn uf2_rejection_probe_uses_managed_executable() {
+        let args = uf2_info_args(Path::new("managed/picotool"));
+        assert_eq!(args, ["managed/picotool", "uf2", "info"]);
+    }
+
+    #[test]
+    fn eject_failure_preserves_prior_transport_and_uf2_diagnostics() {
+        let message = format_eject_failure(
+            "BOOTSEL volume did not eject",
+            Some(&PriorTransportFailure::PicotoolPrimary(
+                "picotool load failed at 0%".to_string(),
+            )),
+            Some("ERROR_INCOMPATIBLE_IMAGE"),
+        );
+        assert!(message.contains("Picotool error: picotool load failed at 0%"));
+        assert!(message.contains("Mass-storage fallback error: BOOTSEL volume did not eject"));
+        assert!(message.contains("Managed picotool UF2 diagnostic: ERROR_INCOMPATIBLE_IMAGE"));
+    }
+
+    #[test]
+    fn eject_failure_preserves_mass_storage_first_ordering() {
+        let message = format_eject_failure(
+            "picotool post-load volume did not eject",
+            Some(&PriorTransportFailure::MassStoragePrimary(
+                "mass-storage write failed".to_string(),
+            )),
+            None,
+        );
+        assert!(message.contains("Mass-storage error: mass-storage write failed"));
+        assert!(
+            message.contains("Managed picotool error: picotool post-load volume did not eject")
+        );
+    }
+
+    #[test]
+    fn eject_failure_keeps_primary_error_when_rom_diagnostic_is_unavailable() {
+        let message = format_eject_failure("volume did not eject", None, None);
+        assert_eq!(message, "volume did not eject");
     }
 
     #[test]
