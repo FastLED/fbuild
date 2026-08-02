@@ -29,6 +29,11 @@ pub struct AvrDeployer {
     /// Deploy timeout in seconds.
     timeout_secs: u64,
     verbose: bool,
+    /// The requesting CLI's PATH. `avrdude_path` falls back to the bare
+    /// name `avrdude`, which would otherwise resolve against the
+    /// long-lived daemon's boot-time PATH (FastLED/fbuild#1234). `None`
+    /// keeps legacy daemon-env behavior.
+    caller_path: Option<String>,
 }
 
 impl AvrDeployer {
@@ -47,6 +52,7 @@ impl AvrDeployer {
             baud_rate: baud_rate.to_string(),
             timeout_secs,
             verbose,
+            caller_path: None,
         }
     }
 
@@ -78,6 +84,16 @@ impl AvrDeployer {
     /// "Issue I".
     pub fn with_baud_rate(mut self, baud: &str) -> Self {
         self.baud_rate = baud.to_string();
+        self
+    }
+
+    /// Forward the requesting CLI's PATH so a bare-name `avrdude` spawn
+    /// resolves against the caller's environment instead of the daemon's
+    /// boot-time PATH (FastLED/fbuild#1234). No-op when `avrdude_path`
+    /// was resolved to a real path.
+    #[must_use]
+    pub fn with_caller_path(mut self, caller_path: Option<String>) -> Self {
+        self.caller_path = caller_path;
         self
     }
 }
@@ -121,10 +137,12 @@ impl Deployer for AvrDeployer {
             port
         );
 
+        let env_overlay =
+            fbuild_core::subprocess::bare_name_path_overlay(&args[0], self.caller_path.as_deref());
         let result = run_command(
             &args_ref,
             None,
-            None,
+            env_overlay.as_deref(),
             Some(std::time::Duration::from_secs(self.timeout_secs)),
         )
         .await?;
@@ -178,6 +196,17 @@ mod tests {
         assert_eq!(deployer.mcu, "atmega328p");
         assert_eq!(deployer.programmer, "arduino");
         assert_eq!(deployer.baud_rate, "115200");
+    }
+
+    /// FastLED/fbuild#1234: the caller PATH threaded from the deploy
+    /// request must be stored on the deployer; the default `None` keeps
+    /// legacy daemon-env behavior for the bare `avrdude` fallback.
+    #[test]
+    fn with_caller_path_stores_the_requesting_cli_path() {
+        let deployer = AvrDeployer::new("atmega328p", "arduino", "115200", 60, None, false);
+        assert_eq!(deployer.caller_path, None);
+        let deployer = deployer.with_caller_path(Some("/opt/tools/bin".to_string()));
+        assert_eq!(deployer.caller_path.as_deref(), Some("/opt/tools/bin"));
     }
 
     #[test]

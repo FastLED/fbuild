@@ -171,6 +171,11 @@ pub async fn deploy(
         }
     };
 
+    // Snapshotted from the request itself — NOT from the pre-deploy build
+    // params — so the skip_build path (which constructs no BuildParams)
+    // forwards the same caller PATH to the deployer (FastLED/fbuild#1234).
+    let deploy_caller_path = deployer_caller_path(&req);
+
     // Build first unless skip_build
     let (firmware_path, elf_path) = if req.skip_build {
         // Look for existing firmware using the standard search order
@@ -252,8 +257,7 @@ pub async fn deploy(
             },
             watch_set_cache: Some(Arc::clone(&ctx.watch_set_cache) as Arc<_>),
             bloat_analysis: false,
-            // deploy-side caller_path threading is FastLED/fbuild#1234
-            caller_path: None,
+            caller_path: req.caller_path.clone(),
         };
 
         // fbuild#813: orchestrator.build is now async — call directly,
@@ -550,7 +554,10 @@ pub async fn deploy(
                     mcu_config.firmware_offset(),
                     &esptool_params,
                     false,
-                );
+                )
+                // esptool is spawned as a bare name; resolve it against
+                // the requesting CLI's PATH, not the daemon's (#1234).
+                .with_caller_path(deploy_caller_path.clone());
                 let deployer = if let Some(baud) = baud_override {
                     deployer.with_baud_rate(&baud.to_string())
                 } else {
@@ -758,7 +765,10 @@ pub async fn deploy(
                     &board_config,
                     &avrdude_params,
                     false,
-                );
+                )
+                // avrdude falls back to a bare name; resolve it against
+                // the requesting CLI's PATH, not the daemon's (#1234).
+                .with_caller_path(deploy_caller_path.clone());
                 let deployer = if let Some(baud) = baud_override {
                     deployer.with_baud_rate(&baud.to_string())
                 } else {
@@ -784,7 +794,10 @@ pub async fn deploy(
                     &loader_params,
                     loader_path,
                     false,
-                );
+                )
+                // teensy_loader_cli falls back to a bare name; resolve it
+                // against the requesting CLI's PATH, not the daemon's (#1234).
+                .with_caller_path(deploy_caller_path.clone());
                 Box::new(deployer)
             }
             fbuild_core::Platform::RaspberryPi => {
@@ -807,6 +820,7 @@ pub async fn deploy(
                 deploy_project.as_path(),
                 baud_override,
                 no_probe_rs,
+                deploy_caller_path.clone(),
             ),
             fbuild_core::Platform::Ch32v => match req.protocol.as_deref() {
                 Some("isp") => {
@@ -1324,6 +1338,17 @@ fn resolve_recovery_port(
     }
 }
 
+/// Caller-PATH snapshot for deployer construction (FastLED/fbuild#1234).
+///
+/// Reads the request field directly — never the pre-deploy `BuildParams`
+/// (which the `skip_build` path never constructs) — so both the normal
+/// build-then-deploy and the `skip_build` path hand the deployer the
+/// same requesting-CLI PATH for bare-name tool spawns (esptool, avrdude,
+/// teensy_loader_cli, lpc21isp).
+fn deployer_caller_path(req: &DeployRequest) -> Option<String> {
+    req.caller_path.clone()
+}
+
 fn deploy_error_response(
     request_id: String,
     error: &fbuild_core::FbuildError,
@@ -1361,6 +1386,29 @@ mod tests {
             "deploy error: deploy failed: RP2040 mass-storage error 1006"
         );
         assert_eq!(response.stderr.as_deref(), Some(response.message.as_str()));
+    }
+
+    /// FastLED/fbuild#1234: the deployer's caller PATH comes from the
+    /// request itself, so a `skip_build` deploy (no `BuildParams`) carries
+    /// it exactly like a normal build-then-deploy, and its absence keeps
+    /// legacy daemon-env behavior.
+    #[test]
+    fn caller_path_reaches_deployer_on_normal_and_skip_build_requests() {
+        for skip_build in [false, true] {
+            let json = format!(
+                r#"{{"project_dir": "/tmp/p", "skip_build": {skip_build}, "caller_path": "/opt/tools/bin"}}"#
+            );
+            let req: DeployRequest = serde_json::from_str(&json).unwrap();
+            assert_eq!(
+                deployer_caller_path(&req).as_deref(),
+                Some("/opt/tools/bin"),
+                "skip_build={skip_build}"
+            );
+
+            let json = format!(r#"{{"project_dir": "/tmp/p", "skip_build": {skip_build}}}"#);
+            let req: DeployRequest = serde_json::from_str(&json).unwrap();
+            assert_eq!(deployer_caller_path(&req), None, "skip_build={skip_build}");
+        }
     }
 
     #[test]

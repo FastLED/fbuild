@@ -303,6 +303,12 @@ pub struct LpcDeployer {
     probe_rs_chip: Option<String>,
     /// Explicit opt-out for users who need to force the UART ISP path.
     probe_rs_enabled: bool,
+    /// The requesting CLI's PATH. `lpc21isp_path` may be the literal
+    /// bare name `lpc21isp` (see [`LpcDeployer::from_board_config`]),
+    /// which would otherwise resolve against the long-lived daemon's
+    /// boot-time PATH (FastLED/fbuild#1234). `None` keeps legacy
+    /// daemon-env behavior.
+    caller_path: Option<String>,
 }
 
 impl LpcDeployer {
@@ -321,6 +327,7 @@ impl LpcDeployer {
             verbose,
             probe_rs_chip: None,
             probe_rs_enabled: true,
+            caller_path: None,
         }
     }
 
@@ -381,6 +388,16 @@ impl LpcDeployer {
         self.baud_rate = baud.to_string();
         self
     }
+
+    /// Forward the requesting CLI's PATH so a bare-name `lpc21isp` spawn
+    /// resolves against the caller's environment instead of the daemon's
+    /// boot-time PATH (FastLED/fbuild#1234). No-op when `lpc21isp_path`
+    /// was resolved to a real path.
+    #[must_use]
+    pub fn with_caller_path(mut self, caller_path: Option<String>) -> Self {
+        self.caller_path = caller_path;
+        self
+    }
 }
 
 /// Boxed-Deployer constructor used by the daemon dispatch site
@@ -401,6 +418,7 @@ pub fn dispatch_box(
     project_path: &Path,
     baud_override: Option<u32>,
     no_probe_rs: bool,
+    caller_path: Option<String>,
 ) -> Box<dyn Deployer> {
     let board_config = fbuild_config::BoardConfig::from_board_id_or_default(
         board_id,
@@ -410,7 +428,8 @@ pub fn dispatch_box(
     );
     let params = Lpc21IspParams::default();
     let deployer = LpcDeployer::from_board_config(&board_config, &params, false)
-        .with_probe_rs_enabled(!no_probe_rs);
+        .with_probe_rs_enabled(!no_probe_rs)
+        .with_caller_path(caller_path);
     let deployer = match baud_override {
         Some(b) => deployer.with_baud_rate(&b.to_string()),
         None => deployer,
@@ -624,10 +643,12 @@ impl Deployer for LpcDeployer {
             self.xtal_khz,
         );
 
+        let env_overlay =
+            fbuild_core::subprocess::bare_name_path_overlay(&args[0], self.caller_path.as_deref());
         let result = run_command(
             &args_ref,
             None,
-            None,
+            env_overlay.as_deref(),
             Some(std::time::Duration::from_secs(self.timeout_secs)),
         )
         .await?;
@@ -799,6 +820,17 @@ mod tests {
         // configured default.
         let deployer = LpcDeployer::new("115200", 12_000, 60, None, false).with_baud_rate("57600");
         assert_eq!(deployer.baud_rate, "57600");
+    }
+
+    /// FastLED/fbuild#1234: the caller PATH threaded from the deploy
+    /// request must be stored on the deployer; the default `None` keeps
+    /// legacy daemon-env behavior for the bare `lpc21isp` fallback.
+    #[test]
+    fn with_caller_path_stores_the_requesting_cli_path() {
+        let deployer = LpcDeployer::new("115200", 12_000, 60, None, false);
+        assert_eq!(deployer.caller_path, None);
+        let deployer = deployer.with_caller_path(Some("/opt/tools/bin".to_string()));
+        assert_eq!(deployer.caller_path.as_deref(), Some("/opt/tools/bin"));
     }
 
     #[test]

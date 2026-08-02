@@ -65,6 +65,11 @@ pub struct Esp32Deployer {
     /// Feature-gated — see `use_native_verify`.
     #[cfg(feature = "espflash-native")]
     pub(super) use_native_write: bool,
+    /// The requesting CLI's PATH. `esptool` is spawned as a bare name
+    /// (see [`Esp32Deployer::find_esptool`]), so without this it would
+    /// resolve against the long-lived daemon's boot-time PATH
+    /// (FastLED/fbuild#1234). `None` keeps legacy daemon-env behavior.
+    pub(super) caller_path: Option<String>,
 }
 
 #[cfg(feature = "espflash-native")]
@@ -146,6 +151,7 @@ impl Esp32Deployer {
             use_native_verify: false,
             #[cfg(feature = "espflash-native")]
             use_native_write: false,
+            caller_path: None,
         }
     }
 
@@ -222,6 +228,15 @@ impl Esp32Deployer {
     /// Override the baud rate (e.g. from a CLI `--baud` flag).
     pub fn with_baud_rate(mut self, baud: &str) -> Self {
         self.baud_rate = baud.to_string();
+        self
+    }
+
+    /// Forward the requesting CLI's PATH so the bare-name `esptool` spawn
+    /// resolves against the caller's environment instead of the daemon's
+    /// boot-time PATH (FastLED/fbuild#1234).
+    #[must_use]
+    pub fn with_caller_path(mut self, caller_path: Option<String>) -> Self {
+        self.caller_path = caller_path;
         self
     }
 
@@ -329,10 +344,12 @@ impl Esp32Deployer {
             self.chip
         );
 
+        let env_overlay =
+            fbuild_core::subprocess::bare_name_path_overlay(&args[0], self.caller_path.as_deref());
         let result = run_command(
             &args_ref,
             None,
-            None,
+            env_overlay.as_deref(),
             // Verify is bounded: the slowest case is ~10s for a maximum
             // image. 30s gives plenty of headroom for slow USB-CDC stacks
             // and stub flasher upload retries.
@@ -755,10 +772,12 @@ impl Esp32Deployer {
             self.chip
         );
 
+        let env_overlay =
+            fbuild_core::subprocess::bare_name_path_overlay(&args[0], self.caller_path.as_deref());
         let result = run_command(
             &args_ref,
             None,
-            None,
+            env_overlay.as_deref(),
             Some(std::time::Duration::from_secs(120)),
         )
         .await?;
@@ -831,10 +850,12 @@ impl Deployer for Esp32Deployer {
             self.chip
         );
 
+        let env_overlay =
+            fbuild_core::subprocess::bare_name_path_overlay(&args[0], self.caller_path.as_deref());
         let result = run_command(
             &args_ref,
             None,
-            None,
+            env_overlay.as_deref(),
             Some(std::time::Duration::from_secs(120)),
         )
         .await?;

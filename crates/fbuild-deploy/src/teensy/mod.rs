@@ -84,6 +84,11 @@ pub struct TeensyDeployer {
     baud_134_trigger: bool,
     post_flash_port_discovery_secs: u64,
     verbose: bool,
+    /// The requesting CLI's PATH. `loader_path` falls back to the bare
+    /// name `teensy_loader_cli`, which would otherwise resolve against
+    /// the long-lived daemon's boot-time PATH (FastLED/fbuild#1234).
+    /// `None` keeps legacy daemon-env behavior.
+    caller_path: Option<String>,
 }
 
 impl TeensyDeployer {
@@ -115,7 +120,19 @@ impl TeensyDeployer {
             baud_134_trigger,
             post_flash_port_discovery_secs: loader_params.post_flash_port_discovery_secs,
             verbose,
+            caller_path: None,
         }
+    }
+
+    /// Forward the requesting CLI's PATH so a bare-name
+    /// `teensy_loader_cli` spawn resolves against the caller's
+    /// environment instead of the daemon's boot-time PATH
+    /// (FastLED/fbuild#1234). No-op when `loader_path` was resolved to a
+    /// real path.
+    #[must_use]
+    pub fn with_caller_path(mut self, caller_path: Option<String>) -> Self {
+        self.caller_path = caller_path;
+        self
     }
 
     /// Create a Teensy deployer from board config defaults.
@@ -236,6 +253,7 @@ impl Deployer for TeensyDeployer {
             wait_flag: self.wait_flag.clone(),
             verbose_flag: self.verbose_flag.clone(),
             firmware_path: firmware_path.to_path_buf(),
+            caller_path: self.caller_path.clone(),
         };
 
         if self.verbose {
@@ -369,6 +387,18 @@ mod tests {
         // Defaults from #433 (not the old 60s blanket).
         assert_eq!(deployer.flash_timeout_secs, 30);
         assert_eq!(deployer.wait_for_halfkay_timeout_secs, 180);
+    }
+
+    /// FastLED/fbuild#1234: the caller PATH threaded from the deploy
+    /// request must be stored on the deployer; the default `None` keeps
+    /// legacy daemon-env behavior for the bare `teensy_loader_cli`
+    /// fallback.
+    #[test]
+    fn with_caller_path_stores_the_requesting_cli_path() {
+        let deployer = TeensyDeployer::new("TEENSY41", &TeensyLoaderParams::default(), None, false);
+        assert_eq!(deployer.caller_path, None);
+        let deployer = deployer.with_caller_path(Some("/opt/tools/bin".to_string()));
+        assert_eq!(deployer.caller_path.as_deref(), Some("/opt/tools/bin"));
     }
 
     #[test]
