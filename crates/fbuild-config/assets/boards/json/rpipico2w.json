@@ -1,0 +1,32 @@
+{
+  "build": {
+    "core": "earlephilhower",
+    "extra_flags": "-DARDUINO_RASPBERRY_PI_PICO_2W -DARDUINO_ARCH_RP2040 -DUSBD_MAX_POWER_MA=250 -DPICO_CYW43_SUPPORTED=1 -DCYW43_PIN_WL_DYNAMIC=1",
+    "f_cpu": "125000000L",
+    "mcu": "rp2350",
+    "variant": "rpipico2w"
+  },
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "jlink": {},
+      "raspberrypi-swd": {}
+    }
+  },
+  "fcpu": 125000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "rpipico2w",
+  "mcu": "RP2350",
+  "name": "Raspberry Pi Pico 2 W",
+  "platform": "raspberrypi",
+  "ram": 524288,
+  "rom": 4194304,
+  "upload": {
+    "protocol": "picotool",
+    "require_upload_port": true
+  },
+  "url": "https://www.raspberrypi.com/products/raspberry-pi-pico-2/",
+  "vendor": "Raspberry Pi"
+}
