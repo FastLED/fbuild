@@ -244,6 +244,26 @@ impl Esp32Linker {
         output_dir.join(".firmware_size_cache.json")
     }
 
+    /// Fingerprint the esptool resolution feeding the BIN cache. A
+    /// provisioned absolute path cannot drift → empty (matches serde's
+    /// default for pre-existing cache records). A bare `esptool` resolved
+    /// against a caller PATH gets a short hash of that PATH so requests
+    /// with different caller PATHs never share a cached firmware.bin
+    /// (FastLED/fbuild#1219).
+    fn esptool_fingerprint(&self) -> String {
+        if self.esptool_bin.is_some() {
+            return String::new();
+        }
+        match self.caller_path.as_deref() {
+            Some(path) if !path.is_empty() => {
+                use sha2::{Digest, Sha256};
+                let digest = Sha256::digest(path.as_bytes());
+                digest[..8].iter().map(|b| format!("{b:02x}")).collect()
+            }
+            _ => String::new(),
+        }
+    }
+
     fn current_bin_cache(&self, elf_path: &Path, flash_size: &str) -> Result<BinArtifactCache> {
         Ok(BinArtifactCache {
             version: BUILD_FINGERPRINT_VERSION,
@@ -251,6 +271,7 @@ impl Esp32Linker {
             flash_mode: self.flash_mode.clone(),
             flash_freq: self.flash_freq.clone(),
             flash_size: flash_size.to_string(),
+            esptool_fingerprint: self.esptool_fingerprint(),
         })
     }
 
@@ -582,11 +603,81 @@ mod tests {
         )
     }
 
+    fn test_linker_with(esptool_bin: Option<PathBuf>, caller_path: Option<String>) -> Esp32Linker {
+        let mut linker = test_linker("esp32c6");
+        linker.esptool_bin = esptool_bin;
+        linker.caller_path = caller_path;
+        linker
+    }
+
     #[test]
     fn test_esp32_linker_creation() {
         let linker = test_linker("esp32c6");
         assert_eq!(linker.max_flash, Some(3145728));
         assert_eq!(linker.max_ram, Some(327680));
+    }
+
+    /// FastLED/fbuild#1219 follow-up: with a bare-name esptool, two
+    /// requests with different caller PATHs may resolve different esptool
+    /// binaries — they must never share a cached firmware.bin.
+    #[test]
+    fn bare_name_esptool_bin_reuse_is_keyed_by_caller_path() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let elf = tmp.path().join("firmware.elf");
+        std::fs::write(&elf, b"elf").unwrap();
+
+        let linker_a = test_linker_with(None, Some("C:\\venv-a\\Scripts".to_string()));
+        let flash_size = linker_a.flash_size();
+
+        // Simulate a successful conversion by linker A.
+        std::fs::write(tmp.path().join("firmware.bin"), b"bin").unwrap();
+        let cache = linker_a.current_bin_cache(&elf, &flash_size).unwrap();
+        save_json(&linker_a.bin_cache_path(tmp.path()), &cache).unwrap();
+
+        assert!(
+            linker_a.can_reuse_bin(&elf, tmp.path(), &flash_size),
+            "same caller PATH must reuse the cached bin"
+        );
+
+        let linker_b = test_linker_with(None, Some("C:\\venv-b\\Scripts".to_string()));
+        assert!(
+            !linker_b.can_reuse_bin(&elf, tmp.path(), &flash_size),
+            "a different caller PATH must not reuse a bin produced by another PATH's esptool"
+        );
+
+        let linker_none = test_linker_with(None, None);
+        assert!(
+            !linker_none.can_reuse_bin(&elf, tmp.path(), &flash_size),
+            "no caller PATH (daemon-ambient resolution) must not reuse a caller-PATH bin"
+        );
+    }
+
+    /// Provisioned absolute-path esptool cannot drift with the caller's
+    /// PATH — caching must behave exactly as before #1219, including
+    /// across requests with different caller PATHs.
+    #[test]
+    fn absolute_esptool_bin_reuse_ignores_caller_path() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let elf = tmp.path().join("firmware.elf");
+        std::fs::write(&elf, b"elf").unwrap();
+
+        let esptool = PathBuf::from("C:\\tools\\esptool.exe");
+        let linker_a = test_linker_with(Some(esptool.clone()), Some("C:\\venv-a".to_string()));
+        let flash_size = linker_a.flash_size();
+
+        std::fs::write(tmp.path().join("firmware.bin"), b"bin").unwrap();
+        let cache = linker_a.current_bin_cache(&elf, &flash_size).unwrap();
+        assert!(
+            cache.esptool_fingerprint.is_empty(),
+            "absolute esptool must record the serde-default (empty) fingerprint"
+        );
+        save_json(&linker_a.bin_cache_path(tmp.path()), &cache).unwrap();
+
+        let linker_b = test_linker_with(Some(esptool), Some("C:\\venv-b".to_string()));
+        assert!(
+            linker_b.can_reuse_bin(&elf, tmp.path(), &flash_size),
+            "absolute-path esptool must keep reusing regardless of caller PATH"
+        );
     }
 
     #[test]
