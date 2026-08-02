@@ -59,6 +59,14 @@ pub struct BinArtifactCache {
     pub flash_mode: String,
     pub flash_freq: String,
     pub flash_size: String,
+    /// Fingerprint of the esptool resolution that produced firmware.bin.
+    /// Empty when esptool is an absolute path (the resolution cannot
+    /// drift); a short hash of the caller's PATH when a bare-name spawn
+    /// resolves against it, so two requests with different caller PATHs
+    /// never share a cached bin (FastLED/fbuild#1238). `serde(default)`
+    /// keeps pre-existing absolute-path cache records valid.
+    #[serde(default)]
+    pub esptool_fingerprint: String,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

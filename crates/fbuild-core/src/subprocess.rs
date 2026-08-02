@@ -864,6 +864,84 @@ mod tests {
         assert_eq!(result.stdout.trim(), "fbuild-1219-overlay-marker");
     }
 
+    /// End-to-end proof for FastLED/fbuild#1219: a PATH overlay must make
+    /// `run_command` resolve a bare executable name from the overlay's
+    /// directory — not just deliver the PATH value to the child. Uses a
+    /// uniquely named probe executable staged into a TempDir so ambient
+    /// PATH can never satisfy the lookup.
+    #[tokio::test]
+    async fn run_command_resolves_bare_name_from_overlay_path() {
+        let tmp = tempfile::tempdir().expect("tempdir");
+        let dir = tmp.path();
+
+        #[cfg(windows)]
+        let probe_path = {
+            let system_root = std::env::var("SystemRoot").expect("SystemRoot must be set");
+            let src = Path::new(&system_root).join("System32").join("cmd.exe");
+            let dst = dir.join("fbuild_1219_probe.exe");
+            std::fs::copy(&src, &dst).expect("copy cmd.exe into overlay dir");
+            dst
+        };
+        #[cfg(unix)]
+        let probe_path = {
+            use std::os::unix::fs::PermissionsExt;
+            let dst = dir.join("fbuild_1219_probe");
+            std::fs::write(&dst, "#!/bin/sh\necho overlay-marker\n").expect("write probe script");
+            std::fs::set_permissions(&dst, std::fs::Permissions::from_mode(0o755))
+                .expect("chmod probe script");
+            dst
+        };
+
+        let dir_str = dir.to_string_lossy();
+        let overlay = [("PATH", dir_str.as_ref())];
+        let bare_args: Vec<&str> = if cfg!(windows) {
+            vec!["fbuild_1219_probe", "/C", "echo overlay-marker"]
+        } else {
+            vec!["fbuild_1219_probe"]
+        };
+
+        // Bare name + overlay → resolved from the overlay PATH.
+        let result = run_command(
+            &bare_args,
+            None,
+            Some(&overlay),
+            Some(Duration::from_secs(30)),
+        )
+        .await
+        .expect("bare-name spawn must resolve via the overlay PATH");
+        assert!(result.success(), "got: {result:?}");
+        assert!(
+            result.stdout.contains("overlay-marker"),
+            "stdout was {:?}",
+            result.stdout
+        );
+
+        // Absolute path, no overlay → normal operation is unaffected.
+        let probe_str = probe_path.to_string_lossy();
+        let abs_args: Vec<&str> = if cfg!(windows) {
+            vec![probe_str.as_ref(), "/C", "echo overlay-marker"]
+        } else {
+            vec![probe_str.as_ref()]
+        };
+        let result = run_command(&abs_args, None, None, Some(Duration::from_secs(30)))
+            .await
+            .expect("absolute-path spawn works without any overlay");
+        assert!(result.success(), "got: {result:?}");
+        assert!(
+            result.stdout.contains("overlay-marker"),
+            "stdout was {:?}",
+            result.stdout
+        );
+
+        // Bare name WITHOUT the overlay → not on ambient PATH → spawn
+        // fails, proving the first resolution came from the overlay.
+        let result = run_command(&bare_args, None, None, Some(Duration::from_secs(30))).await;
+        assert!(
+            result.is_err(),
+            "bare name must not resolve from ambient PATH: {result:?}"
+        );
+    }
+
     #[test]
     fn run_command_blocking_works_from_sync_context() {
         let args = if cfg!(windows) {
