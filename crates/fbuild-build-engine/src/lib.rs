@@ -177,6 +177,11 @@ pub struct BuildParams {
     /// actually emitted. This unblocks per-symbol bloat analysis on
     /// over-budget builds. See FastLED/fbuild#594.
     pub bloat_analysis: bool,
+    /// The CLI caller's PATH, forwarded per request so bare-name tool
+    /// spawns (esptool, python, objcopy) resolve against the caller's
+    /// environment instead of the daemon's spawn-time PATH
+    /// (FastLED/fbuild#1219). `None` = legacy behavior (daemon env).
+    pub caller_path: Option<String>,
 }
 
 /// Trait for platform-specific build orchestrators.

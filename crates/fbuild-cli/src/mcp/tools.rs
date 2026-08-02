@@ -119,6 +119,7 @@ pub(super) async fn execute_tool(
                 src_dir: std::env::var("PLATFORMIO_SRC_DIR")
                     .ok()
                     .filter(|s| !s.is_empty()),
+                caller_path: std::env::var("PATH").ok(),
                 output_dir: None,
                 pio_env: crate::daemon_client::capture_pio_env(),
                 bloat_analysis: false,

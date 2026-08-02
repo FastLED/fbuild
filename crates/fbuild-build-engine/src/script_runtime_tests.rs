@@ -578,3 +578,44 @@ env.Append(CPPDEFINES=[\"LFS_OK\"])
         "{overlay:?}"
     );
 }
+
+// ---- caller-PATH threading (FastLED/fbuild#1219) ----------------------
+
+/// Load-bearing regression test for FastLED/fbuild#1219: the caller PATH
+/// passed to `find_python_with_path` must REPLACE the inherited process
+/// PATH for the probe. An empty temp dir as PATH must make resolution
+/// fail even though this process's own PATH can resolve python.
+#[tokio::test]
+async fn test_find_python_with_path_replaces_inherited_path() {
+    // Gate on python being resolvable at all — machines without python
+    // can't distinguish "override worked" from "python missing".
+    if find_python().await.is_none() {
+        return;
+    }
+    // The `py` launcher installs to the Windows directory, which is on the
+    // OS fallback exe-search path that `Command::new` consults even when
+    // the child PATH is overridden — an empty PATH cannot hide it, and
+    // that is exe resolution, not a PATH leak. Skip on such machines; the
+    // strict assertion still runs on Unix CI and py-less Windows.
+    #[cfg(windows)]
+    {
+        let windir = std::env::var("WINDIR").unwrap_or_else(|_| r"C:\Windows".to_string());
+        if std::path::Path::new(&windir).join("py.exe").exists() {
+            return;
+        }
+    }
+    let empty = tempfile::tempdir().unwrap();
+    let bogus_path = empty.path().to_string_lossy().to_string();
+    assert!(
+        find_python_with_path(Some(&bogus_path)).await.is_none(),
+        "an empty-dir PATH override must make python resolution fail — \
+         the probe leaked the daemon-process PATH"
+    );
+}
+
+/// `find_python_with_path(None)` is the legacy path: identical result to
+/// `find_python()` (both resolve against the inherited process env).
+#[tokio::test]
+async fn test_find_python_with_path_none_matches_find_python() {
+    assert_eq!(find_python_with_path(None).await, find_python().await);
+}

@@ -160,6 +160,7 @@ async fn clangd_check_parity_uno() {
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
         bloat_analysis: false,
+        caller_path: None,
     };
 
     let orchestrator = AvrOrchestrator;

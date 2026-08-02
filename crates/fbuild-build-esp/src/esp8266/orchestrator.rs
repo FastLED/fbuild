@@ -197,7 +197,8 @@ impl BuildOrchestrator for Esp8266Orchestrator {
             ctx.board.max_flash,
             ctx.board.max_ram,
             params.verbose,
-        );
+        )
+        .with_caller_path(params.caller_path.clone());
 
         // 8. Build LibraryBuildEnv for project-as-library compilation
         let gcc_path = toolchain.get_gcc_path();

@@ -211,7 +211,8 @@ impl BuildOrchestrator for Ch32vOrchestrator {
             ctx.board.max_ram,
             params.verbose,
         )
-        .with_memory_defsyms(memory_defsyms);
+        .with_memory_defsyms(memory_defsyms)
+        .with_caller_path(params.caller_path.clone());
 
         // 8. Build LibraryBuildEnv for project-as-library compilation
         let gcc_path = toolchain.get_gcc_path();

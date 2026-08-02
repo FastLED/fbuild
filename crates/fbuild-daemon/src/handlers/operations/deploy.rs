@@ -252,6 +252,8 @@ pub async fn deploy(
             },
             watch_set_cache: Some(Arc::clone(&ctx.watch_set_cache) as Arc<_>),
             bloat_analysis: false,
+            // deploy-side caller_path threading is FastLED/fbuild#1234
+            caller_path: None,
         };
 
         // fbuild#813: orchestrator.build is now async — call directly,

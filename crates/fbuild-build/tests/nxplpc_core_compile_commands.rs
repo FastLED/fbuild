@@ -56,6 +56,7 @@ async fn build_core_repo(repo: &Path, env_name: &str) -> tempfile::TempDir {
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
         bloat_analysis: false,
+        caller_path: None,
     };
 
     let orchestrator = fbuild_build::nxplpc::orchestrator::NxpLpcOrchestrator;

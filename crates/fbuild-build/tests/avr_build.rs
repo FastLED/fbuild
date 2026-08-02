@@ -128,6 +128,7 @@ async fn build_uno_minimal() {
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
         bloat_analysis: false,
+        caller_path: None,
     };
 
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;
@@ -226,6 +227,7 @@ async fn compare_with_python_output() {
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
         bloat_analysis: false,
+        caller_path: None,
     };
 
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;
@@ -318,6 +320,7 @@ void loop() {
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
         bloat_analysis: false,
+        caller_path: None,
     };
 
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;
@@ -385,6 +388,7 @@ fn uno_build_params(project_dir: &Path, build_dir: PathBuf, clean: bool) -> Buil
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
         bloat_analysis: false,
+        caller_path: None,
     }
 }
 

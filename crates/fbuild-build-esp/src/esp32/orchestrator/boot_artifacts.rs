@@ -23,8 +23,13 @@ pub(super) async fn prepare_boot_artifacts(
     mcu_config: &Esp32McuConfig,
     flash_freq: &str,
     esptool_bin: Option<&Path>,
+    caller_path: Option<&str>,
     perf: &mut crate::perf_log::PerfTimer,
 ) -> Result<()> {
+    // FastLED/fbuild#1219: bare-name tool spawns below (`esptool` fallback,
+    // python interpreter) resolve against the CLI caller's PATH when it was
+    // forwarded; `None` keeps the daemon's spawn-time env.
+    let spawn_env: Option<Vec<(&str, &str)>> = caller_path.map(|p| vec![("PATH", p)]);
     let boot_artifacts_started = Instant::now();
     perf.checkpoint("boot-artifacts-start");
     // SDK directory selector matching the chip's ROM revision (e.g. `esp32p4_es`
@@ -94,7 +99,7 @@ pub(super) async fn prepare_boot_artifacts(
             match fbuild_core::subprocess::run_command(
                 &args,
                 None,
-                None,
+                spawn_env.as_deref(),
                 Some(std::time::Duration::from_secs(60)),
             )
             .await
@@ -144,7 +149,7 @@ pub(super) async fn prepare_boot_artifacts(
             // `python` doesn't exist on modern distros (ubuntu 24.04 ships
             // only `python3`); resolve the interpreter the same way the
             // extra_scripts runtime does.
-            let python = crate::script_runtime::find_python()
+            let python = crate::script_runtime::find_python_with_path(caller_path)
                 .await
                 .unwrap_or_else(|| vec!["python".to_string()]);
             let mut args: Vec<&str> = python.iter().map(|s| s.as_str()).collect();
@@ -157,7 +162,7 @@ pub(super) async fn prepare_boot_artifacts(
             match fbuild_core::subprocess::run_command(
                 &args,
                 None,
-                None,
+                spawn_env.as_deref(),
                 Some(std::time::Duration::from_secs(10)),
             )
             .await

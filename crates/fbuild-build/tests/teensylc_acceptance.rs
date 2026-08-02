@@ -74,6 +74,7 @@ async fn teensylc_blink_meets_205_acceptance_criteria() {
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
         bloat_analysis: false,
+        caller_path: None,
     };
 
     let result =

@@ -42,6 +42,19 @@ pub async fn resolve_extra_script_overlay(
     env_name: &str,
     config: &fbuild_config::PlatformIOConfig,
 ) -> fbuild_core::Result<BuildOverlay> {
+    resolve_extra_script_overlay_with_path(project_dir, env_name, config, None).await
+}
+
+/// As [`resolve_extra_script_overlay`] but resolving (and running) the
+/// Python interpreter against the CLI caller's PATH instead of the
+/// daemon's spawn-time PATH (FastLED/fbuild#1219). `None` = legacy
+/// behavior (daemon env).
+pub async fn resolve_extra_script_overlay_with_path(
+    project_dir: &Path,
+    env_name: &str,
+    config: &fbuild_config::PlatformIOConfig,
+    caller_path: Option<&str>,
+) -> fbuild_core::Result<BuildOverlay> {
     let extra_scripts = config.get_extra_scripts(env_name)?;
     if extra_scripts.is_empty() {
         return Ok(BuildOverlay::default());
@@ -61,7 +74,7 @@ pub async fn resolve_extra_script_overlay(
             .to_string(),
     };
 
-    let python = find_python().await.ok_or_else(|| {
+    let python = find_python_with_path(caller_path).await.ok_or_else(|| {
         fbuild_core::FbuildError::BuildFailed(
             "extra_scripts detected but no Python interpreter was found; \
              install Python or use --platformio"
@@ -116,10 +129,14 @@ pub async fn resolve_extra_script_overlay(
     // — config-time evaluation, never legitimately long. Bound to 60s
     // so a buggy or hostile script cannot wedge the daemon's build
     // pipeline indefinitely.
+    // FastLED/fbuild#1219: run the interpreter under the caller's PATH
+    // too, so the script's own resolution (imports, subprocesses) sees
+    // the same environment the probe did.
+    let env: Option<Vec<(&str, &str)>> = caller_path.map(|p| vec![("PATH", p)]);
     let output = fbuild_core::subprocess::run_command(
         &argv,
         Some(project_dir),
-        None,
+        env.as_deref(),
         Some(std::time::Duration::from_secs(60)),
     )
     .await
@@ -299,12 +316,20 @@ fn libs_to_flags(
 }
 
 pub async fn find_python() -> Option<Vec<String>> {
+    find_python_with_path(None).await
+}
+
+/// As [`find_python`] but probing against the CLI caller's PATH instead of
+/// the daemon's spawn-time PATH (FastLED/fbuild#1219). The caller PATH
+/// *replaces* the inherited one for the probe; `None` = legacy behavior.
+pub async fn find_python_with_path(caller_path: Option<&str>) -> Option<Vec<String>> {
     let candidates: &[&[&str]] = if cfg!(windows) {
         &[&["python"], &["py", "-3"]]
     } else {
         &[&["python3"], &["python"]]
     };
 
+    let env: Option<Vec<(&str, &str)>> = caller_path.map(|p| vec![("PATH", p)]);
     for candidate in candidates {
         let mut argv: Vec<&str> = candidate.to_vec();
         argv.push("--version");
@@ -313,7 +338,7 @@ pub async fn find_python() -> Option<Vec<String>> {
         if let Ok(output) = fbuild_core::subprocess::run_command(
             &argv,
             None,
-            None,
+            env.as_deref(),
             Some(std::time::Duration::from_secs(5)),
         )
         .await

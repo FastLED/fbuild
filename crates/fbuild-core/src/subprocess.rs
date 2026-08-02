@@ -661,6 +661,14 @@ fn compute_env(program: &str, overlay: Option<&[(&str, &str)]>) -> Option<Vec<(S
 
         if let Some(vars) = overlay {
             for (k, v) in vars {
+                // Windows env var names are case-insensitive but the map is
+                // not: the parent env often spells the path var "Path"
+                // while overlays say "PATH". Drop any case-variant of the
+                // key first — otherwise both spellings reach `Command::env`,
+                // whose case-insensitive child-env map lets whichever is
+                // applied last win, silently discarding the overlay value
+                // (FastLED/fbuild#1219).
+                env_map.retain(|existing, _| !existing.eq_ignore_ascii_case(k));
                 env_map.insert((*k).to_string(), (*v).to_string());
             }
         }
@@ -773,6 +781,28 @@ mod tests {
     async fn run_empty_args() {
         let result = run_command(&[], None, None, None).await;
         assert!(result.is_err());
+    }
+
+    /// FastLED/fbuild#1219: a `("PATH", ...)` env overlay must be the PATH
+    /// the child actually sees. On Windows the parent env usually spells
+    /// the variable "Path"; without the case-insensitive dedup in
+    /// `compute_env` both spellings reach `Command::env` and the overlay
+    /// value is silently discarded.
+    #[tokio::test]
+    async fn env_overlay_path_reaches_child_over_case_variant() {
+        // `cmd` resolves via the OS system-dir fallback and `/bin/sh` is
+        // absolute, so neither spawn depends on the clobbered PATH.
+        let args = if cfg!(windows) {
+            vec!["cmd", "/C", "echo %PATH%"]
+        } else {
+            vec!["/bin/sh", "-c", "echo \"$PATH\""]
+        };
+        let overlay = [("PATH", "fbuild-1219-overlay-marker")];
+        let result = run_command(&args, None, Some(&overlay), None)
+            .await
+            .unwrap();
+        assert!(result.success());
+        assert_eq!(result.stdout.trim(), "fbuild-1219-overlay-marker");
     }
 
     #[test]

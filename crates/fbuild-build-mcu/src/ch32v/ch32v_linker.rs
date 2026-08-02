@@ -24,6 +24,10 @@ pub struct Ch32vLinker {
     max_ram: Option<u64>,
     memory_defsyms: Vec<String>,
     verbose: bool,
+    /// The CLI caller's PATH, so a bare-name objcopy spawn resolves against
+    /// the caller's environment instead of the daemon's spawn-time PATH
+    /// (FastLED/fbuild#1219). `None` = daemon env.
+    caller_path: Option<String>,
 }
 
 impl Ch32vLinker {
@@ -52,11 +56,20 @@ impl Ch32vLinker {
             max_ram,
             memory_defsyms: Vec::new(),
             verbose,
+            caller_path: None,
         }
     }
 
     pub fn with_memory_defsyms(mut self, flags: Vec<String>) -> Self {
         self.memory_defsyms = flags;
+        self
+    }
+
+    /// Builder: forward the CLI caller's PATH to the objcopy spawn so a
+    /// bare-name invocation resolves against the caller's environment
+    /// (FastLED/fbuild#1219).
+    pub fn with_caller_path(mut self, caller_path: Option<String>) -> Self {
+        self.caller_path = caller_path;
         self
     }
 
@@ -146,13 +159,16 @@ impl Linker for Ch32vLinker {
     }
 
     async fn convert_firmware(&self, elf_path: &Path, output_dir: &Path) -> Result<PathBuf> {
-        crate::linker::LinkerBase::objcopy_firmware(
+        // FastLED/fbuild#1219: resolve/run objcopy under the caller's PATH.
+        let env: Option<Vec<(&str, &str)>> = self.caller_path.as_deref().map(|p| vec![("PATH", p)]);
+        crate::linker::LinkerBase::objcopy_firmware_with_env(
             &self.objcopy_path,
             elf_path,
             output_dir,
             &self.mcu_config.objcopy.output_format,
             &self.mcu_config.objcopy.remove_sections,
             "riscv-none-elf-objcopy",
+            env.as_deref(),
         )
         .await
     }
@@ -263,6 +279,30 @@ mod tests {
             let index = args.iter().position(|arg| arg == flag).unwrap();
             assert!(index < script_index);
         }
+    }
+
+    /// FastLED/fbuild#1219: `with_caller_path` must store the forwarded CLI
+    /// PATH (consumed as the objcopy spawn's PATH override) and default to
+    /// `None` (daemon env) when not set.
+    #[test]
+    fn test_with_caller_path_stores_value() {
+        let make = || {
+            Ch32vLinker::new(
+                PathBuf::from("gcc"),
+                PathBuf::from("ar"),
+                PathBuf::from("objcopy"),
+                PathBuf::from("size"),
+                PathBuf::from("link.ld"),
+                get_ch32v_config_for_mcu("ch32v003").unwrap(),
+                BuildProfile::Release,
+                None,
+                None,
+                false,
+            )
+        };
+        assert!(make().caller_path.is_none());
+        let linker = make().with_caller_path(Some("/opt/tools/bin".to_string()));
+        assert_eq!(linker.caller_path.as_deref(), Some("/opt/tools/bin"));
     }
 
     #[test]

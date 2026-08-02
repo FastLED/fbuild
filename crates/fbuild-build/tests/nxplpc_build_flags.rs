@@ -85,6 +85,7 @@ async fn lpc845brk_propagates_build_flags_to_library_compile_587() {
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
         bloat_analysis: false,
+        caller_path: None,
     };
 
     let orchestrator = fbuild_build::nxplpc::orchestrator::NxpLpcOrchestrator;

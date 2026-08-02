@@ -117,6 +117,7 @@ pub async fn run_build(
         src_dir: std::env::var("PLATFORMIO_SRC_DIR")
             .ok()
             .filter(|s| !s.is_empty()),
+        caller_path: std::env::var("PATH").ok(),
         output_dir,
         pio_env: daemon_client::capture_pio_env(),
         bloat_analysis,

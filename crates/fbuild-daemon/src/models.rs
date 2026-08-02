@@ -52,6 +52,10 @@ pub struct BuildRequest {
     /// does not inherit the caller's env vars.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub src_dir: Option<String>,
+    /// The CLI caller's PATH, forwarded so daemon-side bare-name tool
+    /// spawns resolve against the caller's environment (FastLED/fbuild#1219).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub caller_path: Option<String>,
     /// Export a tooling-friendly artifact bundle to this directory after build.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub output_dir: Option<String>,
@@ -666,6 +670,23 @@ mod tests {
         let json = r#"{"project_dir": "/tmp/p", "src_dir": "examples/AutoResearch"}"#;
         let req: BuildRequest = serde_json::from_str(json).unwrap();
         assert_eq!(req.src_dir.unwrap(), "examples/AutoResearch");
+    }
+
+    /// FastLED/fbuild#1219: `caller_path` is optional on the wire — requests
+    /// from older CLIs that omit it must deserialize to `None` (legacy
+    /// daemon-env behavior), and the forwarded value must round-trip.
+    #[test]
+    fn build_request_caller_path_defaults_to_none() {
+        let json = r#"{"project_dir": "/tmp/p"}"#;
+        let req: BuildRequest = serde_json::from_str(json).unwrap();
+        assert!(req.caller_path.is_none());
+    }
+
+    #[test]
+    fn build_request_caller_path_forwarded() {
+        let json = r#"{"project_dir": "/tmp/p", "caller_path": "/usr/bin:/opt/tools/bin"}"#;
+        let req: BuildRequest = serde_json::from_str(json).unwrap();
+        assert_eq!(req.caller_path.unwrap(), "/usr/bin:/opt/tools/bin");
     }
 
     #[test]

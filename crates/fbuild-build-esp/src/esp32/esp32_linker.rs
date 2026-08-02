@@ -151,6 +151,10 @@ pub struct Esp32Linker {
     /// falls back to an `esptool` on PATH. See FastLED/fbuild#954.
     esptool_bin: Option<PathBuf>,
     verbose: bool,
+    /// The CLI caller's PATH, so the bare-`esptool` fallback resolves
+    /// against the caller's environment instead of the daemon's
+    /// spawn-time PATH (FastLED/fbuild#1219). `None` = daemon env.
+    caller_path: Option<String>,
 }
 
 impl Esp32Linker {
@@ -189,7 +193,16 @@ impl Esp32Linker {
             max_ram,
             esptool_bin,
             verbose,
+            caller_path: None,
         }
+    }
+
+    /// Builder: forward the CLI caller's PATH to the esptool `elf2image`
+    /// spawn so the bare-name fallback resolves against the caller's
+    /// environment (FastLED/fbuild#1219).
+    pub fn with_caller_path(mut self, caller_path: Option<String>) -> Self {
+        self.caller_path = caller_path;
+        self
     }
 
     /// Build all linker flags: SDK flags + profile-specific flags.
@@ -472,7 +485,16 @@ impl Linker for Esp32Linker {
 
         tracing::info!("elf2image: {}", argv.join(" "));
 
-        match run_command(&args, None, None, Some(std::time::Duration::from_secs(60))).await {
+        // FastLED/fbuild#1219: resolve/run esptool under the caller's PATH.
+        let env: Option<Vec<(&str, &str)>> = self.caller_path.as_deref().map(|p| vec![("PATH", p)]);
+        match run_command(
+            &args,
+            None,
+            env.as_deref(),
+            Some(std::time::Duration::from_secs(60)),
+        )
+        .await
+        {
             Ok(result) if result.success() => {
                 let cache = self.current_bin_cache(&elf_out, &flash_size)?;
                 if let Err(e) = save_json(&self.bin_cache_path(output_dir), &cache) {

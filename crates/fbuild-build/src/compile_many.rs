@@ -373,6 +373,7 @@ async fn build_one_sketch(inputs: SketchBuildInputs) -> SketchResult {
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
         bloat_analysis: false,
+        caller_path: None,
     };
 
     let outcome = match get_orchestrator(platform) {

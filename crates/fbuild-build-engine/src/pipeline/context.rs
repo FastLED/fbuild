@@ -69,9 +69,13 @@ impl BuildContext {
         let pio_overrides = fbuild_config::PioEnvOverrides::from_map(params.pio_env.clone());
         let config =
             fbuild_config::PlatformIOConfig::from_path_with_overrides(&ini_path, pio_overrides)?;
-        let overlay =
-            crate::script_runtime::resolve_extra_script_overlay(project_dir, env_name, &config)
-                .await?;
+        let overlay = crate::script_runtime::resolve_extra_script_overlay_with_path(
+            project_dir,
+            env_name,
+            &config,
+            params.caller_path.as_deref(),
+        )
+        .await?;
         if let Some(p) = perf.as_mut() {
             p.record("config-parse", t0.elapsed());
         }
