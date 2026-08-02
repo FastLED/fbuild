@@ -467,6 +467,30 @@ impl LinkerBase {
         remove_sections: &[String],
         tool_label: &str,
     ) -> Result<PathBuf> {
+        Self::objcopy_firmware_with_env(
+            objcopy_path,
+            elf_path,
+            output_dir,
+            output_format,
+            remove_sections,
+            tool_label,
+            None,
+        )
+        .await
+    }
+
+    /// As [`Self::objcopy_firmware`] but with explicit child env vars — used
+    /// to run a bare-name objcopy under the CLI caller's PATH instead of the
+    /// daemon's spawn-time PATH (FastLED/fbuild#1219). `None` = daemon env.
+    pub async fn objcopy_firmware_with_env(
+        objcopy_path: &Path,
+        elf_path: &Path,
+        output_dir: &Path,
+        output_format: &str,
+        remove_sections: &[String],
+        tool_label: &str,
+        env: Option<&[(&str, &str)]>,
+    ) -> Result<PathBuf> {
         use fbuild_core::subprocess::run_command;
 
         let ext = match output_format {
@@ -494,7 +518,7 @@ impl LinkerBase {
         let result = run_command(
             &args_ref,
             None,
-            None,
+            env,
             Some(std::time::Duration::from_secs(60)),
         )
         .await?;

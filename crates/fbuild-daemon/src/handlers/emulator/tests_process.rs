@@ -149,6 +149,7 @@ async fn run_real_esp32s3_fixture_in_qemu() {
         ],
         watch_set_cache: None,
         bloat_analysis: false,
+        caller_path: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;

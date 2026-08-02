@@ -281,6 +281,7 @@ pub async fn build(
             extra_build_flags: Vec::new(),
             watch_set_cache: Some(Arc::clone(&ctx.watch_set_cache) as Arc<_>),
             bloat_analysis: req.bloat_analysis,
+            caller_path: req.caller_path.clone(),
         };
 
         let project_dir_desc = req.project_dir.clone();
@@ -726,6 +727,7 @@ pub async fn build(
             extra_build_flags: Vec::new(),
             watch_set_cache: Some(Arc::clone(&ctx.watch_set_cache) as Arc<_>),
             bloat_analysis: req.bloat_analysis,
+            caller_path: req.caller_path,
         };
 
         // fbuild#813 / #815: orchestrator.build is async, call directly.

@@ -37,6 +37,10 @@ pub struct Esp8266Linker {
     max_flash: Option<u64>,
     max_ram: Option<u64>,
     verbose: bool,
+    /// The CLI caller's PATH, so the bare-`esptool` spawn resolves against
+    /// the caller's environment instead of the daemon's spawn-time PATH
+    /// (FastLED/fbuild#1219). `None` = daemon env.
+    caller_path: Option<String>,
 }
 
 impl Esp8266Linker {
@@ -76,7 +80,16 @@ impl Esp8266Linker {
             max_flash,
             max_ram,
             verbose,
+            caller_path: None,
         }
+    }
+
+    /// Builder: forward the CLI caller's PATH to the esptool `elf2image`
+    /// spawn so the bare-name invocation resolves against the caller's
+    /// environment (FastLED/fbuild#1219).
+    pub fn with_caller_path(mut self, caller_path: Option<String>) -> Self {
+        self.caller_path = caller_path;
+        self
     }
 }
 
@@ -275,7 +288,16 @@ impl Linker for Esp8266Linker {
             &bin_str,
         ];
 
-        match run_command(&args, None, None, Some(std::time::Duration::from_secs(30))).await {
+        // FastLED/fbuild#1219: resolve/run esptool under the caller's PATH.
+        let env: Option<Vec<(&str, &str)>> = self.caller_path.as_deref().map(|p| vec![("PATH", p)]);
+        match run_command(
+            &args,
+            None,
+            env.as_deref(),
+            Some(std::time::Duration::from_secs(30)),
+        )
+        .await
+        {
             Ok(result) if result.success() => {
                 // Verify the output file was actually created with content.
                 // ESP8266 esptool may create segmented files (firmware.bin-0x00000.bin)

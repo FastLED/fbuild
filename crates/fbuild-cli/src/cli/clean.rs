@@ -56,6 +56,7 @@ pub async fn run_clean(
         src_dir: std::env::var("PLATFORMIO_SRC_DIR")
             .ok()
             .filter(|value| !value.is_empty()),
+        caller_path: std::env::var("PATH").ok(),
         output_dir: None,
         pio_env: daemon_client::capture_pio_env(),
         bloat_analysis: false,
