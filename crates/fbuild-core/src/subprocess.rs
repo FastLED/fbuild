@@ -619,6 +619,31 @@ fn bytes_to_lines_string(raw: &[u8]) -> String {
     out
 }
 
+/// PATH env overlay for a spawn whose program may be a bare tool name
+/// (FastLED/fbuild#1234).
+///
+/// Absolute and relative-path programs don't consult PATH at spawn time,
+/// so this returns `None` for them — provisioned tools stay untouched. A
+/// bare name (a single normal path component: no separators, no Windows
+/// drive prefix, no `.`/`..`) combined with a forwarded CLI caller PATH
+/// yields a `[("PATH", ...)]` overlay for the [`run_command`] family, so
+/// the spawn resolves against the caller's environment instead of the
+/// long-lived daemon's boot-time PATH.
+pub fn bare_name_path_overlay<'a>(
+    program: &str,
+    caller_path: Option<&'a str>,
+) -> Option<Vec<(&'static str, &'a str)>> {
+    let mut components = Path::new(program).components();
+    let is_bare_name = matches!(
+        (components.next(), components.next()),
+        (Some(std::path::Component::Normal(_)), None)
+    );
+    if !is_bare_name {
+        return None;
+    }
+    caller_path.map(|path| vec![("PATH", path)])
+}
+
 /// Build the env vector to pass to the child.
 ///
 /// * On Unix: when `overlay` is Some, merge it into the current
@@ -781,6 +806,40 @@ mod tests {
     async fn run_empty_args() {
         let result = run_command(&[], None, None, None).await;
         assert!(result.is_err());
+    }
+
+    /// FastLED/fbuild#1234: a bare tool name plus a forwarded caller PATH
+    /// yields a PATH overlay; anything already resolved to a path — where
+    /// the OS never consults PATH — must stay untouched.
+    #[test]
+    fn bare_name_path_overlay_applies_only_to_bare_names() {
+        assert_eq!(
+            bare_name_path_overlay("esptool", Some("/opt/tools/bin")),
+            Some(vec![("PATH", "/opt/tools/bin")])
+        );
+        assert_eq!(
+            bare_name_path_overlay("avrdude.exe", Some("/opt/tools/bin")),
+            Some(vec![("PATH", "/opt/tools/bin")])
+        );
+        // Bare name without a caller PATH: keep legacy daemon-env behavior.
+        assert_eq!(bare_name_path_overlay("esptool", None), None);
+        // Absolute and relative paths never trigger a PATH lookup.
+        let absolute = if cfg!(windows) {
+            r"C:\tools\esptool\esptool.exe"
+        } else {
+            "/usr/local/bin/esptool"
+        };
+        assert_eq!(bare_name_path_overlay(absolute, Some("/opt/bin")), None);
+        assert_eq!(bare_name_path_overlay("./esptool", Some("/opt/bin")), None);
+        assert_eq!(
+            bare_name_path_overlay("tools/esptool", Some("/opt/bin")),
+            None
+        );
+        #[cfg(windows)]
+        assert_eq!(
+            bare_name_path_overlay(r"tools\esptool.exe", Some("/opt/bin")),
+            None
+        );
     }
 
     /// FastLED/fbuild#1219: a `("PATH", ...)` env overlay must be the PATH

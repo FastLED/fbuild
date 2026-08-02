@@ -29,6 +29,9 @@ pub struct FlashConfig {
     pub verbose_flag: String,
     /// Path to the firmware HEX to flash.
     pub firmware_path: PathBuf,
+    /// The requesting CLI's PATH, applied as a spawn-time PATH overlay
+    /// when `loader_path` is a bare name (FastLED/fbuild#1234).
+    pub caller_path: Option<String>,
 }
 
 /// Outcome of a single subprocess attempt.
@@ -120,6 +123,10 @@ pub async fn run_with_retry(
         firmware_abs.to_string_lossy().to_string(),
     ];
     let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
+    // FastLED/fbuild#1234: a bare `teensy_loader_cli` fallback must
+    // resolve against the requesting CLI's PATH, not the daemon's.
+    let env_overlay =
+        fbuild_core::subprocess::bare_name_path_overlay(&args[0], cfg.caller_path.as_deref());
 
     if verbose {
         tracing::info!(
@@ -142,7 +149,13 @@ pub async fn run_with_retry(
         } else {
             subsequent_attempt_timeout
         };
-        let result = run_command(&args_ref, flash_cwd, None, Some(attempt_timeout)).await?;
+        let result = run_command(
+            &args_ref,
+            flash_cwd,
+            env_overlay.as_deref(),
+            Some(attempt_timeout),
+        )
+        .await?;
         let success = result.success();
         let exit_code = result.exit_code;
         let stdout = result.stdout;

@@ -137,6 +137,11 @@ pub struct DeployRequest {
     /// Override for PLATFORMIO_SRC_DIR — the source directory to compile.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub src_dir: Option<String>,
+    /// The CLI caller's PATH, forwarded so deploy-time bare-name tool
+    /// spawns (esptool, avrdude, ...) resolve against the caller's
+    /// environment (FastLED/fbuild#1234).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub caller_path: Option<String>,
     /// Export a tooling-friendly artifact bundle to this directory after build.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub output_dir: Option<String>,
@@ -686,6 +691,23 @@ mod tests {
     fn build_request_caller_path_forwarded() {
         let json = r#"{"project_dir": "/tmp/p", "caller_path": "/usr/bin:/opt/tools/bin"}"#;
         let req: BuildRequest = serde_json::from_str(json).unwrap();
+        assert_eq!(req.caller_path.unwrap(), "/usr/bin:/opt/tools/bin");
+    }
+
+    /// FastLED/fbuild#1234: `caller_path` is optional on the wire — deploy
+    /// requests from older CLIs that omit it must deserialize to `None`
+    /// (legacy daemon-env behavior), and the forwarded value must round-trip.
+    #[test]
+    fn deploy_request_caller_path_defaults_to_none() {
+        let json = r#"{"project_dir": "/tmp/p"}"#;
+        let req: DeployRequest = serde_json::from_str(json).unwrap();
+        assert!(req.caller_path.is_none());
+    }
+
+    #[test]
+    fn deploy_request_caller_path_forwarded() {
+        let json = r#"{"project_dir": "/tmp/p", "caller_path": "/usr/bin:/opt/tools/bin"}"#;
+        let req: DeployRequest = serde_json::from_str(json).unwrap();
         assert_eq!(req.caller_path.unwrap(), "/usr/bin:/opt/tools/bin");
     }
 

@@ -48,6 +48,33 @@ fn test_esp32_deployer_creation() {
     assert_eq!(deployer.before_reset, "default-reset");
 }
 
+/// FastLED/fbuild#1234: the caller PATH threaded from the deploy request
+/// must be stored on the deployer (it defaults to `None` — legacy
+/// daemon-env behavior), and the bare `esptool` program name it spawns
+/// must qualify for the PATH overlay.
+#[test]
+fn with_caller_path_stores_the_requesting_cli_path() {
+    let params = test_esptool_params();
+    let deployer = Esp32Deployer::new(
+        "esp32c6", "460800", "0x0", "0x8000", "0x10000", &params, false,
+    );
+    assert_eq!(deployer.caller_path, None);
+
+    let deployer = deployer.with_caller_path(Some("/opt/tools/bin".to_string()));
+    assert_eq!(deployer.caller_path.as_deref(), Some("/opt/tools/bin"));
+
+    // The esptool program is a bare name, so the deploy-time spawn gets
+    // the [("PATH", ...)] overlay from the stored caller PATH.
+    let esptool = Esp32Deployer::find_esptool();
+    assert_eq!(
+        fbuild_core::subprocess::bare_name_path_overlay(
+            &esptool[0],
+            deployer.caller_path.as_deref()
+        ),
+        Some(vec![("PATH", "/opt/tools/bin")])
+    );
+}
+
 #[test]
 fn qemu_flash_size_resolution_accepts_supported_sizes() {
     let mut board = fbuild_test_support::board_for_test("esp32-s3-devkitc-1");

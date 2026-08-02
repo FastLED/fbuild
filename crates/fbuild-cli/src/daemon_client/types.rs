@@ -132,6 +132,10 @@ pub struct DeployRequest {
     /// Override for PLATFORMIO_SRC_DIR - forwarded from caller's environment.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub src_dir: Option<String>,
+    /// The CLI caller's PATH, forwarded so deploy-time bare-name tool
+    /// spawns resolve against the caller's environment (FastLED/fbuild#1234).
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub caller_path: Option<String>,
     /// Export a tooling-friendly artifact bundle to this directory after build.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub output_dir: Option<String>,
