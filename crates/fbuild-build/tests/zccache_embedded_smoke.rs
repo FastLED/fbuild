@@ -37,12 +37,7 @@ fn find_c_compiler() -> NormalizedPath {
         panic!("clang.exe or gcc.exe must be installed for this smoke test");
     }
     for name in ["cc", "clang", "gcc"] {
-        if let Some(candidate) = path_dirs
-            .iter()
-            .map(|dir| dir.join(name))
-            .find(|candidate| candidate.is_file())
-            .map(NormalizedPath::from)
-        {
+        if let Some(candidate) = on_path(name) {
             return candidate;
         }
     }
