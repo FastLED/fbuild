@@ -34,7 +34,9 @@ const UF2_MAGIC_START1: u32 = 0x9E5D_5157;
 const UF2_MAGIC_END: u32 = 0x0AB1_6F30;
 const UF2_FLAG_FAMILY_ID_PRESENT: u32 = 0x0000_2000;
 const RP2040_FAMILY_ID: u32 = 0xE48B_FF56;
+const RP2_ABSOLUTE_FAMILY_ID: u32 = 0xE48B_FF57;
 const RP2350_FAMILY_ID: u32 = 0xE48B_FF59;
+const RP2350_ERRATA_ABSOLUTE_ADDRESS: u32 = 0x10FF_FF00;
 // fbuild's firmware.bin is the complete flash image: it starts with the
 // second-stage bootloader at the RP2040 XIP address 0x1000_0000. The 0x2000
 // default used by Arduino-Pico's uf2conv.py is only for app-only BINs whose
@@ -359,19 +361,19 @@ fn select_appeared_volume(
 }
 
 /// Decide how the pre-touch BOOTSEL scan constrains the deploy. A single
-/// mounted volume wins outright — the manual-BOOTSEL recovery flow
-/// (FastLED/fbuild#1040) depends on that even when a runtime selector was
-/// passed. Several volumes are only tolerated when a runtime port is about
-/// to be touched, so the post-touch scan can attribute the volume that
-/// newly appears; otherwise the historical hard error stands.
+/// mounted volume wins for the manual-BOOTSEL recovery flow
+/// (FastLED/fbuild#1040). When a runtime port can be attributed, every
+/// pre-existing volume is stale for that target and only a volume appearing
+/// after the touch is eligible. Otherwise the historical multi-volume hard
+/// error stands.
 fn pretouch_volume_policy(
     mounted: Vec<PathBuf>,
     can_attribute: bool,
 ) -> Result<(Option<PathBuf>, BTreeSet<PathBuf>)> {
+    if can_attribute && !mounted.is_empty() {
+        return Ok((None, mounted.into_iter().collect()));
+    }
     if mounted.len() > 1 {
-        if can_attribute {
-            return Ok((None, mounted.into_iter().collect()));
-        }
         return Err(multiple_bootsel_volumes_error(&mounted));
     }
     Ok((mounted.into_iter().next(), BTreeSet::new()))
@@ -988,10 +990,18 @@ fn validate_uf2(bytes: &[u8], expected_family: u32) -> Result<Uf2Target> {
             bytes.len()
         )));
     }
-    let block_count = bytes.len() / UF2_BLOCK_SIZE;
-    let mut seen = vec![false; block_count];
-    let mut seen_ranges = Vec::with_capacity(block_count);
+    let expected_block_count = bytes
+        .chunks_exact(UF2_BLOCK_SIZE)
+        .filter(|block| {
+            u32::from_le_bytes(block[28..32].try_into().expect("four-byte UF2 family"))
+                == expected_family
+        })
+        .count();
+    let mut seen = vec![false; expected_block_count];
+    let mut seen_ranges = Vec::with_capacity(expected_block_count);
     let mut image_target = None;
+    let mut saw_expected_family = false;
+    let mut saw_rp2350_absolute_block = false;
     let flash_end = if expected_family == RP2350_FAMILY_ID {
         0x1400_0000u32
     } else {
@@ -1013,18 +1023,38 @@ fn validate_uf2(bytes: &[u8], expected_family: u32) -> Result<Uf2Target> {
                 "malformed RP2040 UF2: invalid magic in block {index}"
             )));
         }
-        if field(8) & UF2_FLAG_FAMILY_ID_PRESENT == 0 || field(28) != expected_family {
+        let family = field(28);
+        let is_rp2350_absolute_block =
+            expected_family == RP2350_FAMILY_ID && family == RP2_ABSOLUTE_FAMILY_ID;
+        if field(8) & UF2_FLAG_FAMILY_ID_PRESENT == 0
+            || (family != expected_family && !is_rp2350_absolute_block)
+        {
             return Err(FbuildError::DeployFailed(format!(
                 "wrong UF2 family in block {index}: expected 0x{expected_family:08X}, found 0x{:08X}",
-                field(28)
+                family
             )));
         }
+        saw_expected_family |= family == expected_family;
         let target_address = field(12);
         let Some(target_end) = target_address.checked_add(UF2_PAYLOAD_SIZE as u32) else {
             return Err(FbuildError::DeployFailed(format!(
                 "malformed RP2040 UF2 block metadata at block {index}"
             )));
         };
+        if is_rp2350_absolute_block {
+            if std::mem::replace(&mut saw_rp2350_absolute_block, true)
+                || target_address != RP2350_ERRATA_ABSOLUTE_ADDRESS
+                || field(16) != UF2_PAYLOAD_SIZE as u32
+                || field(20) != 0
+                || field(24) != 2
+            {
+                return Err(FbuildError::DeployFailed(format!(
+                    "malformed RP2350 absolute UF2 block metadata at block {index}"
+                )));
+            }
+            seen_ranges.push((target_address, target_end));
+            continue;
+        }
         let block_number = field(20) as usize;
         let is_flash = target_address >= RP2040_UF2_BASE_ADDRESS
             && target_end <= flash_end
@@ -1042,8 +1072,8 @@ fn validate_uf2(bytes: &[u8], expected_family: u32) -> Result<Uf2Target> {
             )));
         };
         if field(16) != UF2_PAYLOAD_SIZE as u32
-            || block_number >= block_count
-            || field(24) as usize != block_count
+            || block_number >= expected_block_count
+            || field(24) as usize != expected_block_count
         {
             return Err(FbuildError::DeployFailed(format!(
                 "malformed RP2040 UF2 block metadata at block {index}"
@@ -1066,6 +1096,11 @@ fn validate_uf2(bytes: &[u8], expected_family: u32) -> Result<Uf2Target> {
         return Err(FbuildError::DeployFailed(
             "malformed RP2040 UF2: block-number sequence is incomplete".to_string(),
         ));
+    }
+    if !saw_expected_family {
+        return Err(FbuildError::DeployFailed(format!(
+            "wrong UF2 family: image contains no blocks for expected family 0x{expected_family:08X}"
+        )));
     }
     seen_ranges.sort_unstable_by_key(|&(start, _)| start);
     if let Some(overlap) = seen_ranges
@@ -1592,13 +1627,12 @@ impl Deployer for Rp2040Deployer {
                 // failure here falls back to the historical multi-volume
                 // hard error rather than surfacing a selector error that a
                 // single-volume deploy would never have raised.
-                let can_attribute = mounted.len() > 1
-                    && selector
-                        .map(|value| resolve_requested_runtime_target(value, &current_ports))
-                        .transpose()
-                        .ok()
-                        .flatten()
-                        .is_some();
+                let can_attribute = selector
+                    .map(|value| resolve_requested_runtime_target(value, &current_ports))
+                    .transpose()
+                    .ok()
+                    .flatten()
+                    .is_some();
                 pretouch_volume_policy(mounted, can_attribute)?
             }
         };
@@ -2117,18 +2151,19 @@ mod tests {
     }
 
     #[test]
-    fn pretouch_policy_keeps_single_volume_and_gates_multi_volume_on_attribution() {
+    fn pretouch_policy_preserves_manual_recovery_but_attributes_runtime_targets() {
         assert_eq!(
             pretouch_volume_policy(Vec::new(), false).unwrap(),
             (None, BTreeSet::new())
         );
-        // A single mounted volume wins outright, selector or not (#1040).
-        for can_attribute in [true, false] {
-            assert_eq!(
-                pretouch_volume_policy(vec![PathBuf::from("only")], can_attribute).unwrap(),
-                (Some(PathBuf::from("only")), BTreeSet::new())
-            );
-        }
+        assert_eq!(
+            pretouch_volume_policy(vec![PathBuf::from("only")], false).unwrap(),
+            (Some(PathBuf::from("only")), BTreeSet::new())
+        );
+        assert_eq!(
+            pretouch_volume_policy(vec![PathBuf::from("only")], true).unwrap(),
+            (None, BTreeSet::from([PathBuf::from("only")]))
+        );
         let (volume, before) =
             pretouch_volume_policy(vec![PathBuf::from("a"), PathBuf::from("b")], true).unwrap();
         assert_eq!(volume, None);
@@ -2304,6 +2339,30 @@ mod tests {
         overlapping[512 + 12..512 + 16].copy_from_slice(&RP2040_UF2_BASE_ADDRESS.to_le_bytes());
         let error = validate_uf2(&overlapping, RP2040_FAMILY_ID).unwrap_err();
         assert!(error.to_string().contains("overlapping target address"));
+    }
+
+    #[test]
+    fn accepts_rp2350_uf2_with_errata_absolute_block() {
+        let firmware = encode_uf2_for_family(&[0; UF2_PAYLOAD_SIZE + 1], RP2350_FAMILY_ID);
+        let mut absolute = firmware[..UF2_BLOCK_SIZE].to_vec();
+        absolute[12..16].copy_from_slice(&RP2350_ERRATA_ABSOLUTE_ADDRESS.to_le_bytes());
+        absolute[28..32].copy_from_slice(&RP2_ABSOLUTE_FAMILY_ID.to_le_bytes());
+        let mut uf2 = absolute.clone();
+        uf2.extend_from_slice(&firmware);
+
+        assert_eq!(
+            validate_uf2(&uf2, RP2350_FAMILY_ID).unwrap(),
+            Uf2Target::Flash
+        );
+
+        let mut overlapping = uf2.clone();
+        overlapping[UF2_BLOCK_SIZE + 12..UF2_BLOCK_SIZE + 16]
+            .copy_from_slice(&RP2350_ERRATA_ABSOLUTE_ADDRESS.to_le_bytes());
+        let error = validate_uf2(&overlapping, RP2350_FAMILY_ID).unwrap_err();
+        assert!(error.to_string().contains("overlapping target address"));
+
+        let error = validate_uf2(&absolute, RP2350_FAMILY_ID).unwrap_err();
+        assert!(error.to_string().contains("wrong UF2 family"));
     }
 
     #[test]
