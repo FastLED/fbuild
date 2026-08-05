@@ -25,6 +25,10 @@ use crate::build_fingerprint::{
 };
 use crate::compile_database::TargetArchitecture;
 use crate::compiler::Compiler as _;
+use crate::framework_libs::{
+    library_select_kv_store, resolve_framework_library_sources_active_declared,
+    resolve_framework_library_sources_cached, warn_if_lib_ldf_mode_unsupported,
+};
 use crate::generic_arm::{ArmCompiler, ArmLinker};
 use crate::pipeline;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
@@ -196,7 +200,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         let variant_dir = framework.get_variant_dir(&ctx.board.variant);
 
         let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
-        let sources = scanner.scan_all_filtered(
+        let mut sources = scanner.scan_all_filtered(
             Some(&core_dir),
             Some(&variant_dir),
             ctx.source_filter.as_deref(),
@@ -219,6 +223,55 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         }
         add_rp_manifest_defines(&framework_dir, &ctx.board.mcu, &mut defines);
         apply_rp_board_props(&board_props, &framework_dir, &mut defines);
+
+        // Arduino-Pico ships framework libraries (WiFi, SPI, Wire, ...) under
+        // `libraries/`. Mirror PlatformIO's LDF so their headers are visible
+        // and only the sources required by the project are compiled.
+        let framework_libs = framework.get_framework_libraries();
+        let framework_info = fbuild_packages::Package::get_info(&framework);
+        let declared_deps = ctx
+            .config
+            .get_lib_deps(&params.env_name)
+            .unwrap_or_default();
+        warn_if_lib_ldf_mode_unsupported(
+            ctx.config
+                .get_lib_ldf_mode(&params.env_name)
+                .ok()
+                .flatten()
+                .as_deref(),
+        );
+        let framework_library_sources = match library_select_kv_store() {
+            Some(store) => {
+                let key_inputs = fbuild_library_select::cache::CacheKeyInputs {
+                    toolchain_triple: "rp2040-arm-none-eabi",
+                    framework_install_path: &framework_info.install_path,
+                    framework_version: &framework_info.version,
+                    preprocessor_defines: &defines,
+                    declared_deps: &declared_deps,
+                };
+                resolve_framework_library_sources_cached(
+                    &framework_libs,
+                    &params.project_dir,
+                    &ctx.src_dir,
+                    &key_inputs,
+                    store,
+                )
+            }
+            None => resolve_framework_library_sources_active_declared(
+                &framework_libs,
+                &params.project_dir,
+                &ctx.src_dir,
+                &defines,
+                &declared_deps,
+            ),
+        };
+        if !framework_library_sources.is_empty() {
+            tracing::info!(
+                "RP2040 framework library sources added: {}",
+                framework_library_sources.len()
+            );
+            sources.core_sources.extend(framework_library_sources);
+        }
         // Use the resolved core_dir/variant_dir instead of board.get_include_paths():
         // RP2040 board metadata reports `core = earlephilhower`, while the actual
         // package directory is `cores/rp2040/`.
@@ -232,6 +285,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             add_rp_family_includes(&framework_include, &ctx.board.mcu, &mut include_dirs);
         }
         add_rp_board_includes(&board_props, &framework_dir, &mut include_dirs);
+        include_dirs.extend(framework.get_framework_library_include_dirs());
         include_dirs.push(ctx.src_dir.clone());
         pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
         // Toolchain sysroot includes

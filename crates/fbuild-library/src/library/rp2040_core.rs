@@ -6,6 +6,7 @@
 
 use std::path::{Path, PathBuf};
 
+use crate::library::framework_library::{FrameworkLibrary, discover_framework_libraries};
 use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 
 const RP2040_CORE_VERSION: &str = "4.5.3";
@@ -168,6 +169,19 @@ impl Rp2040Cores {
         let core_dir = self.get_core_dir(core_name);
         collect_sources(&core_dir)
     }
+
+    /// List bundled Arduino-Pico framework libraries such as WiFi and SPI.
+    pub fn get_framework_libraries(&self) -> Vec<FrameworkLibrary> {
+        discover_framework_libraries(&self.get_libraries_dir())
+    }
+
+    /// All include directories needed to make bundled framework headers visible.
+    pub fn get_framework_library_include_dirs(&self) -> Vec<PathBuf> {
+        self.get_framework_libraries()
+            .into_iter()
+            .flat_map(|library| library.include_dirs)
+            .collect()
+    }
 }
 
 #[async_trait::async_trait]
@@ -315,6 +329,29 @@ mod tests {
         let core = Rp2040Cores::new(tmp.path());
         let sdk_dir = core.get_pico_sdk_dir();
         assert!(sdk_dir.to_string_lossy().contains("pico-sdk"));
+    }
+
+    #[test]
+    fn test_framework_libraries_expose_arduino_pico_wifi_headers_and_sources() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let core = Rp2040Cores::with_cache_root(tmp.path(), &tmp.path().join("cache"));
+        let wifi_src = core.base.install_path().join("libraries/WiFi/src");
+        std::fs::create_dir_all(&wifi_src).unwrap();
+        std::fs::write(wifi_src.join("WiFi.h"), "").unwrap();
+        let wifi_cpp = wifi_src.join("WiFi.cpp");
+        std::fs::write(&wifi_cpp, "").unwrap();
+
+        let libraries = core.get_framework_libraries();
+        let wifi = libraries
+            .iter()
+            .find(|library| library.name == "WiFi")
+            .unwrap();
+        assert_eq!(wifi.include_dirs, vec![wifi_src.clone()]);
+        assert_eq!(wifi.source_files, vec![wifi_cpp]);
+        assert!(
+            core.get_framework_library_include_dirs()
+                .contains(&wifi_src)
+        );
     }
 
     #[test]
