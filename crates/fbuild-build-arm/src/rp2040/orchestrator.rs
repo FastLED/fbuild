@@ -26,8 +26,8 @@ use crate::build_fingerprint::{
 use crate::compile_database::TargetArchitecture;
 use crate::compiler::Compiler as _;
 use crate::framework_libs::{
-    library_select_kv_store, resolve_framework_library_selection_active_declared,
-    resolve_framework_library_selection_cached, warn_if_lib_ldf_mode_unsupported,
+    library_select_kv_store, resolve_framework_library_sources_active_declared,
+    resolve_framework_library_sources_cached, warn_if_lib_ldf_mode_unsupported,
 };
 use crate::generic_arm::{ArmCompiler, ArmLinker};
 use crate::pipeline;
@@ -223,6 +223,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         }
         add_rp_manifest_defines(&framework_dir, &ctx.board.mcu, &mut defines);
         apply_rp_board_props(&board_props, &framework_dir, &mut defines);
+        apply_rp_platform_net_defines(&framework_dir, &board_props, &mut defines)?;
 
         // Arduino-Pico ships framework libraries (WiFi, SPI, Wire, ...) under
         // `libraries/`. Mirror PlatformIO's LDF so their headers are visible
@@ -240,7 +241,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
                 .flatten()
                 .as_deref(),
         );
-        let framework_library_selection = match library_select_kv_store() {
+        let framework_library_sources = match library_select_kv_store() {
             Some(store) => {
                 let key_inputs = fbuild_library_select::cache::CacheKeyInputs {
                     toolchain_triple: "rp2040-arm-none-eabi",
@@ -249,7 +250,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
                     preprocessor_defines: &defines,
                     declared_deps: &declared_deps,
                 };
-                resolve_framework_library_selection_cached(
+                resolve_framework_library_sources_cached(
                     &framework_libs,
                     &params.project_dir,
                     &ctx.src_dir,
@@ -257,7 +258,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
                     store,
                 )
             }
-            None => resolve_framework_library_selection_active_declared(
+            None => resolve_framework_library_sources_active_declared(
                 &framework_libs,
                 &params.project_dir,
                 &ctx.src_dir,
@@ -265,14 +266,12 @@ impl BuildOrchestrator for Rp2040Orchestrator {
                 &declared_deps,
             ),
         };
-        if !framework_library_selection.source_files.is_empty() {
+        if !framework_library_sources.is_empty() {
             tracing::info!(
                 "RP2040 framework library sources added: {}",
-                framework_library_selection.source_files.len()
+                framework_library_sources.len()
             );
-            sources
-                .core_sources
-                .extend(framework_library_selection.source_files.clone());
+            sources.core_sources.extend(framework_library_sources);
         }
         // Use the resolved core_dir/variant_dir instead of board.get_include_paths():
         // RP2040 board metadata reports `core = earlephilhower`, while the actual
@@ -287,7 +286,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             add_rp_family_includes(&framework_include, &ctx.board.mcu, &mut include_dirs);
         }
         add_rp_board_includes(&board_props, &framework_dir, &mut include_dirs);
-        include_dirs.extend(framework_library_selection.include_dirs);
+        include_dirs.extend(framework.get_framework_library_include_dirs());
         include_dirs.push(ctx.src_dir.clone());
         pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
         // Toolchain sysroot includes
@@ -575,6 +574,9 @@ fn apply_rp_board_props(
         "usbstack_flags",
         "variantdefines",
         "led",
+        "libpicowdefs",
+        "wificc",
+        "sdfatdefines",
     ] {
         if let Some(flags) = props.get(key) {
             let expanded =
@@ -589,6 +591,36 @@ fn apply_rp_board_props(
     if let Some(value) = props.get("usb_product") {
         defines.insert("USB_PRODUCT".to_string(), value.clone());
     }
+}
+
+/// Apply Arduino-Pico's network compiler definitions after expanding values
+/// selected by the board's menu properties. These flags are declared by the
+/// framework rather than owned by an individual board, so they must be read
+/// from its platform metadata instead of being duplicated here.
+fn apply_rp_platform_net_defines(
+    framework_dir: &Path,
+    board_props: &Option<HashMap<String, String>>,
+    defines: &mut HashMap<String, String>,
+) -> Result<()> {
+    let platform_txt = framework_dir.join("platform.txt");
+    let content = std::fs::read_to_string(platform_txt)?;
+    let Some(flags) = content.lines().find_map(|line| {
+        line.trim()
+            .strip_prefix("compiler.netdefines=")
+            .map(str::trim)
+    }) else {
+        return Ok(());
+    };
+
+    let libpicowdefs = board_props
+        .as_ref()
+        .and_then(|props| props.get("libpicowdefs"))
+        .map(String::as_str)
+        .unwrap_or_default();
+    let expanded = flags.replace("{build.libpicowdefs}", libpicowdefs);
+    let tokens = fbuild_core::shell_split::split(&expanded);
+    apply_define_flags(&tokens, defines);
+    Ok(())
 }
 
 fn add_rp_board_includes(
@@ -918,6 +950,49 @@ mod tests {
 
         assert_eq!(defines.get("TARGET_RP2040").map(String::as_str), Some("1"));
         assert_eq!(defines.get("PICO_RP2040").map(String::as_str), Some("1"));
+    }
+
+    #[test]
+    fn test_apply_rp_platform_net_defines_expands_board_wifi_flags() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        std::fs::write(
+            tmp.path().join("platform.txt"),
+            "compiler.netdefines={build.libpicowdefs} -DLWIP_IGMP=1 -DLWIP_CHECKSUM_CTRL_PER_NETIF=1\n",
+        )
+        .unwrap();
+        let board_props = Some(HashMap::from([(
+            "libpicowdefs".to_string(),
+            "-DLWIP_IPV6=0 -DLWIP_IPV4=1".to_string(),
+        )]));
+        let mut defines = HashMap::new();
+
+        apply_rp_platform_net_defines(tmp.path(), &board_props, &mut defines).unwrap();
+
+        assert_eq!(defines.get("LWIP_IPV6").map(String::as_str), Some("0"));
+        assert_eq!(defines.get("LWIP_IPV4").map(String::as_str), Some("1"));
+        assert_eq!(defines.get("LWIP_IGMP").map(String::as_str), Some("1"));
+        assert_eq!(
+            defines
+                .get("LWIP_CHECKSUM_CTRL_PER_NETIF")
+                .map(String::as_str),
+            Some("1")
+        );
+    }
+
+    #[test]
+    fn test_apply_rp_board_props_applies_wifi_country() {
+        let board_props = Some(HashMap::from([(
+            "wificc".to_string(),
+            "-DWIFICC=CYW43_COUNTRY_WORLDWIDE".to_string(),
+        )]));
+        let mut defines = HashMap::new();
+
+        apply_rp_board_props(&board_props, Path::new("framework"), &mut defines);
+
+        assert_eq!(
+            defines.get("WIFICC").map(String::as_str),
+            Some("CYW43_COUNTRY_WORLDWIDE")
+        );
     }
 
     #[test]

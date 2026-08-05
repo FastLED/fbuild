@@ -60,28 +60,6 @@ pub fn resolve_framework_library_sources_active_declared(
     defines: &HashMap<String, String>,
     declared: &[String],
 ) -> Vec<PathBuf> {
-    resolve_framework_library_selection_active_declared(
-        libraries,
-        project_dir,
-        src_dir,
-        defines,
-        declared,
-    )
-    .source_files
-}
-
-/// Resolve the full active-branch framework-library selection.
-///
-/// Orchestrators need both the selected source files and their include
-/// directories. Passing every framework library's include directory can make
-/// identically named private headers resolve from an unrelated library.
-pub fn resolve_framework_library_selection_active_declared(
-    libraries: &[FrameworkLibrary],
-    project_dir: &Path,
-    src_dir: &Path,
-    defines: &HashMap<String, String>,
-    declared: &[String],
-) -> fbuild_library_select::Selection {
     let roots = framework_include_scan_roots(project_dir, src_dir);
     let filtered = filter_framework_libs_shadowed_by_project(libraries, &roots);
     let seeds = collect_project_seeds(&roots);
@@ -94,6 +72,7 @@ pub fn resolve_framework_library_selection_active_declared(
         declared,
     )
     .0
+    .source_files
 }
 
 /// Warn when a project sets `lib_ldf_mode`, which fbuild does not implement.
@@ -299,45 +278,6 @@ pub fn resolve_framework_library_sources_cached(
         store,
     );
     sources
-}
-
-/// Cached counterpart to [`resolve_framework_library_selection_active_declared`].
-pub fn resolve_framework_library_selection_cached(
-    libraries: &[FrameworkLibrary],
-    project_dir: &Path,
-    src_dir: &Path,
-    key_inputs: &CacheKeyInputs<'_>,
-    store: &FileKvStore,
-) -> fbuild_library_select::Selection {
-    let roots = framework_include_scan_roots(project_dir, src_dir);
-    if libraries.is_empty() {
-        return fbuild_library_select::Selection::default();
-    }
-
-    let filtered = filter_framework_libs_shadowed_by_project(libraries, &roots);
-    if filtered.is_empty() {
-        return fbuild_library_select::Selection::default();
-    }
-
-    let seeds = collect_project_seeds(&roots);
-    let search_paths = project_search_paths(&roots);
-    match resolve_cached(&seeds, &search_paths, &filtered, key_inputs, store) {
-        Ok(cached) => cached.selection,
-        Err(err) => {
-            tracing::warn!(
-                error = %err,
-                "library-select cache backend error; falling back to uncached resolve"
-            );
-            fbuild_library_select::resolve_with_stats_active_declared(
-                &seeds,
-                &search_paths,
-                &filtered,
-                key_inputs.preprocessor_defines,
-                key_inputs.declared_deps,
-            )
-            .0
-        }
-    }
 }
 
 /// Internal helper that returns `(sources, from_cache)` so tests can assert
@@ -1054,59 +994,5 @@ mod tests {
         );
         assert!(hit_second, "second call must hit the cache");
         assert_eq!(first, second, "cache hit must yield identical sources");
-    }
-
-    #[test]
-    fn selected_library_include_dirs_exclude_unrelated_lwip_backends() {
-        let tmp = tempfile::TempDir::new().unwrap();
-        let project_dir = tmp.path().join("project");
-        let src_dir = project_dir.join("src");
-        std::fs::create_dir_all(&src_dir).unwrap();
-        std::fs::write(src_dir.join("main.cpp"), "#include <WiFi.h>\n").unwrap();
-
-        let wifi_dir = tmp.path().join("framework/libraries/WiFi/src");
-        let cyw43_dir = tmp.path().join("framework/libraries/lwIP_CYW43/src");
-        let ethernet_dir = tmp.path().join("framework/libraries/lwIP_Ethernet/src");
-        std::fs::create_dir_all(&wifi_dir).unwrap();
-        std::fs::create_dir_all(&cyw43_dir).unwrap();
-        std::fs::create_dir_all(&ethernet_dir).unwrap();
-        std::fs::write(wifi_dir.join("WiFi.h"), "#include <lwIP_CYW43.h>\n").unwrap();
-        std::fs::write(wifi_dir.join("WiFi.cpp"), "").unwrap();
-        std::fs::write(cyw43_dir.join("lwIP_CYW43.h"), "").unwrap();
-        std::fs::write(ethernet_dir.join("LwipIntfDev.h"), "").unwrap();
-
-        let libraries = vec![
-            FrameworkLibrary {
-                name: "WiFi".to_string(),
-                dir: wifi_dir.parent().unwrap().to_path_buf(),
-                include_dirs: vec![wifi_dir.clone()],
-                source_files: vec![wifi_dir.join("WiFi.cpp")],
-            },
-            FrameworkLibrary {
-                name: "lwIP_CYW43".to_string(),
-                dir: cyw43_dir.parent().unwrap().to_path_buf(),
-                include_dirs: vec![cyw43_dir.clone()],
-                source_files: Vec::new(),
-            },
-            FrameworkLibrary {
-                name: "lwIP_Ethernet".to_string(),
-                dir: ethernet_dir.parent().unwrap().to_path_buf(),
-                include_dirs: vec![ethernet_dir.clone()],
-                source_files: Vec::new(),
-            },
-        ];
-
-        let selection = resolve_framework_library_selection_active_declared(
-            &libraries,
-            &project_dir,
-            &src_dir,
-            &HashMap::new(),
-            &[],
-        );
-
-        assert_eq!(selection.source_files, vec![wifi_dir.join("WiFi.cpp")]);
-        assert!(selection.include_dirs.contains(&wifi_dir));
-        assert!(selection.include_dirs.contains(&cyw43_dir));
-        assert!(!selection.include_dirs.contains(&ethernet_dir));
     }
 }
