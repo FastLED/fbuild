@@ -26,8 +26,8 @@ use crate::build_fingerprint::{
 use crate::compile_database::TargetArchitecture;
 use crate::compiler::Compiler as _;
 use crate::framework_libs::{
-    library_select_kv_store, resolve_framework_library_sources_active_declared,
-    resolve_framework_library_sources_cached, warn_if_lib_ldf_mode_unsupported,
+    library_select_kv_store, resolve_framework_library_selection_active_declared,
+    resolve_framework_library_selection_cached, warn_if_lib_ldf_mode_unsupported,
 };
 use crate::generic_arm::{ArmCompiler, ArmLinker};
 use crate::pipeline;
@@ -240,7 +240,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
                 .flatten()
                 .as_deref(),
         );
-        let framework_library_sources = match library_select_kv_store() {
+        let framework_library_selection = match library_select_kv_store() {
             Some(store) => {
                 let key_inputs = fbuild_library_select::cache::CacheKeyInputs {
                     toolchain_triple: "rp2040-arm-none-eabi",
@@ -249,7 +249,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
                     preprocessor_defines: &defines,
                     declared_deps: &declared_deps,
                 };
-                resolve_framework_library_sources_cached(
+                resolve_framework_library_selection_cached(
                     &framework_libs,
                     &params.project_dir,
                     &ctx.src_dir,
@@ -257,7 +257,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
                     store,
                 )
             }
-            None => resolve_framework_library_sources_active_declared(
+            None => resolve_framework_library_selection_active_declared(
                 &framework_libs,
                 &params.project_dir,
                 &ctx.src_dir,
@@ -265,12 +265,14 @@ impl BuildOrchestrator for Rp2040Orchestrator {
                 &declared_deps,
             ),
         };
-        if !framework_library_sources.is_empty() {
+        if !framework_library_selection.source_files.is_empty() {
             tracing::info!(
                 "RP2040 framework library sources added: {}",
-                framework_library_sources.len()
+                framework_library_selection.source_files.len()
             );
-            sources.core_sources.extend(framework_library_sources);
+            sources
+                .core_sources
+                .extend(framework_library_selection.source_files.clone());
         }
         // Use the resolved core_dir/variant_dir instead of board.get_include_paths():
         // RP2040 board metadata reports `core = earlephilhower`, while the actual
@@ -285,7 +287,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             add_rp_family_includes(&framework_include, &ctx.board.mcu, &mut include_dirs);
         }
         add_rp_board_includes(&board_props, &framework_dir, &mut include_dirs);
-        include_dirs.extend(framework.get_framework_library_include_dirs());
+        include_dirs.extend(framework_library_selection.include_dirs);
         include_dirs.push(ctx.src_dir.clone());
         pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
         // Toolchain sysroot includes
