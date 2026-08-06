@@ -31,6 +31,36 @@ fn fallback_runtime() -> Result<&'static Runtime> {
     Ok(RT.get_or_init(|| rt))
 }
 
+/// Resolve a local dependency relative to its project and return a canonical
+/// absolute root. Compiler invocations use a separate build directory as
+/// their working directory, so preserving a relative `lib_deps` path here
+/// would make its include directories resolve against the wrong directory.
+fn resolve_local_library_dir(project_dir: &Path, local_path: &Path, name: &str) -> Result<PathBuf> {
+    let lib_dir = if local_path.is_absolute() {
+        local_path.to_path_buf()
+    } else {
+        project_dir.join(local_path)
+    };
+    if !lib_dir.is_dir() {
+        return Err(FbuildError::PackageError(format!(
+            "local library '{}' does not exist or is not a directory: {}",
+            name,
+            lib_dir.display()
+        )));
+    }
+    lib_dir
+        .canonicalize()
+        .map(|path| fbuild_core::path::strip_unc_prefix(&path))
+        .map_err(|e| {
+            FbuildError::PackageError(format!(
+                "failed to canonicalize local library '{}': {} ({})",
+                name,
+                lib_dir.display(),
+                e
+            ))
+        })
+}
+
 /// Result of library resolution and compilation.
 pub struct LibraryResult {
     /// All include directories from all libraries (for compiler `-I` flags).
@@ -97,18 +127,7 @@ pub async fn ensure_libraries(
     > = tokio::task::JoinSet::new();
     for spec in &specs {
         if let Some(local_path) = &spec.local_path {
-            let lib_dir = if local_path.is_absolute() {
-                local_path.clone()
-            } else {
-                project_dir.join(local_path)
-            };
-            if !lib_dir.is_dir() {
-                return Err(FbuildError::PackageError(format!(
-                    "local library '{}' does not exist or is not a directory: {}",
-                    spec.name,
-                    lib_dir.display()
-                )));
-            }
+            let lib_dir = resolve_local_library_dir(project_dir, local_path, &spec.name)?;
             let sanitized = spec.sanitized_name();
             installed.push(InstalledLibrary::with_build_dir(
                 &lib_dir,
@@ -413,15 +432,16 @@ mod tests {
     }
 
     #[test]
-    fn test_named_local_symlink_adds_include_dir() {
+    fn test_named_relative_local_symlink_adds_include_dir() {
         let tmp = tempfile::TempDir::new().unwrap();
-        let local = tmp.path().join("local");
+        let project = tmp.path().join("project");
+        let local = project.join("local");
         let local_src = local.join("src");
         std::fs::create_dir_all(&local_src).unwrap();
         std::fs::write(local_src.join("Local.h"), "").unwrap();
         let libs_dir = tmp.path().join("build").join("libs");
         let result = ensure_libraries_sync(
-            &[format!("Local=symlink://{}", local.display())],
+            &["Local=symlink://local".to_string()],
             &[],
             Path::new("/gcc"),
             Path::new("/g++"),
@@ -429,7 +449,7 @@ mod tests {
             &[],
             &[],
             &[],
-            tmp.path(),
+            &project,
             &libs_dir,
             false,
             1,
