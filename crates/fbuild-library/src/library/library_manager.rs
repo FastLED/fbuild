@@ -58,6 +58,7 @@ pub async fn ensure_libraries(
     c_flags: &[String],
     cpp_flags: &[String],
     base_includes: &[PathBuf],
+    project_dir: &Path,
     libs_dir: &Path,
     verbose: bool,
     jobs: usize,
@@ -83,7 +84,9 @@ pub async fn ensure_libraries(
 
     tracing::info!("resolving {} library dependencies", specs.len());
 
-    // 2. Download all libraries in parallel
+    // 2. Resolve named local libraries and download remote libraries in parallel.
+    // Local libraries compile into `libs_dir`, never their checked-out source
+    // directory, so a build cannot leave generated artifacts in a dependency.
     std::fs::create_dir_all(libs_dir)?;
     let mut installed: Vec<InstalledLibrary> = Vec::new();
     let mut downloaded_names: std::collections::HashSet<String> = std::collections::HashSet::new();
@@ -93,6 +96,28 @@ pub async fn ensure_libraries(
         std::result::Result<(std::path::PathBuf, String, String), fbuild_core::FbuildError>,
     > = tokio::task::JoinSet::new();
     for spec in &specs {
+        if let Some(local_path) = &spec.local_path {
+            let lib_dir = if local_path.is_absolute() {
+                local_path.clone()
+            } else {
+                project_dir.join(local_path)
+            };
+            if !lib_dir.is_dir() {
+                return Err(FbuildError::PackageError(format!(
+                    "local library '{}' does not exist or is not a directory: {}",
+                    spec.name,
+                    lib_dir.display()
+                )));
+            }
+            let sanitized = spec.sanitized_name();
+            installed.push(InstalledLibrary::with_build_dir(
+                &lib_dir,
+                &sanitized,
+                &libs_dir.join(&sanitized),
+            ));
+            downloaded_names.insert(spec.name.to_lowercase());
+            continue;
+        }
         let spec_clone = spec.clone();
         let dir = libs_dir_owned.clone();
         tasks.spawn(async move {
@@ -150,7 +175,7 @@ pub async fn ensure_libraries(
             ar_path,
             c_flags,
             cpp_flags,
-            &lib.lib_dir,
+            &lib.build_dir,
             verbose,
             jobs,
             compiler_cache,
@@ -311,6 +336,7 @@ pub fn ensure_libraries_sync(
     c_flags: &[String],
     cpp_flags: &[String],
     base_includes: &[PathBuf],
+    project_dir: &Path,
     libs_dir: &Path,
     verbose: bool,
     jobs: usize,
@@ -325,6 +351,7 @@ pub fn ensure_libraries_sync(
         c_flags,
         cpp_flags,
         base_includes,
+        project_dir,
         libs_dir,
         verbose,
         jobs,
@@ -352,6 +379,7 @@ mod tests {
             &[],
             &[],
             &[],
+            Path::new("/project"),
             Path::new("/libs"),
             false,
             1,
@@ -373,6 +401,7 @@ mod tests {
             &[],
             &[],
             &[],
+            Path::new("/project"),
             Path::new("/libs"),
             false,
             1,
@@ -384,9 +413,15 @@ mod tests {
     }
 
     #[test]
-    fn test_local_path_specs_skipped() {
+    fn test_named_local_symlink_adds_include_dir() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let local = tmp.path().join("local");
+        let local_src = local.join("src");
+        std::fs::create_dir_all(&local_src).unwrap();
+        std::fs::write(local_src.join("Local.h"), "").unwrap();
+        let libs_dir = tmp.path().join("build").join("libs");
         let result = ensure_libraries_sync(
-            &["symlink://./local".to_string()],
+            &[format!("Local=symlink://{}", local.display())],
             &[],
             Path::new("/gcc"),
             Path::new("/g++"),
@@ -394,12 +429,13 @@ mod tests {
             &[],
             &[],
             &[],
-            Path::new("/libs"),
+            tmp.path(),
+            &libs_dir,
             false,
             1,
             None,
         )
         .unwrap();
-        assert!(result.include_dirs.is_empty());
+        assert_eq!(result.include_dirs, vec![local_src]);
     }
 }

@@ -11,6 +11,9 @@ pub struct InstalledLibrary {
     pub lib_dir: PathBuf,
     /// Library name.
     pub name: String,
+    /// Directory for generated objects and archives.  Local dependencies keep
+    /// this separate from their source checkout.
+    pub build_dir: PathBuf,
 }
 
 impl InstalledLibrary {
@@ -18,6 +21,16 @@ impl InstalledLibrary {
         Self {
             lib_dir: lib_dir.to_path_buf(),
             name: name.to_string(),
+            build_dir: lib_dir.to_path_buf(),
+        }
+    }
+
+    /// Construct a library whose generated artifacts belong in `build_dir`.
+    pub fn with_build_dir(lib_dir: &Path, name: &str, build_dir: &Path) -> Self {
+        Self {
+            lib_dir: lib_dir.to_path_buf(),
+            name: name.to_string(),
+            build_dir: build_dir.to_path_buf(),
         }
     }
 
@@ -88,7 +101,7 @@ impl InstalledLibrary {
 
     /// Get the archive output path for this library.
     pub fn archive_path(&self) -> PathBuf {
-        self.lib_dir.join(format!("lib{}.a", self.name))
+        self.build_dir.join(format!("lib{}.a", self.name))
     }
 }
 
@@ -248,6 +261,19 @@ mod tests {
             lib.archive_path()
                 .to_string_lossy()
                 .contains("libfastled.a")
+        );
+    }
+
+    #[test]
+    fn test_archive_path_uses_external_build_dir() {
+        let lib = InstalledLibrary::with_build_dir(
+            Path::new("/source/fastled"),
+            "fastled",
+            Path::new("/build/libs/fastled"),
+        );
+        assert_eq!(
+            lib.archive_path(),
+            PathBuf::from("/build/libs/fastled/libfastled.a")
         );
     }
 
