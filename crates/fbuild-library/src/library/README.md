@@ -5,7 +5,7 @@ Arduino library and framework dependency management: spec parsing, download, com
 ## Modules
 
 - **`mod.rs`** -- Module root; re-exports framework types and `LibrarySpec`
-- **`library_spec.rs`** -- Parser for `lib_deps` formats (`owner/Name@^version`, GitHub URLs, bare names)
+- **`library_spec.rs`** -- Parser for `lib_deps` formats (`owner/Name@^version`, GitHub URLs, bare names, and named `symlink://`/`file://` local dependencies)
 - **`library_downloader.rs`** -- Downloads libraries from GitHub URLs or the PlatformIO registry
 - **`library_info.rs`** -- Scans installed libraries for include directories and source files
 - **`library_compiler.rs`** -- Compiles library C/C++ sources and archives into static `.a` files

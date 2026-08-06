@@ -369,6 +369,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 &c_flags,
                 &cpp_flags,
                 &include_dirs,
+                &params.project_dir,
                 &libs_dir,
                 params.verbose,
                 jobs,

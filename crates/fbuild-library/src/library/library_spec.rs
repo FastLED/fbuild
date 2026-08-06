@@ -13,6 +13,8 @@ pub struct LibrarySpec {
     pub name: String,
     pub version: Option<String>,
     pub github_url: Option<String>,
+    /// Local library root from a `Name=symlink://path` or `Name=file://path` dependency.
+    pub local_path: Option<std::path::PathBuf>,
 }
 
 impl LibrarySpec {
@@ -30,7 +32,7 @@ impl LibrarySpec {
             return None;
         }
 
-        // Skip local paths (symlink://, file://, relative/absolute paths)
+        // Skip unnamed local paths. Named local dependencies are handled below.
         if spec.starts_with("symlink://")
             || spec.starts_with("file://")
             || spec.starts_with("./")
@@ -42,9 +44,47 @@ impl LibrarySpec {
             return None;
         }
 
-        // Handle Name=symlink://path (skip local libs)
-        if spec.contains("symlink://") || spec.contains("file://") {
-            return None;
+        // A named local library is resolved by the build orchestrator relative
+        // to the project directory. Keep the dependency name so `lib_ignore`
+        // and the build output directory remain deterministic.
+        if let Some((name, path)) = spec.split_once("=symlink://") {
+            let name = name.trim();
+            let path = path.trim();
+            if name.is_empty() || path.is_empty() {
+                return None;
+            }
+            return Some(Self {
+                owner: String::new(),
+                name: name.to_string(),
+                version: None,
+                github_url: None,
+                local_path: Some(std::path::PathBuf::from(path)),
+            });
+        }
+        if let Some((name, path)) = spec.split_once("=file://") {
+            let name = name.trim();
+            let path = path.trim();
+            if name.is_empty() || path.is_empty() {
+                return None;
+            }
+            // `file:///C:/path` is the standard Windows spelling. Paths use a
+            // leading slash in URI form, but Windows needs the drive prefix.
+            let path = if cfg!(windows)
+                && path.len() > 2
+                && path.as_bytes()[0] == b'/'
+                && path.as_bytes()[2] == b':'
+            {
+                &path[1..]
+            } else {
+                path
+            };
+            return Some(Self {
+                owner: String::new(),
+                name: name.to_string(),
+                version: None,
+                github_url: None,
+                local_path: Some(std::path::PathBuf::from(path)),
+            });
         }
 
         // Handle GitHub URLs
@@ -55,6 +95,7 @@ impl LibrarySpec {
                     name,
                     version: None,
                     github_url: Some(spec.to_string()),
+                    local_path: None,
                 });
             }
             return None;
@@ -80,6 +121,7 @@ impl LibrarySpec {
                 name,
                 version,
                 github_url: None,
+                local_path: None,
             })
         } else {
             Some(Self {
@@ -87,6 +129,7 @@ impl LibrarySpec {
                 name: lib_part.to_string(),
                 version,
                 github_url: None,
+                local_path: None,
             })
         }
     }
@@ -197,9 +240,31 @@ mod tests {
     }
 
     #[test]
-    fn test_parse_skip_symlink() {
+    fn test_parse_skip_unnamed_symlink() {
         assert!(LibrarySpec::parse("symlink://./").is_none());
-        assert!(LibrarySpec::parse("FastLED=symlink://./").is_none());
+    }
+
+    #[test]
+    fn test_parse_named_symlink() {
+        let spec = LibrarySpec::parse("FastLED=symlink://../..").unwrap();
+        assert_eq!(spec.name, "FastLED");
+        assert_eq!(spec.local_path, Some(std::path::PathBuf::from("../..")));
+    }
+
+    #[test]
+    fn test_parse_named_relative_file_uri() {
+        let spec = LibrarySpec::parse("FastLED=file://../..").unwrap();
+        assert_eq!(spec.local_path, Some(std::path::PathBuf::from("../..")));
+    }
+
+    #[cfg(windows)]
+    #[test]
+    fn test_parse_named_windows_file_uri() {
+        let spec = LibrarySpec::parse("FastLED=file:///C:/libraries/FastLED").unwrap();
+        assert_eq!(
+            spec.local_path,
+            Some(std::path::PathBuf::from("C:/libraries/FastLED"))
+        );
     }
 
     #[test]
