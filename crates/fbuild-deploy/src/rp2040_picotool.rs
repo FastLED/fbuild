@@ -8,6 +8,32 @@ use std::time::Duration;
 use fbuild_core::{FbuildError, Result};
 use fbuild_packages::Package;
 
+/// BOOTSEL identity selected before fbuild invokes picotool. The runtime CDC
+/// port is only a control path; the serial number and ROM PID bind the
+/// subsequent PICOBOOT operation to the board that was touched.
+#[derive(Debug)]
+pub(super) struct PicotoolTarget {
+    serial_number: String,
+    vendor_id: String,
+    product_id: String,
+}
+
+impl PicotoolTarget {
+    pub(super) fn new(serial_number: &str, vendor_id: &str, product_id: &str) -> Self {
+        Self {
+            serial_number: serial_number.to_string(),
+            vendor_id: vendor_id.to_string(),
+            product_id: product_id.to_string(),
+        }
+    }
+
+    pub(super) fn matches_usb_instance(&self, instance_id: &str) -> bool {
+        let upper = instance_id.to_ascii_uppercase();
+        upper.contains(&format!("VID_{}", self.vendor_id.to_ascii_uppercase()))
+            && upper.contains(&format!("PID_{}", self.product_id.to_ascii_uppercase()))
+    }
+}
+
 pub(super) struct PicotoolLoad {
     pub stdout: String,
     pub stderr: String,
@@ -49,11 +75,15 @@ pub(super) enum PriorTransportFailure {
 /// reachable before committing to the (longer) load timeout. Failure here is
 /// classified as a transport/device failure by the caller, which falls back
 /// to mass-storage.
-pub(super) async fn probe_picotool_info(project_dir: &Path, timeout: Duration) -> Result<()> {
+pub(super) async fn probe_picotool_info(
+    project_dir: &Path,
+    target: &PicotoolTarget,
+    timeout: Duration,
+) -> Result<()> {
     let package = fbuild_packages::toolchain::Rp2040Picotool::new(project_dir);
     Package::ensure_installed(&package).await?;
     let executable = package.executable();
-    let args = info_probe_args(&executable);
+    let args = info_probe_args(&executable, target);
     let args_ref: Vec<&str> = args.iter().map(String::as_str).collect();
     let output = fbuild_core::subprocess::run_command(&args_ref, None, None, Some(timeout)).await?;
     if !output.success() {
@@ -94,6 +124,7 @@ pub(super) async fn probe_uf2_rejection_info(
 pub(super) async fn load_with_managed_picotool(
     project_dir: &Path,
     artifact: &Path,
+    target: &PicotoolTarget,
     mass_storage_error: Option<&str>,
     timeout: Duration,
     mode: PicotoolMode,
@@ -101,7 +132,7 @@ pub(super) async fn load_with_managed_picotool(
     let package = fbuild_packages::toolchain::Rp2040Picotool::new(project_dir);
     Package::ensure_installed(&package).await?;
     let executable = package.executable();
-    let args = load_args(&executable, artifact);
+    let args = load_args(&executable, artifact, target);
     let args_ref: Vec<&str> = args.iter().map(String::as_str).collect();
     let output = fbuild_core::subprocess::run_command(&args_ref, None, None, Some(timeout)).await?;
     if !output.success() {
@@ -133,18 +164,32 @@ fn combined_tool_output(stdout: &str, stderr: &str) -> String {
         .join("\n")
 }
 
-fn load_args(executable: &Path, artifact: &Path) -> Vec<String> {
-    vec![
+fn append_target_selection(args: &mut Vec<String>, target: &PicotoolTarget) {
+    args.extend([
+        "--vid".to_string(),
+        format!("0x{}", target.vendor_id),
+        "--pid".to_string(),
+        format!("0x{}", target.product_id),
+        "--ser".to_string(),
+        target.serial_number.to_string(),
+    ]);
+}
+
+fn load_args(executable: &Path, artifact: &Path, target: &PicotoolTarget) -> Vec<String> {
+    let mut args = vec![
         executable.to_string_lossy().to_string(),
         "load".to_string(),
         artifact.to_string_lossy().to_string(),
-        "-f".to_string(),
         "-x".to_string(),
-    ]
+    ];
+    append_target_selection(&mut args, target);
+    args
 }
 
-fn info_probe_args(executable: &Path) -> Vec<String> {
-    vec![executable.to_string_lossy().to_string(), "info".to_string()]
+fn info_probe_args(executable: &Path, target: &PicotoolTarget) -> Vec<String> {
+    let mut args = vec![executable.to_string_lossy().to_string(), "info".to_string()];
+    append_target_selection(&mut args, target);
+    args
 }
 
 fn uf2_info_args(executable: &Path) -> Vec<String> {
@@ -219,19 +264,50 @@ pub(super) fn format_eject_failure(
 mod tests {
     use super::*;
 
+    fn rp2350_target() -> PicotoolTarget {
+        PicotoolTarget::new("2DCB876B587EA334", "2e8a", "000f")
+    }
+
     #[test]
-    fn load_uses_managed_executable_force_flag_and_reboots_after_success() {
-        let args = load_args(Path::new("managed/picotool"), Path::new("firmware.uf2"));
+    fn load_is_bound_to_the_bootsel_target_and_reboots_after_success() {
+        let args = load_args(
+            Path::new("managed/picotool"),
+            Path::new("firmware.uf2"),
+            &rp2350_target(),
+        );
         assert_eq!(
             args,
-            ["managed/picotool", "load", "firmware.uf2", "-f", "-x"]
+            [
+                "managed/picotool",
+                "load",
+                "firmware.uf2",
+                "-x",
+                "--vid",
+                "0x2e8a",
+                "--pid",
+                "0x000f",
+                "--ser",
+                "2DCB876B587EA334",
+            ]
         );
     }
 
     #[test]
-    fn info_probe_uses_managed_executable() {
-        let args = info_probe_args(Path::new("managed/picotool"));
-        assert_eq!(args, ["managed/picotool", "info"]);
+    fn info_probe_uses_the_same_bootsel_target() {
+        let args = info_probe_args(Path::new("managed/picotool"), &rp2350_target());
+        assert_eq!(
+            args,
+            [
+                "managed/picotool",
+                "info",
+                "--vid",
+                "0x2e8a",
+                "--pid",
+                "0x000f",
+                "--ser",
+                "2DCB876B587EA334",
+            ]
+        );
     }
 
     #[test]

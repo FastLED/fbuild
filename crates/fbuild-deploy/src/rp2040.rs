@@ -64,7 +64,7 @@ const UF2_WRITE_TIMEOUT_ENV: &str = "FBUILD_RP2040_UF2_WRITE_TIMEOUT_SECS";
 const DEFAULT_UF2_WRITE_TIMEOUT: Duration = Duration::from_secs(60);
 const CDC_POLL_INTERVAL: Duration = Duration::from_millis(100);
 const WATCHDOG_CANCELLATION_GRACE: Duration = Duration::from_millis(250);
-/// Timeout for `picotool load <uf2> -f -x`, used both as the picotool-primary
+/// Timeout for target-bound `picotool load <uf2> -x`, used both as the picotool-primary
 /// load budget (FastLED/fbuild#1162) and the historical picotool-fallback
 /// budget (previously a hardcoded 30s in `rp2040_picotool.rs`).
 const PICOTOOL_LOAD_TIMEOUT_ENV: &str = "FBUILD_RP2040_PICOTOOL_TIMEOUT_SECS";
@@ -108,11 +108,86 @@ fn should_attempt_picotool_first(
 ) -> bool {
     match transport {
         Rp2040Transport::Uf2 => false,
-        Rp2040Transport::Picotool => !matches!(
-            preflight,
-            Some(preflight::PicobootPreflight::DriverMissing { .. })
-        ),
+        Rp2040Transport::Picotool => {
+            matches!(preflight, None | Some(preflight::PicobootPreflight::Ready))
+        }
     }
+}
+
+fn rp_family_name(family_id: u32) -> &'static str {
+    if family_id == RP2350_FAMILY_ID {
+        "rp2350"
+    } else {
+        "rp2040"
+    }
+}
+
+fn bootloader_profile_matches_family(
+    profile: &fbuild_core::usb::profiles::UsbTransportProfile,
+    family_id: u32,
+) -> bool {
+    use fbuild_core::usb::profiles::{UsbDeviceRole, UsbPurpose};
+
+    profile.purpose == UsbPurpose::Bootloader
+        && profile.role == UsbDeviceRole::BootloaderUf2
+        && profile.family.as_deref() == Some(rp_family_name(family_id))
+        && profile.identity_match.pid.is_some()
+}
+
+fn picotool_target_for_family(
+    serial_number: &str,
+    family_id: u32,
+) -> Result<picotool::PicotoolTarget> {
+    let profiles = fbuild_core::usb::profiles::all_profiles();
+    picotool_target_from_profiles(serial_number, family_id, &profiles)
+}
+
+fn picotool_target_from_profiles(
+    serial_number: &str,
+    family_id: u32,
+    profiles: &[fbuild_core::usb::profiles::UsbTransportProfile],
+) -> Result<picotool::PicotoolTarget> {
+    let mut candidates: BTreeSet<_> = profiles
+        .iter()
+        .filter(|profile| bootloader_profile_matches_family(profile, family_id))
+        .filter_map(|profile| {
+            profile
+                .identity_match
+                .pid
+                .as_ref()
+                .map(|pid| (profile.identity_match.vid.clone(), pid.clone()))
+        })
+        .collect();
+    match candidates.len() {
+        0 => Err(FbuildError::DeployFailed(format!(
+            "FastLED/boards USB profiles do not define an exact {} BOOTSEL identity; fbuild refuses an unscoped picotool command",
+            rp_family_name(family_id)
+        ))),
+        1 => {
+            let (vendor_id, product_id) = candidates.pop_first().ok_or_else(|| {
+                FbuildError::DeployFailed(
+                    "FastLED/boards USB profile identity disappeared while resolving PICOBOOT"
+                        .to_string(),
+                )
+            })?;
+            Ok(picotool::PicotoolTarget::new(
+                serial_number,
+                &vendor_id,
+                &product_id,
+            ))
+        }
+        _ => Err(FbuildError::DeployFailed(format!(
+            "FastLED/boards USB profiles define multiple {} BOOTSEL identities; fbuild refuses to guess which one picotool should use",
+            rp_family_name(family_id)
+        ))),
+    }
+}
+
+fn picotool_identity_required_error() -> FbuildError {
+    FbuildError::DeployFailed(
+        "RP-series picotool deployment requires the selected runtime USB serial so fbuild can bind the BOOTSEL operation to one board; use a healthy USB CDC port selector or an explicit UF2=BOOTSEL-volume recovery path"
+            .to_string(),
+    )
 }
 
 /// Parse an env-supplied stage timeout. Accepts integer seconds in 1..=600;
@@ -1489,8 +1564,8 @@ fn ensure_verified_usb_profiles() -> Result<()> {
     }
 }
 
-/// Best-effort Windows PICOBOOT preflight + bounded `picotool info` probe +
-/// `picotool load -f -x`, all folded into a single string error so the
+/// Best-effort Windows PICOBOOT preflight + bounded target-bound `picotool
+/// info` probe + `picotool load -x`, all folded into a single string error so the
 /// caller can compose the final combined-transport message if the
 /// mass-storage fallback also fails (FastLED/fbuild#1162/#1163). Off
 /// Windows, `present_usb_problem_devices` is a no-op empty vec, so preflight
@@ -1498,6 +1573,7 @@ fn ensure_verified_usb_profiles() -> Result<()> {
 async fn attempt_picotool_primary(
     project_dir: &Path,
     artifact: &Path,
+    target: &picotool::PicotoolTarget,
     load_timeout: Duration,
 ) -> std::result::Result<picotool::PicotoolLoad, String> {
     let preflight_result = if cfg!(windows) {
@@ -1505,45 +1581,27 @@ async fn attempt_picotool_primary(
             tokio::task::spawn_blocking(fbuild_serial::ports::present_usb_problem_devices)
                 .await
                 .unwrap_or_default();
-        Some(preflight::classify_picoboot_preflight(&devices))
+        Some(preflight::classify_picoboot_preflight(&devices, target))
     } else {
         None
     };
     if !should_attempt_picotool_first(Rp2040Transport::Picotool, preflight_result.as_ref()) {
-        let Some(preflight::PicobootPreflight::DriverMissing {
-            instance_id,
-            problem_code,
-        }) = preflight_result
-        else {
-            unreachable!("should_attempt_picotool_first only skips picotool on DriverMissing");
-        };
-        let message = preflight::driver_missing_message(&instance_id, problem_code);
-        tracing::warn!(
-            instance_id = %instance_id,
-            problem_code,
-            "{message}"
-        );
+        let preflight = preflight_result
+            .as_ref()
+            .expect("picotool preflight can only block when a problem was found");
+        let message = preflight::problem_message(preflight);
+        tracing::warn!("{message}");
         return Err(message);
     }
-    if let Some(preflight::PicobootPreflight::OtherProblem {
-        instance_id,
-        problem_code,
-    }) = &preflight_result
-    {
-        tracing::warn!(
-            instance_id = %instance_id,
-            problem_code,
-            "RP2040 PICOBOOT devnode reports a Windows Config Manager problem; attempting picotool anyway"
-        );
-    }
     if let Err(probe_error) =
-        picotool::probe_picotool_info(project_dir, PICOTOOL_INFO_PROBE_TIMEOUT).await
+        picotool::probe_picotool_info(project_dir, target, PICOTOOL_INFO_PROBE_TIMEOUT).await
     {
         return Err(format!("picotool info probe failed: {probe_error}"));
     }
     picotool::load_with_managed_picotool(
         project_dir,
         artifact,
+        target,
         None,
         load_timeout,
         picotool::PicotoolMode::Primary,
@@ -1644,6 +1702,11 @@ impl Deployer for Rp2040Deployer {
         } else {
             None
         };
+        let picotool_target = runtime_target
+            .as_ref()
+            .and_then(|target| target.serial_number.as_deref())
+            .map(|serial| picotool_target_for_family(serial, self.family_id))
+            .transpose()?;
         // Capture topology before the 1200-bps touch: once the board resets
         // into BOOTSEL the runtime CDC devnode this looks up disappears.
         // A join failure on this purely-diagnostic task must never fail the
@@ -1695,6 +1758,20 @@ impl Deployer for Rp2040Deployer {
                         "RP2040 UF2 preparation task failed: {error}"
                     ))
                 })??;
+        // A PICOBOOT command without a serial-number selector may choose any
+        // attached RP board. If serial identity is unavailable, retain the
+        // safe BOOTSEL mass-storage path but never issue an unscoped picotool
+        // probe or force-reset command.
+        let transport = if picotool_target.is_none() {
+            if self.transport == Rp2040Transport::Picotool {
+                tracing::warn!(
+                    "RP-series runtime USB serial unavailable; skipping picotool-primary and using BOOTSEL mass-storage only"
+                );
+            }
+            Rp2040Transport::Uf2
+        } else {
+            self.transport
+        };
         let (
             transfer_stdout,
             transfer_stderr,
@@ -1702,7 +1779,7 @@ impl Deployer for Rp2040Deployer {
             transfer_volume,
             picotool_confirmed,
             prior_transport_failure,
-        ) = match self.transport {
+        ) = match transport {
             Rp2040Transport::Uf2 => {
                 if let Some(volume) = volume {
                     let transfer = run_mass_storage_transfer(
@@ -1730,9 +1807,13 @@ impl Deployer for Rp2040Deployer {
                                 ),
                                 topology.as_deref(),
                             );
+                            let target = picotool_target
+                                .as_ref()
+                                .ok_or_else(picotool_identity_required_error)?;
                             let loaded = picotool::load_with_managed_picotool(
                                 project_dir,
                                 &artifact,
+                                target,
                                 Some(&context),
                                 self.picotool_timeout,
                                 picotool::PicotoolMode::Fallback,
@@ -1755,9 +1836,13 @@ impl Deployer for Rp2040Deployer {
                             .to_string(),
                         topology.as_deref(),
                     );
+                    let target = picotool_target
+                        .as_ref()
+                        .ok_or_else(picotool_identity_required_error)?;
                     let loaded = picotool::load_with_managed_picotool(
                         project_dir,
                         &artifact,
+                        target,
                         Some(&context),
                         self.picotool_timeout,
                         picotool::PicotoolMode::Fallback,
@@ -1774,7 +1859,16 @@ impl Deployer for Rp2040Deployer {
                 }
             }
             Rp2040Transport::Picotool => {
-                match attempt_picotool_primary(project_dir, &artifact, self.picotool_timeout).await
+                let target = picotool_target
+                    .as_ref()
+                    .ok_or_else(picotool_identity_required_error)?;
+                match attempt_picotool_primary(
+                    project_dir,
+                    &artifact,
+                    target,
+                    self.picotool_timeout,
+                )
+                .await
                 {
                     Ok(loaded) => (
                         loaded.stdout,
@@ -2545,6 +2639,87 @@ mod tests {
         assert!(profile_matches_family(&profile, RP2350_FAMILY_ID));
         profile.role = UsbDeviceRole::BootloaderUf2;
         assert!(!profile_matches_family(&profile, RP2350_FAMILY_ID));
+    }
+
+    #[test]
+    fn picotool_target_uses_the_single_registry_bootsel_identity() {
+        use fbuild_core::usb::profiles::{
+            UsbDeviceRole, UsbIdentityMatch, UsbProfileProvenance, UsbPurpose, UsbTransportProfile,
+        };
+
+        let bootloader = UsbTransportProfile {
+            identity_match: UsbIdentityMatch {
+                vid: "feed".to_string(),
+                pid: Some("c0de".to_string()),
+                pid_mask: None,
+            },
+            purpose: UsbPurpose::Bootloader,
+            role: UsbDeviceRole::BootloaderUf2,
+            transport: "usb".to_string(),
+            reset: "touch-1200".to_string(),
+            handoff: "bootloader".to_string(),
+            platform: Some("synthetic".to_string()),
+            family: Some("rp2350".to_string()),
+            generation: Some("synthetic".to_string()),
+            interface: Some("msc".to_string()),
+            provenance: UsbProfileProvenance {
+                source_url: "test://fixture".to_string(),
+                source_revision: "a".repeat(40),
+                source_class: "test".to_string(),
+            },
+            priority: 100,
+            allow_ambiguous: false,
+        };
+        let target = picotool_target_from_profiles(
+            "SERIAL",
+            RP2350_FAMILY_ID,
+            &[bootloader.clone(), bootloader],
+        )
+        .unwrap();
+        assert!(target.matches_usb_instance("USB\\VID_FEED&PID_C0DE&MI_01\\SERIAL"));
+        assert!(!target.matches_usb_instance("USB\\VID_FEED&PID_BEEF&MI_01\\SERIAL"));
+    }
+
+    #[test]
+    fn picotool_target_refuses_ambiguous_registry_bootsel_identities() {
+        use fbuild_core::usb::profiles::{
+            UsbDeviceRole, UsbIdentityMatch, UsbProfileProvenance, UsbPurpose, UsbTransportProfile,
+        };
+
+        let profile = |pid: &str| UsbTransportProfile {
+            identity_match: UsbIdentityMatch {
+                vid: "feed".to_string(),
+                pid: Some(pid.to_string()),
+                pid_mask: None,
+            },
+            purpose: UsbPurpose::Bootloader,
+            role: UsbDeviceRole::BootloaderUf2,
+            transport: "usb".to_string(),
+            reset: "touch-1200".to_string(),
+            handoff: "bootloader".to_string(),
+            platform: Some("synthetic".to_string()),
+            family: Some("rp2350".to_string()),
+            generation: Some("synthetic".to_string()),
+            interface: Some("msc".to_string()),
+            provenance: UsbProfileProvenance {
+                source_url: "test://fixture".to_string(),
+                source_revision: "a".repeat(40),
+                source_class: "test".to_string(),
+            },
+            priority: 100,
+            allow_ambiguous: false,
+        };
+        let error = picotool_target_from_profiles(
+            "SERIAL",
+            RP2350_FAMILY_ID,
+            &[profile("c0de"), profile("beef")],
+        )
+        .unwrap_err();
+        assert!(
+            error
+                .to_string()
+                .contains("multiple rp2350 BOOTSEL identities")
+        );
     }
 
     #[test]
@@ -3371,12 +3546,12 @@ mod tests {
     }
 
     #[test]
-    fn picotool_transport_still_attempts_on_other_problem() {
+    fn picotool_transport_skips_picotool_on_an_unusable_bootsel_device() {
         let preflight = preflight::PicobootPreflight::OtherProblem {
             instance_id: "USB\\VID_2E8A&PID_0003&MI_01\\x".to_string(),
             problem_code: 43,
         };
-        assert!(should_attempt_picotool_first(
+        assert!(!should_attempt_picotool_first(
             Rp2040Transport::Picotool,
             Some(&preflight)
         ));
