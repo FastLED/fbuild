@@ -12,7 +12,7 @@
 //! 9. Link (with linker script from variant dir)
 //! 10. Convert to binary + report size
 
-use std::collections::HashMap;
+use std::collections::{BTreeMap, HashMap};
 use std::path::{Path, PathBuf};
 use std::time::Instant;
 
@@ -51,6 +51,7 @@ struct Rp2040FingerprintMetadata {
     board_f_cpu: String,
     board_extra_flags: Option<String>,
     board_upload_protocol: Option<String>,
+    board_menu_overrides: BTreeMap<String, String>,
     platform: String,
     max_flash: Option<u64>,
     max_ram: Option<u64>,
@@ -122,9 +123,11 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             .get("board")
             .cloned()
             .unwrap_or_default();
-        let board_props = crate::arduino_props::load_board_props_with_default_menus(
+        let board_menu_overrides = ctx.config.get_board_overrides(&params.env_name)?;
+        let board_props = crate::arduino_props::load_board_props_with_menu_overrides(
             &framework.get_boards_txt(),
             &board_id,
+            &board_menu_overrides,
         );
         let build_dir = ctx.build_dir.clone();
         let metadata_hash = stable_hash_json(&Rp2040FingerprintMetadata {
@@ -139,6 +142,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             board_f_cpu: ctx.board.f_cpu.clone(),
             board_extra_flags: ctx.board.extra_flags.clone(),
             board_upload_protocol: ctx.board.upload_protocol.clone(),
+            board_menu_overrides: board_menu_overrides.into_iter().collect(),
             platform: "raspberrypi".to_string(),
             max_flash: ctx.board.max_flash,
             max_ram: ctx.board.max_ram,
@@ -392,7 +396,8 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             compiler_cache: None,
         };
 
-        let mut support_link_inputs = rp_support_objects(&framework_dir, &ctx.board.mcu);
+        let mut support_link_inputs =
+            rp_support_objects(&framework_dir, &ctx.board.mcu, &board_props);
         support_link_inputs.push(boot2_object);
 
         // 9. Run shared sequential build pipeline
@@ -875,13 +880,23 @@ fn add_rp_linker_flags(
     mcu_config.linker_libs.push("-Wl,--end-group".to_string());
 }
 
-fn rp_support_objects(framework_dir: &Path, mcu: &str) -> Vec<PathBuf> {
+fn rp_support_objects(
+    framework_dir: &Path,
+    mcu: &str,
+    board_props: &Option<HashMap<String, String>>,
+) -> Vec<PathBuf> {
     let family = rp_family(mcu);
     let lib_dir = framework_dir.join("lib").join(family);
+    let network_library = board_props
+        .as_ref()
+        .and_then(|props| props.get("libpicow"))
+        .map(String::as_str)
+        .filter(|name| !name.is_empty())
+        .unwrap_or("libipv4.a");
     let mut objects = vec![
         lib_dir.join("ota.o"),
         lib_dir.join("libpico.a"),
-        lib_dir.join("libipv4.a"),
+        lib_dir.join(network_library),
         lib_dir.join("libbearssl.a"),
     ];
     objects.retain(|path| path.exists());
@@ -897,6 +912,31 @@ mod tests {
     fn test_rp2040_orchestrator_platform() {
         let orch = Rp2040Orchestrator;
         assert_eq!(orch.platform(), Platform::RaspberryPi);
+    }
+
+    #[test]
+    fn test_rp_support_objects_uses_selected_bluetooth_network_library() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let lib_dir = tmp.path().join("lib").join("rp2350");
+        std::fs::create_dir_all(&lib_dir).unwrap();
+        for name in [
+            "ota.o",
+            "libpico.a",
+            "libipv4.a",
+            "libipv4-bt.a",
+            "libbearssl.a",
+        ] {
+            std::fs::write(lib_dir.join(name), "").unwrap();
+        }
+        let props = Some(HashMap::from([(
+            String::from("libpicow"),
+            String::from("libipv4-bt.a"),
+        )]));
+
+        let inputs = rp_support_objects(tmp.path(), "rp2350", &props);
+
+        assert!(inputs.contains(&lib_dir.join("libipv4-bt.a")));
+        assert!(!inputs.contains(&lib_dir.join("libipv4.a")));
     }
 
     #[test]

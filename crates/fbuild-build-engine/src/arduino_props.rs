@@ -18,6 +18,16 @@ pub fn load_board_props_with_default_menus(
     boards_txt: &Path,
     board_id: &str,
 ) -> Option<HashMap<String, String>> {
+    load_board_props_with_menu_overrides(boards_txt, board_id, &HashMap::new())
+}
+
+/// Load Arduino board properties after applying the board's default menu
+/// choices and any PlatformIO `board_build.<menu>` overrides.
+pub fn load_board_props_with_menu_overrides(
+    boards_txt: &Path,
+    board_id: &str,
+    menu_overrides: &HashMap<String, String>,
+) -> Option<HashMap<String, String>> {
     let content = std::fs::read_to_string(boards_txt).ok()?;
     let prefix = format!("{board_id}.");
     let mut props = HashMap::new();
@@ -47,6 +57,12 @@ pub fn load_board_props_with_default_menus(
         }
 
         insert_prop(&mut props, rest, value);
+    }
+
+    for (menu, option) in menu_overrides {
+        if !option.trim().is_empty() {
+            menu_defaults.insert(menu.clone(), option.trim().to_string());
+        }
     }
 
     for line in content.lines() {
@@ -129,5 +145,38 @@ demo.menu.mode.default.build.usb_product={build.board}
             Some("-DFLASHMODE_DIO")
         );
         assert_eq!(props.get("usb_product").map(String::as_str), Some("DEMO"));
+    }
+
+    #[test]
+    fn test_load_board_props_applies_menu_override() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let boards_txt = tmp.path().join("boards.txt");
+        std::fs::write(
+            &boards_txt,
+            "\
+demo.menu.ipbtstack.ipv4=IPv4 only
+demo.menu.ipbtstack.ipv4.build.libpicow=libipv4.a
+demo.menu.ipbtstack.ipv4btcble=IPv4 Bluetooth
+demo.menu.ipbtstack.ipv4btcble.build.libpicow=libipv4-bt.a
+demo.menu.ipbtstack.ipv4btcble.build.libpicowdefs=-DENABLE_BLE=1
+",
+        )
+        .unwrap();
+
+        let props = load_board_props_with_menu_overrides(
+            &boards_txt,
+            "demo",
+            &HashMap::from([(String::from("ipbtstack"), String::from("ipv4btcble"))]),
+        )
+        .unwrap();
+
+        assert_eq!(
+            props.get("libpicow").map(String::as_str),
+            Some("libipv4-bt.a")
+        );
+        assert_eq!(
+            props.get("libpicowdefs").map(String::as_str),
+            Some("-DENABLE_BLE=1")
+        );
     }
 }
