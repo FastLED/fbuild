@@ -18,7 +18,7 @@
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
-use fbuild_config::PlatformIOConfig;
+use fbuild_config::{BoardConfig, PlatformIOConfig};
 use fbuild_core::Platform;
 use fbuild_core::path::normalize_for_key;
 use fbuild_library_select::{Selection, resolve_active};
@@ -94,7 +94,7 @@ pub fn run(project_dir: &Path, env: Option<&str>, explain: bool, json: bool) -> 
         }
     };
 
-    let framework_info = match resolve_framework(&project_dir, platform, &board) {
+    let framework_info = match resolve_framework(&project_dir, platform, &board, &env_cfg) {
         Ok(info) => info,
         Err(msg) => {
             eprintln!("lib-select: {}", msg);
@@ -110,9 +110,12 @@ pub fn run(project_dir: &Path, env: Option<&str>, explain: bool, json: bool) -> 
 
     // The diagnostic must match build-time LDF behavior: optional headers in
     // inactive branches are not library dependencies. Sketch-local defines
-    // are collected by `resolve_active`; board/compiler defines are supplied
-    // by platform orchestrators during an actual build.
-    let selection = resolve_active(&seeds, &search_paths, &libraries, &HashMap::new());
+    // are collected by `resolve_active`; board defines start with the same
+    // registry values that the platform orchestrator supplies to the build.
+    let board_defines = BoardConfig::from_board_id(&board, &HashMap::new())
+        .map(|config| config.get_defines())
+        .unwrap_or_default();
+    let selection = resolve_active(&seeds, &search_paths, &libraries, &board_defines);
 
     if json {
         emit_json(
@@ -159,10 +162,11 @@ fn resolve_framework(
     project_dir: &Path,
     platform: Platform,
     board: &str,
+    env_config: &HashMap<String, String>,
 ) -> Result<FrameworkInfo, String> {
     use fbuild_packages::library::{
         Apollo3Cores, AvrFramework, Ch32vCores, Esp32Framework, Esp8266Framework, Nrf52Cores,
-        RenesasCores, Rp2040Cores, SamCores, SilabsCores, Stm32Cores, TeensyCores,
+        RenesasCores, SamCores, SilabsCores, Stm32Cores, TeensyCores,
     };
 
     /// Build a `FrameworkInfo` from a libraries dir + display name. Pulled out
@@ -208,7 +212,7 @@ fn resolve_framework(
         ),
         Platform::RaspberryPi => info(
             "framework-arduinopico",
-            Rp2040Cores::new(project_dir).get_libraries_dir(),
+            rp2040_framework_libraries_dir(project_dir, env_config),
         ),
         Platform::NordicNrf52 => info(
             "framework-arduinoadafruitnrf52",
@@ -262,6 +266,31 @@ fn resolve_framework(
         root,
         libraries_dir,
     })
+}
+
+/// Return the Arduino-Pico framework path selected by the environment.
+///
+/// Builds honor `platform_packages = framework-arduinopico@<URL>`; the
+/// diagnostic must use the same override or it inspects a different cache
+/// location and reports that the framework is missing.
+fn rp2040_framework_libraries_dir(
+    project_dir: &Path,
+    env_config: &HashMap<String, String>,
+) -> PathBuf {
+    use fbuild_packages::library::Rp2040Cores;
+
+    let framework = fbuild_config::parse_platform_packages_value(
+        env_config
+            .get("platform_packages")
+            .map(String::as_str)
+            .unwrap_or_default(),
+        "framework-arduinopico",
+    )
+    .map_or_else(
+        || Rp2040Cores::new(project_dir),
+        |override_spec| Rp2040Cores::with_override(project_dir, override_spec),
+    );
+    framework.get_libraries_dir()
 }
 
 /// Mirror of `fbuild_build::framework_libs::framework_include_scan_roots`.
@@ -492,6 +521,23 @@ fn emit_json(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn rp2040_diagnostic_uses_platform_package_override() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let env = HashMap::from([(
+            "platform_packages".to_string(),
+            "framework-arduinopico@https://example.invalid/rp2040-4.5.3.zip".to_string(),
+        )]);
+
+        let libraries = rp2040_framework_libraries_dir(tmp.path(), &env);
+
+        assert!(
+            libraries.to_string_lossy().contains("0.0.0+override"),
+            "override cache path was not selected: {}",
+            libraries.display()
+        );
+    }
 
     #[test]
     fn normalized_path_is_under_matches_exact_path() {
