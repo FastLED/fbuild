@@ -135,6 +135,26 @@ pub fn profiles_for(vid: u16, pid: u16) -> Vec<UsbTransportProfile> {
     profiles
 }
 
+/// Return every verified USB transport profile, ordered by descending
+/// publisher priority. Callers that need to correlate a runtime endpoint with
+/// a bootloader endpoint must derive both identities from this registry rather
+/// than carrying a built-in VID/PID table.
+pub fn all_profiles() -> Vec<UsbTransportProfile> {
+    let Ok(guard) = INSTALLED.read() else {
+        return Vec::new();
+    };
+    let Some(installed) = guard.as_ref() else {
+        return Vec::new();
+    };
+    let mut profiles: Vec<_> = installed
+        .identities
+        .iter()
+        .map(|entry| entry.profile.clone())
+        .collect();
+    profiles.sort_by(|left, right| right.priority.cmp(&left.priority));
+    profiles
+}
+
 fn identity_pid_matches(entry: &IndexedProfile, candidate: u16) -> bool {
     let Some(expected) = entry.pid else {
         return true;
@@ -540,6 +560,9 @@ mod tests {
         assert_eq!(profiles.len(), 1);
         assert_eq!(profiles[0].role, UsbDeviceRole::RuntimeCdc);
         assert_eq!(profiles[0].family.as_deref(), Some("synthetic-family"));
+        let installed = all_profiles();
+        assert_eq!(installed.len(), 1);
+        assert_eq!(installed[0].identity_match.vid, "feed");
         let board = board_profile("synthetic-alias").unwrap();
         assert_eq!(board.board_id, "synthetic-board");
         assert_eq!(board.primary_compile_identity, Some((0xfeed, 0xc0de)));
