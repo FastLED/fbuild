@@ -9,7 +9,7 @@ use fbuild_core::subprocess::run_command;
 use fbuild_core::{BuildProfile, Result, SizeInfo};
 
 use super::mcu_config::ArmMcuConfig;
-use crate::linker::{LinkExtraArgs, Linker};
+use crate::linker::{link_cwd_for, LinkExtraArgs, Linker};
 
 /// Generic ARM linker using arm-none-eabi-gcc (link driver), ar, objcopy, size.
 pub struct ArmLinker {
@@ -151,6 +151,20 @@ impl Linker for ArmLinker {
             tracing::debug!(target: "fbuild_build::linker::generic_arm", "link: {}", args.join(" "));
         }
 
+        // Run the link in the firmware's own output directory rather than
+        // inheriting the daemon's cwd (typically the user's project root):
+        // arm-none-eabi-gcc hands off to collect2 / lto-wrapper, which write
+        // scratch files relative to the process cwd. See FastLED/fbuild#1269
+        // (and #1268, which fixed the same bug for teensy).
+        let link_cwd = link_cwd_for(
+            output_dir,
+            objects
+                .iter()
+                .chain(archives.iter())
+                .chain(self.lib_search_dirs.iter())
+                .chain(std::iter::once(&self.linker_script_path)),
+        );
+
         // GCC LTO temp dir for MSYS-safe paths â€” see FastLED/fbuild#261.
         let lto_env = fbuild_core::subprocess::link_env_for_build(output_dir)?;
         let env_slice: Vec<(&str, &str)> = lto_env
@@ -183,14 +197,14 @@ impl Linker for ArmLinker {
             let rsp_arg = format!("@{}", rsp_path.display());
             run_command(
                 &[args[0].as_str(), &rsp_arg],
-                None,
+                link_cwd,
                 Some(&env_slice),
                 link_timeout,
             )
             .await?
         } else {
             let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-            run_command(&args_ref, None, Some(&env_slice), link_timeout).await?
+            run_command(&args_ref, link_cwd, Some(&env_slice), link_timeout).await?
         };
 
         if !result.success() {

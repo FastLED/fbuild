@@ -9,7 +9,7 @@ use fbuild_core::subprocess::run_command;
 use fbuild_core::{BuildProfile, Result, SizeInfo};
 
 use super::mcu_config::Nrf52McuConfig;
-use crate::linker::{LinkExtraArgs, Linker};
+use crate::linker::{link_cwd_for, LinkExtraArgs, Linker};
 
 /// NRF52-specific linker using arm-none-eabi-gcc (link driver), ar, objcopy, size.
 pub struct Nrf52Linker {
@@ -124,11 +124,25 @@ impl Linker for Nrf52Linker {
             .map(|(k, v)| (k.as_str(), v.as_str()))
             .collect();
 
+        // Run the link in the firmware's own output directory rather than
+        // inheriting the daemon's cwd (typically the user's project root):
+        // arm-none-eabi-gcc hands off to collect2 / lto-wrapper, which write
+        // scratch files relative to the process cwd. See FastLED/fbuild#1269
+        // (and #1268, which fixed the same bug for teensy).
+        let link_cwd = link_cwd_for(
+            output_dir,
+            objects
+                .iter()
+                .chain(archives.iter())
+                .chain(self.linker_search_dirs.iter())
+                .chain(std::iter::once(&self.linker_script_path)),
+        );
+
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
         // FastLED/fbuild#809: bound the link step at 3 min.
         let result = run_command(
             &args_ref,
-            None,
+            link_cwd,
             Some(&env_slice),
             Some(std::time::Duration::from_secs(180)),
         )

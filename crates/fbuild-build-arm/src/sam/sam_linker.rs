@@ -9,7 +9,7 @@ use fbuild_core::subprocess::run_command;
 use fbuild_core::{BuildProfile, Result, SizeInfo};
 
 use super::mcu_config::SamMcuConfig;
-use crate::linker::{LinkExtraArgs, Linker};
+use crate::linker::{link_cwd_for, LinkExtraArgs, Linker};
 
 /// SAM-specific linker using arm-none-eabi-gcc (link driver), ar, objcopy, size.
 pub struct SamLinker {
@@ -145,11 +145,33 @@ impl Linker for SamLinker {
             .map(|(k, v)| (k.as_str(), v.as_str()))
             .collect();
 
+        // Run the link in the firmware's own output directory rather than
+        // inheriting the daemon's cwd (typically the user's project root):
+        // arm-none-eabi-gcc hands off to collect2 / lto-wrapper, which write
+        // scratch files relative to the process cwd. See FastLED/fbuild#1269
+        // (and #1268, which fixed the same bug for teensy).
+        let mut cwd_sensitive: Vec<&Path> = vec![&self.linker_script_path];
+        cwd_sensitive.extend(objects.iter().map(|p| p.as_path()));
+        cwd_sensitive.extend(archives.iter().map(|p| p.as_path()));
+        cwd_sensitive.extend(self.extra_lib_dirs.iter().map(|p| p.as_path()));
+        // `extra_libs` entries that name a file rather than a `-l<name>` are
+        // passed through verbatim, so they are cwd-sensitive too.
+        cwd_sensitive.extend(
+            self.extra_libs
+                .iter()
+                .filter(|lib| {
+                    !lib.starts_with("-l")
+                        && (lib.contains(std::path::MAIN_SEPARATOR) || lib.contains('/'))
+                })
+                .map(Path::new),
+        );
+        let link_cwd = link_cwd_for(output_dir, &cwd_sensitive);
+
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
         // FastLED/fbuild#809: bound the link step at 3 min.
         let result = run_command(
             &args_ref,
-            None,
+            link_cwd,
             Some(&env_slice),
             Some(std::time::Duration::from_secs(180)),
         )
