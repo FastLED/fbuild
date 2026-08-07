@@ -6,6 +6,58 @@
 use fbuild_core::{Result, SizeInfo};
 use std::path::{Path, PathBuf};
 
+/// Working directory to run a link in.
+///
+/// Returns the output directory when it — and every cwd-sensitive path
+/// argument in `path_args` — is absolute, so that `collect2` / `lto-wrapper`
+/// scratch files land in the gitignored build tree instead of the daemon's
+/// inherited cwd (normally the user's project root). The user-visible symptom
+/// of the inherited cwd was a stray 0-byte file literally named `-r` appearing
+/// in the repo root after every clean build
+/// (FastLED/fbuild#1267, FastLED/FastLED#3867).
+///
+/// Returns `None` — keeping the historical inherited-cwd behaviour — as soon as
+/// any of those paths is relative, because moving the cwd would also relocate a
+/// relative `-o`, `-T`, `-L` or object-file path and silently break the link.
+///
+/// `path_args` must list exactly the paths the caller passes to the linker that
+/// are interpreted relative to the process cwd: object files, archives, linker
+/// scripts and library search dirs. It deliberately does *not* scan the raw
+/// argv, because linker flag lists legitimately contain bare non-path operands
+/// (e.g. the symbol name in `-u app_main`) that would fail the check.
+///
+/// Bare `-T<name>` script *names* resolved through absolute `-L` search dirs are
+/// fine: pass the search dirs, not the name.
+///
+/// # Example
+///
+/// ```
+/// use std::path::{Path, PathBuf};
+/// use fbuild_build_engine::linker::link_cwd_for;
+///
+/// # #[cfg(unix)] {
+/// let out = Path::new("/proj/.fbuild/build/release");
+/// let objs = vec![PathBuf::from("/proj/.fbuild/build/release/sketch.o")];
+/// assert_eq!(link_cwd_for(out, &objs), Some(out));
+///
+/// let relative = vec![PathBuf::from("build/sketch.o")];
+/// assert_eq!(link_cwd_for(out, &relative), None);
+/// # }
+/// ```
+pub fn link_cwd_for<I, P>(output_dir: &Path, path_args: I) -> Option<&Path>
+where
+    I: IntoIterator<Item = P>,
+    P: AsRef<Path>,
+{
+    if !output_dir.is_absolute() {
+        return None;
+    }
+    if path_args.into_iter().any(|p| !p.as_ref().is_absolute()) {
+        return None;
+    }
+    Some(output_dir)
+}
+
 /// Result of a link operation.
 #[derive(Debug)]
 pub struct LinkResult {
@@ -537,6 +589,57 @@ impl LinkerBase {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// Absolute path for the running platform (`/x` is *not* absolute on
+    /// Windows — it has a root but no drive prefix).
+    fn abs(tail: &str) -> PathBuf {
+        if cfg!(windows) {
+            PathBuf::from(format!("C:\\{}", tail.replace('/', "\\")))
+        } else {
+            PathBuf::from(format!("/{tail}"))
+        }
+    }
+
+    /// The link must not run in the daemon's inherited cwd: collect2 /
+    /// lto-wrapper write scratch files relative to it, which put a stray
+    /// 0-byte `-r` in the user's repo root on every clean build.
+    /// FastLED/fbuild#1267, FastLED/FastLED#3867.
+    #[test]
+    fn link_cwd_is_absolute_output_dir_when_all_paths_absolute() {
+        let out = abs("proj/.fbuild/build/release");
+        let paths = [abs("proj/.fbuild/build/release/sketch.o"), abs("sdk/ld")];
+        assert_eq!(
+            link_cwd_for(&out, &paths),
+            Some(out.as_path()),
+            "absolute output dir must become the link cwd so linker scratch \
+             files stay in the build tree"
+        );
+    }
+
+    /// No path arguments at all is still safe — `-o` lives under `output_dir`.
+    #[test]
+    fn link_cwd_is_absolute_output_dir_with_no_path_args() {
+        let out = abs("proj/build");
+        let none: [PathBuf; 0] = [];
+        assert_eq!(link_cwd_for(&out, &none), Some(out.as_path()));
+    }
+
+    /// A relative output dir keeps the historical inherited-cwd behaviour:
+    /// moving cwd there would also relocate the relative `-o` path.
+    #[test]
+    fn link_cwd_is_unset_for_relative_output_dir() {
+        let none: [PathBuf; 0] = [];
+        assert_eq!(link_cwd_for(Path::new("build/release"), &none), None);
+    }
+
+    /// A single relative object / script / search dir is enough to disable the
+    /// cwd change: it would be re-resolved against the new working directory.
+    #[test]
+    fn link_cwd_is_unset_when_any_path_arg_is_relative() {
+        let out = abs("proj/build");
+        let paths = [abs("proj/build/sketch.o"), PathBuf::from("variant/lib.a")];
+        assert_eq!(link_cwd_for(&out, &paths), None);
+    }
 
     #[test]
     fn test_collect_objects_empty() {

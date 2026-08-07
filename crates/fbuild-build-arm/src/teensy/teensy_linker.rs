@@ -9,7 +9,7 @@ use fbuild_core::subprocess::run_command;
 use fbuild_core::{BuildProfile, Result, SizeInfo};
 
 use super::mcu_config::TeensyMcuConfig;
-use crate::linker::{LinkExtraArgs, Linker, LinkerScripts};
+use crate::linker::{LinkExtraArgs, Linker, LinkerScripts, link_cwd_for};
 
 /// Teensy-specific linker using arm-none-eabi-gcc (link driver), ar, objcopy, size.
 pub struct TeensyLinker {
@@ -120,21 +120,6 @@ impl TeensyLinker {
     }
 }
 
-/// Working directory to run the teensy link in.
-///
-/// Returns the output directory when it is absolute, so collect2 /
-/// lto-wrapper scratch files land in the gitignored build tree instead of
-/// the daemon's inherited cwd (the user's project root). Returns `None` for
-/// a relative `output_dir`, where changing cwd would also relocate the
-/// relative `-o` path — preserving the historical behaviour for that case.
-fn link_cwd_for(output_dir: &Path) -> Option<&Path> {
-    if output_dir.is_absolute() {
-        Some(output_dir)
-    } else {
-        None
-    }
-}
-
 #[async_trait::async_trait]
 impl Linker for TeensyLinker {
     async fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
@@ -168,12 +153,19 @@ impl Linker for TeensyLinker {
         // in the build dir). This completes FastLED/fbuild#261, which
         // redirected only the env-based LTO temp dir and left cwd inherited.
         //
-        // Safe because every link argument is absolute: `-o` is
-        // `output_dir.join(...)`, objects/archives arrive absolute, and
-        // `-T<script>` resolves through absolute `-L` search paths. The
-        // is_absolute guard keeps the old behaviour for any caller that
-        // passes a relative output_dir, where moving cwd would relocate `-o`.
-        let link_cwd = link_cwd_for(output_dir);
+        // Safe only when every cwd-sensitive link argument is absolute: `-o`
+        // is `output_dir.join(...)`, and `-T<script>` is a bare *name*
+        // resolved through the `-L` search paths, so the guard checks the
+        // objects, the archives and those search dirs. `link_cwd_for` keeps
+        // the old behaviour if any of them is relative, where moving cwd
+        // would relocate `-o` or re-resolve an input.
+        let link_cwd = link_cwd_for(
+            output_dir,
+            objects
+                .iter()
+                .chain(archives.iter())
+                .chain(self.linker_scripts.search_dirs.iter()),
+        );
 
         // Redirect GCC LTO temp files into a forward-slashed, fbuild-owned
         // dir under the build dir so MSYS `mv` doesn't collapse backslashes
@@ -277,27 +269,28 @@ mod tests {
     /// The link must not run in the daemon's inherited cwd: collect2 /
     /// lto-wrapper write scratch files relative to it, which put a stray
     /// 0-byte `-r` in the user's repo root on every clean build.
-    /// FastLED/fbuild#1267, FastLED/FastLED#3867.
+    /// FastLED/fbuild#1267, FastLED/FastLED#3867. The shared helper itself is
+    /// unit-tested in `fbuild-build-engine`; this pins the teensy call shape —
+    /// the `-T` script is a bare name, so it is the `-L` search dirs that must
+    /// be absolute.
     #[test]
     fn link_runs_in_absolute_output_dir_not_inherited_cwd() {
-        let abs = if cfg!(windows) {
-            PathBuf::from("C:\\proj\\.fbuild\\build\\release")
+        let (out, core_dir) = if cfg!(windows) {
+            ("C:\\proj\\.fbuild\\build\\release", "C:\\pkgs\\teensy4")
         } else {
-            PathBuf::from("/proj/.fbuild/build/release")
+            ("/proj/.fbuild/build/release", "/pkgs/teensy4")
         };
+        let scripts = LinkerScripts::single(PathBuf::from(core_dir), "imxrt1062_t41.ld");
+        let objects = [PathBuf::from(out).join("sketch.o")];
         assert_eq!(
-            link_cwd_for(&abs),
-            Some(abs.as_path()),
+            link_cwd_for(
+                Path::new(out),
+                objects.iter().chain(scripts.search_dirs.iter())
+            ),
+            Some(Path::new(out)),
             "absolute output dir must become the link cwd so linker scratch \
              files stay in the build tree"
         );
-    }
-
-    /// A relative output dir keeps the historical inherited-cwd behaviour:
-    /// moving cwd there would also relocate the relative `-o` path.
-    #[test]
-    fn link_cwd_is_unset_for_relative_output_dir() {
-        assert_eq!(link_cwd_for(Path::new("build/release")), None);
     }
 
     #[test]

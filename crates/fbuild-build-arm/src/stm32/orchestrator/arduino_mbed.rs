@@ -286,6 +286,15 @@ async fn preprocess_linker_script(
     let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
     // FastLED/fbuild#809: linker-script preprocessing is a trivial
     // g++ -E invocation; bound to 30s.
+    //
+    // Deliberately keeps the inherited cwd (FastLED/fbuild#1269): this is not
+    // a link. `-E -P` stops after preprocessing, so no `collect2` /
+    // `lto-wrapper` is spawned and nothing writes cwd-relative scratch files —
+    // the stray `-r` class of junk cannot originate here. Both the input
+    // (`variant_dir`) and the output (`build_dir`) are already explicit paths,
+    // so the cwd does not affect where anything lands. The `None` env is
+    // likewise correct: `link_env_for_build` only redirects GCC's *LTO* temp
+    // dir, which a preprocess-only run never uses.
     let result = fbuild_core::subprocess::run_command(
         &args_ref,
         None,
