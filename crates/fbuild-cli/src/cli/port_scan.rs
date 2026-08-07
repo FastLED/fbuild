@@ -34,7 +34,11 @@ pub enum PortAction {
     /// never elevates, prompts, or changes host state.
     Doctor {
         /// Diagnose a single port (e.g. `COM17`). Defaults to every port.
-        #[arg(long)]
+        ///
+        /// Rejected with `--fix`/`--dry-run` for the same reason as the other
+        /// scope flags — those act host-wide, not per port. Flagged by review
+        /// for `--all`/`--hub`; `--port` had the identical hole.
+        #[arg(long, conflicts_with_all = ["fix", "dry_run"])]
         port: Option<String>,
         /// Apply the safe remedies (currently: disable USB selective suspend).
         /// Needs administrator rights and `--yes`.
@@ -57,11 +61,15 @@ pub enum PortAction {
         #[arg(long, conflicts_with_all = ["fix", "dry_run"])]
         json: bool,
         /// Diagnose every port. The default; accepted for symmetry with --port.
-        #[arg(long, conflicts_with_all = ["port", "hub"])]
+        ///
+        /// Like `--port`/`--hub`, rejected with `--fix`/`--dry-run`: those
+        /// paths act on a host-wide power setting, not on a selected port, so
+        /// a scope flag there would be silently ignored.
+        #[arg(long, conflicts_with_all = ["port", "hub", "fix", "dry_run"])]
         all: bool,
         /// Diagnose only ports behind a USB ancestor matching this substring
         /// (a partial instance ID or VID:PID fragment is enough).
-        #[arg(long, conflicts_with = "port")]
+        #[arg(long, conflicts_with_all = ["port", "fix", "dry_run"])]
         hub: Option<String>,
     },
 }

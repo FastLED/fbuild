@@ -141,11 +141,24 @@ pub fn parse_device_power_rows(output: &str) -> Vec<(String, bool)> {
         .lines()
         .filter_map(|line| {
             let (instance, enable) = line.trim().split_once('|')?;
-            let instance = instance.trim().trim_end_matches("_0").to_ascii_uppercase();
+            let instance = instance.trim();
+            // `strip_suffix`, not `trim_end_matches`: the latter strips
+            // repeatedly, so an instance legitimately ending `_0_0` would lose
+            // both and stop matching its devnode.
+            let instance = instance.strip_suffix("_0").unwrap_or(instance);
+            let instance = instance.to_ascii_uppercase();
             if instance.is_empty() {
                 return None;
             }
-            Some((instance, enable.trim().eq_ignore_ascii_case("true")))
+            // An unrecognised value is *no data*, not "cannot be powered off".
+            // Treating it as false would quietly clear a device nobody checked
+            // — the same trap as reporting unknown suspend state as disabled.
+            let enable = match enable.trim() {
+                v if v.eq_ignore_ascii_case("true") => true,
+                v if v.eq_ignore_ascii_case("false") => false,
+                _ => return None,
+            };
+            Some((instance, enable))
         })
         .collect()
 }
@@ -192,9 +205,19 @@ pub fn parse_last_seen_rows(output: &str) -> Option<i64> {
 ///
 /// Deliberately coarse — the reader only needs "moments ago" versus "days
 /// ago" to tell a live board from a stale record.
+/// The whole "last seen" phrase, so the negative case cannot render as the
+/// nonsense "last seen in the future ago". Clock skew and a devnode stamped
+/// slightly ahead of the host are both real, so the branch has to exist.
+pub fn format_last_seen(secs: i64) -> String {
+    if secs < 0 {
+        return "a timestamp in the future (host clock skew?)".to_string();
+    }
+    format!("{} ago", format_age(secs))
+}
+
 pub fn format_age(secs: i64) -> String {
     if secs < 0 {
-        return "in the future".to_string();
+        return "0s".to_string();
     }
     if secs < 60 {
         format!("{secs}s")
@@ -253,7 +276,7 @@ pub fn render_report(diagnoses: &[PortDiagnosis], problems: &[UsbProblemDevice])
         };
         let _ = writeln!(out, "  presence   {presence}");
         if let Some(secs) = d.last_seen_secs_ago {
-            let _ = writeln!(out, "  last seen  {} ago", format_age(secs));
+            let _ = writeln!(out, "  last seen  {}", format_last_seen(secs));
         }
         let mut health_line = format!("  health     {}", d.health);
         if let Some(code) = d.problem_code {
@@ -522,6 +545,17 @@ pub fn run(only_port: Option<&str>, only_hub: Option<&str>, json: bool) -> Resul
             )));
         }
         if let Some(hub) = only_hub {
+            // Distinguish "no match" from "we have no topology to match
+            // against". Off Windows the ancestor chain is always empty, so
+            // blaming the hub string would send the reader looking for a
+            // typo that is not there.
+            if ports.iter().all(|p| p.ancestor_instance_ids.is_empty()) {
+                return Err(FbuildError::SerialError(
+                    "--hub needs USB topology, which this host does not expose \
+                     (normal off Windows); re-run without --hub"
+                        .to_string(),
+                ));
+            }
             return Err(FbuildError::SerialError(format!(
                 "no port sits behind a USB ancestor matching {hub}; \
                  run `fbuild port doctor` to see each port's topology"
@@ -945,14 +979,42 @@ Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)
         ));
     }
 
+    /// An unrecognised `Enable` value is no data, not "cannot be powered
+    /// off" — treating it as false would quietly clear a device nobody
+    /// checked.
+    #[test]
+    fn unrecognised_enable_value_is_dropped_not_treated_as_false() {
+        let rows = parse_device_power_rows("A|True\nB|False\nC|\nD|maybe\nE|(null)\n");
+        let names: Vec<&str> = rows.iter().map(|(n, _)| n.as_str()).collect();
+        assert_eq!(names, vec!["A", "B"], "only recognised values survive");
+    }
+
+    /// `trim_end_matches` strips repeatedly; an instance legitimately ending
+    /// `_0_0` would lose both suffixes and stop matching its devnode.
+    #[test]
+    fn only_one_wmi_suffix_is_stripped() {
+        let rows = parse_device_power_rows("USB\\X_0_0|True\n");
+        assert_eq!(rows[0].0, "USB\\X_0");
+    }
+
+    /// The negative branch must not render as "last seen in the future ago".
+    #[test]
+    fn future_timestamp_renders_as_a_sentence_not_nonsense() {
+        let s = format_last_seen(-5);
+        assert!(!s.contains("ago"), "got: {s}");
+        assert!(s.contains("future"), "got: {s}");
+        assert_eq!(format_last_seen(90), "1m ago");
+    }
+
     #[test]
     fn age_renders_coarsely_enough_to_read_at_a_glance() {
         assert_eq!(format_age(45), "45s");
         assert_eq!(format_age(90), "1m");
         assert_eq!(format_age(7_200), "2h");
         assert_eq!(format_age(5 * 86_400), "5d");
-        // clock skew must not render as a huge negative age
-        assert_eq!(format_age(-5), "in the future");
+        // Negative clamps here; the readable phrasing for a future timestamp
+        // lives in format_last_seen, so "in the future ago" is impossible.
+        assert_eq!(format_age(-5), "0s");
     }
 
     #[test]
