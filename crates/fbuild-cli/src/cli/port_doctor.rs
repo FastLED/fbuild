@@ -24,6 +24,10 @@ pub struct PortDiagnosis {
     pub problem_code: Option<u32>,
     pub instance_id: Option<String>,
     pub parent_instance_id: Option<String>,
+    /// Whether any USB ancestor of this port may be powered down by Windows.
+    /// `None` when unknown — never silently `false`.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub suspend_allowed: Option<bool>,
 }
 
 /// What the diagnosis means and what to do about it.
@@ -50,7 +54,7 @@ pub fn problem_code_meaning(code: u32) -> Option<&'static str> {
     })
 }
 
-pub fn diagnose(port: &DetectedPort) -> PortDiagnosis {
+pub fn diagnose(port: &DetectedPort, power_rows: &[(String, bool)]) -> PortDiagnosis {
     PortDiagnosis {
         port: port.info.port_name.clone(),
         presence: port.health.is_present(),
@@ -58,6 +62,7 @@ pub fn diagnose(port: &DetectedPort) -> PortDiagnosis {
         problem_code: port.health.problem_code(),
         instance_id: port.instance_id.clone(),
         parent_instance_id: port.parent_instance_id.clone(),
+        suspend_allowed: suspend_for_ancestors(power_rows, &port.ancestor_instance_ids),
     }
 }
 
@@ -121,6 +126,50 @@ pub fn parse_selective_suspend(powercfg_output: &str) -> Option<bool> {
     u32::from_str_radix(hex, 16).ok().map(|v| v != 0)
 }
 
+/// Parse `MSPower_DeviceEnable` rows rendered as `instance|Enable`.
+///
+/// `Enable = True` means Windows is *allowed* to power the device down. The
+/// WMI `InstanceName` carries a `_0` suffix that the PnP instance ID does
+/// not, so it is trimmed here rather than at every call site.
+pub fn parse_device_power_rows(output: &str) -> Vec<(String, bool)> {
+    output
+        .lines()
+        .filter_map(|line| {
+            let (instance, enable) = line.trim().split_once('|')?;
+            let instance = instance.trim().trim_end_matches("_0").to_ascii_uppercase();
+            if instance.is_empty() {
+                return None;
+            }
+            Some((instance, enable.trim().eq_ignore_ascii_case("true")))
+        })
+        .collect()
+}
+
+/// Whether any USB ancestor of this port may be powered down.
+///
+/// Takes the **whole ancestor chain**, not just the immediate parent. For a
+/// composite device the immediate parent is the device itself; the nodes
+/// carrying power policy are hubs further up. Matching only one hop silently
+/// reports `None` for every real port — which is exactly what happened on
+/// this bench before the chain was threaded through.
+///
+/// `None` when nothing matched: silence beats a false "fine".
+pub fn suspend_for_ancestors(power_rows: &[(String, bool)], ancestors: &[String]) -> Option<bool> {
+    let mut matched = false;
+    for ancestor in ancestors {
+        let ancestor = ancestor.to_ascii_uppercase();
+        for (instance, can_power_off) in power_rows {
+            if ancestor == *instance {
+                matched = true;
+                if *can_power_off {
+                    return Some(true);
+                }
+            }
+        }
+    }
+    matched.then_some(false)
+}
+
 /// Host-level section describing USB selective suspend.
 ///
 /// Why the report cares: Windows may power a port down mid-session, and a
@@ -180,6 +229,12 @@ pub fn render_report(diagnoses: &[PortDiagnosis], problems: &[UsbProblemDevice])
         let _ = writeln!(out, "{health_line}");
         if let Some(parent) = d.parent_instance_id.as_deref() {
             let _ = writeln!(out, "  topology   parent {parent}");
+        }
+        if d.suspend_allowed == Some(true) {
+            let _ = writeln!(
+                out,
+                "  suspend    this port's hub chain may be powered down by Windows"
+            );
         }
         let _ = writeln!(out, "  verdict    {}", v.summary);
         if !v.remedy.is_empty() {
@@ -376,6 +431,7 @@ pub fn build_json_report(
 
 /// `fbuild port doctor` entry point.
 pub fn run(only_port: Option<&str>, json: bool) -> Result<()> {
+    let power_rows = query_device_power_rows();
     let ports = fbuild_serial::ports::available_ports()
         .map_err(|e| FbuildError::SerialError(format!("serial port enumeration failed: {e}")))?;
     let diagnoses: Vec<_> = ports
@@ -386,7 +442,7 @@ pub fn run(only_port: Option<&str>, json: bool) -> Result<()> {
             Some(want) => p.info.port_name.eq_ignore_ascii_case(want),
             None => true,
         })
-        .map(diagnose)
+        .map(|p| diagnose(p, &power_rows))
         .collect();
     if diagnoses.is_empty() {
         if let Some(want) = only_port {
@@ -418,6 +474,37 @@ pub fn run(only_port: Option<&str>, json: bool) -> Result<()> {
 /// probe did. `None` (its value off Windows, or when powercfg is unavailable
 /// or its output unrecognised) simply omits the section rather than asserting
 /// the host is fine.
+/// Read the per-device "allow the computer to turn off this device" flags.
+///
+/// One WMI call for the whole report (~0.5s), not one per port. Deliberately
+/// **not** wired into `port scan`: that is a hot path used by deploy, and a
+/// diagnostic is the right place to pay for this.
+///
+/// Read-only and best-effort; an empty result simply omits the per-port line.
+fn query_device_power_rows() -> Vec<(String, bool)> {
+    if !cfg!(windows) {
+        return Vec::new();
+    }
+    let script = "Get-CimInstance -Namespace root\\wmi -ClassName MSPower_DeviceEnable \
+                  -ErrorAction SilentlyContinue | ForEach-Object { \
+                  Write-Output (\"{0}|{1}\" -f $_.InstanceName, $_.Enable) }";
+    let Ok(out) = fbuild_core::subprocess::run_command_blocking(
+        &[
+            "powershell",
+            "-NoProfile",
+            "-NonInteractive",
+            "-Command",
+            script,
+        ],
+        None,
+        None,
+        Some(std::time::Duration::from_secs(20)),
+    ) else {
+        return Vec::new();
+    };
+    parse_device_power_rows(&out.stdout)
+}
+
 fn query_selective_suspend() -> Option<bool> {
     if !cfg!(windows) {
         return None;
@@ -450,6 +537,7 @@ mod tests {
             problem_code: problem,
             instance_id: Some(r"USB\VID_2E8A&PID_F00F\X".to_string()),
             parent_instance_id: None,
+            suspend_allowed: None,
         }
     }
 
@@ -646,6 +734,47 @@ Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)
         let text = serde_json::to_string(&report).unwrap();
         assert!(text.contains("not attached"), "got: {text}");
         assert!(text.contains("\"presence\":false"), "got: {text}");
+    }
+
+    #[test]
+    fn device_power_rows_parsed_and_suffix_trimmed() {
+        let rows = parse_device_power_rows(
+            "USB\\VID_05E3&PID_0610\\7&3AFC677D&0&1_0|True\nUSB\\ROOT_HUB30\\5&4087D53&0&0_0|False\n",
+        );
+        assert_eq!(rows.len(), 2);
+        // the WMI `_0` suffix is not part of the PnP instance ID
+        assert!(rows[0].0.ends_with("&0&1"), "got: {}", rows[0].0);
+        assert!(rows[0].1);
+        assert!(!rows[1].1);
+    }
+
+    /// The suspendable node is typically a *grandparent* hub, not the
+    /// immediate parent. Matching only one hop reported `None` for every real
+    /// port on this bench — caught by running it, not by the tests, because
+    /// the fixtures matched by construction.
+    #[test]
+    fn suspend_walks_the_whole_ancestor_chain() {
+        let rows = parse_device_power_rows("USB\\VID_05E3&PID_0610\\7&3AFC677D&0&1_0|True\n");
+        let chain = vec![
+            // composite device — the immediate parent, carries no power policy
+            r"USB\VID_303A&PID_1001\8C:BF:EA:CF:87:B4".to_string(),
+            // the hub, two hops up, lowercased to pin case-insensitivity
+            r"USB\VID_05E3&PID_0610\7&3afc677d&0&1".to_string(),
+        ];
+        assert_eq!(suspend_for_ancestors(&rows, &chain), Some(true));
+    }
+
+    #[test]
+    fn suspend_reports_false_only_when_a_row_actually_matched() {
+        let rows = parse_device_power_rows("USB\\VID_05E3&PID_0610\\7&3AFC677D&0&1_0|False\n");
+        let chain = vec![r"USB\VID_05E3&PID_0610\7&3AFC677D&0&1".to_string()];
+        assert_eq!(suspend_for_ancestors(&rows, &chain), Some(false));
+        // Nothing matched: unknown, not "fine". A false clear is worse than
+        // saying nothing.
+        let other = vec![r"USB\VID_DEAD&PID_BEEF\X".to_string()];
+        assert_eq!(suspend_for_ancestors(&rows, &other), None);
+        assert_eq!(suspend_for_ancestors(&rows, &[]), None);
+        assert_eq!(suspend_for_ancestors(&[], &chain), None);
     }
 
     /// A host-wide change must show exactly what it will run, and how to undo it.
