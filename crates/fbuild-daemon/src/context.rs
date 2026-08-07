@@ -5,6 +5,7 @@ use crate::status_manager::StatusManager;
 use dashmap::DashMap;
 use fbuild_core::DaemonState;
 use fbuild_core::install_status::InstallStatus;
+use fbuild_core::path::NormalizedPath;
 use fbuild_serial::SharedSerialManager;
 use std::path::PathBuf;
 use std::sync::atomic::{AtomicBool, AtomicU64, AtomicUsize};
@@ -162,7 +163,17 @@ pub struct DaemonContext {
     /// Latest dependency/package install status emitted by lower-level crates.
     pub dependency_install: Arc<std::sync::RwLock<Option<InstallStatus>>>,
     /// Per-project build locks to serialize builds on the same project.
-    pub project_locks: DashMap<PathBuf, Arc<Mutex<()>>>,
+    ///
+    /// Keyed on [`NormalizedPath`], not raw `PathBuf`: the project dir
+    /// arrives as an unnormalized client-supplied string
+    /// (`PathBuf::from(&req.project_dir)` in the build/deploy handlers), so
+    /// two requests naming one project with different casing or slash
+    /// direction (`C:\proj` vs `c:/proj`) would key distinct raw-path
+    /// entries and get *different* locks — letting two builds run on the
+    /// same project concurrently. `NormalizedPath`'s case-folded,
+    /// slash-normalized key collapses those to one lock. See
+    /// FastLED/fbuild#1274 (and the #436/#437 identity bug class).
+    pub project_locks: DashMap<NormalizedPath, Arc<Mutex<()>>>,
     /// Device lease manager.
     ///
     /// Wrapped in `Arc` (FastLED/fbuild#808) so refresh paths that call
@@ -441,7 +452,7 @@ impl DaemonContext {
     /// Get or create a per-project lock.
     pub fn project_lock(&self, project_dir: &std::path::Path) -> Arc<Mutex<()>> {
         self.project_locks
-            .entry(project_dir.to_path_buf())
+            .entry(NormalizedPath::from(project_dir))
             .or_insert_with(|| Arc::new(Mutex::new(())))
             .clone()
     }
