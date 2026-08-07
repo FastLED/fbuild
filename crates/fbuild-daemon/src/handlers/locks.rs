@@ -330,8 +330,9 @@ pub async fn clear_locks(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use fbuild_core::path::NormalizedPath;
     use fbuild_serial::{SerialClientMetadata, SerialSession};
-    use std::path::PathBuf;
+    use std::path::{Path, PathBuf};
     use tokio::sync::Mutex;
 
     fn test_context() -> Arc<DaemonContext> {
@@ -367,7 +368,7 @@ mod tests {
     #[tokio::test]
     async fn lock_status_reports_held_project_locks_without_stale_entries() {
         let ctx = test_context();
-        let project = PathBuf::from("/tmp/fbuild-held-project");
+        let project = NormalizedPath::from(PathBuf::from("/tmp/fbuild-held-project"));
         let lock = Arc::new(Mutex::new(()));
         let guard = lock.lock().await;
         ctx.project_locks.insert(project.clone(), lock.clone());
@@ -429,8 +430,8 @@ mod tests {
     #[tokio::test]
     async fn clear_locks_removes_only_unheld_project_lock_entries() {
         let ctx = test_context();
-        let unheld = PathBuf::from("/tmp/fbuild-unheld-project");
-        let held = PathBuf::from("/tmp/fbuild-held-project");
+        let unheld = NormalizedPath::from(PathBuf::from("/tmp/fbuild-unheld-project"));
+        let held = NormalizedPath::from(PathBuf::from("/tmp/fbuild-held-project"));
         let held_lock = Arc::new(Mutex::new(()));
         let guard = held_lock.lock().await;
         ctx.project_locks
@@ -447,6 +448,38 @@ mod tests {
         assert!(ctx.project_locks.contains_key(&held));
 
         drop(guard);
+    }
+
+    /// Regression for FastLED/fbuild#1274 (identity bug class #436/#437):
+    /// the build-serialization lock is keyed on the *raw* client-supplied
+    /// project dir, which is never normalized. Two spellings of one project
+    /// must resolve to the SAME lock or two builds could run concurrently.
+    #[tokio::test]
+    async fn project_lock_keys_on_normalized_identity_not_raw_bytes() {
+        let ctx = test_context();
+        let mixed = ctx.project_lock(Path::new("/Tmp/FBuild/Proj"));
+        let lower = ctx.project_lock(Path::new("/tmp/fbuild/proj"));
+
+        if cfg!(any(windows, target_os = "macos")) {
+            // Case-insensitive filesystem: one logical project, so the two
+            // spellings must share a single serialization lock. Before the
+            // fix these keyed distinct raw-`PathBuf` entries and returned
+            // different `Arc`s — the concurrency hole this test guards.
+            assert!(
+                Arc::ptr_eq(&mixed, &lower),
+                "same project in different case must share one lock"
+            );
+            assert_eq!(ctx.project_locks.len(), 1, "must not create a second lock");
+        } else {
+            // Case-sensitive filesystem: these are genuinely different
+            // directories and correctly get independent locks.
+            assert!(!Arc::ptr_eq(&mixed, &lower));
+        }
+
+        // Re-requesting the exact same path always returns the same lock,
+        // on every platform.
+        let again = ctx.project_lock(Path::new("/tmp/fbuild/proj"));
+        assert!(Arc::ptr_eq(&lower, &again));
     }
 
     #[tokio::test]
