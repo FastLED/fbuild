@@ -50,7 +50,11 @@ pub enum PortAction {
         #[arg(long)]
         no_elevate: bool,
         /// Emit the report as JSON instead of text.
-        #[arg(long)]
+        ///
+        /// Rejected alongside `--fix`/`--dry-run`: those paths print a change
+        /// plan, not a report, so accepting `--json` there would silently
+        /// ignore it and hand a script text it cannot parse.
+        #[arg(long, conflicts_with_all = ["fix", "dry_run"])]
         json: bool,
     },
 }
