@@ -24,6 +24,14 @@ pub struct PortDiagnosis {
     pub problem_code: Option<u32>,
     pub instance_id: Option<String>,
     pub parent_instance_id: Option<String>,
+    /// Whether any USB ancestor of this port may be powered down by Windows.
+    /// `None` when unknown — never silently `false`.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub suspend_allowed: Option<bool>,
+    /// Seconds since the devnode was last seen on the bus. Only populated for
+    /// a single-port query — see `query_last_seen_secs` for why.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub last_seen_secs_ago: Option<i64>,
 }
 
 /// What the diagnosis means and what to do about it.
@@ -50,7 +58,7 @@ pub fn problem_code_meaning(code: u32) -> Option<&'static str> {
     })
 }
 
-pub fn diagnose(port: &DetectedPort) -> PortDiagnosis {
+pub fn diagnose(port: &DetectedPort, power_rows: &[(String, bool)]) -> PortDiagnosis {
     PortDiagnosis {
         port: port.info.port_name.clone(),
         presence: port.health.is_present(),
@@ -58,6 +66,8 @@ pub fn diagnose(port: &DetectedPort) -> PortDiagnosis {
         problem_code: port.health.problem_code(),
         instance_id: port.instance_id.clone(),
         parent_instance_id: port.parent_instance_id.clone(),
+        suspend_allowed: suspend_for_ancestors(power_rows, &port.ancestor_instance_ids),
+        last_seen_secs_ago: None,
     }
 }
 
@@ -121,6 +131,105 @@ pub fn parse_selective_suspend(powercfg_output: &str) -> Option<bool> {
     u32::from_str_radix(hex, 16).ok().map(|v| v != 0)
 }
 
+/// Parse `MSPower_DeviceEnable` rows rendered as `instance|Enable`.
+///
+/// `Enable = True` means Windows is *allowed* to power the device down. The
+/// WMI `InstanceName` carries a `_0` suffix that the PnP instance ID does
+/// not, so it is trimmed here rather than at every call site.
+pub fn parse_device_power_rows(output: &str) -> Vec<(String, bool)> {
+    output
+        .lines()
+        .filter_map(|line| {
+            let (instance, enable) = line.trim().split_once('|')?;
+            let instance = instance.trim();
+            // `strip_suffix`, not `trim_end_matches`: the latter strips
+            // repeatedly, so an instance legitimately ending `_0_0` would lose
+            // both and stop matching its devnode.
+            let instance = instance.strip_suffix("_0").unwrap_or(instance);
+            let instance = instance.to_ascii_uppercase();
+            if instance.is_empty() {
+                return None;
+            }
+            // An unrecognised value is *no data*, not "cannot be powered off".
+            // Treating it as false would quietly clear a device nobody checked
+            // — the same trap as reporting unknown suspend state as disabled.
+            let enable = match enable.trim() {
+                v if v.eq_ignore_ascii_case("true") => true,
+                v if v.eq_ignore_ascii_case("false") => false,
+                _ => return None,
+            };
+            Some((instance, enable))
+        })
+        .collect()
+}
+
+/// Whether any USB ancestor of this port may be powered down.
+///
+/// Takes the **whole ancestor chain**, not just the immediate parent. For a
+/// composite device the immediate parent is the device itself; the nodes
+/// carrying power policy are hubs further up. Matching only one hop silently
+/// reports `None` for every real port — which is exactly what happened on
+/// this bench before the chain was threaded through.
+///
+/// `None` when nothing matched: silence beats a false "fine".
+pub fn suspend_for_ancestors(power_rows: &[(String, bool)], ancestors: &[String]) -> Option<bool> {
+    let mut matched = false;
+    for ancestor in ancestors {
+        let ancestor = ancestor.to_ascii_uppercase();
+        for (instance, can_power_off) in power_rows {
+            if ancestor == *instance {
+                matched = true;
+                if *can_power_off {
+                    return Some(true);
+                }
+            }
+        }
+    }
+    matched.then_some(false)
+}
+
+/// Parse `instance|unix_seconds` rows into a last-seen timestamp.
+///
+/// The PowerShell side emits `ToUnixTimeSeconds()` rather than a formatted
+/// date on purpose: a rendered date is locale-dependent and would parse
+/// differently on a non-English host.
+pub fn parse_last_seen_rows(output: &str) -> Option<i64> {
+    output
+        .lines()
+        .filter_map(|line| line.trim().rsplit_once('|'))
+        .filter_map(|(_, secs)| secs.trim().parse::<i64>().ok())
+        .next()
+}
+
+/// Render an elapsed duration as a short human age: `45s`, `12m`, `3h`, `6d`.
+///
+/// Deliberately coarse — the reader only needs "moments ago" versus "days
+/// ago" to tell a live board from a stale record.
+/// The whole "last seen" phrase, so the negative case cannot render as the
+/// nonsense "last seen in the future ago". Clock skew and a devnode stamped
+/// slightly ahead of the host are both real, so the branch has to exist.
+pub fn format_last_seen(secs: i64) -> String {
+    if secs < 0 {
+        return "a timestamp in the future (host clock skew?)".to_string();
+    }
+    format!("{} ago", format_age(secs))
+}
+
+pub fn format_age(secs: i64) -> String {
+    if secs < 0 {
+        return "0s".to_string();
+    }
+    if secs < 60 {
+        format!("{secs}s")
+    } else if secs < 3600 {
+        format!("{}m", secs / 60)
+    } else if secs < 86_400 {
+        format!("{}h", secs / 3600)
+    } else {
+        format!("{}d", secs / 86_400)
+    }
+}
+
 /// Host-level section describing USB selective suspend.
 ///
 /// Why the report cares: Windows may power a port down mid-session, and a
@@ -166,6 +275,9 @@ pub fn render_report(diagnoses: &[PortDiagnosis], problems: &[UsbProblemDevice])
             None => "unknown",
         };
         let _ = writeln!(out, "  presence   {presence}");
+        if let Some(secs) = d.last_seen_secs_ago {
+            let _ = writeln!(out, "  last seen  {}", format_last_seen(secs));
+        }
         let mut health_line = format!("  health     {}", d.health);
         if let Some(code) = d.problem_code {
             match problem_code_meaning(code) {
@@ -180,6 +292,12 @@ pub fn render_report(diagnoses: &[PortDiagnosis], problems: &[UsbProblemDevice])
         let _ = writeln!(out, "{health_line}");
         if let Some(parent) = d.parent_instance_id.as_deref() {
             let _ = writeln!(out, "  topology   parent {parent}");
+        }
+        if d.suspend_allowed == Some(true) {
+            let _ = writeln!(
+                out,
+                "  suspend    this port's hub chain may be powered down by Windows"
+            );
         }
         let _ = writeln!(out, "  verdict    {}", v.summary);
         if !v.remedy.is_empty() {
@@ -210,112 +328,29 @@ pub fn render_report(diagnoses: &[PortDiagnosis], problems: &[UsbProblemDevice])
     out
 }
 
-/// The exact `powercfg` argv `--fix` would run, AC and DC.
+/// Does this port fall within the requested scope?
 ///
-/// Pure so the change set can be shown by `--dry-run` and asserted in tests
-/// without touching the host. Both indices matter: disabling only the AC side
-/// leaves a laptop suspending ports the moment it is unplugged.
-pub fn suspend_fix_commands() -> Vec<Vec<String>> {
-    ["-setacvalueindex", "-setdcvalueindex"]
-        .iter()
-        .map(|verb| {
-            vec![
-                "powercfg".to_string(),
-                (*verb).to_string(),
-                "SCHEME_CURRENT".to_string(),
-                USB_SUBGROUP_GUID.to_string(),
-                SELECTIVE_SUSPEND_GUID.to_string(),
-                "0".to_string(),
-            ]
-        })
-        .collect()
-}
-
-/// Human-readable plan for `--fix`, used by `--dry-run` and before elevating.
-pub fn render_fix_plan(commands: &[Vec<String>], already_disabled: bool) -> String {
-    if already_disabled {
-        // Idempotent: nothing to do, and in particular no UAC prompt for a
-        // change that would be a no-op.
-        return "nothing to do — USB selective suspend is already disabled\n".to_string();
+/// `--port` matches the COM name exactly (case-insensitively). `--hub`
+/// matches any USB **ancestor**, by substring, so a partial instance ID or a
+/// bare VID:PID fragment works — you rarely have the full instance string to
+/// hand when you are looking at a hub in Device Manager. Neither given means
+/// every port.
+pub fn port_in_scope(
+    port_name: &str,
+    ancestors: &[String],
+    only_port: Option<&str>,
+    only_hub: Option<&str>,
+) -> bool {
+    if let Some(want) = only_port {
+        return port_name.eq_ignore_ascii_case(want);
     }
-    let mut out = String::from("would run, elevated:\n");
-    for cmd in commands {
-        out.push_str("  ");
-        out.push_str(&cmd.join(" "));
-        out.push('\n');
+    if let Some(hub) = only_hub {
+        let hub = hub.to_ascii_uppercase();
+        return ancestors
+            .iter()
+            .any(|a| a.to_ascii_uppercase().contains(&hub));
     }
-    out.push_str(
-        "this changes a host-wide power setting; revert with the same commands and a \
-         trailing 1 instead of 0\n",
-    );
-    out
-}
-
-/// Apply the safe subset of remedies: disable USB selective suspend.
-///
-/// Deliberately narrow. It does **not** disable/enable devnodes or restart
-/// hubs: a bus reset is not a VBUS cycle and does not recover a
-/// descriptor-failed device, while a root-hub restart disrupts every other
-/// device on that hub. A fix that looks helpful and is not is worse than none.
-pub fn run_fix(dry_run: bool, assume_yes: bool, no_elevate: bool) -> Result<()> {
-    let current = query_selective_suspend();
-    let already_disabled = current == Some(false);
-    let commands = suspend_fix_commands();
-    crate::output::result(render_fix_plan(&commands, already_disabled).trim_end_matches('\n'));
-
-    if already_disabled || dry_run {
-        return Ok(());
-    }
-    if !cfg!(windows) {
-        crate::output::result("not applicable on this platform");
-        return Ok(());
-    }
-    if no_elevate {
-        return Err(FbuildError::SerialError(
-            "--no-elevate was passed but this change needs administrator rights; \
-             re-run without it, or run the commands above from an elevated shell"
-                .to_string(),
-        ));
-    }
-    if !assume_yes {
-        // A host-wide power-policy change should never be a side effect of a
-        // diagnostic. Require the caller to say so.
-        return Err(FbuildError::SerialError(
-            "this changes a host-wide power setting; re-run with --yes to apply, \
-             or --dry-run to see the plan only"
-                .to_string(),
-        ));
-    }
-
-    // One elevation for the whole change set, not one per command.
-    let joined = commands
-        .iter()
-        .map(|c| c.join(" "))
-        .collect::<Vec<_>>()
-        .join("; ");
-    let script =
-        format!("Start-Process -Verb RunAs -Wait -FilePath cmd -ArgumentList '/c {joined}'");
-    let out = fbuild_core::subprocess::run_command_blocking(
-        &[
-            "powershell",
-            "-NoProfile",
-            "-NonInteractive",
-            "-Command",
-            &script,
-        ],
-        None,
-        None,
-        Some(std::time::Duration::from_secs(120)),
-    )
-    .map_err(|e| FbuildError::SerialError(format!("elevation failed: {e}")))?;
-    if !out.success() {
-        return Err(FbuildError::SerialError(format!(
-            "elevated powercfg failed: {}",
-            out.stderr.trim()
-        )));
-    }
-    crate::output::result("USB selective suspend disabled; re-run `fbuild port doctor` to confirm");
-    Ok(())
+    true
 }
 
 /// Machine-readable report. Mirrors the human output's structure so a script
@@ -375,26 +410,63 @@ pub fn build_json_report(
 }
 
 /// `fbuild port doctor` entry point.
-pub fn run(only_port: Option<&str>, json: bool) -> Result<()> {
+pub fn run(only_port: Option<&str>, only_hub: Option<&str>, json: bool) -> Result<()> {
+    let power_rows = query_device_power_rows();
     let ports = fbuild_serial::ports::available_ports()
         .map_err(|e| FbuildError::SerialError(format!("serial port enumeration failed: {e}")))?;
-    let diagnoses: Vec<_> = ports
+    let mut diagnoses: Vec<_> = ports
         .iter()
         // Explicit match rather than `Option::is_none_or`: that is stable only
         // since 1.82 and `.clippy.toml` pins msrv = 1.75.
-        .filter(|p| match only_port {
-            Some(want) => p.info.port_name.eq_ignore_ascii_case(want),
-            None => true,
+        .filter(|p| {
+            port_in_scope(
+                &p.info.port_name,
+                &p.ancestor_instance_ids,
+                only_port,
+                only_hub,
+            )
         })
-        .map(diagnose)
+        .map(|p| diagnose(p, &power_rows))
         .collect();
     if diagnoses.is_empty() {
+        // Being explicit beats silence: a selector that matches nothing is
+        // itself a finding, not an empty report.
         if let Some(want) = only_port {
-            // Being explicit beats silence: a name that matches nothing is
-            // itself a finding, not an empty report.
             return Err(FbuildError::SerialError(format!(
                 "no serial port named {want}; run `fbuild port scan` to list what the host sees"
             )));
+        }
+        if let Some(hub) = only_hub {
+            // Distinguish "no match" from "we have no topology to match
+            // against". Off Windows the ancestor chain is always empty, so
+            // blaming the hub string would send the reader looking for a
+            // typo that is not there.
+            if ports.iter().all(|p| p.ancestor_instance_ids.is_empty()) {
+                return Err(FbuildError::SerialError(
+                    "--hub needs USB topology, which this host does not expose \
+                     (normal off Windows); re-run without --hub"
+                        .to_string(),
+                ));
+            }
+            return Err(FbuildError::SerialError(format!(
+                "no port sits behind a USB ancestor matching {hub}; \
+                 run `fbuild port doctor` to see each port's topology"
+            )));
+        }
+    }
+    // Only for a targeted query: this costs ~0.7s per device and does not
+    // batch, so the all-ports listing deliberately goes without.
+    if only_port.is_some() {
+        for d in diagnoses.iter_mut() {
+            if let Some(instance) = d.instance_id.as_deref() {
+                d.last_seen_secs_ago = query_last_seen_secs(instance).map(|arrived| {
+                    let now = std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .map(|d| d.as_secs() as i64)
+                        .unwrap_or(arrived);
+                    now - arrived
+                });
+            }
         }
     }
     let problems = fbuild_serial::ports::present_usb_problem_devices();
@@ -418,7 +490,78 @@ pub fn run(only_port: Option<&str>, json: bool) -> Result<()> {
 /// probe did. `None` (its value off Windows, or when powercfg is unavailable
 /// or its output unrecognised) simply omits the section rather than asserting
 /// the host is fine.
-fn query_selective_suspend() -> Option<bool> {
+/// Read the per-device "allow the computer to turn off this device" flags.
+///
+/// One WMI call for the whole report (~0.5s), not one per port. Deliberately
+/// **not** wired into `port scan`: that is a hot path used by deploy, and a
+/// diagnostic is the right place to pay for this.
+///
+/// Read-only and best-effort; an empty result simply omits the per-port line.
+fn query_device_power_rows() -> Vec<(String, bool)> {
+    if !cfg!(windows) {
+        return Vec::new();
+    }
+    let script = "Get-CimInstance -Namespace root\\wmi -ClassName MSPower_DeviceEnable \
+                  -ErrorAction SilentlyContinue | ForEach-Object { \
+                  Write-Output (\"{0}|{1}\" -f $_.InstanceName, $_.Enable) }";
+    let Ok(out) = fbuild_core::subprocess::run_command_blocking(
+        &[
+            "powershell",
+            "-NoProfile",
+            "-NonInteractive",
+            "-Command",
+            script,
+        ],
+        None,
+        None,
+        Some(std::time::Duration::from_secs(20)),
+    ) else {
+        return Vec::new();
+    };
+    parse_device_power_rows(&out.stdout)
+}
+
+/// Seconds since this devnode was last seen on the bus.
+///
+/// Only ever called for a **single** port. `Get-PnpDeviceProperty` costs
+/// ~0.7s per device and does not batch, so asking for every port would add
+/// ~12s to the listing (measured, 17 ports). Restricting it to `--port` puts
+/// the answer exactly where the question is asked — "is this board broken or
+/// just unplugged?" — without taxing the general report.
+///
+/// This is the one path that works: `SetupDiGetDevicePropertyW` returns
+/// nothing for a phantom devnode, `CM_Get_DevNode_PropertyW` returns
+/// `CR_NO_SUCH_VALUE` even after `CM_Locate_DevNodeW(..., PHANTOM)`, and the
+/// registry copy needs elevation. The CIM provider behind
+/// `Get-PnpDeviceProperty` answers unelevated for phantoms.
+fn query_last_seen_secs(instance_id: &str) -> Option<i64> {
+    if !cfg!(windows) {
+        return None;
+    }
+    let script = format!(
+        "$d = Get-PnpDeviceProperty -InstanceId '{}' \
+         -KeyName 'DEVPKEY_Device_LastArrivalDate' -ErrorAction SilentlyContinue; \
+         if ($d -and $d.Data) {{ Write-Output (\"x|{{0}}\" -f \
+         ([DateTimeOffset]$d.Data).ToUnixTimeSeconds()) }}",
+        instance_id.replace('\'', "''")
+    );
+    let out = fbuild_core::subprocess::run_command_blocking(
+        &[
+            "powershell",
+            "-NoProfile",
+            "-NonInteractive",
+            "-Command",
+            &script,
+        ],
+        None,
+        None,
+        Some(std::time::Duration::from_secs(30)),
+    )
+    .ok()?;
+    parse_last_seen_rows(&out.stdout)
+}
+
+pub(crate) fn query_selective_suspend() -> Option<bool> {
     if !cfg!(windows) {
         return None;
     }
@@ -450,6 +593,8 @@ mod tests {
             problem_code: problem,
             instance_id: Some(r"USB\VID_2E8A&PID_F00F\X".to_string()),
             parent_instance_id: None,
+            suspend_allowed: None,
+            last_seen_secs_ago: None,
         }
     }
 
@@ -578,30 +723,6 @@ Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)
         assert!(render_suspend_section(Some(false)).contains("disabled"));
     }
 
-    /// Both indices matter: disabling only AC leaves a laptop suspending
-    /// ports the moment it is unplugged.
-    #[test]
-    fn fix_covers_both_ac_and_dc() {
-        let cmds = suspend_fix_commands();
-        assert_eq!(cmds.len(), 2);
-        assert!(cmds.iter().any(|c| c.contains(&"-setacvalueindex".into())));
-        assert!(cmds.iter().any(|c| c.contains(&"-setdcvalueindex".into())));
-        for c in &cmds {
-            assert_eq!(c.last().unwrap(), "0", "must disable, not enable");
-            assert!(c.contains(&USB_SUBGROUP_GUID.to_string()));
-            assert!(c.contains(&SELECTIVE_SUSPEND_GUID.to_string()));
-        }
-    }
-
-    /// Idempotence: an already-disabled host must produce no plan, so `--fix`
-    /// never raises a UAC prompt for a no-op.
-    #[test]
-    fn fix_plan_is_empty_when_already_disabled() {
-        let plan = render_fix_plan(&suspend_fix_commands(), true);
-        assert!(plan.contains("nothing to do"), "got: {plan}");
-        assert!(!plan.contains("would run"), "got: {plan}");
-    }
-
     /// The JSON must keep unassociated problem devices in their own list
     /// rather than hanging them off a port — the same separation the text
     /// report enforces, for the same reason.
@@ -648,12 +769,132 @@ Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)
         assert!(text.contains("\"presence\":false"), "got: {text}");
     }
 
-    /// A host-wide change must show exactly what it will run, and how to undo it.
     #[test]
-    fn fix_plan_shows_commands_and_how_to_revert() {
-        let plan = render_fix_plan(&suspend_fix_commands(), false);
-        assert!(plan.contains("would run, elevated"), "got: {plan}");
-        assert!(plan.contains("-setacvalueindex"), "got: {plan}");
-        assert!(plan.contains("revert"), "got: {plan}");
+    fn device_power_rows_parsed_and_suffix_trimmed() {
+        let rows = parse_device_power_rows(
+            "USB\\VID_05E3&PID_0610\\7&3AFC677D&0&1_0|True\nUSB\\ROOT_HUB30\\5&4087D53&0&0_0|False\n",
+        );
+        assert_eq!(rows.len(), 2);
+        // the WMI `_0` suffix is not part of the PnP instance ID
+        assert!(rows[0].0.ends_with("&0&1"), "got: {}", rows[0].0);
+        assert!(rows[0].1);
+        assert!(!rows[1].1);
+    }
+
+    /// The suspendable node is typically a *grandparent* hub, not the
+    /// immediate parent. Matching only one hop reported `None` for every real
+    /// port on this bench — caught by running it, not by the tests, because
+    /// the fixtures matched by construction.
+    #[test]
+    fn suspend_walks_the_whole_ancestor_chain() {
+        let rows = parse_device_power_rows("USB\\VID_05E3&PID_0610\\7&3AFC677D&0&1_0|True\n");
+        let chain = vec![
+            // composite device — the immediate parent, carries no power policy
+            r"USB\VID_303A&PID_1001\8C:BF:EA:CF:87:B4".to_string(),
+            // the hub, two hops up, lowercased to pin case-insensitivity
+            r"USB\VID_05E3&PID_0610\7&3afc677d&0&1".to_string(),
+        ];
+        assert_eq!(suspend_for_ancestors(&rows, &chain), Some(true));
+    }
+
+    /// Unix seconds, not a rendered date: `Get-PnpDeviceProperty` formats
+    /// dates per-locale, so parsing text would break on a non-English host.
+    #[test]
+    fn last_seen_parsed_from_unix_seconds() {
+        assert_eq!(parse_last_seen_rows("x|1785648479\n"), Some(1785648479));
+        assert_eq!(parse_last_seen_rows(""), None);
+        assert_eq!(parse_last_seen_rows("x|8/1/2026 10:27:59 PM"), None);
+        assert_eq!(parse_last_seen_rows("garbage"), None);
+    }
+
+    #[test]
+    fn scope_defaults_to_every_port() {
+        assert!(port_in_scope("COM9", &[], None, None));
+    }
+
+    #[test]
+    fn scope_port_matches_case_insensitively_and_exactly() {
+        assert!(port_in_scope("COM9", &[], Some("com9"), None));
+        assert!(!port_in_scope("COM9", &[], Some("COM19"), None));
+        // must not match on prefix — COM1 is not COM19
+        assert!(!port_in_scope("COM19", &[], Some("COM1"), None));
+    }
+
+    /// `--hub` matches any ancestor by substring: you rarely have the full
+    /// instance ID to hand when looking at a hub in Device Manager.
+    #[test]
+    fn scope_hub_matches_any_ancestor_by_substring() {
+        let chain = vec![
+            r"USB\VID_303A&PID_1001\8C:BF:EA:CF:87:B4".to_string(),
+            r"USB\VID_05E3&PID_0610\7&3afc677d&0&1".to_string(),
+        ];
+        assert!(port_in_scope("COM9", &chain, None, Some("VID_05E3")));
+        assert!(port_in_scope("COM9", &chain, None, Some("vid_05e3")));
+        assert!(!port_in_scope("COM9", &chain, None, Some("VID_DEAD")));
+        assert!(!port_in_scope("COM9", &[], None, Some("VID_05E3")));
+    }
+
+    /// An explicit port wins over a hub filter, so the narrower request is
+    /// never silently widened.
+    #[test]
+    fn scope_port_takes_precedence_over_hub() {
+        let chain = vec![r"USB\VID_05E3&PID_0610\X".to_string()];
+        assert!(!port_in_scope(
+            "COM9",
+            &chain,
+            Some("COM17"),
+            Some("VID_05E3")
+        ));
+    }
+
+    /// An unrecognised `Enable` value is no data, not "cannot be powered
+    /// off" — treating it as false would quietly clear a device nobody
+    /// checked.
+    #[test]
+    fn unrecognised_enable_value_is_dropped_not_treated_as_false() {
+        let rows = parse_device_power_rows("A|True\nB|False\nC|\nD|maybe\nE|(null)\n");
+        let names: Vec<&str> = rows.iter().map(|(n, _)| n.as_str()).collect();
+        assert_eq!(names, vec!["A", "B"], "only recognised values survive");
+    }
+
+    /// `trim_end_matches` strips repeatedly; an instance legitimately ending
+    /// `_0_0` would lose both suffixes and stop matching its devnode.
+    #[test]
+    fn only_one_wmi_suffix_is_stripped() {
+        let rows = parse_device_power_rows("USB\\X_0_0|True\n");
+        assert_eq!(rows[0].0, "USB\\X_0");
+    }
+
+    /// The negative branch must not render as "last seen in the future ago".
+    #[test]
+    fn future_timestamp_renders_as_a_sentence_not_nonsense() {
+        let s = format_last_seen(-5);
+        assert!(!s.contains("ago"), "got: {s}");
+        assert!(s.contains("future"), "got: {s}");
+        assert_eq!(format_last_seen(90), "1m ago");
+    }
+
+    #[test]
+    fn age_renders_coarsely_enough_to_read_at_a_glance() {
+        assert_eq!(format_age(45), "45s");
+        assert_eq!(format_age(90), "1m");
+        assert_eq!(format_age(7_200), "2h");
+        assert_eq!(format_age(5 * 86_400), "5d");
+        // Negative clamps here; the readable phrasing for a future timestamp
+        // lives in format_last_seen, so "in the future ago" is impossible.
+        assert_eq!(format_age(-5), "0s");
+    }
+
+    #[test]
+    fn suspend_reports_false_only_when_a_row_actually_matched() {
+        let rows = parse_device_power_rows("USB\\VID_05E3&PID_0610\\7&3AFC677D&0&1_0|False\n");
+        let chain = vec![r"USB\VID_05E3&PID_0610\7&3AFC677D&0&1".to_string()];
+        assert_eq!(suspend_for_ancestors(&rows, &chain), Some(false));
+        // Nothing matched: unknown, not "fine". A false clear is worse than
+        // saying nothing.
+        let other = vec![r"USB\VID_DEAD&PID_BEEF\X".to_string()];
+        assert_eq!(suspend_for_ancestors(&rows, &other), None);
+        assert_eq!(suspend_for_ancestors(&rows, &[]), None);
+        assert_eq!(suspend_for_ancestors(&[], &chain), None);
     }
 }

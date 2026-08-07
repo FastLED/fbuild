@@ -98,6 +98,12 @@ pub struct DetectedPort {
     pub instance_id: Option<String>,
     /// Immediate parent device instance ID when the host exposes one.
     pub parent_instance_id: Option<String>,
+    /// Full USB ancestor chain, nearest first, when the host exposes one.
+    ///
+    /// The immediate parent of a composite device is the device itself, not a
+    /// hub — anything reasoning about hub-level policy (power management,
+    /// topology) needs the whole chain, not just one hop.
+    pub ancestor_instance_ids: Vec<String>,
 }
 
 impl DetectedPort {
@@ -107,6 +113,7 @@ impl DetectedPort {
             health: PortHealth::Unknown,
             instance_id: None,
             parent_instance_id: None,
+            ancestor_instance_ids: Vec::new(),
         }
     }
 }
@@ -1007,6 +1014,7 @@ mod imp {
                 }
                 let instance_id = port_device.instance_id();
                 let parent_instance_id = port_device.parent_instance_id();
+                let ancestor_instance_ids = ancestor_ids(port_device.devinfo_data.DevInst);
                 let pnp_observation = port_device.pnp_observation();
                 let port_type =
                     port_device.port_type(instance_id.as_deref(), parent_instance_id.as_deref());
@@ -1034,6 +1042,7 @@ mod imp {
                     health,
                     instance_id,
                     parent_instance_id,
+                    ancestor_instance_ids,
                 });
             }
         }
