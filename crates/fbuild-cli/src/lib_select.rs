@@ -94,7 +94,7 @@ pub fn run(project_dir: &Path, env: Option<&str>, explain: bool, json: bool) -> 
         }
     };
 
-    let framework_info = match resolve_framework(&project_dir, platform, &board, &env_cfg) {
+    let framework_info = match resolve_framework(&project_dir, platform, &board, env_cfg) {
         Ok(info) => info,
         Err(msg) => {
             eprintln!("lib-select: {}", msg);
