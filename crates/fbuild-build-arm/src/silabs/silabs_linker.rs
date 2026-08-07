@@ -9,7 +9,7 @@ use fbuild_core::subprocess::run_command;
 use fbuild_core::{BuildProfile, Result, SizeInfo};
 
 use super::mcu_config::SilabsMcuConfig;
-use crate::linker::{link_cwd_for, LinkExtraArgs, Linker};
+use crate::linker::{LinkExtraArgs, Linker, link_cwd_for};
 
 /// Silicon Labs-specific linker using arm-none-eabi-gcc (link driver), ar, objcopy, size.
 pub struct SilabsLinker {

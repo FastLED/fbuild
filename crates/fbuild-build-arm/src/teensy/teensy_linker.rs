@@ -9,7 +9,7 @@ use fbuild_core::subprocess::run_command;
 use fbuild_core::{BuildProfile, Result, SizeInfo};
 
 use super::mcu_config::TeensyMcuConfig;
-use crate::linker::{link_cwd_for, LinkExtraArgs, Linker, LinkerScripts};
+use crate::linker::{LinkExtraArgs, Linker, LinkerScripts, link_cwd_for};
 
 /// Teensy-specific linker using arm-none-eabi-gcc (link driver), ar, objcopy, size.
 pub struct TeensyLinker {
