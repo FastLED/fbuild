@@ -149,6 +149,24 @@ jobs:
           test -n "$firmware" && test -f "$firmware"
           echo "Release build successful - firmware.${{ inputs.firmware-ext }} at $firmware"
 
+      - name: Verify builds left the working tree clean (no stray files)
+        # FastLED/fbuild#1267 / #1269 / FastLED/FastLED#3867: linker helpers
+        # (collect2 / lto-wrapper) running in the daemon's inherited cwd once
+        # dropped scratch files — a stray 0-byte file literally named `-r` —
+        # into the invocation directory (the repo root here). This has now
+        # happened twice, so every board build asserts the tree stays clean.
+        # Gitignored build output (`.fbuild/`, `target/`) is exempt by
+        # definition; anything untracked-and-unignored or modified is a bug
+        # in the build, not in this check.
+        run: |
+          stray="$(git status --porcelain)"
+          if [ -n "$stray" ]; then
+            echo "::error::fbuild build left stray files in the working tree (FastLED/fbuild#1267 regression class):"
+            echo "$stray"
+            exit 1
+          fi
+          echo "working tree clean after quick + release builds"
+
       - name: Save fbuild toolchains
         if: always()
         timeout-minutes: 10
