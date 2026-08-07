@@ -456,6 +456,12 @@ mod tests {
             None,
         )
         .unwrap();
-        assert_eq!(result.include_dirs, vec![local_src]);
+        // Production canonicalizes the local library root
+        // (`resolve_local_library_dir`), so canonicalize the expectation the
+        // same way. Comparing the raw tempfile path fails on Windows (8.3
+        // short names like `RUNNER~1` in %TEMP%) and macOS (`/var` is a
+        // symlink to `/private/var`).
+        let expected = fbuild_core::path::strip_unc_prefix(&local_src.canonicalize().unwrap());
+        assert_eq!(result.include_dirs, vec![expected]);
     }
 }
