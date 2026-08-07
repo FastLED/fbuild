@@ -56,6 +56,13 @@ pub enum PortAction {
         /// ignore it and hand a script text it cannot parse.
         #[arg(long, conflicts_with_all = ["fix", "dry_run"])]
         json: bool,
+        /// Diagnose every port. The default; accepted for symmetry with --port.
+        #[arg(long, conflicts_with_all = ["port", "hub"])]
+        all: bool,
+        /// Diagnose only ports behind a USB ancestor matching this substring
+        /// (a partial instance ID or VID:PID fragment is enough).
+        #[arg(long, conflicts_with = "port")]
+        hub: Option<String>,
     },
 }
 
@@ -70,11 +77,13 @@ pub fn run_port(action: PortAction) -> Result<()> {
             yes,
             no_elevate,
             json,
+            all: _all,
+            hub,
         } => {
             if fix || dry_run {
                 super::port_doctor::run_fix(dry_run, yes, no_elevate)
             } else {
-                super::port_doctor::run(port.as_deref(), json)
+                super::port_doctor::run(port.as_deref(), hub.as_deref(), json)
             }
         }
     }

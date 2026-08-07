@@ -346,6 +346,31 @@ pub fn render_fix_plan(commands: &[Vec<String>], already_disabled: bool) -> Stri
     out
 }
 
+/// Does this port fall within the requested scope?
+///
+/// `--port` matches the COM name exactly (case-insensitively). `--hub`
+/// matches any USB **ancestor**, by substring, so a partial instance ID or a
+/// bare VID:PID fragment works — you rarely have the full instance string to
+/// hand when you are looking at a hub in Device Manager. Neither given means
+/// every port.
+pub fn port_in_scope(
+    port_name: &str,
+    ancestors: &[String],
+    only_port: Option<&str>,
+    only_hub: Option<&str>,
+) -> bool {
+    if let Some(want) = only_port {
+        return port_name.eq_ignore_ascii_case(want);
+    }
+    if let Some(hub) = only_hub {
+        let hub = hub.to_ascii_uppercase();
+        return ancestors
+            .iter()
+            .any(|a| a.to_ascii_uppercase().contains(&hub));
+    }
+    true
+}
+
 /// Apply the safe subset of remedies: disable USB selective suspend.
 ///
 /// Deliberately narrow. It does **not** disable/enable devnodes or restart
@@ -470,7 +495,7 @@ pub fn build_json_report(
 }
 
 /// `fbuild port doctor` entry point.
-pub fn run(only_port: Option<&str>, json: bool) -> Result<()> {
+pub fn run(only_port: Option<&str>, only_hub: Option<&str>, json: bool) -> Result<()> {
     let power_rows = query_device_power_rows();
     let ports = fbuild_serial::ports::available_ports()
         .map_err(|e| FbuildError::SerialError(format!("serial port enumeration failed: {e}")))?;
@@ -478,18 +503,28 @@ pub fn run(only_port: Option<&str>, json: bool) -> Result<()> {
         .iter()
         // Explicit match rather than `Option::is_none_or`: that is stable only
         // since 1.82 and `.clippy.toml` pins msrv = 1.75.
-        .filter(|p| match only_port {
-            Some(want) => p.info.port_name.eq_ignore_ascii_case(want),
-            None => true,
+        .filter(|p| {
+            port_in_scope(
+                &p.info.port_name,
+                &p.ancestor_instance_ids,
+                only_port,
+                only_hub,
+            )
         })
         .map(|p| diagnose(p, &power_rows))
         .collect();
     if diagnoses.is_empty() {
+        // Being explicit beats silence: a selector that matches nothing is
+        // itself a finding, not an empty report.
         if let Some(want) = only_port {
-            // Being explicit beats silence: a name that matches nothing is
-            // itself a finding, not an empty report.
             return Err(FbuildError::SerialError(format!(
                 "no serial port named {want}; run `fbuild port scan` to list what the host sees"
+            )));
+        }
+        if let Some(hub) = only_hub {
+            return Err(FbuildError::SerialError(format!(
+                "no port sits behind a USB ancestor matching {hub}; \
+                 run `fbuild port doctor` to see each port's topology"
             )));
         }
     }
@@ -868,6 +903,46 @@ Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)
         assert_eq!(parse_last_seen_rows(""), None);
         assert_eq!(parse_last_seen_rows("x|8/1/2026 10:27:59 PM"), None);
         assert_eq!(parse_last_seen_rows("garbage"), None);
+    }
+
+    #[test]
+    fn scope_defaults_to_every_port() {
+        assert!(port_in_scope("COM9", &[], None, None));
+    }
+
+    #[test]
+    fn scope_port_matches_case_insensitively_and_exactly() {
+        assert!(port_in_scope("COM9", &[], Some("com9"), None));
+        assert!(!port_in_scope("COM9", &[], Some("COM19"), None));
+        // must not match on prefix — COM1 is not COM19
+        assert!(!port_in_scope("COM19", &[], Some("COM1"), None));
+    }
+
+    /// `--hub` matches any ancestor by substring: you rarely have the full
+    /// instance ID to hand when looking at a hub in Device Manager.
+    #[test]
+    fn scope_hub_matches_any_ancestor_by_substring() {
+        let chain = vec![
+            r"USB\VID_303A&PID_1001\8C:BF:EA:CF:87:B4".to_string(),
+            r"USB\VID_05E3&PID_0610\7&3afc677d&0&1".to_string(),
+        ];
+        assert!(port_in_scope("COM9", &chain, None, Some("VID_05E3")));
+        assert!(port_in_scope("COM9", &chain, None, Some("vid_05e3")));
+        assert!(!port_in_scope("COM9", &chain, None, Some("VID_DEAD")));
+        assert!(!port_in_scope("COM9", &[], None, Some("VID_05E3")));
+    }
+
+    /// An explicit port wins over a hub filter, so the narrower request is
+    /// never silently widened.
+    #[test]
+    fn scope_port_takes_precedence_over_hub() {
+        let chain = vec![r"USB\VID_05E3&PID_0610\X".to_string()];
+        assert!(!port_in_scope(
+            "COM9",
+            &chain,
+            Some("COM17"),
+            Some("VID_05E3")
+        ));
     }
 
     #[test]
