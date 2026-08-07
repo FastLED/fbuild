@@ -89,7 +89,7 @@ pub fn run_port(action: PortAction) -> Result<()> {
             hub,
         } => {
             if fix || dry_run {
-                super::port_doctor::run_fix(dry_run, yes, no_elevate)
+                super::port_doctor_fix::run_fix(dry_run, yes, no_elevate)
             } else {
                 super::port_doctor::run(port.as_deref(), hub.as_deref(), json)
             }

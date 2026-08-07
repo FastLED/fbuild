@@ -34,6 +34,7 @@ pub mod monitor_parse;
 pub mod pio;
 pub mod plotter;
 pub mod port_doctor;
+pub mod port_doctor_fix;
 pub mod port_scan;
 pub mod purge;
 pub mod reset;
