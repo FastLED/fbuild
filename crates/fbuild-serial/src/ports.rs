@@ -62,6 +62,21 @@ impl PortHealth {
         }
     }
 
+    /// Whether the endpoint is in the live device tree.
+    ///
+    /// `Some(false)` is the case worth spelling out: a `Phantom` record is
+    /// hardware that is **not attached**, not hardware that is broken. Those
+    /// need opposite responses — "plug it in" versus "recover it" — and
+    /// conflating them cost a full investigation in FastLED/FastLED#3864.
+    /// `None` means the host cannot say (normal off Windows).
+    pub fn is_present(&self) -> Option<bool> {
+        match self {
+            Self::HealthyPresent | Self::PresentProblem { .. } => Some(true),
+            Self::Phantom { .. } => Some(false),
+            Self::Unknown => None,
+        }
+    }
+
     /// Config Manager problem code when the operating system supplied one.
     pub fn problem_code(&self) -> Option<u32> {
         match self {
@@ -255,6 +270,51 @@ pub fn present_usb_problem_devices_linux() -> Vec<crate::sysfs_usb::LinuxUsbProb
 mod health_tests {
     use super::*;
 
+    /// A phantom record is hardware that is **not attached**, not hardware
+    /// that is faulty. Those need opposite responses, and conflating them
+    /// cost a full investigation in FastLED/FastLED#3864.
+    #[test]
+    fn presence_separates_absent_hardware_from_faulty_hardware() {
+        assert_eq!(PortHealth::HealthyPresent.is_present(), Some(true));
+        // Present but faulty: still attached — recovery is meaningful here.
+        assert_eq!(
+            PortHealth::PresentProblem {
+                problem_code: 43,
+                status: None,
+            }
+            .is_present(),
+            Some(true)
+        );
+        // Phantom: NOT attached — the remedy is "plug it in", never "recover it".
+        assert_eq!(
+            PortHealth::Phantom {
+                problem_code: None,
+                status: None,
+            }
+            .is_present(),
+            Some(false)
+        );
+        // Off Windows the host cannot say; must not be reported as absent.
+        assert_eq!(PortHealth::Unknown.is_present(), None);
+    }
+
+    /// `is_known_unhealthy` lumps phantom in with present-problem for deploy
+    /// selection, which is correct for *selection* but must not be read as a
+    /// presence signal. Pin that the two questions stay distinct.
+    #[test]
+    fn presence_is_not_the_same_question_as_selectability() {
+        let phantom = PortHealth::Phantom {
+            problem_code: None,
+            status: None,
+        };
+        let faulty = PortHealth::PresentProblem {
+            problem_code: 43,
+            status: None,
+        };
+        assert!(phantom.is_known_unhealthy() && faulty.is_known_unhealthy());
+        assert_ne!(phantom.is_present(), faulty.is_present());
+    }
+
     #[test]
     fn classifies_healthy_problem_phantom_and_unknown_endpoints() {
         assert_eq!(
@@ -334,6 +394,7 @@ mod imp {
         SetupDiGetDeviceInstanceIdW, SetupDiGetDeviceRegistryPropertyW, SetupDiOpenDevRegKey,
     };
     use windows_sys::Win32::Foundation::{FALSE, FILETIME, INVALID_HANDLE_VALUE, MAX_PATH};
+
     use windows_sys::Win32::System::Registry::{
         HKEY, HKEY_LOCAL_MACHINE, KEY_READ, REG_SZ, RegCloseKey, RegEnumValueW, RegOpenKeyExW,
         RegQueryInfoKeyW, RegQueryValueExW,

@@ -29,12 +29,21 @@ pub enum PortAction {
         #[arg(long)]
         offline: bool,
     },
+    /// Explain what is actually wrong with a port: whether it is attached at
+    /// all, what the host reports, and what to do about it. Read-only —
+    /// never elevates, prompts, or changes host state.
+    Doctor {
+        /// Diagnose a single port (e.g. `COM17`). Defaults to every port.
+        #[arg(long)]
+        port: Option<String>,
+    },
 }
 
 /// Top-level entry — dispatcher calls this.
 pub fn run_port(action: PortAction) -> Result<()> {
     match action {
         PortAction::Scan { offline } => run_scan(offline),
+        PortAction::Doctor { port } => super::port_doctor::run(port.as_deref()),
     }
 }
 
@@ -215,6 +224,12 @@ fn append_health_annotation(out: &mut String, port: &fbuild_serial::ports::Detec
     use std::fmt::Write as _;
     let _ = out.pop();
     let _ = write!(out, "    health={}", port.health.label());
+    // `health=phantom` alone reads as "broken". Spelling out presence is what
+    // separates "not plugged in" from "attached but faulty" at a glance —
+    // the ambiguity that cost FastLED/FastLED#3864 a full investigation.
+    if port.health.is_present() == Some(false) {
+        out.push_str(" present=no");
+    }
     if port.health.is_known_unhealthy() {
         out.push_str(" selectable=no");
     }
@@ -650,6 +665,44 @@ mod tests {
         assert!(out.contains("selectable=no"), "got: {out}");
         assert!(out.contains("problem=45"), "got: {out}");
         assert!(out.contains("instance=USB\\VID_2E8A&PID_000A\\PICO-1"));
+    }
+
+    /// `health=phantom` alone reads as "this board is broken". It actually
+    /// means the record is for hardware that is **not attached**. Surfacing
+    /// `present=no` is what stops a reader chasing recovery for a board that
+    /// simply is not plugged in — see FastLED/FastLED#3864.
+    #[test]
+    fn scan_reports_absent_hardware_as_present_no() {
+        let mut port = usb_port("COM17", 0x2E8A, 0xF00F, None, Some("RP2350"));
+        port.health = fbuild_serial::ports::PortHealth::Phantom {
+            problem_code: None,
+            status: None,
+        };
+        let out = render_scan(&[port]);
+        assert!(out.contains("present=no"), "got: {out}");
+    }
+
+    /// A board that IS attached but faulty must never be labelled absent —
+    /// that is the case where recovery is the right response.
+    #[test]
+    fn scan_does_not_mark_present_but_faulty_ports_absent() {
+        let mut port = usb_port("COM5", 0x2E8A, 0x000A, None, Some("FAULTY"));
+        port.health = fbuild_serial::ports::PortHealth::PresentProblem {
+            problem_code: 43,
+            status: Some(0),
+        };
+        let out = render_scan(&[port]);
+        assert!(!out.contains("present=no"), "got: {out}");
+        assert!(out.contains("problem=43"), "got: {out}");
+    }
+
+    /// Off Windows presence is unknowable; we must not claim absence.
+    #[test]
+    fn scan_omits_presence_when_host_cannot_say() {
+        let mut port = usb_port("COM1", 0x2E8A, 0x000A, None, Some("X"));
+        port.health = fbuild_serial::ports::PortHealth::Unknown;
+        let out = render_scan(&[port]);
+        assert!(!out.contains("present="), "got: {out}");
     }
 
     #[test]
