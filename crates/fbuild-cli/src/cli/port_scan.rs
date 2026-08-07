@@ -793,7 +793,11 @@ mod tests {
     fn no_footer_when_presence_is_unknown() {
         let mut unknown = usb_port("COM1", 0x303A, 0x1001, None, Some("X"));
         unknown.health = fbuild_serial::ports::PortHealth::Unknown;
-        assert!(absent_port_footer(&[unknown]).is_empty());
+        // Exercise the rendered output, not the helper — the other two footer
+        // tests go through render_scan, and a test that asserts on an internal
+        // helper can pass while the footer is wired up wrong.
+        let out = render_scan(&[unknown]);
+        assert!(!out.contains("not present"), "got: {out}");
     }
 
     #[test]
