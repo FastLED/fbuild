@@ -54,7 +54,12 @@ fn run_doctor(only_port: Option<&str>) -> Result<()> {
         .map_err(|e| FbuildError::SerialError(format!("serial port enumeration failed: {e}")))?;
     let diagnoses: Vec<_> = ports
         .iter()
-        .filter(|p| only_port.is_none_or(|want| p.info.port_name.eq_ignore_ascii_case(want)))
+        // Explicit match rather than `Option::is_none_or`: that is stable only
+        // since 1.82 and `.clippy.toml` pins msrv = 1.75.
+        .filter(|p| match only_port {
+            Some(want) => p.info.port_name.eq_ignore_ascii_case(want),
+            None => true,
+        })
         .map(port_doctor::diagnose)
         .collect();
     if diagnoses.is_empty() {
