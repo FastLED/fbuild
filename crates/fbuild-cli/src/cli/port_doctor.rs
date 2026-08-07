@@ -28,6 +28,10 @@ pub struct PortDiagnosis {
     /// `None` when unknown — never silently `false`.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub suspend_allowed: Option<bool>,
+    /// Seconds since the devnode was last seen on the bus. Only populated for
+    /// a single-port query — see `query_last_seen_secs` for why.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub last_seen_secs_ago: Option<i64>,
 }
 
 /// What the diagnosis means and what to do about it.
@@ -63,6 +67,7 @@ pub fn diagnose(port: &DetectedPort, power_rows: &[(String, bool)]) -> PortDiagn
         instance_id: port.instance_id.clone(),
         parent_instance_id: port.parent_instance_id.clone(),
         suspend_allowed: suspend_for_ancestors(power_rows, &port.ancestor_instance_ids),
+        last_seen_secs_ago: None,
     }
 }
 
@@ -170,6 +175,38 @@ pub fn suspend_for_ancestors(power_rows: &[(String, bool)], ancestors: &[String]
     matched.then_some(false)
 }
 
+/// Parse `instance|unix_seconds` rows into a last-seen timestamp.
+///
+/// The PowerShell side emits `ToUnixTimeSeconds()` rather than a formatted
+/// date on purpose: a rendered date is locale-dependent and would parse
+/// differently on a non-English host.
+pub fn parse_last_seen_rows(output: &str) -> Option<i64> {
+    output
+        .lines()
+        .filter_map(|line| line.trim().rsplit_once('|'))
+        .filter_map(|(_, secs)| secs.trim().parse::<i64>().ok())
+        .next()
+}
+
+/// Render an elapsed duration as a short human age: `45s`, `12m`, `3h`, `6d`.
+///
+/// Deliberately coarse — the reader only needs "moments ago" versus "days
+/// ago" to tell a live board from a stale record.
+pub fn format_age(secs: i64) -> String {
+    if secs < 0 {
+        return "in the future".to_string();
+    }
+    if secs < 60 {
+        format!("{secs}s")
+    } else if secs < 3600 {
+        format!("{}m", secs / 60)
+    } else if secs < 86_400 {
+        format!("{}h", secs / 3600)
+    } else {
+        format!("{}d", secs / 86_400)
+    }
+}
+
 /// Host-level section describing USB selective suspend.
 ///
 /// Why the report cares: Windows may power a port down mid-session, and a
@@ -215,6 +252,9 @@ pub fn render_report(diagnoses: &[PortDiagnosis], problems: &[UsbProblemDevice])
             None => "unknown",
         };
         let _ = writeln!(out, "  presence   {presence}");
+        if let Some(secs) = d.last_seen_secs_ago {
+            let _ = writeln!(out, "  last seen  {} ago", format_age(secs));
+        }
         let mut health_line = format!("  health     {}", d.health);
         if let Some(code) = d.problem_code {
             match problem_code_meaning(code) {
@@ -434,7 +474,7 @@ pub fn run(only_port: Option<&str>, json: bool) -> Result<()> {
     let power_rows = query_device_power_rows();
     let ports = fbuild_serial::ports::available_ports()
         .map_err(|e| FbuildError::SerialError(format!("serial port enumeration failed: {e}")))?;
-    let diagnoses: Vec<_> = ports
+    let mut diagnoses: Vec<_> = ports
         .iter()
         // Explicit match rather than `Option::is_none_or`: that is stable only
         // since 1.82 and `.clippy.toml` pins msrv = 1.75.
@@ -451,6 +491,21 @@ pub fn run(only_port: Option<&str>, json: bool) -> Result<()> {
             return Err(FbuildError::SerialError(format!(
                 "no serial port named {want}; run `fbuild port scan` to list what the host sees"
             )));
+        }
+    }
+    // Only for a targeted query: this costs ~0.7s per device and does not
+    // batch, so the all-ports listing deliberately goes without.
+    if only_port.is_some() {
+        for d in diagnoses.iter_mut() {
+            if let Some(instance) = d.instance_id.as_deref() {
+                d.last_seen_secs_ago = query_last_seen_secs(instance).map(|arrived| {
+                    let now = std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .map(|d| d.as_secs() as i64)
+                        .unwrap_or(arrived);
+                    now - arrived
+                });
+            }
         }
     }
     let problems = fbuild_serial::ports::present_usb_problem_devices();
@@ -505,6 +560,46 @@ fn query_device_power_rows() -> Vec<(String, bool)> {
     parse_device_power_rows(&out.stdout)
 }
 
+/// Seconds since this devnode was last seen on the bus.
+///
+/// Only ever called for a **single** port. `Get-PnpDeviceProperty` costs
+/// ~0.7s per device and does not batch, so asking for every port would add
+/// ~12s to the listing (measured, 17 ports). Restricting it to `--port` puts
+/// the answer exactly where the question is asked — "is this board broken or
+/// just unplugged?" — without taxing the general report.
+///
+/// This is the one path that works: `SetupDiGetDevicePropertyW` returns
+/// nothing for a phantom devnode, `CM_Get_DevNode_PropertyW` returns
+/// `CR_NO_SUCH_VALUE` even after `CM_Locate_DevNodeW(..., PHANTOM)`, and the
+/// registry copy needs elevation. The CIM provider behind
+/// `Get-PnpDeviceProperty` answers unelevated for phantoms.
+fn query_last_seen_secs(instance_id: &str) -> Option<i64> {
+    if !cfg!(windows) {
+        return None;
+    }
+    let script = format!(
+        "$d = Get-PnpDeviceProperty -InstanceId '{}' \
+         -KeyName 'DEVPKEY_Device_LastArrivalDate' -ErrorAction SilentlyContinue; \
+         if ($d -and $d.Data) {{ Write-Output (\"x|{{0}}\" -f \
+         ([DateTimeOffset]$d.Data).ToUnixTimeSeconds()) }}",
+        instance_id.replace('\'', "''")
+    );
+    let out = fbuild_core::subprocess::run_command_blocking(
+        &[
+            "powershell",
+            "-NoProfile",
+            "-NonInteractive",
+            "-Command",
+            &script,
+        ],
+        None,
+        None,
+        Some(std::time::Duration::from_secs(30)),
+    )
+    .ok()?;
+    parse_last_seen_rows(&out.stdout)
+}
+
 fn query_selective_suspend() -> Option<bool> {
     if !cfg!(windows) {
         return None;
@@ -538,6 +633,7 @@ mod tests {
             instance_id: Some(r"USB\VID_2E8A&PID_F00F\X".to_string()),
             parent_instance_id: None,
             suspend_allowed: None,
+            last_seen_secs_ago: None,
         }
     }
 
@@ -762,6 +858,26 @@ Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)
             r"USB\VID_05E3&PID_0610\7&3afc677d&0&1".to_string(),
         ];
         assert_eq!(suspend_for_ancestors(&rows, &chain), Some(true));
+    }
+
+    /// Unix seconds, not a rendered date: `Get-PnpDeviceProperty` formats
+    /// dates per-locale, so parsing text would break on a non-English host.
+    #[test]
+    fn last_seen_parsed_from_unix_seconds() {
+        assert_eq!(parse_last_seen_rows("x|1785648479\n"), Some(1785648479));
+        assert_eq!(parse_last_seen_rows(""), None);
+        assert_eq!(parse_last_seen_rows("x|8/1/2026 10:27:59 PM"), None);
+        assert_eq!(parse_last_seen_rows("garbage"), None);
+    }
+
+    #[test]
+    fn age_renders_coarsely_enough_to_read_at_a_glance() {
+        assert_eq!(format_age(45), "45s");
+        assert_eq!(format_age(90), "1m");
+        assert_eq!(format_age(7_200), "2h");
+        assert_eq!(format_age(5 * 86_400), "5d");
+        // clock skew must not render as a huge negative age
+        assert_eq!(format_age(-5), "in the future");
     }
 
     #[test]
