@@ -49,6 +49,13 @@ pub enum PortAction {
         /// Fail rather than raising a UAC prompt. For CI and headless runs.
         #[arg(long)]
         no_elevate: bool,
+        /// Emit the report as JSON instead of text.
+        ///
+        /// Rejected alongside `--fix`/`--dry-run`: those paths print a change
+        /// plan, not a report, so accepting `--json` there would silently
+        /// ignore it and hand a script text it cannot parse.
+        #[arg(long, conflicts_with_all = ["fix", "dry_run"])]
+        json: bool,
     },
 }
 
@@ -62,11 +69,12 @@ pub fn run_port(action: PortAction) -> Result<()> {
             dry_run,
             yes,
             no_elevate,
+            json,
         } => {
             if fix || dry_run {
                 super::port_doctor::run_fix(dry_run, yes, no_elevate)
             } else {
-                super::port_doctor::run(port.as_deref())
+                super::port_doctor::run(port.as_deref(), json)
             }
         }
     }
@@ -241,8 +249,34 @@ pub fn render_scan(ports: &[fbuild_serial::ports::DetectedPort]) -> String {
         out,
         "{usb_count} USB {usb_plural}, {other_count} non-USB {non_usb_plural}"
     );
+    out.push_str(&absent_port_footer(ports));
 
     out
+}
+
+/// Footer naming not-present ports and pointing at `fbuild port doctor`.
+///
+/// `present=no` on an individual row is easy to skim past, and nobody reads
+/// `--help` for a subcommand they do not know exists. Saying plainly that a
+/// stale record is not a fault — and where to get the full story — is what
+/// stops the "is it broken or just unplugged?" question turning into a
+/// recovery hunt, as it did in FastLED/FastLED#3864.
+pub(crate) fn absent_port_footer(ports: &[fbuild_serial::ports::DetectedPort]) -> String {
+    let absent: Vec<&str> = ports
+        .iter()
+        .filter(|p| p.health.is_present() == Some(false))
+        .map(|p| p.info.port_name.as_str())
+        .collect();
+    if absent.is_empty() {
+        return String::new();
+    }
+    let plural = if absent.len() == 1 { "port" } else { "ports" };
+    format!(
+        "note: {} {plural} not present ({}) — these are stale records for hardware that is \
+         not attached, not faults. Run `fbuild port doctor` for per-port detail.\n",
+        absent.len(),
+        absent.join(", ")
+    )
 }
 
 fn append_health_annotation(out: &mut String, port: &fbuild_serial::ports::DetectedPort) {
@@ -728,6 +762,46 @@ mod tests {
         port.health = fbuild_serial::ports::PortHealth::Unknown;
         let out = render_scan(&[port]);
         assert!(!out.contains("present="), "got: {out}");
+    }
+
+    /// The footer is the discoverability path: `present=no` on one row is
+    /// easy to skim past, and nobody reads `--help` for a subcommand they do
+    /// not know exists.
+    #[test]
+    fn footer_names_absent_ports_and_points_at_doctor() {
+        let mut absent = usb_port("COM17", 0x2E8A, 0xF00F, None, Some("RP2350"));
+        absent.health = fbuild_serial::ports::PortHealth::Phantom {
+            problem_code: None,
+            status: None,
+        };
+        let present = usb_port("COM9", 0x303A, 0x1001, None, Some("S3"));
+        let out = render_scan(&[absent, present]);
+        assert!(out.contains("1 port not present"), "got: {out}");
+        assert!(out.contains("COM17"), "got: {out}");
+        assert!(out.contains("not faults"), "got: {out}");
+        assert!(out.contains("fbuild port doctor"), "got: {out}");
+    }
+
+    /// No footer when everything is attached — no noise on a healthy bench.
+    #[test]
+    fn no_footer_when_every_port_is_present() {
+        let mut present = usb_port("COM9", 0x303A, 0x1001, None, Some("S3"));
+        present.health = fbuild_serial::ports::PortHealth::HealthyPresent;
+        let out = render_scan(&[present]);
+        assert!(!out.contains("not present"), "got: {out}");
+    }
+
+    /// Off Windows presence is unknowable, so the footer must stay silent
+    /// rather than claiming ports are absent.
+    #[test]
+    fn no_footer_when_presence_is_unknown() {
+        let mut unknown = usb_port("COM1", 0x303A, 0x1001, None, Some("X"));
+        unknown.health = fbuild_serial::ports::PortHealth::Unknown;
+        // Exercise the rendered output, not the helper — the other two footer
+        // tests go through render_scan, and a test that asserts on an internal
+        // helper can pass while the footer is wired up wrong.
+        let out = render_scan(&[unknown]);
+        assert!(!out.contains("not present"), "got: {out}");
     }
 
     #[test]

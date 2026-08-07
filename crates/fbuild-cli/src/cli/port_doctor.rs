@@ -15,7 +15,7 @@ use fbuild_serial::ports::{DetectedPort, UsbProblemDevice};
 
 /// One port's diagnosis, decoupled from rendering so the verdict logic is
 /// testable without a live device tree.
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq, serde::Serialize)]
 pub struct PortDiagnosis {
     pub port: String,
     /// `Some(true)` attached, `Some(false)` a stale record, `None` unknowable.
@@ -27,7 +27,7 @@ pub struct PortDiagnosis {
 }
 
 /// What the diagnosis means and what to do about it.
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq, serde::Serialize)]
 pub struct Verdict {
     pub summary: String,
     pub remedy: String,
@@ -318,8 +318,64 @@ pub fn run_fix(dry_run: bool, assume_yes: bool, no_elevate: bool) -> Result<()> 
     Ok(())
 }
 
+/// Machine-readable report. Mirrors the human output's structure so a script
+/// and a person are reading the same model.
+#[derive(Debug, serde::Serialize)]
+pub struct JsonReport {
+    pub ports: Vec<JsonPort>,
+    /// Present USB devices with a fault that could not be tied to any port.
+    /// A separate list, not a field on a port, because attributing one to a
+    /// nearby board is the misdiagnosis this command exists to prevent.
+    pub unassociated_problem_devices: Vec<JsonProblemDevice>,
+    /// `null` when the host cannot say — never silently `false`.
+    pub selective_suspend_enabled: Option<bool>,
+}
+
+#[derive(Debug, serde::Serialize)]
+pub struct JsonPort {
+    #[serde(flatten)]
+    pub diagnosis: PortDiagnosis,
+    pub verdict: Verdict,
+}
+
+#[derive(Debug, serde::Serialize)]
+pub struct JsonProblemDevice {
+    pub instance_id: String,
+    pub problem_code: u32,
+    pub problem_meaning: Option<&'static str>,
+    pub friendly_name: Option<String>,
+    pub location: Option<String>,
+}
+
+pub fn build_json_report(
+    diagnoses: &[PortDiagnosis],
+    problems: &[UsbProblemDevice],
+    selective_suspend_enabled: Option<bool>,
+) -> JsonReport {
+    JsonReport {
+        ports: diagnoses
+            .iter()
+            .map(|d| JsonPort {
+                diagnosis: d.clone(),
+                verdict: verdict(d),
+            })
+            .collect(),
+        unassociated_problem_devices: problems
+            .iter()
+            .map(|p| JsonProblemDevice {
+                instance_id: p.instance_id.clone(),
+                problem_code: p.problem_code,
+                problem_meaning: problem_code_meaning(p.problem_code),
+                friendly_name: p.friendly_name.clone(),
+                location: p.location.clone(),
+            })
+            .collect(),
+        selective_suspend_enabled,
+    }
+}
+
 /// `fbuild port doctor` entry point.
-pub fn run(only_port: Option<&str>) -> Result<()> {
+pub fn run(only_port: Option<&str>, json: bool) -> Result<()> {
     let ports = fbuild_serial::ports::available_ports()
         .map_err(|e| FbuildError::SerialError(format!("serial port enumeration failed: {e}")))?;
     let diagnoses: Vec<_> = ports
@@ -342,8 +398,16 @@ pub fn run(only_port: Option<&str>) -> Result<()> {
         }
     }
     let problems = fbuild_serial::ports::present_usb_problem_devices();
+    let suspend = query_selective_suspend();
+    if json {
+        let report = build_json_report(&diagnoses, &problems, suspend);
+        let text = serde_json::to_string_pretty(&report)
+            .map_err(|e| FbuildError::SerialError(format!("json serialization failed: {e}")))?;
+        crate::output::result(&text);
+        return Ok(());
+    }
     let mut report = render_report(&diagnoses, &problems);
-    report.push_str(&render_suspend_section(query_selective_suspend()));
+    report.push_str(&render_suspend_section(suspend));
     crate::output::result(report.trim_end_matches('\n'));
     Ok(())
 }
@@ -536,6 +600,52 @@ Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)
         let plan = render_fix_plan(&suspend_fix_commands(), true);
         assert!(plan.contains("nothing to do"), "got: {plan}");
         assert!(!plan.contains("would run"), "got: {plan}");
+    }
+
+    /// The JSON must keep unassociated problem devices in their own list
+    /// rather than hanging them off a port — the same separation the text
+    /// report enforces, for the same reason.
+    #[test]
+    fn json_keeps_problem_devices_separate_from_ports() {
+        let problems = vec![UsbProblemDevice {
+            instance_id: r"USB\VID_0000&PID_0002\X".to_string(),
+            problem_code: 43,
+            friendly_name: None,
+            location: Some("Port_#0014.Hub_#0001".into()),
+            behind_external_hub: Some(false),
+            device_class: None,
+            parent_instance_id: None,
+        }];
+        let report = build_json_report(&[diag(Some(false), None)], &problems, Some(true));
+        assert_eq!(report.ports.len(), 1);
+        assert_eq!(report.unassociated_problem_devices.len(), 1);
+        let text = serde_json::to_string(&report).unwrap();
+        assert!(text.contains("unassociated_problem_devices"), "got: {text}");
+        // problem codes are translated for machine consumers too
+        assert!(
+            text.contains("device descriptor request failed"),
+            "got: {text}"
+        );
+    }
+
+    /// `null`, not `false`: a consumer must be able to tell "not checked"
+    /// from "checked and fine".
+    #[test]
+    fn json_suspend_unknown_serializes_as_null() {
+        let report = build_json_report(&[], &[], None);
+        let text = serde_json::to_string(&report).unwrap();
+        assert!(
+            text.contains("\"selective_suspend_enabled\":null"),
+            "got: {text}"
+        );
+    }
+
+    #[test]
+    fn json_carries_the_verdict_alongside_each_port() {
+        let report = build_json_report(&[diag(Some(false), None)], &[], Some(false));
+        let text = serde_json::to_string(&report).unwrap();
+        assert!(text.contains("not attached"), "got: {text}");
+        assert!(text.contains("\"presence\":false"), "got: {text}");
     }
 
     /// A host-wide change must show exactly what it will run, and how to undo it.
