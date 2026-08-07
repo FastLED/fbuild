@@ -29,13 +29,47 @@ pub enum PortAction {
         #[arg(long)]
         offline: bool,
     },
+    /// Explain what is actually wrong with a port: whether it is attached at
+    /// all, what the host reports, and what to do about it. Read-only —
+    /// never elevates, prompts, or changes host state.
+    Doctor {
+        /// Diagnose a single port (e.g. `COM17`). Defaults to every port.
+        #[arg(long)]
+        port: Option<String>,
+    },
 }
 
 /// Top-level entry — dispatcher calls this.
 pub fn run_port(action: PortAction) -> Result<()> {
     match action {
         PortAction::Scan { offline } => run_scan(offline),
+        PortAction::Doctor { port } => run_doctor(port.as_deref()),
     }
+}
+
+fn run_doctor(only_port: Option<&str>) -> Result<()> {
+    use crate::cli::port_doctor;
+
+    let ports = fbuild_serial::ports::available_ports()
+        .map_err(|e| FbuildError::SerialError(format!("serial port enumeration failed: {e}")))?;
+    let diagnoses: Vec<_> = ports
+        .iter()
+        .filter(|p| only_port.is_none_or(|want| p.info.port_name.eq_ignore_ascii_case(want)))
+        .map(port_doctor::diagnose)
+        .collect();
+    if diagnoses.is_empty() {
+        if let Some(want) = only_port {
+            // Being explicit beats silence: a name that matches nothing is
+            // itself a finding, not an empty report.
+            return Err(FbuildError::SerialError(format!(
+                "no serial port named {want}; run `fbuild port scan` to list what the host sees"
+            )));
+        }
+    }
+    let problems = fbuild_serial::ports::present_usb_problem_devices();
+    let report = port_doctor::render_report(&diagnoses, &problems);
+    output::result(report.trim_end_matches('\n'));
+    Ok(())
 }
 
 fn run_scan(offline: bool) -> Result<()> {
