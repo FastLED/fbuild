@@ -43,38 +43,8 @@ pub enum PortAction {
 pub fn run_port(action: PortAction) -> Result<()> {
     match action {
         PortAction::Scan { offline } => run_scan(offline),
-        PortAction::Doctor { port } => run_doctor(port.as_deref()),
+        PortAction::Doctor { port } => super::port_doctor::run(port.as_deref()),
     }
-}
-
-fn run_doctor(only_port: Option<&str>) -> Result<()> {
-    use crate::cli::port_doctor;
-
-    let ports = fbuild_serial::ports::available_ports()
-        .map_err(|e| FbuildError::SerialError(format!("serial port enumeration failed: {e}")))?;
-    let diagnoses: Vec<_> = ports
-        .iter()
-        // Explicit match rather than `Option::is_none_or`: that is stable only
-        // since 1.82 and `.clippy.toml` pins msrv = 1.75.
-        .filter(|p| match only_port {
-            Some(want) => p.info.port_name.eq_ignore_ascii_case(want),
-            None => true,
-        })
-        .map(port_doctor::diagnose)
-        .collect();
-    if diagnoses.is_empty() {
-        if let Some(want) = only_port {
-            // Being explicit beats silence: a name that matches nothing is
-            // itself a finding, not an empty report.
-            return Err(FbuildError::SerialError(format!(
-                "no serial port named {want}; run `fbuild port scan` to list what the host sees"
-            )));
-        }
-    }
-    let problems = fbuild_serial::ports::present_usb_problem_devices();
-    let report = port_doctor::render_report(&diagnoses, &problems);
-    output::result(report.trim_end_matches('\n'));
-    Ok(())
 }
 
 fn run_scan(offline: bool) -> Result<()> {

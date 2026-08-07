@@ -10,6 +10,7 @@
 //! host state — a diagnostic that can change things is one people stop
 //! trusting to run.
 
+use fbuild_core::{FbuildError, Result};
 use fbuild_serial::ports::{DetectedPort, UsbProblemDevice};
 
 /// One port's diagnosis, decoupled from rendering so the verdict logic is
@@ -103,6 +104,44 @@ pub fn verdict(diagnosis: &PortDiagnosis) -> Verdict {
     }
 }
 
+/// Windows power-setting GUIDs: USB subgroup, then selective suspend.
+pub const USB_SUBGROUP_GUID: &str = "2a737441-1930-4402-8d77-b2bebba308a3";
+pub const SELECTIVE_SUSPEND_GUID: &str = "48e6b7a6-50f5-4782-a5d4-53bb8f07e226";
+
+/// Parse `powercfg /q` output for whether USB selective suspend is enabled.
+///
+/// `None` when the output cannot be interpreted — callers must treat that as
+/// "no opinion", never as "disabled", or the report would quietly clear a host
+/// that was never checked.
+pub fn parse_selective_suspend(powercfg_output: &str) -> Option<bool> {
+    let line = powercfg_output
+        .lines()
+        .find(|l| l.contains("Current AC Power Setting Index"))?;
+    let hex = line.rsplit_once(':')?.1.trim().trim_start_matches("0x");
+    u32::from_str_radix(hex, 16).ok().map(|v| v != 0)
+}
+
+/// Host-level section describing USB selective suspend.
+///
+/// Why the report cares: Windows may power a port down mid-session, and a
+/// board that does not resume cleanly returns as code 43 — whose stale COM
+/// record then reads `health=phantom`. That is the same signature as an
+/// unplugged board, so naming the setting here keeps the reader from chasing
+/// a phantom that host power management actually caused.
+pub fn render_suspend_section(enabled: Option<bool>) -> String {
+    match enabled {
+        Some(true) => format!(
+            "host\n  suspend    ENABLED in the active power plan\n  \
+             verdict    Windows may power a port down mid-session; a board that does not\n             \
+             resume returns as code 43 and its record then reads health=phantom\n  \
+             remedy     from an elevated shell: powercfg -setacvalueindex SCHEME_CURRENT \
+             {USB_SUBGROUP_GUID} {SELECTIVE_SUSPEND_GUID} 0\n"
+        ),
+        Some(false) => "host\n  suspend    disabled in the active power plan\n".to_string(),
+        None => String::new(),
+    }
+}
+
 /// Render the human report.
 ///
 /// `problems` are present USB devices with a fault that fbuild could **not**
@@ -169,6 +208,62 @@ pub fn render_report(diagnoses: &[PortDiagnosis], problems: &[UsbProblemDevice])
     }
 
     out
+}
+
+/// `fbuild port doctor` entry point.
+pub fn run(only_port: Option<&str>) -> Result<()> {
+    let ports = fbuild_serial::ports::available_ports()
+        .map_err(|e| FbuildError::SerialError(format!("serial port enumeration failed: {e}")))?;
+    let diagnoses: Vec<_> = ports
+        .iter()
+        // Explicit match rather than `Option::is_none_or`: that is stable only
+        // since 1.82 and `.clippy.toml` pins msrv = 1.75.
+        .filter(|p| match only_port {
+            Some(want) => p.info.port_name.eq_ignore_ascii_case(want),
+            None => true,
+        })
+        .map(diagnose)
+        .collect();
+    if diagnoses.is_empty() {
+        if let Some(want) = only_port {
+            // Being explicit beats silence: a name that matches nothing is
+            // itself a finding, not an empty report.
+            return Err(FbuildError::SerialError(format!(
+                "no serial port named {want}; run `fbuild port scan` to list what the host sees"
+            )));
+        }
+    }
+    let problems = fbuild_serial::ports::present_usb_problem_devices();
+    let mut report = render_report(&diagnoses, &problems);
+    report.push_str(&render_suspend_section(query_selective_suspend()));
+    crate::output::result(report.trim_end_matches('\n'));
+    Ok(())
+}
+
+/// Read the active power plan's USB selective-suspend setting.
+///
+/// Read-only and best-effort — `doctor` must never fail because a diagnostic
+/// probe did. `None` (its value off Windows, or when powercfg is unavailable
+/// or its output unrecognised) simply omits the section rather than asserting
+/// the host is fine.
+fn query_selective_suspend() -> Option<bool> {
+    if !cfg!(windows) {
+        return None;
+    }
+    let out = fbuild_core::subprocess::run_command_blocking(
+        &[
+            "powercfg",
+            "/q",
+            "SCHEME_CURRENT",
+            USB_SUBGROUP_GUID,
+            SELECTIVE_SUSPEND_GUID,
+        ],
+        None,
+        None,
+        Some(std::time::Duration::from_secs(15)),
+    )
+    .ok()?;
+    parse_selective_suspend(&out.stdout)
 }
 
 #[cfg(test)]
@@ -270,5 +365,44 @@ mod tests {
     #[test]
     fn empty_port_list_renders_a_message_rather_than_nothing() {
         assert!(render_report(&[], &[]).contains("no serial ports visible"));
+    }
+
+    const POWERCFG_ENABLED: &str = "\
+Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)
+    Power Setting GUID: 48e6b7a6-50f5-4782-a5d4-53bb8f07e226  (USB selective suspend setting)
+      Current AC Power Setting Index: 0x00000001
+      Current DC Power Setting Index: 0x00000001
+";
+
+    #[test]
+    fn selective_suspend_parsed_from_powercfg() {
+        assert_eq!(parse_selective_suspend(POWERCFG_ENABLED), Some(true));
+        let disabled = POWERCFG_ENABLED.replace("0x00000001", "0x00000000");
+        assert_eq!(parse_selective_suspend(&disabled), Some(false));
+    }
+
+    /// Unparseable output must be "no opinion", never a false "disabled" —
+    /// otherwise the report would quietly clear a host nobody checked.
+    #[test]
+    fn unparseable_powercfg_output_is_not_reported_as_disabled() {
+        assert_eq!(parse_selective_suspend(""), None);
+        assert_eq!(parse_selective_suspend("garbage"), None);
+        assert_eq!(
+            parse_selective_suspend("Current AC Power Setting Index: zzz"),
+            None
+        );
+    }
+
+    #[test]
+    fn suspend_section_names_the_phantom_symptom_and_the_remedy() {
+        let out = render_suspend_section(Some(true));
+        assert!(out.contains("health=phantom"), "got: {out}");
+        assert!(out.contains("powercfg -setacvalueindex"), "got: {out}");
+    }
+
+    #[test]
+    fn suspend_section_is_silent_when_unknown() {
+        assert!(render_suspend_section(None).is_empty());
+        assert!(render_suspend_section(Some(false)).contains("disabled"));
     }
 }
