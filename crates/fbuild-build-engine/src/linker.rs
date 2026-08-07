@@ -44,7 +44,7 @@ use std::path::{Path, PathBuf};
 /// assert_eq!(link_cwd_for(out, &relative), None);
 /// # }
 /// ```
-pub fn link_cwd_for<'a, I, P>(output_dir: &'a Path, path_args: I) -> Option<&'a Path>
+pub fn link_cwd_for<I, P>(output_dir: &Path, path_args: I) -> Option<&Path>
 where
     I: IntoIterator<Item = P>,
     P: AsRef<Path>,
