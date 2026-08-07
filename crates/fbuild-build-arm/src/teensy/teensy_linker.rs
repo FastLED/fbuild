@@ -120,6 +120,21 @@ impl TeensyLinker {
     }
 }
 
+/// Working directory to run the teensy link in.
+///
+/// Returns the output directory when it is absolute, so collect2 /
+/// lto-wrapper scratch files land in the gitignored build tree instead of
+/// the daemon's inherited cwd (the user's project root). Returns `None` for
+/// a relative `output_dir`, where changing cwd would also relocate the
+/// relative `-o` path — preserving the historical behaviour for that case.
+fn link_cwd_for(output_dir: &Path) -> Option<&Path> {
+    if output_dir.is_absolute() {
+        Some(output_dir)
+    } else {
+        None
+    }
+}
+
 #[async_trait::async_trait]
 impl Linker for TeensyLinker {
     async fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
@@ -141,6 +156,24 @@ impl Linker for TeensyLinker {
         if self.verbose {
             tracing::debug!(target: "fbuild_build::linker::teensy", "link: {}", args.join(" "));
         }
+
+        // Run the link in the firmware's own output directory instead of
+        // inheriting the daemon's cwd (typically the user's project root).
+        // `arm-none-eabi-gcc` hands off to collect2 / lto-wrapper, which write
+        // scratch files relative to the process cwd; with no cwd set those
+        // landed in the user's checkout. The observed symptom was a stray
+        // 0-byte file named `-r` appearing in the repo root on every clean
+        // build — the same class of junk `sweep_stray_dash_files` cleans up on
+        // the teensy *deploy* path, which fixed it the same way (run the tool
+        // in the build dir). This completes FastLED/fbuild#261, which
+        // redirected only the env-based LTO temp dir and left cwd inherited.
+        //
+        // Safe because every link argument is absolute: `-o` is
+        // `output_dir.join(...)`, objects/archives arrive absolute, and
+        // `-T<script>` resolves through absolute `-L` search paths. The
+        // is_absolute guard keeps the old behaviour for any caller that
+        // passes a relative output_dir, where moving cwd would relocate `-o`.
+        let link_cwd = link_cwd_for(output_dir);
 
         // Redirect GCC LTO temp files into a forward-slashed, fbuild-owned
         // dir under the build dir so MSYS `mv` doesn't collapse backslashes
@@ -176,14 +209,14 @@ impl Linker for TeensyLinker {
             let rsp_arg = format!("@{}", rsp_path.display());
             run_command(
                 &[args[0].as_str(), &rsp_arg],
-                None,
+                link_cwd,
                 Some(&env_slice),
                 link_timeout,
             )
             .await?
         } else {
             let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-            run_command(&args_ref, None, Some(&env_slice), link_timeout).await?
+            run_command(&args_ref, link_cwd, Some(&env_slice), link_timeout).await?
         };
 
         if !result.success() {
@@ -240,6 +273,32 @@ impl Linker for TeensyLinker {
 mod tests {
     use super::*;
     use crate::teensy::mcu_config::get_teensy_config;
+
+    /// The link must not run in the daemon's inherited cwd: collect2 /
+    /// lto-wrapper write scratch files relative to it, which put a stray
+    /// 0-byte `-r` in the user's repo root on every clean build.
+    /// FastLED/fbuild#1267, FastLED/FastLED#3867.
+    #[test]
+    fn link_runs_in_absolute_output_dir_not_inherited_cwd() {
+        let abs = if cfg!(windows) {
+            PathBuf::from("C:\\proj\\.fbuild\\build\\release")
+        } else {
+            PathBuf::from("/proj/.fbuild/build/release")
+        };
+        assert_eq!(
+            link_cwd_for(&abs),
+            Some(abs.as_path()),
+            "absolute output dir must become the link cwd so linker scratch \
+             files stay in the build tree"
+        );
+    }
+
+    /// A relative output dir keeps the historical inherited-cwd behaviour:
+    /// moving cwd there would also relocate the relative `-o` path.
+    #[test]
+    fn link_cwd_is_unset_for_relative_output_dir() {
+        assert_eq!(link_cwd_for(Path::new("build/release")), None);
+    }
 
     #[test]
     fn test_teensy_linker_creation() {
