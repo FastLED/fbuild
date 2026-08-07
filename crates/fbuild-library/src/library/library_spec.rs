@@ -14,7 +14,7 @@ pub struct LibrarySpec {
     pub version: Option<String>,
     pub github_url: Option<String>,
     /// Local library root from a `Name=symlink://path` or `Name=file://path` dependency.
-    pub local_path: Option<std::path::PathBuf>,
+    pub local_path: Option<fbuild_core::path::NormalizedPath>,
 }
 
 impl LibrarySpec {
@@ -58,7 +58,7 @@ impl LibrarySpec {
                 name: name.to_string(),
                 version: None,
                 github_url: None,
-                local_path: Some(std::path::PathBuf::from(path)),
+                local_path: Some(fbuild_core::path::NormalizedPath::new(path)),
             });
         }
         if let Some((name, path)) = spec.split_once("=file://") {
@@ -83,7 +83,7 @@ impl LibrarySpec {
                 name: name.to_string(),
                 version: None,
                 github_url: None,
-                local_path: Some(std::path::PathBuf::from(path)),
+                local_path: Some(fbuild_core::path::NormalizedPath::new(path)),
             });
         }
 
@@ -248,13 +248,19 @@ mod tests {
     fn test_parse_named_symlink() {
         let spec = LibrarySpec::parse("FastLED=symlink://../..").unwrap();
         assert_eq!(spec.name, "FastLED");
-        assert_eq!(spec.local_path, Some(std::path::PathBuf::from("../..")));
+        assert_eq!(
+            spec.local_path,
+            Some(fbuild_core::path::NormalizedPath::new("../.."))
+        );
     }
 
     #[test]
     fn test_parse_named_relative_file_uri() {
         let spec = LibrarySpec::parse("FastLED=file://../..").unwrap();
-        assert_eq!(spec.local_path, Some(std::path::PathBuf::from("../..")));
+        assert_eq!(
+            spec.local_path,
+            Some(fbuild_core::path::NormalizedPath::new("../.."))
+        );
     }
 
     #[cfg(windows)]
@@ -263,7 +269,9 @@ mod tests {
         let spec = LibrarySpec::parse("FastLED=file:///C:/libraries/FastLED").unwrap();
         assert_eq!(
             spec.local_path,
-            Some(std::path::PathBuf::from("C:/libraries/FastLED"))
+            Some(fbuild_core::path::NormalizedPath::new(
+                "C:/libraries/FastLED"
+            ))
         );
     }
 
