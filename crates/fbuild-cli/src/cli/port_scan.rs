@@ -36,6 +36,19 @@ pub enum PortAction {
         /// Diagnose a single port (e.g. `COM17`). Defaults to every port.
         #[arg(long)]
         port: Option<String>,
+        /// Apply the safe remedies (currently: disable USB selective suspend).
+        /// Needs administrator rights and `--yes`.
+        #[arg(long)]
+        fix: bool,
+        /// Print exactly what `--fix` would run and change nothing. Never elevates.
+        #[arg(long)]
+        dry_run: bool,
+        /// Confirm a host-wide change. Required by `--fix`.
+        #[arg(long)]
+        yes: bool,
+        /// Fail rather than raising a UAC prompt. For CI and headless runs.
+        #[arg(long)]
+        no_elevate: bool,
     },
 }
 
@@ -43,7 +56,19 @@ pub enum PortAction {
 pub fn run_port(action: PortAction) -> Result<()> {
     match action {
         PortAction::Scan { offline } => run_scan(offline),
-        PortAction::Doctor { port } => super::port_doctor::run(port.as_deref()),
+        PortAction::Doctor {
+            port,
+            fix,
+            dry_run,
+            yes,
+            no_elevate,
+        } => {
+            if fix || dry_run {
+                super::port_doctor::run_fix(dry_run, yes, no_elevate)
+            } else {
+                super::port_doctor::run(port.as_deref())
+            }
+        }
     }
 }
 
