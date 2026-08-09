@@ -231,9 +231,9 @@ impl BuildOrchestrator for AvrOrchestrator {
             sources.variant_sources.len(),
         );
 
-        // 6. Build include dirs + compiler
+        // 6. Build include dirs (initial set — lib_deps dirs are added below).
         let defines = ctx.board.get_defines();
-        // Use the resolved core_dir/variant_dir directly â€” board.get_include_paths()
+        // Use the resolved core_dir/variant_dir directly — board.get_include_paths()
         // uses the raw board core name which may differ from the actual directory
         // (e.g. MiniCore's core dir is "MCUdude_corefiles", not "MiniCore").
         let mut include_dirs = vec![core_dir.clone(), variant_dir.clone()];
@@ -244,6 +244,66 @@ impl BuildOrchestrator for AvrOrchestrator {
 
         let mcu_config = super::mcu_config::get_avr_config()?;
 
+        // 6a. Download `lib_deps` from the registry / remote URLs before
+        // creating the compiler, so the downloaded library include directories
+        // are available during compilation (FastLED/fbuild#1276).
+        let lib_deps = ctx.config.get_lib_deps(&params.env_name)?;
+        let lib_ignore = ctx
+            .config
+            .get_lib_ignore(&params.env_name)
+            .unwrap_or_default();
+        let lib_archives: Vec<PathBuf>;
+        if !lib_deps.is_empty() {
+            // Build a temp compiler solely to get the c/cxx flags for library
+            // compilation. The temp compiler is discarded — the *real* compiler
+            // is created afterwards with the full include-dir set.
+            let temp_compiler = AvrCompiler::new(
+                toolchain.get_gcc_path(),
+                toolchain.get_gxx_path(),
+                &ctx.board.mcu,
+                &ctx.board.f_cpu,
+                defines.clone(),
+                include_dirs.clone(),
+                mcu_config.clone(),
+                params.profile,
+                params.verbose,
+            );
+            let c_flags_temp = temp_compiler.c_flags();
+            let cpp_flags_temp = temp_compiler.cpp_flags();
+            let dep_ar_path = toolchain.get_ar_path();
+            let dep_gcc_ar_path = toolchain.get_gcc_ar_path();
+            let dep_lib_ar_path = pipeline::pick_archiver(
+                &dep_ar_path,
+                &dep_gcc_ar_path,
+                &c_flags_temp,
+                &cpp_flags_temp,
+            );
+            let libs_dir = build_dir.join("libs");
+            let (lib_include_dirs, archives) = pipeline::ensure_lib_deps(
+                &lib_deps,
+                &lib_ignore,
+                &toolchain.get_gcc_path(),
+                &toolchain.get_gxx_path(),
+                dep_lib_ar_path,
+                &c_flags_temp,
+                &cpp_flags_temp,
+                &include_dirs,
+                &params.project_dir,
+                &libs_dir,
+                params.verbose,
+                crate::parallel::effective_jobs(params.jobs),
+                compiler_cache.as_deref(),
+            )
+            .await?;
+            include_dirs.extend(lib_include_dirs);
+            lib_archives = archives;
+        } else {
+            lib_archives = Vec::new();
+        }
+        // temp_compiler is dropped here — its only purpose was c_flags/cpp_flags.
+
+        // 6b. Create compiler with the full include-dir set (core, variant,
+        // toolchain sysroot, *and* downloaded library paths).
         let compiler = AvrCompiler::new(
             toolchain.get_gcc_path(),
             toolchain.get_gxx_path(),
@@ -296,14 +356,15 @@ impl BuildOrchestrator for AvrOrchestrator {
             compiler_cache: None,
         };
 
-        // 9. Run shared sequential build pipeline
+        // 9. Run shared sequential build pipeline — pass downloaded library
+        // archives as extra link inputs (FastLED/fbuild#1276).
         let build_result = pipeline::run_sequential_build_with_libs(
             &compiler,
             &linker,
             ctx,
             params,
             &sources,
-            &[],
+            &lib_archives,
             Some(&lib_env),
             TargetArchitecture::Avr,
             "AVR",
