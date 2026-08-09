@@ -1,5 +1,7 @@
 //! Library compilation helpers: `LibraryBuildEnv`, archiver selection,
-//! extra library roots, and the "project-as-library" compile path.
+//! extra library roots, the "project-as-library" compile path, and
+//! `ensure_lib_deps` for downloading registry/remote `lib_deps` entries
+//! before the compiler is created.
 
 use std::path::{Path, PathBuf};
 
@@ -301,6 +303,84 @@ pub async fn compile_project_as_library(
             lib_name, e
         ))),
     }
+}
+
+/// Download and compile `lib_deps` entries from `platformio.ini`.
+///
+/// Called by build orchestrators **before** the compiler is created, so the
+/// returned include directories can be folded into the compiler's search path.
+/// The caller is responsible for:
+///
+/// 1. Adding the returned `include_dirs` to the compiler's include list.
+/// 2. Passing the returned `archives` to the linker (via
+///    `run_sequential_build_with_libs`' `extra_link_inputs` parameter).
+///
+/// `base_includes` is the set of include directories available before any
+/// `lib_deps` are downloaded (core, variant, sketch, toolchain sysroot).
+/// `libs_dir` is where downloaded libraries will be staged — callers typically
+/// use `<build_dir>/libs`.
+///
+/// When `lib_deps` is empty this returns `(vec![], vec![])` immediately with
+/// no I/O or network access.
+///
+/// FastLED/fbuild#1276: registry dependencies (`fastled/FastLED@^3.10.3`)
+/// were classified by `fbuild sync` but never downloaded by the build
+/// orchestrator, so the compile step couldn't find their headers.
+#[allow(clippy::too_many_arguments)]
+pub async fn ensure_lib_deps(
+    lib_deps: &[String],
+    lib_ignore: &[String],
+    gcc_path: &Path,
+    gxx_path: &Path,
+    ar_path: &Path,
+    c_flags: &[String],
+    cpp_flags: &[String],
+    base_includes: &[PathBuf],
+    project_dir: &Path,
+    libs_dir: &Path,
+    verbose: bool,
+    jobs: usize,
+    compiler_cache: Option<&Path>,
+) -> Result<(Vec<PathBuf>, Vec<PathBuf>)> {
+    if lib_deps.is_empty() {
+        return Ok((vec![], vec![]));
+    }
+
+    tracing::info!(
+        "downloading {} lib_deps to {}",
+        lib_deps.len(),
+        libs_dir.display()
+    );
+
+    let lib_result = fbuild_packages::library::library_manager::ensure_libraries(
+        lib_deps,
+        lib_ignore,
+        gcc_path,
+        gxx_path,
+        ar_path,
+        c_flags,
+        cpp_flags,
+        base_includes,
+        project_dir,
+        libs_dir,
+        verbose,
+        jobs,
+        compiler_cache,
+    )
+    .await?;
+
+    // FastLED/fbuild#966: sort include dirs so `-I` flags are deterministic
+    // across checkouts (read_dir order varies by filesystem).
+    let mut lib_include_dirs = lib_result.include_dirs;
+    lib_include_dirs.sort();
+
+    tracing::info!(
+        "lib_deps: {} include dirs, {} archives",
+        lib_include_dirs.len(),
+        lib_result.archives.len()
+    );
+
+    Ok((lib_include_dirs, lib_result.archives))
 }
 
 #[cfg(test)]
