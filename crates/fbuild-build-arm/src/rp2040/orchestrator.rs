@@ -178,24 +178,20 @@ impl BuildOrchestrator for Rp2040Orchestrator {
                 compiler_cache: compiler_cache.as_deref(),
             };
             if let Some(hit) = crate::build_fingerprint::fast_path_check(&fast_path, &inputs)? {
-                ctx.build_log.push(
-                    "No-op fingerprint matched; reusing existing RP2040 artifacts.".to_string(),
-                );
                 let elapsed = start.elapsed().as_secs_f64();
-                return Ok(BuildResult {
-                    success: true,
-                    firmware_path: Some(fast_uf2),
-                    elf_path: Some(fast_elf),
-                    size_info: hit.size_info,
-                    symbol_map: None,
-                    build_time_secs: elapsed,
-                    message: format!(
-                        "RP2040 ({}) build for {} reused cached artifacts",
-                        ctx.board.mcu, params.env_name
-                    ),
-                    compile_database_path: Some(fast_compile_db),
-                    build_log: ctx.build_log,
-                });
+                return Ok(crate::build_fingerprint::assemble_fast_path_result(
+                    hit,
+                    ctx.build_log,
+                    crate::build_fingerprint::FastPathResultInputs {
+                        platform_label: "RP2040",
+                        mcu: &ctx.board.mcu,
+                        env_name: &params.env_name,
+                        firmware_path: fast_uf2,
+                        elf_path: fast_elf,
+                        compile_database_path: fast_compile_db,
+                        elapsed,
+                    },
+                ));
             }
         }
 
