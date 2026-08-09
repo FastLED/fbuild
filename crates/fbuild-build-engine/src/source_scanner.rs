@@ -349,18 +349,33 @@ impl SourceScanner {
             })
             .collect::<fbuild_core::Result<Vec<_>>>()?;
 
+        // Hoist every tab's `#include` directives into the prelude so that
+        // auto-generated prototypes can reference types from library headers
+        // (FastLED/fbuild#1275 — arduino-cli places prototypes *after* the
+        // include block for exactly this reason).  Replace each hoisted
+        // `#include` line with a blank line in the body to preserve line
+        // numbering for diagnostics.
+        let sketch_includes = hoist_include_directives(&contents);
+        let stripped_contents: Vec<String> = contents
+            .iter()
+            .map(|c| strip_include_directives(c))
+            .collect();
+
         // Prototype extraction needs to see every tab's code, so it operates
-        // on the plain concatenation (no #line noise).
+        // on the plain concatenation (no #line noise).  We feed it the
+        // *original* (pre-strip) contents so the tree-sitter parse still sees
+        // the full sketch — the `#include` lines are preprocessor noise that
+        // tree-sitter skips anyway.
         let combined_for_prototypes = contents.join("\n");
         let prototypes = extract_function_prototypes(&combined_for_prototypes);
 
-        let prelude = self.build_ino_prelude(include_arduino_h, &prototypes);
+        let prelude = self.build_ino_prelude(include_arduino_h, &sketch_includes, &prototypes);
 
         // Body: every tab's own text with a `#line` directive at each
         // boundary, so diagnostics in any tab — not just the first — map
         // back to the right file/line.
         let mut body = String::new();
-        for (ino, content) in ino_files.iter().zip(contents.iter()) {
+        for (ino, content) in ino_files.iter().zip(stripped_contents.iter()) {
             body.push_str(&format!("#line 1 \"{}\"\n", self.line_directive_path(ino)));
             body.push_str(content);
             if !content.ends_with('\n') {
@@ -382,18 +397,29 @@ impl SourceScanner {
         let output_path = self.build_dir.join(format!("{}.ino.cpp", stem));
         write_if_changed(&output_path, &output)?;
 
-        let ino_preludes = self.write_ino_preludes(ino_files, &contents, &prelude)?;
+        let ino_preludes = self.write_ino_preludes(ino_files, &stripped_contents, &prelude)?;
 
         Ok((output_path, ino_preludes))
     }
 
     /// Build the shared prelude text: `#include <Arduino.h>` (when
-    /// available) + the auto-generated prototype block. This is exactly the
-    /// machine-written top half the generated `.ino.cpp` carries inline.
-    fn build_ino_prelude(&self, include_arduino_h: bool, prototypes: &[String]) -> String {
+    /// available) + sketch `#include` directives (hoisted from the tab
+    /// bodies — FastLED/fbuild#1275) + the auto-generated prototype block.
+    /// This is exactly the machine-written top half the generated `.ino.cpp`
+    /// carries inline.
+    fn build_ino_prelude(
+        &self,
+        include_arduino_h: bool,
+        sketch_includes: &[String],
+        prototypes: &[String],
+    ) -> String {
         let mut prelude = String::new();
         if include_arduino_h {
             prelude.push_str("#include <Arduino.h>\n");
+        }
+        for inc in sketch_includes {
+            prelude.push_str(inc);
+            prelude.push('\n');
         }
         if !prototypes.is_empty() {
             prelude.push_str("// Auto-generated function prototypes\n");
@@ -759,6 +785,46 @@ fn walk_sources(dir: &Path) -> Vec<PathBuf> {
 
     files.sort();
     files
+}
+
+/// Extract every `#include` directive across all tabs, deduplicated and in
+/// first-seen order, for hoisting into the prelude (FastLED/fbuild#1275).
+fn hoist_include_directives(contents: &[String]) -> Vec<String> {
+    let mut seen = HashSet::new();
+    let mut includes = Vec::new();
+    for content in contents {
+        for line in content.lines() {
+            let trimmed = line.trim();
+            if is_include_directive(trimmed) {
+                let normalized = trimmed.to_string();
+                if seen.insert(normalized.clone()) {
+                    includes.push(normalized);
+                }
+            }
+        }
+    }
+    includes
+}
+
+/// Replace every `#include` line with an empty line so that line numbering
+/// is preserved when the hoisted directives are moved to the prelude
+/// (FastLED/fbuild#1275).
+fn strip_include_directives(source: &str) -> String {
+    source
+        .lines()
+        .map(|line| {
+            if is_include_directive(line.trim()) {
+                ""
+            } else {
+                line
+            }
+        })
+        .collect::<Vec<_>>()
+        .join("\n")
+}
+
+fn is_include_directive(trimmed: &str) -> bool {
+    trimmed.starts_with("#include")
 }
 
 /// Extract function prototypes from concatenated .ino source using a C++ parser.

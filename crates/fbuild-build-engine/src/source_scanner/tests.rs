@@ -828,3 +828,121 @@ fn test_multi_tab_type_declared_in_one_tab_suppresses_prototype_in_another() {
     let main_prelude = fs::read_to_string(main_prelude_path).unwrap();
     assert!(ino_cpp_content.starts_with(&main_prelude));
 }
+
+// =========================================================================
+// FastLED/fbuild#1275: hoist sketch `#include` directives above prototypes
+// =========================================================================
+
+#[test]
+fn test_include_directives_hoisted_before_prototypes() {
+    // A sketch with an #include and a helper whose return type comes from
+    // that included header (e.g. CRGB from FastLED.h).  The prototype must
+    // appear *after* the hoisted #include so the type is declared first.
+    let (_tmp, src_dir, build_dir) = setup_project(&[(
+        "sketch.ino",
+        "#include <FastLED.h>\nCRGB leds[8];\n\nCRGB kelvinToRGB(uint16_t k) {\n  return CRGB(255, k > 5000 ? 255 : 180, k > 5000 ? 200 : 100);\n}\n\nvoid setup() {}\nvoid loop()  { leds[0] = kelvinToRGB(6500); }\n",
+    )]);
+    let core_dir = _tmp.path().join("core");
+    fs::create_dir_all(&core_dir).unwrap();
+    fs::write(core_dir.join("Arduino.h"), "#pragma once\n").unwrap();
+
+    let scanner = SourceScanner::new(&src_dir, &build_dir);
+    let collection = scanner.scan_all(Some(&core_dir), None).unwrap();
+    let content = fs::read_to_string(&collection.sketch_sources[0]).unwrap();
+
+    // The hoisted #include must come before the prototype block.
+    let arduino_pos = content.find("#include <Arduino.h>").unwrap();
+    let fastled_pos = content.find("#include <FastLED.h>").unwrap();
+    let proto_comment_pos = content
+        .find("// Auto-generated function prototypes")
+        .unwrap();
+    let proto_pos = content.find("CRGB kelvinToRGB(uint16_t k);").unwrap();
+
+    assert!(
+        arduino_pos < fastled_pos,
+        "#include <Arduino.h> must be before #include <FastLED.h>"
+    );
+    assert!(
+        fastled_pos < proto_comment_pos,
+        "#include <FastLED.h> must be before prototype comment"
+    );
+    assert!(
+        proto_comment_pos < proto_pos,
+        "prototype comment must be before prototype"
+    );
+
+    // The #include line in the body should be replaced with a blank line
+    // to preserve line numbering.
+    let body_section = content.split("#line 1").nth(1).unwrap();
+    // After the #line directive, the first line (line 1) was "#include <FastLED.h>"
+    // and should now be blank.
+    let after_line = body_section.split('\n').nth(1).unwrap();
+    assert!(
+        after_line.is_empty(),
+        "#include line in body should be blank; got: '{after_line}'"
+    );
+
+    // CRGB kelvinToRGB prototype IS emitted because CRGB is not a
+    // sketch-defined type (it comes from the library header) — and now
+    // that the #include is hoisted above it, the type is available.
+    assert!(
+        proto_pos > 0,
+        "CRGB kelvinToRGB prototype must be emitted for external-header types"
+    );
+}
+
+#[test]
+fn test_include_directives_deduplicated() {
+    let (_tmp, src_dir, build_dir) = setup_project(&[
+        (
+            "main.ino",
+            "#include <FastLED.h>\n#include <Arduino.h>\nvoid setup() {}\nvoid loop() {}\n",
+        ),
+        ("a_tab.ino", "#include <FastLED.h>\nvoid helper() {}\n"),
+    ]);
+    let scanner = SourceScanner::new(&src_dir, &build_dir);
+    let sources = scanner.scan_sketch_sources().unwrap();
+    let content = fs::read_to_string(&sources[0]).unwrap();
+
+    // #include <FastLED.h> should appear exactly once in the prelude.
+    let fastled_count = content
+        .lines()
+        .filter(|l| l.trim() == "#include <FastLED.h>")
+        .count();
+    assert_eq!(
+        fastled_count, 1,
+        "#include <FastLED.h> should be deduplicated, found {fastled_count} times"
+    );
+}
+
+#[test]
+fn test_include_directives_hoisting_preserves_line_numbers() {
+    // The #include line is replaced with a blank line so that subsequent
+    // lines keep their original line numbers for diagnostics.
+    let (_tmp, src_dir, build_dir) = setup_project(&[(
+        "sketch.ino",
+        "#include <FastLED.h>\nCRGB leds[8];\n\nvoid setup() {}\nvoid loop() {}\n",
+    )]);
+    let scanner = SourceScanner::new(&src_dir, &build_dir);
+    let sources = scanner.scan_sketch_sources().unwrap();
+    let content = fs::read_to_string(&sources[0]).unwrap();
+
+    // After the #line directive, the original line 1 (#include) should be
+    // blank, and line 2 (CRGB leds[8];) should follow immediately after.
+    assert!(content.contains("#line 1 \"src/sketch.ino\""));
+    let after_line_directive: Vec<&str> = content
+        .split("#line 1 \"src/sketch.ino\"\n")
+        .nth(1)
+        .unwrap()
+        .lines()
+        .collect();
+
+    assert_eq!(
+        after_line_directive[0], "",
+        "line 1 should be blank (was #include)"
+    );
+    assert_eq!(
+        after_line_directive[1], "CRGB leds[8];",
+        "line 2 should still be CRGB leds[8];"
+    );
+}
