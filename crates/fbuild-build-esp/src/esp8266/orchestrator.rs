@@ -1,4 +1,4 @@
-﻿//! ESP8266 build orchestrator â€” wires together config, packages, compiler, linker.
+//! ESP8266 build orchestrator â€” wires together config, packages, compiler, linker.
 //!
 //! Build phases:
 //! 1. Parse platformio.ini
@@ -17,6 +17,10 @@ use std::time::Instant;
 use fbuild_core::{Platform, Result};
 use fbuild_packages::Framework as _;
 
+use crate::build_fingerprint::{
+    CoreFingerprintMetadata, FastPathCheckInputs, FastPathContract, FastPathPersistInputs,
+    expected_fast_path_artifacts, stable_hash_json,
+};
 use crate::compile_database::TargetArchitecture;
 use crate::pipeline;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
@@ -27,6 +31,13 @@ use super::mcu_config::get_esp8266_config;
 
 /// ESP8266 platform build orchestrator.
 pub struct Esp8266Orchestrator;
+
+fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
+    match profile {
+        fbuild_core::BuildProfile::Release => "release",
+        fbuild_core::BuildProfile::Quick => "quick",
+    }
+}
 
 #[async_trait::async_trait]
 impl BuildOrchestrator for Esp8266Orchestrator {
@@ -92,6 +103,83 @@ impl BuildOrchestrator for Esp8266Orchestrator {
         // 5. Load MCU config
         let mut mcu_config = get_esp8266_config()?;
         apply_esp8266_board_props(&board_props, &mut mcu_config);
+
+        // Compute flash_freq early for the fast-path fingerprint (also used by
+        // the linker constructor below).
+        let f_for_image = ctx
+            .board
+            .f_image
+            .as_deref()
+            .or(ctx.board.f_flash.as_deref());
+        let flash_freq = crate::esp32::esp32_linker::f_flash_to_esptool_freq(
+            f_for_image,
+            &mcu_config.esptool.default_flash_freq,
+        );
+
+        let build_dir = &ctx.build_dir;
+        let metadata_hash = stable_hash_json(&CoreFingerprintMetadata {
+            version: crate::build_fingerprint::BUILD_FINGERPRINT_VERSION,
+            env_name: params.env_name.clone(),
+            profile: profile_label(params.profile).to_string(),
+            board_name: ctx.board.name.clone(),
+            board_mcu: ctx.board.mcu.clone(),
+            board_define: ctx.board.board.clone(),
+            board_core: ctx.board.core.clone(),
+            board_f_cpu: ctx.board.f_cpu.clone(),
+            board_extra_flags: ctx.board.extra_flags.clone(),
+            board_ldscript: ctx.board.ldscript.clone(),
+            board_variant: Some(ctx.board.variant.clone()),
+            platform: "esp8266".to_string(),
+            max_flash: ctx.board.max_flash,
+            max_ram: ctx.board.max_ram,
+            eh_frame_policy: Some(match eh_frame_policy {
+                crate::eh_frame_policy::EhFramePolicy::Strip => "strip".to_string(),
+                crate::eh_frame_policy::EhFramePolicy::Preserve => "preserve".to_string(),
+            }),
+            extra: Some(std::collections::BTreeMap::from([
+                (
+                    "flash_mode".to_string(),
+                    ctx.board.flash_mode.clone().unwrap_or_default(),
+                ),
+                ("flash_freq".to_string(), flash_freq.clone()),
+            ])),
+        })?;
+        let (fast_elf, [fast_bin], fast_compile_db) =
+            expected_fast_path_artifacts(build_dir, &params.project_dir, ["firmware.bin"]);
+        let fast_path = FastPathContract::for_project_outputs(
+            build_dir,
+            &params.project_dir,
+            [fast_elf.clone(), fast_bin.clone(), fast_compile_db.clone()],
+        );
+        let compiler_cache: Option<fbuild_core::path::NormalizedPath> = None;
+
+        if !params.compiledb_only
+            && !params.symbol_analysis
+            && params.symbol_analysis_path.is_none()
+        {
+            let inputs = FastPathCheckInputs {
+                metadata_hash: &metadata_hash,
+                extra_artifact_ok: None,
+                watch_set_cache: params.watch_set_cache.as_deref(),
+                compiler_cache: compiler_cache.as_deref(),
+            };
+            if let Some(hit) = crate::build_fingerprint::fast_path_check(&fast_path, &inputs)? {
+                let elapsed = start.elapsed().as_secs_f64();
+                return Ok(crate::build_fingerprint::assemble_fast_path_result(
+                    hit,
+                    ctx.build_log,
+                    crate::build_fingerprint::FastPathResultInputs {
+                        platform_label: "ESP8266",
+                        mcu: &ctx.board.mcu,
+                        env_name: &params.env_name,
+                        firmware_path: fast_bin,
+                        elf_path: fast_elf,
+                        compile_database_path: fast_compile_db,
+                        elapsed,
+                    },
+                ));
+            }
+        }
 
         // 6. Scan sources
         let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
@@ -169,17 +257,7 @@ impl BuildOrchestrator for Esp8266Orchestrator {
         let sdk_ld_dir = framework.get_sdk_ld_dir();
         let linker_scripts = crate::linker::LinkerScripts::single(sdk_ld_dir.clone(), ldscript);
 
-        // Prefer f_image over f_flash for esptool frequency (see ESP32 orchestrator comment)
-        let f_for_image = ctx
-            .board
-            .f_image
-            .as_deref()
-            .or(ctx.board.f_flash.as_deref());
-        let flash_freq = crate::esp32::esp32_linker::f_flash_to_esptool_freq(
-            f_for_image,
-            &mcu_config.esptool.default_flash_freq,
-        );
-
+        // flash_freq was computed above for the fast-path fingerprint; reuse here.
         let sdk_name = esp8266_sdk_name(&mcu_config).to_string();
         let linker = Esp8266Linker::new(
             toolchain.get_gcc_path(),
@@ -222,7 +300,7 @@ impl BuildOrchestrator for Esp8266Orchestrator {
         };
 
         // 9. Run shared sequential build pipeline
-        pipeline::run_sequential_build_with_libs(
+        let result = pipeline::run_sequential_build_with_libs(
             &compiler,
             &linker,
             ctx,
@@ -234,7 +312,25 @@ impl BuildOrchestrator for Esp8266Orchestrator {
             "ESP8266",
             start,
         )
-        .await
+        .await?;
+
+        if result.success
+            && !params.compiledb_only
+            && !params.symbol_analysis
+            && params.symbol_analysis_path.is_none()
+        {
+            crate::build_fingerprint::persist_fast_path_success(
+                &fast_path,
+                &FastPathPersistInputs {
+                    metadata_hash: &metadata_hash,
+                    size_info: result.size_info.clone(),
+                    watch_set_cache: params.watch_set_cache.as_deref(),
+                    compiler_cache: compiler_cache.as_deref(),
+                },
+            );
+        }
+
+        Ok(result)
     }
 }
 

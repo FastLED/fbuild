@@ -23,9 +23,11 @@
 //! [`PersistedBuildFingerprint`] so the caller only has to re-use
 //! fields, not reload them.
 
+use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 
 use fbuild_core::{BuildLog, Result, SizeInfo};
+use serde::Serialize;
 
 use super::{
     BUILD_FINGERPRINT_VERSION, PersistedBuildFingerprint, WatchSetStampCache,
@@ -350,6 +352,43 @@ pub fn persist_fast_path_success(contract: &FastPathContract, inputs: &FastPathP
             }
         }
     }
+}
+
+/// Shared fingerprint metadata for all platform orchestrators.
+///
+/// Replace the 7 original per-platform metadata structs that had silently
+/// diverged. Every orchestrator hashes this struct via [`super::stable_hash_json`]
+/// to decide whether a prior build's artifacts are still valid.
+///
+/// Platform-specific fields (flash mode, lpc-family, etc.) go into `extra`.
+/// FastLED/fbuild#1288.
+#[derive(Debug, Serialize)]
+pub struct CoreFingerprintMetadata {
+    pub version: u32,
+    pub env_name: String,
+    pub profile: String,
+    pub board_name: String,
+    pub board_mcu: String,
+    pub board_define: String,
+    pub board_core: String,
+    pub board_f_cpu: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub board_extra_flags: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub board_ldscript: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub board_variant: Option<String>,
+    pub platform: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub max_flash: Option<u64>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub max_ram: Option<u64>,
+    /// `"strip"` / `"preserve"`. Absent when the platform doesn't compute it.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub eh_frame_policy: Option<String>,
+    /// Platform-specific key-value pairs.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub extra: Option<BTreeMap<String, String>>,
 }
 
 /// Inputs to [`assemble_fast_path_result`].

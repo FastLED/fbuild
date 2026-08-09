@@ -17,6 +17,10 @@ use std::time::Instant;
 
 use fbuild_core::{Platform, Result};
 
+use crate::build_fingerprint::{
+    CoreFingerprintMetadata, FastPathCheckInputs, FastPathContract, FastPathPersistInputs,
+    expected_fast_path_artifacts, stable_hash_json,
+};
 use crate::compile_database::TargetArchitecture;
 use crate::generic_arm::{ArmCompiler, ArmLinker};
 use crate::pipeline;
@@ -24,6 +28,13 @@ use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 
 /// Apollo3 platform build orchestrator.
 pub struct Apollo3Orchestrator;
+
+fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
+    match profile {
+        fbuild_core::BuildProfile::Release => "release",
+        fbuild_core::BuildProfile::Quick => "quick",
+    }
+}
 
 #[async_trait::async_trait]
 impl BuildOrchestrator for Apollo3Orchestrator {
@@ -74,6 +85,65 @@ impl BuildOrchestrator for Apollo3Orchestrator {
         };
         let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("Apollo3 cores at {}", framework_dir.display());
+
+        let build_dir = &ctx.build_dir;
+        let metadata_hash = stable_hash_json(&CoreFingerprintMetadata {
+            version: crate::build_fingerprint::BUILD_FINGERPRINT_VERSION,
+            env_name: params.env_name.clone(),
+            profile: profile_label(params.profile).to_string(),
+            board_name: ctx.board.name.clone(),
+            board_mcu: ctx.board.mcu.clone(),
+            board_define: ctx.board.board.clone(),
+            board_core: ctx.board.core.clone(),
+            board_f_cpu: ctx.board.f_cpu.clone(),
+            board_extra_flags: ctx.board.extra_flags.clone(),
+            board_ldscript: ctx.board.ldscript.clone(),
+            board_variant: Some(ctx.board.variant.clone()),
+            platform: "apollo3".to_string(),
+            max_flash: ctx.board.max_flash,
+            max_ram: ctx.board.max_ram,
+            eh_frame_policy: Some(match eh_frame_policy {
+                crate::eh_frame_policy::EhFramePolicy::Strip => "strip".to_string(),
+                crate::eh_frame_policy::EhFramePolicy::Preserve => "preserve".to_string(),
+            }),
+            extra: None,
+        })?;
+        let (fast_elf, [fast_bin], fast_compile_db) =
+            expected_fast_path_artifacts(build_dir, &params.project_dir, ["firmware.bin"]);
+        let fast_path = FastPathContract::for_project_outputs(
+            build_dir,
+            &params.project_dir,
+            [fast_elf.clone(), fast_bin.clone(), fast_compile_db.clone()],
+        );
+        let compiler_cache: Option<fbuild_core::path::NormalizedPath> = None;
+
+        if !params.compiledb_only
+            && !params.symbol_analysis
+            && params.symbol_analysis_path.is_none()
+        {
+            let inputs = FastPathCheckInputs {
+                metadata_hash: &metadata_hash,
+                extra_artifact_ok: None,
+                watch_set_cache: params.watch_set_cache.as_deref(),
+                compiler_cache: compiler_cache.as_deref(),
+            };
+            if let Some(hit) = crate::build_fingerprint::fast_path_check(&fast_path, &inputs)? {
+                let elapsed = start.elapsed().as_secs_f64();
+                return Ok(crate::build_fingerprint::assemble_fast_path_result(
+                    hit,
+                    ctx.build_log,
+                    crate::build_fingerprint::FastPathResultInputs {
+                        platform_label: "APOLLO3",
+                        mcu: &ctx.board.mcu,
+                        env_name: &params.env_name,
+                        firmware_path: fast_bin,
+                        elf_path: fast_elf,
+                        compile_database_path: fast_compile_db,
+                        elapsed,
+                    },
+                ));
+            }
+        }
 
         // 5. Scan sources (core + variant)
         let core_dir = framework.get_core_dir(&ctx.board.core);
@@ -276,7 +346,7 @@ impl BuildOrchestrator for Apollo3Orchestrator {
         };
 
         // 10. Run shared sequential build pipeline
-        pipeline::run_sequential_build_with_libs(
+        let result = pipeline::run_sequential_build_with_libs(
             &compiler,
             &linker,
             ctx,
@@ -288,7 +358,25 @@ impl BuildOrchestrator for Apollo3Orchestrator {
             "APOLLO3",
             start,
         )
-        .await
+        .await?;
+
+        if result.success
+            && !params.compiledb_only
+            && !params.symbol_analysis
+            && params.symbol_analysis_path.is_none()
+        {
+            crate::build_fingerprint::persist_fast_path_success(
+                &fast_path,
+                &FastPathPersistInputs {
+                    metadata_hash: &metadata_hash,
+                    size_info: result.size_info.clone(),
+                    watch_set_cache: params.watch_set_cache.as_deref(),
+                    compiler_cache: compiler_cache.as_deref(),
+                },
+            );
+        }
+
+        Ok(result)
     }
 }
 
