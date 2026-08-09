@@ -25,7 +25,7 @@
 
 use std::path::{Path, PathBuf};
 
-use fbuild_core::{Result, SizeInfo};
+use fbuild_core::{BuildLog, Result, SizeInfo};
 
 use super::{
     BUILD_FINGERPRINT_VERSION, PersistedBuildFingerprint, WatchSetStampCache,
@@ -349,6 +349,67 @@ pub fn persist_fast_path_success(contract: &FastPathContract, inputs: &FastPathP
                 );
             }
         }
+    }
+}
+
+/// Inputs to [`assemble_fast_path_result`].
+pub struct FastPathResultInputs<'a> {
+    /// Platform label for log/result messages (e.g. `"AVR"`, `"ESP32"`).
+    pub platform_label: &'a str,
+    /// MCU name for the result message.
+    pub mcu: &'a str,
+    /// Environment name for the result message.
+    pub env_name: &'a str,
+    /// Firmware artifact path (`.hex`, `.bin`, or `.uf2` depending on platform).
+    pub firmware_path: PathBuf,
+    /// ELF artifact path.
+    pub elf_path: PathBuf,
+    /// Compile database output path.
+    pub compile_database_path: PathBuf,
+    /// Elapsed wall-clock time in seconds.
+    pub elapsed: f64,
+}
+
+/// Assemble a [`crate::BuildResult`] from a fast-path cache hit.
+///
+/// Owns the log-push, size-report reprint, artifact listing, and message
+/// formatting that every platform orchestrator previously duplicated.
+/// A single call site per orchestrator means new build-output features
+/// (e.g. `log_size_report` on cached hits — FastLED/fbuild#1277) are
+/// added once and affect every platform.
+///
+/// The artifact paths are also logged here so the fast-path output
+/// includes the same `Artifact:` lines as the normal link path.
+pub fn assemble_fast_path_result(
+    hit: FastPathHit,
+    mut build_log: BuildLog,
+    inputs: FastPathResultInputs<'_>,
+) -> crate::BuildResult {
+    build_log.push(format!(
+        "No-op fingerprint matched; reusing existing {} artifacts.",
+        inputs.platform_label
+    ));
+    if let Some(ref size) = hit.size_info {
+        crate::build_output::log_size_report(&mut build_log, size);
+    }
+    // Match the artifact-listing behaviour of the normal link path
+    // (pipeline::link::handle_link_result).
+    crate::build_output::log_artifact(&mut build_log, &inputs.elf_path);
+    crate::build_output::log_artifact(&mut build_log, &inputs.firmware_path);
+
+    crate::BuildResult {
+        success: true,
+        firmware_path: Some(inputs.firmware_path),
+        elf_path: Some(inputs.elf_path),
+        size_info: hit.size_info,
+        symbol_map: None,
+        build_time_secs: inputs.elapsed,
+        message: format!(
+            "{} ({}) build for {} reused cached artifacts",
+            inputs.platform_label, inputs.mcu, inputs.env_name
+        ),
+        compile_database_path: Some(inputs.compile_database_path),
+        build_log,
     }
 }
 
