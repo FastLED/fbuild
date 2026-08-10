@@ -383,6 +383,58 @@ pub async fn ensure_lib_deps(
     Ok((lib_include_dirs, lib_result.archives))
 }
 
+/// Resolve `lib_deps` from platformio.ini: pick the LTO-aware archiver,
+/// download/compile libraries, and fold the returned include dirs into the
+/// caller's list.
+///
+/// Returns the compiled library archives for link-time. When `lib_deps` is
+/// empty this returns an empty vec immediately with no I/O or network access.
+///
+/// This is the single choke-point that replaced a ~55-line copy-paste block
+/// duplicated across every build orchestrator (FastLED/fbuild#1292). Each
+/// orchestrator creates a temp compiler to extract `c_flags`/`cpp_flags`, then
+/// calls this function to do the rest.
+pub async fn resolve_lib_deps(
+    lib_deps: &[String],
+    lib_ignore: &[String],
+    project_dir: &Path,
+    build_dir: &Path,
+    gcc_path: &Path,
+    gxx_path: &Path,
+    ar_path: &Path,
+    gcc_ar_path: &Path,
+    c_flags: &[String],
+    cpp_flags: &[String],
+    include_dirs: &mut Vec<PathBuf>,
+    verbose: bool,
+    jobs: usize,
+    compiler_cache: Option<&Path>,
+) -> Result<Vec<PathBuf>> {
+    if lib_deps.is_empty() {
+        return Ok(Vec::new());
+    }
+    let dep_lib_ar_path = pick_archiver(ar_path, gcc_ar_path, c_flags, cpp_flags);
+    let libs_dir = build_dir.join("libs");
+    let (lib_include_dirs, archives) = ensure_lib_deps(
+        lib_deps,
+        lib_ignore,
+        gcc_path,
+        gxx_path,
+        dep_lib_ar_path,
+        c_flags,
+        cpp_flags,
+        include_dirs,
+        project_dir,
+        &libs_dir,
+        verbose,
+        jobs,
+        compiler_cache,
+    )
+    .await?;
+    include_dirs.extend(lib_include_dirs);
+    Ok(archives)
+}
+
 #[cfg(test)]
 mod pick_archiver_tests {
     use super::*;

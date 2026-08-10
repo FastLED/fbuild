@@ -306,6 +306,47 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
         pipeline::add_extra_library_include_dirs(&extra_library_roots, &mut include_dirs);
         include_dirs.retain(|dir| !dir.as_os_str().is_empty());
 
+        // 6a. Download `lib_deps` from the registry / remote URLs before
+        // creating the compiler, so the downloaded library include directories
+        // are available during compilation (FastLED/fbuild#1276).
+        let lib_deps = ctx.config.get_lib_deps(&params.env_name)?;
+        let lib_ignore = ctx
+            .config
+            .get_lib_ignore(&params.env_name)
+            .unwrap_or_default();
+        let lib_archives = if !lib_deps.is_empty() {
+            let temp_compiler = ArmCompiler::new(
+                toolchain.get_gcc_path(),
+                toolchain.get_gxx_path(),
+                lpc_family,
+                &ctx.board.f_cpu,
+                defines.clone(),
+                include_dirs.clone(),
+                mcu_config.clone(),
+                params.profile,
+                params.verbose,
+            );
+            pipeline::resolve_lib_deps(
+                &lib_deps,
+                &lib_ignore,
+                &params.project_dir,
+                &ctx.build_dir,
+                &toolchain.get_gcc_path(),
+                &toolchain.get_gxx_path(),
+                &toolchain.get_ar_path(),
+                &toolchain.get_gcc_ar_path(),
+                &crate::compiler::Compiler::c_flags(&temp_compiler),
+                &crate::compiler::Compiler::cpp_flags(&temp_compiler),
+                &mut include_dirs,
+                params.verbose,
+                crate::parallel::effective_jobs(params.jobs),
+                None,
+            )
+            .await?
+        } else {
+            Vec::new()
+        };
+
         let compiler = ArmCompiler::new(
             toolchain.get_gcc_path(),
             toolchain.get_gxx_path(),
@@ -371,9 +412,10 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
             jobs: crate::parallel::effective_jobs(params.jobs),
             compiler_cache: None,
         };
-        let extra_link_inputs =
+        let mut extra_link_inputs =
             pipeline::compile_extra_libraries(&extra_library_roots, &ctx.build_dir, &lib_env)
                 .await?;
+        extra_link_inputs.extend(lib_archives);
 
         // 11. Run the shared sequential build pipeline.
         let result = pipeline::run_sequential_build_with_libs(

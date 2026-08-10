@@ -327,6 +327,47 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             include_dirs.push(lwip_inc);
         }
 
+        // 6a. Download `lib_deps` from the registry / remote URLs before
+        // creating the compiler, so the downloaded library include directories
+        // are available during compilation (FastLED/fbuild#1276).
+        let lib_deps = ctx.config.get_lib_deps(&params.env_name)?;
+        let lib_ignore = ctx
+            .config
+            .get_lib_ignore(&params.env_name)
+            .unwrap_or_default();
+        let lib_archives = if !lib_deps.is_empty() {
+            let temp_compiler = ArmCompiler::new(
+                toolchain.get_gcc_path(),
+                toolchain.get_gxx_path(),
+                &ctx.board.mcu,
+                &ctx.board.f_cpu,
+                defines.clone(),
+                include_dirs.clone(),
+                mcu_config.clone(),
+                params.profile,
+                params.verbose,
+            );
+            pipeline::resolve_lib_deps(
+                &lib_deps,
+                &lib_ignore,
+                &params.project_dir,
+                &build_dir,
+                &toolchain.get_gcc_path(),
+                &toolchain.get_gxx_path(),
+                &toolchain.get_ar_path(),
+                &toolchain.get_gcc_ar_path(),
+                &temp_compiler.c_flags(),
+                &temp_compiler.cpp_flags(),
+                &mut include_dirs,
+                params.verbose,
+                crate::parallel::effective_jobs(params.jobs),
+                compiler_cache.as_deref(),
+            )
+            .await?
+        } else {
+            Vec::new()
+        };
+
         let compiler = ArmCompiler::new(
             toolchain.get_gcc_path(),
             toolchain.get_gxx_path(),
@@ -395,6 +436,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         let mut support_link_inputs =
             rp_support_objects(&framework_dir, &ctx.board.mcu, &board_props);
         support_link_inputs.push(boot2_object);
+        support_link_inputs.extend(lib_archives);
 
         // 9. Run shared sequential build pipeline
         let board_mcu = ctx.board.mcu.clone();

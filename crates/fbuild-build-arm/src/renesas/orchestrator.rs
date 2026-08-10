@@ -199,6 +199,47 @@ impl BuildOrchestrator for RenesasOrchestrator {
         // Toolchain sysroot includes (ARM CMSIS headers, etc.)
         include_dirs.extend(toolchain.get_include_dirs());
 
+        // 6a. Download `lib_deps` from the registry / remote URLs before
+        // creating the compiler, so the downloaded library include directories
+        // are available during compilation (FastLED/fbuild#1276).
+        let lib_deps = ctx.config.get_lib_deps(&params.env_name)?;
+        let lib_ignore = ctx
+            .config
+            .get_lib_ignore(&params.env_name)
+            .unwrap_or_default();
+        let lib_archives = if !lib_deps.is_empty() {
+            let temp_compiler = RenesasCompiler::new(
+                toolchain.get_gcc_path(),
+                toolchain.get_gxx_path(),
+                &ctx.board.mcu,
+                &ctx.board.f_cpu,
+                defines.clone(),
+                include_dirs.clone(),
+                mcu_config.clone(),
+                params.profile,
+                params.verbose,
+            );
+            pipeline::resolve_lib_deps(
+                &lib_deps,
+                &lib_ignore,
+                &params.project_dir,
+                build_dir,
+                &toolchain.get_gcc_path(),
+                &toolchain.get_gxx_path(),
+                &toolchain.get_ar_path(),
+                &toolchain.get_gcc_ar_path(),
+                &crate::compiler::Compiler::c_flags(&temp_compiler),
+                &crate::compiler::Compiler::cpp_flags(&temp_compiler),
+                &mut include_dirs,
+                params.verbose,
+                crate::parallel::effective_jobs(params.jobs),
+                compiler_cache.as_deref(),
+            )
+            .await?
+        } else {
+            Vec::new()
+        };
+
         let compiler = RenesasCompiler::new(
             toolchain.get_gcc_path(),
             toolchain.get_gxx_path(),
@@ -262,7 +303,7 @@ impl BuildOrchestrator for RenesasOrchestrator {
             ctx,
             params,
             &sources,
-            &[],
+            &lib_archives,
             Some(&lib_env),
             TargetArchitecture::Arm,
             "Renesas RA",
