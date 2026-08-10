@@ -364,17 +364,25 @@ impl PackageBase {
             fbuild_core::FbuildError::PackageError(format!("failed to create staging dir: {}", e))
         })?;
 
-        // Download
-        install_status::publish_install_status(install_status::status(
-            &self.name,
-            Some(&self.version),
-            InstallPhase::Downloading,
-            InstallRole::Installer,
-            format!("downloading {} {}", self.name, self.version),
-            None::<String>,
-        ));
+        // Download with progress reporting
         tracing::info!("downloading {} v{}", self.name, self.version);
-        let archive_path = downloader::download_file(&self.url, &staging_path).await?;
+        let name = self.name.clone();
+        let version = self.version.clone();
+        let archive_path = downloader::download_file_with_progress(
+            &self.url,
+            &staging_path,
+            &mut |progress: &downloader::DownloadProgress| {
+                install_status::publish_install_status(install_status::status(
+                    &name,
+                    Some(&version),
+                    InstallPhase::Downloading,
+                    InstallRole::Installer,
+                    progress.format_message(),
+                    None::<String>,
+                ));
+            },
+        )
+        .await?;
 
         // Verify checksum
         if let Some(ref expected) = self.checksum {
