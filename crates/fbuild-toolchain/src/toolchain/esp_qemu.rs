@@ -215,7 +215,7 @@ fn preflight_qemu_binary(qemu_binary: &Path) -> Result<()> {
     #[cfg(not(target_os = "linux"))]
     {
         let _ = qemu_binary;
-        return Ok(());
+        Ok(())
     }
 
     #[cfg(target_os = "linux")]
