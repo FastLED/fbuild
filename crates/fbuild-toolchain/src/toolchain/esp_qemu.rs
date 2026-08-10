@@ -114,48 +114,156 @@ impl EspQemu {
     }
 
     pub async fn resolve_executable(&self) -> Result<PathBuf> {
-        if let Ok(raw) = std::env::var(self.arch.env_var()) {
+        let resolved = if let Ok(raw) = std::env::var(self.arch.env_var()) {
             let path = PathBuf::from(raw);
             let path = validate_qemu_path(path, self.arch.env_var())?;
             hydrate_windows_runtime(&path)?;
             validate_windows_runtime(&path)?;
-            return Ok(path);
-        }
-
-        if let Some(path) = find_on_path(self.arch.binary_name()) {
+            path
+        } else if let Some(path) = find_on_path(self.arch.binary_name()) {
             hydrate_windows_runtime(&path)?;
             validate_windows_runtime(&path)?;
-            return Ok(path);
-        }
-
-        if self.is_installed() {
+            path
+        } else if self.is_installed() {
             let path = find_qemu_binary(&self.base.install_path(), self.arch)?;
             hydrate_windows_runtime(&path)?;
             validate_windows_runtime(&path)?;
-            return Ok(path);
-        }
-
-        if let Some(path) = find_existing_idf_qemu(self.arch) {
+            path
+        } else if let Some(path) = find_existing_idf_qemu(self.arch) {
             hydrate_windows_runtime(&path)?;
             validate_windows_runtime(&path)?;
-            return Ok(path);
-        }
+            path
+        } else {
+            let _ = self.ensure_installed().await?;
+            let path = find_qemu_binary(&self.base.install_path(), self.arch)?;
+            hydrate_windows_runtime(&path)?;
+            validate_windows_runtime(&path)?;
+            path
+        };
 
-        let _ = self.ensure_installed().await?;
-        let path = find_qemu_binary(&self.base.install_path(), self.arch)?;
-        hydrate_windows_runtime(&path)?;
-        validate_windows_runtime(&path)?;
-        Ok(path)
+        // Preflight: verify the binary can actually start (shared library
+        // deps resolve) before handing it to the caller. On Linux, a
+        // missing .so exits with code 127 — much clearer to report here
+        // with the toolchain path than as a bare "exited with code 127"
+        // from the emulator runner.
+        preflight_qemu_binary(&resolved)?;
+        Ok(resolved)
     }
 
     fn validate_install_xtensa(install_dir: &Path) -> Result<()> {
-        let _ = find_qemu_binary(install_dir, EspQemuArch::Xtensa)?;
+        let exe = find_qemu_binary(install_dir, EspQemuArch::Xtensa)?;
+        qemu_validate_bundled_libs(&exe)?;
         Ok(())
     }
 
     fn validate_install_riscv32(install_dir: &Path) -> Result<()> {
-        let _ = find_qemu_binary(install_dir, EspQemuArch::Riscv32)?;
+        let exe = find_qemu_binary(install_dir, EspQemuArch::Riscv32)?;
+        qemu_validate_bundled_libs(&exe)?;
         Ok(())
+    }
+}
+
+/// Validate that the bundled `lib/` directory shipped by the Espressif QEMU
+/// tarball is present alongside the binary.
+///
+/// The tarball layout is:
+/// ```text
+/// qemu/
+/// ├── bin/qemu-system-xtensa
+/// └── lib/libslirp.so.0  (with rpath $ORIGIN/../lib)
+/// ```
+///
+/// `staged_install` already extracts-to-staging-then-atomic-rename and writes
+/// a `.install_complete` sentinel, so a complete tree carries both. This
+/// check defends against cache restoration from an older fbuild version that
+/// predates those guards, or a CI cache that restored a partial tree.
+fn qemu_validate_bundled_libs(qemu_binary: &Path) -> Result<()> {
+    let exe_dir = qemu_binary.parent();
+    // Standard layout: binary is under `bin/`, lib is sibling to `bin/`.
+    if let Some(root) = exe_dir.and_then(|p| p.parent()) {
+        if root.join("lib").is_dir() {
+            return Ok(());
+        }
+    }
+    // Alternative layout: binary is at the top level with a sibling `lib/`.
+    if let Some(dir) = exe_dir {
+        if dir.join("lib").is_dir() {
+            return Ok(());
+        }
+    }
+    Err(FbuildError::PackageError(format!(
+        "Espressif QEMU installation at {} appears incomplete: \
+         bundled lib/ directory not found. The cached toolchain may be corrupt. \
+         Delete the cache entry and retry:\n  rm -rf {}",
+        qemu_binary.display(),
+        qemu_binary
+            .parent()
+            .and_then(|p| p.parent())
+            .unwrap_or(qemu_binary.parent().unwrap_or(qemu_binary))
+            .display(),
+    )))
+}
+
+/// Probe the QEMU binary with `--version` to verify its shared library
+/// dependencies resolve at runtime.
+///
+/// Returns `Ok(())` if the probe succeeds, or a diagnostic `Err` if the
+/// binary exits with code 127 (dynamic linker failure — missing .so).
+/// Other probe failures are treated as non-fatal (the real run will
+/// surface the error with full context).
+fn preflight_qemu_binary(qemu_binary: &Path) -> Result<()> {
+    #[cfg(not(target_os = "linux"))]
+    {
+        let _ = qemu_binary;
+        Ok(())
+    }
+
+    #[cfg(target_os = "linux")]
+    {
+        // Short synchronous probe: verify the QEMU binary can start before we
+        // hand it to the async emulator runner. Uses run_command_blocking which
+        // routes through containment (no console flash on Windows, containment
+        // group on all platforms) and is ~100 ms.
+        let probe_result = fbuild_core::subprocess::run_command_blocking(
+            &[&qemu_binary.to_string_lossy(), "--version"],
+            None, // cwd
+            None, // env
+            Some(std::time::Duration::from_secs(5)),
+        );
+
+        match probe_result {
+            Ok(out) if out.success() => Ok(()),
+            Ok(out) if out.exit_code == 127 => {
+                // Try to identify which library is missing from the linker error.
+                let missing = out
+                    .stderr
+                    .lines()
+                    .find(|l| l.contains("error while loading shared libraries"))
+                    .map(|l| l.trim().to_string());
+
+                Err(FbuildError::PackageError(format!(
+                    "QEMU at {} cannot start: a required shared library is missing.\n\
+                     {}\n\
+                     The cached QEMU toolchain appears incomplete or corrupt.\n\
+                     To fix, delete the cached toolchain and retry:\n  rm -rf {}",
+                    qemu_binary.display(),
+                    missing.as_deref().unwrap_or(&format!(
+                        "The dynamic linker reported: {}",
+                        out.stderr.trim()
+                    )),
+                    qemu_binary
+                        .parent()
+                        .and_then(|p| p.parent())
+                        .unwrap_or(qemu_binary.parent().unwrap_or(qemu_binary))
+                        .display(),
+                )))
+            }
+            Ok(_) | Err(_) => {
+                // Non-127 exit or spawn failure: non-fatal at this stage.
+                // The real QEMU run will surface the error with full context.
+                Ok(())
+            }
+        }
     }
 }
 
@@ -702,5 +810,117 @@ mod tests {
         } else {
             std::env::remove_var("PATH");
         }
+    }
+
+    // ── qemu_validate_bundled_libs ──────────────────────────────────
+
+    #[test]
+    fn bundled_libs_ok_standard_layout_bin_and_lib() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let bin_dir = tmp.path().join("qemu").join("bin");
+        let lib_dir = tmp.path().join("qemu").join("lib");
+        std::fs::create_dir_all(&bin_dir).unwrap();
+        std::fs::create_dir_all(&lib_dir).unwrap();
+        let exe = bin_dir.join(EspQemuArch::Xtensa.binary_name());
+        std::fs::write(&exe, b"").unwrap();
+        qemu_validate_bundled_libs(&exe).expect("standard layout should pass");
+    }
+
+    #[test]
+    fn bundled_libs_ok_alt_layout_top_level_with_lib() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let lib_dir = tmp.path().join("lib");
+        std::fs::create_dir_all(&lib_dir).unwrap();
+        let exe = tmp.path().join(EspQemuArch::Xtensa.binary_name());
+        std::fs::write(&exe, b"").unwrap();
+        qemu_validate_bundled_libs(&exe).expect("top-level layout should pass");
+    }
+
+    #[test]
+    fn bundled_libs_missing_lib_dir_is_error() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let bin_dir = tmp.path().join("qemu").join("bin");
+        std::fs::create_dir_all(&bin_dir).unwrap();
+        let exe = bin_dir.join(EspQemuArch::Xtensa.binary_name());
+        std::fs::write(&exe, b"").unwrap();
+        let err = qemu_validate_bundled_libs(&exe).unwrap_err();
+        let msg = err.to_string();
+        assert!(
+            msg.contains("incomplete"),
+            "expected 'incomplete' in error: {msg}"
+        );
+        assert!(
+            msg.contains("lib/"),
+            "expected 'lib/' mention in error: {msg}"
+        );
+    }
+
+    #[test]
+    fn bundled_libs_binary_at_root_no_lib_dir_is_error() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let exe = tmp.path().join(EspQemuArch::Xtensa.binary_name());
+        std::fs::write(&exe, b"").unwrap();
+        let err = qemu_validate_bundled_libs(&exe).unwrap_err();
+        assert!(
+            err.to_string().contains("incomplete"),
+            "should reject root binary without lib/"
+        );
+    }
+
+    // ── preflight_qemu_binary ───────────────────────────────────────
+
+    #[test]
+    fn preflight_ok_when_binary_runs_version_successfully() {
+        // On Linux, a real QEMU binary would pass. On non-Linux,
+        // preflight is a no-op. We test with a shell script that exits 0
+        // so the probe succeeds cross-platform.
+        let tmp = tempfile::TempDir::new().unwrap();
+        let probe = tmp.path().join("probe_qemu");
+        if cfg!(windows) {
+            std::fs::write(&probe, b"@echo off\r\nexit /b 0\r\n").unwrap();
+        } else {
+            std::fs::write(&probe, b"#!/bin/sh\nexit 0\n").unwrap();
+            // make executable
+            #[cfg(unix)]
+            {
+                use std::os::unix::fs::PermissionsExt;
+                std::fs::set_permissions(&probe, std::fs::Permissions::from_mode(0o755)).unwrap();
+            }
+        };
+        // preflight is a no-op on non-Linux, and on Linux with a fake
+        // script that exits 0 it should pass.
+        let result = preflight_qemu_binary(&probe);
+        assert!(
+            result.is_ok(),
+            "preflight should pass when binary returns 0"
+        );
+    }
+
+    #[cfg(target_os = "linux")]
+    #[test]
+    fn preflight_linux_detects_missing_shared_library_exit_127() {
+        use std::os::unix::fs::PermissionsExt;
+        let tmp = tempfile::TempDir::new().unwrap();
+        // Script that prints the canonical dynamic-linker error to stderr
+        // and exits 127 — same observable as a missing .so.
+        let probe = tmp.path().join("fake_qemu_missing_so");
+        std::fs::write(
+            &probe,
+            b"#!/bin/sh\necho 'error while loading shared libraries: libslirp.so.0: cannot open shared object file' >&2\nexit 127\n",
+        )
+        .unwrap();
+        std::fs::set_permissions(&probe, std::fs::Permissions::from_mode(0o755)).unwrap();
+
+        let err = preflight_qemu_binary(&probe).unwrap_err();
+        let msg = err.to_string();
+        assert!(
+            msg.contains("shared library"),
+            "should report missing shared library: {msg}"
+        );
+        assert!(
+            msg.contains("libslirp.so.0"),
+            "should name the missing library: {msg}"
+        );
+        assert!(msg.contains("rm -rf"), "should suggest deletion: {msg}");
     }
 }

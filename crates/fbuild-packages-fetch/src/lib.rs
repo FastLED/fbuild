@@ -270,14 +270,26 @@ impl PackageBase {
     }
 
     /// Check if already installed in cache.
+    ///
+    /// Requires both the install directory AND the `.install_complete` sentinel
+    /// to be present. A directory without the sentinel is an incomplete or
+    /// partial install (e.g. a CI cache restored from a crashed job before the
+    /// atomic rename was committed, or an extract interrupted mid-flight). The
+    /// caller should treat this as "not installed" so the package is
+    /// re-extracted rather than invoked with a corrupt tree.
+    ///
     /// On a cache hit, bumps the LRU timestamp in the DiskCache index.
     pub fn is_cached(&self) -> bool {
         let path = self.install_path();
-        let cached = path.exists() && path.is_dir();
-        if cached {
-            self.touch_disk_cache();
+        if !path.exists() || !path.is_dir() {
+            return false;
         }
-        cached
+        let sentinel = disk_cache::paths::install_complete_sentinel(&path);
+        if !sentinel.exists() {
+            return false;
+        }
+        self.touch_disk_cache();
+        true
     }
 
     /// Best-effort LRU touch in the DiskCache index.
@@ -619,6 +631,9 @@ mod toolchain_gcc_ar_tests {
         );
         let install_path = base.install_path();
         std::fs::create_dir_all(&install_path).unwrap();
+        // Write the sentinel so is_cached() passes the completeness check.
+        let sentinel = disk_cache::paths::install_complete_sentinel(&install_path);
+        std::fs::write(&sentinel, b"").unwrap();
 
         let disk_cache = DiskCache::open_at(&cache_root).unwrap();
         let rel_path = install_path.strip_prefix(disk_cache.cache_root()).unwrap();
@@ -696,6 +711,36 @@ mod toolchain_gcc_ar_tests {
             "staging dir is renamed away on commit"
         );
         assert!(disk_cache::paths::install_complete_sentinel(&installed).exists());
+    }
+
+    #[test]
+    fn is_cached_returns_false_when_sentinel_is_missing() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let cache_root = tmp.path().join("cache");
+        let cache_key = "missing-sentinel-tool";
+        let base = PackageBase::with_cache_root(
+            "tool",
+            "1.0",
+            cache_key,
+            cache_key,
+            None,
+            CacheSubdir::Toolchains,
+            tmp.path(),
+            &cache_root,
+        );
+        let install_path = base.install_path();
+        std::fs::create_dir_all(&install_path).unwrap();
+
+        // Directory exists but sentinel is missing → should NOT be considered cached.
+        assert!(
+            !base.is_cached(),
+            "directory without .install_complete sentinel must not be cached"
+        );
+
+        // Write the sentinel → now it should be cached.
+        let sentinel = disk_cache::paths::install_complete_sentinel(&install_path);
+        std::fs::write(&sentinel, b"").unwrap();
+        assert!(base.is_cached(), "directory with sentinel should be cached");
     }
 }
 
