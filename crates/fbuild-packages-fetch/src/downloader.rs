@@ -260,7 +260,7 @@ async fn get_with_retry_using(client: &reqwest::Client, url: &str) -> Result<Vec
 pub async fn download_file_with_progress(
     url: &str,
     dest_dir: &Path,
-    on_progress: &mut dyn FnMut(&DownloadProgress),
+    on_progress: &mut (dyn FnMut(&DownloadProgress) + Send),
 ) -> Result<PathBuf> {
     download_file_with_progress_using(http::client(), url, dest_dir, on_progress).await?;
     let filename = url.rsplit('/').next().unwrap_or("download");
@@ -271,7 +271,7 @@ async fn download_file_with_progress_using(
     client: &reqwest::Client,
     url: &str,
     dest_dir: &Path,
-    on_progress: &mut dyn FnMut(&DownloadProgress),
+    on_progress: &mut (dyn FnMut(&DownloadProgress) + Send),
 ) -> Result<()> {
     download_file_with_progress_timed(client, url, dest_dir, on_progress, RetryTiming::PRODUCTION)
         .await
@@ -283,7 +283,7 @@ async fn download_file_with_progress_timed(
     client: &reqwest::Client,
     url: &str,
     dest_dir: &Path,
-    on_progress: &mut dyn FnMut(&DownloadProgress),
+    on_progress: &mut (dyn FnMut(&DownloadProgress) + Send),
     timing: RetryTiming,
 ) -> Result<()> {
     let filename = url.rsplit('/').next().unwrap_or("download").to_string();
