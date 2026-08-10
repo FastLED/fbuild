@@ -220,19 +220,23 @@ fn preflight_qemu_binary(qemu_binary: &Path) -> Result<()> {
 
     #[cfg(target_os = "linux")]
     {
-        use std::process::Command;
-        let output = Command::new(qemu_binary)
-            .arg("--version")
-            .stdout(std::process::Stdio::null())
-            .stderr(std::process::Stdio::piped())
-            .output();
+        // Short synchronous probe: verify the QEMU binary can start before we
+        // hand it to the async emulator runner. Uses run_command_blocking which
+        // routes through containment (no console flash on Windows, containment
+        // group on all platforms) and is ~100 ms.
+        let probe_result = fbuild_core::subprocess::run_command_blocking(
+            &[&qemu_binary.to_string_lossy(), "--version"],
+            None, // cwd
+            None, // env
+            Some(std::time::Duration::from_secs(5)),
+        );
 
-        match output {
-            Ok(out) if out.status.success() => Ok(()),
-            Ok(out) if out.status.code() == Some(127) => {
-                let stderr = String::from_utf8_lossy(&out.stderr);
+        match probe_result {
+            Ok(out) if out.success() => Ok(()),
+            Ok(out) if out.exit_code == 127 => {
                 // Try to identify which library is missing from the linker error.
-                let missing = stderr
+                let missing = out
+                    .stderr
                     .lines()
                     .find(|l| l.contains("error while loading shared libraries"))
                     .map(|l| l.trim().to_string());
@@ -245,7 +249,7 @@ fn preflight_qemu_binary(qemu_binary: &Path) -> Result<()> {
                     qemu_binary.display(),
                     missing.as_deref().unwrap_or(&format!(
                         "The dynamic linker reported: {}",
-                        stderr.trim()
+                        out.stderr.trim()
                     )),
                     qemu_binary
                         .parent()
