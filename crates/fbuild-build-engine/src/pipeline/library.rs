@@ -394,6 +394,7 @@ pub async fn ensure_lib_deps(
 /// duplicated across every build orchestrator (FastLED/fbuild#1292). Each
 /// orchestrator creates a temp compiler to extract `c_flags`/`cpp_flags`, then
 /// calls this function to do the rest.
+#[allow(clippy::too_many_arguments)]
 pub async fn resolve_lib_deps(
     lib_deps: &[String],
     lib_ignore: &[String],
