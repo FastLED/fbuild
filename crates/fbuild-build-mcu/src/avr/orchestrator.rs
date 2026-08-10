@@ -252,8 +252,7 @@ impl BuildOrchestrator for AvrOrchestrator {
             .config
             .get_lib_ignore(&params.env_name)
             .unwrap_or_default();
-        let lib_archives: Vec<PathBuf>;
-        if !lib_deps.is_empty() {
+        let lib_archives = if !lib_deps.is_empty() {
             // Build a temp compiler solely to get the c/cxx flags for library
             // compilation. The temp compiler is discarded — the *real* compiler
             // is created afterwards with the full include-dir set.
@@ -268,39 +267,26 @@ impl BuildOrchestrator for AvrOrchestrator {
                 params.profile,
                 params.verbose,
             );
-            let c_flags_temp = temp_compiler.c_flags();
-            let cpp_flags_temp = temp_compiler.cpp_flags();
-            let dep_ar_path = toolchain.get_ar_path();
-            let dep_gcc_ar_path = toolchain.get_gcc_ar_path();
-            let dep_lib_ar_path = pipeline::pick_archiver(
-                &dep_ar_path,
-                &dep_gcc_ar_path,
-                &c_flags_temp,
-                &cpp_flags_temp,
-            );
-            let libs_dir = build_dir.join("libs");
-            let (lib_include_dirs, archives) = pipeline::ensure_lib_deps(
+            pipeline::resolve_lib_deps(
                 &lib_deps,
                 &lib_ignore,
+                &params.project_dir,
+                build_dir,
                 &toolchain.get_gcc_path(),
                 &toolchain.get_gxx_path(),
-                dep_lib_ar_path,
-                &c_flags_temp,
-                &cpp_flags_temp,
-                &include_dirs,
-                &params.project_dir,
-                &libs_dir,
+                &toolchain.get_ar_path(),
+                &toolchain.get_gcc_ar_path(),
+                &temp_compiler.c_flags(),
+                &temp_compiler.cpp_flags(),
+                &mut include_dirs,
                 params.verbose,
                 crate::parallel::effective_jobs(params.jobs),
                 compiler_cache.as_deref(),
             )
-            .await?;
-            include_dirs.extend(lib_include_dirs);
-            lib_archives = archives;
+            .await?
         } else {
-            lib_archives = Vec::new();
-        }
-        // temp_compiler is dropped here — its only purpose was c_flags/cpp_flags.
+            Vec::new()
+        };
 
         // 6b. Create compiler with the full include-dir set (core, variant,
         // toolchain sysroot, *and* downloaded library paths).

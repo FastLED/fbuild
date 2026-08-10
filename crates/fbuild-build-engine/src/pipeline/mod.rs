@@ -23,6 +23,7 @@ pub use context::BuildContext;
 pub use library::{
     LibraryBuildEnv, add_extra_library_include_dirs, compile_extra_libraries,
     compile_project_as_library, discover_extra_library_roots, ensure_lib_deps, pick_archiver,
+    resolve_lib_deps,
 };
 pub use link::{assemble_build_result, handle_link_result};
 pub use project_discovery::{discover_project_includes, is_platform_project, is_project_a_library};
