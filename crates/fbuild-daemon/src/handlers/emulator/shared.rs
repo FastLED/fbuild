@@ -95,9 +95,16 @@ pub(crate) fn qemu_session_dir(project_dir: &Path, env_name: &str) -> PathBuf {
 
 pub(crate) fn build_linux_macos_qemu_hint(err: &str) -> String {
     if cfg!(any(target_os = "linux", target_os = "macos")) {
+        let prefix = if err.is_empty() {
+            String::new()
+        } else {
+            format!("{}. ", err)
+        };
         format!(
-            "{}. On Linux/macOS, ensure QEMU runtime deps are installed: libgcrypt, glib2, pixman, SDL2, and libslirp.",
-            err
+            "{}The cached QEMU toolchain may be incomplete or corrupt. \
+             On Linux/macOS, also ensure runtime deps are installed: \
+             libgcrypt, glib2, pixman, SDL2, and libslirp.",
+            prefix
         )
     } else {
         err.to_string()
@@ -351,6 +358,16 @@ pub(crate) async fn run_qemu_process(
             } else {
                 MonitorOutcome::Success(format!("{} exited normally", label))
             }
+        } else if status.code() == Some(127) {
+            MonitorOutcome::Error(format!(
+                "{} failed to start (exit code 127): a required shared library is missing.\n\
+                 {}\n\
+                 The cached QEMU toolchain may be incomplete or corrupt.\n\
+                 Delete the cached toolchain and retry:\n  rm -rf $(dirname {})",
+                label,
+                build_linux_macos_qemu_hint(""),
+                qemu_path.display()
+            ))
         } else {
             MonitorOutcome::Error(format!(
                 "{} exited with code {}",
