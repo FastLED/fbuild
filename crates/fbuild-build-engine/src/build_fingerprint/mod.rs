@@ -3,9 +3,9 @@
 pub mod fast_path;
 
 pub use fast_path::{
-    FastPathCheckInputs, FastPathContract, FastPathHit, FastPathInputs, FastPathPersistInputs,
-    FastPathResultInputs, assemble_fast_path_result, expected_fast_path_artifacts, fast_path_check,
-    fast_path_watch, persist_fast_path_success,
+    CoreFingerprintMetadata, FastPathCheckInputs, FastPathContract, FastPathHit, FastPathInputs,
+    FastPathPersistInputs, FastPathResultInputs, assemble_fast_path_result,
+    expected_fast_path_artifacts, fast_path_check, fast_path_watch, persist_fast_path_success,
 };
 
 use std::collections::HashMap;

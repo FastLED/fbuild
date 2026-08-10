@@ -17,6 +17,10 @@ use std::time::Instant;
 
 use fbuild_core::{Platform, Result};
 
+use crate::build_fingerprint::{
+    CoreFingerprintMetadata, FastPathCheckInputs, FastPathContract, FastPathPersistInputs,
+    expected_fast_path_artifacts, stable_hash_json,
+};
 use crate::compile_database::TargetArchitecture;
 use crate::pipeline;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
@@ -26,6 +30,13 @@ use super::ch32v_linker::Ch32vLinker;
 
 /// CH32V platform build orchestrator.
 pub struct Ch32vOrchestrator;
+
+fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
+    match profile {
+        fbuild_core::BuildProfile::Release => "release",
+        fbuild_core::BuildProfile::Quick => "quick",
+    }
+}
 
 #[async_trait::async_trait]
 impl BuildOrchestrator for Ch32vOrchestrator {
@@ -100,6 +111,65 @@ impl BuildOrchestrator for Ch32vOrchestrator {
         // 6. Scan sources
         let core_dir = framework.get_core_dir(&ctx.board.core);
         let variant_dir = resolve_variant_dir(&framework_dir, &ctx.board.variant, &system_series);
+
+        let build_dir = &ctx.build_dir;
+        let metadata_hash = stable_hash_json(&CoreFingerprintMetadata {
+            version: crate::build_fingerprint::BUILD_FINGERPRINT_VERSION,
+            env_name: params.env_name.clone(),
+            profile: profile_label(params.profile).to_string(),
+            board_name: ctx.board.name.clone(),
+            board_mcu: ctx.board.mcu.clone(),
+            board_define: ctx.board.board.clone(),
+            board_core: ctx.board.core.clone(),
+            board_f_cpu: ctx.board.f_cpu.clone(),
+            board_extra_flags: ctx.board.extra_flags.clone(),
+            board_ldscript: ctx.board.ldscript.clone(),
+            board_variant: Some(ctx.board.variant.clone()),
+            platform: "ch32v".to_string(),
+            max_flash: ctx.board.max_flash,
+            max_ram: ctx.board.max_ram,
+            eh_frame_policy: None,
+            extra: Some(std::collections::BTreeMap::from([(
+                "series".to_string(),
+                series.clone(),
+            )])),
+        })?;
+        let (fast_elf, [fast_bin], fast_compile_db) =
+            expected_fast_path_artifacts(build_dir, &params.project_dir, ["firmware.bin"]);
+        let fast_path = FastPathContract::for_project_outputs(
+            build_dir,
+            &params.project_dir,
+            [fast_elf.clone(), fast_bin.clone(), fast_compile_db.clone()],
+        );
+        let compiler_cache: Option<fbuild_core::path::NormalizedPath> = None;
+
+        if !params.compiledb_only
+            && !params.symbol_analysis
+            && params.symbol_analysis_path.is_none()
+        {
+            let inputs = FastPathCheckInputs {
+                metadata_hash: &metadata_hash,
+                extra_artifact_ok: None,
+                watch_set_cache: params.watch_set_cache.as_deref(),
+                compiler_cache: compiler_cache.as_deref(),
+            };
+            if let Some(hit) = crate::build_fingerprint::fast_path_check(&fast_path, &inputs)? {
+                let elapsed = start.elapsed().as_secs_f64();
+                return Ok(crate::build_fingerprint::assemble_fast_path_result(
+                    hit,
+                    ctx.build_log,
+                    crate::build_fingerprint::FastPathResultInputs {
+                        platform_label: "CH32V",
+                        mcu: &ctx.board.mcu,
+                        env_name: &params.env_name,
+                        firmware_path: fast_bin,
+                        elf_path: fast_elf,
+                        compile_database_path: fast_compile_db,
+                        elapsed,
+                    },
+                ));
+            }
+        }
 
         let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
         let sources = scanner.scan_all_filtered(
@@ -236,7 +306,7 @@ impl BuildOrchestrator for Ch32vOrchestrator {
         };
 
         // 9. Run shared sequential build pipeline
-        pipeline::run_sequential_build_with_libs(
+        let result = pipeline::run_sequential_build_with_libs(
             &compiler,
             &linker,
             ctx,
@@ -248,7 +318,25 @@ impl BuildOrchestrator for Ch32vOrchestrator {
             "CH32V",
             start,
         )
-        .await
+        .await?;
+
+        if result.success
+            && !params.compiledb_only
+            && !params.symbol_analysis
+            && params.symbol_analysis_path.is_none()
+        {
+            crate::build_fingerprint::persist_fast_path_success(
+                &fast_path,
+                &FastPathPersistInputs {
+                    metadata_hash: &metadata_hash,
+                    size_info: result.size_info.clone(),
+                    watch_set_cache: params.watch_set_cache.as_deref(),
+                    compiler_cache: compiler_cache.as_deref(),
+                },
+            );
+        }
+
+        Ok(result)
     }
 }
 
