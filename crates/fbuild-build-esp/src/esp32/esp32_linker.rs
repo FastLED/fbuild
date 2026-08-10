@@ -556,9 +556,13 @@ impl Linker for Esp32Linker {
             return Ok(size_info);
         }
 
-        let size_info =
-            super::size_report::esp32_report_size(&self.size_path, elf_path, self.max_flash, self.max_ram)
-                .await?;
+        let size_info = super::size_report::esp32_report_size(
+            &self.size_path,
+            elf_path,
+            self.max_flash,
+            self.max_ram,
+        )
+        .await?;
         self.save_size_cache(elf_path, &size_info);
         Ok(size_info)
     }
@@ -912,5 +916,4 @@ mod tests {
         let freq = f_flash_to_esptool_freq(Some("64000000L"), config.default_flash_freq());
         assert_eq!(freq, "48m");
     }
-
 }

@@ -10,8 +10,8 @@
 
 use std::path::Path;
 
-use fbuild_core::subprocess::run_command;
 use fbuild_core::SizeInfo;
+use fbuild_core::subprocess::run_command;
 
 /// Run `size -A` and parse the SysV output for an ESP32 ELF.
 ///
