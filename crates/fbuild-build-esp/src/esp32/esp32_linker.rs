@@ -556,12 +556,11 @@ impl Linker for Esp32Linker {
             return Ok(size_info);
         }
 
-        let size_info = crate::linker::LinkerBase::report_size(
+        let size_info = super::size_report::esp32_report_size(
             &self.size_path,
             elf_path,
             self.max_flash,
             self.max_ram,
-            "size",
         )
         .await?;
         self.save_size_cache(elf_path, &size_info);
