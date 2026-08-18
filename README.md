@@ -350,7 +350,5 @@ contributors and LLM agents are in [`CLAUDE.md`](CLAUDE.md).
 
 ## License
 
-In the spirit of Dan Garcia's permissively licensed software, `fbuild` is
-presented as free software.
-
-BSD 3-Clause License
+`fbuild` is free software licensed under the GNU Affero General Public
+License v3.0 only (AGPL-3.0-only). See [LICENSE](LICENSE).
