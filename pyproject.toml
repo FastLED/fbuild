@@ -3,6 +3,7 @@ name = "fbuild"
 version = "2.5.16"
 description = "PlatformIO-compatible embedded build tool (Rust implementation)"
 readme = "README.md"
+license = "AGPL-3.0-only"
 requires-python = ">=3.10"
 # FastLED/fbuild#800: fbuild's daemon hosts an in-process zccache
 # service (see `crates/fbuild-build/src/zccache_embedded.rs`). The
