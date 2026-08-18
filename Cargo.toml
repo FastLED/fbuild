@@ -72,7 +72,7 @@ libraries = [{ path = "dylints/*" }]
 version = "2.5.16"
 edition = "2021"
 rust-version = "1.94.1"
-license = "MIT OR Apache-2.0"
+license = "AGPL-3.0-only"
 repository = "https://github.com/fastled/fbuild"
 
 [workspace.dependencies]
