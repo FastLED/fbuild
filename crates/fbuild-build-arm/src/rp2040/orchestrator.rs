@@ -559,6 +559,7 @@ fn rp_manifest_define_files(framework_dir: &Path, mcu: &str) -> Vec<std::path::P
         "rp2040"
     };
     vec![
+        framework_dir.join("lib").join("platform_def.txt"),
         framework_dir
             .join("lib")
             .join(family)
@@ -1028,6 +1029,37 @@ mod tests {
 
         assert_eq!(defines.get("TARGET_RP2040").map(String::as_str), Some("1"));
         assert_eq!(defines.get("PICO_RP2040").map(String::as_str), Some("1"));
+    }
+
+    #[test]
+    fn test_add_rp_manifest_defines_reads_common_and_family_manifests() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let lib_dir = tmp.path().join("lib");
+        let family_dir = lib_dir.join("rp2350");
+        std::fs::create_dir_all(&family_dir).unwrap();
+        std::fs::write(
+            lib_dir.join("platform_def.txt"),
+            "-DPICO_CYW43_ARCH_HEADER=stdint.h\n-DFAMILY_OVERRIDE=common\n",
+        )
+        .unwrap();
+        std::fs::write(
+            family_dir.join("platform_def.txt"),
+            "-DPICO_RP2350=1\n-DFAMILY_OVERRIDE=rp2350\n",
+        )
+        .unwrap();
+
+        let mut defines = HashMap::new();
+        add_rp_manifest_defines(tmp.path(), "rp2350", &mut defines);
+
+        assert_eq!(
+            defines.get("PICO_CYW43_ARCH_HEADER").map(String::as_str),
+            Some("stdint.h")
+        );
+        assert_eq!(defines.get("PICO_RP2350").map(String::as_str), Some("1"));
+        assert_eq!(
+            defines.get("FAMILY_OVERRIDE").map(String::as_str),
+            Some("rp2350")
+        );
     }
 
     #[test]
