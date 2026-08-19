@@ -888,10 +888,12 @@ mod tests {
         let tmp = tempdir();
         let libraries = vec![lib(tmp.path(), "BTstackLib"), lib(tmp.path(), "HTTPUpdate")];
         let declared = vec![
-            "BTstackLib".to_string(),
+            "btSTACKlib".to_string(),
             "vendor/HTTPUpdate@^1.3".to_string(),
             "ExternalRegistryLib@^2.0".to_string(),
             "https://example.com/vendor/local-lib.git".to_string(),
+            "https://example.com/vendor/HTTPUpdate".to_string(),
+            "file://vendor/BTstackLib".to_string(),
         ];
 
         assert_eq!(
@@ -899,6 +901,8 @@ mod tests {
             vec![
                 "ExternalRegistryLib@^2.0".to_string(),
                 "https://example.com/vendor/local-lib.git".to_string(),
+                "https://example.com/vendor/HTTPUpdate".to_string(),
+                "file://vendor/BTstackLib".to_string(),
             ]
         );
     }

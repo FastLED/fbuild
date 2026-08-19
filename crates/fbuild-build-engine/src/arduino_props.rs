@@ -152,7 +152,11 @@ pub fn load_board_props_with_menu_overrides(
     // PlatformIO selects them with the derived `board_build.filesystem_size`
     // setting. Resolve that setting from the board's own fs_start/fs_end
     // metadata so no flash geometry is duplicated in fbuild.
-    if !menu_overrides.contains_key("flash") {
+    let flash_override_is_empty = match menu_overrides.get("flash") {
+        Some(option) => option.trim().is_empty(),
+        None => true,
+    };
+    if flash_override_is_empty {
         if let Some(filesystem_size) = menu_overrides.get("filesystem_size") {
             let option = flash_menu_option_for_filesystem_size(
                 &content,
@@ -314,7 +318,10 @@ demo.menu.flash.4194304_524288.build.fs_end=272621568
         let props = load_board_props_with_menu_overrides(
             &boards_txt,
             "demo",
-            &HashMap::from([(String::from("filesystem_size"), String::from("0.5m"))]),
+            &HashMap::from([
+                (String::from("filesystem_size"), String::from("0.5m")),
+                (String::from("flash"), String::new()),
+            ]),
         )
         .unwrap();
 
