@@ -9,7 +9,9 @@
 //! single allowlisted PnP operation.
 
 use crate::device_manager::DeviceState;
-use fbuild_core::usb::{UNCLASSED_DEVICE_CLASS, UsbRecoveryRequest};
+use fbuild_core::usb::{
+    UNCLASSED_DEVICE_CLASS, UsbRecoveryRequest, is_windows_descriptor_failure_identity,
+};
 use fbuild_serial::ports::UsbProblemDevice;
 use std::collections::BTreeSet;
 
@@ -52,6 +54,7 @@ pub(super) fn compose_rp2040_recovery_request(
                 .clone()
                 .unwrap_or_else(|| UNCLASSED_DEVICE_CLASS.to_string()),
             expected_serial: serial_from_matching_parent(&device.instance_id, &parent),
+            descriptor_failure_at_location: false,
             expected_location_path: None,
             parent_instance_id: Some(parent),
             expected_vid: vid,
@@ -84,7 +87,11 @@ pub(super) fn compose_rp2040_recovery_request(
                 continue;
             };
             for problem in problem_devices {
-                if parse_usb_vid_pid(&problem.instance_id) != Some((0, 2))
+                let Some((problem_vid, problem_pid)) = parse_usb_vid_pid(&problem.instance_id)
+                else {
+                    continue;
+                };
+                if !is_windows_descriptor_failure_identity(problem_vid, problem_pid)
                     || problem.problem_code != 43
                     || problem.parent_instance_id.is_none()
                 {
@@ -99,13 +106,15 @@ pub(super) fn compose_rp2040_recovery_request(
                         serial.to_ascii_uppercase(),
                         historical.instance_id.clone().unwrap_or_default(),
                         problem.instance_id.clone(),
+                        problem_vid,
+                        problem_pid,
                         physical_path.clone(),
                     ));
                 }
             }
         }
     }
-    if let Some((_, _, _, problem_instance, physical_path)) =
+    if let Some((_, _, _, problem_instance, problem_vid, problem_pid, physical_path)) =
         exactly_one(location_matches.into_iter())
     {
         let problem = problem_devices
@@ -120,9 +129,10 @@ pub(super) fn compose_rp2040_recovery_request(
                 .clone()
                 .unwrap_or_else(|| UNCLASSED_DEVICE_CLASS.to_string()),
             parent_instance_id: Some(parent),
-            expected_vid: 0,
-            expected_pid: 2,
+            expected_vid: problem_vid,
+            expected_pid: problem_pid,
             expected_serial: None,
+            descriptor_failure_at_location: true,
             expected_location_path: Some(physical_path),
             problem_code: Some(problem.problem_code),
             flash_completed,
@@ -154,6 +164,7 @@ pub(super) fn compose_rp2040_recovery_request(
             expected_vid: vid,
             expected_pid: pid,
             expected_serial: device.serial_number.clone(),
+            descriptor_failure_at_location: false,
             expected_location_path: None,
             problem_code: device.port_health.problem_code(),
             flash_completed,
@@ -293,6 +304,7 @@ mod tests {
 
         assert_eq!(request.instance_id, UNKNOWN_CODE43);
         assert_eq!((request.expected_vid, request.expected_pid), (0, 2));
+        assert!(request.descriptor_failure_at_location);
         assert_eq!(
             request.expected_location_path.as_deref(),
             Some(RP_PHYSICAL_LOCATION)
@@ -310,6 +322,32 @@ mod tests {
                 std::slice::from_ref(&historical),
                 &[unidentified_code43(different)],
                 "deploy-mismatch",
+                false,
+                |_, _| false,
+                |vid, pid| (vid, pid) == (0x2e8a, 0x000a),
+            ),
+            None
+        );
+        let mut wrong_sentinel_pid = unidentified_code43(RP_PHYSICAL_LOCATION);
+        wrong_sentinel_pid.instance_id = "USB\\VID_0000&PID_0003\\6&3AF0F9CE&0&4".to_string();
+        assert_eq!(
+            compose_rp2040_recovery_request(
+                std::slice::from_ref(&historical),
+                &[wrong_sentinel_pid],
+                "deploy-wrong-sentinel-pid",
+                false,
+                |_, _| false,
+                |vid, pid| (vid, pid) == (0x2e8a, 0x000a),
+            ),
+            None
+        );
+        let mut identified_problem = unidentified_code43(RP_PHYSICAL_LOCATION);
+        identified_problem.instance_id = "USB\\VID_1234&PID_0002\\6&3AF0F9CE&0&4".to_string();
+        assert_eq!(
+            compose_rp2040_recovery_request(
+                std::slice::from_ref(&historical),
+                &[identified_problem],
+                "deploy-identified-problem",
                 false,
                 |_, _| false,
                 |vid, pid| (vid, pid) == (0x2e8a, 0x000a),

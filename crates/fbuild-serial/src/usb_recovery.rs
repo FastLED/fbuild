@@ -638,6 +638,7 @@ mod tests {
             expected_vid: 0x2e8a,
             expected_pid: 0x000a,
             expected_serial: Some("serial".to_string()),
+            descriptor_failure_at_location: false,
             expected_location_path: None,
             problem_code: Some(43),
             flash_completed: true,
@@ -767,6 +768,7 @@ mod tests {
         request.expected_vid = 0;
         request.expected_pid = 2;
         request.expected_serial = None;
+        request.descriptor_failure_at_location = true;
         request.expected_location_path = Some("PCIROOT(0)#USBROOT(0)#USB(10)#USB(4)".to_string());
         let mut target = device(UsbRecoveryHealth::PresentProblem { problem_code: 43 });
         target.vid = 0;
@@ -790,6 +792,7 @@ mod tests {
         request.expected_vid = 0;
         request.expected_pid = 2;
         request.expected_serial = None;
+        request.descriptor_failure_at_location = true;
         request.expected_location_path = Some("PCIROOT(0)#USBROOT(0)#USB(10)#USB(4)".to_string());
 
         let mut target = device(UsbRecoveryHealth::Phantom {
@@ -824,6 +827,7 @@ mod tests {
         request.expected_vid = 0;
         request.expected_pid = 2;
         request.expected_serial = None;
+        request.descriptor_failure_at_location = true;
         request.expected_location_path = None;
         request.problem_code = Some(43);
         let mut backend =
@@ -870,6 +874,7 @@ mod tests {
             expected_vid: 0x2e8a,
             expected_pid: 0x0003,
             expected_serial: Some("E0C9125B0D9B".to_string()),
+            descriptor_failure_at_location: false,
             expected_location_path: None,
             problem_code: Some(28),
             flash_completed: false,

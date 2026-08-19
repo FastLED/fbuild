@@ -28,6 +28,23 @@ class GuardTests(unittest.TestCase):
         reasons = self.reasons("crates/demo/src/device.rs", "const DEVICE_VID: u16 = 4660;")
         self.assertIn("named VID/PID literal", reasons)
 
+    def test_exact_windows_descriptor_failure_sentinel_is_allowed_only_in_core_contract(self):
+        declaration = "pub const WINDOWS_DESCRIPTOR_FAILURE_PID: u16 = 2;"
+        self.assertEqual(
+            self.reasons("crates/fbuild-core/src/usb/recovery.rs", declaration), []
+        )
+        self.assertIn(
+            "named VID/PID literal",
+            self.reasons("crates/demo/src/device.rs", declaration),
+        )
+        self.assertIn(
+            "named VID/PID literal",
+            self.reasons(
+                "crates/fbuild-core/src/usb/recovery.rs",
+                "pub const WINDOWS_DESCRIPTOR_FAILURE_PID: u16 = 3;",
+            ),
+        )
+
     def test_board_json_separate_fields_are_rejected(self):
         findings = guard.scan_text(
             "crates/fbuild-config/assets/boards/json/demo.json",

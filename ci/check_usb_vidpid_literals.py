@@ -50,7 +50,7 @@ TUPLE_PAIR_RE = re.compile(
     r"(?i)[\[(]\s*0x([0-9a-f]{4})\s*,\s*0x([0-9a-f]{4})\s*[\])]"
 )
 NAMED_LITERAL_RE = re.compile(
-    r"(?i)\b(?:vid|pid|[a-z0-9]+_(?:vid|pid))\b\s*"
+    r"(?i)\b(?:vid|pid|[a-z0-9_]+_(?:vid|pid))\b\s*"
     r"(?::\s*[a-z_][a-z0-9_:<>]*)?\s*(?:==|!=|=|:)\s*"
     r"(?:Some\(\s*)?\b(0x[0-9a-f]{4}|[1-9][0-9]{0,4})\b"
 )
@@ -64,6 +64,16 @@ CATALOGUE_RE = re.compile(
     r"(?i)\b(?:board_fingerprints|environment_to_vcom|mcu_to_vid|seed_mcu|usb_vid_pid_catalog)\b"
 )
 CFG_TEST_RE = re.compile(r"#\s*\[\s*cfg\s*\(\s*test\s*\)\s*\]")
+
+# This is a Windows PnP protocol sentinel, not a board identity. Keep the
+# exception exact in path, spelling, type, and value so it cannot become a
+# second production VID/PID catalogue.
+IDENTITY_LITERAL_EXCEPTIONS = {
+    (
+        "crates/fbuild-core/src/usb/recovery.rs",
+        "pub const WINDOWS_DESCRIPTOR_FAILURE_PID: u16 = 2;",
+    )
+}
 
 
 @dataclass(frozen=True)
@@ -209,6 +219,12 @@ def scan_text(path: str, source: str) -> list[Finding]:
         )
         for pattern, reason in checks:
             if not pattern.search(line):
+                continue
+            if (
+                reason == "named VID/PID literal"
+                and (path.replace("\\", "/"), stripped)
+                in IDENTITY_LITERAL_EXCEPTIONS
+            ):
                 continue
             key = (line_number, reason)
             if key not in seen:

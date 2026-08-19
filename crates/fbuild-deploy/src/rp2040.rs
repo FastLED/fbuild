@@ -2,6 +2,7 @@
 
 use std::collections::{BTreeSet, HashMap};
 use std::fs;
+use std::future::Future;
 use std::io::{self, Write};
 use std::path::{Path, PathBuf};
 use std::sync::{Mutex, OnceLock};
@@ -211,6 +212,77 @@ fn application_reboot_target(
         &format!("{:04x}", runtime_target.vendor_id),
         &format!("{:04x}", runtime_target.product_id),
     ))
+}
+
+struct ApplicationRebootRecovery {
+    volume: Option<PathBuf>,
+    volume_discovery_error: Option<FbuildError>,
+    application_reboot_succeeded: bool,
+}
+
+/// Run the application-mode recovery transition behind injectable boundaries
+/// so its ordering and failure semantics are covered without invoking a real
+/// USB device from unit tests. The production closures remain the managed
+/// picotool command and the normal BOOTSEL watcher.
+async fn run_application_reboot_recovery<Reboot, RebootFuture, Discover, DiscoverFuture>(
+    target: Option<picotool::PicotoolTarget>,
+    volume: Option<PathBuf>,
+    mut volume_discovery_error: Option<FbuildError>,
+    bootloader_timeout: Duration,
+    reboot: Reboot,
+    discover_bootsel: Discover,
+) -> Result<ApplicationRebootRecovery>
+where
+    Reboot: FnOnce(picotool::PicotoolTarget) -> RebootFuture,
+    RebootFuture: Future<Output = Result<picotool::PicotoolLoad>>,
+    Discover: FnOnce() -> DiscoverFuture,
+    DiscoverFuture: Future<Output = Result<Option<PathBuf>>>,
+{
+    let Some(target) = target else {
+        return Ok(ApplicationRebootRecovery {
+            volume,
+            volume_discovery_error,
+            application_reboot_succeeded: false,
+        });
+    };
+
+    let earlier_failure = volume_discovery_error
+        .take()
+        .map(|error| error.to_string())
+        .unwrap_or_else(|| "initial BOOTSEL discovery found no target".to_string());
+    tracing::warn!(
+        cdc_or_bootsel_failure = %earlier_failure,
+        "RP-series CDC/BOOTSEL transition failed; trying target-bound application-mode picotool reboot"
+    );
+
+    match reboot(target).await {
+        Ok(_) => {
+            tracing::info!(
+                "RP-series recovery layer succeeded: target-bound application-mode picotool reboot"
+            );
+            let discovered = discover_bootsel().await?;
+            let volume_discovery_error = if discovered.is_some() {
+                None
+            } else {
+                Some(FbuildError::DeployFailed(format!(
+                    "{earlier_failure}; target-bound application-mode picotool reboot succeeded, but no RP2040 BOOTSEL volume mounted within {}s",
+                    bootloader_timeout.as_secs()
+                )))
+            };
+            Ok(ApplicationRebootRecovery {
+                volume: discovered,
+                volume_discovery_error,
+                application_reboot_succeeded: true,
+            })
+        }
+        Err(error) => Ok(ApplicationRebootRecovery {
+            volume,
+            volume_discovery_error: Some(FbuildError::DeployFailed(format!(
+                "{earlier_failure}; target-bound application-mode picotool reboot also failed: {error}"
+            ))),
+            application_reboot_succeeded: false,
+        }),
+    }
 }
 
 /// Parse an env-supplied stage timeout. Accepts integer seconds in 1..=600;
@@ -1755,7 +1827,7 @@ impl Deployer for Rp2040Deployer {
         } else {
             None
         };
-        let (mut volume, mut volume_discovery_error) = if let Some(volume) = volume_before_reset {
+        let (volume, volume_discovery_error) = if let Some(volume) = volume_before_reset {
             (Some(volume), None)
         } else {
             let timeout = self.bootloader_timeout;
@@ -1775,55 +1847,37 @@ impl Deployer for Rp2040Deployer {
                 Err(error) => (None, Some(error)),
             }
         };
-        let mut application_reboot_succeeded = false;
-        if let Some(target) = application_reboot_target(volume.is_some(), runtime_target.as_ref()) {
-            let earlier_failure = volume_discovery_error
-                .take()
-                .map(|error| error.to_string())
-                .unwrap_or_else(|| "initial BOOTSEL discovery found no target".to_string());
-            tracing::warn!(
-                cdc_or_bootsel_failure = %earlier_failure,
-                "RP-series CDC/BOOTSEL transition failed; trying target-bound application-mode picotool reboot"
-            );
-            match picotool::reboot_runtime_to_bootsel(
-                project_dir,
-                &target,
-                PICOTOOL_INFO_PROBE_TIMEOUT,
-            )
-            .await
-            {
-                Ok(_) => {
-                    application_reboot_succeeded = true;
-                    tracing::info!(
-                        "RP-series recovery layer succeeded: target-bound application-mode picotool reboot"
-                    );
-                    let timeout = self.bootloader_timeout;
-                    let stale_volumes = volumes_before.clone();
-                    let discovered = tokio::task::spawn_blocking(move || {
-                        find_uf2_volume_until(timeout, &stale_volumes)
-                    })
+        let application_target =
+            application_reboot_target(volume.is_some(), runtime_target.as_ref());
+        let timeout = self.bootloader_timeout;
+        let stale_volumes = volumes_before.clone();
+        let application_recovery = run_application_reboot_recovery(
+            application_target,
+            volume,
+            volume_discovery_error,
+            self.bootloader_timeout,
+            |target| async move {
+                picotool::reboot_runtime_to_bootsel(
+                    project_dir,
+                    &target,
+                    PICOTOOL_INFO_PROBE_TIMEOUT,
+                )
+                .await
+            },
+            move || async move {
+                tokio::task::spawn_blocking(move || find_uf2_volume_until(timeout, &stale_volumes))
                     .await
                     .map_err(|error| {
                         FbuildError::DeployFailed(format!(
                             "RP2040 post-picotool volume watcher failed: {error}"
                         ))
-                    })??;
-                    if let Some(discovered) = discovered {
-                        volume = Some(discovered);
-                    } else {
-                        volume_discovery_error = Some(FbuildError::DeployFailed(format!(
-                            "{earlier_failure}; target-bound application-mode picotool reboot succeeded, but no RP2040 BOOTSEL volume mounted within {}s",
-                            self.bootloader_timeout.as_secs()
-                        )));
-                    }
-                }
-                Err(error) => {
-                    volume_discovery_error = Some(FbuildError::DeployFailed(format!(
-                        "{earlier_failure}; target-bound application-mode picotool reboot also failed: {error}"
-                    )));
-                }
-            }
-        }
+                    })?
+            },
+        )
+        .await?;
+        let volume = application_recovery.volume;
+        let volume_discovery_error = application_recovery.volume_discovery_error;
+        let application_reboot_succeeded = application_recovery.application_reboot_succeeded;
         let firmware = firmware_path.to_path_buf();
         let family_id = self.family_id;
         let (artifact, uf2_target) =
@@ -2894,6 +2948,75 @@ mod tests {
         };
 
         assert!(application_reboot_target(true, Some(&runtime)).is_none());
+    }
+
+    #[tokio::test]
+    async fn failed_cdc_without_bootsel_reboots_and_reacquires_bootsel() {
+        let runtime = target::RequestedRuntimeTarget {
+            port: "COM18".to_string(),
+            serial_number: Some("2DCB876B587EA334".to_string()),
+            vendor_id: 0x2e8a,
+            product_id: 0xf00f,
+        };
+        let expected_volume = PathBuf::from("RPI-RP2");
+
+        let outcome = run_application_reboot_recovery(
+            application_reboot_target(false, Some(&runtime)),
+            None,
+            Some(FbuildError::DeployFailed(
+                "CDC touch failed and initial BOOTSEL discovery timed out".to_string(),
+            )),
+            Duration::from_secs(10),
+            |_target| async {
+                Ok(picotool::PicotoolLoad {
+                    stdout: "rebooted".to_string(),
+                    stderr: String::new(),
+                })
+            },
+            || async { Ok(Some(PathBuf::from("RPI-RP2"))) },
+        )
+        .await
+        .unwrap();
+
+        assert_eq!(outcome.volume, Some(expected_volume));
+        assert!(outcome.volume_discovery_error.is_none());
+        assert!(outcome.application_reboot_succeeded);
+    }
+
+    #[tokio::test]
+    async fn application_picotool_timeout_preserves_layered_failure() {
+        let runtime = target::RequestedRuntimeTarget {
+            port: "COM18".to_string(),
+            serial_number: Some("2DCB876B587EA334".to_string()),
+            vendor_id: 0x2e8a,
+            product_id: 0xf00f,
+        };
+
+        let outcome = run_application_reboot_recovery(
+            application_reboot_target(false, Some(&runtime)),
+            None,
+            Some(FbuildError::DeployFailed(
+                "initial BOOTSEL discovery timed out".to_string(),
+            )),
+            Duration::from_secs(10),
+            |_target| async {
+                Err(FbuildError::DeployFailed(
+                    "managed picotool timed out after 2s".to_string(),
+                ))
+            },
+            || async { panic!("BOOTSEL discovery must not run after a failed application reboot") },
+        )
+        .await
+        .unwrap();
+
+        assert!(outcome.volume.is_none());
+        assert!(!outcome.application_reboot_succeeded);
+        let error = outcome
+            .volume_discovery_error
+            .expect("the layered recovery failure must remain actionable")
+            .to_string();
+        assert!(error.contains("initial BOOTSEL discovery timed out"));
+        assert!(error.contains("managed picotool timed out after 2s"));
     }
 
     #[test]
