@@ -645,6 +645,16 @@ mod tests {
         }
     }
 
+    fn descriptor_failure_request(location: Option<&str>) -> UsbRecoveryRequest {
+        let mut request = request();
+        request.expected_vid = 0;
+        request.expected_pid = 2;
+        request.expected_serial = None;
+        request.descriptor_failure_at_location = true;
+        request.expected_location_path = location.map(str::to_string);
+        request
+    }
+
     fn device(health: UsbRecoveryHealth) -> UsbPnpDevice {
         UsbPnpDevice {
             instance_id: request().instance_id,
@@ -764,12 +774,7 @@ mod tests {
 
     #[test]
     fn descriptor_failure_recovery_revalidates_normalized_location_path() {
-        let mut request = request();
-        request.expected_vid = 0;
-        request.expected_pid = 2;
-        request.expected_serial = None;
-        request.descriptor_failure_at_location = true;
-        request.expected_location_path = Some("PCIROOT(0)#USBROOT(0)#USB(10)#USB(4)".to_string());
+        let request = descriptor_failure_request(Some("PCIROOT(0)#USBROOT(0)#USB(10)#USB(4)"));
         let mut target = device(UsbRecoveryHealth::PresentProblem { problem_code: 43 });
         target.vid = 0;
         target.pid = 2;
@@ -786,14 +791,9 @@ mod tests {
 
     #[test]
     fn descriptor_failure_that_became_phantom_never_reenumerates_parent() {
-        let mut request = request();
+        let mut request = descriptor_failure_request(Some("PCIROOT(0)#USBROOT(0)#USB(10)#USB(4)"));
         request.instance_id = "USB\\VID_0000&PID_0002\\descriptor-failed".to_string();
         request.expected_class = "USB".to_string();
-        request.expected_vid = 0;
-        request.expected_pid = 2;
-        request.expected_serial = None;
-        request.descriptor_failure_at_location = true;
-        request.expected_location_path = Some("PCIROOT(0)#USBROOT(0)#USB(10)#USB(4)".to_string());
 
         let mut target = device(UsbRecoveryHealth::Phantom {
             problem_code: Some(43),
@@ -821,14 +821,9 @@ mod tests {
 
     #[test]
     fn descriptor_failure_without_location_is_rejected_before_inspection() {
-        let mut request = request();
+        let mut request = descriptor_failure_request(None);
         request.instance_id = "USB\\VID_0000&PID_0002\\descriptor-failed".to_string();
         request.expected_class = "USB".to_string();
-        request.expected_vid = 0;
-        request.expected_pid = 2;
-        request.expected_serial = None;
-        request.descriptor_failure_at_location = true;
-        request.expected_location_path = None;
         request.problem_code = Some(43);
         let mut backend =
             FakePnp::with_observations(vec![device(UsbRecoveryHealth::PresentProblem {
