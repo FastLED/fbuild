@@ -335,7 +335,9 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             .config
             .get_lib_ignore(&params.env_name)
             .unwrap_or_default();
-        let lib_archives = if !lib_deps.is_empty() {
+        let external_lib_deps =
+            fbuild_library_select::external_declared_deps(&lib_deps, &framework_libs);
+        let lib_archives = if !external_lib_deps.is_empty() {
             let temp_compiler = ArmCompiler::new(
                 toolchain.get_gcc_path(),
                 toolchain.get_gxx_path(),
@@ -348,7 +350,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
                 params.verbose,
             );
             pipeline::resolve_lib_deps(
-                &lib_deps,
+                &external_lib_deps,
                 &lib_ignore,
                 &params.project_dir,
                 &build_dir,
@@ -634,6 +636,15 @@ fn apply_rp_board_props(
     }
     if let Some(value) = props.get("usb_product") {
         defines.insert("USB_PRODUCT".to_string(), value.clone());
+    }
+    for (property, define) in [
+        ("flash_total", "PICO_FLASH_SIZE_BYTES"),
+        ("fs_start", "FS_START"),
+        ("fs_end", "FS_END"),
+    ] {
+        if let Some(value) = props.get(property) {
+            defines.insert(define.to_string(), value.clone());
+        }
     }
 }
 
@@ -1103,6 +1114,28 @@ mod tests {
             defines.get("WIFICC").map(String::as_str),
             Some("CYW43_COUNTRY_WORLDWIDE")
         );
+    }
+
+    #[test]
+    fn test_apply_rp_board_props_applies_flash_layout_defines() {
+        let board_props = Some(HashMap::from([
+            ("flash_total".to_string(), "4194304".to_string()),
+            ("fs_start".to_string(), "272097280".to_string()),
+            ("fs_end".to_string(), "272621568".to_string()),
+        ]));
+        let mut defines = HashMap::new();
+
+        apply_rp_board_props(&board_props, Path::new("framework"), &mut defines);
+
+        assert_eq!(
+            defines.get("PICO_FLASH_SIZE_BYTES").map(String::as_str),
+            Some("4194304")
+        );
+        assert_eq!(
+            defines.get("FS_START").map(String::as_str),
+            Some("272097280")
+        );
+        assert_eq!(defines.get("FS_END").map(String::as_str), Some("272621568"));
     }
 
     #[test]

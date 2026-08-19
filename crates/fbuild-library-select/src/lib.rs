@@ -178,6 +178,26 @@ fn declared_dep_name(entry: &str) -> Option<String> {
     }
 }
 
+/// Return declarations that do not match a library bundled with the framework.
+///
+/// Bundled matches are already selected by [`resolve_with_stats_active_declared`]
+/// and must not also be sent to the external registry installer. URL and local
+/// path declarations never match a bundled name and remain in the result.
+pub fn external_declared_deps(declared: &[String], libraries: &[FrameworkLibrary]) -> Vec<String> {
+    let bundled: BTreeSet<String> = libraries
+        .iter()
+        .map(|library| library.name.to_ascii_lowercase())
+        .collect();
+    declared
+        .iter()
+        .filter(|entry| match declared_dep_name(entry) {
+            Some(name) => !bundled.contains(&name),
+            None => true,
+        })
+        .cloned()
+        .collect()
+}
+
 fn seed_defines(
     seeds: &[PathBuf],
     compiler_defines: &HashMap<String, String>,
@@ -860,6 +880,26 @@ mod tests {
             sel.required_libraries,
             vec!["SPI".to_string(), "Wire".to_string()],
             "declaring SPI must also bring in the Wire it depends on"
+        );
+    }
+
+    #[test]
+    fn bundled_framework_lib_deps_are_not_external() {
+        let tmp = tempdir();
+        let libraries = vec![lib(tmp.path(), "BTstackLib"), lib(tmp.path(), "HTTPUpdate")];
+        let declared = vec![
+            "BTstackLib".to_string(),
+            "vendor/HTTPUpdate@^1.3".to_string(),
+            "ExternalRegistryLib@^2.0".to_string(),
+            "https://example.com/vendor/local-lib.git".to_string(),
+        ];
+
+        assert_eq!(
+            external_declared_deps(&declared, &libraries),
+            vec![
+                "ExternalRegistryLib@^2.0".to_string(),
+                "https://example.com/vendor/local-lib.git".to_string(),
+            ]
         );
     }
 
