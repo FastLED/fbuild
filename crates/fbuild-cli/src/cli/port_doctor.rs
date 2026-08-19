@@ -665,6 +665,7 @@ mod tests {
             location: Some("Port_#0014.Hub_#0001".into()),
             behind_external_hub: Some(false),
             device_class: None,
+            location_paths: Vec::new(),
             parent_instance_id: None,
         }];
         let out = render_report(&[diag(Some(false), None)], &problems);
@@ -735,6 +736,7 @@ Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)
             location: Some("Port_#0014.Hub_#0001".into()),
             behind_external_hub: Some(false),
             device_class: None,
+            location_paths: Vec::new(),
             parent_instance_id: None,
         }];
         let report = build_json_report(&[diag(Some(false), None)], &problems, Some(true));

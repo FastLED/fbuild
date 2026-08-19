@@ -134,6 +134,7 @@ mod tests {
             behind_external_hub: Some(false),
             parent_instance_id: Some(BOOTSEL_COMPOSITE.to_string()),
             device_class: None,
+            location_paths: Vec::new(),
         }
     }
 

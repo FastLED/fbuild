@@ -104,6 +104,9 @@ pub struct DetectedPort {
     /// hub — anything reasoning about hub-level policy (power management,
     /// topology) needs the whole chain, not just one hop.
     pub ancestor_instance_ids: Vec<String>,
+    /// Windows physical USB location paths. Empty when unavailable. These are
+    /// identity history only and never make a phantom endpoint selectable.
+    pub location_paths: Vec<String>,
 }
 
 impl DetectedPort {
@@ -114,6 +117,7 @@ impl DetectedPort {
             instance_id: None,
             parent_instance_id: None,
             ancestor_instance_ids: Vec::new(),
+            location_paths: Vec::new(),
         }
     }
 }
@@ -238,6 +242,9 @@ pub struct UsbProblemDevice {
     /// Windows device class (e.g. `Ports`, `USB`); `None` for driverless
     /// devnodes that never got a class assigned.
     pub device_class: Option<String>,
+    /// Windows physical USB location paths for exact device-local
+    /// correlation. Human-readable `location` is not stable enough for this.
+    pub location_paths: Vec<String>,
 }
 
 /// Best-effort enumeration of present USB devnodes with a non-zero Windows
@@ -398,7 +405,11 @@ mod imp {
         SP_DEVINFO_DATA, SPDRP_CLASS, SPDRP_FRIENDLYNAME, SPDRP_HARDWAREID,
         SPDRP_LOCATION_INFORMATION, SPDRP_MFG, SetupDiClassGuidsFromNameW,
         SetupDiDestroyDeviceInfoList, SetupDiEnumDeviceInfo, SetupDiGetClassDevsW,
-        SetupDiGetDeviceInstanceIdW, SetupDiGetDeviceRegistryPropertyW, SetupDiOpenDevRegKey,
+        SetupDiGetDeviceInstanceIdW, SetupDiGetDevicePropertyW, SetupDiGetDeviceRegistryPropertyW,
+        SetupDiOpenDevRegKey,
+    };
+    use windows_sys::Win32::Devices::Properties::{
+        DEVPKEY_Device_LocationPaths, DEVPROP_TYPE_STRING_LIST,
     };
     use windows_sys::Win32::Foundation::{FALSE, FILETIME, INVALID_HANDLE_VALUE, MAX_PATH};
 
@@ -796,6 +807,51 @@ mod imp {
         }))
     }
 
+    fn location_paths_from_info(hdi: HDEVINFO, info: &SP_DEVINFO_DATA) -> Vec<String> {
+        let mut property_type = 0u32;
+        let mut required_bytes = 0u32;
+        // First call obtains the required byte count. SetupAPI reports
+        // insufficient buffer here, so the return value itself is not the
+        // success signal; a non-zero required size is.
+        unsafe {
+            SetupDiGetDevicePropertyW(
+                hdi,
+                info,
+                &DEVPKEY_Device_LocationPaths,
+                &mut property_type,
+                std::ptr::null_mut(),
+                0,
+                &mut required_bytes,
+                0,
+            )
+        };
+        if required_bytes < 2 {
+            return Vec::new();
+        }
+        let mut buffer = vec![0u16; (required_bytes as usize).div_ceil(2)];
+        let ok = unsafe {
+            SetupDiGetDevicePropertyW(
+                hdi,
+                info,
+                &DEVPKEY_Device_LocationPaths,
+                &mut property_type,
+                buffer.as_mut_ptr().cast(),
+                required_bytes,
+                &mut required_bytes,
+                0,
+            )
+        };
+        if ok == FALSE || property_type != DEVPROP_TYPE_STRING_LIST {
+            return Vec::new();
+        }
+        buffer
+            .split(|unit| *unit == 0)
+            .take_while(|segment| !segment.is_empty())
+            .map(String::from_utf16_lossy)
+            .filter(|path| !path.is_empty())
+            .collect()
+    }
+
     pub(super) fn present_usb_problem_devices() -> Vec<UsbProblemDevice> {
         // Enumerate by the `USB` *enumerator* with DIGCF_ALLCLASSES, not by
         // the USB *setup class*: a driverless devnode (e.g. a BOOTSEL
@@ -853,6 +909,7 @@ mod imp {
                 behind_external_hub: classify_usb_ancestry(info.DevInst),
                 parent_instance_id: ancestor_ids(info.DevInst).into_iter().next(),
                 device_class: property_from_info(hdi, &info, SPDRP_CLASS),
+                location_paths: location_paths_from_info(hdi, &info),
             });
         }
         unsafe {
@@ -1043,6 +1100,10 @@ mod imp {
                     instance_id,
                     parent_instance_id,
                     ancestor_instance_ids,
+                    location_paths: location_paths_from_info(
+                        port_device.hdi,
+                        &port_device.devinfo_data,
+                    ),
                 });
             }
         }

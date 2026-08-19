@@ -21,6 +21,7 @@ pub struct UsbPnpDevice {
     pub pid: u16,
     pub serial: Option<String>,
     pub health: UsbRecoveryHealth,
+    pub location_paths: Vec<String>,
 }
 
 /// Narrow host boundary used by the elevated helper and deterministic tests.
@@ -193,6 +194,23 @@ fn validate_target_identity(
             return Err("serial-mismatch");
         }
     }
+    if let Some(expected_location) = request.expected_location_path.as_deref() {
+        match (request.problem_code, &target.health) {
+            (Some(expected_problem_code), UsbRecoveryHealth::PresentProblem { problem_code })
+                if *problem_code == expected_problem_code => {}
+            (Some(_), UsbRecoveryHealth::PresentProblem { .. }) => {
+                return Err("problem-code-mismatch");
+            }
+            _ => return Err("location-target-not-present-problem"),
+        }
+        if !target
+            .location_paths
+            .iter()
+            .any(|path| normalize_physical_location(path) == expected_location)
+        {
+            return Err("location-path-mismatch");
+        }
+    }
     if let (Some(expected_problem_code), UsbRecoveryHealth::PresentProblem { problem_code }) =
         (request.problem_code, &target.health)
     {
@@ -219,6 +237,15 @@ fn validate_target_identity(
 
 fn same_id(left: &str, right: &str) -> bool {
     left.eq_ignore_ascii_case(right)
+}
+
+fn normalize_physical_location(path: &str) -> String {
+    let upper = path.trim().to_ascii_uppercase();
+    upper
+        .rsplit_once("#USBMI(")
+        .and_then(|(physical, interface)| interface.ends_with(')').then_some(physical))
+        .unwrap_or(&upper)
+        .to_string()
 }
 
 /// Whether the instance is a USB composite-interface devnode (`usbccgp`
@@ -266,7 +293,10 @@ mod windows {
         CM_Locate_DevNodeW, CM_Reenumerate_DevNode, CR_NO_SUCH_DEVINST, CR_NO_SUCH_VALUE,
         CR_SUCCESS, MAX_DEVICE_ID_LEN,
     };
-    use windows_sys::Win32::Devices::Properties::{DEVPKEY_Device_Class, DEVPROP_TYPE_STRING};
+    use windows_sys::Win32::Devices::Properties::{
+        DEVPKEY_Device_Class, DEVPKEY_Device_LocationPaths, DEVPROP_TYPE_STRING,
+        DEVPROP_TYPE_STRING_LIST,
+    };
 
     /// Windows implementation is added below the common security ladder so
     /// tests can exercise every allowlist decision without a privileged host.
@@ -317,6 +347,7 @@ mod windows {
         let parent_instance_id = parent_id(devinst)?;
         let device_class = device_class(devinst)?;
         let health = device_health(devinst);
+        let location_paths = device_location_paths(devinst);
         let (vid, pid, serial) =
             parse_usb_identity(&actual_instance_id, parent_instance_id.as_deref()).ok_or_else(
                 || "device does not expose a canonical USB VID/PID identity".to_string(),
@@ -330,6 +361,7 @@ mod windows {
             pid,
             serial,
             health,
+            location_paths,
         })
     }
 
@@ -465,6 +497,44 @@ mod windows {
         }
     }
 
+    fn device_location_paths(devinst: u32) -> Vec<String> {
+        let mut property_type = 0u32;
+        let mut byte_len = 0u32;
+        unsafe {
+            CM_Get_DevNode_PropertyW(
+                devinst,
+                &DEVPKEY_Device_LocationPaths,
+                &mut property_type,
+                std::ptr::null_mut(),
+                &mut byte_len,
+                0,
+            )
+        };
+        if byte_len < 2 {
+            return Vec::new();
+        }
+        let mut buffer = vec![0u16; (byte_len as usize).div_ceil(2)];
+        let result = unsafe {
+            CM_Get_DevNode_PropertyW(
+                devinst,
+                &DEVPKEY_Device_LocationPaths,
+                &mut property_type,
+                buffer.as_mut_ptr().cast(),
+                &mut byte_len,
+                0,
+            )
+        };
+        if result != CR_SUCCESS || property_type != DEVPROP_TYPE_STRING_LIST {
+            return Vec::new();
+        }
+        buffer
+            .split(|unit| *unit == 0)
+            .take_while(|segment| !segment.is_empty())
+            .map(String::from_utf16_lossy)
+            .filter(|path| !path.is_empty())
+            .collect()
+    }
+
     fn parse_usb_identity(
         instance_id: &str,
         parent_instance_id: Option<&str>,
@@ -568,6 +638,7 @@ mod tests {
             expected_vid: 0x2e8a,
             expected_pid: 0x000a,
             expected_serial: Some("serial".to_string()),
+            expected_location_path: None,
             problem_code: Some(43),
             flash_completed: true,
         }
@@ -582,6 +653,7 @@ mod tests {
             pid: 0x000a,
             serial: Some("serial".to_string()),
             health,
+            location_paths: Vec::new(),
         }
     }
 
@@ -595,6 +667,7 @@ mod tests {
             pid: 0x000a,
             serial: Some("serial".to_string()),
             health: UsbRecoveryHealth::HealthyPresent,
+            location_paths: Vec::new(),
         };
         let mut backend = FakePnp::with_observations(vec![
             device(UsbRecoveryHealth::Phantom {
@@ -689,6 +762,86 @@ mod tests {
     }
 
     #[test]
+    fn descriptor_failure_recovery_revalidates_normalized_location_path() {
+        let mut request = request();
+        request.expected_vid = 0;
+        request.expected_pid = 2;
+        request.expected_serial = None;
+        request.expected_location_path = Some("PCIROOT(0)#USBROOT(0)#USB(10)#USB(4)".to_string());
+        let mut target = device(UsbRecoveryHealth::PresentProblem { problem_code: 43 });
+        target.vid = 0;
+        target.pid = 2;
+        target.serial = None;
+        target.location_paths = vec!["pciroot(0)#usbroot(0)#usb(10)#usb(4)#usbmi(0)".to_string()];
+        assert_eq!(validate_target_identity(&request, &target), Ok(()));
+
+        target.location_paths = vec!["PCIROOT(0)#USBROOT(0)#USB(14)".to_string()];
+        assert_eq!(
+            validate_target_identity(&request, &target),
+            Err("location-path-mismatch")
+        );
+    }
+
+    #[test]
+    fn descriptor_failure_that_became_phantom_never_reenumerates_parent() {
+        let mut request = request();
+        request.instance_id = "USB\\VID_0000&PID_0002\\descriptor-failed".to_string();
+        request.expected_class = "USB".to_string();
+        request.expected_vid = 0;
+        request.expected_pid = 2;
+        request.expected_serial = None;
+        request.expected_location_path = Some("PCIROOT(0)#USBROOT(0)#USB(10)#USB(4)".to_string());
+
+        let mut target = device(UsbRecoveryHealth::Phantom {
+            problem_code: Some(43),
+        });
+        target.instance_id = request.instance_id.clone();
+        target.device_class = request.expected_class.clone();
+        target.vid = 0;
+        target.pid = 2;
+        target.serial = None;
+        target.location_paths = vec!["PCIROOT(0)#USBROOT(0)#USB(10)#USB(4)".to_string()];
+        let mut backend = FakePnp::with_observations(vec![target]);
+
+        let result = execute_recovery(&request, "nonce".to_string(), &mut backend);
+
+        assert!(!result.success);
+        assert_eq!(
+            result.error_code.as_deref(),
+            Some("location-target-not-present-problem")
+        );
+        assert_eq!(
+            backend.calls,
+            vec!["inspect:USB\\VID_0000&PID_0002\\descriptor-failed:true"]
+        );
+    }
+
+    #[test]
+    fn descriptor_failure_without_location_is_rejected_before_inspection() {
+        let mut request = request();
+        request.instance_id = "USB\\VID_0000&PID_0002\\descriptor-failed".to_string();
+        request.expected_class = "USB".to_string();
+        request.expected_vid = 0;
+        request.expected_pid = 2;
+        request.expected_serial = None;
+        request.expected_location_path = None;
+        request.problem_code = Some(43);
+        let mut backend =
+            FakePnp::with_observations(vec![device(UsbRecoveryHealth::PresentProblem {
+                problem_code: 43,
+            })]);
+
+        let result = execute_recovery(&request, "nonce".to_string(), &mut backend);
+
+        assert!(!result.success);
+        assert_eq!(
+            result.error_code.as_deref(),
+            Some("invalid-request-identity")
+        );
+        assert!(backend.calls.is_empty());
+    }
+
+    #[test]
     fn unhealthy_result_after_success_remains_advisory_not_a_port() {
         let mut backend = FakePnp::with_observations(vec![
             device(UsbRecoveryHealth::PresentProblem { problem_code: 43 }),
@@ -717,6 +870,7 @@ mod tests {
             expected_vid: 0x2e8a,
             expected_pid: 0x0003,
             expected_serial: Some("E0C9125B0D9B".to_string()),
+            expected_location_path: None,
             problem_code: Some(28),
             flash_completed: false,
         }
@@ -731,6 +885,7 @@ mod tests {
             pid: 0x0003,
             serial: Some("E0C9125B0D9B".to_string()),
             health,
+            location_paths: Vec::new(),
         }
     }
 
@@ -743,6 +898,7 @@ mod tests {
             pid: 0x0003,
             serial: Some("E0C9125B0D9B".to_string()),
             health,
+            location_paths: Vec::new(),
         }
     }
 

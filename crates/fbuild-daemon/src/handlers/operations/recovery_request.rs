@@ -11,6 +11,7 @@
 use crate::device_manager::DeviceState;
 use fbuild_core::usb::{UNCLASSED_DEVICE_CLASS, UsbRecoveryRequest};
 use fbuild_serial::ports::UsbProblemDevice;
+use std::collections::BTreeSet;
 
 /// Pick the exact-device recovery target from fresh scan facts.
 ///
@@ -51,10 +52,79 @@ pub(super) fn compose_rp2040_recovery_request(
                 .clone()
                 .unwrap_or_else(|| UNCLASSED_DEVICE_CLASS.to_string()),
             expected_serial: serial_from_matching_parent(&device.instance_id, &parent),
+            expected_location_path: None,
             parent_instance_id: Some(parent),
             expected_vid: vid,
             expected_pid: pid,
             problem_code: Some(device.problem_code),
+            flash_completed,
+        });
+    }
+
+    // A descriptor-failed node has lost the board VID/PID and serial, so it
+    // is never safe to associate by proximity, hub ancestry, or timing. The
+    // sole exception is a unique equality between the node's current
+    // LocationPaths and a matching RP runtime endpoint's retained healthy
+    // LocationPaths. Interface suffixes identify USB functions rather than
+    // physical sockets and are normalized away on both sides.
+    let mut location_matches = BTreeSet::new();
+    for historical in devices {
+        let (Some(vid), Some(pid), Some(serial)) = (
+            historical.vid,
+            historical.pid,
+            historical.serial_number.as_deref(),
+        ) else {
+            continue;
+        };
+        if !runtime_match(vid, pid) {
+            continue;
+        }
+        for historical_path in &historical.location_paths {
+            let Some(physical_path) = normalize_physical_location(historical_path) else {
+                continue;
+            };
+            for problem in problem_devices {
+                if parse_usb_vid_pid(&problem.instance_id) != Some((0, 2))
+                    || problem.problem_code != 43
+                    || problem.parent_instance_id.is_none()
+                {
+                    continue;
+                }
+                if problem.location_paths.iter().any(|candidate| {
+                    normalize_physical_location(candidate).as_deref()
+                        == Some(physical_path.as_str())
+                }) {
+                    location_matches.insert((
+                        historical.port.clone(),
+                        serial.to_ascii_uppercase(),
+                        historical.instance_id.clone().unwrap_or_default(),
+                        problem.instance_id.clone(),
+                        physical_path.clone(),
+                    ));
+                }
+            }
+        }
+    }
+    if let Some((_, _, _, problem_instance, physical_path)) =
+        exactly_one(location_matches.into_iter())
+    {
+        let problem = problem_devices
+            .iter()
+            .find(|device| device.instance_id.eq_ignore_ascii_case(&problem_instance))?;
+        let parent = problem.parent_instance_id.clone()?;
+        return Some(UsbRecoveryRequest {
+            operation_id: operation_id.to_string(),
+            instance_id: problem.instance_id.clone(),
+            expected_class: problem
+                .device_class
+                .clone()
+                .unwrap_or_else(|| UNCLASSED_DEVICE_CLASS.to_string()),
+            parent_instance_id: Some(parent),
+            expected_vid: 0,
+            expected_pid: 2,
+            expected_serial: None,
+            expected_location_path: Some(physical_path),
+            problem_code: Some(problem.problem_code),
             flash_completed,
         });
     }
@@ -84,11 +154,31 @@ pub(super) fn compose_rp2040_recovery_request(
             expected_vid: vid,
             expected_pid: pid,
             expected_serial: device.serial_number.clone(),
+            expected_location_path: None,
             problem_code: device.port_health.problem_code(),
             flash_completed,
         });
     }
     None
+}
+
+fn exactly_one<T>(mut values: impl Iterator<Item = T>) -> Option<T> {
+    let first = values.next()?;
+    values.next().is_none().then_some(first)
+}
+
+fn normalize_physical_location(path: &str) -> Option<String> {
+    let upper = path.trim().to_ascii_uppercase();
+    if upper.is_empty() || !upper.contains("#USB(") {
+        return None;
+    }
+    Some(
+        upper
+            .rsplit_once("#USBMI(")
+            .and_then(|(physical, interface)| interface.ends_with(')').then_some(physical))
+            .unwrap_or(&upper)
+            .to_string(),
+    )
 }
 
 fn is_composite_interface(instance_id: &str) -> bool {
@@ -131,6 +221,9 @@ mod tests {
     const BOOTSEL_INTERFACE: &str = "USB\\VID_2E8A&PID_0003&MI_01\\8&22CF742D&0&0001";
     const BOOTSEL_COMPOSITE: &str = "USB\\VID_2E8A&PID_0003\\E0C9125B0D9B";
     const PHANTOM_CDC: &str = "USB\\VID_2E8A&PID_000A\\5303284720C4641C";
+    const RP_LOCATION: &str = "PCIROOT(0)#PCI(0103)#PCI(0000)#USBROOT(0)#USB(10)#USB(4)#USBMI(0)";
+    const RP_PHYSICAL_LOCATION: &str = "PCIROOT(0)#PCI(0103)#PCI(0000)#USBROOT(0)#USB(10)#USB(4)";
+    const UNKNOWN_CODE43: &str = "USB\\VID_0000&PID_0002\\6&3AF0F9CE&0&4";
 
     fn phantom_cdc_device() -> DeviceState {
         DeviceState {
@@ -149,6 +242,7 @@ mod tests {
             },
             instance_id: Some(PHANTOM_CDC.to_string()),
             parent_instance_id: Some("USB\\ROOT_HUB30\\5&23f8e3f5&0&0".to_string()),
+            location_paths: vec![RP_LOCATION.to_string()],
             previous_port: None,
             exclusive_lease: None,
             monitor_leases: HashMap::new(),
@@ -168,7 +262,88 @@ mod tests {
             behind_external_hub: Some(false),
             parent_instance_id: Some(BOOTSEL_COMPOSITE.to_string()),
             device_class: None,
+            location_paths: Vec::new(),
         }
+    }
+
+    fn unidentified_code43(location: &str) -> UsbProblemDevice {
+        UsbProblemDevice {
+            instance_id: UNKNOWN_CODE43.to_string(),
+            problem_code: 43,
+            friendly_name: Some("Unknown USB Device".to_string()),
+            location: Some("Port_#0004.Hub_#0005".to_string()),
+            behind_external_hub: Some(true),
+            parent_instance_id: Some("USB\\ROOT_HUB30\\5&23f8e3f5&0&0".to_string()),
+            device_class: Some("USB".to_string()),
+            location_paths: vec![location.to_string()],
+        }
+    }
+
+    #[test]
+    fn unidentified_code43_requires_unique_exact_physical_location() {
+        let request = compose_rp2040_recovery_request(
+            &[phantom_cdc_device()],
+            &[unidentified_code43(RP_PHYSICAL_LOCATION)],
+            "deploy-location",
+            false,
+            |_, _| false,
+            |vid, pid| (vid, pid) == (0x2e8a, 0x000a),
+        )
+        .expect("the exact historical RP location must correlate uniquely");
+
+        assert_eq!(request.instance_id, UNKNOWN_CODE43);
+        assert_eq!((request.expected_vid, request.expected_pid), (0, 2));
+        assert_eq!(
+            request.expected_location_path.as_deref(),
+            Some(RP_PHYSICAL_LOCATION)
+        );
+    }
+
+    #[test]
+    fn unidentified_code43_mismatch_and_ambiguity_fail_closed() {
+        let mut historical = phantom_cdc_device();
+        historical.port_health = PortHealth::HealthyPresent;
+        historical.is_connected = false;
+        let different = "PCIROOT(0)#PCI(0103)#PCI(0000)#USBROOT(0)#USB(14)";
+        assert_eq!(
+            compose_rp2040_recovery_request(
+                std::slice::from_ref(&historical),
+                &[unidentified_code43(different)],
+                "deploy-mismatch",
+                false,
+                |_, _| false,
+                |vid, pid| (vid, pid) == (0x2e8a, 0x000a),
+            ),
+            None
+        );
+        let mut second_historical = historical.clone();
+        second_historical.port = "COM19".to_string();
+        second_historical.serial_number = Some("SECOND-RP".to_string());
+        second_historical.instance_id = Some("USB\\VID_2E8A&PID_000A\\SECOND-RP".to_string());
+        assert_eq!(
+            compose_rp2040_recovery_request(
+                &[historical.clone(), second_historical],
+                &[unidentified_code43(RP_PHYSICAL_LOCATION)],
+                "deploy-ambiguous-history",
+                false,
+                |_, _| false,
+                |vid, pid| (vid, pid) == (0x2e8a, 0x000a),
+            ),
+            None
+        );
+        let mut second_problem = unidentified_code43(RP_PHYSICAL_LOCATION);
+        second_problem.instance_id = "USB\\VID_0000&PID_0002\\6&3AF0F9CE&0&5".to_string();
+        assert_eq!(
+            compose_rp2040_recovery_request(
+                &[historical],
+                &[unidentified_code43(RP_PHYSICAL_LOCATION), second_problem,],
+                "deploy-ambiguous",
+                false,
+                |_, _| false,
+                |vid, pid| (vid, pid) == (0x2e8a, 0x000a),
+            ),
+            None
+        );
     }
 
     #[test]

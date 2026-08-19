@@ -190,6 +190,29 @@ fn picotool_identity_required_error() -> FbuildError {
     )
 }
 
+/// Decide whether the Pico SDK USB reset interface may be used as the middle
+/// recovery layer between the CDC touch and ROM transports. A serial number
+/// plus the selected endpoint's observed VID/PID are mandatory: without all
+/// three facts, `picotool -f` could act on the wrong attached RP board.
+fn application_reboot_target(
+    bootsel_present: bool,
+    runtime_target: Option<&target::RequestedRuntimeTarget>,
+) -> Option<picotool::PicotoolTarget> {
+    if bootsel_present {
+        return None;
+    }
+    let runtime_target = runtime_target?;
+    let serial = runtime_target.serial_number.as_deref()?;
+    if serial.is_empty() || runtime_target.vendor_id == 0 || runtime_target.product_id == 0 {
+        return None;
+    }
+    Some(picotool::PicotoolTarget::new(
+        serial,
+        &format!("{:04x}", runtime_target.vendor_id),
+        &format!("{:04x}", runtime_target.product_id),
+    ))
+}
+
 /// Parse an env-supplied stage timeout. Accepts integer seconds in 1..=600;
 /// an unset variable is silently the default, anything else warns and falls
 /// back to the default.
@@ -1286,6 +1309,8 @@ impl Rp2040Deployer {
 struct PicoCdcPort {
     name: String,
     serial_number: Option<String>,
+    vendor_id: u16,
+    product_id: u16,
     health: fbuild_serial::ports::PortHealth,
     instance_id: Option<String>,
     parent_instance_id: Option<String>,
@@ -1309,6 +1334,8 @@ fn catalogue_pico_cdc_ports(expected_family: u32) -> Result<Vec<PicoCdcPort>> {
             matches_family.then(|| PicoCdcPort {
                 name: port.info.port_name,
                 serial_number: usb.serial_number.clone(),
+                vendor_id: usb.vid,
+                product_id: usb.pid,
                 health: port.health,
                 instance_id: port.instance_id,
                 parent_instance_id: port.parent_instance_id,
@@ -1728,7 +1755,7 @@ impl Deployer for Rp2040Deployer {
         } else {
             None
         };
-        let (volume, volume_discovery_error) = if let Some(volume) = volume_before_reset {
+        let (mut volume, mut volume_discovery_error) = if let Some(volume) = volume_before_reset {
             (Some(volume), None)
         } else {
             let timeout = self.bootloader_timeout;
@@ -1748,6 +1775,55 @@ impl Deployer for Rp2040Deployer {
                 Err(error) => (None, Some(error)),
             }
         };
+        let mut application_reboot_succeeded = false;
+        if let Some(target) = application_reboot_target(volume.is_some(), runtime_target.as_ref()) {
+            let earlier_failure = volume_discovery_error
+                .take()
+                .map(|error| error.to_string())
+                .unwrap_or_else(|| "initial BOOTSEL discovery found no target".to_string());
+            tracing::warn!(
+                cdc_or_bootsel_failure = %earlier_failure,
+                "RP-series CDC/BOOTSEL transition failed; trying target-bound application-mode picotool reboot"
+            );
+            match picotool::reboot_runtime_to_bootsel(
+                project_dir,
+                &target,
+                PICOTOOL_INFO_PROBE_TIMEOUT,
+            )
+            .await
+            {
+                Ok(_) => {
+                    application_reboot_succeeded = true;
+                    tracing::info!(
+                        "RP-series recovery layer succeeded: target-bound application-mode picotool reboot"
+                    );
+                    let timeout = self.bootloader_timeout;
+                    let stale_volumes = volumes_before.clone();
+                    let discovered = tokio::task::spawn_blocking(move || {
+                        find_uf2_volume_until(timeout, &stale_volumes)
+                    })
+                    .await
+                    .map_err(|error| {
+                        FbuildError::DeployFailed(format!(
+                            "RP2040 post-picotool volume watcher failed: {error}"
+                        ))
+                    })??;
+                    if let Some(discovered) = discovered {
+                        volume = Some(discovered);
+                    } else {
+                        volume_discovery_error = Some(FbuildError::DeployFailed(format!(
+                            "{earlier_failure}; target-bound application-mode picotool reboot succeeded, but no RP2040 BOOTSEL volume mounted within {}s",
+                            self.bootloader_timeout.as_secs()
+                        )));
+                    }
+                }
+                Err(error) => {
+                    volume_discovery_error = Some(FbuildError::DeployFailed(format!(
+                        "{earlier_failure}; target-bound application-mode picotool reboot also failed: {error}"
+                    )));
+                }
+            }
+        }
         let firmware = firmware_path.to_path_buf();
         let family_id = self.family_id;
         let (artifact, uf2_target) =
@@ -1938,6 +2014,11 @@ impl Deployer for Rp2040Deployer {
                 }
             }
         };
+        let transfer_method = if application_reboot_succeeded {
+            format!("{transfer_method} after target-bound application-mode picotool reboot")
+        } else {
+            transfer_method.to_string()
+        };
         if let Some(volume_for_wait) = transfer_volume.clone() {
             let post_timeout = self.post_deploy_timeout;
             let eject_result = tokio::task::spawn_blocking(move || {
@@ -1962,7 +2043,7 @@ impl Deployer for Rp2040Deployer {
         if uf2_target == Uf2Target::Ram {
             return Ok(ram_load_result(
                 transfer_volume.as_deref(),
-                transfer_method,
+                &transfer_method,
                 transfer_stdout,
                 transfer_stderr,
             ));
@@ -2763,10 +2844,56 @@ mod tests {
         PicoCdcPort {
             name: name.to_string(),
             serial_number: serial.map(str::to_string),
+            vendor_id: 0x2e8a,
+            product_id: 0xf00f,
             health,
             instance_id: Some(format!("USB\\VID_2E8A&PID_000A\\{name}")),
             parent_instance_id: None,
         }
+    }
+
+    #[test]
+    fn failed_cdc_without_bootsel_plans_target_bound_application_reboot() {
+        let runtime = target::RequestedRuntimeTarget {
+            port: "COM18".to_string(),
+            serial_number: Some("2DCB876B587EA334".to_string()),
+            vendor_id: 0x2e8a,
+            product_id: 0xf00f,
+        };
+
+        assert!(application_reboot_target(false, Some(&runtime)).is_some());
+    }
+
+    #[test]
+    fn application_reboot_is_never_forced_without_exact_identity() {
+        let no_serial = target::RequestedRuntimeTarget {
+            port: "COM18".to_string(),
+            serial_number: None,
+            vendor_id: 0x2e8a,
+            product_id: 0xf00f,
+        };
+
+        assert!(application_reboot_target(false, Some(&no_serial)).is_none());
+        let zero_vid = target::RequestedRuntimeTarget {
+            port: "COM18".to_string(),
+            serial_number: Some("2DCB876B587EA334".to_string()),
+            vendor_id: 0,
+            product_id: 0xf00f,
+        };
+        assert!(application_reboot_target(false, Some(&zero_vid)).is_none());
+        assert!(application_reboot_target(false, None).is_none());
+    }
+
+    #[test]
+    fn already_visible_bootsel_skips_application_reboot() {
+        let runtime = target::RequestedRuntimeTarget {
+            port: "COM18".to_string(),
+            serial_number: Some("2DCB876B587EA334".to_string()),
+            vendor_id: 0x2e8a,
+            product_id: 0xf00f,
+        };
+
+        assert!(application_reboot_target(true, Some(&runtime)).is_none());
     }
 
     #[test]
@@ -2929,6 +3056,8 @@ mod tests {
             candidates: vec![PicoCdcPort {
                 name: "COM27".to_string(),
                 serial_number: Some("5303284720C4641C".to_string()),
+                vendor_id: 0x2e8a,
+                product_id: 0xf00f,
                 health: fbuild_serial::ports::PortHealth::Unknown,
                 instance_id: None,
                 parent_instance_id: None,
@@ -2993,6 +3122,8 @@ mod tests {
                     vec![PicoCdcPort {
                         name: "COM27".to_string(),
                         serial_number: Some("5303284720C4641C".to_string()),
+                        vendor_id: 0x2e8a,
+                        product_id: 0xf00f,
                         health: fbuild_serial::ports::PortHealth::Unknown,
                         instance_id: None,
                         parent_instance_id: None,
@@ -3023,6 +3154,8 @@ mod tests {
                 Ok(vec![PicoCdcPort {
                     name: "COM27".to_string(),
                     serial_number: Some("5303284720C4641C".to_string()),
+                    vendor_id: 0x2e8a,
+                    product_id: 0xf00f,
                     health: fbuild_serial::ports::PortHealth::Unknown,
                     instance_id: None,
                     parent_instance_id: None,
@@ -3055,6 +3188,8 @@ mod tests {
                     PicoCdcPort {
                         name: "COM12".to_string(),
                         serial_number: None,
+                        vendor_id: 0x2e8a,
+                        product_id: 0xf00f,
                         health: fbuild_serial::ports::PortHealth::Unknown,
                         instance_id: None,
                         parent_instance_id: None,
@@ -3062,6 +3197,8 @@ mod tests {
                     PicoCdcPort {
                         name: "COM13".to_string(),
                         serial_number: None,
+                        vendor_id: 0x2e8a,
+                        product_id: 0xf00f,
                         health: fbuild_serial::ports::PortHealth::Unknown,
                         instance_id: None,
                         parent_instance_id: None,

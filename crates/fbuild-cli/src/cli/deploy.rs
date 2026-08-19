@@ -732,6 +732,7 @@ mod tests {
             instance_id: None,
             parent_instance_id: None,
             ancestor_instance_ids: Vec::new(),
+            location_paths: Vec::new(),
         }
     }
 

@@ -81,6 +81,11 @@ pub struct UsbRecoveryRequest {
     pub expected_pid: u16,
     /// Required when the board profile supplied a serial number.
     pub expected_serial: Option<String>,
+    /// Normalized physical USB location that must still match when recovering
+    /// a descriptor-failed node whose current VID/PID cannot identify the
+    /// board. `None` for ordinary identity-bound recovery requests.
+    #[serde(default)]
+    pub expected_location_path: Option<String>,
     /// Problem code observed by the normal process, if Windows supplied one.
     pub problem_code: Option<u32>,
     /// Distinguishes preflight recovery from post-flash recovery-only flow.
@@ -102,6 +107,16 @@ impl UsbRecoveryRequest {
                 })
         }
 
+        let descriptor_failure_identity = self.expected_vid == 0 && self.expected_pid == 2;
+        let location_bound_shape_is_safe = match (
+            descriptor_failure_identity,
+            self.expected_location_path.is_some(),
+        ) {
+            (false, false) => true,
+            (true, true) => self.expected_serial.is_none() && self.problem_code == Some(43),
+            _ => false,
+        };
+
         canonical_pnp_id(&self.operation_id)
             && canonical_pnp_id(&self.instance_id)
             && canonical_pnp_id(&self.expected_class)
@@ -112,6 +127,15 @@ impl UsbRecoveryRequest {
             && self.expected_serial.as_deref().map_or(true, |serial| {
                 !serial.is_empty() && serial.len() <= 256 && !serial.chars().any(char::is_control)
             })
+            && self.expected_location_path.as_deref().map_or(true, |path| {
+                !path.is_empty()
+                    && path.len() <= 1024
+                    && !path.chars().any(|character| {
+                        character.is_control()
+                            || matches!(character, '"' | '\'' | '\n' | '\r' | '\t')
+                    })
+            })
+            && location_bound_shape_is_safe
     }
 }
 
@@ -143,6 +167,7 @@ mod tests {
             expected_vid: 0x2e8a,
             expected_pid: 0x000a,
             expected_serial: Some("5303284720C4641C".to_string()),
+            expected_location_path: None,
             problem_code: Some(43),
             flash_completed: true,
         }
@@ -178,5 +203,37 @@ mod tests {
         let mut bad_class = request();
         bad_class.expected_class = "Ports\nUSB".to_string();
         assert!(!bad_class.has_canonical_identity());
+    }
+
+    #[test]
+    fn location_bound_request_requires_descriptor_failure_shape() {
+        let mut location_bound = request();
+        location_bound.instance_id = "USB\\VID_0000&PID_0002\\descriptor-failed".to_string();
+        location_bound.expected_class = "USB".to_string();
+        location_bound.expected_vid = 0;
+        location_bound.expected_pid = 2;
+        location_bound.expected_serial = None;
+        location_bound.expected_location_path = Some("PCIROOT(0)#USBROOT(0)#USB(4)".to_string());
+        location_bound.problem_code = Some(43);
+        assert!(location_bound.has_canonical_identity());
+
+        let mut missing_code = location_bound.clone();
+        missing_code.problem_code = None;
+        assert!(!missing_code.has_canonical_identity());
+
+        let mut wrong_identity = location_bound.clone();
+        wrong_identity.expected_vid = 0x2e8a;
+        assert!(!wrong_identity.has_canonical_identity());
+
+        let mut unexpected_serial = location_bound;
+        unexpected_serial.expected_serial = Some("not-authoritative".to_string());
+        assert!(!unexpected_serial.has_canonical_identity());
+
+        let mut missing_location = request();
+        missing_location.expected_vid = 0;
+        missing_location.expected_pid = 2;
+        missing_location.expected_serial = None;
+        missing_location.problem_code = Some(43);
+        assert!(!missing_location.has_canonical_identity());
     }
 }

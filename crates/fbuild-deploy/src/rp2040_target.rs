@@ -10,6 +10,8 @@ use super::PicoCdcPort;
 pub(super) struct RequestedRuntimeTarget {
     pub(super) port: String,
     pub(super) serial_number: Option<String>,
+    pub(super) vendor_id: u16,
+    pub(super) product_id: u16,
 }
 
 pub(super) fn serial_selector(selector: &str) -> Option<&str> {
@@ -67,6 +69,8 @@ pub(super) fn resolve_requested_runtime_target(
         [only] => Ok(RequestedRuntimeTarget {
             port: only.name.clone(),
             serial_number: only.serial_number.clone(),
+            vendor_id: only.vendor_id,
+            product_id: only.product_id,
         }),
         [] => Err(FbuildError::DeployFailed(format!(
             "RP2040 runtime selector {selector:?} did not match a catalogue-identified CDC port"
@@ -151,6 +155,8 @@ mod tests {
         PicoCdcPort {
             name: name.to_string(),
             serial_number: serial_number.map(str::to_string),
+            vendor_id: 0x2e8a,
+            product_id: 0xf00f,
             health,
             instance_id: Some(format!("USB\\VID_2E8A&PID_000A\\{name}")),
             parent_instance_id: None,
@@ -186,8 +192,21 @@ mod tests {
             RequestedRuntimeTarget {
                 port: "COM13".to_string(),
                 serial_number: Some("PICO-2".to_string()),
+                vendor_id: 0x2e8a,
+                product_id: 0xf00f,
             }
         );
+    }
+
+    #[test]
+    fn selected_runtime_target_retains_exact_picotool_identity() {
+        let target =
+            resolve_requested_runtime_target("SER=PICO-2", &[cdc("COM13", Some("PICO-2"))])
+                .unwrap();
+
+        assert_eq!(target.vendor_id, 0x2e8a);
+        assert_eq!(target.product_id, 0xf00f);
+        assert_eq!(target.serial_number.as_deref(), Some("PICO-2"));
     }
 
     #[test]

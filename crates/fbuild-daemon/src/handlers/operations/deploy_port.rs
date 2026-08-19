@@ -391,6 +391,7 @@ mod tests {
             port_health: fbuild_serial::ports::PortHealth::Unknown,
             instance_id: None,
             parent_instance_id: None,
+            location_paths: Vec::new(),
             previous_port: None,
             exclusive_lease: None,
             monitor_leases: HashMap::new(),
