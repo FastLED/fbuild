@@ -1,0 +1,39 @@
+name: Platform Boundary Research
+
+on:
+  workflow_dispatch: {}
+  pull_request:
+    branches: [main]
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+jobs:
+  inventory:
+    name: Inventory (${{ matrix.host }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            host: linux
+          - os: windows-latest
+            host: windows
+          - os: macos-latest
+            host: macos
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v3
+      - uses: zackees/setup-soldr@v0
+        with:
+          version: 0.8.23
+          cache: true
+          toolchain: 1.94.1
+          prebuild-deps: none
+      - name: Check deterministic inventory
+        run: uv run --no-project python ci/platform_boundary_research.py --check --host-label ${{ matrix.host }}
+      - name: Run research scanner tests
+        run: uv run --no-project python -m unittest ci.test_platform_boundary_research
+      - name: Preserve RED compile evidence
+        run: soldr rustc --crate-type lib --emit metadata ci/fixtures/platform_boundary/research_red_pass.rs
