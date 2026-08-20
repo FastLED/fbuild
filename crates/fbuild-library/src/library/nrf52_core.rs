@@ -244,7 +244,7 @@ fn pick_highest_version_ldscript(linker_dir: &Path, prefix: &str) -> Option<Path
             .find(|c: char| !c.is_ascii_digit())
             .unwrap_or(after_v.len());
         if let Ok(version) = after_v[..digit_end].parse::<u32>() {
-            if best.as_ref().map_or(true, |(b, _)| version > *b) {
+            if best.as_ref().is_none_or(|(b, _)| version > *b) {
                 best = Some((version, entry.path()));
             }
         }

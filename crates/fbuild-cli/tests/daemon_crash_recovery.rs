@@ -86,7 +86,7 @@ fn try_run_cli(args: &[&str], port: u16, cache_dir: &std::path::Path) -> Option<
 /// verifies the executable stem so a recycled PID can never be signalled.
 struct TestDaemonGuard {
     port: u16,
-    cache_dir: std::path::PathBuf,
+    cache_dir: NormalizedPath,
     armed: bool,
 }
 
@@ -94,7 +94,7 @@ impl TestDaemonGuard {
     fn new(port: u16, cache_dir: &std::path::Path) -> Self {
         Self {
             port,
-            cache_dir: cache_dir.to_path_buf(),
+            cache_dir: NormalizedPath::from(cache_dir),
             armed: true,
         }
     }

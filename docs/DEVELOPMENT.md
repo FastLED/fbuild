@@ -129,8 +129,8 @@ This environment requires you to use `git-bash`.
 
 ### Toolchain
 
-- MSRV: 1.94.1 | Edition: 2021
-- Toolchain: 1.94.1 pinned in `rust-toolchain.toml` (clippy + rustfmt)
+- MSRV: 1.95.0 | Edition: 2021
+- Toolchain: 1.95.0 pinned in `rust-toolchain.toml` (clippy + rustfmt)
 - CI: Linux, macOS, Windows. All warnings denied (`RUSTFLAGS="-D warnings"`)
 
 ### Linting

@@ -100,7 +100,7 @@ pub(super) fn stm32_property_scopes(prefix: &str) -> Vec<String> {
         scopes.push(segments[..idx].join("."));
     }
 
-    if scopes.last().map_or(true, |scope| scope != prefix) {
+    if scopes.last().is_none_or(|scope| scope != prefix) {
         scopes.push(prefix.to_string());
     }
 

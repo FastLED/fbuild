@@ -311,7 +311,7 @@ pub async fn compile_library_with_jobs(
             )
             .await?;
             let count = counter.fetch_add(1, std::sync::atomic::Ordering::Relaxed) + 1;
-            if count % 20 == 0 || count == total {
+            if count.is_multiple_of(20) || count == total {
                 tracing::info!("[{}/{}] compiled [{}]", count, total, lib_name_t);
             }
             Ok::<(), FbuildError>(())

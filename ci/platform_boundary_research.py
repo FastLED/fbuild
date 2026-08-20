@@ -53,22 +53,21 @@ NATIVE_PATHS = (
     re.compile(r"\b(?:windows_sys|winapi|libc|mach2|nix|portable_pty)\s*::"),
     re.compile(r"\bwindows\s*::\s*Win32\b"),
     re.compile(r"\binterprocess\s*::\s*os\s*::\s*(?:windows|unix)\b"),
+    re.compile(r"\binterprocess\s*::\s*local_socket\b"),
     re.compile(r"\btokio\s*::\s*net\s*::\s*(?:windows|UnixListener|UnixStream)\b"),
+    re.compile(r"\bwindows\s*::"),
 )
-COMPILE_HOST_CONST = re.compile(
-    r"\bstd\s*::\s*env\s*::\s*consts\s*::\s*(?:OS|ARCH)\b"
+SINGLE_NATIVE_USE = re.compile(
+    r"\buse\s+(interprocess|libc|mach2|nix|portable_pty|winapi|windows|windows_sys)"
+    r"\s*(?:as\s+[A-Za-z_][A-Za-z0-9_]*\s*)?;"
 )
-COMPILE_HOST_MACRO = re.compile(
-    r"\b(?:env|option_env)\s*!\s*\(\s*\"CARGO_CFG_TARGET_[A-Z_]+\""
-)
-CONCRETE_MODULE = re.compile(
-    r"\b(?:platform_imp|platform_win|platform_windows|platform_linux|platform_macos)\b"
-)
-TARGET_TABLE = re.compile(
-    r"^\s*\[target\.(.+)\.(?:build-|dev-)?dependencies\]\s*$"
-)
+COMPILE_HOST_CONST = re.compile(r"\bstd\s*::\s*env\s*::\s*consts\s*::\s*(?:OS|ARCH)\b")
+COMPILE_HOST_MACRO = re.compile(r"\b(?:env|option_env)\s*!\s*\(\s*\"CARGO_CFG_TARGET_[A-Z_]+\"")
+CONCRETE_MODULE = re.compile(r"\b(?:platform_imp|platform_win|platform_windows|platform_linux|platform_macos)\b")
+TARGET_TABLE = re.compile(r"^\s*\[target\.(.+)\.(?:build-|dev-)?dependencies\]\s*$")
 DEPENDENCY = re.compile(r"^\s*([A-Za-z0-9_-]+)\s*=")
 FUNCTION_START = re.compile(r"\b(?:async\s+)?fn\s+([A-Za-z_][A-Za-z0-9_]*)\s*\(")
+CHAR_LITERAL = re.compile(r"(?:b)?'(?:\\.|[^\\'\n])'")
 
 ESP_QEMU_FS_CONTEXTS = {
     "preflight_ok_when_binary_runs_version_successfully",
@@ -119,7 +118,9 @@ def code_only(text: str) -> str:
                     out[index] = " "
                 index += 1
             continue
-        raw = re.match(r'(?:b)?r(#{0,255})"', text[index:])
+        raw = None
+        if index == 0 or not (text[index - 1].isalnum() or text[index - 1] == "_"):
+            raw = re.match(r'(?:b)?r(#{0,255})"', text[index:])
         if raw:
             terminator = '"' + raw.group(1)
             cursor = text.find(terminator, index + raw.end())
@@ -128,6 +129,12 @@ def code_only(text: str) -> str:
                 if text[position] != "\n":
                     out[position] = " "
             index = cursor
+            continue
+        character = CHAR_LITERAL.match(text, index)
+        if character:
+            for position in range(index, character.end()):
+                out[position] = " "
+            index = character.end()
             continue
         if pair == "//":
             end = text.find("\n", index)
@@ -200,9 +207,7 @@ def enclosing_function(text: str, offset: int) -> str:
     return ""
 
 
-def classify(
-    path: str, kind: str, normalized: str = "", context: str = ""
-) -> tuple[str, str]:
+def classify(path: str, kind: str, normalized: str = "", context: str = "") -> tuple[str, str]:
     """Assign the phase-1 owner class; phase 2 validates this per occurrence."""
     if kind in {"native_import", "native_path", "native_dependency"}:
         if "::fs" in normalized or "permissions" in normalized.lower():
@@ -233,11 +238,7 @@ def classify(
 
 
 def source_files(root: Path = ROOT) -> list[Path]:
-    return sorted(
-        path
-        for path in (root / "crates").rglob("*.rs")
-        if "target" not in path.parts and not any(part.startswith(".") for part in path.parts)
-    )
+    return sorted(path for path in (root / "crates").rglob("*.rs") if "target" not in path.parts and not any(part.startswith(".") for part in path.parts))
 
 
 def scan_rust(path: Path, root: Path = ROOT) -> list[Finding]:
@@ -258,9 +259,7 @@ def scan_rust(path: Path, root: Path = ROOT) -> list[Finding]:
                 continue
             normalized = normalized_construct(construct)
             line = line_at(original, match.start())
-            capability, classification = classify(
-                relative, kind, normalized, enclosing_function(code, match.start())
-            )
+            capability, classification = classify(relative, kind, normalized, enclosing_function(code, match.start()))
             findings.append(
                 Finding(
                     relative,
@@ -272,8 +271,33 @@ def scan_rust(path: Path, root: Path = ROOT) -> list[Finding]:
                 )
             )
 
+    native_spans: list[tuple[int, int]] = []
+    for match in SINGLE_NATIVE_USE.finditer(code):
+        start, end = match.span(1)
+        native_spans.append((start, end))
+        normalized = match.group(1)
+        line = line_at(original, start)
+        capability, classification = classify(
+            relative,
+            "native_path",
+            normalized,
+            enclosing_function(code, start),
+        )
+        findings.append(
+            Finding(
+                relative,
+                line,
+                "native_path",
+                normalized,
+                capability,
+                classification,
+            )
+        )
     for pattern in NATIVE_PATHS:
         for match in pattern.finditer(code):
+            if any(start <= match.start() < end for start, end in native_spans):
+                continue
+            native_spans.append(match.span())
             normalized = normalized_construct(match.group(0))
             line = line_at(original, match.start())
             capability, classification = classify(
@@ -293,11 +317,7 @@ def scan_rust(path: Path, root: Path = ROOT) -> list[Finding]:
                 )
             )
     compile_host_matches = list(COMPILE_HOST_CONST.finditer(code))
-    compile_host_matches.extend(
-        match
-        for match in COMPILE_HOST_MACRO.finditer(original)
-        if code[match.start() : match.start() + len(match.group(0).split("!", 1)[0])].strip()
-    )
+    compile_host_matches.extend(match for match in COMPILE_HOST_MACRO.finditer(original) if code[match.start() : match.start() + len(match.group(0).split("!", 1)[0])].strip())
     for match in sorted(compile_host_matches, key=lambda item: item.start()):
         normalized = normalized_construct(match.group(0))
         line = line_at(original, match.start())
@@ -348,9 +368,7 @@ def scan_manifests(root: Path = ROOT) -> list[Finding]:
             if table:
                 current_target = True
                 normalized = normalized_construct(table.group(0))
-                capability, classification = classify(
-                    relative, "target_dependency_table", normalized
-                )
+                capability, classification = classify(relative, "target_dependency_table", normalized)
                 findings.append(
                     Finding(
                         relative,
@@ -366,9 +384,7 @@ def scan_manifests(root: Path = ROOT) -> list[Finding]:
                 current_target = False
             dependency = DEPENDENCY.match(line)
             if dependency and dependency.group(1).replace("-", "_") in NATIVE_ROOTS:
-                capability, classification = classify(
-                    relative, "native_dependency", dependency.group(1)
-                )
+                capability, classification = classify(relative, "native_dependency", dependency.group(1))
                 findings.append(
                     Finding(
                         relative,
@@ -407,12 +423,8 @@ def totals(findings: list[Finding]) -> str:
         (
             f"rows={len(findings)}",
             "kinds=" + ",".join(f"{key}:{kinds[key]}" for key in sorted(kinds)),
-            "capabilities="
-            + ",".join(f"{key}:{capabilities[key]}" for key in sorted(capabilities)),
-            "classifications="
-            + ",".join(
-                f"{key}:{classifications[key]}" for key in sorted(classifications)
-            ),
+            "capabilities=" + ",".join(f"{key}:{capabilities[key]}" for key in sorted(capabilities)),
+            "classifications=" + ",".join(f"{key}:{classifications[key]}" for key in sorted(classifications)),
         )
     )
 
@@ -436,8 +448,7 @@ def main(argv: list[str] | None = None) -> int:
             return 1
         if committed != rendered:
             print(
-                "platform-boundary-research: committed inventory is stale; run "
-                "`uv run --no-project python ci/platform_boundary_research.py --write`",
+                "platform-boundary-research: committed inventory is stale; run `uv run --no-project python ci/platform_boundary_research.py --write`",
                 file=sys.stderr,
             )
             return 1

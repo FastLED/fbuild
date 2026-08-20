@@ -6,7 +6,9 @@ Python scripts for CI, packaging, and development tooling. All invoked via `uv r
 
 - **`build_dist.py`** -- Triggers GitHub Actions native builds, downloads artifacts, and assembles `dist/` for PyPI packaging
 - **`check_workspace_crates.py`** -- Monocrate guard: fails if the root `Cargo.toml` `[workspace] members` list gains a crate outside the approved allowlist (run by `crate-gate.yml`)
-- **`env.py`** -- Centralized PATH activation ensuring `.cargo/bin` is on PATH before invoking Rust tools
+- **`check_rust_toolchain_pins.py`** -- Prevents fbuild-owned Rust 1.95.0 MSRV, toolchain, workflow, and bootstrap declarations from drifting
+- **`enforce_platform_boundary.py`** -- Independent whole-tree and manifest checker for the exact host-platform occurrence ledger
+- **`env.py`** -- Centralized PATH activation ensuring the Rust tool bin directory is on PATH before invoking Rust tools
 - **`extract_pio_build_flags.py`** -- Extracts compiler/linker flags from PlatformIO for each board and writes reference JSONs
 - **`lint.py`** -- Workspace linting (rustfmt + clippy), supports single-file and auto-fix modes
 - **`platform_boundary_research.py`** -- Host-independent phase-1 inventory and cross-host drift check for FastLED/fbuild#1307

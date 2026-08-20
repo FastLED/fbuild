@@ -688,7 +688,7 @@ impl Esp32Deployer {
             self.flash_size.clone(),
         ]);
 
-        let include = |r: FlashRegion| regions.map_or(true, |rs| rs.contains(&r));
+        let include = |r: FlashRegion| regions.is_none_or(|rs| rs.contains(&r));
 
         if include(FlashRegion::Bootloader) && bootloader_path.exists() {
             args.push(self.bootloader_offset.clone());

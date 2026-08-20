@@ -393,7 +393,7 @@ fn command_hash_path(object: &Path) -> PathBuf {
 /// Resolve `path` to an absolute path by joining it with the current working
 /// directory if it's relative. Equivalent in intent to `std::path::absolute`
 /// (stable in 1.79), written by hand to stay within the workspace MSRV
-/// enforced by `clippy.toml` (1.75). Does not canonicalize symlinks or `..`.
+/// enforced by `.clippy.toml` (1.95.0). Does not canonicalize symlinks or `..`.
 /// Falls back to the original path if `current_dir()` fails (e.g. cwd was
 /// deleted) — callers should treat that as the path they originally got.
 pub fn absolute_from_cwd(path: &Path) -> PathBuf {

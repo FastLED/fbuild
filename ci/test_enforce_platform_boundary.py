@@ -1,0 +1,70 @@
+from __future__ import annotations
+
+import dataclasses
+import unittest
+
+from ci import enforce_platform_boundary as boundary
+
+
+class EnforcePlatformBoundaryTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.expected = boundary.parse_ledger()
+        cls.observed = boundary.rows_from_findings(boundary.research.inventory())
+
+    def test_committed_exact_occurrence_ledger_matches_whole_tree(self) -> None:
+        self.assertEqual(len(self.expected), 504)
+        self.assertFalse(boundary.validate_ledger(self.expected))
+        self.assertFalse(boundary.compare(self.expected, self.observed))
+
+    def test_duplicate_and_non_contiguous_ordinal_are_rejected(self) -> None:
+        malformed = [*self.expected, self.expected[0]]
+        failures = boundary.validate_ledger(malformed)
+
+        self.assertTrue(any("duplicate" in failure for failure in failures))
+        self.assertTrue(any("non-contiguous" in failure for failure in failures))
+
+    def test_second_identical_occurrence_in_grandfathered_file_is_new(self) -> None:
+        first = self.expected[0]
+        same_group = [row for row in self.expected if (row.path, row.kind, row.normalized) == (first.path, first.kind, first.normalized)]
+        extra = dataclasses.replace(first, ordinal=len(same_group))
+
+        failures = boundary.compare(self.expected, [*self.observed, extra])
+
+        self.assertTrue(any("new occurrence" in failure for failure in failures))
+
+    def test_deleted_source_requires_deleting_ledger_row(self) -> None:
+        failures = boundary.compare(self.expected, self.observed[1:])
+
+        self.assertTrue(any("stale occurrence" in failure for failure in failures))
+
+    def test_dylint_and_scanner_baselines_agree(self) -> None:
+        self.assertEqual(
+            boundary.parse_dylint_baseline(),
+            boundary.scanner_dylint_counts(self.expected),
+        )
+
+    def test_actual_dylint_undercount_is_rejected(self) -> None:
+        expected = boundary.scanner_dylint_counts(self.expected)
+        source, kind, normalized = next(iter(expected))
+        process = "123"
+        sources = {(process, source)}
+        findings = boundary.collections.Counter({(process, source, kind, normalized): expected[(source, kind, normalized)] - 1})
+
+        failures = boundary.compare_dylint_observations(expected, sources, findings)
+
+        self.assertTrue(any("observations disagree" in failure for failure in failures))
+
+    def test_one_selector_and_six_neutral_namespaces(self) -> None:
+        platform = boundary.ROOT / "crates/fbuild-core/src/platform"
+        all_source = "\n".join(path.read_text(encoding="utf-8") for path in (boundary.ROOT / "crates").rglob("*.rs"))
+        selector = (platform / "mod.rs").read_text(encoding="utf-8")
+
+        self.assertEqual(all_source.count("std::cfg_select!"), 1)
+        self.assertNotIn("_ =>", selector)
+        for namespace in ("process", "fs", "ipc", "executable", "host", "device"):
+            self.assertTrue((platform / f"{namespace}.rs").is_file())
+
+
+if __name__ == "__main__":
+    unittest.main()

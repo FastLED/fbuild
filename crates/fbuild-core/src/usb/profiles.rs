@@ -131,7 +131,7 @@ pub fn profiles_for(vid: u16, pid: u16) -> Vec<UsbTransportProfile> {
         .filter(|entry| entry.vid == vid && identity_pid_matches(entry, pid))
         .map(|entry| entry.profile.clone())
         .collect();
-    profiles.sort_by(|left, right| right.priority.cmp(&left.priority));
+    profiles.sort_by_key(|profile| std::cmp::Reverse(profile.priority));
     profiles
 }
 
@@ -151,7 +151,7 @@ pub fn all_profiles() -> Vec<UsbTransportProfile> {
         .iter()
         .map(|entry| entry.profile.clone())
         .collect();
-    profiles.sort_by(|left, right| right.priority.cmp(&left.priority));
+    profiles.sort_by_key(|profile| std::cmp::Reverse(profile.priority));
     profiles
 }
 

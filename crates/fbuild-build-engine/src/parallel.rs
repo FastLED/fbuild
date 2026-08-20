@@ -126,7 +126,7 @@ pub async fn compile_sources_parallel(
                 Ok(result) if result.success => {
                     let stderr = result.stderr.trim().to_string();
                     let count = counter.fetch_add(1, std::sync::atomic::Ordering::Relaxed) + 1;
-                    if count % 20 == 0 || count == total {
+                    if count.is_multiple_of(20) || count == total {
                         tracing::info!("[{}/{}] compiled", count, total);
                         if let Some(log) = build_log_ptr {
                             if let Ok(mut log) = log.lock() {

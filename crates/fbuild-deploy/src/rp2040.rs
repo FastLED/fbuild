@@ -1158,7 +1158,7 @@ fn is_device_disappearance_error(error: &std::io::Error) -> bool {
 }
 
 fn validate_uf2(bytes: &[u8], expected_family: u32) -> Result<Uf2Target> {
-    if bytes.is_empty() || bytes.len() % UF2_BLOCK_SIZE != 0 {
+    if bytes.is_empty() || !bytes.len().is_multiple_of(UF2_BLOCK_SIZE) {
         return Err(FbuildError::DeployFailed(format!(
             "malformed RP2040 UF2: size {} is not a non-zero multiple of {UF2_BLOCK_SIZE}",
             bytes.len()
@@ -1479,9 +1479,7 @@ fn resolve_reset_only_target(
         .iter()
         .filter(|interface| interface.serial_number.eq_ignore_ascii_case(serial))
         .filter(|interface| {
-            expected_vid_pid.map_or(true, |(vid, pid)| {
-                (interface.vid, interface.pid) == (vid, pid)
-            })
+            expected_vid_pid.is_none_or(|(vid, pid)| (interface.vid, interface.pid) == (vid, pid))
         })
         .collect();
     match matching_reset.as_slice() {

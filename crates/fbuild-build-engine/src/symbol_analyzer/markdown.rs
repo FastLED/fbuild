@@ -108,7 +108,7 @@ pub fn format_markdown_report_with_graphs(
     ) {
         use std::fmt::Write as _;
         let mut syms: Vec<_> = map.symbols.iter().filter(|s| s.region == region).collect();
-        syms.sort_by(|a, b| b.size.cmp(&a.size));
+        syms.sort_by_key(|symbol| std::cmp::Reverse(symbol.size));
         let _ = writeln!(
             out,
             "## Top {} {} symbols",
@@ -161,7 +161,7 @@ pub fn format_markdown_report_with_graphs(
         *by_archive.entry(key).or_insert(0) += s.size;
     }
     let mut rows: Vec<(String, u64)> = by_archive.into_iter().collect();
-    rows.sort_by(|a, b| b.1.cmp(&a.1));
+    rows.sort_by_key(|row| std::cmp::Reverse(row.1));
     let _ = writeln!(out, "## Flash bytes by archive");
     let _ = writeln!(out);
     let _ = writeln!(out, "| Bytes | Archive |");
@@ -185,7 +185,7 @@ fn emit_backref_graph_section(
 ) {
     use std::fmt::Write as _;
     let mut syms: Vec<_> = map.symbols.iter().collect();
-    syms.sort_by(|a, b| b.size.cmp(&a.size));
+    syms.sort_by_key(|symbol| std::cmp::Reverse(symbol.size));
     let limit = graph_opts.graph_top.min(top_n).min(syms.len());
     if limit == 0 {
         return;
@@ -446,7 +446,7 @@ pub fn write_sidecar_dot_files(
         ))
     })?;
     let mut syms: Vec<_> = map.symbols.iter().collect();
-    syms.sort_by(|a, b| b.size.cmp(&a.size));
+    syms.sort_by_key(|symbol| std::cmp::Reverse(symbol.size));
     let index = TuIndex::build(map);
     let mut written = 0usize;
     for (i, s) in syms.iter().enumerate() {

@@ -416,8 +416,6 @@ pub fn run(only_port: Option<&str>, only_hub: Option<&str>, json: bool) -> Resul
         .map_err(|e| FbuildError::SerialError(format!("serial port enumeration failed: {e}")))?;
     let mut diagnoses: Vec<_> = ports
         .iter()
-        // Explicit match rather than `Option::is_none_or`: that is stable only
-        // since 1.82 and `.clippy.toml` pins msrv = 1.75.
         .filter(|p| {
             port_in_scope(
                 &p.info.port_name,

@@ -19,67 +19,77 @@ class PlatformBoundaryResearchTests(unittest.TestCase):
         self.assertIn("compile_host_fact", kinds)
 
     def test_comments_and_strings_are_not_findings(self) -> None:
-        source = (
-            '// cfg!(windows)\n'
-            'const TEXT: &str = "std::os::unix";\n'
-            'const RAW: &str = r#"cfg!(windows); libc::kill(1, 1)"#;\n'
-        )
+        source = '// cfg!(windows)\nconst TEXT: &str = "std::os::unix";\nconst RAW: &str = r#"cfg!(windows); libc::kill(1, 1)"#;\n'
         code = platform_boundary_research.code_only(source)
 
         self.assertNotRegex(code, r"cfg\s*!|std\s*::\s*os")
+
+    def test_character_literal_does_not_hide_later_cfg_macro(self) -> None:
+        source = "let quote = '\"';\nlet host = cfg!(windows);\n"
+        code = platform_boundary_research.code_only(source)
+
+        self.assertRegex(code, r"cfg\s*!\s*\(windows\)")
+
+    def test_local_concrete_host_module_path_is_inventoried(self) -> None:
+        with TemporaryDirectory(dir=platform_boundary_research.ROOT) as directory:
+            path = Path(directory) / "concrete.rs"
+            path.write_text(
+                "fn recover() { let _ = windows::Backend; }\n",
+                encoding="utf-8",
+            )
+            findings = platform_boundary_research.scan_rust(path, platform_boundary_research.ROOT)
+
+        self.assertEqual(
+            [(finding.kind, finding.normalized) for finding in findings],
+            [("native_path", "windows::")],
+        )
+
+    def test_local_linux_and_macos_module_names_are_not_native_crates(self) -> None:
+        with TemporaryDirectory(dir=platform_boundary_research.ROOT) as directory:
+            path = Path(directory) / "local_modules.rs"
+            path.write_text(
+                "fn detect() { linux::detect(); macos::detect(); unix::detect(); }\n",
+                encoding="utf-8",
+            )
+            findings = platform_boundary_research.scan_rust(path, platform_boundary_research.ROOT)
+
+        self.assertEqual(findings, [])
+
+    def test_single_segment_native_use_is_inventoried(self) -> None:
+        with TemporaryDirectory(dir=platform_boundary_research.ROOT) as directory:
+            path = Path(directory) / "native_use.rs"
+            path.write_text("use libc;\n", encoding="utf-8")
+            findings = platform_boundary_research.scan_rust(path, platform_boundary_research.ROOT)
+
+        self.assertEqual(
+            [(finding.kind, finding.normalized) for finding in findings],
+            [("native_path", "libc")],
+        )
 
     def test_compile_host_macros_are_found_but_quoted_text_is_not(self) -> None:
         with TemporaryDirectory(dir=platform_boundary_research.ROOT) as directory:
             path = Path(directory) / "compile_facts.rs"
             path.write_text(
-                'const A: Option<&str> = option_env!("CARGO_CFG_TARGET_OS");\n'
-                'const B: &str = env!("CARGO_CFG_TARGET_ARCH");\n'
-                'const TEXT: &str = r#"env!(\\"CARGO_CFG_TARGET_ENV\\")"#;\n',
+                'const A: Option<&str> = option_env!("CARGO_CFG_TARGET_OS");\nconst B: &str = env!("CARGO_CFG_TARGET_ARCH");\nconst TEXT: &str = r#"env!(\\"CARGO_CFG_TARGET_ENV\\")"#;\n',
                 encoding="utf-8",
             )
-            findings = platform_boundary_research.scan_rust(
-                path, platform_boundary_research.ROOT
-            )
+            findings = platform_boundary_research.scan_rust(path, platform_boundary_research.ROOT)
 
-        macros = [
-            finding
-            for finding in findings
-            if finding.kind == "compile_host_fact"
-        ]
+        macros = [finding for finding in findings if finding.kind == "compile_host_fact"]
         self.assertEqual(len(macros), 2)
 
     def test_all_target_dependency_table_forms_are_recognized(self) -> None:
         for suffix in ("dependencies", "dev-dependencies", "build-dependencies"):
             with self.subTest(suffix=suffix):
-                self.assertIsNotNone(
-                    platform_boundary_research.TARGET_TABLE.match(
-                        f"[target.'cfg(unix)'.{suffix}]"
-                    )
-                )
+                self.assertIsNotNone(platform_boundary_research.TARGET_TABLE.match(f"[target.'cfg(unix)'.{suffix}]"))
 
     def test_mixed_qemu_file_classifies_permissions_as_filesystem_mechanics(self) -> None:
-        path = (
-            platform_boundary_research.ROOT
-            / "crates/fbuild-toolchain/src/toolchain/esp_qemu.rs"
-        )
-        findings = platform_boundary_research.scan_rust(
-            path, platform_boundary_research.ROOT
-        )
-        permission_findings = [
-            finding
-            for finding in findings
-            if finding.capability == "fs"
-            and finding.kind in {"attr_cfg", "cfg_macro", "native_path"}
-        ]
+        path = platform_boundary_research.ROOT / "crates/fbuild-toolchain/src/toolchain/esp_qemu.rs"
+        findings = platform_boundary_research.scan_rust(path, platform_boundary_research.ROOT)
+        permission_findings = [finding for finding in findings if finding.capability == "fs" and finding.kind in {"attr_cfg", "cfg_macro", "native_path"}]
 
         self.assertTrue(permission_findings)
-        self.assertTrue(
-            all(
-                finding.capability == "fs"
-                and finding.classification == "host_mechanic"
-                for finding in permission_findings
-            )
-        )
+        self.assertTrue(all(finding.capability == "fs" and finding.classification == "host_mechanic" for finding in permission_findings))
 
         for context in platform_boundary_research.ESP_QEMU_FS_CONTEXTS:
             with self.subTest(context=context):
@@ -106,15 +116,11 @@ fn attached() {}
         code = platform_boundary_research.code_only(source)
 
         self.assertEqual(
-            platform_boundary_research.enclosing_function(
-                code, code.index("#[cfg(unix)]")
-            ),
+            platform_boundary_research.enclosing_function(code, code.index("#[cfg(unix)]")),
             "outer",
         )
         self.assertEqual(
-            platform_boundary_research.enclosing_function(
-                code, code.index("#[cfg(target_os")
-            ),
+            platform_boundary_research.enclosing_function(code, code.index("#[cfg(target_os")),
             "attached",
         )
 

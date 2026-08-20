@@ -460,7 +460,7 @@ pub fn format_text_report(map: &FineGrainedSymbolMap, top_n: usize) -> String {
         title: &str,
     ) {
         let mut syms: Vec<_> = map.symbols.iter().filter(|s| s.region == region).collect();
-        syms.sort_by(|a, b| b.size.cmp(&a.size));
+        syms.sort_by_key(|symbol| std::cmp::Reverse(symbol.size));
         lines.push(format!(
             "--- Top {} {title} symbols ---",
             top_n.min(syms.len())
@@ -516,7 +516,7 @@ pub fn format_text_report(map: &FineGrainedSymbolMap, top_n: usize) -> String {
         *by_archive.entry(key).or_insert(0) += s.size;
     }
     let mut rows: Vec<(String, u64)> = by_archive.into_iter().collect();
-    rows.sort_by(|a, b| b.1.cmp(&a.1));
+    rows.sort_by_key(|row| std::cmp::Reverse(row.1));
     lines.push("--- Flash bytes by archive ---".to_string());
     lines.push(format!("{:>10}  ARCHIVE", "BYTES"));
     for (archive, bytes) in rows.into_iter().take(top_n) {

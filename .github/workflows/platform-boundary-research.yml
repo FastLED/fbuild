@@ -31,11 +31,15 @@ jobs:
         with:
           version: 0.8.23
           cache: true
-          toolchain: 1.94.1
+          toolchain: 1.95.0
           prebuild-deps: none
       - name: Check deterministic inventory
         run: uv run --no-project python ci/platform_boundary_research.py --check --host-label ${{ matrix.host }}
       - name: Run research scanner tests
-        run: uv run --no-project python -m unittest ci.test_platform_boundary_research
+        run: uv run --no-project python -m unittest ci.test_platform_boundary_research ci.test_enforce_platform_boundary ci.test_rust_toolchain_pins
+      - name: Enforce exact boundary ledger and Rust pin consistency
+        run: |
+          uv run --no-project python ci/enforce_platform_boundary.py --print-totals
+          uv run --no-project python ci/check_rust_toolchain_pins.py
       - name: Preserve RED compile evidence
         run: soldr rustc --edition 2021 -D warnings --crate-type lib --emit metadata ci/fixtures/platform_boundary/research_red_pass.rs
