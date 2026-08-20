@@ -15,7 +15,11 @@ import dataclasses
 import sys
 from pathlib import Path
 
-from ci import platform_boundary_research as research
+REPO_ROOT = Path(__file__).resolve().parent.parent
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from ci import platform_boundary_research as research  # noqa: E402
 
 ROOT = research.ROOT
 LEDGER = ROOT / "ci/platform_boundary_ledger.tsv"
