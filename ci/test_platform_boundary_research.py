@@ -68,8 +68,8 @@ class PlatformBoundaryResearchTests(unittest.TestCase):
         permission_findings = [
             finding
             for finding in findings
-            if finding.line in {884, 886, 899, 901}
-            and finding.kind in {"attr_cfg", "native_path"}
+            if finding.capability == "fs"
+            and finding.kind in {"attr_cfg", "cfg_macro", "native_path"}
         ]
 
         self.assertTrue(permission_findings)
@@ -79,6 +79,43 @@ class PlatformBoundaryResearchTests(unittest.TestCase):
                 and finding.classification == "host_mechanic"
                 for finding in permission_findings
             )
+        )
+
+        for context in platform_boundary_research.ESP_QEMU_FS_CONTEXTS:
+            with self.subTest(context=context):
+                self.assertEqual(
+                    platform_boundary_research.classify(
+                        "crates/fbuild-toolchain/src/toolchain/esp_qemu.rs",
+                        "attr_cfg",
+                        "#[cfg(unix)]",
+                        context,
+                    ),
+                    ("fs", "host_mechanic"),
+                )
+
+    def test_function_context_handles_inner_and_attached_cfg_attributes(self) -> None:
+        source = """
+fn outer() {
+    #[cfg(unix)]
+    let enabled = true;
+}
+
+#[cfg(target_os = "linux")]
+fn attached() {}
+"""
+        code = platform_boundary_research.code_only(source)
+
+        self.assertEqual(
+            platform_boundary_research.enclosing_function(
+                code, code.index("#[cfg(unix)]")
+            ),
+            "outer",
+        )
+        self.assertEqual(
+            platform_boundary_research.enclosing_function(
+                code, code.index("#[cfg(target_os")
+            ),
+            "attached",
         )
 
     def test_inventory_is_sorted_and_matches_committed_file(self) -> None:

@@ -24,6 +24,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - uses: astral-sh/setup-uv@v3
       - uses: zackees/setup-soldr@v0
         with:
@@ -36,4 +38,4 @@ jobs:
       - name: Run research scanner tests
         run: uv run --no-project python -m unittest ci.test_platform_boundary_research
       - name: Preserve RED compile evidence
-        run: soldr rustc --crate-type lib --emit metadata ci/fixtures/platform_boundary/research_red_pass.rs
+        run: soldr rustc --edition 2021 -D warnings --crate-type lib --emit metadata ci/fixtures/platform_boundary/research_red_pass.rs

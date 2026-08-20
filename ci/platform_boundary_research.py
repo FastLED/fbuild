@@ -68,6 +68,12 @@ TARGET_TABLE = re.compile(
     r"^\s*\[target\.(.+)\.(?:build-|dev-)?dependencies\]\s*$"
 )
 DEPENDENCY = re.compile(r"^\s*([A-Za-z0-9_-]+)\s*=")
+FUNCTION_START = re.compile(r"\b(?:async\s+)?fn\s+([A-Za-z_][A-Za-z0-9_]*)\s*\(")
+
+ESP_QEMU_FS_CONTEXTS = {
+    "preflight_ok_when_binary_runs_version_successfully",
+    "preflight_linux_detects_missing_shared_library_exit_127",
+}
 
 
 @dataclasses.dataclass(frozen=True, order=True)
@@ -174,7 +180,29 @@ def line_at(text: str, offset: int) -> int:
     return text.count("\n", 0, offset) + 1
 
 
-def classify(path: str, kind: str, normalized: str = "", line: int = 0) -> tuple[str, str]:
+def enclosing_function(text: str, offset: int) -> str:
+    """Return the function owning an offset, including an attribute on that function."""
+    starts = list(FUNCTION_START.finditer(text))
+    for match in reversed(starts):
+        if match.start() > offset:
+            continue
+        opening = text.find("{", match.end())
+        if opening >= 0 and offset <= matching_delimiter(text, opening, "{", "}"):
+            return match.group(1)
+
+    for match in starts:
+        if match.start() <= offset:
+            continue
+        prefix = text[offset : match.start()]
+        if len(prefix) <= 256 and "{" not in prefix and ";" not in prefix:
+            return match.group(1)
+        break
+    return ""
+
+
+def classify(
+    path: str, kind: str, normalized: str = "", context: str = ""
+) -> tuple[str, str]:
     """Assign the phase-1 owner class; phase 2 validates this per occurrence."""
     if kind in {"native_import", "native_path", "native_dependency"}:
         if "::fs" in normalized or "permissions" in normalized.lower():
@@ -186,10 +214,10 @@ def classify(path: str, kind: str, normalized: str = "", line: int = 0) -> tuple
         # esp_qemu mixes artifact selection with concrete host runtime and
         # test-fixture mechanics. Review these occurrences individually instead
         # of granting the whole file the artifact-policy classification.
-        if path.endswith("/esp_qemu.rs") and kind == "attr_cfg":
-            return ("fs" if line >= 850 else "host_executable"), "host_mechanic"
-        if path.endswith("/esp_qemu.rs") and line >= 850:
+        if path.endswith("/esp_qemu.rs") and context in ESP_QEMU_FS_CONTEXTS:
             return "fs", "host_mechanic"
+        if path.endswith("/esp_qemu.rs") and kind == "attr_cfg":
+            return "host_executable", "host_mechanic"
         return "host_executable", "host_artifact_policy"
     if "/fbuild-serial/" in f"/{path}/" or "/fbuild-deploy/" in f"/{path}/":
         return "device", "host_mechanic"
@@ -230,7 +258,9 @@ def scan_rust(path: Path, root: Path = ROOT) -> list[Finding]:
                 continue
             normalized = normalized_construct(construct)
             line = line_at(original, match.start())
-            capability, classification = classify(relative, kind, normalized, line)
+            capability, classification = classify(
+                relative, kind, normalized, enclosing_function(code, match.start())
+            )
             findings.append(
                 Finding(
                     relative,
@@ -247,7 +277,10 @@ def scan_rust(path: Path, root: Path = ROOT) -> list[Finding]:
             normalized = normalized_construct(match.group(0))
             line = line_at(original, match.start())
             capability, classification = classify(
-                relative, "native_path", normalized, line
+                relative,
+                "native_path",
+                normalized,
+                enclosing_function(code, match.start()),
             )
             findings.append(
                 Finding(
@@ -269,7 +302,10 @@ def scan_rust(path: Path, root: Path = ROOT) -> list[Finding]:
         normalized = normalized_construct(match.group(0))
         line = line_at(original, match.start())
         capability, classification = classify(
-            relative, "compile_host_fact", normalized, line
+            relative,
+            "compile_host_fact",
+            normalized,
+            enclosing_function(code, match.start()),
         )
         findings.append(
             Finding(
@@ -284,7 +320,10 @@ def scan_rust(path: Path, root: Path = ROOT) -> list[Finding]:
     for match in CONCRETE_MODULE.finditer(code):
         line = line_at(original, match.start())
         capability, classification = classify(
-            relative, "concrete_module_ref", match.group(0), line
+            relative,
+            "concrete_module_ref",
+            match.group(0),
+            enclosing_function(code, match.start()),
         )
         findings.append(
             Finding(
@@ -310,7 +349,7 @@ def scan_manifests(root: Path = ROOT) -> list[Finding]:
                 current_target = True
                 normalized = normalized_construct(table.group(0))
                 capability, classification = classify(
-                    relative, "target_dependency_table", normalized, line_number
+                    relative, "target_dependency_table", normalized
                 )
                 findings.append(
                     Finding(
@@ -328,7 +367,7 @@ def scan_manifests(root: Path = ROOT) -> list[Finding]:
             dependency = DEPENDENCY.match(line)
             if dependency and dependency.group(1).replace("-", "_") in NATIVE_ROOTS:
                 capability, classification = classify(
-                    relative, "native_dependency", dependency.group(1), line_number
+                    relative, "native_dependency", dependency.group(1)
                 )
                 findings.append(
                     Finding(
