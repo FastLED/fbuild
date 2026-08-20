@@ -1,4 +1,4 @@
-use std::os::unix::process::{CommandExt, ExitStatusExt};
+use std::os::unix::process::ExitStatusExt;
 use std::os::fd::AsFd;
 
 use crate::path::NormalizedPath;

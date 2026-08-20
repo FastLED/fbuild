@@ -43,10 +43,10 @@ crates/fbuild-core/src/path.rs	822	native_path	std::os::unix::fs::symlink	fs	hos
 crates/fbuild-core/src/path.rs	829	attr_cfg	#[cfg(windows)]	fs	host_mechanic
 crates/fbuild-core/src/platform/executable.rs	56	native_path	std::env::current_exe	host_executable	host_mechanic
 crates/fbuild-core/src/platform/linux/mod.rs	8	compile_host_fact	std::env::consts::ARCH	host	host_mechanic
-crates/fbuild-core/src/platform/linux/process.rs	1	native_path	std::os::unix::process	process	host_mechanic
+crates/fbuild-core/src/platform/linux/process.rs	1	native_path	std::os::unix::process::ExitStatusExt	process	host_mechanic
 crates/fbuild-core/src/platform/linux/process.rs	133	native_path	std::os::unix::fs::PermissionsExt	fs	host_mechanic
 crates/fbuild-core/src/platform/macos/mod.rs	8	compile_host_fact	std::env::consts::ARCH	host	host_mechanic
-crates/fbuild-core/src/platform/macos/process.rs	1	native_path	std::os::unix::process	process	host_mechanic
+crates/fbuild-core/src/platform/macos/process.rs	1	native_path	std::os::unix::process::ExitStatusExt	process	host_mechanic
 crates/fbuild-core/src/platform/macos/process.rs	131	native_path	std::os::unix::fs::PermissionsExt	fs	host_mechanic
 crates/fbuild-core/src/platform/windows/mod.rs	8	compile_host_fact	std::env::consts::ARCH	host	host_mechanic
 crates/fbuild-core/src/platform/windows/process.rs	1	native_path	std::os::windows::io::AsHandle	process	host_mechanic
