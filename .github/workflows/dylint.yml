@@ -71,19 +71,10 @@ jobs:
           # toolchain. Keep that proxy ahead of Soldr's compiler shim.
           export PATH="${CARGO_HOME}/bin:${PATH}"
           export CARGO_TARGET_DIR="$PWD/target/dylint-tests"
-          status=0
           while IFS= read -r manifest; do
-            if ! RUSTUP_TOOLCHAIN=nightly-2026-04-16 \
-              soldr cargo test --manifest-path "$manifest"; then
-              status=1
-              if [[ "$manifest" == "dylints/enforce_platform_boundary/Cargo.toml" ]]; then
-                find "$CARGO_TARGET_DIR/debug" -maxdepth 1 \
-                  -name 'libenforce_platform_boundary@*.so' \
-                  -print -exec file {} \; -exec ldd -r {} \; || true
-              fi
-            fi
+            RUSTUP_TOOLCHAIN=nightly-2026-04-16 \
+              soldr cargo test --manifest-path "$manifest"
           done < <(find dylints -mindepth 2 -maxdepth 2 -name Cargo.toml | sort)
-          exit "$status"
       - name: Run dylint over workspace
         env:
           FBUILD_PLATFORM_BOUNDARY_OBSERVED: ${{ github.workspace }}/target/platform-boundary-dylint-observed.tsv
