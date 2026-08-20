@@ -473,6 +473,8 @@ mod tests {
                 expected_vid: 0x2e8a,
                 expected_pid: 0x000a,
                 expected_serial: Some("serial".to_string()),
+                descriptor_failure_at_location: false,
+                expected_location_path: None,
                 problem_code: Some(43),
                 flash_completed: true,
             },

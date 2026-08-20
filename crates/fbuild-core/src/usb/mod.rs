@@ -33,7 +33,8 @@ pub use data::{
 pub use embedded::vendor_name as embedded_vendor_name;
 pub use recovery::{
     UNCLASSED_DEVICE_CLASS, UsbRecoveryHealth, UsbRecoveryOperation, UsbRecoveryPolicy,
-    UsbRecoveryRequest, UsbRecoveryResult,
+    UsbRecoveryRequest, UsbRecoveryResult, is_windows_descriptor_failure_identity,
+    normalize_physical_location,
 };
 #[cfg(test)]
 pub use resolver::resolve_bundled;

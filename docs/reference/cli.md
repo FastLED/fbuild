@@ -85,11 +85,20 @@ Common options include `--port`, `--clean`, `--monitor`, `--timeout`,
 `--output-dir`.
 
 `--transport picotool|uf2` selects the RP2040/RP2350 deploy transport
-(FastLED/fbuild#1162). `picotool` is the default: fbuild tries the PICOBOOT
-vendor interface first (Windows preflight checks for a missing WinUSB driver
-before attempting it, then a bounded `picotool info` probe, then
-`picotool load -f -x`) and falls back to BOOTSEL mass-storage on any
-failure. `uf2` preserves the historical mass-storage-first order with
+(FastLED/fbuild#1162). Before either transport runs, fbuild tries the normal
+1200-bps CDC touch. If no BOOTSEL endpoint appears and the selected runtime
+port supplied an exact VID, PID, and USB serial, fbuild asks the Pico SDK
+application reset interface to enter BOOTSEL, then reacquires it. Windows uses
+the exact healthy WinUSB reset interface mapped to the selected CDC identity;
+other hosts fall back to managed
+`picotool reboot -u --vid 0x<vid> --pid 0x<pid> -f`. Picotool derives the
+runtime serial from the opened application device, and refuses a forced command
+when that VID/PID is ambiguous. fbuild never emits an unscoped reset request.
+
+`picotool` is the default transport: fbuild tries the target-bound PICOBOOT
+vendor interface first (Windows preflight checks for a missing WinUSB driver,
+then a bounded `picotool info` probe and `picotool load -x`) and falls back to
+BOOTSEL mass-storage. `uf2` preserves the mass-storage-first order with
 picotool as the fallback. The picotool load timeout defaults to 60s and is
 configurable with `FBUILD_RP2040_PICOTOOL_TIMEOUT_SECS`.
 

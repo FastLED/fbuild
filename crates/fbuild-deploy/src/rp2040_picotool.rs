@@ -95,6 +95,35 @@ pub(super) async fn probe_picotool_info(
     Ok(())
 }
 
+/// Ask a cooperative runtime application to enter USB BOOTSEL. Unlike a
+/// 1200-bps touch this uses the Pico SDK reset interface, so it still works
+/// when the selected board's CDC endpoint cannot be opened. The caller must
+/// supply the exact runtime VID/PID and USB serial. Windows callers use the
+/// native WinUSB reset-interface path when it can be resolved exactly; this
+/// libusb fallback remains target-filtered for other hosts.
+pub(super) async fn reboot_runtime_to_bootsel(
+    project_dir: &Path,
+    target: &PicotoolTarget,
+    timeout: Duration,
+) -> Result<PicotoolLoad> {
+    let package = fbuild_packages::toolchain::Rp2040Picotool::new(project_dir);
+    Package::ensure_installed(&package).await?;
+    let executable = package.executable();
+    let args = reboot_to_bootsel_args(&executable, target);
+    let args_ref: Vec<&str> = args.iter().map(String::as_str).collect();
+    let output = fbuild_core::subprocess::run_command(&args_ref, None, None, Some(timeout)).await?;
+    if !output.success() {
+        return Err(FbuildError::DeployFailed(format!(
+            "managed picotool application-mode reboot error: {}",
+            combined_tool_output(output.stdout.trim(), output.stderr.trim())
+        )));
+    }
+    Ok(PicotoolLoad {
+        stdout: output.stdout,
+        stderr: output.stderr,
+    })
+}
+
 /// Ask the already-installed managed picotool for its most recent UF2
 /// diagnostic. This must never trigger a package download; it shares the
 /// caller's bounded subprocess timeout (FastLED/fbuild#1245).
@@ -165,13 +194,16 @@ fn combined_tool_output(stdout: &str, stderr: &str) -> String {
 }
 
 fn append_target_selection(args: &mut Vec<String>, target: &PicotoolTarget) {
+    append_target_vid_pid(args, target);
+    args.extend(["--ser".to_string(), target.serial_number.to_string()]);
+}
+
+fn append_target_vid_pid(args: &mut Vec<String>, target: &PicotoolTarget) {
     args.extend([
         "--vid".to_string(),
         format!("0x{}", target.vendor_id),
         "--pid".to_string(),
         format!("0x{}", target.product_id),
-        "--ser".to_string(),
-        target.serial_number.to_string(),
     ]);
 }
 
@@ -183,6 +215,27 @@ fn load_args(executable: &Path, artifact: &Path, target: &PicotoolTarget) -> Vec
         "-x".to_string(),
     ];
     append_target_selection(&mut args, target);
+    args
+}
+
+fn reboot_to_bootsel_args(executable: &Path, target: &PicotoolTarget) -> Vec<String> {
+    let mut args = vec![
+        executable.to_string_lossy().to_string(),
+        "reboot".to_string(),
+        "-u".to_string(),
+    ];
+    // pico-quick-toolchain's pinned picotool uses an order-sensitive
+    // CLIPP grammar: reboot-type options precede device selectors, and `-f`
+    // is the final option in the selector group. Keep the application-mode
+    // VID/PID selectors. Do not pass
+    // `--ser` here: current picotool applies it while opening the application
+    // device, where Arduino-Pico's reset function does not expose the BOOTSEL
+    // serial. When omitted, picotool reads the application device descriptor
+    // and tracks that serial automatically across the reboot. fbuild has
+    // already resolved one exact healthy reset interface, and picotool itself
+    // refuses a forced command if the VID/PID matches multiple devices.
+    append_target_vid_pid(&mut args, target);
+    args.push("-f".to_string());
     args
 }
 
@@ -288,6 +341,25 @@ mod tests {
                 "0x000f",
                 "--ser",
                 "2DCB876B587EA334",
+            ]
+        );
+    }
+
+    #[test]
+    fn forced_application_reboot_is_bound_to_the_runtime_target() {
+        let target = PicotoolTarget::new("2DCB876B587EA334", "2e8a", "f00f");
+        let args = reboot_to_bootsel_args(Path::new("managed/picotool"), &target);
+        assert_eq!(
+            args,
+            [
+                "managed/picotool",
+                "reboot",
+                "-u",
+                "--vid",
+                "0x2e8a",
+                "--pid",
+                "0xf00f",
+                "-f",
             ]
         );
     }

@@ -833,6 +833,7 @@ mod tests {
             behind_external_hub: Some(true),
             parent_instance_id: None,
             device_class: None,
+            location_paths: Vec::new(),
         }];
         let warning = format_usb_problem_warning(&devices);
         assert!(warning.contains("problem code 43"));
@@ -852,6 +853,7 @@ mod tests {
             behind_external_hub: Some(false),
             parent_instance_id: None,
             device_class: None,
+            location_paths: Vec::new(),
         }];
         let warning = format_usb_problem_warning(&devices);
         assert!(warning.contains("Unknown USB device"));

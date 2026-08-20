@@ -193,6 +193,7 @@ fn tracked_serial_lease_moves_to_new_port_on_refresh() {
         port_health: fbuild_serial::ports::PortHealth::HealthyPresent,
         instance_id: Some(r"USB\VID_1234&PID_5678\TEST-SERIAL".to_string()),
         parent_instance_id: Some(r"USB\VID_1234&PID_5678\PARENT".to_string()),
+        location_paths: vec!["PCIROOT(0)#USBROOT(0)#USB(3)".to_string()],
     }]);
 
     assert!(mgr.get_device_status("COM3").is_none());
@@ -230,6 +231,43 @@ fn tracked_serial_lease_moves_to_new_port_on_refresh() {
 }
 
 #[test]
+fn phantom_refresh_retains_last_nonempty_usb_location_paths() {
+    let mgr = DeviceManager::new();
+    let discovered = |health, location_paths| DiscoveredDevice {
+        port: "COM18".to_string(),
+        device_id: "2e8a:f00f".to_string(),
+        description: "Raspberry Pi Pico 2 W".to_string(),
+        vid: Some(0x2e8a),
+        pid: Some(0xf00f),
+        vendor_name: Some("Raspberry Pi".to_string()),
+        product_name: Some("Pico 2".to_string()),
+        is_cdc: Some(true),
+        serial_number: Some("2DCB876B587EA334".to_string()),
+        port_health: health,
+        instance_id: Some("USB\\VID_2E8A&PID_F00F\\2DCB876B587EA334".to_string()),
+        parent_instance_id: Some("USB\\ROOT_HUB30\\parent".to_string()),
+        location_paths,
+    };
+    let location = "PCIROOT(0)#USBROOT(0)#USB(10)#USB(4)#USBMI(0)".to_string();
+    mgr.refresh_from_discovered(vec![discovered(
+        fbuild_serial::ports::PortHealth::HealthyPresent,
+        vec![location.clone()],
+    )]);
+    mgr.refresh_from_discovered(vec![discovered(
+        fbuild_serial::ports::PortHealth::Phantom {
+            problem_code: None,
+            status: None,
+        },
+        Vec::new(),
+    )]);
+
+    assert_eq!(
+        mgr.get_device_status("COM18").unwrap().location_paths,
+        vec![location]
+    );
+}
+
+#[test]
 fn untracked_serial_lease_stays_on_old_disconnected_port() {
     let mgr = make_manager_with_device("COM3");
     mgr.acquire_exclusive("COM3", "c1", "untracked deploy", false)
@@ -251,6 +289,7 @@ fn untracked_serial_lease_stays_on_old_disconnected_port() {
         },
         instance_id: Some(r"USB\VID_1234&PID_5678\TEST-SERIAL".to_string()),
         parent_instance_id: Some(r"USB\VID_1234&PID_5678\PARENT".to_string()),
+        location_paths: Vec::new(),
     }]);
 
     let old = mgr.get_device_status("COM3").unwrap();

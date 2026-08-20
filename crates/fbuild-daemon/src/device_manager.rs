@@ -118,6 +118,10 @@ pub struct DeviceState {
     /// Canonical Plug and Play identity when the host exposes one.
     pub instance_id: Option<String>,
     pub parent_instance_id: Option<String>,
+    /// Last non-empty physical USB location paths observed for this endpoint.
+    /// Retained across a later phantom refresh for descriptor-failure
+    /// correlation; never used to make a serial endpoint selectable.
+    pub location_paths: Vec<String>,
     pub previous_port: Option<String>,
     pub exclusive_lease: Option<DeviceLease>,
     pub monitor_leases: HashMap<String, DeviceLease>,
@@ -173,6 +177,7 @@ struct DiscoveredDevice {
     port_health: fbuild_serial::ports::PortHealth,
     instance_id: Option<String>,
     parent_instance_id: Option<String>,
+    location_paths: Vec<String>,
 }
 
 /// Thread-safe device manager.
@@ -250,6 +255,7 @@ impl DeviceManager {
                 let port_health = detected.health.clone();
                 let instance_id = detected.instance_id.clone();
                 let parent_instance_id = detected.parent_instance_id.clone();
+                let location_paths = detected.location_paths.clone();
                 let port_info = detected.info;
                 let (vid, pid, fallback_desc) = match &port_info.port_type {
                     serialport::SerialPortType::UsbPort(usb) => (
@@ -303,6 +309,7 @@ impl DeviceManager {
                     port_health,
                     instance_id,
                     parent_instance_id,
+                    location_paths,
                 }
             })
             .collect();
@@ -359,6 +366,9 @@ impl DeviceManager {
                             state.port_health = device.port_health;
                             state.instance_id = device.instance_id;
                             state.parent_instance_id = device.parent_instance_id;
+                            if !device.location_paths.is_empty() {
+                                state.location_paths = device.location_paths;
+                            }
                             if let Some(previous_port) = state.previous_port.clone() {
                                 self.recent_port_moves
                                     .lock()
@@ -389,6 +399,7 @@ impl DeviceManager {
                 port_health: device.port_health.clone(),
                 instance_id: device.instance_id.clone(),
                 parent_instance_id: device.parent_instance_id.clone(),
+                location_paths: device.location_paths.clone(),
                 previous_port: None,
                 exclusive_lease: None,
                 monitor_leases: HashMap::new(),
@@ -411,6 +422,9 @@ impl DeviceManager {
             entry.port_health = device.port_health;
             entry.instance_id = device.instance_id;
             entry.parent_instance_id = device.parent_instance_id;
+            if !device.location_paths.is_empty() {
+                entry.location_paths = device.location_paths;
+            }
         }
 
         // Stamp `last_disconnect_at` for every device that went from
@@ -730,6 +744,7 @@ impl DeviceManager {
                 port_health: fbuild_serial::ports::PortHealth::Unknown,
                 instance_id: None,
                 parent_instance_id: None,
+                location_paths: Vec::new(),
                 previous_port: None,
                 exclusive_lease: None,
                 monitor_leases: HashMap::new(),

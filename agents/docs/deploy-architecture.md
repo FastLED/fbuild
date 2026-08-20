@@ -92,17 +92,29 @@ The follow-up issues track the full polymorphic version:
 `crates/fbuild-deploy/src/rp2040.rs` (`--transport picotool|uf2`,
 FastLED/fbuild#1162) selects which stock transport is tried first:
 
-- **`picotool` (default).** After the unchanged pre-touch/1200-bps-touch/
-  UF2-preparation steps and a best-effort bounded BOOTSEL volume wait,
+- **Shared reset ladder.** After the pre-touch scan and 1200-bps CDC touch,
+  fbuild waits for BOOTSEL. If none appears and the selected runtime endpoint
+  supplied an exact VID, PID, and non-empty USB serial, it asks the Pico SDK
+  application reset interface to enter BOOTSEL and waits again. On Windows,
+  fbuild maps the selected CDC identity to one exact healthy WinUSB reset
+  interface and sends the Pico class control request directly. Other hosts use
+  managed `picotool reboot -u --vid ... --pid ... -f`; picotool derives the
+  runtime serial from the opened application device because that interface
+  cannot be selected reliably with `--ser`. The fallback is attempted only
+  after fbuild resolves one exact runtime identity, and picotool refuses a
+  forced command when the VID/PID is ambiguous. A missing or ambiguous identity
+  skips this layer, so an unscoped forced command is impossible. Deployment
+  results name the application reset-interface reboot when it ran successfully.
+- **`picotool` (default).** After the shared reset ladder and UF2 preparation,
   fbuild derives one exact BOOTSEL VID:PID from the verified FastLED/boards
   profile for the selected RP family and binds each picotool operation to
   that identity plus the selected runtime USB serial:
   `--vid 0x<registry-vid> --pid 0x<registry-pid> --ser <serial>`. It then
   runs a Windows-only PICOBOOT driver preflight for that same composite
   interface, a bounded `picotool info` probe, and `picotool load <uf2> -x`.
-  It intentionally does **not** use `-f`: a failed 1200-bps transition must
-  not let picotool reset some other compatible RP board. A missing runtime
-  serial or ambiguous/missing registry BOOTSEL identity disables picotool;
+  The ROM load does not use `-f`; forced application reset is the separately
+  scoped ladder step above. A missing runtime serial or ambiguous/missing
+  registry BOOTSEL identity disables picotool;
   fbuild uses only an explicitly identified BOOTSEL mass-storage volume. A
   Windows driver problem, including Code 43, also skips picotool rather than
   spending its timeout. Any remaining picotool failure falls back to the
@@ -128,6 +140,14 @@ image, a quiet runtime-CDC window no longer fails the deploy — it reports
 **success with no port** ("flashed, CDC unconfirmed"), so CI does not
 re-flash a healthy board whose first-plug driver install outlived the
 window. A genuine port-enumeration error still fails.
+
+On Windows, the daemon retains the last non-empty `LocationPaths` observed
+for a runtime endpoint. An unidentified `VID_0000&PID_0002` Code 43 node is
+eligible for the explicit/admin-gated exact-child restart only when one and
+only one matching RP history has the same normalized physical USB path. The
+elevated helper re-queries that path before acting. A different location or
+multiple matches fail closed; fbuild never cycles a hub or changes the
+host-wide selective-suspend policy.
 
 ## Worked example — "agent ports a new RP2350 board"
 
