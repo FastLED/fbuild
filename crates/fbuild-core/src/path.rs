@@ -241,7 +241,7 @@ impl<'de> Deserialize<'de> for NormalizedPath {
 /// log lines stay readable. See FastLED/fbuild#844 "Bridge pair 5".
 #[must_use]
 pub fn strip_unc_prefix(p: &Path) -> PathBuf {
-    crate::platform::fs::strip_extended_prefix(p)
+    crate::platform::fs::strip_extended_prefix(p).into_path_buf()
 }
 
 /// Canonicalize an existing path, stripping the Windows UNC prefix and
@@ -682,6 +682,10 @@ mod tests {
             strip_unc_prefix(Path::new("/usr/bin/nm")),
             PathBuf::from("/usr/bin/nm")
         );
+        assert_eq!(
+            strip_unc_prefix(Path::new("a/../b/./c")),
+            PathBuf::from("a/../b/./c")
+        );
     }
 
     /// On Windows the extended-length prefix is stripped.
@@ -693,6 +697,10 @@ mod tests {
         assert_eq!(
             strip_unc_prefix(Path::new(r"\\?\C:\Users\test")),
             PathBuf::from(r"C:\Users\test")
+        );
+        assert_eq!(
+            strip_unc_prefix(Path::new(r"\\?\C:\Users\..\test\.")),
+            PathBuf::from(r"C:\Users\..\test\.")
         );
     }
 

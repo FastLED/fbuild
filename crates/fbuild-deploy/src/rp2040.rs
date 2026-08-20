@@ -381,7 +381,11 @@ fn put_u32(buffer: &mut [u8], offset: usize, value: u32) {
 fn volume_roots() -> Vec<PathBuf> {
     let home = std::env::var_os("HOME").map(PathBuf::from);
     if fbuild_core::platform::host::is_windows() {
-        fbuild_core::platform::fs::removable_volume_roots().unwrap_or_default()
+        fbuild_core::platform::fs::removable_volume_roots()
+            .unwrap_or_default()
+            .into_iter()
+            .map(fbuild_core::path::NormalizedPath::into_path_buf)
+            .collect()
     } else {
         volume_roots_filtered(false, home.as_deref(), |_: &Path| true)
     }

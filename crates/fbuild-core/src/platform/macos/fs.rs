@@ -1,8 +1,9 @@
 use std::fs::OpenOptions;
 use std::os::unix::fs::PermissionsExt;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 use crate::platform::fs::{ErrorClass, VolumeFacts};
+use crate::path::NormalizedPath;
 
 pub(crate) fn file_identity(path: &Path) -> std::io::Result<same_file::Handle> {
     same_file::Handle::from_path(path)
@@ -16,8 +17,8 @@ pub(crate) fn display_slash(path: &Path) -> String {
     path.to_string_lossy().into_owned()
 }
 
-pub(crate) fn strip_extended_prefix(path: &Path) -> PathBuf {
-    path.to_path_buf()
+pub(crate) fn strip_extended_prefix(path: &Path) -> Box<Path> {
+    path.into()
 }
 
 pub(crate) fn set_executable(path: &Path) -> std::io::Result<()> {
@@ -57,7 +58,7 @@ pub(crate) fn volume_facts(path: &Path) -> std::io::Result<VolumeFacts> {
     volume_facts_from_statvfs(path)
 }
 
-pub(crate) fn removable_volume_roots() -> std::io::Result<Vec<PathBuf>> {
+pub(crate) fn removable_volume_roots() -> std::io::Result<Vec<NormalizedPath>> {
     Ok(Vec::new())
 }
 

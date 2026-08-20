@@ -1,7 +1,9 @@
 //! Neutral filesystem identity, permission, and replacement APIs.
 
 use std::fs::{File, OpenOptions};
-use std::path::{Path, PathBuf};
+use std::path::Path;
+
+use crate::path::NormalizedPath;
 
 /// Opaque, open-handle identity for a filesystem object.
 #[derive(Debug, Eq, PartialEq, Hash)]
@@ -58,7 +60,7 @@ pub fn display_slash(path: &Path) -> String {
 
 /// Remove host-added extended-length prefixes from a canonical path.
 #[must_use]
-pub fn strip_extended_prefix(path: &Path) -> PathBuf {
+pub fn strip_extended_prefix(path: &Path) -> Box<Path> {
     super::selected::fs::strip_extended_prefix(path)
 }
 
@@ -119,7 +121,7 @@ pub fn volume_facts(path: &Path) -> std::io::Result<VolumeFacts> {
 }
 
 /// Snapshot mounted removable volume roots without probing candidate paths.
-pub fn removable_volume_roots() -> std::io::Result<Vec<PathBuf>> {
+pub fn removable_volume_roots() -> std::io::Result<Vec<NormalizedPath>> {
     super::selected::fs::removable_volume_roots()
 }
 

@@ -2,9 +2,10 @@ use std::fs::OpenOptions;
 use std::os::windows::ffi::OsStrExt;
 use std::os::windows::fs::{MetadataExt, OpenOptionsExt};
 use std::os::windows::io::AsRawHandle;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 use crate::platform::fs::{ErrorClass, VolumeFacts, VolumeKind};
+use crate::path::NormalizedPath;
 
 pub(crate) fn file_identity(path: &Path) -> std::io::Result<same_file::Handle> {
     same_file::Handle::from_path(path)
@@ -27,14 +28,15 @@ pub(crate) fn display_slash(path: &Path) -> String {
     value
 }
 
-pub(crate) fn strip_extended_prefix(path: &Path) -> PathBuf {
+pub(crate) fn strip_extended_prefix(path: &Path) -> Box<Path> {
     let value = path.to_string_lossy();
     if let Some(rest) = value.strip_prefix(r"\\?\UNC\") {
-        return PathBuf::from(format!(r"\\{rest}"));
+        let stripped = format!(r"\\{rest}");
+        return Path::new(&stripped).into();
     }
     value
         .strip_prefix(r"\\?\")
-        .map_or_else(|| PathBuf::from(value.as_ref()), PathBuf::from)
+        .map_or_else(|| Path::new(value.as_ref()).into(), |rest| Path::new(rest).into())
 }
 
 pub(crate) fn set_executable(_path: &Path) -> std::io::Result<()> {
@@ -124,7 +126,7 @@ pub(crate) fn volume_facts(path: &Path) -> std::io::Result<VolumeFacts> {
     })
 }
 
-pub(crate) fn removable_volume_roots() -> std::io::Result<Vec<PathBuf>> {
+pub(crate) fn removable_volume_roots() -> std::io::Result<Vec<NormalizedPath>> {
     use windows_sys::Win32::Storage::FileSystem::{GetDriveTypeW, GetLogicalDrives};
 
     // SAFETY: GetLogicalDrives has no pointer arguments or preconditions.
@@ -142,7 +144,7 @@ pub(crate) fn removable_volume_roots() -> std::io::Result<Vec<PathBuf>> {
 fn removable_roots_from_mask(
     mask: u32,
     mut drive_type: impl FnMut(u8) -> u32,
-) -> Vec<PathBuf> {
+) -> Vec<NormalizedPath> {
     const DRIVE_REMOVABLE: u32 = 2;
 
     (0_u8..26)
@@ -150,7 +152,7 @@ fn removable_roots_from_mask(
         .filter_map(|index| {
             let letter = b'A' + index;
             (drive_type(letter) == DRIVE_REMOVABLE)
-                .then(|| PathBuf::from(format!("{}:\\", char::from(letter))))
+                .then(|| NormalizedPath::new(format!("{}:\\", char::from(letter))))
         })
         .collect()
 }
@@ -203,6 +205,6 @@ mod tests {
             if letter == b'D' { 2 } else { 3 }
         });
         assert_eq!(queried, vec![b'C', b'D']);
-        assert_eq!(roots, vec![PathBuf::from(r"D:\")]);
+        assert_eq!(roots, vec![NormalizedPath::new(r"D:\")]);
     }
 }
