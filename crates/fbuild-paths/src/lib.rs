@@ -77,19 +77,29 @@ fn endpoint_key_from_material(material: &str) -> String {
 
 /// Deterministic default daemon port derived from [`daemon_endpoint_key`].
 ///
-/// Lands in the IANA dynamic range (49152–65535) so it never collides with a
-/// well-known service, and is stable for a given version+identity. Distinct
-/// versions (and dev vs prod, since mode is part of the identity) get distinct
-/// ports. `FBUILD_DAEMON_PORT` still overrides this (see [`get_daemon_port`]).
+/// On Windows this lands in 10000–49151, below the dynamic range that
+/// Hyper-V/HNS commonly reserves in excluded blocks. Other platforms use the
+/// IANA dynamic range (49152–65535). The result is stable for a given
+/// version+identity; distinct versions (and dev vs prod, since mode is part of
+/// the identity) get distinct ports. `FBUILD_DAEMON_PORT` still overrides this
+/// (see [`get_daemon_port`]).
 pub fn default_daemon_port() -> u16 {
     port_from_endpoint_key(&daemon_endpoint_key())
 }
 
-/// Map a hex endpoint key into the IANA dynamic port window (49152–65535).
-/// Pure + deterministic (unit-tested).
+/// Map a hex endpoint key into the platform's default daemon-port window.
+/// Pure and deterministic (unit-tested).
 fn port_from_endpoint_key(key: &str) -> u16 {
+    #[cfg(windows)]
+    const LOW: u32 = 10000;
+    #[cfg(windows)]
+    const SPAN: u32 = 49152 - LOW;
+
+    #[cfg(not(windows))]
     const LOW: u32 = 49152;
-    const SPAN: u32 = 65536 - LOW; // 16384
+    #[cfg(not(windows))]
+    const SPAN: u32 = 65536 - LOW;
+
     let n = u64::from_str_radix(key, 16).unwrap_or(0);
     (LOW + (n % u64::from(SPAN)) as u32) as u16
 }
@@ -516,6 +526,7 @@ mod tests {
         assert!(live.chars().all(|c| c.is_ascii_hexdigit()));
     }
 
+    #[cfg(not(windows))]
     #[test]
     fn default_daemon_port_is_in_dynamic_range() {
         let p = default_daemon_port();
@@ -525,16 +536,29 @@ mod tests {
         );
     }
 
+    #[cfg(windows)]
+    #[test]
+    fn default_daemon_port_avoids_windows_dynamic_exclusion_range() {
+        let p = default_daemon_port();
+        assert!(
+            (10000..49152).contains(&p),
+            "Windows daemon port {p} overlaps the dynamic exclusion range"
+        );
+    }
+
     #[test]
     fn port_from_key_is_deterministic_and_ranged() {
         // Same key → same port; keys differing (e.g. by version or checkout)
-        // map into the dynamic range and generally differ.
+        // map into the platform range and generally differ.
         assert_eq!(
             port_from_endpoint_key("0123456789abcdef"),
             port_from_endpoint_key("0123456789abcdef")
         );
         for key in ["0000000000000000", "ffffffffffffffff", "deadbeefcafef00d"] {
             let p = port_from_endpoint_key(key);
+            #[cfg(windows)]
+            assert!((10000..49152).contains(&p), "key {key} → {p} out of range");
+            #[cfg(not(windows))]
             assert!((49152..=65535).contains(&p), "key {key} → {p} out of range");
         }
         // Two distinct version/identity keys should not collapse to one port
