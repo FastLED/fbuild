@@ -236,7 +236,7 @@ fn remove_cached_install(install_path: &Path) -> Result<()> {
 async fn verify_esptool_binary(bin: &Path) -> Result<()> {
     let bin_arg = bin.to_string_lossy();
     let output = run_command(
-        &[bin_arg.as_ref(), "--version"],
+        &[bin_arg.as_ref(), "version"],
         None,
         None,
         Some(std::time::Duration::from_secs(10)),
@@ -520,12 +520,16 @@ mod tests {
 
     #[cfg(unix)]
     #[tokio::test]
-    async fn verify_accepts_runnable_standalone_binary() {
+    async fn verify_uses_supported_version_subcommand() {
         use std::os::unix::fs::PermissionsExt;
 
         let tmp = tempfile::TempDir::new().unwrap();
         let bin = tmp.path().join(esptool_bin_name());
-        std::fs::write(&bin, b"#!/bin/sh\nexit 0\n").unwrap();
+        std::fs::write(
+            &bin,
+            b"#!/bin/sh\n[ \"$#\" -eq 1 ] && [ \"$1\" = \"version\" ]\n",
+        )
+        .unwrap();
         let mut permissions = std::fs::metadata(&bin).unwrap().permissions();
         permissions.set_mode(0o755);
         std::fs::set_permissions(&bin, permissions).unwrap();
