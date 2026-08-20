@@ -90,18 +90,14 @@ pub fn default_daemon_port() -> u16 {
 /// Map a hex endpoint key into the platform's default daemon-port window.
 /// Pure and deterministic (unit-tested).
 fn port_from_endpoint_key(key: &str) -> u16 {
-    #[cfg(windows)]
-    const LOW: u32 = 10000;
-    #[cfg(windows)]
-    const SPAN: u32 = 49152 - LOW;
-
-    #[cfg(not(windows))]
-    const LOW: u32 = 49152;
-    #[cfg(not(windows))]
-    const SPAN: u32 = 65536 - LOW;
+    let (low, span): (u32, u32) = if fbuild_core::platform::host::is_windows() {
+        (10000, 49152 - 10000)
+    } else {
+        (49152, 65536 - 49152)
+    };
 
     let n = u64::from_str_radix(key, 16).unwrap_or(0);
-    (LOW + (n % u64::from(SPAN)) as u32) as u16
+    (low + (n % u64::from(span)) as u32) as u16
 }
 
 /// Daemon port file path (written by daemon so clients can discover the port).
@@ -447,12 +443,9 @@ pub fn find_firmware_dir(project_dir: &Path, env_name: &str) -> Option<PathBuf> 
 }
 
 fn dirs_next() -> Option<PathBuf> {
-    #[cfg(target_os = "windows")]
-    {
+    if fbuild_core::platform::host::is_windows() {
         std::env::var("USERPROFILE").ok().map(PathBuf::from)
-    }
-    #[cfg(not(target_os = "windows"))]
-    {
+    } else {
         std::env::var("HOME").ok().map(PathBuf::from)
     }
 }
@@ -526,24 +519,20 @@ mod tests {
         assert!(live.chars().all(|c| c.is_ascii_hexdigit()));
     }
 
-    #[cfg(not(windows))]
     #[test]
-    fn default_daemon_port_is_in_dynamic_range() {
+    fn default_daemon_port_is_in_host_range() {
         let p = default_daemon_port();
-        assert!(
-            (49152..=65535).contains(&p),
-            "port {p} outside dynamic range"
-        );
-    }
-
-    #[cfg(windows)]
-    #[test]
-    fn default_daemon_port_avoids_windows_dynamic_exclusion_range() {
-        let p = default_daemon_port();
-        assert!(
-            (10000..49152).contains(&p),
-            "Windows daemon port {p} overlaps the dynamic exclusion range"
-        );
+        if fbuild_core::platform::host::is_windows() {
+            assert!(
+                (10000..49152).contains(&p),
+                "Windows daemon port {p} overlaps the dynamic exclusion range"
+            );
+        } else {
+            assert!(
+                (49152..=65535).contains(&p),
+                "port {p} outside dynamic range"
+            );
+        }
     }
 
     #[test]
@@ -556,10 +545,14 @@ mod tests {
         );
         for key in ["0000000000000000", "ffffffffffffffff", "deadbeefcafef00d"] {
             let p = port_from_endpoint_key(key);
-            #[cfg(windows)]
-            assert!((10000..49152).contains(&p), "key {key} → {p} out of range");
-            #[cfg(not(windows))]
-            assert!((49152..=65535).contains(&p), "key {key} → {p} out of range");
+            if fbuild_core::platform::host::is_windows() {
+                assert!((10000..49152).contains(&p), "key {key} -> {p} out of range");
+            } else {
+                assert!(
+                    (49152..=65535).contains(&p),
+                    "key {key} -> {p} out of range"
+                );
+            }
         }
         // Two distinct version/identity keys should not collapse to one port
         // for these representative values.

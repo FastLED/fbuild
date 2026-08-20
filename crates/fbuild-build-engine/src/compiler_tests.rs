@@ -59,7 +59,7 @@ async fn compile_path_contract_pairs_cwd_and_output_arg_for_282() {
 
 #[test]
 fn absolute_from_cwd_is_identity_on_absolute_paths() {
-    let p = if cfg!(windows) {
+    let p = if fbuild_core::platform::host::is_windows() {
         std::path::PathBuf::from(r"C:\some\absolute\path")
     } else {
         std::path::PathBuf::from("/some/absolute/path")

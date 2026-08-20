@@ -443,7 +443,7 @@ impl Linker for Esp32Linker {
         // link step in the codebase (LTO + large SDK archive). 5 min
         // is a generous upper bound — anything past that is a wedge.
         let link_timeout = Some(std::time::Duration::from_secs(300));
-        let result = if cfg!(windows) {
+        let result = if fbuild_core::platform::host::is_windows() {
             let flags_for_rsp: Vec<String> = link_args[1..].to_vec();
             let rsp_dir = output_dir.join("tmp");
             let rsp_path = fbuild_core::response_file::write_response_file(

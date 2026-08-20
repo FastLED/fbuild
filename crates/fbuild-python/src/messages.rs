@@ -25,7 +25,7 @@ impl ClientMetadata {
     pub(crate) fn current() -> Self {
         Self {
             pid: Some(std::process::id()),
-            exe: std::env::current_exe()
+            exe: fbuild_core::platform::executable::current_image()
                 .ok()
                 .map(|p| p.to_string_lossy().into_owned()),
             cwd: std::env::current_dir()

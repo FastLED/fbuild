@@ -285,7 +285,7 @@ pub fn classify_install_source() -> InstallSource {
         }
     }
 
-    let Ok(exe) = std::env::current_exe() else {
+    let Ok(exe) = fbuild_core::platform::executable::current_image() else {
         return InstallSource::Unknown;
     };
 

@@ -247,11 +247,7 @@ pub(crate) fn gdb_candidate_names(toolchain_prefix: &str) -> Vec<String> {
 }
 
 fn exe_name(name: &str) -> String {
-    if cfg!(windows) {
-        format!("{name}.exe")
-    } else {
-        name.to_string()
-    }
+    fbuild_core::platform::executable::native_name(name)
 }
 
 /// Search a list of directories (in order) for the first existing
@@ -328,7 +324,10 @@ fn resolve_gdb_path(elf_path: &Path, toolchain_prefix: &str) -> Result<Normalize
 /// OS device, so this module does the translation itself. No-op on other
 /// platforms and for names that already use the `\\.\` prefix.
 pub(crate) fn windows_gdb_serial_target(port: &str) -> String {
-    if cfg!(windows) && !port.starts_with(r"\\.\") && !port.contains('/') {
+    if fbuild_core::platform::host::is_windows()
+        && !port.starts_with(r"\\.\")
+        && !port.contains('/')
+    {
         format!(r"\\.\{port}")
     } else {
         port.to_string()

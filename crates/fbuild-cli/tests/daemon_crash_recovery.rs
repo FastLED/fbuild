@@ -32,7 +32,11 @@ use fbuild_paths::daemon_ownership::{DAEMON_EXE_STEM, RootOwnershipGuard};
 
 /// The real user home, the same way the spawned daemon will resolve it.
 fn real_home() -> Option<NormalizedPath> {
-    let key = if cfg!(windows) { "USERPROFILE" } else { "HOME" };
+    let key = if fbuild_core::platform::host::is_windows() {
+        "USERPROFILE"
+    } else {
+        "HOME"
+    };
     std::env::var_os(key).map(NormalizedPath::new)
 }
 
@@ -170,11 +174,7 @@ fn client_recovers_after_daemon_is_killed_uncleanly() {
     // the CLI. Under `cargo test --workspace` (and any full build) it exists;
     // under an isolated `-p fbuild-cli` test run it may not — skip then.
     let cli = NormalizedPath::new(env!("CARGO_BIN_EXE_fbuild"));
-    let daemon_name = if cfg!(windows) {
-        "fbuild-daemon.exe"
-    } else {
-        "fbuild-daemon"
-    };
+    let daemon_name = fbuild_core::platform::executable::name("fbuild-daemon", "fbuild-daemon.exe");
     let sibling = cli
         .parent()
         .map(|d| NormalizedPath::new(d).join(daemon_name));

@@ -86,7 +86,7 @@ pub fn capture_pio_env() -> BTreeMap<String, String> {
 }
 
 pub fn runtime_diagnostic() -> String {
-    let exe = std::env::current_exe()
+    let exe = fbuild_core::platform::executable::current_image()
         .ok()
         .map(|p| p.display().to_string())
         .unwrap_or_else(|| "<unknown>".to_string());
@@ -185,14 +185,12 @@ pub fn last_daemon_acquisition() -> Option<DaemonAcquisition> {
 }
 
 fn daemon_executable_hint() -> String {
-    let Some(parent) = std::env::current_exe()
-        .ok()
-        .and_then(|p| p.parent().map(|d| d.to_path_buf()))
+    let Ok(candidates) =
+        fbuild_core::platform::executable::current_image_sibling_candidates("fbuild-daemon")
     else {
         return "fbuild-daemon".to_string();
     };
-    let stem = parent.join("fbuild-daemon");
-    for candidate in [stem.clone(), stem.with_extension("exe")] {
+    for candidate in candidates {
         if candidate.exists() {
             return candidate.display().to_string();
         }
@@ -676,7 +674,7 @@ fn shutdown_caller_headers() -> reqwest::header::HeaderMap {
             cwd.to_string_lossy().into_owned(),
         );
     }
-    if let Ok(exe) = std::env::current_exe() {
+    if let Ok(exe) = fbuild_core::platform::executable::current_image() {
         insert_shutdown_header(
             &mut headers,
             "x-fbuild-client-exe",
@@ -703,14 +701,10 @@ fn insert_shutdown_header(
 
 /// Compute the modification time of the fbuild-daemon binary on disk.
 fn compute_daemon_binary_mtime() -> f64 {
-    // Find the daemon binary next to our own executable
-    let daemon_path = std::env::current_exe()
-        .ok()
-        .and_then(|p| p.parent().map(|d| d.join("fbuild-daemon")));
-
-    if let Some(path) = daemon_path {
-        // Try with and without .exe extension
-        for candidate in [path.clone(), path.with_extension("exe")] {
+    if let Ok(candidates) =
+        fbuild_core::platform::executable::current_image_sibling_candidates("fbuild-daemon")
+    {
+        for candidate in candidates {
             if let Ok(meta) = candidate.metadata() {
                 if let Ok(mtime) = meta.modified() {
                     if let Ok(dur) = mtime.duration_since(std::time::UNIX_EPOCH) {

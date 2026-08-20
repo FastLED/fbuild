@@ -11,10 +11,8 @@ use running_process::broker::client::RefusalKind;
 /// Windows ships `fbuild-daemon.exe`; Unix-like systems ship `fbuild-daemon`.
 /// Kept as a single constant so the venv-adjacent lookup and the PATH
 /// fallback agree on the name.
-#[cfg(windows)]
-const DAEMON_BIN_NAME: &str = "fbuild-daemon.exe";
-#[cfg(not(windows))]
-const DAEMON_BIN_NAME: &str = "fbuild-daemon";
+const DAEMON_BIN_NAME: &str =
+    fbuild_core::platform::executable::name("fbuild-daemon", "fbuild-daemon.exe");
 
 /// Look for `fbuild-daemon[.exe]` next to `sys.executable` (FastLED/fbuild#275).
 ///
@@ -70,7 +68,7 @@ fn shutdown_caller_headers() -> reqwest::header::HeaderMap {
             cwd.to_string_lossy().into_owned(),
         );
     }
-    if let Ok(exe) = std::env::current_exe() {
+    if let Ok(exe) = fbuild_core::platform::executable::current_image() {
         insert_shutdown_header(
             &mut headers,
             "x-fbuild-client-exe",
@@ -475,10 +473,10 @@ mod tests {
         // The lookup file name must agree with what gets installed by
         // maturin / pip — on Windows that is `fbuild-daemon.exe`, on
         // Unix it is unsuffixed.
-        #[cfg(windows)]
-        assert_eq!(DAEMON_BIN_NAME, "fbuild-daemon.exe");
-        #[cfg(not(windows))]
-        assert_eq!(DAEMON_BIN_NAME, "fbuild-daemon");
+        assert_eq!(
+            DAEMON_BIN_NAME,
+            fbuild_core::platform::executable::native_name("fbuild-daemon")
+        );
     }
 
     #[test]

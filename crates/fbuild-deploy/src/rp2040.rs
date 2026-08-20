@@ -635,13 +635,13 @@ fn select_volume_after_reset(
     if let Some(error) = reset_error {
         return Err(FbuildError::DeployFailed(format!(
             "{error}; no RP2040 BOOTSEL transition was observed after the 1200-bps reset (discovery window is extendable with {BOOTLOADER_TIMEOUT_ENV}){}",
-            macos_accessory_hint(cfg!(target_os = "macos"))
+            macos_accessory_hint(fbuild_core::platform::host::is_macos())
         )));
     }
 
-    Err(FbuildError::DeployFailed(bootsel_not_found_message(cfg!(
-        target_os = "macos"
-    ))))
+    Err(FbuildError::DeployFailed(bootsel_not_found_message(
+        fbuild_core::platform::host::is_macos(),
+    )))
 }
 
 fn prepare_uf2_artifact(firmware_path: &Path, family_id: u32) -> Result<(PathBuf, Uf2Target)> {
@@ -1772,7 +1772,7 @@ async fn attempt_picotool_primary(
     target: &picotool::PicotoolTarget,
     load_timeout: Duration,
 ) -> std::result::Result<picotool::PicotoolLoad, String> {
-    let preflight_result = if cfg!(windows) {
+    let preflight_result = if fbuild_core::platform::host::is_windows() {
         let devices =
             tokio::task::spawn_blocking(fbuild_serial::ports::present_usb_problem_devices)
                 .await
@@ -2000,7 +2000,7 @@ impl Deployer for Rp2040Deployer {
         } else {
             application_reboot_target(false, runtime_target.as_ref())
         };
-        let native_reset_target = if cfg!(windows) && volume.is_none() {
+        let native_reset_target = if fbuild_core::platform::host::is_windows() && volume.is_none() {
             if let Some(target) = reset_only_target.clone() {
                 Some(target)
             } else if let Some(target) = runtime_target.as_ref() {
@@ -2227,7 +2227,7 @@ impl Deployer for Rp2040Deployer {
                                             picotool::FailureDirection::PicotoolPrimary,
                                             &mass_storage_context,
                                             &picotool_error_text,
-                                            cfg!(windows),
+                                            fbuild_core::platform::host::is_windows(),
                                         ),
                                     ));
                                 }
@@ -2246,7 +2246,7 @@ impl Deployer for Rp2040Deployer {
                                 picotool::FailureDirection::PicotoolPrimary,
                                 &mass_storage_context,
                                 &picotool_error_text,
-                                cfg!(windows),
+                                fbuild_core::platform::host::is_windows(),
                             )));
                         }
                     },

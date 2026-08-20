@@ -14,6 +14,7 @@
 
 use std::path::{Path, PathBuf};
 
+use fbuild_core::platform::host::{self, HostArch, HostPlatform};
 use fbuild_core::{FbuildError, Result};
 
 use crate::{CacheSubdir, Package, PackageBase, PackageInfo};
@@ -71,11 +72,15 @@ impl EspQemuArch {
     }
 
     fn binary_name(self) -> &'static str {
-        match (self, cfg!(windows)) {
-            (Self::Xtensa, true) => "qemu-system-xtensa.exe",
-            (Self::Xtensa, false) => "qemu-system-xtensa",
-            (Self::Riscv32, true) => "qemu-system-riscv32.exe",
-            (Self::Riscv32, false) => "qemu-system-riscv32",
+        match self {
+            Self::Xtensa => fbuild_core::platform::executable::name(
+                "qemu-system-xtensa",
+                "qemu-system-xtensa.exe",
+            ),
+            Self::Riscv32 => fbuild_core::platform::executable::name(
+                "qemu-system-riscv32",
+                "qemu-system-riscv32.exe",
+            ),
         }
     }
 }
@@ -357,34 +362,38 @@ struct PlatformPackage {
 }
 
 fn platform_package(arch: EspQemuArch) -> Result<PlatformPackage> {
+    platform_package_for(host::current(), arch)
+}
+
+fn platform_package_for(host: HostPlatform, arch: EspQemuArch) -> Result<PlatformPackage> {
     match arch {
-        EspQemuArch::Xtensa => xtensa_platform_package(),
-        EspQemuArch::Riscv32 => riscv32_platform_package(),
+        EspQemuArch::Xtensa => xtensa_platform_package(host),
+        EspQemuArch::Riscv32 => riscv32_platform_package(host),
     }
 }
 
-fn xtensa_platform_package() -> Result<PlatformPackage> {
-    if cfg!(target_os = "windows") && cfg!(target_arch = "x86_64") {
+fn xtensa_platform_package(host: HostPlatform) -> Result<PlatformPackage> {
+    if host.is_windows() && host.arch() == HostArch::X86_64 {
         Ok(PlatformPackage {
             archive_suffix: "x86_64-w64-mingw32",
             sha256: "ef550b912726997f3c1ff4a4fb13c1569e2b692efdc5c9f9c3c926a8f7c540fa",
         })
-    } else if cfg!(target_os = "linux") && cfg!(target_arch = "x86_64") {
+    } else if host.is_linux() && host.arch() == HostArch::X86_64 {
         Ok(PlatformPackage {
             archive_suffix: "x86_64-linux-gnu",
             sha256: "588bfaccd0f929650655d10a580f020c6ba9c131712d8fa519280081b8d126eb",
         })
-    } else if cfg!(target_os = "linux") && cfg!(target_arch = "aarch64") {
+    } else if host.is_linux() && host.arch() == HostArch::Aarch64 {
         Ok(PlatformPackage {
             archive_suffix: "aarch64-linux-gnu",
             sha256: "317f6e0fd1dba0886d8110709823d909593ef29438822a14f81ebe19d72ce7cd",
         })
-    } else if cfg!(target_os = "macos") && cfg!(target_arch = "x86_64") {
+    } else if host.is_macos() && host.arch() == HostArch::X86_64 {
         Ok(PlatformPackage {
             archive_suffix: "x86_64-apple-darwin",
             sha256: "00b9dbc2124cf7633cb86f264fbc524226ad4001bce68bbdba43c9bdc4eb026e",
         })
-    } else if cfg!(target_os = "macos") && cfg!(target_arch = "aarch64") {
+    } else if host.is_macos() && host.arch() == HostArch::Aarch64 {
         Ok(PlatformPackage {
             archive_suffix: "aarch64-apple-darwin",
             sha256: "aa92e337461d482f5d9f31cd8efc0bd67b3de8fcfcfb567289cb43a59c184651",
@@ -392,34 +401,34 @@ fn xtensa_platform_package() -> Result<PlatformPackage> {
     } else {
         Err(FbuildError::PackageError(format!(
             "native QEMU (xtensa) is not supported on {}-{}",
-            std::env::consts::OS,
-            std::env::consts::ARCH
+            host.os_name(),
+            host.arch_name()
         )))
     }
 }
 
-fn riscv32_platform_package() -> Result<PlatformPackage> {
-    if cfg!(target_os = "windows") && cfg!(target_arch = "x86_64") {
+fn riscv32_platform_package(host: HostPlatform) -> Result<PlatformPackage> {
+    if host.is_windows() && host.arch() == HostArch::X86_64 {
         Ok(PlatformPackage {
             archive_suffix: "x86_64-w64-mingw32",
             sha256: "9474015f24d27acb7516955ec932e5307226bd9d6652cdc870793ed36010ab73",
         })
-    } else if cfg!(target_os = "linux") && cfg!(target_arch = "x86_64") {
+    } else if host.is_linux() && host.arch() == HostArch::X86_64 {
         Ok(PlatformPackage {
             archive_suffix: "x86_64-linux-gnu",
             sha256: "373b37a68bae3ef441ead24a7bfc950fcbfc274cbdd2b628fc6915f179eb1d8e",
         })
-    } else if cfg!(target_os = "linux") && cfg!(target_arch = "aarch64") {
+    } else if host.is_linux() && host.arch() == HostArch::Aarch64 {
         Ok(PlatformPackage {
             archive_suffix: "aarch64-linux-gnu",
             sha256: "f907a54313058f8a9681d2f48257d518950ff98bcd5a319194b4bee7c10cf223",
         })
-    } else if cfg!(target_os = "macos") && cfg!(target_arch = "x86_64") {
+    } else if host.is_macos() && host.arch() == HostArch::X86_64 {
         Ok(PlatformPackage {
             archive_suffix: "x86_64-apple-darwin",
             sha256: "820028ee7cd2dd8fe8cd8ca5519ab6e792d15fea9367c4525cf63c0f707c0b1f",
         })
-    } else if cfg!(target_os = "macos") && cfg!(target_arch = "aarch64") {
+    } else if host.is_macos() && host.arch() == HostArch::Aarch64 {
         Ok(PlatformPackage {
             archive_suffix: "aarch64-apple-darwin",
             sha256: "234690b6fa7c1d5dfe3dbb2bdd0c2810755e7c98999a9f21c389a6046b7eb76d",
@@ -427,8 +436,8 @@ fn riscv32_platform_package() -> Result<PlatformPackage> {
     } else {
         Err(FbuildError::PackageError(format!(
             "native QEMU (riscv32) is not supported on {}-{}",
-            std::env::consts::OS,
-            std::env::consts::ARCH
+            host.os_name(),
+            host.arch_name()
         )))
     }
 }
@@ -708,6 +717,17 @@ mod tests {
     }
 
     #[test]
+    fn linux_host_selects_linux_artifacts_for_both_embedded_qemu_targets() {
+        let linux = HostPlatform::new(host::HostOs::Linux, HostArch::X86_64);
+
+        let xtensa = platform_package_for(linux, EspQemuArch::Xtensa).unwrap();
+        let riscv = platform_package_for(linux, EspQemuArch::Riscv32).unwrap();
+
+        assert_eq!(xtensa.archive_suffix, "x86_64-linux-gnu");
+        assert_eq!(riscv.archive_suffix, "x86_64-linux-gnu");
+    }
+
+    #[test]
     fn find_qemu_binary_direct_bin_xtensa() {
         let tmp = tempfile::TempDir::new().unwrap();
         let bin = tmp.path().join("bin");
@@ -876,7 +896,7 @@ mod tests {
         // so the probe succeeds cross-platform.
         let tmp = tempfile::TempDir::new().unwrap();
         let probe = tmp.path().join("probe_qemu");
-        if cfg!(windows) {
+        if fbuild_core::platform::host::is_windows() {
             std::fs::write(&probe, b"@echo off\r\nexit /b 0\r\n").unwrap();
         } else {
             std::fs::write(&probe, b"#!/bin/sh\nexit 0\n").unwrap();

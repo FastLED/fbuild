@@ -40,7 +40,7 @@ use walkdir::WalkDir;
 fn normalize_glob_separators(pattern: &str) -> String {
     // Glob-pattern normalization is INTENTIONALLY unconditional
     // (unlike `NormalizedPath::display_slash()` which gates on
-    // `cfg!(windows)`) — glob patterns come from `platformio.ini` and
+    // `fbuild_core::platform::host::is_windows()`) — glob patterns come from `platformio.ini` and
     // may contain a mix of `\` and `/` regardless of host OS.
     pattern.replace('\\', "/")
 }

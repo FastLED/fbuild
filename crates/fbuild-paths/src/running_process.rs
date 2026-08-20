@@ -46,10 +46,8 @@ pub const FBUILD_RUNNING_PROCESS_BROKER_ENV: &str = "FBUILD_RUNNING_PROCESS_BROK
 pub const FBUILD_CACHE_DIR_ENV: &str = "FBUILD_CACHE_DIR";
 pub const LOCAL_TRUST_DOMAIN: &str = "local-shared";
 
-#[cfg(windows)]
-pub const DAEMON_BINARY_NAME: &str = "fbuild-daemon.exe";
-#[cfg(not(windows))]
-pub const DAEMON_BINARY_NAME: &str = "fbuild-daemon";
+pub const DAEMON_BINARY_NAME: &str =
+    fbuild_core::platform::executable::name("fbuild-daemon", "fbuild-daemon.exe");
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum RunningProcessDaemonMode {
@@ -224,33 +222,29 @@ impl CacheRoots {
     }
 }
 
-#[cfg(windows)]
 fn platform_service_definition_dir() -> PathBuf {
-    std::env::var_os("APPDATA")
-        .map(PathBuf::from)
-        .or_else(|| {
-            std::env::var_os("USERPROFILE")
-                .map(|home| PathBuf::from(home).join("AppData").join("Roaming"))
-        })
-        .unwrap_or_else(|| PathBuf::from(r"C:\ProgramData"))
-        .join("running-process")
-        .join("services")
-}
-
-#[cfg(target_os = "macos")]
-fn platform_service_definition_dir() -> PathBuf {
-    if let Some(home) = std::env::var_os("HOME") {
-        return PathBuf::from(home)
-            .join("Library")
-            .join("Application Support")
+    if fbuild_core::platform::host::is_windows() {
+        return std::env::var_os("APPDATA")
+            .map(PathBuf::from)
+            .or_else(|| {
+                std::env::var_os("USERPROFILE")
+                    .map(|home| PathBuf::from(home).join("AppData").join("Roaming"))
+            })
+            .unwrap_or_else(|| PathBuf::from(r"C:\ProgramData"))
             .join("running-process")
             .join("services");
     }
-    fbuild_owned_service_definition_dir()
-}
-
-#[cfg(all(unix, not(target_os = "macos")))]
-fn platform_service_definition_dir() -> PathBuf {
+    if fbuild_core::platform::host::is_macos() {
+        return std::env::var_os("HOME")
+            .map(PathBuf::from)
+            .map(|home| {
+                home.join("Library")
+                    .join("Application Support")
+                    .join("running-process")
+                    .join("services")
+            })
+            .unwrap_or_else(fbuild_owned_service_definition_dir);
+    }
     if let Some(config_home) = std::env::var_os("XDG_CONFIG_HOME")
         .map(PathBuf::from)
         .or_else(|| std::env::var_os("HOME").map(|home| PathBuf::from(home).join(".config")))
@@ -260,7 +254,6 @@ fn platform_service_definition_dir() -> PathBuf {
     fbuild_owned_service_definition_dir()
 }
 
-#[cfg(any(target_os = "macos", all(unix, not(target_os = "macos"))))]
 fn fbuild_owned_service_definition_dir() -> PathBuf {
     crate::get_cache_root()
         .join("running-process")
@@ -319,9 +312,11 @@ mod tests {
         );
     }
 
-    #[cfg(all(unix, not(target_os = "macos")))]
     #[test]
     fn service_definition_dir_falls_back_to_fbuild_cache_root_without_home() {
+        if !fbuild_core::platform::host::is_linux() {
+            return;
+        }
         let _env = ENV_LOCK.lock().unwrap();
         let cache_root = crate::temp_subdir(&format!(
             "fbuild-service-def-cache-root-{}",

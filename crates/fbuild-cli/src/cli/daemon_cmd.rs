@@ -306,13 +306,11 @@ fn run_daemon_running_process(json: bool) -> fbuild_core::Result<()> {
 }
 
 fn daemon_executable_candidate() -> std::path::PathBuf {
-    let Some(parent) = std::env::current_exe()
-        .ok()
-        .and_then(|p| p.parent().map(|d| d.to_path_buf()))
-    else {
-        return std::path::PathBuf::from(fbuild_paths::running_process::DAEMON_BINARY_NAME);
-    };
-    parent.join(fbuild_paths::running_process::DAEMON_BINARY_NAME)
+    fbuild_core::platform::executable::current_image_sibling(
+        fbuild_paths::running_process::DAEMON_BINARY_NAME,
+    )
+    .map(fbuild_core::path::NormalizedPath::into_path_buf)
+    .unwrap_or_else(|_| std::path::PathBuf::from(fbuild_paths::running_process::DAEMON_BINARY_NAME))
 }
 
 pub async fn run_daemon_list(client: &DaemonClient) -> fbuild_core::Result<()> {
@@ -696,7 +694,7 @@ pub async fn run_daemon_kill_all(force: bool) -> fbuild_core::Result<()> {
 
 pub async fn kill_process(pid: u32, force: bool) -> fbuild_core::Result<()> {
     let pid_str = pid.to_string();
-    let argv: Vec<&str> = if cfg!(windows) {
+    let argv: Vec<&str> = if fbuild_core::platform::host::is_windows() {
         if force {
             vec!["taskkill", "/F", "/PID", &pid_str]
         } else {
@@ -731,17 +729,14 @@ pub async fn kill_process(pid: u32, force: bool) -> fbuild_core::Result<()> {
 }
 
 pub async fn find_daemon_pids() -> fbuild_core::Result<Vec<u32>> {
-    if cfg!(windows) {
+    if fbuild_core::platform::host::is_windows() {
         // FastLED/fbuild#810: cap tasklist at 10s.
+        let image_filter = format!(
+            "IMAGENAME eq {}",
+            fbuild_core::platform::executable::native_name("fbuild-daemon")
+        );
         let output = fbuild_core::subprocess::run_command(
-            &[
-                "tasklist",
-                "/FI",
-                "IMAGENAME eq fbuild-daemon.exe",
-                "/FO",
-                "CSV",
-                "/NH",
-            ],
+            &["tasklist", "/FI", &image_filter, "/FO", "CSV", "/NH"],
             None,
             None,
             Some(std::time::Duration::from_secs(10)),

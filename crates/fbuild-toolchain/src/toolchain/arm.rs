@@ -194,11 +194,13 @@ fn all_platform_packages() -> [(&'static str, ArmPlatformPackage); 4] {
 
 /// Get the platform-specific download URL and optional checksum for the current host.
 fn platform_package() -> (String, Option<String>) {
-    let key = if cfg!(target_os = "windows") {
+    let key = if fbuild_core::platform::host::is_windows() {
         "windows"
-    } else if cfg!(target_os = "macos") {
+    } else if fbuild_core::platform::host::is_macos() {
         "macos"
-    } else if cfg!(target_arch = "aarch64") {
+    } else if fbuild_core::platform::host::current().arch()
+        == fbuild_core::platform::host::HostArch::Aarch64
+    {
         "linux-aarch64"
     } else {
         "linux-x86_64"
@@ -239,11 +241,7 @@ fn find_bin_root(install_dir: &Path) -> PathBuf {
 
 /// Get the tool binary name with .exe extension on Windows.
 fn tool_name(name: &str) -> String {
-    if cfg!(windows) {
-        format!("{}.exe", name)
-    } else {
-        name.to_string()
-    }
+    fbuild_core::platform::executable::native_name(name)
 }
 
 /// Get the full path to a tool binary.
@@ -267,11 +265,10 @@ mod tests {
     #[test]
     fn test_tool_name_platform() {
         let name = tool_name("arm-none-eabi-gcc");
-        if cfg!(windows) {
-            assert_eq!(name, "arm-none-eabi-gcc.exe");
-        } else {
-            assert_eq!(name, "arm-none-eabi-gcc");
-        }
+        assert_eq!(
+            name,
+            fbuild_core::platform::executable::native_name("arm-none-eabi-gcc")
+        );
     }
 
     #[test]

@@ -120,12 +120,12 @@ const PIO_DL_BASE: &str = "https://dl.registry.platformio.org/download/platformi
 
 /// Get the platform-specific download URL and optional SHA-256 checksum.
 fn platform_package() -> (&'static str, Option<&'static str>) {
-    if cfg!(target_os = "windows") {
+    if fbuild_core::platform::host::is_windows() {
         (
             "toolchain-gccarmnoneeabi-windows_amd64-1.90201.191206.tar.gz",
             Some("31301e144002f2043f60c518b87327dfcfca9f1dc0c1add72322d553d5733f0e"),
         )
-    } else if cfg!(target_os = "macos") {
+    } else if fbuild_core::platform::host::is_macos() {
         (
             "toolchain-gccarmnoneeabi-darwin_x86_64-1.90201.191206.tar.gz",
             Some("309fb7cd5c1b12f1ba8daa6f7554cc95c96a81246b6ff4833cbb31436f8f6add"),
@@ -162,11 +162,7 @@ fn find_bin_root(install_dir: &Path) -> PathBuf {
 }
 
 fn tool_name(name: &str) -> String {
-    if cfg!(windows) {
-        format!("{}.exe", name)
-    } else {
-        name.to_string()
-    }
+    fbuild_core::platform::executable::native_name(name)
 }
 
 fn tool_binary(bin_dir: &Path, name: &str) -> PathBuf {

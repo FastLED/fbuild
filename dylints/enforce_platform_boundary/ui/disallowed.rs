@@ -20,6 +20,7 @@ fn main() {
     let _backend = platform_windows::Backend;
     let _nested_host = format!("{}", cfg!(target_os = "linux"));
     let _nested_os = format!("{}", std::env::consts::OS);
+    let _current_image = std::env::current_exe();
 }
 
 #[cfg(test)]

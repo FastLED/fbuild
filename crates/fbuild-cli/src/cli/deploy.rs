@@ -287,7 +287,7 @@ async fn maybe_recover_and_retry(
             .unwrap_or_default()
     ));
     let context = usb_recovery::RecoveryLaunchContext {
-        is_windows: cfg!(windows),
+        is_windows: fbuild_core::platform::host::is_windows(),
         is_ci: std::env::var_os("CI").is_some(),
         is_interactive: std::io::IsTerminal::is_terminal(&std::io::stdin()),
     };

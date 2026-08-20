@@ -82,7 +82,7 @@ fn subprocess_sleep_helper() {
 
 #[test]
 fn legacy_pid_stand_in_is_never_signaled() {
-    let bin = std::env::current_exe().expect("current test exe");
+    let bin = fbuild_core::platform::executable::current_image().expect("current test exe");
     // allow-direct-spawn: test driver spawns its own test binary in helper mode.
     let mut helper = Command::new(&bin)
         .args([
@@ -205,7 +205,11 @@ async fn real_daemon_root_ownership_released_on_kill() {
     let temp_home = tempfile::tempdir().expect("temp home");
     let port = free_port();
     let bin = env!("CARGO_BIN_EXE_fbuild-daemon");
-    let home_key = if cfg!(windows) { "USERPROFILE" } else { "HOME" };
+    let home_key = if fbuild_core::platform::host::is_windows() {
+        "USERPROFILE"
+    } else {
+        "HOME"
+    };
 
     // allow-direct-spawn: test driver spawns the real fbuild-daemon binary under test.
     let mut daemon = Command::new(bin)

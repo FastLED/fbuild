@@ -944,7 +944,7 @@ pub fn family_for_port_or_default(name: &str) -> BoardFamily {
 }
 
 fn serial_port_name_matches(candidate: &str, requested: &str) -> bool {
-    if cfg!(windows) {
+    if fbuild_core::platform::host::is_windows() {
         candidate.eq_ignore_ascii_case(requested)
     } else {
         candidate == requested

@@ -323,7 +323,7 @@ pub async fn find_python() -> Option<Vec<String>> {
 /// the daemon's spawn-time PATH (FastLED/fbuild#1219). The caller PATH
 /// *replaces* the inherited one for the probe; `None` = legacy behavior.
 pub async fn find_python_with_path(caller_path: Option<&str>) -> Option<Vec<String>> {
-    let candidates: &[&[&str]] = if cfg!(windows) {
+    let candidates: &[&[&str]] = if fbuild_core::platform::host::is_windows() {
         &[&["python"], &["py", "-3"]]
     } else {
         &[&["python3"], &["python"]]

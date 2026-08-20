@@ -315,7 +315,11 @@ framework = arduino
 lib_extra_dirs = ignored
 ",
     );
-    let sep = if cfg!(windows) { ";" } else { ":" };
+    let sep = if fbuild_core::platform::host::is_windows() {
+        ";"
+    } else {
+        ":"
+    };
     let overrides = crate::pio_env::PioEnvOverrides::from_map(
         [(
             "PLATFORMIO_LIB_EXTRA_DIRS".to_string(),

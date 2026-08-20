@@ -6,3 +6,8 @@ expose neutral APIs; the private `windows`, `linux`, and `macos` trees own
 native implementation details.
 
 Embedded board/MCU selection and host artifact policy do not belong here.
+
+`host` exposes the current `HostPlatform` plus explicit values used by pure
+product-owner tests. `executable` owns native executable and command-script
+spelling. Product crates keep URL/checksum tables and embedded-target choices;
+they pass or read neutral host facts instead of using raw `cfg!` queries.

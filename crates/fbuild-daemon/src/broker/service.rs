@@ -224,11 +224,14 @@ mod tests {
     }
 
     fn abs_daemon() -> PathBuf {
-        if cfg!(windows) {
-            PathBuf::from(r"C:\opt\fbuild\bin\fbuild-daemon.exe")
+        if fbuild_core::platform::host::is_windows() {
+            PathBuf::from(r"C:\opt\fbuild\bin")
         } else {
-            PathBuf::from("/opt/fbuild/bin/fbuild-daemon")
+            PathBuf::from("/opt/fbuild/bin")
         }
+        .join(fbuild_core::platform::executable::native_name(
+            "fbuild-daemon",
+        ))
     }
 
     #[test]
@@ -322,7 +325,7 @@ mod tests {
 
     #[test]
     fn cache_manifest_records_all_seven_roots() {
-        let runtime = if cfg!(windows) {
+        let runtime = if fbuild_core::platform::host::is_windows() {
             PathBuf::from(r"C:\opt\fbuild\bin")
         } else {
             PathBuf::from("/opt/fbuild/bin")
@@ -443,12 +446,12 @@ mod tests {
     #[test]
     fn cache_data_root_is_stable_across_backend_versions() {
         let _env = ENV_LOCK.lock().unwrap();
-        let runtime_v1 = if cfg!(windows) {
+        let runtime_v1 = if fbuild_core::platform::host::is_windows() {
             PathBuf::from(r"C:\opt\fbuild-1\bin")
         } else {
             PathBuf::from("/opt/fbuild-1/bin")
         };
-        let runtime_v2 = if cfg!(windows) {
+        let runtime_v2 = if fbuild_core::platform::host::is_windows() {
             PathBuf::from(r"C:\opt\fbuild-2\bin")
         } else {
             PathBuf::from("/opt/fbuild-2/bin")
@@ -489,7 +492,7 @@ mod tests {
 
     #[test]
     fn ci_cache_manifest_uses_explicit_trust_instance() {
-        let runtime = if cfg!(windows) {
+        let runtime = if fbuild_core::platform::host::is_windows() {
             PathBuf::from(r"C:\opt\fbuild\bin")
         } else {
             PathBuf::from("/opt/fbuild/bin")

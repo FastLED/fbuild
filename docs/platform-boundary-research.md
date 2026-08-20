@@ -159,3 +159,22 @@ private, inline-test, integration-test, example, bench, and build-script source;
 the Dylint covers every construct in the current host's compiled sources,
 including arbitrary unexpanded macro tokens. CI compares actual Dylint
 observations with the scanner projection so a skipped compiler traversal fails.
+
+## Phase-3 host and executable facts
+
+Phase 3 introduced the value-type `HostPlatform` and neutral executable naming
+helpers. RED characterization failed on the absent `HostPlatform`, `current`,
+`name_for`, and `native_name_for` APIs. The same focused test is GREEN for
+Windows, Linux, and macOS values, including architecture identity and path-list
+separation. A product-owner test also proves that a Linux host selects Linux
+QEMU artifacts for both Xtensa and RISC-V embedded targets.
+
+The migration removed every raw `cfg!` host query and compile-time host fact
+outside the private boundary. Artifact URL/checksum tables, embedded-target
+selection, retry policy, and diagnostics remain in their existing product
+owners. The exact ledger contracted from 504 to 271 rows; the independent
+research inventory is 275 because it also records three authorized architecture
+reads inside the private selected modules and the single authorized current-image
+read inside the executable facade. Focused enforcement permanently asserts zero
+`cfg_macro` and `compile_host_fact` rows outside the boundary, while both
+detectors reject direct current-image discovery in shared callers.

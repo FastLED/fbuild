@@ -44,7 +44,7 @@ fn run_parent() {
         .expect("init_global_containment");
 
     // Spawn the child via the contained-spawn helper.
-    let self_exe = std::env::current_exe().expect("current_exe");
+    let self_exe = fbuild_core::platform::executable::current_image().expect("current_exe");
     // allow-direct-spawn: integration-test harness exercising spawn_contained itself.
     let mut cmd = std::process::Command::new(&self_exe);
     cmd.arg("child")
@@ -96,7 +96,7 @@ fn run_child() {
     //
     // So here we use a plain `spawn()` and the grandchild still ends
     // up in the parent's containment group.
-    let self_exe = std::env::current_exe().expect("current_exe");
+    let self_exe = fbuild_core::platform::executable::current_image().expect("current_exe");
     // allow-direct-spawn: integration-test harness verifying grandchild containment inheritance.
     let mut cmd = std::process::Command::new(&self_exe);
     cmd.arg("grandchild")

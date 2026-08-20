@@ -37,7 +37,7 @@ fn serial_client_lock_info(client: &SerialClientInfo) -> SerialClientLockInfo {
 }
 
 fn port_matches(actual: &str, requested: &str) -> bool {
-    if cfg!(windows) {
+    if fbuild_core::platform::host::is_windows() {
         actual.eq_ignore_ascii_case(requested)
     } else {
         actual == requested
@@ -460,7 +460,7 @@ mod tests {
         let mixed = ctx.project_lock(Path::new("/Tmp/FBuild/Proj"));
         let lower = ctx.project_lock(Path::new("/tmp/fbuild/proj"));
 
-        if cfg!(any(windows, target_os = "macos")) {
+        if fbuild_core::platform::host::is_windows() || fbuild_core::platform::host::is_macos() {
             // Case-insensitive filesystem: one logical project, so the two
             // spellings must share a single serialization lock. Before the
             // fix these keyed distinct raw-`PathBuf` entries and returned

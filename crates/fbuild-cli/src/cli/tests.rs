@@ -245,7 +245,11 @@ fn normalize_batch_preserves_order() {
 async fn build_pio_env_joins_libs_with_platform_separator() {
     let libs = vec!["a".to_string(), "b".to_string()];
     let env = build_ci_pio_env(&libs, None).await;
-    let expected = if cfg!(windows) { "a;b" } else { "a:b" };
+    let expected = if fbuild_core::platform::host::is_windows() {
+        "a;b"
+    } else {
+        "a:b"
+    };
     assert_eq!(
         env.get("PLATFORMIO_LIB_EXTRA_DIRS").map(String::as_str),
         Some(expected)

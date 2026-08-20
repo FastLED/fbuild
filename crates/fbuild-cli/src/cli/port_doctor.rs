@@ -496,7 +496,7 @@ pub fn run(only_port: Option<&str>, only_hub: Option<&str>, json: bool) -> Resul
 ///
 /// Read-only and best-effort; an empty result simply omits the per-port line.
 fn query_device_power_rows() -> Vec<(String, bool)> {
-    if !cfg!(windows) {
+    if !fbuild_core::platform::host::is_windows() {
         return Vec::new();
     }
     let script = "Get-CimInstance -Namespace root\\wmi -ClassName MSPower_DeviceEnable \
@@ -533,7 +533,7 @@ fn query_device_power_rows() -> Vec<(String, bool)> {
 /// registry copy needs elevation. The CIM provider behind
 /// `Get-PnpDeviceProperty` answers unelevated for phantoms.
 fn query_last_seen_secs(instance_id: &str) -> Option<i64> {
-    if !cfg!(windows) {
+    if !fbuild_core::platform::host::is_windows() {
         return None;
     }
     let script = format!(
@@ -560,7 +560,7 @@ fn query_last_seen_secs(instance_id: &str) -> Option<i64> {
 }
 
 pub(crate) fn query_selective_suspend() -> Option<bool> {
-    if !cfg!(windows) {
+    if !fbuild_core::platform::host::is_windows() {
         return None;
     }
     let out = fbuild_core::subprocess::run_command_blocking(

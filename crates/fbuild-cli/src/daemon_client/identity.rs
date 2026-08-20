@@ -116,7 +116,7 @@ fn identity_path(path: &str) -> String {
     while normalized.ends_with('/') && normalized.len() > 1 {
         normalized.pop();
     }
-    if cfg!(windows) {
+    if fbuild_core::platform::host::is_windows() {
         normalized.to_ascii_lowercase()
     } else {
         normalized

@@ -121,7 +121,11 @@ impl SharedSerialManager {
         // permission denied, no device) bubble up quickly instead of stalling
         // the daemon's WebSocket clients for 4+ minutes. The previous schedule
         // had 30 retries × ~10s ≈ 5 minutes which deadlocked self-eviction.
-        let max_retries: usize = if cfg!(windows) { 8 } else { 6 };
+        let max_retries: usize = if fbuild_core::platform::host::is_windows() {
+            8
+        } else {
+            6
+        };
         let backoff_schedule = [250u64, 500, 1000, 2000, 3000]; // ms
 
         let port_name = port.to_string();
@@ -749,7 +753,11 @@ impl SharedSerialManager {
                     session_key
                 ))
             })?;
-        let max_retries: usize = if cfg!(windows) { 8 } else { 6 };
+        let max_retries: usize = if fbuild_core::platform::host::is_windows() {
+            8
+        } else {
+            6
+        };
         let serial_handle = Arc::new(Mutex::new(
             Self::open_physical_serial(new_port, baud_rate, max_retries).await?,
         ));

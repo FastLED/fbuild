@@ -8,7 +8,7 @@ use crate::output;
 /// PlatformIO follows `PATH`-style conventions: ';' on Windows, ':' elsewhere.
 /// Centralized here so the CLI handler and the unit tests agree.
 pub fn ci_lib_extra_dirs_sep() -> &'static str {
-    if cfg!(windows) { ";" } else { ":" }
+    fbuild_core::platform::host::path_list_separator_str()
 }
 
 /// Map a single `pio ci` positional argument to a project directory.

@@ -88,13 +88,9 @@ fn uno_project_dir() -> PathBuf {
 /// `ClangComponentKind`'s variants.
 fn find_clangd_on_path() -> Option<PathBuf> {
     let path_var = std::env::var_os("PATH")?;
-    let exe_name = if cfg!(windows) {
-        "clangd.exe"
-    } else {
-        "clangd"
-    };
+    let exe_name = fbuild_core::platform::executable::native_name("clangd");
     std::env::split_paths(&path_var)
-        .map(|dir| dir.join(exe_name))
+        .map(|dir| dir.join(&exe_name))
         .find(|candidate| candidate.is_file())
 }
 

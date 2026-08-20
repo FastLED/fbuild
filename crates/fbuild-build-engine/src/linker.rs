@@ -593,7 +593,7 @@ mod tests {
     /// Absolute path for the running platform (`/x` is *not* absolute on
     /// Windows — it has a root but no drive prefix).
     fn abs(tail: &str) -> PathBuf {
-        if cfg!(windows) {
+        if fbuild_core::platform::host::is_windows() {
             PathBuf::from(format!("C:\\{}", tail.replace('/', "\\")))
         } else {
             PathBuf::from(format!("/{tail}"))

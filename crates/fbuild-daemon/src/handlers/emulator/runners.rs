@@ -239,11 +239,7 @@ impl EmulatorRunner for Avr8jsRunner {
 /// - macOS: `brew install simavr`
 /// - Windows: build from source (MSYS2/MinGW) — limited support
 async fn find_simavr() -> fbuild_core::Result<PathBuf> {
-    let simavr = if cfg!(windows) {
-        "simavr.exe"
-    } else {
-        "simavr"
-    };
+    let simavr = fbuild_core::platform::executable::name("simavr", "simavr.exe");
     // Try running simavr to verify it exists; route through containment
     // (issue #32). This is a short-lived probe so the containment
     // difference is purely consistency.
@@ -262,9 +258,9 @@ async fn find_simavr() -> fbuild_core::Result<PathBuf> {
     {
         Ok(_) => Ok(PathBuf::from(simavr)),
         Err(_) => {
-            let install_hint = if cfg!(target_os = "linux") {
+            let install_hint = if fbuild_core::platform::host::is_linux() {
                 "Install via: apt install simavr (Debian/Ubuntu) or your distro's package manager"
-            } else if cfg!(target_os = "macos") {
+            } else if fbuild_core::platform::host::is_macos() {
                 "Install via: brew install simavr"
             } else {
                 "SimAVR has limited Windows support. Build from source via MSYS2/MinGW, \

@@ -29,14 +29,11 @@ use super::common::{native_verify_enabled, native_write_enabled};
 /// try a bare `teensy_loader_cli` invocation, which will surface
 /// `command not found` to the user — clearer than a silent abort here.
 fn find_teensy_loader_cli() -> Option<PathBuf> {
-    let exe_name = if cfg!(windows) {
-        "teensy_loader_cli.exe"
-    } else {
-        "teensy_loader_cli"
-    };
+    let exe_name =
+        fbuild_core::platform::executable::name("teensy_loader_cli", "teensy_loader_cli.exe");
 
     if let Ok(path_env) = std::env::var("PATH") {
-        let sep = if cfg!(windows) { ';' } else { ':' };
+        let sep = fbuild_core::platform::host::path_list_separator();
         for dir in path_env.split(sep) {
             let candidate = PathBuf::from(dir).join(exe_name);
             if candidate.is_file() {
@@ -48,7 +45,7 @@ fn find_teensy_loader_cli() -> Option<PathBuf> {
     // PlatformIO drops the binary here on every platform. Reusing it means a
     // user who already has PIO working doesn't need to install anything else
     // to deploy via fbuild.
-    let pio_root = if cfg!(windows) {
+    let pio_root = if fbuild_core::platform::host::is_windows() {
         std::env::var("USERPROFILE").ok()
     } else {
         std::env::var("HOME").ok()
@@ -974,7 +971,7 @@ pub async fn deploy(
     let deploy_flashed = matches!(&deploy_result, Ok(r) if r.success);
     let cdc_unrecovered =
         port_discovery_owned && matches!(&deploy_result, Ok(r) if r.success && r.port.is_none());
-    let usb_recovery_request = if cfg!(windows)
+    let usb_recovery_request = if fbuild_core::platform::host::is_windows()
         && platform == fbuild_core::Platform::RaspberryPi
         && (!deploy_flashed || cdc_unrecovered)
     {

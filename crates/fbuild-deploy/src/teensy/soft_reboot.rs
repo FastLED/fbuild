@@ -95,7 +95,7 @@ mod tests {
         // Pure unit test: any host without a Teensy plugged at this port name
         // should return `Ok(false)` (no device). The point is to make sure
         // that a missing CDC port is never treated as a hard error.
-        let port = if cfg!(windows) {
+        let port = if fbuild_core::platform::host::is_windows() {
             "COM199" // unlikely to exist
         } else {
             "/tmp/fbuild-teensy-no-such-port"

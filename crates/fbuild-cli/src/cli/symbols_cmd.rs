@@ -213,10 +213,10 @@ fn resolve_elf(input: &Path) -> Result<PathBuf> {
 
 /// Locate `nm` on PATH. The user can always override with `--nm`.
 fn find_nm_on_path() -> Result<PathBuf> {
-    let exe_name = if cfg!(windows) { "nm.exe" } else { "nm" };
+    let exe_name = fbuild_core::platform::executable::native_name("nm");
     let path = std::env::var_os("PATH").ok_or_else(|| FbuildError::Other("PATH not set".into()))?;
     for dir in std::env::split_paths(&path) {
-        let candidate = dir.join(exe_name);
+        let candidate = dir.join(&exe_name);
         if candidate.exists() {
             return Ok(candidate);
         }

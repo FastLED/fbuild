@@ -39,8 +39,8 @@ not included; the same reconciliation also added concrete
 removed 25 false positives where local modules named `linux`, `macos`, or
 `unix` had been mistaken for native crates. Eight host-cfg occurrences added
 to `fbuild-paths` on `main` before the phase 2 baseline was merged were then
-reconciled into the ledger. The corrected, authoritative union contains **504
-rows**:
+reconciled into the ledger. The phase-2 bootstrap's corrected, authoritative
+union contained **504 rows**:
 
 | Kind | Rows |
 | --- | ---: |
@@ -67,7 +67,7 @@ rows**:
 | `fs` | 43 |
 | `ipc` | 12 |
 
-## Distribution by crate
+## Phase-2 distribution by crate
 
 | Crate | Rows |
 | --- | ---: |
@@ -91,6 +91,46 @@ The 504-row count is larger than #1306's preliminary 386 matching lines because
 this scan also records compile-time host facts, native paths/dependencies, and
 target-specific dependency tables and treats multiple constructs on a line as
 separate findings.
+
+## Phase-3 host-fact contraction
+
+Phase 3 replaced every raw `cfg!` OS/architecture query and compile-time host
+fact outside the boundary with `fbuild_core::platform::{host,executable}`.
+Product owners retain embedded-target and artifact-table policy; they now
+consume an explicit neutral `HostPlatform`. The exact enforcement ledger fell
+from **504 to 271 rows**, deleting 233 migrated occurrences. Its current shape
+is:
+
+| Kind | Rows |
+| --- | ---: |
+| `attr_cfg` | 181 |
+| `native_path` | 77 |
+| `native_dependency` | 7 |
+| `target_dependency_table` | 6 |
+| `cfg_macro` | 0 |
+| `compile_host_fact` | 0 |
+
+| Classification | Rows |
+| --- | ---: |
+| Host mechanic | 262 |
+| Host artifact policy | 9 |
+
+| Capability | Rows |
+| --- | ---: |
+| `process` | 95 |
+| `device` | 76 |
+| `host` | 36 |
+| `fs` | 39 |
+| `host_executable` | 20 |
+| `ipc` | 5 |
+
+The host-independent research inventory contains 275 rows because it also
+records the three authorized `std::env::consts::ARCH` reads in the private
+Windows, Linux, and macOS implementations and the single authorized
+`std::env::current_exe` read inside the executable facade. Those rows are
+intentionally absent from the enforcement ledger and Dylint baseline;
+regression tests verify that boundary implementation findings cannot be
+grandfathered while direct shared-caller current-image reads are rejected.
 
 ## Manifest findings
 

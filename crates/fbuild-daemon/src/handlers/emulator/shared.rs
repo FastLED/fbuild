@@ -94,7 +94,7 @@ pub(crate) fn qemu_session_dir(project_dir: &Path, env_name: &str) -> PathBuf {
 }
 
 pub(crate) fn build_linux_macos_qemu_hint(err: &str) -> String {
-    if cfg!(any(target_os = "linux", target_os = "macos")) {
+    if fbuild_core::platform::host::is_linux() || fbuild_core::platform::host::is_macos() {
         let prefix = if err.is_empty() {
             String::new()
         } else {

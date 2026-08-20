@@ -369,7 +369,8 @@ mod tests {
         let path = temp.path().join("root-owner.lock");
 
         let run_probe = |expected: &str| {
-            let executable = std::env::current_exe().expect("current test executable");
+            let executable = fbuild_core::platform::executable::current_image()
+                .expect("current test executable");
             let executable = executable.to_string_lossy();
             let lock_path = path.to_string_lossy();
             let args = [

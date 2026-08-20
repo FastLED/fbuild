@@ -174,7 +174,7 @@ fn write_lock_owner(lock_dir: &Path, package_name: &str, package_version: &str) 
 /// File stem of the running executable, used to make the liveness probe
 /// PID-recycling-safe.
 fn current_exe_stem() -> Option<String> {
-    std::env::current_exe()
+    fbuild_core::platform::executable::current_image()
         .ok()?
         .file_stem()
         .and_then(|s| s.to_str())
@@ -236,7 +236,7 @@ fn owner_is_dead(owner: &LockOwner) -> bool {
 }
 
 fn stem_eq(left: &str, right: &str) -> bool {
-    if cfg!(windows) {
+    if fbuild_core::platform::host::is_windows() {
         left.eq_ignore_ascii_case(right)
     } else {
         left == right
