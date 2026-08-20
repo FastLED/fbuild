@@ -260,7 +260,11 @@ where
             tracing::info!(
                 "RP-series recovery layer succeeded: target-bound application reset-interface reboot"
             );
-            let discovered = discover_bootsel().await?;
+            let discovered = discover_bootsel().await.map_err(|error| {
+                FbuildError::DeployFailed(format!(
+                    "{earlier_failure}; target-bound application reset-interface reboot succeeded, but BOOTSEL rediscovery failed: {error}"
+                ))
+            })?;
             let volume_discovery_error = if discovered.is_some() {
                 None
             } else {
@@ -3248,6 +3252,45 @@ mod tests {
         assert_eq!(outcome.volume, Some(expected_volume));
         assert!(outcome.volume_discovery_error.is_none());
         assert!(outcome.application_reboot_succeeded);
+    }
+
+    #[tokio::test]
+    async fn bootsel_rediscovery_error_preserves_layered_failure() {
+        let runtime = target::RequestedRuntimeTarget {
+            port: "COM18".to_string(),
+            serial_number: Some("2DCB876B587EA334".to_string()),
+            vendor_id: 0x2e8a,
+            product_id: 0xf00f,
+        };
+
+        let result = run_application_reboot_recovery(
+            application_reboot_target(false, Some(&runtime)),
+            None,
+            Some(FbuildError::DeployFailed(
+                "CDC touch failed and initial BOOTSEL discovery timed out".to_string(),
+            )),
+            Duration::from_secs(10),
+            |_target| async {
+                Ok(picotool::PicotoolLoad {
+                    stdout: "rebooted".to_string(),
+                    stderr: String::new(),
+                })
+            },
+            || async {
+                Err(FbuildError::DeployFailed(
+                    "volume enumeration failed".to_string(),
+                ))
+            },
+        )
+        .await;
+        let error = match result {
+            Err(error) => error.to_string(),
+            Ok(_) => panic!("BOOTSEL rediscovery failure must fail the recovery layer"),
+        };
+
+        assert!(error.contains("CDC touch failed and initial BOOTSEL discovery timed out"));
+        assert!(error.contains("reset-interface reboot succeeded"));
+        assert!(error.contains("volume enumeration failed"));
     }
 
     #[tokio::test]

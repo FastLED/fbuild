@@ -11,6 +11,7 @@
 use crate::device_manager::DeviceState;
 use fbuild_core::usb::{
     UNCLASSED_DEVICE_CLASS, UsbRecoveryRequest, is_windows_descriptor_failure_identity,
+    normalize_physical_location,
 };
 use fbuild_serial::ports::UsbProblemDevice;
 use std::collections::BTreeSet;
@@ -176,20 +177,6 @@ pub(super) fn compose_rp2040_recovery_request(
 fn exactly_one<T>(mut values: impl Iterator<Item = T>) -> Option<T> {
     let first = values.next()?;
     values.next().is_none().then_some(first)
-}
-
-fn normalize_physical_location(path: &str) -> Option<String> {
-    let upper = path.trim().to_ascii_uppercase();
-    if upper.is_empty() || !upper.contains("#USB(") {
-        return None;
-    }
-    Some(
-        upper
-            .rsplit_once("#USBMI(")
-            .and_then(|(physical, interface)| interface.ends_with(')').then_some(physical))
-            .unwrap_or(&upper)
-            .to_string(),
-    )
 }
 
 fn is_composite_interface(instance_id: &str) -> bool {

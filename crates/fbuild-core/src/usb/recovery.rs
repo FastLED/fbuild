@@ -58,6 +58,26 @@ pub fn is_windows_descriptor_failure_identity(vid: u16, pid: u16) -> bool {
     vid == WINDOWS_DESCRIPTOR_FAILURE_VID && pid == WINDOWS_DESCRIPTOR_FAILURE_PID
 }
 
+/// Normalize one Windows USB `LocationPaths` value to its physical-device
+/// path, removing a trailing composite-interface component when present.
+///
+/// Non-USB and empty values are rejected so callers that correlate an
+/// identity-lost device cannot accidentally treat an arbitrary PnP location
+/// as a physical USB socket.
+pub fn normalize_physical_location(path: &str) -> Option<String> {
+    let upper = path.trim().to_ascii_uppercase();
+    if upper.is_empty() || !upper.contains("#USB(") {
+        return None;
+    }
+    Some(
+        upper
+            .rsplit_once("#USBMI(")
+            .and_then(|(physical, interface)| interface.ends_with(')').then_some(physical))
+            .unwrap_or(&upper)
+            .to_string(),
+    )
+}
+
 /// Host health observed before or after a recovery operation.
 ///
 /// This is intentionally independent of `fbuild_serial::PortHealth` so the
@@ -260,5 +280,20 @@ mod tests {
         missing_location.descriptor_failure_at_location = true;
         missing_location.problem_code = Some(43);
         assert!(!missing_location.has_canonical_identity());
+    }
+
+    #[test]
+    fn physical_location_normalization_is_shared_and_usb_only() {
+        assert_eq!(
+            normalize_physical_location(" pciroot(0)#usbroot(0)#usb(10)#usb(4)#usbmi(2) ")
+                .as_deref(),
+            Some("PCIROOT(0)#USBROOT(0)#USB(10)#USB(4)")
+        );
+        assert_eq!(
+            normalize_physical_location("PCIROOT(0)#USBROOT(0)#USB(4)").as_deref(),
+            Some("PCIROOT(0)#USBROOT(0)#USB(4)")
+        );
+        assert_eq!(normalize_physical_location("PCIROOT(0)#PCI(1)"), None);
+        assert_eq!(normalize_physical_location("  "), None);
     }
 }

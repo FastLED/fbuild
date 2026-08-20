@@ -9,6 +9,7 @@
 
 use fbuild_core::usb::{
     UsbRecoveryHealth, UsbRecoveryOperation, UsbRecoveryRequest, UsbRecoveryResult,
+    normalize_physical_location,
 };
 
 /// A PnP devnode observed directly by the recovery backend.
@@ -206,7 +207,7 @@ fn validate_target_identity(
         if !target
             .location_paths
             .iter()
-            .any(|path| normalize_physical_location(path) == expected_location)
+            .any(|path| normalize_physical_location(path).as_deref() == Some(expected_location))
         {
             return Err("location-path-mismatch");
         }
@@ -237,15 +238,6 @@ fn validate_target_identity(
 
 fn same_id(left: &str, right: &str) -> bool {
     left.eq_ignore_ascii_case(right)
-}
-
-fn normalize_physical_location(path: &str) -> String {
-    let upper = path.trim().to_ascii_uppercase();
-    upper
-        .rsplit_once("#USBMI(")
-        .and_then(|(physical, interface)| interface.ends_with(')').then_some(physical))
-        .unwrap_or(&upper)
-        .to_string()
 }
 
 /// Whether the instance is a USB composite-interface devnode (`usbccgp`
