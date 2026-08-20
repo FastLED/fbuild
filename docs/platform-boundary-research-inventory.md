@@ -172,12 +172,51 @@ occurrences. Its process capability has contracted from 95 to 17 rows; three
 of those are authorized implementation details, leaving 14 exact caller rows
 for later IPC/device capability phases.
 
+## Phase-5 filesystem contraction
+
+Phase 5 moved native path and file identity, extended-prefix handling,
+permissions, directory links and reparse points, volume facts, error
+classification, shared output-file opening, atomic replacement, and blocked-I/O
+retirement behind `platform::fs`. Neutral product owners retain
+cache/archive/authorization/diagnostic/lock/retry policy.
+
+The exact enforcement ledger fell from **162 to 107 rows**, deleting 55
+migrated occurrences. Its current shape is:
+
+| Kind | Rows |
+| --- | ---: |
+| `attr_cfg` | 81 |
+| `native_path` | 21 |
+| `native_dependency` | 3 |
+| `target_dependency_table` | 2 |
+| `cfg_macro` | 0 |
+| `compile_host_fact` | 0 |
+
+| Classification | Rows |
+| --- | ---: |
+| Host mechanic | 104 |
+| Host artifact policy | 3 |
+
+| Capability | Rows |
+| --- | ---: |
+| `device` | 62 |
+| `host` | 20 |
+| `process` | 12 |
+| `host_executable` | 11 |
+| `ipc` | 2 |
+| `fs` | 0 |
+
+The normalized Dylint projection is 103 rows. The host-independent research
+inventory contains 137 rows: 107 enforced caller occurrences plus 30 exact
+authorized facade/private-implementation occurrences. Ten of those are native
+filesystem implementation or dependency details.
+
 ## Manifest findings
 
 Target-specific native ownership currently exists in:
 
+- `fbuild-core`: Unix `libc` and Windows `windows-sys`, confined to selected filesystem implementations;
 - `fbuild-cli`: Windows `windows-sys`;
-- `fbuild-deploy`: Windows `windows-sys`;
 - `fbuild-serial`: Windows `windows-sys`;
 - `fbuild-daemon`: cross-platform `interprocess`.
 

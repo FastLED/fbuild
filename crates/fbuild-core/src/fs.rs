@@ -134,7 +134,7 @@ pub async fn write_atomic(
 
     // Atomic rename. On NTFS this is `MoveFileExW(...,
     // MOVEFILE_REPLACE_EXISTING)`. On POSIX it's plain `rename(2)`.
-    if let Err(e) = tokio::fs::rename(&tmp_path, path).await {
+    if let Err(e) = crate::platform::fs::replace_file_async(&tmp_path, path).await {
         let _ = tokio::fs::remove_file(&tmp_path).await;
         return Err(e);
     }
@@ -213,7 +213,7 @@ pub fn write_atomic_sync(path: impl AsRef<Path>, content: impl AsRef<[u8]>) -> s
         drop(file);
     }
 
-    if let Err(e) = std::fs::rename(&tmp_path, path) {
+    if let Err(e) = crate::platform::fs::replace_file(&tmp_path, path) {
         let _ = std::fs::remove_file(&tmp_path);
         return Err(e);
     }

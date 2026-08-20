@@ -282,7 +282,6 @@ mod tests {
     mod linux_tests {
         use super::*;
         use std::fs;
-        use std::os::unix::fs::symlink;
         use tempfile::tempdir;
 
         // Build a fake `/sys/class/tty/<port>/device/driver` symlink
@@ -304,7 +303,8 @@ mod tests {
                 .join("drivers")
                 .join(driver_name);
             fs::create_dir_all(&driver_dir).unwrap();
-            symlink(&driver_dir, device_dir.join("driver")).unwrap();
+            fbuild_core::platform::fs::symlink_dir(&driver_dir, &device_dir.join("driver"))
+                .unwrap();
         }
 
         #[test]

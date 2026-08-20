@@ -162,7 +162,7 @@ pub fn resolve(lnk: &LnkFile, cache: &DiskCache) -> Result<ResolvedBlob> {
     if final_path.exists() {
         let _ = std::fs::remove_file(&final_path);
     }
-    std::fs::rename(&downloaded, &final_path).map_err(|e| {
+    fbuild_core::platform::fs::replace_file(&downloaded, &final_path).map_err(|e| {
         FbuildError::PackageError(format!(
             "failed to move lnk blob {} → {}: {e}",
             downloaded.display(),

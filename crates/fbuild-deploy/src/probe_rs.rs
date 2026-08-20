@@ -269,15 +269,9 @@ fn extract_and_install_probe_rs(
         ))
     })?;
 
-    #[cfg(unix)]
-    {
-        use std::os::unix::fs::PermissionsExt;
-        let mut perms = std::fs::metadata(&temp_path)?.permissions();
-        perms.set_mode(perms.mode() | 0o755);
-        std::fs::set_permissions(&temp_path, perms)?;
-    }
+    fbuild_core::platform::fs::set_executable(&temp_path)?;
 
-    std::fs::rename(&temp_path, dest_path).map_err(|e| {
+    fbuild_core::platform::fs::replace_file(&temp_path, dest_path).map_err(|e| {
         let _ = std::fs::remove_file(&temp_path);
         FbuildError::PackageError(format!(
             "failed to atomically install probe-rs from {} to {}: {}",

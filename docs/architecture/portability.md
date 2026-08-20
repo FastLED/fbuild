@@ -29,6 +29,13 @@ mechanics delegate to the workspace-pinned `running-process`; raw Job Objects,
 process groups, parent-death signals, handles/file descriptors, and native PID
 APIs remain inside the selected private platform tree.
 
+Filesystem mechanics use `fbuild_core::platform::fs`. The facade owns lexical
+path rules, file identity and same-file comparison, permissions, links and
+reparse points, volume facts, native error classification, shared removable
+volume output, atomic rename/replacement, and retirement of blocked filesystem
+I/O. Callers retain cache/archive policy, authorization, diagnostics, locking,
+and retry decisions.
+
 ## Windows (MSYS2/Git Bash)
 
 ### USB-CDC Serial

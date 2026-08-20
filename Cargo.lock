@@ -1189,9 +1189,11 @@ version = "2.5.18"
 dependencies = [
  "async-trait",
  "fs2",
+ "libc",
  "prost",
  "reqwest",
  "running-process",
+ "same-file",
  "serde",
  "serde_json",
  "sha2",
@@ -1200,6 +1202,7 @@ dependencies = [
  "thiserror 2.0.18",
  "tokio",
  "tracing",
+ "windows-sys 0.52.0",
  "zstd",
 ]
 
@@ -1266,7 +1269,6 @@ dependencies = [
  "thiserror 2.0.18",
  "tokio",
  "tracing",
- "windows-sys 0.52.0",
  "zip",
  "zstd",
 ]
@@ -1319,6 +1321,7 @@ dependencies = [
  "bincode",
  "blake3",
  "criterion",
+ "fbuild-core",
  "fbuild-header-scan",
  "fbuild-packages",
  "fbuild-paths",

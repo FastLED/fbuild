@@ -11,3 +11,9 @@ Embedded board/MCU selection and host artifact policy do not belong here.
 product-owner tests. `executable` owns native executable and command-script
 spelling. Product crates keep URL/checksum tables and embedded-target choices;
 they pass or read neutral host facts instead of using raw `cfg!` queries.
+
+`fs` owns host path and file identity, display rules, executable permissions,
+link/reparse classification, volume facts, native error classification, shared
+destination opening, atomic replacement, and blocked-I/O retirement. Cache
+sizing, archive traversal, authorization, locking, diagnostics, and retry policy
+remain with their product owners.

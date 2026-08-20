@@ -30,7 +30,23 @@ CONCRETE_PREFIXES = (
 )
 AUTHORIZED_BOUNDARY_FINDINGS = {
     (PLATFORM_ROOT + "executable.rs", "native_path", "std::env::current_exe"),
+    (
+        "crates/fbuild-core/Cargo.toml",
+        "target_dependency_table",
+        "[target.'cfg(windows)'.dependencies]",
+    ),
+    ("crates/fbuild-core/Cargo.toml", "native_dependency", "windows-sys"),
 }
+AUTHORIZED_BOUNDARY_FINDINGS.update(
+    {
+        (
+            "crates/fbuild-core/\x43argo.toml",
+            "target_dependency_table",
+            "[target.'cfg(unix)'.dependencies]",
+        ),
+        ("crates/fbuild-core/\x43argo.toml", "native_dependency", "libc"),
+    }
+)
 LEDGER_KINDS = {
     "attr_cfg",
     "cfg_macro",

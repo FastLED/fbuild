@@ -421,35 +421,15 @@ fn validate_rendezvous_paths(request_path: &Path, result_path: &Path) -> fbuild_
     Ok(())
 }
 
-#[cfg(windows)]
 fn reject_reparse_point(path: &Path, description: &str) -> fbuild_core::Result<()> {
-    use std::os::windows::ffi::OsStrExt;
-    use windows_sys::Win32::Storage::FileSystem::{
-        FILE_ATTRIBUTE_REPARSE_POINT, GetFileAttributesW, INVALID_FILE_ATTRIBUTES,
-    };
-
-    let wide = path
-        .as_os_str()
-        .encode_wide()
-        .chain(Some(0))
-        .collect::<Vec<_>>();
-    // SAFETY: `wide` is NUL-terminated and remains live for the API call.
-    let attributes = unsafe { GetFileAttributesW(wide.as_ptr()) };
-    if attributes == INVALID_FILE_ATTRIBUTES {
-        return Err(fbuild_core::FbuildError::Other(format!(
-            "cannot inspect {description} attributes"
-        )));
-    }
-    if attributes & FILE_ATTRIBUTE_REPARSE_POINT != 0 {
+    let is_link = fbuild_core::platform::fs::is_link_or_reparse(path).map_err(|_| {
+        fbuild_core::FbuildError::Other(format!("cannot inspect {description} attributes"))
+    })?;
+    if is_link {
         return Err(fbuild_core::FbuildError::Other(format!(
             "recovery helper rejected reparse-point {description}"
         )));
     }
-    Ok(())
-}
-
-#[cfg(not(windows))]
-fn reject_reparse_point(_path: &Path, _description: &str) -> fbuild_core::Result<()> {
     Ok(())
 }
 

@@ -1,14 +1,4 @@
-//! USB topology capture for RP-series deploy diagnostics (Windows only) and
-//! the removable-drive predicate used to keep the BOOTSEL volume scan off
-//! dead mapped network drives (FastLED/fbuild#1081, #1082).
-
-/// True when `root` (e.g. `D:\`) is a `DRIVE_REMOVABLE` volume per
-/// `GetDriveTypeW`. Used to keep the default Windows drive-letter scan from
-/// touching a disconnected mapped network drive or a fixed disk.
-#[cfg(windows)]
-pub(super) fn is_removable_drive(root: &std::path::Path) -> bool {
-    windows_impl::is_removable_drive(root)
-}
+//! USB topology capture for RP-series deploy diagnostics (Windows only).
 
 /// One-line human-readable USB topology for a runtime COM port, or `None`
 /// when the platform or host cannot supply one. Never panics: every FFI
@@ -128,11 +118,9 @@ pub(super) fn format_topology(depth: HubDepth, location: Option<&str>) -> String
 
 #[cfg(windows)]
 mod windows_impl {
+    use super::{classify_ancestor_chain, format_topology};
     use std::ffi::{OsStr, c_void};
     use std::os::windows::ffi::OsStrExt;
-    use std::path::Path;
-
-    use super::{classify_ancestor_chain, format_topology};
 
     const DIGCF_PRESENT: u32 = 0x0000_0002;
     const DICS_FLAG_GLOBAL: u32 = 0x0000_0001;
@@ -142,7 +130,6 @@ mod windows_impl {
     const ERROR_SUCCESS: i32 = 0;
     const SPDRP_LOCATION_INFORMATION: u32 = 0x0000_000D;
     const CR_SUCCESS: u32 = 0;
-    const DRIVE_REMOVABLE: u32 = 2;
     // Real USB hub trees are at most a handful of tiers deep; this bounds a
     // wedged/cyclic CM_Get_Parent walk instead of looping forever.
     const MAX_ANCESTOR_DEPTH: usize = 16;
@@ -224,11 +211,6 @@ mod windows_impl {
         fn CM_Get_Device_IDW(devinst: u32, buffer: *mut u16, buffer_len: u32, flags: u32) -> u32;
     }
 
-    #[link(name = "kernel32")]
-    extern "system" {
-        fn GetDriveTypeW(root_path_name: *const u16) -> u32;
-    }
-
     fn to_wide(value: &str) -> Vec<u16> {
         OsStr::new(value)
             .encode_wide()
@@ -248,11 +230,6 @@ mod windows_impl {
     /// `INVALID_HANDLE_VALUE` (all bits set), not always a null pointer.
     fn is_invalid_handle(handle: *mut c_void) -> bool {
         handle.is_null() || handle as usize == usize::MAX
-    }
-
-    pub(super) fn is_removable_drive(root: &Path) -> bool {
-        let wide_root = to_wide(&root.to_string_lossy());
-        unsafe { GetDriveTypeW(wide_root.as_ptr()) == DRIVE_REMOVABLE }
     }
 
     fn new_devinfo_data() -> SpDevinfoData {

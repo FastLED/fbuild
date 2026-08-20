@@ -39,6 +39,18 @@ reqwest = { workspace = true }
 # Cross-process shared/exclusive fbuild-daemon lifecycle gates. These are not
 # used for zccache object access. Locks are released if a process exits.
 fs2 = { workspace = true }
+# Stable cross-platform file identity handles; construction remains confined
+# to the selected filesystem implementation.
+same-file = { workspace = true }
+
+[target.'cfg(unix)'.dependencies]
+# Selected Unix filesystem mechanics query the exact mount containing a path.
+libc = { workspace = true }
+
+[target.'cfg(windows)'.dependencies]
+# Selected Windows filesystem mechanics: removable-volume facts and retiring
+# a kernel-blocked output handle after its watchdog expires.
+windows-sys = { version = "0.52", features = ["Win32_Foundation", "Win32_Storage_FileSystem", "Win32_System_IO"] }
 
 [dev-dependencies]
 tempfile = { workspace = true }

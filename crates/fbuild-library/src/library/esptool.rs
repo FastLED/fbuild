@@ -159,17 +159,7 @@ impl Esptool {
         // The GitHub-released zips do not always preserve the executable bit;
         // set it every time (idempotent, cheap) so a cached install stays
         // runnable.
-        #[cfg(unix)]
-        {
-            use std::os::unix::fs::PermissionsExt;
-            if let Ok(meta) = std::fs::metadata(bin.as_path()) {
-                let mut perms = meta.permissions();
-                if perms.mode() & 0o111 == 0 {
-                    perms.set_mode(0o755);
-                    let _ = std::fs::set_permissions(bin.as_path(), perms);
-                }
-            }
-        }
+        let _ = fbuild_core::platform::fs::ensure_executable(bin.as_path());
 
         if let Err(error) = verify_esptool_binary(bin.as_path()).await {
             if let Err(remove_error) = remove_cached_install(&install_path) {
@@ -517,10 +507,11 @@ mod tests {
         assert!(tmp.path().join(esptool_bin_name()).exists());
     }
 
-    #[cfg(unix)]
     #[tokio::test]
     async fn verify_uses_supported_version_subcommand() {
-        use std::os::unix::fs::PermissionsExt;
+        if fbuild_core::platform::host::is_windows() {
+            return;
+        }
 
         let tmp = tempfile::TempDir::new().unwrap();
         let bin = tmp.path().join(esptool_bin_name());
@@ -529,9 +520,7 @@ mod tests {
             b"#!/bin/sh\n[ \"$#\" -eq 1 ] && [ \"$1\" = \"version\" ]\n",
         )
         .unwrap();
-        let mut permissions = std::fs::metadata(&bin).unwrap().permissions();
-        permissions.set_mode(0o755);
-        std::fs::set_permissions(&bin, permissions).unwrap();
+        fbuild_core::platform::fs::set_executable(&bin).unwrap();
 
         verify_esptool_binary(&bin).await.unwrap();
     }

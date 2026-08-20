@@ -130,11 +130,9 @@ pub(crate) fn command_environment(
 
 #[cfg(test)]
 pub(crate) fn create_path_probe(directory: &std::path::Path) -> std::io::Result<super::super::process::PathProbe> {
-    use std::os::unix::fs::PermissionsExt;
-
     let path = directory.join("fbuild_1219_probe");
     std::fs::write(&path, "#!/bin/sh\necho overlay-marker\n")?;
-    std::fs::set_permissions(&path, std::fs::Permissions::from_mode(0o755))?;
+    super::fs::set_executable(&path)?;
     Ok(super::super::process::PathProbe {
         path: path.into(),
         bare_args: vec!["fbuild_1219_probe".to_string()],

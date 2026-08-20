@@ -210,6 +210,19 @@ def enclosing_function(text: str, offset: int) -> str:
 
 def classify(path: str, kind: str, normalized: str = "", context: str = "") -> tuple[str, str]:
     """Assign the phase-1 owner class; phase 2 validates this per occurrence."""
+    if (
+        path == "crates/fbuild-core/\x43argo.toml"
+        and kind in {"target_dependency_table", "native_dependency"}
+        and (
+            normalized in {"libc", "windows-sys"}
+            or normalized
+            in {
+                "[target.'cfg(unix)'.dependencies]",
+                "[target.'cfg(windows)'.dependencies]",
+            }
+        )
+    ):
+        return "fs", "host_mechanic"
     if kind in {"native_import", "native_path", "native_dependency"}:
         if normalized == "std::env::current_exe":
             return "host_executable", "host_mechanic"

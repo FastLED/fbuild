@@ -122,8 +122,7 @@ fn extract_wlink(archive: &Path, staging: &Path, dest: &Path) -> Result<()> {
     }
     std::fs::copy(binary, dest)
         .map_err(|e| FbuildError::PackageError(format!("install wlink: {e}")))?;
-    #[cfg(unix)]
-    std::fs::set_permissions(dest, std::os::unix::fs::PermissionsExt::from_mode(0o755))
+    fbuild_core::platform::fs::set_executable(dest)
         .map_err(|e| FbuildError::PackageError(format!("make wlink executable: {e}")))?;
     Ok(())
 }

@@ -131,7 +131,7 @@ async fn download_github_library(url: &str, name: &str, lib_dir: &Path) -> Resul
     if final_src.exists() {
         std::fs::remove_dir_all(&final_src)?;
     }
-    std::fs::rename(&src_dir, &final_src)
+    fbuild_core::platform::fs::rename_path(&src_dir, &final_src)
         .map_err(|e| FbuildError::PackageError(format!("failed to move library source: {}", e)))?;
 
     // Clean up
@@ -177,7 +177,7 @@ async fn download_registry_library(spec: &LibrarySpec, lib_dir: &Path) -> Result
     if final_src.exists() {
         std::fs::remove_dir_all(&final_src)?;
     }
-    std::fs::rename(&src_dir, &final_src)
+    fbuild_core::platform::fs::rename_path(&src_dir, &final_src)
         .map_err(|e| FbuildError::PackageError(format!("failed to move library source: {}", e)))?;
 
     // Clean up

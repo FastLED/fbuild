@@ -124,8 +124,7 @@ fn extract_wchisp(archive: &Path, staging: &Path, dest: &Path) -> Result<()> {
     }
     std::fs::copy(binary, dest)
         .map_err(|e| FbuildError::PackageError(format!("install wchisp: {e}")))?;
-    #[cfg(unix)]
-    std::fs::set_permissions(dest, std::os::unix::fs::PermissionsExt::from_mode(0o755))
+    fbuild_core::platform::fs::set_executable(dest)
         .map_err(|e| FbuildError::PackageError(format!("make wchisp executable: {e}")))?;
     Ok(())
 }

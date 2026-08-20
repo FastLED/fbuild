@@ -406,7 +406,7 @@ fn fetch_overlay_to_inner_with_client(
     }
     let tmp = path.with_extension("tmp");
     std::fs::write(&tmp, &body).map_err(|e| format!("tmp write: {e}"))?;
-    std::fs::rename(&tmp, path).map_err(|e| format!("rename: {e}"))?;
+    crate::platform::fs::replace_file(&tmp, path).map_err(|e| format!("rename: {e}"))?;
     tracing::debug!(
         path = %path.display(),
         size = body.len(),

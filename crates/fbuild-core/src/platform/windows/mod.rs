@@ -1,5 +1,6 @@
 use super::host::{HostArch, HostOs};
 
+pub(super) mod fs;
 pub(super) mod process;
 
 pub(super) const HOST_OS: HostOs = HostOs::Windows;

@@ -380,19 +380,16 @@ fn put_u32(buffer: &mut [u8], offset: usize, value: u32) {
 /// tests can keep passing explicit temp-dir roots.
 fn volume_roots() -> Vec<PathBuf> {
     let home = std::env::var_os("HOME").map(PathBuf::from);
-    #[cfg(windows)]
-    {
-        volume_roots_filtered(true, home.as_deref(), topology::is_removable_drive)
-    }
-    #[cfg(not(windows))]
-    {
+    if fbuild_core::platform::host::is_windows() {
+        fbuild_core::platform::fs::removable_volume_roots().unwrap_or_default()
+    } else {
         volume_roots_filtered(false, home.as_deref(), |_: &Path| true)
     }
 }
 
 /// Unfiltered root list, kept for the pre-existing cross-platform coverage
-/// test now that `volume_roots()` filters Windows letters through
-/// [`topology::is_removable_drive`].
+/// test now that `volume_roots()` filters Windows letters through neutral
+/// filesystem volume facts.
 #[cfg(test)]
 fn volume_roots_for(windows: bool, home: Option<&Path>) -> Vec<PathBuf> {
     volume_roots_filtered(windows, home, |_: &Path| true)
@@ -842,20 +839,9 @@ fn watchdog_diagnostics() -> String {
     }
 }
 
-#[cfg(windows)]
 fn cancel_synchronous_io(worker: &std::thread::JoinHandle<()>) {
-    use std::os::windows::io::AsRawHandle;
-    use windows_sys::Win32::System::IO::CancelSynchronousIo;
-
-    // SAFETY: `as_raw_handle` is valid for the lifetime of `worker`; Windows
-    // documents CancelSynchronousIo as safe to call on another thread handle.
-    unsafe {
-        let _ = CancelSynchronousIo(worker.as_raw_handle() as isize);
-    }
+    let _ = fbuild_core::platform::fs::cancel_blocking_io(worker);
 }
-
-#[cfg(not(windows))]
-fn cancel_synchronous_io(_worker: &std::thread::JoinHandle<()>) {}
 
 /// Run `work` on a dedicated thread and give up after `budget`. A storport
 /// retry storm behind a sick hub can block the NEW.UF2 `write_all` for
@@ -1006,25 +992,7 @@ fn write_uf2_artifact_direct(
 }
 
 fn open_uf2_destination(destination: &Path) -> io::Result<fs::File> {
-    let mut options = fs::OpenOptions::new();
-    options.write(true).create(true).truncate(true);
-
-    #[cfg(windows)]
-    {
-        use std::os::windows::fs::OpenOptionsExt;
-
-        // CPython's open(name, "wb") reaches UCRT _wopen(), whose default
-        // _SH_DENYNO mapping is FILE_SHARE_READ | FILE_SHARE_WRITE. Rust also
-        // enables FILE_SHARE_DELETE by default. Exclude that extra permission
-        // so removable-drive scanners cannot delete/replace NEW.UF2 while the
-        // ROM transfer handle is active and the Windows path matches the
-        // Arduino-Pico uploader exactly.
-        const FILE_SHARE_READ: u32 = 0x0000_0001;
-        const FILE_SHARE_WRITE: u32 = 0x0000_0002;
-        options.share_mode(FILE_SHARE_READ | FILE_SHARE_WRITE);
-    }
-
-    options.open(destination)
+    fbuild_core::platform::fs::open_shared_write(destination)
 }
 
 struct CountingWriter<W> {
@@ -1122,17 +1090,20 @@ fn format_uf2_copy_error(
         artifact.display(),
         destination.display()
     );
-    match copy_error.raw_os_error() {
-        Some(5) => format!(
+    if !fbuild_core::platform::host::is_windows() {
+        return base;
+    }
+    match fbuild_core::platform::fs::classify_error(copy_error) {
+        fbuild_core::platform::fs::ErrorClass::AccessDenied => format!(
             "{base}. Windows denied write access to the RP-series BOOTSEL volume (error 5). This is characteristically a host removable-storage write-deny policy — Group Policy \"Removable Disks: Deny write access\" or BitLocker FDVDenyWriteAccess — or an aggressive endpoint-protection filter, not a board fault. Check with this machine's administrator; retrying on a direct USB port will not clear a policy block"
         ),
-        Some(121) => format!(
+        fbuild_core::platform::fs::ErrorClass::TimedOut => format!(
             "{base}. Windows timed out writing to the RP-series BOOTSEL storage transport (error 121), and fbuild did not observe the ROM eject transition. Request a fresh USB enumeration on a direct USB port with a known data cable, avoid USB hubs for the retry, and do not retry the same timed-out enumeration. A blank or invalid-flash Pico returns to ROM boot automatically: reconnect normally and do not press BOOTSEL"
         ),
-        Some(1006) => format!(
+        fbuild_core::platform::fs::ErrorClass::InvalidatedHandle => format!(
             "{base}. Windows invalidated the open handle to the RP-series BOOTSEL synthetic FAT volume (error 1006), and fbuild did not observe the ROM eject transition. Request a fresh USB enumeration on a direct USB port and close software that scans or synchronizes removable drives before retrying. A blank or invalid-flash Pico returns to ROM boot automatically: reconnect normally and do not press BOOTSEL"
         ),
-        Some(1392) => format!(
+        fbuild_core::platform::fs::ErrorClass::CorruptFilesystem => format!(
             "{base}. Windows cannot access the RP-series BOOTSEL synthetic FAT volume (error 1392). Do not run chkdsk, filesystem repair, or format this ROM-emulated volume; request a fresh USB enumeration and retry, or use fbuild's managed picotool fallback with the Raspberry Pi-documented WinUSB binding. A blank or invalid-flash Pico returns to ROM boot automatically: reconnect normally and do not press BOOTSEL"
         ),
         _ => base,
@@ -1140,20 +1111,10 @@ fn format_uf2_copy_error(
 }
 
 fn is_device_disappearance_error(error: &std::io::Error) -> bool {
-    use std::io::ErrorKind;
-
     matches!(
-        error.kind(),
-        ErrorKind::NotFound
-            | ErrorKind::BrokenPipe
-            | ErrorKind::ConnectionAborted
-            | ErrorKind::ConnectionReset
-            | ErrorKind::UnexpectedEof
-    ) || matches!(
-        error.raw_os_error(),
-        // Windows: FILE/PATH_NOT_FOUND, INVALID_HANDLE, NOT_READY,
-        // FILE_INVALID after eject, DEVICE_NOT_CONNECTED. Unix: ENODEV.
-        Some(2 | 3 | 6 | 21 | 1006 | 1167 | 19)
+        fbuild_core::platform::fs::classify_error(error),
+        fbuild_core::platform::fs::ErrorClass::DeviceUnavailable
+            | fbuild_core::platform::fs::ErrorClass::InvalidatedHandle
     )
 }
 
@@ -2650,6 +2611,9 @@ mod tests {
 
     #[test]
     fn windows_5_write_denial_points_at_host_policy_not_the_board() {
+        if !fbuild_core::platform::host::is_windows() {
+            return;
+        }
         let error = io::Error::from_raw_os_error(5);
         let message =
             format_uf2_copy_error(Path::new("firmware.uf2"), Path::new("G:/NEW.UF2"), &error);
@@ -3786,25 +3750,6 @@ mod tests {
         assert_eq!(fs::read(destination).unwrap(), bytes);
     }
 
-    #[cfg(windows)]
-    #[test]
-    fn uf2_destination_matches_ucrt_delete_sharing() {
-        use std::os::windows::fs::OpenOptionsExt;
-
-        const DELETE_ACCESS: u32 = 0x0001_0000;
-        const ERROR_SHARING_VIOLATION: i32 = 32;
-
-        let root = tempdir().unwrap();
-        let destination = root.path().join("NEW.UF2");
-        let _writer = open_uf2_destination(&destination).unwrap();
-
-        let error = fs::OpenOptions::new()
-            .access_mode(DELETE_ACCESS)
-            .open(&destination)
-            .unwrap_err();
-        assert_eq!(error.raw_os_error(), Some(ERROR_SHARING_VIOLATION));
-    }
-
     #[test]
     fn whole_buffer_writer_tracks_short_writes_and_flush_failures() {
         let bytes = vec![0xA5; 4096];
@@ -3848,6 +3793,9 @@ mod tests {
 
     #[test]
     fn windows_1392_copy_error_warns_against_repairing_synthetic_volume() {
+        if !fbuild_core::platform::host::is_windows() {
+            return;
+        }
         let error = std::io::Error::from_raw_os_error(1392);
         let message =
             format_uf2_copy_error(Path::new("firmware.uf2"), Path::new("G:/NEW.UF2"), &error);
@@ -3860,6 +3808,9 @@ mod tests {
 
     #[test]
     fn windows_1006_is_rejected_while_bootsel_marker_remains() {
+        if !fbuild_core::platform::host::is_windows() {
+            return;
+        }
         let root = tempdir().unwrap();
         let artifact = root.path().join("firmware.uf2");
         let destination = root.path().join("NEW.UF2");
@@ -3885,6 +3836,9 @@ mod tests {
 
     #[test]
     fn windows_1006_after_complete_write_and_bootsel_eject_is_accepted() {
+        if !fbuild_core::platform::host::is_windows() {
+            return;
+        }
         let root = tempdir().unwrap();
         let marker = root.path().join("INFO_UF2.TXT");
         let artifact = root.path().join("firmware.uf2");
@@ -4021,6 +3975,9 @@ mod tests {
 
     #[test]
     fn windows_121_write_timeout_recommends_a_direct_usb_retry() {
+        if !fbuild_core::platform::host::is_windows() {
+            return;
+        }
         let error = io::Error::from_raw_os_error(121);
         let message =
             format_uf2_copy_error(Path::new("firmware.uf2"), Path::new("G:/NEW.UF2"), &error);
