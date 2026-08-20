@@ -825,9 +825,9 @@ mod tests {
         assert_eq!(bare_name_path_overlay("esptool", None), None);
         // Absolute and relative paths never trigger a PATH lookup.
         let absolute = if crate::platform::host::is_windows() {
-            std::path::PathBuf::from(r"C:\tools\esptool")
+            crate::path::NormalizedPath::from(r"C:\tools\esptool")
         } else {
-            std::path::PathBuf::from("/usr/local/bin")
+            crate::path::NormalizedPath::from("/usr/local/bin")
         }
         .join(crate::platform::executable::native_name("esptool"));
         assert_eq!(
