@@ -54,6 +54,13 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
             normalized="libc",
         )
         self.assertEqual(boundary.rows_from_findings([unix_manifest_finding]), [])
+        unscoped_manifest_finding = dataclasses.replace(
+            unix_manifest_finding,
+            capability="process",
+        )
+        self.assertEqual(
+            len(boundary.rows_from_findings([unscoped_manifest_finding])), 1
+        )
         unauthorized_manifest_finding = dataclasses.replace(
             manifest_finding,
             normalized="winapi",

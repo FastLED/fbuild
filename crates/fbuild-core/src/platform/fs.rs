@@ -98,7 +98,7 @@ pub fn replace_file(source: &Path, destination: &Path) -> std::io::Result<()> {
 
 /// Atomically rename a file or directory on the same filesystem.
 pub fn rename_path(source: &Path, destination: &Path) -> std::io::Result<()> {
-    super::selected::fs::replace_file(source, destination)
+    super::selected::fs::rename_path(source, destination)
 }
 
 /// Async bridge for [`replace_file`], dispatched away from the Tokio worker.
@@ -112,7 +112,7 @@ pub async fn replace_file_async(source: &Path, destination: &Path) -> std::io::R
 
 /// Total capacity of the filesystem containing `path`.
 pub fn total_space(path: &Path) -> std::io::Result<u64> {
-    Ok(volume_facts(path)?.total_space)
+    fs2::total_space(path)
 }
 
 /// Query neutral capacity, writability, and host volume-kind facts.
@@ -198,13 +198,15 @@ mod tests {
         let nested = temp.path().join("read-only-file");
         std::fs::write(&nested, b"contents").unwrap();
         let root_facts = volume_facts(temp.path()).unwrap();
-        let mut permissions = std::fs::metadata(&nested).unwrap().permissions();
-        permissions.set_readonly(true);
-        std::fs::set_permissions(&nested, permissions).unwrap();
+        let original_permissions = std::fs::metadata(&nested).unwrap().permissions();
+        let mut read_only_permissions = original_permissions.clone();
+        read_only_permissions.set_readonly(true);
+        std::fs::set_permissions(&nested, read_only_permissions).unwrap();
         let facts = volume_facts(&nested).unwrap();
         assert!(facts.total_space > 0);
         assert!(facts.available_space <= facts.total_space);
         assert_eq!(facts.read_only, root_facts.read_only);
+        std::fs::set_permissions(&nested, original_permissions).unwrap();
     }
 
     #[test]

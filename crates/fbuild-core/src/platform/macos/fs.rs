@@ -23,7 +23,8 @@ pub(crate) fn strip_extended_prefix(path: &Path) -> Box<Path> {
 
 pub(crate) fn set_executable(path: &Path) -> std::io::Result<()> {
     let mut permissions = std::fs::metadata(path)?.permissions();
-    permissions.set_mode(permissions.mode() | 0o755);
+    let mode = permissions.mode();
+    permissions.set_mode(mode | ((mode & 0o444) >> 2));
     std::fs::set_permissions(path, permissions)
 }
 
@@ -51,6 +52,10 @@ pub(crate) fn open_shared_write(
 }
 
 pub(crate) fn replace_file(source: &Path, destination: &Path) -> std::io::Result<()> {
+    std::fs::rename(source, destination)
+}
+
+pub(crate) fn rename_path(source: &Path, destination: &Path) -> std::io::Result<()> {
     std::fs::rename(source, destination)
 }
 
@@ -99,4 +104,17 @@ fn volume_facts_from_statvfs(path: &Path) -> std::io::Result<VolumeFacts> {
 
 fn byte_count(blocks: u128, fragment_size: u128) -> u64 {
     blocks.saturating_mul(fragment_size).min(u128::from(u64::MAX)) as u64
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn executable_permission_preserves_private_read_access() {
+        let temp = tempfile::NamedTempFile::new().unwrap();
+        std::fs::set_permissions(temp.path(), std::fs::Permissions::from_mode(0o600)).unwrap();
+        set_executable(temp.path()).unwrap();
+        assert_eq!(std::fs::metadata(temp.path()).unwrap().permissions().mode() & 0o777, 0o700);
+    }
 }

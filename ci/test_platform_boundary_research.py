@@ -86,17 +86,50 @@ class PlatformBoundaryResearchTests(unittest.TestCase):
     def test_core_filesystem_manifest_occurrences_have_exact_ownership(self) -> None:
         path = "crates/fbuild-core/\x43argo.toml"
         occurrences = (
-            ("target_dependency_table", "[target.'cfg(unix)'.dependencies]"),
-            ("target_dependency_table", "[target.'cfg(windows)'.dependencies]"),
-            ("native_dependency", "libc"),
-            ("native_dependency", "windows-sys"),
+            ("target_dependency_table", "[target.'cfg(unix)'.dependencies]", ""),
+            ("target_dependency_table", "[target.'cfg(windows)'.dependencies]", ""),
+            ("native_dependency", "libc", "[target.'cfg(unix)'.dependencies]"),
+            ("native_dependency", "windows-sys", "[target.'cfg(windows)'.dependencies]"),
         )
-        for kind, normalized in occurrences:
+        for kind, normalized, context in occurrences:
             with self.subTest(kind=kind, normalized=normalized):
                 self.assertEqual(
-                    platform_boundary_research.classify(path, kind, normalized),
+                    platform_boundary_research.classify(path, kind, normalized, context),
                     ("fs", "host_mechanic"),
                 )
+        for normalized, context in (
+            ("libc", ""),
+            ("libc", "[dependencies]"),
+            ("windows-sys", "[target.'cfg(unix)'.dependencies]"),
+        ):
+            with self.subTest(normalized=normalized, context=context):
+                self.assertEqual(
+                    platform_boundary_research.classify(
+                        path, "native_dependency", normalized, context
+                    ),
+                    ("process", "host_mechanic"),
+                )
+
+    def test_core_native_dependency_ownership_requires_matching_target_table(self) -> None:
+        with TemporaryDirectory(dir=platform_boundary_research.ROOT) as directory:
+            root = Path(directory)
+            manifest = root / "crates" / "fbuild-core" / "\x43argo.toml"
+            manifest.parent.mkdir(parents=True)
+            manifest.write_text(
+                "[dependencies]\nlibc = \"0.2\"\n"
+                "[target.'cfg(unix)'.dependencies]\nlibc = \"0.2\"\n",
+                encoding="utf-8",
+            )
+            dependencies = [
+                finding
+                for finding in platform_boundary_research.scan_manifests(root)
+                if finding.kind == "native_dependency"
+            ]
+
+        self.assertEqual(
+            [(finding.capability, finding.classification) for finding in dependencies],
+            [("process", "host_mechanic"), ("fs", "host_mechanic")],
+        )
 
     def test_mixed_qemu_permissions_are_migrated_but_context_stays_classified(self) -> None:
         path = platform_boundary_research.ROOT / "crates/fbuild-toolchain/src/toolchain/esp_qemu.rs"

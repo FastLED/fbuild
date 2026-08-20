@@ -13,19 +13,18 @@ pub(crate) fn file_identity(path: &Path) -> std::io::Result<same_file::Handle> {
 
 pub(crate) fn comparison_key(path: &Path) -> String {
     let mut value = display_slash(path);
-    if let Some(stripped) = value.strip_prefix("//?/") {
-        value = stripped.to_string();
-    }
     value.make_ascii_lowercase();
     value
 }
 
 pub(crate) fn display_slash(path: &Path) -> String {
-    let mut value = path.to_string_lossy().replace('\\', "/");
-    if let Some(stripped) = value.strip_prefix("//?/") {
-        value = stripped.to_string();
+    let value = path.to_string_lossy().replace('\\', "/");
+    if let Some(rest) = value.strip_prefix("//?/UNC/") {
+        return format!("//{rest}");
     }
     value
+        .strip_prefix("//?/")
+        .map_or_else(|| value.clone(), str::to_string)
 }
 
 pub(crate) fn strip_extended_prefix(path: &Path) -> Box<Path> {
@@ -68,6 +67,10 @@ pub(crate) fn open_shared_write(
 }
 
 pub(crate) fn replace_file(source: &Path, destination: &Path) -> std::io::Result<()> {
+    std::fs::rename(source, destination)
+}
+
+pub(crate) fn rename_path(source: &Path, destination: &Path) -> std::io::Result<()> {
     std::fs::rename(source, destination)
 }
 
@@ -206,5 +209,13 @@ mod tests {
         });
         assert_eq!(queried, vec![b'C', b'D']);
         assert_eq!(roots, vec![NormalizedPath::new(r"D:\")]);
+    }
+
+    #[test]
+    fn extended_unc_paths_match_plain_unc_paths() {
+        let extended = Path::new(r"\\?\UNC\server\share\file");
+        let plain = Path::new(r"\\server\share\file");
+        assert_eq!(display_slash(extended), "//server/share/file");
+        assert_eq!(comparison_key(extended), comparison_key(plain));
     }
 }

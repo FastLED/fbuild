@@ -159,9 +159,6 @@ pub fn resolve(lnk: &LnkFile, cache: &DiskCache) -> Result<ResolvedBlob> {
             .file_name()
             .ok_or_else(|| FbuildError::PackageError("downloaded file has no name".to_string()))?,
     );
-    if final_path.exists() {
-        let _ = std::fs::remove_file(&final_path);
-    }
     fbuild_core::platform::fs::replace_file(&downloaded, &final_path).map_err(|e| {
         FbuildError::PackageError(format!(
             "failed to move lnk blob {} → {}: {e}",
