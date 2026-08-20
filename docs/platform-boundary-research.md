@@ -199,6 +199,6 @@ RED characterization initially failed because PID inspection, termination,
 waiting, and neutral termination modes did not exist. The focused facade and
 containment tests now exercise those APIs, invalid-PID fail-closed behavior,
 PATH-overlay child launch, daemon crash recovery, and descendant cleanup. The
-exact ledger contracted from **271 to 166 rows**, deleting 105 migrated
-occurrences; the normalized Dylint projection is 164. The independent research
-inventory is 175 rows, including nine authorized implementation occurrences.
+exact ledger contracted from **271 to 162 rows**, deleting 109 migrated
+occurrences; the normalized Dylint projection is 160. The independent research
+inventory is 171 rows, including nine authorized implementation occurrences.

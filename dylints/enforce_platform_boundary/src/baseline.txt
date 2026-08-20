@@ -157,9 +157,5 @@ crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	attr_cfg	windows	2
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	attr_cfg	windows	3
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	attr_cfg	windows	4
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	attr_cfg	windows	5
-crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	attr_cfg	windows	6
-crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	attr_cfg	windows	7
-crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	attr_cfg	windows	8
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	native_import	std::os::unix	0
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	native_import	std::os::unix	1
-crates/fbuild-toolchain/src/toolchain/mod.rs	attr_cfg	windows	0

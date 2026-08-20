@@ -140,12 +140,12 @@ Compatible contained and detached spawning delegates to the already pinned
 `running-process`; product callers continue to own their retry, escalation,
 diagnostic, and lifecycle policy.
 
-The exact enforcement ledger fell from **271 to 166 rows**, deleting 105
+The exact enforcement ledger fell from **271 to 162 rows**, deleting 109
 migrated occurrences. Its current shape is:
 
 | Kind | Rows |
 | --- | ---: |
-| `attr_cfg` | 123 |
+| `attr_cfg` | 119 |
 | `native_path` | 36 |
 | `native_dependency` | 4 |
 | `target_dependency_table` | 3 |
@@ -154,19 +154,19 @@ migrated occurrences. Its current shape is:
 
 | Classification | Rows |
 | --- | ---: |
-| Host mechanic | 160 |
-| Host artifact policy | 6 |
+| Host mechanic | 157 |
+| Host artifact policy | 5 |
 
 | Capability | Rows |
 | --- | ---: |
 | `device` | 76 |
 | `fs` | 35 |
 | `host` | 22 |
-| `host_executable` | 17 |
+| `host_executable` | 13 |
 | `process` | 14 |
 | `ipc` | 2 |
 
-The host-independent research inventory contains 175 rows: the 166 enforced
+The host-independent research inventory contains 171 rows: the 162 enforced
 caller occurrences plus nine authorized facade/private-implementation
 occurrences. Its process capability has contracted from 95 to 17 rows; three
 of those are authorized implementation details, leaving 14 exact caller rows

@@ -14,7 +14,7 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
         cls.observed = boundary.rows_from_findings(boundary.research.inventory())
 
     def test_committed_exact_occurrence_ledger_matches_whole_tree(self) -> None:
-        self.assertEqual(len(self.expected), 166)
+        self.assertEqual(len(self.expected), 162)
         self.assertFalse(boundary.validate_ledger(self.expected))
         self.assertFalse(boundary.compare(self.expected, self.observed))
 

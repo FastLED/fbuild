@@ -560,7 +560,6 @@ fn user_home_dir() -> Option<PathBuf> {
         .map(PathBuf::from)
 }
 
-#[cfg(windows)]
 pub fn build_windows_qemu_path_env(qemu_path: &Path, current_path: &str) -> Result<String> {
     hydrate_windows_runtime(qemu_path)?;
     let mut dirs = windows_runtime_dirs(qemu_path)?;
@@ -621,7 +620,6 @@ fn hydrate_windows_runtime(_qemu_path: &Path) -> Result<()> {
     Ok(())
 }
 
-#[cfg(windows)]
 fn windows_runtime_dirs(qemu_path: &Path) -> Result<Vec<PathBuf>> {
     let exe_dir = qemu_path.parent().ok_or_else(|| {
         FbuildError::PackageError(format!(
@@ -648,7 +646,6 @@ fn windows_runtime_dirs(qemu_path: &Path) -> Result<Vec<PathBuf>> {
     )))
 }
 
-#[cfg(windows)]
 fn find_windows_libiconv_path() -> Option<PathBuf> {
     if let Some(path) = find_on_path("libiconv-2.dll") {
         return Some(path);

@@ -159,9 +159,5 @@ crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	attr_cfg	#[cfg(windows)]	0	hos
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	attr_cfg	#[cfg(windows)]	1	host_executable	host_mechanic
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	attr_cfg	#[cfg(windows)]	2	host_executable	host_mechanic
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	attr_cfg	#[cfg(windows)]	3	host_executable	host_mechanic
-crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	attr_cfg	#[cfg(windows)]	4	host_executable	host_mechanic
-crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	attr_cfg	#[cfg(windows)]	5	host_executable	host_mechanic
-crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	attr_cfg	#[cfg(windows)]	6	host_executable	host_mechanic
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	native_path	std::os::unix::fs::PermissionsExt	0	fs	host_mechanic
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	native_path	std::os::unix::fs::PermissionsExt	1	fs	host_mechanic
-crates/fbuild-toolchain/src/toolchain/mod.rs	attr_cfg	#[cfg(windows)]	0	host_executable	host_artifact_policy
