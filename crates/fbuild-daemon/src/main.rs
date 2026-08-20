@@ -263,7 +263,7 @@ async fn main() {
             let identity = fbuild_paths::running_process::DaemonCacheIdentity::discover();
             let claim = fbuild_paths::daemon_ownership::OwnerClaim {
                 pid: std::process::id(),
-                exe: exe.into(),
+                exe,
                 version: env!("CARGO_PKG_VERSION").to_string(),
                 mode: identity.mode.to_string(),
                 cache_root_key: identity.cache_root_key.clone(),
@@ -292,7 +292,7 @@ async fn main() {
             let daemon_binary = this_exe
                 .parent()
                 .map(|d| d.join(fbuild_paths::running_process::DAEMON_BINARY_NAME))
-                .unwrap_or(this_exe);
+                .unwrap_or_else(|| this_exe.into_path_buf());
             match fbuild_daemon::broker::install_fbuild_service_definition(&daemon_binary) {
                 Ok(written) => tracing::info!(
                     "installed running-process service definition: {}",

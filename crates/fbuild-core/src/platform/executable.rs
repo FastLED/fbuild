@@ -1,8 +1,9 @@
 //! Neutral executable naming, discovery, and materialization APIs.
 
 use super::host::{self, HostArch, HostPlatform};
+use crate::path::NormalizedPath;
 use std::io;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 /// Select the spelling of an executable or command script for an explicit host.
 pub const fn name_for<'a>(host: HostPlatform, non_windows: &'a str, windows: &'a str) -> &'a str {
@@ -51,12 +52,12 @@ pub fn path_candidate_names(stem: &str) -> Vec<String> {
 }
 
 /// Discover the path of the currently running executable image.
-pub fn current_image() -> io::Result<PathBuf> {
-    std::env::current_exe()
+pub fn current_image() -> io::Result<NormalizedPath> {
+    std::env::current_exe().map(NormalizedPath::from)
 }
 
 /// Return a path next to the current executable image.
-pub fn current_image_sibling(name: impl AsRef<Path>) -> io::Result<PathBuf> {
+pub fn current_image_sibling(name: impl AsRef<Path>) -> io::Result<NormalizedPath> {
     let image = current_image()?;
     let parent = image.parent().ok_or_else(|| {
         io::Error::new(
@@ -64,16 +65,16 @@ pub fn current_image_sibling(name: impl AsRef<Path>) -> io::Result<PathBuf> {
             "current executable image has no parent directory",
         )
     })?;
-    Ok(parent.join(name))
+    Ok(parent.join(name).into())
 }
 
 /// Return the conventional unsuffixed and `.exe` sibling candidates.
 ///
 /// Probing both preserves compatibility with archives that carry an explicit
 /// Windows suffix even when inspected from another host.
-pub fn current_image_sibling_candidates(stem: &str) -> io::Result<[PathBuf; 2]> {
+pub fn current_image_sibling_candidates(stem: &str) -> io::Result<[NormalizedPath; 2]> {
     let unsuffixed = current_image_sibling(stem)?;
-    let explicit_exe = unsuffixed.with_extension("exe");
+    let explicit_exe = NormalizedPath::from(unsuffixed.with_extension("exe"));
     Ok([unsuffixed, explicit_exe])
 }
 

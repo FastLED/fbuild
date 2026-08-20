@@ -77,7 +77,7 @@ crates/fbuild-core/src/path.rs	739	attr_cfg	#[cfg(windows)]	fs	host_mechanic
 crates/fbuild-core/src/path.rs	814	attr_cfg	#[cfg(unix)]	fs	host_mechanic
 crates/fbuild-core/src/path.rs	822	native_path	std::os::unix::fs::symlink	fs	host_mechanic
 crates/fbuild-core/src/path.rs	829	attr_cfg	#[cfg(windows)]	fs	host_mechanic
-crates/fbuild-core/src/platform/executable.rs	55	native_path	std::env::current_exe	host_executable	host_mechanic
+crates/fbuild-core/src/platform/executable.rs	56	native_path	std::env::current_exe	host_executable	host_mechanic
 crates/fbuild-core/src/platform/linux/mod.rs	6	compile_host_fact	std::env::consts::ARCH	host	host_mechanic
 crates/fbuild-core/src/platform/macos/mod.rs	6	compile_host_fact	std::env::consts::ARCH	host	host_mechanic
 crates/fbuild-core/src/platform/windows/mod.rs	6	compile_host_fact	std::env::consts::ARCH	host	host_mechanic

@@ -309,6 +309,7 @@ fn daemon_executable_candidate() -> std::path::PathBuf {
     fbuild_core::platform::executable::current_image_sibling(
         fbuild_paths::running_process::DAEMON_BINARY_NAME,
     )
+    .map(fbuild_core::path::NormalizedPath::into_path_buf)
     .unwrap_or_else(|_| std::path::PathBuf::from(fbuild_paths::running_process::DAEMON_BINARY_NAME))
 }
 
