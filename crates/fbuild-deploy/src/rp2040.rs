@@ -194,7 +194,7 @@ fn picotool_identity_required_error() -> FbuildError {
 /// Decide whether the Pico SDK USB reset interface may be used as the middle
 /// recovery layer between the CDC touch and ROM transports. A serial number
 /// plus the selected endpoint's observed VID/PID are mandatory: without all
-/// three facts, `picotool -f` could act on the wrong attached RP board.
+/// three facts, a reset request could act on the wrong attached RP board.
 fn application_reboot_target(
     bootsel_present: bool,
     runtime_target: Option<&target::RequestedRuntimeTarget>,
@@ -223,7 +223,7 @@ struct ApplicationRebootRecovery {
 /// Run the application-mode recovery transition behind injectable boundaries
 /// so its ordering and failure semantics are covered without invoking a real
 /// USB device from unit tests. The production closures remain the managed
-/// picotool command and the normal BOOTSEL watcher.
+/// reset-interface transport and the normal BOOTSEL watcher.
 async fn run_application_reboot_recovery<Reboot, RebootFuture, Discover, DiscoverFuture>(
     target: Option<picotool::PicotoolTarget>,
     volume: Option<PathBuf>,
@@ -252,20 +252,20 @@ where
         .unwrap_or_else(|| "initial BOOTSEL discovery found no target".to_string());
     tracing::warn!(
         cdc_or_bootsel_failure = %earlier_failure,
-        "RP-series CDC/BOOTSEL transition failed; trying target-bound application-mode picotool reboot"
+        "RP-series CDC/BOOTSEL transition failed; trying target-bound application reset-interface reboot"
     );
 
     match reboot(target).await {
         Ok(_) => {
             tracing::info!(
-                "RP-series recovery layer succeeded: target-bound application-mode picotool reboot"
+                "RP-series recovery layer succeeded: target-bound application reset-interface reboot"
             );
             let discovered = discover_bootsel().await?;
             let volume_discovery_error = if discovered.is_some() {
                 None
             } else {
                 Some(FbuildError::DeployFailed(format!(
-                    "{earlier_failure}; target-bound application-mode picotool reboot succeeded, but no RP2040 BOOTSEL volume mounted within {}s",
+                    "{earlier_failure}; target-bound application reset-interface reboot succeeded, but no RP2040 BOOTSEL volume mounted within {}s",
                     bootloader_timeout.as_secs()
                 )))
             };
@@ -278,7 +278,7 @@ where
         Err(error) => Ok(ApplicationRebootRecovery {
             volume,
             volume_discovery_error: Some(FbuildError::DeployFailed(format!(
-                "{earlier_failure}; target-bound application-mode picotool reboot also failed: {error}"
+                "{earlier_failure}; target-bound application reset-interface reboot also failed: {error}"
             ))),
             application_reboot_succeeded: false,
         }),
@@ -1388,6 +1388,8 @@ struct PicoCdcPort {
     parent_instance_id: Option<String>,
 }
 
+type PicoResetInterface = fbuild_serial::ports::UsbResetInterface;
+
 fn catalogue_pico_cdc_ports(expected_family: u32) -> Result<Vec<PicoCdcPort>> {
     let ports = fbuild_serial::ports::available_ports().map_err(|error| {
         FbuildError::SerialError(format!(
@@ -1416,6 +1418,99 @@ fn catalogue_pico_cdc_ports(expected_family: u32) -> Result<Vec<PicoCdcPort>> {
         .collect();
     matches.sort_by(|left, right| left.name.cmp(&right.name));
     Ok(matches)
+}
+
+fn catalogue_pico_reset_interfaces(expected_family: u32) -> Vec<PicoResetInterface> {
+    let mut matches: Vec<_> = fbuild_serial::ports::present_usb_reset_interfaces()
+        .into_iter()
+        .filter(|interface| {
+            fbuild_core::usb::profiles::profiles_for(interface.vid, interface.pid)
+                .iter()
+                .any(|profile| profile_matches_family(profile, expected_family))
+        })
+        .collect();
+    matches.sort_by(|left, right| left.instance_id.cmp(&right.instance_id));
+    matches
+}
+
+/// Resolve an exact healthy application reset interface when the selected CDC
+/// endpoint itself is not usable. A serial selector may recover even after the
+/// COM devnode disappears; a COM selector must still match a retained,
+/// catalogue-identified unhealthy record before its serial can be trusted.
+fn resolve_reset_only_target(
+    selector: &str,
+    cdc_candidates: &[PicoCdcPort],
+    reset_interfaces: &[PicoResetInterface],
+) -> Result<Option<PicoResetInterface>> {
+    let (serial, expected_vid_pid) = if let Some(serial) = serial_selector(selector) {
+        (serial, None)
+    } else {
+        let matching_cdc: Vec<_> = cdc_candidates
+            .iter()
+            .filter(|candidate| candidate.name == selector)
+            .collect();
+        let candidate = match matching_cdc.as_slice() {
+            [] => return Ok(None),
+            [only] if only.health.is_known_unhealthy() => *only,
+            [only] => {
+                return Err(FbuildError::DeployFailed(format!(
+                    "RP2040 runtime selector {selector:?} matched healthy {}, but normal CDC target resolution failed",
+                    only.name
+                )));
+            }
+            many => {
+                return Err(FbuildError::DeployFailed(format!(
+                    "RP2040 runtime selector {selector:?} is ambiguous across {} CDC records",
+                    many.len()
+                )));
+            }
+        };
+        let Some(serial) = candidate.serial_number.as_deref() else {
+            return Ok(None);
+        };
+        (serial, Some((candidate.vendor_id, candidate.product_id)))
+    };
+
+    let matching_reset: Vec<_> = reset_interfaces
+        .iter()
+        .filter(|interface| interface.serial_number.eq_ignore_ascii_case(serial))
+        .filter(|interface| {
+            expected_vid_pid.map_or(true, |(vid, pid)| {
+                (interface.vid, interface.pid) == (vid, pid)
+            })
+        })
+        .collect();
+    match matching_reset.as_slice() {
+        [] => Ok(None),
+        [only] => Ok(Some((*only).clone())),
+        many => Err(FbuildError::DeployFailed(format!(
+            "RP2040 reset-interface selector {selector:?} is ambiguous across {} exact serial/VID/PID matches; fbuild refuses an unscoped reset",
+            many.len()
+        ))),
+    }
+}
+
+fn reset_interface_for_runtime_target(
+    target: &target::RequestedRuntimeTarget,
+    reset_interfaces: &[PicoResetInterface],
+) -> Result<Option<PicoResetInterface>> {
+    let Some(serial) = target.serial_number.as_deref() else {
+        return Ok(None);
+    };
+    let matches: Vec<_> = reset_interfaces
+        .iter()
+        .filter(|interface| interface.serial_number.eq_ignore_ascii_case(serial))
+        .filter(|interface| (interface.vid, interface.pid) == (target.vendor_id, target.product_id))
+        .collect();
+    match matches.as_slice() {
+        [] => Ok(None),
+        [only] => Ok(Some((*only).clone())),
+        many => Err(FbuildError::DeployFailed(format!(
+            "RP2040 runtime target {} is ambiguous across {} exact reset-interface matches; fbuild refuses an unscoped reset",
+            target.port,
+            many.len()
+        ))),
+    }
 }
 
 /// CDC-wait failure classification: a quiet window (`Timeout`) is
@@ -1793,17 +1888,62 @@ impl Deployer for Rp2040Deployer {
                 pretouch_volume_policy(mounted, can_attribute)?
             }
         };
-        let requested_serial = selector.and_then(serial_selector).map(str::to_string);
-        let runtime_target = if volume_before_reset.is_none() {
-            selector
-                .map(|value| resolve_requested_runtime_target(value, &current_ports))
-                .transpose()?
+        let reset_interfaces = if volume_before_reset.is_none() {
+            let family_id = self.family_id;
+            tokio::task::spawn_blocking(move || catalogue_pico_reset_interfaces(family_id))
+                .await
+                .map_err(|error| {
+                    FbuildError::DeployFailed(format!(
+                        "RP2040 reset-interface snapshot task failed: {error}"
+                    ))
+                })?
         } else {
-            None
+            Vec::new()
         };
-        let picotool_target = runtime_target
-            .as_ref()
-            .and_then(|target| target.serial_number.as_deref())
+        let (runtime_target, reset_only_target) = if volume_before_reset.is_none() {
+            match selector
+                .map(|value| resolve_requested_runtime_target(value, &current_ports))
+                .transpose()
+            {
+                Ok(target) => (target, None),
+                Err(cdc_error) => {
+                    let reset_target = selector
+                        .map(|value| {
+                            resolve_reset_only_target(value, &current_ports, &reset_interfaces)
+                        })
+                        .transpose()?
+                        .flatten();
+                    let Some(reset_target) = reset_target else {
+                        return Err(cdc_error);
+                    };
+                    tracing::warn!(
+                        selector,
+                        serial = %reset_target.serial_number,
+                        instance_id = %reset_target.instance_id,
+                        cdc_failure = %cdc_error,
+                        "selected RP-series CDC endpoint is unusable; using its exact healthy application reset interface"
+                    );
+                    (None, Some(reset_target))
+                }
+            }
+        } else {
+            (None, None)
+        };
+        let requested_serial = selector
+            .and_then(serial_selector)
+            .map(str::to_string)
+            .or_else(|| {
+                runtime_target
+                    .as_ref()
+                    .and_then(|target| target.serial_number.clone())
+            })
+            .or_else(|| {
+                reset_only_target
+                    .as_ref()
+                    .map(|target| target.serial_number.clone())
+            });
+        let picotool_target = requested_serial
+            .as_deref()
             .map(|serial| picotool_target_for_family(serial, self.family_id))
             .transpose()?;
         // Capture topology before the 1200-bps touch: once the board resets
@@ -1847,8 +1987,28 @@ impl Deployer for Rp2040Deployer {
                 Err(error) => (None, Some(error)),
             }
         };
-        let application_target =
-            application_reboot_target(volume.is_some(), runtime_target.as_ref());
+        let application_target = if volume.is_some() {
+            None
+        } else if let Some(target) = reset_only_target.as_ref() {
+            Some(picotool::PicotoolTarget::new(
+                &target.serial_number,
+                &format!("{:04x}", target.vid),
+                &format!("{:04x}", target.pid),
+            ))
+        } else {
+            application_reboot_target(false, runtime_target.as_ref())
+        };
+        let native_reset_target = if cfg!(windows) && volume.is_none() {
+            if let Some(target) = reset_only_target.clone() {
+                Some(target)
+            } else if let Some(target) = runtime_target.as_ref() {
+                reset_interface_for_runtime_target(target, &reset_interfaces)?
+            } else {
+                None
+            }
+        } else {
+            None
+        };
         let timeout = self.bootloader_timeout;
         let stale_volumes = volumes_before.clone();
         let application_recovery = run_application_reboot_recovery(
@@ -1856,7 +2016,30 @@ impl Deployer for Rp2040Deployer {
             volume,
             volume_discovery_error,
             self.bootloader_timeout,
-            |target| async move {
+            move |target| async move {
+                if let Some(reset_interface) = native_reset_target {
+                    let instance_id = reset_interface.instance_id.clone();
+                    tokio::task::spawn_blocking(move || {
+                        fbuild_serial::ports::reset_usb_interface_to_bootsel(&reset_interface)
+                    })
+                    .await
+                    .map_err(|error| {
+                        FbuildError::DeployFailed(format!(
+                            "native Pico reset-interface task failed: {error}"
+                        ))
+                    })?
+                    .map_err(|error| {
+                        FbuildError::DeployFailed(format!(
+                            "native Pico reset-interface request for {instance_id} failed: {error}"
+                        ))
+                    })?;
+                    return Ok(picotool::PicotoolLoad {
+                        stdout: format!(
+                            "requested BOOTSEL through native Pico reset interface {instance_id}"
+                        ),
+                        stderr: String::new(),
+                    });
+                }
                 picotool::reboot_runtime_to_bootsel(
                     project_dir,
                     &target,
@@ -2069,7 +2252,7 @@ impl Deployer for Rp2040Deployer {
             }
         };
         let transfer_method = if application_reboot_succeeded {
-            format!("{transfer_method} after target-bound application-mode picotool reboot")
+            format!("{transfer_method} after target-bound application reset-interface reboot")
         } else {
             transfer_method.to_string()
         };
@@ -2904,6 +3087,90 @@ mod tests {
             instance_id: Some(format!("USB\\VID_2E8A&PID_000A\\{name}")),
             parent_instance_id: None,
         }
+    }
+
+    fn reset_candidate(instance: &str, serial: &str) -> PicoResetInterface {
+        PicoResetInterface {
+            instance_id: instance.to_string(),
+            parent_instance_id: format!("USB\\VID_2E8A&PID_F00F\\{serial}"),
+            serial_number: serial.to_string(),
+            vid: 0x2e8a,
+            pid: 0xf00f,
+            device_path: format!("\\\\?\\{instance}"),
+            interface_number: 2,
+            location_paths: vec!["PCIROOT(0)#USBROOT(0)#USB(1)#USBMI(2)".to_string()],
+        }
+    }
+
+    #[test]
+    fn unhealthy_cdc_can_select_its_exact_live_reset_interface() {
+        let cdc = cdc_candidate(
+            "COM18",
+            Some("2DCB876B587EA334"),
+            fbuild_serial::ports::PortHealth::PresentProblem {
+                problem_code: 31,
+                status: Some(0),
+            },
+        );
+        let reset = reset_candidate(
+            "USB\\VID_2E8A&PID_F00F&MI_02\\8&20C14328&0&0002",
+            "2DCB876B587EA334",
+        );
+
+        let selected = resolve_reset_only_target("COM18", &[cdc], std::slice::from_ref(&reset))
+            .unwrap()
+            .expect("the exact live reset interface must recover the stale COM selector");
+
+        assert_eq!(selected, reset);
+    }
+
+    #[test]
+    fn serial_selector_can_recover_after_the_cdc_devnode_disappears() {
+        let reset = reset_candidate(
+            "USB\\VID_2E8A&PID_F00F&MI_02\\8&20C14328&0&0002",
+            "2DCB876B587EA334",
+        );
+
+        let selected =
+            resolve_reset_only_target("SER=2DCB876B587EA334", &[], std::slice::from_ref(&reset))
+                .unwrap();
+
+        assert_eq!(selected, Some(reset));
+    }
+
+    #[test]
+    fn reset_only_target_fails_closed_on_wrong_or_multiple_devices() {
+        let first = reset_candidate("USB\\VID_2E8A&PID_F00F&MI_02\\FIRST", "2DCB876B587EA334");
+        let wrong = reset_candidate("USB\\VID_2E8A&PID_F00F&MI_02\\WRONG", "OTHER");
+        assert_eq!(
+            resolve_reset_only_target("SER=2DCB876B587EA334", &[], std::slice::from_ref(&wrong))
+                .unwrap(),
+            None
+        );
+
+        let duplicate = reset_candidate("USB\\VID_2E8A&PID_F00F&MI_02\\SECOND", "2DCB876B587EA334");
+        let error = resolve_reset_only_target("SER=2DCB876B587EA334", &[], &[first, duplicate])
+            .unwrap_err();
+        assert!(error.to_string().contains("ambiguous"));
+        assert!(error.to_string().contains("refuses an unscoped reset"));
+    }
+
+    #[test]
+    fn runtime_target_maps_to_one_exact_native_reset_interface() {
+        let runtime = target::RequestedRuntimeTarget {
+            port: "COM18".to_string(),
+            serial_number: Some("2DCB876B587EA334".to_string()),
+            vendor_id: 0x2e8a,
+            product_id: 0xf00f,
+        };
+        let reset = reset_candidate(
+            "USB\\VID_2E8A&PID_F00F&MI_02\\8&20C14328&0&0002",
+            "2DCB876B587EA334",
+        );
+        assert_eq!(
+            reset_interface_for_runtime_target(&runtime, std::slice::from_ref(&reset)).unwrap(),
+            Some(reset)
+        );
     }
 
     #[test]

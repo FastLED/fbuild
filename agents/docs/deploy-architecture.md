@@ -94,11 +94,17 @@ FastLED/fbuild#1162) selects which stock transport is tried first:
 
 - **Shared reset ladder.** After the pre-touch scan and 1200-bps CDC touch,
   fbuild waits for BOOTSEL. If none appears and the selected runtime endpoint
-  supplied an exact VID, PID, and non-empty USB serial, it invokes managed
-  `picotool reboot -f -u` against that application identity and waits for
-  BOOTSEL again. A missing identity skips this layer; an unscoped forced
-  command is impossible. Deployment results name the application-mode reboot
-  when it ran successfully.
+  supplied an exact VID, PID, and non-empty USB serial, it asks the Pico SDK
+  application reset interface to enter BOOTSEL and waits again. On Windows,
+  fbuild maps the selected CDC identity to one exact healthy WinUSB reset
+  interface and sends the Pico class control request directly. Other hosts use
+  managed `picotool reboot -u --vid ... --pid ... -f`; picotool derives the
+  runtime serial from the opened application device because that interface
+  cannot be selected reliably with `--ser`. The fallback is attempted only
+  after fbuild resolves one exact runtime identity, and picotool refuses a
+  forced command when the VID/PID is ambiguous. A missing or ambiguous identity
+  skips this layer, so an unscoped forced command is impossible. Deployment
+  results name the application reset-interface reboot when it ran successfully.
 - **`picotool` (default).** After the shared reset ladder and UF2 preparation,
   fbuild derives one exact BOOTSEL VID:PID from the verified FastLED/boards
   profile for the selected RP family and binds each picotool operation to

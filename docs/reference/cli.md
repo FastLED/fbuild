@@ -87,9 +87,13 @@ Common options include `--port`, `--clean`, `--monitor`, `--timeout`,
 `--transport picotool|uf2` selects the RP2040/RP2350 deploy transport
 (FastLED/fbuild#1162). Before either transport runs, fbuild tries the normal
 1200-bps CDC touch. If no BOOTSEL endpoint appears and the selected runtime
-port supplied an exact VID, PID, and USB serial, fbuild asks the managed
-picotool to run `reboot -f -u` against that exact application identity, then
-reacquires BOOTSEL. It never emits an unscoped forced command.
+port supplied an exact VID, PID, and USB serial, fbuild asks the Pico SDK
+application reset interface to enter BOOTSEL, then reacquires it. Windows uses
+the exact healthy WinUSB reset interface mapped to the selected CDC identity;
+other hosts fall back to managed
+`picotool reboot -u --vid 0x<vid> --pid 0x<pid> -f`. Picotool derives the
+runtime serial from the opened application device, and refuses a forced command
+when that VID/PID is ambiguous. fbuild never emits an unscoped reset request.
 
 `picotool` is the default transport: fbuild tries the target-bound PICOBOOT
 vendor interface first (Windows preflight checks for a missing WinUSB driver,

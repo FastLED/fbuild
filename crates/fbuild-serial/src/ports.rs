@@ -247,6 +247,68 @@ pub struct UsbProblemDevice {
     pub location_paths: Vec<String>,
 }
 
+/// A healthy, present Pico SDK application-mode USB reset interface.
+///
+/// Arduino-Pico exposes this WinUSB function when `ENABLE_PICOTOOL_USB` is
+/// enabled. It remains independently addressable when the sibling CDC
+/// interface is missing or unusable, which lets the RP deployer recover the
+/// exact application device without opening a stale COM endpoint.
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct UsbResetInterface {
+    pub instance_id: String,
+    pub parent_instance_id: String,
+    pub vid: u16,
+    pub pid: u16,
+    pub serial_number: String,
+    /// WinUSB device-interface path for the fixed Pico SDK reset GUID.
+    pub device_path: String,
+    /// USB interface number carried by the composite `MI_xx` devnode.
+    pub interface_number: u8,
+    pub location_paths: Vec<String>,
+}
+
+fn is_picotool_reset_compatible_id(value: &str) -> bool {
+    value.eq_ignore_ascii_case("USB\\Class_ff&SubClass_00&Prot_01")
+}
+
+/// Best-effort enumeration of healthy Pico SDK application reset interfaces.
+///
+/// Windows exposes the function as the standard Raspberry Pi reset-interface
+/// compatible ID. Other hosts currently return an empty list; their normal
+/// libusb/picotool path remains unchanged.
+pub fn present_usb_reset_interfaces() -> Vec<UsbResetInterface> {
+    #[cfg(windows)]
+    {
+        imp::present_usb_reset_interfaces()
+    }
+    #[cfg(not(windows))]
+    {
+        Vec::new()
+    }
+}
+
+/// Ask one exact Pico SDK WinUSB reset interface to enter BOOTSEL mode.
+///
+/// The interface must come from [`present_usb_reset_interfaces`], which binds
+/// the live device path to its USB serial and VID/PID before this request is
+/// issued. The board may disconnect before Windows reports completion; that
+/// is the normal successful shape of the no-data control transfer, so the
+/// deployer confirms success by waiting for the target BOOTSEL transport.
+pub fn reset_usb_interface_to_bootsel(interface: &UsbResetInterface) -> std::io::Result<()> {
+    #[cfg(windows)]
+    {
+        imp::reset_usb_interface_to_bootsel(interface)
+    }
+    #[cfg(not(windows))]
+    {
+        let _ = interface;
+        Err(std::io::Error::new(
+            std::io::ErrorKind::Unsupported,
+            "the native Pico reset interface is currently implemented only on Windows",
+        ))
+    }
+}
+
 /// Best-effort enumeration of present USB devnodes with a non-zero Windows
 /// problem code.  This is empty on non-Windows hosts and never makes a port
 /// scan fail merely because host diagnostics are unavailable.
@@ -390,36 +452,70 @@ mod health_tests {
             .is_known_unhealthy()
         );
     }
+
+    #[test]
+    fn recognizes_only_the_pico_sdk_reset_interface_protocol() {
+        assert!(is_picotool_reset_compatible_id(
+            "usb\\class_FF&subclass_00&prot_01"
+        ));
+        assert!(!is_picotool_reset_compatible_id(
+            "USB\\Class_02&SubClass_02&Prot_01"
+        ));
+        assert!(!is_picotool_reset_compatible_id(
+            "USB\\Class_ff&SubClass_00"
+        ));
+    }
 }
 
 #[cfg(windows)]
 mod imp {
-    use super::{DetectedPort, PnpObservation, UsbProblemDevice, health_for_endpoint};
-    use std::collections::HashSet;
+    use super::{
+        DetectedPort, PnpObservation, UsbProblemDevice, UsbResetInterface, health_for_endpoint,
+        is_picotool_reset_compatible_id,
+    };
+    use std::collections::{HashMap, HashSet};
+    use std::io;
     use std::ptr;
 
     use serialport::{SerialPortInfo, SerialPortType, UsbPortInfo};
     use windows_sys::Win32::Devices::DeviceAndDriverInstallation::{
         CM_Get_DevNode_Status, CM_Get_Device_IDW, CM_Get_Parent, CR_NO_SUCH_DEVINST, CR_SUCCESS,
-        DICS_FLAG_GLOBAL, DIGCF_ALLCLASSES, DIGCF_PRESENT, DIREG_DEV, HDEVINFO, MAX_DEVICE_ID_LEN,
-        SP_DEVINFO_DATA, SPDRP_CLASS, SPDRP_FRIENDLYNAME, SPDRP_HARDWAREID,
+        DICS_FLAG_GLOBAL, DIGCF_ALLCLASSES, DIGCF_DEVICEINTERFACE, DIGCF_PRESENT, DIREG_DEV,
+        HDEVINFO, MAX_DEVICE_ID_LEN, SP_DEVICE_INTERFACE_DATA, SP_DEVICE_INTERFACE_DETAIL_DATA_W,
+        SP_DEVINFO_DATA, SPDRP_CLASS, SPDRP_COMPATIBLEIDS, SPDRP_FRIENDLYNAME, SPDRP_HARDWAREID,
         SPDRP_LOCATION_INFORMATION, SPDRP_MFG, SetupDiClassGuidsFromNameW,
-        SetupDiDestroyDeviceInfoList, SetupDiEnumDeviceInfo, SetupDiGetClassDevsW,
-        SetupDiGetDeviceInstanceIdW, SetupDiGetDevicePropertyW, SetupDiGetDeviceRegistryPropertyW,
-        SetupDiOpenDevRegKey,
+        SetupDiDestroyDeviceInfoList, SetupDiEnumDeviceInfo, SetupDiEnumDeviceInterfaces,
+        SetupDiGetClassDevsW, SetupDiGetDeviceInstanceIdW, SetupDiGetDeviceInterfaceDetailW,
+        SetupDiGetDevicePropertyW, SetupDiGetDeviceRegistryPropertyW, SetupDiOpenDevRegKey,
     };
     use windows_sys::Win32::Devices::Properties::{
         DEVPKEY_Device_LocationPaths, DEVPROP_TYPE_STRING_LIST,
     };
-    use windows_sys::Win32::Foundation::{FALSE, FILETIME, INVALID_HANDLE_VALUE, MAX_PATH};
+    use windows_sys::Win32::Devices::Usb::{
+        WINUSB_INTERFACE_HANDLE, WINUSB_SETUP_PACKET, WinUsb_ControlTransfer, WinUsb_Free,
+        WinUsb_Initialize,
+    };
+    use windows_sys::Win32::Foundation::{
+        CloseHandle, FALSE, FILETIME, GENERIC_READ, GENERIC_WRITE, INVALID_HANDLE_VALUE, MAX_PATH,
+    };
+    use windows_sys::Win32::Storage::FileSystem::{
+        CreateFileW, FILE_ATTRIBUTE_NORMAL, FILE_FLAG_OVERLAPPED, FILE_SHARE_READ,
+        FILE_SHARE_WRITE, OPEN_EXISTING,
+    };
 
     use windows_sys::Win32::System::Registry::{
-        HKEY, HKEY_LOCAL_MACHINE, KEY_READ, REG_SZ, RegCloseKey, RegEnumValueW, RegOpenKeyExW,
-        RegQueryInfoKeyW, RegQueryValueExW,
+        HKEY, HKEY_LOCAL_MACHINE, KEY_READ, REG_MULTI_SZ, REG_SZ, RegCloseKey, RegEnumValueW,
+        RegOpenKeyExW, RegQueryInfoKeyW, RegQueryValueExW,
     };
     use windows_sys::core::GUID;
 
     const CONNECTOR_PUNCTUATION_SELECTION: &[char] = &[':', '_', '\u{ff3f}'];
+    const PICO_RESET_INTERFACE_GUID: GUID = GUID::from_u128(0xbc7398c1_73cd_4cb7_98b8_913a8fca7bf6);
+    const RESET_REQUEST_BOOTSEL: u8 = 0x01;
+    // USB_DIR_OUT | USB_TYPE_CLASS | USB_RECIP_INTERFACE. This exactly
+    // matches picotool's reset-interface request; the endpoint is vendor
+    // class, but the control request itself is class-scoped.
+    const RESET_REQUEST_TYPE: u8 = 0x21;
 
     fn as_utf16(utf8: &str) -> Vec<u16> {
         utf8.encode_utf16().chain(Some(0)).collect()
@@ -918,6 +1014,256 @@ mod imp {
         devices
     }
 
+    pub(super) fn present_usb_reset_interfaces() -> Vec<UsbResetInterface> {
+        let device_paths = pico_reset_interface_paths();
+        let enumerator: Vec<u16> = "USB".encode_utf16().chain(Some(0)).collect();
+        let hdi = unsafe {
+            SetupDiGetClassDevsW(
+                std::ptr::null(),
+                enumerator.as_ptr(),
+                0,
+                DIGCF_PRESENT | DIGCF_ALLCLASSES,
+            )
+        };
+        if hdi == INVALID_HANDLE_VALUE {
+            return Vec::new();
+        }
+
+        let mut devices = Vec::new();
+        let mut index = 0u32;
+        loop {
+            let mut info = SP_DEVINFO_DATA {
+                cbSize: std::mem::size_of::<SP_DEVINFO_DATA>() as u32,
+                ClassGuid: GUID::from_u128(0),
+                DevInst: 0,
+                Reserved: 0,
+            };
+            if unsafe { SetupDiEnumDeviceInfo(hdi, index, &mut info) } == FALSE {
+                break;
+            }
+            index += 1;
+
+            let compatible_ids = string_list_property_from_info(hdi, &info, SPDRP_COMPATIBLEIDS);
+            if !compatible_ids
+                .iter()
+                .any(|value| is_picotool_reset_compatible_id(value))
+            {
+                continue;
+            }
+            let mut status = 0u32;
+            let mut problem_code = 0u32;
+            if unsafe { CM_Get_DevNode_Status(&mut status, &mut problem_code, info.DevInst, 0) }
+                != CR_SUCCESS
+                || problem_code != 0
+            {
+                continue;
+            }
+
+            let Some(instance_id) = device_instance_id_from_info(hdi, &info) else {
+                continue;
+            };
+            let Some(parent_instance_id) = ancestor_ids(info.DevInst).into_iter().next() else {
+                continue;
+            };
+            let Some(identity) = parse_usb_port_info(&instance_id, Some(&parent_instance_id))
+            else {
+                continue;
+            };
+            let Some(serial_number) = identity.serial_number else {
+                continue;
+            };
+            let Some(interface_number) = identity.interface else {
+                continue;
+            };
+            let Some(device_path) = device_paths.get(&instance_id.to_ascii_uppercase()) else {
+                continue;
+            };
+            devices.push(UsbResetInterface {
+                instance_id,
+                parent_instance_id,
+                vid: identity.vid,
+                pid: identity.pid,
+                serial_number,
+                device_path: device_path.clone(),
+                interface_number,
+                location_paths: location_paths_from_info(hdi, &info),
+            });
+        }
+        unsafe {
+            SetupDiDestroyDeviceInfoList(hdi);
+        }
+        devices.sort_by(|left, right| left.instance_id.cmp(&right.instance_id));
+        devices
+    }
+
+    fn pico_reset_interface_paths() -> HashMap<String, String> {
+        let hdi = unsafe {
+            SetupDiGetClassDevsW(
+                &PICO_RESET_INTERFACE_GUID,
+                std::ptr::null(),
+                0,
+                DIGCF_PRESENT | DIGCF_DEVICEINTERFACE,
+            )
+        };
+        if hdi == INVALID_HANDLE_VALUE {
+            return HashMap::new();
+        }
+
+        let mut paths = HashMap::new();
+        let mut index = 0u32;
+        loop {
+            let mut interface = SP_DEVICE_INTERFACE_DATA {
+                cbSize: std::mem::size_of::<SP_DEVICE_INTERFACE_DATA>() as u32,
+                InterfaceClassGuid: GUID::from_u128(0),
+                Flags: 0,
+                Reserved: 0,
+            };
+            if unsafe {
+                SetupDiEnumDeviceInterfaces(
+                    hdi,
+                    std::ptr::null(),
+                    &PICO_RESET_INTERFACE_GUID,
+                    index,
+                    &mut interface,
+                )
+            } == FALSE
+            {
+                break;
+            }
+            index += 1;
+
+            let mut required_bytes = 0u32;
+            unsafe {
+                SetupDiGetDeviceInterfaceDetailW(
+                    hdi,
+                    &interface,
+                    std::ptr::null_mut(),
+                    0,
+                    &mut required_bytes,
+                    std::ptr::null_mut(),
+                )
+            };
+            if required_bytes < std::mem::size_of::<SP_DEVICE_INTERFACE_DETAIL_DATA_W>() as u32 {
+                continue;
+            }
+
+            // `Vec<usize>` provides pointer alignment suitable for the
+            // variable-sized SetupAPI detail record while still letting the
+            // API state its required byte count exactly.
+            let units = (required_bytes as usize).div_ceil(std::mem::size_of::<usize>());
+            let mut storage = vec![0usize; units];
+            let detail = storage
+                .as_mut_ptr()
+                .cast::<SP_DEVICE_INTERFACE_DETAIL_DATA_W>();
+            unsafe {
+                (*detail).cbSize = std::mem::size_of::<SP_DEVICE_INTERFACE_DETAIL_DATA_W>() as u32;
+            }
+            let mut info = SP_DEVINFO_DATA {
+                cbSize: std::mem::size_of::<SP_DEVINFO_DATA>() as u32,
+                ClassGuid: GUID::from_u128(0),
+                DevInst: 0,
+                Reserved: 0,
+            };
+            if unsafe {
+                SetupDiGetDeviceInterfaceDetailW(
+                    hdi,
+                    &interface,
+                    detail,
+                    required_bytes,
+                    &mut required_bytes,
+                    &mut info,
+                )
+            } == FALSE
+            {
+                continue;
+            }
+            let Some(instance_id) = device_instance_id_from_info(hdi, &info) else {
+                continue;
+            };
+            let path_ptr = unsafe { std::ptr::addr_of!((*detail).DevicePath).cast::<u16>() };
+            let path_offset = std::mem::offset_of!(SP_DEVICE_INTERFACE_DETAIL_DATA_W, DevicePath);
+            let max_units = (required_bytes as usize).saturating_sub(path_offset) / 2;
+            let path_units = unsafe { std::slice::from_raw_parts(path_ptr, max_units) };
+            let length = path_units
+                .iter()
+                .position(|unit| *unit == 0)
+                .unwrap_or(path_units.len());
+            if length != 0 {
+                paths.insert(
+                    instance_id.to_ascii_uppercase(),
+                    String::from_utf16_lossy(&path_units[..length]),
+                );
+            }
+        }
+        unsafe {
+            SetupDiDestroyDeviceInfoList(hdi);
+        }
+        paths
+    }
+
+    pub(super) fn reset_usb_interface_to_bootsel(interface: &UsbResetInterface) -> io::Result<()> {
+        let path = as_utf16(&interface.device_path);
+        let device = unsafe {
+            CreateFileW(
+                path.as_ptr(),
+                GENERIC_READ | GENERIC_WRITE,
+                FILE_SHARE_READ | FILE_SHARE_WRITE,
+                std::ptr::null(),
+                OPEN_EXISTING,
+                FILE_ATTRIBUTE_NORMAL | FILE_FLAG_OVERLAPPED,
+                0,
+            )
+        };
+        if device == INVALID_HANDLE_VALUE {
+            return Err(io::Error::last_os_error());
+        }
+
+        let mut winusb: WINUSB_INTERFACE_HANDLE = 0;
+        if unsafe { WinUsb_Initialize(device, &mut winusb) } == FALSE {
+            let error = io::Error::last_os_error();
+            unsafe {
+                CloseHandle(device);
+            }
+            return Err(error);
+        }
+
+        let setup = WINUSB_SETUP_PACKET {
+            RequestType: RESET_REQUEST_TYPE,
+            Request: RESET_REQUEST_BOOTSEL,
+            Value: 0,
+            Index: u16::from(interface.interface_number),
+            Length: 0,
+        };
+        let mut transferred = 0u32;
+        let transfer_ok = unsafe {
+            WinUsb_ControlTransfer(
+                winusb,
+                setup,
+                std::ptr::null_mut(),
+                0,
+                &mut transferred,
+                std::ptr::null(),
+            )
+        };
+        let transfer_error = (transfer_ok == FALSE).then(io::Error::last_os_error);
+        unsafe {
+            WinUsb_Free(winusb);
+            CloseHandle(device);
+        }
+        if let Some(error) = transfer_error {
+            // The reset handler does not return. Windows can therefore report
+            // the expected disconnect as a failed zero-length transfer even
+            // though the request was accepted. The deployer performs the
+            // authoritative BOOTSEL wait immediately after this call.
+            tracing::debug!(
+                instance_id = %interface.instance_id,
+                %error,
+                "Pico reset interface disconnected while handling the BOOTSEL request"
+            );
+        }
+        Ok(())
+    }
+
     fn device_instance_id_from_info(hdi: HDEVINFO, info: &SP_DEVINFO_DATA) -> Option<String> {
         let mut buffer = [0u16; MAX_DEVICE_ID_LEN as usize];
         let mut required = 0u32;
@@ -967,6 +1313,50 @@ mod imp {
             .unwrap_or(buffer.len());
         let value = String::from_utf16_lossy(&buffer[..length]);
         (!value.is_empty()).then_some(value)
+    }
+
+    fn string_list_property_from_info(
+        hdi: HDEVINFO,
+        info: &SP_DEVINFO_DATA,
+        property_id: u32,
+    ) -> Vec<String> {
+        let mut value_type = 0u32;
+        let mut required_bytes = 0u32;
+        unsafe {
+            SetupDiGetDeviceRegistryPropertyW(
+                hdi,
+                info,
+                property_id,
+                &mut value_type,
+                std::ptr::null_mut(),
+                0,
+                &mut required_bytes,
+            )
+        };
+        if required_bytes < 2 {
+            return Vec::new();
+        }
+        let mut buffer = vec![0u16; (required_bytes as usize).div_ceil(2)];
+        let ok = unsafe {
+            SetupDiGetDeviceRegistryPropertyW(
+                hdi,
+                info,
+                property_id,
+                &mut value_type,
+                buffer.as_mut_ptr().cast(),
+                required_bytes,
+                &mut required_bytes,
+            )
+        };
+        if ok == FALSE || value_type != REG_MULTI_SZ {
+            return Vec::new();
+        }
+        buffer
+            .split(|unit| *unit == 0)
+            .take_while(|segment| !segment.is_empty())
+            .map(String::from_utf16_lossy)
+            .filter(|value| !value.is_empty())
+            .collect()
     }
 
     /// COM ports listed under `HKLM\HARDWARE\DEVICEMAP\SERIALCOMM` that the
