@@ -47,7 +47,7 @@ crates/fbuild-core/src/platform/linux/process.rs	1	native_path	std::os::unix::pr
 crates/fbuild-core/src/platform/linux/process.rs	133	native_path	std::os::unix::fs::PermissionsExt	fs	host_mechanic
 crates/fbuild-core/src/platform/macos/mod.rs	8	compile_host_fact	std::env::consts::ARCH	host	host_mechanic
 crates/fbuild-core/src/platform/macos/process.rs	1	native_path	std::os::unix::process	process	host_mechanic
-crates/fbuild-core/src/platform/macos/process.rs	130	native_path	std::os::unix::fs::PermissionsExt	fs	host_mechanic
+crates/fbuild-core/src/platform/macos/process.rs	131	native_path	std::os::unix::fs::PermissionsExt	fs	host_mechanic
 crates/fbuild-core/src/platform/windows/mod.rs	8	compile_host_fact	std::env::consts::ARCH	host	host_mechanic
 crates/fbuild-core/src/platform/windows/process.rs	1	native_path	std::os::windows::io::AsHandle	process	host_mechanic
 crates/fbuild-daemon/Cargo.toml	58	native_dependency	interprocess	process	host_mechanic
