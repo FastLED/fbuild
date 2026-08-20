@@ -157,11 +157,11 @@ impl UsbRecoveryRequest {
             && self
                 .parent_instance_id
                 .as_deref()
-                .map_or(true, canonical_pnp_id)
-            && self.expected_serial.as_deref().map_or(true, |serial| {
+                .is_none_or(canonical_pnp_id)
+            && self.expected_serial.as_deref().is_none_or(|serial| {
                 !serial.is_empty() && serial.len() <= 256 && !serial.chars().any(char::is_control)
             })
-            && self.expected_location_path.as_deref().map_or(true, |path| {
+            && self.expected_location_path.as_deref().is_none_or(|path| {
                 !path.is_empty()
                     && path.len() <= 1024
                     && !path.chars().any(|character| {

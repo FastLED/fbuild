@@ -6,7 +6,7 @@ CI/CD workflows for the fbuild project, covering lint, test, documentation, and 
 
 - **`check-{macos,ubuntu,windows}.yml`** -- Clippy + tests per platform
 - **`fmt.yml`** -- Rustfmt check | **`docs.yml`** -- Doc build with `-D warnings`
-- **`msrv.yml`** -- MSRV 1.94.1 verification | **`validate-boards.yml`** -- Board JSON validation
+- **`msrv.yml`** -- MSRV 1.95.0 verification | **`validate-boards.yml`** -- Board JSON validation
 - **`platform-boundary-research.yml`** -- Windows/Linux/macOS reconciliation of the #1307 research inventory and RED fixture
 - **`loc-gate.yml`** -- Reject `.rs` files over 1000 LOC | **`lint-subprocess.yml`** -- Forbid direct subprocess spawns
 - **`crate-gate.yml`** -- Reject new workspace crates (monocrate policy, `ci/check_workspace_crates.py`)

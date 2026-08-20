@@ -35,7 +35,7 @@ jobs:
       # setup-soldr provisions the pinned toolchain with profile=minimal,
       # which omits rustfmt. Without this step, `cargo fmt` silently falls
       # back to the runner's preinstalled (newer) stable rustfmt, whose
-      # import-sorting/width rules differ from the pinned 1.94.1 — every
+      # import-sorting/width rules differ from the pinned 1.95.0 — every
       # cache-miss run then fails with diffs the pinned toolchain does not
       # produce.
       - name: Install rustfmt for the pinned toolchain

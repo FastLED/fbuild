@@ -67,9 +67,9 @@ such an occurrence would be a bug, not a permanent exception.
 
 ## Toolchain proof and pin audit
 
-`std::cfg_select!` is stable in Rust 1.95.0. The current workspace MSRV and
-toolchain are 1.94.1, so phase 2 raises all declarations that build fbuild
-itself to one reviewed 1.95.x patch release.
+`std::cfg_select!` is stable in Rust 1.95.0. Phase 1 recorded workspace MSRV
+and toolchain 1.94.1; phase 2 selects 1.95.0 for every declaration that builds
+fbuild itself.
 
 The fbuild-owned pin set is:
 
@@ -89,7 +89,9 @@ adds a drift test so future build pins cannot diverge.
 ## Inventory result and dependency order
 
 The host-independent source walker in `ci/platform_boundary_research.py`
-reports 490 candidate occurrences. The checked-in rows and reproducible
+initially reported 490 candidate occurrences. Phase 2 Dylint/scanner
+reconciliation corrected the authoritative union to 496 after adding missed
+constructs and removing local-module false positives. The checked-in rows and reproducible
 three-host protocol are described in
 `platform-boundary-research-inventory.md`. This is reviewed research input, not
 the phase-2 exact-occurrence baseline.
@@ -133,7 +135,7 @@ compile result on all three hosts. Phase 2 converts the same constructs into
 negative Dylint/scanner fixtures whose expected result is a boundary error.
 
 Existing production and test sources provide additional RED evidence: the
-research inventory includes private/inactive attributes, 72 native paths, and
+research inventory includes private/inactive attributes, 77 native paths, and
 host cfg in integration and inline-test sources without a boundary diagnostic.
 
 ## Phase-2 entry requirements
@@ -142,3 +144,17 @@ Phase 2 must use the committed union as input, replace research scanning with
 syntax-aware pre-expansion Dylint plus an independent whole-tree parser, freeze
 the exact-occurrence ledger, add the selector skeleton, and update the toolchain.
 No capability migration begins until those gates pass.
+
+## Phase-2 bootstrap
+
+Phase 2 selected Rust 1.95.0, added the single exhaustive selector at
+`fbuild_core::platform`, and froze `ci/platform_boundary_ledger.tsv`. Ledger
+identity is `(path, kind, normalized construct, ordinal)`; line numbers are
+diagnostic only and do not affect identity. The independent checker requires
+the current whole-tree and manifest scan to equal that ledger exactly, while
+the pre-expansion `enforce_platform_boundary` Dylint rejects any occurrence
+beyond its corresponding exact count. The scanner covers inactive, orphaned,
+private, inline-test, integration-test, example, bench, and build-script source;
+the Dylint covers every construct in the current host's compiled sources,
+including arbitrary unexpanded macro tokens. CI compares actual Dylint
+observations with the scanner projection so a skipped compiler traversal fails.

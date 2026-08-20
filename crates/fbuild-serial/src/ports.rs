@@ -798,7 +798,7 @@ mod imp {
             if err != 0 {
                 return String::new();
             }
-            if value_type != REG_SZ || byte_len % 2 != 0 || byte_len > buffer_byte_len {
+            if value_type != REG_SZ || !byte_len.is_multiple_of(2) || byte_len > buffer_byte_len {
                 return String::new();
             }
             let len = buffer_byte_len as usize / 2;
@@ -1429,7 +1429,7 @@ mod imp {
                 };
                 if res != 0
                     || value_type != REG_SZ
-                    || byte_len % 2 != 0
+                    || !byte_len.is_multiple_of(2)
                     || byte_len > buffer_byte_len
                 {
                     break;

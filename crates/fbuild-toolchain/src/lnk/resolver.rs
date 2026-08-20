@@ -138,10 +138,9 @@ pub fn resolve(lnk: &LnkFile, cache: &DiskCache) -> Result<ResolvedBlob> {
         }
     };
 
-    verify_sha256(&downloaded, &lnk.sha256).map_err(|e| {
+    verify_sha256(&downloaded, &lnk.sha256).inspect_err(|_e| {
         // Clean up the staging file so a retry starts fresh.
         let _ = std::fs::remove_file(&downloaded);
-        e
     })?;
 
     let archive_bytes = std::fs::metadata(&downloaded)

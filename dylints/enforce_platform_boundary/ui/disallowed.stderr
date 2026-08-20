@@ -1,0 +1,69 @@
+error: native import `libc` is outside fbuild_core::platform; use a neutral facade
+  --> $DIR/disallowed.rs:8:5
+   |
+LL | use libc as native_libc;
+   |     ^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[deny(enforce_platform_boundary)]` on by default
+
+error: attr cfg `windows` is outside fbuild_core::platform; use a neutral facade
+  --> $DIR/disallowed.rs:10:7
+   |
+LL | #[cfg(windows)]
+   |       ^^^^^^^
+
+error: native import `std::os::unix` is outside fbuild_core::platform; use a neutral facade
+  --> $DIR/disallowed.rs:14:5
+   |
+LL | use std::os::unix::ffi::OsStrExt as _;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: attr cfg `windows` is outside fbuild_core::platform; use a neutral facade
+  --> $DIR/disallowed.rs:13:11
+   |
+LL | #[cfg(not(windows))]
+   |           ^^^^^^^
+
+error: module ref `platform_windows` is outside fbuild_core::platform; use a neutral facade
+  --> $DIR/disallowed.rs:20:20
+   |
+LL |     let _backend = platform_windows::Backend;
+   |                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: cfg macro `target_os` is outside fbuild_core::platform; use a neutral facade
+  --> $DIR/disallowed.rs:17:17
+   |
+LL |     let _host = cfg!(target_os = "linux");
+   |                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: cfg macro `target_os` is outside fbuild_core::platform; use a neutral facade
+  --> $DIR/disallowed.rs:18:28
+   |
+LL |     let _same_host_again = cfg!(target_os = "linux");
+   |                            ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: compile host fact `CARGO_CFG_TARGET_ARCH` is outside fbuild_core::platform; use a neutral facade
+  --> $DIR/disallowed.rs:19:17
+   |
+LL |     let _arch = option_env!("CARGO_CFG_TARGET_ARCH");
+   |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: cfg macro `target_os` is outside fbuild_core::platform; use a neutral facade
+  --> $DIR/disallowed.rs:21:24
+   |
+LL |     let _nested_host = format!("{}", cfg!(target_os = "linux"));
+   |                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: compile host fact `std::env::consts::OS` is outside fbuild_core::platform; use a neutral facade
+  --> $DIR/disallowed.rs:22:22
+   |
+LL |     let _nested_os = format!("{}", std::env::consts::OS);
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: cfg macro `unix` is outside fbuild_core::platform; use a neutral facade
+  --> $DIR/disallowed.rs:29:9
+   |
+LL |         assert!(cfg!(unix));
+   |         ^^^^^^^^^^^^^^^^^^^
+
+error: aborting due to 11 previous errors

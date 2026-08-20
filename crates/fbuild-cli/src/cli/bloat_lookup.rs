@@ -170,7 +170,7 @@ fn format_symbol_block(sym: &FineGrainedSymbol, map: &FineGrainedSymbolMap) -> S
                 (size, demangled, m.as_str())
             })
             .collect();
-        rows.sort_by(|a, b| b.0.cmp(&a.0));
+        rows.sort_by_key(|row| std::cmp::Reverse(row.0));
         for (size, demangled, _) in rows.iter().take(10) {
             let _ = writeln!(out, "    {size:>8} B  {demangled}");
         }
@@ -200,7 +200,7 @@ fn format_symbol_block(sym: &FineGrainedSymbol, map: &FineGrainedSymbolMap) -> S
                 (size, demangled)
             })
             .collect();
-        rows.sort_by(|a, b| b.0.cmp(&a.0));
+        rows.sort_by_key(|row| std::cmp::Reverse(row.0));
         for (size, demangled) in rows.iter().take(10) {
             let _ = writeln!(out, "    {size:>8} B  {demangled}");
         }

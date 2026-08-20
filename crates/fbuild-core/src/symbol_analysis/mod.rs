@@ -666,7 +666,7 @@ pub fn rollup_sections(ranges: &[InputSectionRange]) -> Vec<SectionBytes> {
             bytes,
         })
         .collect();
-    out.sort_by(|a, b| b.bytes.cmp(&a.bytes));
+    out.sort_by_key(|symbol| std::cmp::Reverse(symbol.bytes));
     out
 }
 

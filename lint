@@ -86,6 +86,13 @@ def main() -> int:
             )
 
     # Full workspace mode
+    for checker in (
+        "ci/check_rust_toolchain_pins.py",
+        "ci/enforce_platform_boundary.py",
+    ):
+        rc = run([sys.executable, checker])
+        if rc != 0:
+            return rc
     rc = run(["soldr", "cargo", "fmt", "--all", "--check"])
     if rc != 0:
         print(

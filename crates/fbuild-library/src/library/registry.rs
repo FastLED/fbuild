@@ -125,7 +125,7 @@ pub async fn resolve_library(
         // Keep the highest matching version
         if best_match
             .as_ref()
-            .map_or(true, |(best_ver, _)| ver > *best_ver)
+            .is_none_or(|(best_ver, _)| ver > *best_ver)
         {
             best_match = Some((ver, ver_entry));
         }

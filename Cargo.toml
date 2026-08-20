@@ -28,6 +28,7 @@ members = [
 # stable workspace build — `cargo dylint --all` builds them with
 # the pinned nightly via the discovery below. See #264.
 exclude = [
+    "dylints/enforce_platform_boundary",
     "dylints/ban_raw_subprocess",
     "dylints/ban_raw_path_prefix_compare",
     "dylints/ban_std_pathbuf",
@@ -71,7 +72,7 @@ libraries = [{ path = "dylints/*" }]
 [workspace.package]
 version = "2.5.17"
 edition = "2021"
-rust-version = "1.94.1"
+rust-version = "1.95.0"
 license = "AGPL-3.0-only"
 repository = "https://github.com/fastled/fbuild"
 

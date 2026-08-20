@@ -13,6 +13,7 @@ Core types, errors, and utilities shared across all fbuild crates.
 - `SizeInfo` -- Firmware size breakdown (text/data/bss/flash/RAM) with Berkeley and AVR section format parsers
 - `BuildLog` -- Build output accumulator with optional real-time channel streaming
 - `ToolOutput` -- Captured subprocess result (stdout, stderr, exit code)
+- `platform` -- Single host selector and neutral process, fs, IPC, executable, host, and device namespaces
 
 ## Modules
 

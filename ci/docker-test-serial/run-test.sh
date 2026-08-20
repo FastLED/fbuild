@@ -53,7 +53,7 @@ wsl.exe -d "$WSL_DISTRO" --user root -- bash <<'WSL_SCRIPT'
 set -euo pipefail
 source /root/.cargo/env 2>/dev/null || (
     apt-get install -y -qq curl build-essential pkg-config 2>&1 | tail -1
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.94.1 --profile minimal -q 2>&1 | tail -1
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.95.0 --profile minimal -q 2>&1 | tail -1
     source /root/.cargo/env
 )
 

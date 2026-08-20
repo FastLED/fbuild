@@ -3,7 +3,7 @@
 Custom [dylint](https://github.com/trailofbits/dylint) lints for fbuild
 production code. Each lint lives in its own crate so it can pin its own
 nightly toolchain (the rustc internal API moves fast; the workspace
-itself stays on stable 1.94.1).
+itself stays on stable 1.95.0).
 
 ## Crates
 

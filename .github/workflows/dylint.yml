@@ -26,11 +26,13 @@ jobs:
       - uses: astral-sh/setup-uv@v3
       - name: Validate Dylint allowlist paths
         run: uv run --no-project python ci/check_dylint_allowlists.py
+      - name: Validate platform-boundary ledgers
+        run: uv run --no-project python ci/enforce_platform_boundary.py --print-totals
       - uses: zackees/setup-soldr@v0
         with:
           version: 0.8.23
           cache: true
-          toolchain: 1.94.1
+          toolchain: 1.95.0
           cache-key-suffix: dylint
           prebuild-deps: none
           # Opt out of the implicit `SOLDR_LINKER=fast` injection so cargo /
@@ -74,8 +76,17 @@ jobs:
               soldr cargo test --manifest-path "$manifest"
           done < <(find dylints -mindepth 2 -maxdepth 2 -name Cargo.toml | sort)
       - name: Run dylint over workspace
+        env:
+          FBUILD_PLATFORM_BOUNDARY_OBSERVED: ${{ github.workspace }}/target/platform-boundary-dylint-observed.tsv
         run: |
           # Invoke the exact binary installed above. The Soldr cargo front
           # door otherwise injects its managed cargo-dylint toolchain, which
           # overrides the shared nightly pinned by the library manifests.
+          # Give every job a distinct, inert cfg so Cargo cannot reuse check
+          # artifacts without running rustc/Dylint. Actual traversal is what
+          # makes the observation comparison below meaningful.
+          export RUSTFLAGS="${RUSTFLAGS:+${RUSTFLAGS} }--cfg fbuild_platform_boundary_observation_run_${GITHUB_RUN_ID}"
+          rm -f "$FBUILD_PLATFORM_BOUNDARY_OBSERVED"
           "${CARGO_HOME}/bin/cargo-dylint" dylint --all -- --workspace --all-targets
+      - name: Compare scanner with actual Dylint observations
+        run: uv run --no-project python ci/enforce_platform_boundary.py --dylint-observed target/platform-boundary-dylint-observed.tsv --print-totals
