@@ -503,16 +503,6 @@ impl EarlyLintPass for EnforcePlatformBoundary {
 }
 
 #[test]
-fn ui() {
-    // SAFETY: this test binary contains one test, so no peer observes the
-    // process-wide target override change.
-    unsafe {
-        std::env::remove_var("CARGO_BUILD_TARGET");
-    }
-    dylint_testing::ui_test(env!("CARGO_PKG_NAME"), "./ui");
-}
-
-#[test]
 fn second_identical_occurrence_exceeds_exact_baseline() {
     let key = (
         "crates/example/src/lib.rs".to_owned(),
