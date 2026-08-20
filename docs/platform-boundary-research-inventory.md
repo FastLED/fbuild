@@ -37,12 +37,14 @@ the research lexer and that concrete local `windows::...` module paths were
 not included; the same reconciliation also added concrete
 `interprocess::local_socket` transports. A subsequent exact AST comparison
 removed 25 false positives where local modules named `linux`, `macos`, or
-`unix` had been mistaken for native crates. The corrected, authoritative union
-contains **496 rows**:
+`unix` had been mistaken for native crates. Eight host-cfg occurrences added
+to `fbuild-paths` on `main` before the phase 2 baseline was merged were then
+reconciled into the ledger. The corrected, authoritative union contains **504
+rows**:
 
 | Kind | Rows |
 | --- | ---: |
-| `attr_cfg` | 194 |
+| `attr_cfg` | 202 |
 | `cfg_macro` | 198 |
 | `compile_host_fact` | 14 |
 | `native_path` | 77 |
@@ -51,7 +53,7 @@ contains **496 rows**:
 
 | Classification | Rows |
 | --- | ---: |
-| Host mechanic | 390 |
+| Host mechanic | 398 |
 | Host artifact policy | 106 |
 | Embedded build-target policy | 0 |
 | Specialized artifact | 0 |
@@ -61,7 +63,7 @@ contains **496 rows**:
 | `host_executable` | 117 |
 | `device` | 117 |
 | `process` | 110 |
-| `host` | 97 |
+| `host` | 105 |
 | `fs` | 43 |
 | `ipc` | 12 |
 
@@ -77,7 +79,7 @@ contains **496 rows**:
 | `fbuild-cli` | 47 |
 | `fbuild-library` | 13 |
 | `fbuild-build` | 10 |
-| `fbuild-paths` | 9 |
+| `fbuild-paths` | 17 |
 | `fbuild-packages-fetch` | 9 |
 | `fbuild-python` | 4 |
 | `fbuild-build-engine` | 4 |
@@ -85,7 +87,7 @@ contains **496 rows**:
 | `fbuild-build-arm` | 3 |
 | `fbuild-build-esp` | 2 |
 
-The 496-row count is larger than #1306's preliminary 386 matching lines because
+The 504-row count is larger than #1306's preliminary 386 matching lines because
 this scan also records compile-time host facts, native paths/dependencies, and
 target-specific dependency tables and treats multiple constructs on a line as
 separate findings.

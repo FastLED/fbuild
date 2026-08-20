@@ -337,6 +337,14 @@ crates/fbuild-packages-fetch/src/disk_cache/index/pid.rs	attr_cfg	windows	1
 crates/fbuild-packages-fetch/src/install_lock.rs	cfg_macro	windows	0
 crates/fbuild-paths/src/lib.rs	attr_cfg	target_os	0
 crates/fbuild-paths/src/lib.rs	attr_cfg	target_os	1
+crates/fbuild-paths/src/lib.rs	attr_cfg	windows	0
+crates/fbuild-paths/src/lib.rs	attr_cfg	windows	1
+crates/fbuild-paths/src/lib.rs	attr_cfg	windows	2
+crates/fbuild-paths/src/lib.rs	attr_cfg	windows	3
+crates/fbuild-paths/src/lib.rs	attr_cfg	windows	4
+crates/fbuild-paths/src/lib.rs	attr_cfg	windows	5
+crates/fbuild-paths/src/lib.rs	attr_cfg	windows	6
+crates/fbuild-paths/src/lib.rs	attr_cfg	windows	7
 crates/fbuild-paths/src/running_process.rs	attr_cfg	target_os	0
 crates/fbuild-paths/src/running_process.rs	attr_cfg	target_os	1
 crates/fbuild-paths/src/running_process.rs	attr_cfg	target_os	2
