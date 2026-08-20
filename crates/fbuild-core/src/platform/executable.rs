@@ -3,7 +3,7 @@
 use super::host::{self, HostArch, HostPlatform};
 use crate::path::NormalizedPath;
 use std::io;
-use std::path::Path;
+use std::path::{Component, Path};
 
 /// Select the spelling of an executable or command script for an explicit host.
 pub const fn name_for<'a>(host: HostPlatform, non_windows: &'a str, windows: &'a str) -> &'a str {
@@ -58,6 +58,18 @@ pub fn current_image() -> io::Result<NormalizedPath> {
 
 /// Return a path next to the current executable image.
 pub fn current_image_sibling(name: impl AsRef<Path>) -> io::Result<NormalizedPath> {
+    let name = name.as_ref();
+    let mut components = name.components();
+    if !matches!(
+        (components.next(), components.next()),
+        (Some(Component::Normal(_)), None)
+    ) {
+        return Err(io::Error::new(
+            io::ErrorKind::InvalidInput,
+            "current executable sibling name must be exactly one file-name component",
+        ));
+    }
+
     let image = current_image()?;
     let parent = image.parent().ok_or_else(|| {
         io::Error::new(
@@ -119,5 +131,16 @@ mod tests {
             candidates[1].file_name().and_then(|name| name.to_str()),
             Some("fbuild-daemon.exe")
         );
+    }
+
+    #[test]
+    fn current_image_sibling_rejects_paths_that_can_escape_the_image_directory() {
+        for invalid in [
+            std::path::Path::new("/tmp/other"),
+            std::path::Path::new("../other"),
+        ] {
+            let error = super::current_image_sibling(invalid).expect_err("reject non-sibling path");
+            assert_eq!(error.kind(), std::io::ErrorKind::InvalidInput);
+        }
     }
 }

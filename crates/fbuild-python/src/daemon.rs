@@ -475,7 +475,7 @@ mod tests {
         // Unix it is unsuffixed.
         assert_eq!(
             DAEMON_BIN_NAME,
-            fbuild_core::platform::executable::name("fbuild-daemon", "fbuild-daemon.exe")
+            fbuild_core::platform::executable::native_name("fbuild-daemon")
         );
     }
 

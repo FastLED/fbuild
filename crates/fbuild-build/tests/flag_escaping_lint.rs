@@ -38,20 +38,21 @@ fn collect_rs_files(dir: &Path) -> Vec<PathBuf> {
 /// Check that a compiler file that has a non-Windows `run_command` path
 /// also calls `prepare_flags_for_exec` in that path.
 ///
-/// Heuristic: if a file contains both `run_command` and `fbuild_core::platform::host::is_windows()` (the
-/// response-file branch pattern), it MUST also contain `prepare_flags_for_exec`.
+/// Heuristic: if a file contains both `run_command` and an `is_windows`
+/// reference (the response-file branch pattern), it MUST also contain
+/// `prepare_flags_for_exec`. Matching the symbol reference also covers direct,
+/// imported, and aliased calls because the import still names `is_windows`.
 #[test]
 fn compiler_backends_must_sanitize_flags_for_exec() {
     let src = crate_src_dir();
     let mut rs_files = collect_rs_files(&src);
 
-    // Also scan fbuild-packages which has its own library compiler.
-    let packages_src = Path::new(env!("CARGO_MANIFEST_DIR"))
-        .parent()
-        .unwrap()
-        .join("fbuild-packages")
-        .join("src");
-    rs_files.extend(collect_rs_files(&packages_src));
+    // Also scan the packages and library crates, which own direct compiler
+    // backends outside this crate's source tree.
+    let crates_dir = Path::new(env!("CARGO_MANIFEST_DIR")).parent().unwrap();
+    for crate_name in ["fbuild-packages", "fbuild-library"] {
+        rs_files.extend(collect_rs_files(&crates_dir.join(crate_name).join("src")));
+    }
 
     let mut violations = Vec::new();
 
@@ -63,7 +64,7 @@ fn compiler_backends_must_sanitize_flags_for_exec() {
         let has_run_command = content.contains("run_command");
         let has_response_file =
             content.contains("write_response_file") || content.contains("@response");
-        let has_cfg_windows = content.contains("fbuild_core::platform::host::is_windows()");
+        let has_windows_host_branch = content.contains("is_windows");
 
         // Linker files use response files for link flags (not -D defines),
         // so they don't need prepare_flags_for_exec.
@@ -75,7 +76,7 @@ fn compiler_backends_must_sanitize_flags_for_exec() {
         // compiler backend that must sanitize flags on the non-Windows path.
         if has_run_command
             && has_response_file
-            && has_cfg_windows
+            && has_windows_host_branch
             && !is_linker
             && !content.contains("prepare_flags_for_exec")
         {
