@@ -59,7 +59,7 @@ fbuild-test-support (test utilities) ──────────────�
 
 - **fbuild-core** — `FbuildError`/`Result`, `BuildProfile`, `Platform`, `SizeInfo`, `DaemonState`. USB identity catalogues are fetched from FastLED/boards and must never be generated or embedded here outside test fixtures.
 - **fbuild-config** — `PlatformIOConfig` (INI parser with `extends` inheritance), `BoardConfig`, `McuSpec`
-- **fbuild-paths** — Dev/prod path isolation (`~/.fbuild/{dev|prod}/`), version+identity-keyed daemon endpoint (`daemon_endpoint_key`/`default_daemon_port`, dynamic range 49152–65535; FastLED/fbuild#1009), cache dirs
+- **fbuild-paths** — Dev/prod path isolation (`~/.fbuild/{dev|prod}/`), version+identity-keyed daemon endpoint (`daemon_endpoint_key`/`default_daemon_port`, Windows 10000–49151 to avoid excluded dynamic ports, 49152–65535 elsewhere; FastLED/fbuild#1009), cache dirs
 - **fbuild-packages** — URL-based package downloads, toolchain resolution, library manager, parallel pipeline
 - **fbuild-serial** — `SharedSerialManager` (centralized serial I/O), deploy preemption protocol, WebSocket messages, USB-CDC retry logic
 - **fbuild-build** — `BuildOrchestrator` trait, per-platform orchestrators (AVR, ESP32, ESP8266, RP2040, STM32, Teensy, WASM)
