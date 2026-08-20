@@ -267,6 +267,7 @@ pub struct UsbResetInterface {
     pub location_paths: Vec<String>,
 }
 
+#[cfg(any(windows, test))]
 fn is_picotool_reset_compatible_id(value: &str) -> bool {
     value.eq_ignore_ascii_case("USB\\Class_ff&SubClass_00&Prot_01")
 }
