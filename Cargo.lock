@@ -1189,7 +1189,6 @@ version = "2.5.18"
 dependencies = [
  "async-trait",
  "fs2",
- "libc",
  "prost",
  "reqwest",
  "running-process",
@@ -1224,7 +1223,6 @@ dependencies = [
  "fbuild-test-support",
  "futures",
  "interprocess",
- "libc",
  "mimalloc",
  "prost",
  "regex",

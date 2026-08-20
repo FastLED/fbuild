@@ -30,7 +30,7 @@ use fbuild_core::path::NormalizedPath;
 use crate::get_daemon_dir;
 
 /// Expected executable stem of the fbuild daemon binary. Used with
-/// `fbuild_core::process_identity::pid_exe_stem_matches` to verify a PID
+/// `fbuild_core::platform::process::pid_exe_stem_matches` to verify a PID
 /// found in a legacy pid file / claim / status file is actually an
 /// fbuild-daemon before it is ever signalled.
 pub const DAEMON_EXE_STEM: &str = "fbuild-daemon";
@@ -138,7 +138,7 @@ pub fn owner_claim_path() -> NormalizedPath {
 /// **Never authoritative on its own.** This file can go stale (crash,
 /// `SIGKILL`, power loss) exactly like any other PID file — always verify
 /// `pid` liveness AND its exe stem (via
-/// `fbuild_core::process_identity::pid_exe_stem_matches(pid, DAEMON_EXE_STEM)`)
+/// `fbuild_core::platform::process::pid_exe_stem_matches(pid, DAEMON_EXE_STEM)`)
 /// before treating a claim as describing a live daemon, and never signal a
 /// PID from a claim without that verification.
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]

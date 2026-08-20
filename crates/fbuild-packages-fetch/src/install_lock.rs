@@ -218,13 +218,13 @@ fn owner_is_dead(owner: &LockOwner) -> bool {
     let Some(pid) = owner.pid else {
         return false;
     };
-    if !fbuild_core::process_identity::pid_is_alive(pid) {
+    if !fbuild_core::platform::process::pid_is_alive(pid) {
         return true;
     }
     match &owner.exe_stem {
         // `pid_exe_stem_matches` fails closed on an uninspectable image, so
         // only treat a *successful* probe of a different program as death.
-        Some(stem) => match fbuild_core::process_identity::pid_executable_path(pid) {
+        Some(stem) => match fbuild_core::platform::process::pid_executable_path(pid) {
             Some(path) => match path.file_stem().and_then(|s| s.to_str()) {
                 Some(actual) => !stem_eq(actual, stem),
                 None => false,

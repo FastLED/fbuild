@@ -77,22 +77,11 @@ fn daemon_rebinds_cleanly_after_hard_kill_with_open_connection() {
     let _hold = std::net::TcpStream::connect(("127.0.0.1", port)).expect("hold connection");
 
     // 3) Hard-kill (no graceful shutdown).
-    #[cfg(unix)]
-    {
-        // SAFETY: libc::kill is async-signal-safe and we are passing a PID
-        // that we own. The kill syscall has no Rust-visible state to invalidate.
-        unsafe {
-            libc::kill(d1.id() as i32, libc::SIGKILL);
-        }
-    }
-    #[cfg(windows)]
-    {
-        // taskkill /F is the Windows equivalent of SIGKILL.
-        // allow-direct-spawn: test driver hard-killing the daemon process under test.
-        let _ = Command::new("taskkill")
-            .args(["/F", "/PID", &d1.id().to_string()])
-            .status();
-    }
+    fbuild_core::platform::process::terminate_pid(
+        d1.id(),
+        fbuild_core::platform::process::Termination::Force,
+    )
+    .expect("hard-kill daemon #1");
     // #806: bound the wait so a missed signal can't wedge the test.
     let exited_d1 = wait_with_timeout(&mut d1, Duration::from_secs(30));
     assert!(

@@ -20,11 +20,10 @@
   flagged test files that legitimately spawn binaries under test.)
 
 - **`allowlist.txt`** — newline-separated tail-suffix matches for source
-  files that legitimately need to call the banned APIs (the blessed
-  helpers themselves; daemon-bootstrap spawns from the CLI/Python;
-  cross-tool zccache daemon launch; CLI-side async fan-out where no
-  containment group exists). New entries require a justification
-  comment.
+  files that legitimately need to call the banned APIs (the containment
+  test harness, cross-tool zccache daemon launch, interactive debugger,
+  short capability probe, and CLI-side async fan-out). New entries require
+  a justification comment.
 
 The `_in_daemon` suffix that zccache's sibling crate uses isn't applied
 here because fbuild's wrappers are used by *every* crate, not just the

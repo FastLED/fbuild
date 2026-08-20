@@ -317,18 +317,12 @@ fn launch_zed(zed_path: &Path, project_dir: &str) -> fbuild_core::Result<()> {
     // allow-direct-spawn: editor is launched detached and must outlive the CLI; deliberately not in a containment group.
     let mut cmd = std::process::Command::new(zed_path);
     cmd.arg(project_dir);
-    cmd.stdin(std::process::Stdio::null())
-        .stdout(std::process::Stdio::null())
-        .stderr(std::process::Stdio::null());
-    #[cfg(windows)]
-    {
-        use std::os::windows::process::CommandExt;
-        const CREATE_NO_WINDOW: u32 = 0x08000000;
-        const DETACHED_PROCESS: u32 = 0x00000008;
-        cmd.creation_flags(CREATE_NO_WINDOW | DETACHED_PROCESS);
-    }
-    cmd.spawn()
-        .map_err(|e| fbuild_core::FbuildError::Other(format!("failed to launch zed: {}", e)))?;
+    fbuild_core::platform::process::spawn_detached(
+        &mut cmd,
+        None,
+        fbuild_core::platform::process::DetachedEnvironment::Inherit,
+    )
+    .map_err(|e| fbuild_core::FbuildError::Other(format!("failed to launch zed: {}", e)))?;
     Ok(())
 }
 

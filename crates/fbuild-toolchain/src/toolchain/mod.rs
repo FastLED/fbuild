@@ -17,7 +17,6 @@ pub use arm::ArmToolchain;
 pub use arm_gcc8::ArmGcc8Toolchain;
 pub use avr::AvrToolchain;
 pub use clang::{ClangComponent, ClangComponentKind};
-#[cfg(windows)]
 pub use esp_qemu::build_windows_qemu_path_env;
 pub use esp_qemu::{EspQemu, EspQemuArch, EspQemuRiscv32, EspQemuXtensa};
 pub use esp32::Esp32Toolchain;

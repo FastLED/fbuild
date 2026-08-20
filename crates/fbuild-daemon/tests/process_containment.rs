@@ -98,18 +98,22 @@ fn daemon_children_die_when_daemon_dies() {
 
     // Sanity: every pid must be alive *right now*.
     assert!(
-        pid_alive(child_pid),
+        fbuild_core::platform::process::pid_is_alive(child_pid),
         "child {} is not alive before kill",
         child_pid
     );
     assert!(
-        pid_alive(grandchild_pid),
+        fbuild_core::platform::process::pid_is_alive(grandchild_pid),
         "grandchild {} is not alive before kill",
         grandchild_pid
     );
 
     // Hard-kill the parent.
-    kill_hard(parent_pid).expect("hard-kill parent");
+    fbuild_core::platform::process::terminate_pid(
+        parent_pid,
+        fbuild_core::platform::process::Termination::Force,
+    )
+    .expect("hard-kill parent");
 
     // Wait for the parent to be reaped. This is necessary on Windows
     // because the Job Object's kill-on-close only fires after the job
@@ -129,8 +133,8 @@ fn daemon_children_die_when_daemon_dies() {
     // grandchild must be gone.
     let deadline = Instant::now() + Duration::from_secs(10);
     loop {
-        let child_gone = !pid_alive(child_pid);
-        let grand_gone = !pid_alive(grandchild_pid);
+        let child_gone = !fbuild_core::platform::process::pid_is_alive(child_pid);
+        let grand_gone = !fbuild_core::platform::process::pid_is_alive(grandchild_pid);
         if child_gone && grand_gone {
             return; // success
         }
@@ -138,9 +142,9 @@ fn daemon_children_die_when_daemon_dies() {
             panic!(
                 "containment failed: child {} alive={}, grandchild {} alive={}",
                 child_pid,
-                pid_alive(child_pid),
+                fbuild_core::platform::process::pid_is_alive(child_pid),
                 grandchild_pid,
-                pid_alive(grandchild_pid),
+                fbuild_core::platform::process::pid_is_alive(grandchild_pid),
             );
         }
         std::thread::sleep(Duration::from_millis(100));
@@ -150,68 +154,3 @@ fn daemon_children_die_when_daemon_dies() {
 // ---------------------------------------------------------------------------
 // OS-specific PID probes and hard-kill
 // ---------------------------------------------------------------------------
-
-#[cfg(unix)]
-fn pid_alive(pid: u32) -> bool {
-    // `kill(pid, 0)` is a probe — returns 0 if the pid exists and we
-    // have permission, -1/ESRCH otherwise.
-    unsafe { libc::kill(pid as i32, 0) == 0 }
-}
-
-#[cfg(windows)]
-fn pid_alive(pid: u32) -> bool {
-    // OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION) succeeds for any
-    // running process; fails for a dead / non-existent PID. Also check
-    // the exit code — a handle to a process that has exited but not
-    // yet been reaped will still open successfully but report exited.
-    type Handle = *mut std::ffi::c_void;
-    const PROCESS_QUERY_LIMITED_INFORMATION: u32 = 0x1000;
-    const STILL_ACTIVE: u32 = 259;
-    #[link(name = "kernel32")]
-    extern "system" {
-        fn OpenProcess(desired_access: u32, inherit_handle: i32, process_id: u32) -> Handle;
-        fn CloseHandle(handle: Handle) -> i32;
-        fn GetExitCodeProcess(handle: Handle, exit_code: *mut u32) -> i32;
-    }
-    unsafe {
-        let h = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, 0, pid);
-        if h.is_null() {
-            return false;
-        }
-        let mut code: u32 = 0;
-        let ok = GetExitCodeProcess(h, &mut code as *mut u32);
-        CloseHandle(h);
-        ok != 0 && code == STILL_ACTIVE
-    }
-}
-
-#[cfg(unix)]
-fn kill_hard(pid: u32) -> std::io::Result<()> {
-    let rc = unsafe { libc::kill(pid as i32, libc::SIGKILL) };
-    if rc == 0 {
-        Ok(())
-    } else {
-        Err(std::io::Error::last_os_error())
-    }
-}
-
-#[cfg(windows)]
-fn kill_hard(pid: u32) -> std::io::Result<()> {
-    // `taskkill /F` is the standard Windows hard-kill and works for
-    // arbitrary PIDs without DLL shenanigans.
-    // allow-direct-spawn: test driver using taskkill to hard-kill a test subject.
-    let status = Command::new("taskkill")
-        .args(["/F", "/PID", &pid.to_string()])
-        .stdout(Stdio::null())
-        .stderr(Stdio::null())
-        .status()?;
-    if status.success() {
-        Ok(())
-    } else {
-        Err(std::io::Error::other(format!(
-            "taskkill /F /PID {} exited with {:?}",
-            pid,
-            status.code()
-        )))
-    }
-}

@@ -156,21 +156,16 @@ pub(crate) async fn resolve_esp32_toolchain_gcc_path(
     Ok(toolchain.get_gcc_path())
 }
 
-#[cfg(windows)]
-fn apply_windows_process_flags(cmd: &mut tokio::process::Command, exe_path: &Path) {
-    const CREATE_NO_WINDOW: u32 = 0x08000000;
-    cmd.creation_flags(CREATE_NO_WINDOW);
-
-    let current_path = std::env::var("PATH").unwrap_or_default();
-    if let Ok(path_env) =
-        fbuild_packages::toolchain::build_windows_qemu_path_env(exe_path, &current_path)
-    {
-        cmd.env("PATH", path_env);
+fn apply_process_environment(cmd: &mut tokio::process::Command, exe_path: &Path) {
+    if fbuild_core::platform::host::is_windows() {
+        let current_path = std::env::var("PATH").unwrap_or_default();
+        if let Ok(path_env) =
+            fbuild_packages::toolchain::build_windows_qemu_path_env(exe_path, &current_path)
+        {
+            cmd.env("PATH", path_env);
+        }
     }
 }
-
-#[cfg(not(windows))]
-fn apply_windows_process_flags(_cmd: &mut tokio::process::Command, _exe_path: &Path) {}
 
 pub(crate) async fn spawn_line_reader(
     stream: impl tokio::io::AsyncRead + Unpin + Send + 'static,
@@ -195,7 +190,7 @@ pub(crate) async fn run_qemu_process(
         .stdin(Stdio::null())
         .stdout(Stdio::piped())
         .stderr(Stdio::piped());
-    apply_windows_process_flags(&mut cmd, qemu_path);
+    apply_process_environment(&mut cmd, qemu_path);
 
     let label = options.process_label;
     if options.verbose {
@@ -206,7 +201,7 @@ pub(crate) async fn run_qemu_process(
     // — a daemon hard-kill mid-emulation must not leave `qemu-system-*`
     // or its `conhost.exe` wrapper behind.
     let mut child =
-        fbuild_core::containment::tokio_spawn::spawn_contained(&mut cmd).map_err(|e| {
+        fbuild_core::platform::process::spawn_tokio_contained(&mut cmd).map_err(|e| {
             fbuild_core::FbuildError::DeployFailed(build_linux_macos_qemu_hint(&format!(
                 "failed to launch {} at {}: {}",
                 label,

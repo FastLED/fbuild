@@ -1,5 +1,7 @@
 use super::host::{HostArch, HostOs};
 
+pub(super) mod process;
+
 pub(super) const HOST_OS: HostOs = HostOs::Macos;
 
 pub(super) fn host_arch() -> HostArch {

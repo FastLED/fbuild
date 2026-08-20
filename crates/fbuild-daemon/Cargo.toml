@@ -67,12 +67,6 @@ tempfile = { workspace = true }
 # on Windows. See ISSUES.md "Issue B5a".
 socket2 = "0.6"
 
-# libc::kill(pid, 0) is used as a probe to detect dead daemon PIDs at
-# startup (stale-PID cleanup). Unix-only; Windows uses a manual
-# OpenProcess FFI in main.rs.
-[target.'cfg(unix)'.dependencies]
-libc = "0.2"
-
 [dependencies.mimalloc]
 workspace = true
 
@@ -82,8 +76,3 @@ fbuild-test-support = { path = "../fbuild-test-support" }
 # against a router mounted on an ephemeral loopback port, matching the
 # client-side path that fails in issue #130.
 reqwest = { workspace = true }
-
-# libc::kill(pid, SIGKILL) is used by the process-containment integration
-# test (tests/process_containment.rs). Unix-only; Windows uses taskkill /F.
-[target.'cfg(unix)'.dev-dependencies]
-libc = "0.2"

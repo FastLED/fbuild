@@ -29,11 +29,11 @@ dylint_linting::declare_late_lint! {
     /// `subprocess::run_command` (sync, captures stdout/stderr via
     /// `running-process::NativeProcess` so the drain loop can't
     /// deadlock on a full pipe buffer — see #141),
-    /// `containment::spawn_contained` /
-    /// `containment::tokio_spawn::spawn_contained` (apply Windows Job
-    /// Object containment + Linux per-child pgid + originator env), or
-    /// `containment::spawn_detached` for the rare case where the child
-    /// must outlive its launcher (daemon bootstrap).
+    /// `platform::process::spawn_contained` /
+    /// `platform::process::spawn_tokio_contained` (apply native
+    /// containment + originator env), or
+    /// `platform::process::spawn_detached` when the child must outlive
+    /// its launcher (daemon bootstrap).
     ///
     /// Bypassing them silently regresses one or more invariants. The
     /// dylint enforces the contract at lint time so the requirement
@@ -161,8 +161,8 @@ fn emit_lint(cx: &LateContext<'_>, span: rustc_span::Span, banned: &[&str]) {
             diag.primary_message(format!(
                 "`{joined}` bypasses fbuild's spawn discipline; route through \
                  `fbuild_core::subprocess::run_command` (sync, capture) or \
-                 `fbuild_core::containment::spawn_contained` / `spawn_detached` / \
-                 `tokio_spawn::spawn_contained` so containment, drain semantics, \
+                 `fbuild_core::platform::process::spawn_contained` / \
+                 `spawn_detached` / `spawn_tokio_contained` so containment, drain semantics, \
                  and originator-env propagation are applied. If raw spawn is \
                  truly justified for this file, allowlist it in \
                  `dylints/ban_raw_subprocess/src/allowlist.txt` with a one-line \
@@ -263,7 +263,7 @@ mod tests {
         // The real allowlist has its own entries; this just sanity-checks the
         // suffix-match logic against a small synthetic example.
         assert!(crate::is_allowlisted(
-            "/anywhere/crates/fbuild-core/src/containment.rs"
+            "/anywhere/crates/fbuild-daemon/src/bin/containment_harness.rs"
         ));
     }
 }
