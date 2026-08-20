@@ -1,5 +1,17 @@
 # Platform Portability
 
+## Host-platform architecture
+
+FastLED/fbuild#1306 is centralizing host mechanics behind a single
+`fbuild_core::platform` selector. The phase-1 decision and source inventory are
+documented in [platform-boundary-research.md](../platform-boundary-research.md)
+and
+[platform-boundary-research-inventory.md](../platform-boundary-research-inventory.md).
+
+Host mechanics are distinct from the embedded board/compiler target. A Linux
+host that builds Windows-hosted tool artifacts or firmware for another MCU must
+still use Linux process, filesystem, IPC, and device mechanics.
+
 ## Windows (MSYS2/Git Bash)
 
 ### USB-CDC Serial
