@@ -20,6 +20,15 @@ value. Executable and command-script spelling uses
 tables and embedded-target policy. Raw `cfg!` OS/architecture reads are not
 permitted outside the private platform implementation.
 
+Process creation and lifecycle mechanics use
+`fbuild_core::platform::process`. The facade supplies contained, detached, and
+Tokio spawning; PID/image inspection; graceful or forced termination; bounded
+waiting; and exit-code normalization. Callers own command arguments, retry and
+escalation policy, diagnostics, and lifecycle decisions. Compatible spawn
+mechanics delegate to the workspace-pinned `running-process`; raw Job Objects,
+process groups, parent-death signals, handles/file descriptors, and native PID
+APIs remain inside the selected private platform tree.
+
 ## Windows (MSYS2/Git Bash)
 
 ### USB-CDC Serial

@@ -13,11 +13,11 @@ wrappers in `crates/fbuild-core/src/`:
 - `subprocess::run_command` — sync, captures stdout/stderr via
   `running-process::NativeProcess` so the drain loop can't deadlock
   on a full pipe buffer (see #141).
-- `containment::spawn_contained` /
-  `containment::tokio_spawn::spawn_contained` — applies Windows Job
-  Object containment + Linux per-child pgid + originator-env propagation
+- `platform::process::spawn_contained` /
+  `platform::process::spawn_tokio_contained` — applies native containment,
+  kill-on-drop, and originator-env propagation
   (see #129, #254).
-- `containment::spawn_detached` — for the rare case where the child must
+- `platform::process::spawn_detached` — for the rare case where the child must
   outlive its launcher (daemon bootstrap from the CLI/Python).
 
 Bypassing the wrappers silently regresses one or more of those
@@ -49,12 +49,9 @@ Current entries:
 
 | Path | Reason |
 |---|---|
-| `crates/fbuild-core/src/subprocess.rs` | Internal helpers in the wrapper itself |
-| `crates/fbuild-core/src/containment.rs` | IS the wrapper — `command.spawn()` is the implementation |
+| `crates/fbuild-core/src/platform/macos/process.rs` | Selected implementation uses `/bin/ps` for PID image inspection |
 | `crates/fbuild-daemon/src/bin/containment_harness.rs` | Test harness for #129 |
-| `crates/fbuild-cli/src/daemon_client.rs` | Daemon bootstrap — must outlive CLI |
-| `crates/fbuild-python/src/daemon.rs` | Daemon bootstrap from Python interop |
-| `crates/fbuild-build/src/zccache.rs` | Starts the zccache daemon (cross-tool) |
+| `crates/fbuild-build-engine/src/zccache.rs` | Starts the zccache daemon (cross-tool) |
 | `crates/fbuild-cli/src/cli/clang_tools.rs` | Async fan-out, no daemon containment in CLI |
 
 ## Toolchain

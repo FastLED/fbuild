@@ -126,42 +126,7 @@ fn live_refusal_reason(session: &PortSessionInfo) -> String {
 }
 
 fn is_pid_alive(pid: u32) -> bool {
-    #[cfg(unix)]
-    {
-        if pid > i32::MAX as u32 {
-            return false;
-        }
-        // SAFETY: kill(pid, 0) probes existence without sending a signal.
-        if unsafe { libc::kill(pid as i32, 0) } == 0 {
-            true
-        } else {
-            std::io::Error::last_os_error().raw_os_error() == Some(libc::EPERM)
-        }
-    }
-    #[cfg(windows)]
-    {
-        const PROCESS_QUERY_LIMITED_INFORMATION: u32 = 0x1000;
-        type Handle = *mut std::ffi::c_void;
-        #[link(name = "kernel32")]
-        extern "system" {
-            fn OpenProcess(desired_access: u32, inherit_handle: i32, process_id: u32) -> Handle;
-            fn CloseHandle(handle: Handle) -> i32;
-        }
-        unsafe {
-            let h = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, 0, pid);
-            if h.is_null() {
-                false
-            } else {
-                CloseHandle(h);
-                true
-            }
-        }
-    }
-    #[cfg(not(any(unix, windows)))]
-    {
-        let _ = pid;
-        true
-    }
+    fbuild_core::platform::process::pid_is_alive(pid)
 }
 
 /// GET /api/locks/status

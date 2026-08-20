@@ -1,6 +1,7 @@
 [package]
 name = "ban_raw_subprocess"
-version = "0.1.0"
+# Bump whenever the embedded allowlist changes so the Dylint cache is invalidated.
+version = "0.1.2"
 description = "Ban raw std/tokio Command spawn/output/status in fbuild production code"
 edition = "2021"
 publish = false

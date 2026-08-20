@@ -1023,7 +1023,7 @@ async fn spawn_daemon_process() -> fbuild_core::Result<()> {
     // name (and thus PATH) when no sibling is found.
     let daemon_exe = daemon_executable_hint();
     // allow-direct-spawn: daemon must outlive the CLI; see INTENTIONALLY DETACHED comment below.
-    let mut cmd = tokio::process::Command::new(&daemon_exe);
+    let mut cmd = std::process::Command::new(&daemon_exe);
     let baseline = running_process::environment::user_baseline_environment().map_err(|error| {
         fbuild_core::FbuildError::DaemonError(format!(
             "failed to construct daemon user environment: {error}"
@@ -1060,14 +1060,6 @@ async fn spawn_daemon_process() -> fbuild_core::Result<()> {
         cmd.env("VIRTUAL_ENV", venv);
     }
 
-    // Prevent a console window from appearing on Windows (including MSYS/MinGW).
-    #[cfg(windows)]
-    {
-        const CREATE_NO_WINDOW: u32 = 0x08000000;
-        const DETACHED_PROCESS: u32 = 0x00000008;
-        cmd.creation_flags(CREATE_NO_WINDOW | DETACHED_PROCESS);
-    }
-
     // Redirect stderr to log file so daemon logs are persisted
     let daemon_dir = fbuild_paths::get_daemon_dir();
     let _ = std::fs::create_dir_all(&daemon_dir);
@@ -1079,30 +1071,20 @@ async fn spawn_daemon_process() -> fbuild_core::Result<()> {
             fbuild_core::FbuildError::DaemonError(format!("failed to open log file: {}", e))
         })?;
 
-    cmd.stdin(std::process::Stdio::null())
-        .stdout(std::process::Stdio::null())
-        .stderr(std::process::Stdio::from(log_file));
-
-    // On Windows, any inheritable handle in our process — including the shell's
-    // stderr pipe — flows into the daemon grandchild via bInheritHandles=TRUE
-    // in CreateProcess. The daemon holds that pipe open for SELF_EVICTION_TIMEOUT
-    // (120s), blocking the shell from unblocking even after the CLI exits. Strip
-    // HANDLE_FLAG_INHERIT from our std handles before spawn so Rust's plumbing
-    // only passes through the explicit Stdio handles it configured above.
-    // See issue #91.
-    #[cfg(windows)]
-    strip_std_handle_inheritance();
+    // running-process duplicates this file into its sanitized detached-child
+    // handle list; no ambient standard handle can leak into the daemon.
 
     // INTENTIONALLY DETACHED (FastLED/fbuild#32): the CLI spawns the
     // daemon and then exits — the daemon must survive the CLI. The
-    // daemon in turn installs its own global `ContainedProcessGroup`
-    // (see fbuild-daemon/src/main.rs) so every descendant it spawns
-    // dies with *it*. The CLI binary itself has no global containment
-    // group installed, so this `spawn()` is already uncontained; the
-    // comment is here so a future refactor doesn't accidentally reroute
-    // it through `containment::spawn_contained`, which would make the
-    // daemon die the instant the CLI exits.
-    cmd.spawn().map_err(|e| {
+    // daemon initializes the neutral process facade so every descendant
+    // dies with it. The detached helper sanitizes inherited handles and
+    // starts from an empty environment plus the explicit overrides above.
+    fbuild_core::platform::process::spawn_detached(
+        &mut cmd,
+        Some(&log_file),
+        fbuild_core::platform::process::DetachedEnvironment::Clear,
+    )
+    .map_err(|e| {
         fbuild_core::FbuildError::DaemonError(format!(
             "failed to spawn daemon at {daemon_exe:?} (is fbuild-daemon next to the fbuild CLI or on PATH?): {}",
             e
@@ -1110,39 +1092,6 @@ async fn spawn_daemon_process() -> fbuild_core::Result<()> {
     })?;
 
     Ok(())
-}
-
-/// Clear `HANDLE_FLAG_INHERIT` on the CLI's STD_INPUT/OUTPUT/ERROR handles.
-///
-/// Called immediately before spawning the daemon so the parent shell's pipes
-/// (attached to our stderr via `|`, `2>&1`, etc.) are not inherited by the
-/// long-lived daemon grandchild.
-#[cfg(windows)]
-fn strip_std_handle_inheritance() {
-    use std::ffi::c_void;
-
-    const HANDLE_FLAG_INHERIT: u32 = 0x1;
-    const STD_INPUT_HANDLE: u32 = -10i32 as u32;
-    const STD_OUTPUT_HANDLE: u32 = -11i32 as u32;
-    const STD_ERROR_HANDLE: u32 = -12i32 as u32;
-    const INVALID_HANDLE_VALUE: isize = -1;
-
-    unsafe extern "system" {
-        fn GetStdHandle(nStdHandle: u32) -> *mut c_void;
-        fn SetHandleInformation(hObject: *mut c_void, dwMask: u32, dwFlags: u32) -> i32;
-    }
-
-    for std_id in [STD_INPUT_HANDLE, STD_OUTPUT_HANDLE, STD_ERROR_HANDLE] {
-        // SAFETY: GetStdHandle / SetHandleInformation are documented safe for
-        // concurrent use on owned std handles. We only clear a flag on handles
-        // the OS already owns on our behalf; we do not close them.
-        unsafe {
-            let h = GetStdHandle(std_id);
-            if !h.is_null() && (h as isize) != INVALID_HANDLE_VALUE {
-                SetHandleInformation(h, HANDLE_FLAG_INHERIT, 0);
-            }
-        }
-    }
 }
 
 #[cfg(test)]

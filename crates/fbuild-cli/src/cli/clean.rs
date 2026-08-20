@@ -2,8 +2,8 @@
 
 use crate::daemon_client::{self, BuildRequest, DaemonClient};
 use crate::output;
-use fbuild_core::process_identity::{
-    pid_exe_stem_matches, pid_is_alive, terminate_pid, wait_for_pid_exit,
+use fbuild_core::platform::process::{
+    Termination, pid_exe_stem_matches, pid_is_alive, terminate_pid, wait_for_pid_exit,
 };
 use fbuild_paths::daemon_ownership::{self, DAEMON_EXE_STEM, RootOwnershipGuard, SpawnLockGuard};
 use std::future::Future;
@@ -339,7 +339,7 @@ async fn terminate_legacy_pid_if_verified(pid: u32) {
     if wait_for_pid_exit(pid, Duration::from_secs(5)) {
         return;
     }
-    terminate_pid(pid);
+    let _ = terminate_pid(pid, Termination::Force);
     wait_for_pid_exit(pid, Duration::from_secs(5));
 }
 

@@ -4,36 +4,19 @@
 # is out of scope and does not need an entry here.
 #
 # Add an entry ONLY for files that legitimately need to bypass the
-# wrappers in `crates/fbuild-core/src/{subprocess,containment}.rs`.
+# wrappers in `fbuild_core::{subprocess,platform::process}`.
 # Include an inline comment explaining why.
 
-# The blessed wrappers themselves. `subprocess.rs` runs commands via
-# `running_process::NativeProcess::start()` (not `Command::spawn`),
-# but defensively allowlist it so internal helpers/refactors stay
-# unconstrained. `containment.rs` is the entire point of the file —
-# raw `command.spawn()` is the implementation detail that gives us a
-# `std::process::Child` to attach to the Windows Job Object (the
-# published `running-process` 4.0 API returns `SpawnedChild`, not
-# `Child`, so this raw-spawn pattern is the bridge — see PR #254).
-crates/fbuild-core/src/subprocess.rs
-crates/fbuild-core/src/containment.rs
+# Selected macOS process implementation queries native PID image metadata
+# through `/bin/ps`; routing that query through its own public facade would
+# recurse back into this implementation.
+crates/fbuild-core/src/platform/macos/process.rs
 
 # Test harness binary that exercises the containment regression for
 # FastLED/fbuild#129. Lives under `src/bin/` (production tree) so it
 # falls inside the lint scope, but it spawns itself to validate the
 # EPERM-on-second-child fix — that's the test, raw spawn is correct.
 crates/fbuild-daemon/src/bin/containment_harness.rs
-
-# CLI spawns the daemon detached so it outlives the CLI process. No
-# tokio variant of `containment::spawn_detached` exists (the wrapper
-# only covers `spawn_contained` for tokio). The raw spawn here is
-# intentional and documented inline ("daemon must outlive the CLI").
-crates/fbuild-cli/src/daemon_client.rs
-
-# Python interop layer spawns `fbuild-daemon` for the
-# `from fbuild.api import ...` use case. Same rationale as daemon
-# bootstrap from the CLI: daemon must outlive the Python interpreter.
-crates/fbuild-python/src/daemon.rs
 
 # `fbuild-build-engine/src/zccache.rs` starts the `zccache` daemon which must
 # outlive the fbuild daemon (cross-tool dependency: zccache is a
@@ -42,7 +25,7 @@ crates/fbuild-build-engine/src/zccache.rs
 
 # Parallel async fan-out for clang-tidy/iwyu in the CLI binary. The
 # CLI doesn't install a global containment group, so going through
-# `containment::tokio_spawn::spawn_contained` would be a no-op anyway;
+# `platform::process::spawn_tokio_contained` would add kill-on-drop only;
 # documented inline at each call site.
 crates/fbuild-cli/src/cli/clang_tools.rs
 
@@ -56,9 +39,3 @@ crates/fbuild-toolchain/src/toolchain/riscv.rs
 # `fbuild_core::subprocess` would swallow the prompt and make gdb unusable.
 # Documented inline at the call site.
 crates/fbuild-cli/src/cli/debug.rs
-
-# `fbuild ide` launches the user's editor detached and returns immediately.
-# The editor must OUTLIVE the CLI, which is the opposite of what a
-# containment group guarantees, so `spawn_contained` is wrong here by
-# design. Documented inline at the call site.
-crates/fbuild-cli/src/cli/ide.rs

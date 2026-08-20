@@ -67,12 +67,6 @@ pub(crate) async fn run_avr8js_headless(
         .stdout(Stdio::piped())
         .stderr(Stdio::piped());
 
-    #[cfg(windows)]
-    {
-        const CREATE_NO_WINDOW: u32 = 0x08000000;
-        cmd.creation_flags(CREATE_NO_WINDOW);
-    }
-
     if options.verbose {
         tracing::info!(
             "avr8js headless: {} {} --hex {} --f-cpu {}",
@@ -86,7 +80,7 @@ pub(crate) async fn run_avr8js_headless(
     // Route through containment (#32) so a daemon crash mid-emulation
     // takes node.exe and any helper processes it spawned with it.
     let mut child =
-        fbuild_core::containment::tokio_spawn::spawn_contained(&mut cmd).map_err(|e| {
+        fbuild_core::platform::process::spawn_tokio_contained(&mut cmd).map_err(|e| {
             fbuild_core::FbuildError::DeployFailed(format!(
                 "failed to launch Node.js for avr8js: {}",
                 e

@@ -1,6 +1,8 @@
 [package]
 name = "enforce_platform_boundary"
-version = "0.1.0"
+# Bump whenever the embedded baseline changes: setup-soldr's Dylint cache
+# hashes the manifest but not src/baseline.txt.
+version = "0.1.1"
 description = "Enforce fbuild's single host-platform boundary"
 edition = "2021"
 publish = false

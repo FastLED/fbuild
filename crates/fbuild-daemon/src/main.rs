@@ -48,7 +48,7 @@ async fn main() {
     // group with PR_SET_PDEATHSIG. When the daemon dies for any reason
     // — SIGKILL, power loss, crash, console window close — the OS
     // reaps every descendant in the group. See FastLED/fbuild#32.
-    if let Err(e) = fbuild_core::containment::init_global_containment("FBUILD-DAEMON") {
+    if let Err(e) = fbuild_core::platform::process::init_containment("FBUILD-DAEMON") {
         eprintln!("warning: failed to install process containment: {}", e);
     }
 
@@ -579,41 +579,7 @@ async fn read_stale_daemon_pid() -> Option<u32> {
 /// Cross-platform "is this PID still running?" check. Avoids dragging in
 /// the `sysinfo` crate for a 10-line operation.
 fn is_pid_alive(pid: u32) -> bool {
-    #[cfg(unix)]
-    {
-        // SAFETY: kill(pid, 0) is a probe — it sends no signal but
-        // returns 0 if the PID exists and we have permission, or -1
-        // with errno=ESRCH if the PID does not exist.
-        unsafe { libc::kill(pid as i32, 0) == 0 }
-    }
-    #[cfg(windows)]
-    {
-        // OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION) succeeds for any
-        // running process; ERROR_INVALID_PARAMETER (87) means the PID is
-        // gone. We use the limited variant so the probe works for
-        // processes owned by other users / elevated daemons.
-        const PROCESS_QUERY_LIMITED_INFORMATION: u32 = 0x1000;
-        type Handle = *mut std::ffi::c_void;
-        #[link(name = "kernel32")]
-        extern "system" {
-            fn OpenProcess(desired_access: u32, inherit_handle: i32, process_id: u32) -> Handle;
-            fn CloseHandle(handle: Handle) -> i32;
-        }
-        unsafe {
-            let h = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, 0, pid);
-            if h.is_null() {
-                false
-            } else {
-                CloseHandle(h);
-                true
-            }
-        }
-    }
-    #[cfg(not(any(unix, windows)))]
-    {
-        let _ = pid;
-        true
-    }
+    fbuild_core::platform::process::pid_is_alive(pid)
 }
 
 /// Bind the daemon's TCP listener with platform-appropriate hardening:

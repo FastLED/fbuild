@@ -178,3 +178,27 @@ reads inside the private selected modules and the single authorized current-imag
 read inside the executable facade. Focused enforcement permanently asserts zero
 `cfg_macro` and `compile_host_fact` rows outside the boundary, while both
 detectors reject direct current-image discovery in shared callers.
+
+## Phase-4 process and containment mechanics
+
+Phase 4 introduced the neutral `platform::process` facade for contained,
+detached, and Tokio child spawning; PID liveness and executable inspection;
+graceful/forced termination; bounded exit waiting; and native exit-code
+interpretation. The daemon and CLI retain programs, arguments, retry and
+escalation budgets, diagnostics, and lifecycle state. Shared callers no longer
+select Job Objects, process groups, parent-death signals, native handles/file
+descriptors, console flags, or PID APIs.
+
+The implementation delegates synchronous containment and sanitized detached
+spawning to the workspace-pinned `running-process`. That dependency remains on
+the exact source and revision used by zccache, avoiding duplicate exported
+symbols. The selected private platform trees retain only the Tokio owner-death
+adapters and PID/termination operations not exposed by the pinned neutral API.
+
+RED characterization initially failed because PID inspection, termination,
+waiting, and neutral termination modes did not exist. The focused facade and
+containment tests now exercise those APIs, invalid-PID fail-closed behavior,
+PATH-overlay child launch, daemon crash recovery, and descendant cleanup. The
+exact ledger contracted from **271 to 166 rows**, deleting 105 migrated
+occurrences; the normalized Dylint projection is 164. The independent research
+inventory is 175 rows, including nine authorized implementation occurrences.

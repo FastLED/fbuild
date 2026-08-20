@@ -7,7 +7,7 @@
 //! call sites (CLI diagnostic subcommands, tests, etc.).
 //!
 //! Internally we spawn via [`tokio::process::Command`] routed through
-//! [`crate::containment::tokio_spawn::spawn_contained`] so the daemon's
+//! [`crate::platform::process::spawn_tokio_contained`] so the daemon's
 //! Job Object / `PR_SET_PDEATHSIG` containment still kills every child
 //! when the daemon goes down. When no global containment group has been
 //! installed (CLI binary, unit tests) the contained helper falls back
@@ -32,11 +32,8 @@ use std::time::Duration;
 use tokio::io::AsyncWriteExt;
 use tokio::process::{Child, Command as TokioCommand};
 
-use crate::containment::tokio_spawn;
+use crate::platform::process;
 use crate::{FbuildError, Result};
-
-#[cfg(windows)]
-const CREATE_NO_WINDOW: u32 = 0x08000000;
 
 /// Default cap applied to every `run_command*` call that passes
 /// `timeout: None`. Picked at 15 minutes so even the slowest real
@@ -248,7 +245,7 @@ async fn run_command_inner(
     let mut cmd = build_command(
         args, cwd, env, /*capture=*/ true, /*stdin_piped=*/ false,
     )?;
-    let child = tokio_spawn::spawn_contained(&mut cmd).map_err(|e| spawn_err(args, e))?;
+    let child = process::spawn_tokio_contained(&mut cmd).map_err(|e| spawn_err(args, e))?;
     wait_and_capture(child, args, timeout).await
 }
 
@@ -293,7 +290,7 @@ async fn run_command_with_stdin_inner(
     let mut cmd = build_command(
         args, cwd, env, /*capture=*/ true, /*stdin_piped=*/ true,
     )?;
-    let mut child = tokio_spawn::spawn_contained(&mut cmd).map_err(|e| spawn_err(args, e))?;
+    let mut child = process::spawn_tokio_contained(&mut cmd).map_err(|e| spawn_err(args, e))?;
 
     // Take the stdin handle and concurrently write the payload while
     // tokio drains stdout/stderr in the background. Dropping `stdin`
@@ -380,7 +377,7 @@ async fn run_command_passthrough_inner(
     let mut cmd = build_command(
         args, cwd, env, /*capture=*/ false, /*stdin_piped=*/ false,
     )?;
-    let mut child = tokio_spawn::spawn_contained(&mut cmd).map_err(|e| spawn_err(args, e))?;
+    let mut child = process::spawn_tokio_contained(&mut cmd).map_err(|e| spawn_err(args, e))?;
     let status = match wait_with_timeout(&mut child, timeout).await? {
         Some(status) => status,
         None => {
@@ -510,19 +507,7 @@ async fn wait_with_timeout(
 }
 
 fn exit_code_from(status: std::process::ExitStatus) -> i32 {
-    status.code().unwrap_or_else(|| {
-        #[cfg(unix)]
-        {
-            use std::os::unix::process::ExitStatusExt;
-            // Surface signal as -signo to match running-process semantics.
-            status.signal().map(|s| -s).unwrap_or(-1)
-        }
-        #[cfg(not(unix))]
-        {
-            let _ = status;
-            -1
-        }
-    })
+    process::exit_code(status)
 }
 
 fn build_command(
@@ -567,14 +552,6 @@ fn build_command(
         cmd.stdin(Stdio::null());
     } else {
         cmd.stdin(Stdio::inherit());
-    }
-
-    // Hide the console window for child processes on Windows. Matches
-    // the pre-async `CREATE_NO_WINDOW` flag.
-    #[cfg(windows)]
-    {
-        use std::os::windows::process::CommandExt;
-        cmd.as_std_mut().creation_flags(CREATE_NO_WINDOW);
     }
 
     Ok(cmd)
@@ -655,129 +632,7 @@ pub fn bare_name_path_overlay<'a>(
 ///   `cmd.env("PATH", …)` and `cmd.env_remove(...)` on a command that
 ///   otherwise inherited the current env.
 fn compute_env(program: &str, overlay: Option<&[(&str, &str)]>) -> Option<Vec<(String, String)>> {
-    #[cfg(windows)]
-    {
-        let mut env_map: std::collections::BTreeMap<String, String> = std::env::vars().collect();
-
-        // Prepend the executable's directory to PATH so that child
-        // processes (e.g., cc1plus launched by g++) can find DLLs in
-        // the same bin/ dir.
-        if let Some(exe_dir) = Path::new(program).parent() {
-            let exe_dir_str = exe_dir.to_string_lossy().to_string();
-            if !exe_dir_str.is_empty() {
-                let current_path = env_map
-                    .get("PATH")
-                    .or_else(|| env_map.get("Path"))
-                    .cloned()
-                    .unwrap_or_default();
-                env_map.insert(
-                    "PATH".to_string(),
-                    format!("{};{}", exe_dir_str, current_path),
-                );
-            }
-        }
-
-        // Strip MSYS/MSYS2 environment variables that interfere with
-        // native Windows toolchain binaries finding their internal
-        // tools.
-        if is_msys_environment(&env_map) {
-            strip_msys_env(&mut env_map);
-        }
-
-        if let Some(vars) = overlay {
-            for (k, v) in vars {
-                // Windows env var names are case-insensitive but the map is
-                // not: the parent env often spells the path var "Path"
-                // while overlays say "PATH". Drop any case-variant of the
-                // key first — otherwise both spellings reach `Command::env`,
-                // whose case-insensitive child-env map lets whichever is
-                // applied last win, silently discarding the overlay value
-                // (FastLED/fbuild#1219).
-                env_map.retain(|existing, _| !existing.eq_ignore_ascii_case(k));
-                env_map.insert((*k).to_string(), (*v).to_string());
-            }
-        }
-
-        Some(env_map.into_iter().collect())
-    }
-    #[cfg(not(windows))]
-    {
-        let _ = program;
-        match overlay {
-            Some(vars) if !vars.is_empty() => {
-                let mut env_map: std::collections::BTreeMap<String, String> =
-                    std::env::vars().collect();
-                for (k, v) in vars {
-                    env_map.insert((*k).to_string(), (*v).to_string());
-                }
-                Some(env_map.into_iter().collect())
-            }
-            _ => None,
-        }
-    }
-}
-
-#[cfg(windows)]
-fn is_msys_environment(env_map: &std::collections::BTreeMap<String, String>) -> bool {
-    env_map.contains_key("MSYSTEM") || env_map.contains_key("MSYS")
-}
-
-/// Strip MSYS-specific environment variables and rebuild PATH without
-/// MSYS dirs.
-///
-/// Matches Python's `get_pio_safe_env()` in `pio_env.py`: strips vars
-/// with prefixes (MSYS*, MINGW*, CHERE*, ORIGINAL_PATH*), exact
-/// shell/terminal keys, and PATH entries starting with "/" (MSYS-style
-/// paths).
-#[cfg(windows)]
-fn strip_msys_env(env_map: &mut std::collections::BTreeMap<String, String>) {
-    let strip_prefixes: &[&str] = &["MSYS", "MINGW", "CHERE", "ORIGINAL_PATH"];
-    let strip_exact: &[&str] = &[
-        "SHELL",
-        "SHLVL",
-        "TERM",
-        "TERM_PROGRAM",
-        "TERM_PROGRAM_VERSION",
-        "TMPDIR",
-        "TMP",
-        "TEMP",
-        "_",
-        "!",
-        "POSIXLY_CORRECT",
-        "EXECIGNORE",
-        "HOSTTYPE",
-        "MACHTYPE",
-        "OSTYPE",
-        "CONFIG_SITE",
-    ];
-
-    let keys_to_remove: Vec<String> = env_map
-        .keys()
-        .filter(|k| {
-            strip_prefixes.iter().any(|prefix| k.starts_with(prefix))
-                || strip_exact.contains(&k.as_str())
-        })
-        .cloned()
-        .collect();
-    for key in keys_to_remove {
-        env_map.remove(&key);
-    }
-
-    // Clean PATH: remove MSYS-style entries (start with "/") and dirs
-    // containing msys/usr.
-    if let Some(path) = env_map.get("PATH").cloned() {
-        let filtered: Vec<&str> = path
-            .split(';')
-            .filter(|p| {
-                if p.starts_with('/') {
-                    return false;
-                }
-                let lower = p.to_lowercase();
-                !lower.contains("\\msys") && !lower.contains("/msys") && !lower.contains("/usr/")
-            })
-            .collect();
-        env_map.insert("PATH".to_string(), filtered.join(";"));
-    }
+    process::command_environment(program, overlay)
 }
 
 #[cfg(test)]
@@ -839,11 +694,6 @@ mod tests {
             bare_name_path_overlay("tools/esptool", Some("/opt/bin")),
             None
         );
-        #[cfg(windows)]
-        assert_eq!(
-            bare_name_path_overlay(r"tools\esptool.exe", Some("/opt/bin")),
-            None
-        );
     }
 
     /// FastLED/fbuild#1219: a `("PATH", ...)` env overlay must be the PATH
@@ -878,31 +728,12 @@ mod tests {
         let tmp = tempfile::tempdir().expect("tempdir");
         let dir = tmp.path();
 
-        #[cfg(windows)]
-        let probe_path = {
-            let system_root = std::env::var("SystemRoot").expect("SystemRoot must be set");
-            let src = Path::new(&system_root).join("System32").join("cmd.exe");
-            let dst = dir.join("fbuild_1219_probe.exe");
-            std::fs::copy(&src, &dst).expect("copy cmd.exe into overlay dir");
-            dst
-        };
-        #[cfg(unix)]
-        let probe_path = {
-            use std::os::unix::fs::PermissionsExt;
-            let dst = dir.join("fbuild_1219_probe");
-            std::fs::write(&dst, "#!/bin/sh\necho overlay-marker\n").expect("write probe script");
-            std::fs::set_permissions(&dst, std::fs::Permissions::from_mode(0o755))
-                .expect("chmod probe script");
-            dst
-        };
+        let probe = crate::platform::process::create_path_probe(dir).expect("create path probe");
+        let probe_path = probe.path;
 
         let dir_str = dir.to_string_lossy();
         let overlay = [("PATH", dir_str.as_ref())];
-        let bare_args: Vec<&str> = if crate::platform::host::is_windows() {
-            vec!["fbuild_1219_probe", "/C", "echo overlay-marker"]
-        } else {
-            vec!["fbuild_1219_probe"]
-        };
+        let bare_args: Vec<&str> = probe.bare_args.iter().map(String::as_str).collect();
 
         // Bare name + overlay → resolved from the overlay PATH.
         let result = run_command(

@@ -25,8 +25,8 @@ use std::process::Command;
 use std::time::{Duration, Instant};
 
 use fbuild_core::path::NormalizedPath;
-use fbuild_core::process_identity::{
-    pid_exe_stem_matches, pid_is_alive, terminate_pid, wait_for_pid_exit,
+use fbuild_core::platform::process::{
+    Termination, pid_exe_stem_matches, pid_is_alive, terminate_pid, wait_for_pid_exit,
 };
 use fbuild_paths::daemon_ownership::{DAEMON_EXE_STEM, RootOwnershipGuard};
 
@@ -134,7 +134,7 @@ impl Drop for TestDaemonGuard {
             return;
         }
         if pid_exe_stem_matches(pid, DAEMON_EXE_STEM) {
-            terminate_pid(pid);
+            let _ = terminate_pid(pid, Termination::Force);
             let _ = wait_for_pid_exit(pid, Duration::from_secs(15));
         }
     }
@@ -223,7 +223,7 @@ fn client_recovers_after_daemon_is_killed_uncleanly() {
 
     // 2. Crash it. This is the #1213/#1228 scenario: unclean death that
     //    leaves the port/pid/status records in place.
-    terminate_pid(old_pid);
+    terminate_pid(old_pid, Termination::Force).expect("terminate old daemon");
     assert!(
         wait_for_pid_exit(old_pid, Duration::from_secs(15)),
         "daemon (pid {old_pid}) did not die within 15s of terminate_pid"
@@ -252,7 +252,7 @@ fn client_recovers_after_daemon_is_killed_uncleanly() {
     // 4. Kill the replacement and make `clean sketch` the next client.
     //    Unlike build/deploy, clean used to skip `ensure_daemon_running` and
     //    dial the stale endpoint directly (#1320).
-    terminate_pid(new_pid);
+    terminate_pid(new_pid, Termination::Force).expect("terminate replacement daemon");
     assert!(
         wait_for_pid_exit(new_pid, Duration::from_secs(15)),
         "replacement daemon (pid {new_pid}) did not exit within 15s"

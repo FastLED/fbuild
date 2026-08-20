@@ -253,29 +253,28 @@ async fn ensure_running_async_impl(
 
     // INTENTIONALLY DETACHED (FastLED/fbuild#32): the Python host spawns
     // the daemon and the Python interpreter may exit — the daemon must
-    // survive. This PyO3 binding runs inside the Python interpreter
-    // process, which has no global containment group, so `spawn()` is
-    // already uncontained; see the matching comment in
-    // `fbuild-cli/src/daemon_client.rs`.
+    // survive. The neutral detached helper sanitizes inherited handles
+    // while preserving the Python host's environment.
     //
     // Prefer the daemon binary sitting next to `sys.executable`
     // (FastLED/fbuild#275) so a venv install never gets shadowed by a
     // stale user-level daemon on PATH.
-    // allow-direct-spawn: daemon must outlive the Python interpreter.
     let mut cmd = match spawn_target {
-        // allow-direct-spawn: daemon must outlive the Python interpreter.
+        // allow-direct-spawn: construction only; execution uses platform::process::spawn_detached.
         Some(path) => std::process::Command::new(path),
-        // allow-direct-spawn: daemon must outlive the Python interpreter.
+        // allow-direct-spawn: construction only; execution uses platform::process::spawn_detached.
         None => std::process::Command::new(DAEMON_BIN_NAME),
     };
     if dev_mode {
         cmd.arg("--dev");
     }
-    cmd.stdin(std::process::Stdio::null())
-        .stdout(std::process::Stdio::null())
-        .stderr(std::process::Stdio::null());
-
-    if cmd.spawn().is_err() {
+    if fbuild_core::platform::process::spawn_detached(
+        &mut cmd,
+        None,
+        fbuild_core::platform::process::DetachedEnvironment::Inherit,
+    )
+    .is_err()
+    {
         return false;
     }
 

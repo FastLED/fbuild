@@ -334,13 +334,13 @@ fn recorded_daemon_owner_is_dead() -> bool {
     let Some(claim) = daemon_ownership::read_owner_claim() else {
         return false;
     };
-    if !fbuild_core::process_identity::pid_is_alive(claim.pid) {
+    if !fbuild_core::platform::process::pid_is_alive(claim.pid) {
         return true;
     }
     // Alive PID: only a *successful* probe showing a different program counts
     // as death, since `pid_exe_stem_matches` fails closed.
-    match fbuild_core::process_identity::pid_executable_path(claim.pid) {
-        Some(_) => !fbuild_core::process_identity::pid_exe_stem_matches(
+    match fbuild_core::platform::process::pid_executable_path(claim.pid) {
+        Some(_) => !fbuild_core::platform::process::pid_exe_stem_matches(
             claim.pid,
             daemon_ownership::DAEMON_EXE_STEM,
         ),
@@ -488,9 +488,9 @@ mod tests {
         // Probe the primitives directly rather than writing a claim to the
         // process-global claim path, which would race other tests.
         let pid = std::process::id();
-        assert!(fbuild_core::process_identity::pid_is_alive(pid));
+        assert!(fbuild_core::platform::process::pid_is_alive(pid));
         assert!(
-            !fbuild_core::process_identity::pid_exe_stem_matches(
+            !fbuild_core::platform::process::pid_exe_stem_matches(
                 pid,
                 daemon_ownership::DAEMON_EXE_STEM
             ),

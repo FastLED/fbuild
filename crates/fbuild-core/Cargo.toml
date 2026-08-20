@@ -18,13 +18,11 @@ sha2 = { workspace = true }
 # Runtime decompression for the downloaded FastLED/boards cache.
 zstd = { workspace = true }
 prost = { workspace = true }
-# Process containment primitive (Job Objects on Windows; process groups +
-# PR_SET_PDEATHSIG on Linux; process groups on macOS). The single global
-# `ContainedProcessGroup` owned by the daemon ensures every child process
-# spawned through `fbuild_core::subprocess::run_command` (and the emulator
-# helpers) dies with the daemon. See FastLED/fbuild#32.
+# Cross-platform containment and detached-spawn implementation delegated by
+# `platform::process`. Its source and revision intentionally match zccache's
+# copy so exported-symbol ownership remains unique. See FastLED/fbuild#32.
 running-process = { workspace = true }
-# Async helpers for the tokio integration in `containment::tokio_spawn` —
+# Async helpers for the Tokio integration in `platform::process` —
 # we need the `process` feature so `tokio::process::Command` is in scope.
 # Also drives the async `subprocess::run_command*` surface introduced
 # in the full-async runtime conversion (#813).
@@ -41,11 +39,6 @@ reqwest = { workspace = true }
 # Cross-process shared/exclusive fbuild-daemon lifecycle gates. These are not
 # used for zccache object access. Locks are released if a process exits.
 fs2 = { workspace = true }
-
-# `libc::setpgid` / `libc::prctl` for the Unix `pre_exec` hook used by
-# `containment::tokio_spawn::configure`. See FastLED/fbuild#32.
-[target.'cfg(unix)'.dependencies]
-libc = "0.2"
 
 [dev-dependencies]
 tempfile = { workspace = true }

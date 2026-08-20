@@ -9,7 +9,6 @@
 pub mod build_log;
 pub mod channel;
 pub mod compiler_flags;
-pub mod containment;
 pub mod elapsed;
 pub mod emulator;
 pub mod env_namespace;
@@ -19,7 +18,6 @@ pub mod http;
 pub mod install_status;
 pub mod path;
 pub mod platform;
-pub mod process_identity;
 pub mod response_file;
 pub mod shell_split;
 pub mod subprocess;

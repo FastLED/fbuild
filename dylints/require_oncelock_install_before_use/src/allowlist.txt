@@ -12,5 +12,5 @@
 # impossible at these sites because the call IS the install path —
 # any future addition of a non-install call to `OnceLock::set` outside
 # these files will trip the lint as intended.
-crates/fbuild-core/src/containment.rs
+crates/fbuild-core/src/platform/process.rs
 crates/fbuild-build-engine/src/compile_backend.rs

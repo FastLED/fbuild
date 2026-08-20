@@ -40,22 +40,26 @@ fn run_parent() {
     // Install the process-wide containment group. In production this is
     // done by the fbuild-daemon binary; here we reproduce the same call
     // site so the test exercises real behaviour, not a mock.
-    fbuild_core::containment::init_global_containment("FBUILD-TEST")
-        .expect("init_global_containment");
+    fbuild_core::platform::process::init_containment("FBUILD-TEST").expect("init_containment");
 
     // Spawn the child via the contained-spawn helper.
     let self_exe = fbuild_core::platform::executable::current_image().expect("current_exe");
     // allow-direct-spawn: integration-test harness exercising spawn_contained itself.
     let mut cmd = std::process::Command::new(&self_exe);
-    cmd.arg("child")
-        .stdin(std::process::Stdio::null())
-        .stdout(std::process::Stdio::piped())
-        .stderr(std::process::Stdio::null());
-    let mut child = fbuild_core::containment::spawn_contained(&mut cmd).expect("spawn child");
+    cmd.arg("child");
+    let mut child = fbuild_core::platform::process::spawn_contained(
+        &mut cmd,
+        fbuild_core::platform::process::ContainedStdio {
+            stdin: fbuild_core::platform::process::StdioSource::Null,
+            stdout: fbuild_core::platform::process::StdioSource::Pipe,
+            stderr: fbuild_core::platform::process::StdioSource::Null,
+        },
+    )
+    .expect("spawn child");
 
     // The child prints `<child-pid> <grandchild-pid>\n` to stdout on
     // startup. Wait for that single line before announcing our own PIDs.
-    let mut stdout = child.stdout.take().expect("child stdout");
+    let mut stdout = child.take_stdout().expect("child stdout");
     let mut buf = Vec::<u8>::new();
     let mut byte = [0u8; 1];
     loop {

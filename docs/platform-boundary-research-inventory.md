@@ -132,16 +132,54 @@ intentionally absent from the enforcement ledger and Dylint baseline;
 regression tests verify that boundary implementation findings cannot be
 grandfathered while direct shared-caller current-image reads are rejected.
 
+## Phase-4 process contraction
+
+Phase 4 moved fbuild-owned spawning, containment, PID/image inspection,
+termination, waiting, and exit interpretation behind `platform::process`.
+Compatible contained and detached spawning delegates to the already pinned
+`running-process`; product callers continue to own their retry, escalation,
+diagnostic, and lifecycle policy.
+
+The exact enforcement ledger fell from **271 to 166 rows**, deleting 105
+migrated occurrences. Its current shape is:
+
+| Kind | Rows |
+| --- | ---: |
+| `attr_cfg` | 123 |
+| `native_path` | 36 |
+| `native_dependency` | 4 |
+| `target_dependency_table` | 3 |
+| `cfg_macro` | 0 |
+| `compile_host_fact` | 0 |
+
+| Classification | Rows |
+| --- | ---: |
+| Host mechanic | 160 |
+| Host artifact policy | 6 |
+
+| Capability | Rows |
+| --- | ---: |
+| `device` | 76 |
+| `fs` | 35 |
+| `host` | 22 |
+| `host_executable` | 17 |
+| `process` | 14 |
+| `ipc` | 2 |
+
+The host-independent research inventory contains 175 rows: the 166 enforced
+caller occurrences plus nine authorized facade/private-implementation
+occurrences. Its process capability has contracted from 95 to 17 rows; three
+of those are authorized implementation details, leaving 14 exact caller rows
+for later IPC/device capability phases.
+
 ## Manifest findings
 
 Target-specific native ownership currently exists in:
 
-- `fbuild-core`: Unix `libc`;
 - `fbuild-cli`: Windows `windows-sys`;
 - `fbuild-deploy`: Windows `windows-sys`;
 - `fbuild-serial`: Windows `windows-sys`;
-- `fbuild-daemon`: Unix `libc`, including a dev dependency, plus
-  cross-platform `interprocess`.
+- `fbuild-daemon`: cross-platform `interprocess`.
 
 Phase 2's manifest checker must freeze exact occurrences. Later capability
 phases move native dependency ownership into `fbuild-core`'s private concrete

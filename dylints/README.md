@@ -11,7 +11,7 @@ itself stays on stable 1.95.0).
   on `std::process::Command` and `tokio::process::Command` in production
   code (`crates/*/src/`). All subprocess spawns must flow through
   `fbuild_core::subprocess::run_command` /
-  `fbuild_core::containment::*`. See #264.
+  `fbuild_core::platform::process::*`. See #264.
 - **`ban_std_pathbuf/`** — bans raw `std::path::PathBuf` in workspace
   code; steers callers at `fbuild_core::path::NormalizedPath` so paths
   carry the normalization invariant Windows requires. Legacy call sites

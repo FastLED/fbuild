@@ -9,7 +9,7 @@
 //!    a temp-dir stand-in for the legacy stable pid file
 //!    (`fbuild_paths::get_daemon_pid_file()`'s layout). Any code path that
 //!    would read that PID and consider signalling it MUST refuse, because
-//!    `fbuild_core::process_identity::pid_exe_stem_matches(pid,
+//!    `fbuild_core::platform::process::pid_exe_stem_matches(pid,
 //!    "fbuild-daemon")` fails closed on the stem mismatch. This test proves
 //!    the gate stays closed and the process survives, and that liveness
 //!    detection correctly flips to `false` once the process is actually
@@ -28,7 +28,9 @@ use std::process::{Child, Command, Stdio};
 use std::time::{Duration, Instant};
 
 use fbuild_core::path::NormalizedPath;
-use fbuild_core::process_identity::{pid_exe_stem_matches, pid_is_alive};
+use fbuild_core::platform::process::{
+    Termination, pid_exe_stem_matches, pid_is_alive, terminate_pid,
+};
 use fbuild_paths::daemon_ownership::{DAEMON_EXE_STEM, RootOwnershipGuard};
 
 /// Bounded `Child::wait()` (mirrors `tests/port_recovery.rs`): a missed
@@ -51,22 +53,8 @@ fn wait_with_timeout(child: &mut Child, budget: Duration) -> bool {
     }
 }
 
-#[cfg(unix)]
 fn hard_kill(child: &Child) {
-    // SAFETY: kill(2) with a PID this test process owns (a child it spawned
-    // itself). No signal handler runs in our own process; this only affects
-    // the child.
-    unsafe {
-        libc::kill(child.id() as i32, libc::SIGKILL);
-    }
-}
-
-#[cfg(windows)]
-fn hard_kill(child: &Child) {
-    // allow-direct-spawn: test driver hard-killing a process it spawned under test.
-    let _ = Command::new("taskkill")
-        .args(["/F", "/PID", &child.id().to_string()])
-        .status();
+    let _ = terminate_pid(child.id(), Termination::Force);
 }
 
 /// Helper mode: NOT `fbuild-daemon` (this is the integration-test binary,
