@@ -25,6 +25,7 @@ pub async fn run_clean(
     if matches!(scope, CleanScope::Cache) {
         reset_compiler_cache().await?;
     }
+    daemon_client::ensure_daemon_running().await?;
     let profile = if release {
         Some("release".to_string())
     } else if quick {
