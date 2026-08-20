@@ -468,7 +468,7 @@ mod tests {
         // When no global group is installed, the helper should still be
         // able to spawn processes — this preserves behaviour for the
         // CLI binary and for unit tests.
-        let mut cmd = if cfg!(windows) {
+        let mut cmd = if crate::platform::host::is_windows() {
             // allow-direct-spawn: this IS the containment module's own test of spawn_contained.
             let mut c = Command::new("cmd");
             c.args(["/C", "echo", "hello"]);
@@ -518,7 +518,7 @@ mod tests {
         // AVR build's "gcc -dumpversion then compile" sequence that
         // reproduces the original bug.
         let build_cmd = || {
-            let mut cmd = if cfg!(windows) {
+            let mut cmd = if crate::platform::host::is_windows() {
                 // allow-direct-spawn: regression test for this module's own containment behaviour.
                 let mut c = Command::new("cmd");
                 c.args(["/C", "echo", "ok"]);

@@ -46,6 +46,7 @@ CFG_ATTRIBUTE_START = re.compile(r"#\s*!?\s*\[\s*cfg(?:_attr)?\s*\(")
 CFG_MACRO_START = re.compile(r"\bcfg\s*!\s*\(")
 IDENTIFIER = re.compile(r"\b[A-Za-z_][A-Za-z0-9_]*\b")
 NATIVE_PATHS = (
+    re.compile(r"\bstd\s*::\s*env\s*::\s*current_exe\b"),
     re.compile(
         r"\bstd\s*::\s*os\s*::\s*(?:windows|unix|linux|macos)\b"
         r"(?:\s*::\s*[A-Za-z_][A-Za-z0-9_]*)*"
@@ -210,6 +211,8 @@ def enclosing_function(text: str, offset: int) -> str:
 def classify(path: str, kind: str, normalized: str = "", context: str = "") -> tuple[str, str]:
     """Assign the phase-1 owner class; phase 2 validates this per occurrence."""
     if kind in {"native_import", "native_path", "native_dependency"}:
+        if normalized == "std::env::current_exe":
+            return "host_executable", "host_mechanic"
         if "::fs" in normalized or "permissions" in normalized.lower():
             return "fs", "host_mechanic"
         if "/fbuild-serial/" in f"/{path}/" or "/fbuild-deploy/" in f"/{path}/":

@@ -278,7 +278,10 @@ async fn verify_esptool_binary(bin: &Path) -> Result<()> {
 /// Returns `None` for hosts without a prebuilt binary, so the caller falls
 /// back to an `esptool` on PATH.
 fn tasmota_platform_tag() -> Option<&'static str> {
-    match (std::env::consts::OS, std::env::consts::ARCH) {
+    match (
+        fbuild_core::platform::host::os_name(),
+        fbuild_core::platform::host::arch_name(),
+    ) {
         ("linux", "x86_64") => Some("linux-amd64"),
         ("linux", "aarch64") => Some("linux-aarch64"),
         ("linux", "arm") => Some("linux-armv7"),
@@ -296,19 +299,15 @@ fn host_platform_tag() -> Result<&'static str> {
         FbuildError::PackageError(format!(
             "no prebuilt esptool binary for {}/{} — set {ESPTOOL_PATH_ENV_VAR} \
              to an esptool executable",
-            std::env::consts::OS,
-            std::env::consts::ARCH
+            fbuild_core::platform::host::os_name(),
+            fbuild_core::platform::host::arch_name()
         ))
     })
 }
 
 /// Executable name for the current platform.
 fn esptool_bin_name() -> &'static str {
-    if cfg!(windows) {
-        "esptool.exe"
-    } else {
-        "esptool"
-    }
+    fbuild_core::platform::executable::name("esptool", "esptool.exe")
 }
 
 /// Locate the `esptool` executable in an extracted tree, searching the root and

@@ -150,7 +150,7 @@ impl NormalizedPath {
     #[must_use]
     pub fn display_slash(&self) -> String {
         let mut s = self.path.to_string_lossy().into_owned();
-        if cfg!(windows) {
+        if crate::platform::host::is_windows() {
             s = s.replace('\\', "/");
             if let Some(stripped) = s.strip_prefix("//?/") {
                 s = stripped.to_string();

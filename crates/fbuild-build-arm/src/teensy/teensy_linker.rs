@@ -182,7 +182,7 @@ impl Linker for TeensyLinker {
         // FastLED/fbuild#809: bound the link step at 3 min — teensy41
         // links comfortably under this budget.
         let link_timeout = Some(std::time::Duration::from_secs(180));
-        let result = if cfg!(windows) && args.len() > 50 {
+        let result = if fbuild_core::platform::host::is_windows() && args.len() > 50 {
             let temp_dir = output_dir.join("tmp");
             std::fs::create_dir_all(&temp_dir)?;
             // FastLED/fbuild#911 — path-shape slash normalization goes
@@ -275,7 +275,7 @@ mod tests {
     /// be absolute.
     #[test]
     fn link_runs_in_absolute_output_dir_not_inherited_cwd() {
-        let (out, core_dir) = if cfg!(windows) {
+        let (out, core_dir) = if fbuild_core::platform::host::is_windows() {
             ("C:\\proj\\.fbuild\\build\\release", "C:\\pkgs\\teensy4")
         } else {
             ("/proj/.fbuild/build/release", "/pkgs/teensy4")

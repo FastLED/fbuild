@@ -258,7 +258,7 @@ async fn main() {
     // enumerating every `daemon-*.port` file. `current_exe()` failing is
     // not treated as fatal: skip the claim write and keep the daemon
     // running under the root-ownership lock alone.
-    match std::env::current_exe() {
+    match fbuild_core::platform::executable::current_image() {
         Ok(exe) => {
             let identity = fbuild_paths::running_process::DaemonCacheIdentity::discover();
             let claim = fbuild_paths::daemon_ownership::OwnerClaim {
@@ -287,7 +287,7 @@ async fn main() {
     // FastLED/fbuild#510 lands `connect_to_backend`. Best-effort: any
     // failure (read-only AppData, sandbox, etc.) is logged but does not
     // block daemon startup. See FastLED/fbuild#592.
-    match std::env::current_exe() {
+    match fbuild_core::platform::executable::current_image() {
         Ok(this_exe) => {
             let daemon_binary = this_exe
                 .parent()

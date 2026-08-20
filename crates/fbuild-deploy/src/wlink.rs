@@ -22,7 +22,10 @@ struct WlinkAsset {
 }
 
 fn release_asset() -> Result<WlinkAsset> {
-    match (std::env::consts::OS, std::env::consts::ARCH) {
+    match (
+        fbuild_core::platform::host::os_name(),
+        fbuild_core::platform::host::arch_name(),
+    ) {
         ("windows", "x86_64") => Ok(WlinkAsset {
             name: "wlink-v0.1.2-win-x64.zip",
             sha256: "59b3989137a9d22c9c1e8c04fd9371af3f54fa43b4cb63c59d6fb4286a34c78a",
@@ -42,11 +45,13 @@ fn release_asset() -> Result<WlinkAsset> {
 }
 
 fn managed_wlink_path() -> Result<PathBuf> {
-    let home = std::env::var_os(if cfg!(windows) { "USERPROFILE" } else { "HOME" })
-        .map(PathBuf::from)
-        .ok_or_else(|| {
-            FbuildError::PackageError("could not determine home directory".to_string())
-        })?;
+    let home = std::env::var_os(if fbuild_core::platform::host::is_windows() {
+        "USERPROFILE"
+    } else {
+        "HOME"
+    })
+    .map(PathBuf::from)
+    .ok_or_else(|| FbuildError::PackageError("could not determine home directory".to_string()))?;
     let mode = if std::env::var_os("FBUILD_DEV_MODE").is_some() {
         "dev"
     } else {
@@ -57,7 +62,7 @@ fn managed_wlink_path() -> Result<PathBuf> {
         .join(mode)
         .join("tools")
         .join("wlink")
-        .join(if cfg!(windows) { "wlink.exe" } else { "wlink" }))
+        .join(fbuild_core::platform::executable::native_name("wlink")))
 }
 
 async fn ensure_wlink_installed() -> Result<PathBuf> {
@@ -108,8 +113,8 @@ fn extract_wlink(archive: &Path, staging: &Path, dest: &Path) -> Result<()> {
         tar.unpack(&extract_dir)
             .map_err(|e| FbuildError::PackageError(format!("extract wlink archive: {e}")))?;
     }
-    let binary_name = if cfg!(windows) { "wlink.exe" } else { "wlink" };
-    let binary = find_file(&extract_dir, binary_name)
+    let binary_name = fbuild_core::platform::executable::native_name("wlink");
+    let binary = find_file(&extract_dir, &binary_name)
         .ok_or_else(|| FbuildError::PackageError(format!("wlink archive lacks {binary_name}")))?;
     if let Some(parent) = dest.parent() {
         std::fs::create_dir_all(parent)
@@ -147,7 +152,9 @@ impl WlinkDeployer {
     pub fn new() -> Self {
         let executable = std::env::var_os("FBUILD_WLINK_PATH")
             .map(PathBuf::from)
-            .unwrap_or_else(|| PathBuf::from(if cfg!(windows) { "wlink.exe" } else { "wlink" }));
+            .unwrap_or_else(|| {
+                PathBuf::from(fbuild_core::platform::executable::native_name("wlink"))
+            });
         Self { executable }
     }
 

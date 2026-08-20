@@ -151,15 +151,19 @@ fn supported_hosts() -> String {
 }
 
 fn platform_package() -> PlatformPackage {
-    let key = if cfg!(target_os = "windows") {
+    let key = if fbuild_core::platform::host::is_windows() {
         "windows"
-    } else if cfg!(target_os = "macos") {
-        if cfg!(target_arch = "aarch64") {
+    } else if fbuild_core::platform::host::is_macos() {
+        if fbuild_core::platform::host::current().arch()
+            == fbuild_core::platform::host::HostArch::Aarch64
+        {
             "macos-arm64"
         } else {
             "macos-x86_64"
         }
-    } else if cfg!(target_arch = "aarch64") {
+    } else if fbuild_core::platform::host::current().arch()
+        == fbuild_core::platform::host::HostArch::Aarch64
+    {
         "linux-aarch64"
     } else {
         "linux-x86_64"
@@ -184,11 +188,7 @@ fn find_picotool_root(install_dir: &Path) -> PathBuf {
 }
 
 fn picotool_name() -> &'static str {
-    if cfg!(windows) {
-        "picotool.exe"
-    } else {
-        "picotool"
-    }
+    fbuild_core::platform::executable::name("picotool", "picotool.exe")
 }
 
 #[cfg(test)]

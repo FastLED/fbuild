@@ -17,7 +17,10 @@ struct WchispAsset {
 }
 
 fn release_asset() -> Result<WchispAsset> {
-    match (std::env::consts::OS, std::env::consts::ARCH) {
+    match (
+        fbuild_core::platform::host::os_name(),
+        fbuild_core::platform::host::arch_name(),
+    ) {
         ("windows", "x86_64") => Ok(WchispAsset {
             name: "wchisp-v0.3.0-win-x64.zip",
             sha256: "eba605bbc62f217f6454e7236d04ef1b8a6b4396dd7ce8dc26fc83016213c3aa",
@@ -45,11 +48,13 @@ fn release_asset() -> Result<WchispAsset> {
 }
 
 fn managed_wchisp_path() -> Result<PathBuf> {
-    let home = std::env::var_os(if cfg!(windows) { "USERPROFILE" } else { "HOME" })
-        .map(PathBuf::from)
-        .ok_or_else(|| {
-            FbuildError::PackageError("could not determine home directory".to_string())
-        })?;
+    let home = std::env::var_os(if fbuild_core::platform::host::is_windows() {
+        "USERPROFILE"
+    } else {
+        "HOME"
+    })
+    .map(PathBuf::from)
+    .ok_or_else(|| FbuildError::PackageError("could not determine home directory".to_string()))?;
     let mode = if std::env::var_os("FBUILD_DEV_MODE").is_some() {
         "dev"
     } else {
@@ -60,11 +65,7 @@ fn managed_wchisp_path() -> Result<PathBuf> {
         .join(mode)
         .join("tools")
         .join("wchisp")
-        .join(if cfg!(windows) {
-            "wchisp.exe"
-        } else {
-            "wchisp"
-        }))
+        .join(fbuild_core::platform::executable::native_name("wchisp")))
 }
 
 async fn ensure_wchisp_installed() -> Result<PathBuf> {
@@ -114,12 +115,8 @@ fn extract_wchisp(archive: &Path, staging: &Path, dest: &Path) -> Result<()> {
             .unpack(&extract_dir)
             .map_err(|e| FbuildError::PackageError(format!("extract wchisp archive: {e}")))?;
     }
-    let name = if cfg!(windows) {
-        "wchisp.exe"
-    } else {
-        "wchisp"
-    };
-    let binary = find_file(&extract_dir, name)
+    let name = fbuild_core::platform::executable::native_name("wchisp");
+    let binary = find_file(&extract_dir, &name)
         .ok_or_else(|| FbuildError::PackageError(format!("wchisp archive lacks {name}")))?;
     if let Some(parent) = dest.parent() {
         std::fs::create_dir_all(parent)
@@ -171,11 +168,7 @@ impl WchispDeployer {
             executable: std::env::var_os("FBUILD_WCHISP_PATH")
                 .map(PathBuf::from)
                 .unwrap_or_else(|| {
-                    PathBuf::from(if cfg!(windows) {
-                        "wchisp.exe"
-                    } else {
-                        "wchisp"
-                    })
+                    PathBuf::from(fbuild_core::platform::executable::native_name("wchisp"))
                 }),
         }
     }

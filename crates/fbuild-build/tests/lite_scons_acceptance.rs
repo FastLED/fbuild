@@ -38,7 +38,7 @@ use fbuild_build::script_runtime::resolve_extra_script_overlay;
 fn python_available() -> bool {
     use std::time::{Duration, Instant};
 
-    let probes: &[&[&str]] = if cfg!(windows) {
+    let probes: &[&[&str]] = if fbuild_core::platform::host::is_windows() {
         &[&["python", "--version"], &["py", "-3", "--version"]]
     } else {
         &[&["python3", "--version"], &["python", "--version"]]

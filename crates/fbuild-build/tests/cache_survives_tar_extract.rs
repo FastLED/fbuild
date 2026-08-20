@@ -161,9 +161,9 @@ fn compiler_signature_survives_toolchain_path_change() {
     let toolchain_a = TempDir::new().unwrap();
     let toolchain_b = TempDir::new().unwrap();
 
-    let compiler_filename = if cfg!(windows) { "gcc.exe" } else { "gcc" };
-    let path_a: PathBuf = toolchain_a.path().join(compiler_filename);
-    let path_b: PathBuf = toolchain_b.path().join(compiler_filename);
+    let compiler_filename = fbuild_core::platform::executable::native_name("gcc");
+    let path_a: PathBuf = toolchain_a.path().join(&compiler_filename);
+    let path_b: PathBuf = toolchain_b.path().join(&compiler_filename);
     assert_ne!(
         path_a, path_b,
         "test setup invariant: the two compiler paths must differ as absolute path strings"
@@ -183,7 +183,7 @@ fn compiler_signature_survives_toolchain_path_change() {
          See crates/fbuild-build/src/compiler.rs::compiler_identity."
     );
 
-    let alt_filename = if cfg!(windows) { "clang.exe" } else { "clang" };
+    let alt_filename = fbuild_core::platform::executable::native_name("clang");
     let path_c = toolchain_a.path().join(alt_filename);
     let sig_c = build_rebuild_signature(&path_c, &flags, &pre_flags, &extra_flags, &build_unflags);
     assert_ne!(

@@ -255,13 +255,13 @@ fn emit_zed_tasks(
 /// testable; callers are responsible for checking `.exists()`.
 fn known_zed_install_candidates() -> Vec<NormalizedPath> {
     let mut candidates = Vec::new();
-    if cfg!(windows) {
+    if fbuild_core::platform::host::is_windows() {
         if let Some(local_appdata) = std::env::var_os("LOCALAPPDATA") {
             let base = NormalizedPath::new(local_appdata);
-            candidates.push(base.join("Programs").join("Zed").join("zed.exe"));
-            candidates.push(base.join("Zed").join("zed.exe"));
+            candidates.push(base.join("Programs").join("Zed").join(zed_exe_name()));
+            candidates.push(base.join("Zed").join(zed_exe_name()));
         }
-    } else if cfg!(target_os = "macos") {
+    } else if fbuild_core::platform::host::is_macos() {
         candidates.push(NormalizedPath::new(
             "/Applications/Zed.app/Contents/MacOS/cli",
         ));
@@ -272,16 +272,16 @@ fn known_zed_install_candidates() -> Vec<NormalizedPath> {
                 NormalizedPath::new(home)
                     .join(".local")
                     .join("bin")
-                    .join("zed"),
+                    .join(zed_exe_name()),
             );
         }
-        candidates.push(NormalizedPath::new("/usr/bin/zed"));
+        candidates.push(NormalizedPath::new("/usr/bin").join(zed_exe_name()));
     }
     candidates
 }
 
 fn zed_exe_name() -> &'static str {
-    if cfg!(windows) { "zed.exe" } else { "zed" }
+    fbuild_core::platform::executable::name("zed", "zed.exe")
 }
 
 /// Find `zed` on PATH first, then fall back to known install locations.
@@ -841,11 +841,12 @@ mod tests {
         // happen in `find_zed_executable`, which we deliberately don't
         // test here (must not launch/require zed in CI).
         let candidates = known_zed_install_candidates();
-        if cfg!(windows) {
+        if fbuild_core::platform::host::is_windows() {
+            let executable = fbuild_core::platform::executable::name("zed", "zed.exe");
             assert!(
                 candidates
                     .iter()
-                    .all(|p| p.to_string_lossy().ends_with("zed.exe"))
+                    .all(|p| p.to_string_lossy().ends_with(executable))
             );
         } else {
             // Case-insensitive: the macOS candidate is
@@ -862,10 +863,9 @@ mod tests {
     #[test]
     fn zed_exe_name_matches_platform() {
         let name = zed_exe_name();
-        if cfg!(windows) {
-            assert_eq!(name, "zed.exe");
-        } else {
-            assert_eq!(name, "zed");
-        }
+        assert_eq!(
+            name,
+            fbuild_core::platform::executable::name("zed", "zed.exe")
+        );
     }
 }

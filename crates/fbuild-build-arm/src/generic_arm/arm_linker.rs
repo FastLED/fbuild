@@ -178,7 +178,7 @@ impl Linker for ArmLinker {
         // FastLED/fbuild#809: bound the link step at 3 min — large
         // STM32 HAL builds are still well inside this budget.
         let link_timeout = Some(std::time::Duration::from_secs(180));
-        let result = if cfg!(windows) && args.len() > 50 {
+        let result = if fbuild_core::platform::host::is_windows() && args.len() > 50 {
             let temp_dir = output_dir.join("tmp");
             std::fs::create_dir_all(&temp_dir)?;
             // FastLED/fbuild#911 — path-shape slash normalization goes

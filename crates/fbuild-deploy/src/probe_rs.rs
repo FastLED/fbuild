@@ -78,7 +78,10 @@ impl ProbeRsReleaseAsset {
 
 /// Return the pinned FastLED/probe-rs release asset for this host.
 pub fn probe_rs_release_asset_for_host() -> Result<ProbeRsReleaseAsset> {
-    match (std::env::consts::OS, std::env::consts::ARCH) {
+    match (
+        fbuild_core::platform::host::os_name(),
+        fbuild_core::platform::host::arch_name(),
+    ) {
         ("windows", "x86_64") => Ok(ProbeRsReleaseAsset {
             name: "probe-rs-fastled-fastled-v0.31.2-nusb-v1-transport-x86_64-pc-windows-msvc.zip",
             sha256: "257e294988498218cf350a852bf60e57313b19f492f8019b92905df59095c7a1",
@@ -129,11 +132,7 @@ pub fn managed_probe_rs_dir() -> Option<NormalizedPath> {
 }
 
 pub fn managed_probe_rs_path() -> Option<NormalizedPath> {
-    let exe = if cfg!(windows) {
-        "probe-rs.exe"
-    } else {
-        "probe-rs"
-    };
+    let exe = fbuild_core::platform::executable::native_name("probe-rs");
     Some(managed_probe_rs_dir()?.join(exe))
 }
 
@@ -310,12 +309,8 @@ fn probe_rs_temp_install_path(dest_path: &Path) -> NormalizedPath {
 }
 
 fn find_extracted_probe_rs_binary(root: &Path) -> Result<NormalizedPath> {
-    let exe = if cfg!(windows) {
-        "probe-rs.exe"
-    } else {
-        "probe-rs"
-    };
-    find_file_by_name(root, exe).ok_or_else(|| {
+    let exe = fbuild_core::platform::executable::native_name("probe-rs");
+    find_file_by_name(root, &exe).ok_or_else(|| {
         FbuildError::PackageError(format!(
             "probe-rs binary `{exe}` not found after extracting {}",
             root.display()
@@ -651,7 +646,13 @@ mod tests {
         let staging = tmp.path().join("probe-rs-install");
         std::fs::create_dir_all(staging.join("extract")).unwrap();
         std::fs::write(staging.join("archive.zip"), b"zip").unwrap();
-        std::fs::write(staging.join("extract").join("probe-rs.exe"), b"exe").unwrap();
+        std::fs::write(
+            staging
+                .join("extract")
+                .join(fbuild_core::platform::executable::native_name("probe-rs")),
+            b"exe",
+        )
+        .unwrap();
 
         cleanup_probe_rs_staging_dir(&staging).await;
 
@@ -667,25 +668,15 @@ mod tests {
         let archive = tmp.path().join("probe-rs.zip");
         let staging = tmp.path().join("staging");
         let dest_dir = tmp.path().join("managed");
-        let dest = dest_dir.join(if cfg!(windows) {
-            "probe-rs.exe"
-        } else {
-            "probe-rs"
-        });
+        let binary_name = fbuild_core::platform::executable::native_name("probe-rs");
+        let dest = dest_dir.join(&binary_name);
         std::fs::create_dir_all(&dest_dir).unwrap();
         std::fs::write(&dest, b"old-probe-rs").unwrap();
 
         let file = std::fs::File::create(&archive).unwrap();
         let mut zip = zip::ZipWriter::new(file);
         zip.start_file(
-            format!(
-                "nested/{}",
-                if cfg!(windows) {
-                    "probe-rs.exe"
-                } else {
-                    "probe-rs"
-                }
-            ),
+            format!("nested/{binary_name}"),
             zip::write::SimpleFileOptions::default(),
         )
         .unwrap();

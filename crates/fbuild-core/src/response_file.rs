@@ -24,7 +24,7 @@ const RESPONSE_FILE_STALE_AFTER: Duration = Duration::from_secs(7 * 24 * 60 * 60
 /// Windows GCC treats as `C:\tmp\`. Use an app-owned directory under
 /// `~/.fbuild/{dev|prod}/tmp/response-files` instead.
 pub fn windows_temp_dir() -> PathBuf {
-    if cfg!(windows) {
+    if crate::platform::host::is_windows() {
         response_files_dir()
     } else {
         std::env::temp_dir()

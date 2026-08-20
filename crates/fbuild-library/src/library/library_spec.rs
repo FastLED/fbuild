@@ -69,7 +69,7 @@ impl LibrarySpec {
             }
             // `file:///C:/path` is the standard Windows spelling. Paths use a
             // leading slash in URI form, but Windows needs the drive prefix.
-            let path = if cfg!(windows)
+            let path = if fbuild_core::platform::host::is_windows()
                 && path.len() > 2
                 && path.as_bytes()[0] == b'/'
                 && path.as_bytes()[2] == b':'

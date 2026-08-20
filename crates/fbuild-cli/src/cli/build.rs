@@ -4,9 +4,9 @@ use crate::daemon_client::{self, BuildRequest, DaemonClient};
 use crate::output;
 
 pub async fn open_in_browser(url: &str) -> fbuild_core::Result<()> {
-    let args: Vec<&str> = if cfg!(target_os = "windows") {
+    let args: Vec<&str> = if fbuild_core::platform::host::is_windows() {
         vec!["cmd", "/c", "start", "", url]
-    } else if cfg!(target_os = "macos") {
+    } else if fbuild_core::platform::host::is_macos() {
         vec!["open", url]
     } else {
         vec!["xdg-open", url]
@@ -159,7 +159,7 @@ pub async fn run_build(
 
 /// Convert MSYS/Git-Bash paths (/c/Users/...) to native Windows paths and canonicalize.
 pub async fn normalize_path(path: &str) -> fbuild_core::Result<String> {
-    let converted = if cfg!(windows) {
+    let converted = if fbuild_core::platform::host::is_windows() {
         // /c/foo → C:\foo
         let bytes = path.as_bytes();
         if bytes.len() >= 3

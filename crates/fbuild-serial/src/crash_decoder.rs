@@ -390,8 +390,9 @@ pub fn derive_addr2line_path(cc_path: &Path) -> Option<PathBuf> {
     }
 
     let prefix = &stem[..stem.len() - 3]; // e.g. "riscv32-esp-elf-"
-    let suffix = if cfg!(windows) { ".exe" } else { "" };
-    let addr2line = cc_path.parent()?.join(format!("{prefix}addr2line{suffix}"));
+    let addr2line_name =
+        fbuild_core::platform::executable::native_name(&format!("{prefix}addr2line"));
+    let addr2line = cc_path.parent()?.join(addr2line_name);
 
     if addr2line.exists() {
         Some(addr2line)
@@ -759,10 +760,10 @@ mod tests {
             let home = std::env::var("USERPROFILE")
                 .or_else(|_| std::env::var("HOME"))
                 .unwrap_or_default();
+            let executable =
+                fbuild_core::platform::executable::native_name("xtensa-esp-elf-addr2line");
             fbuild_core::path::NormalizedPath::from(format!(
-                "{}/.platformio/packages/toolchain-xtensa-esp-elf/bin/xtensa-esp-elf-addr2line{}",
-                home,
-                if cfg!(windows) { ".exe" } else { "" }
+                "{home}/.platformio/packages/toolchain-xtensa-esp-elf/bin/{executable}"
             ))
             .display_slash()
         }));

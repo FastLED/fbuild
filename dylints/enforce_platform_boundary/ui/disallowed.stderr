@@ -30,6 +30,12 @@ error: module ref `platform_windows` is outside fbuild_core::platform; use a neu
 LL |     let _backend = platform_windows::Backend;
    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^
 
+error: native import `std::env::current_exe` is outside fbuild_core::platform; use a neutral facade
+  --> $DIR/disallowed.rs:23:26
+   |
+LL |     let _current_image = std::env::current_exe();
+   |                          ^^^^^^^^^^^^^^^^^^^^^
+
 error: cfg macro `target_os` is outside fbuild_core::platform; use a neutral facade
   --> $DIR/disallowed.rs:17:17
    |
@@ -61,10 +67,9 @@ LL |     let _nested_os = format!("{}", std::env::consts::OS);
    |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 error: cfg macro `unix` is outside fbuild_core::platform; use a neutral facade
-  --> $DIR/disallowed.rs:29:9
+  --> $DIR/disallowed.rs:30:9
    |
 LL |         assert!(cfg!(unix));
    |         ^^^^^^^^^^^^^^^^^^^
 
-error: aborting due to 11 previous errors
-
+error: aborting due to 12 previous errors

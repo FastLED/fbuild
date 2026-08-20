@@ -272,7 +272,7 @@ impl RecoveryHelperLauncher for WindowsUacLauncher {
             Ok(format!("\"{value}\""))
         }
 
-        let executable = std::env::current_exe().map_err(|error| {
+        let executable = fbuild_core::platform::executable::current_image().map_err(|error| {
             fbuild_core::FbuildError::Other(format!(
                 "cannot locate current fbuild executable: {error}"
             ))

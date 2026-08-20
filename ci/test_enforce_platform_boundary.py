@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import re
 import unittest
 
 from ci import enforce_platform_boundary as boundary
@@ -13,9 +14,75 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
         cls.observed = boundary.rows_from_findings(boundary.research.inventory())
 
     def test_committed_exact_occurrence_ledger_matches_whole_tree(self) -> None:
-        self.assertEqual(len(self.expected), 504)
+        self.assertEqual(len(self.expected), 271)
         self.assertFalse(boundary.validate_ledger(self.expected))
         self.assertFalse(boundary.compare(self.expected, self.observed))
+
+    def test_private_platform_implementation_findings_are_not_baselined(self) -> None:
+        finding = boundary.research.Finding(
+            "crates/fbuild-core/src/platform/windows/example.rs",
+            1,
+            "compile_host_fact",
+            "std::env::consts::ARCH",
+            "host",
+            "host_mechanic",
+        )
+
+        self.assertEqual(boundary.rows_from_findings([finding]), [])
+
+        image_finding = boundary.research.Finding(
+            "crates/fbuild-core/src/platform/executable.rs",
+            1,
+            "native_path",
+            "std::env::current_exe",
+            "host_executable",
+            "host_mechanic",
+        )
+        self.assertEqual(boundary.rows_from_findings([image_finding]), [])
+
+        unauthorized_facade_finding = dataclasses.replace(
+            image_finding,
+            kind="cfg_macro",
+            normalized='cfg!(windows)',
+        )
+        self.assertEqual(
+            boundary.rows_from_findings([unauthorized_facade_finding]),
+            [
+                boundary.LedgerRow(
+                    unauthorized_facade_finding.path,
+                    unauthorized_facade_finding.kind,
+                    unauthorized_facade_finding.normalized,
+                    0,
+                    unauthorized_facade_finding.capability,
+                    unauthorized_facade_finding.classification,
+                )
+            ],
+        )
+
+    def test_no_raw_host_fact_reads_remain_outside_the_boundary(self) -> None:
+        self.assertFalse(
+            [
+                row
+                for row in self.expected
+                if row.kind in {"cfg_macro", "compile_host_fact"}
+            ]
+        )
+
+    def test_executable_spelling_does_not_bypass_the_executable_facade(self) -> None:
+        host_selected_exe = re.compile(
+            r"if\s+(?:fbuild_core|crate)::platform::host::is_windows\(\)"
+            r"\s*\{.{0,240}?\.exe",
+            re.DOTALL,
+        )
+        bypasses = []
+        for source in boundary.research.source_files():
+            text = source.read_text(encoding="utf-8")
+            for match in host_selected_exe.finditer(text):
+                if "platform::executable" not in match.group(0):
+                    bypasses.append(
+                        f"{source.relative_to(boundary.ROOT).as_posix()}:{text.count(chr(10), 0, match.start()) + 1}"
+                    )
+        self.assertFalse(bypasses, bypasses)
 
     def test_duplicate_and_non_contiguous_ordinal_are_rejected(self) -> None:
         malformed = [*self.expected, self.expected[0]]

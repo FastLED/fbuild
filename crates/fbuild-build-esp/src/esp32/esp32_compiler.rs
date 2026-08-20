@@ -61,7 +61,7 @@ impl Esp32Compiler {
             verbose,
             // On MSYS2/Git Bash, std::env::temp_dir() returns "/tmp/" which
             // native Windows GCC treats as "C:\tmp\". Use LOCALAPPDATA\Temp.
-            if cfg!(windows) {
+            if fbuild_core::platform::host::is_windows() {
                 std::env::var("LOCALAPPDATA")
                     .map(|la| PathBuf::from(la).join("Temp"))
                     .unwrap_or_else(|_| std::env::temp_dir())

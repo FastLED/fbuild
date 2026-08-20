@@ -150,7 +150,7 @@ pub fn pid_exe_stem_matches(pid: u32, expected_stem: &str) -> bool {
     let Some(stem) = path.file_stem().and_then(|s| s.to_str()) else {
         return false;
     };
-    if cfg!(windows) {
+    if crate::platform::host::is_windows() {
         stem.eq_ignore_ascii_case(expected_stem)
     } else {
         stem == expected_stem
@@ -261,7 +261,7 @@ mod tests {
 
     #[test]
     fn exe_stem_matches_current_exe_stem() {
-        let current_exe = std::env::current_exe().expect("current exe");
+        let current_exe = crate::platform::executable::current_image().expect("current exe");
         let stem = current_exe
             .file_stem()
             .and_then(|s| s.to_str())

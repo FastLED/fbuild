@@ -171,7 +171,7 @@ pub(super) async fn load_with_managed_picotool(
                 FailureDirection::PicotoolFallback,
                 mass_storage_error.unwrap_or("unknown mass-storage error"),
                 &tool_output,
-                cfg!(windows),
+                fbuild_core::platform::host::is_windows(),
             ),
             // Mass-storage has not run yet; the caller composes the final
             // combined message only if it also fails.
@@ -294,14 +294,14 @@ pub(super) fn format_eject_failure(
             FailureDirection::PicotoolPrimary,
             mass_storage_error,
             picotool_error,
-            cfg!(windows),
+            fbuild_core::platform::host::is_windows(),
         ),
         Some(PriorTransportFailure::MassStoragePrimary(prior_mass_storage_error)) => {
             format_failure(
                 FailureDirection::PicotoolFallback,
                 prior_mass_storage_error,
                 mass_storage_error,
-                cfg!(windows),
+                fbuild_core::platform::host::is_windows(),
             )
         }
         None => mass_storage_error.to_string(),

@@ -106,11 +106,7 @@ impl ClangComponent {
     /// Calls `ensure_installed()` internally.
     pub async fn get_binary(&self, name: &str) -> fbuild_core::Result<PathBuf> {
         let install_dir = self.ensure_installed().await?;
-        let binary_name = if cfg!(windows) {
-            format!("{}.exe", name)
-        } else {
-            name.to_string()
-        };
+        let binary_name = fbuild_core::platform::executable::native_name(name);
         find_binary_in_dir(&install_dir, &binary_name).ok_or_else(|| {
             fbuild_core::FbuildError::Other(format!(
                 "'{}' not found in {} installation at {}",
@@ -244,11 +240,7 @@ impl ClangComponent {
 
     fn validate(kind: ClangComponentKind, dir: &Path) -> fbuild_core::Result<()> {
         for name in kind.required_binaries() {
-            let binary_name = if cfg!(windows) {
-                format!("{}.exe", name)
-            } else {
-                (*name).to_string()
-            };
+            let binary_name = fbuild_core::platform::executable::native_name(name);
             if find_binary_in_dir(dir, &binary_name).is_none() {
                 return Err(fbuild_core::FbuildError::PackageError(format!(
                     "'{}' not found in extracted {} archive",
@@ -346,9 +338,9 @@ fn find_gcc_includes_recursive(dir: &Path, depth: u32, out: &mut Vec<PathBuf>) {
 }
 
 fn platform() -> &'static str {
-    if cfg!(target_os = "windows") {
+    if fbuild_core::platform::host::is_windows() {
         "win"
-    } else if cfg!(target_os = "macos") {
+    } else if fbuild_core::platform::host::is_macos() {
         "darwin"
     } else {
         "linux"
@@ -356,7 +348,9 @@ fn platform() -> &'static str {
 }
 
 fn arch() -> &'static str {
-    if cfg!(target_arch = "aarch64") {
+    if fbuild_core::platform::host::current().arch()
+        == fbuild_core::platform::host::HostArch::Aarch64
+    {
         "arm64"
     } else {
         "x86_64"
@@ -417,12 +411,8 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let bin_dir = dir.path().join("bin");
         std::fs::create_dir_all(&bin_dir).unwrap();
-        let name = if cfg!(windows) {
-            "clang-tidy.exe"
-        } else {
-            "clang-tidy"
-        };
-        std::fs::write(bin_dir.join(name), b"fake").unwrap();
+        let name = fbuild_core::platform::executable::native_name("clang-tidy");
+        std::fs::write(bin_dir.join(&name), b"fake").unwrap();
         let result = ClangComponent::validate(ClangComponentKind::ClangExtra, dir.path());
         assert!(result.is_ok());
     }
@@ -432,13 +422,9 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let nested = dir.path().join("llvm-21.1.5").join("bin");
         std::fs::create_dir_all(&nested).unwrap();
-        let name = if cfg!(windows) {
-            "clang-tidy.exe"
-        } else {
-            "clang-tidy"
-        };
-        std::fs::write(nested.join(name), b"fake").unwrap();
-        assert!(find_binary_in_dir(dir.path(), name).is_some());
+        let name = fbuild_core::platform::executable::native_name("clang-tidy");
+        std::fs::write(nested.join(&name), b"fake").unwrap();
+        assert!(find_binary_in_dir(dir.path(), &name).is_some());
     }
 
     #[test]

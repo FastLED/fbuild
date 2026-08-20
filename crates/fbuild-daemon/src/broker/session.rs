@@ -172,7 +172,7 @@ mod tests {
 
         // (2) hatch unset → a real (failing) dial against a bogus endpoint.
         std::env::remove_var("RUNNING_PROCESS_DISABLE");
-        let endpoint = if cfg!(windows) {
+        let endpoint = if fbuild_core::platform::host::is_windows() {
             "fbuild-broker-test-does-not-exist"
         } else {
             "/tmp/fbuild-broker-test-does-not-exist.sock"

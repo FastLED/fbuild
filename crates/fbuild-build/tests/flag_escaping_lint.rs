@@ -38,7 +38,7 @@ fn collect_rs_files(dir: &Path) -> Vec<PathBuf> {
 /// Check that a compiler file that has a non-Windows `run_command` path
 /// also calls `prepare_flags_for_exec` in that path.
 ///
-/// Heuristic: if a file contains both `run_command` and `cfg!(windows)` (the
+/// Heuristic: if a file contains both `run_command` and `fbuild_core::platform::host::is_windows()` (the
 /// response-file branch pattern), it MUST also contain `prepare_flags_for_exec`.
 #[test]
 fn compiler_backends_must_sanitize_flags_for_exec() {
@@ -63,7 +63,7 @@ fn compiler_backends_must_sanitize_flags_for_exec() {
         let has_run_command = content.contains("run_command");
         let has_response_file =
             content.contains("write_response_file") || content.contains("@response");
-        let has_cfg_windows = content.contains("cfg!(windows)");
+        let has_cfg_windows = content.contains("fbuild_core::platform::host::is_windows()");
 
         // Linker files use response files for link flags (not -D defines),
         // so they don't need prepare_flags_for_exec.
@@ -96,7 +96,7 @@ fn compiler_backends_must_sanitize_flags_for_exec() {
          to strip backslash-escaped quotes from -D define flags.\n\n\
          Violations:\n{}\n\n\
          Fix: add `crate::compiler::prepare_flags_for_exec(all_flags)` in the else \
-         branch of `cfg!(windows)`.",
+         branch of `fbuild_core::platform::host::is_windows()`.",
         violations.join("\n")
     );
 }

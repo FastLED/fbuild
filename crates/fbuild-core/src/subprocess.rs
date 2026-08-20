@@ -786,7 +786,7 @@ mod tests {
 
     #[tokio::test]
     async fn run_echo() {
-        let args = if cfg!(windows) {
+        let args = if crate::platform::host::is_windows() {
             vec!["cmd", "/C", "echo hello"]
         } else {
             vec!["echo", "hello"]
@@ -824,12 +824,16 @@ mod tests {
         // Bare name without a caller PATH: keep legacy daemon-env behavior.
         assert_eq!(bare_name_path_overlay("esptool", None), None);
         // Absolute and relative paths never trigger a PATH lookup.
-        let absolute = if cfg!(windows) {
-            r"C:\tools\esptool\esptool.exe"
+        let absolute = if crate::platform::host::is_windows() {
+            std::path::PathBuf::from(r"C:\tools\esptool")
         } else {
-            "/usr/local/bin/esptool"
-        };
-        assert_eq!(bare_name_path_overlay(absolute, Some("/opt/bin")), None);
+            std::path::PathBuf::from("/usr/local/bin")
+        }
+        .join(crate::platform::executable::native_name("esptool"));
+        assert_eq!(
+            bare_name_path_overlay(&absolute.to_string_lossy(), Some("/opt/bin")),
+            None
+        );
         assert_eq!(bare_name_path_overlay("./esptool", Some("/opt/bin")), None);
         assert_eq!(
             bare_name_path_overlay("tools/esptool", Some("/opt/bin")),
@@ -851,7 +855,7 @@ mod tests {
     async fn env_overlay_path_reaches_child_over_case_variant() {
         // `cmd` resolves via the OS system-dir fallback and `/bin/sh` is
         // absolute, so neither spawn depends on the clobbered PATH.
-        let args = if cfg!(windows) {
+        let args = if crate::platform::host::is_windows() {
             vec!["cmd", "/C", "echo %PATH%"]
         } else {
             vec!["/bin/sh", "-c", "echo \"$PATH\""]
@@ -894,7 +898,7 @@ mod tests {
 
         let dir_str = dir.to_string_lossy();
         let overlay = [("PATH", dir_str.as_ref())];
-        let bare_args: Vec<&str> = if cfg!(windows) {
+        let bare_args: Vec<&str> = if crate::platform::host::is_windows() {
             vec!["fbuild_1219_probe", "/C", "echo overlay-marker"]
         } else {
             vec!["fbuild_1219_probe"]
@@ -918,7 +922,7 @@ mod tests {
 
         // Absolute path, no overlay → normal operation is unaffected.
         let probe_str = probe_path.to_string_lossy();
-        let abs_args: Vec<&str> = if cfg!(windows) {
+        let abs_args: Vec<&str> = if crate::platform::host::is_windows() {
             vec![probe_str.as_ref(), "/C", "echo overlay-marker"]
         } else {
             vec![probe_str.as_ref()]
@@ -944,7 +948,7 @@ mod tests {
 
     #[test]
     fn run_command_blocking_works_from_sync_context() {
-        let args = if cfg!(windows) {
+        let args = if crate::platform::host::is_windows() {
             vec!["cmd", "/C", "echo blocking"]
         } else {
             vec!["echo", "blocking"]
@@ -956,7 +960,7 @@ mod tests {
 
     #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
     async fn run_command_blocking_works_from_tokio_worker() {
-        let args = if cfg!(windows) {
+        let args = if crate::platform::host::is_windows() {
             vec!["cmd", "/C", "echo blocking-runtime"]
         } else {
             vec!["echo", "blocking-runtime"]
@@ -977,7 +981,7 @@ mod tests {
             .enable_all()
             .build()
             .expect("test runtime");
-        let args = if cfg!(windows) {
+        let args = if crate::platform::host::is_windows() {
             vec!["cmd", "/C", "echo current-thread-runtime"]
         } else {
             vec!["echo", "current-thread-runtime"]
@@ -1096,7 +1100,7 @@ mod tests {
     #[tokio::test]
     async fn run_captures_stderr() {
         // Verify that stderr is captured independently from stdout.
-        let args = if cfg!(windows) {
+        let args = if crate::platform::host::is_windows() {
             vec!["cmd", "/C", "echo err 1>&2"]
         } else {
             vec!["sh", "-c", "echo err 1>&2"]
@@ -1133,7 +1137,7 @@ mod tests {
         //   * Windows: `ping -n 30 127.0.0.1` waits ~29 s (sends 30
         //     pings 1 s apart) — far longer than our 200 ms cap.
         //   * Unix: `sleep 30`.
-        let args = if cfg!(windows) {
+        let args = if crate::platform::host::is_windows() {
             vec!["ping", "-n", "30", "127.0.0.1"]
         } else {
             vec!["sleep", "30"]
@@ -1150,7 +1154,7 @@ mod tests {
         // Audit-helper API still has to work for the legit unbounded
         // case — verify it returns Ok for a command that finishes
         // promptly.
-        let args = if cfg!(windows) {
+        let args = if crate::platform::host::is_windows() {
             vec!["cmd", "/C", "echo no-timeout"]
         } else {
             vec!["echo", "no-timeout"]
@@ -1164,7 +1168,7 @@ mod tests {
     async fn run_command_with_stdin_pipes_payload() {
         // Round-trip: feed stdin → expect it back on stdout. `cat` on
         // unix, `findstr` on windows (matches everything via /R ".*").
-        let args = if cfg!(windows) {
+        let args = if crate::platform::host::is_windows() {
             vec!["findstr", "/R", ".*"]
         } else {
             vec!["cat"]

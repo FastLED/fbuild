@@ -116,7 +116,7 @@ use std::time::Duration;
 /// Compute the modification time of the running binary (for stale daemon detection).
 /// Returns 0.0 if the mtime cannot be determined.
 fn compute_binary_mtime() -> f64 {
-    std::env::current_exe()
+    fbuild_core::platform::executable::current_image()
         .ok()
         .and_then(|p| p.metadata().ok())
         .and_then(|m| m.modified().ok())

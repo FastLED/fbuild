@@ -463,7 +463,7 @@ async fn compile_one_source(
     } else {
         // On Windows, put ALL flags in a response file to avoid command-line
         // length limits (OS error 206): `[zccache] <compiler> @response.rsp`.
-        let args = if cfg!(windows) {
+        let args = if fbuild_core::platform::host::is_windows() {
             let rsp_path = fbuild_core::response_file::write_response_file(
                 &all_flags,
                 &rsp_dir,
@@ -652,7 +652,7 @@ async fn build_include_flags(include_dirs: &[PathBuf], _temp_dir: &Path) -> Resu
         .map(|d| format!("-I{}", d.display()))
         .collect();
 
-    if cfg!(windows) && flags.len() > 100 {
+    if fbuild_core::platform::host::is_windows() && flags.len() > 100 {
         let rsp_dir = _temp_dir.join("tmp");
         let rsp_path =
             fbuild_core::response_file::write_response_file(&flags, &rsp_dir, "lib_includes")

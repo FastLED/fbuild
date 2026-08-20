@@ -191,15 +191,19 @@ fn all_platform_packages() -> [(&'static str, PlatformPackage); 5] {
 }
 
 fn platform_package() -> (String, Option<String>) {
-    let key = if cfg!(target_os = "windows") {
+    let key = if fbuild_core::platform::host::is_windows() {
         "windows"
-    } else if cfg!(target_os = "macos") {
-        if cfg!(target_arch = "aarch64") {
+    } else if fbuild_core::platform::host::is_macos() {
+        if fbuild_core::platform::host::current().arch()
+            == fbuild_core::platform::host::HostArch::Aarch64
+        {
             "macos-arm64"
         } else {
             "macos-x86_64"
         }
-    } else if cfg!(target_arch = "aarch64") {
+    } else if fbuild_core::platform::host::current().arch()
+        == fbuild_core::platform::host::HostArch::Aarch64
+    {
         "linux-aarch64"
     } else {
         "linux-x86_64"
@@ -239,11 +243,7 @@ fn find_bin_root(install_dir: &Path) -> PathBuf {
 }
 
 fn tool_name(name: &str) -> String {
-    if cfg!(windows) {
-        format!("{name}.exe")
-    } else {
-        name.to_string()
-    }
+    fbuild_core::platform::executable::native_name(name)
 }
 
 fn tool_binary(bin_dir: &Path, name: &str) -> PathBuf {
@@ -265,11 +265,10 @@ mod tests {
     #[test]
     fn test_tool_name_platform() {
         let name = tool_name("xtensa-lx106-elf-gcc");
-        if cfg!(windows) {
-            assert_eq!(name, "xtensa-lx106-elf-gcc.exe");
-        } else {
-            assert_eq!(name, "xtensa-lx106-elf-gcc");
-        }
+        assert_eq!(
+            name,
+            fbuild_core::platform::executable::native_name("xtensa-lx106-elf-gcc")
+        );
     }
 
     #[test]

@@ -107,7 +107,7 @@ pub(super) fn parse_lib_deps(deps_str: &str) -> Vec<String> {
 
 /// Parse a `PATH`-style list of paths from `PLATFORMIO_LIB_EXTRA_DIRS`.
 pub(super) fn parse_path_list(paths_str: &str) -> Vec<String> {
-    let separator = if cfg!(windows) { ';' } else { ':' };
+    let separator = fbuild_core::platform::host::path_list_separator();
     let mut result = Vec::new();
 
     for line in paths_str.lines() {

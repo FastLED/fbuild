@@ -188,15 +188,21 @@ fn all_platform_packages() -> [TeensyArmPlatformPackage; 6] {
 }
 
 fn platform_package() -> TeensyArmPlatformPackage {
-    let key = if cfg!(target_os = "windows") {
+    let key = if fbuild_core::platform::host::is_windows() {
         "windows"
-    } else if cfg!(target_os = "macos") {
+    } else if fbuild_core::platform::host::is_macos() {
         "macos"
-    } else if cfg!(target_arch = "aarch64") {
+    } else if fbuild_core::platform::host::current().arch()
+        == fbuild_core::platform::host::HostArch::Aarch64
+    {
         "linux-aarch64"
-    } else if cfg!(target_arch = "arm") {
+    } else if fbuild_core::platform::host::current().arch()
+        == fbuild_core::platform::host::HostArch::Arm
+    {
         "linux-arm"
-    } else if cfg!(target_arch = "x86") {
+    } else if fbuild_core::platform::host::current().arch()
+        == fbuild_core::platform::host::HostArch::X86
+    {
         "linux-i686"
     } else {
         "linux-x86_64"
@@ -232,11 +238,7 @@ fn find_bin_root(install_dir: &Path) -> PathBuf {
 }
 
 fn tool_name(name: &str) -> String {
-    if cfg!(windows) {
-        format!("{}.exe", name)
-    } else {
-        name.to_string()
-    }
+    fbuild_core::platform::executable::native_name(name)
 }
 
 fn tool_binary(bin_dir: &Path, name: &str) -> PathBuf {
@@ -261,11 +263,10 @@ mod tests {
     #[test]
     fn test_tool_name_platform() {
         let name = tool_name("arm-none-eabi-gcc");
-        if cfg!(windows) {
-            assert_eq!(name, "arm-none-eabi-gcc.exe");
-        } else {
-            assert_eq!(name, "arm-none-eabi-gcc");
-        }
+        assert_eq!(
+            name,
+            fbuild_core::platform::executable::native_name("arm-none-eabi-gcc")
+        );
     }
 
     #[test]

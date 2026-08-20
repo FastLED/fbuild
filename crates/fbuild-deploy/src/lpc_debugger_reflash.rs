@@ -50,9 +50,9 @@ pub const CMSIS_DAP_V1_HEX_NAME: &str = "lpc-link2-cmsis-dap-v1.hex";
 /// `ASSETS_BASE_URL`. Matches the filenames the framework repo PR
 /// (FastLED/framework-arduino-lpc8xx#37) committed.
 pub fn dfu_util_archive_name() -> &'static str {
-    if cfg!(target_os = "windows") {
+    if fbuild_core::platform::host::is_windows() {
         "dfu-util-0.11-windows-x86_64.zip"
-    } else if cfg!(target_os = "macos") {
+    } else if fbuild_core::platform::host::is_macos() {
         "dfu-util-0.11-darwin-x86_64.tar.gz"
     } else {
         // Everything else Linux-shaped. Users on OpenBSD/FreeBSD / other
@@ -116,11 +116,7 @@ fn find_dfu_util_with_override(env_override: Option<std::ffi::OsString>) -> Opti
         }
     }
     let tools = managed_tools_dir()?;
-    let exe = if cfg!(windows) {
-        "dfu-util.exe"
-    } else {
-        "dfu-util"
-    };
+    let exe = fbuild_core::platform::executable::native_name("dfu-util");
     let candidate = tools.join(exe);
     if candidate.is_file() {
         return Some(candidate);
@@ -394,11 +390,9 @@ mod tests {
     #[test]
     fn find_dfu_util_env_var_wins_when_path_is_real() {
         let tmp = tempfile::TempDir::new().unwrap();
-        let fake = tmp.path().join(if cfg!(windows) {
-            "dfu-util.exe"
-        } else {
-            "dfu-util"
-        });
+        let fake = tmp
+            .path()
+            .join(fbuild_core::platform::executable::native_name("dfu-util"));
         std::fs::write(&fake, b"stub").unwrap();
         let got = find_dfu_util_with_override(Some(fake.clone().into_os_string()));
         assert_eq!(got.as_ref().map(|p| p.as_path()), Some(fake.as_path()));

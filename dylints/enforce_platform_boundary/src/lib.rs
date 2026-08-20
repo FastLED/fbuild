@@ -233,6 +233,13 @@ fn record(context: &EarlyContext<'_>, span: Span, kind: Kind, normalized: &str) 
     };
     match classify(&path) {
         Scope::Selector | Scope::Concrete | Scope::OutOfScope => return,
+        Scope::Facade
+            if path == "crates/fbuild-core/src/platform/executable.rs"
+                && kind == Kind::NativeImport
+                && normalized == "std::env::current_exe" =>
+        {
+            return;
+        }
         Scope::Facade | Scope::Ui => {
             emit(context, span, kind, normalized);
             return;
@@ -377,6 +384,15 @@ impl State<'_> {
     }
 
     fn check_path_segments(&self, span: Span, segments: &[String]) {
+        if segments.len() >= 3 && segments[..3] == ["std", "env", "current_exe"] {
+            record(
+                self.context,
+                span,
+                Kind::NativeImport,
+                "std::env::current_exe",
+            );
+            return;
+        }
         if segments.len() >= 4
             && segments[..3] == ["std", "env", "consts"]
             && matches!(segments[3].as_str(), "OS" | "ARCH")

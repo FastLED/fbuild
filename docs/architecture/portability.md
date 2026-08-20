@@ -12,6 +12,14 @@ Host mechanics are distinct from the embedded board/compiler target. A Linux
 host that builds Windows-hosted tool artifacts or firmware for another MCU must
 still use Linux process, filesystem, IPC, and device mechanics.
 
+Shared code reads the current machine through
+`fbuild_core::platform::host::current()`, which returns a `HostPlatform`
+containing `HostOs` and `HostArch`. Path-list separation comes from the same
+value. Executable and command-script spelling uses
+`fbuild_core::platform::executable`; product crates retain their artifact
+tables and embedded-target policy. Raw `cfg!` OS/architecture reads are not
+permitted outside the private platform implementation.
+
 ## Windows (MSYS2/Git Bash)
 
 ### USB-CDC Serial

@@ -44,11 +44,7 @@ fn home_dir() -> Option<PathBuf> {
 /// Honors `FBUILD_DEV_MODE=1` → `~/.fbuild/dev/tools/…` to match the
 /// isolation the rest of `fbuild-paths` applies.
 pub fn managed_lpc21isp_path() -> Option<PathBuf> {
-    let exe = if cfg!(windows) {
-        "lpc21isp.exe"
-    } else {
-        "lpc21isp"
-    };
+    let exe = fbuild_core::platform::executable::native_name("lpc21isp");
     let home = home_dir()?;
     let mode = if std::env::var_os("FBUILD_DEV_MODE").is_some() {
         "dev"
@@ -100,11 +96,8 @@ pub fn find_lpc21isp() -> Option<PathBuf> {
 /// deploy path. Kept as a standalone function so the test module can
 /// assert the exact URLs / paths without shelling out.
 pub(crate) fn lpc21isp_install_hint() -> String {
-    let (tools_dir, exe) = if cfg!(windows) {
-        ("~/.fbuild/prod/tools/", "lpc21isp.exe")
-    } else {
-        ("~/.fbuild/prod/tools/", "lpc21isp")
-    };
+    let tools_dir = "~/.fbuild/prod/tools/";
+    let exe = fbuild_core::platform::executable::native_name("lpc21isp");
     format!(
         "lpc21isp not found on PATH or in any fbuild-managed tools dir.\n\
          \n\
@@ -183,7 +176,7 @@ pub(crate) fn resolve_lpc21isp_baud(
 /// (or ports that already carry the prefix, or non-`COM*` names such as
 /// Linux `/dev/ttyUSB0`) the input is returned unchanged.
 pub(crate) fn normalize_lpc21isp_port(port: &str) -> String {
-    if !cfg!(windows) {
+    if !fbuild_core::platform::host::is_windows() {
         return port.to_string();
     }
     // Already prefixed — nothing to do.
@@ -872,11 +865,9 @@ mod tests {
             .lock()
             .unwrap_or_else(|error| error.into_inner());
         let tmp = tempfile::TempDir::new().unwrap();
-        let fake = tmp.path().join(if cfg!(windows) {
-            "lpc21isp.exe"
-        } else {
-            "lpc21isp"
-        });
+        let fake = tmp
+            .path()
+            .join(fbuild_core::platform::executable::native_name("lpc21isp"));
         std::fs::write(&fake, b"stub").unwrap();
 
         // SAFETY: single-threaded test process.

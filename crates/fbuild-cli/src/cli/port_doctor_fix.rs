@@ -64,7 +64,7 @@ pub fn run_fix(dry_run: bool, assume_yes: bool, no_elevate: bool) -> Result<()> 
     if already_disabled || dry_run {
         return Ok(());
     }
-    if !cfg!(windows) {
+    if !fbuild_core::platform::host::is_windows() {
         crate::output::result("not applicable on this platform");
         return Ok(());
     }

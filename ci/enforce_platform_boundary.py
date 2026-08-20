@@ -25,7 +25,12 @@ ROOT = research.ROOT
 LEDGER = ROOT / "ci/platform_boundary_ledger.tsv"
 DYLINT_BASELINE = ROOT / "dylints/enforce_platform_boundary/src/baseline.txt"
 PLATFORM_ROOT = "crates/fbuild-core/src/platform/"
-CONCRETE_PREFIXES = tuple(PLATFORM_ROOT + host + "/" for host in ("windows", "linux", "macos"))
+CONCRETE_PREFIXES = (
+    *(PLATFORM_ROOT + host + "/" for host in ("windows", "linux", "macos")),
+)
+AUTHORIZED_BOUNDARY_FINDINGS = {
+    (PLATFORM_ROOT + "executable.rs", "native_path", "std::env::current_exe"),
+}
 LEDGER_KINDS = {
     "attr_cfg",
     "cfg_macro",
@@ -76,6 +81,12 @@ def rows_from_findings(findings: list[research.Finding]) -> list[LedgerRow]:
     ordinals: collections.Counter[tuple[str, str, str]] = collections.Counter()
     rows: list[LedgerRow] = []
     for finding in findings:
+        if finding.path.startswith(CONCRETE_PREFIXES) or (
+            finding.path,
+            finding.kind,
+            finding.normalized,
+        ) in AUTHORIZED_BOUNDARY_FINDINGS:
+            continue
         key = (finding.path, finding.kind, finding.normalized)
         ordinal = ordinals[key]
         ordinals[key] += 1
@@ -181,7 +192,9 @@ def scanner_dylint_counts(rows: list[LedgerRow]) -> collections.Counter[tuple[st
                     counts[(row.path, row.kind, identifier)] += 1
         elif row.kind == "native_path":
             normalized = row.normalized
-            if normalized.startswith("std::os::"):
+            if normalized == "std::env::current_exe":
+                key = normalized
+            elif normalized.startswith("std::os::"):
                 parts = normalized.split("::")
                 key = "::".join(parts[:3])
             else:

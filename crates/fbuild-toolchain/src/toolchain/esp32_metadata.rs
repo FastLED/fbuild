@@ -38,15 +38,19 @@ pub struct ResolvedToolchain {
 /// Returns a key matching the platform entries in tools.json:
 /// `"win64"`, `"linux-amd64"`, `"linux-arm64"`, `"macos"`, `"macos-arm64"`
 pub fn detect_platform() -> &'static str {
-    if cfg!(target_os = "windows") {
+    if fbuild_core::platform::host::is_windows() {
         "win64"
-    } else if cfg!(target_os = "macos") {
-        if cfg!(target_arch = "aarch64") {
+    } else if fbuild_core::platform::host::is_macos() {
+        if fbuild_core::platform::host::current().arch()
+            == fbuild_core::platform::host::HostArch::Aarch64
+        {
             "macos-arm64"
         } else {
             "macos"
         }
-    } else if cfg!(target_arch = "aarch64") {
+    } else if fbuild_core::platform::host::current().arch()
+        == fbuild_core::platform::host::HostArch::Aarch64
+    {
         "linux-arm64"
     } else {
         "linux-amd64"

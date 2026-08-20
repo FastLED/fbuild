@@ -8,7 +8,7 @@
 pub async fn find_pio() -> fbuild_core::Result<std::path::PathBuf> {
     // Check PATH. FastLED/fbuild#810: cap `where` / `which` at 5s; they should
     // return instantly, but we don't want a wedged invocation to hang fbuild.
-    let locator = if cfg!(windows) { "where" } else { "which" };
+    let locator = fbuild_core::platform::executable::name("which", "where");
     if let Ok(output) = fbuild_core::subprocess::run_command(
         &[locator, "pio"],
         None,
@@ -33,15 +33,13 @@ pub async fn find_pio() -> fbuild_core::Result<std::path::PathBuf> {
 
     // Check fbuild cache (PlatformIO installed via iso_env)
     let cache = fbuild_paths::get_cache_root().join("platform");
-    let candidates = if cfg!(windows) {
-        vec![
-            cache.join("Scripts").join("pio.exe"),
-            cache.join("Scripts").join("pio"),
-        ]
+    let binary_dir = if fbuild_core::platform::host::is_windows() {
+        cache.join("Scripts")
     } else {
-        vec![cache.join("bin").join("pio")]
+        cache.join("bin")
     };
-    for c in candidates {
+    for name in fbuild_core::platform::executable::path_candidate_names("pio") {
+        let c = binary_dir.join(name);
         if c.exists() {
             return Ok(c);
         }

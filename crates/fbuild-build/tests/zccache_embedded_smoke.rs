@@ -18,21 +18,25 @@ fn find_c_compiler() -> NormalizedPath {
             .find(|candidate| candidate.is_file())
             .map(NormalizedPath::from)
     };
-    if cfg!(windows) {
-        if let Some(candidate) = on_path("clang.exe") {
-            return candidate;
+    if fbuild_core::platform::host::is_windows() {
+        for name in fbuild_core::platform::executable::path_candidate_names("clang") {
+            if let Some(candidate) = on_path(&name) {
+                return candidate;
+            }
         }
         if let Some(program_files) = std::env::var_os("ProgramFiles") {
             let candidate = NormalizedPath::new(std::path::Path::new(&program_files))
                 .join("LLVM")
                 .join("bin")
-                .join("clang.exe");
+                .join(fbuild_core::platform::executable::native_name("clang"));
             if candidate.is_file() {
                 return candidate;
             }
         }
-        if let Some(candidate) = on_path("gcc.exe") {
-            return candidate;
+        for name in fbuild_core::platform::executable::path_candidate_names("gcc") {
+            if let Some(candidate) = on_path(&name) {
+                return candidate;
+            }
         }
         panic!("clang.exe or gcc.exe must be installed for this smoke test");
     }
@@ -89,11 +93,13 @@ async fn embedded_compilation_cold_miss_then_warm_hit() {
     let tmp = tempfile::TempDir::new().expect("tempdir");
     let cache_root = tmp.path().join("zccache");
     let source = tmp.path().join("smoke.c");
-    let object = tmp.path().join(if cfg!(windows) {
-        "smoke.obj"
-    } else {
-        "smoke.o"
-    });
+    let object = tmp
+        .path()
+        .join(if fbuild_core::platform::host::is_windows() {
+            "smoke.obj"
+        } else {
+            "smoke.o"
+        });
     std::fs::write(&source, "int smoke(void) { return 42; }\n").expect("write source");
 
     let svc = FbuildZccacheService::start_in(cache_root)

@@ -6,7 +6,7 @@
 use std::path::{Path, PathBuf};
 
 pub(crate) async fn find_node() -> fbuild_core::Result<PathBuf> {
-    let node = if cfg!(windows) { "node.exe" } else { "node" };
+    let node = fbuild_core::platform::executable::name("node", "node.exe");
     // Route through fbuild-core's `run_command` so the probe spawn is
     // captured by the daemon's containment group (issue #32). The probe
     // is short-lived (`node --version`) but a missing binary should
@@ -162,7 +162,7 @@ pub(crate) async fn ensure_avr8js_npm_in(
         ))
     })?;
 
-    let npm = if cfg!(windows) { "npm.cmd" } else { "npm" };
+    let npm = fbuild_core::platform::executable::name("npm", "npm.cmd");
     // Route through `run_command` (which spawns via the daemon's
     // containment group) so an `npm install` killed mid-flight doesn't
     // leak node processes after the daemon dies. See FastLED/fbuild#32.
