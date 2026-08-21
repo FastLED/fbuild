@@ -91,6 +91,11 @@ FBUILD_NATIVE_BOARDS = frozenset(
         "seeed_xiao_mg24",
         "nice_nano",
         "nrfmicro",
+        # Teknic publishes ClearCore through its Arduino Board Manager index,
+        # not PlatformIO. fbuild pins that official vendor package directly
+        # so the SAME53 compile target can be validated without a fake SAMD51
+        # board definition (FastLED/FastLED#3839).
+        "clearcore",
     }
 )
 

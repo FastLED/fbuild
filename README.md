@@ -89,13 +89,14 @@ that fbuild actively protects in CI.
 [![Build Nucleo F439ZI](https://github.com/fastled/fbuild/actions/workflows/build-nucleo_f439zi.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-nucleo_f439zi.yml)
 [![Build Arduino Giga R1](https://github.com/fastled/fbuild/actions/workflows/build-giga-r1.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-giga-r1.yml)
 
-### SAM / SAMD
+### SAM / SAMD / SAME
 
 [![Build Arduino Due](https://github.com/fastled/fbuild/actions/workflows/build-sam3x8e_due.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-sam3x8e_due.yml)
 [![Build SAMD21](https://github.com/fastled/fbuild/actions/workflows/build-samd21.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-samd21.yml)
 [![Build Arduino Zero](https://github.com/fastled/fbuild/actions/workflows/build-samd21_zero.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-samd21_zero.yml)
 [![Build SAMD51J](https://github.com/fastled/fbuild/actions/workflows/build-samd51j.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-samd51j.yml)
 [![Build SAMD51P](https://github.com/fastled/fbuild/actions/workflows/build-samd51p.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-samd51p.yml)
+[![Build Teknic ClearCore SAME53](https://github.com/fastled/fbuild/actions/workflows/build-clearcore.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-clearcore.yml)
 
 ### RP2040 / RP2350
 

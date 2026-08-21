@@ -12,6 +12,8 @@ Arduino library and framework dependency management: spec parsing, download, com
 - **`library_manager.rs`** -- Top-level orchestrator: spec parsing, download, discovery, compile, archive
 - **`registry.rs`** -- PlatformIO registry API client with semver version constraint resolution
 - **`arduino_core.rs`** -- Arduino AVR Core framework package (ArduinoCore-avr from GitHub)
+- **`samd_core.rs`** -- Adafruit ArduinoCore-samd framework package
+- **`clearcore_core.rs`** -- Teknic ClearCore Arduino package for ATSAME53
 - **`attiny_core.rs`** -- ATTinyCore framework package (SpenceKonde/ATTinyCore)
 - **`avr_framework.rs`** -- Data-driven AVR framework resolver using `avr_frameworks.json`
 - **`esp32_framework.rs`** -- ESP32 Arduino framework + ESP-IDF precompiled libraries

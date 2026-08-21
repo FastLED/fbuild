@@ -1,9 +1,10 @@
 //! SAM/SAMD build orchestrator â€” wires together config, packages, compiler, linker.
 //!
-//! Handles both SAM (Due/SAM3X) and SAMD (SAMD21/SAMD51) boards under the
+//! Handles SAM (Due/SAM3X), SAMD (SAMD21/SAMD51), and SAME5x boards under the
 //! `atmelsam` platform. Selects the correct Arduino core:
 //! - SAM3X â†’ ArduinoCore-sam
 //! - SAMD21/51 â†’ ArduinoCore-samd (Adafruit fork)
+//! - Teknic ClearCore/SAME53 â†’ official ClearCore Arduino package
 //!
 //! Build phases:
 //! 1. Parse platformio.ini
@@ -33,10 +34,31 @@ use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 use super::sam_compiler::SamCompiler;
 use super::sam_linker::SamLinker;
 
-/// Returns true if the MCU is a SAMD (not classic SAM3X).
+/// Returns true for modern SAM D/E MCUs (not classic SAM3X).
 fn is_samd_mcu(mcu: &str) -> bool {
     let m = mcu.to_lowercase();
-    m.starts_with("samd21") || m.starts_with("samd51")
+    m.starts_with("samd21")
+        || m.starts_with("samd51")
+        || m.starts_with("same51")
+        || m.starts_with("same53")
+        || m.starts_with("same54")
+}
+
+fn is_clearcore_board(board: &fbuild_config::BoardConfig) -> bool {
+    board.board_id.eq_ignore_ascii_case("clearcore")
+        || board.variant.eq_ignore_ascii_case("clearcore")
+}
+
+fn is_clearcore_core_source(path: &Path) -> bool {
+    // ClearCore's Arduino API supplies ltoa/ultoa definitions from itoa.h when
+    // the ARM C library already has itoa/utoa. Compiling api/itoa.c as a
+    // separate recursive core source creates duplicate ltoa/ultoa symbols.
+    !(path.file_name().and_then(|name| name.to_str()) == Some("itoa.c")
+        && path
+            .parent()
+            .and_then(Path::file_name)
+            .and_then(|name| name.to_str())
+            == Some("api"))
 }
 
 /// SAM platform build orchestrator.
@@ -63,6 +85,16 @@ struct SamFingerprintMetadata {
     max_ram: Option<u64>,
 }
 
+struct SamCoreInstall {
+    framework_dir: PathBuf,
+    core_dir: PathBuf,
+    variant_dir: PathBuf,
+    linker_script: PathBuf,
+    system_includes: Vec<PathBuf>,
+    library_dirs: Vec<PathBuf>,
+    libraries: Vec<String>,
+}
+
 fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
     match profile {
         fbuild_core::BuildProfile::Release => "release",
@@ -82,13 +114,25 @@ impl BuildOrchestrator for SamOrchestrator {
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
         let mut ctx = pipeline::BuildContext::new(params).await?;
+        let clearcore = is_clearcore_board(&ctx.board);
 
         // 3. Ensure ARM GCC toolchain
-        let toolchain = fbuild_packages::toolchain::ArmToolchain::new(&params.project_dir);
-        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
+        // Teknic's precompiled ClearCore/LwIP libraries are built with GCC 7.
+        // fbuild's GCC 9 package is the closest supported toolchain and avoids
+        // needlessly crossing the much larger GCC 15 ABI/version gap.
+        use fbuild_packages::Toolchain;
+        let toolchain: Box<dyn Toolchain> = if clearcore {
+            Box::new(fbuild_packages::toolchain::ArmGcc8Toolchain::new(
+                &params.project_dir,
+            ))
+        } else {
+            Box::new(fbuild_packages::toolchain::ArmToolchain::new(
+                &params.project_dir,
+            ))
+        };
+        let toolchain_dir = toolchain.ensure_installed().await?;
         tracing::info!("arm-none-eabi toolchain at {}", toolchain_dir.display());
 
-        use fbuild_packages::Toolchain;
         pipeline::log_toolchain_version(
             &toolchain.get_gcc_path(),
             "arm-none-eabi-gcc",
@@ -120,12 +164,29 @@ impl BuildOrchestrator for SamOrchestrator {
             .and_then(|env| {
                 crate::package_override::resolve_override(env, "framework-arduino-samd-adafruit")
             });
-        let (framework_dir, core_dir, variant_dir, linker_script_path, system_includes) =
-            if is_samd_mcu(&ctx.board.mcu) {
-                install_samd_core(params, &ctx.board.core, &ctx.board.variant, __samd_ovr).await?
-            } else {
-                install_sam_core(params, &ctx.board.core, &ctx.board.variant, __sam_ovr).await?
-            };
+        let __clearcore_ovr = ctx
+            .config
+            .get_env_config(&params.env_name)
+            .ok()
+            .and_then(|env| {
+                crate::package_override::resolve_override(env, "framework-arduino-sam-clearcore")
+            });
+        let SamCoreInstall {
+            framework_dir,
+            core_dir,
+            variant_dir,
+            linker_script: linker_script_path,
+            system_includes,
+            library_dirs,
+            libraries,
+        } = if clearcore {
+            install_clearcore_core(params, &ctx.board.core, &ctx.board.variant, __clearcore_ovr)
+                .await?
+        } else if is_samd_mcu(&ctx.board.mcu) {
+            install_samd_core(params, &ctx.board.core, &ctx.board.variant, __samd_ovr).await?
+        } else {
+            install_sam_core(params, &ctx.board.core, &ctx.board.variant, __sam_ovr).await?
+        };
 
         let build_dir = &ctx.build_dir;
         let metadata_hash = stable_hash_json(&SamFingerprintMetadata {
@@ -185,11 +246,16 @@ impl BuildOrchestrator for SamOrchestrator {
 
         // 5. Scan sources
         let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
-        let sources = scanner.scan_all_filtered(
+        let mut sources = scanner.scan_all_filtered(
             Some(&core_dir),
             Some(&variant_dir),
             ctx.source_filter.as_deref(),
         )?;
+        if clearcore {
+            sources
+                .core_sources
+                .retain(|path| is_clearcore_core_source(path));
+        }
 
         tracing::info!(
             "sources: {} sketch, {} core, {} variant",
@@ -218,13 +284,24 @@ impl BuildOrchestrator for SamOrchestrator {
             defines.insert("USB_PID".to_string(), pid.clone());
         }
         if is_samd_mcu(&ctx.board.mcu) {
-            if mcu_upper.starts_with("SAMD51") {
-                defines.insert("__SAMD51__".to_string(), "1".to_string());
+            if mcu_upper.starts_with("SAMD51") || mcu_upper.starts_with("SAME5") {
+                if mcu_upper.starts_with("SAMD51") {
+                    defines.insert("__SAMD51__".to_string(), "1".to_string());
+                }
                 defines.insert("__FPU_PRESENT".to_string(), "1".to_string());
                 defines.insert("ARM_MATH_CM4".to_string(), "1".to_string());
             } else {
                 defines.insert("ARM_MATH_CM0PLUS".to_string(), "1".to_string());
             }
+        }
+        if clearcore {
+            defines.insert("__CLEARCORE__".to_string(), "1".to_string());
+            defines.insert("USB_CONFIG_POWER".to_string(), "0".to_string());
+            defines.insert("__ARM_FEATURE_DSP".to_string(), "1".to_string());
+            defines.insert(
+                "CPPUTEST_USE_MEM_LEAK_DETECTION".to_string(),
+                "0".to_string(),
+            );
         }
 
         let mut include_dirs = ctx.board.get_include_paths(&framework_dir);
@@ -302,13 +379,8 @@ impl BuildOrchestrator for SamOrchestrator {
             ctx.board.max_ram,
             params.verbose,
         );
-        // Add variant directory as linker search path for system libraries
-        // (e.g. libsam_sam3x8e_gcc_rel.a for Due)
-        linker.add_lib_dirs(vec![variant_dir]);
-        if !is_samd_mcu(&ctx.board.mcu) {
-            // Due needs the pre-built libsam system library
-            linker.add_libs(vec!["sam_sam3x8e_gcc_rel".to_string()]);
-        }
+        linker.add_lib_dirs(library_dirs);
+        linker.add_libs(libraries);
 
         // 8. Build LibraryBuildEnv for project-as-library compilation
         let gcc_path = toolchain.get_gcc_path();
@@ -367,14 +439,12 @@ impl BuildOrchestrator for SamOrchestrator {
 }
 
 /// Install ArduinoCore-sam for classic SAM3X boards (Due).
-///
-/// Returns (framework_dir, core_dir, variant_dir, linker_script, system_includes).
 async fn install_sam_core(
     params: &BuildParams,
     core_name: &str,
     variant_name: &str,
     ovr: Option<fbuild_config::PackageOverride>,
-) -> Result<(PathBuf, PathBuf, PathBuf, PathBuf, Vec<PathBuf>)> {
+) -> Result<SamCoreInstall> {
     let framework = match ovr {
         Some(o) => fbuild_packages::library::SamCores::with_override(&params.project_dir, o),
         None => fbuild_packages::library::SamCores::new(&params.project_dir),
@@ -396,24 +466,24 @@ async fn install_sam_core(
         includes.push(system_dir.join("CMSIS").join("Device").join("ATMEL"));
     }
 
-    Ok((
+    Ok(SamCoreInstall {
         framework_dir,
         core_dir,
+        library_dirs: vec![variant_dir.clone()],
         variant_dir,
         linker_script,
-        includes,
-    ))
+        system_includes: includes,
+        libraries: vec!["sam_sam3x8e_gcc_rel".to_string()],
+    })
 }
 
 /// Install Adafruit ArduinoCore-samd for SAMD21/SAMD51 boards.
-///
-/// Returns (framework_dir, core_dir, variant_dir, linker_script, system_includes).
 async fn install_samd_core(
     params: &BuildParams,
     core_name: &str,
     variant_name: &str,
     override_: Option<fbuild_config::PackageOverride>,
-) -> Result<(PathBuf, PathBuf, PathBuf, PathBuf, Vec<PathBuf>)> {
+) -> Result<SamCoreInstall> {
     let framework = match override_ {
         Some(o) => fbuild_packages::library::SamdCores::with_override(&params.project_dir, o),
         None => fbuild_packages::library::SamdCores::new(&params.project_dir),
@@ -456,13 +526,64 @@ async fn install_samd_core(
     // hit during search, matching what PlatformIO's atmelsam builder does.
     includes.insert(0, core_dir.clone());
 
-    Ok((
+    Ok(SamCoreInstall {
+        framework_dir,
+        core_dir,
+        library_dirs: vec![variant_dir.clone()],
+        variant_dir,
+        linker_script,
+        system_includes: includes,
+        libraries: Vec::new(),
+    })
+}
+
+/// Install Teknic's official ClearCore Arduino package for ATSAME53.
+///
+/// Unlike a normal ArduinoCore-samd package, ClearCore ships its own SAME53
+/// device headers and precompiled ClearCore/LwIP libraries. Generic CMSIS
+/// supplies the Cortex-M4 core headers and DSP library.
+async fn install_clearcore_core(
+    params: &BuildParams,
+    core_name: &str,
+    variant_name: &str,
+    override_: Option<fbuild_config::PackageOverride>,
+) -> Result<SamCoreInstall> {
+    let framework = match override_ {
+        Some(o) => fbuild_packages::library::ClearCoreCores::with_override(&params.project_dir, o),
+        None => fbuild_packages::library::ClearCoreCores::new(&params.project_dir),
+    };
+    let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
+    tracing::info!("ClearCore Arduino core at {}", framework_dir.display());
+
+    let core_dir = framework.get_core_dir(core_name);
+    let variant_dir = framework.get_variant_dir(variant_name);
+    let linker_script = framework.get_linker_script(variant_name);
+
+    let cmsis = fbuild_packages::library::CmsisFramework::new(&params.project_dir);
+    let cmsis_dir = fbuild_packages::Package::ensure_installed(&cmsis).await?;
+    tracing::info!("CMSIS at {}", cmsis_dir.display());
+
+    let mut includes = framework.get_system_include_dirs(&core_dir, &variant_dir);
+    includes.push(cmsis.get_core_include_dir());
+    includes.push(cmsis.get_dsp_include_dir());
+
+    let mut library_dirs = framework.get_library_dirs();
+    library_dirs.push(variant_dir.clone());
+    library_dirs.push(cmsis.get_gcc_library_dir());
+
+    Ok(SamCoreInstall {
         framework_dir,
         core_dir,
         variant_dir,
         linker_script,
-        includes,
-    ))
+        system_includes: includes,
+        library_dirs,
+        libraries: vec![
+            "ClearCore".to_string(),
+            "LwIP".to_string(),
+            "arm_cortexM4lf_math".to_string(),
+        ],
+    })
 }
 
 /// Create a SAM orchestrator (convenience for get_orchestrator dispatch).
@@ -483,6 +604,23 @@ mod tests {
     fn test_sam_orchestrator_platform() {
         let orch = SamOrchestrator;
         assert_eq!(orch.platform(), Platform::AtmelSam);
+    }
+
+    #[test]
+    fn same5x_uses_modern_sam_core() {
+        assert!(is_samd_mcu("same51j19a"));
+        assert!(is_samd_mcu("same53n19a"));
+    }
+
+    #[test]
+    fn clearcore_skips_duplicate_itoa_implementation() {
+        assert!(!is_clearcore_core_source(Path::new(
+            "cores/arduino/api/itoa.c"
+        )));
+        assert!(is_clearcore_core_source(Path::new(
+            "cores/arduino/api/String.cpp"
+        )));
+        assert!(is_clearcore_core_source(Path::new("project/itoa.c")));
     }
 
     #[test]

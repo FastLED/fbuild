@@ -2,7 +2,7 @@
 
 PlatformIO board definitions — one JSON file per board.
 
-- `manifest.json` — sorted list of all 1609 board IDs
+- `manifest.json` — sorted list of all 1636 board IDs
 - `json/{board_id}.json` — individual board configuration
 
 ## Enrichment

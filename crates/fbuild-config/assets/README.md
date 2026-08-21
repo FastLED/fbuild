@@ -4,7 +4,7 @@ Embedded data files for fbuild-config.
 
 ## boards/
 
-Board database (1609 boards) from PlatformIO registry, matching the Python fbuild structure.
+Board database (1636 boards) from PlatformIO registry and vendor sources.
 
 - `boards/manifest.json` — sorted list of all board IDs
 - `boards/json/{board_id}.json` — one file per board with config (name, MCU, CPU frequency, RAM, ROM, platform, etc.)
