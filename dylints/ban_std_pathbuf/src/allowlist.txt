@@ -168,6 +168,7 @@ crates/fbuild-library/src/library/arduino_mbed_core.rs
 crates/fbuild-library/src/library/attiny_core.rs
 crates/fbuild-library/src/library/avr_framework.rs
 crates/fbuild-library/src/library/ch32v_core.rs
+crates/fbuild-library/src/library/clearcore_core.rs
 crates/fbuild-library/src/library/cmsis_atmel.rs
 crates/fbuild-library/src/library/cmsis_framework.rs
 crates/fbuild-library/src/library/esp32_framework/fs_utils.rs
