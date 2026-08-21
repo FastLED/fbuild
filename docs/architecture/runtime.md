@@ -35,6 +35,12 @@ These are OS-released file locks, never manually broken or deleted, and they
 never gate zccache object reads/writes — those stay in-memory-synchronized
 inside zccache itself.
 
+The running-process broker's private local endpoint is bound through
+`fbuild_core::platform::ipc`: a namespaced pipe on Windows and an owner-only
+local socket on Unix. That boundary also supplies peer process facts and daemon
+TCP readiness/listener mechanics; broker frames, HTTP/protobuf payloads, and
+startup retry/yield policy remain host-neutral daemon concerns.
+
 ## Error Recovery
 
 - **Daemon crash**: CLI detects connection failure, restarts daemon automatically

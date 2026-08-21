@@ -4,6 +4,12 @@ use std::os::fd::AsFd;
 use crate::path::NormalizedPath;
 use crate::platform::process::{DetachedEnvironment, Termination};
 
+pub(crate) fn register_daemon_shutdown_handler(
+    _shutdown_tx: tokio::sync::watch::Sender<bool>,
+) -> std::io::Result<()> {
+    Ok(())
+}
+
 pub(crate) fn configure_tokio_owner_death(
     command: &mut tokio::process::Command,
 ) -> std::io::Result<()> {

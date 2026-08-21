@@ -131,6 +131,28 @@ class PlatformBoundaryResearchTests(unittest.TestCase):
             [("process", "host_mechanic"), ("fs", "host_mechanic")],
         )
 
+    def test_core_ipc_dependencies_have_exact_ownership(self) -> None:
+        path = "crates/fbuild-core/\x43argo.toml"
+        for dependency in ("interprocess", "socket2"):
+            with self.subTest(dependency=dependency):
+                self.assertEqual(
+                    platform_boundary_research.classify(
+                        path, "native_dependency", dependency, ""
+                    ),
+                    ("ipc", "host_mechanic"),
+                )
+
+    def test_selected_ipc_implementation_has_exact_ownership(self) -> None:
+        self.assertEqual(
+            platform_boundary_research.classify(
+                "crates/fbuild-core/src/platform/windows/ipc.rs",
+                "native_path",
+                "socket2::",
+                "",
+            ),
+            ("ipc", "host_mechanic"),
+        )
+
     def test_mixed_qemu_permissions_are_migrated_but_context_stays_classified(self) -> None:
         path = platform_boundary_research.ROOT / "crates/fbuild-toolchain/src/toolchain/esp_qemu.rs"
         findings = platform_boundary_research.scan_rust(path, platform_boundary_research.ROOT)

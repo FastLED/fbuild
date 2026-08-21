@@ -218,12 +218,53 @@ Target-specific native ownership currently exists in:
 - `fbuild-core`: Unix `libc` and Windows `windows-sys`, confined to selected filesystem implementations;
 - `fbuild-cli`: Windows `windows-sys`;
 - `fbuild-serial`: Windows `windows-sys`;
-- `fbuild-daemon`: cross-platform `interprocess`.
+- `fbuild-core`: cross-platform `interprocess` and `socket2`, confined to
+  selected IPC implementations.
 
 Phase 2's manifest checker must freeze exact occurrences. Later capability
 phases move native dependency ownership into `fbuild-core`'s private concrete
 platform implementation and remove caller target tables when their final use is
 migrated.
+
+## Phase-6 IPC and daemon-lifecycle contraction
+
+Phase 6 moved fbuild-owned local endpoint bind/connect/accept, peer facts,
+owner-only endpoint creation, TCP listener construction/readiness, and the
+Windows console-close shutdown bridge behind `platform::ipc` and
+`platform::process`. Broker framing and routing, daemon bind retry/yield policy,
+and HTTP/protobuf behavior remain with `fbuild-daemon`.
+
+The exact enforcement ledger fell from **107 to 94 rows**, deleting all 13
+migrated daemon IPC/lifecycle occurrences. Its current shape is:
+
+| Kind | Rows |
+| --- | ---: |
+| `attr_cfg` | 74 |
+| `native_path` | 16 |
+| `native_dependency` | 2 |
+| `target_dependency_table` | 2 |
+| `cfg_macro` | 0 |
+| `compile_host_fact` | 0 |
+
+| Classification | Rows |
+| --- | ---: |
+| Host mechanic | 91 |
+| Host artifact policy | 3 |
+
+| Capability | Rows |
+| --- | ---: |
+| `device` | 62 |
+| `host` | 15 |
+| `host_executable` | 11 |
+| `process` | 6 |
+| `ipc` | 0 |
+| `fs` | 0 |
+
+The normalized Dylint projection is 92 rows. The host-independent research
+inventory contains 142 rows: 94 enforced caller occurrences plus 48 exact
+authorized facade/private-implementation occurrences. Eighteen authorized
+occurrences belong to the selected IPC implementation and its two native
+dependencies.
 
 ## Classification limits
 

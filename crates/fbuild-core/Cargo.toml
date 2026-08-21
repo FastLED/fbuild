@@ -42,6 +42,10 @@ fs2 = { workspace = true }
 # Stable cross-platform file identity handles; construction remains confined
 # to the selected filesystem implementation.
 same-file = { workspace = true }
+# Local endpoint transport and native TCP listener construction are confined
+# to the selected `platform::ipc` implementations.
+interprocess = { workspace = true }
+socket2 = { workspace = true }
 
 [target.'cfg(unix)'.dependencies]
 # Selected Unix filesystem mechanics query the exact mount containing a path.
@@ -51,6 +55,8 @@ libc = { workspace = true }
 # Selected Windows filesystem mechanics: removable-volume facts and retiring
 # a kernel-blocked output handle after its watchdog expires.
 windows-sys = { version = "0.52", features = ["Win32_Foundation", "Win32_Storage_FileSystem", "Win32_System_IO"] }
+# Selected Windows IPC creates a protected owner-only pipe descriptor.
+widestring = { workspace = true }
 
 [dev-dependencies]
 tempfile = { workspace = true }

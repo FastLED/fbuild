@@ -52,6 +52,7 @@ const NATIVE_ROOTS: &[&str] = &[
     "mach2",
     "nix",
     "portable_pty",
+    "socket2",
     "winapi",
     "windows",
     "windows_sys",

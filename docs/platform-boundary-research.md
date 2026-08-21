@@ -226,3 +226,23 @@ occurrences; it contains zero filesystem-capability rows. The normalized
 Dylint projection contracted from 160 to 103. The independent research
 inventory contracted from 171 to 137 rows, including ten authorized native
 filesystem implementation or dependency occurrences.
+
+## Phase 6: daemon IPC and lifecycle
+
+`platform::ipc` now owns fbuild local-endpoint listener/connect/accept and peer
+facts, owner-private Unix endpoint creation, daemon TCP listener socket policy,
+and readiness probes. The Windows console-close bridge is selected through
+`platform::process`. Broker framing/routing, bind retry and spawn-race yield
+policy, and HTTP/protobuf compatibility remain unchanged in `fbuild-daemon`.
+
+RED characterization began with an empty IPC facade while the daemon directly
+selected Unix sockets versus Windows named pipes, configured native TCP socket
+options, and registered a Windows console handler. The focused facade tests now
+exercise local endpoint round trips, peer PID facts, and live-versus-free TCP
+readiness through the selected implementation.
+
+The exact ledger contracted from **107 to 94 rows**, deleting all 13 migrated
+daemon occurrences and leaving zero IPC-capability rows. The normalized Dylint
+projection contracted from 103 to 92. The independent research inventory moved
+from 137 to 142 rows: 94 enforced caller occurrences plus 48 authorized boundary
+occurrences, including 18 selected IPC implementation/dependency/test occurrences.

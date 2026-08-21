@@ -69,6 +69,18 @@ AUTHORIZED_BOUNDARY_FINDINGS.update(
         ),
     }
 )
+AUTHORIZED_BOUNDARY_FINDINGS.update(
+    {
+        (
+            "crates/fbuild-core/\x43argo.toml",
+            "native_dependency",
+            dependency,
+            "ipc",
+            "host_mechanic",
+        )
+        for dependency in ("interprocess", "socket2")
+    }
+)
 LEDGER_KINDS = {
     "attr_cfg",
     "cfg_macro",
@@ -81,14 +93,8 @@ LEDGER_KINDS = {
 # Pre-expansion rustc visits exactly one of these mutually exclusive cfg
 # bodies on any host, while the whole-tree scanner intentionally inventories
 # both. Keep this projection adjustment explicit and occurrence-specific.
-DYLINT_HOST_EXCLUSIVE_ADJUSTMENTS = collections.Counter(
-    {
-        (
-            "crates/fbuild-daemon/src/broker/backend.rs",
-            "native_import",
-            "interprocess",
-        ): 1,
-    }
+DYLINT_HOST_EXCLUSIVE_ADJUSTMENTS: collections.Counter[tuple[str, str, str]] = (
+    collections.Counter()
 )
 
 

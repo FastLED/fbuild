@@ -37,6 +37,7 @@ NATIVE_ROOTS = {
     "mach2",
     "nix",
     "portable_pty",
+    "socket2",
     "winapi",
     "windows",
     "windows_sys",
@@ -51,7 +52,7 @@ NATIVE_PATHS = (
         r"\bstd\s*::\s*os\s*::\s*(?:windows|unix|linux|macos)\b"
         r"(?:\s*::\s*[A-Za-z_][A-Za-z0-9_]*)*"
     ),
-    re.compile(r"\b(?:windows_sys|winapi|libc|mach2|nix|portable_pty)\s*::"),
+    re.compile(r"\b(?:windows_sys|winapi|libc|mach2|nix|portable_pty|socket2)\s*::"),
     re.compile(r"\bwindows\s*::\s*Win32\b"),
     re.compile(r"\binterprocess\s*::\s*os\s*::\s*(?:windows|unix)\b"),
     re.compile(r"\binterprocess\s*::\s*local_socket\b"),
@@ -59,7 +60,7 @@ NATIVE_PATHS = (
     re.compile(r"\bwindows\s*::"),
 )
 SINGLE_NATIVE_USE = re.compile(
-    r"\buse\s+(interprocess|libc|mach2|nix|portable_pty|winapi|windows|windows_sys)"
+    r"\buse\s+(interprocess|libc|mach2|nix|portable_pty|socket2|winapi|windows|windows_sys)"
     r"\s*(?:as\s+[A-Za-z_][A-Za-z0-9_]*\s*)?;"
 )
 COMPILE_HOST_CONST = re.compile(r"\bstd\s*::\s*env\s*::\s*consts\s*::\s*(?:OS|ARCH)\b")
@@ -210,6 +211,8 @@ def enclosing_function(text: str, offset: int) -> str:
 
 def classify(path: str, kind: str, normalized: str = "", context: str = "") -> tuple[str, str]:
     """Assign the phase-1 owner class; phase 2 validates this per occurrence."""
+    if path.startswith("crates/fbuild-core/src/platform/") and path.endswith("/ipc.rs"):
+        return "ipc", "host_mechanic"
     if path == "crates/fbuild-core/\x43argo.toml":
         unix_table = "[target.'cfg(unix)'.dependencies]"
         windows_table = "[target.'cfg(windows)'.dependencies]"
@@ -220,6 +223,8 @@ def classify(path: str, kind: str, normalized: str = "", context: str = "") -> t
             ("windows-sys", windows_table),
         }:
             return "fs", "host_mechanic"
+        if kind == "native_dependency" and normalized in {"interprocess", "socket2"}:
+            return "ipc", "host_mechanic"
     if kind in {"native_import", "native_path", "native_dependency"}:
         if normalized == "std::env::current_exe":
             return "host_executable", "host_mechanic"

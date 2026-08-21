@@ -17,3 +17,9 @@ link/reparse classification, volume facts, native error classification, shared
 destination opening, atomic replacement, and blocked-I/O retirement. Cache
 sizing, archive traversal, authorization, locking, diagnostics, and retry policy
 remain with their product owners.
+
+`ipc` owns fbuild local-endpoint bind/connect/accept and peer facts, owner-only
+Unix endpoint creation, TCP listener socket policy, and endpoint readiness
+probing. Broker framing/routing, daemon retry/yield policy, and HTTP/protobuf
+compatibility remain with the daemon. Additional native shutdown notifications
+route through `process` into the daemon's neutral shutdown channel.

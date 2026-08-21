@@ -8,7 +8,7 @@
 use std::io::{Read, Write};
 use std::sync::Arc;
 
-use interprocess::local_socket::prelude::*;
+use fbuild_core::platform::ipc::LocalListener;
 use prost::Message;
 use running_process::broker::backend_lifecycle::DaemonProcess;
 use running_process::broker::backend_lifecycle::probe::{
@@ -58,7 +58,7 @@ fn serve_backend_endpoint(
     ctx: Arc<DaemonContext>,
 ) -> Result<(), BackendEndpointError> {
     let daemon = DaemonProcess::current_process(endpoint.clone(), Some(30))?;
-    let listener = bind_local_socket(&endpoint.path)?;
+    let listener = LocalListener::bind(&endpoint.path)?;
     tracing::info!("serving running-process backend endpoint {}", endpoint.path);
 
     for stream in listener.incoming() {
@@ -183,26 +183,6 @@ fn write_frame_bytes<W: Write>(writer: &mut W, frame: &Frame) -> Result<(), Back
     frame.encode(&mut body)?;
     write_frame(writer, &body)?;
     Ok(())
-}
-
-fn bind_local_socket(path: &str) -> Result<interprocess::local_socket::Listener, std::io::Error> {
-    #[cfg(unix)]
-    {
-        if let Some(parent) = std::path::Path::new(path).parent() {
-            std::fs::create_dir_all(parent)?;
-        }
-        let _ = std::fs::remove_file(path);
-        use interprocess::local_socket::{GenericFilePath, ListenerOptions, ToFsName};
-        let name = path.to_fs_name::<GenericFilePath>()?;
-        ListenerOptions::new().name(name).create_sync()
-    }
-
-    #[cfg(windows)]
-    {
-        use interprocess::local_socket::{GenericNamespaced, ListenerOptions, ToNsName};
-        let name = path.to_ns_name::<GenericNamespaced>()?;
-        ListenerOptions::new().name(name).create_sync()
-    }
 }
 
 #[derive(Debug, thiserror::Error)]

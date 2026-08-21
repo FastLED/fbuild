@@ -16,6 +16,39 @@ unsafe impl Send for JobHandle {}
 unsafe impl Sync for JobHandle {}
 
 static TOKIO_JOB: OnceLock<JobHandle> = OnceLock::new();
+static SHUTDOWN_TX: OnceLock<tokio::sync::watch::Sender<bool>> = OnceLock::new();
+
+pub(crate) fn register_daemon_shutdown_handler(
+    shutdown_tx: tokio::sync::watch::Sender<bool>,
+) -> std::io::Result<()> {
+    let _ = SHUTDOWN_TX.set(shutdown_tx);
+    // SAFETY: the callback has the required system ABI and process lifetime.
+    let registered = unsafe { SetConsoleCtrlHandler(Some(console_ctrl_handler), 1) };
+    if registered == 0 {
+        Err(std::io::Error::last_os_error())
+    } else {
+        Ok(())
+    }
+}
+
+unsafe extern "system" fn console_ctrl_handler(control_type: u32) -> i32 {
+    if is_shutdown_control_event(control_type) {
+        if let Some(shutdown_tx) = SHUTDOWN_TX.get() {
+            let _ = shutdown_tx.send(true);
+            // Windows gives close handlers about five seconds and shutdown
+            // handlers longer. Hold the native callback while the neutral
+            // daemon shutdown path runs; normal process exit cuts this short.
+            std::thread::sleep(std::time::Duration::from_millis(3500));
+        }
+        1
+    } else {
+        0
+    }
+}
+
+const fn is_shutdown_control_event(control_type: u32) -> bool {
+    matches!(control_type, 2 | 5 | 6)
+}
 
 pub(crate) fn configure_tokio_owner_death(
     _command: &mut tokio::process::Command,
@@ -278,6 +311,10 @@ struct JobObjectExtendedLimitInformation {
 
 #[link(name = "kernel32")]
 extern "system" {
+    fn SetConsoleCtrlHandler(
+        handler_routine: Option<unsafe extern "system" fn(u32) -> i32>,
+        add: i32,
+    ) -> i32;
     fn CreateJobObjectW(security_attrs: Handle, name: *const u16) -> Handle;
     fn SetInformationJobObject(
         job: Handle,
@@ -296,4 +333,17 @@ extern "system" {
         size: *mut u32,
     ) -> i32;
     fn TerminateProcess(handle: Handle, exit_code: u32) -> i32;
+}
+
+#[cfg(test)]
+mod shutdown_handler_tests {
+    #[test]
+    fn only_close_logoff_and_shutdown_are_bridged() {
+        for event in [2, 5, 6] {
+            assert!(super::is_shutdown_control_event(event));
+        }
+        for event in [0, 1, 3, 4, 7] {
+            assert!(!super::is_shutdown_control_event(event));
+        }
+    }
 }

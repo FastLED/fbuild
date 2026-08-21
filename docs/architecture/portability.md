@@ -57,7 +57,8 @@ ESP32-S3 and similar chips use USB CDC for serial communication. Windows has sig
 
 - `pythonw.exe` vs `python.exe` — subprocess safety wrapper handles this
 - Never use `taskkill /IM python.exe /F` — kills everything including Claude Code
-- Named pipes for IPC if ever needed (currently HTTP)
+- Named pipes for the running-process broker endpoint; HTTP remains the public
+  daemon protocol
 
 ## Linux / macOS
 
