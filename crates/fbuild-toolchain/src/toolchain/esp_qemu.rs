@@ -897,12 +897,7 @@ mod tests {
             std::fs::write(&probe, b"@echo off\r\nexit /b 0\r\n").unwrap();
         } else {
             std::fs::write(&probe, b"#!/bin/sh\nexit 0\n").unwrap();
-            // make executable
-            #[cfg(unix)]
-            {
-                use std::os::unix::fs::PermissionsExt;
-                std::fs::set_permissions(&probe, std::fs::Permissions::from_mode(0o755)).unwrap();
-            }
+            fbuild_core::platform::fs::set_executable(&probe).unwrap();
         };
         // preflight is a no-op on non-Linux, and on Linux with a fake
         // script that exits 0 it should pass.
@@ -913,10 +908,12 @@ mod tests {
         );
     }
 
-    #[cfg(target_os = "linux")]
     #[test]
     fn preflight_linux_detects_missing_shared_library_exit_127() {
-        use std::os::unix::fs::PermissionsExt;
+        if fbuild_core::platform::host::current().os() != fbuild_core::platform::host::HostOs::Linux
+        {
+            return;
+        }
         let tmp = tempfile::TempDir::new().unwrap();
         // Script that prints the canonical dynamic-linker error to stderr
         // and exits 127 — same observable as a missing .so.
@@ -926,7 +923,7 @@ mod tests {
             b"#!/bin/sh\necho 'error while loading shared libraries: libslirp.so.0: cannot open shared object file' >&2\nexit 127\n",
         )
         .unwrap();
-        std::fs::set_permissions(&probe, std::fs::Permissions::from_mode(0o755)).unwrap();
+        fbuild_core::platform::fs::set_executable(&probe).unwrap();
 
         let err = preflight_qemu_binary(&probe).unwrap_err();
         let msg = err.to_string();

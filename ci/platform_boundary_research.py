@@ -210,6 +210,16 @@ def enclosing_function(text: str, offset: int) -> str:
 
 def classify(path: str, kind: str, normalized: str = "", context: str = "") -> tuple[str, str]:
     """Assign the phase-1 owner class; phase 2 validates this per occurrence."""
+    if path == "crates/fbuild-core/\x43argo.toml":
+        unix_table = "[target.'cfg(unix)'.dependencies]"
+        windows_table = "[target.'cfg(windows)'.dependencies]"
+        if kind == "target_dependency_table" and normalized in {unix_table, windows_table}:
+            return "fs", "host_mechanic"
+        if kind == "native_dependency" and (normalized, context) in {
+            ("libc", unix_table),
+            ("windows-sys", windows_table),
+        }:
+            return "fs", "host_mechanic"
     if kind in {"native_import", "native_path", "native_dependency"}:
         if normalized == "std::env::current_exe":
             return "host_executable", "host_mechanic"
@@ -365,12 +375,12 @@ def scan_manifests(root: Path = ROOT) -> list[Finding]:
     findings: list[Finding] = []
     for manifest in sorted((root / "crates").glob("*/Cargo.toml")):
         relative = manifest.relative_to(root).as_posix()
-        current_target = False
+        current_target: str | None = None
         for line_number, line in enumerate(manifest.read_text(encoding="utf-8").splitlines(), 1):
             table = TARGET_TABLE.match(line)
             if table:
-                current_target = True
                 normalized = normalized_construct(table.group(0))
+                current_target = normalized
                 capability, classification = classify(relative, "target_dependency_table", normalized)
                 findings.append(
                     Finding(
@@ -384,10 +394,15 @@ def scan_manifests(root: Path = ROOT) -> list[Finding]:
                 )
                 continue
             if line.lstrip().startswith("["):
-                current_target = False
+                current_target = None
             dependency = DEPENDENCY.match(line)
             if dependency and dependency.group(1).replace("-", "_") in NATIVE_ROOTS:
-                capability, classification = classify(relative, "native_dependency", dependency.group(1))
+                capability, classification = classify(
+                    relative,
+                    "native_dependency",
+                    dependency.group(1),
+                    current_target or "",
+                )
                 findings.append(
                     Finding(
                         relative,

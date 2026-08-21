@@ -202,3 +202,27 @@ PATH-overlay child launch, daemon crash recovery, and descendant cleanup. The
 exact ledger contracted from **271 to 162 rows**, deleting 109 migrated
 occurrences; the normalized Dylint projection is 160. The independent research
 inventory is 171 rows, including nine authorized implementation occurrences.
+
+## Phase-5 filesystem and path mechanics
+
+Phase 5 introduced the neutral `platform::fs` facade for path comparison and
+display rules, file identity, extended-prefix removal, executable permissions,
+directory links/reparse classification, volume facts, native error classes,
+removable-volume-safe output opening, atomic replacement, and blocked-I/O
+retirement. Path values, cache sizing, archive traversal, install locking,
+authorization, diagnostics, and retry policy stay in their existing neutral
+owners.
+
+RED characterization was the phase-4 tree: the facade was an empty namespace,
+shared callers contained native filesystem extension traits and target-gated
+path behavior, and the exact ledger contained 35 filesystem rows. The focused
+facade/path tests now run through the selected Windows, Linux, or macOS
+implementation and cover host case rules, file aliases, extended prefixes,
+permissions, links, volume invariants, replacement-overwrite behavior, and
+Windows sharing.
+
+The exact ledger contracted from **162 to 107 rows**, deleting 55 migrated
+occurrences; it contains zero filesystem-capability rows. The normalized
+Dylint projection contracted from 160 to 103. The independent research
+inventory contracted from 171 to 137 rows, including ten authorized native
+filesystem implementation or dependency occurrences.

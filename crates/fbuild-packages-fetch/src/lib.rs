@@ -428,7 +428,7 @@ impl PackageBase {
         validate(&staging_path)?;
 
         // Atomic commit: rename staging → final
-        std::fs::rename(&staging_path, &install_path).map_err(|e| {
+        fbuild_core::platform::fs::replace_file(&staging_path, &install_path).map_err(|e| {
             fbuild_core::FbuildError::PackageError(format!("failed to commit installation: {}", e))
         })?;
 

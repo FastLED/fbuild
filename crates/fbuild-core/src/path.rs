@@ -149,14 +149,7 @@ impl NormalizedPath {
     /// Cheap: walks the path once; no `Arc` clone, no normalization.
     #[must_use]
     pub fn display_slash(&self) -> String {
-        let mut s = self.path.to_string_lossy().into_owned();
-        if crate::platform::host::is_windows() {
-            s = s.replace('\\', "/");
-            if let Some(stripped) = s.strip_prefix("//?/") {
-                s = stripped.to_string();
-            }
-        }
-        s
+        crate::platform::fs::display_slash(&self.path)
     }
 }
 
@@ -248,25 +241,7 @@ impl<'de> Deserialize<'de> for NormalizedPath {
 /// log lines stay readable. See FastLED/fbuild#844 "Bridge pair 5".
 #[must_use]
 pub fn strip_unc_prefix(p: &Path) -> PathBuf {
-    #[cfg(windows)]
-    {
-        let s = p.to_string_lossy();
-        // `\\?\UNC\server\share\...` → `\\server\share\...`
-        if let Some(rest) = s.strip_prefix(r"\\?\UNC\") {
-            let mut out = String::from(r"\\");
-            out.push_str(rest);
-            return PathBuf::from(out);
-        }
-        // `\\?\C:\...` → `C:\...`
-        if let Some(rest) = s.strip_prefix(r"\\?\") {
-            return PathBuf::from(rest);
-        }
-        PathBuf::from(s.into_owned())
-    }
-    #[cfg(not(windows))]
-    {
-        p.to_path_buf()
-    }
+    crate::platform::fs::strip_extended_prefix(p).into_path_buf()
 }
 
 /// Canonicalize an existing path, stripping the Windows UNC prefix and
@@ -322,29 +297,7 @@ pub fn normalize(path: &Path) -> PathBuf {
 #[must_use]
 pub fn normalize_for_key(path: &Path) -> String {
     let normalized = normalize(path);
-
-    #[cfg(windows)]
-    {
-        let mut s = normalized.to_string_lossy().replace('\\', "/");
-        if let Some(stripped) = s.strip_prefix("//?/") {
-            s = stripped.to_string();
-        }
-        s.make_ascii_lowercase();
-        s
-    }
-
-    #[cfg(target_os = "macos")]
-    {
-        normalized.to_string_lossy().to_lowercase()
-    }
-
-    #[cfg(not(any(windows, target_os = "macos")))]
-    {
-        normalized
-            .into_os_string()
-            .into_string()
-            .unwrap_or_else(|os| os.to_string_lossy().into_owned())
-    }
+    crate::platform::fs::comparison_key(&normalized)
 }
 
 // ---------------------------------------------------------------------------
@@ -506,8 +459,7 @@ mod tests {
         // Same path with backslashes — on Windows this resolves to the
         // same key (slash-normalized); on Linux the backslash is just
         // part of the filename, but the key still doesn't carry one.
-        #[cfg(windows)]
-        {
+        if crate::platform::host::is_windows() {
             let win = NormalizedPath::new(r"\bin\avr-nm");
             assert_eq!(unix.key(), win.key());
         }
@@ -533,23 +485,21 @@ mod tests {
     /// On case-insensitive platforms (Windows + macOS), equality
     /// folds case. On Linux it does not.
     #[test]
-    #[cfg(any(windows, target_os = "macos"))]
-    fn case_insensitive_equality_on_windows_and_macos() {
+    fn equality_uses_the_selected_host_case_rules() {
         let a = NormalizedPath::new("/Bin/AVR-NM");
         let b = NormalizedPath::new("/bin/avr-nm");
-        assert_eq!(a, b);
+        if matches!(
+            crate::platform::host::current().os(),
+            crate::platform::host::HostOs::Windows | crate::platform::host::HostOs::Macos
+        ) {
+            assert_eq!(a, b);
+        } else {
+            assert_ne!(a, b);
+        }
     }
 
     /// On Linux paths are case-sensitive — same string, different
     /// case must compare unequal.
-    #[test]
-    #[cfg(not(any(windows, target_os = "macos")))]
-    fn case_sensitive_inequality_on_linux() {
-        let a = NormalizedPath::new("/Bin/AVR-NM");
-        let b = NormalizedPath::new("/bin/avr-nm");
-        assert_ne!(a, b);
-    }
-
     /// `Hash` agrees with `Eq` — required by HashMap correctness.
     /// Two equal paths must hash to the same value.
     #[test]
@@ -610,8 +560,10 @@ mod tests {
     /// paths, so the conversion is deliberately Windows-only and this
     /// test is cfg-gated to match.
     #[test]
-    #[cfg(windows)]
     fn serialize_converts_backslash_input_to_forward_slashes_on_windows() {
+        if !crate::platform::host::is_windows() {
+            return;
+        }
         let mixed = NormalizedPath::new(r"C:\Users\zach\bin\avr-nm");
         let json = serde_json::to_string(&mixed).unwrap();
         assert!(
@@ -624,8 +576,10 @@ mod tests {
     /// serialized form must keep the backslashes intact (otherwise
     /// real filenames containing `\` would be corrupted).
     #[test]
-    #[cfg(not(windows))]
     fn serialize_preserves_backslashes_as_content_on_unix() {
+        if crate::platform::host::is_windows() {
+            return;
+        }
         // A filename whose actual bytes contain `\` — legal on Linux,
         // unusual but supported on macOS.
         let unix = NormalizedPath::new(r"/tmp/weird\name");
@@ -641,8 +595,10 @@ mod tests {
     /// the serialized form too — otherwise cache lookups against
     /// hand-typed paths drift.
     #[test]
-    #[cfg(windows)]
     fn serialize_strips_extended_length_prefix() {
+        if !crate::platform::host::is_windows() {
+            return;
+        }
         let p = NormalizedPath::new(r"\\?\C:\Users\test");
         let json = serde_json::to_string(&p).unwrap();
         assert!(
@@ -655,8 +611,10 @@ mod tests {
     /// key. Required so canonicalised paths don't drift from
     /// hand-typed forms in cache lookups.
     #[test]
-    #[cfg(windows)]
     fn windows_extended_length_prefix_is_stripped_in_key() {
+        if !crate::platform::host::is_windows() {
+            return;
+        }
         let prefixed = NormalizedPath::new(r"\\?\C:\Users\test");
         let plain = NormalizedPath::new(r"C:\Users\test");
         assert_eq!(prefixed.key(), plain.key());
@@ -716,28 +674,42 @@ mod tests {
 
     /// On non-Windows `strip_unc_prefix` is a no-op.
     #[test]
-    #[cfg(not(windows))]
     fn strip_unc_prefix_is_noop_on_unix() {
+        if crate::platform::host::is_windows() {
+            return;
+        }
         assert_eq!(
             strip_unc_prefix(Path::new("/usr/bin/nm")),
             PathBuf::from("/usr/bin/nm")
+        );
+        assert_eq!(
+            strip_unc_prefix(Path::new("a/../b/./c")),
+            PathBuf::from("a/../b/./c")
         );
     }
 
     /// On Windows the extended-length prefix is stripped.
     #[test]
-    #[cfg(windows)]
     fn strip_unc_prefix_strips_extended_length_on_windows() {
+        if !crate::platform::host::is_windows() {
+            return;
+        }
         assert_eq!(
             strip_unc_prefix(Path::new(r"\\?\C:\Users\test")),
             PathBuf::from(r"C:\Users\test")
+        );
+        assert_eq!(
+            strip_unc_prefix(Path::new(r"\\?\C:\Users\..\test\.")),
+            PathBuf::from(r"C:\Users\..\test\.")
         );
     }
 
     /// On Windows the UNC-normalized prefix collapses to plain UNC.
     #[test]
-    #[cfg(windows)]
     fn strip_unc_prefix_collapses_unc_form_on_windows() {
+        if !crate::platform::host::is_windows() {
+            return;
+        }
         assert_eq!(
             strip_unc_prefix(Path::new(r"\\?\UNC\server\share\dir")),
             PathBuf::from(r"\\server\share\dir")
@@ -811,7 +783,6 @@ mod tests {
     }
 
     #[test]
-    #[cfg(unix)]
     fn path_arg_for_compile_cwd_canonicalizes_symlinked_cwd() {
         let tmp = tempfile::TempDir::new().unwrap();
         let real = tmp.path().join("real");
@@ -819,15 +790,21 @@ mod tests {
         let cwd = link.join("project");
         let source = cwd.join("src/main.cpp");
         std::fs::create_dir_all(real.join("project/src")).unwrap();
-        std::os::unix::fs::symlink(&real, &link).unwrap();
+        if let Err(error) = crate::platform::fs::symlink_dir(&real, &link) {
+            if crate::platform::host::is_windows()
+                && error.kind() == std::io::ErrorKind::PermissionDenied
+            {
+                return;
+            }
+            panic!("create directory symlink: {error}");
+        }
         std::fs::write(&source, "int main() { return 0; }\n").unwrap();
 
         assert_eq!(path_arg_for_compile_cwd(&source, &cwd), "src/main.cpp");
     }
 
     #[test]
-    #[cfg(windows)]
-    fn path_arg_for_compile_cwd_forces_forward_slashes_on_windows() {
+    fn path_arg_for_compile_cwd_forces_forward_slashes() {
         let tmp = tempfile::TempDir::new().unwrap();
         let cwd = tmp.path().join("project");
         let nested = cwd.join("src").join("sketch");

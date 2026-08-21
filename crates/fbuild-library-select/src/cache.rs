@@ -128,10 +128,7 @@ impl FileKvStore {
             .as_nanos();
         let tmp = path.with_extension(format!("tmp.{}.{}", std::process::id(), nonce));
         std::fs::write(&tmp, bytes)?;
-        std::fs::rename(&tmp, &path).or_else(|err| {
-            let _ = std::fs::remove_file(&path);
-            std::fs::rename(&tmp, &path).map_err(|_| err)
-        })?;
+        fbuild_core::platform::fs::replace_file(&tmp, &path)?;
         Ok(value.len())
     }
 

@@ -83,13 +83,65 @@ class PlatformBoundaryResearchTests(unittest.TestCase):
             with self.subTest(suffix=suffix):
                 self.assertIsNotNone(platform_boundary_research.TARGET_TABLE.match(f"[target.'cfg(unix)'.{suffix}]"))
 
-    def test_mixed_qemu_file_classifies_permissions_as_filesystem_mechanics(self) -> None:
+    def test_core_filesystem_manifest_occurrences_have_exact_ownership(self) -> None:
+        path = "crates/fbuild-core/\x43argo.toml"
+        occurrences = (
+            ("target_dependency_table", "[target.'cfg(unix)'.dependencies]", ""),
+            ("target_dependency_table", "[target.'cfg(windows)'.dependencies]", ""),
+            ("native_dependency", "libc", "[target.'cfg(unix)'.dependencies]"),
+            ("native_dependency", "windows-sys", "[target.'cfg(windows)'.dependencies]"),
+        )
+        for kind, normalized, context in occurrences:
+            with self.subTest(kind=kind, normalized=normalized):
+                self.assertEqual(
+                    platform_boundary_research.classify(path, kind, normalized, context),
+                    ("fs", "host_mechanic"),
+                )
+        for normalized, context in (
+            ("libc", ""),
+            ("libc", "[dependencies]"),
+            ("windows-sys", "[target.'cfg(unix)'.dependencies]"),
+        ):
+            with self.subTest(normalized=normalized, context=context):
+                self.assertEqual(
+                    platform_boundary_research.classify(
+                        path, "native_dependency", normalized, context
+                    ),
+                    ("process", "host_mechanic"),
+                )
+
+    def test_core_native_dependency_ownership_requires_matching_target_table(self) -> None:
+        with TemporaryDirectory(dir=platform_boundary_research.ROOT) as directory:
+            root = Path(directory)
+            manifest = root / "crates" / "fbuild-core" / "\x43argo.toml"
+            manifest.parent.mkdir(parents=True)
+            manifest.write_text(
+                "[dependencies]\nlibc = \"0.2\"\n"
+                "[target.'cfg(unix)'.dependencies]\nlibc = \"0.2\"\n",
+                encoding="utf-8",
+            )
+            dependencies = [
+                finding
+                for finding in platform_boundary_research.scan_manifests(root)
+                if finding.kind == "native_dependency"
+            ]
+
+        self.assertEqual(
+            [(finding.capability, finding.classification) for finding in dependencies],
+            [("process", "host_mechanic"), ("fs", "host_mechanic")],
+        )
+
+    def test_mixed_qemu_permissions_are_migrated_but_context_stays_classified(self) -> None:
         path = platform_boundary_research.ROOT / "crates/fbuild-toolchain/src/toolchain/esp_qemu.rs"
         findings = platform_boundary_research.scan_rust(path, platform_boundary_research.ROOT)
-        permission_findings = [finding for finding in findings if finding.capability == "fs" and finding.kind in {"attr_cfg", "cfg_macro", "native_path"}]
+        permission_findings = [
+            finding
+            for finding in findings
+            if finding.capability == "fs"
+            and finding.kind in {"attr_cfg", "cfg_macro", "native_path"}
+        ]
 
-        self.assertTrue(permission_findings)
-        self.assertTrue(all(finding.capability == "fs" and finding.classification == "host_mechanic" for finding in permission_findings))
+        self.assertFalse(permission_findings)
 
         for context in platform_boundary_research.ESP_QEMU_FS_CONTEXTS:
             with self.subTest(context=context):

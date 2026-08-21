@@ -14,7 +14,7 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
         cls.observed = boundary.rows_from_findings(boundary.research.inventory())
 
     def test_committed_exact_occurrence_ledger_matches_whole_tree(self) -> None:
-        self.assertEqual(len(self.expected), 162)
+        self.assertEqual(len(self.expected), 107)
         self.assertFalse(boundary.validate_ledger(self.expected))
         self.assertFalse(boundary.compare(self.expected, self.observed))
 
@@ -39,6 +39,33 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
             "host_mechanic",
         )
         self.assertEqual(boundary.rows_from_findings([image_finding]), [])
+
+        manifest_finding = boundary.research.Finding(
+            "crates/fbuild-core/Cargo.toml",
+            1,
+            "native_dependency",
+            "windows-sys",
+            "fs",
+            "host_mechanic",
+        )
+        self.assertEqual(boundary.rows_from_findings([manifest_finding]), [])
+        unix_manifest_finding = dataclasses.replace(
+            manifest_finding,
+            normalized="libc",
+        )
+        self.assertEqual(boundary.rows_from_findings([unix_manifest_finding]), [])
+        unscoped_manifest_finding = dataclasses.replace(
+            unix_manifest_finding,
+            capability="process",
+        )
+        self.assertEqual(
+            len(boundary.rows_from_findings([unscoped_manifest_finding])), 1
+        )
+        unauthorized_manifest_finding = dataclasses.replace(
+            manifest_finding,
+            normalized="winapi",
+        )
+        self.assertEqual(len(boundary.rows_from_findings([unauthorized_manifest_finding])), 1)
 
         unauthorized_facade_finding = dataclasses.replace(
             image_finding,
@@ -67,6 +94,16 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
                 if row.kind in {"cfg_macro", "compile_host_fact"}
             ]
         )
+
+    def test_no_filesystem_mechanics_remain_outside_the_boundary(self) -> None:
+        self.assertFalse([row for row in self.expected if row.capability == "fs"])
+
+    def test_rp2040_filesystem_mechanics_use_the_neutral_facade(self) -> None:
+        source = (
+            boundary.ROOT / "crates/fbuild-deploy/src/rp2040.rs"
+        ).read_text(encoding="utf-8")
+        for forbidden in ("AsRawHandle", "CancelSynchronousIo", ".raw_os_error()"):
+            self.assertNotIn(forbidden, source)
 
     def test_executable_spelling_does_not_bypass_the_executable_facade(self) -> None:
         host_selected_exe = re.compile(

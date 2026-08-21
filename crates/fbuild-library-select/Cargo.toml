@@ -10,6 +10,7 @@ license.workspace = true
 publish = false
 
 [dependencies]
+fbuild-core = { path = "../fbuild-core" }
 fbuild-header-scan = { path = "../fbuild-header-scan" }
 fbuild-packages = { path = "../fbuild-packages" }
 tracing = { workspace = true }

@@ -499,19 +499,8 @@ fn write_cache_pair(
 }
 
 fn publish_cache_file(source: &Path, destination: &Path, label: &str) -> Result<(), String> {
-    match std::fs::rename(source, destination) {
-        Ok(()) => Ok(()),
-        Err(first_error) if destination.is_file() => {
-            // Windows rename does not replace an existing file. These files
-            // are a verified cache; a crash between removal and rename only
-            // causes the next launch to download the pair again.
-            std::fs::remove_file(destination)
-                .map_err(|error| format!("replace old {label} cache: {error}"))?;
-            std::fs::rename(source, destination)
-                .map_err(|error| format!("publish {label}: {error} (initial error: {first_error})"))
-        }
-        Err(error) => Err(format!("publish {label}: {error}")),
-    }
+    crate::platform::fs::replace_file(source, destination)
+        .map_err(|error| format!("publish {label}: {error}"))
 }
 
 #[cfg(test)]

@@ -29,8 +29,46 @@ CONCRETE_PREFIXES = (
     *(PLATFORM_ROOT + host + "/" for host in ("windows", "linux", "macos")),
 )
 AUTHORIZED_BOUNDARY_FINDINGS = {
-    (PLATFORM_ROOT + "executable.rs", "native_path", "std::env::current_exe"),
+    (
+        PLATFORM_ROOT + "executable.rs",
+        "native_path",
+        "std::env::current_exe",
+        "host_executable",
+        "host_mechanic",
+    ),
+    (
+        "crates/fbuild-core/\x43argo.toml",
+        "target_dependency_table",
+        "[target.'cfg(windows)'.dependencies]",
+        "fs",
+        "host_mechanic",
+    ),
+    (
+        "crates/fbuild-core/\x43argo.toml",
+        "native_dependency",
+        "windows-sys",
+        "fs",
+        "host_mechanic",
+    ),
 }
+AUTHORIZED_BOUNDARY_FINDINGS.update(
+    {
+        (
+            "crates/fbuild-core/\x43argo.toml",
+            "target_dependency_table",
+            "[target.'cfg(unix)'.dependencies]",
+            "fs",
+            "host_mechanic",
+        ),
+        (
+            "crates/fbuild-core/\x43argo.toml",
+            "native_dependency",
+            "libc",
+            "fs",
+            "host_mechanic",
+        ),
+    }
+)
 LEDGER_KINDS = {
     "attr_cfg",
     "cfg_macro",
@@ -85,6 +123,8 @@ def rows_from_findings(findings: list[research.Finding]) -> list[LedgerRow]:
             finding.path,
             finding.kind,
             finding.normalized,
+            finding.capability,
+            finding.classification,
         ) in AUTHORIZED_BOUNDARY_FINDINGS:
             continue
         key = (finding.path, finding.kind, finding.normalized)
