@@ -22,6 +22,26 @@ fn main() {
 }
 
 fn async_main_entry() {
+    // FastLED/fbuild#1285: derive the dev daemon-identity stamp once, at the
+    // top level, and export the value so every child — including the spawned
+    // daemon — inherits it instead of re-hashing per invocation. Official
+    // (non-dev) invocations export nothing. A hash failure is reported and
+    // otherwise ignored: dev builds must keep working.
+    match fbuild_paths::dev_daemon_namespace::namespace_to_export() {
+        Ok(Some(namespace)) => unsafe {
+            // SAFETY: single-threaded startup — before the tokio runtime or
+            // any environment reader exists.
+            std::env::set_var(
+                fbuild_paths::dev_daemon_namespace::ZCCACHE_DAEMON_NAMESPACE_ENV,
+                namespace,
+            )
+        },
+        Ok(None) => {}
+        Err(error) => {
+            eprintln!("warning: failed to derive dev daemon-identity namespace: {error}")
+        }
+    }
+
     let rt = tokio::runtime::Builder::new_multi_thread()
         .enable_all()
         .build()
