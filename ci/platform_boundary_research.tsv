@@ -47,9 +47,9 @@ crates/fbuild-core/src/platform/macos/fs.rs	91	native_path	libc::	process	host_m
 crates/fbuild-core/src/platform/macos/fs.rs	101	native_path	libc::	process	host_mechanic
 crates/fbuild-core/src/platform/macos/ipc.rs	1	native_path	interprocess::local_socket	ipc	host_mechanic
 crates/fbuild-core/src/platform/macos/ipc.rs	2	native_path	interprocess::local_socket	ipc	host_mechanic
-crates/fbuild-core/src/platform/macos/ipc.rs	3	native_path	interprocess::os::unix	ipc	host_mechanic
-crates/fbuild-core/src/platform/macos/ipc.rs	4	native_path	socket2::	ipc	host_mechanic
-crates/fbuild-core/src/platform/macos/ipc.rs	66	native_path	std::os::unix::fs::PermissionsExt	ipc	host_mechanic
+crates/fbuild-core/src/platform/macos/ipc.rs	3	native_path	socket2::	ipc	host_mechanic
+crates/fbuild-core/src/platform/macos/ipc.rs	19	native_path	std::os::unix::fs::PermissionsExt	ipc	host_mechanic
+crates/fbuild-core/src/platform/macos/ipc.rs	72	native_path	std::os::unix::fs::PermissionsExt	ipc	host_mechanic
 crates/fbuild-core/src/platform/macos/mod.rs	10	compile_host_fact	std::env::consts::ARCH	host	host_mechanic
 crates/fbuild-core/src/platform/macos/process.rs	1	native_path	std::os::unix::process::ExitStatusExt	process	host_mechanic
 crates/fbuild-core/src/platform/windows/fs.rs	2	native_path	std::os::windows::ffi::OsStrExt	process	host_mechanic
