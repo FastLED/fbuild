@@ -1,6 +1,5 @@
 use interprocess::local_socket::prelude::*;
 use interprocess::local_socket::{GenericFilePath, ListenerOptions};
-use interprocess::os::unix::local_socket::ListenerOptionsExt;
 use socket2::{Domain, Protocol, Socket, Type};
 
 pub(crate) type LocalListener = LocalSocketListener;
@@ -12,7 +11,14 @@ pub(crate) fn bind_local(endpoint: &str) -> std::io::Result<LocalListener> {
     }
     let _ = std::fs::remove_file(endpoint);
     let name = endpoint.to_fs_name::<GenericFilePath>()?;
-    ListenerOptions::new().name(name).mode(0o600).create_sync()
+    // Darwin does not support fchmod() on socket fds; interprocess maps the
+    // EINVAL to ErrorKind::Unsupported when ListenerOptions::mode() is used.
+    // Enforce owner-only by chmodding the bound socket path instead. Linux
+    // keeps the atomic pre-bind fchmod via mode().
+    let listener = ListenerOptions::new().name(name).create_sync()?;
+    use std::os::unix::fs::PermissionsExt;
+    std::fs::set_permissions(endpoint, std::fs::Permissions::from_mode(0o600))?;
+    Ok(listener)
 }
 
 pub(crate) fn connect_local(endpoint: &str) -> std::io::Result<LocalStream> {
