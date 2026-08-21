@@ -9,7 +9,7 @@ use std::collections::HashMap;
 
 use super::types::DebugToolMeta;
 
-/// Embedded board database — 1609 boards from PlatformIO registry JSON files.
+/// Embedded board database — 1636 boards from registry and vendor sources.
 ///
 /// Loaded once on first access via `OnceLock`. Each entry maps board_id → JSON object
 /// with fields: id, name, mcu, platform, fcpu, ram, rom, etc.

@@ -19,14 +19,15 @@ pub struct ArmGcc8Toolchain {
 
 impl ArmGcc8Toolchain {
     pub fn new(project_dir: &Path) -> Self {
-        let url = platform_url();
+        let (filename, checksum) = platform_package();
+        let url = format!("{PIO_DL_BASE}/{filename}");
         Self {
             base: PackageBase::new(
                 "arm-gcc8",
                 ARM_GCC9_VERSION,
                 &url,
                 &url,
-                None,
+                checksum,
                 CacheSubdir::Toolchains,
                 project_dir,
             ),
@@ -138,11 +139,6 @@ fn platform_package() -> (&'static str, Option<&'static str>) {
     }
 }
 
-fn platform_url() -> String {
-    let (filename, _) = platform_package();
-    format!("{}/{}", PIO_DL_BASE, filename)
-}
-
 /// Find the actual root directory containing bin/ inside an extracted archive.
 fn find_bin_root(install_dir: &Path) -> PathBuf {
     if install_dir.join("bin").exists() {
@@ -175,9 +171,22 @@ mod tests {
 
     #[test]
     fn test_platform_url_is_valid() {
-        let url = platform_url();
+        let (filename, _) = platform_package();
+        let url = format!("{PIO_DL_BASE}/{filename}");
         assert!(url.starts_with("https://dl.registry.platformio.org"));
         assert!(url.contains("toolchain-gccarmnoneeabi"));
+    }
+
+    #[test]
+    fn test_platform_package_has_pinned_sha256() {
+        let (_, checksum) = platform_package();
+        let checksum = checksum.expect("ARM GCC 9 package must have a checksum");
+        assert_eq!(checksum.len(), 64);
+        assert!(
+            checksum
+                .chars()
+                .all(|character| character.is_ascii_hexdigit())
+        );
     }
 
     #[test]

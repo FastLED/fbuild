@@ -1,0 +1,34 @@
+{
+  "build": {
+    "arduino": {
+      "ldscript": "linker_scripts/gcc/flash_with_bootloader.ld"
+    },
+    "board": "ARM_ClearCore",
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_ARM_ClearCore -D__CLEARCORE__ -DUSB_CONFIG_POWER=0 -D__ARM_FEATURE_DSP=1 -DCPPUTEST_USE_MEM_LEAK_DETECTION=0",
+    "f_cpu": "120000000L",
+    "mcu": "same53n19a",
+    "usb_product": "Teknic ClearCore",
+    "variant": "clearcore"
+  },
+  "fcpu": 120000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "clearcore",
+  "mcu": "SAME53N19A",
+  "name": "Teknic ClearCore",
+  "platform": "atmelsam",
+  "ram": 196608,
+  "rom": 507904,
+  "upload": {
+    "maximum_ram_size": 196608,
+    "maximum_size": 507904,
+    "protocol": "sam-ba",
+    "require_upload_port": true,
+    "use_1200bps_touch": true,
+    "wait_for_upload_port": true
+  },
+  "url": "https://www.teknic.com/products/io-motion-controller/",
+  "vendor": "Teknic, Inc."
+}

@@ -71,13 +71,14 @@ between files.
 [![Build Nucleo F439ZI](https://github.com/fastled/fbuild/actions/workflows/build-nucleo_f439zi.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-nucleo_f439zi.yml)
 [![Build Arduino Giga R1](https://github.com/fastled/fbuild/actions/workflows/build-giga-r1.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-giga-r1.yml)
 
-### SAM / SAMD
+### SAM / SAMD / SAME
 [![Build Arduino Due](https://github.com/fastled/fbuild/actions/workflows/build-sam3x8e_due.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-sam3x8e_due.yml)
 [![Build SAMD21](https://github.com/fastled/fbuild/actions/workflows/build-samd21.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-samd21.yml)
 [![Build Arduino Zero](https://github.com/fastled/fbuild/actions/workflows/build-samd21_zero.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-samd21_zero.yml)
 [![Build QT Py M0](https://github.com/fastled/fbuild/actions/workflows/build-qtpy_m0.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-qtpy_m0.yml)
 [![Build SAMD51J](https://github.com/fastled/fbuild/actions/workflows/build-samd51j.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-samd51j.yml)
 [![Build SAMD51P](https://github.com/fastled/fbuild/actions/workflows/build-samd51p.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-samd51p.yml)
+[![Build Teknic ClearCore SAME53](https://github.com/fastled/fbuild/actions/workflows/build-clearcore.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-clearcore.yml)
 [![Build Matrix Portal M4](https://github.com/fastled/fbuild/actions/workflows/build-matrix_portal_m4.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-matrix_portal_m4.yml)
 
 ### RP2040 / RP2350
@@ -385,7 +386,7 @@ STM32 is STMicroelectronics' extensive family of ARM Cortex-M microcontrollers, 
 
 </details>
 
-**Atmel SAM / SAMD Platform** - Supported
+**Atmel SAM / SAMD / SAME Platform** - Supported
 - **Arduino Due** (SAM3X8E) - Supported
 - **SAMD21** (Adafruit Feather M0) - Supported
 - **SAMD21** (Arduino Zero) - Supported
@@ -393,6 +394,7 @@ STM32 is STMicroelectronics' extensive family of ARM Cortex-M microcontrollers, 
 - **SAMD51J** (Adafruit Feather M4) - Supported
 - **SAMD51P** (Adafruit Grand Central M4) - Supported
 - **SAMD51J** (Adafruit Matrix Portal M4) - Supported
+- **SAME53N19A** (Teknic ClearCore) - Build tested
 
 <details>
 <summary><strong>About the SAM / SAMD Family</strong></summary>

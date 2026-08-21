@@ -80,6 +80,16 @@ impl CmsisFramework {
             .join("DSP")
             .join("Include")
     }
+
+    /// Get the GCC CMSIS-DSP library directory.
+    pub fn get_gcc_library_dir(&self) -> PathBuf {
+        self.base
+            .install_path()
+            .join("CMSIS")
+            .join("DSP")
+            .join("Lib")
+            .join("GCC")
+    }
 }
 
 #[async_trait::async_trait]
@@ -128,5 +138,16 @@ mod tests {
         let tmp = tempfile::TempDir::new().unwrap();
         let result = CmsisFramework::validate(tmp.path());
         assert!(result.is_err());
+    }
+
+    #[test]
+    fn gcc_library_dir_points_to_dsp_payload() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let cmsis = CmsisFramework::with_cache_root(tmp.path(), &tmp.path().join("cache"));
+        assert!(
+            cmsis
+                .get_gcc_library_dir()
+                .ends_with(Path::new("CMSIS/DSP/Lib/GCC"))
+        );
     }
 }

@@ -14,6 +14,7 @@ use crate::mcu_config::DefineEntry;
 const SAM3X_JSON: &str = include_str!("configs/sam3x.json");
 const SAMD21_JSON: &str = include_str!("configs/samd21.json");
 const SAMD51_JSON: &str = include_str!("configs/samd51.json");
+const SAME5X_JSON: &str = include_str!("configs/same5x.json");
 
 /// Complete SAM MCU configuration parsed from JSON.
 #[derive(Debug, Clone, Deserialize)]
@@ -70,9 +71,12 @@ pub fn get_sam_config_for_mcu(mcu: &str) -> Result<SamMcuConfig> {
         "at91sam3x8e" => SAM3X_JSON,
         m if m.starts_with("samd21") => SAMD21_JSON,
         m if m.starts_with("samd51") => SAMD51_JSON,
+        m if m.starts_with("same51") || m.starts_with("same53") || m.starts_with("same54") => {
+            SAME5X_JSON
+        }
         _ => {
             return Err(fbuild_core::FbuildError::ConfigError(format!(
-                "unsupported SAM MCU: '{}' (supported: at91sam3x8e, samd21*, samd51*)",
+                "unsupported SAM MCU: '{}' (supported: at91sam3x8e, samd21*, samd51*, same51*, same53*, same54*)",
                 mcu
             )));
         }
@@ -206,5 +210,23 @@ mod tests {
     fn test_samd51p_config_parses() {
         let config = get_sam_config_for_mcu("samd51p20a").unwrap();
         assert_eq!(config.name, "SAMD51");
+    }
+
+    #[test]
+    fn test_same53_config_parses() {
+        let config = get_sam_config_for_mcu("same53n19a").unwrap();
+        assert_eq!(config.architecture, "arm-cortex-m4f");
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mcpu=cortex-m4".to_string())
+        );
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-mfloat-abi=hard".to_string())
+        );
     }
 }
