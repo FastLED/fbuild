@@ -342,6 +342,10 @@ impl PackageBase {
         let install_path = self.install_path();
 
         if install_path.exists() {
+            // An existing-install hit is a use: refresh the DiskCache LRU so
+            // background GC doesn't treat this package as the oldest unused
+            // entry and delete it mid-build (FastLED/fbuild#1341).
+            self.touch_disk_cache();
             return Ok(install_path);
         }
 
@@ -356,6 +360,7 @@ impl PackageBase {
         let _install_lock =
             install_lock::acquire_for_install(&install_path, &self.name, &self.version).await?;
         if install_path.exists() {
+            self.touch_disk_cache();
             return Ok(install_path);
         }
 
@@ -711,6 +716,60 @@ mod toolchain_gcc_ar_tests {
             "staging dir is renamed away on commit"
         );
         assert!(disk_cache::paths::install_complete_sentinel(&installed).exists());
+    }
+
+    /// A warm `staged_install` hit (install dir already exists) must count as
+    /// a use in the DiskCache LRU, exactly like `is_cached()` does. The early
+    /// return used to skip the touch, so a package restored from an Actions
+    /// cache kept its original `last_used_at` forever — making it the FIRST
+    /// entry the daemon's background GC evicted once the cache went over
+    /// budget, deleting a freshly-validated esptool binary out from under an
+    /// in-flight build (FastLED/fbuild#1341).
+    #[tokio::test]
+    async fn staged_install_existing_dir_bumps_lru_use_count() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let cache_root = tmp.path().join("cache");
+        let cache_key = "warm-hit-tool";
+        let base = PackageBase::with_cache_root(
+            "tool",
+            "1.0",
+            cache_key,
+            cache_key,
+            None,
+            CacheSubdir::Toolchains,
+            tmp.path(),
+            &cache_root,
+        );
+        let install_path = base.install_path();
+        std::fs::create_dir_all(&install_path).unwrap();
+        let sentinel = disk_cache::paths::install_complete_sentinel(&install_path);
+        std::fs::write(&sentinel, b"").unwrap();
+
+        let disk_cache = DiskCache::open_at(&cache_root).unwrap();
+        let rel_path = install_path.strip_prefix(disk_cache.cache_root()).unwrap();
+        disk_cache
+            .record_install(
+                disk_cache::Kind::Toolchains,
+                cache_key,
+                "1.0",
+                &rel_path.to_string_lossy(),
+                1,
+            )
+            .unwrap();
+
+        base.staged_install(|_| Ok(()))
+            .await
+            .expect("warm staged_install should early-return on the existing dir");
+
+        let entry = disk_cache
+            .lookup(disk_cache::Kind::Toolchains, cache_key, "1.0")
+            .unwrap()
+            .unwrap();
+        assert_eq!(
+            entry.use_count, 1,
+            "a warm staged_install hit must refresh the entry's LRU recency, \
+             or background GC evicts it as if it had never been used"
+        );
     }
 
     #[test]
