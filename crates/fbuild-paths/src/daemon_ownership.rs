@@ -186,6 +186,28 @@ mod tests {
     use super::*;
     use tempfile::TempDir;
 
+    /// Post-release re-acquires poll through a short deadline instead of
+    /// asserting single-shot availability: the kernel can transiently report
+    /// contention just after close-release on macOS (FastLED/fbuild#1340), and
+    /// the production contract is poll-and-retry, so the property under test is
+    /// eventual availability. Hard I/O errors still fail immediately.
+    fn reacquire_within<T>(
+        io_context: &str,
+        mut acquire: impl FnMut() -> std::io::Result<Option<T>>,
+    ) -> T {
+        let deadline = std::time::Instant::now() + std::time::Duration::from_secs(1);
+        loop {
+            match acquire().unwrap_or_else(|error| panic!("{io_context}: {error}")) {
+                Some(guard) => return guard,
+                None => assert!(
+                    std::time::Instant::now() < deadline,
+                    "{io_context}: lock did not become available within 1s of release"
+                ),
+            }
+            std::thread::sleep(std::time::Duration::from_millis(10));
+        }
+    }
+
     #[test]
     fn root_ownership_is_exclusive_within_process() {
         let temp = TempDir::new().expect("tempdir");
@@ -200,9 +222,9 @@ mod tests {
             "a second exclusive acquire while the first is held must return None"
         );
         drop(first);
-        let third = RootOwnershipGuard::try_acquire_at(&path)
-            .expect("third acquire io")
-            .expect("lock must be available again after the holder drops");
+        let third = reacquire_within("third acquire io", || {
+            RootOwnershipGuard::try_acquire_at(&path)
+        });
         drop(third);
     }
 
@@ -221,9 +243,8 @@ mod tests {
         let second = try_acquire_spawn_lock_result_at(&path).expect("second acquire io");
         assert!(second.is_none(), "second acquire while held must be None");
         drop(first);
-        let third = try_acquire_spawn_lock_result_at(&path)
-            .expect("third acquire io")
-            .expect("lock must be available after release");
+        let third =
+            reacquire_within("third acquire io", || try_acquire_spawn_lock_result_at(&path));
         drop(third);
     }
 
@@ -249,9 +270,7 @@ mod tests {
             "second acquire while held must be None"
         );
         drop(first);
-        try_acquire_spawn_lock_result_at(&path)
-            .expect("re-acquire io")
-            .expect("lock must be available after release");
+        reacquire_within("re-acquire io", || try_acquire_spawn_lock_result_at(&path));
     }
 
     /// Soldr pattern (`spawn_lock_serializes_concurrent_threads`): fire a

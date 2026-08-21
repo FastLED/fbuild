@@ -20,6 +20,16 @@ pub struct FileLockGuard {
     _file: File,
 }
 
+impl Drop for FileLockGuard {
+    fn drop(&mut self) {
+        // Unlock explicitly instead of relying on close: macOS can transiently
+        // report contention for a re-acquire racing the close-release
+        // (FastLED/fbuild#1340). Explicit LOCK_UN is the deterministic release;
+        // soldr's lifecycle guard unlocks the same way.
+        let _ = self._file.unlock();
+    }
+}
+
 /// Try to acquire an OS-released lock on `path`.
 ///
 /// Returns `Ok(None)` when another process holds a conflicting lock. The lock
@@ -122,6 +132,26 @@ pub async fn acquire(
 mod tests {
     use super::*;
 
+    /// Post-release re-acquires poll through a short deadline instead of
+    /// asserting single-shot availability: macOS can transiently report
+    /// contention just after close-release (FastLED/fbuild#1340). The
+    /// production contract is poll-and-retry, so the property under test is
+    /// eventual availability.
+    fn reacquire_within(path: &Path, mode: FileLockMode) -> FileLockGuard {
+        let deadline = Instant::now() + Duration::from_secs(1);
+        loop {
+            if let Some(guard) = try_acquire(path, mode).unwrap() {
+                return guard;
+            }
+            assert!(
+                Instant::now() < deadline,
+                "lock at {} did not become available within 1s of release",
+                path.display()
+            );
+            std::thread::sleep(Duration::from_millis(10));
+        }
+    }
+
     #[test]
     fn shared_holders_block_exclusive_until_all_release() {
         let temp = tempfile::tempdir().unwrap();
@@ -145,11 +175,7 @@ mod tests {
                 .is_none()
         );
         drop(second);
-        assert!(
-            try_acquire(&path, FileLockMode::Exclusive)
-                .unwrap()
-                .is_some()
-        );
+        let _third = reacquire_within(&path, FileLockMode::Exclusive);
     }
 
     #[test]
@@ -162,7 +188,7 @@ mod tests {
 
         assert!(try_acquire(&path, FileLockMode::Shared).unwrap().is_none());
         drop(exclusive);
-        assert!(try_acquire(&path, FileLockMode::Shared).unwrap().is_some());
+        let _shared = reacquire_within(&path, FileLockMode::Shared);
     }
 
     #[tokio::test]
