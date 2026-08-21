@@ -23,6 +23,24 @@ pub(super) fn choose_deploy_port(
     board: Option<&BoardConfig>,
     devices: Vec<DeviceState>,
 ) -> DeployPortChoice {
+    choose_deploy_port_with_profile_lookup(
+        requested,
+        platform,
+        board_id,
+        board,
+        devices,
+        fbuild_core::usb::profiles::board_profile,
+    )
+}
+
+fn choose_deploy_port_with_profile_lookup(
+    requested: Option<String>,
+    platform: Platform,
+    board_id: Option<&str>,
+    board: Option<&BoardConfig>,
+    devices: Vec<DeviceState>,
+    profile_lookup: impl FnOnce(&str) -> Option<fbuild_core::usb::profiles::BoardUsbProfile>,
+) -> DeployPortChoice {
     if requested.is_some() {
         return DeployPortChoice {
             port: requested,
@@ -36,12 +54,9 @@ pub(super) fn choose_deploy_port(
     // port: FastLED/boards data is the sole identity source.
     if platform == Platform::RaspberryPi {
         let expected_generation = rp_generation_for(board);
-        let (matches, unhealthy) = partition_rp_candidates(devices, |vid, pid| {
-            rp_profiles_match_generation(
-                &fbuild_core::usb::profiles::profiles_for(vid, pid),
-                expected_generation,
-            )
-        });
+        let board_profile = rp_board_profile_id(board_id, board).and_then(profile_lookup);
+        let (matches, unhealthy) =
+            partition_rp_candidates_for_board(devices, board_profile.as_ref(), expected_generation);
         return rp_deploy_choice(matches, unhealthy);
     }
 
@@ -100,6 +115,13 @@ pub(super) fn choose_deploy_port(
     }
 }
 
+fn rp_board_profile_id<'a>(
+    board_id: Option<&'a str>,
+    board: Option<&'a BoardConfig>,
+) -> Option<&'a str> {
+    board.map(BoardConfig::registry_board_id).or(board_id)
+}
+
 /// Split connected Raspberry Pi family matches into deploy-eligible
 /// candidates and known-unhealthy records (FastLED/fbuild#1147). Phantom and
 /// present-problem devnodes stay visible for diagnostics but are never
@@ -132,6 +154,46 @@ fn partition_rp_candidates(
     }
     matches.sort_by(|a, b| a.port.cmp(&b.port));
     (matches, unhealthy)
+}
+
+/// Prefer the requested board's exact runtime identity. Generation matching
+/// remains available for callers whose board profile has not been published
+/// yet, but must not make W and non-W variants interchangeable once exact
+/// identities exist.
+fn partition_rp_candidates_for_board(
+    devices: Vec<DeviceState>,
+    board_profile: Option<&fbuild_core::usb::profiles::BoardUsbProfile>,
+    expected_generation: RpGeneration,
+) -> (Vec<PortCandidate>, Vec<String>) {
+    partition_rp_candidates(devices, |vid, pid| {
+        let profiles = fbuild_core::usb::profiles::profiles_for(vid, pid);
+        rp_runtime_identity_matches(board_profile, vid, pid, &profiles, expected_generation)
+    })
+}
+
+fn rp_runtime_identity_matches(
+    board_profile: Option<&fbuild_core::usb::profiles::BoardUsbProfile>,
+    vid: u16,
+    pid: u16,
+    profiles: &[fbuild_core::usb::profiles::UsbTransportProfile],
+    expected_generation: RpGeneration,
+) -> bool {
+    match board_profile.and_then(board_runtime_identities) {
+        Some(identities) => identities
+            .iter()
+            .any(|identity| identity_matches(identity, vid, pid)),
+        None => rp_profiles_match_generation(profiles, expected_generation),
+    }
+}
+
+fn board_runtime_identities(
+    profile: &fbuild_core::usb::profiles::BoardUsbProfile,
+) -> Option<&[String]> {
+    profile
+        .identities
+        .get("runtime")
+        .filter(|identities| !identities.is_empty())
+        .map(Vec::as_slice)
 }
 
 fn describe_unhealthy_device(device: &DeviceState) -> String {
@@ -286,7 +348,8 @@ fn test_device_matches_deploy_target(platform: Platform, vid: u16, pid: u16) -> 
 #[cfg(not(test))]
 fn board_runtime_identity_matches(board_id: &str, vid: u16, pid: u16) -> bool {
     fbuild_core::usb::profiles::board_profile(board_id)
-        .and_then(|profile| profile.identities.get("runtime").cloned())
+        .as_ref()
+        .and_then(board_runtime_identities)
         .is_some_and(|identities| {
             identities
                 .iter()
@@ -294,7 +357,6 @@ fn board_runtime_identity_matches(board_id: &str, vid: u16, pid: u16) -> bool {
         })
 }
 
-#[cfg(not(test))]
 fn identity_matches(identity: &str, vid: u16, pid: u16) -> bool {
     let Some((expected_vid, expected_pid)) = identity.split_once(':') else {
         return false;
@@ -373,7 +435,7 @@ fn log_connect(op: &str, candidate: &PortCandidate) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::collections::HashMap;
+    use std::collections::{BTreeMap, HashMap};
 
     fn device(port: &str, vid: Option<u16>, pid: Option<u16>) -> DeviceState {
         DeviceState {
@@ -436,6 +498,157 @@ mod tests {
             },
             priority: 100,
             allow_ambiguous: false,
+        }
+    }
+
+    fn board_profile(
+        board_id: &str,
+        runtime_identities: &[&str],
+    ) -> fbuild_core::usb::profiles::BoardUsbProfile {
+        fbuild_core::usb::profiles::BoardUsbProfile {
+            board_id: board_id.to_string(),
+            identities: BTreeMap::from([(
+                "runtime".to_string(),
+                runtime_identities
+                    .iter()
+                    .map(|identity| (*identity).to_string())
+                    .collect(),
+            )]),
+            aliases: Vec::new(),
+            primary_compile_identity: None,
+        }
+    }
+
+    #[test]
+    fn raspberry_pi_runtime_selection_uses_exact_board_profile() {
+        for (board_id, expected_pid, wrong_pid, generation) in [
+            ("rpipico", 0x000A, 0xF00A, RpGeneration::Rp2040),
+            ("rpipicow", 0xF00A, 0x000A, RpGeneration::Rp2040),
+            ("rpipico2", 0x000F, 0xF00F, RpGeneration::Rp2350),
+            ("rpipico2w", 0xF00F, 0x000F, RpGeneration::Rp2350),
+        ] {
+            let identity = format!("2e8a:{expected_pid:04x}");
+            let profile = board_profile(board_id, &[&identity]);
+            let family = generation.family();
+            let same_generation = runtime_profile(Some("raspberrypi"), Some(family), false);
+            assert!(
+                !rp_runtime_identity_matches(
+                    Some(&profile),
+                    0x2E8A,
+                    wrong_pid,
+                    std::slice::from_ref(&same_generation),
+                    generation,
+                ),
+                "{board_id} must not fall back to generation matching",
+            );
+            let (matches, unhealthy) = partition_rp_candidates_for_board(
+                vec![
+                    device("COM17", Some(0x2E8A), Some(wrong_pid)),
+                    device("COM18", Some(0x2E8A), Some(expected_pid)),
+                ],
+                Some(&profile),
+                generation,
+            );
+
+            assert!(unhealthy.is_empty(), "{board_id}");
+            assert_eq!(matches.len(), 1, "{board_id}");
+            assert_eq!(matches[0].port, "COM18", "{board_id}");
+
+            let (wrong_variant, _) = partition_rp_candidates_for_board(
+                vec![device("COM17", Some(0x2E8A), Some(wrong_pid))],
+                Some(&profile),
+                generation,
+            );
+            assert!(wrong_variant.is_empty(), "{board_id}");
+        }
+    }
+
+    #[test]
+    fn raspberry_pi_runtime_selection_falls_back_when_profile_is_unavailable() {
+        let pico = runtime_profile(Some("raspberrypi"), Some("rp2040"), false);
+
+        assert!(rp_runtime_identity_matches(
+            None,
+            0x2E8A,
+            0x000A,
+            std::slice::from_ref(&pico),
+            RpGeneration::Rp2040,
+        ));
+        assert!(!rp_runtime_identity_matches(
+            None,
+            0x2E8A,
+            0x000A,
+            std::slice::from_ref(&pico),
+            RpGeneration::Rp2350,
+        ));
+
+        let missing_runtime = board_profile("unpublished-runtime", &[]);
+        assert!(rp_runtime_identity_matches(
+            Some(&missing_runtime),
+            0x2E8A,
+            0x000A,
+            std::slice::from_ref(&pico),
+            RpGeneration::Rp2040,
+        ));
+    }
+
+    #[test]
+    fn raspberry_pi_profile_lookup_uses_canonical_config_aliases() {
+        for (alias, canonical, expected_pid, wrong_pid, generation) in [
+            ("pico", "rpipico", 0x000A, 0xF00A, RpGeneration::Rp2040),
+            ("rpipico", "rpipico", 0x000A, 0xF00A, RpGeneration::Rp2040),
+            ("picow", "rpipicow", 0xF00A, 0x000A, RpGeneration::Rp2040),
+            ("rpipicow", "rpipicow", 0xF00A, 0x000A, RpGeneration::Rp2040),
+            ("pico2", "rpipico2", 0x000F, 0xF00F, RpGeneration::Rp2350),
+            ("rpipico2", "rpipico2", 0x000F, 0xF00F, RpGeneration::Rp2350),
+            ("pico2w", "rpipico2w", 0xF00F, 0x000F, RpGeneration::Rp2350),
+            ("pico2wh", "rpipico2w", 0xF00F, 0x000F, RpGeneration::Rp2350),
+            (
+                "rpipico2w",
+                "rpipico2w",
+                0xF00F,
+                0x000F,
+                RpGeneration::Rp2350,
+            ),
+            (
+                "rpipico2wh",
+                "rpipico2w",
+                0xF00F,
+                0x000F,
+                RpGeneration::Rp2350,
+            ),
+        ] {
+            let board = BoardConfig::from_board_id(alias, &HashMap::new()).unwrap();
+            assert_eq!(rp_generation_for(Some(&board)), generation, "{alias}");
+            let identity = format!("2e8a:{expected_pid:04x}");
+            let profile = board_profile(canonical, &[&identity]);
+            let lookup = |lookup_id: &str| {
+                assert_eq!(lookup_id, canonical, "{alias}");
+                Some(profile.clone())
+            };
+
+            let choice = choose_deploy_port_with_profile_lookup(
+                None,
+                Platform::RaspberryPi,
+                Some(alias),
+                Some(&board),
+                vec![
+                    device("COM17", Some(0x2E8A), Some(wrong_pid)),
+                    device("COM18", Some(0x2E8A), Some(expected_pid)),
+                ],
+                lookup,
+            );
+            assert_eq!(choice.port.as_deref(), Some("COM18"), "{alias}");
+
+            let wrong_variant = choose_deploy_port_with_profile_lookup(
+                None,
+                Platform::RaspberryPi,
+                Some(alias),
+                Some(&board),
+                vec![device("COM17", Some(0x2E8A), Some(wrong_pid))],
+                lookup,
+            );
+            assert!(wrong_variant.port.is_none(), "{alias}");
         }
     }
 

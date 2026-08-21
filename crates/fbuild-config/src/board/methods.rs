@@ -10,6 +10,15 @@ use super::db::registry_board_id;
 use super::types::{BoardConfig, DebugToolMeta, EMULATOR_TOOL_NAMES, Esp32QemuPsramConfig};
 
 impl BoardConfig {
+    /// Canonical board ID used to look up registry-backed metadata.
+    ///
+    /// PlatformIO-compatible aliases are retained in [`Self::board_id`] for
+    /// user-facing configuration, while FastLED/boards profiles are keyed by
+    /// their canonical bundled board IDs.
+    pub fn registry_board_id(&self) -> &str {
+        registry_board_id(&self.board_id)
+    }
+
     /// Returns emulator/simulator tools available for this board.
     ///
     /// Filters `debug_tools` to only include known software emulators
@@ -58,7 +67,7 @@ impl BoardConfig {
     }
 
     fn registry_compile_identity(&self) -> Option<(u16, u16)> {
-        fbuild_core::usb::profiles::board_profile(registry_board_id(&self.board_id))?
+        fbuild_core::usb::profiles::board_profile(self.registry_board_id())?
             .primary_compile_identity
     }
 
