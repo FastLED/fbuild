@@ -168,6 +168,9 @@ crates/fbuild-library/src/library/arduino_mbed_core.rs
 crates/fbuild-library/src/library/attiny_core.rs
 crates/fbuild-library/src/library/avr_framework.rs
 crates/fbuild-library/src/library/ch32v_core.rs
+# New-file entry per allowlist policy: clearcore_core.rs (#1333) implements the
+# shared Package/core traits typed in PathBuf; migration is repo-wide (FastLED/fbuild#1339).
+crates/fbuild-library/src/library/clearcore_core.rs
 crates/fbuild-library/src/library/cmsis_atmel.rs
 crates/fbuild-library/src/library/cmsis_framework.rs
 crates/fbuild-library/src/library/esp32_framework/fs_utils.rs
