@@ -14,7 +14,7 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
         cls.observed = boundary.rows_from_findings(boundary.research.inventory())
 
     def test_committed_exact_occurrence_ledger_matches_whole_tree(self) -> None:
-        self.assertEqual(len(self.expected), 107)
+        self.assertEqual(len(self.expected), 94)
         self.assertFalse(boundary.validate_ledger(self.expected))
         self.assertFalse(boundary.compare(self.expected, self.observed))
 
@@ -104,6 +104,23 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
         ).read_text(encoding="utf-8")
         for forbidden in ("AsRawHandle", "CancelSynchronousIo", ".raw_os_error()"):
             self.assertNotIn(forbidden, source)
+
+    def test_daemon_ipc_and_shutdown_use_neutral_facades(self) -> None:
+        backend = (
+            boundary.ROOT / "crates/fbuild-daemon/src/broker/backend.rs"
+        ).read_text(encoding="utf-8")
+        main = (boundary.ROOT / "crates/fbuild-daemon/src/main.rs").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertNotIn("interprocess", backend)
+        for forbidden in (
+            "socket2",
+            "AsRawSocket",
+            "SetConsoleCtrlHandler",
+            "windows_console",
+        ):
+            self.assertNotIn(forbidden, main)
 
     def test_executable_spelling_does_not_bypass_the_executable_facade(self) -> None:
         host_selected_exe = re.compile(

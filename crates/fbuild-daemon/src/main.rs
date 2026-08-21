@@ -316,8 +316,13 @@ async fn main() {
     // handler that funnels them into the same `shutdown_tx` the HTTP
     // endpoint and Ctrl+C paths use. See FastLED/fbuild#18 ("B5a
     // hardening leftovers").
-    #[cfg(windows)]
-    windows_console::register_ctrl_handler(context.shutdown_tx.clone());
+    if let Err(error) = fbuild_core::platform::process::register_daemon_shutdown_handler(
+        context.shutdown_tx.clone(),
+    ) {
+        tracing::warn!(
+            "native daemon shutdown handler registration failed: {error}; native close events may bypass graceful shutdown"
+        );
+    }
 
     // Spawn background maintenance task (self-eviction, idle timeout, stale lock cleanup)
     {
@@ -615,18 +620,11 @@ fn is_pid_alive(pid: u32) -> bool {
 /// retry). Because the endpoint is version+identity-keyed (FastLED/fbuild#1009),
 /// a live listener on it is necessarily an fbuild-daemon of our own version.
 async fn another_daemon_is_listening(addr: &std::net::SocketAddr) -> bool {
-    matches!(
-        tokio::time::timeout(
-            std::time::Duration::from_millis(500),
-            tokio::net::TcpStream::connect(addr),
-        )
-        .await,
-        Ok(Ok(_))
-    )
+    fbuild_core::platform::ipc::tcp_endpoint_ready(*addr, std::time::Duration::from_millis(500))
+        .await
 }
 
 async fn bind_listener_with_retry(addr: &str) -> tokio::net::TcpListener {
-    use socket2::{Domain, Protocol, Socket, Type};
     let std_addr: std::net::SocketAddr = addr.parse().unwrap_or_else(|e| {
         eprintln!("invalid bind address {}: {}", addr, e);
         std::process::exit(1);
@@ -634,55 +632,18 @@ async fn bind_listener_with_retry(addr: &str) -> tokio::net::TcpListener {
 
     let mut last_err: Option<std::io::Error> = None;
     for attempt in 0..3u32 {
-        let sock = match Socket::new(Domain::IPV4, Type::STREAM, Some(Protocol::TCP)) {
-            Ok(s) => s,
-            Err(e) => {
-                eprintln!("failed to create socket: {}", e);
-                std::process::exit(1);
-            }
-        };
-
-        // Apply platform-specific address-reuse policy.
-        #[cfg(windows)]
-        {
-            if let Err(e) = set_exclusive_address_windows(&sock) {
-                tracing::warn!("failed to set SO_EXCLUSIVEADDRUSE: {}", e);
-            }
-        }
-        #[cfg(not(windows))]
-        {
-            if let Err(e) = sock.set_reuse_address(true) {
-                tracing::warn!("failed to set SO_REUSEADDR: {}", e);
-            }
-        }
+        let listener = fbuild_core::platform::ipc::bind_tcp_listener(std_addr);
 
         // Force RST on close for accepted client sockets — inherited via
         // `accept(2)` on Linux/macOS/Windows. See doc comment above and
         // FastLED/fbuild#32.
-        if let Err(e) = sock.set_linger(Some(std::time::Duration::ZERO)) {
-            tracing::warn!("failed to set SO_LINGER=0 on listener: {}", e);
-        }
-
-        if let Err(e) = sock.set_nonblocking(true) {
-            eprintln!("failed to set non-blocking: {}", e);
-            std::process::exit(1);
-        }
-
-        match sock.bind(&std_addr.into()) {
-            Ok(()) => match sock.listen(128) {
-                Ok(()) => {
-                    let std_listener: std::net::TcpListener = sock.into();
-                    return tokio::net::TcpListener::from_std(std_listener).unwrap_or_else(|e| {
-                        eprintln!("failed to convert listener to tokio: {}", e);
-                        std::process::exit(1);
-                    });
-                }
-                Err(e) => {
-                    eprintln!("failed to listen on {}: {}", addr, e);
-                    std::process::exit(1);
-                }
-            },
-            Err(e) => {
+        match listener {
+            Ok(listener) => return listener,
+            Err(e @ fbuild_core::platform::ipc::TcpListenerError::Setup { .. }) => {
+                eprintln!("{e}");
+                std::process::exit(1);
+            }
+            Err(fbuild_core::platform::ipc::TcpListenerError::Bind(e)) => {
                 // FastLED/fbuild#1010 single-flight: the endpoint is now keyed
                 // by version+identity (#1009), so anything actually LISTENING on
                 // this port is another fbuild-daemon of our exact version — we
@@ -720,120 +681,6 @@ async fn bind_listener_with_retry(addr: &str) -> tokio::net::TcpListener {
             .unwrap_or_else(|| "unknown".to_string())
     );
     std::process::exit(1);
-}
-
-/// Set `SO_EXCLUSIVEADDRUSE` on a Windows socket using a manual FFI call,
-/// since socket2 0.6 does not yet expose this option. The constant value
-/// is `~SO_REUSEADDR = -5` (i.e. the bitwise complement of `SO_REUSEADDR`).
-/// `SOL_SOCKET` on Winsock is `0xFFFF`, NOT `1` like on Linux.
-#[cfg(windows)]
-fn set_exclusive_address_windows(sock: &socket2::Socket) -> std::io::Result<()> {
-    use std::os::windows::io::AsRawSocket;
-
-    const SOL_SOCKET: i32 = 0xFFFF;
-    const SO_EXCLUSIVEADDRUSE: i32 = !0x0004; // = -5
-
-    type SocketHandle = usize;
-    #[link(name = "ws2_32")]
-    extern "system" {
-        fn setsockopt(
-            s: SocketHandle,
-            level: i32,
-            optname: i32,
-            optval: *const u8,
-            optlen: i32,
-        ) -> i32;
-    }
-
-    let raw: SocketHandle = sock.as_raw_socket() as SocketHandle;
-    let on: i32 = 1;
-    let ret = unsafe {
-        setsockopt(
-            raw,
-            SOL_SOCKET,
-            SO_EXCLUSIVEADDRUSE,
-            &on as *const i32 as *const u8,
-            std::mem::size_of::<i32>() as i32,
-        )
-    };
-    if ret == 0 {
-        Ok(())
-    } else {
-        Err(std::io::Error::last_os_error())
-    }
-}
-
-/// Windows-only console ctrl handler registration.
-///
-/// `tokio::signal::ctrl_c()` covers CTRL_C_EVENT / CTRL_BREAK_EVENT on
-/// Windows but the console subsystem also fires CTRL_CLOSE_EVENT (window
-/// X button), CTRL_LOGOFF_EVENT, and CTRL_SHUTDOWN_EVENT — each of which
-/// terminates the process unless an explicit handler is registered via
-/// `SetConsoleCtrlHandler`. Without the hook, the daemon dies without
-/// running its graceful-shutdown path, leaving stale PID/port files and
-/// potentially orphaned child processes. See FastLED/fbuild#18 ("B5a
-/// hardening leftovers").
-#[cfg(windows)]
-mod windows_console {
-    use std::sync::OnceLock;
-    use tokio::sync::watch;
-
-    /// Globally accessible shutdown sender — the console ctrl handler
-    /// has a fixed C-ABI signature with no user-data pointer, so the only
-    /// way to reach the daemon's shutdown channel from inside it is
-    /// through process-wide state.
-    static SHUTDOWN_TX: OnceLock<watch::Sender<bool>> = OnceLock::new();
-
-    /// Windows console control events: `CTRL_CLOSE_EVENT = 2`,
-    /// `CTRL_LOGOFF_EVENT = 5`, `CTRL_SHUTDOWN_EVENT = 6`. `CTRL_C_EVENT`
-    /// and `CTRL_BREAK_EVENT` are already covered by `tokio::signal::ctrl_c`
-    /// so we deliberately fall through (return 0 / FALSE) to let the
-    /// default handler chain propagate them to tokio's signal driver.
-    unsafe extern "system" fn console_ctrl_handler(ctrl_type: u32) -> i32 {
-        const CTRL_CLOSE_EVENT: u32 = 2;
-        const CTRL_LOGOFF_EVENT: u32 = 5;
-        const CTRL_SHUTDOWN_EVENT: u32 = 6;
-
-        match ctrl_type {
-            CTRL_CLOSE_EVENT | CTRL_LOGOFF_EVENT | CTRL_SHUTDOWN_EVENT => {
-                if let Some(tx) = SHUTDOWN_TX.get() {
-                    let _ = tx.send(true);
-                    // Windows gives a CTRL_CLOSE handler ~5s and a
-                    // CTRL_SHUTDOWN handler ~20s before it force-kills
-                    // the process. Block here so the main graceful-shutdown
-                    // path has a chance to run to completion; if it
-                    // finishes sooner, the process exits normally from
-                    // `main` and this sleep is cut short by that exit.
-                    std::thread::sleep(std::time::Duration::from_millis(3500));
-                }
-                1 // TRUE — handled
-            }
-            _ => 0, // FALSE — let the default handler take it
-        }
-    }
-
-    pub fn register_ctrl_handler(shutdown_tx: watch::Sender<bool>) {
-        // Idempotent on repeated calls; `OnceLock::set` returns Err if
-        // already initialised — we ignore it.
-        let _ = SHUTDOWN_TX.set(shutdown_tx);
-
-        #[link(name = "kernel32")]
-        extern "system" {
-            fn SetConsoleCtrlHandler(
-                handler_routine: Option<unsafe extern "system" fn(u32) -> i32>,
-                add: i32,
-            ) -> i32;
-        }
-
-        let ret = unsafe { SetConsoleCtrlHandler(Some(console_ctrl_handler), 1) };
-        if ret == 0 {
-            tracing::warn!(
-                "SetConsoleCtrlHandler failed (err={}); \
-                 CTRL_CLOSE/LOGOFF/SHUTDOWN events will bypass graceful shutdown",
-                std::io::Error::last_os_error()
-            );
-        }
-    }
 }
 
 /// Compact byte formatter for log messages.

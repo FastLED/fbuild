@@ -132,9 +132,12 @@ bincode = "1"
 # to the version running-process 4.3.0 re-exports so the wire types stay
 # compatible. See crates/fbuild-daemon/src/broker.
 prost = "0.14"
-# fbuild-daemon binds the running-process backend endpoint directly so the
-# broker can verify and route to versioned daemon processes.
+# fbuild-core's selected IPC implementations bind the private running-process
+# backend endpoint and construct the daemon TCP listener.
 interprocess = "2.4.2"
+socket2 = "0.6"
+# Windows owner-only endpoint descriptors use static UTF-16 SDDL.
+widestring = "1.2"
 rayon = "1"
 tracing-test = "0.2"
 # Terminal coloring for `fbuild build --shrink` reporting (FastLED/fbuild#493).

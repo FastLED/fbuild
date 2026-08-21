@@ -213,6 +213,14 @@ pub fn exit_code(status: ExitStatus) -> i32 {
     super::selected::process::exit_code(status)
 }
 
+/// Bridge native daemon-shutdown notifications into the shared Tokio watch
+/// channel. Hosts without an additional native notification source are a no-op.
+pub fn register_daemon_shutdown_handler(
+    shutdown_tx: tokio::sync::watch::Sender<bool>,
+) -> std::io::Result<()> {
+    super::selected::process::register_daemon_shutdown_handler(shutdown_tx)
+}
+
 /// Build the host-correct child environment while preserving caller overlays.
 pub(crate) fn command_environment(
     program: &str,
