@@ -243,8 +243,9 @@ mod tests {
         let second = try_acquire_spawn_lock_result_at(&path).expect("second acquire io");
         assert!(second.is_none(), "second acquire while held must be None");
         drop(first);
-        let third =
-            reacquire_within("third acquire io", || try_acquire_spawn_lock_result_at(&path));
+        let third = reacquire_within("third acquire io", || {
+            try_acquire_spawn_lock_result_at(&path)
+        });
         drop(third);
     }
 
