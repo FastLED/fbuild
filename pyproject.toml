@@ -1,6 +1,6 @@
 [project]
 name = "fbuild"
-version = "2.5.19"
+version = "2.5.20"
 description = "PlatformIO-compatible embedded build tool (Rust implementation)"
 readme = "README.md"
 license = "AGPL-3.0-only"
