@@ -114,6 +114,11 @@ APPROVED_CRATE_DIRS: frozenset[str] = frozenset(
         # the canonicalized root silently defeated a cross-project cache
         # key (the global cache never hit). See agents/docs/path-conventions.md.
         "dylints/ban_raw_path_prefix_compare",
+        # FastLED/fbuild#1349 — bans raw `.fbuild` path literals outside
+        # fbuild-paths, the declared single source of truth for the build
+        # tree. Ships with a shrink-only baseline allowlist. See
+        # dylints/ban_raw_fbuild_path/README.md.
+        "dylints/ban_raw_fbuild_path",
     }
 )
 

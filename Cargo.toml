@@ -64,6 +64,13 @@ exclude = [
     # Companion to ban_std_pathbuf. Filed after PRs #890 and #912 both
     # had to patch the same anti-pattern at yet another call site.
     "dylints/ban_manual_slash_normalize",
+    # FastLED/fbuild#1349 — bans raw `.fbuild` path literals outside
+    # fbuild-paths, the declared single source of truth for the build
+    # tree. Ships with a shrink-only baseline allowlist; the env-segment
+    # collapse, `FBUILD_BUILD_DIR` override, and PIO nesting mean a
+    # hardcoded `.fbuild/build/<env>/<profile>` is wrong the moment the
+    # layout rules move. See agents/docs/path-conventions.md.
+    "dylints/ban_raw_fbuild_path",
 ]
 
 [workspace.metadata.dylint]

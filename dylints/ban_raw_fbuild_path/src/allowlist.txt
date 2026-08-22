@@ -1,0 +1,71 @@
+# Each non-empty, non-comment line is matched against the tail of each
+# source file path (slashes normalized to /). Use forward-slash paths
+# only — the lint normalizes \ to / before matching.
+#
+# Rollout strategy (FastLED/fbuild#1349):
+#   - The lint is ON and denies new raw `.fbuild` string literals by
+#     default.
+#   - Everything below the "baseline" marker is a legacy site captured
+#     when the lint landed. The list may only SHRINK: sanitize the file
+#     (route through fbuild_paths) and delete its line.
+#   - New files MUST NOT be added here. If a call site needs a `.fbuild`
+#     path, it needs `fbuild_paths`, not an allowlist entry.
+
+# --- Sanctioned definition sites (permanent) ---
+
+# The source of truth itself. `get_project_fbuild_dir`, `get_project_build_root`,
+# and `BuildLayout` in this file own the `.fbuild` layout; every other
+# call site delegates to them.
+crates/fbuild-paths/src/lib.rs
+
+# --- Baseline: legacy sites captured at landing (FastLED/fbuild#1349) ---
+# Each line below is a file that spells `.fbuild` by hand today. Removing
+# a line is the unit of progress on #1349; adding one is not allowed.
+
+crates/fbuild-build-arm/src/teensy/teensy_linker.rs
+crates/fbuild-build-engine/src/build_fingerprint/fast_path.rs
+crates/fbuild-build-engine/src/build_info.rs
+crates/fbuild-build-engine/src/compile_database/tests/clang.rs
+crates/fbuild-build-engine/src/compile_database/tests/generate.rs
+crates/fbuild-build-engine/src/compiler.rs
+crates/fbuild-build-engine/src/compiler_tests.rs
+crates/fbuild-build-engine/src/framework_libs.rs
+crates/fbuild-build-engine/src/linker.rs
+crates/fbuild-build-engine/src/source_scanner.rs
+crates/fbuild-build-engine/src/symbol_analyzer/mod.rs
+crates/fbuild-build/src/compile_many.rs
+crates/fbuild-build/tests/avr_build.rs
+crates/fbuild-build/tests/clangd_check_parity.rs
+crates/fbuild-build/tests/compile_many_stage2_perf.rs
+crates/fbuild-build/tests/compile_many_two_stage.rs
+crates/fbuild-build/tests/eh_frame_strip_esp32.rs
+crates/fbuild-build/tests/esp32_build.rs
+crates/fbuild-build/tests/nxplpc_build_flags.rs
+crates/fbuild-build/tests/nxplpc_core_compile_commands.rs
+crates/fbuild-build/tests/stm32_acceptance.rs
+crates/fbuild-build/tests/teensy30_acceptance.rs
+crates/fbuild-build/tests/teensy_build.rs
+crates/fbuild-cli/src/cli/args.rs
+crates/fbuild-cli/src/cli/debug.rs
+crates/fbuild-cli/src/cli/dispatch.rs
+crates/fbuild-cli/src/cli/ide.rs
+crates/fbuild-cli/src/cli/ide_debug.rs
+crates/fbuild-cli/src/cli/purge.rs
+crates/fbuild-cli/src/cli/symbols_cmd.rs
+crates/fbuild-cli/src/lib_select.rs
+crates/fbuild-cli/tests/daemon_crash_recovery.rs
+crates/fbuild-core/src/path.rs
+crates/fbuild-core/src/response_file.rs
+crates/fbuild-daemon/src/handlers/emulator/tests_process.rs
+crates/fbuild-daemon/src/handlers/libraries.rs
+crates/fbuild-daemon/src/handlers/operations/build.rs
+crates/fbuild-daemon/src/main.rs
+crates/fbuild-daemon/src/models.rs
+crates/fbuild-daemon/tests/legacy_daemon_transition.rs
+crates/fbuild-deploy/src/lpc.rs
+crates/fbuild-deploy/src/lpc_debugger_reflash.rs
+crates/fbuild-deploy/src/probe_rs.rs
+crates/fbuild-deploy/src/wchisp.rs
+crates/fbuild-deploy/src/wlink.rs
+crates/fbuild-library-select/tests/teensy41_ldf_diag.rs
+crates/fbuild-library/src/library/library_compiler.rs

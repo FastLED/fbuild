@@ -1,0 +1,16 @@
+error: raw '.fbuild' path literal: use fbuild_paths (FBUILD_DIR_NAME, BUILD_DIR_NAME, get_project_fbuild_dir, get_project_build_root, BuildLayout) instead of spelling the directory layout by hand
+  --> $DIR/disallowed.rs:5:39
+   |
+LL |     let _build_dir = project_dir.join(".fbuild").join("build");
+   |                                       ^^^^^^^^^
+   |
+   = note: `#[deny(ban_raw_fbuild_path)]` on by default
+
+error: raw '.fbuild' path literal: use fbuild_paths (FBUILD_DIR_NAME, BUILD_DIR_NAME, get_project_fbuild_dir, get_project_build_root, BuildLayout) instead of spelling the directory layout by hand
+  --> $DIR/disallowed.rs:6:29
+   |
+LL |     let _firmware = format!(".fbuild/build/{}/release/firmware.bin", "uno");
+   |                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: aborting due to 2 previous errors
+

@@ -419,7 +419,7 @@ mod tests {
         assert!(
             identity
                 .cache_root
-                .ends_with(Path::new(".fbuild").join("dev").join("cache")),
+                .ends_with(Path::new(crate::FBUILD_DIR_NAME).join("dev").join("cache")),
             "dev identity must own the default dev cache root, got {}",
             identity.cache_root.display()
         );
