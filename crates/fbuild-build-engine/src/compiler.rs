@@ -158,7 +158,16 @@ pub trait Compiler: Send + Sync {
     /// Stable fingerprint of the effective compile configuration for one source file.
     ///
     /// Used for incremental rebuild invalidation when flags or compiler paths change.
-    fn rebuild_signature(&self, source: &Path, extra_flags: &[String]) -> String {
+    ///
+    /// `output` is the object file path this source would produce. It anchors
+    /// the signature to the compile workspace (`compile_cwd_from_output`), so
+    /// workspace-relative include flags normalize identically on the write
+    /// side and the check side no matter which project directory hosts them —
+    /// this is what lets a stage-1 `.cmdhash` seeded into a sibling stage-2
+    /// workspace match its fresh check-side signature (FastLED/fbuild#1346).
+    /// Pass any path when no object exists yet; only the workspace ancestry of
+    /// the path matters, never the object itself.
+    fn rebuild_signature(&self, source: &Path, extra_flags: &[String], output: &Path) -> String {
         let ext = source
             .extension()
             .unwrap_or_default()
@@ -168,10 +177,12 @@ pub trait Compiler: Send + Sync {
             "c" | "s" => (self.gcc_path(), self.c_flags()),
             _ => (self.gxx_path(), self.cpp_flags()),
         };
-        // build_unflags are stripped inside build_rebuild_signature (the shared
-        // core), matching compile_c/compile_cpp on the write side
+        let compile_cwd = crate::zccache::compile_cwd_from_output(output);
+        // build_unflags are stripped inside build_rebuild_signature_for_workspace
+        // (the shared core), matching compile_c/compile_cpp on the write side
         // (FastLED/fbuild#951, #970).
-        build_rebuild_signature(
+        build_rebuild_signature_for_workspace(
+            compile_cwd.as_deref(),
             compiler_path,
             &flags,
             &[],
@@ -460,6 +471,43 @@ pub fn build_rebuild_signature_for_project(
     )
 }
 
+/// Variant of [`build_rebuild_signature`] anchored to a compile workspace.
+///
+/// Absolute path-bearing flag values that live *inside* `compile_cwd` are
+/// relativized against it before hashing — exactly the transform the executed
+/// argv undergoes in [`crate::compiler::compile_source`] — so two workspaces
+/// that would run byte-identical compiler commands hash identically even when
+/// their absolute roots differ. Values outside the workspace fall back to the
+/// legacy project-independent normalization. With `compile_cwd = None` this is
+/// byte-for-byte [`build_rebuild_signature`].
+///
+/// FastLED/fbuild#1346: without the workspace anchor, sibling stage-2
+/// workspaces (`.tmpX/s0/src` vs `.tmpX/s1/src`) hit the last-two-components
+/// fallback and produced different signatures from identical effective
+/// commands, so every seeded framework object failed its `.cmdhash` check and
+/// stage 2 recompiled the whole framework.
+pub fn build_rebuild_signature_for_workspace(
+    compile_cwd: Option<&Path>,
+    compiler_path: &Path,
+    flags: &[String],
+    pre_flags: &[String],
+    extra_flags: &[String],
+    unflags: &[String],
+) -> String {
+    let normalize = |value: &str| match compile_cwd {
+        Some(cwd) => normalize_signature_value_for_workspace(value, cwd),
+        None => normalize_signature_value(value),
+    };
+    build_rebuild_signature_with_normalizer(
+        compiler_path,
+        flags,
+        pre_flags,
+        extra_flags,
+        unflags,
+        &normalize,
+    )
+}
+
 fn build_rebuild_signature_with_normalizer(
     compiler_path: &Path,
     flags: &[String],
@@ -531,6 +579,27 @@ fn normalize_signature_value(value: &str) -> String {
     let path = Path::new(value);
     if !looks_like_absolute_path(path, value) {
         return value.to_string();
+    }
+    normalize_signature_path(path)
+}
+
+/// Workspace-anchored counterpart of [`normalize_signature_value`].
+///
+/// Absolute values inside the compile workspace relativize to their
+/// workspace-relative form (the same string the compiler actually sees on its
+/// command line); everything else keeps the legacy project-independent
+/// normalization.
+fn normalize_signature_value_for_workspace(value: &str, compile_cwd: &Path) -> String {
+    if value.is_empty() {
+        return String::new();
+    }
+    let path = Path::new(value);
+    if !looks_like_absolute_path(path, value) {
+        return value.to_string();
+    }
+    let arg = fbuild_core::path::path_arg_for_compile_cwd(path, compile_cwd);
+    if !looks_like_absolute_path(Path::new(&arg), &arg) {
+        return arg;
     }
     normalize_signature_path(path)
 }
@@ -878,8 +947,19 @@ pub async fn compile_source(
     // compile_c/compile_cpp before reaching compile_one, so pass empty unflags
     // (re-stripping would be a no-op). The read side reconstructs the same
     // filtered set inside build_rebuild_signature (FastLED/fbuild#970).
-    let rebuild_signature =
-        build_rebuild_signature(compiler, flags, extra_pre_flags, extra_flags, &[]);
+    //
+    // The signature is anchored to `compile_cwd` — the same workspace the
+    // argv above was relativized against — so the written `.cmdhash` matches
+    // the check-side signature of any workspace that would run an identical
+    // compiler command (FastLED/fbuild#1346).
+    let rebuild_signature = build_rebuild_signature_for_workspace(
+        compile_cwd.as_deref(),
+        compiler,
+        flags,
+        extra_pre_flags,
+        extra_flags,
+        &[],
+    );
     all_flags.extend(["-c".to_string(), source_arg, "-o".to_string(), output_arg]);
 
     let global = crate::compile_backend::get_global().ok_or_else(|| {

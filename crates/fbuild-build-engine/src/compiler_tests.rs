@@ -373,6 +373,124 @@ fn test_needs_rebuild_when_command_hash_changes() {
 }
 
 #[test]
+fn test_build_rebuild_signature_for_workspace_relativizes_workspace_includes() {
+    // FastLED/fbuild#1346: sibling workspaces whose effective compile
+    // commands are byte-identical after cwd relativization must hash
+    // identically, or a stage-1 `.cmdhash` seeded into stage 2 never matches.
+    let tmp = tempfile::tempdir().unwrap();
+    let build_dir_for = |root: &std::path::Path| {
+        fbuild_paths::BuildLayout::new(
+            root.to_path_buf(),
+            "uno".to_string(),
+            fbuild_core::BuildProfile::Release,
+        )
+        .resolve()
+    };
+    let (s0, s1) = (tmp.path().join("s0"), tmp.path().join("s1"));
+    for dir in [&s0, &s1] {
+        std::fs::create_dir_all(dir.join("src")).unwrap();
+    }
+    let flags_s0 = vec![format!("-I{}", s0.join("src").display()), "-Os".to_string()];
+    let flags_s1 = vec![format!("-I{}", s1.join("src").display()), "-Os".to_string()];
+    let compiler = Path::new("/tool/bin/avr-g++");
+    let obj_for = |root: &std::path::Path| build_dir_for(root).join("core/CDC.cpp.o");
+
+    let sig_s0 = build_rebuild_signature_for_workspace(
+        crate::zccache::compile_cwd_from_output(&obj_for(&s0)).as_deref(),
+        compiler,
+        &flags_s0,
+        &[],
+        &[],
+        &[],
+    );
+    let sig_s1 = build_rebuild_signature_for_workspace(
+        crate::zccache::compile_cwd_from_output(&obj_for(&s1)).as_deref(),
+        compiler,
+        &flags_s1,
+        &[],
+        &[],
+        &[],
+    );
+
+    assert_eq!(sig_s0, sig_s1);
+}
+
+#[test]
+fn test_build_rebuild_signature_for_workspace_none_matches_legacy() {
+    // compile_cwd = None must stay byte-for-byte the legacy builder so
+    // no-.fbuild-ancestor layouts keep their historical signatures.
+    let flags = vec!["-I/tmp/ws/project/include".to_string(), "-Os".to_string()];
+    let legacy = build_rebuild_signature(Path::new("/tool/bin/gcc"), &flags, &[], &[], &[]);
+    let workspace = build_rebuild_signature_for_workspace(
+        None,
+        Path::new("/tool/bin/gcc"),
+        &flags,
+        &[],
+        &[],
+        &[],
+    );
+    assert_eq!(legacy, workspace);
+}
+
+#[test]
+fn test_build_rebuild_signature_for_workspace_outside_paths_keep_legacy_normalization() {
+    // Include dirs outside the workspace (global framework cache) fall back
+    // to the project-independent normalization — unchanged behavior.
+    let tmp_a = tempfile::tempdir().unwrap();
+    let tmp_b = tempfile::tempdir().unwrap();
+    let global_a = tmp_a.path().join(".fbuild/cache/framework/cores/arduino");
+    let global_b = tmp_b.path().join(".fbuild/cache/framework/cores/arduino");
+    let ws_a = tmp_a.path().join("proj-a");
+    let ws_b = tmp_b.path().join("other-name-proj-b");
+    std::fs::create_dir_all(&ws_a).unwrap();
+    std::fs::create_dir_all(&ws_b).unwrap();
+    let flags_a = vec![format!("-I{}", global_a.display())];
+    let flags_b = vec![format!("-I{}", global_b.display())];
+    let compiler = Path::new("/tool/bin/gcc");
+
+    let sig_a =
+        build_rebuild_signature_for_workspace(Some(&ws_a), compiler, &flags_a, &[], &[], &[]);
+    let sig_b =
+        build_rebuild_signature_for_workspace(Some(&ws_b), compiler, &flags_b, &[], &[], &[]);
+
+    assert_eq!(sig_a, sig_b);
+}
+
+#[test]
+fn test_build_rebuild_signature_distinguishes_different_effective_includes() {
+    // Two workspaces with genuinely different include targets inside them
+    // must NOT collide — only identical effective commands hash equal.
+    let tmp = tempfile::tempdir().unwrap();
+    let (s0, s1) = (tmp.path().join("s0"), tmp.path().join("s1"));
+    for dir in [&s0, &s1] {
+        std::fs::create_dir_all(dir.join("src")).unwrap();
+    }
+    let compiler = Path::new("/tool/bin/gcc");
+    let shared = vec!["-Os".to_string()];
+    let flags_s0 = vec![format!("-I{}", s0.join("src").display())];
+    let flags_s1 = vec![format!("-I{}", s1.join("include").display())];
+
+    let sig_s0 = build_rebuild_signature_for_workspace(
+        Some(&s0),
+        compiler,
+        &[flags_s0, shared.clone()].concat(),
+        &[],
+        &[],
+        &[],
+    );
+    let sig_s1 = build_rebuild_signature_for_workspace(
+        Some(&s1),
+        compiler,
+        &[flags_s1, shared].concat(),
+        &[],
+        &[],
+        &[],
+    );
+
+    assert_ne!(sig_s0, sig_s1);
+}
+
+#[test]
 fn test_build_rebuild_signature_ignores_absolute_compiler_path() {
     let flags = vec!["-Os".to_string(), "-mmcu=atmega328p".to_string()];
     let sig_a = build_rebuild_signature(

@@ -274,7 +274,7 @@ fn refresh_command_hashes(
             continue;
         }
         let source_flags = extra_flags.for_source(source);
-        let signature = compiler.rebuild_signature(source, &source_flags);
+        let signature = compiler.rebuild_signature(source, &source_flags, &obj);
         std::fs::write(obj.with_extension("cmdhash"), signature)?;
         refreshed += 1;
     }
@@ -348,7 +348,12 @@ mod tests {
             vec!["-Os".to_string(), "-std=gnu++17".to_string()]
         }
 
-        fn rebuild_signature(&self, source: &Path, extra_flags: &[String]) -> String {
+        fn rebuild_signature(
+            &self,
+            source: &Path,
+            extra_flags: &[String],
+            _output: &Path,
+        ) -> String {
             let mut hasher = Sha256::new();
             hasher.update(source.to_string_lossy().as_bytes());
             for flag in extra_flags {
@@ -567,10 +572,10 @@ mod tests {
         assert_eq!(stats.copied, 3);
         let hydrated_object = hydrated.join(object.file_name().unwrap());
         let hydrated_cmdhash = hydrated_object.with_extension("cmdhash");
-        assert_eq!(std::fs::read(hydrated_object).unwrap(), b"obj");
+        assert_eq!(std::fs::read(&hydrated_object).unwrap(), b"obj");
         assert_eq!(
             std::fs::read_to_string(hydrated_cmdhash).unwrap(),
-            compiler.rebuild_signature(&source, &[])
+            compiler.rebuild_signature(&source, &[], &hydrated_object)
         );
     }
 
