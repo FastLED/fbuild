@@ -45,6 +45,7 @@ async fn run_qemu_process_reports_expected_success_output() {
             show_timestamp: false,
             verbose: false,
             process_label: "QEMU",
+            project_dir: None,
         },
     )
     .await
@@ -76,6 +77,7 @@ async fn run_qemu_process_surfaces_crash_decoder_output() {
             show_timestamp: false,
             verbose: false,
             process_label: "QEMU",
+            project_dir: None,
         },
     )
     .await
@@ -215,6 +217,7 @@ async fn run_real_esp32s3_fixture_in_qemu() {
             show_timestamp: false,
             verbose: true,
             process_label: "QEMU",
+            project_dir: None,
         },
     )
     .await
@@ -251,6 +254,7 @@ async fn run_avr8js_headless_captures_stdout() {
             show_timestamp: false,
             verbose: false,
             process_label: "QEMU",
+            project_dir: None,
         },
     )
     .await
@@ -282,6 +286,7 @@ async fn run_avr8js_headless_halt_on_success() {
             show_timestamp: false,
             verbose: false,
             process_label: "QEMU",
+            project_dir: None,
         },
     )
     .await
@@ -311,6 +316,7 @@ async fn run_avr8js_headless_halt_on_error() {
             show_timestamp: false,
             verbose: false,
             process_label: "QEMU",
+            project_dir: None,
         },
     )
     .await
@@ -346,6 +352,7 @@ async fn simavr_runner_captures_stdout_via_process_runner() {
             show_timestamp: false,
             verbose: false,
             process_label: "simavr",
+            project_dir: None,
         },
     )
     .await
@@ -374,6 +381,7 @@ async fn simavr_runner_halt_on_success() {
             show_timestamp: false,
             verbose: false,
             process_label: "simavr",
+            project_dir: None,
         },
     )
     .await
@@ -403,6 +411,7 @@ async fn simavr_runner_halt_on_error() {
             show_timestamp: false,
             verbose: false,
             process_label: "simavr",
+            project_dir: None,
         },
     )
     .await
@@ -432,6 +441,7 @@ async fn simavr_runner_timeout() {
             show_timestamp: false,
             verbose: false,
             process_label: "simavr",
+            project_dir: None,
         },
     )
     .await
