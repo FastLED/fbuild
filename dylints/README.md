@@ -154,6 +154,24 @@ itself stays on stable 1.95.0).
   in `fbuild-build/src/zccache.rs`, plus same-normal-form call sites.
   See FastLED/fbuild#952 and `agents/docs/path-conventions.md`.
 
+### FastLED/fbuild#1349 — `.fbuild` layout literals
+
+- **`ban_raw_fbuild_path/`** — forbids string literals containing
+  `.fbuild` outside `crates/fbuild-paths/src/lib.rs`, the crate that
+  declares itself the single source of truth for the build tree.
+  Steers callers at `fbuild_paths::{FBUILD_DIR_NAME, BUILD_DIR_NAME}`,
+  `get_project_fbuild_dir`, `get_project_build_root`, and
+  `BuildLayout::resolve`. A hardcoded
+  `dir.join(".fbuild/build/uno/release")` pins exactly one layout
+  shape, but the env segment auto-collapses for single-environment
+  projects, `FBUILD_BUILD_DIR` replaces the root wholesale, and PIO
+  projects nest under `.build/pio/<env>/`; the literal keeps compiling
+  and silently points at a directory that does not exist. Ships with a
+  **shrink-only baseline** allowlist of the 46 legacy files captured at
+  landing — sanitize a file, delete its line, bump the crate version to
+  bust the Dylint `.so` cache. See FastLED/fbuild#1349 and
+  `agents/docs/path-conventions.md`.
+
 ## Running locally
 
 ```bash

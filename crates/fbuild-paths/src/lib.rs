@@ -11,6 +11,21 @@ pub mod daemon_ownership;
 pub mod dev_daemon_namespace;
 pub mod running_process;
 
+/// The project-local and home-local fbuild directory segment: `.fbuild`.
+///
+/// This is the canonical spelling. Nothing outside this crate should write
+/// the literal — see the `ban_raw_fbuild_path` Dylint
+/// (FastLED/fbuild#1349).
+pub const FBUILD_DIR_NAME: &str = ".fbuild";
+
+/// The build-tree segment directly under [`FBUILD_DIR_NAME`]: `build`.
+///
+/// `<project>/.fbuild/build/` is the default build root; note that
+/// `FBUILD_BUILD_DIR` can replace the whole root, so prefer
+/// [`get_project_build_root`] or [`BuildLayout`] over joining this
+/// segment by hand.
+pub const BUILD_DIR_NAME: &str = "build";
+
 /// Check if running in development mode.
 pub fn is_dev_mode() -> bool {
     std::env::var("FBUILD_DEV_MODE")
@@ -22,7 +37,7 @@ pub fn is_dev_mode() -> bool {
 pub fn get_fbuild_root() -> PathBuf {
     let home = dirs_next().expect("could not determine home directory");
     let mode = if is_dev_mode() { "dev" } else { "prod" };
-    home.join(".fbuild").join(mode)
+    home.join(FBUILD_DIR_NAME).join(mode)
 }
 
 /// Root fbuild directory for the OTHER mode (cross-mode fallback).
@@ -32,7 +47,7 @@ pub fn get_fbuild_root() -> PathBuf {
 pub fn get_other_fbuild_root() -> PathBuf {
     let home = dirs_next().expect("could not determine home directory");
     let mode = if is_dev_mode() { "prod" } else { "dev" };
-    home.join(".fbuild").join(mode)
+    home.join(FBUILD_DIR_NAME).join(mode)
 }
 
 /// Daemon files directory.
@@ -157,7 +172,7 @@ pub fn temp_subdir(name: &str) -> PathBuf {
 
 /// Project-local `.fbuild` directory.
 pub fn get_project_fbuild_dir(project_dir: &Path) -> PathBuf {
-    project_dir.join(".fbuild")
+    project_dir.join(FBUILD_DIR_NAME)
 }
 
 /// Project build root.
@@ -170,7 +185,7 @@ pub fn get_project_build_root(project_dir: &Path) -> PathBuf {
     if let Ok(dir) = std::env::var("FBUILD_BUILD_DIR") {
         return PathBuf::from(dir);
     }
-    get_project_fbuild_dir(project_dir).join("build")
+    get_project_fbuild_dir(project_dir).join(BUILD_DIR_NAME)
 }
 
 /// Layout resolver for the per-environment build directory.
@@ -254,7 +269,7 @@ impl BuildLayout {
         } else if let Ok(dir) = std::env::var("FBUILD_BUILD_DIR") {
             PathBuf::from(dir)
         } else {
-            get_project_fbuild_dir(&self.project_dir).join("build")
+            get_project_fbuild_dir(&self.project_dir).join(BUILD_DIR_NAME)
         };
 
         let collapse_env = self.flatten_env || self.project_basename_matches_env();
