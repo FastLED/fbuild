@@ -167,13 +167,13 @@ fn runtime_arch(host: HostPlatform) -> Result<&'static str> {
 /// SHA-256 of each published bundle. An architecture without an entry has no
 /// bundle yet: report that plainly instead of downloading something unpinned.
 ///
-/// aarch64 is built by `.github/workflows/qemu-runtime-bundle.yml` on a native
-/// arm64 runner — Docker Desktop's arm64 emulation cannot run dpkg's
-/// maintainer scripts, so it cannot be produced from an x86_64 developer
-/// workstation the way the x86_64 bundle was.
+/// Both are built by `.github/workflows/qemu-runtime-bundle.yml`; aarch64 needs
+/// its native arm64 runner because Docker Desktop's arm64 emulation cannot run
+/// dpkg's maintainer scripts.
 fn runtime_sha256(arch: &str) -> Result<&'static str> {
     match arch {
         "x86_64" => Ok("b3318ccf60df8e17a42b5b0f61180440f56337fadb0babe867bff1f3dfecd99f"),
+        "aarch64" => Ok("1782782a25f1a375c03bcdc1aafb7444f46d5f2fa40d66793dd530b76c62da0a"),
         other => Err(FbuildError::PackageError(format!(
             "no QEMU runtime-library bundle is published for linux-{other} yet (tracked in the {RUNTIME_RELEASE_TAG} release).\n\
              Install the QEMU runtime libraries from your distribution — on Debian/Ubuntu: libslirp0, libsdl2-2.0-0, libpixman-1-0."
