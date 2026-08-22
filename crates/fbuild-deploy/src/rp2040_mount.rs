@@ -1,9 +1,13 @@
-//! Linux best-effort mounting for a stock RP-series ROM volume.
+//! Best-effort mounting for a stock RP-series ROM volume.
+//!
+//! Candidate discovery (`/dev/disk/by-id/usb-RPI_RP2*-part1`) is pure and
+//! runs on every host; the actual mount mechanic lives behind
+//! [`fbuild_core::platform::device::mount_block_devices`] (udisksctl on
+//! Linux, a no-op where the OS auto-mounts). Callers keep the retry/policy
+//! loop around this.
 
-#[cfg(any(target_os = "linux", test))]
 use std::path::{Path, PathBuf};
 
-#[cfg(any(target_os = "linux", test))]
 fn rom_block_devices(by_id: &Path) -> Vec<PathBuf> {
     let Ok(entries) = std::fs::read_dir(by_id) else {
         return Vec::new();
@@ -20,39 +24,18 @@ fn rom_block_devices(by_id: &Path) -> Vec<PathBuf> {
     devices
 }
 
-#[cfg(target_os = "linux")]
-pub(super) fn try_mount_linux_rom_device() -> bool {
+/// Try to mount any RP-series ROM block device the host exposes. Returns
+/// whether any candidate existed — `false` means "nothing to mount", not
+/// "mounting failed"; individual failures are logged, never fatal.
+pub(super) fn try_mount_rom_device() -> bool {
     let devices = rom_block_devices(Path::new("/dev/disk/by-id"));
-    for device in &devices {
-        let device = device.to_string_lossy().to_string();
-        let args = ["udisksctl", "mount", "--block-device", device.as_str()];
-        match fbuild_core::subprocess::run_command_blocking(
-            &args,
-            None,
-            None,
-            Some(std::time::Duration::from_secs(5)),
-        ) {
-            Ok(output) if output.success() => {
-                tracing::debug!(device, "mounted RP-series ROM volume with udisksctl");
-            }
-            Ok(output) => {
-                tracing::debug!(
-                    device,
-                    stderr = output.stderr.trim(),
-                    "udisksctl could not mount RP-series ROM volume"
-                );
-            }
-            Err(error) => {
-                tracing::debug!(device, error = %error, "RP-series ROM auto-mount unavailable");
-            }
-        }
-    }
+    let device_strs: Vec<String> = devices
+        .iter()
+        .map(|device| device.to_string_lossy().into_owned())
+        .collect();
+    let device_refs: Vec<&str> = device_strs.iter().map(String::as_str).collect();
+    fbuild_core::platform::device::mount_block_devices(&device_refs);
     !devices.is_empty()
-}
-
-#[cfg(not(target_os = "linux"))]
-pub(super) fn try_mount_linux_rom_device() -> bool {
-    false
 }
 
 #[cfg(test)]

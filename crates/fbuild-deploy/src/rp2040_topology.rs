@@ -1,23 +1,41 @@
-//! USB topology capture for RP-series deploy diagnostics (Windows only).
+//! USB topology capture for RP-series deploy diagnostics.
+//!
+//! Built entirely on [`fbuild_core::platform::device::available_serial_ports`]
+//! facts: the host seam owns the SetupAPI/CfgMgr32 walk (Windows) and simply
+//! reports no ancestry elsewhere. Two deliberate deltas versus the previous
+//! hand-rolled fork: ports retained in host history (phantom records,
+//! FastLED/fbuild#962) now get a topology line like live ones — better
+//! failure diagnostics — and a port with neither an instance ID nor any
+//! ancestor chain reports `None` instead of a flat "unavailable" sentence.
+
+use fbuild_core::platform::device;
 
 /// One-line human-readable USB topology for a runtime COM port, or `None`
-/// when the platform or host cannot supply one. Never panics: every FFI
-/// failure degrades to `None` rather than guessing at topology.
-#[cfg(windows)]
+/// when the host cannot supply one. Never panics: every missing fact
+/// degrades to `None` rather than guessing at topology.
 pub(super) fn describe_port_topology(port_name: &str) -> Option<String> {
-    windows_impl::describe_port_topology(port_name)
-}
-
-#[cfg(not(windows))]
-pub(super) fn describe_port_topology(_port_name: &str) -> Option<String> {
-    None
+    let facts = device::available_serial_ports().ok()?;
+    let port = facts
+        .iter()
+        .find(|port| port.port_name.eq_ignore_ascii_case(port_name))?;
+    if port.instance_id.is_none() && port.ancestor_instance_ids.is_empty() {
+        // The host exposes no USB identity at all for this endpoint;
+        // report nothing rather than a flat "unavailable" sentence.
+        return None;
+    }
+    // An unreadable own ID degrades to no composite-ancestor skipping,
+    // not to a lost topology line.
+    let depth = classify_ancestor_chain(
+        port.instance_id.as_deref().unwrap_or_default(),
+        &port.ancestor_instance_ids,
+    );
+    Some(format_topology(depth, port.location_information.as_deref()))
 }
 
 /// Coarse USB hub-tier classification derived from an ancestor
 /// instance-ID chain (child -> root order; the device's own ID is not
-/// included). Kept separate from the FFI walk so it is deterministically
-/// testable on every host OS.
-#[cfg(any(windows, test))]
+/// included). Pure string logic, deterministically testable on every
+/// host OS.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub(super) enum HubDepth {
     DirectRootPort,
@@ -28,7 +46,6 @@ pub(super) enum HubDepth {
     Unavailable,
 }
 
-#[cfg(any(windows, test))]
 pub(super) fn classify_ancestor_chain(own_id: &str, ancestor_ids: &[String]) -> HubDepth {
     // A composite-device CDC function enumerates as an interface node
     // (`USB\VID_xxxx&PID_yyyy&MI_00\...`) whose leading ancestor is the USB
@@ -68,7 +85,6 @@ pub(super) fn classify_ancestor_chain(own_id: &str, ancestor_ids: &[String]) -> 
 
 /// Extract the uppercase `VID_xxxx&PID_yyyy` token from a USB instance ID,
 /// dropping any interface suffix (`&MI_nn`). `None` for non-USB IDs.
-#[cfg(any(windows, test))]
 fn vid_pid_token(instance_id: &str) -> Option<String> {
     let upper = instance_id.to_ascii_uppercase();
     let device_part = upper.strip_prefix("USB\\")?.split('\\').next()?;
@@ -78,14 +94,12 @@ fn vid_pid_token(instance_id: &str) -> Option<String> {
     Some(format!("{vid}&{pid}"))
 }
 
-#[cfg(any(windows, test))]
 fn is_root_hub_id(instance_id: &str) -> bool {
     instance_id
         .to_ascii_uppercase()
         .starts_with("USB\\ROOT_HUB")
 }
 
-#[cfg(any(windows, test))]
 fn is_usb_device_id(instance_id: &str) -> bool {
     let upper = instance_id.to_ascii_uppercase();
     upper.starts_with("USB\\VID_") && upper.contains("&PID_")
@@ -96,7 +110,6 @@ fn is_usb_device_id(instance_id: &str) -> bool {
 /// one-line summary appended to deploy failure messages. Facts fbuild
 /// cannot query (hub power mode, sibling count) are labeled explicitly
 /// rather than omitted or guessed.
-#[cfg(any(windows, test))]
 pub(super) fn format_topology(depth: HubDepth, location: Option<&str>) -> String {
     match depth {
         HubDepth::DirectRootPort => match location {
@@ -113,262 +126,6 @@ pub(super) fn format_topology(depth: HubDepth, location: Option<&str>) -> String
             )
         }
         HubDepth::Unavailable => "USB topology unavailable".to_string(),
-    }
-}
-
-#[cfg(windows)]
-mod windows_impl {
-    use super::{classify_ancestor_chain, format_topology};
-    use std::ffi::{OsStr, c_void};
-    use std::os::windows::ffi::OsStrExt;
-
-    const DIGCF_PRESENT: u32 = 0x0000_0002;
-    const DICS_FLAG_GLOBAL: u32 = 0x0000_0001;
-    const DIREG_DEV: u32 = 0x0000_0001;
-    const KEY_READ: u32 = 0x0002_0019;
-    const REG_SZ: u32 = 1;
-    const ERROR_SUCCESS: i32 = 0;
-    const SPDRP_LOCATION_INFORMATION: u32 = 0x0000_000D;
-    const CR_SUCCESS: u32 = 0;
-    // Real USB hub trees are at most a handful of tiers deep; this bounds a
-    // wedged/cyclic CM_Get_Parent walk instead of looping forever.
-    const MAX_ANCESTOR_DEPTH: usize = 16;
-    const DEVICE_ID_BUFFER_LEN: usize = 256;
-
-    #[repr(C)]
-    struct Guid {
-        data1: u32,
-        data2: u16,
-        data3: u16,
-        data4: [u8; 8],
-    }
-
-    // {4D36E978-E325-11CE-BFC1-08002BE10318} -- GUID_DEVCLASS_PORTS.
-    const GUID_DEVCLASS_PORTS: Guid = Guid {
-        data1: 0x4D36_E978,
-        data2: 0xE325,
-        data3: 0x11CE,
-        data4: [0xBF, 0xC1, 0x08, 0x00, 0x2B, 0xE1, 0x03, 0x18],
-    };
-
-    #[repr(C)]
-    struct SpDevinfoData {
-        cb_size: u32,
-        class_guid: Guid,
-        dev_inst: u32,
-        reserved: usize,
-    }
-
-    #[link(name = "setupapi")]
-    extern "system" {
-        fn SetupDiGetClassDevsW(
-            class_guid: *const Guid,
-            enumerator: *const u16,
-            hwnd_parent: *mut c_void,
-            flags: u32,
-        ) -> *mut c_void;
-        fn SetupDiEnumDeviceInfo(
-            device_info_set: *mut c_void,
-            member_index: u32,
-            device_info_data: *mut SpDevinfoData,
-        ) -> i32;
-        fn SetupDiOpenDevRegKey(
-            device_info_set: *mut c_void,
-            device_info_data: *mut SpDevinfoData,
-            scope: u32,
-            hw_profile: u32,
-            key_type: u32,
-            sam_desired: u32,
-        ) -> *mut c_void;
-        fn SetupDiGetDeviceRegistryPropertyW(
-            device_info_set: *mut c_void,
-            device_info_data: *mut SpDevinfoData,
-            property: u32,
-            property_reg_data_type: *mut u32,
-            property_buffer: *mut u8,
-            property_buffer_size: u32,
-            required_size: *mut u32,
-        ) -> i32;
-        fn SetupDiDestroyDeviceInfoList(device_info_set: *mut c_void) -> i32;
-    }
-
-    #[link(name = "advapi32")]
-    extern "system" {
-        fn RegQueryValueExW(
-            hkey: *mut c_void,
-            value_name: *const u16,
-            reserved: *mut u32,
-            data_type: *mut u32,
-            data: *mut u8,
-            data_size: *mut u32,
-        ) -> i32;
-        fn RegCloseKey(hkey: *mut c_void) -> i32;
-    }
-
-    #[link(name = "cfgmgr32")]
-    extern "system" {
-        fn CM_Get_Parent(parent_devinst: *mut u32, devinst: u32, flags: u32) -> u32;
-        fn CM_Get_Device_IDW(devinst: u32, buffer: *mut u16, buffer_len: u32, flags: u32) -> u32;
-    }
-
-    fn to_wide(value: &str) -> Vec<u16> {
-        OsStr::new(value)
-            .encode_wide()
-            .chain(std::iter::once(0))
-            .collect()
-    }
-
-    fn from_wide_lossy(buffer: &[u16]) -> String {
-        let len = buffer
-            .iter()
-            .position(|&unit| unit == 0)
-            .unwrap_or(buffer.len());
-        String::from_utf16_lossy(&buffer[..len])
-    }
-
-    /// `SetupDiGetClassDevsW`/`SetupDiOpenDevRegKey` report failure as
-    /// `INVALID_HANDLE_VALUE` (all bits set), not always a null pointer.
-    fn is_invalid_handle(handle: *mut c_void) -> bool {
-        handle.is_null() || handle as usize == usize::MAX
-    }
-
-    fn new_devinfo_data() -> SpDevinfoData {
-        SpDevinfoData {
-            cb_size: std::mem::size_of::<SpDevinfoData>() as u32,
-            class_guid: Guid {
-                data1: 0,
-                data2: 0,
-                data3: 0,
-                data4: [0; 8],
-            },
-            dev_inst: 0,
-            reserved: 0,
-        }
-    }
-
-    fn read_port_name(hdevinfo: *mut c_void, info: &mut SpDevinfoData) -> Option<String> {
-        let hkey = unsafe {
-            SetupDiOpenDevRegKey(hdevinfo, info, DICS_FLAG_GLOBAL, 0, DIREG_DEV, KEY_READ)
-        };
-        if is_invalid_handle(hkey) {
-            return None;
-        }
-        let value_name = to_wide("PortName");
-        let mut buffer = [0u8; DEVICE_ID_BUFFER_LEN];
-        let mut size = buffer.len() as u32;
-        let mut data_type = 0u32;
-        let status = unsafe {
-            RegQueryValueExW(
-                hkey,
-                value_name.as_ptr(),
-                std::ptr::null_mut(),
-                &mut data_type,
-                buffer.as_mut_ptr(),
-                &mut size,
-            )
-        };
-        unsafe {
-            RegCloseKey(hkey);
-        }
-        if status != ERROR_SUCCESS || data_type != REG_SZ {
-            return None;
-        }
-        let word_count = ((size as usize) / 2).min(buffer.len() / 2);
-        let wide: Vec<u16> = buffer[..word_count * 2]
-            .chunks_exact(2)
-            .map(|pair| u16::from_ne_bytes([pair[0], pair[1]]))
-            .collect();
-        Some(from_wide_lossy(&wide))
-    }
-
-    fn read_location(hdevinfo: *mut c_void, info: &mut SpDevinfoData) -> Option<String> {
-        let mut buffer = [0u16; DEVICE_ID_BUFFER_LEN];
-        let ok = unsafe {
-            SetupDiGetDeviceRegistryPropertyW(
-                hdevinfo,
-                info,
-                SPDRP_LOCATION_INFORMATION,
-                std::ptr::null_mut(),
-                buffer.as_mut_ptr() as *mut u8,
-                (buffer.len() * 2) as u32,
-                std::ptr::null_mut(),
-            )
-        };
-        if ok == 0 {
-            return None;
-        }
-        let text = from_wide_lossy(&buffer);
-        (!text.is_empty()).then_some(text)
-    }
-
-    fn find_devinst_for_port(port_name: &str) -> Option<(u32, Option<String>)> {
-        let hdevinfo = unsafe {
-            SetupDiGetClassDevsW(
-                &GUID_DEVCLASS_PORTS,
-                std::ptr::null(),
-                std::ptr::null_mut(),
-                DIGCF_PRESENT,
-            )
-        };
-        if is_invalid_handle(hdevinfo) {
-            return None;
-        }
-        let mut index = 0u32;
-        let found = loop {
-            let mut info = new_devinfo_data();
-            let ok = unsafe { SetupDiEnumDeviceInfo(hdevinfo, index, &mut info) };
-            if ok == 0 {
-                break None;
-            }
-            index += 1;
-            let Some(candidate_name) = read_port_name(hdevinfo, &mut info) else {
-                continue;
-            };
-            if candidate_name.eq_ignore_ascii_case(port_name) {
-                let location = read_location(hdevinfo, &mut info);
-                break Some((info.dev_inst, location));
-            }
-        };
-        unsafe {
-            SetupDiDestroyDeviceInfoList(hdevinfo);
-        }
-        found
-    }
-
-    fn device_instance_id(devinst: u32) -> Option<String> {
-        let mut buffer = [0u16; DEVICE_ID_BUFFER_LEN];
-        if unsafe { CM_Get_Device_IDW(devinst, buffer.as_mut_ptr(), buffer.len() as u32, 0) }
-            != CR_SUCCESS
-        {
-            return None;
-        }
-        Some(from_wide_lossy(&buffer))
-    }
-
-    fn ancestor_chain(devinst: u32) -> Vec<String> {
-        let mut ids = Vec::new();
-        let mut current = devinst;
-        for _ in 0..MAX_ANCESTOR_DEPTH {
-            let mut parent = 0u32;
-            if unsafe { CM_Get_Parent(&mut parent, current, 0) } != CR_SUCCESS {
-                break;
-            }
-            let Some(id) = device_instance_id(parent) else {
-                break;
-            };
-            ids.push(id);
-            current = parent;
-        }
-        ids
-    }
-
-    pub(super) fn describe_port_topology(port_name: &str) -> Option<String> {
-        let (devinst, location) = find_devinst_for_port(port_name)?;
-        // An unreadable own ID degrades to no composite-ancestor skipping,
-        // not to a lost topology line.
-        let own_id = device_instance_id(devinst).unwrap_or_default();
-        let depth = classify_ancestor_chain(&own_id, &ancestor_chain(devinst));
-        Some(format_topology(depth, location.as_deref()))
     }
 }
 
@@ -503,9 +260,10 @@ mod tests {
         );
     }
 
-    #[cfg(not(windows))]
     #[test]
-    fn non_windows_never_reports_topology() {
-        assert_eq!(describe_port_topology("COM12"), None);
+    fn unknown_port_reports_no_topology_on_any_host() {
+        // Host-independent contract: a port name the host never enumerated
+        // yields `None` everywhere (Windows included), never a guess.
+        assert_eq!(describe_port_topology("FBUILD_NO_SUCH_PORT"), None);
     }
 }

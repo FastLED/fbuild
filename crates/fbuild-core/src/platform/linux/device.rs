@@ -33,6 +33,32 @@ pub(crate) fn live_sysfs_usb_root() -> Option<NormalizedPath> {
     Some(NormalizedPath::from(SYSFS_USB_ROOT))
 }
 
+pub(crate) fn mount_block_devices(device_paths: &[&str]) {
+    for device in device_paths {
+        let args = ["udisksctl", "mount", "--block-device", device];
+        match crate::subprocess::run_command_blocking(
+            &args,
+            None,
+            None,
+            Some(std::time::Duration::from_secs(5)),
+        ) {
+            Ok(output) if output.success() => {
+                tracing::debug!(device, "mounted RP-series ROM volume with udisksctl");
+            }
+            Ok(output) => {
+                tracing::debug!(
+                    device,
+                    stderr = output.stderr.trim(),
+                    "udisksctl could not mount RP-series ROM volume"
+                );
+            }
+            Err(error) => {
+                tracing::debug!(device, error = %error, "RP-series ROM auto-mount unavailable");
+            }
+        }
+    }
+}
+
 /// Linux implementation, factored on `sysfs_root` so unit tests can
 /// point at a temp dir holding a fake sysfs.
 pub(crate) fn detect_with_sysfs_root(

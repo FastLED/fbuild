@@ -1,4 +1,7 @@
 //! Neutral host identity and runtime facts.
+//!
+//! Host-filesystem mechanics (e.g. the home directory) live in the
+//! per-OS `selected::host` tree; this module exposes the neutral API.
 
 /// Operating systems supported by the fbuild executable.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -122,6 +125,17 @@ pub fn path_list_separator() -> char {
 
 pub fn path_list_separator_str() -> &'static str {
     current().path_list_separator_str()
+}
+
+/// The current user's home directory: `%USERPROFILE%` on Windows (with a
+/// `%HOME%` fallback for POSIX-style shells), `$HOME` elsewhere.
+///
+/// Callers keep their own policy for what to do when the variable is
+/// unset — the facade only reports the fact. Returned as a
+/// [`NormalizedPath`](crate::path::NormalizedPath), matching the other
+/// neutral facades that hand out paths.
+pub fn home_dir() -> Option<crate::path::NormalizedPath> {
+    super::selected::host::home_dir()
 }
 
 #[cfg(test)]

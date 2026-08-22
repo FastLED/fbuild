@@ -215,24 +215,19 @@ pub fn available_ports() -> serialport::Result<Vec<DetectedPort>> {
             }
         })
         .collect();
-    // Only Linux mutates the list (sysfs health enrichment). macOS and other
-    // unix targets keep every record at its enumeration-time health. Binding
-    // the `mut` inside the cfg keeps non-Linux unix targets from tripping
-    // `-D unused-mut`.
-    #[cfg(target_os = "linux")]
-    let ports = {
-        let mut ports = ports;
-        enrich_linux_port_health(&mut ports);
-        ports
-    };
+    // Sysfs health enrichment self-noops where the host has no live sysfs
+    // USB tree (Windows, macOS): every record keeps its enumeration-time
+    // health, so one unconditional call serves every host.
+    let mut ports = ports;
+    enrich_with_sysfs_health(&mut ports);
     Ok(ports)
 }
 
 /// Overwrite `PortHealth::Unknown` entries with a concrete sysfs-derived
-/// signal, for ports whose name is a `/dev/ttyXXX` device. Ports that sysfs
-/// has no opinion about (non-USB ttys, ambiguous state) are left untouched.
-#[cfg(target_os = "linux")]
-fn enrich_linux_port_health(ports: &mut [DetectedPort]) {
+/// signal, for ports whose name is a `/dev/ttyXXX` device. No-op wherever
+/// the host has no live sysfs USB tree; otherwise, ports that sysfs has no
+/// opinion about (non-USB ttys, ambiguous state) are left untouched.
+fn enrich_with_sysfs_health(ports: &mut [DetectedPort]) {
     let Some(root) = crate::sysfs_usb::live_root() else {
         return;
     };
@@ -274,21 +269,18 @@ pub fn reset_usb_interface_to_bootsel(interface: &UsbResetInterface) -> std::io:
 /// Linux has an equivalent diagnostic (`sysfs`-derived, not Windows PnP
 /// problem codes), but the `UsbProblemDevice` shape doesn't fit it honestly
 /// (no PnP instance id, no Windows setup class) — see
-/// `present_usb_problem_devices_linux` instead (not an intra-doc link: that
-/// item is `cfg(target_os = "linux")`, so it does not exist to resolve
-/// against when these docs are built on a non-Linux host). macOS has no
-/// equivalent implemented yet (IOKit work is out of scope without a macOS
-/// host).
+/// [`present_usb_problem_devices_linux`] instead. macOS has no equivalent
+/// implemented yet (IOKit work is out of scope without a macOS host).
 pub fn present_usb_problem_devices() -> Vec<UsbProblemDevice> {
     fbuild_core::platform::device::present_usb_problem_devices()
 }
 
 /// Linux sibling of [`present_usb_problem_devices`]: `sysfs`-derived USB
 /// devices with a concrete, observed fault (unauthorized, unconfigured, or a
-/// CDC interface with no bound driver). Diagnostics only — never used to
-/// drive `PortHealth` selection directly (that happens per-tty via
-/// [`available_ports`]'s Linux enrichment).
-#[cfg(target_os = "linux")]
+/// CDC interface with no bound driver). Empty on hosts without a live sysfs
+/// USB tree (Windows, macOS). Diagnostics only — never used to drive
+/// `PortHealth` selection directly (that happens per-tty via
+/// [`available_ports`]'s sysfs enrichment).
 pub fn present_usb_problem_devices_linux() -> Vec<crate::sysfs_usb::LinuxUsbProblemDevice> {
     match crate::sysfs_usb::live_root() {
         Some(root) => crate::sysfs_usb::linux_usb_problem_devices_from_root(&root),
