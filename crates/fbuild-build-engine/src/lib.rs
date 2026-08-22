@@ -28,6 +28,7 @@ pub mod package_override;
 pub mod parallel;
 pub mod perf_log;
 pub mod pipeline;
+pub mod rebuild_signature;
 pub mod resolution;
 pub mod script_runtime;
 pub mod shrink;
