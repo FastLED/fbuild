@@ -1,6 +1,6 @@
 //! Verifies fbuild's nxplpc compile command shape against ArduinoCore-LPC8xx.
 
-use fbuild_build::{BuildOrchestrator, BuildParams};
+use fbuild_build::{BuildOrchestrator, BuildParams, compile_backend};
 use fbuild_core::BuildProfile;
 use serde_json::Value;
 use std::fs;
@@ -19,6 +19,26 @@ async fn under_test_timeout<F: std::future::Future>(fut: F) -> F::Output {
     }
 }
 
+/// The orchestrator compiles through the process-wide compile backend
+/// (FastLED/fbuild#800), which only the daemon wires at startup — this
+/// integration test must install its own.
+///
+/// Initialized at most once per test process: a second concurrent
+/// `CompileBackend::start()` cannot win the zccache cache-root writer slot
+/// from the first and fails with "another live daemon already holds this
+/// cache root".
+async fn install_test_compile_backend() {
+    static INSTALL: tokio::sync::OnceCell<()> = tokio::sync::OnceCell::const_new();
+    INSTALL
+        .get_or_init(|| async {
+            let backend = compile_backend::CompileBackend::start()
+                .await
+                .expect("compile backend starts for nxp lpc compile-commands test");
+            compile_backend::install_global(backend);
+        })
+        .await;
+}
+
 fn arduino_core_repo() -> Option<PathBuf> {
     let home = std::env::var_os("USERPROFILE")
         .map(PathBuf::from)
@@ -28,6 +48,7 @@ fn arduino_core_repo() -> Option<PathBuf> {
 }
 
 async fn build_core_repo(repo: &Path, env_name: &str) -> tempfile::TempDir {
+    install_test_compile_backend().await;
     let tmp = tempfile::TempDir::new().expect("tempdir");
     let build_dir = tmp
         .path()

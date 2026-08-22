@@ -291,7 +291,9 @@ async fn maybe_recover_and_retry(
         is_ci: std::env::var_os("CI").is_some(),
         is_interactive: std::io::IsTerminal::is_terminal(&std::io::stdin()),
     };
-    #[cfg(windows)]
+    // One path on every host: `decide_recovery_launch` inside
+    // `run_recovery_for_typed_request` refuses every launch off Windows, so
+    // the launcher is only ever reached in an interactive Windows session.
     let outcome = {
         let request = request.clone();
         tokio::task::spawn_blocking(move || {
@@ -306,11 +308,6 @@ async fn maybe_recover_and_retry(
         .map_err(|error| {
             fbuild_core::FbuildError::Other(format!("recovery helper task failed: {error}"))
         })??
-    };
-    #[cfg(not(windows))]
-    let outcome = match usb_recovery::decide_recovery_launch(policy, true, context) {
-        usb_recovery::RecoveryLaunchDecision::ManualGuidance => RecoveryRunOutcome::ManualGuidance,
-        _ => RecoveryRunOutcome::RefuseNonInteractive,
     };
     match outcome {
         RecoveryRunOutcome::ManualGuidance => {

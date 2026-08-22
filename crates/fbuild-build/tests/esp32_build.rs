@@ -8,7 +8,7 @@
 use std::fs;
 use std::path::PathBuf;
 
-use fbuild_build::{BuildOrchestrator, BuildParams};
+use fbuild_build::{BuildOrchestrator, BuildParams, compile_backend};
 use fbuild_core::BuildProfile;
 
 /// 15-min wall-clock cap for `--ignored` real-toolchain tests (FastLED/fbuild#806).
@@ -28,14 +28,30 @@ async fn under_test_timeout<F: std::future::Future>(fut: F) -> F::Output {
 }
 
 fn home_dir() -> PathBuf {
-    #[cfg(windows)]
-    {
-        PathBuf::from(std::env::var("USERPROFILE").expect("USERPROFILE not set"))
-    }
-    #[cfg(not(windows))]
-    {
-        PathBuf::from(std::env::var("HOME").expect("HOME not set"))
-    }
+    fbuild_core::platform::host::home_dir()
+        .expect("home directory not set")
+        .into_path_buf()
+}
+
+/// The ESP32 orchestrators compile through the process-wide compile backend
+/// (FastLED/fbuild#800), which only the daemon wires at startup — these
+/// integration tests must install their own, like the sibling acceptance
+/// suites do.
+///
+/// Initialized at most once per test process: a second concurrent
+/// `CompileBackend::start()` cannot win the zccache cache-root writer slot
+/// from the first and fails with "another live daemon already holds this
+/// cache root".
+async fn install_test_compile_backend() {
+    static INSTALL: tokio::sync::OnceCell<()> = tokio::sync::OnceCell::const_new();
+    INSTALL
+        .get_or_init(|| async {
+            let backend = compile_backend::CompileBackend::start()
+                .await
+                .expect("compile backend starts for ESP32 build test");
+            compile_backend::install_global(backend);
+        })
+        .await;
 }
 
 /// Build a self-contained ESP32 blink sketch.
@@ -44,6 +60,7 @@ fn home_dir() -> PathBuf {
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads ESP32 toolchain (~hundreds of MB)"]
 async fn build_esp32dev_blink() {
+    install_test_compile_backend().await;
     let tmp = tempfile::TempDir::new().unwrap();
     let project_dir = tmp.path();
 
@@ -139,6 +156,7 @@ void loop() {
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads ESP32 toolchain (~hundreds of MB)"]
 async fn build_esp32c6_blink() {
+    install_test_compile_backend().await;
     let tmp = tempfile::TempDir::new().unwrap();
     let project_dir = tmp.path();
 
@@ -224,6 +242,7 @@ void loop() {
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads ESP32 toolchain (~hundreds of MB)"]
 async fn build_esp32c3_blink() {
+    install_test_compile_backend().await;
     let tmp = tempfile::TempDir::new().unwrap();
     let project_dir = tmp.path();
 
@@ -308,6 +327,7 @@ void loop() {
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads ESP32 toolchain (~hundreds of MB)"]
 async fn build_esp32s3_blink() {
+    install_test_compile_backend().await;
     let tmp = tempfile::TempDir::new().unwrap();
     let project_dir = tmp.path();
 
@@ -418,6 +438,7 @@ async fn build_esp32s3_fixture() {
         eprintln!("SKIP: {} does not exist", project_dir.display());
         return;
     }
+    install_test_compile_backend().await;
 
     let build_dir = project_dir.join(".fbuild/build/esp32s3/release");
     let params = BuildParams {
@@ -485,6 +506,7 @@ async fn build_nightdriverstrip_demo() {
         );
         return;
     }
+    install_test_compile_backend().await;
 
     let tmp = tempfile::TempDir::new().unwrap();
     let build_dir = tmp.path().join(".fbuild/build/demo/release");
@@ -583,6 +605,7 @@ async fn incremental_build_at(project_dir: &std::path::Path, env_name: &str) {
         );
         return;
     }
+    install_test_compile_backend().await;
 
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
@@ -667,6 +690,7 @@ async fn incremental_nightdriverstrip_one_file_changed() {
         eprintln!("SKIP: no prior build at {}", build_marker.display());
         return;
     }
+    install_test_compile_backend().await;
 
     // Touch one source file to trigger recompilation
     let src_dir = project_dir.join("src");

@@ -21,6 +21,7 @@
 use std::fs;
 use std::path::{Path, PathBuf};
 
+use fbuild_build::compile_backend;
 use fbuild_build::compile_many::{CompileManyRequest, Stage, compile_many};
 use fbuild_core::BuildProfile;
 
@@ -35,6 +36,21 @@ async fn under_test_timeout<F: std::future::Future>(fut: F) -> F::Output {
             REAL_BUILD_TIMEOUT.as_secs_f64()
         ),
     }
+}
+
+/// `compile_many` compiles through the process-wide compile backend
+/// (FastLED/fbuild#800), which only the daemon wires at startup — this
+/// integration test must install its own.
+async fn install_test_compile_backend() {
+    static INSTALL: tokio::sync::OnceCell<()> = tokio::sync::OnceCell::const_new();
+    INSTALL
+        .get_or_init(|| async {
+            let backend = compile_backend::CompileBackend::start()
+                .await
+                .expect("compile backend starts for stage-2 perf test");
+            compile_backend::install_global(backend);
+        })
+        .await;
 }
 
 const UNO_PLATFORMIO_INI: &str =
@@ -63,6 +79,7 @@ fn scaffold_uno_blink(project_dir: &Path) {
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads AVR toolchain + measures wall-time; perf oracle, flaky under CI load"]
 async fn stage2_per_sketch_wall_is_a_fraction_of_stage1() {
+    install_test_compile_backend().await;
     let tmp = tempfile::TempDir::new().unwrap();
     let sketches: Vec<PathBuf> = (0..4)
         .map(|i| {

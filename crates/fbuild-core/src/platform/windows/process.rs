@@ -56,6 +56,94 @@ pub(crate) fn configure_tokio_owner_death(
     Ok(())
 }
 
+/// Windows consults system directories (notably `%WINDIR%`, home of the
+/// `py` launcher) through a fallback exe-search that survives any child
+/// PATH override. Report whether `exe_name` would so resolve.
+pub(crate) fn system_exe_fallback_resolves(exe_name: &str) -> bool {
+    let bare = exe_name.strip_suffix(".exe").unwrap_or(exe_name);
+    let windir = std::env::var_os("WINDIR")
+        .unwrap_or_else(|| std::ffi::OsString::from(r"C:\Windows"));
+    std::path::Path::new(&windir)
+        .join(format!("{bare}.exe"))
+        .exists()
+}
+
+/// Windows elevation mechanic: `ShellExecuteExW` with the `runas` verb,
+/// a hidden window, and `SEE_MASK_NOCLOSEPROCESS` so the caller can wait
+/// for the elevated child and read its exit code.
+pub(crate) fn launch_elevated(
+    program: &std::ffi::OsStr,
+    parameters: &str,
+) -> std::io::Result<super::super::process::ElevationOutcome> {
+    use std::os::windows::ffi::OsStrExt;
+
+    use windows_sys::Win32::Foundation::{
+        CloseHandle, ERROR_CANCELLED, GetLastError, WAIT_OBJECT_0,
+    };
+    use windows_sys::Win32::System::Threading::{
+        GetExitCodeProcess, INFINITE, WaitForSingleObject,
+    };
+    use windows_sys::Win32::UI::Shell::{
+        SEE_MASK_NOCLOSEPROCESS, SHELLEXECUTEINFOW, ShellExecuteExW,
+    };
+    use windows_sys::Win32::UI::WindowsAndMessaging::SW_HIDE;
+
+    fn wide(value: &std::ffi::OsStr) -> Vec<u16> {
+        value.encode_wide().chain(Some(0)).collect()
+    }
+
+    let program_wide = wide(program);
+    let verb_wide = wide(std::ffi::OsStr::new("runas"));
+    let parameters_wide = wide(std::ffi::OsStr::new(parameters));
+    // SAFETY: all pointer fields target NUL-terminated buffers that remain
+    // alive through ShellExecuteExW; zero is the documented initialization
+    // for unused structure fields.
+    let mut execute: SHELLEXECUTEINFOW = unsafe { std::mem::zeroed() };
+    execute.cbSize = std::mem::size_of::<SHELLEXECUTEINFOW>() as u32;
+    execute.fMask = SEE_MASK_NOCLOSEPROCESS;
+    execute.lpVerb = verb_wide.as_ptr();
+    execute.lpFile = program_wide.as_ptr();
+    execute.lpParameters = parameters_wide.as_ptr();
+    execute.nShow = SW_HIDE;
+    // SAFETY: `execute` is fully initialized as described above; the caller
+    // owns the choice of program and parameters.
+    if unsafe { ShellExecuteExW(&mut execute) } == 0 {
+        // SAFETY: GetLastError reads thread-local state immediately after
+        // ShellExecuteExW's documented failure return.
+        let error = unsafe { GetLastError() };
+        if error == ERROR_CANCELLED {
+            return Ok(super::super::process::ElevationOutcome::Declined);
+        }
+        return Err(std::io::Error::from_raw_os_error(error as i32));
+    }
+    if execute.hProcess == 0 {
+        return Err(std::io::Error::other(
+            "elevated launch returned no process handle",
+        ));
+    }
+    // SAFETY: hProcess was requested through SEE_MASK_NOCLOSEPROCESS and
+    // belongs to this caller. The handle is closed on every path below.
+    let wait = unsafe { WaitForSingleObject(execute.hProcess, INFINITE) };
+    if wait != WAIT_OBJECT_0 {
+        // SAFETY: closes the valid owned process handle before returning.
+        unsafe { CloseHandle(execute.hProcess) };
+        return Err(std::io::Error::other(format!(
+            "elevated launch wait failed ({wait})"
+        )));
+    }
+    let mut exit_code = 1u32;
+    // SAFETY: valid completed process handle and writable local exit code.
+    let got_exit_code = unsafe { GetExitCodeProcess(execute.hProcess, &mut exit_code) };
+    // SAFETY: closes the valid owned process handle exactly once.
+    unsafe { CloseHandle(execute.hProcess) };
+    if got_exit_code == 0 {
+        return Err(std::io::Error::other(
+            "cannot read elevated process exit status",
+        ));
+    }
+    Ok(super::super::process::ElevationOutcome::Completed(exit_code))
+}
+
 pub(crate) fn after_tokio_spawn(child: &tokio::process::Child) -> std::io::Result<()> {
     let Some(raw) = child.raw_handle() else {
         return Ok(());

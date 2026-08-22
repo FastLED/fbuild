@@ -29,7 +29,7 @@ use std::path::{Path, PathBuf};
 use std::time::Duration;
 
 use fbuild_build::avr::orchestrator::AvrOrchestrator;
-use fbuild_build::{BuildOrchestrator, BuildParams};
+use fbuild_build::{BuildOrchestrator, BuildParams, compile_backend};
 use fbuild_core::BuildProfile;
 
 /// Wall-clock cap for the whole harness (compiledb generation + clangd
@@ -54,6 +54,26 @@ async fn under_timeout<F: std::future::Future>(fut: F) -> F::Output {
             HARNESS_TIMEOUT.as_secs_f64()
         ),
     }
+}
+
+/// The orchestrator compiles through the process-wide compile backend
+/// (FastLED/fbuild#800), which only the daemon wires at startup — this
+/// harness must install its own.
+///
+/// Initialized at most once per test process: a second concurrent
+/// `CompileBackend::start()` cannot win the zccache cache-root writer slot
+/// from the first and fails with "another live daemon already holds this
+/// cache root".
+async fn install_test_compile_backend() {
+    static INSTALL: tokio::sync::OnceCell<()> = tokio::sync::OnceCell::const_new();
+    INSTALL
+        .get_or_init(|| async {
+            let backend = compile_backend::CompileBackend::start()
+                .await
+                .expect("compile backend starts for clangd parity harness");
+            compile_backend::install_global(backend);
+        })
+        .await;
 }
 
 /// Absolute path to `tests/platform/uno` (the AVR representative project —
@@ -131,6 +151,7 @@ async fn clangd_check_parity_uno() {
         }
     };
     eprintln!("Using clangd: {}", clangd_path.display());
+    install_test_compile_backend().await;
 
     let tmp = tempfile::TempDir::new().expect("tempdir");
     let build_dir = tmp.path().join(".fbuild/build/uno/release");

@@ -595,14 +595,11 @@ async fn test_find_python_with_path_replaces_inherited_path() {
     // The `py` launcher installs to the Windows directory, which is on the
     // OS fallback exe-search path that `Command::new` consults even when
     // the child PATH is overridden — an empty PATH cannot hide it, and
-    // that is exe resolution, not a PATH leak. Skip on such machines; the
-    // strict assertion still runs on Unix CI and py-less Windows.
-    #[cfg(windows)]
-    {
-        let windir = std::env::var("WINDIR").unwrap_or_else(|_| r"C:\Windows".to_string());
-        if std::path::Path::new(&windir).join("py.exe").exists() {
-            return;
-        }
+    // that is exe resolution, not a PATH leak. Skip on such hosts; the
+    // strict assertion still runs everywhere the fallback can't rescue
+    // python (Unix CI, py-less Windows).
+    if fbuild_core::platform::process::system_exe_fallback_resolves("py") {
+        return;
     }
     let empty = tempfile::tempdir().unwrap();
     let bogus_path = empty.path().to_string_lossy().to_string();
