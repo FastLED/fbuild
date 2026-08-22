@@ -53,9 +53,22 @@ const RUNTIME_RELEASE_TAG: &str = "qemu-linux-runtime-v1";
 /// Subdirectory the archive extracts its libraries into.
 const LIB_SUBDIR: &str = "lib";
 
-/// One library that must be present for the bundle to be considered valid —
-/// it is the one whose absence broke CI in the first place.
-const SENTINEL_LIB: &str = "libslirp.so.0";
+/// Every non-glibc library the Espressif QEMU binaries link directly. All of
+/// them must be present for a cached bundle to count as complete: checking one
+/// sentinel would let a half-extracted tree pass `is_installed()`, and the
+/// install would then never be repaired — the second probe would just fail
+/// with "cannot start even with the bundle applied".
+///
+/// The bundle carries their transitive closure too, but those are reachable
+/// only through these five, so a tree that has all five and nothing else is
+/// already impossible from `staged_install`'s atomic rename.
+const REQUIRED_LIBS: &[&str] = &[
+    "libslirp.so.0",
+    "libSDL2-2.0.so.0",
+    "libpixman-1.so.0",
+    "libgcrypt.so.20",
+    "libz.so.1",
+];
 
 /// The bundled Linux runtime libraries for Espressif QEMU.
 pub struct QemuLinuxRuntime {
@@ -101,7 +114,7 @@ impl QemuLinuxRuntime {
 
     /// Whether a complete bundle is already unpacked in the cache.
     pub fn is_installed(&self) -> bool {
-        self.base.is_cached() && self.lib_dir().join(SENTINEL_LIB).is_file()
+        self.base.is_cached() && missing_libs(self.lib_dir().as_path()).is_empty()
     }
 
     pub fn get_info(&self) -> PackageInfo {
@@ -109,17 +122,27 @@ impl QemuLinuxRuntime {
     }
 }
 
+/// Which of the required libraries are absent from an extracted `lib/` dir.
+fn missing_libs(lib_dir: &Path) -> Vec<&'static str> {
+    REQUIRED_LIBS
+        .iter()
+        .copied()
+        .filter(|lib| !lib_dir.join(lib).is_file())
+        .collect()
+}
+
 /// Reject an extracted tree that does not carry the libraries it exists for.
 fn validate_runtime_install(install_dir: &Path) -> Result<()> {
     let lib_dir = install_dir.join(LIB_SUBDIR);
-    if lib_dir.join(SENTINEL_LIB).is_file() {
+    let missing = missing_libs(&lib_dir);
+    if missing.is_empty() {
         return Ok(());
     }
     Err(FbuildError::PackageError(format!(
-        "QEMU Linux runtime bundle at {} is incomplete: {}/{} not found",
+        "QEMU Linux runtime bundle at {} is incomplete: {} missing from {}/",
         install_dir.display(),
+        missing.join(", "),
         LIB_SUBDIR,
-        SENTINEL_LIB,
     )))
 }
 
@@ -375,22 +398,47 @@ mod tests {
         );
     }
 
-    #[test]
-    fn validate_rejects_tree_without_sentinel_library() {
-        let tmp = tempfile::TempDir::new().unwrap();
-        std::fs::create_dir_all(tmp.path().join(LIB_SUBDIR)).unwrap();
-        let err = validate_runtime_install(tmp.path())
-            .unwrap_err()
-            .to_string();
-        assert!(err.contains(SENTINEL_LIB), "unexpected error: {err}");
+    /// Lay down an extracted-bundle tree carrying `libs`.
+    fn bundle_tree(root: &Path, libs: &[&str]) {
+        let lib = root.join(LIB_SUBDIR);
+        std::fs::create_dir_all(&lib).unwrap();
+        for name in libs {
+            std::fs::write(lib.join(name), b"").unwrap();
+        }
     }
 
     #[test]
-    fn validate_accepts_tree_with_sentinel_library() {
+    fn validate_rejects_empty_tree_and_names_every_missing_library() {
         let tmp = tempfile::TempDir::new().unwrap();
-        let lib = tmp.path().join(LIB_SUBDIR);
-        std::fs::create_dir_all(&lib).unwrap();
-        std::fs::write(lib.join(SENTINEL_LIB), b"").unwrap();
+        bundle_tree(tmp.path(), &[]);
+        let err = validate_runtime_install(tmp.path())
+            .unwrap_err()
+            .to_string();
+        for lib in REQUIRED_LIBS {
+            assert!(err.contains(lib), "error should name {lib}: {err}");
+        }
+    }
+
+    #[test]
+    fn validate_rejects_tree_missing_one_library() {
+        // A partially-restored CI cache must be re-installed, not accepted:
+        // otherwise `is_installed()` short-circuits the repair and the QEMU
+        // probe fails afterwards with nothing left to fix it.
+        let tmp = tempfile::TempDir::new().unwrap();
+        bundle_tree(tmp.path(), &REQUIRED_LIBS[1..]);
+        let err = validate_runtime_install(tmp.path())
+            .unwrap_err()
+            .to_string();
+        assert!(
+            err.contains(REQUIRED_LIBS[0]),
+            "error should name the one missing library: {err}"
+        );
+    }
+
+    #[test]
+    fn validate_accepts_tree_with_every_required_library() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        bundle_tree(tmp.path(), REQUIRED_LIBS);
         validate_runtime_install(tmp.path()).expect("complete tree should validate");
     }
 
