@@ -46,6 +46,10 @@ same-file = { workspace = true }
 # to the selected `platform::ipc` implementations.
 interprocess = { workspace = true }
 socket2 = { workspace = true }
+# Portable serial-port enumeration delegate for `platform::device` on Unix
+# hosts, plus the `SerialPortInfo` shape the neutral facts map from. The
+# Windows SetupAPI fork does not use it. FastLED/fbuild#1313.
+serialport = { workspace = true }
 
 [target.'cfg(unix)'.dependencies]
 # Selected Unix filesystem mechanics query the exact mount containing a path.
@@ -54,7 +58,19 @@ libc = { workspace = true }
 [target.'cfg(windows)'.dependencies]
 # Selected Windows filesystem mechanics: removable-volume facts and retiring
 # a kernel-blocked output handle after its watchdog expires.
-windows-sys = { version = "0.52", features = ["Win32_Foundation", "Win32_Storage_FileSystem", "Win32_System_IO"] }
+# The Devices_* / Registry / Security features serve `platform::device`:
+# the SetupAPI serial enumeration fork, CfgMgr32 PnP recovery primitives,
+# and the WinUsb BOOTSEL reset (FastLED/fbuild#962, #1152, #1313).
+windows-sys = { version = "0.52", features = [
+    "Win32_Devices_DeviceAndDriverInstallation",
+    "Win32_Devices_Properties",
+    "Win32_Devices_Usb",
+    "Win32_Foundation",
+    "Win32_Security",
+    "Win32_Storage_FileSystem",
+    "Win32_System_IO",
+    "Win32_System_Registry",
+] }
 # Selected Windows IPC creates a protected owner-only pipe descriptor.
 widestring = { workspace = true }
 

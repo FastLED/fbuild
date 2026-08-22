@@ -55,3 +55,12 @@ crates/fbuild-deploy/src/teensy/soft_reboot.rs
 # and drops it immediately; creating a manager session here would retain the
 # port and defeat the recovery handoff (FastLED/fbuild#1152).
 crates/fbuild-cli/src/cli/deploy.rs
+
+# Platform-boundary migration (FastLED/fbuild#1313): the neutral
+# `platform::device` facade delegates to `serialport` for portable serial
+# enumeration on Unix hosts and maps `SerialPortInfo` onto host-neutral
+# facts. The Windows SetupAPI fork does not touch the library. These are
+# the blessed wrapper's new home inside fbuild-core, not new callers.
+crates/fbuild-core/src/platform/device.rs
+crates/fbuild-core/src/platform/linux/device.rs
+crates/fbuild-core/src/platform/macos/device.rs

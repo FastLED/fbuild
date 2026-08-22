@@ -1,8 +1,10 @@
 use super::host::{HostArch, HostOs};
 
+pub(super) mod device;
 pub(super) mod fs;
 pub(super) mod ipc;
 pub(super) mod process;
+pub(super) mod usb_pnp;
 
 pub(super) const HOST_OS: HostOs = HostOs::Windows;
 
