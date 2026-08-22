@@ -17,7 +17,12 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
         # Phase 8b (FastLED/fbuild#1314): the 15 `host` and 6 `process`
         # namespace rows migrated behind the platform facades are gone;
         # only `host_executable` work (phase 8c) remains.
-        self.assertEqual(len(self.expected), 12)
+        #
+        # 12 -> 14: the Espressif QEMU Linux runtime bundle adds three
+        # `target_os = "linux"` gates in `esp_qemu_runtime.rs` plus the
+        # Linux-only integration test, and moves the two pre-existing
+        # `target_os` gates out of `esp_qemu.rs`.
+        self.assertEqual(len(self.expected), 14)
         self.assertFalse(boundary.validate_ledger(self.expected))
         self.assertFalse(boundary.compare(self.expected, self.observed))
 
@@ -68,12 +73,14 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
             manifest_finding,
             normalized="winapi",
         )
-        self.assertEqual(len(boundary.rows_from_findings([unauthorized_manifest_finding])), 1)
+        self.assertEqual(
+            len(boundary.rows_from_findings([unauthorized_manifest_finding])), 1
+        )
 
         unauthorized_facade_finding = dataclasses.replace(
             image_finding,
             kind="cfg_macro",
-            normalized='cfg!(windows)',
+            normalized="cfg!(windows)",
         )
         self.assertEqual(
             boundary.rows_from_findings([unauthorized_facade_finding]),
@@ -102,9 +109,9 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
         self.assertFalse([row for row in self.expected if row.capability == "fs"])
 
     def test_rp2040_filesystem_mechanics_use_the_neutral_facade(self) -> None:
-        source = (
-            boundary.ROOT / "crates/fbuild-deploy/src/rp2040.rs"
-        ).read_text(encoding="utf-8")
+        source = (boundary.ROOT / "crates/fbuild-deploy/src/rp2040.rs").read_text(
+            encoding="utf-8"
+        )
         for forbidden in ("AsRawHandle", "CancelSynchronousIo", ".raw_os_error()"):
             self.assertNotIn(forbidden, source)
 
@@ -150,7 +157,12 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
 
     def test_second_identical_occurrence_in_grandfathered_file_is_new(self) -> None:
         first = self.expected[0]
-        same_group = [row for row in self.expected if (row.path, row.kind, row.normalized) == (first.path, first.kind, first.normalized)]
+        same_group = [
+            row
+            for row in self.expected
+            if (row.path, row.kind, row.normalized)
+            == (first.path, first.kind, first.normalized)
+        ]
         extra = dataclasses.replace(first, ordinal=len(same_group))
 
         failures = boundary.compare(self.expected, [*self.observed, extra])
@@ -173,7 +185,14 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
         source, kind, normalized = next(iter(expected))
         process = "123"
         sources = {(process, source)}
-        findings = boundary.collections.Counter({(process, source, kind, normalized): expected[(source, kind, normalized)] - 1})
+        findings = boundary.collections.Counter(
+            {
+                (process, source, kind, normalized): expected[
+                    (source, kind, normalized)
+                ]
+                - 1
+            }
+        )
 
         failures = boundary.compare_dylint_observations(expected, sources, findings)
 
@@ -181,7 +200,10 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
 
     def test_one_selector_and_six_neutral_namespaces(self) -> None:
         platform = boundary.ROOT / "crates/fbuild-core/src/platform"
-        all_source = "\n".join(path.read_text(encoding="utf-8") for path in (boundary.ROOT / "crates").rglob("*.rs"))
+        all_source = "\n".join(
+            path.read_text(encoding="utf-8")
+            for path in (boundary.ROOT / "crates").rglob("*.rs")
+        )
         selector = (platform / "mod.rs").read_text(encoding="utf-8")
 
         self.assertEqual(all_source.count("std::cfg_select!"), 1)
