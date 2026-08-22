@@ -30,6 +30,31 @@ The four rules an agent must internalize before doing anything else (all listed 
   become runtime defaults. If a VID/PID is missing, fix the boards registry;
   do not add an exception here.
 
+  The transport is a **zstd-compressed protobuf**, `usb-vids.proto.zstd`,
+  published by the boards `site.yml` workflow to
+  <https://fastled.github.io/boards/usb-vids.proto.zstd> and consumed via
+  `USB_VIDS_PROTO_ZSTD_URL` (`crates/fbuild-core/src/usb/data.rs`). Its nested
+  `Vendor{vid, name, [Product{pid, name}]}` shape yields **both** projections
+  the resolver needs — VID → vendor and VID:PID → {vendor, product} — from one
+  artifact, which is why no per-VID blob or generated table is warranted.
+  fbuild uses it in **both** paths. `populate_online_cache_from_paths_and_urls`
+  refetches only when the cache is past its TTL; if that fetch fails it installs
+  the **last-ingested cache-root copy**, and only then falls back to the legacy
+  JSON overlay. Degrading to a hardcoded literal is deliberately not a rung on
+  that ladder. The archives under `crates/fbuild-core/data/` are frozen
+  `cfg(test)` fixtures only — never refresh one to solve a production lookup or
+  deploy problem.
+
+  **Cascade downstream after publishing.** A boards change reaches consumers
+  only through an fbuild release: republish the artifact, cut the fbuild
+  version, then move the consumer's pin. In FastLED that is `fbuild==X.Y.Z` in
+  `pyproject.toml` — its `uv.lock` is gitignored, so the pin is the only
+  committed half, and consumers must still relock locally (`uv lock && uv sync`)
+  or they keep running the previous wheel. FastLED mirrors this rule in its
+  `agents/docs/usb-vid-pid-registry.md`. Per-module migration status lives in
+  [`docs/usb-vidpid-audit.md`](docs/usb-vidpid-audit.md); the guard is
+  `ci/check_usb_vidpid_literals.py`.
+
 - **Modules-first for new functionality; crate splits only for compile parallelism (backed by `--timings`).** New *functionality* is still folded into an existing crate as a *module*, never a drive-by new crate — that original rule (no scope-creep crates) stands. The one sanctioned reason to add a workspace member is **splitting an existing giant crate to compile in parallel**, backed by `cargo build --timings` data and maintainer sign-off (FastLED/fbuild#1008 is that sign-off for the `fbuild-build` / `fbuild-packages` splits). Such splits keep the original crate as a thin **facade** that re-exports the extracted crates at their old paths, so consumers are unchanged. If code is needed by two crates that can't depend on each other (e.g. the CLI and the daemon), put the shared, dependency-free pieces in a crate both already depend on (`fbuild-core` / `fbuild-paths`). Enforced by CI (`crate-gate.yml` → `ci/check_workspace_crates.py`): adding a workspace member fails the build unless you also add it to the approved allowlist (and `ci/hooks/crate_guard.py`) with a maintainer-reviewed rationale.
 - **Always use a globally-installed `soldr` to execute Rust commands.** Bare cargo/rustc and legacy `uv run cargo` shims are blocked by hook. soldr uses `rustup which` to pick the rustup-managed toolchain from `rust-toolchain.toml`. The standard Cargo path is `soldr cargo ...`, so repo Rust builds get soldr's managed zccache path by default; do not add repo-specific `RUSTC_WRAPPER` wiring for normal builds. Install soldr globally via `uv tool install soldr` (or see https://github.com/zackees/soldr).
 - **Always use `uv` for Python.** Bare `python`/`pip` are blocked by hook. Use `uv run ...` or `uv pip ...`.
