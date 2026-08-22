@@ -197,6 +197,127 @@ pub fn build_linux_qemu_ld_library_path(
     Some(ld_library_path_with(&lib_dir, current))
 }
 
+/// Result of probing a QEMU binary with `--version`.
+#[cfg_attr(not(target_os = "linux"), allow(dead_code))]
+enum QemuProbe {
+    /// The binary started; its shared-library dependencies all resolved.
+    Started,
+    /// The dynamic linker could not satisfy a dependency (exit code 127).
+    /// Carries the linker's own line when it could be recovered.
+    MissingSharedLibrary(String),
+    /// Probe could not be interpreted (spawn failure, or some other
+    /// non-127 exit). Treated as non-fatal: the real run reports it with
+    /// full context.
+    Inconclusive,
+}
+
+/// Probe the QEMU binary with `--version` to verify its shared library
+/// dependencies resolve at runtime.
+///
+/// `lib_dir`, when given, is prepended to `LD_LIBRARY_PATH` for the probe so
+/// the caller can ask "does it start *with* the bundled runtime libraries?".
+///
+/// Probing is Linux-only. Windows resolves its DLLs through the `PATH`
+/// hydration path above, and macOS builds are self-contained.
+fn probe_qemu_binary(qemu_binary: &Path, lib_dir: Option<&Path>) -> QemuProbe {
+    #[cfg(not(target_os = "linux"))]
+    {
+        let _ = (qemu_binary, lib_dir);
+        QemuProbe::Started
+    }
+
+    #[cfg(target_os = "linux")]
+    {
+        // Short synchronous probe: verify the QEMU binary can start before we
+        // hand it to the async emulator runner. Uses run_command_blocking which
+        // routes through containment (no console flash on Windows, containment
+        // group on all platforms) and is ~100 ms.
+        let ld_library_path = lib_dir
+            .map(|dir| ld_library_path_with(dir, std::env::var("LD_LIBRARY_PATH").ok().as_deref()));
+        let env: Option<Vec<(&str, &str)>> = ld_library_path
+            .as_deref()
+            .map(|value| vec![("LD_LIBRARY_PATH", value)]);
+
+        let probe_result = fbuild_core::subprocess::run_command_blocking(
+            &[&qemu_binary.to_string_lossy(), "--version"],
+            None, // cwd
+            env.as_deref(),
+            Some(std::time::Duration::from_secs(5)),
+        );
+
+        match probe_result {
+            Ok(out) if out.success() => QemuProbe::Started,
+            Ok(out) if out.exit_code == 127 => {
+                let detail = out
+                    .stderr
+                    .lines()
+                    .find(|l| l.contains("error while loading shared libraries"))
+                    .map(|l| l.trim().to_string())
+                    .unwrap_or_else(|| out.stderr.trim().to_string());
+                QemuProbe::MissingSharedLibrary(detail)
+            }
+            Ok(_) | Err(_) => QemuProbe::Inconclusive,
+        }
+    }
+}
+
+/// Make sure the resolved QEMU binary can actually start on this host.
+///
+/// The Espressif tarballs bundle no shared libraries and carry no `RPATH`, so
+/// on Linux the binary needs libslirp/libSDL2/libpixman/libgcrypt/libz from
+/// somewhere. A stock `ubuntu-24.04` has none of the first three. Rather than
+/// make every caller `apt-get install` them first — an external bootstrap step
+/// fbuild exists to remove — fbuild downloads its own runtime bundle and
+/// re-probes with it applied.
+///
+/// The bundle is fetched lazily: a host that can already start QEMU never
+/// downloads it and never has its own libraries shadowed.
+pub(crate) async fn ensure_qemu_can_start(qemu_binary: &Path, project_dir: &Path) -> Result<()> {
+    let missing = match probe_qemu_binary(qemu_binary, None) {
+        QemuProbe::Started | QemuProbe::Inconclusive => return Ok(()),
+        QemuProbe::MissingSharedLibrary(detail) => detail,
+    };
+
+    tracing::info!(
+        "QEMU at {} is missing a host shared library ({}); fetching the fbuild runtime bundle",
+        qemu_binary.display(),
+        missing
+    );
+
+    let runtime = QemuLinuxRuntime::new(project_dir)
+        .map_err(|e| runtime_unavailable_error(qemu_binary, &missing, &e.to_string()))?;
+    let lib_dir = runtime
+        .ensure_lib_dir()
+        .await
+        .map_err(|e| runtime_unavailable_error(qemu_binary, &missing, &e.to_string()))?;
+
+    match probe_qemu_binary(qemu_binary, Some(&lib_dir)) {
+        QemuProbe::Started | QemuProbe::Inconclusive => Ok(()),
+        QemuProbe::MissingSharedLibrary(still_missing) => Err(FbuildError::PackageError(format!(
+            "QEMU at {} cannot start even with the fbuild runtime bundle at {} applied.\n\
+             {}\n\
+             The bundle carries the full non-glibc dependency closure of the Espressif QEMU binaries, so this points at a host glibc older than the bundle's build image (ubuntu 22.04, glibc 2.35), or at a library the closure does not cover.\n\
+             Please report it at https://github.com/FastLED/fbuild/issues.",
+            qemu_binary.display(),
+            lib_dir.display(),
+            still_missing,
+        ))),
+    }
+}
+
+/// Error for "the host cannot start QEMU and fbuild could not provision the
+/// libraries either" — keeps the original linker complaint in view.
+fn runtime_unavailable_error(qemu_binary: &Path, missing: &str, cause: &str) -> FbuildError {
+    FbuildError::PackageError(format!(
+        "QEMU at {} cannot start: a required shared library is missing.\n\
+         {}\n\
+         fbuild could not provision its Linux runtime bundle: {}",
+        qemu_binary.display(),
+        missing,
+        cause,
+    ))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -279,5 +400,93 @@ mod tests {
         // Nothing is cached under a fresh project dir, so the spawn-time
         // lookup must stay quiet rather than inventing a path.
         assert!(build_linux_qemu_ld_library_path(tmp.path(), Some("/usr/lib")).is_none());
+    }
+
+    // ── probe_qemu_binary ───────────────────────────────────────────
+
+    #[test]
+    fn probe_reports_started_when_binary_runs_version_successfully() {
+        // On Linux, a real QEMU binary would pass. On non-Linux, probing is
+        // a no-op that always reports Started. We use a script that exits 0
+        // so the assertion holds cross-platform.
+        let tmp = tempfile::TempDir::new().unwrap();
+        let probe = tmp.path().join("probe_qemu");
+        if fbuild_core::platform::host::is_windows() {
+            std::fs::write(&probe, b"@echo off\r\nexit /b 0\r\n").unwrap();
+        } else {
+            std::fs::write(&probe, b"#!/bin/sh\nexit 0\n").unwrap();
+            fbuild_core::platform::fs::set_executable(&probe).unwrap();
+        };
+        assert!(
+            matches!(probe_qemu_binary(&probe, None), QemuProbe::Started),
+            "probe should report Started when the binary returns 0"
+        );
+    }
+
+    #[test]
+    fn probe_linux_detects_missing_shared_library_exit_127() {
+        if fbuild_core::platform::host::current().os() != fbuild_core::platform::host::HostOs::Linux
+        {
+            return;
+        }
+        let tmp = tempfile::TempDir::new().unwrap();
+        // Script that prints the canonical dynamic-linker error to stderr
+        // and exits 127 — same observable as a missing .so.
+        let probe = tmp.path().join("fake_qemu_missing_so");
+        std::fs::write(
+            &probe,
+            b"#!/bin/sh\necho 'error while loading shared libraries: libslirp.so.0: cannot open shared object file' >&2\nexit 127\n",
+        )
+        .unwrap();
+        fbuild_core::platform::fs::set_executable(&probe).unwrap();
+
+        match probe_qemu_binary(&probe, None) {
+            QemuProbe::MissingSharedLibrary(detail) => assert!(
+                detail.contains("libslirp.so.0"),
+                "probe should name the missing library: {detail}"
+            ),
+            _ => panic!("exit 127 must be reported as a missing shared library"),
+        }
+    }
+
+    #[test]
+    fn probe_linux_exports_the_bundle_on_ld_library_path() {
+        if fbuild_core::platform::host::current().os() != fbuild_core::platform::host::HostOs::Linux
+        {
+            return;
+        }
+        let tmp = tempfile::TempDir::new().unwrap();
+        // Script that succeeds only when LD_LIBRARY_PATH leads with the
+        // directory we asked the probe to apply — i.e. the bundle actually
+        // reaches the QEMU invocation rather than merely being installed.
+        let probe = tmp.path().join("fake_qemu_needs_lib_dir");
+        let lib_dir = tmp.path().join("bundle-lib");
+        std::fs::create_dir_all(&lib_dir).unwrap();
+        std::fs::write(
+            &probe,
+            format!(
+                "#!/bin/sh\ncase \"$LD_LIBRARY_PATH\" in\n  {}:*|{}) exit 0;;\nesac\necho 'error while loading shared libraries: libslirp.so.0' >&2\nexit 127\n",
+                lib_dir.display(),
+                lib_dir.display()
+            )
+            .as_bytes(),
+        )
+        .unwrap();
+        fbuild_core::platform::fs::set_executable(&probe).unwrap();
+
+        assert!(
+            matches!(
+                probe_qemu_binary(&probe, None),
+                QemuProbe::MissingSharedLibrary(_)
+            ),
+            "without the bundle the stub must fail like a real missing .so"
+        );
+        assert!(
+            matches!(
+                probe_qemu_binary(&probe, Some(&lib_dir)),
+                QemuProbe::Started
+            ),
+            "probe must put the bundle directory on LD_LIBRARY_PATH"
+        );
     }
 }
