@@ -1,8 +1,8 @@
 //! Selected macOS host mechanics behind [`crate::platform::host`].
 
-use std::path::PathBuf;
+use crate::path::NormalizedPath;
 
 /// `$HOME`.
-pub(crate) fn home_dir() -> Option<PathBuf> {
-    std::env::var_os("HOME").map(PathBuf::from)
+pub(crate) fn home_dir() -> Option<NormalizedPath> {
+    std::env::var_os("HOME").map(NormalizedPath::new)
 }

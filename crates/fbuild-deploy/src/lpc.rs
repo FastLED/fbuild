@@ -24,7 +24,7 @@ pub const LPC21ISP_PATH_ENV_VAR: &str = "FBUILD_LPC21ISP_PATH";
 /// (`%USERPROFILE%` with a `%HOME%` fallback on Windows, `$HOME`
 /// elsewhere) so this module carries no per-OS env logic.
 fn home_dir() -> Option<PathBuf> {
-    fbuild_core::platform::host::home_dir()
+    fbuild_core::platform::host::home_dir().map(|home| home.into_path_buf())
 }
 
 /// The one canonical location fbuild manages lpc21isp at. FastLED/fbuild#921

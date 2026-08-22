@@ -1,11 +1,11 @@
 //! Selected Windows host mechanics behind [`crate::platform::host`].
 
-use std::path::PathBuf;
+use crate::path::NormalizedPath;
 
 /// `%USERPROFILE%`, falling back to `%HOME%` for environments (MSYS,
 /// cross-toolchain shells) that export only the POSIX variable.
-pub(crate) fn home_dir() -> Option<PathBuf> {
+pub(crate) fn home_dir() -> Option<NormalizedPath> {
     std::env::var_os("USERPROFILE")
         .or_else(|| std::env::var_os("HOME"))
-        .map(PathBuf::from)
+        .map(NormalizedPath::new)
 }

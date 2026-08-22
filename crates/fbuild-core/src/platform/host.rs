@@ -131,8 +131,10 @@ pub fn path_list_separator_str() -> &'static str {
 /// `%HOME%` fallback for POSIX-style shells), `$HOME` elsewhere.
 ///
 /// Callers keep their own policy for what to do when the variable is
-/// unset — the facade only reports the fact.
-pub fn home_dir() -> Option<std::path::PathBuf> {
+/// unset — the facade only reports the fact. Returned as a
+/// [`NormalizedPath`](crate::path::NormalizedPath), matching the other
+/// neutral facades that hand out paths.
+pub fn home_dir() -> Option<crate::path::NormalizedPath> {
     super::selected::host::home_dir()
 }
 

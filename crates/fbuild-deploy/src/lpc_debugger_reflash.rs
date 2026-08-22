@@ -75,7 +75,7 @@ pub const LPC_LINK2_FIRMWARE_ENV_VAR: &str = "FBUILD_LPC_LINK2_FIRMWARE";
 /// tools under. Honors `FBUILD_DEV_MODE=1` for `~/.fbuild/dev/…`
 /// isolation, same as `find_lpc21isp` and the rest of `fbuild-paths`.
 pub fn managed_tools_dir() -> Option<NormalizedPath> {
-    let home = NormalizedPath::new(&fbuild_core::platform::host::home_dir()?);
+    let home = fbuild_core::platform::host::home_dir()?;
     let mode = if std::env::var_os("FBUILD_DEV_MODE").is_some() {
         "dev"
     } else {
