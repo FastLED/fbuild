@@ -101,6 +101,13 @@ impl FbuildZccacheService {
     /// daemon's startup path is single-threaded so this is not
     /// exercised today.
     pub async fn start() -> Result<Self, EmbeddedServiceError> {
+        // Escape hatch mirroring fbuild_paths' `FBUILD_CACHE_DIR`: point
+        // the embedded service at an alternate root. Test harnesses use
+        // this to avoid contending with (or polluting) the shared prod
+        // writer slot — FastLED/fbuild#1346, #1347.
+        if let Some(root) = std::env::var_os("FBUILD_ZCCACHE_ROOT") {
+            return Self::start_in(PathBuf::from(root)).await;
+        }
         Self::start_in(fbuild_paths::get_fbuild_root().join("zccache")).await
     }
 

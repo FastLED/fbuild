@@ -226,7 +226,7 @@ impl Compiler for RenesasCompiler {
     /// or expands. Without this, an object compiled with the old flags would
     /// be considered up-to-date after the suppressions change. See
     /// FastLED/fbuild#404.
-    fn rebuild_signature(&self, source: &Path, extra_flags: &[String]) -> String {
+    fn rebuild_signature(&self, source: &Path, extra_flags: &[String], output: &Path) -> String {
         let ext = source
             .extension()
             .unwrap_or_default()
@@ -249,9 +249,12 @@ impl Compiler for RenesasCompiler {
         } else {
             extra_flags.to_vec()
         };
-        // build_unflags stripped inside build_rebuild_signature (shared core),
-        // matching compile_c/compile_cpp on the write side (FastLED/fbuild#970).
-        crate::compiler::build_rebuild_signature(
+        // build_unflags stripped inside build_rebuild_signature_for_workspace
+        // (shared core), matching compile_c/compile_cpp on the write side
+        // (FastLED/fbuild#970). The workspace anchor keeps sibling workspaces
+        // with identical effective commands hash-equal (FastLED/fbuild#1346).
+        crate::compiler::build_rebuild_signature_for_workspace(
+            crate::zccache::compile_cwd_from_output(output).as_deref(),
             compiler_path,
             &flags,
             &[],
@@ -454,8 +457,18 @@ mod tests {
         std::fs::write(&user_src, "// stub").unwrap();
 
         let compiler = test_compiler().with_framework_root(framework_root);
-        let fsp_sig = compiler.rebuild_signature(&fsp_src, &[]);
-        let user_sig = compiler.rebuild_signature(&user_src, &[]);
+        // Object paths inside the resolved build layout so both sides
+        // relativize against the same workspace; the assertion targets the
+        // suppression-flag difference.
+        let build_dir = fbuild_paths::BuildLayout::new(
+            tmp.path().to_path_buf(),
+            "uno_r4".to_string(),
+            BuildProfile::Release,
+        )
+        .resolve();
+        let fsp_sig =
+            compiler.rebuild_signature(&fsp_src, &[], &build_dir.join("fsp/r_ioport.c.o"));
+        let user_sig = compiler.rebuild_signature(&user_src, &[], &build_dir.join("main.c.o"));
         assert_ne!(
             fsp_sig, user_sig,
             "FSP C signature must include the four -Wno-error= flags; \
@@ -479,8 +492,16 @@ mod tests {
         std::fs::write(&baseline_cpp, "// stub").unwrap();
 
         let compiler = test_compiler().with_framework_root(framework_root);
-        let framework_cpp_sig = compiler.rebuild_signature(&cpp_src, &[]);
-        let baseline_cpp_sig = compiler.rebuild_signature(&baseline_cpp, &[]);
+        let build_dir = fbuild_paths::BuildLayout::new(
+            tmp.path().to_path_buf(),
+            "uno_r4".to_string(),
+            BuildProfile::Release,
+        )
+        .resolve();
+        let framework_cpp_sig =
+            compiler.rebuild_signature(&cpp_src, &[], &build_dir.join("core/Serial.cpp.o"));
+        let baseline_cpp_sig =
+            compiler.rebuild_signature(&baseline_cpp, &[], &build_dir.join("Serial.cpp.o"));
         assert_eq!(
             framework_cpp_sig, baseline_cpp_sig,
             "framework C++ sources must not pick up the C-only FSP \
