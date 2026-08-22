@@ -23,7 +23,7 @@
 //! vendored ArduinoCore-LPC8xx framework and performs a real firmware
 //! build — too heavy for default `cargo test`.
 
-use fbuild_build::{BuildOrchestrator, BuildParams};
+use fbuild_build::{BuildOrchestrator, BuildParams, compile_backend};
 use fbuild_core::BuildProfile;
 
 /// 15-min wall-clock cap for `--ignored` real-toolchain tests (FastLED/fbuild#806).
@@ -37,6 +37,26 @@ async fn under_test_timeout<F: std::future::Future>(fut: F) -> F::Output {
             REAL_BUILD_TIMEOUT.as_secs_f64()
         ),
     }
+}
+
+/// The orchestrator compiles through the process-wide compile backend
+/// (FastLED/fbuild#800), which only the daemon wires at startup — this
+/// integration test must install its own.
+///
+/// Initialized at most once per test process: a second concurrent
+/// `CompileBackend::start()` cannot win the zccache cache-root writer slot
+/// from the first and fails with "another live daemon already holds this
+/// cache root".
+async fn install_test_compile_backend() {
+    static INSTALL: tokio::sync::OnceCell<()> = tokio::sync::OnceCell::const_new();
+    INSTALL
+        .get_or_init(|| async {
+            let backend = compile_backend::CompileBackend::start()
+                .await
+                .expect("compile backend starts for nxp lpc build-flags test");
+            compile_backend::install_global(backend);
+        })
+        .await;
 }
 
 /// Locate the in-tree fixture so the test is independent of CWD.
@@ -59,6 +79,7 @@ async fn lpc845brk_propagates_build_flags_to_library_compile_587() {
         "fixture missing platformio.ini at {}",
         fixture.display()
     );
+    install_test_compile_backend().await;
 
     // Build into a temp dir so reruns are clean and don't litter the repo.
     let tmp = tempfile::TempDir::new().expect("tempdir");

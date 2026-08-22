@@ -746,16 +746,19 @@ mod tests {
         assert_eq!(windows_gdb_serial_target("/dev/ttyUSB0"), "/dev/ttyUSB0");
     }
 
-    #[cfg(windows)]
     #[test]
-    fn windows_gdb_serial_target_prefixes_bare_com_ports() {
-        assert_eq!(windows_gdb_serial_target("COM5"), r"\\.\COM5");
-    }
-
-    #[cfg(windows)]
-    #[test]
-    fn windows_gdb_serial_target_is_idempotent() {
-        assert_eq!(windows_gdb_serial_target(r"\\.\COM5"), r"\\.\COM5");
+    fn windows_gdb_serial_target_branches_on_the_host_os_facade() {
+        if fbuild_core::platform::host::is_windows() {
+            // COM5 works bare on Windows but the \\.\ escape hatch is
+            // accepted for any COM name, so prefixing is always safe.
+            assert_eq!(windows_gdb_serial_target("COM5"), r"\\.\COM5");
+            // Already prefixed — idempotent.
+            assert_eq!(windows_gdb_serial_target(r"\\.\COM5"), r"\\.\COM5");
+        } else {
+            // No-op off Windows: gdb opens POSIX devnodes verbatim.
+            assert_eq!(windows_gdb_serial_target("COM5"), "COM5");
+            assert_eq!(windows_gdb_serial_target(r"\\.\COM5"), r"\\.\COM5");
+        }
     }
 
     // ---------- ELF resolution against a tempdir fixture ----------

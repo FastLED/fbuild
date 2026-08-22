@@ -21,7 +21,7 @@ use std::path::{Path, PathBuf};
 use filetime::{FileTime, set_file_mtime};
 use tar::{Archive, Builder};
 
-use fbuild_build::{BuildOrchestrator, BuildParams};
+use fbuild_build::{BuildOrchestrator, BuildParams, compile_backend};
 use fbuild_core::BuildProfile;
 
 /// 15-min wall-clock cap for `--ignored` real-toolchain tests (FastLED/fbuild#806).
@@ -42,14 +42,30 @@ async fn under_test_timeout<F: std::future::Future>(fut: F) -> F::Output {
 }
 
 fn home_dir() -> PathBuf {
-    #[cfg(windows)]
-    {
-        PathBuf::from(std::env::var("USERPROFILE").expect("USERPROFILE not set"))
-    }
-    #[cfg(not(windows))]
-    {
-        PathBuf::from(std::env::var("HOME").expect("HOME not set"))
-    }
+    fbuild_core::platform::host::home_dir()
+        .expect("home directory not set")
+        .into_path_buf()
+}
+
+/// The AVR orchestrator compiles through the process-wide compile backend
+/// (FastLED/fbuild#800), which only the daemon wires at startup — these
+/// integration tests must install their own, like the sibling acceptance
+/// suites do.
+///
+/// Initialized at most once per test process: a second concurrent
+/// `CompileBackend::start()` cannot win the zccache cache-root writer slot
+/// from the first and fails with "another live daemon already holds this
+/// cache root".
+async fn install_test_compile_backend() {
+    static INSTALL: tokio::sync::OnceCell<()> = tokio::sync::OnceCell::const_new();
+    INSTALL
+        .get_or_init(|| async {
+            let backend = compile_backend::CompileBackend::start()
+                .await
+                .expect("compile backend starts for AVR build test");
+            compile_backend::install_global(backend);
+        })
+        .await;
 }
 
 /// Verify stem/hash cache path format produces readable, unique paths.
@@ -100,6 +116,7 @@ async fn build_uno_minimal() {
         );
         return;
     }
+    install_test_compile_backend().await;
 
     // Use a temp build dir so we don't pollute the Python project.
     // `params.build_dir` is the resolved env-rooted dir per
@@ -201,6 +218,7 @@ async fn compare_with_python_output() {
         );
         return;
     }
+    install_test_compile_backend().await;
 
     // Build with Rust
     let tmp = tempfile::TempDir::new().unwrap();
@@ -268,6 +286,7 @@ async fn compare_with_python_output() {
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads AVR toolchain + Arduino-AVR core"]
 async fn build_self_contained_blink() {
+    install_test_compile_backend().await;
     let tmp = tempfile::TempDir::new().unwrap();
     let project_dir = tmp.path();
 
@@ -472,6 +491,7 @@ impl Drop for EnvVarGuard {
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads AVR toolchain + Arduino-AVR core; exercises tar-extract cache path"]
 async fn cache_survives_tar_extract_uno() {
+    install_test_compile_backend().await;
     let tmp_a = tempfile::TempDir::new().unwrap();
     let proj_a = tmp_a.path().join("proj");
     fs::create_dir_all(&proj_a).unwrap();

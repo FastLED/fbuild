@@ -14,10 +14,10 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
         cls.observed = boundary.rows_from_findings(boundary.research.inventory())
 
     def test_committed_exact_occurrence_ledger_matches_whole_tree(self) -> None:
-        # Phase 8a (FastLED/fbuild#1314): the 24 `device`-namespace rows
-        # migrated behind the platform facade are gone; what remains is
-        # fs/ipc/host/process/host_executable work for later phases.
-        self.assertEqual(len(self.expected), 33)
+        # Phase 8b (FastLED/fbuild#1314): the 15 `host` and 6 `process`
+        # namespace rows migrated behind the platform facades are gone;
+        # only `host_executable` work (phase 8c) remains.
+        self.assertEqual(len(self.expected), 12)
         self.assertFalse(boundary.validate_ledger(self.expected))
         self.assertFalse(boundary.compare(self.expected, self.observed))
 

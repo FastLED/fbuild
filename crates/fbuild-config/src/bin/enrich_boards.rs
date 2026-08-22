@@ -71,14 +71,9 @@ const DXCORE_EXTRA_FLAGS: &[&str] = &[
 ];
 
 fn home_dir() -> PathBuf {
-    #[cfg(windows)]
-    {
-        PathBuf::from(std::env::var("USERPROFILE").expect("USERPROFILE not set"))
-    }
-    #[cfg(not(windows))]
-    {
-        PathBuf::from(std::env::var("HOME").expect("HOME not set"))
-    }
+    fbuild_core::platform::host::home_dir()
+        .expect("home directory not set")
+        .into_path_buf()
 }
 
 fn pio_platforms_dir() -> PathBuf {

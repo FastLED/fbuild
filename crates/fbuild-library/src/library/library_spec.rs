@@ -263,15 +263,19 @@ mod tests {
         );
     }
 
-    #[cfg(windows)]
     #[test]
     fn test_parse_named_windows_file_uri() {
+        // The `file:///C:/...` drive-prefix strip is a Windows-host behavior
+        // (on POSIX, `/C:/...` is a legitimate absolute path and stays).
         let spec = LibrarySpec::parse("FastLED=file:///C:/libraries/FastLED").unwrap();
+        let expected = if fbuild_core::platform::host::is_windows() {
+            "C:/libraries/FastLED"
+        } else {
+            "/C:/libraries/FastLED"
+        };
         assert_eq!(
             spec.local_path,
-            Some(fbuild_core::path::NormalizedPath::new(
-                "C:/libraries/FastLED"
-            ))
+            Some(fbuild_core::path::NormalizedPath::new(expected))
         );
     }
 

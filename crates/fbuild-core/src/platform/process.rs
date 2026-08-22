@@ -208,6 +208,39 @@ pub fn wait_for_pid_exit(pid: u32, timeout: Duration) -> bool {
     !pid_is_alive(pid)
 }
 
+/// How an elevated program launch ended.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum ElevationOutcome {
+    /// The user declined the elevation prompt; nothing ran. Expected user
+    /// control flow, not a failure.
+    Declined,
+    /// The elevated program ran to completion with this exit code.
+    Completed(u32),
+}
+
+/// Launch `program` with `parameters` through the host's elevation prompt
+/// (Windows UAC "Run as administrator"), hiding the elevated window, and
+/// wait for it to exit. Callers keep all policy: who may be elevated,
+/// with which arguments, and what the result means.
+///
+/// Fails closed on hosts without an elevation mechanic; callers on those
+/// hosts must route around this rather than attempt it.
+pub fn launch_elevated(
+    program: &std::ffi::OsStr,
+    parameters: &str,
+) -> std::io::Result<ElevationOutcome> {
+    super::selected::process::launch_elevated(program, parameters)
+}
+
+/// Whether the host resolves executables through a system fallback search
+/// path that a child process's PATH cannot suppress (Windows consults
+/// `%WINDIR%`, home of the `py` launcher; Unix resolves strictly via
+/// `PATH`). Tools that assert "empty PATH ⇒ executable not found" must
+/// skip their strict assertion when this returns true for the probed name.
+pub fn system_exe_fallback_resolves(exe_name: &str) -> bool {
+    super::selected::process::system_exe_fallback_resolves(exe_name)
+}
+
 /// Normalize native signal/exception exits to fbuild's numeric exit-code contract.
 pub fn exit_code(status: ExitStatus) -> i32 {
     super::selected::process::exit_code(status)

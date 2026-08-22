@@ -30,6 +30,23 @@ pub(crate) fn after_tokio_spawn(_child: &tokio::process::Child) -> std::io::Resu
     Ok(())
 }
 
+/// Unix resolves executables strictly via `PATH`; there is no system
+/// fallback directory a child PATH cannot suppress.
+pub(crate) fn system_exe_fallback_resolves(_exe_name: &str) -> bool {
+    false
+}
+
+/// macOS has no single elevation mechanic; callers must not attempt this
+/// and should route around it.
+pub(crate) fn launch_elevated(
+    _program: &std::ffi::OsStr,
+    _parameters: &str,
+) -> std::io::Result<super::super::process::ElevationOutcome> {
+    Err(std::io::Error::other(
+        "elevated process launch is a Windows-only mechanic",
+    ))
+}
+
 pub(crate) fn spawn_detached(
     command: &mut std::process::Command,
     stderr: Option<&std::fs::File>,

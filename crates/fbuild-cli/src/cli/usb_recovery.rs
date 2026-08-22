@@ -234,44 +234,30 @@ fn read_recovery_result(result_path: &Path) -> fbuild_core::Result<UsbRecoveryRe
     })
 }
 
-/// Windows implementation that launches only the current fbuild executable
-/// with the fixed hidden helper shape. It is deliberately not a general
-/// command runner and never launches a daemon.
-#[cfg(windows)]
+fn quoted_path(path: &Path) -> fbuild_core::Result<String> {
+    let value = path.to_string_lossy();
+    if value.contains('"') || value.contains('\n') || value.contains('\r') {
+        return Err(fbuild_core::FbuildError::Other(
+            "recovery helper path contains an unsupported character".to_string(),
+        ));
+    }
+    Ok(format!("\"{value}\""))
+}
+
+/// Launches only the current fbuild executable with the fixed hidden helper
+/// shape, elevated through the host's UAC prompt via
+/// [`fbuild_core::platform::process::launch_elevated`]. It is deliberately
+/// not a general command runner and never launches a daemon. The policy gate
+/// in [`decide_recovery_launch`] refuses every launch off Windows, so this
+/// launcher is only ever reached where the elevation mechanic exists.
 pub struct WindowsUacLauncher;
 
-#[cfg(windows)]
 impl RecoveryHelperLauncher for WindowsUacLauncher {
     fn launch(
         &mut self,
         request_path: &Path,
         result_path: &Path,
     ) -> fbuild_core::Result<HelperLaunchOutcome> {
-        use windows_sys::Win32::Foundation::{
-            CloseHandle, ERROR_CANCELLED, GetLastError, WAIT_OBJECT_0,
-        };
-        use windows_sys::Win32::System::Threading::{
-            GetExitCodeProcess, INFINITE, WaitForSingleObject,
-        };
-        use windows_sys::Win32::UI::Shell::{
-            SEE_MASK_NOCLOSEPROCESS, SHELLEXECUTEINFOW, ShellExecuteExW,
-        };
-        use windows_sys::Win32::UI::WindowsAndMessaging::SW_HIDE;
-
-        fn wide(value: &std::ffi::OsStr) -> Vec<u16> {
-            use std::os::windows::ffi::OsStrExt;
-            value.encode_wide().chain(Some(0)).collect()
-        }
-        fn quoted_path(path: &Path) -> fbuild_core::Result<String> {
-            let value = path.to_string_lossy();
-            if value.contains('"') || value.contains('\n') || value.contains('\r') {
-                return Err(fbuild_core::FbuildError::Other(
-                    "recovery helper path contains an unsupported character".to_string(),
-                ));
-            }
-            Ok(format!("\"{value}\""))
-        }
-
         let executable = fbuild_core::platform::executable::current_image().map_err(|error| {
             fbuild_core::FbuildError::Other(format!(
                 "cannot locate current fbuild executable: {error}"
@@ -282,58 +268,17 @@ impl RecoveryHelperLauncher for WindowsUacLauncher {
             quoted_path(request_path)?,
             quoted_path(result_path)?
         );
-        let executable_wide = wide(executable.as_os_str());
-        let verb_wide = wide(std::ffi::OsStr::new("runas"));
-        let parameters_wide = wide(std::ffi::OsStr::new(&parameters));
-        // SAFETY: all pointer fields target NUL-terminated buffers that remain
-        // alive through ShellExecuteExW; zero is the documented initialization
-        // for unused structure fields.
-        let mut execute: SHELLEXECUTEINFOW = unsafe { std::mem::zeroed() };
-        execute.cbSize = std::mem::size_of::<SHELLEXECUTEINFOW>() as u32;
-        execute.fMask = SEE_MASK_NOCLOSEPROCESS;
-        execute.lpVerb = verb_wide.as_ptr();
-        execute.lpFile = executable_wide.as_ptr();
-        execute.lpParameters = parameters_wide.as_ptr();
-        execute.nShow = SW_HIDE;
-        // SAFETY: `execute` is fully initialized as described above and only
-        // invokes this executable with the fixed helper subcommand.
-        if unsafe { ShellExecuteExW(&mut execute) } == 0 {
-            // SAFETY: GetLastError reads thread-local state immediately after
-            // ShellExecuteExW's documented failure return.
-            let error = unsafe { GetLastError() };
-            if error == ERROR_CANCELLED {
-                return Ok(HelperLaunchOutcome::Cancelled);
+        match fbuild_core::platform::process::launch_elevated(executable.as_os_str(), &parameters) {
+            Ok(fbuild_core::platform::process::ElevationOutcome::Declined) => {
+                Ok(HelperLaunchOutcome::Cancelled)
             }
-            return Err(fbuild_core::FbuildError::Other(format!(
-                "UAC helper launch failed ({error})"
-            )));
+            Ok(fbuild_core::platform::process::ElevationOutcome::Completed(exit_code)) => {
+                Ok(HelperLaunchOutcome::Completed { exit_code })
+            }
+            Err(error) => Err(fbuild_core::FbuildError::Other(format!(
+                "UAC helper launch failed: {error}"
+            ))),
         }
-        if execute.hProcess == 0 {
-            return Err(fbuild_core::FbuildError::Other(
-                "UAC helper launch returned no process handle".to_string(),
-            ));
-        }
-        // SAFETY: hProcess was requested through SEE_MASK_NOCLOSEPROCESS and
-        // belongs to this caller. The handle is closed on every path below.
-        let wait = unsafe { WaitForSingleObject(execute.hProcess, INFINITE) };
-        if wait != WAIT_OBJECT_0 {
-            // SAFETY: closes the valid owned process handle before returning.
-            unsafe { CloseHandle(execute.hProcess) };
-            return Err(fbuild_core::FbuildError::Other(format!(
-                "UAC helper wait failed ({wait})"
-            )));
-        }
-        let mut exit_code = 1u32;
-        // SAFETY: valid completed process handle and writable local exit code.
-        let got_exit_code = unsafe { GetExitCodeProcess(execute.hProcess, &mut exit_code) };
-        // SAFETY: closes the valid owned process handle exactly once.
-        unsafe { CloseHandle(execute.hProcess) };
-        if got_exit_code == 0 {
-            return Err(fbuild_core::FbuildError::Other(
-                "cannot read UAC helper exit status".to_string(),
-            ));
-        }
-        Ok(HelperLaunchOutcome::Completed { exit_code })
     }
 }
 

@@ -15,7 +15,7 @@
 use std::fs;
 use std::path::Path;
 
-use fbuild_build::{BuildOrchestrator, BuildParams};
+use fbuild_build::{BuildOrchestrator, BuildParams, compile_backend};
 use fbuild_core::BuildProfile;
 
 /// 15-min wall-clock cap for `--ignored` real-toolchain tests (FastLED/fbuild#806).
@@ -29,6 +29,26 @@ async fn under_test_timeout<F: std::future::Future>(fut: F) -> F::Output {
             REAL_BUILD_TIMEOUT.as_secs_f64()
         ),
     }
+}
+
+/// The orchestrator compiles through the process-wide compile backend
+/// (FastLED/fbuild#800), which only the daemon wires at startup — this
+/// integration test must install its own.
+///
+/// Initialized at most once per test process: a second concurrent
+/// `CompileBackend::start()` cannot win the zccache cache-root writer slot
+/// from the first and fails with "another live daemon already holds this
+/// cache root".
+async fn install_test_compile_backend() {
+    static INSTALL: tokio::sync::OnceCell<()> = tokio::sync::OnceCell::const_new();
+    INSTALL
+        .get_or_init(|| async {
+            let backend = compile_backend::CompileBackend::start()
+                .await
+                .expect("compile backend starts for eh_frame strip test");
+            compile_backend::install_global(backend);
+        })
+        .await;
 }
 
 fn make_params(project_dir: &Path) -> BuildParams {
@@ -90,6 +110,7 @@ void loop() {
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads ESP32 toolchain (~hundreds of MB)"]
 async fn eh_frame_strip_drops_firmware_at_least_150kb() {
+    install_test_compile_backend().await;
     // Use two separate tempdirs so .fbuild/build/... paths don't collide.
     let preserve_tmp = tempfile::TempDir::new().unwrap();
     let strip_tmp = tempfile::TempDir::new().unwrap();
