@@ -49,6 +49,7 @@ crates/fbuild-build/tests/nxplpc_core_compile_commands.rs
 crates/fbuild-build/tests/stm32_acceptance.rs
 crates/fbuild-build/tests/teensy30_acceptance.rs
 crates/fbuild-build/tests/teensy_build.rs
+crates/fbuild-cli/src/cli/args.rs
 crates/fbuild-cli/src/cli/debug.rs
 crates/fbuild-cli/src/cli/dispatch.rs
 crates/fbuild-cli/src/cli/ide.rs

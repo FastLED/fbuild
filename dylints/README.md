@@ -167,7 +167,7 @@ itself stays on stable 1.95.0).
   projects, `FBUILD_BUILD_DIR` replaces the root wholesale, and PIO
   projects nest under `.build/pio/<env>/`; the literal keeps compiling
   and silently points at a directory that does not exist. Ships with a
-  **shrink-only baseline** allowlist of the 46 legacy files captured at
+  **shrink-only baseline** allowlist of the 47 legacy files captured at
   landing — sanitize a file, delete its line, bump the crate version to
   bust the Dylint `.so` cache. See FastLED/fbuild#1349 and
   `agents/docs/path-conventions.md`.

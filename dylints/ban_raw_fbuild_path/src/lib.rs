@@ -42,6 +42,15 @@ dylint_linting::declare_late_lint! {
     /// legitimate and belong on `src/allowlist.txt` with a justification.
     /// Path segments assembled from non-literal pieces are not detected.
     ///
+    /// Two macro-shaped sources of literals are worth knowing about. Derive
+    /// macros that stringify doc comments (clap's `Subcommand` / `Args`
+    /// turning `///` text into help strings) produce literals whose call
+    /// site is the `#[derive(..)]` item, so the whole file lands on the
+    /// allowlist rather than the individual doc line. And `assert!(cond)`
+    /// synthesizes `"assertion failed: <stringified cond>"` with no source
+    /// span at all; the dummy-span guard in `check_expr` drops those,
+    /// because a diagnostic nobody can locate is one nobody can fix.
+    ///
     /// ### Example
     ///
     /// ```rust
@@ -77,10 +86,21 @@ impl<'tcx> LateLintPass<'tcx> for BanRawFbuildPath {
         if !sym.as_str().contains(FBUILD_SEGMENT) {
             return;
         }
-        if is_allowlisted(cx, expr.span) {
+        // Literals reached through a macro expansion carry the expansion's
+        // span; `source_callsite` walks back to the code the developer
+        // actually wrote, which is both what the allowlist matches against
+        // and the only location worth pointing a diagnostic at.
+        let span = expr.span.source_callsite();
+        if span.is_dummy() {
+            // No source location survived the expansion. A diagnostic here
+            // would name the crate root at byte 0 — unactionable, and
+            // impossible to allowlist by file. Stay quiet instead.
             return;
         }
-        emit_lint(cx, expr.span);
+        if is_allowlisted(cx, span) {
+            return;
+        }
+        emit_lint(cx, span);
     }
 }
 
