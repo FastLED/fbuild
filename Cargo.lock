@@ -1401,6 +1401,7 @@ dependencies = [
 name = "fbuild-paths"
 version = "2.5.19"
 dependencies = [
+ "blake3",
  "fbuild-core",
  "serde",
  "serde_json",

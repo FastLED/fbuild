@@ -92,6 +92,7 @@ crates/fbuild-deploy/src/rp2040_topology.rs	119	attr_cfg	#[cfg(windows)]	device	
 crates/fbuild-deploy/src/rp2040_topology.rs	123	native_path	std::os::windows::ffi::OsStrExt	device	host_mechanic
 crates/fbuild-deploy/src/rp2040_topology.rs	506	attr_cfg	#[cfg(not(windows))]	device	host_mechanic
 crates/fbuild-library/src/library/library_spec.rs	266	attr_cfg	#[cfg(windows)]	host	host_mechanic
+crates/fbuild-paths/src/dev_daemon_namespace.rs	83	native_path	std::env::current_exe	host_executable	host_mechanic
 crates/fbuild-serial/Cargo.toml	32	target_dependency_table	[target.'cfg(windows)'.dependencies]	device	host_mechanic
 crates/fbuild-serial/Cargo.toml	33	native_dependency	windows-sys	device	host_mechanic
 crates/fbuild-serial/src/port_class.rs	105	attr_cfg	#[cfg(target_os=)]	device	host_mechanic

@@ -41,6 +41,26 @@ async fn main() {
         unsafe { std::env::set_var("FBUILD_DEV_MODE", "1") };
     }
 
+    // FastLED/fbuild#1285: adopt the dev daemon-identity stamp the spawning
+    // CLI exported, or derive one from this binary's content — once per
+    // daemon, inherited by every build child. Official (non-dev) runs export
+    // nothing. A hash failure is reported and otherwise ignored: dev builds
+    // must keep working.
+    match fbuild_paths::dev_daemon_namespace::namespace_to_export() {
+        Ok(Some(namespace)) => unsafe {
+            // SAFETY: daemon startup — before worker threads or any
+            // environment reader exists.
+            std::env::set_var(
+                fbuild_paths::dev_daemon_namespace::ZCCACHE_DAEMON_NAMESPACE_ENV,
+                namespace,
+            )
+        },
+        Ok(None) => {}
+        Err(error) => {
+            eprintln!("warning: failed to derive dev daemon-identity namespace: {error}")
+        }
+    }
+
     // Install the process-wide containment group as early as possible so
     // every subprocess the daemon spawns (compilers, linkers, esptool,
     // avrdude, qemu, simavr, node, npm, …) is born inside a Windows Job

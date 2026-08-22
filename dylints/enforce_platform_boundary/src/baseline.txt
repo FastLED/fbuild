@@ -42,6 +42,7 @@ crates/fbuild-deploy/src/rp2040_topology.rs	attr_cfg	windows	8
 crates/fbuild-deploy/src/rp2040_topology.rs	attr_cfg	windows	9
 crates/fbuild-deploy/src/rp2040_topology.rs	native_import	std::os::windows	0
 crates/fbuild-library/src/library/library_spec.rs	attr_cfg	windows	0
+crates/fbuild-paths/src/dev_daemon_namespace.rs	native_import	std::env::current_exe	0
 crates/fbuild-serial/src/port_class.rs	attr_cfg	target_os	0
 crates/fbuild-serial/src/port_class.rs	attr_cfg	target_os	1
 crates/fbuild-serial/src/port_class.rs	attr_cfg	target_os	2

@@ -10,6 +10,9 @@ license.workspace = true
 publish = false
 
 [dependencies]
+# Dev daemon-identity stamping hashes the running executable's bytes
+# (FastLED/fbuild#1285).
+blake3 = { workspace = true }
 fbuild-core = { path = "../fbuild-core" }
 serde = { workspace = true }
 serde_json = { workspace = true }

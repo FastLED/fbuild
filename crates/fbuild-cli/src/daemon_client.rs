@@ -1060,6 +1060,18 @@ async fn spawn_daemon_process() -> fbuild_core::Result<()> {
         cmd.env("VIRTUAL_ENV", venv);
     }
 
+    // FastLED/fbuild#1285: propagate the dev daemon-identity stamp this CLI
+    // computed so the daemon — and through it every compiler and zccache
+    // child — shares one namespace instead of colliding across checkouts.
+    if let Ok(namespace) =
+        std::env::var(fbuild_paths::dev_daemon_namespace::ZCCACHE_DAEMON_NAMESPACE_ENV)
+    {
+        cmd.env(
+            fbuild_paths::dev_daemon_namespace::ZCCACHE_DAEMON_NAMESPACE_ENV,
+            namespace,
+        );
+    }
+
     // Redirect stderr to log file so daemon logs are persisted
     let daemon_dir = fbuild_paths::get_daemon_dir();
     let _ = std::fs::create_dir_all(&daemon_dir);
