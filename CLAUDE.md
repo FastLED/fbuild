@@ -45,13 +45,22 @@ The four rules an agent must internalize before doing anything else (all listed 
   `cfg(test)` fixtures only — never refresh one to solve a production lookup or
   deploy problem.
 
-  **Cascade downstream after publishing.** A boards change reaches consumers
-  only through an fbuild release: republish the artifact, cut the fbuild
-  version, then move the consumer's pin. In FastLED that is `fbuild==X.Y.Z` in
-  `pyproject.toml` — its `uv.lock` is gitignored, so the pin is the only
-  committed half, and consumers must still relock locally (`uv lock && uv sync`)
-  or they keep running the previous wheel. FastLED mirrors this rule in its
-  `agents/docs/usb-vid-pid-registry.md`. Per-module migration status lives in
+  **Missing an identity? Push it to FastLED/boards immediately.** We own that
+  repo, so pushing is the standard way to get support — not an escalation, and
+  never a reason to file an issue and wait. Curated records go on the `other`
+  data branch as flat `{vid, pid, product}` JSON (see its
+  `nxp_debug_probe_pids.json` for the shape); verify with
+  `builders/extract_other.py --in <worktree> --out <tmp>` before pushing, then
+  run the `Build site` workflow. Turnaround is minutes.
+
+  **A data-only change needs no fbuild release.** fbuild fetches the published
+  catalogue at runtime, so new identities reach every consumer on the next cache
+  refresh. Cut a release and cascade the downstream pin (FastLED's
+  `fbuild==X.Y.Z` in `pyproject.toml`) only when the *ingestion or resolution
+  logic* changes — that is the "push boards, or push boards and fbuild" split.
+
+  FastLED mirrors this rule in its `agents/docs/usb-vid-pid-registry.md`.
+  Per-module migration status lives in
   [`docs/usb-vidpid-audit.md`](docs/usb-vidpid-audit.md); the guard is
   `ci/check_usb_vidpid_literals.py`.
 

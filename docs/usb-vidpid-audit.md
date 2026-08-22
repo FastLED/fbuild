@@ -52,16 +52,21 @@ failed fetch installs the last-ingested cache-root copy, and only then does it
 fall back to the legacy JSON overlay. There is no hardcoded-literal rung on
 that ladder, by design.
 
-A registry change is not visible to a consumer until an fbuild release carries
-it. The cascade is:
+We own FastLED/boards, so a missing identity is published directly rather than
+filed and waited on:
 
-1. Land the record on the FastLED/boards data branch; `site.yml` republishes.
-2. Ingest and cut an fbuild release.
-3. Move the consumer pin. For FastLED that is `fbuild==X.Y.Z` in
-   `pyproject.toml`; its `uv.lock` is gitignored, so the pin is the only
-   committed half. Relock locally (`uv lock && uv sync`) or the environment
-   keeps resolving the previous wheel and any verification runs against the
-   old registry snapshot.
+1. Add the curated record on the `other` data branch as flat
+   `{vid, pid, product}` JSON; verify with `builders/extract_other.py` first.
+2. Push to the data branch. `site.yml` rebuilds on push, with a nightly
+   backstop and a `workflow_dispatch` override if the push trigger misses.
+
+That is the whole loop for data — **no fbuild release required**, because
+fbuild fetches the catalogue at runtime and picks it up on the next cache
+refresh. Worked example: FTDI FT232H `0403:6014` (FastLED/boards#60) went from
+absent to resolving downstream in minutes via exactly these two steps.
+
+Cut a release and cascade the downstream pin (FastLED's `fbuild==X.Y.Z` in
+`pyproject.toml`) only when the ingestion or resolution *logic* changes.
 
 FastLED documents its half of this in `agents/docs/usb-vid-pid-registry.md`.
 
