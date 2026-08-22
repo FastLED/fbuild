@@ -157,20 +157,23 @@ itself stays on stable 1.95.0).
 ### FastLED/fbuild#1349 — `.fbuild` layout literals
 
 - **`ban_raw_fbuild_path/`** — forbids string literals containing
-  `.fbuild` outside `crates/fbuild-paths/src/lib.rs`, the crate that
-  declares itself the single source of truth for the build tree.
-  Steers callers at `fbuild_paths::{FBUILD_DIR_NAME, BUILD_DIR_NAME}`,
+  `.fbuild`. Two exemptions, both in `src/allowlist.txt`: the source
+  of truth itself (`crates/fbuild-paths/src/lib.rs`), and the 47
+  legacy files captured as a **shrink-only baseline** when the lint
+  landed. Steers callers at
+  `fbuild_paths::{FBUILD_DIR_NAME, BUILD_DIR_NAME}`,
   `get_project_fbuild_dir`, `get_project_build_root`, and
   `BuildLayout::resolve`. A hardcoded
   `dir.join(".fbuild/build/uno/release")` pins exactly one layout
-  shape, but the env segment auto-collapses for single-environment
-  projects, `FBUILD_BUILD_DIR` replaces the root wholesale, and PIO
-  projects nest under `.build/pio/<env>/`; the literal keeps compiling
-  and silently points at a directory that does not exist. Ships with a
-  **shrink-only baseline** allowlist of the 47 legacy files captured at
-  landing — sanitize a file, delete its line, bump the crate version to
-  bust the Dylint `.so` cache. See FastLED/fbuild#1349 and
-  `agents/docs/path-conventions.md`.
+  shape, but `BuildLayout` drops the `<env>` segment whenever
+  `flatten_env` is set or the project basename already equals the env
+  name (the PIO `.build/pio/<board>/` shape), and `override_root` /
+  `FBUILD_BUILD_DIR` each replace the root wholesale; the literal keeps
+  compiling and silently points at a directory that does not exist. The
+  baseline may only shrink — sanitize a file, delete its line, bump the
+  crate version to bust the Dylint `.so` cache;
+  `ci/check_fbuild_path_baseline.py` fails CI on any addition. See
+  FastLED/fbuild#1349 and `agents/docs/path-conventions.md`.
 
 ## Running locally
 

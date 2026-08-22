@@ -7,6 +7,8 @@ runner in [`../src/lib.rs`](../src/lib.rs) `#[test] fn ui` compiles
 `disallowed.rs` with the lint enabled and diffs the diagnostics against
 `disallowed.stderr`.
 
-This directory is on the lint's own allowlist
-([`../src/allowlist.txt`](../src/allowlist.txt)) so the fixture can
-contain the anti-pattern without the lint recursing on itself.
+The fixture is deliberately *not* on
+[`../src/allowlist.txt`](../src/allowlist.txt) — it has to trip the lint
+for the test to mean anything. Nothing under `dylints/` is scanned by
+the workspace sweep anyway: every lint crate is in the root
+`Cargo.toml`'s `exclude` list.

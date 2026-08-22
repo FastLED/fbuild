@@ -10,11 +10,17 @@ paths.
 `crates/fbuild-paths/src/lib.rs:3` says it owns every `.fbuild` path,
 but the layout underneath it is not a fixed string:
 
-- the env segment **auto-collapses** when a project has a single
-  environment (`<project>/.fbuild/build/release/`, no env dir),
-- `FBUILD_BUILD_DIR` **overrides the root wholesale**,
-- PlatformIO-style projects nest the tree under
-  `.build/pio/<env>/.fbuild/build/<env>/<profile>/`.
+- the `<env>` segment is **dropped** whenever `BuildLayout.flatten_env`
+  is set or the project directory's basename already equals the env name
+  — so the same build can live at `.../build/<env>/<profile>/` or at
+  `.../build/<profile>/`,
+- an explicit `override_root`, and then `FBUILD_BUILD_DIR`, each
+  **replace the root wholesale** ahead of the `<project>/.fbuild/build`
+  default,
+- PlatformIO-style projects stage each board at `.build/pio/<board>/`
+  and build with `env == board`, which is exactly the basename-matches
+  case above — the tree is `.build/pio/<board>/.fbuild/build/<profile>/`,
+  not `.../build/<board>/<profile>/`.
 
 A hardcoded `dir.join(".fbuild/build/uno/release")` encodes exactly one
 of those shapes. When the layout rules evolve, the literal keeps
@@ -50,8 +56,11 @@ legacy sites that existed when the lint landed
    invalidated (`setup-soldr`'s cache key hashes the manifest, not
    `src/allowlist.txt`).
 
-Adding a line is not allowed. If a call site needs a `.fbuild` path it
-needs `fbuild_paths`, not an allowlist entry.
+Adding a line is not allowed, and that is enforced rather than merely
+requested: `ci/check_fbuild_path_baseline.py` diffs this file against
+`origin/main` and fails the Dylint job on any added entry. Removals are
+always fine. If a call site needs a `.fbuild` path it needs
+`fbuild_paths`, not an allowlist entry.
 
 ## Known limitations
 

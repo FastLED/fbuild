@@ -26,6 +26,12 @@ jobs:
       - uses: astral-sh/setup-uv@v3
       - name: Validate Dylint allowlist paths
         run: uv run --no-project python ci/check_dylint_allowlists.py
+      - name: Enforce shrink-only .fbuild allowlist
+        # The baseline in dylints/ban_raw_fbuild_path may only shrink
+        # (FastLED/fbuild#1349). Needs main fetched to diff against.
+        run: |
+          git fetch --no-tags --depth=1 origin main
+          uv run --no-project python ci/check_fbuild_path_baseline.py --base FETCH_HEAD
       - name: Validate platform-boundary ledgers
         run: uv run --no-project python ci/enforce_platform_boundary.py --print-totals
       - uses: zackees/setup-soldr@v0

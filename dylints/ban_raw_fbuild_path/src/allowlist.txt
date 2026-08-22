@@ -18,10 +18,6 @@
 # call site delegates to them.
 crates/fbuild-paths/src/lib.rs
 
-# This lint's own UI fixtures must contain the anti-pattern without the
-# lint recursing on itself.
-dylints/ban_raw_fbuild_path/ui/disallowed.rs
-
 # --- Baseline: legacy sites captured at landing (FastLED/fbuild#1349) ---
 # Each line below is a file that spells `.fbuild` by hand today. Removing
 # a line is the unit of progress on #1349; adding one is not allowed.
