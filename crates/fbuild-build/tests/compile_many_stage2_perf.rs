@@ -157,8 +157,10 @@ async fn stage2_per_sketch_wall_is_a_fraction_of_stage1() {
         );
         assert!(
             r.seed_applied,
-            "stage-2 sketch {} should have had a core seed applied",
-            r.sketch.display()
+            "stage-2 sketch {} should have had a core seed applied
+{}",
+            r.sketch.display(),
+            stage2_failure_detail(r)
         );
         assert!(
             max_compiled_batch_size(r) <= 1,
@@ -169,10 +171,16 @@ async fn stage2_per_sketch_wall_is_a_fraction_of_stage1() {
 }
 
 /// Largest work-list size M from `Compiled N/M files` lines in this
-/// sketch's `compile_many.log`, or `usize::MAX` when the log is
-/// missing/unreadable (which the caller surfaces through
-/// [`stage2_failure_detail`]). M is the number of TUs the freshness check
-/// queued — with the seed working it equals the sketch's own TU count.
+/// sketch's `compile_many.log`. M is the number of TUs the freshness
+/// check queued — with the seed working it equals the sketch's own TU
+/// count.
+///
+/// Fails closed: a missing, unreadable, empty, or malformed log yields
+/// `usize::MAX`, never 0. A log with no parsable work record proves
+/// nothing about the stage-2 work limit, and returning 0 would let the
+/// `<= 1` assertion pass vacuously — turning the #1346 regression oracle
+/// into a no-op the moment the log format drifts. The caller surfaces
+/// the log itself through [`stage2_failure_detail`].
 fn max_compiled_batch_size(r: &SketchResult) -> usize {
     let Some(log_path) = r.log_path.as_deref() else {
         return usize::MAX;
@@ -180,6 +188,13 @@ fn max_compiled_batch_size(r: &SketchResult) -> usize {
     let Ok(log) = fs::read_to_string(log_path) else {
         return usize::MAX;
     };
+    max_compiled_batch_size_in(&log)
+}
+
+/// The parse half of [`max_compiled_batch_size`], split out so the
+/// fail-closed contract is covered by a cheap unit test instead of only by
+/// the `#[ignore]`d real-toolchain oracle.
+fn max_compiled_batch_size_in(log: &str) -> usize {
     log.lines()
         .filter_map(|line| {
             let rest = line.strip_prefix("Compiled ")?;
@@ -188,7 +203,71 @@ fn max_compiled_batch_size(r: &SketchResult) -> usize {
             m.parse::<usize>().ok()
         })
         .max()
-        .unwrap_or(0)
+        .unwrap_or(usize::MAX)
+}
+
+/// The oracle is only worth having if it cannot pass by accident. These
+/// lock the fail-closed contract: every shape of log that fails to prove
+/// how much work stage 2 did must read as `usize::MAX`, so the `<= 1`
+/// assertion rejects it — FastLED/fbuild#1346.
+#[test]
+fn unparsable_logs_fail_closed() {
+    assert_eq!(max_compiled_batch_size_in(""), usize::MAX, "empty log");
+    assert_eq!(
+        max_compiled_batch_size_in(
+            "Building sketch
+Linking firmware.elf
+"
+        ),
+        usize::MAX,
+        "log with no work record"
+    );
+    assert_eq!(
+        max_compiled_batch_size_in(
+            "Compiled some/of files
+"
+        ),
+        usize::MAX,
+        "work record with a non-numeric denominator"
+    );
+    assert_eq!(
+        max_compiled_batch_size_in(
+            "Compiled 1 file
+"
+        ),
+        usize::MAX,
+        "work record without the N/M separator"
+    );
+}
+
+/// The pass state (`M == 1`) and the #1346 failure signature
+/// (`M == 26`) must both survive the parse, and multiple records take
+/// the maximum rather than the last.
+#[test]
+fn work_records_parse_to_their_denominator() {
+    assert_eq!(
+        max_compiled_batch_size_in(
+            "Compiled 1/1 files
+"
+        ),
+        1
+    );
+    assert_eq!(
+        max_compiled_batch_size_in(
+            "Compiled 26/26 files
+"
+        ),
+        26
+    );
+    assert_eq!(
+        max_compiled_batch_size_in(
+            "Compiled 1/1 files
+Compiled 5/26 files
+"
+        ),
+        26,
+        "a later small batch must not mask an earlier full rebuild"
+    );
 }
 
 /// Build the panic message for a failed stage-2 work assertion. Reads the

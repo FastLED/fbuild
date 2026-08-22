@@ -224,7 +224,7 @@ fn normalize_signature_path(path: &Path) -> String {
     let normalized = normalize_signature_components(path);
     if let Some(index) = normalized
         .iter()
-        .position(|component| component.eq_ignore_ascii_case(".fbuild"))
+        .position(|component| component.eq_ignore_ascii_case(fbuild_paths::FBUILD_DIR_NAME))
     {
         return normalized[index..].join("/");
     }
