@@ -28,12 +28,13 @@
 //! the host — a bundled `libc.so.6` without its matching `ld-linux` is a
 //! segfault, not a fix.
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::platform::host::{self, HostArch, HostPlatform};
 use fbuild_core::{FbuildError, Result};
 
-use crate::{CacheSubdir, Package, PackageBase, PackageInfo};
+use crate::{CacheSubdir, PackageBase, PackageInfo};
 
 /// Release tag of the QEMU build this bundle was closed over. Kept in sync
 /// with `QEMU_RELEASE_TAG` in `esp_qemu.rs` and with
@@ -80,31 +81,24 @@ impl QemuLinuxRuntime {
     }
 
     /// Directory to place on `LD_LIBRARY_PATH`.
-    pub fn lib_dir(&self) -> PathBuf {
-        self.base.install_path().join(LIB_SUBDIR)
+    pub fn lib_dir(&self) -> NormalizedPath {
+        NormalizedPath::from(self.base.install_path()).join(LIB_SUBDIR)
     }
 
     /// Install if needed and return the directory to put on `LD_LIBRARY_PATH`.
-    pub async fn ensure_lib_dir(&self) -> Result<PathBuf> {
-        self.ensure_installed().await?;
+    pub async fn ensure_lib_dir(&self) -> Result<NormalizedPath> {
+        if !self.is_installed() {
+            self.base.staged_install(validate_runtime_install).await?;
+        }
         Ok(self.lib_dir())
     }
-}
 
-#[async_trait::async_trait]
-impl Package for QemuLinuxRuntime {
-    async fn ensure_installed(&self) -> Result<PathBuf> {
-        if self.is_installed() {
-            return Ok(self.base.install_path());
-        }
-        self.base.staged_install(validate_runtime_install).await
-    }
-
-    fn is_installed(&self) -> bool {
+    /// Whether a complete bundle is already unpacked in the cache.
+    pub fn is_installed(&self) -> bool {
         self.base.is_cached() && self.lib_dir().join(SENTINEL_LIB).is_file()
     }
 
-    fn get_info(&self) -> PackageInfo {
+    pub fn get_info(&self) -> PackageInfo {
         self.base.get_info()
     }
 }
@@ -178,7 +172,7 @@ pub fn ld_library_path_with(lib_dir: &Path, current: Option<&str>) -> String {
 /// emulator spawn path does not have to thread a resolution result through
 /// every call site. A host that never needed the bundle has nothing cached
 /// here and gets `None`.
-pub fn installed_lib_dir(project_dir: &Path) -> Option<PathBuf> {
+pub fn installed_lib_dir(project_dir: &Path) -> Option<NormalizedPath> {
     let runtime = QemuLinuxRuntime::new(project_dir).ok()?;
     if runtime.is_installed() {
         Some(runtime.lib_dir())
@@ -291,7 +285,7 @@ pub(crate) async fn ensure_qemu_can_start(qemu_binary: &Path, project_dir: &Path
         .await
         .map_err(|e| runtime_unavailable_error(qemu_binary, &missing, &e.to_string()))?;
 
-    match probe_qemu_binary(qemu_binary, Some(&lib_dir)) {
+    match probe_qemu_binary(qemu_binary, Some(lib_dir.as_path())) {
         QemuProbe::Started | QemuProbe::Inconclusive => Ok(()),
         QemuProbe::MissingSharedLibrary(still_missing) => Err(FbuildError::PackageError(format!(
             "QEMU at {} cannot start even with the fbuild runtime bundle at {} applied.\n\
