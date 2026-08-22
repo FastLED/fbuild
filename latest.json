@@ -1,0 +1,81 @@
+{
+  "metadata": {
+    "board": "Arduino Uno",
+    "cold_definition": "project outputs, reusable framework objects, compiler-object caches, and Arduino/PlatformIO download/HTTP caches removed; installed packages/toolchains and fbuild package archives retained",
+    "fixture": "bench/blink",
+    "fqbn": "arduino:avr:uno",
+    "generated_at": "2026-08-22T09:34:59Z",
+    "git_sha": "f517c0f7fe703216eb8565cd501c96ab3443c4e4",
+    "repository": "FastLED/fbuild",
+    "run_url": "https://github.com/FastLED/fbuild/actions/runs/32565004087",
+    "runner": {
+      "arch": "x86_64",
+      "os": "linux"
+    },
+    "statistic": "median",
+    "toolchain_pins": {
+      "arduino_core": "arduino:avr@1.8.8",
+      "note": "ecosystem framework distributions are pinned independently",
+      "platformio_platform": "atmelavr@5.1.0"
+    },
+    "trials": 3,
+    "warm_definition": "immediate no-change rebuild after the cold build"
+  },
+  "results": [
+    {
+      "cold_ms": 661.892,
+      "cold_trials_ms": [
+        661.892,
+        656.603,
+        665.463
+      ],
+      "display_name": "Arduino CLI",
+      "speedup": 1.986,
+      "tool": "arduino",
+      "version": "arduino-cli  Version: 1.5.0 Commit: dd407d42d Date: 2026-05-19T14:07:51Z",
+      "warm_ms": 333.201,
+      "warm_trials_ms": [
+        333.201,
+        334.339,
+        331.846
+      ]
+    },
+    {
+      "cold_ms": 893.199,
+      "cold_trials_ms": [
+        887.87,
+        895.715,
+        893.199
+      ],
+      "display_name": "PlatformIO",
+      "speedup": 1.426,
+      "tool": "platformio",
+      "version": "PlatformIO Core, version 6.1.19",
+      "warm_ms": 626.514,
+      "warm_trials_ms": [
+        631.984,
+        622.875,
+        626.514
+      ]
+    },
+    {
+      "cold_ms": 2352.614,
+      "cold_trials_ms": [
+        2342.055,
+        2352.614,
+        2358.194
+      ],
+      "display_name": "fbuild",
+      "speedup": 50.983,
+      "tool": "fbuild",
+      "version": "fbuild 2.5.19",
+      "warm_ms": 46.145,
+      "warm_trials_ms": [
+        46.145,
+        46.391,
+        46.058
+      ]
+    }
+  ],
+  "schema_version": 1
+}
