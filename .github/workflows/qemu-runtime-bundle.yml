@@ -3,9 +3,11 @@ name: Build QEMU Linux Runtime Bundle
 # Manually-dispatched builder for the runtime-library bundles fbuild downloads
 # when a Linux host cannot start Espressif QEMU on its own.
 #
-# Runs on ubuntu-22.04 (and its arm64 sibling) because the bundled libraries
-# inherit the build host's glibc floor: 22.04's glibc 2.35 covers every runner
-# and distro fbuild targets, while building on 24.04 would not.
+# The bundle is always built inside an ubuntu:20.04 container, so the libraries
+# it carries need at most GLIBC_2.30 — the same floor the Espressif QEMU
+# binaries themselves have. The runner only supplies the CPU architecture:
+# aarch64 needs a native arm64 runner because dpkg's maintainer scripts fail
+# under emulated arm64.
 #
 # Upload the resulting artifacts to the `qemu-linux-runtime-v1` release and
 # paste the printed SHA-256 into
@@ -27,17 +29,19 @@ jobs:
       matrix:
         include:
           - arch: x86_64
-            runner: ubuntu-22.04
+            runner: ubuntu-latest
           - arch: aarch64
-            runner: ubuntu-22.04-arm
+            runner: ubuntu-24.04-arm
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - uses: astral-sh/setup-uv@v3
 
       - name: Build bundle
         run: |
           uv run --no-project python ci/build_qemu_linux_runtime.py \
-            --arch ${{ matrix.arch }} --native --out dist/qemu-runtime
+            --arch ${{ matrix.arch }} --out dist/qemu-runtime
 
       - uses: actions/upload-artifact@v4
         with:

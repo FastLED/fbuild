@@ -23,10 +23,16 @@
 //! fetch it and never have their libraries shadowed.
 //!
 //! Bundle provenance: `ci/build_qemu_linux_runtime.py` walks `ldd` over both
-//! real QEMU binaries inside `ubuntu:22.04` and archives the transitive
+//! real QEMU binaries inside `ubuntu:20.04` and archives the transitive
 //! closure minus the glibc family. glibc and the loader deliberately stay on
 //! the host — a bundled `libc.so.6` without its matching `ld-linux` is a
 //! segfault, not a fix.
+//!
+//! The 20.04 build image is chosen so the bundle is never the binding
+//! portability constraint: its libraries need at most `GLIBC_2.30`, which is
+//! exactly what the Espressif QEMU binaries themselves require. Building on
+//! 22.04 would raise the floor to `GLIBC_2.34` and lock out hosts that could
+//! otherwise run QEMU.
 
 use std::path::Path;
 
@@ -138,13 +144,13 @@ fn runtime_arch(host: HostPlatform) -> Result<&'static str> {
 /// SHA-256 of each published bundle. An architecture without an entry has no
 /// bundle yet: report that plainly instead of downloading something unpinned.
 ///
-/// aarch64 is built by `.github/workflows/qemu-runtime-bundle.yml` on an
-/// `ubuntu-22.04-arm` runner — Docker Desktop's arm64 emulation cannot run
-/// dpkg's maintainer scripts, so it cannot be produced from a developer
+/// aarch64 is built by `.github/workflows/qemu-runtime-bundle.yml` on a native
+/// arm64 runner — Docker Desktop's arm64 emulation cannot run dpkg's
+/// maintainer scripts, so it cannot be produced from an x86_64 developer
 /// workstation the way the x86_64 bundle was.
 fn runtime_sha256(arch: &str) -> Result<&'static str> {
     match arch {
-        "x86_64" => Ok("e4f22c9b88a1a032dcba07aec2ac7ada01563b7fe6ccdd3a1a0b3d740aec51df"),
+        "x86_64" => Ok("b3318ccf60df8e17a42b5b0f61180440f56337fadb0babe867bff1f3dfecd99f"),
         other => Err(FbuildError::PackageError(format!(
             "no QEMU runtime-library bundle is published for linux-{other} yet (tracked in the {RUNTIME_RELEASE_TAG} release).\n\
              Install the QEMU runtime libraries from your distribution — on Debian/Ubuntu: libslirp0, libsdl2-2.0-0, libpixman-1-0."

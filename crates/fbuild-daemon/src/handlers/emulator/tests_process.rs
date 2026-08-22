@@ -217,7 +217,9 @@ async fn run_real_esp32s3_fixture_in_qemu() {
             show_timestamp: false,
             verbose: true,
             process_label: "QEMU",
-            project_dir: None,
+            // Real QEMU: on a host that needed fbuild's runtime bundle,
+            // resolve_executable() installed it and the spawn must export it.
+            project_dir: Some(&project_dir),
         },
     )
     .await
