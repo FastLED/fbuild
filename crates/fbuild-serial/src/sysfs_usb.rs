@@ -9,7 +9,8 @@
 //! parses that name — see `scan_device_interfaces` for why; it is private, so
 //! this is deliberately not an intra-doc link). This module
 //! walks that shape and turns it into the same kind of facts Windows gets
-//! from SetupAPI/CfgMgr32 in `ports.rs::imp` — but it never touches a live
+//! from SetupAPI/CfgMgr32 (see the facade's Windows implementation,
+//! `fbuild_core::platform::windows::device`) — but it never touches a live
 //! filesystem itself. Every parsing function takes a `root: &Path`, so the
 //! whole module is exercised with fixture trees built under a
 //! `tempfile::TempDir` on any host OS, including this Windows dev box
@@ -17,8 +18,9 @@
 //! exactly why interface directories are identified structurally instead
 //! of by name).
 //!
-//! The one `cfg(target_os = "linux")` boundary is `live_root` plus the
-//! two thin wrappers that call it — everything else here is pure parsing
+//! The one host boundary is `live_root`, which asks
+//! [`fbuild_core::platform::device::live_sysfs_usb_root`] whether this OS has
+//! a live sysfs USB topology at all — everything else here is pure parsing
 //! and runs (and is tested) everywhere.
 //!
 //! ## Design choices (FastLED/fbuild#1091)
@@ -124,7 +126,8 @@ pub struct UsbDeviceNode {
     /// `Some(true)` when the directory-name port path has 2+ segments,
     /// meaning at least one hub sits between this device and the root hub.
     /// `Some(false)` when it is directly on a root hub port. Mirrors the
-    /// semantics of `ports::imp::classify_usb_ancestry` on Windows:
+    /// semantics of `classify_usb_ancestry` in the facade's Windows
+    /// implementation:
     /// "is there a USB device ancestor before the root hub". Root hub
     /// entries (`"usbN"`) themselves get `None` — the question doesn't
     /// apply to the hub itself.
@@ -455,12 +458,11 @@ pub fn health_for_tty_from_root(root: &Path, tty_name: &str) -> PortHealth {
     PortHealth::Unknown
 }
 
-/// Live sysfs root, gated to the one platform where `/sys/bus/usb/devices`
-/// exists. Every other function in this module takes an explicit `root`
-/// and has no idea what OS it's running on.
-#[cfg(target_os = "linux")]
-pub fn live_root() -> NormalizedPath {
-    NormalizedPath::from(DEFAULT_SYSFS_USB_ROOT)
+/// Live sysfs root when the host provides one (`Some` only on Linux, where
+/// `/sys/bus/usb/devices` exists). Every other function in this module takes
+/// an explicit `root` and has no idea what OS it's running on.
+pub fn live_root() -> Option<NormalizedPath> {
+    fbuild_core::platform::device::live_sysfs_usb_root()
 }
 
 #[cfg(test)]

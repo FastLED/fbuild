@@ -12,18 +12,10 @@ use fbuild_core::usb::{
     normalize_physical_location,
 };
 
-/// A PnP devnode observed directly by the recovery backend.
-#[derive(Clone, Debug, Eq, PartialEq)]
-pub struct UsbPnpDevice {
-    pub instance_id: String,
-    pub parent_instance_id: Option<String>,
-    pub device_class: String,
-    pub vid: u16,
-    pub pid: u16,
-    pub serial: Option<String>,
-    pub health: UsbRecoveryHealth,
-    pub location_paths: Vec<String>,
-}
+/// A PnP devnode observed directly by the recovery backend. The record
+/// itself is a host-neutral fact owned by the platform facade; the recovery
+/// ladder only revalidates its fields.
+pub use fbuild_core::platform::device::UsbPnpDevice;
 
 /// Narrow host boundary used by the elevated helper and deterministic tests.
 ///
@@ -255,14 +247,8 @@ pub fn recover_windows_usb_device(
     request: &UsbRecoveryRequest,
     nonce: String,
 ) -> UsbRecoveryResult {
-    #[cfg(windows)]
-    {
-        let mut backend = windows::WindowsPnpBackend;
-        execute_recovery(request, nonce, &mut backend)
-    }
-    #[cfg(not(windows))]
-    {
-        UsbRecoveryResult {
+    if !fbuild_core::platform::host::is_windows() {
+        return UsbRecoveryResult {
             operation_id: request.operation_id.clone(),
             nonce,
             validated_instance_id: None,
@@ -271,301 +257,51 @@ pub fn recover_windows_usb_device(
             after: UsbRecoveryHealth::Unknown,
             success: false,
             error_code: Some("windows-recovery-unavailable".to_string()),
-        }
+        };
     }
+    let mut backend = PlatformPnpBackend;
+    execute_recovery(request, nonce, &mut backend)
 }
 
-#[cfg(windows)]
-mod windows {
-    use super::*;
-    use std::time::Duration;
-    use windows_sys::Win32::Devices::DeviceAndDriverInstallation::{
-        CM_Disable_DevNode, CM_Enable_DevNode, CM_Get_DevNode_PropertyW, CM_Get_DevNode_Status,
-        CM_Get_Device_IDW, CM_Get_Parent, CM_LOCATE_DEVNODE_NORMAL, CM_LOCATE_DEVNODE_PHANTOM,
-        CM_Locate_DevNodeW, CM_Reenumerate_DevNode, CR_NO_SUCH_DEVINST, CR_NO_SUCH_VALUE,
-        CR_SUCCESS, MAX_DEVICE_ID_LEN,
-    };
-    use windows_sys::Win32::Devices::Properties::{
-        DEVPKEY_Device_Class, DEVPKEY_Device_LocationPaths, DEVPROP_TYPE_STRING,
-        DEVPROP_TYPE_STRING_LIST,
-    };
+/// Real backend over the neutral device facade. The Config Manager writes it
+/// reaches are confined to the exact devnodes `execute_recovery` revalidated;
+/// on hosts without a Windows PnP surface every primitive fails closed, and
+/// [`recover_windows_usb_device`] never even constructs this backend there.
+struct PlatformPnpBackend;
 
-    /// Windows implementation is added below the common security ladder so
-    /// tests can exercise every allowlist decision without a privileged host.
-    pub(super) struct WindowsPnpBackend;
+impl UsbPnpBackend for PlatformPnpBackend {
+    type Error = String;
 
-    impl UsbPnpBackend for WindowsPnpBackend {
-        type Error = String;
-
-        fn inspect(
-            &mut self,
-            instance_id: &str,
-            allow_phantom: bool,
-        ) -> Result<UsbPnpDevice, Self::Error> {
-            inspect_device(instance_id, allow_phantom)
-        }
-
-        fn reenumerate_parent(&mut self, parent_instance_id: &str) -> Result<(), Self::Error> {
-            reenumerate_parent(parent_instance_id)
-        }
-
-        fn restart_target(&mut self, instance_id: &str) -> Result<(), Self::Error> {
-            restart_target(instance_id)
-        }
-
-        fn restart_verified_parent(&mut self, parent_instance_id: &str) -> Result<(), Self::Error> {
-            // Same bounded disable/enable as `restart_target`, applied to the
-            // parent composite that `execute_recovery` already re-proved live
-            // and identity-matched. Never reachable for a hub or controller:
-            // the ladder only passes a `USB\VID_...` composite here.
-            restart_target(parent_instance_id)
-        }
-
-        fn post_operation_poll_attempts(&self) -> usize {
-            8
-        }
-
-        fn wait_for_post_operation_poll(&mut self) {
-            std::thread::sleep(Duration::from_millis(250));
-        }
-    }
-
-    // These Config Manager functions are intentionally the only real PnP
-    // writes in this module. Keeping them behind `UsbPnpBackend` makes it
-    // impossible for the helper to call a broader operation than the trait.
-    fn inspect_device(instance_id: &str, allow_phantom: bool) -> Result<UsbPnpDevice, String> {
-        let devinst = locate(instance_id, allow_phantom)?;
-        let actual_instance_id = device_id(devinst)?;
-        let parent_instance_id = parent_id(devinst)?;
-        let device_class = device_class(devinst)?;
-        let health = device_health(devinst);
-        let location_paths = device_location_paths(devinst);
-        let (vid, pid, serial) =
-            parse_usb_identity(&actual_instance_id, parent_instance_id.as_deref()).ok_or_else(
-                || "device does not expose a canonical USB VID/PID identity".to_string(),
-            )?;
-
-        Ok(UsbPnpDevice {
-            instance_id: actual_instance_id,
-            parent_instance_id,
-            device_class,
-            vid,
-            pid,
-            serial,
-            health,
-            location_paths,
-        })
-    }
-
-    fn reenumerate_parent(parent_instance_id: &str) -> Result<(), String> {
-        let parent = locate(parent_instance_id, false)?;
-        // SAFETY: `parent` was obtained from Config Manager for the exact
-        // verified live parent. Flags are zero, requesting no broad scan.
-        let result = unsafe { CM_Reenumerate_DevNode(parent, 0) };
-        (result == CR_SUCCESS)
-            .then_some(())
-            .ok_or_else(|| format!("CM_Reenumerate_DevNode failed ({result})"))
-    }
-
-    fn restart_target(instance_id: &str) -> Result<(), String> {
-        let target = locate(instance_id, false)?;
-        // SAFETY: `target` was revalidated as the exact present problematic
-        // child. The helper never passes a parent/hub/controller to this call.
-        let disabled = unsafe { CM_Disable_DevNode(target, 0) };
-        if disabled != CR_SUCCESS {
-            return Err(format!("CM_Disable_DevNode failed ({disabled})"));
-        }
-        // SAFETY: same exact child devinst as the immediately preceding
-        // disable. No other Config Manager action is performed here.
-        let enabled = unsafe { CM_Enable_DevNode(target, 0) };
-        if enabled == CR_SUCCESS {
-            return Ok(());
-        }
-        // Best-effort rollback for a transient Config Manager failure. This
-        // is still the same exact child and does not widen the allowlist; its
-        // result is retained in the diagnostic rather than silently leaving a
-        // potentially disabled endpoint behind.
-        // SAFETY: same exact validated child devinst; this is a bounded
-        // best-effort re-enable after the first enable reported failure.
-        let rollback = unsafe { CM_Enable_DevNode(target, 0) };
-        Err(format!(
-            "CM_Enable_DevNode failed ({enabled}); rollback enable returned ({rollback})"
-        ))
-    }
-
-    fn locate(instance_id: &str, allow_phantom: bool) -> Result<u32, String> {
-        let mut devinst = 0u32;
-        let utf16 = instance_id
-            .encode_utf16()
-            .chain(Some(0))
-            .collect::<Vec<_>>();
-        let flags = if allow_phantom {
-            CM_LOCATE_DEVNODE_PHANTOM
-        } else {
-            CM_LOCATE_DEVNODE_NORMAL
-        };
-        // SAFETY: `utf16` is NUL-terminated and remains alive for the call;
-        // `devinst` is writable local storage.
-        let result = unsafe { CM_Locate_DevNodeW(&mut devinst, utf16.as_ptr(), flags) };
-        (result == CR_SUCCESS)
-            .then_some(devinst)
-            .ok_or_else(|| format!("CM_Locate_DevNodeW failed ({result})"))
-    }
-
-    fn device_id(devinst: u32) -> Result<String, String> {
-        let mut buffer = [0u16; MAX_DEVICE_ID_LEN as usize];
-        // SAFETY: `buffer` is writable local UTF-16 storage sized according to
-        // the Config Manager API's documented maximum device ID length.
-        let result = unsafe {
-            CM_Get_Device_IDW(devinst, buffer.as_mut_ptr(), (buffer.len() - 1) as u32, 0)
-        };
-        if result != CR_SUCCESS {
-            return Err(format!("CM_Get_Device_IDW failed ({result})"));
-        }
-        Ok(from_utf16(&buffer))
-    }
-
-    fn parent_id(devinst: u32) -> Result<Option<String>, String> {
-        let mut parent = 0u32;
-        // SAFETY: `parent` is writable local storage and `devinst` came from
-        // Config Manager in the same process.
-        let result = unsafe { CM_Get_Parent(&mut parent, devinst, 0) };
-        if result == CR_NO_SUCH_DEVINST {
-            return Ok(None);
-        }
-        if result != CR_SUCCESS {
-            return Err(format!("CM_Get_Parent failed ({result})"));
-        }
-        device_id(parent).map(Some)
-    }
-
-    fn device_class(devinst: u32) -> Result<String, String> {
-        let mut property_type = 0u32;
-        let mut buffer = [0u16; 256];
-        let mut byte_len = (buffer.len() * std::mem::size_of::<u16>()) as u32;
-        // SAFETY: the property key and all output pointers remain valid for
-        // the call; the buffer size is provided in bytes as required by CM.
-        let result = unsafe {
-            CM_Get_DevNode_PropertyW(
-                devinst,
-                &DEVPKEY_Device_Class,
-                &mut property_type,
-                buffer.as_mut_ptr().cast(),
-                &mut byte_len,
-                0,
-            )
-        };
-        if result == CR_NO_SUCH_VALUE {
-            // Driverless devnodes (e.g. a BOOTSEL PICOBOOT interface stuck at
-            // CM_PROB_FAILED_INSTALL) have no Device_Class property at all.
-            // Report the shared sentinel so identity revalidation treats the
-            // absence as an exact-match fact (FastLED/fbuild#1152).
-            return Ok(fbuild_core::usb::UNCLASSED_DEVICE_CLASS.to_string());
-        }
-        if result != CR_SUCCESS || property_type != DEVPROP_TYPE_STRING {
-            return Err(format!(
-                "CM_Get_DevNode_PropertyW(Device_Class) failed ({result})"
-            ));
-        }
-        Ok(from_utf16(&buffer))
-    }
-
-    fn device_health(devinst: u32) -> UsbRecoveryHealth {
-        let mut status = 0u32;
-        let mut problem_code = 0u32;
-        // SAFETY: both output pointers are writable local storage and the
-        // devinst was returned by Config Manager.
-        let result = unsafe { CM_Get_DevNode_Status(&mut status, &mut problem_code, devinst, 0) };
-        if result == CR_SUCCESS {
-            if problem_code == 0 {
-                UsbRecoveryHealth::HealthyPresent
-            } else {
-                UsbRecoveryHealth::PresentProblem { problem_code }
-            }
-        } else if result == CR_NO_SUCH_DEVINST {
-            UsbRecoveryHealth::Phantom { problem_code: None }
-        } else {
-            UsbRecoveryHealth::Unknown
-        }
-    }
-
-    fn device_location_paths(devinst: u32) -> Vec<String> {
-        let mut property_type = 0u32;
-        let mut byte_len = 0u32;
-        unsafe {
-            CM_Get_DevNode_PropertyW(
-                devinst,
-                &DEVPKEY_Device_LocationPaths,
-                &mut property_type,
-                std::ptr::null_mut(),
-                &mut byte_len,
-                0,
-            )
-        };
-        if byte_len < 2 {
-            return Vec::new();
-        }
-        let mut buffer = vec![0u16; (byte_len as usize).div_ceil(2)];
-        let result = unsafe {
-            CM_Get_DevNode_PropertyW(
-                devinst,
-                &DEVPKEY_Device_LocationPaths,
-                &mut property_type,
-                buffer.as_mut_ptr().cast(),
-                &mut byte_len,
-                0,
-            )
-        };
-        if result != CR_SUCCESS || property_type != DEVPROP_TYPE_STRING_LIST {
-            return Vec::new();
-        }
-        buffer
-            .split(|unit| *unit == 0)
-            .take_while(|segment| !segment.is_empty())
-            .map(String::from_utf16_lossy)
-            .filter(|path| !path.is_empty())
-            .collect()
-    }
-
-    fn parse_usb_identity(
+    fn inspect(
+        &mut self,
         instance_id: &str,
-        parent_instance_id: Option<&str>,
-    ) -> Option<(u16, u16, Option<String>)> {
-        fn parse(id: &str) -> Option<(u16, u16, Option<String>)> {
-            let mut parts = id.split('\\');
-            if !parts.next()?.eq_ignore_ascii_case("USB") {
-                return None;
-            }
-            let hardware = parts.next()?.to_ascii_uppercase();
-            let vid_start = hardware.find("VID_")? + 4;
-            let pid_start = hardware.find("PID_")? + 4;
-            let vid = u16::from_str_radix(hardware.get(vid_start..vid_start + 4)?, 16).ok()?;
-            let pid = u16::from_str_radix(hardware.get(pid_start..pid_start + 4)?, 16).ok()?;
-            let serial = parts
-                .next()
-                .filter(|value| !value.is_empty())
-                .map(str::to_string);
-            Some((vid, pid, serial))
-        }
-
-        let (vid, pid, child_serial) = parse(instance_id)?;
-        let parent_serial =
-            parent_instance_id
-                .and_then(parse)
-                .and_then(|(parent_vid, parent_pid, serial)| {
-                    (parent_vid == vid && parent_pid == pid)
-                        .then_some(serial)
-                        .flatten()
-                });
-        Some((vid, pid, parent_serial.or(child_serial)))
+        allow_phantom: bool,
+    ) -> Result<UsbPnpDevice, Self::Error> {
+        fbuild_core::platform::device::inspect_usb_pnp_device(instance_id, allow_phantom)
     }
 
-    fn from_utf16(buffer: &[u16]) -> String {
-        let length = buffer
-            .iter()
-            .position(|unit| *unit == 0)
-            .unwrap_or(buffer.len());
-        String::from_utf16_lossy(&buffer[..length])
+    fn reenumerate_parent(&mut self, parent_instance_id: &str) -> Result<(), Self::Error> {
+        fbuild_core::platform::device::reenumerate_usb_parent(parent_instance_id)
+    }
+
+    fn restart_target(&mut self, instance_id: &str) -> Result<(), Self::Error> {
+        fbuild_core::platform::device::restart_usb_device(instance_id)
+    }
+
+    fn restart_verified_parent(&mut self, parent_instance_id: &str) -> Result<(), Self::Error> {
+        // Same bounded disable/enable as `restart_target`, applied to the
+        // parent composite that `execute_recovery` already re-proved live
+        // and identity-matched. Never reachable for a hub or controller:
+        // the ladder only passes a `USB\VID_...` composite here.
+        fbuild_core::platform::device::restart_usb_device(parent_instance_id)
+    }
+
+    fn post_operation_poll_attempts(&self) -> usize {
+        fbuild_core::platform::device::usb_pnp_post_operation_poll_attempts()
+    }
+
+    fn wait_for_post_operation_poll(&mut self) {
+        std::thread::sleep(fbuild_core::platform::device::usb_pnp_post_operation_poll_interval());
     }
 }
 

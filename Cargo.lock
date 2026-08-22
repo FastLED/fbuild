@@ -1197,6 +1197,7 @@ dependencies = [
  "same-file",
  "serde",
  "serde_json",
+ "serialport",
  "sha2",
  "socket2",
  "tar",
@@ -1452,7 +1453,6 @@ dependencies = [
  "tracing",
  "tracing-test",
  "uuid",
- "windows-sys 0.52.0",
 ]
 
 [[package]]
