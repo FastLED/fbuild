@@ -8,6 +8,7 @@ pub mod esp32;
 pub mod esp32_metadata;
 pub mod esp8266;
 pub mod esp_qemu;
+pub mod esp_qemu_runtime;
 pub mod riscv;
 pub mod rp2040_picotool;
 pub mod rp2040_pqt;
@@ -19,6 +20,10 @@ pub use avr::AvrToolchain;
 pub use clang::{ClangComponent, ClangComponentKind};
 pub use esp_qemu::build_windows_qemu_path_env;
 pub use esp_qemu::{EspQemu, EspQemuArch, EspQemuRiscv32, EspQemuXtensa};
+pub use esp_qemu_runtime::{
+    QemuLinuxRuntime, build_linux_qemu_ld_library_path,
+    installed_lib_dir as qemu_linux_runtime_lib_dir,
+};
 pub use esp32::Esp32Toolchain;
 pub use esp8266::Esp8266Toolchain;
 pub use riscv::RiscvToolchain;
