@@ -42,6 +42,9 @@ pub(crate) struct RunQemuOptions<'a> {
     pub verbose: bool,
     /// Label used in user-visible messages (e.g. "QEMU", "simavr").
     pub process_label: &'a str,
+    /// Project directory, used to locate fbuild's Linux QEMU runtime-library
+    /// bundle. `None` for non-QEMU runners and for tests that spawn a stub.
+    pub project_dir: Option<&'a Path>,
 }
 
 /// Configuration for an emulator test run (user-facing options).
@@ -156,13 +159,33 @@ pub(crate) async fn resolve_esp32_toolchain_gcc_path(
     Ok(toolchain.get_gcc_path())
 }
 
-fn apply_process_environment(cmd: &mut tokio::process::Command, exe_path: &Path) {
+fn apply_process_environment(
+    cmd: &mut tokio::process::Command,
+    exe_path: &Path,
+    project_dir: Option<&Path>,
+) {
     if fbuild_core::platform::host::is_windows() {
         let current_path = std::env::var("PATH").unwrap_or_default();
         if let Ok(path_env) =
             fbuild_packages::toolchain::build_windows_qemu_path_env(exe_path, &current_path)
         {
             cmd.env("PATH", path_env);
+        }
+        return;
+    }
+
+    // Linux: the Espressif QEMU binaries bundle no shared libraries and
+    // carry no RPATH. When the host could not start QEMU on its own,
+    // toolchain resolution installed fbuild's runtime bundle; point the
+    // emulator at it. Hosts that never needed the bundle get `None` here
+    // and keep their own libraries.
+    if let (true, Some(project_dir)) = (fbuild_core::platform::host::is_linux(), project_dir) {
+        let current = std::env::var("LD_LIBRARY_PATH").ok();
+        if let Some(value) = fbuild_packages::toolchain::build_linux_qemu_ld_library_path(
+            project_dir,
+            current.as_deref(),
+        ) {
+            cmd.env("LD_LIBRARY_PATH", value);
         }
     }
 }
@@ -190,7 +213,7 @@ pub(crate) async fn run_qemu_process(
         .stdin(Stdio::null())
         .stdout(Stdio::piped())
         .stderr(Stdio::piped());
-    apply_process_environment(&mut cmd, qemu_path);
+    apply_process_environment(&mut cmd, qemu_path, options.project_dir);
 
     let label = options.process_label;
     if options.verbose {

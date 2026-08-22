@@ -277,6 +277,7 @@ pub async fn deploy_qemu(
             show_timestamp,
             verbose,
             process_label: "QEMU",
+            project_dir: Some(&project_dir),
         },
     )
     .await

@@ -1,0 +1,76 @@
+name: QEMU Linux Runtime
+
+# Proves fbuild can start Espressif QEMU on a stock Linux runner without any
+# host library installation. `ubuntu-latest` (24.04) ships none of libslirp,
+# libSDL2 or libpixman, which the Espressif QEMU binaries link against — so
+# this job is red unless fbuild provisions them itself.
+#
+# There is deliberately NO apt-get step here. Adding one would make the job
+# pass for the wrong reason.
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths:
+      - 'crates/fbuild-toolchain/**'
+      - 'crates/fbuild-daemon/src/handlers/emulator/**'
+      - 'ci/build_qemu_linux_runtime.py'
+      - '.github/workflows/qemu-linux-runtime.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'crates/fbuild-toolchain/**'
+      - 'crates/fbuild-daemon/src/handlers/emulator/**'
+      - 'ci/build_qemu_linux_runtime.py'
+      - '.github/workflows/qemu-linux-runtime.yml'
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: "-D warnings"
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+jobs:
+  qemu_runtime:
+    name: QEMU starts with no host libraries (ubuntu-latest)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Confirm the runner really is missing the libraries
+        # Documents the premise of the test. Informational: a future runner
+        # image that ships them makes the test exercise the host path, which
+        # is still a valid pass.
+        run: |
+          for lib in libslirp.so.0 libSDL2-2.0.so.0 libpixman-1.so.0; do
+            if ldconfig -p | grep -q "$lib"; then
+              echo "present: $lib"
+            else
+              echo "absent:  $lib  <- fbuild must provision this"
+            fi
+          done
+
+      - uses: astral-sh/setup-uv@v3
+
+      - name: Setup soldr
+        uses: zackees/setup-soldr@v0
+        with:
+          version: 0.8.23
+          cache: true
+          build-cache: true
+          target-cache: true
+          prebuild-deps: none
+          linker: platform-default
+
+      - name: QEMU runtime provisioning test
+        run: |
+          soldr cargo test -p fbuild-toolchain --test qemu_linux_runtime -- \
+            --ignored --nocapture

@@ -132,6 +132,7 @@ impl EmulatorRunner for QemuRunner {
                 show_timestamp: config.show_timestamp,
                 verbose: config.verbose,
                 process_label: "QEMU",
+                project_dir: Some(&self.project_dir),
             },
         )
         .await?;
@@ -345,6 +346,8 @@ impl EmulatorRunner for SimavrRunner {
                 show_timestamp: config.show_timestamp,
                 verbose: config.verbose,
                 process_label: "simavr",
+                // simavr is a host-native binary; no QEMU runtime bundle.
+                project_dir: None,
             },
         )
         .await?;

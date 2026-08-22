@@ -4,7 +4,7 @@ requires-python = ">=3.10"
 
 [[package]]
 name = "fbuild"
-version = "2.5.17"
+version = "2.5.19"
 source = { editable = "." }
 
 [package.dev-dependencies]
