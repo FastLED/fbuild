@@ -82,6 +82,10 @@ pub struct SerialPortFacts {
     /// Physical USB location paths. Empty when unavailable. These are
     /// identity history only and never make a phantom endpoint selectable.
     pub location_paths: Vec<String>,
+    /// The host's short human location string for the devnode (Windows
+    /// `SPDRP_LOCATION_INFORMATION`, e.g. `Port_#0003.Hub_#0004`).
+    /// `None` where the host has no equivalent.
+    pub location_information: Option<String>,
 }
 
 /// Map a portable `serialport` enumeration entry onto neutral facts.
@@ -115,6 +119,7 @@ pub fn facts_from_port_info(info: serialport::SerialPortInfo) -> SerialPortFacts
         parent_instance_id: None,
         ancestor_instance_ids: Vec::new(),
         location_paths: Vec::new(),
+        location_information: None,
     }
 }
 
@@ -254,6 +259,15 @@ pub fn restart_usb_device(instance_id: &str) -> Result<(), String> {
 /// Pico SDK application-mode reset interface (`USB\Class_ff&SubClass_00&Prot_01`).
 pub fn is_picotool_reset_compatible_id(value: &str) -> bool {
     value.eq_ignore_ascii_case("USB\\Class_ff&SubClass_00&Prot_01")
+}
+
+/// Best-effort mount of USB mass-storage block-device paths discovered by
+/// the caller (Linux: `udisksctl mount --block-device`, one attempt per
+/// path, 5 s timeout each; diagnostics logged, failures never fatal). A
+/// no-op on hosts without a supported auto-mount mechanic — callers keep
+/// their own scan/policy and derive behavior from their own enumeration.
+pub fn mount_block_devices(device_paths: &[&str]) {
+    super::selected::device::mount_block_devices(device_paths);
 }
 
 /// Number of bounded post-operation observations the host backend wants.

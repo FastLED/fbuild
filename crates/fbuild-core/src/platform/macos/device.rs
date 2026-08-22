@@ -28,6 +28,11 @@ pub(crate) fn live_sysfs_usb_root() -> Option<crate::path::NormalizedPath> {
     None
 }
 
+pub(crate) fn mount_block_devices(_device_paths: &[&str]) {
+    // No fbuild-supported auto-mount mechanic on macOS: macOS auto-mounts
+    // USB mass-storage volumes itself.
+}
+
 /// Classify a macOS serial devnode from its device-node name.
 ///
 /// Any name we don't recognize returns `None` so the caller falls back

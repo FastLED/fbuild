@@ -44,8 +44,7 @@
 //!   (`fbuild port scan` / future CLI surfacing), not for the
 //!   `PortHealth` selection path. `ports::present_usb_problem_devices()`
 //!   stays an empty `Vec` on Linux for that reason; see
-//!   `ports::present_usb_problem_devices_linux` for the sibling (Linux-only
-//!   item, so not an intra-doc link — this module's docs build everywhere).
+//!   [`crate::ports::present_usb_problem_devices_linux`] for the sibling.
 //!
 //! ## macOS
 //!

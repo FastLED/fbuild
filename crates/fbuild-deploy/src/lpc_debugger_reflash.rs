@@ -75,7 +75,7 @@ pub const LPC_LINK2_FIRMWARE_ENV_VAR: &str = "FBUILD_LPC_LINK2_FIRMWARE";
 /// tools under. Honors `FBUILD_DEV_MODE=1` for `~/.fbuild/dev/…`
 /// isolation, same as `find_lpc21isp` and the rest of `fbuild-paths`.
 pub fn managed_tools_dir() -> Option<NormalizedPath> {
-    let home = home_dir()?;
+    let home = NormalizedPath::new(&fbuild_core::platform::host::home_dir()?);
     let mode = if std::env::var_os("FBUILD_DEV_MODE").is_some() {
         "dev"
     } else {
@@ -285,19 +285,6 @@ pub fn require_installed() -> Result<(NormalizedPath, NormalizedPath)> {
     let dfu = find_dfu_util().ok_or_else(|| FbuildError::DeployFailed(install_hint()))?;
     let fw = find_lpc_link2_firmware().ok_or_else(|| FbuildError::DeployFailed(install_hint()))?;
     Ok((dfu, fw))
-}
-
-/// Resolve `$HOME` / `%USERPROFILE%`. Kept local so this module does
-/// not gain a `dirs` dependency for one call site — mirrors the same
-/// helper in `fbuild_deploy::lpc`.
-fn home_dir() -> Option<NormalizedPath> {
-    #[cfg(target_os = "windows")]
-    {
-        if let Some(value) = std::env::var_os("USERPROFILE") {
-            return Some(NormalizedPath::new(Path::new(&value)));
-        }
-    }
-    std::env::var_os("HOME").map(|value| NormalizedPath::new(Path::new(&value)))
 }
 
 #[cfg(test)]

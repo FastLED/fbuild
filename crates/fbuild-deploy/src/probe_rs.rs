@@ -117,7 +117,7 @@ pub fn probe_rs_release_asset_for_host() -> Result<ProbeRsReleaseAsset> {
 /// Honors `FBUILD_DEV_MODE=1` → `~/.fbuild/dev/tools/probe-rs/` to
 /// match the isolation the rest of `fbuild-paths` applies.
 pub fn managed_probe_rs_dir() -> Option<NormalizedPath> {
-    let home = home_dir_local()?;
+    let home = NormalizedPath::new(&fbuild_core::platform::host::home_dir()?);
     let mode = if std::env::var_os("FBUILD_DEV_MODE").is_some() {
         "dev"
     } else {
@@ -502,16 +502,6 @@ impl ProbeRsRun {
     pub fn success(&self) -> bool {
         self.exit_code == 0
     }
-}
-
-fn home_dir_local() -> Option<NormalizedPath> {
-    #[cfg(windows)]
-    {
-        if let Some(v) = std::env::var_os("USERPROFILE") {
-            return Some(NormalizedPath::new(Path::new(&v)));
-        }
-    }
-    std::env::var_os("HOME").map(|value| NormalizedPath::new(Path::new(&value)))
 }
 
 #[cfg(test)]

@@ -25,7 +25,7 @@ mod preflight;
 mod target;
 #[path = "rp2040_topology.rs"]
 mod topology;
-use mount::try_mount_linux_rom_device;
+use mount::try_mount_rom_device;
 use target::{
     describe_unhealthy, resolve_requested_runtime_target, select_cdc_candidate, serial_selector,
 };
@@ -472,7 +472,7 @@ fn find_uf2_volume_until(
     find_uf2_volume_until_with(
         timeout,
         || select_appeared_volume(volumes_before, find_uf2_volumes(&volume_roots())),
-        try_mount_linux_rom_device,
+        try_mount_rom_device,
     )
 }
 

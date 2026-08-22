@@ -18,7 +18,8 @@ use std::ptr;
 use windows_sys::Win32::Devices::DeviceAndDriverInstallation::{
     CM_Get_DevNode_Status, CM_Get_Device_IDW, CM_Get_Parent, CR_NO_SUCH_DEVINST, CR_SUCCESS,
     DICS_FLAG_GLOBAL, DIREG_DEV, HDEVINFO, MAX_DEVICE_ID_LEN, SP_DEVINFO_DATA,
-    SPDRP_FRIENDLYNAME, SPDRP_HARDWAREID, SPDRP_MFG, SetupDiClassGuidsFromNameW,
+    SPDRP_FRIENDLYNAME, SPDRP_HARDWAREID, SPDRP_LOCATION_INFORMATION, SPDRP_MFG,
+    SetupDiClassGuidsFromNameW,
     SetupDiDestroyDeviceInfoList, SetupDiEnumDeviceInfo, SetupDiGetClassDevsW,
     SetupDiGetDeviceInstanceIdW, SetupDiGetDevicePropertyW, SetupDiGetDeviceRegistryPropertyW,
     SetupDiOpenDevRegKey,
@@ -60,6 +61,7 @@ pub(crate) fn available_serial_ports() -> io::Result<Vec<SerialPortFacts>> {
             let parent_instance_id = port_device.parent_instance_id();
             let ancestor_instance_ids = ancestor_ids(port_device.devinfo_data.DevInst);
             let observation = port_device.pnp_observation();
+            let location_information = port_device.property(SPDRP_LOCATION_INFORMATION);
             let port_type =
                 port_device.port_type(instance_id.as_deref(), parent_instance_id.as_deref());
             let is_usb = matches!(port_type, SerialPortTypeFacts::Usb(_));
@@ -88,6 +90,7 @@ pub(crate) fn available_serial_ports() -> io::Result<Vec<SerialPortFacts>> {
                     port_device.hdi,
                     &port_device.devinfo_data,
                 ),
+                location_information,
             });
         }
     }
@@ -103,6 +106,7 @@ pub(crate) fn available_serial_ports() -> io::Result<Vec<SerialPortFacts>> {
                 parent_instance_id: None,
                 ancestor_instance_ids: Vec::new(),
                 location_paths: Vec::new(),
+                location_information: None,
             });
         }
     }
@@ -118,6 +122,11 @@ pub(crate) fn detect_serial_kernel_driver(_port_name: &str) -> Option<KernelDriv
 
 pub(crate) fn live_sysfs_usb_root() -> Option<NormalizedPath> {
     None
+}
+
+pub(crate) fn mount_block_devices(_device_paths: &[&str]) {
+    // No fbuild-supported auto-mount mechanic on Windows: the RP-series
+    // ROM volume auto-assigns a drive letter without help.
 }
 
 pub(super) fn as_utf16(utf8: &str) -> Vec<u16> {

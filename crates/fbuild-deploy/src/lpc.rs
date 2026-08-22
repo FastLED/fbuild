@@ -20,18 +20,11 @@ use crate::{DeployOutcome, Deployer, DeploymentResult};
 /// lpc21isp itself.
 pub const LPC21ISP_PATH_ENV_VAR: &str = "FBUILD_LPC21ISP_PATH";
 
-/// Resolve `$HOME` (`$USERPROFILE` on Windows). Kept as a small local
-/// helper so this crate does not gain a `dirs` / `home` dependency for
-/// one call site — mirrors the same pattern in `fbuild-paths`.
+/// Resolve the user's home directory through the neutral host facade
+/// (`%USERPROFILE%` with a `%HOME%` fallback on Windows, `$HOME`
+/// elsewhere) so this module carries no per-OS env logic.
 fn home_dir() -> Option<PathBuf> {
-    #[cfg(target_os = "windows")]
-    {
-        std::env::var_os("USERPROFILE").map(PathBuf::from)
-    }
-    #[cfg(not(target_os = "windows"))]
-    {
-        std::env::var_os("HOME").map(PathBuf::from)
-    }
+    fbuild_core::platform::host::home_dir()
 }
 
 /// The one canonical location fbuild manages lpc21isp at. FastLED/fbuild#921
@@ -969,27 +962,24 @@ mod tests {
     }
 
     #[test]
-    #[cfg(windows)]
-    fn normalize_port_prefixes_com10_and_above_on_windows() {
-        assert_eq!(normalize_lpc21isp_port("COM1"), "COM1");
-        assert_eq!(normalize_lpc21isp_port("COM9"), "COM9");
-        assert_eq!(normalize_lpc21isp_port("COM10"), r"\\.\COM10");
-        assert_eq!(normalize_lpc21isp_port("COM99"), r"\\.\COM99");
-        assert_eq!(normalize_lpc21isp_port("com10"), r"\\.\com10");
-        // Already prefixed — leave alone.
-        assert_eq!(normalize_lpc21isp_port(r"\\.\COM10"), r"\\.\COM10");
-        // Non-COM devices — leave alone.
-        assert_eq!(normalize_lpc21isp_port("/dev/ttyUSB0"), "/dev/ttyUSB0");
-        assert_eq!(normalize_lpc21isp_port("COMx"), "COMx");
-    }
-
-    #[test]
-    #[cfg(not(windows))]
-    fn normalize_port_is_a_noop_on_non_windows() {
-        // On POSIX the caller sees /dev/ttyUSBn / /dev/tty.usbserial-*
-        // and lpc21isp opens them via plain open(2); no prefix needed.
-        assert_eq!(normalize_lpc21isp_port("COM10"), "COM10");
-        assert_eq!(normalize_lpc21isp_port("/dev/ttyUSB0"), "/dev/ttyUSB0");
+    fn normalize_port_branches_on_the_host_os_facade() {
+        if fbuild_core::platform::host::is_windows() {
+            assert_eq!(normalize_lpc21isp_port("COM1"), "COM1");
+            assert_eq!(normalize_lpc21isp_port("COM9"), "COM9");
+            assert_eq!(normalize_lpc21isp_port("COM10"), r"\\.\COM10");
+            assert_eq!(normalize_lpc21isp_port("COM99"), r"\\.\COM99");
+            assert_eq!(normalize_lpc21isp_port("com10"), r"\\.\com10");
+            // Already prefixed — leave alone.
+            assert_eq!(normalize_lpc21isp_port(r"\\.\COM10"), r"\\.\COM10");
+            // Non-COM devices — leave alone.
+            assert_eq!(normalize_lpc21isp_port("/dev/ttyUSB0"), "/dev/ttyUSB0");
+            assert_eq!(normalize_lpc21isp_port("COMx"), "COMx");
+        } else {
+            // On POSIX the caller sees /dev/ttyUSBn / /dev/tty.usbserial-*
+            // and lpc21isp opens them via plain open(2); no prefix needed.
+            assert_eq!(normalize_lpc21isp_port("COM10"), "COM10");
+            assert_eq!(normalize_lpc21isp_port("/dev/ttyUSB0"), "/dev/ttyUSB0");
+        }
     }
 
     #[test]
