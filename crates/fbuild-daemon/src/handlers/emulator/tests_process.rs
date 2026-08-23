@@ -134,7 +134,9 @@ async fn run_real_esp32s3_fixture_in_qemu() {
         "esp32s3".to_string(),
         BuildProfile::Release,
     )
-    .with_override_root(Some(project_dir.join(".fbuild").join("build-qemu")))
+    .with_override_root(Some(
+        fbuild_paths::get_project_fbuild_dir(&project_dir).join("build-qemu"),
+    ))
     .resolve();
     let params = BuildParams {
         project_dir: project_dir.clone(),

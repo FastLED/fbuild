@@ -167,7 +167,7 @@ fn free_port() -> u16 {
 /// scoped to just that child.
 fn root_owner_lock_path_for(temp_home: &Path) -> NormalizedPath {
     NormalizedPath::new(temp_home)
-        .join(".fbuild")
+        .join(fbuild_paths::FBUILD_DIR_NAME)
         .join("dev")
         .join("daemon")
         .join("root-owner.lock")

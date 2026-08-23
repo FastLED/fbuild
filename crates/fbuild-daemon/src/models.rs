@@ -651,6 +651,13 @@ pub struct IdeLibrariesResponse {
 mod tests {
     use super::*;
 
+    /// Fixture cache path, assembled from the canonical segment rather than
+    /// typed out — a fixture that spells the layout by hand goes on passing
+    /// after the layout changes (FastLED/fbuild#1349).
+    fn fixture_cache_dir() -> String {
+        format!("/home/user/{}/prod/cache", fbuild_paths::FBUILD_DIR_NAME)
+    }
+
     // --- BuildRequest deserialization ---
 
     #[test]
@@ -932,11 +939,13 @@ mod tests {
             current_operation: None,
             dependency_install: None,
             client_count: 3,
-            cache_dir: "/home/user/.fbuild/prod/cache".into(),
-            cache_identity:
-                "mode=prod;trust=local-shared;schema=1;cache=/home/user/.fbuild/prod/cache".into(),
+            cache_dir: fixture_cache_dir(),
+            cache_identity: format!(
+                "mode=prod;trust=local-shared;schema=1;cache={}",
+                fixture_cache_dir()
+            ),
             cache_schema_version: 1,
-            daemon_dir: "/home/user/.fbuild/prod/daemon".into(),
+            daemon_dir: format!("/home/user/{}/prod/daemon", fbuild_paths::FBUILD_DIR_NAME),
             source_mtime: 1700000000.0,
             spawner_cwd: "/home/user/project".into(),
             mcp_url: "http://127.0.0.1:8765/mcp".into(),

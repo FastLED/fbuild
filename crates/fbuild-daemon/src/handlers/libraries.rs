@@ -44,11 +44,57 @@ use crate::models::{IdeLibrariesQuery, IdeLibrariesResponse, IdeLibraryEntry};
 
 const LIBRARIES_PAGE_HTML: &str = include_str!("../../web/libraries/index.html");
 
-const INSTALL_STATE_NOTE: &str = "Installed state is best-effort: it checks the release build \
-profile's <project>/.fbuild/build/<env>/release/libs/ directory for a same-named subdirectory. \
-That directory is only populated after a build that needed dependencies has run — if no build \
-has run yet, every entry reports installed: false even though the source may be perfectly \
-resolvable.";
+/// Explains what `installed` means on the libraries page.
+///
+/// Takes the directory the handler actually checked, when it got far enough
+/// to resolve one. `BuildLayout::resolve()` drops the `<env>` segment when it
+/// matches the project basename, so a note that always spells
+/// `<project>/.fbuild/build/<env>/release/libs/` can name a path the handler
+/// never looked at — the same class of drift FastLED/fbuild#1349 is about,
+/// one level up from the literal.
+///
+/// The generic form is only used on the early-return paths, which carry no
+/// library data for the note to be wrong about; it states the collapse rule
+/// rather than pretending the segment is always there.
+fn install_state_note(libs_dir: Option<&Path>) -> String {
+    let location = match libs_dir {
+        Some(dir) => format!("the {} directory", dir.display()),
+        None => generic_libs_location(),
+    };
+    format!(
+        "Installed state is best-effort: it checks {location} for a same-named \
+         subdirectory. That directory is only populated after a build that needed \
+         dependencies has run — if no build has run yet, every entry reports \
+         installed: false even though the source may be perfectly resolvable."
+    )
+}
+
+/// Describe where library output lands when the handler failed before it
+/// could resolve a concrete path.
+///
+/// Two things can move that directory out from under a hardcoded description,
+/// and both have to be said rather than assumed away:
+///
+/// - `FBUILD_BUILD_DIR` replaces the build root outright
+///   (`get_project_build_root` returns it verbatim), so the `.fbuild/build`
+///   segments are simply not present.
+/// - `BuildLayout::resolve()` drops the `<env>` segment when it matches the
+///   project directory name.
+fn generic_libs_location() -> String {
+    match std::env::var("FBUILD_BUILD_DIR") {
+        Ok(root) if !root.trim().is_empty() => format!(
+            "the release build profile's <env>/release/libs/ directory under {root}, \
+             which FBUILD_BUILD_DIR has substituted for the default build root"
+        ),
+        _ => format!(
+            "the release build profile's <project>/{}/{}/<env>/release/libs/ directory \
+             (the <env> segment is omitted when it matches the project directory name, \
+             and FBUILD_BUILD_DIR replaces the root entirely when set)",
+            fbuild_paths::FBUILD_DIR_NAME,
+            fbuild_paths::BUILD_DIR_NAME
+        ),
+    }
+}
 
 /// GET /libraries — serve the self-contained Library Manager page.
 pub async fn libraries_page() -> impl IntoResponse {
@@ -165,7 +211,7 @@ pub async fn list_libraries(
                 project: None,
                 environment: None,
                 libraries: Vec::new(),
-                install_state_note: INSTALL_STATE_NOTE.to_string(),
+                install_state_note: install_state_note(None),
                 error: Some(
                     "missing required ?project=<absolute project dir> query param; \
                      run `fbuild libraries` from a project directory to open this page \
@@ -185,7 +231,7 @@ pub async fn list_libraries(
                 project: Some(project),
                 environment: params.env.clone(),
                 libraries: Vec::new(),
-                install_state_note: INSTALL_STATE_NOTE.to_string(),
+                install_state_note: install_state_note(None),
                 error: Some(e),
             }),
         );
@@ -201,7 +247,7 @@ pub async fn list_libraries(
                     project: Some(project),
                     environment: params.env.clone(),
                     libraries: Vec::new(),
-                    install_state_note: INSTALL_STATE_NOTE.to_string(),
+                    install_state_note: install_state_note(None),
                     error: Some(format!("failed to parse platformio.ini: {}", e)),
                 }),
             );
@@ -218,7 +264,7 @@ pub async fn list_libraries(
                     project: Some(project),
                     environment: params.env.clone(),
                     libraries: Vec::new(),
-                    install_state_note: INSTALL_STATE_NOTE.to_string(),
+                    install_state_note: install_state_note(None),
                     error: Some(e),
                 }),
             );
@@ -241,7 +287,7 @@ pub async fn list_libraries(
                 project: Some(project),
                 environment: Some(env_name),
                 libraries,
-                install_state_note: INSTALL_STATE_NOTE.to_string(),
+                install_state_note: install_state_note(Some(libs_dir.as_ref())),
                 error: None,
             }),
         ),
@@ -252,7 +298,7 @@ pub async fn list_libraries(
                 project: Some(project),
                 environment: Some(env_name),
                 libraries: Vec::new(),
-                install_state_note: INSTALL_STATE_NOTE.to_string(),
+                install_state_note: install_state_note(Some(libs_dir.as_ref())),
                 error: Some(e),
             }),
         ),
@@ -261,6 +307,94 @@ pub async fn list_libraries(
 
 #[cfg(test)]
 mod tests {
+
+    /// FastLED/fbuild#1349 review: `BuildLayout::resolve()` drops the `<env>`
+    /// segment when it matches the project directory name, so a note that
+    /// always spells `<env>` can name a directory the handler never checked.
+    #[test]
+    fn the_note_names_the_directory_that_was_actually_checked() {
+        // Assembled from the canonical segments: a fixture that spells the
+        // layout by hand is the thing this ratchet exists to remove, and the
+        // lint rightly rejects one here too.
+        let checked = format!(
+            "/proj/{}/{}/release/libs",
+            fbuild_paths::FBUILD_DIR_NAME,
+            fbuild_paths::BUILD_DIR_NAME
+        );
+        let named = install_state_note(Some(Path::new(&checked)));
+        assert!(named.contains(&checked), "{named}");
+        assert!(
+            !named.contains("<env>"),
+            "a resolved path must not carry an unexpanded placeholder: {named}"
+        );
+    }
+
+    /// The env overrides below are process-wide; cargo runs these in
+    /// parallel, so serialize the two that read them.
+    static BUILD_DIR_ENV_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
+
+    /// Restores `FBUILD_BUILD_DIR` on drop so a failing assertion cannot
+    /// leave it set for a sibling test.
+    struct BuildDirEnv(Option<std::ffi::OsString>);
+
+    impl BuildDirEnv {
+        fn set(value: Option<&str>) -> Self {
+            let saved = std::env::var_os("FBUILD_BUILD_DIR");
+            match value {
+                Some(v) => std::env::set_var("FBUILD_BUILD_DIR", v),
+                None => std::env::remove_var("FBUILD_BUILD_DIR"),
+            }
+            Self(saved)
+        }
+    }
+
+    impl Drop for BuildDirEnv {
+        fn drop(&mut self) {
+            match self.0.take() {
+                Some(v) => std::env::set_var("FBUILD_BUILD_DIR", v),
+                None => std::env::remove_var("FBUILD_BUILD_DIR"),
+            }
+        }
+    }
+
+    /// Without a resolved directory the note has to describe the layout — so
+    /// it must also state both ways that layout can move: the collapsed
+    /// `<env>` segment and the `FBUILD_BUILD_DIR` override.
+    #[test]
+    fn the_generic_note_states_both_ways_the_layout_can_move() {
+        let _lock = BUILD_DIR_ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        let _env = BuildDirEnv::set(None);
+
+        let generic = install_state_note(None);
+        assert!(generic.contains("<env>"), "{generic}");
+        assert!(
+            generic.contains("omitted when it matches the project directory name"),
+            "{generic}"
+        );
+        assert!(
+            generic.contains("FBUILD_BUILD_DIR"),
+            "the default description must still name the override that can replace it: {generic}"
+        );
+    }
+
+    /// FastLED/fbuild#1349 review: `get_project_build_root` returns
+    /// `FBUILD_BUILD_DIR` verbatim, so when it is set the `.fbuild/build`
+    /// segments are not in the path at all. Describing them anyway points the
+    /// reader at a directory that does not exist on their machine.
+    #[test]
+    fn the_generic_note_follows_the_build_dir_override() {
+        let _lock = BUILD_DIR_ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        let _env = BuildDirEnv::set(Some("/scratch/short"));
+
+        let generic = install_state_note(None);
+        assert!(generic.contains("/scratch/short"), "{generic}");
+        assert!(
+            !generic.contains(fbuild_paths::FBUILD_DIR_NAME),
+            "the override replaces the root, so the default segments must not be described \
+             as if they were still there: {generic}"
+        );
+    }
+
     use super::*;
 
     async fn write_project(dir: &Path, ini: &str) {

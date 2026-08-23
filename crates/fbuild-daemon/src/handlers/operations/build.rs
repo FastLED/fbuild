@@ -88,7 +88,7 @@ impl Drop for StreamTerminationGuard {
             "type": "result",
             "success": false,
             "request_id": self.request_id,
-            "message": "daemon build worker terminated unexpectedly (panic or early return); check ~/.fbuild/daemon/daemon.log",
+            "message": worker_terminated_message(),
             "exit_code": 1,
             "output_file": null,
             "output_dir": null,
@@ -347,11 +347,11 @@ pub async fn build(
                                     "project lock on {} not acquired within {}s — \
                              another build is still holding it. Continuing \
                              to wait; if this persists the daemon may be \
-                             stuck. Inspect ~/.fbuild/<env>/daemon/daemon.log \
-                             or run `fbuild daemon locks` to see who is \
-                             holding the lock.",
+                             stuck. Inspect {} or run `fbuild daemon locks` \
+                             to see who is holding the lock.",
                                     project_dir_desc,
                                     LOCK_WAIT_WARN.as_secs(),
+                                    daemon_log_hint(),
                                 );
                                 warned = true;
                             }
@@ -1015,5 +1015,57 @@ mod tests {
         );
         assert!(should_emit_dependency_status(&waiting));
         assert!(!should_emit_dependency_status(&installed));
+    }
+}
+
+/// The daemon log file, named as an absolute path rather than a template the
+/// reader has to expand.
+///
+/// FastLED/fbuild#1349: the two diagnostics that point at this file each
+/// spelled it by hand, and each spelled it wrong. One said
+/// `~/.fbuild/daemon/daemon.log`, dropping the `dev`/`prod` segment entirely;
+/// the other said `~/.fbuild/<env>/daemon/daemon.log`, where `<env>` reads as
+/// a PlatformIO environment and is really the dev/prod mode. Both sent a user
+/// who was already debugging a stuck build to a path that does not exist.
+fn daemon_log_hint() -> String {
+    fbuild_paths::get_daemon_log_file().display().to_string()
+}
+
+/// Message reported when the build worker dies without answering.
+fn worker_terminated_message() -> String {
+    format!(
+        "daemon build worker terminated unexpectedly (panic or early return); check {}",
+        daemon_log_hint()
+    )
+}
+
+#[cfg(test)]
+mod daemon_log_hint_tests {
+    use super::*;
+
+    /// The hint must name the file that actually exists. Asserting against
+    /// `get_daemon_log_file` rather than against a literal is the point: a
+    /// literal is what drifted.
+    #[test]
+    fn diagnostics_name_the_real_daemon_log_path() {
+        let expected = fbuild_paths::get_daemon_log_file();
+        let expected = expected.display().to_string();
+        assert_eq!(daemon_log_hint(), expected);
+        assert!(
+            worker_terminated_message().contains(&expected),
+            "{}",
+            worker_terminated_message()
+        );
+        // The mode segment is what the old spelling dropped.
+        let mode = if fbuild_paths::is_dev_mode() {
+            "dev"
+        } else {
+            "prod"
+        };
+        assert!(
+            daemon_log_hint().contains(mode),
+            "the hint must carry the dev/prod segment: {}",
+            daemon_log_hint()
+        );
     }
 }

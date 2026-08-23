@@ -60,9 +60,3 @@ crates/fbuild-cli/src/cli/purge.rs
 crates/fbuild-cli/src/cli/symbols_cmd.rs
 crates/fbuild-cli/src/lib_select.rs
 crates/fbuild-cli/tests/daemon_crash_recovery.rs
-crates/fbuild-daemon/src/handlers/emulator/tests_process.rs
-crates/fbuild-daemon/src/handlers/libraries.rs
-crates/fbuild-daemon/src/handlers/operations/build.rs
-crates/fbuild-daemon/src/main.rs
-crates/fbuild-daemon/src/models.rs
-crates/fbuild-daemon/tests/legacy_daemon_transition.rs
