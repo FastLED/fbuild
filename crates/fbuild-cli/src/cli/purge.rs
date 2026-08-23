@@ -132,7 +132,10 @@ pub fn list_cached_packages(cache_root: &std::path::Path) -> fbuild_core::Result
         ));
         output::result("\nUsage:");
         output::result("  fbuild purge all              Remove all cached packages");
-        output::result("  fbuild purge project          Remove project build artifacts (.fbuild/)");
+        output::result(format!(
+            "  fbuild purge project          Remove project build artifacts ({}/)",
+            fbuild_paths::FBUILD_DIR_NAME
+        ));
         output::result("  fbuild purge <name>           Remove specific cache subdirectory");
         output::result("  fbuild purge ... --dry-run    Show what would be removed");
         return Ok(());

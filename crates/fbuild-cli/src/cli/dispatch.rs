@@ -81,7 +81,11 @@ pub async fn async_main() {
 
     // Notify when running in dev mode (matches Python behavior)
     if std::env::var("FBUILD_DEV_MODE").is_ok_and(|v| v == "1") {
-        output::progress("FBUILD_DEV_MODE=1 (dev mode: port 8865, ~/.fbuild/dev/)");
+        output::progress(format!(
+            "FBUILD_DEV_MODE=1 (dev mode: port {}, {})",
+            fbuild_paths::get_daemon_port(),
+            fbuild_paths::get_fbuild_root().display()
+        ));
     }
 
     // FastLED/fbuild#626 Phase 1: passive update check. Kick it off in
@@ -608,8 +612,9 @@ pub async fn async_main() {
         }) => {
             if let Some(bd) = &build_dir {
                 output::warn(format!(
-                    "--build-dir {} is accepted for pio ci compatibility but not yet honored; outputs go to .fbuild/build/...",
-                    bd
+                    "--build-dir {} is accepted for pio ci compatibility but not yet honored; outputs go to {}/...",
+                    bd,
+                    fbuild_paths::get_project_build_root(std::path::Path::new(".")).display()
                 ));
             }
             let normalized = normalize_ci_sketches(&sketches);

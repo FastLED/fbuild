@@ -44,7 +44,7 @@ struct IdeState {
 }
 
 fn ide_state_path(project_path: &Path) -> NormalizedPath {
-    NormalizedPath::from(project_path.join(".fbuild").join("ide_state.json"))
+    NormalizedPath::from(fbuild_paths::get_project_fbuild_dir(project_path).join("ide_state.json"))
 }
 
 /// Read the persisted environment. Tolerates an absent file, an empty file,
@@ -59,7 +59,7 @@ fn read_persisted_env(project_path: &Path) -> Option<String> {
 
 /// Persist the chosen environment, creating `.fbuild/` if needed.
 fn write_persisted_env(project_path: &Path, environment: &str) -> fbuild_core::Result<()> {
-    let dir = project_path.join(".fbuild");
+    let dir = fbuild_paths::get_project_fbuild_dir(project_path);
     std::fs::create_dir_all(&dir).map_err(|e| {
         fbuild_core::FbuildError::Other(format!("failed to create {}: {}", dir.display(), e))
     })?;
@@ -580,7 +580,7 @@ mod tests {
     #[test]
     fn ide_state_malformed_json_is_none() {
         let tmp = tempfile::tempdir().unwrap();
-        std::fs::create_dir_all(tmp.path().join(".fbuild")).unwrap();
+        std::fs::create_dir_all(fbuild_paths::get_project_fbuild_dir(tmp.path())).unwrap();
         std::fs::write(ide_state_path(tmp.path()), "{ not json").unwrap();
         assert_eq!(read_persisted_env(tmp.path()), None);
     }
@@ -588,7 +588,7 @@ mod tests {
     #[test]
     fn ide_state_empty_file_is_none() {
         let tmp = tempfile::tempdir().unwrap();
-        std::fs::create_dir_all(tmp.path().join(".fbuild")).unwrap();
+        std::fs::create_dir_all(fbuild_paths::get_project_fbuild_dir(tmp.path())).unwrap();
         std::fs::write(ide_state_path(tmp.path()), "").unwrap();
         assert_eq!(read_persisted_env(tmp.path()), None);
     }

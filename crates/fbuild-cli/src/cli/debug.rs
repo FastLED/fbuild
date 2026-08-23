@@ -561,6 +561,17 @@ pub async fn run_debug(
 mod tests {
     use super::*;
 
+    /// Fixture ELF path, built from the canonical segments so it cannot
+    /// drift from the layout the resolver actually walks
+    /// (FastLED/fbuild#1349).
+    fn fixture_elf_path() -> String {
+        format!(
+            "/proj/{}/{}/esp32dev/release/firmware.elf",
+            fbuild_paths::FBUILD_DIR_NAME,
+            fbuild_paths::BUILD_DIR_NAME
+        )
+    }
+
     // ---------- capability matrix ----------
 
     #[test]
@@ -727,7 +738,8 @@ mod tests {
 
     #[test]
     fn build_gdb_argv_orders_baud_before_target_remote() {
-        let elf = Path::new("/proj/.fbuild/build/esp32dev/release/firmware.elf");
+        let elf_path = fixture_elf_path();
+        let elf = Path::new(&elf_path);
         let argv = build_gdb_argv(elf, "COM5", 115_200);
         assert_eq!(
             argv,
@@ -736,7 +748,7 @@ mod tests {
                 "set serial baud 115200".to_string(),
                 "-ex".to_string(),
                 "target remote COM5".to_string(),
-                "/proj/.fbuild/build/esp32dev/release/firmware.elf".to_string(),
+                fixture_elf_path(),
             ]
         );
     }

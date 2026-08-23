@@ -45,7 +45,7 @@ fn real_home() -> Option<NormalizedPath> {
 /// `fbuild_paths` layout without mutating this process's env (env vars are
 /// process-global and tests run multi-threaded).
 fn dev_root_owner_lock(home: &NormalizedPath) -> NormalizedPath {
-    home.join(".fbuild")
+    home.join(fbuild_paths::FBUILD_DIR_NAME)
         .join("dev")
         .join("daemon")
         .join("root-owner.lock")
