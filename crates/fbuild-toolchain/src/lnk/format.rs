@@ -91,6 +91,82 @@ impl LnkFile {
         Self::from_raw(raw)
     }
 
+    /// Parse a `.lnk` file in either supported format.
+    ///
+    /// Two formats exist in the wild and both are accepted:
+    ///
+    /// - **JSON** (canonical, what `fbuild lnk add` writes) — see
+    ///   [`Self::from_json_str`].
+    /// - **Text**, the format FastLED's C++ runtime parses
+    ///   (`fl::parse_lnk_with_metadata()`): `#` comments and blank lines are
+    ///   skipped, the first remaining line is the URL, and subsequent
+    ///   `key=value` lines carry metadata. Unknown keys are ignored so the
+    ///   format can grow.
+    ///
+    /// The format is detected by sniffing the first non-blank, non-comment
+    /// character: `{` means JSON, anything else is text.
+    pub fn from_str_any(s: &str) -> Result<Self> {
+        if first_meaningful_char(s) == Some('{') {
+            Self::from_json_str(s)
+        } else {
+            Self::from_text_str(s)
+        }
+    }
+
+    /// Parse the plain-text `.lnk` form.
+    ///
+    /// `sha256` is required here just as it is for JSON: the resolver caches
+    /// by content digest, so a `.lnk` without one cannot be content-addressed
+    /// or verified. The text format treats it as optional, so a file written
+    /// for the C++ runtime may need a digest added before fbuild can use it —
+    /// the error says exactly that.
+    pub fn from_text_str(s: &str) -> Result<Self> {
+        let mut url: Option<String> = None;
+        let mut sha256: Option<String> = None;
+
+        for raw_line in s.lines() {
+            let line = raw_line.trim();
+            if line.is_empty() || line.starts_with('#') {
+                continue;
+            }
+            if url.is_none() {
+                url = Some(line.to_string());
+                continue;
+            }
+            let Some((key, value)) = line.split_once('=') else {
+                // Unknown non-key=value line: ignore for forward-compat,
+                // matching the C++ and Python parsers.
+                continue;
+            };
+            if key.trim() == "sha256" {
+                sha256 = Some(value.trim().to_string());
+            }
+            // Other keys (e.g. `fallback`) are recognized by the runtime but
+            // have no representation in LnkFile yet; ignored rather than fatal.
+        }
+
+        let Some(url) = url else {
+            return Err(FbuildError::PackageError(
+                "no URL found in .lnk (expected a non-comment line with the asset URL)".to_string(),
+            ));
+        };
+        let Some(sha256) = sha256 else {
+            return Err(FbuildError::PackageError(format!(
+                "text-format .lnk for {url} has no `sha256=` line; fbuild caches by content \
+                 digest and cannot verify or content-address without one. Add a \
+                 `sha256=<64 hex chars>` line, or regenerate the file with `fbuild lnk add <url>`."
+            )));
+        };
+
+        Self::from_raw(LnkFileRaw {
+            v: 1,
+            url,
+            sha256,
+            size: None,
+            extract: None,
+        })
+    }
+
     /// Parse a `.lnk` file from disk.
     pub fn from_path(path: &Path) -> Result<Self> {
         let bytes = std::fs::read(path).map_err(|e| {
@@ -99,7 +175,7 @@ impl LnkFile {
         let s = std::str::from_utf8(&bytes).map_err(|_| {
             FbuildError::PackageError(format!(".lnk file {} is not valid UTF-8", path.display()))
         })?;
-        Self::from_json_str(s).map_err(|e| match e {
+        Self::from_str_any(s).map_err(|e| match e {
             FbuildError::PackageError(msg) => {
                 FbuildError::PackageError(format!("{}: {msg}", path.display()))
             }
@@ -131,6 +207,15 @@ impl LnkFile {
     }
 }
 
+/// First character that is neither whitespace nor part of a `#` comment line.
+/// Used to tell the JSON form from the text form.
+fn first_meaningful_char(s: &str) -> Option<char> {
+    s.lines()
+        .map(str::trim)
+        .find(|line| !line.is_empty() && !line.starts_with('#'))
+        .and_then(|line| line.chars().next())
+}
+
 fn validate_sha256_hex(s: &str) -> Result<()> {
     if s.len() != 64 {
         return Err(FbuildError::PackageError(format!(
@@ -154,6 +239,78 @@ mod tests {
 
     fn valid_minimal() -> String {
         format!(r#"{{"v":1,"url":"https://example.com/x.bin","sha256":"{VALID_SHA}"}}"#)
+    }
+
+    #[test]
+    fn parses_text_format_with_sha256() {
+        let text = format!(
+            "# .lnk asset link file\n\
+             # comments are skipped\n\
+             \n\
+             https://example.com/track.mp3\n\
+             sha256={VALID_SHA}\n"
+        );
+        let lnk = LnkFile::from_str_any(&text).unwrap();
+        assert_eq!(lnk.version, 1);
+        assert_eq!(lnk.url, "https://example.com/track.mp3");
+        assert_eq!(lnk.sha256, VALID_SHA);
+        assert_eq!(lnk.extract, ExtractMode::File);
+    }
+
+    #[test]
+    fn text_format_ignores_unknown_keys() {
+        let text = format!(
+            "https://example.com/x.bin\nsha256={VALID_SHA}\nfallback=https://mirror/x.bin\nfuture=1\n"
+        );
+        let lnk = LnkFile::from_str_any(&text).unwrap();
+        assert_eq!(lnk.url, "https://example.com/x.bin");
+    }
+
+    #[test]
+    fn text_format_without_sha256_explains_why_it_is_required() {
+        let text = "https://example.com/track.mp3\n";
+        let err = LnkFile::from_str_any(text).unwrap_err().to_string();
+        assert!(err.contains("sha256"), "unexpected error: {err}");
+        assert!(err.contains("fbuild lnk add"), "unexpected error: {err}");
+    }
+
+    #[test]
+    fn text_format_without_url_is_rejected() {
+        let err = LnkFile::from_str_any("# only a comment\n")
+            .unwrap_err()
+            .to_string();
+        assert!(err.contains("no URL"), "unexpected error: {err}");
+    }
+
+    #[test]
+    fn sniffer_routes_leading_whitespace_to_json() {
+        let json = format!(
+            "\n  {{\"v\":1,\"url\":\"https://example.com/x.bin\",\"sha256\":\"{VALID_SHA}\"}}"
+        );
+        let lnk = LnkFile::from_str_any(&json).unwrap();
+        assert_eq!(lnk.url, "https://example.com/x.bin");
+    }
+
+    #[test]
+    fn json_preceded_by_a_hash_comment_is_rejected_as_json() {
+        // JSON has no comment syntax, so `#` before `{` is malformed rather
+        // than a mixed-format file. The sniffer still routes it to the JSON
+        // branch (first meaningful char is `{`), and serde reports the error.
+        let json = format!(
+            "# not legal in JSON\n{{\"v\":1,\"url\":\"https://example.com/x.bin\",\"sha256\":\"{VALID_SHA}\"}}"
+        );
+        let err = LnkFile::from_str_any(&json).unwrap_err().to_string();
+        assert!(err.contains("invalid .lnk JSON"), "unexpected error: {err}");
+    }
+
+    #[test]
+    fn json_and_text_forms_agree() {
+        let json = valid_minimal();
+        let text = format!("https://example.com/x.bin\nsha256={VALID_SHA}\n");
+        assert_eq!(
+            LnkFile::from_str_any(&json).unwrap(),
+            LnkFile::from_str_any(&text).unwrap()
+        );
     }
 
     #[test]
