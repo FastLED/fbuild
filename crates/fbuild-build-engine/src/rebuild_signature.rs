@@ -5,13 +5,18 @@
 //! [`crate::compiler`] so external paths are unchanged.
 
 use std::collections::HashMap;
-use std::path::{Component, Path, PathBuf};
+use std::path::{Component, Path};
 use std::sync::{Mutex, OnceLock};
 
 use fbuild_core::path::NormalizedPath;
 use sha2::{Digest, Sha256};
 
-static COMPILER_IDENTITY_CACHE: OnceLock<Mutex<HashMap<PathBuf, String>>> = OnceLock::new();
+/// Memoized `compiler_identity` results, keyed by
+/// `fbuild_core::path::normalize_for_key` rather than the raw path. Two
+/// spellings of the same compiler (case differences on Windows, a
+/// verbatim prefix, a trailing slash) are the same toolchain and must
+/// not each pay for a `--version` subprocess — FastLED/fbuild#952.
+static COMPILER_IDENTITY_CACHE: OnceLock<Mutex<HashMap<String, String>>> = OnceLock::new();
 
 /// Stable fingerprint of a compile invocation, used for incremental rebuild
 /// invalidation.
@@ -267,10 +272,11 @@ fn looks_like_absolute_path(path: &Path, raw: &str) -> bool {
 
 fn compiler_identity(path: &Path) -> String {
     let cache = COMPILER_IDENTITY_CACHE.get_or_init(|| Mutex::new(HashMap::new()));
+    let key = fbuild_core::path::normalize_for_key(path);
     if let Some(identity) = cache
         .lock()
         .unwrap_or_else(|e| e.into_inner())
-        .get(path)
+        .get(&key)
         .cloned()
     {
         return identity;
@@ -286,7 +292,7 @@ fn compiler_identity(path: &Path) -> String {
     cache
         .lock()
         .unwrap_or_else(|e| e.into_inner())
-        .insert(path.to_path_buf(), identity.clone());
+        .insert(key, identity.clone());
     identity
 }
 
