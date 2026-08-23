@@ -363,7 +363,7 @@ fn object_hash_key(source: &Path, build_dir: &Path) -> String {
     for ancestor in build_dir.ancestors() {
         if ancestor
             .file_name()
-            .map(|n| n == ".fbuild")
+            .map(|n| n == fbuild_paths::FBUILD_DIR_NAME)
             .unwrap_or(false)
         {
             if let Some(workspace) = ancestor.parent() {

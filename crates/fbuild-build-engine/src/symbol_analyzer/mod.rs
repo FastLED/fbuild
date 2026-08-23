@@ -557,7 +557,12 @@ pub fn discover_elf_in_project(project_dir: &Path) -> Option<PathBuf> {
         }
     }
     // 2. .fbuild and 3. .pio output trees
-    for relative in [".fbuild/build", ".pio/build"] {
+    let fbuild_tree = format!(
+        "{}/{}",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    );
+    for relative in [fbuild_tree.as_str(), ".pio/build"] {
         let root = project_dir.join(relative);
         if root.exists() {
             if let Some(elf) = newest_elf_under(&root) {

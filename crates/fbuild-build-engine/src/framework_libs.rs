@@ -187,7 +187,13 @@ fn collect_header_basenames(roots: &[PathBuf]) -> HashSet<String> {
                     .to_lowercase();
                 if matches!(
                     name.as_str(),
-                    ".git" | ".pio" | ".fbuild" | ".zap" | ".build" | "build" | "target"
+                    ".git"
+                        | ".pio"
+                        | fbuild_paths::FBUILD_DIR_NAME
+                        | ".zap"
+                        | ".build"
+                        | "build"
+                        | "target"
                 ) {
                     continue;
                 }
@@ -530,7 +536,7 @@ fn should_scan_entry(entry: &DirEntry) -> bool {
         name.as_str(),
         ".git"
             | ".pio"
-            | ".fbuild"
+            | fbuild_paths::FBUILD_DIR_NAME
             | ".zap"
             | ".build"
             | "build"
