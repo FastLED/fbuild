@@ -83,3 +83,15 @@ widestring = { workspace = true }
 tempfile = { workspace = true }
 # Test-only embedded USB-vendor fixture extraction. Production never links it.
 tar = { workspace = true }
+# FastLED/fbuild#1361: the on-CPU sampler, its frame symbolizer, and the
+# off-CPU/async profile pipeline, exercised by tests/cpu_profiling.rs.
+#
+# It lives here rather than on fbuild-daemon for a linker reason, not a
+# taste one. `running-process-probe` pulls crash-handler 0.7 while the
+# pinned zccache 1.13.1 pulls 0.6.3, and both export the same unmangled C
+# symbols (`ehsetjmp`, `handle_invalid_parameter`, ...). Any binary
+# linking both fails with duplicate symbols. fbuild-core is the deepest
+# crate that does NOT depend on zccache, so its test binary links exactly
+# one copy. The heap half of #1361 stays in fbuild-daemon, which needs no
+# probe crate at all.
+running-process-probe-daemon = { workspace = true }

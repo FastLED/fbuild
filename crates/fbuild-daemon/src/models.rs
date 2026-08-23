@@ -305,6 +305,20 @@ pub struct RootResponse {
     pub health: String,
 }
 
+/// Response body for `POST /api/daemon/heap-dump` (FastLED/fbuild#1361).
+#[derive(Debug, Serialize, Deserialize)]
+pub struct HeapDumpResponse {
+    /// Where the pprof snapshot was written, absent when the dump failed.
+    pub path: Option<String>,
+    /// Sampled live allocations at the moment of the dump.
+    pub live_samples: usize,
+    /// False when this request started profiling, which means the snapshot
+    /// only covers allocations made after it — not memory already held.
+    pub profiling_was_already_running: bool,
+    /// Human-readable outcome, including the caveat above when it applies.
+    pub message: String,
+}
+
 /// POST /api/daemon/shutdown
 #[derive(Debug, Serialize)]
 pub struct ShutdownResponse {

@@ -33,6 +33,8 @@ pub mod broker;
 pub mod context;
 pub mod device_manager;
 pub mod handlers;
+/// Sampled heap profiling for the long-lived daemon (FastLED/fbuild#1361).
+pub mod heap_profile;
 pub mod lock_models;
 pub mod log_layer;
 pub mod models;

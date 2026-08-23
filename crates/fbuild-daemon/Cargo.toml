@@ -60,7 +60,7 @@ regex = { workspace = true }
 async-trait = { workspace = true }
 tempfile = { workspace = true }
 
-[dependencies.mimalloc]
+[dependencies.mimalloc-pprof]
 workspace = true
 
 [dev-dependencies]

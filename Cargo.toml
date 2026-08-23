@@ -127,9 +127,22 @@ async-trait = "0.1"
 dashmap = "6"
 blake3 = "1"
 criterion = { version = "0.5", default-features = false, features = ["html_reports"] }
-mimalloc = "0.1"
+# Global allocator for `fbuild-daemon`. `mimalloc-pprof` vendors the same
+# mimalloc (v3 line) plus a sampled heap profiler that stays dormant until
+# started, so this is the plain allocator it replaced with a reporting half
+# attached — see FastLED/fbuild#1361 and the ~3.9 GB idle daemon in #1360.
+# Not feature-gated on purpose: a profiler compiled out of the shipped
+# binary is never present on the machine where a slow leak reproduces.
+mimalloc-pprof = "0.9"
+
+# On-CPU sampling, stack symbolization, and the off-CPU/async profile
+# pipeline. Dev-only: this is how the profiling contract is tested, not
+# something the shipped daemon links. The git rev MUST equal the
+# `running-process` rev pinned above, for the same `rp_*_public`
+# symbol-duplication reason documented there.
+running-process-probe-daemon = { version = "4.8.1", git = "https://github.com/zackees/running-process.git", rev = "359b4e3d92660e54eb9b16b6e83de8ce26932ff8" }
 object = { version = "0.36", default-features = false, features = ["read", "std", "elf", "write"] }
-rusqlite = { version = "0.31", features = ["bundled"] }
+rusqlite = { version = "0.32", features = ["bundled"] }
 shell-words = "1"
 bincode = "1"
 # USB identity data is fetched from FastLED/boards at runtime. Do not add a
