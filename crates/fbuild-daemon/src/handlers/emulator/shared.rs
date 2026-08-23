@@ -96,6 +96,31 @@ pub(crate) fn qemu_session_dir(project_dir: &Path, env_name: &str) -> PathBuf {
         .join(uuid::Uuid::new_v4().to_string())
 }
 
+/// Describe a *spawn* failure in terms of what actually went wrong.
+///
+/// FastLED/fbuild#1390: every spawn failure used to be reported through
+/// [`build_linux_macos_qemu_hint`], which asserts the cached toolchain is
+/// incomplete or corrupt and lists five system libraries to install. That
+/// advice belongs to exactly one failure mode — a missing shared library —
+/// and that mode does *not* reach here: the loader runs after a successful
+/// `execve`, so it surfaces as exit code 127, which the monitor already
+/// handles and already words correctly.
+///
+/// So on this path the runtime-deps text was never right. It sent a reader
+/// whose real problem was a missing binary off to reinstall pixman and SDL2.
+pub(crate) fn spawn_failure_hint(label: &str, path: &Path, error: &std::io::Error) -> String {
+    let attempted = path.display();
+    match error.kind() {
+        std::io::ErrorKind::NotFound => format!(
+            "failed to launch {label}: no executable at {attempted}. Nothing ran — this is a              missing file, not a broken one, so reinstalling runtime libraries will not help.              If that is a bare program name it was searched for on PATH; otherwise check that              the toolchain finished extracting."
+        ),
+        std::io::ErrorKind::PermissionDenied => format!(
+            "failed to launch {label}: {attempted} exists but is not executable. Check the              execute bit and any mount options (`noexec`) on that path."
+        ),
+        _ => format!("failed to launch {label} at {attempted}: {error}"),
+    }
+}
+
 pub(crate) fn build_linux_macos_qemu_hint(err: &str) -> String {
     if fbuild_core::platform::host::is_linux() || fbuild_core::platform::host::is_macos() {
         let prefix = if err.is_empty() {
@@ -225,12 +250,7 @@ pub(crate) async fn run_qemu_process(
     // or its `conhost.exe` wrapper behind.
     let mut child =
         fbuild_core::platform::process::spawn_tokio_contained(&mut cmd).map_err(|e| {
-            fbuild_core::FbuildError::DeployFailed(build_linux_macos_qemu_hint(&format!(
-                "failed to launch {} at {}: {}",
-                label,
-                qemu_path.display(),
-                e
-            )))
+            fbuild_core::FbuildError::DeployFailed(spawn_failure_hint(label, qemu_path, &e))
         })?;
 
     let stdout = child.stdout.take().ok_or_else(|| {
@@ -403,4 +423,54 @@ pub(crate) async fn run_qemu_process(
         stderr: stderr_buf,
         exit_code: child_exit.and_then(|s| s.code()),
     })
+}
+
+#[cfg(test)]
+mod spawn_failure_hint_tests {
+    use super::*;
+    use std::io::{Error, ErrorKind};
+
+    /// FastLED/fbuild#1390: a missing binary is a missing *file*. Telling the
+    /// reader to install libgcrypt/pixman/SDL2 sends them to fix something
+    /// that was never broken.
+    #[test]
+    fn a_missing_binary_does_not_advise_installing_runtime_libraries() {
+        let hint = spawn_failure_hint(
+            "QEMU",
+            Path::new("/opt/qemu/bin/qemu-system-xtensa"),
+            &Error::new(ErrorKind::NotFound, "No such file or directory"),
+        );
+        assert!(hint.contains("/opt/qemu/bin/qemu-system-xtensa"), "{hint}");
+        for irrelevant in ["libgcrypt", "pixman", "SDL2", "libslirp", "glib2"] {
+            assert!(
+                !hint.contains(irrelevant),
+                "a missing file must not recommend {irrelevant}: {hint}"
+            );
+        }
+    }
+
+    /// Present but not executable is a different fix from absent.
+    #[test]
+    fn a_non_executable_binary_is_reported_as_such() {
+        let hint = spawn_failure_hint(
+            "QEMU",
+            Path::new("/opt/qemu/bin/qemu-system-xtensa"),
+            &Error::new(ErrorKind::PermissionDenied, "Permission denied"),
+        );
+        assert!(hint.contains("not executable"), "{hint}");
+        assert!(!hint.contains("pixman"), "{hint}");
+    }
+
+    /// Anything unrecognized still names the path and surfaces the OS error
+    /// verbatim rather than guessing at a cause.
+    #[test]
+    fn an_unrecognized_error_is_passed_through_with_the_path() {
+        let hint = spawn_failure_hint(
+            "QEMU",
+            Path::new("/opt/qemu/bin/q"),
+            &Error::other("something else entirely"),
+        );
+        assert!(hint.contains("/opt/qemu/bin/q"), "{hint}");
+        assert!(hint.contains("something else entirely"), "{hint}");
+    }
 }
