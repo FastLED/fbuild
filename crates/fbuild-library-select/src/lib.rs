@@ -20,7 +20,10 @@
 use std::collections::{BTreeMap, BTreeSet, HashMap};
 use std::path::{Path, PathBuf};
 
-use fbuild_header_scan::{WalkState, active_defines, walk_with_state, walk_with_state_active};
+use fbuild_header_scan::{
+    WalkState, active_defines, collect_defined_macro_names, walk_with_state,
+    walk_with_state_active_known,
+};
 use fbuild_packages::library::FrameworkLibrary;
 use serde::{Deserialize, Serialize};
 
@@ -284,13 +287,38 @@ fn resolve_with_stats_impl_declared(
         }
     }
 
+    // Which macro names the reachable corpus defines anywhere.
+    //
+    // This is what lets branch evaluation stay honest without hiding real
+    // dependencies. `#if defined(FL_IS_SAMD21)` cannot be decided from the
+    // compiler command line, because FastLED derives that macro several
+    // headers deep and header-defined macros are not threaded through a BFS
+    // walk — so guards on names the project *does* define are undecidable and
+    // every arm gets scanned. Guards on names nobody defines stay honestly
+    // false, which is what keeps a library behind a genuinely dead branch
+    // from being selected (FastLED/fbuild#1094, #1371).
+    //
+    // Only computed when branch evaluation is on; the textual mode already
+    // scans every arm.
+    let defined_somewhere = if defines.is_some() {
+        collect_defined_macro_names(seeds, &full_search_paths)
+    } else {
+        Default::default()
+    };
+
     // Pass 1: BFS from project seeds.
     {
         let _span = tracing::info_span!("ldf_pass", pass = 1u32).entered();
         pass_count += 1;
         tracing::info!(pass = 1u32, "ldf_pass");
         let res = match defines {
-            Some(defines) => walk_with_state_active(seeds, &full_search_paths, defines, &mut state),
+            Some(defines) => walk_with_state_active_known(
+                seeds,
+                &full_search_paths,
+                defines,
+                &defined_somewhere,
+                &mut state,
+            ),
             None => walk_with_state(seeds, &full_search_paths, &mut state),
         };
         for p in &res.reached {
@@ -325,9 +353,13 @@ fn resolve_with_stats_impl_declared(
             }
         }
         let res = match defines {
-            Some(defines) => {
-                walk_with_state_active(&recon_seeds, &full_search_paths, defines, &mut state)
-            }
+            Some(defines) => walk_with_state_active_known(
+                &recon_seeds,
+                &full_search_paths,
+                defines,
+                &defined_somewhere,
+                &mut state,
+            ),
             None => walk_with_state(&recon_seeds, &full_search_paths, &mut state),
         };
         for p in &res.reached {
@@ -457,6 +489,121 @@ mod tests {
         let sel = resolve(&seeds, &[project_src], &[spi]);
         assert_eq!(sel.required_libraries, vec!["SPI".to_string()]);
         assert!(sel.source_files.contains(&canon(&spi_cpp)) || sel.source_files.contains(&spi_cpp));
+    }
+
+    /// FastLED/fbuild#1371, end to end: a macro derived inside a header must
+    /// not hide the include it guards.
+    ///
+    /// This is the SAMD shape verbatim. The compiler command line carries
+    /// `__SAMD21G18A__`; `FL_IS_SAMD21` is derived from it several headers
+    /// deep, and header-defined macros are not threaded through a BFS walk.
+    /// Evaluating `#if defined(FL_IS_SAMD21)` as *false* made `<SPI.h>`
+    /// invisible to selection even though the include is genuinely compiled —
+    /// the build then failed on a missing header that nothing had requested.
+    #[test]
+    fn include_guarded_by_a_header_derived_macro_still_selects_its_library() {
+        let tmp = tempdir();
+        let project_src = tmp.path().join("project").join("src");
+        write(&project_src.join("main.cpp"), "#include <FastLED.h>\n");
+        write(
+            &project_src.join("FastLED.h"),
+            "#include <is_platform.h>\n#include <fastspi_arm_sam.h>\n",
+        );
+        // The derivation the walk cannot see: command-line macro in, FastLED
+        // macro out.
+        write(
+            &project_src.join("is_platform.h"),
+            "#if defined(__SAMD21G18A__)\n#define FL_IS_SAMD21 1\n#endif\n",
+        );
+        write(
+            &project_src.join("fastspi_arm_sam.h"),
+            "#if defined(FL_IS_SAMD21) || defined(FL_IS_SAMD51)\n#include <SPI.h>\n#endif\n",
+        );
+
+        let mut spi = lib(tmp.path(), "SPI");
+        write(&spi.include_dirs[0].join("SPI.h"), "");
+        let spi_cpp = spi.include_dirs[0].join("SPI.cpp");
+        write(&spi_cpp, "");
+        spi.source_files.push(spi_cpp);
+
+        let mut defines = HashMap::new();
+        defines.insert("__SAMD21G18A__".to_string(), "1".to_string());
+
+        let seeds = vec![project_src.join("main.cpp")];
+        let selection = resolve_active(&seeds, &[project_src], &[spi], &defines);
+        assert_eq!(
+            selection.required_libraries,
+            vec!["SPI".to_string()],
+            "an include behind a header-derived guard must still select its library"
+        );
+    }
+
+    /// The `#if 0` LDF hint idiom, end to end.
+    ///
+    /// `platforms/ldf_headers.h` in FastLED declares dependencies inside
+    /// `#if 0` blocks precisely because PlatformIO's `chain` LDF scans
+    /// includes without evaluating conditionals. The block never compiles, so
+    /// an include there exists only to be seen.
+    #[test]
+    fn if_zero_hint_headers_declare_a_dependency() {
+        let tmp = tempdir();
+        let project_src = tmp.path().join("project").join("src");
+        write(&project_src.join("main.cpp"), "#include <FastLED.h>\n");
+        write(&project_src.join("FastLED.h"), "#include <ldf_headers.h>\n");
+        write(
+            &project_src.join("ldf_headers.h"),
+            "#if 0\n#include <SPI.h>\n#endif\n",
+        );
+
+        let mut spi = lib(tmp.path(), "SPI");
+        write(&spi.include_dirs[0].join("SPI.h"), "");
+        let spi_cpp = spi.include_dirs[0].join("SPI.cpp");
+        write(&spi_cpp, "");
+        spi.source_files.push(spi_cpp);
+
+        let seeds = vec![project_src.join("main.cpp")];
+        let selection = resolve_active(&seeds, &[project_src], &[spi], &HashMap::new());
+        assert_eq!(
+            selection.required_libraries,
+            vec!["SPI".to_string()],
+            "an #if 0 hint must declare the dependency"
+        );
+    }
+
+    /// A guard on a macro *nothing* defines stays honestly false.
+    ///
+    /// The counterweight to the two tests above, and the reason this is not
+    /// simply a textual scan: without it, every unresolved guard would select
+    /// its library and #1094's over-selection would come straight back.
+    #[test]
+    fn guard_on_a_macro_no_file_defines_does_not_select() {
+        let tmp = tempdir();
+        let project_src = tmp.path().join("project").join("src");
+        write(&project_src.join("main.cpp"), "#include <FastLED.h>\n");
+        write(
+            &project_src.join("FastLED.h"),
+            "#if defined(NOBODY_DEFINES_THIS)\n#include <Audio.h>\n#endif\n#include <SPI.h>\n",
+        );
+
+        let mut audio = lib(tmp.path(), "Audio");
+        write(&audio.include_dirs[0].join("Audio.h"), "");
+        let audio_cpp = audio.include_dirs[0].join("Audio.cpp");
+        write(&audio_cpp, "");
+        audio.source_files.push(audio_cpp);
+
+        let mut spi = lib(tmp.path(), "SPI");
+        write(&spi.include_dirs[0].join("SPI.h"), "");
+        let spi_cpp = spi.include_dirs[0].join("SPI.cpp");
+        write(&spi_cpp, "");
+        spi.source_files.push(spi_cpp);
+
+        let seeds = vec![project_src.join("main.cpp")];
+        let selection = resolve_active(&seeds, &[project_src], &[audio, spi], &HashMap::new());
+        assert_eq!(
+            selection.required_libraries,
+            vec!["SPI".to_string()],
+            "a guard nothing can satisfy must not pull in a library"
+        );
     }
 
     #[test]

@@ -9,7 +9,7 @@
 //! preprocessor conditionals — false positives are acceptable, false negatives
 //! are not) when using `scan`.
 
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 /// Whether an include used `<...>` (system / search-path) or `"..."` (quoted /
 /// same-directory-first).
@@ -194,8 +194,45 @@ pub fn scan(src: &str) -> Vec<IncludeRef> {
 /// active `#define` in the same file apply to subsequent lines, matching the
 /// part of preprocessing relevant to library discovery.
 pub fn scan_active(src: &str, defines: &HashMap<String, String>) -> Vec<IncludeRef> {
+    scan_active_with_known(src, defines, &HashSet::new())
+}
+
+/// [`scan_active`] told which macro names the wider corpus defines.
+///
+/// `defined_somewhere` is the union of every `#define`d name reachable from
+/// the seeds. A guard on a name in that set cannot be decided from the
+/// compiler command line alone, so every arm is scanned; a guard on a name
+/// nobody defines is honestly false and stays pruned (FastLED/fbuild#1371).
+pub fn scan_active_with_known(
+    src: &str,
+    defines: &HashMap<String, String>,
+    defined_somewhere: &HashSet<String>,
+) -> Vec<IncludeRef> {
     let mut macros = defines.clone();
-    scan(&active_source(src, &mut macros))
+    scan(&active_source(src, &mut macros, defined_somewhere))
+}
+
+/// Every macro name this source `#define`s, in any branch.
+///
+/// Deliberately textual: the point is to know what the corpus *could* define,
+/// so conditionals must not filter it.
+pub fn defined_macro_names(src: &str) -> Vec<String> {
+    let mut names = Vec::new();
+    for line in src.lines() {
+        let Some(directive) = line.trim_start().strip_prefix('#').map(str::trim_start) else {
+            continue;
+        };
+        let (name, rest) = split_directive(directive);
+        if name != "define" {
+            continue;
+        }
+        let (macro_name, _) = split_directive(rest);
+        let macro_name = macro_name.split('(').next().unwrap_or("");
+        if !macro_name.is_empty() {
+            names.push(macro_name.to_string());
+        }
+    }
+    names
 }
 
 /// Return `defines` plus macros declared in active branches of `src`.
@@ -204,72 +241,125 @@ pub fn scan_active(src: &str, defines: &HashMap<String, String>) -> Vec<IncludeR
 /// define remains visible when its included headers are scanned.
 pub fn active_defines(src: &str, defines: &HashMap<String, String>) -> HashMap<String, String> {
     let mut macros = defines.clone();
-    let _ = active_source(src, &mut macros);
+    let _ = active_source(src, &mut macros, &HashSet::new());
     macros
 }
 
 #[derive(Clone, Copy)]
 struct Conditional {
-    parent_active: bool,
+    /// Whether lines were being kept when this conditional opened.
+    parent_scan: bool,
+    /// Whether `#define`s were being applied when this conditional opened.
+    parent_define: bool,
+    /// A branch of this group was decidably taken, so later `#elif`/`#else`
+    /// arms are dead. Never set for an undecidable group.
     branch_taken: bool,
+    /// The group's condition could not be decided, so every arm is scanned.
+    unknown: bool,
 }
 
-fn active_source(src: &str, macros: &mut HashMap<String, String>) -> String {
-    let mut stack = Vec::new();
+/// Apply one branch decision to the scan/define state.
+///
+/// The two states are deliberately separate. Scanning is generous — the
+/// scanner's contract is that false positives are acceptable and false
+/// negatives are not — while `#define` application stays strict, because a
+/// macro picked up from a branch that may not be compiled would go on to
+/// decide *other* conditions wrongly.
+fn apply_decision(decision: Decision, parent_scan: bool, parent_define: bool) -> (bool, bool) {
+    match decision {
+        Decision::True => (parent_scan, parent_define),
+        // The LDF `#if 0` hint idiom: never compiled, so an include here is a
+        // dependency declaration. Scanned, but its defines are not real.
+        Decision::LiteralFalse => (parent_scan, false),
+        Decision::False => (false, false),
+        Decision::Unknown => (parent_scan, false),
+    }
+}
+
+fn active_source(
+    src: &str,
+    macros: &mut HashMap<String, String>,
+    defined_somewhere: &HashSet<String>,
+) -> String {
+    let mut stack: Vec<Conditional> = Vec::new();
+    // `scan` keeps lines for the include scan; `active` gates `#define`.
+    let mut scan = true;
     let mut active = true;
     let mut output = String::with_capacity(src.len());
     for line in src.split_inclusive('\n') {
         let directive = line.trim_start().strip_prefix('#').map(str::trim_start);
-        let mut keep = active;
+        let mut keep = scan;
         if let Some(directive) = directive {
             let (name, rest) = split_directive(directive);
             match name {
-                "if" => {
-                    let current = active && eval_condition(rest, macros);
+                "if" | "ifdef" | "ifndef" => {
+                    let decision = match name {
+                        "if" => eval_decision(rest, macros, defined_somewhere),
+                        // A bare `#ifdef X` is undecidable for the same reason
+                        // `defined(X)` is: the macro set is the command line,
+                        // not the preprocessor's running state.
+                        "ifdef" => {
+                            decide_defined(macros, defined_somewhere, first_token(rest), false)
+                        }
+                        _ => decide_defined(macros, defined_somewhere, first_token(rest), true),
+                    };
+                    let (next_scan, next_active) = if scan {
+                        apply_decision(decision, scan, active)
+                    } else {
+                        (false, false)
+                    };
                     stack.push(Conditional {
-                        parent_active: active,
-                        branch_taken: current,
+                        parent_scan: scan,
+                        parent_define: active,
+                        branch_taken: scan && decision == Decision::True,
+                        unknown: scan && decision == Decision::Unknown,
                     });
-                    active = current;
-                    keep = false;
-                }
-                "ifdef" => {
-                    let current = active && macros.contains_key(first_token(rest));
-                    stack.push(Conditional {
-                        parent_active: active,
-                        branch_taken: current,
-                    });
-                    active = current;
-                    keep = false;
-                }
-                "ifndef" => {
-                    let current = active && !macros.contains_key(first_token(rest));
-                    stack.push(Conditional {
-                        parent_active: active,
-                        branch_taken: current,
-                    });
-                    active = current;
+                    scan = next_scan;
+                    active = next_active;
                     keep = false;
                 }
                 "elif" => {
                     if let Some(current) = stack.last_mut() {
-                        active = current.parent_active
-                            && !current.branch_taken
-                            && eval_condition(rest, macros);
-                        current.branch_taken |= active;
+                        if current.unknown {
+                            // Undecidable group: every arm is scanned, none
+                            // contributes defines.
+                            scan = current.parent_scan;
+                            active = false;
+                        } else if current.branch_taken {
+                            scan = false;
+                            active = false;
+                        } else {
+                            let decision = eval_decision(rest, macros, defined_somewhere);
+                            let (next_scan, next_active) = apply_decision(
+                                decision,
+                                current.parent_scan,
+                                current.parent_define,
+                            );
+                            scan = next_scan;
+                            active = next_active;
+                            current.branch_taken |= decision == Decision::True;
+                            current.unknown |= decision == Decision::Unknown;
+                        }
                     }
                     keep = false;
                 }
                 "else" => {
                     if let Some(current) = stack.last_mut() {
-                        active = current.parent_active && !current.branch_taken;
-                        current.branch_taken = true;
+                        if current.unknown {
+                            scan = current.parent_scan;
+                            active = false;
+                        } else {
+                            scan = current.parent_scan && !current.branch_taken;
+                            active = current.parent_define && !current.branch_taken;
+                            current.branch_taken = true;
+                        }
                     }
                     keep = false;
                 }
                 "endif" => {
                     if let Some(current) = stack.pop() {
-                        active = current.parent_active;
+                        scan = current.parent_scan;
+                        active = current.parent_define;
                     }
                     keep = false;
                 }
@@ -284,6 +374,12 @@ fn active_source(src: &str, macros: &mut HashMap<String, String>) -> String {
                     macros.remove(first_token(rest));
                     keep = false;
                 }
+                // A `#define`/`#undef` inside a branch that is only being
+                // scanned speculatively must not reach the macro set. The
+                // directive line itself is never include-bearing either.
+                "define" | "undef" => {
+                    keep = false;
+                }
                 _ => {}
             }
         }
@@ -294,6 +390,34 @@ fn active_source(src: &str, macros: &mut HashMap<String, String>) -> String {
         }
     }
     output
+}
+
+/// Decide an `#ifdef` / `#ifndef` against the available macro set.
+///
+/// Present means decidable. Absent means *unknown*, not false — see
+/// [`Decision`].
+fn decide_defined(
+    macros: &HashMap<String, String>,
+    defined_somewhere: &HashSet<String>,
+    name: &str,
+    negated: bool,
+) -> Decision {
+    if name.is_empty() {
+        return Decision::LiteralFalse;
+    }
+    if macros.contains_key(name) {
+        if negated {
+            Decision::False
+        } else {
+            Decision::True
+        }
+    } else if defined_somewhere.contains(name) {
+        Decision::Unknown
+    } else if negated {
+        Decision::True
+    } else {
+        Decision::False
+    }
 }
 
 fn split_directive(input: &str) -> (&str, &str) {
@@ -310,19 +434,76 @@ fn first_token(input: &str) -> &str {
         .unwrap_or("")
 }
 
-fn eval_condition(input: &str, macros: &HashMap<String, String>) -> bool {
+/// What a preprocessor condition evaluates to, given an incomplete macro set.
+///
+/// The third state is the point. `scan_active` is handed the *compiler
+/// command line* only — macros a header defines are not threaded through the
+/// walk, because the walker visits each file once, in BFS order, with a
+/// shared cache, and that is not preprocessor order. So a guard like
+/// `#if defined(FL_IS_SAMD21)` is not false; it is *unknown*, and the
+/// difference matters: FastLED derives `FL_IS_SAMD21` several headers deep
+/// from `-D__SAMD21G18A__`, and treating it as false made an include that is
+/// genuinely compiled invisible to library selection
+/// (FastLED/fbuild#1371).
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+enum Decision {
+    True,
+    /// Decidably false from the macros actually available.
+    False,
+    /// False, and reached without consulting a single macro — `#if 0`.
+    ///
+    /// Distinguished from [`Decision::False`] because an include inside a
+    /// literal-false block cannot be there to be compiled. It is a dependency
+    /// declaration: the PlatformIO LDF `#if 0` hint idiom.
+    LiteralFalse,
+    /// Referenced a macro that is not in the available set, so the branch
+    /// cannot be decided.
+    Unknown,
+}
+
+fn eval_decision(
+    input: &str,
+    macros: &HashMap<String, String>,
+    defined_somewhere: &HashSet<String>,
+) -> Decision {
     let mut parser = ConditionParser {
         input: input.as_bytes(),
         index: 0,
         macros,
+        defined_somewhere,
+        saw_unknown_macro: false,
+        saw_any_macro: false,
     };
-    parser.parse_or() != 0
+    let value = parser.parse_or();
+    if parser.saw_unknown_macro {
+        Decision::Unknown
+    } else if value != 0 {
+        Decision::True
+    } else if parser.saw_any_macro {
+        Decision::False
+    } else {
+        Decision::LiteralFalse
+    }
 }
 
 struct ConditionParser<'a> {
     input: &'a [u8],
     index: usize,
     macros: &'a HashMap<String, String>,
+    /// Every macro name `#define`d anywhere in the reachable source corpus.
+    ///
+    /// This is what separates "the project never defines this" from "the
+    /// project defines this somewhere the walk could not thread to us". Only
+    /// the second is undecidable; the first is honestly false, and treating
+    /// it as unknown would select libraries behind branches that genuinely
+    /// never compile.
+    defined_somewhere: &'a HashSet<String>,
+    /// Set when the expression consulted a macro that is not available, which
+    /// makes the whole condition undecidable rather than false.
+    saw_unknown_macro: bool,
+    /// Set when the expression consulted any macro at all, which separates
+    /// `#if 0` from a guard that happened to evaluate to zero.
+    saw_any_macro: bool,
 }
 
 impl<'a> ConditionParser<'a> {
@@ -388,15 +569,28 @@ impl<'a> ConditionParser<'a> {
             self.consume(b"(");
             let name = self.token();
             self.consume(b")");
+            self.saw_any_macro = true;
+            if !self.macros.contains_key(name) && self.defined_somewhere.contains(name) {
+                self.saw_unknown_macro = true;
+            }
             return i64::from(self.macros.contains_key(name));
         }
         if let Some(value) = parse_number(token) {
             return value;
         }
-        self.macros
-            .get(token)
-            .and_then(|value| parse_number(value))
-            .unwrap_or(0)
+        if token.is_empty() {
+            return 0;
+        }
+        self.saw_any_macro = true;
+        match self.macros.get(token).and_then(|value| parse_number(value)) {
+            Some(value) => value,
+            None => {
+                if self.defined_somewhere.contains(token) {
+                    self.saw_unknown_macro = true;
+                }
+                0
+            }
+        }
     }
 
     fn consume(&mut self, expected: &[u8]) -> bool {
@@ -850,13 +1044,107 @@ mod tests {
     }
 
     #[test]
-    fn active_scan_ignores_disabled_branch() {
+    /// `#if 0` is a dependency declaration, not dead code.
+    ///
+    /// This test previously asserted that `Audio.h` was ignored. It is not,
+    /// and deliberately so: an include that can never be compiled is only
+    /// there to be *seen* — the PlatformIO LDF hint idiom, which FastLED uses
+    /// in `platforms/*/ldf_headers.h` to declare dependencies its conditional
+    /// includes would otherwise hide (FastLED/fbuild#1371). PlatformIO's own
+    /// `chain` mode honors it by not evaluating conditionals at all.
+    ///
+    /// The `#else` arm is scanned too, because that is the arm which actually
+    /// compiles. Both are dependencies.
+    fn literal_false_branches_are_scanned_as_ldf_hints() {
         let refs = scan_active(
             "#if 0\n#include <Audio.h>\n#else\n#include <SPI.h>\n#endif\n",
             &HashMap::new(),
         );
-        assert_eq!(refs.len(), 1);
-        assert_eq!(refs[0].path, "SPI.h");
+        let paths: Vec<&str> = refs.iter().map(|r| r.path.as_str()).collect();
+        assert!(
+            paths.contains(&"Audio.h"),
+            "the #if 0 hint must be seen: {paths:?}"
+        );
+        assert!(
+            paths.contains(&"SPI.h"),
+            "the compiled arm must be seen: {paths:?}"
+        );
+    }
+
+    /// A branch that is decidably false from the *known* macros stays pruned.
+    ///
+    /// This is what keeps the change from collapsing into a plain textual
+    /// scan: when the command line actually settles a guard, it is settled.
+    #[test]
+    fn decidably_false_branches_are_still_pruned() {
+        let mut defines = HashMap::new();
+        defines.insert("USE_AUDIO".to_string(), "0".to_string());
+        let refs = scan_active(
+            "#if USE_AUDIO\n#include <Audio.h>\n#else\n#include <SPI.h>\n#endif\n",
+            &defines,
+        );
+        let paths: Vec<&str> = refs.iter().map(|r| r.path.as_str()).collect();
+        assert_eq!(
+            paths,
+            vec!["SPI.h"],
+            "a known-false guard must still prune: {paths:?}"
+        );
+    }
+
+    /// The FastLED/fbuild#1371 case: a guard on a macro the scan cannot see.
+    ///
+    /// `FL_IS_SAMD21` is derived several headers deep from `-D__SAMD21G18A__`,
+    /// and header-defined macros are not threaded through the walk. Treating
+    /// that as *false* made an include that is genuinely compiled invisible to
+    /// library selection; treating it as *unknown* finds it.
+    #[test]
+    fn guards_on_unknown_macros_scan_every_arm() {
+        // The corpus defines these somewhere (FastLED's `is_platform.h`), so
+        // the guard is undecidable rather than false.
+        let known: HashSet<String> =
+            ["FL_IS_SAMD21".to_string(), "FL_IS_SAMD51".to_string()].into();
+        let refs = scan_active_with_known(
+            "#if defined(FL_IS_SAMD21) || defined(FL_IS_SAMD51)\n#include <SPI.h>\n#endif\n",
+            &HashMap::new(),
+            &known,
+        );
+        let paths: Vec<&str> = refs.iter().map(|r| r.path.as_str()).collect();
+        assert_eq!(
+            paths,
+            vec!["SPI.h"],
+            "an undecidable guard must not hide its include"
+        );
+    }
+
+    /// `#ifdef` on an unseen macro is undecidable for the same reason.
+    #[test]
+    fn ifdef_on_an_unknown_macro_is_undecidable() {
+        let known: HashSet<String> = ["FL_IS_ARM".to_string()].into();
+        let refs = scan_active_with_known(
+            "#ifdef FL_IS_ARM\n#include <arm.h>\n#else\n#include <other.h>\n#endif\n",
+            &HashMap::new(),
+            &known,
+        );
+        let paths: Vec<&str> = refs.iter().map(|r| r.path.as_str()).collect();
+        assert!(paths.contains(&"arm.h"), "{paths:?}");
+        assert!(paths.contains(&"other.h"), "{paths:?}");
+    }
+
+    /// Defines from a speculatively-scanned branch must not settle later
+    /// guards — that would let an arm which may never compile prune a real one.
+    #[test]
+    fn defines_inside_undecidable_branches_do_not_leak() {
+        let known: HashSet<String> = ["UNKNOWN_MACRO".to_string(), "PICKED".to_string()].into();
+        let refs = scan_active_with_known(
+            "#ifdef UNKNOWN_MACRO\n#define PICKED 1\n#endif\n#if PICKED\n#include <picked.h>\n#else\n#include <other.h>\n#endif\n",
+            &HashMap::new(),
+            &known,
+        );
+        let paths: Vec<&str> = refs.iter().map(|r| r.path.as_str()).collect();
+        // `PICKED` never became known, so the second guard is undecidable too
+        // and both arms are scanned — rather than `PICKED` being trusted.
+        assert!(paths.contains(&"picked.h"), "{paths:?}");
+        assert!(paths.contains(&"other.h"), "{paths:?}");
     }
 
     #[test]
