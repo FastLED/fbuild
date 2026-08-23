@@ -151,6 +151,11 @@ crates/fbuild-library-select/benches/resolve_cold.rs
 crates/fbuild-library-select/benches/resolve_warm.rs
 crates/fbuild-library-select/src/cache.rs
 crates/fbuild-library-select/src/lib.rs
+# Same code as `lib.rs` above, just relocated: the tests moved into
+# their own file to keep `lib.rs` under the 1000-LOC gate
+# (FastLED/fbuild#1371). A file move must not silently drop the
+# exception the moved code already had.
+crates/fbuild-library-select/src/lib_tests.rs
 crates/fbuild-library-select/tests/teensy41_ldf_diag.rs
 crates/fbuild-packages-fetch/src/cache.rs
 crates/fbuild-packages-fetch/src/disk_cache/gc.rs
