@@ -619,15 +619,23 @@ async fn fetch_into_part(
     let mut last_report = Instant::now();
     let mut last_pct: u32 = 0;
 
+    // Set when the body stops arriving. Recorded rather than returned, so the
+    // flush below still runs — see the comment there.
+    let mut body_error: Option<DownloadAttemptError> = None;
+
     loop {
         let chunk = match tokio::time::timeout(timing.chunk_read_timeout, response.chunk()).await {
             Ok(Ok(Some(chunk))) => chunk,
             Ok(Ok(None)) => break,
-            Ok(Err(error)) => return Err(DownloadAttemptError::Body(error)),
+            Ok(Err(error)) => {
+                body_error = Some(DownloadAttemptError::Body(error));
+                break;
+            }
             Err(_) => {
-                return Err(DownloadAttemptError::BodyStalled {
+                body_error = Some(DownloadAttemptError::BodyStalled {
                     filename: filename.to_string(),
                 });
+                break;
             }
         };
         file.write_all(&chunk)
@@ -664,12 +672,24 @@ async fn fetch_into_part(
 
     // Flush before the caller stats the file to decide whether this attempt
     // made progress — buffered bytes would read as a stall.
+    //
+    // FastLED/fbuild#1370: this has to run on the *failure* path too, which
+    // is the whole point. A dropped connection used to return from inside the
+    // loop above, skipping this; `tokio::fs::File` makes no promise to flush
+    // on drop, so the bytes that did arrive could vanish. The retry loop then
+    // stats a short `.part`, resumes from a stale offset, and asks the server
+    // for a range it already has — losing exactly the progress this feature
+    // exists to keep, on the one path where keeping it matters.
     file.flush()
         .await
         .map_err(|error| DownloadAttemptError::PartFile {
             path: part_path.display().to_string(),
             error: error.to_string(),
         })?;
+
+    if let Some(error) = body_error {
+        return Err(error);
+    }
 
     // A short body is a dropped connection that happened to end on a chunk
     // boundary. Treat it as a retryable failure so the resume loop continues
