@@ -13,37 +13,7 @@ pub async fn run_daemon(action: DaemonAction) -> fbuild_core::Result<()> {
     let client = DaemonClient::new();
     match action {
         DaemonAction::Stop => {
-            if !client.health().await {
-                // FastLED/fbuild#1213 part 2: this used to return here without
-                // touching anything, so a crashed daemon's port/pid/status
-                // records survived `daemon stop` indefinitely and every later
-                // `daemon status` kept describing a dead PID. "Not running" is
-                // exactly when those records are known to be garbage.
-                let removed = clear_daemon_records();
-                if removed.is_empty() {
-                    output::result("daemon is not running");
-                } else {
-                    output::result(format!(
-                        "daemon is not running (cleared stale records: {})",
-                        removed.join(", ")
-                    ));
-                }
-                return Ok(());
-            }
-            client.shutdown().await?;
-            // Wait for it to actually stop
-            for _ in 0..50 {
-                tokio::time::sleep(std::time::Duration::from_millis(100)).await;
-                if !client.health().await {
-                    // The daemon removes its own pid/port/claim on a graceful
-                    // exit; sweep anything it left behind (notably
-                    // daemon_status.json) so `stop` always leaves a clean dir.
-                    clear_daemon_records();
-                    output::result("daemon stopped");
-                    return Ok(());
-                }
-            }
-            output::result("daemon stop requested (may still be shutting down)");
+            run_daemon_stop(&client).await?;
         }
         DaemonAction::Status => {
             if client.health().await {
@@ -626,6 +596,10 @@ pub fn print_gc_report(report: &fbuild_packages::disk_cache::GcReport) {
         ));
     }
 }
+
+#[path = "daemon_stop.rs"]
+mod stop;
+pub use stop::*;
 
 pub async fn run_daemon_kill(
     client: &DaemonClient,

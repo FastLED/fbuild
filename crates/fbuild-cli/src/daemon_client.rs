@@ -971,14 +971,48 @@ async fn ensure_direct_daemon_running() -> fbuild_core::Result<()> {
 
     Err(fbuild_core::FbuildError::DaemonError(format!(
         "daemon did not become healthy after 3 spawn attempts \
-         ({READINESS_TIMEOUT_SECS}s each).\n{}\n\nIf the daemon executable above is not the one \
+         ({READINESS_TIMEOUT_SECS}s each). This is a daemon problem, not a defect in the code \
+         being built — no compilation was attempted.\n{}{}\n\nIf the daemon executable above is \
+         not the one \
          you expect, that is the likely cause: the endpoint port is derived from the daemon \
          version (FastLED/fbuild#1009), so a version-mismatched daemon listens on a different \
          port than this CLI polls and can never be reached. When running a locally-built CLI, \
          build the daemon too (`soldr cargo build -p fbuild-daemon`) so a sibling binary exists \
          instead of resolving `fbuild-daemon` from PATH.",
-        runtime_diagnostic()
+        runtime_diagnostic(),
+        wedged_daemon_hint()
     )))
+}
+
+/// Name the wedged-daemon case, but only when the evidence for it is present.
+///
+/// FastLED/fbuild#1360: a daemon that has grown until it stops answering
+/// `/health` keeps running and keeps owning its endpoint, so every spawn
+/// attempt fails and the CLI reports the result as `Compilation failed for
+/// board <x>`. That sends people to read their own sketch looking for a
+/// problem that is entirely ours.
+///
+/// Emitted only when a recorded PID is alive *and* really is an fbuild-daemon,
+/// so the hint never invents a diagnosis: a missing or stale pid file, or a
+/// recycled PID now owned by something else, yields nothing rather than a
+/// confident wrong answer.
+fn wedged_daemon_hint() -> String {
+    wedged_daemon_note(crate::cli::daemon_cmd::recorded_daemon_pid())
+}
+
+/// The hint itself, split from PID discovery so the wording and the
+/// say-nothing-without-evidence rule are both testable without a daemon.
+fn wedged_daemon_note(live_daemon_pid: Option<u32>) -> String {
+    let Some(pid) = live_daemon_pid else {
+        return String::new();
+    };
+    format!(
+        "\n\nA daemon process is still alive at PID {pid} but is not answering. That is the \
+         shape of FastLED/fbuild#1360: an unresponsive daemon goes on owning the endpoint, so no \
+         replacement can take it. Clear it with `fbuild daemon stop` (which terminates an \
+         unresponsive daemon rather than reporting success and leaving it running), or \
+         `fbuild daemon kill-all`."
+    )
 }
 
 /// Wall-clock budget for a spawned daemon to answer `health()`.

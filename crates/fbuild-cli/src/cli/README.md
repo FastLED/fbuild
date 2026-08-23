@@ -20,6 +20,7 @@ here and is dispatched from `cli::async_main`.
 - **`clang_tools.rs`** -- `run_clang_tool`, `run_iwyu`, IWYU cache key + output filtering
 - **`purge.rs`** -- `run_purge`, `run_purge_gc`, size formatting, cache listing
 - **`daemon_cmd.rs`** -- `run_daemon` and friends (status / restart / kill / locks / cache-stats / gc), process-management helpers
+- **`daemon_stop.rs`** -- `fbuild daemon stop`: `StopPlan` (the decision), termination + exit confirmation (FastLED/fbuild#1360). Tests in `daemon_stop_tests.rs`
 - **`device.rs`** -- `run_device` (list / status / lease / release / take)
 - **`show.rs`** -- `run_show`, `show_daemon_logs`
 - **`reset.rs`** -- `run_reset`

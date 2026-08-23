@@ -3,7 +3,7 @@
 
 use super::{
     DaemonAcquisition, DaemonInfoResponse, broker_refusal_is_fatal, daemon_cache_identity_error,
-    launcher_path, should_restart_daemon,
+    launcher_path, should_restart_daemon, wedged_daemon_note,
 };
 use running_process::broker::client::RefusalKind::{VersionBlocked, VersionUnsupported};
 
@@ -141,4 +141,25 @@ fn same_version_restarts_only_on_newer_binary_mtime() {
 fn unparseable_versions_fall_back_to_mtime() {
     assert!(should_restart_daemon("not-semver", "2.4.0", 200.0, 100.0));
     assert!(!should_restart_daemon("2.4.0", "garbage", 100.0, 200.0));
+}
+
+/// FastLED/fbuild#1360: when a daemon is alive but not answering, the spawn
+/// failure must say so and name the recovery, rather than leaving the caller
+/// with an error that reads like their sketch failed to compile.
+#[test]
+fn a_live_unresponsive_daemon_is_named_along_with_its_recovery() {
+    let note = wedged_daemon_note(Some(4321));
+    assert!(note.contains("4321"), "{note}");
+    assert!(
+        note.contains("fbuild daemon stop"),
+        "the hint must point at the recovery, not just describe the problem: {note}"
+    );
+}
+
+/// Without a live daemon of our own there is nothing to diagnose — and a guess
+/// here would be worse than silence, because the spawn failure already carries
+/// a correct version-mismatch explanation that the hint would talk over.
+#[test]
+fn no_live_daemon_produces_no_hint() {
+    assert_eq!(wedged_daemon_note(None), "");
 }
