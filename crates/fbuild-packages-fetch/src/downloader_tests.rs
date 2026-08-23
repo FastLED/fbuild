@@ -457,6 +457,15 @@ async fn streaming_download_resumes_from_the_byte_offset_after_a_drop() {
         RESUME_BODY,
         "the resumed file must be byte-identical to the source"
     );
+    // Load-bearing, and deliberately exact. A third request means the resume
+    // asked for a range it already had — i.e. the bytes the first attempt
+    // delivered were lost and the retry started over. That is the failure
+    // FastLED/fbuild#1370 exists to prevent, and this count is the only thing
+    // that detects it: the file still ends up correct either way, so every
+    // other assertion here passes while the feature silently does nothing.
+    //
+    // It caught exactly that on macOS runners, where the unflushed `.part`
+    // read short.
     assert_eq!(
         request_count.load(Ordering::SeqCst),
         2,
