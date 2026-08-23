@@ -20,27 +20,69 @@ concurrency:
   group: dylint.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
+# Read-only token. Every step here reads: checkout, a shallow `git fetch
+# origin main` for the shrink-only allowlist diff, and lint runs. Nothing
+# writes, so nothing should be able to. Without this the job inherits the
+# repository/organization default, which can include write access.
+permissions:
+  contents: read
+
 env:
   CARGO_TERM_COLOR: always
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
 jobs:
   dylint:
-    name: Dylint
-    runs-on: ubuntu-latest
+    # The matrix `name` is pinned per-leg rather than derived, so the ubuntu
+    # leg keeps reporting as exactly `Dylint` — that string is a required
+    # status check, and letting the matrix rename it to `Dylint
+    # (ubuntu-latest)` would leave the required check permanently pending on
+    # every PR. The Windows leg is additive and reports under its own name.
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      # Independent legs: a Windows-only violation should not hide a Linux
+      # one, or the reverse. Finding both in one run is the whole point.
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            name: Dylint
+          # FastLED/fbuild#1359 — `cargo check` only compiles the modules the
+          # target platform selects, so every `#[cfg(windows)]` /
+          # `platform/windows/**` module was invisible to a ubuntu-only gate.
+          # That is not hypothetical: the platform-facade migration (#1306)
+          # moved `display_slash` into `platform/windows/fs.rs` and its
+          # `ban_manual_slash_normalize` violation sat on main unnoticed,
+          # because CI had never compiled the file.
+          #
+          # Windows is also where the bugs these lints exist to prevent
+          # actually bite — #875, #885, #890 and #912 were all Windows path
+          # handling.
+          - os: windows-latest
+            name: Dylint (windows)
     timeout-minutes: 90
+    defaults:
+      run:
+        # Git Bash on the Windows runner. The steps below use process
+        # substitution and POSIX `find`, so PowerShell (the Windows default)
+        # would fail to parse them.
+        shell: bash
     steps:
       - uses: actions/checkout@v6
       - uses: astral-sh/setup-uv@v3
       - name: Validate Dylint allowlist paths
+        if: matrix.os == 'ubuntu-latest'
         run: uv run --no-project python ci/check_dylint_allowlists.py
       - name: Enforce shrink-only .fbuild allowlist
+        if: matrix.os == 'ubuntu-latest'
         # The baseline in dylints/ban_raw_fbuild_path may only shrink
         # (FastLED/fbuild#1349). Needs main fetched to diff against.
         run: |
           git fetch --no-tags --depth=1 origin main
           uv run --no-project python ci/check_fbuild_path_baseline.py --base FETCH_HEAD
       - name: Validate platform-boundary ledgers
+        if: matrix.os == 'ubuntu-latest'
         run: uv run --no-project python ci/enforce_platform_boundary.py --print-totals
       - uses: zackees/setup-soldr@v0
         with:
@@ -73,16 +115,42 @@ jobs:
         timeout-minutes: 15
         run: uv run --no-project python ci/build_dylint_driver.py
       - name: Check Dylint library formatting
+        if: matrix.os == 'ubuntu-latest'
         run: |
           while IFS= read -r manifest; do
             RUSTUP_TOOLCHAIN=nightly-2026-04-16 \
               soldr cargo fmt --manifest-path "$manifest" --all -- --check
           done < <(find dylints -mindepth 2 -maxdepth 2 -name Cargo.toml | sort)
       - name: Test Dylint libraries
+        # ubuntu only, and the reason is a scoping one rather than a workaround.
+        # These are the lint crates' OWN unit/ui tests — they assert that each
+        # lint fires on its fixture, which is platform-independent behavior
+        # already covered once. What the Windows leg uniquely provides is
+        # compiling Windows-gated *workspace* source so the lints can see it;
+        # re-running the lint crates' self-tests on a second OS adds ~10 min per
+        # PR and proves nothing new.
+        #
+        # It also does not currently work there: Dylint 6.0.1 looks for its test
+        # library under `<target>/debug`, while soldr sets `CARGO_BUILD_TARGET`
+        # so cargo writes to `<target>/<host>/debug`. Each lint's `fn ui` clears
+        # that variable, but on the runner the .dll still fails to load:
+        #
+        #   error: could not load library
+        #   `.../target/dylint-tests/debug/ban_manual_slash_normalize@nightly-2026-04-16.dll`:
+        #   LoadLibraryExW failed
+        #
+        # That is a dylint/soldr/compiletest interaction, not an fbuild defect,
+        # and is tracked separately rather than blocking this gate.
+        if: matrix.os == 'ubuntu-latest'
         run: |
           # Dylint's driver builder intentionally clears RUSTUP_TOOLCHAIN and
           # relies on the rustup cargo proxy to re-select each lint's pinned
           # toolchain. Keep that proxy ahead of Soldr's compiler shim.
+          #
+          # `CARGO_HOME` is defaulted rather than assumed: unset, the export
+          # below would silently prepend a bare `/bin` and the proxy would
+          # never be found.
+          CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"
           export PATH="${CARGO_HOME}/bin:${PATH}"
           export CARGO_TARGET_DIR="$PWD/target/dylint-tests"
           while IFS= read -r manifest; do
@@ -101,6 +169,8 @@ jobs:
           # makes the observation comparison below meaningful.
           export RUSTFLAGS="${RUSTFLAGS:+${RUSTFLAGS} }--cfg fbuild_platform_boundary_observation_run_${GITHUB_RUN_ID}"
           rm -f "$FBUILD_PLATFORM_BOUNDARY_OBSERVED"
+          CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"
+          # No `.exe` suffix needed: Git Bash resolves it on Windows.
           "${CARGO_HOME}/bin/cargo-dylint" dylint --all -- --workspace --all-targets
       - name: Compare scanner with actual Dylint observations
         run: uv run --no-project python ci/enforce_platform_boundary.py --dylint-observed target/platform-boundary-dylint-observed.tsv --print-totals

@@ -12,10 +12,17 @@
 #     allowlist to paper over "I don't want to plumb NormalizedPath
 #     through here" — thread the type instead.
 
-# The primitive itself. `NormalizedPath::display_slash` and
-# `normalize_for_key` in this file own the transformation; every other
-# call site delegates to them.
-crates/fbuild-core/src/path.rs
+# The primitive itself. The platform-facade migration (#1306) moved the
+# actual `\` -> `/` rewrite out of `fbuild-core/src/path.rs` and into the
+# per-OS `platform::fs::display_slash`; `NormalizedPath::display_slash` now
+# just delegates. So the Windows implementation is the definition site, and
+# `path.rs` no longer performs the transformation at all — its entry is gone
+# rather than kept "just in case", because an allowlist that outlives what it
+# excused is how this drifted in the first place (FastLED/fbuild#1359).
+#
+# There is no matching `platform/linux/fs.rs` or `platform/macos/fs.rs` entry:
+# only Windows has backslashes to rewrite.
+crates/fbuild-core/src/platform/windows/fs.rs
 
 # Symbol-analysis Graphviz DOT emitter escapes `\` to `\\` for label
 # text. The `.replace('\\', "\\\\")` call is not a path-shape rewrite —
