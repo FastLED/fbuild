@@ -75,6 +75,6 @@ crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	570	attr_cfg	#[cfg(not(windows
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	728	attr_cfg	#[cfg(windows)]	host_executable	host_mechanic
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	755	attr_cfg	#[cfg(windows)]	host_executable	host_mechanic
 crates/fbuild-toolchain/src/toolchain/esp_qemu_runtime.rs	224	attr_cfg	#[cfg_attr(not(target_os=),allow(dead_code))]	host_executable	host_artifact_policy
-crates/fbuild-toolchain/src/toolchain/esp_qemu_runtime.rs	246	attr_cfg	#[cfg(not(target_os=))]	host_executable	host_artifact_policy
-crates/fbuild-toolchain/src/toolchain/esp_qemu_runtime.rs	252	attr_cfg	#[cfg(target_os=)]	host_executable	host_artifact_policy
+crates/fbuild-toolchain/src/toolchain/esp_qemu_runtime.rs	266	attr_cfg	#[cfg(not(target_os=))]	host_executable	host_artifact_policy
+crates/fbuild-toolchain/src/toolchain/esp_qemu_runtime.rs	272	attr_cfg	#[cfg(target_os=)]	host_executable	host_artifact_policy
 crates/fbuild-toolchain/tests/qemu_linux_runtime.rs	18	attr_cfg	#![cfg(target_os=)]	host_executable	host_artifact_policy

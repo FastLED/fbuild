@@ -411,6 +411,78 @@ pub fn run_command_blocking(
     block_on(run_command(args, cwd, env, timeout))
 }
 
+/// How many times [`run_command_blocking_retrying_exec_busy`] will try to
+/// spawn before giving up.
+///
+/// Three is enough for the window this exists to cross. The race is another
+/// thread holding a writable descriptor across a `fork`, which lasts as long
+/// as it takes that child to reach `exec` — microseconds, not milliseconds.
+const EXEC_BUSY_ATTEMPTS: u32 = 3;
+
+/// Base backoff between spawn attempts; multiplied by the attempt number.
+const EXEC_BUSY_BACKOFF: Duration = Duration::from_millis(25);
+
+/// Whether an OS spawn error is "the file is open for writing somewhere".
+///
+/// `ETXTBSY` on Unix. The kernel refuses to `exec` a file while any process
+/// holds a writable descriptor for it — and "any process" includes a `fork`ed
+/// child of this one that has not reached `exec` yet, which is how the race
+/// happens without anyone writing to the file at all.
+pub fn is_exec_busy(error: &std::io::Error) -> bool {
+    error.kind() == std::io::ErrorKind::ExecutableFileBusy
+}
+
+/// [`run_command_blocking`], but retrying a spawn that fails with `ETXTBSY`.
+///
+/// Opt-in rather than the default for every subprocess in fbuild, because
+/// retrying an exec is a behavior change and only some callers have the
+/// write-then-exec shape that provokes it: a file this process just created
+/// or extracted and is now running.
+///
+/// Only `ETXTBSY` is retried. Every other spawn error is returned on the
+/// first attempt — a missing binary should fail immediately, not three times
+/// slowly.
+///
+/// FastLED/fbuild#1366.
+pub fn run_command_blocking_retrying_exec_busy(
+    args: &[&str],
+    cwd: Option<&Path>,
+    env: Option<&[(&str, &str)]>,
+    timeout: Option<Duration>,
+) -> Result<ToolOutput> {
+    block_on(run_command_retrying_exec_busy(args, cwd, env, timeout))
+}
+
+/// Async form of [`run_command_blocking_retrying_exec_busy`].
+pub async fn run_command_retrying_exec_busy(
+    args: &[&str],
+    cwd: Option<&Path>,
+    env: Option<&[(&str, &str)]>,
+    timeout: Option<Duration>,
+) -> Result<ToolOutput> {
+    if args.is_empty() {
+        return Err(FbuildError::Other("empty command".to_string()));
+    }
+    let timeout = resolve_default_timeout(timeout);
+    let mut attempt = 1;
+    loop {
+        let mut cmd = build_command(
+            args, cwd, env, /*capture=*/ true, /*stdin_piped=*/ false,
+        )?;
+        match process::spawn_tokio_contained(&mut cmd) {
+            Ok(child) => return wait_and_capture(child, args, timeout).await,
+            Err(error) if is_exec_busy(&error) && attempt < EXEC_BUSY_ATTEMPTS => {
+                // `tokio::time::sleep`, not `std::thread::sleep`: this runs on
+                // a tokio worker and blocking it would stall every other task
+                // on that thread (FastLED/fbuild#844).
+                tokio::time::sleep(EXEC_BUSY_BACKOFF * attempt).await;
+                attempt += 1;
+            }
+            Err(error) => return Err(spawn_err(args, error)),
+        }
+    }
+}
+
 /// Blocking variant of [`run_command_with_stdin`].
 pub fn run_command_with_stdin_blocking(
     args: &[&str],
@@ -638,6 +710,134 @@ fn compute_env(program: &str, overlay: Option<&[(&str, &str)]>) -> Option<Vec<(S
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// `is_exec_busy` must key on the OS condition, not on a message.
+    ///
+    /// Cheap and platform-independent: the classifier is what decides whether
+    /// a spawn failure gets retried, so retrying the wrong error (a missing
+    /// binary, say) would turn one fast failure into three slow ones.
+    #[test]
+    fn only_executable_file_busy_is_retryable() {
+        use std::io::{Error, ErrorKind};
+        assert!(is_exec_busy(&Error::from(ErrorKind::ExecutableFileBusy)));
+        for kind in [
+            ErrorKind::NotFound,
+            ErrorKind::PermissionDenied,
+            ErrorKind::InvalidInput,
+            ErrorKind::WouldBlock,
+        ] {
+            assert!(
+                !is_exec_busy(&Error::from(kind)),
+                "{kind:?} must not be retried"
+            );
+        }
+    }
+
+    /// Whether this host enforces `ETXTBSY` on `exec`.
+    ///
+    /// Linux only, and that is not pedantry: Darwin lets a plain
+    /// open-for-write coexist with `execve`, so the same code that reliably
+    /// fails on Linux succeeds on macOS. Gating on `unix` would have made
+    /// these tests fail there for a reason that is not a bug.
+    fn host_enforces_exec_busy() -> bool {
+        crate::platform::host::current().os() == crate::platform::host::HostOs::Linux
+    }
+
+    /// Build an executable no-op script and return its path.
+    ///
+    /// Uses the neutral `platform::fs` facade rather than a per-OS
+    /// permissions extension trait, so this file stays free of raw host
+    /// mechanics (the platform-boundary ledger, #1306).
+    fn write_runnable_script(dir: &std::path::Path, name: &str) -> std::io::Result<String> {
+        use std::io::Write;
+        let script = dir.join(name);
+        {
+            let mut file = std::fs::File::create(&script)?;
+            file.write_all(
+                b"#!/bin/sh
+exit 0
+",
+            )?;
+        }
+        crate::platform::fs::set_executable(&script)?;
+        Ok(script.to_string_lossy().into_owned())
+    }
+
+    /// A held write handle blocks `exec`, and no amount of retrying helps.
+    ///
+    /// This is the mechanism behind FastLED/fbuild#1366 made reproducible.
+    /// Linux refuses to `exec` a file while *any* process holds it open for
+    /// writing — including this one — so the flake, which in CI came from a
+    /// sibling thread's `fork` inheriting the descriptor, needs no thread
+    /// timing to reproduce. Fully deterministic: the handle outlives the whole
+    /// retry budget.
+    #[tokio::test(flavor = "multi_thread")]
+    async fn a_held_write_handle_blocks_exec_for_the_whole_retry_budget() {
+        if !host_enforces_exec_busy() {
+            return;
+        }
+        let tmp = tempfile::TempDir::new().expect("tempdir");
+        let path = write_runnable_script(tmp.path(), "held_open.sh").expect("script");
+
+        let held = std::fs::OpenOptions::new()
+            .write(true)
+            .open(&path)
+            .expect("reopen for write");
+
+        let result = run_command_retrying_exec_busy(&[path.as_str()], None, None, None).await;
+        assert!(
+            result.is_err(),
+            "exec must fail while a writable handle is open, got {result:?}"
+        );
+        drop(held);
+    }
+
+    /// The retry earns its place: a handle released mid-window lets a later
+    /// attempt through, where a single attempt would have failed.
+    ///
+    /// This is the property that actually fixes #1366 — the CI race window is
+    /// the microseconds between another thread's `fork` and its `exec`, so a
+    /// second attempt is all it takes. The 10 ms hold is deliberately tiny
+    /// against the ~75 ms retry budget: a loaded runner can delay the release
+    /// several times over and this still passes, so it cannot become the flake
+    /// it exists to prevent.
+    #[tokio::test(flavor = "multi_thread")]
+    async fn a_handle_released_mid_window_lets_the_retry_through() {
+        if !host_enforces_exec_busy() {
+            return;
+        }
+        let tmp = tempfile::TempDir::new().expect("tempdir");
+        let path = write_runnable_script(tmp.path(), "released.sh").expect("script");
+
+        let held = std::fs::OpenOptions::new()
+            .write(true)
+            .open(&path)
+            .expect("reopen for write");
+
+        // The releaser signals *before* it sleeps, and the probe does not
+        // start until that signal arrives. Spawning detached and hoping would
+        // leave the task's timer unarmed until an arbitrary later point — on a
+        // loaded runner it could start after the retry budget had already
+        // elapsed, holding the handle through all three attempts. That would
+        // make this the flake it exists to prevent.
+        //
+        // A tokio task rather than a thread with `std::thread::sleep`, which
+        // the workspace bans for blocking a runtime worker (#844).
+        let (armed_tx, armed_rx) = tokio::sync::oneshot::channel();
+        let releaser = tokio::spawn(async move {
+            let _ = armed_tx.send(());
+            tokio::time::sleep(Duration::from_millis(10)).await;
+            drop(held);
+        });
+        armed_rx.await.expect("releaser task must start");
+
+        let result = run_command_retrying_exec_busy(&[path.as_str()], None, None, None).await;
+        releaser.await.expect("releaser task must finish");
+        assert!(
+            result.is_ok(),
+            "a retry must outlast a transient writable handle, got {result:?}"
+        );
+    }
 
     #[tokio::test]
     async fn run_echo() {

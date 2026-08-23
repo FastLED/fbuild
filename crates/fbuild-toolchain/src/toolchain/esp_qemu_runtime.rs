@@ -228,9 +228,29 @@ enum QemuProbe {
     /// The dynamic linker could not satisfy a dependency (exit code 127).
     /// Carries the linker's own line when it could be recovered.
     MissingSharedLibrary(String),
-    /// Probe could not be interpreted (spawn failure, or some other
-    /// non-127 exit). Treated as non-fatal: the real run reports it with
-    /// full context.
+    /// The probe produced no exit code to interpret: the binary could not be
+    /// executed, or the run failed or timed out before one was available.
+    ///
+    /// Distinct from [`QemuProbe::Inconclusive`] (which *did* get an exit
+    /// code, just not one that means anything) because the two say different
+    /// things about the runtime bundle. Collapsing "never produced a result"
+    /// into the bundle's own failure mode is what made a failed `exec` report
+    /// itself as a missing shared library, sending readers after QEMU
+    /// dependencies for a problem that was never there
+    /// (FastLED/fbuild#1366).
+    ///
+    /// Deliberately *not* split further into spawn-vs-timeout. The error
+    /// crossing this boundary is already flattened to a string by
+    /// `subprocess::spawn_err`, so telling them apart here would mean matching
+    /// on message text — and inventing a distinction the code cannot actually
+    /// make is precisely the bug above. The carried string is the underlying
+    /// error, which says which it was.
+    ///
+    /// Treated as non-fatal exactly like `Inconclusive`: the real run reports
+    /// it with full context.
+    ProbeFailed(String),
+    /// Probe could not be interpreted (some other non-127 exit). Treated as
+    /// non-fatal: the real run reports it with full context.
     Inconclusive,
 }
 
@@ -261,7 +281,12 @@ fn probe_qemu_binary(qemu_binary: &Path, lib_dir: Option<&Path>) -> QemuProbe {
             .as_deref()
             .map(|value| vec![("LD_LIBRARY_PATH", value)]);
 
-        let probe_result = fbuild_core::subprocess::run_command_blocking(
+        // Retrying variant: fbuild probes binaries it has just downloaded and
+        // extracted, and `exec` on a file any process still holds open for
+        // writing fails with `ETXTBSY` — including a `fork`ed child of this
+        // process that has not reached its own `exec` yet. See
+        // FastLED/fbuild#1366.
+        let probe_result = fbuild_core::subprocess::run_command_blocking_retrying_exec_busy(
             &[&qemu_binary.to_string_lossy(), "--version"],
             None, // cwd
             env.as_deref(),
@@ -279,7 +304,8 @@ fn probe_qemu_binary(qemu_binary: &Path, lib_dir: Option<&Path>) -> QemuProbe {
                     .unwrap_or_else(|| out.stderr.trim().to_string());
                 QemuProbe::MissingSharedLibrary(detail)
             }
-            Ok(_) | Err(_) => QemuProbe::Inconclusive,
+            Err(error) => QemuProbe::ProbeFailed(error.to_string()),
+            Ok(_) => QemuProbe::Inconclusive,
         }
     }
 }
@@ -298,6 +324,17 @@ fn probe_qemu_binary(qemu_binary: &Path, lib_dir: Option<&Path>) -> QemuProbe {
 pub(crate) async fn ensure_qemu_can_start(qemu_binary: &Path, project_dir: &Path) -> Result<()> {
     let missing = match probe_qemu_binary(qemu_binary, None) {
         QemuProbe::Started | QemuProbe::Inconclusive => return Ok(()),
+        QemuProbe::ProbeFailed(detail) => {
+            // Not a runtime-library problem, so downloading the bundle would
+            // fix nothing. Say what actually happened and let the real run
+            // report it with full context.
+            tracing::warn!(
+                "QEMU probe at {} produced no usable result: {}",
+                qemu_binary.display(),
+                detail
+            );
+            return Ok(());
+        }
         QemuProbe::MissingSharedLibrary(detail) => detail,
     };
 
@@ -316,6 +353,19 @@ pub(crate) async fn ensure_qemu_can_start(qemu_binary: &Path, project_dir: &Path
 
     match probe_qemu_binary(qemu_binary, Some(lib_dir.as_path())) {
         QemuProbe::Started | QemuProbe::Inconclusive => Ok(()),
+        // Non-fatal for the same reason `Inconclusive` is: the probe learned
+        // nothing about the runtime bundle. Logged rather than swallowed,
+        // because "could not execute the binary at all" is a different problem
+        // from "started and could not find a .so", and the next thing to fail
+        // will be the real run (FastLED/fbuild#1366).
+        QemuProbe::ProbeFailed(detail) => {
+            tracing::warn!(
+                "QEMU probe at {} produced no usable result even with the runtime bundle applied: {}",
+                qemu_binary.display(),
+                detail
+            );
+            Ok(())
+        }
         QemuProbe::MissingSharedLibrary(still_missing) => Err(FbuildError::PackageError(format!(
             "QEMU at {} cannot start even with the fbuild runtime bundle at {} applied.\n\
              {}\n\
