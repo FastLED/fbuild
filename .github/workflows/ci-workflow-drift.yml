@@ -7,6 +7,11 @@ name: CI Workflow Drift
 # This is intentionally always-on (no paths filter) -- it is fast and
 # stops drift the moment it appears. If a contributor edits a per-board
 # `on:` block by hand, this gate fails with a copy-paste fix command.
+#
+# It also enforces that every `pull_request`-triggered workflow declares an
+# auto-cancel `concurrency:` block (ci/check_workflow_concurrency.py), so a
+# rapid series of pushes to a feature branch supersedes its in-flight runs
+# instead of queueing ~80 more board builds behind them.
 
 on:
   workflow_dispatch: {}
@@ -14,6 +19,14 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+
+# Auto-cancel superseded PR runs: pushing again to a feature branch
+# supersedes the in-flight run instead of queueing behind it. Non-PR
+# events key on run_id so each gets its own group -- a shared group keeps
+# only ONE pending run, which would silently drop queued main SHAs.
+concurrency:
+  group: ci-workflow-drift.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   check:
@@ -25,3 +38,7 @@ jobs:
       - uses: astral-sh/setup-uv@v3
       - name: Verify rendered workflows match SOT
         run: uv run --no-project python ci/render_workflows.py --check
+      - name: Verify PR-triggered workflows auto-cancel superseded runs
+        run: uv run --with pyyaml --no-project python ci/check_workflow_concurrency.py
+      - name: Unit-test the concurrency guard
+        run: uv run --with pyyaml --no-project python -m unittest ci.test_workflow_concurrency
