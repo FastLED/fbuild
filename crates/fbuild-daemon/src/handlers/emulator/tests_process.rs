@@ -25,7 +25,16 @@ pub(super) fn test_process_command(lines: &[&str]) -> (PathBuf, Vec<String>) {
             .map(|line| format!("printf '%s\\n' '{}'", line.replace('\'', "'\"'\"'")))
             .collect::<Vec<_>>()
             .join("; ");
-        (PathBuf::from("sh"), vec!["-c".to_string(), script])
+        // Absolute, not a bare `sh` resolved through PATH. The Windows branch
+        // above already builds an absolute `cmd.exe` path; this side did not,
+        // and an ubuntu runner failed with
+        //
+        //   failed to launch QEMU at sh: No such file or directory (os error 2)
+        //
+        // which is a PATH lookup miss dressed up as a missing emulator. POSIX
+        // requires `/bin/sh`, so naming it outright removes the runner's
+        // environment from the equation entirely.
+        (PathBuf::from("/bin/sh"), vec!["-c".to_string(), script])
     }
 }
 
