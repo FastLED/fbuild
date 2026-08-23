@@ -2,7 +2,8 @@
 
 use crate::context::DaemonContext;
 use crate::models::{
-    DaemonInfoResponse, HealthResponse, RootResponse, ShutdownParams, ShutdownResponse,
+    DaemonInfoResponse, HealthResponse, HeapDumpResponse, RootResponse, ShutdownParams,
+    ShutdownResponse,
 };
 use axum::Json;
 use axum::extract::{ConnectInfo, Query, State};
@@ -66,6 +67,80 @@ pub async fn daemon_info(State(ctx): State<Arc<DaemonContext>>) -> Json<DaemonIn
         watch_set_cache: Some(ctx.watch_set_cache.stats()),
     })
 }
+
+/// POST /api/daemon/heap-dump
+///
+/// Write a pprof heap snapshot of this daemon and return where it landed.
+///
+/// Deliberately reachable on a daemon that is already misbehaving, which is
+/// the case FastLED/fbuild#1360 ran into: the process had grown to ~3.9 GB and
+/// restarting it to turn on a profiler would have destroyed the very leak
+/// under investigation.
+///
+/// Starts a session on demand when none is running, so an operator who did
+/// not set `FBUILD_HEAP_PROFILE` at startup still gets something. That
+/// snapshot only covers allocations made *after* this call — the response
+/// says so rather than letting a thin profile read as "nothing is leaking".
+pub async fn heap_dump(
+    ConnectInfo(peer): ConnectInfo<SocketAddr>,
+) -> (StatusCode, Json<HeapDumpResponse>) {
+    // Loopback only. The daemon binds 0.0.0.0 (see `main.rs`), and this
+    // endpoint is not a read: it can switch process-wide profiling on and make
+    // the daemon serialize its whole heap on demand. Reachable from off-box
+    // that is both a denial-of-service lever and a way to extract allocation
+    // shapes from someone else's machine. Nothing about a profiling dump needs
+    // to cross a network boundary, so the check is a flat refusal rather than
+    // a rate limit.
+    if !peer.ip().is_loopback() {
+        tracing::warn!(peer = %peer, "heap-dump refused: non-loopback caller");
+        return (
+            StatusCode::FORBIDDEN,
+            Json(HeapDumpResponse {
+                path: None,
+                live_samples: 0,
+                profiling_was_already_running: crate::heap_profile::is_enabled(),
+                message: "heap-dump is loopback-only".to_string(),
+            }),
+        );
+    }
+
+    let was_running = crate::heap_profile::is_enabled();
+    if !was_running {
+        crate::heap_profile::start(DEFAULT_ON_DEMAND_SAMPLE_RATE);
+    }
+
+    match crate::heap_profile::dump(None).await {
+        Ok(path) => (
+            StatusCode::OK,
+            Json(HeapDumpResponse {
+                path: Some(path.display_slash()),
+                live_samples: crate::heap_profile::live_sample_count(),
+                profiling_was_already_running: was_running,
+                message: if was_running {
+                    "heap snapshot written".to_string()
+                } else {
+                    "heap snapshot written, but profiling only started with this                      request — it covers allocations from now on, not the ones                      already held. Set FBUILD_HEAP_PROFILE=1 before starting the                      daemon to capture from process start."
+                        .to_string()
+                },
+            }),
+        ),
+        Err(error) => (
+            StatusCode::INTERNAL_SERVER_ERROR,
+            Json(HeapDumpResponse {
+                path: None,
+                live_samples: 0,
+                profiling_was_already_running: was_running,
+                message: format!("heap dump failed: {error}"),
+            }),
+        ),
+    }
+}
+
+/// Sample rate used when a dump is requested on a daemon that was not started
+/// with profiling on. 64 KiB is finer than the 512 KiB default: by this point
+/// someone is actively chasing something, and the extra resolution is worth
+/// more than the overhead.
+const DEFAULT_ON_DEMAND_SAMPLE_RATE: usize = 64 * 1024;
 
 /// POST /api/daemon/shutdown
 pub async fn shutdown(

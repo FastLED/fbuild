@@ -1,5 +1,10 @@
+// The same mimalloc the daemon has always used, plus a sampled heap
+// profiler that stays dormant until started (FastLED/fbuild#1361).
+// Unconditional rather than feature-gated: a profiler compiled out of
+// the shipped binary is never present on the machine where a slow leak
+// reproduces, which is exactly how #1360 was found.
 #[global_allocator]
-static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
+static GLOBAL: mimalloc_pprof::MiMalloc = mimalloc_pprof::MiMalloc;
 
 use axum::Router;
 use axum::routing::{get, post};
@@ -35,6 +40,14 @@ struct Args {
 
 #[tokio::main]
 async fn main() {
+    // FastLED/fbuild#1361 — first statement in the process, ahead of argument
+    // parsing, containment setup, the broadcast hub, and the tracing
+    // subscriber. Every allocation made before the profiler starts is
+    // invisible to every later snapshot, so anything this call sits behind is
+    // permanently unattributable. The rate is logged further down, once
+    // tracing exists to log it to.
+    let heap_profile_rate = fbuild_daemon::heap_profile::start_from_env();
+
     let args = Args::parse();
 
     if args.dev {
@@ -97,6 +110,13 @@ async fn main() {
         .with(tracing_subscriber::fmt::layer().with_writer(std::io::stderr))
         .with(BroadcastLogLayer::new(log_tx))
         .init();
+
+    if let Some(rate) = heap_profile_rate {
+        tracing::info!(
+            "heap profiling enabled from process start, sampling every ~{rate} \
+             bytes; dump with POST /api/daemon/heap-dump"
+        );
+    }
 
     tracing::info!("fbuild daemon starting on port {}", port);
 
@@ -201,6 +221,10 @@ async fn main() {
         .route("/health", get(health::health_check))
         .route("/api/daemon/info", get(health::daemon_info))
         .route("/api/daemon/shutdown", post(health::shutdown))
+        // FastLED/fbuild#1361 — obtainable from a daemon that is already
+        // misbehaving. Restarting to enable a profiler would destroy the
+        // leak being investigated, which is what made #1360 hard to chase.
+        .route("/api/daemon/heap-dump", post(health::heap_dump))
         .route("/api/build", post(operations::build))
         .route("/api/deploy", post(operations::deploy))
         .route("/api/monitor", post(operations::monitor))
