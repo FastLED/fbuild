@@ -20,13 +20,6 @@ use crate::{DeployOutcome, Deployer, DeploymentResult};
 /// lpc21isp itself.
 pub const LPC21ISP_PATH_ENV_VAR: &str = "FBUILD_LPC21ISP_PATH";
 
-/// Resolve the user's home directory through the neutral host facade
-/// (`%USERPROFILE%` with a `%HOME%` fallback on Windows, `$HOME`
-/// elsewhere) so this module carries no per-OS env logic.
-fn home_dir() -> Option<PathBuf> {
-    fbuild_core::platform::host::home_dir().map(|home| home.into_path_buf())
-}
-
 /// The one canonical location fbuild manages lpc21isp at. FastLED/fbuild#921
 /// treats lpc21isp as a fbuild-owned dependency — auto-install will drop
 /// the binary here in a follow-up PR, and the deployer reads it back from
@@ -38,13 +31,7 @@ fn home_dir() -> Option<PathBuf> {
 /// isolation the rest of `fbuild-paths` applies.
 pub fn managed_lpc21isp_path() -> Option<PathBuf> {
     let exe = fbuild_core::platform::executable::native_name("lpc21isp");
-    let home = home_dir()?;
-    let mode = if std::env::var_os("FBUILD_DEV_MODE").is_some() {
-        "dev"
-    } else {
-        "prod"
-    };
-    Some(home.join(".fbuild").join(mode).join("tools").join(exe))
+    Some(fbuild_paths::try_get_tools_dir()?.join(exe))
 }
 
 /// Resolve where `lpc21isp` lives on this system.
@@ -89,7 +76,14 @@ pub fn find_lpc21isp() -> Option<PathBuf> {
 /// deploy path. Kept as a standalone function so the test module can
 /// assert the exact URLs / paths without shelling out.
 pub(crate) fn lpc21isp_install_hint() -> String {
-    let tools_dir = "~/.fbuild/prod/tools/";
+    // Name the directory fbuild will actually look in — under
+    // `FBUILD_DEV_MODE=1` that is the dev tree, and telling a dev-mode user
+    // to install into `prod` is how a "correctly installed" tool goes on
+    // being not-found (FastLED/fbuild#1349).
+    let tools_dir = fbuild_paths::try_get_tools_dir()
+        .map(|p| p.display().to_string())
+        .unwrap_or_else(fbuild_paths::tools_dir_label);
+    let tools_dir = format!("{tools_dir}{}", std::path::MAIN_SEPARATOR);
     let exe = fbuild_core::platform::executable::native_name("lpc21isp");
     format!(
         "lpc21isp not found on PATH or in any fbuild-managed tools dir.\n\
@@ -714,11 +708,38 @@ fn port_names_match(sys: &str, user: &str) -> bool {
 mod tests {
     use super::*;
 
-    // The resolver tests below temporarily mutate the same process-wide
-    // override. Cargo runs unit tests in parallel, so serialize that narrow
-    // shared state rather than letting one test restore the other test's
-    // value (which was visible as a Windows-only intermittent miss).
+    // The resolver tests below temporarily mutate process-wide env
+    // overrides (`FBUILD_LPC21ISP_PATH`, `FBUILD_DEV_MODE`). Cargo runs unit
+    // tests in parallel, so serialize that narrow shared state rather than
+    // letting one test restore the other test's value (which was visible as a
+    // Windows-only intermittent miss). Tests that only *read* a path derived
+    // from those vars take the lock too — otherwise they sample the value
+    // mid-flip.
     static LPC21ISP_ENV_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
+
+    /// Restores an env var when dropped, so a failing assertion cannot leave
+    /// the flipped value behind for whichever test runs next.
+    struct EnvVarGuard {
+        key: &'static str,
+        saved: Option<std::ffi::OsString>,
+    }
+
+    impl EnvVarGuard {
+        fn set(key: &'static str, value: &str) -> Self {
+            let saved = std::env::var_os(key);
+            std::env::set_var(key, value);
+            Self { key, saved }
+        }
+    }
+
+    impl Drop for EnvVarGuard {
+        fn drop(&mut self) {
+            match self.saved.take() {
+                Some(v) => std::env::set_var(self.key, v),
+                None => std::env::remove_var(self.key),
+            }
+        }
+    }
 
     #[test]
     fn test_lpc_deployer_creation() {
@@ -905,6 +926,9 @@ mod tests {
 
     #[test]
     fn install_hint_mentions_env_var_and_download_source() {
+        // Reads a `FBUILD_DEV_MODE`-derived path twice; without the lock it
+        // can sample prod on one read and dev on the other.
+        let _lock = LPC21ISP_ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
         let hint = lpc21isp_install_hint();
         assert!(
             hint.contains(LPC21ISP_PATH_ENV_VAR),
@@ -914,12 +938,46 @@ mod tests {
             hint.contains("sourceforge.net"),
             "hint must point at a download"
         );
+        let tools_dir = fbuild_paths::try_get_tools_dir()
+            .map(|p| p.display().to_string())
+            .unwrap_or_else(fbuild_paths::tools_dir_label);
         assert!(
-            hint.contains("~/.fbuild/prod/tools/"),
+            hint.contains(&tools_dir),
             "hint must direct the user at the fbuild-managed tools dir \
-             (never an out-of-tree C:\\tools\\ path or PATH-walk)"
+             (never an out-of-tree C:\\tools\\ path or PATH-walk): {hint}"
         );
         assert!(hint.contains("#921"), "hint must cite the tracking issue");
+    }
+
+    /// FastLED/fbuild#1349: the managed-tools path must be the one
+    /// `fbuild-paths` defines, not a private re-derivation of it.
+    ///
+    /// The re-derivations tested `FBUILD_DEV_MODE` with `var_os(..).is_some()`,
+    /// so `FBUILD_DEV_MODE=0` — an explicit *opt out* — selected the dev tree
+    /// here while `fbuild_paths::is_dev_mode()` (which requires the literal
+    /// `1`) kept every other path in prod. A deploy would then look for its
+    /// tools in a directory nothing installs into.
+    #[test]
+    fn managed_tools_path_agrees_with_fbuild_paths_on_dev_mode() {
+        let _lock = LPC21ISP_ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+
+        for (value, expected_dev) in [("0", false), ("1", true), ("true", false)] {
+            let _dev_mode = EnvVarGuard::set("FBUILD_DEV_MODE", value);
+            let Some(expected) = fbuild_paths::try_get_tools_dir() else {
+                continue; // no home dir on this host; nothing to compare against
+            };
+            let got = managed_lpc21isp_path().expect("home dir was resolvable just above");
+            assert_eq!(
+                got.parent(),
+                Some(expected.as_path()),
+                "FBUILD_DEV_MODE={value:?} must resolve the same tools dir as fbuild-paths"
+            );
+            assert_eq!(
+                fbuild_paths::is_dev_mode(),
+                expected_dev,
+                "only the literal `1` enables dev mode"
+            );
+        }
     }
 
     // ---------- FastLED/fbuild#927 baud + hex-flag fixes ----------

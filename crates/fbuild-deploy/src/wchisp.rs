@@ -48,22 +48,10 @@ fn release_asset() -> Result<WchispAsset> {
 }
 
 fn managed_wchisp_path() -> Result<PathBuf> {
-    let home = std::env::var_os(if fbuild_core::platform::host::is_windows() {
-        "USERPROFILE"
-    } else {
-        "HOME"
-    })
-    .map(PathBuf::from)
-    .ok_or_else(|| FbuildError::PackageError("could not determine home directory".to_string()))?;
-    let mode = if std::env::var_os("FBUILD_DEV_MODE").is_some() {
-        "dev"
-    } else {
-        "prod"
-    };
-    Ok(home
-        .join(".fbuild")
-        .join(mode)
-        .join("tools")
+    let tools = fbuild_paths::try_get_tools_dir().ok_or_else(|| {
+        FbuildError::PackageError("could not determine home directory".to_string())
+    })?;
+    Ok(tools
         .join("wchisp")
         .join(fbuild_core::platform::executable::native_name("wchisp")))
 }

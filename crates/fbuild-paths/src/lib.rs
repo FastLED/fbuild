@@ -34,10 +34,53 @@ pub fn is_dev_mode() -> bool {
 }
 
 /// Root fbuild directory: `~/.fbuild/{dev|prod}`
+///
+/// Panics when the home directory cannot be determined. Callers that must
+/// degrade instead of panicking want [`try_get_fbuild_root`].
 pub fn get_fbuild_root() -> PathBuf {
-    let home = dirs_next().expect("could not determine home directory");
+    try_get_fbuild_root().expect("could not determine home directory")
+}
+
+/// [`get_fbuild_root`] for callers that report a missing home directory
+/// rather than panicking on it.
+///
+/// Exists because several tool resolvers return `Option`/`Result` precisely
+/// so a home-less environment is a diagnosable failure and not a crash; they
+/// had each hand-rolled this path to keep that property (FastLED/fbuild#1349).
+pub fn try_get_fbuild_root() -> Option<PathBuf> {
     let mode = if is_dev_mode() { "dev" } else { "prod" };
-    home.join(FBUILD_DIR_NAME).join(mode)
+    Some(dirs_next()?.join(FBUILD_DIR_NAME).join(mode))
+}
+
+/// The segment holding fbuild-managed external tools, under
+/// [`get_fbuild_root`]: `tools`.
+pub const TOOLS_DIR_NAME: &str = "tools";
+
+/// Where fbuild installs and looks for managed external tools:
+/// `~/.fbuild/{dev|prod}/tools`.
+///
+/// Panics when the home directory cannot be determined; see
+/// [`try_get_tools_dir`].
+pub fn get_tools_dir() -> PathBuf {
+    get_fbuild_root().join(TOOLS_DIR_NAME)
+}
+
+/// [`get_tools_dir`] for callers that report a missing home directory rather
+/// than panicking on it.
+pub fn try_get_tools_dir() -> Option<PathBuf> {
+    Some(try_get_fbuild_root()?.join(TOOLS_DIR_NAME))
+}
+
+/// Human-facing label for [`get_tools_dir`] when the real path cannot be
+/// resolved — `~/.fbuild/{dev|prod}/tools`.
+///
+/// Diagnostics that tell a user where to install a managed tool need
+/// *something* to print even on a host with no discoverable home directory.
+/// Producing it here keeps those messages honest about the current mode, and
+/// keeps the `.fbuild` spelling from being re-typed at each call site.
+pub fn tools_dir_label() -> String {
+    let mode = if is_dev_mode() { "dev" } else { "prod" };
+    format!("~/{FBUILD_DIR_NAME}/{mode}/{TOOLS_DIR_NAME}")
 }
 
 /// Root fbuild directory for the OTHER mode (cross-mode fallback).
