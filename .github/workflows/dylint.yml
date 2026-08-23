@@ -26,9 +26,41 @@ env:
 
 jobs:
   dylint:
-    name: Dylint
-    runs-on: ubuntu-latest
+    # The matrix `name` is pinned per-leg rather than derived, so the ubuntu
+    # leg keeps reporting as exactly `Dylint` — that string is a required
+    # status check, and letting the matrix rename it to `Dylint
+    # (ubuntu-latest)` would leave the required check permanently pending on
+    # every PR. The Windows leg is additive and reports under its own name.
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      # Independent legs: a Windows-only violation should not hide a Linux
+      # one, or the reverse. Finding both in one run is the whole point.
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            name: Dylint
+          # FastLED/fbuild#1359 — `cargo check` only compiles the modules the
+          # target platform selects, so every `#[cfg(windows)]` /
+          # `platform/windows/**` module was invisible to a ubuntu-only gate.
+          # That is not hypothetical: the platform-facade migration (#1306)
+          # moved `display_slash` into `platform/windows/fs.rs` and its
+          # `ban_manual_slash_normalize` violation sat on main unnoticed,
+          # because CI had never compiled the file.
+          #
+          # Windows is also where the bugs these lints exist to prevent
+          # actually bite — #875, #885, #890 and #912 were all Windows path
+          # handling.
+          - os: windows-latest
+            name: Dylint (windows)
     timeout-minutes: 90
+    defaults:
+      run:
+        # Git Bash on the Windows runner. The steps below use process
+        # substitution and POSIX `find`, so PowerShell (the Windows default)
+        # would fail to parse them.
+        shell: bash
     steps:
       - uses: actions/checkout@v6
       - uses: astral-sh/setup-uv@v3
@@ -83,6 +115,11 @@ jobs:
           # Dylint's driver builder intentionally clears RUSTUP_TOOLCHAIN and
           # relies on the rustup cargo proxy to re-select each lint's pinned
           # toolchain. Keep that proxy ahead of Soldr's compiler shim.
+          #
+          # `CARGO_HOME` is defaulted rather than assumed: unset, the export
+          # below would silently prepend a bare `/bin` and the proxy would
+          # never be found.
+          CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"
           export PATH="${CARGO_HOME}/bin:${PATH}"
           export CARGO_TARGET_DIR="$PWD/target/dylint-tests"
           while IFS= read -r manifest; do
@@ -101,6 +138,8 @@ jobs:
           # makes the observation comparison below meaningful.
           export RUSTFLAGS="${RUSTFLAGS:+${RUSTFLAGS} }--cfg fbuild_platform_boundary_observation_run_${GITHUB_RUN_ID}"
           rm -f "$FBUILD_PLATFORM_BOUNDARY_OBSERVED"
+          CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"
+          # No `.exe` suffix needed: Git Bash resolves it on Windows.
           "${CARGO_HOME}/bin/cargo-dylint" dylint --all -- --workspace --all-targets
       - name: Compare scanner with actual Dylint observations
         run: uv run --no-project python ci/enforce_platform_boundary.py --dylint-observed target/platform-boundary-dylint-observed.tsv --print-totals

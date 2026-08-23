@@ -3,7 +3,7 @@ name = "ban_manual_slash_normalize"
 # Bump the version to bust the dylint .so cache when allowlist.txt
 # changes (setup-soldr's dylint-cache key hashes the manifest but not
 # src/allowlist.txt). Same convention ban_std_pathbuf follows.
-version = "0.1.0"
+version = "0.1.1"
 description = "Ban manual '.replace(\\, /)' backslash-to-slash rewrites"
 edition = "2021"
 publish = false
