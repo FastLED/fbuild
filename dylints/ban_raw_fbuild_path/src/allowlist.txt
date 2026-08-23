@@ -18,11 +18,17 @@
 # call site delegates to them.
 crates/fbuild-paths/src/lib.rs
 
+# Where `FBUILD_DIR_NAME` is actually declared. It cannot live in
+# fbuild-paths: fbuild-paths depends on fbuild-core, not the reverse, and
+# fbuild-core needs the segment itself (`compile_cwd_from_output` walks for
+# it, `response_file` builds under it). fbuild-paths re-exports the const, so
+# `fbuild_paths::FBUILD_DIR_NAME` is still the name every other crate uses.
+crates/fbuild-core/src/path.rs
+
 # --- Baseline: legacy sites captured at landing (FastLED/fbuild#1349) ---
 # Each line below is a file that spells `.fbuild` by hand today. Removing
 # a line is the unit of progress on #1349; adding one is not allowed.
 
-crates/fbuild-build-arm/src/teensy/teensy_linker.rs
 crates/fbuild-build-engine/src/build_fingerprint/fast_path.rs
 crates/fbuild-build-engine/src/build_info.rs
 crates/fbuild-build-engine/src/compile_database/tests/clang.rs
@@ -54,13 +60,9 @@ crates/fbuild-cli/src/cli/purge.rs
 crates/fbuild-cli/src/cli/symbols_cmd.rs
 crates/fbuild-cli/src/lib_select.rs
 crates/fbuild-cli/tests/daemon_crash_recovery.rs
-crates/fbuild-core/src/path.rs
-crates/fbuild-core/src/response_file.rs
 crates/fbuild-daemon/src/handlers/emulator/tests_process.rs
 crates/fbuild-daemon/src/handlers/libraries.rs
 crates/fbuild-daemon/src/handlers/operations/build.rs
 crates/fbuild-daemon/src/main.rs
 crates/fbuild-daemon/src/models.rs
 crates/fbuild-daemon/tests/legacy_daemon_transition.rs
-crates/fbuild-library-select/tests/teensy41_ldf_diag.rs
-crates/fbuild-library/src/library/library_compiler.rs

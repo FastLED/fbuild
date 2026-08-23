@@ -37,17 +37,23 @@ fn response_files_dir() -> PathBuf {
 
 fn response_files_root(home: &Path, dev_mode: bool) -> PathBuf {
     let mode = if dev_mode { "dev" } else { "prod" };
-    home.join(".fbuild")
+    home.join(crate::path::FBUILD_DIR_NAME)
         .join(mode)
         .join("tmp")
         .join("response-files")
 }
 
+/// Resolve the home directory through the neutral host facade.
+///
+/// Deliberately not a local `HOME`-first lookup. On Windows the facade
+/// prefers `%USERPROFILE%`, and preferring `HOME` instead put response files
+/// under an MSYS path like `/c/Users/you` whenever fbuild ran from Git Bash —
+/// which native Windows GCC cannot open, and is precisely the failure
+/// [`windows_temp_dir`] exists to avoid (FastLED/fbuild#1349).
 fn home_dir() -> PathBuf {
-    std::env::var("HOME")
-        .or_else(|_| std::env::var("USERPROFILE"))
-        .map(PathBuf::from)
-        .unwrap_or_else(|_| std::env::temp_dir())
+    crate::platform::host::home_dir()
+        .map(|home| home.into_path_buf())
+        .unwrap_or_else(std::env::temp_dir)
 }
 
 fn is_dev_mode() -> bool {
@@ -338,20 +344,61 @@ mod tests {
         assert_eq!(content, expected_content);
     }
 
+    /// FastLED/fbuild#1349: this module resolved the home directory itself,
+    /// preferring `HOME` over `USERPROFILE`. The neutral facade prefers
+    /// `USERPROFILE` on Windows, and that difference is exactly the case this
+    /// module exists for: under MSYS2 / Git Bash `HOME` is a POSIX path such
+    /// as `/c/Users/you`, which native Windows GCC cannot open. Preferring it
+    /// put response files somewhere no compiler could read — the failure
+    /// `windows_temp_dir` was written to avoid, reintroduced by resolving the
+    /// home directory a second way.
+    ///
+    /// The test harness does not inherit Git Bash's `HOME`, so the divergence
+    /// is invisible unless the test sets it.
+    #[test]
+    fn home_dir_prefers_the_native_profile_over_an_msys_home() {
+        static ENV_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
+        let _lock = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        if !crate::platform::host::is_windows() {
+            return; // `HOME` is the right answer everywhere else
+        }
+
+        struct Restore(&'static str, Option<std::ffi::OsString>);
+        impl Drop for Restore {
+            fn drop(&mut self) {
+                match self.1.take() {
+                    Some(v) => std::env::set_var(self.0, v),
+                    None => std::env::remove_var(self.0),
+                }
+            }
+        }
+
+        let _home = Restore("HOME", std::env::var_os("HOME"));
+        let _profile = Restore("USERPROFILE", std::env::var_os("USERPROFILE"));
+        std::env::set_var("HOME", "/c/Users/msys");
+        std::env::set_var("USERPROFILE", "C:\\Users\\native");
+
+        assert_eq!(
+            home_dir(),
+            PathBuf::from("C:\\Users\\native"),
+            "an MSYS-style HOME must not win: native GCC cannot open that path"
+        );
+    }
+
     #[test]
     fn test_response_files_root_uses_fbuild_owned_tmp_dir() {
         let home = Path::new("/home/user");
 
         assert_eq!(
             response_files_root(home, false),
-            home.join(".fbuild")
+            home.join(crate::path::FBUILD_DIR_NAME)
                 .join("prod")
                 .join("tmp")
                 .join("response-files")
         );
         assert_eq!(
             response_files_root(home, true),
-            home.join(".fbuild")
+            home.join(crate::path::FBUILD_DIR_NAME)
                 .join("dev")
                 .join("tmp")
                 .join("response-files")
