@@ -1,4 +1,5 @@
-//! Wrap `process_embed_files` with `.lnk` resolution + objcopy target selection.
+//! Wrap `process_embed_files` with blob-pointer resolution + objcopy target
+//! selection.
 
 use std::path::{Path, PathBuf};
 
@@ -15,6 +16,12 @@ fn expand_embed_entries(
     lnk_leases: &mut Vec<fbuild_packages::lnk::MaterializedLnk>,
 ) -> Result<Vec<String>> {
     let mut out = Vec::with_capacity(entries.len());
+    // A materialized target is named after the pointer's blob, so two
+    // pointers with the same blob name land on one path — the second
+    // overwrites the first and both embed entries end up holding the second
+    // blob's bytes. Refuse instead: a wrong asset embedded in firmware is
+    // not something the user can see went wrong.
+    let mut claimed: std::collections::HashMap<PathBuf, String> = std::collections::HashMap::new();
     for entry in entries {
         let p = if Path::new(entry).is_absolute() {
             PathBuf::from(entry)
@@ -24,10 +31,17 @@ fn expand_embed_entries(
         if fbuild_packages::lnk::is_blob_pointer(&p) {
             let cache = lnk_cache.ok_or_else(|| {
                 fbuild_core::FbuildError::PackageError(
-                    "disk cache unavailable; cannot resolve .lnk entries".to_string(),
+                    "disk cache unavailable; cannot resolve blob-pointer (.fetch/.lnk) entries"
+                        .to_string(),
                 )
             })?;
             let materialized = fbuild_packages::lnk::materialize_lnk_entry(&p, lnk_dir, cache)?;
+            if let Some(first) = claimed.insert(materialized.target_path.clone(), entry.clone()) {
+                return Err(fbuild_core::FbuildError::PackageError(format!(
+                    "embed entries `{first}` and `{entry}` both materialize to {} — blob                      pointers are named after the blob they point at, so two of them cannot                      share one. Rename one, or drop the stale pointer if this is a leftover                      `.lnk` beside its `.fetch` replacement (FastLED/fbuild#1369).",
+                    materialized.target_path.display()
+                )));
+            }
             out.push(materialized.target_path.to_string_lossy().into_owned());
             lnk_leases.push(materialized);
         } else {
@@ -37,7 +51,7 @@ fn expand_embed_entries(
     Ok(out)
 }
 
-/// Resolve `.lnk` entries in `embed_files`/`embed_txtfiles` against the disk
+/// Resolve blob-pointer entries in `embed_files`/`embed_txtfiles` against the disk
 /// cache, then convert each entry into a linkable ELF object. Returns the
 /// list of object files to be appended to the sketch link set.
 #[allow(clippy::too_many_arguments)]
@@ -150,6 +164,66 @@ mod tests {
         assert_eq!(
             after_operation.pinned, 0,
             "the cache lease must release when embed processing ends"
+        );
+    }
+
+    /// Two pointers whose blob names match materialize to one path, because
+    /// the target is derived from the file name alone. The second silently
+    /// replaced the first and both embed entries then pointed at the same
+    /// bytes.
+    ///
+    /// Pre-existing for two `.lnk` in different directories; FastLED/fbuild
+    /// #1369 adds the case where `foo.bin.fetch` and `foo.bin.lnk` sit in the
+    /// *same* directory, which is exactly what a half-finished migration
+    /// looks like. Silence is the wrong answer either way.
+    #[test]
+    fn colliding_blob_names_are_refused_rather_than_silently_overwritten() {
+        let cache_root = tempfile::tempdir().unwrap();
+        let cache = fbuild_packages::DiskCache::open_at(cache_root.path()).unwrap();
+        let project = tempfile::tempdir().unwrap();
+
+        let write_pointer = |rel: &str, body: &[u8]| {
+            let sha = format!("{:x}", Sha256::digest(body));
+            let url = format!("https://localhost.invalid/{rel}");
+            let archive_dir = cache.archive_dir(Kind::LnkBlobs, &url, &sha);
+            std::fs::create_dir_all(&archive_dir).unwrap();
+            let blob_path = archive_dir.join("blob.bin");
+            std::fs::write(&blob_path, body).unwrap();
+            cache
+                .record_archive(
+                    Kind::LnkBlobs,
+                    &url,
+                    &sha,
+                    &blob_path.to_string_lossy(),
+                    body.len() as i64,
+                    &sha,
+                )
+                .unwrap();
+            let path = project.path().join(rel);
+            std::fs::create_dir_all(path.parent().unwrap()).unwrap();
+            std::fs::write(
+                &path,
+                format!(r#"{{"v":1,"url":"{url}","sha256":"{sha}"}}"#),
+            )
+            .unwrap();
+        };
+        write_pointer("logo.bin.fetch", b"the fetch blob");
+        write_pointer("logo.bin.lnk", b"the legacy blob");
+
+        let mut leases = Vec::new();
+        let error = expand_embed_entries(
+            &["logo.bin.fetch".to_string(), "logo.bin.lnk".to_string()],
+            project.path(),
+            &project.path().join("build/lnk"),
+            Some(&cache),
+            &mut leases,
+        )
+        .expect_err("two pointers cannot share one materialized path");
+        let message = error.to_string();
+        assert!(message.contains("logo.bin"), "{message}");
+        assert!(
+            message.contains("logo.bin.fetch") && message.contains("logo.bin.lnk"),
+            "the error must name both pointers, or it is unactionable: {message}"
         );
     }
 }

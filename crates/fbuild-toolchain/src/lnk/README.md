@@ -97,7 +97,7 @@ fbuild lnk add <url> [-o <output_path>]
 
 **fbuild side** — uses the existing `DiskCache` with `Kind::LnkBlobs`. Cache
 key: `(LnkBlobs, url, sha256)`. The sha256 in the "version" slot guarantees
-that flipping the `.lnk`'s sha256 forces a refetch.
+that flipping the pointer's sha256 forces a refetch.
 
 - LRU eviction via `disk_cache::gc`
 - Lease-aware GC reaping (active builds pin their blobs)
@@ -107,26 +107,26 @@ that flipping the `.lnk`'s sha256 forces a refetch.
 materialized blob (e.g. `objcopy` invoked by the esp32 orchestrator)
 already hashes its inputs as part of the cache key. Because the blob's
 on-disk content is byte-identical to its sha256, the cache key changes
-whenever the `.lnk`'s sha256 changes. Composition is automatic.
+whenever the pointer's sha256 changes. Composition is automatic.
 
 ## Integration with `embed_files`
 
 PlatformIO `board_build.embed_files` and `board_build.embed_txtfiles`
-entries can mix plain paths with `.lnk` pointers:
+entries can mix plain paths with blob pointers:
 
 ```ini
 [env:demo]
 board_build.embed_files =
     site/dist/index.html.gz       ; plain file in source tree
-    assets/large_blob.bin.lnk     ; resolved at build time
+    assets/large_blob.bin.fetch   ; resolved at build time
 
 board_build.embed_txtfiles =
     config/timezones.json
 ```
 
-The esp32 orchestrator pre-resolves any `.lnk` entries through
+The esp32 orchestrator pre-resolves any blob-pointer entries through
 `materialize_lnk_entry` before passing them to `process_embed_files`. The
-materialized path is what reaches `objcopy`. The original `.lnk` file is
+materialized path is what reaches `objcopy`. The original pointer file is
 not visible to downstream tooling.
 
 ## Module map
@@ -134,7 +134,7 @@ not visible to downstream tooling.
 | File | What |
 |------|------|
 | `format.rs` | `LnkFile` struct, JSON parser, validation |
-| `scanner.rs` | `scan_for_lnk(root)` — walk a tree, collect parsed `.lnk`s |
+| `scanner.rs` | `scan_for_lnk(root)` — walk a tree, collect parsed pointers (`.fetch` and `.lnk`) |
 | `resolver.rs` | `resolve(lnk, cache)` — cache hit / miss + download + verify |
 | `materialize.rs` | `materialize_one` / `materialize_all` — write blob into build tree |
 | `embed.rs` | `expand_lnk_entries` / `materialize_lnk_entry` — glue for `embed_files` |
@@ -143,7 +143,7 @@ not visible to downstream tooling.
 
 **Can I use git LFS instead?**
 You can — git LFS is orthogonal. But that pulls every blob on every
-clone. `.lnk` lets you fetch only what a build actually consumes, with
+clone. A blob pointer lets you fetch only what a build actually consumes, with
 content-addressable cache sharing across projects on the same machine.
 
 **Why mandatory sha256?**
