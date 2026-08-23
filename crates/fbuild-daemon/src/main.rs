@@ -101,7 +101,7 @@ async fn main() {
                 .add_directive(tracing::Level::INFO.into()),
         )
         // Route fmt layer to stderr — the CLI captures the daemon's
-        // stderr into ~/.fbuild/<env>/daemon/daemon.log (see
+        // stderr into the daemon log under the fbuild root (see
         // daemon_client.rs spawn_daemon). The MakeWriter default is
         // stdout, but the CLI sets stdout to Null, so without
         // .with_writer(stderr) every `tracing::*` event in the daemon
@@ -194,8 +194,8 @@ async fn main() {
             eprintln!(
                 "fatal: failed to start embedded zccache service: {err}\n\
                  fbuild-daemon cannot start without an embedded zccache \
-                 backend. Check ~/.fbuild/<mode>/zccache/ permissions and \
-                 disk space."
+                 backend. Check {} permissions and disk space.",
+                fbuild_paths::get_fbuild_root().join("zccache").display()
             );
             std::process::exit(1);
         }

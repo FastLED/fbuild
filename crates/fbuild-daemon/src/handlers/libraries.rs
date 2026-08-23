@@ -44,11 +44,18 @@ use crate::models::{IdeLibrariesQuery, IdeLibrariesResponse, IdeLibraryEntry};
 
 const LIBRARIES_PAGE_HTML: &str = include_str!("../../web/libraries/index.html");
 
-const INSTALL_STATE_NOTE: &str = "Installed state is best-effort: it checks the release build \
-profile's <project>/.fbuild/build/<env>/release/libs/ directory for a same-named subdirectory. \
-That directory is only populated after a build that needed dependencies has run — if no build \
-has run yet, every entry reports installed: false even though the source may be perfectly \
-resolvable.";
+/// Explains what `installed` means on the libraries page.
+///
+/// Built from the canonical path segments rather than spelled by hand: the
+/// note names a real directory layout, and a note that disagrees with the
+/// layout is worse than no note (FastLED/fbuild#1349).
+fn install_state_note() -> String {
+    format!(
+        "Installed state is best-effort: it checks the release build profile's          <project>/{}/{}/<env>/release/libs/ directory for a same-named subdirectory.          That directory is only populated after a build that needed dependencies has run —          if no build has run yet, every entry reports installed: false even though the          source may be perfectly resolvable.",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    )
+}
 
 /// GET /libraries — serve the self-contained Library Manager page.
 pub async fn libraries_page() -> impl IntoResponse {
@@ -165,7 +172,7 @@ pub async fn list_libraries(
                 project: None,
                 environment: None,
                 libraries: Vec::new(),
-                install_state_note: INSTALL_STATE_NOTE.to_string(),
+                install_state_note: install_state_note(),
                 error: Some(
                     "missing required ?project=<absolute project dir> query param; \
                      run `fbuild libraries` from a project directory to open this page \
@@ -185,7 +192,7 @@ pub async fn list_libraries(
                 project: Some(project),
                 environment: params.env.clone(),
                 libraries: Vec::new(),
-                install_state_note: INSTALL_STATE_NOTE.to_string(),
+                install_state_note: install_state_note(),
                 error: Some(e),
             }),
         );
@@ -201,7 +208,7 @@ pub async fn list_libraries(
                     project: Some(project),
                     environment: params.env.clone(),
                     libraries: Vec::new(),
-                    install_state_note: INSTALL_STATE_NOTE.to_string(),
+                    install_state_note: install_state_note(),
                     error: Some(format!("failed to parse platformio.ini: {}", e)),
                 }),
             );
@@ -218,7 +225,7 @@ pub async fn list_libraries(
                     project: Some(project),
                     environment: params.env.clone(),
                     libraries: Vec::new(),
-                    install_state_note: INSTALL_STATE_NOTE.to_string(),
+                    install_state_note: install_state_note(),
                     error: Some(e),
                 }),
             );
@@ -241,7 +248,7 @@ pub async fn list_libraries(
                 project: Some(project),
                 environment: Some(env_name),
                 libraries,
-                install_state_note: INSTALL_STATE_NOTE.to_string(),
+                install_state_note: install_state_note(),
                 error: None,
             }),
         ),
@@ -252,7 +259,7 @@ pub async fn list_libraries(
                 project: Some(project),
                 environment: Some(env_name),
                 libraries: Vec::new(),
-                install_state_note: INSTALL_STATE_NOTE.to_string(),
+                install_state_note: install_state_note(),
                 error: Some(e),
             }),
         ),
