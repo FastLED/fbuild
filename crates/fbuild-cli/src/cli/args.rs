@@ -620,12 +620,17 @@ pub enum Commands {
         #[arg(short = 'm', long)]
         matcher: Option<String>,
     },
-    /// Manage `.lnk` resource pointers (fetch / verify / add).
+    /// Manage `.fetch` blob pointers (fetch / verify / add).
     ///
-    /// `.lnk` files are tiny JSON manifests checked into source control
+    /// `.fetch` files are tiny JSON manifests checked into source control
     /// that point at remote binary blobs (sha256-verified). At build time
     /// fbuild downloads + caches them; this command lets you operate on
     /// them outside of a build.
+    ///
+    /// `.lnk` is still read for pointers written before the split
+    /// (FastLED/fbuild#1369). Note that FastLED's *runtime* asset links are
+    /// also `.lnk` but a different, plain-text format read on-device by
+    /// `fl::parse_lnk` — those are not fbuild's and are skipped.
     Lnk {
         #[command(subcommand)]
         action: LnkAction,
@@ -771,26 +776,29 @@ pub enum Commands {
 /// Subcommands for `fbuild lnk`.
 #[derive(Subcommand)]
 pub enum LnkAction {
-    /// Walk the current dir (or a project root) and fetch every `.lnk`
-    /// referenced blob into the disk cache. Cache hits are no-ops.
+    /// Walk the current dir (or a project root) and fetch every
+    /// blob-pointer-referenced blob into the disk cache. Cache hits are
+    /// no-ops.
     Pull {
         /// Project root to scan. Defaults to the current directory.
         project_dir: Option<String>,
     },
-    /// Verify every `.lnk` blob in the cache matches its sha256, without
-    /// touching the network. Reports mismatches; exits non-zero on any.
+    /// Verify every pointed-at blob in the cache matches its sha256,
+    /// without touching the network. Reports mismatches; exits non-zero on
+    /// any.
     Check {
         /// Project root to scan. Defaults to the current directory.
         project_dir: Option<String>,
     },
-    /// Download a URL once, compute its sha256, and write a new `.lnk`
+    /// Download a URL once, compute its sha256, and write a new `.fetch`
     /// JSON pointing at it. Useful for adding new resources without
     /// hand-editing JSON.
     Add {
         /// URL to download.
         url: String,
-        /// Where to write the `.lnk` file. Defaults to the URL's basename
-        /// + `.lnk` in the current directory.
+        /// Where to write the pointer. Defaults to the URL's basename with
+        /// a `.fetch` suffix, in the current directory; an explicit path is
+        /// used exactly as given.
         #[arg(short = 'o', long)]
         output: Option<String>,
     },

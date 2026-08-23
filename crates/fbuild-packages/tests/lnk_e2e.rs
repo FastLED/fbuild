@@ -116,13 +116,16 @@ async fn lnk_pipeline_e2e_fetches_verifies_and_materializes() {
                 spawn_test_server(vec![("asset.bin".to_string(), blob_bytes.clone())]).await;
             let url = format!("http://127.0.0.1:{port}/asset.bin");
 
-            // Set up a project tree with one .lnk pointing at our test server.
+            // Set up a project tree with one blob pointer aimed at our test
+            // server. `.fetch` is what `fbuild lnk add` writes as of
+            // FastLED/fbuild#1369; the legacy `.lnk` spelling gets its own
+            // end-to-end run below.
             let work = tempdir();
             let src_root = work.path().join("src");
             let build_dir = work.path().join("build/resources");
             let cache_dir = work.path().join("cache");
 
-            let lnk_path = src_root.join("data/asset.bin.lnk");
+            let lnk_path = src_root.join("data/asset.bin.fetch");
             std::fs::create_dir_all(lnk_path.parent().unwrap()).unwrap();
             let lnk_json = format!(
                 r#"{{"v":1,"url":"{url}","sha256":"{blob_sha}","size":{}}}"#,
@@ -134,7 +137,7 @@ async fn lnk_pipeline_e2e_fetches_verifies_and_materializes() {
 
             // Scan finds the lnk.
             let discovered = scan_for_lnk(&src_root).unwrap();
-            assert_eq!(discovered.len(), 1, "scanner should find the one .lnk");
+            assert_eq!(discovered.len(), 1, "scanner should find the one pointer");
             assert_eq!(discovered[0].lnk.sha256, blob_sha);
 
             // Materialize fetches + verifies + writes into the build tree.
@@ -179,6 +182,9 @@ async fn lnk_pipeline_rejects_sha_mismatch() {
         let build_dir = work.path().join("build");
         let cache_dir = work.path().join("cache");
 
+        // Deliberately the legacy `.lnk` spelling: pointers written before
+        // FastLED/fbuild#1369 must keep resolving, and this run is what
+        // proves it rather than a comment claiming so.
         let lnk_path = src_root.join("x.bin.lnk");
         std::fs::create_dir_all(&src_root).unwrap();
         std::fs::write(

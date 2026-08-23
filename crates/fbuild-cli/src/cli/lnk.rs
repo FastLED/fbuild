@@ -1,8 +1,8 @@
 //! `fbuild lnk` subcommands.
 //!
-//! - `pull`  — scan + fetch every .lnk's blob into the disk cache
+//! - `pull`  — scan + fetch every blob pointer's blob into the disk cache
 //! - `check` — verify every cached blob's sha256 (no network)
-//! - `add`   — fetch a URL once, hash it, write a new .lnk pointing at it
+//! - `add`   — fetch a URL once, hash it, write a new `.fetch` pointing at it
 
 use crate::output;
 
@@ -36,7 +36,10 @@ pub async fn run_lnk(
             let root = resolve_root(project_dir, top_level_project_dir);
             let discovered = scan_for_lnk(&root)?;
             if discovered.is_empty() {
-                output::result(format!("no .lnk files found under {}", root.display()));
+                output::result(format!(
+                    "no blob pointers (.fetch/.lnk) found under {}",
+                    root.display()
+                ));
                 return Ok(());
             }
             let cache = open_cache()?;
@@ -73,7 +76,10 @@ pub async fn run_lnk(
             let root = resolve_root(project_dir, top_level_project_dir);
             let discovered = scan_for_lnk(&root)?;
             if discovered.is_empty() {
-                output::result(format!("no .lnk files found under {}", root.display()));
+                output::result(format!(
+                    "no blob pointers (.fetch/.lnk) found under {}",
+                    root.display()
+                ));
                 return Ok(());
             }
             let cache = open_cache()?;
@@ -150,9 +156,19 @@ pub async fn run_lnk(
             // Determine output path before downloading so we fail early on a
             // bad output spec.
             let basename = url.rsplit('/').next().unwrap_or("blob");
+            // FastLED/fbuild#1369: newly written blob pointers get `.fetch`,
+            // which is unambiguously fbuild's. `.lnk` stays FastLED's runtime
+            // asset link — a different format with a different consumer, and
+            // conflating the two produced a silently wrong URL on-device
+            // (FastLED/FastLED#4012). An explicit `--output` is honored as
+            // typed: the user naming a file is not the user asking to be
+            // corrected.
             let output_path = match output_arg {
                 Some(p) => PathBuf::from(p),
-                None => PathBuf::from(format!("{basename}.lnk")),
+                None => PathBuf::from(format!(
+                    "{basename}.{}",
+                    fbuild_packages::lnk::BLOB_POINTER_EXTENSION
+                )),
             };
             if let Some(parent) = output_path.parent() {
                 if !parent.as_os_str().is_empty() {
@@ -201,7 +217,7 @@ pub async fn run_lnk(
             });
             let pretty = serde_json::to_string_pretty(&json).map_err(|e| {
                 fbuild_core::FbuildError::PackageError(format!(
-                    "failed to serialize .lnk JSON: {e}"
+                    "failed to serialize blob-pointer JSON: {e}"
                 ))
             })?;
             let mut f = std::fs::File::create(&output_path).map_err(|e| {

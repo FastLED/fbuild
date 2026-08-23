@@ -41,7 +41,7 @@ where
     let mut out = Vec::with_capacity(entries.len());
     for entry in entries {
         let entry_path = make_absolute(entry, project_dir);
-        if has_lnk_extension(&entry_path) {
+        if is_blob_pointer(&entry_path) {
             let resolved = resolver(&entry_path)?;
             out.push(resolved);
         } else {
@@ -51,10 +51,39 @@ where
     Ok(out)
 }
 
-/// Whether the given path's filename ends in `.lnk` (case-sensitive,
-/// matching the convention of the rest of the module).
-pub fn has_lnk_extension(path: &Path) -> bool {
-    path.extension().and_then(|e| e.to_str()) == Some("lnk")
+/// The extension `fbuild lnk add` writes for a build-time blob pointer.
+///
+/// FastLED/fbuild#1369: `.lnk` used to serve two roles with different
+/// consumers, formats and guarantees — this JSON blob pointer (parsed by
+/// fbuild on the build host, sha256 mandatory) and FastLED's runtime asset
+/// link (parsed by `fl::parse_lnk` on the MCU, plain text). Sharing one
+/// extension read as one concept, and someone "tidied" a runtime link into
+/// this schema; `fl::parse_lnk` then took `{` as the URL
+/// (FastLED/FastLED#4012). Distinct extensions make that unexpressible.
+pub const BLOB_POINTER_EXTENSION: &str = "fetch";
+
+/// The extension blob pointers used to carry, still accepted on read.
+///
+/// Files written before #1369 keep working; only the *default* for newly
+/// written ones moved. A `.lnk` that fails to parse as JSON is far more
+/// likely a runtime asset link than a corrupt blob pointer, which is why
+/// the scanner's diagnostic distinguishes the two.
+pub const LEGACY_BLOB_POINTER_EXTENSION: &str = "lnk";
+
+/// Whether the path names a build-time blob pointer, in either spelling
+/// (case-sensitive, matching the convention of the rest of the module).
+pub fn is_blob_pointer(path: &Path) -> bool {
+    matches!(
+        path.extension().and_then(|e| e.to_str()),
+        Some(BLOB_POINTER_EXTENSION) | Some(LEGACY_BLOB_POINTER_EXTENSION)
+    )
+}
+
+/// Strip whichever blob-pointer extension `name` carries, yielding the name
+/// of the blob it points at. `None` if it carries neither.
+pub fn strip_pointer_extension(name: &str) -> Option<&str> {
+    name.strip_suffix(&format!(".{BLOB_POINTER_EXTENSION}"))
+        .or_else(|| name.strip_suffix(&format!(".{LEGACY_BLOB_POINTER_EXTENSION}")))
 }
 
 fn make_absolute(entry: &str, project_dir: &Path) -> PathBuf {
@@ -86,9 +115,9 @@ pub fn materialize_lnk_entry(
         .ok_or_else(|| {
             FbuildError::PackageError(format!("invalid lnk path: {}", lnk_path.display()))
         })?;
-    let stripped = basename.strip_suffix(".lnk").ok_or_else(|| {
+    let stripped = strip_pointer_extension(basename).ok_or_else(|| {
         FbuildError::PackageError(format!(
-            "lnk path does not end in .lnk: {}",
+            "blob pointer does not end in .{BLOB_POINTER_EXTENSION} or              .{LEGACY_BLOB_POINTER_EXTENSION}: {}",
             lnk_path.display()
         ))
     })?;
@@ -170,12 +199,35 @@ mod tests {
         assert!(err.contains("simulated fetch failure"), "got: {err}");
     }
 
+    /// FastLED/fbuild#1369: `.fetch` is the build-time blob pointer. It must
+    /// be recognized everywhere `.lnk` is, or an ESP32 `embed_files` entry
+    /// written by `fbuild lnk add` reaches objcopy as a literal JSON file.
     #[test]
-    fn has_lnk_extension_handles_dotted_paths() {
-        assert!(has_lnk_extension(Path::new("foo.lnk")));
-        assert!(has_lnk_extension(Path::new("path/to/foo.bin.lnk")));
-        assert!(!has_lnk_extension(Path::new("foo.lnk.bak")));
-        assert!(!has_lnk_extension(Path::new("foo")));
-        assert!(!has_lnk_extension(Path::new("foo.bin")));
+    fn fetch_extension_is_a_blob_pointer() {
+        assert!(is_blob_pointer(Path::new("foo.fetch")));
+        assert!(is_blob_pointer(Path::new("path/to/foo.bin.fetch")));
+        assert!(!is_blob_pointer(Path::new("foo.fetch.bak")));
+    }
+
+    /// The suffix strip must follow the extension, or a `.fetch` entry is
+    /// rejected with "does not end in .lnk" — the pointer is recognized and
+    /// then refused, which is worse than not recognizing it.
+    #[test]
+    fn blob_pointer_basename_strips_whichever_extension_it_has() {
+        assert_eq!(
+            strip_pointer_extension("asset.bin.fetch"),
+            Some("asset.bin")
+        );
+        assert_eq!(strip_pointer_extension("asset.bin.lnk"), Some("asset.bin"));
+        assert_eq!(strip_pointer_extension("asset.bin"), None);
+    }
+
+    #[test]
+    fn legacy_lnk_extension_is_still_a_blob_pointer() {
+        assert!(is_blob_pointer(Path::new("foo.lnk")));
+        assert!(is_blob_pointer(Path::new("path/to/foo.bin.lnk")));
+        assert!(!is_blob_pointer(Path::new("foo.lnk.bak")));
+        assert!(!is_blob_pointer(Path::new("foo")));
+        assert!(!is_blob_pointer(Path::new("foo.bin")));
     }
 }

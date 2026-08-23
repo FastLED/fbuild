@@ -166,9 +166,9 @@ known limitations.
 | `fbuild clang-tidy` | Run clang-tidy against project sources. |
 | `fbuild iwyu` | Run include-what-you-use analysis. |
 | `fbuild clang-query` | Run a clang-query matcher. |
-| `fbuild lnk pull` | Fetch `.lnk` resource blobs into the cache. |
-| `fbuild lnk check` | Verify cached `.lnk` resources. |
-| `fbuild lnk add <url>` | Create a `.lnk` manifest for a remote blob. |
+| `fbuild lnk pull` | Fetch every blob pointed at by a `.fetch` (or legacy `.lnk`) into the cache. |
+| `fbuild lnk check` | Verify cached blobs still match their recorded sha256. |
+| `fbuild lnk add <url>` | Create a `.fetch` manifest for a remote blob (FastLED/fbuild#1369). |
 | `fbuild mcp` | Start the MCP server for AI assistant integration. |
 
 ### `fbuild ide`

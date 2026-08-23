@@ -1,12 +1,39 @@
-# `.lnk` resource pointers
+# `.fetch` blob pointers
 
 Tiny JSON manifests checked into source control that point at remote binary
 blobs. At build time fbuild fetches them, verifies the sha256, caches them
 in the shared two-phase disk cache, and materializes them next to where the
-`.lnk` would have been (in the build tree, not the source tree).
+pointer would have been (in the build tree, not the source tree).
 
 The intent: keep the source repo small, keep binary assets out of git
 history, but have them appear as if they were always there during builds.
+
+## The extension, and the one it is not
+
+`fbuild lnk add` writes `.fetch`. `.lnk` is still read, so pointers written
+before FastLED/fbuild#1369 keep working — only the default for newly
+written ones moved.
+
+The split exists because `.lnk` was serving two unrelated roles:
+
+|  | runtime asset link | build-time blob pointer |
+| --- | --- | --- |
+| extension | `.lnk` | `.fetch` |
+| parsed by | `fl::parse_lnk` (C++, on the MCU) | fbuild (Rust, on the build host) |
+| format | text: URL line + `key=value` | JSON: `{v, url, sha256, size, extract}` |
+| `sha256` | optional, unenforced | **required** — the cache is content-addressed |
+| written by | hand | `fbuild lnk add` |
+
+They are not competing drafts of one format. The runtime form has to parse
+on an MCU, where a JSON parser is not worth carrying; the build-time form
+needs a mandatory digest because the resolver caches by content.
+
+Sharing one extension read as one concept, so people normalized toward
+whichever they met first. That happened: converting a runtime link to this
+JSON schema looked like tidying, and `fl::parse_lnk` then took `{` as the
+URL (FastLED/FastLED#4012). Distinct extensions make the mistake
+unexpressible. A `.lnk` that does not parse as JSON is therefore reported as
+"probably a runtime asset link", not as a malformed blob pointer.
 
 ## Format (v1)
 
@@ -36,7 +63,7 @@ escape hatch.
 
 ```text
   source tree:                build tree:
-    foo.bin.lnk    ─────►       resources/foo.bin
+    foo.bin.fetch  ─────►       resources/foo.bin
        │                              ▲
        │ scan + parse                 │ hardlink (or copy)
        ▼                              │
@@ -56,13 +83,13 @@ the materialized file as if it had been in the source tree all along.
 ## CLI
 
 ```bash
-# Fetch every .lnk-referenced blob into the disk cache
+# Fetch every pointer-referenced blob into the disk cache
 fbuild lnk pull [<project_dir>]
 
 # Verify every cached blob matches its sha256 (no network)
 fbuild lnk check [<project_dir>]
 
-# One-shot: download a URL, hash it, write a new .lnk
+# One-shot: download a URL, hash it, write a new .fetch
 fbuild lnk add <url> [-o <output_path>]
 ```
 
@@ -70,7 +97,7 @@ fbuild lnk add <url> [-o <output_path>]
 
 **fbuild side** — uses the existing `DiskCache` with `Kind::LnkBlobs`. Cache
 key: `(LnkBlobs, url, sha256)`. The sha256 in the "version" slot guarantees
-that flipping the `.lnk`'s sha256 forces a refetch.
+that flipping the pointer's sha256 forces a refetch.
 
 - LRU eviction via `disk_cache::gc`
 - Lease-aware GC reaping (active builds pin their blobs)
@@ -80,26 +107,26 @@ that flipping the `.lnk`'s sha256 forces a refetch.
 materialized blob (e.g. `objcopy` invoked by the esp32 orchestrator)
 already hashes its inputs as part of the cache key. Because the blob's
 on-disk content is byte-identical to its sha256, the cache key changes
-whenever the `.lnk`'s sha256 changes. Composition is automatic.
+whenever the pointer's sha256 changes. Composition is automatic.
 
 ## Integration with `embed_files`
 
 PlatformIO `board_build.embed_files` and `board_build.embed_txtfiles`
-entries can mix plain paths with `.lnk` pointers:
+entries can mix plain paths with blob pointers:
 
 ```ini
 [env:demo]
 board_build.embed_files =
     site/dist/index.html.gz       ; plain file in source tree
-    assets/large_blob.bin.lnk     ; resolved at build time
+    assets/large_blob.bin.fetch   ; resolved at build time
 
 board_build.embed_txtfiles =
     config/timezones.json
 ```
 
-The esp32 orchestrator pre-resolves any `.lnk` entries through
+The esp32 orchestrator pre-resolves any blob-pointer entries through
 `materialize_lnk_entry` before passing them to `process_embed_files`. The
-materialized path is what reaches `objcopy`. The original `.lnk` file is
+materialized path is what reaches `objcopy`. The original pointer file is
 not visible to downstream tooling.
 
 ## Module map
@@ -107,7 +134,7 @@ not visible to downstream tooling.
 | File | What |
 |------|------|
 | `format.rs` | `LnkFile` struct, JSON parser, validation |
-| `scanner.rs` | `scan_for_lnk(root)` — walk a tree, collect parsed `.lnk`s |
+| `scanner.rs` | `scan_for_lnk(root)` — walk a tree, collect parsed pointers (`.fetch` and `.lnk`) |
 | `resolver.rs` | `resolve(lnk, cache)` — cache hit / miss + download + verify |
 | `materialize.rs` | `materialize_one` / `materialize_all` — write blob into build tree |
 | `embed.rs` | `expand_lnk_entries` / `materialize_lnk_entry` — glue for `embed_files` |
@@ -116,7 +143,7 @@ not visible to downstream tooling.
 
 **Can I use git LFS instead?**
 You can — git LFS is orthogonal. But that pulls every blob on every
-clone. `.lnk` lets you fetch only what a build actually consumes, with
+clone. A blob pointer lets you fetch only what a build actually consumes, with
 content-addressable cache sharing across projects on the same machine.
 
 **Why mandatory sha256?**
