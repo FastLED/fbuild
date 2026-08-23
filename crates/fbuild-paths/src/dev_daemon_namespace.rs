@@ -8,10 +8,18 @@
 //! invocation (the `displace-stale` war, root-caused in zackees/soldr#2352).
 //!
 //! The fix is a per-checkout namespace stamp exported as
-//! `ZCCACHE_DAEMON_NAMESPACE` (the variable zccache honors once its own
-//! adoption lands — zccache#1362; an inherited value always wins there, so
-//! this export is inert, and harmless, until fbuild repins a zccache
-//! release containing it):
+//! `ZCCACHE_DAEMON_NAMESPACE`, which the pinned zccache folds into the IPC
+//! endpoint its daemons rendezvous on — so two stamps mean two pipes, and
+//! neither checkout can see the other as stale.
+//!
+//! This module previously claimed the export was "inert until fbuild repins
+//! a zccache release containing it". That was wrong: endpoint namespacing is
+//! already present at the pinned rev, and the isolation has worked since the
+//! stamp landed. `crates/fbuild-build-engine/tests/
+//! dev_daemon_namespace_isolation.rs` pins the contract so a future repin
+//! cannot drop it silently. What remains zccache-side (zccache#1362) is
+//! zccache *deriving its own* stamp when nothing exported one — which fbuild
+//! does not need, because fbuild exports one:
 //!
 //! ```text
 //! stamp = "<workspace version>-<first 16 hex digits of blake3(current_exe)>"
