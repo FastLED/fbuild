@@ -67,7 +67,7 @@ crates/fbuild-core/src/platform/windows/usb_pnp.rs	40	native_path	windows_sys::	
 crates/fbuild-daemon/src/handlers/emulator/tests_npm_cache.rs	146	attr_cfg	#[cfg(windows)]	host_executable	host_artifact_policy
 crates/fbuild-daemon/src/handlers/emulator/tests_process.rs	9	attr_cfg	#[cfg(windows)]	host_executable	host_artifact_policy
 crates/fbuild-daemon/src/handlers/emulator/tests_process.rs	21	attr_cfg	#[cfg(not(windows))]	host_executable	host_artifact_policy
-crates/fbuild-paths/src/dev_daemon_namespace.rs	83	native_path	std::env::current_exe	host_executable	host_mechanic
+crates/fbuild-paths/src/dev_daemon_namespace.rs	91	native_path	std::env::current_exe	host_executable	host_mechanic
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	528	attr_cfg	#[cfg(windows)]	host_executable	host_mechanic
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	534	attr_cfg	#[cfg(windows)]	host_executable	host_mechanic
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	565	attr_cfg	#[cfg(not(windows))]	host_executable	host_mechanic
