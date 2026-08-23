@@ -15,11 +15,11 @@
 //! This module previously claimed the export was "inert until fbuild repins
 //! a zccache release containing it". That was wrong: endpoint namespacing is
 //! already present at the pinned rev, and the isolation has worked since the
-//! stamp landed. `crates/fbuild-build-engine/tests/
-//! dev_daemon_namespace_isolation.rs` pins the contract so a future repin
-//! cannot drop it silently. What remains zccache-side (zccache#1362) is
-//! zccache *deriving its own* stamp when nothing exported one — which fbuild
-//! does not need, because fbuild exports one:
+//! stamp landed. The contract is now pinned by a test — see
+//! `dev_daemon_namespace_isolation.rs` under `fbuild-build-engine/tests` —
+//! so a future repin cannot drop it silently. What remains zccache-side
+//! (zccache#1362) is zccache *deriving its own* stamp when nothing exported
+//! one — which fbuild does not need, because fbuild exports one:
 //!
 //! ```text
 //! stamp = "<workspace version>-<first 16 hex digits of blake3(current_exe)>"
