@@ -122,26 +122,6 @@ jobs:
               soldr cargo fmt --manifest-path "$manifest" --all -- --check
           done < <(find dylints -mindepth 2 -maxdepth 2 -name Cargo.toml | sort)
       - name: Test Dylint libraries
-        # ubuntu only, and the reason is a scoping one rather than a workaround.
-        # These are the lint crates' OWN unit/ui tests — they assert that each
-        # lint fires on its fixture, which is platform-independent behavior
-        # already covered once. What the Windows leg uniquely provides is
-        # compiling Windows-gated *workspace* source so the lints can see it;
-        # re-running the lint crates' self-tests on a second OS adds ~10 min per
-        # PR and proves nothing new.
-        #
-        # It also does not currently work there: Dylint 6.0.1 looks for its test
-        # library under `<target>/debug`, while soldr sets `CARGO_BUILD_TARGET`
-        # so cargo writes to `<target>/<host>/debug`. Each lint's `fn ui` clears
-        # that variable, but on the runner the .dll still fails to load:
-        #
-        #   error: could not load library
-        #   `.../target/dylint-tests/debug/ban_manual_slash_normalize@nightly-2026-04-16.dll`:
-        #   LoadLibraryExW failed
-        #
-        # That is a dylint/soldr/compiletest interaction, not an fbuild defect,
-        # and is tracked separately rather than blocking this gate.
-        if: matrix.os == 'ubuntu-latest'
         run: |
           # Dylint's driver builder intentionally clears RUSTUP_TOOLCHAIN and
           # relies on the rustup cargo proxy to re-select each lint's pinned
@@ -151,7 +131,23 @@ jobs:
           # below would silently prepend a bare `/bin` and the proxy would
           # never be found.
           CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"
-          export PATH="${CARGO_HOME}/bin:${PATH}"
+          # FastLED/fbuild#1373. On Windows `CARGO_HOME` is a native path
+          # (`C:\Users\runneradmin\.cargo`), and `$PATH` inside Git Bash is
+          # POSIX and `:`-separated. Prepending one to the other produced
+          # `C:\Users\runneradmin\.cargo/bin:/usr/bin...`, whose drive-letter
+          # colon reads as a separator — the runner saw a `C` entry followed by
+          # a bogus `D:\Users\runneradmin\.cargo\bin`, the compiletest driver
+          # could not resolve the lint library's dependencies, and every ui
+          # fixture failed with `LoadLibraryExW failed`.
+          #
+          # `cygpath -u` converts to `/c/Users/.../.cargo/bin`, which is safe to
+          # join with `:`. Absent on Linux/macOS, where the path is already
+          # POSIX.
+          CARGO_BIN="${CARGO_HOME}/bin"
+          if command -v cygpath >/dev/null 2>&1; then
+            CARGO_BIN="$(cygpath -u "${CARGO_BIN}")"
+          fi
+          export PATH="${CARGO_BIN}:${PATH}"
           export CARGO_TARGET_DIR="$PWD/target/dylint-tests"
           while IFS= read -r manifest; do
             RUSTUP_TOOLCHAIN=nightly-2026-04-16 \
@@ -170,7 +166,9 @@ jobs:
           export RUSTFLAGS="${RUSTFLAGS:+${RUSTFLAGS} }--cfg fbuild_platform_boundary_observation_run_${GITHUB_RUN_ID}"
           rm -f "$FBUILD_PLATFORM_BOUNDARY_OBSERVED"
           CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"
-          # No `.exe` suffix needed: Git Bash resolves it on Windows.
+          # Invoked as a single argument rather than through `PATH`, so the
+          # separator hazard in #1373 does not apply here. No `.exe` suffix
+          # needed: Git Bash resolves it on Windows.
           "${CARGO_HOME}/bin/cargo-dylint" dylint --all -- --workspace --all-targets
       - name: Compare scanner with actual Dylint observations
         run: uv run --no-project python ci/enforce_platform_boundary.py --dylint-observed target/platform-boundary-dylint-observed.tsv --print-totals
