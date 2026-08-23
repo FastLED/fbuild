@@ -62,10 +62,5 @@ crates/fbuild-daemon/src/handlers/operations/build.rs
 crates/fbuild-daemon/src/main.rs
 crates/fbuild-daemon/src/models.rs
 crates/fbuild-daemon/tests/legacy_daemon_transition.rs
-crates/fbuild-deploy/src/lpc.rs
-crates/fbuild-deploy/src/lpc_debugger_reflash.rs
-crates/fbuild-deploy/src/probe_rs.rs
-crates/fbuild-deploy/src/wchisp.rs
-crates/fbuild-deploy/src/wlink.rs
 crates/fbuild-library-select/tests/teensy41_ldf_diag.rs
 crates/fbuild-library/src/library/library_compiler.rs

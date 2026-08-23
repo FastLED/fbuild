@@ -75,18 +75,7 @@ pub const LPC_LINK2_FIRMWARE_ENV_VAR: &str = "FBUILD_LPC_LINK2_FIRMWARE";
 /// tools under. Honors `FBUILD_DEV_MODE=1` for `~/.fbuild/dev/…`
 /// isolation, same as `find_lpc21isp` and the rest of `fbuild-paths`.
 pub fn managed_tools_dir() -> Option<NormalizedPath> {
-    let home = fbuild_core::platform::host::home_dir()?;
-    let mode = if std::env::var_os("FBUILD_DEV_MODE").is_some() {
-        "dev"
-    } else {
-        "prod"
-    };
-    Some(
-        home.join(".fbuild")
-            .join(mode)
-            .join("tools")
-            .join("lpc-link2-debugger"),
-    )
+    Some(NormalizedPath::from(fbuild_paths::try_get_tools_dir()?).join("lpc-link2-debugger"))
 }
 
 /// Absolute URL for one of the vendored assets under the framework
@@ -189,7 +178,9 @@ pub fn install_hint() -> String {
          Tracked under FastLED/fbuild#921.",
         tools = managed_tools_dir()
             .map(|p| p.display().to_string())
-            .unwrap_or_else(|| "~/.fbuild/prod/tools/lpc-link2-debugger/".to_string()),
+            .unwrap_or_else(|| {
+                format!("{}/lpc-link2-debugger", fbuild_paths::tools_dir_label())
+            }),
         v2_name = CMSIS_DAP_V2_HEX_NAME,
         dfu_env = DFU_UTIL_PATH_ENV_VAR,
         fw_env = LPC_LINK2_FIRMWARE_ENV_VAR,
