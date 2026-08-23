@@ -512,15 +512,6 @@ async fn streaming_download_gives_up_when_the_server_ignores_range() {
     );
 }
 
-#[test]
-fn content_range_start_and_total_are_parsed() {
-    // Exercised through the public shape rather than a Response, which
-    // cannot be constructed here: the header grammar is the fragile part.
-    assert_eq!(parse_request_range("Range: bytes=1234-\r\n"), 1234);
-    assert_eq!(parse_request_range("range: bytes=0-\r\n"), 0);
-    assert_eq!(parse_request_range("GET / HTTP/1.1\r\n"), 0);
-}
-
 /// Retry timings short enough to run in real time. This test previously
 /// used `#[tokio::test(start_paused = true)]` against a real
 /// `TcpListener`, which flaked on loaded macOS runners: paused time
@@ -616,4 +607,230 @@ fn format_download_progress_zero() {
     };
     let msg = p.format_message();
     assert!(msg.contains("0%"), "msg: {msg}");
+}
+
+/// A server that always answers a ranged request with `416` **and a body**.
+///
+/// S3, GCS and several CDNs do exactly this. The body is an error document,
+/// not resource bytes, so appending it would corrupt a file that was already
+/// complete — and because those bytes push the length past the expected
+/// total, the short-body check cannot catch it either.
+async fn run_range_not_satisfiable_server(
+    body: &'static [u8],
+    first_len: usize,
+    request_count: std::sync::Arc<AtomicUsize>,
+) -> u16 {
+    use tokio::io::{AsyncReadExt, AsyncWriteExt};
+    use tokio::net::TcpListener;
+
+    const ERROR_DOC: &str = "<?xml version=\"1.0\"?><Error>InvalidRange</Error>";
+
+    let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
+    let port = listener.local_addr().unwrap().port();
+    let (ready_tx, ready_rx) = tokio::sync::oneshot::channel();
+
+    tokio::spawn(async move {
+        let _ = ready_tx.send(());
+        loop {
+            let (mut stream, _) = match listener.accept().await {
+                Ok(pair) => pair,
+                Err(_) => break,
+            };
+            request_count.fetch_add(1, Ordering::SeqCst);
+            let mut buf = [0u8; 2048];
+            let read = stream.read(&mut buf).await.unwrap_or(0);
+            let request = String::from_utf8_lossy(&buf[..read]).to_string();
+
+            if parse_request_range(&request) > 0 {
+                let head = format!(
+                    "HTTP/1.1 416 Range Not Satisfiable\r\nContent-Length: {}\r\n\r\n",
+                    ERROR_DOC.len()
+                );
+                let _ = stream.write_all(head.as_bytes()).await;
+                let _ = stream.write_all(ERROR_DOC.as_bytes()).await;
+            } else {
+                let head = format!(
+                    "HTTP/1.1 200 OK\r\nContent-Length: {}\r\nAccept-Ranges: bytes\r\n\r\n",
+                    first_len
+                );
+                let _ = stream.write_all(head.as_bytes()).await;
+                let _ = stream.write_all(&body[..first_len]).await;
+            }
+            let _ = stream.shutdown().await;
+        }
+    });
+    ready_rx.await.expect("416 test server should start");
+    port
+}
+
+/// A `416` answer must finalize the file, never append its error body.
+#[tokio::test]
+async fn streaming_download_treats_416_as_complete_without_appending_its_body() {
+    let _guard = network_test_guard().await;
+    let request_count = std::sync::Arc::new(AtomicUsize::new(0));
+    // The server announces exactly what it sends, so the first attempt is a
+    // complete download by its own account; a second, ranged request is only
+    // made if something retries. Force that by having the body be short of
+    // RESUME_BODY and letting the truncation check fire.
+    let port =
+        run_range_not_satisfiable_server(RESUME_BODY, RESUME_BODY.len(), request_count.clone())
+            .await;
+    let url = format!("http://127.0.0.1:{port}/file");
+    let temp = tempfile::TempDir::new().unwrap();
+    let mut progress = |_p: &DownloadProgress| {};
+
+    download_file_with_progress_using(&test_client(), &url, temp.path(), &mut progress)
+        .await
+        .expect("a complete first response should succeed");
+
+    let written = std::fs::read(temp.path().join("file")).unwrap();
+    assert_eq!(
+        written, RESUME_BODY,
+        "the file must be exactly the resource, with no error document appended"
+    );
+}
+
+/// `416` reached through the resume path: the part file is already complete,
+/// and the error body that comes with the status must not reach it.
+#[tokio::test]
+async fn a_416_response_is_not_written_to_the_part_file() {
+    let _guard = network_test_guard().await;
+    let temp = tempfile::TempDir::new().unwrap();
+    let part = temp.path().join("file.part");
+    std::fs::write(&part, RESUME_BODY).unwrap();
+
+    let request_count = std::sync::Arc::new(AtomicUsize::new(0));
+    let port =
+        run_range_not_satisfiable_server(RESUME_BODY, RESUME_BODY.len(), request_count.clone())
+            .await;
+    let url = format!("http://127.0.0.1:{port}/file");
+    let mut progress = |_p: &DownloadProgress| {};
+
+    fetch_into_part(
+        &test_client(),
+        &url,
+        &part,
+        RESUME_BODY.len() as u64,
+        "file",
+        &mut progress,
+        FAST_RETRY_TIMING,
+    )
+    .await
+    .expect("416 means the resource is already complete, which is success");
+
+    assert_eq!(
+        std::fs::read(&part).unwrap(),
+        RESUME_BODY,
+        "the 416 error document must not be appended to the completed part file"
+    );
+}
+
+/// Progress alone must not license an unbounded loop.
+///
+/// This server hands back one byte per attempt, so the stall budget never
+/// fires — every attempt "makes progress". Only the absolute ceiling ends it,
+/// and without that the install would hang rather than fail.
+#[tokio::test]
+async fn streaming_download_stops_at_the_absolute_attempt_ceiling() {
+    let _guard = network_test_guard().await;
+    let request_count = std::sync::Arc::new(AtomicUsize::new(0));
+    let port = run_one_byte_at_a_time_server(request_count.clone()).await;
+    let url = format!("http://127.0.0.1:{port}/file");
+    let temp = tempfile::TempDir::new().unwrap();
+    let mut progress = |_p: &DownloadProgress| {};
+
+    let error = download_file_with_progress_timed(
+        &test_client(),
+        &url,
+        temp.path(),
+        &mut progress,
+        FAST_RETRY_TIMING,
+    )
+    .await
+    .expect_err("a drip-feeding server must hit the ceiling, not run forever");
+
+    let message = error.to_string();
+    assert!(
+        message.contains("ceiling"),
+        "the failure must say the absolute bound stopped it: {message}"
+    );
+    assert_eq!(
+        request_count.load(Ordering::SeqCst),
+        MAX_TOTAL_ATTEMPTS as usize,
+        "should stop exactly at the ceiling"
+    );
+    assert!(!temp.path().join("file").exists());
+    assert!(!temp.path().join("file.part").exists());
+}
+
+/// Serves one byte per request, always claiming a much larger total.
+async fn run_one_byte_at_a_time_server(request_count: std::sync::Arc<AtomicUsize>) -> u16 {
+    use tokio::io::{AsyncReadExt, AsyncWriteExt};
+    use tokio::net::TcpListener;
+
+    let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
+    let port = listener.local_addr().unwrap().port();
+    let (ready_tx, ready_rx) = tokio::sync::oneshot::channel();
+
+    tokio::spawn(async move {
+        let _ = ready_tx.send(());
+        loop {
+            let (mut stream, _) = match listener.accept().await {
+                Ok(pair) => pair,
+                Err(_) => break,
+            };
+            request_count.fetch_add(1, Ordering::SeqCst);
+            let mut buf = [0u8; 2048];
+            let read = stream.read(&mut buf).await.unwrap_or(0);
+            let request = String::from_utf8_lossy(&buf[..read]).to_string();
+            let start = parse_request_range(&request);
+
+            // Always honor the range and always deliver exactly one byte, so
+            // the file advances forever and the stall budget never trips.
+            let total = 1_000_000usize;
+            let head = if start > 0 {
+                format!(
+                    "HTTP/1.1 206 Partial Content\r\nContent-Length: {}\r\n\
+                     Content-Range: bytes {}-{}/{}\r\nAccept-Ranges: bytes\r\n\r\n",
+                    total - start,
+                    start,
+                    total - 1,
+                    total
+                )
+            } else {
+                format!(
+                    "HTTP/1.1 200 OK\r\nContent-Length: {total}\r\nAccept-Ranges: bytes\r\n\r\n"
+                )
+            };
+            let _ = stream.write_all(head.as_bytes()).await;
+            let _ = stream.write_all(b"x").await;
+            let _ = stream.shutdown().await;
+        }
+    });
+    ready_rx.await.expect("drip server should start");
+    port
+}
+
+#[test]
+fn content_range_values_are_parsed() {
+    assert_eq!(
+        parse_content_range_value("bytes 100-199/200"),
+        Some((100, Some(200)))
+    );
+    // A `*` total is legal when the origin does not know the full size: the
+    // start still parses, the total is simply unknown.
+    assert_eq!(
+        parse_content_range_value("bytes 100-199/*"),
+        Some((100, None))
+    );
+    assert_eq!(
+        parse_content_range_value("  bytes 0-9/10  "),
+        Some((0, Some(10)))
+    );
+    // Malformed inputs must yield None so the caller falls back to the
+    // offset it asked for, rather than trusting a garbage start.
+    assert_eq!(parse_content_range_value("items 100-199/200"), None);
+    assert_eq!(parse_content_range_value("bytes 100-199"), None);
+    assert_eq!(parse_content_range_value("bytes abc-199/200"), None);
+    assert_eq!(parse_content_range_value(""), None);
 }

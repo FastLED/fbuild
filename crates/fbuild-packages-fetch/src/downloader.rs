@@ -173,6 +173,15 @@ struct OpenedRange {
     starts_at: u64,
     /// Total size of the complete resource, when the server disclosed it.
     total: Option<u64>,
+    /// The server has nothing left to send (a `416` answer to our range).
+    ///
+    /// Carried as a flag rather than an empty body because a `416` response
+    /// usually *has* a body — S3, GCS and several CDNs send XML or HTML
+    /// explaining the error. Streaming that onto the end of an already
+    /// complete file would corrupt it, and because those bytes push the
+    /// length past the expected total, the short-body check would not catch
+    /// it either.
+    already_complete: bool,
 }
 
 /// GET `url`, asking to resume from `offset` when that is non-zero.
@@ -203,6 +212,7 @@ async fn open_attempt_from(
             response,
             starts_at: offset,
             total: Some(offset),
+            already_complete: true,
         });
     }
     if !status.is_success() {
@@ -215,6 +225,7 @@ async fn open_attempt_from(
             response,
             starts_at,
             total,
+            already_complete: false,
         });
     }
 
@@ -224,6 +235,7 @@ async fn open_attempt_from(
         response,
         starts_at: 0,
         total,
+        already_complete: false,
     })
 }
 
@@ -237,6 +249,16 @@ fn parse_content_range(response: &reqwest::Response) -> Option<(u64, Option<u64>
         .get(reqwest::header::CONTENT_RANGE)?
         .to_str()
         .ok()?;
+    parse_content_range_value(value)
+}
+
+/// Parse the value half of `Content-Range: bytes <start>-<end>/<total>`.
+///
+/// Split from the header lookup so the grammar — the fragile part — is
+/// directly testable. `<total>` may be `*` when the origin does not know the
+/// full size, which is legal and yields `None` for the total rather than
+/// failing the parse.
+fn parse_content_range_value(value: &str) -> Option<(u64, Option<u64>)> {
     let spec = value.trim().strip_prefix("bytes ")?;
     let (range, total) = spec.split_once('/')?;
     let start = range.split_once('-')?.0.trim().parse::<u64>().ok()?;
@@ -391,6 +413,20 @@ async fn download_file_with_progress_using(
 /// stuck still stops promptly.
 const MAX_STALLED_ATTEMPTS: u32 = 5;
 
+/// Absolute ceiling on attempts, whatever progress is being made.
+///
+/// The stall budget alone is not a bound: a server that drops the connection
+/// after a handful of bytes resets it every single time, and the loop would
+/// run forever at a byte rate no operator would accept. There is no outer
+/// timeout above this function, so "forever" means a wedged install rather
+/// than a failed one — the same non-terminating shape FastLED/fbuild#1370
+/// reported, reached from the opposite direction.
+///
+/// Sized so a genuinely converging download still finishes: the reporter's
+/// 282 MB archive over a link dying at ~90 MB needs four attempts, and this
+/// leaves an order of magnitude of headroom.
+const MAX_TOTAL_ATTEMPTS: u32 = 40;
+
 /// [`download_file_with_progress_using`] with the retry durations injected.
 /// See [`RetryTiming`] for why tests need this instead of paused Tokio time.
 ///
@@ -460,19 +496,29 @@ async fn download_file_with_progress_timed(
                     stalled += 1;
                 }
 
-                if error.is_retryable() && stalled < MAX_STALLED_ATTEMPTS {
+                let exhausted = if stalled >= MAX_STALLED_ATTEMPTS {
+                    Some(format!("{stalled} consecutive attempts made no progress"))
+                } else if attempt >= MAX_TOTAL_ATTEMPTS {
+                    Some(format!(
+                        "hit the {MAX_TOTAL_ATTEMPTS}-attempt ceiling while making only intermittent progress"
+                    ))
+                } else {
+                    None
+                };
+
+                if error.is_retryable() && exhausted.is_none() {
                     wait_before_retry(url, stalled.max(1), &error, timing).await;
                     continue;
                 }
 
                 let _ = tokio::fs::remove_file(&part_path).await;
+                let reason = exhausted.unwrap_or_else(|| "error is not retryable".to_string());
                 return Err(FbuildError::PackageError(format!(
-                    "{} (gave up after {} attempts at byte offset {}; \
-                     {} consecutive attempts made no progress)",
+                    "{} (gave up after {} attempts at byte offset {}; {})",
                     error.into_fbuild_error(url),
                     attempt,
                     resume_from,
-                    stalled
+                    reason
                 )));
             }
         }
@@ -531,7 +577,14 @@ async fn fetch_into_part(
         mut response,
         starts_at,
         total,
+        already_complete,
     } = opened;
+
+    // Nothing left to fetch. Return before touching the file: the `416`
+    // response body is an error document, not resource bytes.
+    if already_complete {
+        return Ok(());
+    }
 
     // The server declined the range and restarted the body. Anything already
     // written is now the wrong prefix, so drop it rather than append.
