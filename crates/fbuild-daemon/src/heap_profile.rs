@@ -30,7 +30,9 @@
 //! every flame-graph viewer already read, so nothing here needs a bespoke
 //! decoder.
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
+
+use fbuild_core::path::NormalizedPath;
 
 /// Environment variable that turns heap profiling on at daemon startup.
 ///
@@ -101,8 +103,8 @@ pub fn stop() {
 /// Routed through `fbuild_paths` so dumps land under the same dev/prod
 /// isolation as everything else the daemon writes, rather than the CWD of
 /// whoever happened to start it.
-pub fn default_dump_dir() -> PathBuf {
-    fbuild_paths::temp_subdir(DUMP_SUBDIR)
+pub fn default_dump_dir() -> NormalizedPath {
+    NormalizedPath::new(fbuild_paths::temp_subdir(DUMP_SUBDIR))
 }
 
 /// Write a pprof `profile.proto` snapshot of the live heap.
@@ -115,25 +117,33 @@ pub fn default_dump_dir() -> PathBuf {
 /// Returns the path written. Dumping while the profiler is stopped produces
 /// a valid but empty profile, so the caller gets a file either way and the
 /// emptiness is visible in the profile itself rather than as an error.
-pub fn dump(path: Option<&Path>) -> std::io::Result<PathBuf> {
+///
+/// Async because it is reached from an axum handler: `create_dir_all` on a
+/// tokio worker would block the runtime (FastLED/fbuild#844).
+pub async fn dump(path: Option<&Path>) -> std::io::Result<NormalizedPath> {
     let target = match path {
-        Some(explicit) => explicit.to_path_buf(),
+        Some(explicit) => NormalizedPath::new(explicit),
         None => {
             let dir = default_dump_dir();
-            std::fs::create_dir_all(&dir)?;
-            dir.join(format!("heap-{}.pb", std::process::id()))
+            fbuild_core::fs::create_dir_all(dir.as_path()).await?;
+            NormalizedPath::new(
+                dir.as_path()
+                    .join(format!("heap-{}.pb", std::process::id())),
+            )
         }
     };
-    mimalloc_pprof::prof::dump_proto_file(&target)?;
+    // The dump itself is a synchronous C call into the allocator and is not
+    // filesystem-bound in the way `create_dir_all` is, so it does not need
+    // offloading.
+    mimalloc_pprof::prof::dump_proto_file(target.as_path())?;
     Ok(target)
 }
 
-/// Live-sample counters, for a health endpoint that wants to report growth
+/// Live-sample count, for a health endpoint that wants to report growth
 /// without serializing a whole profile.
 ///
-/// `live_samples` is the sampled count; `live_bytes` the sampled byte total.
-/// Both are statistical — the exact allocator counters they are derived from
-/// are what make an assertion on a sampled profile meaningful.
+/// Statistical, not exact — the sampler is what makes it cheap enough to
+/// leave on.
 pub fn live_sample_count() -> usize {
     mimalloc_pprof::prof::stats().live_samples
 }
@@ -177,14 +187,18 @@ mod tests {
     fn the_default_dump_dir_is_under_the_isolated_fbuild_root() {
         let dir = default_dump_dir();
         assert!(
-            dir.ends_with(DUMP_SUBDIR),
+            dir.as_path().ends_with(DUMP_SUBDIR),
             "dump dir must be the named subdir, got {}",
-            dir.display()
+            dir.display_slash()
         );
+        // Compared through `normalize_for_key` rather than `Path::starts_with`:
+        // the two sides can be spelled differently (verbatim prefix, case) and
+        // still be the same directory (FastLED/fbuild#952).
+        let root = fbuild_core::path::normalize_for_key(&fbuild_paths::get_fbuild_root());
+        let dir_key = fbuild_core::path::normalize_for_key(dir.as_path());
         assert!(
-            dir.starts_with(fbuild_paths::get_fbuild_root()),
-            "dump dir must sit under the dev/prod-isolated root, got {}",
-            dir.display()
+            dir_key.starts_with(&root),
+            "dump dir must sit under the dev/prod-isolated root; dir={dir_key} root={root}"
         );
     }
 }

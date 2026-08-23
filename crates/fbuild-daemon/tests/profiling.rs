@@ -97,9 +97,14 @@ fn heap_profiling_captures_retained_allocations_and_dumps_them_as_pprof() {
     //    being investigated.
     let tmp = tempfile::TempDir::new().expect("tempdir");
     let target = tmp.path().join("heap.pb");
-    let written = fbuild_daemon::heap_profile::dump(Some(&target)).expect("dump must succeed");
-    assert_eq!(written, target);
-    let bytes = std::fs::read(&written).expect("dump file must be readable");
+    let written = tokio::runtime::Builder::new_current_thread()
+        .enable_all()
+        .build()
+        .expect("runtime")
+        .block_on(fbuild_daemon::heap_profile::dump(Some(&target)))
+        .expect("dump must succeed");
+    assert_eq!(written.as_path(), target.as_path());
+    let bytes = std::fs::read(written.as_path()).expect("dump file must be readable");
     assert!(!bytes.is_empty(), "dump file must not be empty");
 
     std::hint::black_box(&retained);

@@ -87,11 +87,11 @@ pub async fn heap_dump() -> (StatusCode, Json<HeapDumpResponse>) {
         crate::heap_profile::start(DEFAULT_ON_DEMAND_SAMPLE_RATE);
     }
 
-    match crate::heap_profile::dump(None) {
+    match crate::heap_profile::dump(None).await {
         Ok(path) => (
             StatusCode::OK,
             Json(HeapDumpResponse {
-                path: Some(path.to_string_lossy().into_owned()),
+                path: Some(path.display_slash()),
                 live_samples: crate::heap_profile::live_sample_count(),
                 profiling_was_already_running: was_running,
                 message: if was_running {
