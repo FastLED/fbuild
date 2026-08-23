@@ -149,6 +149,28 @@ jobs:
           fi
           export PATH="${CARGO_BIN}:${PATH}"
           export CARGO_TARGET_DIR="$PWD/target/dylint-tests"
+
+          # FastLED/fbuild#1373, the second half. Two target-dir layouts
+          # coexist here: soldr builds the test binary under
+          # `<target>/<triple>/debug`, while each lint's `fn ui` clears
+          # `CARGO_BUILD_TARGET` so the *library* it rebuilds lands in
+          # `<target>/debug` — which is the only place Dylint 6.0.1 looks.
+          #
+          # compiletest then invokes the driver with a PATH derived from the
+          # triple layout, so the lint library loads from one tree while its
+          # sibling rustc dylibs are searched for in the other. On Windows that
+          # surfaces as `LoadLibraryExW failed` on the library itself, which
+          # reads like a missing file and is actually a missing *dependency*.
+          #
+          # Putting the untargeted `debug` and `debug/deps` on PATH makes both
+          # trees resolvable regardless of which one a given artifact came from.
+          # Harmless on Linux/macOS, where the loader uses rpath and these
+          # directories simply go unused.
+          UNTARGETED="${CARGO_TARGET_DIR}/debug"
+          if command -v cygpath >/dev/null 2>&1; then
+            UNTARGETED="$(cygpath -u "${UNTARGETED}")"
+          fi
+          export PATH="${UNTARGETED}:${UNTARGETED}/deps:${PATH}"
           while IFS= read -r manifest; do
             RUSTUP_TOOLCHAIN=nightly-2026-04-16 \
               soldr cargo test --manifest-path "$manifest"
