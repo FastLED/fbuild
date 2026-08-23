@@ -76,7 +76,20 @@ enum DownloadAttemptError {
     Request(reqwest::Error),
     HttpStatus(reqwest::StatusCode),
     Body(reqwest::Error),
-    BodyStalled { filename: String },
+    BodyStalled {
+        filename: String,
+    },
+    /// The part file on disk could not be opened, written, or flushed.
+    PartFile {
+        path: String,
+        error: String,
+    },
+    /// The body ended before the announced length — a dropped connection that
+    /// happened to land on a chunk boundary (FastLED/fbuild#1370).
+    BodyTruncated {
+        got: u64,
+        expected: u64,
+    },
 }
 
 impl DownloadAttemptError {
@@ -85,6 +98,11 @@ impl DownloadAttemptError {
             Self::Request(error) | Self::Body(error) => is_transient(error),
             Self::HttpStatus(status) => status.is_server_error(),
             Self::BodyStalled { .. } => true,
+            // A truncated body is the failure this retry loop exists for.
+            Self::BodyTruncated { .. } => true,
+            // Local disk trouble will not fix itself by asking the server
+            // again, and retrying would just rewrite the same bytes.
+            Self::PartFile { .. } => false,
         }
     }
 
@@ -104,6 +122,14 @@ impl DownloadAttemptError {
                 CHUNK_READ_TIMEOUT.as_secs(),
                 filename
             )),
+            Self::PartFile { path, error } => FbuildError::PackageError(format!(
+                "failed to write partial download at {}: {}",
+                path, error
+            )),
+            Self::BodyTruncated { got, expected } => FbuildError::PackageError(format!(
+                "download of {} ended early: got {} of {} bytes",
+                url, got, expected
+            )),
         }
     }
 }
@@ -120,6 +146,12 @@ impl Display for DownloadAttemptError {
                 CHUNK_READ_TIMEOUT.as_secs(),
                 filename
             ),
+            Self::PartFile { path, error } => {
+                write!(f, "partial-download write error at {path}: {error}")
+            }
+            Self::BodyTruncated { got, expected } => {
+                write!(f, "body ended early: {got} of {expected} bytes")
+            }
         }
     }
 }
@@ -128,17 +160,87 @@ async fn open_attempt(
     client: &reqwest::Client,
     url: &str,
 ) -> std::result::Result<reqwest::Response, DownloadAttemptError> {
-    let response = client
-        .get(url)
+    open_attempt_from(client, url, 0)
+        .await
+        .map(|opened| opened.response)
+}
+
+/// A response plus what the server agreed to about resuming.
+struct OpenedRange {
+    response: reqwest::Response,
+    /// Byte offset the body actually starts at. Zero when the server sent a
+    /// full body, whether or not a range was requested.
+    starts_at: u64,
+    /// Total size of the complete resource, when the server disclosed it.
+    total: Option<u64>,
+}
+
+/// GET `url`, asking to resume from `offset` when that is non-zero.
+///
+/// A server may decline the range and send the whole body instead — that is
+/// legal, and the caller has to notice, because appending a full body onto a
+/// partial file would silently corrupt it. `starts_at` reports what the
+/// server actually did rather than what was asked for (FastLED/fbuild#1370).
+async fn open_attempt_from(
+    client: &reqwest::Client,
+    url: &str,
+    offset: u64,
+) -> std::result::Result<OpenedRange, DownloadAttemptError> {
+    let mut request = client.get(url);
+    if offset > 0 {
+        request = request.header(reqwest::header::RANGE, format!("bytes={offset}-"));
+    }
+    let response = request
         .send()
         .await
         .map_err(DownloadAttemptError::Request)?;
     let status = response.status();
-    if status.is_success() {
-        Ok(response)
-    } else {
-        Err(DownloadAttemptError::HttpStatus(status))
+
+    // The whole resource is already on disk: the server has nothing left to
+    // send. Not an error — the caller finalizes and verifies.
+    if status == reqwest::StatusCode::RANGE_NOT_SATISFIABLE && offset > 0 {
+        return Ok(OpenedRange {
+            response,
+            starts_at: offset,
+            total: Some(offset),
+        });
     }
+    if !status.is_success() {
+        return Err(DownloadAttemptError::HttpStatus(status));
+    }
+
+    if status == reqwest::StatusCode::PARTIAL_CONTENT {
+        let (starts_at, total) = parse_content_range(&response).unwrap_or((offset, None));
+        return Ok(OpenedRange {
+            response,
+            starts_at,
+            total,
+        });
+    }
+
+    // 200 with a full body. If a range was asked for, the server ignored it.
+    let total = response.content_length();
+    Ok(OpenedRange {
+        response,
+        starts_at: 0,
+        total,
+    })
+}
+
+/// Parse `Content-Range: bytes <start>-<end>/<total>`.
+///
+/// Returns the start offset and the total when the total is a number rather
+/// than the `*` an origin is allowed to send.
+fn parse_content_range(response: &reqwest::Response) -> Option<(u64, Option<u64>)> {
+    let value = response
+        .headers()
+        .get(reqwest::header::CONTENT_RANGE)?
+        .to_str()
+        .ok()?;
+    let spec = value.trim().strip_prefix("bytes ")?;
+    let (range, total) = spec.split_once('/')?;
+    let start = range.split_once('-')?.0.trim().parse::<u64>().ok()?;
+    Some((start, total.trim().parse::<u64>().ok()))
 }
 
 async fn wait_before_retry(
@@ -277,8 +379,26 @@ async fn download_file_with_progress_using(
         .await
 }
 
+/// How many attempts in a row may make zero progress before giving up.
+///
+/// The retry budget is spent on *stalls*, not on attempts. A 282 MB download
+/// on a connection that dies around 90 MB needs four attempts to finish, and
+/// counting those against a fixed total would fail a download that was
+/// converging fine — which is exactly the shape of FastLED/fbuild#1370, where
+/// five restarts moved ~450 MB for zero net progress and could never
+/// terminate. An attempt that advances the file resets this counter, so a
+/// download that keeps making headway keeps going, and one that is genuinely
+/// stuck still stops promptly.
+const MAX_STALLED_ATTEMPTS: u32 = 5;
+
 /// [`download_file_with_progress_using`] with the retry durations injected.
 /// See [`RetryTiming`] for why tests need this instead of paused Tokio time.
+///
+/// Bytes land in a `<filename>.part` beside the destination and are appended
+/// to across retries, so a failed attempt costs only the bytes it did not
+/// finish rather than everything downloaded so far. The part file is renamed
+/// into place only once the body is complete, so a consumer never observes a
+/// truncated archive at the real path.
 async fn download_file_with_progress_timed(
     client: &reqwest::Client,
     url: &str,
@@ -288,86 +408,227 @@ async fn download_file_with_progress_timed(
 ) -> Result<()> {
     let filename = url.rsplit('/').next().unwrap_or("download").to_string();
     let dest_path = dest_dir.join(&filename);
+    let part_path = dest_dir.join(format!("{filename}.part"));
 
-    let mut attempt: u32 = 0;
-    let buf = loop {
-        attempt += 1;
-        let result: std::result::Result<Vec<u8>, DownloadAttemptError> = async {
-            let response = open_attempt(client, url).await?;
-            let total_bytes = response.content_length();
-            let mut downloaded: u64 = 0;
-            let mut attempt_buf =
-                Vec::with_capacity(total_bytes.unwrap_or(8 * 1024 * 1024) as usize);
-            let mut last_report = Instant::now();
-            let mut last_pct: u32 = 0;
-            let mut stream = response;
-            // FastLED/fbuild#805 CRITICAL: per-chunk deadline. The shared
-            // `http::client()` already enforces a 300 s total-request timeout,
-            // but defense-in-depth — wrap each `chunk().await` in a 60 s
-            // tokio timeout so a stalled mid-download fails *this* attempt
-            // promptly instead of waiting out the 5 min total. This is what
-            // the audit calls out specifically: streaming body reads have no
-            // per-chunk wake-up signal otherwise.
-            loop {
-                let chunk =
-                    match tokio::time::timeout(timing.chunk_read_timeout, stream.chunk()).await {
-                        Ok(Ok(Some(chunk))) => chunk,
-                        Ok(Ok(None)) => break,
-                        Ok(Err(error)) => return Err(DownloadAttemptError::Body(error)),
-                        Err(_) => {
-                            return Err(DownloadAttemptError::BodyStalled {
-                                filename: filename.clone(),
-                            });
-                        }
-                    };
-                attempt_buf.extend_from_slice(&chunk);
-                downloaded += chunk.len() as u64;
-
-                let elapsed = last_report.elapsed().as_secs();
-                let current_pct = total_bytes
-                    .map(|total| {
-                        if total > 0 {
-                            (downloaded as f64 / total as f64 * 100.0) as u32
-                        } else {
-                            0
-                        }
-                    })
-                    .unwrap_or(0);
-                let pct_jump = current_pct >= last_pct + 10;
-
-                if elapsed >= 15 || pct_jump {
-                    let progress = DownloadProgress {
-                        downloaded,
-                        total_bytes,
-                        filename: filename.clone(),
-                    };
-                    on_progress(&progress);
-                    last_report = Instant::now();
-                    last_pct = current_pct;
-                }
-            }
-            Ok(attempt_buf)
+    // Start from a known state. A part file left by an earlier invocation
+    // cannot be trusted: nothing proves it came from this URL, and the
+    // caller wipes its staging directory anyway.
+    if let Err(error) = tokio::fs::remove_file(&part_path).await {
+        if error.kind() != std::io::ErrorKind::NotFound {
+            return Err(FbuildError::PackageError(format!(
+                "failed to clear partial download at {}: {}",
+                part_path.display(),
+                error
+            )));
         }
+    }
+
+    let mut resume_from: u64 = 0;
+    let mut stalled: u32 = 0;
+    let mut attempt: u32 = 0;
+
+    loop {
+        attempt += 1;
+        let started_at = resume_from;
+
+        let outcome = fetch_into_part(
+            client,
+            url,
+            &part_path,
+            resume_from,
+            &filename,
+            on_progress,
+            timing,
+        )
         .await;
 
-        match result {
-            Ok(bytes) => break bytes,
-            Err(error) if error.is_retryable() && attempt < MAX_ATTEMPTS => {
-                wait_before_retry(url, attempt, &error, timing).await;
+        resume_from = part_len(&part_path).await;
+
+        match outcome {
+            Ok(()) => break,
+            Err(error) => {
+                // Progress, not attempt count, is what earns another try.
+                if resume_from > started_at {
+                    stalled = 0;
+                    tracing::info!(
+                        "download {}: attempt {} ended at {} bytes; resuming",
+                        url,
+                        attempt,
+                        resume_from
+                    );
+                } else {
+                    stalled += 1;
+                }
+
+                if error.is_retryable() && stalled < MAX_STALLED_ATTEMPTS {
+                    wait_before_retry(url, stalled.max(1), &error, timing).await;
+                    continue;
+                }
+
+                let _ = tokio::fs::remove_file(&part_path).await;
+                return Err(FbuildError::PackageError(format!(
+                    "{} (gave up after {} attempts at byte offset {}; \
+                     {} consecutive attempts made no progress)",
+                    error.into_fbuild_error(url),
+                    attempt,
+                    resume_from,
+                    stalled
+                )));
             }
-            Err(error) => return Err(error.into_fbuild_error(url)),
         }
-    };
+    }
 
-    tokio::fs::write(&dest_path, &buf).await.map_err(|e| {
-        FbuildError::PackageError(format!(
-            "failed to write downloaded file to {}: {}",
-            dest_path.display(),
-            e
-        ))
-    })?;
+    // Windows will not rename over an existing file.
+    if let Err(error) = tokio::fs::remove_file(&dest_path).await {
+        if error.kind() != std::io::ErrorKind::NotFound {
+            return Err(FbuildError::PackageError(format!(
+                "failed to replace {}: {}",
+                dest_path.display(),
+                error
+            )));
+        }
+    }
+    tokio::fs::rename(&part_path, &dest_path)
+        .await
+        .map_err(|e| {
+            FbuildError::PackageError(format!(
+                "failed to move completed download into {}: {}",
+                dest_path.display(),
+                e
+            ))
+        })?;
 
-    tracing::info!("downloaded {} ({} bytes)", filename, buf.len());
+    tracing::info!("downloaded {} ({} bytes)", filename, resume_from);
+    Ok(())
+}
+
+/// Bytes already in the part file, or zero when it does not exist.
+async fn part_len(part_path: &Path) -> u64 {
+    tokio::fs::metadata(part_path)
+        .await
+        .map(|meta| meta.len())
+        .unwrap_or(0)
+}
+
+/// Stream one attempt's worth of body into `part_path`, resuming at `offset`.
+///
+/// Appends when the server honors the range and truncates when it does not,
+/// so the part file always matches what the server is actually sending.
+#[allow(clippy::too_many_arguments)]
+async fn fetch_into_part(
+    client: &reqwest::Client,
+    url: &str,
+    part_path: &Path,
+    offset: u64,
+    filename: &str,
+    on_progress: &mut (dyn FnMut(&DownloadProgress) + Send),
+    timing: RetryTiming,
+) -> std::result::Result<(), DownloadAttemptError> {
+    use tokio::io::AsyncWriteExt;
+
+    let opened = open_attempt_from(client, url, offset).await?;
+    let OpenedRange {
+        mut response,
+        starts_at,
+        total,
+    } = opened;
+
+    // The server declined the range and restarted the body. Anything already
+    // written is now the wrong prefix, so drop it rather than append.
+    let appending = starts_at == offset && offset > 0;
+    if !appending && offset > 0 {
+        tracing::warn!(
+            "download {}: server ignored the resume request and restarted from 0; \
+             discarding {} partial bytes",
+            url,
+            offset
+        );
+    }
+
+    let mut file = tokio::fs::OpenOptions::new()
+        .create(true)
+        .write(true)
+        .append(appending)
+        .truncate(!appending)
+        .open(part_path)
+        .await
+        .map_err(|error| DownloadAttemptError::PartFile {
+            path: part_path.display().to_string(),
+            error: error.to_string(),
+        })?;
+
+    let mut downloaded: u64 = if appending { offset } else { 0 };
+    // `content_length()` on a 206 is what remains, not the whole resource, so
+    // the total has to come from Content-Range when resuming — otherwise the
+    // percentage the caller renders would restart at 0 on every retry.
+    let total_bytes = total.or_else(|| response.content_length().map(|len| len + downloaded));
+
+    let mut last_report = Instant::now();
+    let mut last_pct: u32 = 0;
+
+    loop {
+        let chunk = match tokio::time::timeout(timing.chunk_read_timeout, response.chunk()).await {
+            Ok(Ok(Some(chunk))) => chunk,
+            Ok(Ok(None)) => break,
+            Ok(Err(error)) => return Err(DownloadAttemptError::Body(error)),
+            Err(_) => {
+                return Err(DownloadAttemptError::BodyStalled {
+                    filename: filename.to_string(),
+                });
+            }
+        };
+        file.write_all(&chunk)
+            .await
+            .map_err(|error| DownloadAttemptError::PartFile {
+                path: part_path.display().to_string(),
+                error: error.to_string(),
+            })?;
+        downloaded += chunk.len() as u64;
+
+        let elapsed = last_report.elapsed().as_secs();
+        let current_pct = total_bytes
+            .map(|total| {
+                if total > 0 {
+                    (downloaded as f64 / total as f64 * 100.0) as u32
+                } else {
+                    0
+                }
+            })
+            .unwrap_or(0);
+        let pct_jump = current_pct >= last_pct + 10;
+
+        if elapsed >= 15 || pct_jump {
+            let progress = DownloadProgress {
+                downloaded,
+                total_bytes,
+                filename: filename.to_string(),
+            };
+            on_progress(&progress);
+            last_report = Instant::now();
+            last_pct = current_pct;
+        }
+    }
+
+    // Flush before the caller stats the file to decide whether this attempt
+    // made progress — buffered bytes would read as a stall.
+    file.flush()
+        .await
+        .map_err(|error| DownloadAttemptError::PartFile {
+            path: part_path.display().to_string(),
+            error: error.to_string(),
+        })?;
+
+    // A short body is a dropped connection that happened to end on a chunk
+    // boundary. Treat it as a retryable failure so the resume loop continues
+    // rather than renaming a truncated archive into place.
+    if let Some(total) = total_bytes {
+        if downloaded < total {
+            return Err(DownloadAttemptError::BodyTruncated {
+                got: downloaded,
+                expected: total,
+            });
+        }
+    }
     Ok(())
 }
 
@@ -756,7 +1017,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn streaming_download_stops_after_five_truncated_bodies_without_output() {
+    async fn streaming_download_stops_after_five_stalled_attempts_without_output() {
         let _guard = network_test_guard().await;
         let responses = std::sync::Arc::new(std::sync::Mutex::new(vec![
             truncated_response(),
@@ -776,11 +1037,188 @@ mod tests {
                 .await
                 .expect_err("the fifth truncated response should exhaust retries");
 
-        // See the buffered variant above: both body-read and connection
-        // errors are retryable transport failures, so only exhaustion of the
-        // five-attempt budget is stable across platforms.
-        assert_eq!(request_count.load(Ordering::SeqCst), 5);
+        // Six, not five, and the extra one is the point of
+        // FastLED/fbuild#1370: the budget is now five attempts that make *no
+        // progress*, not five attempts total. The first attempt advances the
+        // part file from 0 to the truncation point, so it does not spend
+        // budget; the five after it re-deliver the same prefix (this mock
+        // ignores `Range`) and do. A download that keeps advancing is no
+        // longer cut off at a fixed attempt count, which is what let a large
+        // toolchain fail forever on a connection that could not carry it in
+        // one stream.
+        assert_eq!(request_count.load(Ordering::SeqCst), 6);
         assert!(!temp.path().join("file").exists());
+        assert!(!temp.path().join("file.part").exists());
+    }
+
+    /// A server that drops the connection partway through the body, then
+    /// serves the remainder to a ranged retry.
+    ///
+    /// This is the shape FastLED/fbuild#1370 reported: a 282 MB download that
+    /// died in the same 80-98 MB band every time. `honor_range = false`
+    /// models an origin that ignores `Range` and restarts the body, which is
+    /// legal and must not corrupt the partial file.
+    async fn run_resuming_server(
+        body: &'static [u8],
+        first_len: usize,
+        honor_range: bool,
+        request_count: std::sync::Arc<AtomicUsize>,
+    ) -> u16 {
+        use tokio::io::{AsyncReadExt, AsyncWriteExt};
+        use tokio::net::TcpListener;
+
+        let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let port = listener.local_addr().unwrap().port();
+        let (ready_tx, ready_rx) = tokio::sync::oneshot::channel();
+
+        tokio::spawn(async move {
+            let _ = ready_tx.send(());
+            loop {
+                let (mut stream, _) = match listener.accept().await {
+                    Ok(pair) => pair,
+                    Err(_) => break,
+                };
+                request_count.fetch_add(1, Ordering::SeqCst);
+
+                let mut buf = [0u8; 2048];
+                let read = stream.read(&mut buf).await.unwrap_or(0);
+                let request = String::from_utf8_lossy(&buf[..read]).to_string();
+                let start = parse_request_range(&request);
+
+                if honor_range && start > 0 && start < body.len() {
+                    let head = format!(
+                        "HTTP/1.1 206 Partial Content\r\n\
+                         Content-Length: {}\r\n\
+                         Content-Range: bytes {}-{}/{}\r\n\
+                         Accept-Ranges: bytes\r\n\r\n",
+                        body.len() - start,
+                        start,
+                        body.len() - 1,
+                        body.len()
+                    );
+                    let _ = stream.write_all(head.as_bytes()).await;
+                    let _ = stream.write_all(&body[start..]).await;
+                } else {
+                    // Announce the whole body but hang up after `first_len`.
+                    let head = format!(
+                        "HTTP/1.1 200 OK\r\nContent-Length: {}\r\nAccept-Ranges: bytes\r\n\r\n",
+                        body.len()
+                    );
+                    let _ = stream.write_all(head.as_bytes()).await;
+                    let _ = stream.write_all(&body[..first_len]).await;
+                }
+                let _ = stream.shutdown().await;
+            }
+        });
+        ready_rx.await.expect("resuming test server should start");
+        port
+    }
+
+    /// Pull the start offset out of a `Range: bytes=N-` request header.
+    fn parse_request_range(request: &str) -> usize {
+        request
+            .lines()
+            .find_map(|line| {
+                let value = line
+                    .strip_prefix("Range:")
+                    .or_else(|| line.strip_prefix("range:"))?;
+                let spec = value.trim().strip_prefix("bytes=")?;
+                spec.split('-').next()?.trim().parse::<usize>().ok()
+            })
+            .unwrap_or(0)
+    }
+
+    const RESUME_BODY: &[u8] = b"0123456789abcdefghijklmnopqrstuvwxyz";
+
+    /// The fix for FastLED/fbuild#1370: a dropped connection costs only the
+    /// bytes it did not deliver.
+    ///
+    /// Without resume this needs the server to send a complete body in one
+    /// attempt, which is exactly what the reporter's connection could not do.
+    /// With it, two attempts finish the file and the second one asks for the
+    /// remainder rather than starting over.
+    #[tokio::test]
+    async fn streaming_download_resumes_from_the_byte_offset_after_a_drop() {
+        let _guard = network_test_guard().await;
+        let request_count = std::sync::Arc::new(AtomicUsize::new(0));
+        let port = run_resuming_server(RESUME_BODY, 10, true, request_count.clone()).await;
+        let url = format!("http://127.0.0.1:{port}/file");
+        let temp = tempfile::TempDir::new().unwrap();
+        let mut seen: Vec<u64> = Vec::new();
+        let mut progress = |p: &DownloadProgress| seen.push(p.downloaded);
+
+        download_file_with_progress_using(&test_client(), &url, temp.path(), &mut progress)
+            .await
+            .expect("a ranged retry should finish the download");
+
+        assert_eq!(
+            std::fs::read(temp.path().join("file")).unwrap(),
+            RESUME_BODY,
+            "the resumed file must be byte-identical to the source"
+        );
+        assert_eq!(
+            request_count.load(Ordering::SeqCst),
+            2,
+            "one dropped attempt plus one ranged resume"
+        );
+        assert!(
+            !temp.path().join("file.part").exists(),
+            "the part file must be renamed away, not left behind"
+        );
+        assert!(
+            seen.iter().all(|d| *d <= RESUME_BODY.len() as u64),
+            "reported progress must stay cumulative rather than restarting: {seen:?}"
+        );
+    }
+
+    /// An origin that ignores `Range` must not corrupt the partial file, and
+    /// must still terminate rather than looping forever.
+    ///
+    /// The second half of #1370 is that retries which make no progress cannot
+    /// converge. Here every attempt lands on the same byte, so the
+    /// no-progress budget is what stops it.
+    #[tokio::test]
+    async fn streaming_download_gives_up_when_the_server_ignores_range() {
+        let _guard = network_test_guard().await;
+        let request_count = std::sync::Arc::new(AtomicUsize::new(0));
+        let port = run_resuming_server(RESUME_BODY, 10, false, request_count.clone()).await;
+        let url = format!("http://127.0.0.1:{port}/file");
+        let temp = tempfile::TempDir::new().unwrap();
+        let mut progress = |_p: &DownloadProgress| {};
+
+        let error =
+            download_file_with_progress_using(&test_client(), &url, temp.path(), &mut progress)
+                .await
+                .expect_err("a server that never sends the tail must fail, not hang");
+
+        let message = error.to_string();
+        assert!(
+            message.contains("byte offset"),
+            "the failure must name the offset it stopped at, per #1370: {message}"
+        );
+        assert!(
+            !temp.path().join("file").exists(),
+            "no truncated archive may be left at the destination"
+        );
+        assert!(
+            !temp.path().join("file.part").exists(),
+            "the part file must be cleaned up on hard failure"
+        );
+        // One attempt makes progress (0 -> 10), then every later attempt
+        // re-sends the same prefix, so the no-progress budget ends it.
+        assert!(
+            request_count.load(Ordering::SeqCst) >= MAX_STALLED_ATTEMPTS as usize,
+            "should have spent the no-progress budget"
+        );
+    }
+
+    #[test]
+    fn content_range_start_and_total_are_parsed() {
+        // Exercised through the public shape rather than a Response, which
+        // cannot be constructed here: the header grammar is the fragile part.
+        assert_eq!(parse_request_range("Range: bytes=1234-\r\n"), 1234);
+        assert_eq!(parse_request_range("range: bytes=0-\r\n"), 0);
+        assert_eq!(parse_request_range("GET / HTTP/1.1\r\n"), 0);
     }
 
     /// Retry timings short enough to run in real time. This test previously
