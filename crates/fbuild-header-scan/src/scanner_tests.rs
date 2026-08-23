@@ -483,3 +483,73 @@ fn a_non_guard_ifndef_is_still_undecidable() {
     assert!(paths.contains(&"fallback.h"), "{paths:?}");
     assert!(paths.contains(&"feature.h"), "{paths:?}");
 }
+
+/// `__has_include` is a compiler builtin, so nothing can settle it from a
+/// macro set — but answering "false" is how an include the compiler *does*
+/// take became invisible (FastLED/fbuild#1337). Undecidable is the honest
+/// answer, and the walker's own header resolution then decides.
+#[test]
+fn has_include_is_undecidable_and_its_argument_is_consumed() {
+    let refs = scan_active_with_known(
+        "#if __has_include(<SPI.h>)\n#include <SPI.h>\n#endif\n",
+        &HashMap::new(),
+        &HashSet::new(),
+    );
+    let paths: Vec<&str> = refs.iter().map(|r| r.path.as_str()).collect();
+    assert_eq!(paths, vec!["SPI.h"], "{paths:?}");
+}
+
+/// A decidably-false operand settles `&&`, even when the other half cannot be
+/// decided.
+///
+/// This is FastLED's opt-in gate: `defined(FASTLED_USE_ADAFRUIT_NEOPIXEL) &&
+/// FL_HAS_INCLUDE(<Adafruit_NeoPixel.h>)`. Nothing defines the opt-in, so the
+/// guard is false — and letting the undecidable half win would select a
+/// library the build never compiles.
+#[test]
+fn a_false_operand_settles_and_despite_an_undecidable_one() {
+    let known: HashSet<String> = ["FL_HAS_INCLUDE".to_string()].into();
+    let refs = scan_active_with_known(
+        "#if defined(OPT_IN) && FL_HAS_INCLUDE(<SPI.h>)\n#include <SPI.h>\n#else\n#include <fake.h>\n#endif\n",
+        &HashMap::new(),
+        &known,
+    );
+    let paths: Vec<&str> = refs.iter().map(|r| r.path.as_str()).collect();
+    assert_eq!(
+        paths,
+        vec!["fake.h"],
+        "an unsatisfiable opt-in must settle the guard: {paths:?}"
+    );
+}
+
+/// With the opt-in supplied, the undecidable half governs and both arms are
+/// scanned — the walker decides which header actually resolves.
+#[test]
+fn an_undecidable_operand_governs_once_the_others_are_satisfied() {
+    let known: HashSet<String> = ["FL_HAS_INCLUDE".to_string()].into();
+    let mut defines = HashMap::new();
+    defines.insert("OPT_IN".to_string(), "1".to_string());
+    let refs = scan_active_with_known(
+        "#if defined(OPT_IN) && FL_HAS_INCLUDE(<SPI.h>)\n#include <SPI.h>\n#else\n#include <fake.h>\n#endif\n",
+        &defines,
+        &known,
+    );
+    let paths: Vec<&str> = refs.iter().map(|r| r.path.as_str()).collect();
+    assert!(paths.contains(&"SPI.h"), "{paths:?}");
+    assert!(paths.contains(&"fake.h"), "{paths:?}");
+}
+
+/// A decidably-true operand settles `||` the same way.
+#[test]
+fn a_true_operand_settles_or_despite_an_undecidable_one() {
+    let known: HashSet<String> = ["MAYBE".to_string()].into();
+    let mut defines = HashMap::new();
+    defines.insert("SURE".to_string(), "1".to_string());
+    let refs = scan_active_with_known(
+        "#if defined(SURE) || defined(MAYBE)\n#include <taken.h>\n#else\n#include <dead.h>\n#endif\n",
+        &defines,
+        &known,
+    );
+    let paths: Vec<&str> = refs.iter().map(|r| r.path.as_str()).collect();
+    assert_eq!(paths, vec!["taken.h"], "{paths:?}");
+}

@@ -552,21 +552,58 @@ struct ConditionParser<'a> {
 }
 
 impl<'a> ConditionParser<'a> {
+    /// `||`, where a decidably-true operand settles the result.
+    ///
+    /// Unknown-ness has to combine per operand rather than globally, or one
+    /// unseeable macro poisons an expression another term already decided.
+    /// `defined(OPT_IN) && FL_HAS_INCLUDE(<X.h>)` is the case that matters:
+    /// when nothing defines `OPT_IN` the guard is *false*, whatever the
+    /// undecidable half says, and treating the whole thing as unknown would
+    /// select a library the build never compiles (FastLED/fbuild#1337).
     fn parse_or(&mut self) -> i64 {
+        let outer = self.saw_unknown_macro;
+        self.saw_unknown_macro = false;
         let mut value = self.parse_and();
+        let mut unknown = self.saw_unknown_macro;
         while self.consume(b"||") {
+            self.saw_unknown_macro = false;
             let rhs = self.parse_and();
-            value = i64::from(value != 0 || rhs != 0);
+            let rhs_unknown = self.saw_unknown_macro;
+            let lhs_true = !unknown && value != 0;
+            let rhs_true = !rhs_unknown && rhs != 0;
+            if lhs_true || rhs_true {
+                value = 1;
+                unknown = false;
+            } else {
+                unknown = unknown || rhs_unknown;
+                value = i64::from(value != 0 || rhs != 0);
+            }
         }
+        self.saw_unknown_macro = outer || unknown;
         value
     }
 
+    /// `&&`, where a decidably-false operand settles the result.
     fn parse_and(&mut self) -> i64 {
+        let outer = self.saw_unknown_macro;
+        self.saw_unknown_macro = false;
         let mut value = self.parse_equality();
+        let mut unknown = self.saw_unknown_macro;
         while self.consume(b"&&") {
+            self.saw_unknown_macro = false;
             let rhs = self.parse_equality();
-            value = i64::from(value != 0 && rhs != 0);
+            let rhs_unknown = self.saw_unknown_macro;
+            let lhs_false = !unknown && value == 0;
+            let rhs_false = !rhs_unknown && rhs == 0;
+            if lhs_false || rhs_false {
+                value = 0;
+                unknown = false;
+            } else {
+                unknown = unknown || rhs_unknown;
+                value = i64::from(value != 0 && rhs != 0);
+            }
         }
+        self.saw_unknown_macro = outer || unknown;
         value
     }
 
@@ -626,6 +663,21 @@ impl<'a> ConditionParser<'a> {
         if token.is_empty() {
             return 0;
         }
+        // `__has_include(<X.h>)` is a compiler builtin: nothing `#define`s it,
+        // so the corpus set can never settle it, and answering "false" is how
+        // an include the compiler *does* take became invisible
+        // (FastLED/fbuild#1337). Undecidable is the honest answer — the arm is
+        // scanned, and the walker's own header resolution then decides, which
+        // is the same question `__has_include` asks.
+        if token == "__has_include" {
+            self.skip_balanced_parens();
+            self.saw_any_macro = true;
+            self.saw_unknown_macro = true;
+            return 0;
+        }
+        // A function-like macro invocation: consume its argument list so a
+        // `<` inside it is not mistaken for a comparison operator.
+        self.skip_balanced_parens();
         self.saw_any_macro = true;
         match self.macros.get(token).and_then(|value| parse_number(value)) {
             Some(value) => value,
@@ -635,6 +687,35 @@ impl<'a> ConditionParser<'a> {
                 }
                 0
             }
+        }
+    }
+
+    /// Consume a balanced `( ... )` group if one starts here.
+    ///
+    /// Used after an identifier so a function-like macro's arguments do not
+    /// leak into the expression grammar — `FL_HAS_INCLUDE(<SPI.h>)` would
+    /// otherwise leave `<SPI.h>` behind and the `<` would parse as a
+    /// less-than.
+    fn skip_balanced_parens(&mut self) {
+        self.skip_ws();
+        if self.index >= self.input.len() || self.input[self.index] != b'(' {
+            return;
+        }
+        let mut depth = 0usize;
+        while self.index < self.input.len() {
+            match self.input[self.index] {
+                b'(' => depth += 1,
+                b')' => {
+                    depth -= 1;
+                    self.index += 1;
+                    if depth == 0 {
+                        return;
+                    }
+                    continue;
+                }
+                _ => {}
+            }
+            self.index += 1;
         }
     }
 
