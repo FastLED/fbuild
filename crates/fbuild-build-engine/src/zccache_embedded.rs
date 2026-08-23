@@ -91,8 +91,16 @@ pub struct EmbeddedCompileOutcome {
 }
 
 impl FbuildZccacheService {
-    /// Start the embedded service on the caller's tokio runtime,
-    /// rooted at `~/.fbuild/<mode>/zccache/`.
+    /// Start the embedded service on the caller's tokio runtime.
+    ///
+    /// Root resolution, in precedence order:
+    ///
+    /// 1. `FBUILD_ZCCACHE_ROOT`, used verbatim when set. This mirrors
+    ///    `fbuild_paths`' own `FBUILD_CACHE_DIR` escape hatch and lets a
+    ///    test harness isolate the embedded cache instead of contending
+    ///    with the shared prod writer slot — FastLED/fbuild#1346, #1347.
+    /// 2. `fbuild_paths::get_fbuild_root().join("zccache")`, i.e.
+    ///    `~/.fbuild/<mode>/zccache/`, the production default.
     ///
     /// Idempotent only at the file-system level — `create_dir_all`
     /// on the cache root is safe under concurrent callers. Two
@@ -101,15 +109,24 @@ impl FbuildZccacheService {
     /// daemon's startup path is single-threaded so this is not
     /// exercised today.
     pub async fn start() -> Result<Self, EmbeddedServiceError> {
+        // Escape hatch mirroring fbuild_paths' `FBUILD_CACHE_DIR`: point
+        // the embedded service at an alternate root. Test harnesses use
+        // this to avoid contending with (or polluting) the shared prod
+        // writer slot — FastLED/fbuild#1346, #1347.
+        if let Some(root) = std::env::var_os("FBUILD_ZCCACHE_ROOT") {
+            return Self::start_in(PathBuf::from(root)).await;
+        }
         Self::start_in(fbuild_paths::get_fbuild_root().join("zccache")).await
     }
 
     /// Start with an explicit cache root.
     ///
-    /// Production callers should use [`Self::start`], which derives
-    /// the root from `fbuild_paths`. This entry point exists so the
-    /// smoke test (`tests/zccache_embedded_smoke.rs`) can point at a
-    /// per-test tempdir and not contaminate the user's real
+    /// The root is used exactly as given — neither
+    /// `FBUILD_ZCCACHE_ROOT` nor `fbuild_paths` is consulted here.
+    /// Production callers should use [`Self::start`], which applies
+    /// that precedence chain. This entry point exists so the smoke test
+    /// (`tests/zccache_embedded_smoke.rs`) can point at a per-test
+    /// tempdir and not contaminate the user's real
     /// `~/.fbuild/<mode>/zccache/`. Phase 2 (#791) may also use this
     /// to host multiple service instances per integration test.
     pub async fn start_in(cache_root: PathBuf) -> Result<Self, EmbeddedServiceError> {

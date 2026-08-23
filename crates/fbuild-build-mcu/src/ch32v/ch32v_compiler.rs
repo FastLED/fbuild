@@ -191,7 +191,7 @@ impl Compiler for Ch32vCompiler {
     /// rebuild fingerprint changes whenever the third-party flag set changes.
     /// Otherwise an existing object compiled with the old flags would be
     /// considered up-to-date after the suppressions move or expand.
-    fn rebuild_signature(&self, source: &Path, extra_flags: &[String]) -> String {
+    fn rebuild_signature(&self, source: &Path, extra_flags: &[String], output: &Path) -> String {
         let ext = source
             .extension()
             .unwrap_or_default()
@@ -214,9 +214,12 @@ impl Compiler for Ch32vCompiler {
         } else {
             extra_flags.to_vec()
         };
-        // build_unflags stripped inside build_rebuild_signature (shared core),
-        // matching compile_c/compile_cpp on the write side (FastLED/fbuild#970).
-        crate::compiler::build_rebuild_signature(
+        // build_unflags stripped inside build_rebuild_signature_for_workspace
+        // (shared core), matching compile_c/compile_cpp on the write side
+        // (FastLED/fbuild#970). The workspace anchor keeps sibling workspaces
+        // with identical effective commands hash-equal (FastLED/fbuild#1346).
+        crate::compiler::build_rebuild_signature_for_workspace(
+            crate::zccache::compile_cwd_from_output(output).as_deref(),
             compiler_path,
             &flags,
             &[],
@@ -386,8 +389,19 @@ mod tests {
         std::fs::write(&user_src, "// stub").unwrap();
 
         let compiler = test_compiler().with_framework_root(framework_root);
-        let core_sig = compiler.rebuild_signature(&core_src, &[]);
-        let user_sig = compiler.rebuild_signature(&user_src, &[]);
+        // Object paths inside the resolved build layout so both sides
+        // relativize against the same workspace; the assertion targets the
+        // suppression-flag difference.
+        let build_dir = fbuild_paths::BuildLayout::new(
+            tmp.path().to_path_buf(),
+            "ch32v".to_string(),
+            BuildProfile::Release,
+        )
+        .resolve();
+        let core_obj = build_dir.join("core/analog.cpp.o");
+        let user_obj = build_dir.join("main.cpp.o");
+        let core_sig = compiler.rebuild_signature(&core_src, &[], &core_obj);
+        let user_sig = compiler.rebuild_signature(&user_src, &[], &user_obj);
         assert_ne!(
             core_sig, user_sig,
             "framework signature must include the suppression flags"

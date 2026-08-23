@@ -65,7 +65,10 @@ pub async fn compile_sources_parallel(
     for source in sources {
         let obj = CompilerBase::object_path(source, build_dir);
         let source_flags = extra_flags.for_source(source);
-        let signature = compiler.rebuild_signature(source, &source_flags);
+        // The object path anchors the workspace: a `.cmdhash` written by a
+        // sibling workspace with an identical effective compile command must
+        // match this check (stage-2 seeding, FastLED/fbuild#1346).
+        let signature = compiler.rebuild_signature(source, &source_flags, &obj);
         if CompilerBase::needs_rebuild_with_signature(source, &obj, Some(&signature)) {
             work.push((source.clone(), obj.clone()));
         }

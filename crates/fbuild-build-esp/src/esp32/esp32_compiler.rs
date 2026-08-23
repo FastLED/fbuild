@@ -196,7 +196,7 @@ impl Compiler for Esp32Compiler {
         crate::compiler::build_cpp_flags(self.common_flags(), &self.mcu_config)
     }
 
-    fn rebuild_signature(&self, source: &Path, extra_flags: &[String]) -> String {
+    fn rebuild_signature(&self, source: &Path, extra_flags: &[String], output: &Path) -> String {
         let ext = source
             .extension()
             .unwrap_or_default()
@@ -211,10 +211,13 @@ impl Compiler for Esp32Compiler {
             "c" | "s" => self.gcc_path(),
             _ => self.gxx_path(),
         };
-        // build_unflags stripped inside build_rebuild_signature (shared core),
-        // matching compile_c/compile_cpp on the write side
-        // (FastLED/fbuild#951, #970).
-        crate::compiler::build_rebuild_signature(
+        // build_unflags stripped inside build_rebuild_signature_for_workspace
+        // (shared core), matching compile_c/compile_cpp on the write side
+        // (FastLED/fbuild#951, #970). The workspace anchor keeps sibling
+        // workspaces with identical effective commands hash-equal
+        // (FastLED/fbuild#1346).
+        crate::compiler::build_rebuild_signature_for_workspace(
+            crate::zccache::compile_cwd_from_output(output).as_deref(),
             compiler_path,
             &base_flags,
             &include_flags,
@@ -417,20 +420,30 @@ mod tests {
     fn rebuild_signature_matches_write_path_with_unflags() {
         let compiler =
             test_compiler("esp32c6").with_build_unflags(vec!["-std=gnu++2b".to_string()]);
+        let workspace = tempfile::TempDir::new().unwrap();
+        let build_dir = fbuild_paths::BuildLayout::new(
+            workspace.path().to_path_buf(),
+            "esp32c6".to_string(),
+            BuildProfile::Release,
+        )
+        .resolve();
+        let object = build_dir.join("src/main.cpp.o");
         let source = Path::new("src/main.cpp");
         let extra = vec!["-DX=1".to_string()];
 
-        let check = compiler.rebuild_signature(source, &extra);
+        let check = compiler.rebuild_signature(source, &extra, &object);
 
         // Mirror the write path: compile_cpp applies unflags, then
-        // compile_source hashes (flags, include_flags, extra).
+        // compile_source hashes (flags, include_flags, extra) anchored to the
+        // same compile workspace.
         let (applied_flags, applied_extra) = crate::compiler::apply_compile_unflags(
             compiler.cpp_flags(),
             &extra,
             Compiler::build_unflags(&compiler),
         );
         let include_flags = compiler.base.build_include_flags();
-        let written = crate::compiler::build_rebuild_signature(
+        let written = crate::compiler::build_rebuild_signature_for_workspace(
+            crate::zccache::compile_cwd_from_output(&object).as_deref(),
             compiler.gxx_path(),
             &applied_flags,
             &include_flags,
@@ -439,6 +452,48 @@ mod tests {
         );
 
         assert_eq!(check, written);
+    }
+
+    /// FastLED/fbuild#1346: two sibling workspaces running byte-identical
+    /// effective compile commands must produce identical rebuild signatures,
+    /// or a `.cmdhash` seeded from stage 1 never matches stage 2's fresh
+    /// check and the whole framework recompiles per sketch.
+    #[test]
+    fn rebuild_signature_matches_across_sibling_workspaces() {
+        let compiler = test_compiler("esp32c6");
+        let tmp = tempfile::TempDir::new().unwrap();
+        let build_dir_for = |root: &std::path::Path| {
+            fbuild_paths::BuildLayout::new(
+                root.to_path_buf(),
+                "esp32c6".to_string(),
+                BuildProfile::Release,
+            )
+            .resolve()
+        };
+        let s0 = tmp.path().join("s0");
+        let s1 = tmp.path().join("s1");
+        for dir in [&s0, &s1] {
+            std::fs::create_dir_all(build_dir_for(dir).join("core")).unwrap();
+            std::fs::create_dir_all(dir.join("src")).unwrap();
+        }
+        let source = Path::new("cores/arduino/CDC.cpp");
+        // Each workspace's own compile carried its own sketch-src include;
+        // after argv relativization both run as plain `-Isrc`.
+        let extra_s0 = vec![format!("-I{}", s0.join("src").display())];
+        let extra_s1 = vec![format!("-I{}", s1.join("src").display())];
+
+        let sig_s0 = compiler.rebuild_signature(
+            source,
+            &extra_s0,
+            &build_dir_for(&s0).join("core/CDC.cpp.o"),
+        );
+        let sig_s1 = compiler.rebuild_signature(
+            source,
+            &extra_s1,
+            &build_dir_for(&s1).join("core/CDC.cpp.o"),
+        );
+
+        assert_eq!(sig_s0, sig_s1);
     }
 
     /// FastLED/fbuild#243: by default the compiler preserves eh_frame; the
