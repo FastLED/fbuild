@@ -639,6 +639,18 @@ mod tests {
             while request_count < 2 {
                 match listener.accept() {
                     Ok((mut stream, _)) => {
+                        // Windows hands back an accepted socket that inherits
+                        // the listener's non-blocking mode, unlike Unix. The
+                        // read below then returns WSAEWOULDBLOCK (os error
+                        // 10035) whenever the client's bytes have not landed
+                        // yet, and `unwrap` turns that into a flaky failure
+                        // that looks nothing like a socket-mode problem.
+                        // FastLED/fbuild#1349 CI run 32658416728 hit it; the
+                        // mock daemon in `test_emu_exit_code.rs` already
+                        // guards the same way.
+                        stream
+                            .set_nonblocking(false)
+                            .expect("accepted socket must block for the exchange below");
                         let mut buf = [0_u8; 1024];
                         let _ = stream.read(&mut buf).unwrap();
                         request_count += 1;
