@@ -813,14 +813,26 @@ exit 0
             .write(true)
             .open(&path)
             .expect("reopen for write");
+
+        // The releaser signals *before* it sleeps, and the probe does not
+        // start until that signal arrives. Spawning detached and hoping would
+        // leave the task's timer unarmed until an arbitrary later point — on a
+        // loaded runner it could start after the retry budget had already
+        // elapsed, holding the handle through all three attempts. That would
+        // make this the flake it exists to prevent.
+        //
         // A tokio task rather than a thread with `std::thread::sleep`, which
         // the workspace bans for blocking a runtime worker (#844).
-        tokio::spawn(async move {
+        let (armed_tx, armed_rx) = tokio::sync::oneshot::channel();
+        let releaser = tokio::spawn(async move {
+            let _ = armed_tx.send(());
             tokio::time::sleep(Duration::from_millis(10)).await;
             drop(held);
         });
+        armed_rx.await.expect("releaser task must start");
 
         let result = run_command_retrying_exec_busy(&[path.as_str()], None, None, None).await;
+        releaser.await.expect("releaser task must finish");
         assert!(
             result.is_ok(),
             "a retry must outlast a transient writable handle, got {result:?}"
