@@ -733,38 +733,51 @@ mod tests {
         }
     }
 
+    /// Whether this host enforces `ETXTBSY` on `exec`.
+    ///
+    /// Linux only, and that is not pedantry: Darwin lets a plain
+    /// open-for-write coexist with `execve`, so the same code that reliably
+    /// fails on Linux succeeds on macOS. Gating on `unix` would have made
+    /// these tests fail there for a reason that is not a bug.
+    fn host_enforces_exec_busy() -> bool {
+        crate::platform::host::current().os() == crate::platform::host::HostOs::Linux
+    }
+
     /// Build an executable no-op script and return its path.
-    #[cfg(unix)]
-    fn write_runnable_script(dir: &std::path::Path, name: &str) -> String {
+    ///
+    /// Uses the neutral `platform::fs` facade rather than a per-OS
+    /// permissions extension trait, so this file stays free of raw host
+    /// mechanics (the platform-boundary ledger, #1306).
+    fn write_runnable_script(dir: &std::path::Path, name: &str) -> std::io::Result<String> {
         use std::io::Write;
-        use std::os::unix::fs::PermissionsExt;
         let script = dir.join(name);
         {
-            let mut file = std::fs::File::create(&script).expect("create");
+            let mut file = std::fs::File::create(&script)?;
             file.write_all(
                 b"#!/bin/sh
 exit 0
 ",
-            )
-            .expect("write");
+            )?;
         }
-        std::fs::set_permissions(&script, std::fs::Permissions::from_mode(0o755)).expect("chmod");
-        script.to_string_lossy().into_owned()
+        crate::platform::fs::set_executable(&script)?;
+        Ok(script.to_string_lossy().into_owned())
     }
 
     /// A held write handle blocks `exec`, and no amount of retrying helps.
     ///
     /// This is the mechanism behind FastLED/fbuild#1366 made reproducible.
-    /// `exec` fails with `ETXTBSY` while *any* process holds the file open for
+    /// Linux refuses to `exec` a file while *any* process holds it open for
     /// writing — including this one — so the flake, which in CI came from a
     /// sibling thread's `fork` inheriting the descriptor, needs no thread
-    /// timing to reproduce. Fully deterministic: the handle lives longer than
-    /// the whole retry budget.
-    #[cfg(unix)]
+    /// timing to reproduce. Fully deterministic: the handle outlives the whole
+    /// retry budget.
     #[tokio::test(flavor = "multi_thread")]
     async fn a_held_write_handle_blocks_exec_for_the_whole_retry_budget() {
+        if !host_enforces_exec_busy() {
+            return;
+        }
         let tmp = tempfile::TempDir::new().expect("tempdir");
-        let path = write_runnable_script(tmp.path(), "held_open.sh");
+        let path = write_runnable_script(tmp.path(), "held_open.sh").expect("script");
 
         let held = std::fs::OpenOptions::new()
             .write(true)
@@ -786,13 +799,15 @@ exit 0
     /// the microseconds between another thread's `fork` and its `exec`, so a
     /// second attempt is all it takes. The 10 ms hold is deliberately tiny
     /// against the ~75 ms retry budget: a loaded runner can delay the release
-    /// by several times over and the test still passes, so this cannot become
-    /// the flake it exists to prevent.
-    #[cfg(unix)]
+    /// several times over and this still passes, so it cannot become the flake
+    /// it exists to prevent.
     #[tokio::test(flavor = "multi_thread")]
     async fn a_handle_released_mid_window_lets_the_retry_through() {
+        if !host_enforces_exec_busy() {
+            return;
+        }
         let tmp = tempfile::TempDir::new().expect("tempdir");
-        let path = write_runnable_script(tmp.path(), "released.sh");
+        let path = write_runnable_script(tmp.path(), "released.sh").expect("script");
 
         let held = std::fs::OpenOptions::new()
             .write(true)
