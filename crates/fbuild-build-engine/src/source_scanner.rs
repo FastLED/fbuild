@@ -93,7 +93,7 @@ const EXCLUDE_DIRS: &[&str] = &[
     ".git",
     "__pycache__",
     "node_modules",
-    ".fbuild",
+    fbuild_paths::FBUILD_DIR_NAME,
     ".venv",
     "venv",
     ".cache",

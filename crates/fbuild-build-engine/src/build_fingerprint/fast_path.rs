@@ -53,7 +53,7 @@ pub const FAST_PATH_EXTENSIONS: &[&str] = &[
 /// should not invalidate a warm build.
 pub const FAST_PATH_EXCLUDES: &[&str] = &[
     ".cache",
-    ".fbuild",
+    fbuild_paths::FBUILD_DIR_NAME,
     ".git",
     ".pio",
     ".venv",
