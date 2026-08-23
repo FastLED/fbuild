@@ -18,10 +18,10 @@
 //!
 //! # Two ways in, because leaks are found at two different times
 //!
-//! - [`start_from_env`] reads `FBUILD_HEAP_PROFILE` at startup. Startup and
+//! - [`self::start_from_env`] reads `FBUILD_HEAP_PROFILE` at startup. Startup and
 //!   static-initialization allocations are only visible this way, because
 //!   anything allocated before the profiler starts is untracked.
-//! - [`dump`] can be called on a daemon that is *already* wedged, over HTTP,
+//! - [`self::dump`] can be called on a daemon that is *already* wedged, over HTTP,
 //!   without restarting it. This matters more than it looks: restarting the
 //!   daemon destroys the leak, so a restart-only profiler cannot answer the
 //!   question it exists to answer.
@@ -41,7 +41,7 @@ use fbuild_core::path::NormalizedPath;
 /// `FBUILD_HEAP_PROFILE=65536` to sample roughly every 64 KiB allocated.
 pub const HEAP_PROFILE_ENV: &str = "FBUILD_HEAP_PROFILE";
 
-/// Sample rate used when [`HEAP_PROFILE_ENV`] is set to a plain truthy value.
+/// Sample rate used when [`self::HEAP_PROFILE_ENV`] is set to a plain truthy value.
 ///
 /// 512 KiB is `mimalloc-pprof`'s own default. Sampling is statistical, so a
 /// finer rate buys resolution with proportional overhead; a leak large enough
@@ -51,7 +51,7 @@ const DEFAULT_SAMPLE_RATE: usize = 512 * 1024;
 /// Directory under the dev/prod-isolated fbuild root where dumps are written.
 const DUMP_SUBDIR: &str = "heap-profiles";
 
-/// Start the profiler if [`HEAP_PROFILE_ENV`] asks for it.
+/// Start the profiler if [`self::HEAP_PROFILE_ENV`] asks for it.
 ///
 /// Returns the sample rate actually used, or `None` when profiling was not
 /// requested or the profiler was already running. Call this as early in
@@ -69,7 +69,7 @@ pub fn start_from_env() -> Option<usize> {
 
 /// Parse the env var into a sample rate.
 ///
-/// Separated from [`start_from_env`] so the parsing contract is testable
+/// Separated from [`self::start_from_env`] so the parsing contract is testable
 /// without touching process-wide profiler state.
 fn sample_rate_from(value: &str) -> Option<usize> {
     let value = value.trim();
@@ -98,7 +98,7 @@ pub fn stop() {
     mimalloc_pprof::prof::stop();
 }
 
-/// Where [`dump`] writes, absent an explicit path.
+/// Where [`self::dump`] writes, absent an explicit path.
 ///
 /// Routed through `fbuild_paths` so dumps land under the same dev/prod
 /// isolation as everything else the daemon writes, rather than the CWD of
@@ -110,7 +110,7 @@ pub fn default_dump_dir() -> NormalizedPath {
 /// Write a pprof `profile.proto` snapshot of the live heap.
 ///
 /// `path` overrides the destination; otherwise the snapshot lands in
-/// [`default_dump_dir`] under a name carrying the daemon's PID, so repeated
+/// [`self::default_dump_dir`] under a name carrying the daemon's PID, so repeated
 /// dumps from one daemon do not overwrite each other and dumps from
 /// different daemons do not collide.
 ///
