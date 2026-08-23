@@ -444,3 +444,42 @@ fn active_scan_uses_compiler_and_local_defines() {
     assert_eq!(refs.len(), 1);
     assert_eq!(refs[0].path, "SPI.h");
 }
+
+/// A file's own include guard must not make the rest of the file undecidable.
+///
+/// `#ifndef FOO_H` / `#define FOO_H` puts `FOO_H` into the corpus-wide name
+/// set — the file defines it, after all. Reading that guard as *undecidable*
+/// would switch off `#define` application for the entire body, so
+/// `LOCAL_FEATURE` below would never be learned and the `#ifdef` on it would
+/// scan both arms. Since nearly every header is guarded this way, that would
+/// quietly degrade the whole scan toward textual.
+#[test]
+fn a_files_own_include_guard_does_not_poison_the_rest_of_it() {
+    let known: HashSet<String> = ["FOO_H".to_string(), "LOCAL_FEATURE".to_string()].into();
+    let refs = scan_active_with_known(
+        "#ifndef FOO_H\n#define FOO_H\n#define LOCAL_FEATURE 1\n#ifdef LOCAL_FEATURE\n#include <wanted.h>\n#else\n#include <unwanted.h>\n#endif\n#endif\n",
+        &HashMap::new(),
+        &known,
+    );
+    let paths: Vec<&str> = refs.iter().map(|r| r.path.as_str()).collect();
+    assert_eq!(
+        paths,
+        vec!["wanted.h"],
+        "the guard must stay decidable so the file's own defines still apply: {paths:?}"
+    );
+}
+
+/// An `#ifndef` that is *not* the file's self-guard keeps the conservative
+/// treatment — it is a real feature test, not a header-reentry check.
+#[test]
+fn a_non_guard_ifndef_is_still_undecidable() {
+    let known: HashSet<String> = ["SOME_FEATURE".to_string()].into();
+    let refs = scan_active_with_known(
+        "#include <always.h>\n#ifndef SOME_FEATURE\n#include <fallback.h>\n#else\n#include <feature.h>\n#endif\n",
+        &HashMap::new(),
+        &known,
+    );
+    let paths: Vec<&str> = refs.iter().map(|r| r.path.as_str()).collect();
+    assert!(paths.contains(&"fallback.h"), "{paths:?}");
+    assert!(paths.contains(&"feature.h"), "{paths:?}");
+}

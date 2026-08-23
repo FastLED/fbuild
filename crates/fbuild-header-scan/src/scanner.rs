@@ -276,11 +276,46 @@ fn apply_decision(decision: Decision, parent_scan: bool, parent_define: bool) ->
     }
 }
 
+/// The name of this file's own include guard, if it has the standard shape.
+///
+/// A header that opens `#ifndef FOO_H` / `#define FOO_H` defines its own guard
+/// macro, so `FOO_H` lands in the corpus-wide name set and the guard would
+/// read as *undecidable* — which would switch off `#define` application for
+/// the entire body of nearly every header in the project, and cascade into
+/// every later guard in the same file. The guard is not really undecidable:
+/// on the inclusion that matters it is not yet defined, so the body is taken.
+fn self_include_guard(src: &str) -> Option<String> {
+    let mut directives = src.lines().filter_map(|line| {
+        let directive = line.trim_start().strip_prefix('#')?.trim_start();
+        let (name, rest) = split_directive(directive);
+        if name.is_empty() {
+            None
+        } else {
+            Some((name, rest))
+        }
+    });
+    let (first_name, first_rest) = directives.next()?;
+    if first_name != "ifndef" {
+        return None;
+    }
+    let guard = first_token(first_rest);
+    if guard.is_empty() {
+        return None;
+    }
+    let (second_name, second_rest) = directives.next()?;
+    if second_name == "define" && first_token(second_rest) == guard {
+        Some(guard.to_string())
+    } else {
+        None
+    }
+}
+
 fn active_source(
     src: &str,
     macros: &mut HashMap<String, String>,
     defined_somewhere: &HashSet<String>,
 ) -> String {
+    let self_guard = self_include_guard(src);
     let mut stack: Vec<Conditional> = Vec::new();
     // `scan` keeps lines for the include scan; `active` gates `#define`.
     let mut scan = true;
@@ -302,6 +337,16 @@ fn active_source(
                             decide_defined(macros, defined_somewhere, first_token(rest), false)
                         }
                         _ => decide_defined(macros, defined_somewhere, first_token(rest), true),
+                    };
+                    // A file's own `#ifndef FOO_H` is taken on the inclusion
+                    // that matters, whatever the corpus says about `FOO_H`.
+                    let decision = if name == "ifndef"
+                        && self_guard.as_deref() == Some(first_token(rest))
+                        && !macros.contains_key(first_token(rest))
+                    {
+                        Decision::True
+                    } else {
+                        decision
                     };
                     let (next_scan, next_active) = if scan {
                         apply_decision(decision, scan, active)

@@ -121,10 +121,17 @@ is there only to be seen: the PlatformIO LDF hint idiom, which FastLED uses in
 `platforms/*/ldf_headers.h`. Its `#define`s are *not* applied, since that code
 does not run.
 
-Note this is stricter than PlatformIO `chain`, which evaluates no conditionals
-at all, and more permissive than `chain+`, which evaluates them without the
-undecidable case. Neither honors a `#if 0` hint the way `chain` does by
-accident; fbuild does so deliberately.
+Two separate comparisons with PlatformIO, since it is easy to conflate them:
+
+- **Against `chain`**, which evaluates no conditionals at all, fbuild is
+  *stricter*: a guard the command line settles is settled here, and its dead
+  arm is pruned.
+- **Against `chain+`**, which does evaluate conditionals, fbuild is *more
+  permissive*: `chain+` has no undecidable case, so a guard on a macro it
+  cannot see reads as false — the exact failure this rule exists to avoid.
+
+The `#if 0` hint works under `chain` only as a side effect of it evaluating
+nothing. `chain+` does not honor it. fbuild honors it deliberately.
 
 ## Why two-pass (not fixed-point)
 
