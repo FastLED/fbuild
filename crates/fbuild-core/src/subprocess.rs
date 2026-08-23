@@ -460,6 +460,22 @@ pub async fn run_command_retrying_exec_busy(
     env: Option<&[(&str, &str)]>,
     timeout: Option<Duration>,
 ) -> Result<ToolOutput> {
+    run_command_retrying_exec_busy_with_backoff(args, cwd, env, timeout, EXEC_BUSY_BACKOFF).await
+}
+
+/// [`run_command_retrying_exec_busy`] with the backoff injected.
+///
+/// Exists so the retry test can give itself a margin that no runner load can
+/// close. With the production 25 ms backoff the test was a race between a
+/// releasing task and the second spawn attempt, and it lost one on a busy CI
+/// runner (FastLED/fbuild#1373).
+async fn run_command_retrying_exec_busy_with_backoff(
+    args: &[&str],
+    cwd: Option<&Path>,
+    env: Option<&[(&str, &str)]>,
+    timeout: Option<Duration>,
+    backoff: Duration,
+) -> Result<ToolOutput> {
     if args.is_empty() {
         return Err(FbuildError::Other("empty command".to_string()));
     }
@@ -475,7 +491,7 @@ pub async fn run_command_retrying_exec_busy(
                 // `tokio::time::sleep`, not `std::thread::sleep`: this runs on
                 // a tokio worker and blocking it would stall every other task
                 // on that thread (FastLED/fbuild#844).
-                tokio::time::sleep(EXEC_BUSY_BACKOFF * attempt).await;
+                tokio::time::sleep(backoff * attempt).await;
                 attempt += 1;
             }
             Err(error) => return Err(spawn_err(args, error)),
@@ -831,7 +847,18 @@ exit 0
         });
         armed_rx.await.expect("releaser task must start");
 
-        let result = run_command_retrying_exec_busy(&[path.as_str()], None, None, None).await;
+        // A 500 ms backoff against a 10 ms hold: the second attempt fires
+        // fifty times later than the release. The production 25 ms backoff
+        // made this a race, and a loaded CI runner won it (#1373). Injecting
+        // the backoff costs nothing and removes the only timing dependence.
+        let result = run_command_retrying_exec_busy_with_backoff(
+            &[path.as_str()],
+            None,
+            None,
+            None,
+            Duration::from_millis(500),
+        )
+        .await;
         releaser.await.expect("releaser task must finish");
         assert!(
             result.is_ok(),
