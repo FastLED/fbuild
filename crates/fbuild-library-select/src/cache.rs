@@ -39,7 +39,7 @@ pub const SCANNER_VERSION: u32 = 3;
 
 /// Bump when the resolver's 2-pass LDF semantics change (seed expansion,
 /// attribution, convergence rule, etc.).
-pub const LDF_MODE_VERSION: u32 = 5;
+pub const LDF_MODE_VERSION: u32 = 6;
 
 /// Namespace for the library-selection file cache.
 pub const NAMESPACE: &str = "library-selection";
