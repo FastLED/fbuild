@@ -81,7 +81,29 @@ pub async fn daemon_info(State(ctx): State<Arc<DaemonContext>>) -> Json<DaemonIn
 /// not set `FBUILD_HEAP_PROFILE` at startup still gets something. That
 /// snapshot only covers allocations made *after* this call — the response
 /// says so rather than letting a thin profile read as "nothing is leaking".
-pub async fn heap_dump() -> (StatusCode, Json<HeapDumpResponse>) {
+pub async fn heap_dump(
+    ConnectInfo(peer): ConnectInfo<SocketAddr>,
+) -> (StatusCode, Json<HeapDumpResponse>) {
+    // Loopback only. The daemon binds 0.0.0.0 (see `main.rs`), and this
+    // endpoint is not a read: it can switch process-wide profiling on and make
+    // the daemon serialize its whole heap on demand. Reachable from off-box
+    // that is both a denial-of-service lever and a way to extract allocation
+    // shapes from someone else's machine. Nothing about a profiling dump needs
+    // to cross a network boundary, so the check is a flat refusal rather than
+    // a rate limit.
+    if !peer.ip().is_loopback() {
+        tracing::warn!(peer = %peer, "heap-dump refused: non-loopback caller");
+        return (
+            StatusCode::FORBIDDEN,
+            Json(HeapDumpResponse {
+                path: None,
+                live_samples: 0,
+                profiling_was_already_running: crate::heap_profile::is_enabled(),
+                message: "heap-dump is loopback-only".to_string(),
+            }),
+        );
+    }
+
     let was_running = crate::heap_profile::is_enabled();
     if !was_running {
         crate::heap_profile::start(DEFAULT_ON_DEMAND_SAMPLE_RATE);

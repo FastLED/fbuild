@@ -126,10 +126,7 @@ pub async fn dump(path: Option<&Path>) -> std::io::Result<NormalizedPath> {
         None => {
             let dir = default_dump_dir();
             fbuild_core::fs::create_dir_all(dir.as_path()).await?;
-            NormalizedPath::new(
-                dir.as_path()
-                    .join(format!("heap-{}.pb", std::process::id())),
-            )
+            NormalizedPath::new(dir.as_path().join(next_dump_name()))
         }
     };
     // The dump itself is a synchronous C call into the allocator and is not
@@ -137,6 +134,26 @@ pub async fn dump(path: Option<&Path>) -> std::io::Result<NormalizedPath> {
     // offloading.
     mimalloc_pprof::prof::dump_proto_file(target.as_path())?;
     Ok(target)
+}
+
+/// Monotonic counter behind [`self::next_dump_name`].
+static DUMP_SEQUENCE: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
+
+/// A dump file name that no earlier dump can have used.
+///
+/// Three parts, each earning its place: the PID separates daemons, the
+/// millisecond stamp orders snapshots and survives a PID being recycled by a
+/// restarted daemon, and the sequence number keeps two dumps inside the same
+/// millisecond apart. Overwriting matters here more than it usually does —
+/// leak investigation is *comparing* snapshots over time, so a name that
+/// clobbers the previous one destroys the evidence being gathered.
+fn next_dump_name() -> String {
+    let seq = DUMP_SEQUENCE.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+    let millis = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .map(|since| since.as_millis())
+        .unwrap_or(0);
+    format!("heap-{}-{millis}-{seq}.pb", std::process::id())
 }
 
 /// Live-sample count, for a health endpoint that wants to report growth
@@ -181,6 +198,24 @@ mod tests {
         // operator typing 0 means — they mean off, and that is the `"0"` case.
         assert_eq!(sample_rate_from("00"), None);
         assert_eq!(sample_rate_from("not-a-number"), None);
+    }
+
+    #[test]
+    fn successive_dump_names_never_collide() {
+        // A leak investigation compares snapshots taken minutes apart. A name
+        // that reuses the previous one deletes the evidence, so this is the
+        // property that matters, not the exact format.
+        let names: Vec<String> = (0..64).map(|_| next_dump_name()).collect();
+        let unique: std::collections::HashSet<&String> = names.iter().collect();
+        assert_eq!(
+            unique.len(),
+            names.len(),
+            "dump names must be unique even when generated back to back: {names:?}"
+        );
+        assert!(
+            names.iter().all(|name| name.ends_with(".pb")),
+            "dump names must keep the .pb extension"
+        );
     }
 
     #[test]

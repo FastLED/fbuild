@@ -40,6 +40,14 @@ struct Args {
 
 #[tokio::main]
 async fn main() {
+    // FastLED/fbuild#1361 — first statement in the process, ahead of argument
+    // parsing, containment setup, the broadcast hub, and the tracing
+    // subscriber. Every allocation made before the profiler starts is
+    // invisible to every later snapshot, so anything this call sits behind is
+    // permanently unattributable. The rate is logged further down, once
+    // tracing exists to log it to.
+    let heap_profile_rate = fbuild_daemon::heap_profile::start_from_env();
+
     let args = Args::parse();
 
     if args.dev {
@@ -103,14 +111,10 @@ async fn main() {
         .with(BroadcastLogLayer::new(log_tx))
         .init();
 
-    // FastLED/fbuild#1361 — start sampling before any heavy init when the
-    // operator asked for it. Anything allocated before this point is
-    // invisible to every later snapshot, so "as early as the logger" is
-    // the latest this can usefully go.
-    if let Some(rate) = fbuild_daemon::heap_profile::start_from_env() {
+    if let Some(rate) = heap_profile_rate {
         tracing::info!(
-            "heap profiling enabled, sampling every ~{rate} bytes; \
-             dump with POST /api/daemon/heap-dump"
+            "heap profiling enabled from process start, sampling every ~{rate} \
+             bytes; dump with POST /api/daemon/heap-dump"
         );
     }
 
