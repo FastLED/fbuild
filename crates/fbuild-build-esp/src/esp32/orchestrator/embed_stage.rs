@@ -21,7 +21,12 @@ fn expand_embed_entries(
     // overwrites the first and both embed entries end up holding the second
     // blob's bytes. Refuse instead: a wrong asset embedded in firmware is
     // not something the user can see went wrong.
-    let mut claimed: std::collections::HashMap<PathBuf, String> = std::collections::HashMap::new();
+    // Keyed by `normalize_for_key`, not by `PathBuf` equality. Windows and
+    // macOS are case-insensitive, so `logo.bin.fetch` and `LOGO.bin.lnk`
+    // produce lexically distinct targets that are the *same file* — which is
+    // exactly the collision this guard exists to catch, and the one a plain
+    // comparison lets through.
+    let mut claimed: std::collections::HashMap<String, String> = std::collections::HashMap::new();
     for entry in entries {
         let p = if Path::new(entry).is_absolute() {
             PathBuf::from(entry)
@@ -36,7 +41,8 @@ fn expand_embed_entries(
                 )
             })?;
             let materialized = fbuild_packages::lnk::materialize_lnk_entry(&p, lnk_dir, cache)?;
-            if let Some(first) = claimed.insert(materialized.target_path.clone(), entry.clone()) {
+            let claim_key = fbuild_core::path::normalize_for_key(&materialized.target_path);
+            if let Some(first) = claimed.insert(claim_key, entry.clone()) {
                 return Err(fbuild_core::FbuildError::PackageError(format!(
                     "embed entries `{first}` and `{entry}` both materialize to {} — blob                      pointers are named after the blob they point at, so two of them cannot                      share one. Rename one, or drop the stale pointer if this is a leftover                      `.lnk` beside its `.fetch` replacement (FastLED/fbuild#1369).",
                     materialized.target_path.display()
@@ -225,5 +231,63 @@ mod tests {
             message.contains("logo.bin.fetch") && message.contains("logo.bin.lnk"),
             "the error must name both pointers, or it is unactionable: {message}"
         );
+    }
+
+    /// FastLED/fbuild#1369 review: on Windows and macOS the filesystem folds
+    /// case, so `logo.bin.fetch` and `LOGO.bin.lnk` materialize to one file
+    /// while comparing unequal as paths. Keying the guard lexically let
+    /// exactly the collision it was written to catch slip through — on the
+    /// platforms where it actually happens.
+    #[test]
+    fn blob_names_differing_only_by_case_collide_on_case_insensitive_hosts() {
+        if !fbuild_core::platform::host::is_windows() && !fbuild_core::platform::host::is_macos() {
+            return; // case-sensitive host: these really are two distinct files
+        }
+
+        let cache_root = tempfile::tempdir().unwrap();
+        let cache = fbuild_packages::DiskCache::open_at(cache_root.path()).unwrap();
+        let project = tempfile::tempdir().unwrap();
+
+        let write_pointer = |rel: &str, body: &[u8]| {
+            let sha = format!("{:x}", Sha256::digest(body));
+            let url = format!("https://localhost.invalid/{rel}");
+            let archive_dir = cache.archive_dir(Kind::LnkBlobs, &url, &sha);
+            std::fs::create_dir_all(&archive_dir).unwrap();
+            let blob_path = archive_dir.join("blob.bin");
+            std::fs::write(&blob_path, body).unwrap();
+            cache
+                .record_archive(
+                    Kind::LnkBlobs,
+                    &url,
+                    &sha,
+                    &blob_path.to_string_lossy(),
+                    body.len() as i64,
+                    &sha,
+                )
+                .unwrap();
+            let path = project.path().join(rel);
+            std::fs::create_dir_all(path.parent().unwrap()).unwrap();
+            std::fs::write(
+                &path,
+                format!(r#"{{"v":1,"url":"{url}","sha256":"{sha}"}}"#),
+            )
+            .unwrap();
+        };
+        write_pointer("data/logo.bin.fetch", b"the fetch blob");
+        write_pointer("assets/LOGO.bin.lnk", b"the legacy blob");
+
+        let mut leases = Vec::new();
+        let error = expand_embed_entries(
+            &[
+                "data/logo.bin.fetch".to_string(),
+                "assets/LOGO.bin.lnk".to_string(),
+            ],
+            project.path(),
+            &project.path().join("build/lnk"),
+            Some(&cache),
+            &mut leases,
+        )
+        .expect_err("case-folded names name one file on this host");
+        assert!(error.to_string().contains("materialize to"), "{error}");
     }
 }
