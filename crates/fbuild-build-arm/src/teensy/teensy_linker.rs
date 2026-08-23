@@ -276,18 +276,27 @@ mod tests {
     #[test]
     fn link_runs_in_absolute_output_dir_not_inherited_cwd() {
         let (out, core_dir) = if fbuild_core::platform::host::is_windows() {
-            ("C:\\proj\\.fbuild\\build\\release", "C:\\pkgs\\teensy4")
+            (
+                format!(
+                    "C:\\proj\\{}\\build\\release",
+                    fbuild_paths::FBUILD_DIR_NAME
+                ),
+                "C:\\pkgs\\teensy4".to_string(),
+            )
         } else {
-            ("/proj/.fbuild/build/release", "/pkgs/teensy4")
+            (
+                format!("/proj/{}/build/release", fbuild_paths::FBUILD_DIR_NAME),
+                "/pkgs/teensy4".to_string(),
+            )
         };
-        let scripts = LinkerScripts::single(PathBuf::from(core_dir), "imxrt1062_t41.ld");
-        let objects = [PathBuf::from(out).join("sketch.o")];
+        let scripts = LinkerScripts::single(PathBuf::from(&core_dir), "imxrt1062_t41.ld");
+        let objects = [PathBuf::from(&out).join("sketch.o")];
         assert_eq!(
             link_cwd_for(
-                Path::new(out),
+                Path::new(&out),
                 objects.iter().chain(scripts.search_dirs.iter())
             ),
-            Some(Path::new(out)),
+            Some(Path::new(&out)),
             "absolute output dir must become the link cwd so linker scratch \
              files stay in the build tree"
         );

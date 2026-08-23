@@ -310,6 +310,17 @@ pub fn normalize_for_key(path: &Path) -> String {
 // different project directories — see agents/docs/path-conventions.md.
 // ---------------------------------------------------------------------------
 
+/// The directory segment fbuild owns, both project-local
+/// (`<project>/.fbuild/`) and home-local (`~/.fbuild/{dev|prod}/`).
+///
+/// Defined here rather than in `fbuild-paths` because `fbuild-paths`
+/// depends on this crate, not the reverse, and both
+/// [`compile_cwd_from_output`] below and `response_file` need it.
+/// `fbuild_paths::FBUILD_DIR_NAME` re-exports this, so `fbuild-paths`
+/// remains the name every other crate reaches for
+/// (FastLED/fbuild#1349).
+pub const FBUILD_DIR_NAME: &str = ".fbuild";
+
 /// Return the workspace root to use as the CWD for zccache compiles.
 ///
 /// fbuild object files live under `<workspace>/.fbuild/...`, so running
@@ -323,7 +334,7 @@ pub fn compile_cwd_from_output(output: &Path) -> Option<PathBuf> {
         if dir
             .file_name()
             .and_then(|name| name.to_str())
-            .is_some_and(|name| name.eq_ignore_ascii_case(".fbuild"))
+            .is_some_and(|name| name.eq_ignore_ascii_case(FBUILD_DIR_NAME))
         {
             return dir.parent().map(|workspace| {
                 canonicalize_lexical(workspace).unwrap_or_else(|| workspace.to_path_buf())
@@ -744,7 +755,10 @@ mod tests {
 
     #[test]
     fn compile_cwd_from_output_uses_workspace_before_fbuild() {
-        let output = Path::new("/work/project/.fbuild/build/env/release/src/main.o");
+        let output = PathBuf::from(format!(
+            "/work/project/{FBUILD_DIR_NAME}/build/env/release/src/main.o"
+        ));
+        let output = output.as_path();
         assert_eq!(
             compile_cwd_from_output(output).as_deref(),
             Some(Path::new("/work/project"))
@@ -761,7 +775,7 @@ mod tests {
     fn compile_cwd_from_output_canonicalizes_existing_workspace() {
         let tmp = tempfile::TempDir::new().unwrap();
         let workspace = tmp.path().join("project");
-        let output = workspace.join(".fbuild/build/main.o");
+        let output = workspace.join(format!("{FBUILD_DIR_NAME}/build/main.o"));
         std::fs::create_dir_all(output.parent().unwrap()).unwrap();
         let expected = strip_unc_prefix(&workspace.canonicalize().unwrap());
         assert_eq!(

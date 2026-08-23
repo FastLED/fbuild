@@ -13,10 +13,16 @@ pub mod running_process;
 
 /// The project-local and home-local fbuild directory segment: `.fbuild`.
 ///
-/// This is the canonical spelling. Nothing outside this crate should write
-/// the literal — see the `ban_raw_fbuild_path` Dylint
-/// (FastLED/fbuild#1349).
-pub const FBUILD_DIR_NAME: &str = ".fbuild";
+/// This is the canonical spelling. Nothing outside `fbuild-paths` /
+/// `fbuild-core` should write the literal — see the `ban_raw_fbuild_path`
+/// Dylint (FastLED/fbuild#1349).
+///
+/// Re-exported from `fbuild-core` rather than defined here: `fbuild-core`
+/// needs the segment too (`compile_cwd_from_output` walks for it,
+/// `response_file` builds under it) and cannot depend on this crate, since
+/// the dependency runs the other way. Keeping the name reachable at
+/// `fbuild_paths::FBUILD_DIR_NAME` means no consumer has to know that.
+pub use fbuild_core::path::FBUILD_DIR_NAME;
 
 /// The build-tree segment directly under [`FBUILD_DIR_NAME`]: `build`.
 ///

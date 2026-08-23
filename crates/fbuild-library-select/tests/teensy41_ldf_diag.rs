@@ -29,12 +29,11 @@ fn home_dir() -> Option<PathBuf> {
 }
 
 fn find_teensy_libraries() -> Option<PathBuf> {
-    let home = home_dir()?;
-    let root = home
-        .join(".fbuild")
-        .join("prod")
-        .join("cache")
-        .join("platforms");
+    // FastLED/fbuild#1349: ask fbuild-paths where the cache is rather than
+    // rebuilding `~/.fbuild/prod/cache` here — the hardcoded `prod` made this
+    // diagnostic look in the wrong tree under `FBUILD_DEV_MODE=1`, and it
+    // ignored `FBUILD_CACHE_DIR` entirely.
+    let root = fbuild_paths::get_cache_root().join("platforms");
     let entries = std::fs::read_dir(&root).ok()?;
     for entry in entries.flatten() {
         let name = entry.file_name().to_string_lossy().into_owned();
