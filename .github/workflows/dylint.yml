@@ -20,6 +20,13 @@ concurrency:
   group: dylint.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
+# Read-only token. Every step here reads: checkout, a shallow `git fetch
+# origin main` for the shrink-only allowlist diff, and lint runs. Nothing
+# writes, so nothing should be able to. Without this the job inherits the
+# repository/organization default, which can include write access.
+permissions:
+  contents: read
+
 env:
   CARGO_TERM_COLOR: always
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
