@@ -11,6 +11,42 @@ CI/CD workflows for the fbuild project, covering lint, test, documentation, and 
 - **`loc-gate.yml`** -- Reject `.rs` files over 1000 LOC | **`lint-subprocess.yml`** -- Forbid direct subprocess spawns
 - **`crate-gate.yml`** -- Reject new workspace crates (monocrate policy, `ci/check_workspace_crates.py`)
 
+## Concurrency (auto-cancel superseded PR runs)
+
+Every `pull_request`-triggered workflow declares:
+
+```yaml
+concurrency:
+  group: <this-file>.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+```
+
+Pushing again to a feature branch **cancels** the superseded runs instead of
+queueing a second full copy of ~80 board builds behind them. Three details are
+load-bearing:
+
+- **Group keyed on the file name, not `github.workflow`.** Several board
+  workflows share a display name on purpose (`build-due.yml` and
+  `build-sam3x8e_due.yml` are both "Build Arduino Due"); keying on the display
+  name would make those siblings cancel each other inside one PR.
+- **Non-PR events fall back to `github.run_id`.** GitHub keeps at most **one
+  pending run per group**, so a shared group would silently *drop* queued
+  pushes to `main` -- the very SHAs that populate the soldr build caches and
+  feed the release flow. With `run_id` each non-PR run is its own group and
+  nothing on `main` is ever cancelled or dropped.
+- **`cancel-in-progress` is PR-only** for the same reason.
+
+Exempt, with the reason recorded in `ci/check_workflow_concurrency.py`:
+`template_build.yml` / `template_native_build.yml` (in a reusable workflow the
+`github` context is the *caller's*, so all ~80 nightly template invocations
+would share one group and cancel each other), `hw-ci.yml` (cancelling mid-flash
+can wedge real hardware), and `add-to-project.yml` (fires once on PR open).
+
+Per-board files get the block from `ci/render_workflows.py`; everything else
+carries it by hand. `ci-workflow-drift.yml` enforces both halves via
+`ci/check_workflow_concurrency.py` -- a new PR-triggered workflow without the
+block fails CI with a copy-paste fix.
+
 ## Scheduled Benchmarks
 
 - **`benchmark-build-comparison.yml`** -- Arduino CLI vs PlatformIO vs fbuild Blink cold/warm benchmark; runs nightly, manually, and for relevant pushes to `main`, then force-publishes the one-commit `benchmark-stats` branch and deploys its site to GitHub Pages

@@ -8,12 +8,17 @@ Sources of truth:
 Produces (or --check verifies):
   - .github/workflows/build-<board>.yml  (rewrites only the `on:` block)
 
-The rewritten block is wrapped in sentinel comment lines so subsequent
-re-renders are deterministic:
+The rewritten block spans `on:` *and* `concurrency:` and is wrapped in
+sentinel comment lines so subsequent re-renders are deterministic:
     # >>> RENDERED-ON-BEGIN (ci/render_workflows.py) -- do not edit by hand <<<
     on:
       ...
+    concurrency:
+      ...
     # >>> RENDERED-ON-END <<<
+
+The sentinel text still says "ON" for backwards compatibility -- renaming
+it would strand the old markers in every committed workflow.
 
 CI invokes this script with --check to enforce that committed workflows
 match the SOT. See FastLED/fbuild#835.
@@ -88,6 +93,34 @@ def render_paths_for_board(board: dict, families: dict, common_paths: list[str])
     return deduped
 
 
+def render_concurrency_block(board: dict) -> str:
+    """Auto-cancel superseded PR runs for one per-board workflow.
+
+    The group key is the workflow *file name*, not `github.workflow`: several
+    board workflows deliberately share a display name (build-due.yml and
+    build-sam3x8e_due.yml are both "Build Arduino Due"), and keying on the
+    display name would make those siblings cancel each other on one PR.
+
+    Non-`pull_request` events fall back to `github.run_id`, which puts every
+    such run in its own group. That is load-bearing, not cosmetic: with a
+    shared group GitHub keeps at most ONE pending run per group, so a burst of
+    pushes to main would silently DROP queued SHAs -- and main pushes are what
+    populate the soldr build caches and feed the release flow. Only PR runs
+    are ever superseded. See FastLED/fbuild#835 for the render pipeline.
+    """
+    workflow = board["workflow"]
+    group = (
+        f"{workflow}-"
+        "${{ github.event_name == 'pull_request' && github.ref || github.run_id }}"
+    )
+    return (
+        "\n"
+        "concurrency:\n"
+        f"  group: {group}\n"
+        "  cancel-in-progress: ${{ github.event_name == 'pull_request' }}\n"
+    )
+
+
 def render_on_block(board: dict, families: dict, common_paths: list[str]) -> str:
     paths = render_paths_for_board(board, families, common_paths)
     paths_yaml = "\n".join(f"      - '{p}'" for p in paths)
@@ -103,7 +136,7 @@ def render_on_block(board: dict, families: dict, common_paths: list[str]) -> str
         "    branches: [main]\n"
         "    paths:\n"
         f"{paths_yaml}\n"
-    )
+    ) + render_concurrency_block(board)
 
 
 def _find_on_and_jobs(lines: list[str]) -> tuple[int, int]:

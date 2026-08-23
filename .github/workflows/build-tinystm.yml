@@ -66,6 +66,10 @@ on:
       - 'crates/fbuild-library/**'
       - 'crates/fbuild-packages-fetch/**'
       - '.github/workflows/build-tinystm.yml'
+
+concurrency:
+  group: build-tinystm.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 # >>> RENDERED-ON-END <<<
 
 jobs:

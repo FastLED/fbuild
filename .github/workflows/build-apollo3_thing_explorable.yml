@@ -66,6 +66,10 @@ on:
       - 'crates/fbuild-library/**'
       - 'crates/fbuild-packages-fetch/**'
       - '.github/workflows/build-apollo3_thing_explorable.yml'
+
+concurrency:
+  group: build-apollo3_thing_explorable.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 # >>> RENDERED-ON-END <<<
 
 jobs:

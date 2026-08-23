@@ -7,6 +7,14 @@ on:
   pull_request:
     branches: [main]
 
+# Auto-cancel superseded PR runs: pushing again to a feature branch
+# supersedes the in-flight run instead of queueing behind it. Non-PR
+# events key on run_id so each gets its own group -- a shared group keeps
+# only ONE pending run, which would silently drop queued main SHAs.
+concurrency:
+  group: check-windows.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 env:
   CARGO_TERM_COLOR: always
   RUSTFLAGS: "-D warnings"
