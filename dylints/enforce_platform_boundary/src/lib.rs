@@ -130,6 +130,29 @@ static COUNTS: LazyLock<Mutex<HashMap<Key, u32>>> = LazyLock::new(|| Mutex::new(
 static OBSERVED_SOURCES: LazyLock<Mutex<HashSet<String>>> =
     LazyLock::new(|| Mutex::new(HashSet::new()));
 
+/// Identity stamped on every observation line so the checker can tell one
+/// driver process's findings from another's.
+///
+/// A bare PID is not that identity. `cargo dylint --all-targets` runs one
+/// driver process per crate-target, so a crate's lib and lib-test targets
+/// compile the same sources twice — and Windows reuses PIDs aggressively
+/// enough that the second process can be handed the first one's number once
+/// it has exited. The two runs' findings then merge under a single key and
+/// every count for the shared sources reads exactly double, which surfaced
+/// as `expected={('attr_cfg', 'windows'): 6} actual={...: 12}` on
+/// `fbuild-toolchain` while the Linux leg of the same commit was green.
+///
+/// Appending a nanosecond stamp taken once per process separates them:
+/// reusing a PID requires the original holder to have exited first, so the
+/// two processes cannot have started in the same nanosecond.
+static PROCESS_IDENTITY: LazyLock<String> = LazyLock::new(|| {
+    let nonce = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .map(|d| d.as_nanos())
+        .unwrap_or(0);
+    format!("{}-{nonce:x}", std::process::id())
+});
+
 fn append_observation(line: &str) {
     let Some(path) = std::env::var(OBSERVATION_PATH_ENV)
         .ok()
@@ -156,7 +179,7 @@ fn observe_source(context: &EarlyContext<'_>, span: Span) {
         .lock()
         .expect("platform lint source counter poisoned");
     if sources.insert(path.clone()) {
-        append_observation(&format!("{}\t{path}\tsource_seen\t-\n", std::process::id()));
+        append_observation(&format!("{}\t{path}\tsource_seen\t-\n", *PROCESS_IDENTITY));
     }
 }
 
@@ -250,10 +273,7 @@ fn record(context: &EarlyContext<'_>, span: Span, kind: Kind, normalized: &str) 
     let key = (path, kind.as_str().to_owned(), normalized.to_owned());
     append_observation(&format!(
         "{}\t{}\t{}\t{}\n",
-        std::process::id(),
-        key.0,
-        key.1,
-        key.2
+        *PROCESS_IDENTITY, key.0, key.1, key.2
     ));
     let mut counts = COUNTS.lock().expect("platform lint counter poisoned");
     if exceeds_baseline(&BASELINE.counts, &mut counts, &key) {
