@@ -21,7 +21,9 @@ use std::path::{Path, PathBuf};
 
 use rayon::prelude::*;
 
-use crate::scanner::{IncludeKind, IncludeRef, scan, scan_active};
+use crate::scanner::{
+    IncludeKind, IncludeRef, defined_macro_names, scan, scan_active, scan_active_with_known,
+};
 
 /// Result of a walk. `reached` and `unresolved` are sorted for deterministic
 /// cache keys.
@@ -131,6 +133,40 @@ pub fn walk_with_state_active(
     state: &mut WalkState,
 ) -> WalkResult {
     walk_with_state_scanner(seeds, search_paths, state, &|src| scan_active(src, defines))
+}
+
+/// [`walk_with_state_active`] told which macro names the corpus defines.
+///
+/// See [`crate::scanner::scan_active_with_known`]: a guard on a macro the
+/// project defines somewhere is undecidable from the command line alone, and
+/// pruning it hid includes that genuinely compile (FastLED/fbuild#1371).
+pub fn walk_with_state_active_known(
+    seeds: &[PathBuf],
+    search_paths: &[PathBuf],
+    defines: &HashMap<String, String>,
+    defined_somewhere: &HashSet<String>,
+    state: &mut WalkState,
+) -> WalkResult {
+    walk_with_state_scanner(seeds, search_paths, state, &|src| {
+        scan_active_with_known(src, defines, defined_somewhere)
+    })
+}
+
+/// Collect every macro name `#define`d in any file reachable from `seeds`.
+///
+/// Walks textually (all branches), because the question is what the corpus
+/// *could* define — a conditional must not filter the answer. Uses its own
+/// [`WalkState`] so the active passes keep their own scan cache semantics.
+pub fn collect_defined_macro_names(seeds: &[PathBuf], search_paths: &[PathBuf]) -> HashSet<String> {
+    let mut state = WalkState::new();
+    let result = walk_with_state(seeds, search_paths, &mut state);
+    let mut names = HashSet::new();
+    for path in &result.reached {
+        if let Ok(src) = std::fs::read_to_string(path) {
+            names.extend(defined_macro_names(&src));
+        }
+    }
+    names
 }
 
 fn walk_with_state_scanner<F>(

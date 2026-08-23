@@ -94,6 +94,45 @@ before its framework dependencies can be selected. This prevents an inactive
 header anywhere in a large library from self-selecting an unrelated framework
 library (FastLED/fbuild#1094).
 
+## Conditional includes: decided, undecidable, or a hint
+
+The walk evaluates preprocessor branches, but only where it honestly can. The
+macro set it is handed is the *compiler command line* — macros a header
+`#define`s are not threaded through, because the walker visits each file once
+in BFS order with a shared cache, and that is not preprocessor order.
+
+So a guard is resolved three ways:
+
+| guard | treatment |
+|---|---|
+| decidable from the command-line macros | evaluated; the dead arm is pruned |
+| references a macro the reachable corpus `#define`s somewhere | **undecidable** — every arm is scanned |
+| references a macro *nothing* defines | honestly false; the arm is pruned |
+
+The middle row is FastLED/fbuild#1371: FastLED derives `FL_IS_SAMD21` several
+headers deep from `-D__SAMD21G18A__`, so `#if defined(FL_IS_SAMD21)` is not
+false — it is unknowable from the command line, and treating it as false hid
+an `#include <SPI.h>` that genuinely compiles. The third row is what keeps
+this from collapsing into a plain textual scan and reviving the
+over-selection of #1094.
+
+A literal `#if 0` block is scanned as well. An include that can never compile
+is there only to be seen: the PlatformIO LDF hint idiom, which FastLED uses in
+`platforms/*/ldf_headers.h`. Its `#define`s are *not* applied, since that code
+does not run.
+
+Two separate comparisons with PlatformIO, since it is easy to conflate them:
+
+- **Against `chain`**, which evaluates no conditionals at all, fbuild is
+  *stricter*: a guard the command line settles is settled here, and its dead
+  arm is pruned.
+- **Against `chain+`**, which does evaluate conditionals, fbuild is *more
+  permissive*: `chain+` has no undecidable case, so a guard on a macro it
+  cannot see reads as false — the exact failure this rule exists to avoid.
+
+The `#if 0` hint works under `chain` only as a side effect of it evaluating
+nothing. `chain+` does not honor it. fbuild honors it deliberately.
+
 ## Why two-pass (not fixed-point)
 
 PlatformIO `chain` mode runs BFS from project sources, then ONE

@@ -9,7 +9,7 @@
 //! preprocessor conditionals — false positives are acceptable, false negatives
 //! are not) when using `scan`.
 
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 /// Whether an include used `<...>` (system / search-path) or `"..."` (quoted /
 /// same-directory-first).
@@ -194,8 +194,45 @@ pub fn scan(src: &str) -> Vec<IncludeRef> {
 /// active `#define` in the same file apply to subsequent lines, matching the
 /// part of preprocessing relevant to library discovery.
 pub fn scan_active(src: &str, defines: &HashMap<String, String>) -> Vec<IncludeRef> {
+    scan_active_with_known(src, defines, &HashSet::new())
+}
+
+/// [`scan_active`] told which macro names the wider corpus defines.
+///
+/// `defined_somewhere` is the union of every `#define`d name reachable from
+/// the seeds. A guard on a name in that set cannot be decided from the
+/// compiler command line alone, so every arm is scanned; a guard on a name
+/// nobody defines is honestly false and stays pruned (FastLED/fbuild#1371).
+pub fn scan_active_with_known(
+    src: &str,
+    defines: &HashMap<String, String>,
+    defined_somewhere: &HashSet<String>,
+) -> Vec<IncludeRef> {
     let mut macros = defines.clone();
-    scan(&active_source(src, &mut macros))
+    scan(&active_source(src, &mut macros, defined_somewhere))
+}
+
+/// Every macro name this source `#define`s, in any branch.
+///
+/// Deliberately textual: the point is to know what the corpus *could* define,
+/// so conditionals must not filter it.
+pub fn defined_macro_names(src: &str) -> Vec<String> {
+    let mut names = Vec::new();
+    for line in src.lines() {
+        let Some(directive) = line.trim_start().strip_prefix('#').map(str::trim_start) else {
+            continue;
+        };
+        let (name, rest) = split_directive(directive);
+        if name != "define" {
+            continue;
+        }
+        let (macro_name, _) = split_directive(rest);
+        let macro_name = macro_name.split('(').next().unwrap_or("");
+        if !macro_name.is_empty() {
+            names.push(macro_name.to_string());
+        }
+    }
+    names
 }
 
 /// Return `defines` plus macros declared in active branches of `src`.
@@ -204,72 +241,170 @@ pub fn scan_active(src: &str, defines: &HashMap<String, String>) -> Vec<IncludeR
 /// define remains visible when its included headers are scanned.
 pub fn active_defines(src: &str, defines: &HashMap<String, String>) -> HashMap<String, String> {
     let mut macros = defines.clone();
-    let _ = active_source(src, &mut macros);
+    let _ = active_source(src, &mut macros, &HashSet::new());
     macros
 }
 
 #[derive(Clone, Copy)]
 struct Conditional {
-    parent_active: bool,
+    /// Whether lines were being kept when this conditional opened.
+    parent_scan: bool,
+    /// Whether `#define`s were being applied when this conditional opened.
+    parent_define: bool,
+    /// A branch of this group was decidably taken, so later `#elif`/`#else`
+    /// arms are dead. Never set for an undecidable group.
     branch_taken: bool,
+    /// The group's condition could not be decided, so every arm is scanned.
+    unknown: bool,
 }
 
-fn active_source(src: &str, macros: &mut HashMap<String, String>) -> String {
-    let mut stack = Vec::new();
+/// Apply one branch decision to the scan/define state.
+///
+/// The two states are deliberately separate. Scanning is generous — the
+/// scanner's contract is that false positives are acceptable and false
+/// negatives are not — while `#define` application stays strict, because a
+/// macro picked up from a branch that may not be compiled would go on to
+/// decide *other* conditions wrongly.
+fn apply_decision(decision: Decision, parent_scan: bool, parent_define: bool) -> (bool, bool) {
+    match decision {
+        Decision::True => (parent_scan, parent_define),
+        // The LDF `#if 0` hint idiom: never compiled, so an include here is a
+        // dependency declaration. Scanned, but its defines are not real.
+        Decision::LiteralFalse => (parent_scan, false),
+        Decision::False => (false, false),
+        Decision::Unknown => (parent_scan, false),
+    }
+}
+
+/// The name of this file's own include guard, if it has the standard shape.
+///
+/// A header that opens `#ifndef FOO_H` / `#define FOO_H` defines its own guard
+/// macro, so `FOO_H` lands in the corpus-wide name set and the guard would
+/// read as *undecidable* — which would switch off `#define` application for
+/// the entire body of nearly every header in the project, and cascade into
+/// every later guard in the same file. The guard is not really undecidable:
+/// on the inclusion that matters it is not yet defined, so the body is taken.
+fn self_include_guard(src: &str) -> Option<String> {
+    let mut directives = src.lines().filter_map(|line| {
+        let directive = line.trim_start().strip_prefix('#')?.trim_start();
+        let (name, rest) = split_directive(directive);
+        if name.is_empty() {
+            None
+        } else {
+            Some((name, rest))
+        }
+    });
+    let (first_name, first_rest) = directives.next()?;
+    if first_name != "ifndef" {
+        return None;
+    }
+    let guard = first_token(first_rest);
+    if guard.is_empty() {
+        return None;
+    }
+    let (second_name, second_rest) = directives.next()?;
+    if second_name == "define" && first_token(second_rest) == guard {
+        Some(guard.to_string())
+    } else {
+        None
+    }
+}
+
+fn active_source(
+    src: &str,
+    macros: &mut HashMap<String, String>,
+    defined_somewhere: &HashSet<String>,
+) -> String {
+    let self_guard = self_include_guard(src);
+    let mut stack: Vec<Conditional> = Vec::new();
+    // `scan` keeps lines for the include scan; `active` gates `#define`.
+    let mut scan = true;
     let mut active = true;
     let mut output = String::with_capacity(src.len());
     for line in src.split_inclusive('\n') {
         let directive = line.trim_start().strip_prefix('#').map(str::trim_start);
-        let mut keep = active;
+        let mut keep = scan;
         if let Some(directive) = directive {
             let (name, rest) = split_directive(directive);
             match name {
-                "if" => {
-                    let current = active && eval_condition(rest, macros);
+                "if" | "ifdef" | "ifndef" => {
+                    let decision = match name {
+                        "if" => eval_decision(rest, macros, defined_somewhere),
+                        // A bare `#ifdef X` is undecidable for the same reason
+                        // `defined(X)` is: the macro set is the command line,
+                        // not the preprocessor's running state.
+                        "ifdef" => {
+                            decide_defined(macros, defined_somewhere, first_token(rest), false)
+                        }
+                        _ => decide_defined(macros, defined_somewhere, first_token(rest), true),
+                    };
+                    // A file's own `#ifndef FOO_H` is taken on the inclusion
+                    // that matters, whatever the corpus says about `FOO_H`.
+                    let decision = if name == "ifndef"
+                        && self_guard.as_deref() == Some(first_token(rest))
+                        && !macros.contains_key(first_token(rest))
+                    {
+                        Decision::True
+                    } else {
+                        decision
+                    };
+                    let (next_scan, next_active) = if scan {
+                        apply_decision(decision, scan, active)
+                    } else {
+                        (false, false)
+                    };
                     stack.push(Conditional {
-                        parent_active: active,
-                        branch_taken: current,
+                        parent_scan: scan,
+                        parent_define: active,
+                        branch_taken: scan && decision == Decision::True,
+                        unknown: scan && decision == Decision::Unknown,
                     });
-                    active = current;
-                    keep = false;
-                }
-                "ifdef" => {
-                    let current = active && macros.contains_key(first_token(rest));
-                    stack.push(Conditional {
-                        parent_active: active,
-                        branch_taken: current,
-                    });
-                    active = current;
-                    keep = false;
-                }
-                "ifndef" => {
-                    let current = active && !macros.contains_key(first_token(rest));
-                    stack.push(Conditional {
-                        parent_active: active,
-                        branch_taken: current,
-                    });
-                    active = current;
+                    scan = next_scan;
+                    active = next_active;
                     keep = false;
                 }
                 "elif" => {
                     if let Some(current) = stack.last_mut() {
-                        active = current.parent_active
-                            && !current.branch_taken
-                            && eval_condition(rest, macros);
-                        current.branch_taken |= active;
+                        if current.unknown {
+                            // Undecidable group: every arm is scanned, none
+                            // contributes defines.
+                            scan = current.parent_scan;
+                            active = false;
+                        } else if current.branch_taken {
+                            scan = false;
+                            active = false;
+                        } else {
+                            let decision = eval_decision(rest, macros, defined_somewhere);
+                            let (next_scan, next_active) = apply_decision(
+                                decision,
+                                current.parent_scan,
+                                current.parent_define,
+                            );
+                            scan = next_scan;
+                            active = next_active;
+                            current.branch_taken |= decision == Decision::True;
+                            current.unknown |= decision == Decision::Unknown;
+                        }
                     }
                     keep = false;
                 }
                 "else" => {
                     if let Some(current) = stack.last_mut() {
-                        active = current.parent_active && !current.branch_taken;
-                        current.branch_taken = true;
+                        if current.unknown {
+                            scan = current.parent_scan;
+                            active = false;
+                        } else {
+                            scan = current.parent_scan && !current.branch_taken;
+                            active = current.parent_define && !current.branch_taken;
+                            current.branch_taken = true;
+                        }
                     }
                     keep = false;
                 }
                 "endif" => {
                     if let Some(current) = stack.pop() {
-                        active = current.parent_active;
+                        scan = current.parent_scan;
+                        active = current.parent_define;
                     }
                     keep = false;
                 }
@@ -284,6 +419,12 @@ fn active_source(src: &str, macros: &mut HashMap<String, String>) -> String {
                     macros.remove(first_token(rest));
                     keep = false;
                 }
+                // A `#define`/`#undef` inside a branch that is only being
+                // scanned speculatively must not reach the macro set. The
+                // directive line itself is never include-bearing either.
+                "define" | "undef" => {
+                    keep = false;
+                }
                 _ => {}
             }
         }
@@ -294,6 +435,34 @@ fn active_source(src: &str, macros: &mut HashMap<String, String>) -> String {
         }
     }
     output
+}
+
+/// Decide an `#ifdef` / `#ifndef` against the available macro set.
+///
+/// Present means decidable. Absent means *unknown*, not false — see
+/// [`Decision`].
+fn decide_defined(
+    macros: &HashMap<String, String>,
+    defined_somewhere: &HashSet<String>,
+    name: &str,
+    negated: bool,
+) -> Decision {
+    if name.is_empty() {
+        return Decision::LiteralFalse;
+    }
+    if macros.contains_key(name) {
+        if negated {
+            Decision::False
+        } else {
+            Decision::True
+        }
+    } else if defined_somewhere.contains(name) {
+        Decision::Unknown
+    } else if negated {
+        Decision::True
+    } else {
+        Decision::False
+    }
 }
 
 fn split_directive(input: &str) -> (&str, &str) {
@@ -310,19 +479,76 @@ fn first_token(input: &str) -> &str {
         .unwrap_or("")
 }
 
-fn eval_condition(input: &str, macros: &HashMap<String, String>) -> bool {
+/// What a preprocessor condition evaluates to, given an incomplete macro set.
+///
+/// The third state is the point. `scan_active` is handed the *compiler
+/// command line* only — macros a header defines are not threaded through the
+/// walk, because the walker visits each file once, in BFS order, with a
+/// shared cache, and that is not preprocessor order. So a guard like
+/// `#if defined(FL_IS_SAMD21)` is not false; it is *unknown*, and the
+/// difference matters: FastLED derives `FL_IS_SAMD21` several headers deep
+/// from `-D__SAMD21G18A__`, and treating it as false made an include that is
+/// genuinely compiled invisible to library selection
+/// (FastLED/fbuild#1371).
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+enum Decision {
+    True,
+    /// Decidably false from the macros actually available.
+    False,
+    /// False, and reached without consulting a single macro — `#if 0`.
+    ///
+    /// Distinguished from [`Decision::False`] because an include inside a
+    /// literal-false block cannot be there to be compiled. It is a dependency
+    /// declaration: the PlatformIO LDF `#if 0` hint idiom.
+    LiteralFalse,
+    /// Referenced a macro that is not in the available set, so the branch
+    /// cannot be decided.
+    Unknown,
+}
+
+fn eval_decision(
+    input: &str,
+    macros: &HashMap<String, String>,
+    defined_somewhere: &HashSet<String>,
+) -> Decision {
     let mut parser = ConditionParser {
         input: input.as_bytes(),
         index: 0,
         macros,
+        defined_somewhere,
+        saw_unknown_macro: false,
+        saw_any_macro: false,
     };
-    parser.parse_or() != 0
+    let value = parser.parse_or();
+    if parser.saw_unknown_macro {
+        Decision::Unknown
+    } else if value != 0 {
+        Decision::True
+    } else if parser.saw_any_macro {
+        Decision::False
+    } else {
+        Decision::LiteralFalse
+    }
 }
 
 struct ConditionParser<'a> {
     input: &'a [u8],
     index: usize,
     macros: &'a HashMap<String, String>,
+    /// Every macro name `#define`d anywhere in the reachable source corpus.
+    ///
+    /// This is what separates "the project never defines this" from "the
+    /// project defines this somewhere the walk could not thread to us". Only
+    /// the second is undecidable; the first is honestly false, and treating
+    /// it as unknown would select libraries behind branches that genuinely
+    /// never compile.
+    defined_somewhere: &'a HashSet<String>,
+    /// Set when the expression consulted a macro that is not available, which
+    /// makes the whole condition undecidable rather than false.
+    saw_unknown_macro: bool,
+    /// Set when the expression consulted any macro at all, which separates
+    /// `#if 0` from a guard that happened to evaluate to zero.
+    saw_any_macro: bool,
 }
 
 impl<'a> ConditionParser<'a> {
@@ -388,15 +614,28 @@ impl<'a> ConditionParser<'a> {
             self.consume(b"(");
             let name = self.token();
             self.consume(b")");
+            self.saw_any_macro = true;
+            if !self.macros.contains_key(name) && self.defined_somewhere.contains(name) {
+                self.saw_unknown_macro = true;
+            }
             return i64::from(self.macros.contains_key(name));
         }
         if let Some(value) = parse_number(token) {
             return value;
         }
-        self.macros
-            .get(token)
-            .and_then(|value| parse_number(value))
-            .unwrap_or(0)
+        if token.is_empty() {
+            return 0;
+        }
+        self.saw_any_macro = true;
+        match self.macros.get(token).and_then(|value| parse_number(value)) {
+            Some(value) => value,
+            None => {
+                if self.defined_somewhere.contains(token) {
+                    self.saw_unknown_macro = true;
+                }
+                0
+            }
+        }
     }
 
     fn consume(&mut self, expected: &[u8]) -> bool {
@@ -521,353 +760,5 @@ fn try_parse_include(
 }
 
 #[cfg(test)]
-mod tests {
-    use super::*;
-
-    fn first(refs: &[IncludeRef]) -> &IncludeRef {
-        refs.first().expect("expected at least one include ref")
-    }
-
-    #[test]
-    fn s01_angled() {
-        let refs = scan("#include <stdio.h>");
-        assert_eq!(refs.len(), 1);
-        assert_eq!(first(&refs).path, "stdio.h");
-        assert_eq!(first(&refs).kind, IncludeKind::Angled);
-    }
-
-    #[test]
-    fn s02_quoted() {
-        let refs = scan("#include \"foo.h\"");
-        assert_eq!(refs.len(), 1);
-        assert_eq!(first(&refs).path, "foo.h");
-        assert_eq!(first(&refs).kind, IncludeKind::Quoted);
-    }
-
-    #[test]
-    fn s03_leading_ws() {
-        let refs = scan("  #include <a.h>");
-        assert_eq!(refs.len(), 1);
-        assert_eq!(first(&refs).path, "a.h");
-    }
-
-    #[test]
-    fn s04_ws_after_hash() {
-        let refs = scan("#  include <a.h>");
-        assert_eq!(refs.len(), 1);
-        assert_eq!(first(&refs).path, "a.h");
-    }
-
-    #[test]
-    fn s05_path_with_slashes() {
-        let refs = scan("#include <a/b/c.h>");
-        assert_eq!(refs.len(), 1);
-        assert_eq!(first(&refs).path, "a/b/c.h");
-    }
-
-    #[test]
-    fn s06_trailing_comment_ignored() {
-        let refs = scan("#include   <a.h>  // trailing\n");
-        assert_eq!(refs.len(), 1);
-        assert_eq!(first(&refs).path, "a.h");
-    }
-
-    #[test]
-    fn s07_garbage_after_first_include_does_not_crash() {
-        let refs = scan("#include \"a.h\" \"b.h\"\n");
-        assert_eq!(refs.len(), 1);
-        assert_eq!(first(&refs).path, "a.h");
-    }
-
-    #[test]
-    fn s10_line_comment_blocks_include() {
-        let refs = scan("// #include <evil.h>\n");
-        assert!(refs.is_empty(), "got {refs:?}");
-    }
-
-    #[test]
-    fn s11_block_comment_blocks_include() {
-        let refs = scan("/* #include <evil.h> */\n");
-        assert!(refs.is_empty(), "got {refs:?}");
-    }
-
-    #[test]
-    fn s12_multiline_block_comment_blocks_include() {
-        let refs = scan("/*\n#include <evil.h>\n*/\n");
-        assert!(refs.is_empty(), "got {refs:?}");
-    }
-
-    #[test]
-    fn s13_string_literal_blocks_include() {
-        let refs = scan("const char* s = \"#include <evil.h>\";\n");
-        assert!(refs.is_empty(), "got {refs:?}");
-    }
-
-    #[test]
-    fn s14_escaped_quotes_in_string_blocks_include() {
-        let refs = scan("const char* s = \"\\\"#include <evil.h>\\\"\";\n");
-        assert!(refs.is_empty(), "got {refs:?}");
-    }
-
-    #[test]
-    fn s15_raw_string_blocks_include() {
-        let refs = scan("const char* s = R\"(#include <evil.h>)\";\n");
-        assert!(refs.is_empty(), "got {refs:?}");
-    }
-
-    #[test]
-    fn s15_raw_string_with_delim_blocks_include() {
-        let refs = scan("const char* s = R\"DELIM(#include <evil.h>)DELIM\";\n");
-        assert!(refs.is_empty(), "got {refs:?}");
-    }
-
-    #[test]
-    fn s16_char_literal_does_not_swallow() {
-        let refs = scan("char c = '#';\n#include <a.h>\n");
-        assert_eq!(refs.len(), 1);
-        assert_eq!(first(&refs).path, "a.h");
-    }
-
-    #[test]
-    fn s17_line_comment_then_include() {
-        let refs = scan("//#include <a.h>\n#include <b.h>\n");
-        assert_eq!(refs.len(), 1);
-        assert_eq!(first(&refs).path, "b.h");
-    }
-
-    #[test]
-    fn s20_span_line_after_blank_lines() {
-        let refs = scan("\n\n#include <a.h>");
-        assert_eq!(first(&refs).span.line, 3);
-        assert_eq!(first(&refs).span.col, 1);
-    }
-
-    #[test]
-    fn s21_span_col_with_indent() {
-        let refs = scan("  #include <a.h>");
-        assert_eq!(first(&refs).span.line, 1);
-        assert_eq!(first(&refs).span.col, 3);
-    }
-
-    #[test]
-    fn s30_if_zero_branch_still_scanned() {
-        let refs = scan("#if 0\n#include <a.h>\n#endif\n");
-        assert_eq!(refs.len(), 1);
-        assert_eq!(first(&refs).path, "a.h");
-    }
-
-    #[test]
-    fn s31_has_include_branch_still_scanned() {
-        let refs = scan("#ifdef __has_include\n#include <a.h>\n#endif\n");
-        assert_eq!(refs.len(), 1);
-    }
-
-    #[test]
-    fn s32_both_branches_scanned() {
-        let refs = scan("#if defined(X)\n#include <a.h>\n#else\n#include <b.h>\n#endif\n");
-        assert_eq!(refs.len(), 2);
-        assert_eq!(refs[0].path, "a.h");
-        assert_eq!(refs[1].path, "b.h");
-    }
-
-    #[test]
-    fn ignores_other_directives() {
-        let refs = scan("#define FOO 1\n#pragma once\n");
-        assert!(refs.is_empty());
-    }
-
-    #[test]
-    fn handles_crlf_line_endings() {
-        let refs = scan("#include <a.h>\r\n#include <b.h>\r\n");
-        assert_eq!(refs.len(), 2);
-        assert_eq!(refs[0].span.line, 1);
-        assert_eq!(refs[1].span.line, 2);
-    }
-
-    #[test]
-    fn does_not_panic_on_unterminated_block_comment() {
-        let _ = scan("/* unterminated");
-    }
-
-    #[test]
-    fn does_not_panic_on_unterminated_string() {
-        let _ = scan("const char* s = \"unterminated");
-    }
-
-    #[test]
-    fn does_not_panic_on_unterminated_raw_string() {
-        let _ = scan("const char* s = R\"DELIM(unterminated");
-    }
-
-    #[test]
-    fn identifier_ending_in_r_does_not_start_raw_string() {
-        // `FooR` ends in `R` but is an identifier — the next `R"(` must NOT
-        // be treated as the opener of a raw string. If it were, the scanner
-        // would consume into RawString state and silently swallow the
-        // `#include` on the following line — a false negative the module
-        // contract forbids.
-        let refs = scan("auto FooR = 0;\n#include <a.h>\n");
-        assert_eq!(refs.len(), 1);
-        assert_eq!(refs[0].path, "a.h");
-    }
-
-    #[test]
-    fn identifier_ending_in_lr_does_not_start_wide_raw_string() {
-        // `FooL` precedes `R"(` — the `L` is part of the identifier, not the
-        // wide-string prefix. Must NOT enter RawString state.
-        let refs = scan("auto FooL = 0;\n#include <a.h>\n");
-        assert_eq!(refs.len(), 1);
-        assert_eq!(refs[0].path, "a.h");
-    }
-
-    #[test]
-    fn identifier_ending_in_lower_u_r_does_not_start_raw_string() {
-        let refs = scan("auto Foou = 0;\n#include <a.h>\n");
-        assert_eq!(refs.len(), 1);
-        assert_eq!(refs[0].path, "a.h");
-    }
-
-    #[test]
-    fn identifier_ending_in_upper_u_r_does_not_start_raw_string() {
-        let refs = scan("auto FooU = 0;\n#include <a.h>\n");
-        assert_eq!(refs.len(), 1);
-        assert_eq!(refs[0].path, "a.h");
-    }
-
-    #[test]
-    fn underscore_before_raw_prefix_blocks_detection() {
-        // `_R"(...)"` is identifier-continuation; must not start a raw
-        // string. Critical for code that uses `_R` as a translation macro
-        // name (common in i18n shims).
-        let refs = scan("foo_R = 0;\n#include <a.h>\n");
-        assert_eq!(refs.len(), 1);
-    }
-
-    #[test]
-    fn digit_before_raw_prefix_blocks_detection() {
-        // Numbers can appear in identifiers; `foo1R` must not start a raw
-        // string.
-        let refs = scan("foo1R = 0;\n#include <a.h>\n");
-        assert_eq!(refs.len(), 1);
-    }
-
-    #[test]
-    fn whitespace_before_raw_prefix_starts_raw_string() {
-        // Positive control — make sure we didn't break legitimate raw
-        // strings preceded by whitespace.
-        let refs = scan("auto x = R\"(#include <evil.h>)\";\n#include <a.h>\n");
-        assert_eq!(refs.len(), 1);
-        assert_eq!(refs[0].path, "a.h");
-    }
-
-    #[test]
-    fn start_of_file_raw_string_still_detected() {
-        // Boundary case: `R"(...)"` at byte 0 has no previous byte;
-        // `i > 0` clause must short-circuit and allow detection.
-        let refs = scan("R\"(#include <evil.h>)\"\n#include <a.h>\n");
-        assert_eq!(refs.len(), 1);
-        assert_eq!(refs[0].path, "a.h");
-    }
-
-    #[test]
-    fn punctuation_before_raw_prefix_starts_raw_string() {
-        // `=R"(...)"` — `=` is non-identifier; must enter raw-string state
-        // and swallow the embedded `#include`.
-        let refs = scan("auto x =R\"(#include <evil.h>)\";\n#include <a.h>\n");
-        assert_eq!(refs.len(), 1);
-        assert_eq!(refs[0].path, "a.h");
-    }
-
-    #[test]
-    fn paren_before_raw_prefix_starts_raw_string() {
-        // `(R"(...)"` — `(` is non-identifier.
-        let refs = scan("foo(R\"(#include <evil.h>)\");\n#include <a.h>\n");
-        assert_eq!(refs.len(), 1);
-        assert_eq!(refs[0].path, "a.h");
-    }
-
-    #[test]
-    fn many_includes_in_one_file() {
-        // Adversary: pile of includes interspersed with comments and
-        // strings. Confirm count + order are stable.
-        let src = "// header\n\
-                   #include <a.h>\n\
-                   const char* s = \"#include <not_real.h>\";\n\
-                   #include \"b.h\"\n\
-                   /* block\n\
-                      #include <also_not_real.h>\n\
-                   */\n\
-                   #include <c.h>\n";
-        let refs = scan(src);
-        assert_eq!(refs.len(), 3);
-        assert_eq!(refs[0].path, "a.h");
-        assert_eq!(refs[1].path, "b.h");
-        assert_eq!(refs[2].path, "c.h");
-    }
-
-    #[test]
-    fn empty_input_returns_empty() {
-        assert!(scan("").is_empty());
-    }
-
-    #[test]
-    fn lone_hash_does_not_panic() {
-        let _ = scan("#");
-    }
-
-    #[test]
-    fn hash_then_eof_does_not_panic() {
-        let _ = scan("#include");
-    }
-
-    #[test]
-    fn null_bytes_do_not_panic() {
-        // Adversary: embedded NUL inside source. Real toolchains reject
-        // these but the scanner must not crash.
-        let _ = scan("foo\0bar\n#include <a.h>\n");
-    }
-
-    #[test]
-    fn very_long_line_does_not_panic() {
-        // 64 KB single line.
-        let mut s = String::from("// ");
-        s.push_str(&"x".repeat(64 * 1024));
-        s.push('\n');
-        s.push_str("#include <a.h>\n");
-        let refs = scan(&s);
-        assert_eq!(refs.len(), 1);
-    }
-
-    #[test]
-    fn deeply_nested_block_comments_do_not_panic() {
-        // C/C++ block comments don't nest, but we still shouldn't choke on
-        // pathological input.
-        let s = "/* /* /* */\n#include <a.h>\n";
-        let refs = scan(s);
-        // After the first `*/`, we're back in code state, so the include
-        // must be picked up.
-        assert_eq!(refs.len(), 1);
-    }
-
-    #[test]
-    fn active_scan_ignores_disabled_branch() {
-        let refs = scan_active(
-            "#if 0\n#include <Audio.h>\n#else\n#include <SPI.h>\n#endif\n",
-            &HashMap::new(),
-        );
-        assert_eq!(refs.len(), 1);
-        assert_eq!(refs[0].path, "SPI.h");
-    }
-
-    #[test]
-    fn active_scan_uses_compiler_and_local_defines() {
-        let mut defines = HashMap::new();
-        defines.insert("ARDUINO".to_string(), "10819".to_string());
-        let refs = scan_active(
-            "#if defined(ARDUINO) && ARDUINO >= 100\n#define USE_SPI 1\n#endif\n#ifdef USE_SPI\n#include <SPI.h>\n#endif\n",
-            &defines,
-        );
-        assert_eq!(refs.len(), 1);
-        assert_eq!(refs[0].path, "SPI.h");
-    }
-}
+#[path = "scanner_tests.rs"]
+mod tests;
