@@ -21,7 +21,7 @@ fn expand_embed_entries(
         } else {
             project_dir.join(entry)
         };
-        if fbuild_packages::lnk::has_lnk_extension(&p) {
+        if fbuild_packages::lnk::is_blob_pointer(&p) {
             let cache = lnk_cache.ok_or_else(|| {
                 fbuild_core::FbuildError::PackageError(
                     "disk cache unavailable; cannot resolve .lnk entries".to_string(),

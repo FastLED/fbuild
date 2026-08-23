@@ -51,7 +51,7 @@ help text).
 | `fbuild show` | Show daemon logs or other introspection. | `fbuild help show` |
 | `fbuild device` | List / inspect connected devices the daemon knows about. | `fbuild help device` |
 | `fbuild purge` | Purge cached packages — full purge or LRU-only via `--gc`. | `fbuild help purge` |
-| `fbuild lnk` | Manage `.lnk` resource pointers (fetch / verify / add). | `fbuild help lnk` |
+| `fbuild lnk` | Manage `.fetch` blob pointers (fetch / verify / add). `.lnk` is still read for pointers written before FastLED/fbuild#1369; FastLED's runtime `.lnk` asset links are a different format and are skipped. | `fbuild help lnk` |
 
 ## Serial-port introspection (FastLED/fbuild#686)
 

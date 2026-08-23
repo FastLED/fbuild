@@ -184,8 +184,13 @@ fn strip_lnk_suffix(rel: &Path) -> Result<PathBuf> {
     let file_name = rel.file_name().and_then(|n| n.to_str()).ok_or_else(|| {
         FbuildError::PackageError(format!("cannot decode lnk file name: {}", rel.display()))
     })?;
-    let stripped = file_name.strip_suffix(".lnk").ok_or_else(|| {
-        FbuildError::PackageError(format!("lnk path does not end in .lnk: {}", rel.display()))
+    let stripped = super::strip_pointer_extension(file_name).ok_or_else(|| {
+        FbuildError::PackageError(format!(
+            "blob pointer does not end in .{} or .{}: {}",
+            super::BLOB_POINTER_EXTENSION,
+            super::LEGACY_BLOB_POINTER_EXTENSION,
+            rel.display()
+        ))
     })?;
     Ok(rel
         .parent()
@@ -277,6 +282,32 @@ mod tests {
         assert_eq!(target, Path::new("/build/foo.bin"));
     }
 
+    /// FastLED/fbuild#1369: the target path drops whichever pointer
+    /// extension the file carries. Missing this is not a silent no-op —
+    /// `target_path_for` hard-errors, so a `.fetch` the scanner just found
+    /// would be refused at materialize time.
+    #[test]
+    fn target_path_strips_either_pointer_extension() {
+        assert_eq!(
+            target_path_for(
+                Path::new("/repo/data/asset.bin.fetch"),
+                Path::new("/repo"),
+                Path::new("/build")
+            )
+            .unwrap(),
+            Path::new("/build/data/asset.bin")
+        );
+        assert_eq!(
+            target_path_for(
+                Path::new("/repo/data/asset.bin.lnk"),
+                Path::new("/repo"),
+                Path::new("/build")
+            )
+            .unwrap(),
+            Path::new("/build/data/asset.bin")
+        );
+    }
+
     #[test]
     fn target_path_rejects_non_lnk_suffix() {
         let err = target_path_for(
@@ -286,7 +317,7 @@ mod tests {
         )
         .unwrap_err()
         .to_string();
-        assert!(err.contains("does not end in .lnk"), "got: {err}");
+        assert!(err.contains("does not end in .fetch or .lnk"), "got: {err}");
     }
 
     #[test]

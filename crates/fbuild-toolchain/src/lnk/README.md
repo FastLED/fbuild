@@ -1,12 +1,39 @@
-# `.lnk` resource pointers
+# `.fetch` blob pointers
 
 Tiny JSON manifests checked into source control that point at remote binary
 blobs. At build time fbuild fetches them, verifies the sha256, caches them
 in the shared two-phase disk cache, and materializes them next to where the
-`.lnk` would have been (in the build tree, not the source tree).
+pointer would have been (in the build tree, not the source tree).
 
 The intent: keep the source repo small, keep binary assets out of git
 history, but have them appear as if they were always there during builds.
+
+## The extension, and the one it is not
+
+`fbuild lnk add` writes `.fetch`. `.lnk` is still read, so pointers written
+before FastLED/fbuild#1369 keep working — only the default for newly
+written ones moved.
+
+The split exists because `.lnk` was serving two unrelated roles:
+
+|  | runtime asset link | build-time blob pointer |
+| --- | --- | --- |
+| extension | `.lnk` | `.fetch` |
+| parsed by | `fl::parse_lnk` (C++, on the MCU) | fbuild (Rust, on the build host) |
+| format | text: URL line + `key=value` | JSON: `{v, url, sha256, size, extract}` |
+| `sha256` | optional, unenforced | **required** — the cache is content-addressed |
+| written by | hand | `fbuild lnk add` |
+
+They are not competing drafts of one format. The runtime form has to parse
+on an MCU, where a JSON parser is not worth carrying; the build-time form
+needs a mandatory digest because the resolver caches by content.
+
+Sharing one extension read as one concept, so people normalized toward
+whichever they met first. That happened: converting a runtime link to this
+JSON schema looked like tidying, and `fl::parse_lnk` then took `{` as the
+URL (FastLED/FastLED#4012). Distinct extensions make the mistake
+unexpressible. A `.lnk` that does not parse as JSON is therefore reported as
+"probably a runtime asset link", not as a malformed blob pointer.
 
 ## Format (v1)
 
@@ -36,7 +63,7 @@ escape hatch.
 
 ```text
   source tree:                build tree:
-    foo.bin.lnk    ─────►       resources/foo.bin
+    foo.bin.fetch  ─────►       resources/foo.bin
        │                              ▲
        │ scan + parse                 │ hardlink (or copy)
        ▼                              │
@@ -56,13 +83,13 @@ the materialized file as if it had been in the source tree all along.
 ## CLI
 
 ```bash
-# Fetch every .lnk-referenced blob into the disk cache
+# Fetch every pointer-referenced blob into the disk cache
 fbuild lnk pull [<project_dir>]
 
 # Verify every cached blob matches its sha256 (no network)
 fbuild lnk check [<project_dir>]
 
-# One-shot: download a URL, hash it, write a new .lnk
+# One-shot: download a URL, hash it, write a new .fetch
 fbuild lnk add <url> [-o <output_path>]
 ```
 

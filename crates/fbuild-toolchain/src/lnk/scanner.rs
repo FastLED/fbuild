@@ -42,7 +42,7 @@ pub fn scan_for_lnk(root: &Path) -> Result<Vec<DiscoveredLnk>> {
             continue;
         }
         let path = entry.path();
-        if path.extension().and_then(|s| s.to_str()) != Some("lnk") {
+        if !super::is_blob_pointer(path) {
             continue;
         }
         match LnkFile::from_path(path) {
@@ -51,11 +51,27 @@ pub fn scan_for_lnk(root: &Path) -> Result<Vec<DiscoveredLnk>> {
                 lnk,
             }),
             Err(e) => {
-                warn!(
-                    path = %path.display(),
-                    error = %e,
-                    "skipping malformed .lnk file"
-                );
+                // FastLED/fbuild#1369: a `.lnk` that will not parse as JSON
+                // is more likely FastLED's runtime asset link — plain text,
+                // read on the MCU by `fl::parse_lnk`, and none of fbuild's
+                // business — than a corrupt blob pointer. Say so, instead of
+                // calling someone's correct file malformed. A `.fetch` is
+                // unambiguously ours, so that one keeps the blunt wording.
+                if path.extension().and_then(|s| s.to_str())
+                    == Some(super::LEGACY_BLOB_POINTER_EXTENSION)
+                {
+                    warn!(
+                        path = %path.display(),
+                        error = %e,
+                        "skipping .lnk that is not fbuild's JSON blob-pointer format; if this is                          a runtime asset link consumed by fl::parse_lnk, it is not fbuild's to                          resolve and this warning is expected"
+                    );
+                } else {
+                    warn!(
+                        path = %path.display(),
+                        error = %e,
+                        "skipping malformed blob pointer"
+                    );
+                }
             }
         }
     }
@@ -130,6 +146,22 @@ mod tests {
         // The good one is found; the bad one is logged + skipped.
         assert_eq!(found.len(), 1);
         assert_eq!(found[0].lnk.url, "https://x/g.bin");
+    }
+
+    /// FastLED/fbuild#1369: the scanner must find what `fbuild lnk add`
+    /// now writes, and must go on finding what it wrote before.
+    #[test]
+    fn finds_both_pointer_extensions_in_one_tree() {
+        let dir = tempfile::tempdir().unwrap();
+        write_valid_lnk(&dir.path().join("new.bin.fetch"), "https://x/new.bin");
+        write_valid_lnk(&dir.path().join("old.bin.lnk"), "https://x/old.bin");
+        let mut found: Vec<String> = scan_for_lnk(dir.path())
+            .unwrap()
+            .into_iter()
+            .map(|d| d.lnk.url)
+            .collect();
+        found.sort();
+        assert_eq!(found, vec!["https://x/new.bin", "https://x/old.bin"]);
     }
 
     #[test]

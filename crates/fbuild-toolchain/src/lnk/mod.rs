@@ -28,7 +28,10 @@ pub mod materialize;
 pub mod resolver;
 pub mod scanner;
 
-pub use embed::{expand_lnk_entries, has_lnk_extension, materialize_lnk_entry};
+pub use embed::{
+    BLOB_POINTER_EXTENSION, LEGACY_BLOB_POINTER_EXTENSION, expand_lnk_entries, is_blob_pointer,
+    materialize_lnk_entry, strip_pointer_extension,
+};
 pub use format::{ExtractMode, LnkFile};
 pub use materialize::{MaterializedLnk, materialize_all, materialize_one};
 pub use resolver::{ResolvedBlob, resolve};
