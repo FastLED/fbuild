@@ -21,7 +21,9 @@
 //! contents, which is what makes this cheap to catch: the file states exactly
 //! which directories are supposed to be non-empty.
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
+
+use fbuild_core::path::NormalizedPath;
 
 /// A declared submodule whose directory came out of the archive empty.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -29,7 +31,7 @@ pub struct EmptySubmodule {
     /// Path as written in `.gitmodules`, relative to the repo root.
     pub declared_path: String,
     /// Where that landed on disk.
-    pub extracted_at: PathBuf,
+    pub extracted_at: NormalizedPath,
 }
 
 /// Parse the `path = …` entries out of a `.gitmodules` file.
@@ -77,9 +79,9 @@ pub fn find_empty_submodules(root: &Path) -> Vec<EmptySubmodule> {
         .into_iter()
         .filter_map(|declared| {
             let extracted_at = root.join(&declared);
-            is_empty_dir(&extracted_at).then_some(EmptySubmodule {
+            is_empty_dir(&extracted_at).then(|| EmptySubmodule {
                 declared_path: declared,
-                extracted_at,
+                extracted_at: NormalizedPath::from(extracted_at),
             })
         })
         .collect()
@@ -209,7 +211,7 @@ mod tests {
     fn the_error_names_the_directories_and_the_archive_kind() {
         let empty = vec![EmptySubmodule {
             declared_path: "libraries/LittleFS/lib/littlefs".to_string(),
-            extracted_at: PathBuf::from("/cache/x/libraries/LittleFS/lib/littlefs"),
+            extracted_at: NormalizedPath::from("/cache/x/libraries/LittleFS/lib/littlefs"),
         }];
         let msg = empty_submodule_error(
             "esp8266-arduino",
