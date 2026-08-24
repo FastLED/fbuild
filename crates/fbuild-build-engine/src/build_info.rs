@@ -812,7 +812,9 @@ mod tests {
     fn find_build_info_walks_up_from_elf_dir() {
         let tmp = tempfile::TempDir::new().unwrap();
         let project = tmp.path();
-        let build_dir = project.join(".fbuild").join("build").join("uno");
+        let build_dir = fbuild_paths::get_project_fbuild_dir(project)
+            .join(fbuild_paths::BUILD_DIR_NAME)
+            .join("uno");
         std::fs::create_dir_all(&build_dir).unwrap();
         // Emit at the project root (where platformio.ini would live).
         let info = sample_info();

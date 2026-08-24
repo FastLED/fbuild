@@ -38,11 +38,6 @@ crates/fbuild-cli/src/cli/args.rs
 # Each line below is a file that spells `.fbuild` by hand today. Removing
 # a line is the unit of progress on #1349; adding one is not allowed.
 
-crates/fbuild-build-engine/src/build_info.rs
-crates/fbuild-build-engine/src/compile_database/tests/clang.rs
-crates/fbuild-build-engine/src/compile_database/tests/generate.rs
-crates/fbuild-build-engine/src/compiler_tests.rs
-crates/fbuild-build-engine/src/linker.rs
 crates/fbuild-build/src/compile_many.rs
 crates/fbuild-build/tests/avr_build.rs
 crates/fbuild-build/tests/clangd_check_parity.rs

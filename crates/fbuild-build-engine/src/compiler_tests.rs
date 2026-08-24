@@ -35,7 +35,7 @@ async fn compile_path_contract_pairs_cwd_and_output_arg_for_282() {
     // Workspace shape mirrors CI: <project>/.fbuild/build/<env>/quick/core
     let workspace = tmp_canon.join("proj_for_282");
     let core = workspace
-        .join(".fbuild")
+        .join(fbuild_paths::FBUILD_DIR_NAME)
         .join("build")
         .join("x")
         .join("quick")
@@ -322,7 +322,11 @@ fn test_needs_rebuild_resolves_relative_depfile_deps_against_workspace() {
     let tmp = tempfile::TempDir::new().unwrap();
     let ws = tmp.path();
     let src_dir = ws.join("src");
-    let build_dir = ws.join(".fbuild/build/demo/release/src");
+    let build_dir = ws.join(format!(
+        "{}/{}/demo/release/src",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    ));
     std::fs::create_dir_all(&src_dir).unwrap();
     std::fs::create_dir_all(&build_dir).unwrap();
 
@@ -337,7 +341,11 @@ fn test_needs_rebuild_resolves_relative_depfile_deps_against_workspace() {
     // compile cwd is the workspace root.
     std::fs::write(
         &dep,
-        ".fbuild/build/demo/release/src/main.cpp.o: src/main.cpp src/config.h\n",
+        format!(
+            "{}/{}/demo/release/src/main.cpp.o: src/main.cpp src/config.h\n",
+            fbuild_paths::FBUILD_DIR_NAME,
+            fbuild_paths::BUILD_DIR_NAME
+        ),
     )
     .unwrap();
     std::thread::sleep(std::time::Duration::from_millis(20));
@@ -438,8 +446,12 @@ fn test_build_rebuild_signature_for_workspace_outside_paths_keep_legacy_normaliz
     // to the project-independent normalization — unchanged behavior.
     let tmp_a = tempfile::tempdir().unwrap();
     let tmp_b = tempfile::tempdir().unwrap();
-    let global_a = tmp_a.path().join(".fbuild/cache/framework/cores/arduino");
-    let global_b = tmp_b.path().join(".fbuild/cache/framework/cores/arduino");
+    let cache_rel = format!(
+        "{}/cache/framework/cores/arduino",
+        fbuild_paths::FBUILD_DIR_NAME
+    );
+    let global_a = tmp_a.path().join(&cache_rel);
+    let global_b = tmp_b.path().join(&cache_rel);
     let ws_a = tmp_a.path().join("proj-a");
     let ws_b = tmp_b.path().join("other-name-proj-b");
     std::fs::create_dir_all(&ws_a).unwrap();
@@ -501,7 +513,10 @@ fn test_build_rebuild_signature_ignores_absolute_compiler_path() {
         &[],
     );
     let sig_b = build_rebuild_signature(
-        Path::new("/home/runner/.fbuild/packages/toolchain-atmelavr/bin/avr-gcc"),
+        Path::new(&format!(
+            "/home/runner/{}/packages/toolchain-atmelavr/bin/avr-gcc",
+            fbuild_paths::FBUILD_DIR_NAME
+        )),
         &flags,
         &[],
         &[],
@@ -536,11 +551,17 @@ fn test_build_rebuild_signature_changes_when_compiler_name_changes() {
 fn test_build_rebuild_signature_ignores_attached_include_root() {
     let flags_a = vec![
         "-I/tmp/ws-a/project/include".to_string(),
-        "-I/home/runner/.fbuild/packages/framework-arduinoavr/cores/arduino".to_string(),
+        format!(
+            "-I/home/runner/{}/packages/framework-arduinoavr/cores/arduino",
+            fbuild_paths::FBUILD_DIR_NAME
+        ),
     ];
     let flags_b = vec![
         "-I/tmp/ws-b/project/include".to_string(),
-        "-I/Users/runner/.fbuild/packages/framework-arduinoavr/cores/arduino".to_string(),
+        format!(
+            "-I/Users/runner/{}/packages/framework-arduinoavr/cores/arduino",
+            fbuild_paths::FBUILD_DIR_NAME
+        ),
     ];
 
     let sig_a = build_rebuild_signature(
