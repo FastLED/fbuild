@@ -75,8 +75,7 @@
       "test_dir": "tests/platform/apollo3_red",
       "env_name": "apollo3_red",
       "firmware_ext": "bin",
-      "family": "apollo3",
-      "core": true
+      "family": "apollo3"
     },
     {
       "workflow": "build-apollo3_thing_explorable.yml",
@@ -172,8 +171,7 @@
       "test_dir": "tests/platform/ch32v003",
       "env_name": "ch32v003",
       "firmware_ext": "bin",
-      "family": "ch32v",
-      "core": true
+      "family": "ch32v"
     },
     {
       "workflow": "build-ch32v006.yml",
@@ -245,8 +243,7 @@
       "test_dir": "tests/platform/due",
       "env_name": "due",
       "firmware_ext": "bin",
-      "family": "sam",
-      "core": true
+      "family": "sam"
     },
     {
       "workflow": "build-esp32c2.yml",
@@ -262,8 +259,7 @@
       "test_dir": "tests/platform/esp32c3",
       "env_name": "esp32c3",
       "firmware_ext": "bin",
-      "family": "esp32",
-      "core": true
+      "family": "esp32"
     },
     {
       "workflow": "build-esp32c5.yml",
@@ -328,8 +324,7 @@
       "test_dir": "tests/platform/esp8266",
       "env_name": "esp8266",
       "firmware_ext": "bin",
-      "family": "esp8266",
-      "core": true
+      "family": "esp8266"
     },
     {
       "workflow": "build-giga-r1.yml",
@@ -369,8 +364,7 @@
       "test_dir": "tests/platform/lpc845brk",
       "env_name": "lpc845brk",
       "firmware_ext": "bin",
-      "family": "nxplpc",
-      "core": true
+      "family": "nxplpc"
     },
     {
       "workflow": "build-lpcxpresso804.yml",
@@ -402,8 +396,7 @@
       "test_dir": "tests/platform/mgm240",
       "env_name": "mgm240",
       "firmware_ext": "bin",
-      "family": "silabs",
-      "core": true
+      "family": "silabs"
     },
     {
       "workflow": "build-nano-every.yml",
@@ -443,8 +436,7 @@
       "test_dir": "tests/platform/nrf52840_dk",
       "env_name": "nrf52840_dk",
       "firmware_ext": "hex",
-      "family": "nrf52",
-      "core": true
+      "family": "nrf52"
     },
     {
       "workflow": "build-nrfmicro_nrf52840.yml",
@@ -516,8 +508,7 @@
       "test_dir": "tests/platform/rpipico",
       "env_name": "rpipico",
       "firmware_ext": "bin",
-      "family": "rp2040",
-      "core": true
+      "family": "rp2040"
     },
     {
       "workflow": "build-rpipico2.yml",
@@ -565,8 +556,7 @@
       "test_dir": "tests/platform/samd51p",
       "env_name": "samd51p",
       "firmware_ext": "bin",
-      "family": "sam",
-      "core": true
+      "family": "sam"
     },
     {
       "workflow": "build-stm32f103c8.yml",
@@ -574,8 +564,7 @@
       "test_dir": "tests/platform/stm32f103c8",
       "env_name": "stm32f103c8",
       "firmware_ext": "hex",
-      "family": "stm32",
-      "core": true
+      "family": "stm32"
     },
     {
       "workflow": "build-stm32f103cb.yml",
@@ -607,8 +596,7 @@
       "test_dir": "tests/platform/stm32h747xi",
       "env_name": "stm32h747xi",
       "firmware_ext": "bin",
-      "family": "stm32",
-      "core": true
+      "family": "stm32"
     },
     {
       "workflow": "build-supermini_nrf52840.yml",
@@ -624,8 +612,7 @@
       "test_dir": "tests/platform/teensy30",
       "env_name": "teensy30",
       "firmware_ext": "hex",
-      "family": "teensy",
-      "core": true
+      "family": "teensy"
     },
     {
       "workflow": "build-teensy31.yml",
@@ -706,8 +693,7 @@
       "test_dir": "tests/platform/uno_r4_wifi",
       "env_name": "uno_r4_wifi",
       "firmware_ext": "bin",
-      "family": "renesas",
-      "core": true
+      "family": "renesas"
     },
     {
       "workflow": "build-uno.yml",

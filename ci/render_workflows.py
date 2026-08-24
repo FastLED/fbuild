@@ -80,10 +80,11 @@ def render_paths_for_board(board: dict, families: dict, common_paths: list[str])
     paths: list[str] = []
     paths.append(f"{board['test_dir']}/**")
     paths.extend(family_paths)
-    # Shared-code paths run the CORE boards only — one representative per
-    # family (FastLED/fbuild#1396). Previously every common-code edit ran all
-    # 80 per-board workflows, so a one-line change in `fbuild-core` scheduled
-    # ~90 checks and the merge queue serialized behind them.
+    # Shared-code paths run the CORE boards only — uno / esp32dev / teensy41,
+    # one per toolchain family shared code can plausibly break
+    # (FastLED/fbuild#1396). Previously every common-code edit ran all 80
+    # per-board workflows, so a one-line change in `fbuild-core` scheduled
+    # ~94 checks and the merge queue serialized behind them.
     #
     # A board's own test dir, its family's crate paths, and its own workflow
     # file still trigger it directly, so family-specific work is unaffected.
