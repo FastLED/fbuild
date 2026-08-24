@@ -30,6 +30,16 @@ on:
         required: false
         default: 'all'
 
+# Pushing again to a PR branch supersedes the in-flight hardware run instead
+# of queueing behind it — this was the one pull_request-triggered workflow
+# without that guard (FastLED/fbuild#1396). It matters more here than
+# elsewhere: these jobs occupy a physical board, so a superseded run holds
+# hardware nobody is waiting on. Non-PR events key on run_id so scheduled
+# sweeps never cancel each other.
+concurrency:
+  group: hw-ci.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   bringup:
     # Skip on hosted runners; this job is meant for the self-hosted

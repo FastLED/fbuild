@@ -3,7 +3,7 @@
 
 Sources of truth:
   - ci/board_families.json  -- per-board metadata + family -> crate paths
-  - ci/ci_common_paths.txt  -- paths that force-run every per-board build
+  - ci/ci_common_paths.txt  -- paths that force-run the CORE per-board builds
 
 Produces (or --check verifies):
   - .github/workflows/build-<board>.yml  (rewrites only the `on:` block)
@@ -80,7 +80,17 @@ def render_paths_for_board(board: dict, families: dict, common_paths: list[str])
     paths: list[str] = []
     paths.append(f"{board['test_dir']}/**")
     paths.extend(family_paths)
-    paths.extend(common_paths)
+    # Shared-code paths run the CORE boards only — uno / esp32dev / teensy41,
+    # one per toolchain family shared code can plausibly break
+    # (FastLED/fbuild#1396). Previously every common-code edit ran all 80
+    # per-board workflows, so a one-line change in `fbuild-core` scheduled
+    # ~94 checks and the merge queue serialized behind them.
+    #
+    # A board's own test dir, its family's crate paths, and its own workflow
+    # file still trigger it directly, so family-specific work is unaffected.
+    # Non-core boards are covered by the nightly sweep.
+    if board.get("core", False):
+        paths.extend(common_paths)
     paths.append(f".github/workflows/{board['workflow']}")
 
     seen: set[str] = set()
@@ -243,8 +253,10 @@ def render_nightly(boards: list[dict]) -> str:
         "\n"
         "on:\n"
         "  schedule:\n"
-        "    # 09:00 UTC = 01:00 PST (winter) / 02:00 PDT (summer). See #835.\n"
-        "    - cron: '0 9 * * *'\n"
+        "    # 11:00 UTC = 03:00 PST (winter) / 04:00 PDT (summer). GitHub cron\n"
+        "    # has no timezone, so one of the two has to drift; 3am standard\n"
+        "    # time is the one asked for (FastLED/fbuild#1396). See also #835.\n"
+        "    - cron: '0 11 * * *'\n"
         "  workflow_dispatch:\n"
         "    inputs:\n"
         "      force:\n"
