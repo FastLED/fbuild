@@ -200,10 +200,12 @@ fn resolve_elf(input: &Path) -> Result<PathBuf> {
     if input.is_dir() {
         discover_elf_in_project(input).ok_or_else(|| {
             FbuildError::BuildFailed(format!(
-                "no ELF found under {} (looked for build_info.json's \
-                 prog_path, .fbuild/build/**/firmware.elf, \
-                 .pio/build/**/firmware.elf, and *.elf at top level)",
-                input.display()
+                "no ELF found under {} (looked for build_info.json's prog_path, \
+                 {}/{}/**/firmware.elf, .pio/build/**/firmware.elf, and *.elf at \
+                 top level)",
+                input.display(),
+                fbuild_paths::FBUILD_DIR_NAME,
+                fbuild_paths::BUILD_DIR_NAME
             ))
         })
     } else {
@@ -415,7 +417,9 @@ mod tests {
     fn resolve_reads_nm_from_build_info_auto_discovery() {
         let tmp = tempfile::TempDir::new().unwrap();
         let project = tmp.path();
-        let build_dir = project.join(".fbuild").join("build").join("uno");
+        let build_dir = fbuild_paths::get_project_fbuild_dir(project)
+            .join(fbuild_paths::BUILD_DIR_NAME)
+            .join("uno");
         std::fs::create_dir_all(&build_dir).unwrap();
         let elf = build_dir.join("firmware.elf");
         std::fs::write(&elf, b"\x7fELF").unwrap();

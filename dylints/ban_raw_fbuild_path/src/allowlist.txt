@@ -25,6 +25,15 @@ crates/fbuild-paths/src/lib.rs
 # `fbuild_paths::FBUILD_DIR_NAME` is still the name every other crate uses.
 crates/fbuild-core/src/path.rs
 
+# Clap derive, not a hand-written literal. `#[derive(Subcommand)]` stringifies
+# the `///` help text into `&str` literals whose `source_callsite()` is the
+# derive item, so the diagnostic lands on the whole file and cannot be
+# silenced by editing an expression. The only alternative is deleting
+# `.fbuild/build/**/firmware.elf` from the help a user reads, which makes the
+# documentation worse to satisfy a lint. Verified by removing this line: the
+# lint then fires at args.rs:121, the `#[derive(Subcommand)]`.
+crates/fbuild-cli/src/cli/args.rs
+
 # --- Baseline: legacy sites captured at landing (FastLED/fbuild#1349) ---
 # Each line below is a file that spells `.fbuild` by hand today. Removing
 # a line is the unit of progress on #1349; adding one is not allowed.
@@ -46,12 +55,3 @@ crates/fbuild-build/tests/nxplpc_core_compile_commands.rs
 crates/fbuild-build/tests/stm32_acceptance.rs
 crates/fbuild-build/tests/teensy30_acceptance.rs
 crates/fbuild-build/tests/teensy_build.rs
-crates/fbuild-cli/src/cli/args.rs
-crates/fbuild-cli/src/cli/debug.rs
-crates/fbuild-cli/src/cli/dispatch.rs
-crates/fbuild-cli/src/cli/ide.rs
-crates/fbuild-cli/src/cli/ide_debug.rs
-crates/fbuild-cli/src/cli/purge.rs
-crates/fbuild-cli/src/cli/symbols_cmd.rs
-crates/fbuild-cli/src/lib_select.rs
-crates/fbuild-cli/tests/daemon_crash_recovery.rs

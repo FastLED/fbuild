@@ -370,7 +370,7 @@ fn should_scan_entry(entry: &DirEntry) -> bool {
         name.as_str(),
         ".git"
             | ".pio"
-            | ".fbuild"
+            | fbuild_paths::FBUILD_DIR_NAME
             | ".zap"
             | ".build"
             | "build"

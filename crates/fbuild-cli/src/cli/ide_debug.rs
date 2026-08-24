@@ -312,12 +312,14 @@ mod tests {
 
     #[test]
     fn build_debug_entry_includes_elf_program_when_given() {
-        let elf = Path::new("/proj/.fbuild/build/esp32dev/release/firmware.elf");
-        let entry = build_debug_entry("esp32dev", Some(elf));
-        assert_eq!(
-            entry.program.as_deref(),
-            Some("/proj/.fbuild/build/esp32dev/release/firmware.elf")
+        let elf_path = format!(
+            "/proj/{}/{}/esp32dev/release/firmware.elf",
+            fbuild_paths::FBUILD_DIR_NAME,
+            fbuild_paths::BUILD_DIR_NAME
         );
+        let elf = Path::new(&elf_path);
+        let entry = build_debug_entry("esp32dev", Some(elf));
+        assert_eq!(entry.program.as_deref(), Some(elf_path.as_str()));
     }
 
     #[test]
