@@ -5,10 +5,22 @@
 # to regenerate the `on: paths:` blocks of every per-board workflow. The CI
 # drift gate (.github/workflows/ci-workflow-drift.yml) enforces this.
 #
-# Bias: be BROAD here. A safety-net force-run on every common-code edit is
-# the right trade vs. missing a regression that only a board build catches.
-# Narrow filtering is only correct for family-specific code (handled by
-# board_families.json crate_paths).
+# Scope: these paths force-run the CORE boards only -- the entries marked
+# `"core": true` in ci/board_families.json, one representative per family
+# (two where a family spans distinct toolchains, e.g. ESP32 Xtensa vs
+# RISC-V). They do NOT run all 80 per-board workflows any more.
+#
+# That changed in FastLED/fbuild#1396. Being broad here used to mean a
+# one-line edit in fbuild-core scheduled ~90 checks; with a strict
+# up-to-date merge rule, every merge then invalidated every other open PR
+# and the queue serialized behind full board sweeps. The safety net is now
+# the nightly sweep (.github/workflows/nightly-platforms.yml), which runs
+# every board.
+#
+# So being broad here is still cheap and still correct -- it costs 17
+# workflows, not 80. Add a path when a change to it could plausibly break a
+# build on any family. Family-specific code stays in board_families.json
+# crate_paths and triggers only its own family.
 
 # Shared build pipeline crates. Keep family-specific directories in the
 # family map below so a change only runs the relevant board workflows.

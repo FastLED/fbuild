@@ -8,8 +8,10 @@ name: Nightly Platforms
 
 on:
   schedule:
-    # 09:00 UTC = 01:00 PST (winter) / 02:00 PDT (summer). See #835.
-    - cron: '0 9 * * *'
+    # 11:00 UTC = 03:00 PST (winter) / 04:00 PDT (summer). GitHub cron
+    # has no timezone, so one of the two has to drift; 3am standard
+    # time is the one asked for (FastLED/fbuild#1396). See also #835.
+    - cron: '0 11 * * *'
   workflow_dispatch:
     inputs:
       force:
