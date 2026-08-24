@@ -29,7 +29,9 @@ const ESP8266_FRAMEWORK_VERSION: &str = "3.1.2";
 /// directories empty, so `#include <LittleFS.h>` compiled and then failed
 /// inside the core's own header:
 ///
-///     LittleFS.h:38:10: fatal error: ../lib/littlefs/lfs.h: No such file
+/// ```text
+/// LittleFS.h:38:10: fatal error: ../lib/littlefs/lfs.h: No such file
+/// ```
 ///
 /// `__has_include(<LittleFS.h>)` passes in that state — the header is there
 /// and the thing it needs is not — so consumers cannot guard against it.
