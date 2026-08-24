@@ -36,7 +36,7 @@ async fn compile_path_contract_pairs_cwd_and_output_arg_for_282() {
     let workspace = tmp_canon.join("proj_for_282");
     let core = workspace
         .join(fbuild_paths::FBUILD_DIR_NAME)
-        .join("build")
+        .join(fbuild_paths::BUILD_DIR_NAME)
         .join("x")
         .join("quick")
         .join("core");

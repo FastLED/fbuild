@@ -99,7 +99,7 @@ impl SketchBuilder for MockBuilder {
         let build_dir = inputs
             .sketch
             .join(fbuild_paths::FBUILD_DIR_NAME)
-            .join("build")
+            .join(fbuild_paths::BUILD_DIR_NAME)
             .join(&inputs.env_name)
             .join(match inputs.profile {
                 BuildProfile::Release => "release",
