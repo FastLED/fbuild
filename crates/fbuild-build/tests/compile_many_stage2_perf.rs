@@ -275,10 +275,13 @@ Compiled 5/26 files
 /// point) and embeds its head and tail so the failure is diagnosable after
 /// the TempDir is dropped — FastLED/fbuild#1346.
 fn stage2_failure_detail(r: &SketchResult) -> String {
-    let log_path = r
-        .log_path
-        .clone()
-        .unwrap_or_else(|| r.sketch.join(".fbuild/build/uno/release/compile_many.log"));
+    let log_path = r.log_path.clone().unwrap_or_else(|| {
+        r.sketch.join(format!(
+            "{}/{}/uno/release/compile_many.log",
+            fbuild_paths::FBUILD_DIR_NAME,
+            fbuild_paths::BUILD_DIR_NAME
+        ))
+    });
     let log = fs::read_to_string(&log_path).unwrap_or_else(|e| {
         format!(
             "<compile_many.log unreadable at {}: {e}>",

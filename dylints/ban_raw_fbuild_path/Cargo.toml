@@ -3,7 +3,7 @@ name = "ban_raw_fbuild_path"
 # Bump the version to bust the dylint .so cache when allowlist.txt
 # changes (setup-soldr's dylint-cache key hashes the manifest but not
 # src/allowlist.txt). Same convention ban_manual_slash_normalize follows.
-version = "0.1.6"
+version = "0.1.7"
 description = "Ban raw '.fbuild' path literals outside fbuild-paths"
 edition = "2021"
 publish = false

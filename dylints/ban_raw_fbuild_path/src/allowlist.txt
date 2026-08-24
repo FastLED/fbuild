@@ -5,11 +5,14 @@
 # Rollout strategy (FastLED/fbuild#1349):
 #   - The lint is ON and denies new raw `.fbuild` string literals by
 #     default.
-#   - Everything below the "baseline" marker is a legacy site captured
-#     when the lint landed. The list may only SHRINK: sanitize the file
-#     (route through fbuild_paths) and delete its line.
-#   - New files MUST NOT be added here. If a call site needs a `.fbuild`
-#     path, it needs `fbuild_paths`, not an allowlist entry.
+#   - The baseline is EXHAUSTED. It started at 48 legacy sites when the
+#     lint landed and reached zero; every remaining line below is a
+#     sanctioned definition site with its rationale inline.
+#   - New files MUST NOT be added here — not as a baseline entry, and not
+#     as a "temporary" one. If a call site needs a `.fbuild` path, it
+#     needs `fbuild_paths`. A genuinely new sanctioned site needs the same
+#     kind of justification the three below carry: why no expression edit
+#     can remove it.
 
 # --- Sanctioned definition sites (permanent) ---
 
@@ -35,18 +38,9 @@ crates/fbuild-core/src/path.rs
 crates/fbuild-cli/src/cli/args.rs
 
 # --- Baseline: legacy sites captured at landing (FastLED/fbuild#1349) ---
-# Each line below is a file that spells `.fbuild` by hand today. Removing
-# a line is the unit of progress on #1349; adding one is not allowed.
+#
+# Empty, and it stays that way. 48 files spelled `.fbuild` by hand when the
+# lint landed; all 48 now route through `fbuild_paths`. This section is kept
+# rather than deleted so the next person to reach for it sees that the
+# baseline was closed deliberately, not that one was never opened.
 
-crates/fbuild-build/src/compile_many.rs
-crates/fbuild-build/tests/avr_build.rs
-crates/fbuild-build/tests/clangd_check_parity.rs
-crates/fbuild-build/tests/compile_many_stage2_perf.rs
-crates/fbuild-build/tests/compile_many_two_stage.rs
-crates/fbuild-build/tests/eh_frame_strip_esp32.rs
-crates/fbuild-build/tests/esp32_build.rs
-crates/fbuild-build/tests/nxplpc_build_flags.rs
-crates/fbuild-build/tests/nxplpc_core_compile_commands.rs
-crates/fbuild-build/tests/stm32_acceptance.rs
-crates/fbuild-build/tests/teensy30_acceptance.rs
-crates/fbuild-build/tests/teensy_build.rs

@@ -98,7 +98,7 @@ impl SketchBuilder for MockBuilder {
         // bug we are trying to rule out.
         let build_dir = inputs
             .sketch
-            .join(".fbuild")
+            .join(fbuild_paths::FBUILD_DIR_NAME)
             .join("build")
             .join(&inputs.env_name)
             .join(match inputs.profile {

@@ -52,7 +52,11 @@ async fn build_core_repo(repo: &Path, env_name: &str) -> tempfile::TempDir {
     let tmp = tempfile::TempDir::new().expect("tempdir");
     let build_dir = tmp
         .path()
-        .join(".fbuild/build")
+        .join(format!(
+            "{}/{}",
+            fbuild_paths::FBUILD_DIR_NAME,
+            fbuild_paths::BUILD_DIR_NAME
+        ))
         .join(env_name)
         .join("release");
 
@@ -96,9 +100,11 @@ async fn arduino_core_lpc845brk_compile_commands_match_platform_txt() {
         return;
     };
     let tmp = build_core_repo(&repo, "lpc845brk").await;
-    let compile_db = tmp
-        .path()
-        .join(".fbuild/build/lpc845brk/release/compile_commands.json");
+    let compile_db = tmp.path().join(format!(
+        "{}/{}/lpc845brk/release/compile_commands.json",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    ));
     let text = fs::read_to_string(&compile_db).expect("compile_commands.json");
     let entries: Vec<Value> = serde_json::from_str(&text).expect("valid compile database");
     let args = entries

@@ -840,9 +840,17 @@ mod tests {
         // here that doesn't also update the orchestrators will silently
         // break the stage-1â†’stage-2 core/ handoff in FastLED/fbuild#335.
         let p = project_build_dir(Path::new("/tmp/sketch"), "uno", BuildProfile::Release);
-        assert!(p.ends_with("sketch/.fbuild/build/uno/release"));
+        assert!(p.ends_with(format!(
+            "sketch/{}/{}/uno/release",
+            fbuild_paths::FBUILD_DIR_NAME,
+            fbuild_paths::BUILD_DIR_NAME
+        )));
         let q = project_build_dir(Path::new("/tmp/sketch"), "esp32s3", BuildProfile::Quick);
-        assert!(q.ends_with("sketch/.fbuild/build/esp32s3/quick"));
+        assert!(q.ends_with(format!(
+            "sketch/{}/{}/esp32s3/quick",
+            fbuild_paths::FBUILD_DIR_NAME,
+            fbuild_paths::BUILD_DIR_NAME
+        )));
     }
 
     /// FastLED stages each board's project at
