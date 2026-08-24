@@ -166,11 +166,34 @@ mod tests {
 
     #[tokio::test]
     async fn tcp_readiness_distinguishes_live_and_free_endpoints() {
+        // Live endpoint: sound as a single sample. We hold the listener, so
+        // nothing else can be answering on it.
         let listener =
             bind_tcp_listener("127.0.0.1:0".parse().unwrap()).expect("bind ephemeral listener");
         let address = listener.local_addr().expect("listener address");
         assert!(tcp_endpoint_ready(address, Duration::from_millis(500)).await);
         drop(listener);
-        assert!(!tcp_endpoint_ready(address, Duration::from_millis(100)).await);
+
+        // Dead endpoint: NOT sound as a single sample, which is what made
+        // this flaky on macOS runners. Once the listener is dropped the port
+        // returns to the ephemeral pool, and the OS is free to hand it to
+        // anyone — including a sibling test in this same binary calling
+        // `bind_tcp_listener("127.0.0.1:0")`. When that happened the probe
+        // correctly reported "ready" and the assertion blamed the probe.
+        //
+        // Retry with a freshly-bound-then-dropped port each time. A genuine
+        // defect in `tcp_endpoint_ready` fails every attempt; a port-reuse
+        // collision has to lose the race repeatedly, which it will not.
+        let mut address = address;
+        for attempt in 0..8 {
+            if !tcp_endpoint_ready(address, Duration::from_millis(100)).await {
+                return;
+            }
+            let listener = bind_tcp_listener("127.0.0.1:0".parse().unwrap())
+                .unwrap_or_else(|error| panic!("rebind on attempt {attempt}: {error}"));
+            address = listener.local_addr().expect("listener address");
+            drop(listener);
+        }
+        panic!("a closed endpoint reported ready on every attempt — probe is not detecting death");
     }
 }
