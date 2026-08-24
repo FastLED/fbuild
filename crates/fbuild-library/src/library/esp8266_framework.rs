@@ -19,8 +19,26 @@ use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 
 /// Framework version matching espressif8266@4.2.1.
 const ESP8266_FRAMEWORK_VERSION: &str = "3.1.2";
+/// Release asset, NOT `archive/refs/tags/...`.
+///
+/// FastLED/fbuild#1380: GitHub's auto-generated source archives deliberately
+/// omit submodules, and `esp8266/Arduino` keeps five of them —
+/// `libraries/LittleFS/lib/littlefs`, `libraries/SoftwareSerial`,
+/// `libraries/ESP8266SdFat`, `tools/sdk/lwip2/builder`, and
+/// `tools/sdk/ssl/bearssl`. Unpacking the source archive creates those
+/// directories empty, so `#include <LittleFS.h>` compiled and then failed
+/// inside the core's own header:
+///
+///     LittleFS.h:38:10: fatal error: ../lib/littlefs/lfs.h: No such file
+///
+/// `__has_include(<LittleFS.h>)` passes in that state — the header is there
+/// and the thing it needs is not — so consumers cannot guard against it.
+///
+/// The release asset published on the tag bundles the submodule contents.
+/// Verified against 3.1.2: 47 entries under `libraries/LittleFS/lib/littlefs`
+/// including `lfs.h`.
 const ESP8266_FRAMEWORK_URL: &str =
-    "https://github.com/esp8266/Arduino/archive/refs/tags/3.1.2.tar.gz";
+    "https://github.com/esp8266/Arduino/releases/download/3.1.2/esp8266-3.1.2.zip";
 
 /// ESP8266 Arduino framework manager.
 pub struct Esp8266Framework {
@@ -263,6 +281,35 @@ fn find_framework_root(install_dir: &Path) -> PathBuf {
 mod tests {
     use super::*;
     use crate::Package;
+
+    /// FastLED/fbuild#1380: this core carries submodules, so it must come
+    /// from an artifact that bundles them.
+    ///
+    /// GitHub's `archive/refs/tags/...` tarballs omit submodule contents by
+    /// design — the directories are created empty. That produced a build
+    /// failure inside the core's own `LittleFS.h`, past every capability
+    /// guard a consumer could write, because `__has_include(<LittleFS.h>)`
+    /// still passes when the header is present and its dependency is not.
+    ///
+    /// Asserting the URL *shape* rather than the exact string: the point is
+    /// that a future version bump must not quietly move back to the source
+    /// archive, which is the easy mistake since that URL form is what every
+    /// other core in this crate uses.
+    #[test]
+    fn framework_url_is_a_release_asset_not_a_source_archive() {
+        assert!(
+            ESP8266_FRAMEWORK_URL.contains("/releases/download/"),
+            "esp8266 core must come from a release asset that bundles its              submodules: {ESP8266_FRAMEWORK_URL}"
+        );
+        assert!(
+            !ESP8266_FRAMEWORK_URL.contains("/archive/refs/"),
+            "GitHub source archives omit submodules; LittleFS/SoftwareSerial/             SdFat/lwip2/bearssl would unpack empty: {ESP8266_FRAMEWORK_URL}"
+        );
+        assert!(
+            ESP8266_FRAMEWORK_URL.contains(ESP8266_FRAMEWORK_VERSION),
+            "asset URL must track the pinned version: {ESP8266_FRAMEWORK_URL}"
+        );
+    }
 
     #[test]
     fn test_esp8266_framework_not_installed() {
