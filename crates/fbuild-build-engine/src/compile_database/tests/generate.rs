@@ -355,13 +355,21 @@ fn test_generate_entries_file_is_source_not_build() {
         &[],
         &[],
         &[PathBuf::from("/project/src/main.cpp")],
-        Path::new("/project/.fbuild/build/esp32/src"),
+        Path::new(&format!(
+            "/project/{}/{}/esp32/src",
+            fbuild_paths::FBUILD_DIR_NAME,
+            fbuild_paths::BUILD_DIR_NAME
+        )),
         Path::new("/project"),
     );
     assert_eq!(entries[0].file, "/project/src/main.cpp");
     // Output should be in the build dir
     assert!(
-        entries[0].output.as_ref().unwrap().contains(".fbuild"),
+        entries[0]
+            .output
+            .as_ref()
+            .unwrap()
+            .contains(fbuild_paths::FBUILD_DIR_NAME),
         "output should be in build dir: {:?}",
         entries[0].output
     );
@@ -437,7 +445,11 @@ fn test_generate_entries_include_flags_preserved_verbatim() {
     // source-tree paths, not build-dir paths.
     let include_flags = vec![
         "-I/project/src".to_string(), // source tree ✓
-        "-I/home/user/.fbuild/build/esp32/libs/fastled/src".to_string(), // cache path ✗
+        format!(
+            "-I/home/user/{}/{}/esp32/libs/fastled/src",
+            fbuild_paths::FBUILD_DIR_NAME,
+            fbuild_paths::BUILD_DIR_NAME
+        ), // cache path ✗
         "-I/framework/cores/esp32".to_string(), // framework ✓
     ];
     let entries = generate_entries(

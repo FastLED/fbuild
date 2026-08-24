@@ -606,8 +606,13 @@ mod tests {
     /// FastLED/fbuild#1267, FastLED/FastLED#3867.
     #[test]
     fn link_cwd_is_absolute_output_dir_when_all_paths_absolute() {
-        let out = abs("proj/.fbuild/build/release");
-        let paths = [abs("proj/.fbuild/build/release/sketch.o"), abs("sdk/ld")];
+        let rel = format!(
+            "proj/{}/{}/release",
+            fbuild_paths::FBUILD_DIR_NAME,
+            fbuild_paths::BUILD_DIR_NAME
+        );
+        let out = abs(&rel);
+        let paths = [abs(&format!("{rel}/sketch.o")), abs("sdk/ld")];
         assert_eq!(
             link_cwd_for(&out, &paths),
             Some(out.as_path()),

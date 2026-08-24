@@ -7,6 +7,25 @@ use crate::compile_database::{
     CompileDatabase, CompileEntry, TargetArchitecture, translate_flags_for_clang,
 };
 
+/// Fixture build directory, assembled from the canonical segments so these
+/// tests cannot describe a layout the resolver no longer produces
+/// (FastLED/fbuild#1349).
+fn fixture_dir() -> String {
+    format!(
+        "/project/{}/{}/env/src",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    )
+}
+
+fn fixture_src() -> String {
+    format!("{}/sketch.ino.cpp", fixture_dir())
+}
+
+fn fixture_obj() -> String {
+    format!("{}/sketch.ino.cpp.o", fixture_dir())
+}
+
 #[test]
 fn test_target_triples() {
     assert_eq!(TargetArchitecture::Xtensa.target_triple(), "xtensa-esp-elf");
@@ -260,13 +279,13 @@ fn ino_cpp_template_entry() -> CompileEntry {
             "--target=xtensa-esp-elf".to_string(),
             "-Isrc".to_string(),
             "-c".to_string(),
-            "/project/.fbuild/build/env/src/sketch.ino.cpp".to_string(),
+            fixture_src().as_str().to_string(),
             "-o".to_string(),
-            "/project/.fbuild/build/env/src/sketch.ino.cpp.o".to_string(),
+            fixture_obj().as_str().to_string(),
         ],
         directory: "/project".to_string(),
-        file: "/project/.fbuild/build/env/src/sketch.ino.cpp".to_string(),
-        output: Some("/project/.fbuild/build/env/src/sketch.ino.cpp.o".to_string()),
+        file: fixture_src().as_str().to_string(),
+        output: Some(fixture_obj().as_str().to_string()),
     }
 }
 
@@ -277,7 +296,7 @@ fn test_swap_ino_entries_for_raw_replaces_generated_entry() {
 
     let ino_preludes = vec![(
         PathBuf::from("/project/src/sketch.ino"),
-        PathBuf::from("/project/.fbuild/build/env/src/sketch.ino.prelude.h"),
+        PathBuf::from(format!("{}/sketch.ino.prelude.h", fixture_dir())),
     )];
     let swapped = db.swap_ino_entries_for_raw(&ino_preludes);
 
@@ -298,7 +317,7 @@ fn test_swap_ino_entries_for_raw_replaces_generated_entry() {
         .unwrap();
     assert_eq!(
         entry.arguments[include_idx + 1],
-        "/project/.fbuild/build/env/src/sketch.ino.prelude.h"
+        format!("{}/sketch.ino.prelude.h", fixture_dir()).as_str()
     );
     assert!(
         entry
@@ -323,11 +342,11 @@ fn test_swap_ino_entries_for_raw_multi_tab() {
     let ino_preludes = vec![
         (
             PathBuf::from("/project/src/main.ino"),
-            PathBuf::from("/project/.fbuild/build/env/src/main.ino.prelude.h"),
+            PathBuf::from(format!("{}/main.ino.prelude.h", fixture_dir())),
         ),
         (
             PathBuf::from("/project/src/a_tab.ino"),
-            PathBuf::from("/project/.fbuild/build/env/src/a_tab.ino.prelude.h"),
+            PathBuf::from(format!("{}/a_tab.ino.prelude.h", fixture_dir())),
         ),
     ];
     let swapped = db.swap_ino_entries_for_raw(&ino_preludes);
@@ -372,7 +391,7 @@ fn test_swap_ino_entries_for_raw_no_generated_entry_leaves_db_untouched() {
 
     let ino_preludes = vec![(
         PathBuf::from("/project/src/sketch.ino"),
-        PathBuf::from("/project/.fbuild/build/env/src/sketch.ino.prelude.h"),
+        PathBuf::from(format!("{}/sketch.ino.prelude.h", fixture_dir())),
     )];
     let swapped = db.swap_ino_entries_for_raw(&ino_preludes);
     assert_eq!(swapped.entries.len(), 1);
