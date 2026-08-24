@@ -93,7 +93,11 @@ void loop() {
     )
     .unwrap();
 
-    let build_dir = project_dir.join(".fbuild/build/esp32dev/release");
+    let build_dir = project_dir.join(format!(
+        "{}/{}/esp32dev/release",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    ));
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
         env_name: "esp32dev".to_string(),
@@ -187,7 +191,11 @@ void loop() {
     )
     .unwrap();
 
-    let build_dir = project_dir.join(".fbuild/build/esp32c6/release");
+    let build_dir = project_dir.join(format!(
+        "{}/{}/esp32c6/release",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    ));
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
         env_name: "esp32c6".to_string(),
@@ -274,7 +282,11 @@ void loop() {
     )
     .unwrap();
 
-    let build_dir = project_dir.join(".fbuild/build/esp32c3/release");
+    let build_dir = project_dir.join(format!(
+        "{}/{}/esp32c3/release",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    ));
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
         env_name: "esp32c3".to_string(),
@@ -362,7 +374,11 @@ void loop() {
     )
     .unwrap();
 
-    let build_dir = project_dir.join(".fbuild/build/esp32s3/release");
+    let build_dir = project_dir.join(format!(
+        "{}/{}/esp32s3/release",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    ));
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
         env_name: "esp32s3".to_string(),
@@ -440,7 +456,11 @@ async fn build_esp32s3_fixture() {
     }
     install_test_compile_backend().await;
 
-    let build_dir = project_dir.join(".fbuild/build/esp32s3/release");
+    let build_dir = project_dir.join(format!(
+        "{}/{}/esp32s3/release",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    ));
     let params = BuildParams {
         project_dir: project_dir.clone(),
         env_name: "esp32s3".to_string(),
@@ -509,7 +529,11 @@ async fn build_nightdriverstrip_demo() {
     install_test_compile_backend().await;
 
     let tmp = tempfile::TempDir::new().unwrap();
-    let build_dir = tmp.path().join(".fbuild/build/demo/release");
+    let build_dir = tmp.path().join(format!(
+        "{}/{}/demo/release",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    ));
 
     let params = BuildParams {
         project_dir: project_dir.clone(),
@@ -595,7 +619,11 @@ async fn incremental_nightdriverstrip_no_changes() {
 async fn incremental_build_at(project_dir: &std::path::Path, env_name: &str) {
     // Verify there's an existing build
     let build_marker = project_dir
-        .join(".fbuild/build")
+        .join(format!(
+            "{}/{}",
+            fbuild_paths::FBUILD_DIR_NAME,
+            fbuild_paths::BUILD_DIR_NAME
+        ))
         .join(env_name)
         .join("release/firmware.elf");
     if !build_marker.exists() {
@@ -683,7 +711,11 @@ async fn incremental_nightdriverstrip_one_file_changed() {
 
     let env_name = "demo";
     let build_marker = project_dir
-        .join(".fbuild/build")
+        .join(format!(
+            "{}/{}",
+            fbuild_paths::FBUILD_DIR_NAME,
+            fbuild_paths::BUILD_DIR_NAME
+        ))
         .join(env_name)
         .join("release/firmware.elf");
     if !build_marker.exists() {

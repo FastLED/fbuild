@@ -83,7 +83,11 @@ async fn lpc845brk_propagates_build_flags_to_library_compile_587() {
 
     // Build into a temp dir so reruns are clean and don't litter the repo.
     let tmp = tempfile::TempDir::new().expect("tempdir");
-    let build_dir = tmp.path().join(".fbuild/build/lpc845brk/release");
+    let build_dir = tmp.path().join(format!(
+        "{}/{}/lpc845brk/release",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    ));
 
     let params = BuildParams {
         project_dir: fixture.clone(),

@@ -98,8 +98,8 @@ impl SketchBuilder for MockBuilder {
         // bug we are trying to rule out.
         let build_dir = inputs
             .sketch
-            .join(".fbuild")
-            .join("build")
+            .join(fbuild_paths::FBUILD_DIR_NAME)
+            .join(fbuild_paths::BUILD_DIR_NAME)
             .join(&inputs.env_name)
             .join(match inputs.profile {
                 BuildProfile::Release => "release",

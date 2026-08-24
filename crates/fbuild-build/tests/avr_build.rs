@@ -122,7 +122,11 @@ async fn build_uno_minimal() {
     // `params.build_dir` is the resolved env-rooted dir per
     // `BuildLayout::resolve()`.
     let tmp = tempfile::TempDir::new().unwrap();
-    let build_dir = tmp.path().join(".fbuild/build/uno/release");
+    let build_dir = tmp.path().join(format!(
+        "{}/{}/uno/release",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    ));
 
     let params = BuildParams {
         project_dir: project_dir.clone(),
@@ -210,7 +214,11 @@ async fn build_uno_minimal() {
 async fn compare_with_python_output() {
     let project_dir = home_dir().join("dev/fbuild/tests/uno_minimal");
 
-    let python_hex = project_dir.join(".fbuild/build/uno/release/firmware.hex");
+    let python_hex = project_dir.join(format!(
+        "{}/{}/uno/release/firmware.hex",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    ));
     if !python_hex.exists() {
         eprintln!(
             "SKIP: Python build output not found at {}",
@@ -222,7 +230,11 @@ async fn compare_with_python_output() {
 
     // Build with Rust
     let tmp = tempfile::TempDir::new().unwrap();
-    let build_dir = tmp.path().join(".fbuild/build/uno/release");
+    let build_dir = tmp.path().join(format!(
+        "{}/{}/uno/release",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    ));
 
     let params = BuildParams {
         project_dir: project_dir.clone(),
@@ -317,7 +329,11 @@ void loop() {
     )
     .unwrap();
 
-    let build_dir = project_dir.join(".fbuild/build/uno/release");
+    let build_dir = project_dir.join(format!(
+        "{}/{}/uno/release",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    ));
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
         env_name: "uno".to_string(),
@@ -438,7 +454,11 @@ fn stomp_mtimes(root: &Path, mtime: FileTime) {
 }
 
 fn fingerprint_path(project_dir: &Path) -> PathBuf {
-    project_dir.join(".fbuild/build/uno/release/build_fingerprint.json")
+    project_dir.join(format!(
+        "{}/{}/uno/release/build_fingerprint.json",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    ))
 }
 
 /// RAII guard for an env var: sets it on construction, restores the previous
@@ -501,7 +521,11 @@ async fn cache_survives_tar_extract_uno() {
 
     let cold_result = under_test_timeout(orchestrator.build(&uno_build_params(
         &proj_a,
-        proj_a.join(".fbuild/build/uno/release"),
+        proj_a.join(format!(
+            "{}/{}/uno/release",
+            fbuild_paths::FBUILD_DIR_NAME,
+            fbuild_paths::BUILD_DIR_NAME
+        )),
         true,
     )))
     .await
@@ -533,7 +557,11 @@ async fn cache_survives_tar_extract_uno() {
     // because of an orchestrator/fast-path bug unrelated to tar restoration.
     let same_project_warm = under_test_timeout(orchestrator.build(&uno_build_params(
         &proj_a,
-        proj_a.join(".fbuild/build/uno/release"),
+        proj_a.join(format!(
+            "{}/{}/uno/release",
+            fbuild_paths::FBUILD_DIR_NAME,
+            fbuild_paths::BUILD_DIR_NAME
+        )),
         false,
     )))
     .await
@@ -564,8 +592,16 @@ async fn cache_survives_tar_extract_uno() {
         proj_b.display()
     );
     assert!(
-        proj_b.join(".fbuild/build").exists(),
-        "tar restore left no .fbuild/build/ at {}",
+        proj_b
+            .join(format!(
+                "{}/{}",
+                fbuild_paths::FBUILD_DIR_NAME,
+                fbuild_paths::BUILD_DIR_NAME
+            ))
+            .exists(),
+        "tar restore left no {}/{}/ at {}",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME,
         proj_b.display()
     );
     assert_ne!(
@@ -578,7 +614,11 @@ async fn cache_survives_tar_extract_uno() {
 
     let warm_result = under_test_timeout(orchestrator.build(&uno_build_params(
         &proj_b,
-        proj_b.join(".fbuild/build/uno/release"),
+        proj_b.join(format!(
+            "{}/{}/uno/release",
+            fbuild_paths::FBUILD_DIR_NAME,
+            fbuild_paths::BUILD_DIR_NAME
+        )),
         false,
     )))
     .await

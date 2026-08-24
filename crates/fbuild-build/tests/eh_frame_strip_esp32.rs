@@ -52,7 +52,11 @@ async fn install_test_compile_backend() {
 }
 
 fn make_params(project_dir: &Path) -> BuildParams {
-    let build_dir = project_dir.join(".fbuild/build/esp32dev/release");
+    let build_dir = project_dir.join(format!(
+        "{}/{}/esp32dev/release",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    ));
     BuildParams {
         project_dir: project_dir.to_path_buf(),
         env_name: "esp32dev".to_string(),
@@ -141,7 +145,11 @@ async fn eh_frame_strip_drops_firmware_at_least_150kb() {
         .elf_path
         .clone()
         .expect("preserve build should produce ELF path");
-    let preserve_firmware_bin = preserve_dir.join(".fbuild/build/esp32dev/release/firmware.bin");
+    let preserve_firmware_bin = preserve_dir.join(format!(
+        "{}/{}/esp32dev/release/firmware.bin",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    ));
     std::env::remove_var("FBUILD_KEEP_EH_FRAME");
 
     // --- Build 2: strip eh_frame ---
@@ -156,7 +164,11 @@ async fn eh_frame_strip_drops_firmware_at_least_150kb() {
         .elf_path
         .clone()
         .expect("strip build should produce ELF path");
-    let strip_firmware_bin = strip_dir.join(".fbuild/build/esp32dev/release/firmware.bin");
+    let strip_firmware_bin = strip_dir.join(format!(
+        "{}/{}/esp32dev/release/firmware.bin",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    ));
     std::env::remove_var("FBUILD_STRIP_EH_FRAME");
 
     // --- firmware.bin delta ---

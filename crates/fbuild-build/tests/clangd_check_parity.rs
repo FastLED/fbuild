@@ -154,7 +154,11 @@ async fn clangd_check_parity_uno() {
     install_test_compile_backend().await;
 
     let tmp = tempfile::TempDir::new().expect("tempdir");
-    let build_dir = tmp.path().join(".fbuild/build/uno/release");
+    let build_dir = tmp.path().join(format!(
+        "{}/{}/uno/release",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    ));
 
     let params = BuildParams {
         project_dir: project_dir.clone(),

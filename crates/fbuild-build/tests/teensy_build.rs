@@ -95,7 +95,11 @@ void loop() {
     )
     .unwrap();
 
-    let build_dir = project_dir.join(".fbuild/build/teensy41/release");
+    let build_dir = project_dir.join(format!(
+        "{}/{}/teensy41/release",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    ));
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
         env_name: "teensy41".to_string(),
@@ -172,7 +176,11 @@ void loop() {}
     )
     .unwrap();
 
-    let build_dir = project_dir.join(".fbuild/build/teensy41/release");
+    let build_dir = project_dir.join(format!(
+        "{}/{}/teensy41/release",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    ));
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
         env_name: "teensy41".to_string(),
@@ -226,7 +234,11 @@ async fn build_teensy41_fixture() {
     install_test_compile_backend().await;
 
     let tmp = tempfile::TempDir::new().unwrap();
-    let build_dir = tmp.path().join(".fbuild/build/teensy41/release");
+    let build_dir = tmp.path().join(format!(
+        "{}/{}/teensy41/release",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    ));
 
     let params = BuildParams {
         project_dir: project_dir.clone(),
@@ -349,7 +361,11 @@ void loop() {
         clean: true,
         clean_only: false,
         profile: BuildProfile::Release,
-        build_dir: tmp.path().join(".fbuild/build/teensy30/release"),
+        build_dir: tmp.path().join(format!(
+            "{}/{}/teensy30/release",
+            fbuild_paths::FBUILD_DIR_NAME,
+            fbuild_paths::BUILD_DIR_NAME
+        )),
         verbose: true,
         jobs: None,
         generate_compiledb: false,
