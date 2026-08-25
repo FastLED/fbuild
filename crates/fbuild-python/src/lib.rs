@@ -28,6 +28,7 @@
 #![allow(clippy::useless_conversion)]
 
 use pyo3::prelude::*;
+use std::path::Path;
 
 mod async_daemon_connection;
 mod async_serial_monitor;
@@ -57,6 +58,25 @@ fn connect_daemon_async(project_dir: String, environment: String) -> AsyncDaemon
     AsyncDaemonConnection::new(project_dir, environment)
 }
 
+/// Locate a built firmware artifact using fbuild's canonical layout rules.
+///
+/// This is intentionally a non-mutating filesystem query. It lets Python
+/// consumers keep a streaming CLI build/deploy while delegating artifact
+/// discovery to the same `BuildLayout` implementation used by fbuild itself.
+#[pyfunction(signature = (project_dir, environment, firmware_name=None))]
+fn find_firmware(
+    project_dir: String,
+    environment: String,
+    firmware_name: Option<String>,
+) -> Option<String> {
+    fbuild_paths::find_firmware(
+        Path::new(&project_dir),
+        &environment,
+        firmware_name.as_deref(),
+    )
+    .map(|path| path.to_string_lossy().into_owned())
+}
+
 /// The version string exposed to Python as `fbuild.__version__`.
 ///
 /// Sourced from `CARGO_PKG_VERSION` at compile time so it always tracks the
@@ -77,6 +97,7 @@ fn _native(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<AsyncDaemonConnection>()?;
     m.add_function(wrap_pyfunction!(connect_daemon, m)?)?;
     m.add_function(wrap_pyfunction!(connect_daemon_async, m)?)?;
+    m.add_function(wrap_pyfunction!(find_firmware, m)?)?;
     Ok(())
 }
 
@@ -144,6 +165,8 @@ mod tests {
             "success": false,
             "message": "build failed",
             "exit_code": 2,
+            "output_file": "/tmp/build/release/firmware.bin",
+            "output_dir": "/tmp/export",
             "stdout": "compile log",
             "stderr": "error: missing header",
         });
@@ -151,6 +174,11 @@ mod tests {
         assert!(!outcome.success);
         assert_eq!(outcome.message.as_deref(), Some("build failed"));
         assert_eq!(outcome.exit_code, Some(2));
+        assert_eq!(
+            outcome.output_file.as_deref(),
+            Some("/tmp/build/release/firmware.bin")
+        );
+        assert_eq!(outcome.output_dir.as_deref(), Some("/tmp/export"));
         assert_eq!(outcome.stdout.as_deref(), Some("compile log"));
         assert_eq!(outcome.stderr.as_deref(), Some("error: missing header"));
     }
@@ -169,8 +197,38 @@ mod tests {
         assert!(outcome.success);
         assert_eq!(outcome.message.as_deref(), Some("done"));
         assert_eq!(outcome.exit_code, None);
+        assert_eq!(outcome.output_file, None);
+        assert_eq!(outcome.output_dir, None);
         assert_eq!(outcome.stdout, None);
         assert_eq!(outcome.stderr, None);
+    }
+
+    /// Python consumers that keep the streaming CLI deploy path still need a
+    /// structured way to locate the exact artifact using fbuild's canonical
+    /// `BuildLayout` rules. FastLED's staged project basename equals its env,
+    /// so this also guards the collapsed `.fbuild/build/release` layout.
+    #[test]
+    fn find_firmware_locates_collapsed_project_layout() {
+        let tmp = tempfile::tempdir().unwrap();
+        let project = tmp.path().join("rp2350w");
+        let firmware = project
+            .join(".fbuild")
+            .join("build")
+            .join("release")
+            .join("firmware.bin");
+        std::fs::create_dir_all(firmware.parent().unwrap()).unwrap();
+        std::fs::write(&firmware, b"firmware").unwrap();
+
+        let resolved = crate::find_firmware(
+            project.to_string_lossy().into_owned(),
+            "rp2350w".to_string(),
+            None,
+        );
+
+        assert_eq!(
+            resolved.as_deref(),
+            Some(firmware.to_string_lossy().as_ref())
+        );
     }
 
     /// A malformed or empty response body must not panic and must default

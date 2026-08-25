@@ -2,4 +2,4 @@
 
 ## Modules
 
-- **`lib.rs`** -- Crate root; defines `SerialMonitor` (WebSocket-based serial I/O), `Daemon` (lifecycle management), `DaemonConnection` (build/deploy/monitor operations), and `connect_daemon()` factory; registers the `_native` PyO3 module
+- **`lib.rs`** -- Crate root; registers the `_native` PyO3 module and standalone factories/helpers including `connect_daemon()` and canonical `find_firmware()` artifact discovery
