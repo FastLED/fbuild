@@ -107,15 +107,11 @@ fn native_release_workflow_uses_current_cross_toolchains() {
         "native release builds need soldr >= 0.9.5 for catalogue-v2 Apple SDK assets"
     );
     assert!(
-        workflow.contains(
-            "SOLDR_TOOLCHAIN_ORIGIN: https://zackees.github.io/soldr-toolchain"
-        ),
+        workflow.contains("SOLDR_TOOLCHAIN_ORIGIN: https://zackees.github.io/soldr-toolchain"),
         "Apple SDK prepare and build steps must share the catalogue origin"
     );
     assert!(
-        workflow.contains(
-            "CFLAGS=\"-Wno-error=date-time\" cargo zigbuild --release --target"
-        ),
+        workflow.contains("CFLAGS=\"-Wno-error=date-time\" cargo zigbuild --release --target"),
         "musl release builds must demote zig's date-time error for mimalloc-pprof"
     );
     for release_input in [
