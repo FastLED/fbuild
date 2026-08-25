@@ -128,7 +128,8 @@ impl AsyncDaemonConnection {
 
     /// Async counterpart to `DaemonConnection::build_result`. Returns the
     /// full structured outcome dict (`success`, `message`, `exit_code`,
-    /// `stdout`, `stderr`) — matches the sync surface exactly.
+    /// `output_file`, `output_dir`, `stdout`, `stderr`) — matches the sync
+    /// surface exactly.
     #[pyo3(signature = (clean=false, verbose=false, timeout=1800.0))]
     fn build_result<'py>(
         &self,

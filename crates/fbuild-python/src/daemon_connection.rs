@@ -71,8 +71,9 @@ impl DaemonConnection {
     }
 
     /// Same as `build()` but returns a dict with structured result fields:
-    /// `success`, `message`, `exit_code`, `stdout`, `stderr`. Callers that
-    /// need to branch on failure mode can inspect the dict instead of
+    /// `success`, `message`, `exit_code`, `output_file`, `output_dir`,
+    /// `stdout`, `stderr`. Callers that need to branch on failure mode or
+    /// consume the produced artifact can inspect the dict instead of
     /// swallowing a bare bool. See FastLED/fbuild#18.
     #[pyo3(signature = (clean=false, verbose=false, timeout=1800.0))]
     fn build_result<'py>(
