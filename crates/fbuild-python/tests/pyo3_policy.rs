@@ -110,10 +110,18 @@ fn native_release_workflow_uses_current_cross_toolchains() {
         workflow.contains("SOLDR_TOOLCHAIN_ORIGIN: https://zackees.github.io/soldr-toolchain"),
         "Apple SDK prepare and build steps must share the catalogue origin"
     );
-    assert!(
-        workflow.contains("CFLAGS=\"-Wno-error=date-time\" cargo zigbuild --release --target"),
-        "musl release builds must demote zig's date-time error for mimalloc-pprof"
-    );
+    for target in [
+        "x86_64_unknown_linux_musl",
+        "aarch64_unknown_linux_musl",
+        "x86_64_apple_darwin",
+        "aarch64_apple_darwin",
+    ] {
+        let target_cflags = format!("CFLAGS_{target}: \"-Wno-error=date-time\"");
+        assert!(
+            workflow.contains(&target_cflags),
+            "zig cross builds must demote the mimalloc-pprof date-time error: {target_cflags}"
+        );
+    }
     for job_limit in ["CARGO_BUILD_JOBS: \"1\"", "SOLDR_JOBS: \"1\""] {
         assert!(
             workflow.contains(job_limit),

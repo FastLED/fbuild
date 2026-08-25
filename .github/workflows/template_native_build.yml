@@ -52,6 +52,13 @@ env:
   # the runner memory limit instead of being killed by the host.
   CARGO_BUILD_JOBS: "1"
   SOLDR_JOBS: "1"
+  # cargo-zigbuild clears generic CFLAGS while constructing a cross-target
+  # environment. Use cc-rs's target-specific variables so the vendored
+  # mimalloc-pprof build keeps this narrow Zig diagnostic demotion.
+  CFLAGS_x86_64_unknown_linux_musl: "-Wno-error=date-time"
+  CFLAGS_aarch64_unknown_linux_musl: "-Wno-error=date-time"
+  CFLAGS_x86_64_apple_darwin: "-Wno-error=date-time"
+  CFLAGS_aarch64_apple_darwin: "-Wno-error=date-time"
   # Keep every soldr invocation in this reusable job on the same catalogue.
   # soldr >= 0.9.5 consumes its multipart v2 assets, including Apple SDKs
   # whose legacy direct-LFS URLs are no longer anonymously downloadable.
@@ -303,7 +310,7 @@ jobs:
             # mimalloc-pprof's vendored diagnostic banner expands
             # __DATE__/__TIME__. Zig promotes that one warning to an error;
             # demote only that diagnostic for this C dependency build.
-            CFLAGS="-Wno-error=date-time" cargo zigbuild --release --target ${{ inputs.target }} \
+            cargo zigbuild --release --target ${{ inputs.target }} \
               -p fbuild-cli \
               -p fbuild-daemon
           else
