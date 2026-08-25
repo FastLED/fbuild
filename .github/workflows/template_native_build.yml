@@ -50,8 +50,8 @@ env:
   # Six cold release lanes run concurrently on two-core hosted runners.
   # Bound rustc and soldr concurrency so cross-target codegen stays within
   # the runner memory limit instead of being killed by the host.
-  CARGO_BUILD_JOBS: "2"
-  SOLDR_JOBS: "2"
+  CARGO_BUILD_JOBS: "1"
+  SOLDR_JOBS: "1"
   # Keep every soldr invocation in this reusable job on the same catalogue.
   # soldr >= 0.9.5 consumes its multipart v2 assets, including Apple SDKs
   # whose legacy direct-LFS URLs are no longer anonymously downloadable.

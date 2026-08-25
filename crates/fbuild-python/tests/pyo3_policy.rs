@@ -114,7 +114,7 @@ fn native_release_workflow_uses_current_cross_toolchains() {
         workflow.contains("CFLAGS=\"-Wno-error=date-time\" cargo zigbuild --release --target"),
         "musl release builds must demote zig's date-time error for mimalloc-pprof"
     );
-    for job_limit in ["CARGO_BUILD_JOBS: \"2\"", "SOLDR_JOBS: \"2\""] {
+    for job_limit in ["CARGO_BUILD_JOBS: \"1\"", "SOLDR_JOBS: \"1\""] {
         assert!(
             workflow.contains(job_limit),
             "native release lanes must stay below hosted-runner memory limits: {job_limit}"
