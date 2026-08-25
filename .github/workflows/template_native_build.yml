@@ -41,28 +41,6 @@ env:
   CARGO_TERM_COLOR: always
   RUSTFLAGS: "-D warnings"
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
-  # Native Windows release builds can be quiet for longer than soldr's
-  # default 30 minute cargo diagnostic watchdog while rustc/link.exe are
-  # still active. Match the release-binary step's 45 minute timeout so
-  # GitHub Actions owns the outer deadline instead of soldr killing the
-  # build early.
-  SOLDR_CARGO_WAIT_TIMEOUT_SECS: "2700"
-  # Six cold release lanes run concurrently on two-core hosted runners.
-  # Bound rustc and soldr concurrency so cross-target codegen stays within
-  # the runner memory limit instead of being killed by the host.
-  CARGO_BUILD_JOBS: "1"
-  SOLDR_JOBS: "1"
-  # cargo-zigbuild clears generic CFLAGS while constructing a cross-target
-  # environment. Use cc-rs's target-specific variables so the vendored
-  # mimalloc-pprof build keeps this narrow Zig diagnostic demotion.
-  CFLAGS_x86_64_unknown_linux_musl: "-Wno-error=date-time"
-  CFLAGS_aarch64_unknown_linux_musl: "-Wno-error=date-time"
-  CFLAGS_x86_64_apple_darwin: "-Wno-error=date-time"
-  CFLAGS_aarch64_apple_darwin: "-Wno-error=date-time"
-  # Keep every soldr invocation in this reusable job on the same catalogue.
-  # soldr >= 0.9.5 consumes its multipart v2 assets, including Apple SDKs
-  # whose legacy direct-LFS URLs are no longer anonymously downloadable.
-  SOLDR_TOOLCHAIN_ORIGIN: https://zackees.github.io/soldr-toolchain
   # cc-rs env vars for the xwin lanes. ring's build.rs uses cc-rs;
   # without these, cc-rs invokes plain `clang` and the curve25519.c
   # compile fails with `error: no such file or directory: '/imsvc'`
@@ -87,6 +65,29 @@ jobs:
     name: Build (${{ inputs.target }})
     runs-on: ${{ inputs.runner }}
     timeout-minutes: 90
+    env:
+      # Native Windows release builds can be quiet for longer than soldr's
+      # default 30 minute cargo diagnostic watchdog while rustc/link.exe are
+      # still active. Match the release-binary step's 45 minute timeout so
+      # GitHub Actions owns the outer deadline instead of soldr killing the
+      # build early.
+      SOLDR_CARGO_WAIT_TIMEOUT_SECS: "2700"
+      # Six cold release lanes run concurrently on two-core hosted runners.
+      # Bound rustc and soldr concurrency so cross-target codegen stays within
+      # the runner memory limit instead of being killed by the host.
+      CARGO_BUILD_JOBS: "1"
+      SOLDR_JOBS: "1"
+      # cargo-zigbuild clears generic CFLAGS while constructing a cross-target
+      # environment. Use cc-rs's target-specific variables so the vendored
+      # mimalloc-pprof build keeps this narrow Zig diagnostic demotion.
+      CFLAGS_x86_64_unknown_linux_musl: "-Wno-error=date-time"
+      CFLAGS_aarch64_unknown_linux_musl: "-Wno-error=date-time"
+      CFLAGS_x86_64_apple_darwin: "-Wno-error=date-time"
+      CFLAGS_aarch64_apple_darwin: "-Wno-error=date-time"
+      # Keep every soldr invocation in this reusable job on the same catalogue.
+      # soldr >= 0.9.5 consumes its multipart v2 assets, including Apple SDKs
+      # whose legacy direct-LFS URLs are no longer anonymously downloadable.
+      SOLDR_TOOLCHAIN_ORIGIN: https://zackees.github.io/soldr-toolchain
 
     steps:
       - uses: actions/checkout@v6
