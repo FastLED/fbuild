@@ -93,3 +93,38 @@ fn pyo3_029_policy_stays_target_python_independent() {
         );
     }
 }
+
+#[test]
+fn native_release_workflow_uses_current_cross_toolchains() {
+    let root = repo_root();
+    let workflow =
+        fs::read_to_string(root.join(".github/workflows/template_native_build.yml")).unwrap();
+    let release_workflow =
+        fs::read_to_string(root.join(".github/workflows/release-auto.yml")).unwrap();
+
+    assert!(
+        workflow.contains("version: 0.9.6"),
+        "native release builds need soldr >= 0.9.5 for catalogue-v2 Apple SDK assets"
+    );
+    assert!(
+        workflow.contains(
+            "SOLDR_TOOLCHAIN_ORIGIN: https://zackees.github.io/soldr-toolchain"
+        ),
+        "Apple SDK prepare and build steps must share the catalogue origin"
+    );
+    assert!(
+        workflow.contains(
+            "CFLAGS=\"-Wno-error=date-time\" cargo zigbuild --release --target"
+        ),
+        "musl release builds must demote zig's date-time error for mimalloc-pprof"
+    );
+    for release_input in [
+        "- .github/workflows/release-auto.yml",
+        "- .github/workflows/template_native_build.yml",
+    ] {
+        assert!(
+            release_workflow.contains(release_input),
+            "release workflow fixes must retrigger an incomplete publication: {release_input}"
+        );
+    }
+}

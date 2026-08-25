@@ -19,12 +19,13 @@ from fbuild._native import (  # noqa: F401
     find_firmware,
 )
 
+
 __all__ = [
-    "__version__",
     "AsyncDaemon",
     "AsyncDaemonConnection",
     "Daemon",
     "DaemonConnection",
+    "__version__",
     "connect_daemon",
     "connect_daemon_async",
     "find_firmware",
