@@ -211,9 +211,7 @@ mod tests {
     fn find_firmware_locates_collapsed_project_layout() {
         let tmp = tempfile::tempdir().unwrap();
         let project = tmp.path().join("rp2350w");
-        let firmware = project
-            .join(".fbuild")
-            .join("build")
+        let firmware = fbuild_paths::get_project_build_root(&project)
             .join("release")
             .join("firmware.bin");
         std::fs::create_dir_all(firmware.parent().unwrap()).unwrap();
