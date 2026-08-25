@@ -41,12 +41,6 @@ env:
   CARGO_TERM_COLOR: always
   RUSTFLAGS: "-D warnings"
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
-  # Native Windows release builds can be quiet for longer than soldr's
-  # default 30 minute cargo diagnostic watchdog while rustc/link.exe are
-  # still active. Match the release-binary step's 45 minute timeout so
-  # GitHub Actions owns the outer deadline instead of soldr killing the
-  # build early.
-  SOLDR_CARGO_WAIT_TIMEOUT_SECS: "2700"
   # cc-rs env vars for the xwin lanes. ring's build.rs uses cc-rs;
   # without these, cc-rs invokes plain `clang` and the curve25519.c
   # compile fails with `error: no such file or directory: '/imsvc'`
@@ -71,6 +65,29 @@ jobs:
     name: Build (${{ inputs.target }})
     runs-on: ${{ inputs.runner }}
     timeout-minutes: 90
+    env:
+      # Native Windows release builds can be quiet for longer than soldr's
+      # default 30 minute cargo diagnostic watchdog while rustc/link.exe are
+      # still active. Match the release-binary step's 45 minute timeout so
+      # GitHub Actions owns the outer deadline instead of soldr killing the
+      # build early.
+      SOLDR_CARGO_WAIT_TIMEOUT_SECS: "2700"
+      # Six cold release lanes run concurrently on two-core hosted runners.
+      # Bound rustc and soldr concurrency so cross-target codegen stays within
+      # the runner memory limit instead of being killed by the host.
+      CARGO_BUILD_JOBS: "1"
+      SOLDR_JOBS: "1"
+      # cargo-zigbuild clears generic CFLAGS while constructing a cross-target
+      # environment. Use cc-rs's target-specific variables so the vendored
+      # mimalloc-pprof build keeps this narrow Zig diagnostic demotion.
+      CFLAGS_x86_64_unknown_linux_musl: "-Wno-error=date-time"
+      CFLAGS_aarch64_unknown_linux_musl: "-Wno-error=date-time"
+      CFLAGS_x86_64_apple_darwin: "-Wno-error=date-time"
+      CFLAGS_aarch64_apple_darwin: "-Wno-error=date-time"
+      # Keep every soldr invocation in this reusable job on the same catalogue.
+      # soldr >= 0.9.5 consumes its multipart v2 assets, including Apple SDKs
+      # whose legacy direct-LFS URLs are no longer anonymously downloadable.
+      SOLDR_TOOLCHAIN_ORIGIN: https://zackees.github.io/soldr-toolchain
 
     steps:
       - uses: actions/checkout@v6
@@ -93,15 +110,13 @@ jobs:
         #     v0.7.85/v0.7.87 were broken releases that shipped silent
         #     binaries (no output at all), which setup-soldr@v0.9.63
         #     surfaced as a version-JSON parse failure.
-        # Pin the latest published soldr release; setup-soldr's current
-        # default can briefly lead a release that has not been published yet.
-        # soldr v0.8.0 is the
-        # known-good floor for the Apple SDK URL fix, soldr-clang-shim
-        # in every release archive, cargo:rustc-env wrapper forwarding,
-        # and managed cmake/ninja.
+        # Pin a fully published soldr release. v0.9.5 is the first version
+        # that consumes catalogue-v2 multipart assets; v0.8.23 still probes
+        # the retired direct-LFS Apple SDK URLs even though the SDKs are
+        # available through the v2 catalogue.
         uses: zackees/setup-soldr@v0
         with:
-          version: 0.8.23
+          version: 0.9.6
           cache: true
           build-cache: true
           target-cache: true
@@ -226,20 +241,12 @@ jobs:
       # cargo invocation so the SDKROOT export is debuggable independent
       # of the build itself.
       #
-      # SOLDR_TOOLCHAIN_ORIGIN redirects soldr's toolchain catalogue
-      # fetch away from the retired `manifest` branch of
-      # zackees/soldr (soldr#988 Phase 5 / soldr#992, merged
-      # 2026-06-27) at the new soldr-toolchain origin. soldr v0.7.66
-      # honors this env var via the Phase 2 catalogue-first
-      # fetch_once (soldr#989); older versions ignore it (and fail
-      # against the retired manifest branch, which is what we're
-      # avoiding here).
+      # SOLDR_TOOLCHAIN_ORIGIN is job-scoped above so this prepare step and
+      # both following build steps resolve the exact same catalogue.
       - name: Prepare Apple SDK (Linux → mac cross)
         if: inputs.mac_cross_linux
         timeout-minutes: 15
         shell: bash
-        env:
-          SOLDR_TOOLCHAIN_ORIGIN: https://zackees.github.io/soldr-toolchain
         run: soldr prepare --target ${{ inputs.target }}
 
       - name: Build release binaries
@@ -301,6 +308,9 @@ jobs:
             # soldr's bin cache, which has been serving a corrupted
             # cargo-zigbuild binary (`Syntax error: ")" unexpected` at
             # line 10) and blocking PyPI publishes. See #331.
+            # mimalloc-pprof's vendored diagnostic banner expands
+            # __DATE__/__TIME__. Zig promotes that one warning to an error;
+            # demote only that diagnostic for this C dependency build.
             cargo zigbuild --release --target ${{ inputs.target }} \
               -p fbuild-cli \
               -p fbuild-daemon
