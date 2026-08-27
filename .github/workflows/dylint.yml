@@ -30,6 +30,14 @@ permissions:
 env:
   CARGO_TERM_COLOR: always
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+  # Dylint owns a separate nightly/driver compile domain. It explicitly opts
+  # into two Cargo scheduling slots so Windows can install cargo-dylint within
+  # the ten-minute step budget. Compiler admission remains serialized: two
+  # concurrent Soldr admissions can race Dylint build-script executables on
+  # Linux (`Text file busy`). Normal ci-test consumers retain the action's
+  # safe one-job default for the shared stable test domain.
+  CARGO_BUILD_JOBS: "2"
+  SOLDR_JOBS: "1"
 
 jobs:
   dylint:
@@ -86,9 +94,10 @@ jobs:
         run: uv run --no-project python ci/enforce_platform_boundary.py --print-totals
       - uses: zackees/setup-soldr@v0
         with:
-          # ci-tests delegates the pinned nightly, driver, and tool binaries
-          # to Soldr's one Dylint foundation instead of recompiling them in
-          # the three bootstrap steps that used to follow.
+          # ci-tests applies the prescribed bounded resource contract for the
+          # workspace validation domain. Dylint deliberately remains on its
+          # separate pinned nightly/driver lifecycle in the explicit steps
+          # below, so it cannot invalidate the stable target tree.
           version: 0.9.10
           cache: true
           toolchain: 1.95.0
