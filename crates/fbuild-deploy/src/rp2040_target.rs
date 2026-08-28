@@ -42,6 +42,18 @@ pub(super) fn describe_unhealthy(port: &PicoCdcPort) -> String {
     )
 }
 
+/// Snapshot only CDC names that were eligible before the flash. A stale
+/// Windows devnode may later return healthy under the same COM name; treating
+/// that historical phantom name as already present would hide the recovered
+/// endpoint from post-flash discovery.
+pub(super) fn preflash_eligible_port_names(candidates: &[PicoCdcPort]) -> BTreeSet<String> {
+    candidates
+        .iter()
+        .filter(|candidate| !candidate.health.is_known_unhealthy())
+        .map(|candidate| candidate.name.clone())
+        .collect()
+}
+
 pub(super) fn resolve_requested_runtime_target(
     selector: &str,
     candidates: &[PicoCdcPort],
@@ -174,6 +186,39 @@ mod tests {
         assert_eq!(
             selected_name(select_cdc_candidate(Some("COM7"), None, &before, &after).unwrap()),
             Some("COM12".to_string())
+        );
+    }
+
+    #[test]
+    fn phantom_name_can_return_as_a_healthy_post_flash_endpoint() {
+        let before = preflash_eligible_port_names(&[
+            cdc_with_health(
+                "COM18",
+                Some("PICO-1"),
+                PortHealth::Phantom {
+                    problem_code: None,
+                    status: None,
+                },
+            ),
+            cdc_with_health("COM27", Some("PICO-2"), PortHealth::HealthyPresent),
+        ]);
+
+        assert_eq!(before, BTreeSet::from(["COM27".to_string()]));
+        assert_eq!(
+            selected_name(
+                select_cdc_candidate(
+                    None,
+                    None,
+                    &before,
+                    &[cdc_with_health(
+                        "COM18",
+                        Some("PICO-1"),
+                        PortHealth::HealthyPresent,
+                    )],
+                )
+                .unwrap()
+            ),
+            Some("COM18".to_string())
         );
     }
 

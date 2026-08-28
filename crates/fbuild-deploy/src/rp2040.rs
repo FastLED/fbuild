@@ -27,7 +27,8 @@ mod target;
 mod topology;
 use mount::try_mount_rom_device;
 use target::{
-    describe_unhealthy, resolve_requested_runtime_target, select_cdc_candidate, serial_selector,
+    describe_unhealthy, preflash_eligible_port_names, resolve_requested_runtime_target,
+    select_cdc_candidate, serial_selector,
 };
 
 const UF2_MAGIC_START0: u32 = 0x0A32_4655;
@@ -1828,8 +1829,7 @@ impl Deployer for Rp2040Deployer {
                         "RP2040 serial snapshot task failed: {error}"
                     ))
                 })??;
-        let ports_before: BTreeSet<String> =
-            current_ports.iter().map(|port| port.name.clone()).collect();
+        let ports_before = preflash_eligible_port_names(&current_ports);
         let explicit_volume = selector.and_then(explicit_uf2_volume);
         if selector.is_some_and(|value| value.to_ascii_lowercase().starts_with("uf2="))
             && explicit_volume.is_none()
@@ -2878,6 +2878,63 @@ mod tests {
             Some(root.path().to_path_buf())
         );
         assert!(resolve_requested_runtime_target(&selector, &[]).is_err());
+
+        let before = preflash_eligible_port_names(&[cdc_candidate(
+            "COM18",
+            Some("2DCB876B587EA334"),
+            fbuild_serial::ports::PortHealth::Phantom {
+                problem_code: None,
+                status: None,
+            },
+        )]);
+        let recovered = select_cdc_candidate(
+            None,
+            None,
+            &before,
+            &[cdc_candidate(
+                "COM18",
+                Some("2DCB876B587EA334"),
+                fbuild_serial::ports::PortHealth::HealthyPresent,
+            )],
+        )
+        .unwrap()
+        .expect("same-name healthy CDC must be recovered after explicit UF2 deploy");
+        assert_eq!(recovered.name, "COM18");
+    }
+
+    #[test]
+    fn stale_com_selector_uses_unique_bootsel_and_reacquires_same_name() {
+        let stale = cdc_candidate(
+            "COM18",
+            Some("2DCB876B587EA334"),
+            fbuild_serial::ports::PortHealth::Phantom {
+                problem_code: None,
+                status: None,
+            },
+        );
+        let can_attribute = resolve_requested_runtime_target("COM18", std::slice::from_ref(&stale))
+            .ok()
+            .is_some();
+        let (volume, volumes_before) =
+            pretouch_volume_policy(vec![PathBuf::from("H:\\")], can_attribute).unwrap();
+
+        assert_eq!(volume, Some(PathBuf::from("H:\\")));
+        assert!(volumes_before.is_empty());
+
+        let before = preflash_eligible_port_names(&[stale]);
+        let recovered = select_cdc_candidate(
+            None,
+            None,
+            &before,
+            &[cdc_candidate(
+                "COM18",
+                Some("2DCB876B587EA334"),
+                fbuild_serial::ports::PortHealth::HealthyPresent,
+            )],
+        )
+        .unwrap()
+        .expect("stale COM selector must converge through unique BOOTSEL recovery");
+        assert_eq!(recovered.name, "COM18");
     }
 
     #[test]
