@@ -6,6 +6,10 @@ on:
     paths:
       - Cargo.toml
       - pyproject.toml
+      # An incomplete release must be retried when its release machinery is
+      # repaired without forcing another public version bump.
+      - .github/workflows/release-auto.yml
+      - .github/workflows/template_native_build.yml
   workflow_dispatch:
     inputs:
       publish:

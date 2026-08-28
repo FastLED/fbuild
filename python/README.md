@@ -4,7 +4,7 @@ Thin Python wrapper modules that re-export classes from the Rust `_native` exten
 
 ## Contents
 
-- **`fbuild/`** -- Top-level package re-exporting `Daemon`, `DaemonConnection`, `connect_daemon`, and `__version__`
+- **`fbuild/`** -- Top-level package re-exporting daemon clients, canonical firmware discovery, and `__version__`
 - **`fbuild/api/`** -- Public serial-monitoring API re-exporting `SerialMonitor`
 - **`fbuild/_native.{pyd,abi3.so,so,dylib}`** -- Compiled Rust PyO3 extension (platform-specific binary, gitignored — see below)
 

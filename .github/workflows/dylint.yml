@@ -30,6 +30,14 @@ permissions:
 env:
   CARGO_TERM_COLOR: always
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+  # Dylint owns a separate nightly/driver compile domain. It explicitly opts
+  # into two Cargo scheduling slots so Windows can install cargo-dylint within
+  # the ten-minute step budget. Compiler admission remains serialized: two
+  # concurrent Soldr admissions can race Dylint build-script executables on
+  # Linux (`Text file busy`). Normal ci-test consumers retain the action's
+  # safe one-job default for the shared stable test domain.
+  CARGO_BUILD_JOBS: "2"
+  SOLDR_JOBS: "1"
 
 jobs:
   dylint:
@@ -86,11 +94,19 @@ jobs:
         run: uv run --no-project python ci/enforce_platform_boundary.py --print-totals
       - uses: zackees/setup-soldr@v0
         with:
-          version: 0.8.23
+          # ci-tests applies the prescribed bounded resource contract for the
+          # workspace validation domain. Dylint deliberately remains on its
+          # separate pinned nightly/driver lifecycle in the explicit steps
+          # below, so it cannot invalidate the stable target tree.
+          version: 0.9.10
           cache: true
           toolchain: 1.95.0
           cache-key-suffix: dylint
           prebuild-deps: none
+          ci-tests: true
+          dylint-toolchain: nightly-2026-04-16
+          cargo-dylint-version: 6.0.1
+          dylint-link-version: 6.0.1
           # Opt out of the implicit `SOLDR_LINKER=fast` injection so cargo /
           # rust-toolchain.toml stays in charge. Silences the routine
           # "defaulting SOLDR_LINKER=fast" warning (issue #400 /
@@ -102,16 +118,14 @@ jobs:
           # at the action default (6 GiB).
           cache-payload-warn-bytes: 2GiB
       - name: Install Dylint nightly toolchain
-        # Pin matches every `dylints/*/rust-toolchain.toml`.
         timeout-minutes: 10
         run: soldr rustup toolchain install nightly-2026-04-16 --component llvm-tools-preview --component rust-src --component rustc-dev --component rustfmt --profile minimal
       - name: Install Dylint
         timeout-minutes: 10
         run: soldr cargo install cargo-dylint dylint-link --version 6.0.1 --locked
       - name: Build published Dylint driver
-        # Dylint 6.0.1 clears RUSTUP_TOOLCHAIN before its driver build even
-        # though the published driver's build script requires it. This narrow
-        # bootstrap uses the crates.io driver; it does not clone Dylint.
+        # Dylint is explicitly permitted to build under its separate nightly
+        # until its matching Windows driver becomes a published prebuilt.
         timeout-minutes: 15
         run: uv run --no-project python ci/build_dylint_driver.py
       - name: Check Dylint library formatting

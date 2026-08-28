@@ -13,6 +13,11 @@ do not require a target Python installation or import library.
 - `Daemon` -- Static methods for daemon lifecycle: `ensure_running()`, `stop()`, `status()`
 - `DaemonConnection` -- Python context manager for build/deploy/monitor operations via the daemon's HTTP API
 - `connect_daemon()` -- Factory function matching `from fbuild import connect_daemon`
+- `find_firmware()` -- Non-mutating canonical artifact lookup backed by `fbuild_paths::BuildLayout`
+
+The structured `build_result()` and `deploy_result()` dictionaries include
+`output_file` and `output_dir` from the daemon response in addition to status
+and captured streams.
 
 ## Architecture
 

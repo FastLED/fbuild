@@ -70,6 +70,10 @@ pub(crate) struct OperationOutcome {
     pub(crate) success: bool,
     pub(crate) message: Option<String>,
     pub(crate) exit_code: Option<i32>,
+    /// Primary firmware artifact reported by the daemon.
+    pub(crate) output_file: Option<String>,
+    /// Explicit artifact-export directory, when one was requested.
+    pub(crate) output_dir: Option<String>,
     pub(crate) stdout: Option<String>,
     pub(crate) stderr: Option<String>,
 }
@@ -82,6 +86,8 @@ pub(crate) fn outcome_to_pydict<'py>(
     dict.set_item("success", outcome.success)?;
     dict.set_item("message", outcome.message.clone())?;
     dict.set_item("exit_code", outcome.exit_code)?;
+    dict.set_item("output_file", outcome.output_file.clone())?;
+    dict.set_item("output_dir", outcome.output_dir.clone())?;
     dict.set_item("stdout", outcome.stdout.clone())?;
     dict.set_item("stderr", outcome.stderr.clone())?;
     Ok(dict)
@@ -107,6 +113,14 @@ pub(crate) fn parse_outcome(body: &serde_json::Value) -> OperationOutcome {
                     None
                 }
             }),
+        output_file: body
+            .get("output_file")
+            .and_then(|v| v.as_str())
+            .map(str::to_string),
+        output_dir: body
+            .get("output_dir")
+            .and_then(|v| v.as_str())
+            .map(str::to_string),
         stdout: body
             .get("stdout")
             .and_then(|v| v.as_str())

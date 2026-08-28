@@ -18,10 +18,15 @@ runtime or import library.
 FastLED (`~/dev/fastled`) imports these from the `fbuild` Python package:
 
 ```python
-from fbuild import connect_daemon, Daemon
+from fbuild import connect_daemon, Daemon, find_firmware
 from fbuild.api import SerialMonitor
 from fbuild.daemon import ensure_daemon_running, stop_daemon
 ```
+
+`find_firmware(project_dir, environment, firmware_name=None)` is a
+non-mutating query backed by `fbuild_paths::find_firmware`; consumers must use
+it instead of reconstructing `.fbuild/build` paths. Structured build/deploy
+results also preserve the daemon's `output_file` and `output_dir` fields.
 
 ## SerialMonitor API
 
