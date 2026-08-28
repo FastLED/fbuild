@@ -11,6 +11,7 @@ pub mod disk_cache;
 pub mod downloader;
 pub mod extractor;
 pub mod http;
+pub mod submodules;
 
 mod install_lock;
 
@@ -428,6 +429,20 @@ impl PackageBase {
 
         // Remove the archive after extraction
         let _ = std::fs::remove_file(&archive_path);
+
+        // A core whose archive dropped its submodules extracts to something
+        // that looks complete. Catch it here rather than letting the compiler
+        // report a missing header from inside the core (FastLED/fbuild#1380,
+        // #1400). Checked against the extracted root and one level down,
+        // since most archives nest under a single version directory.
+        for root in submodule_scan_roots(&staging_path) {
+            let empty = submodules::find_empty_submodules(&root);
+            if !empty.is_empty() {
+                return Err(fbuild_core::FbuildError::PackageError(
+                    submodules::empty_submodule_error(&self.name, &self.url, &empty),
+                ));
+            }
+        }
 
         // Validate
         validate(&staging_path)?;
@@ -924,4 +939,22 @@ mod package_override_tests {
             "name is preserved across override"
         );
     }
+}
+
+/// Where to look for a `.gitmodules` after extraction.
+///
+/// Archives usually nest everything under one directory named for the
+/// version (`esp8266-3.1.2/`), so the repo root is one level down from the
+/// staging dir — but not always. Checking both costs one `read_dir`.
+fn submodule_scan_roots(staging: &Path) -> Vec<PathBuf> {
+    let mut roots = vec![staging.to_path_buf()];
+    if let Ok(entries) = std::fs::read_dir(staging) {
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.is_dir() {
+                roots.push(path);
+            }
+        }
+    }
+    roots
 }
