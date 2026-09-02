@@ -123,7 +123,9 @@ No current fbuild component needs a permanent specialized-artifact zone.
 | build/test fixtures | Generic or concrete-facade tests | Tests are not an exemption from the source boundary. |
 
 Phase 2 must revalidate this decision against its parser-derived three-host
-union. If it discovers a genuine artifact ABI constraint, the exception must be
+union (the scanner is host-independent; CI now runs it on Linux and Windows
+only -- the macOS runner lane was dropped and macOS binaries are cross-built
+from Linux). If it discovers a genuine artifact ABI constraint, the exception must be
 named and narrowly linted; a file/directory wildcard is not acceptable.
 
 ## RED evidence
@@ -132,8 +134,10 @@ named and narrowly linted; a file/directory wildcard is not acceptable.
 attribute, active-host native import, `cfg!` expression, and compile-time host
 fact. It compiles on Windows, Linux, and macOS today because fbuild has no
 host-platform boundary lint. The phase-1 workflow preserves that positive
-compile result on all three hosts. Phase 2 converts the same constructs into
-negative Dylint/scanner fixtures whose expected result is a boundary error.
+compile result on the Linux and Windows CI hosts (the macOS runner lane was
+dropped from CI; macOS binaries are cross-built from Linux). Phase 2 converts
+the same constructs into negative Dylint/scanner fixtures whose expected result
+is a boundary error.
 
 Existing production and test sources provide additional RED evidence: the
 research inventory includes private/inactive attributes, 77 native paths, and
