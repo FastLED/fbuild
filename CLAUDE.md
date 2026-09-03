@@ -59,7 +59,11 @@ The four rules an agent must internalize before doing anything else (all listed 
 - **Always use a globally-installed `soldr` to execute Rust commands.** Bare cargo/rustc and legacy `uv run cargo` shims are blocked by hook. soldr uses `rustup which` to pick the rustup-managed toolchain from `rust-toolchain.toml`. The standard Cargo path is `soldr cargo ...`, so repo Rust builds get soldr's managed zccache path by default; do not add repo-specific `RUSTC_WRAPPER` wiring for normal builds. Install soldr globally via `uv tool install soldr` (or see https://github.com/zackees/soldr).
 - **Always use `uv` for Python.** Bare `python`/`pip` are blocked by hook. Use `uv run ...` or `uv pip ...`.
 - MSRV: 1.95.0 | Edition: 2021 | Toolchain: 1.95.0 pinned in `rust-toolchain.toml` (clippy + rustfmt)
-- CI: Linux, macOS, Windows. All warnings denied (`RUSTFLAGS="-D warnings"`)
+- CI hosts: Linux, Windows. All warnings denied (`RUSTFLAGS="-D warnings"`). There are
+  **no macOS runners** — macOS is a build *target*, not a test host: every apple-darwin
+  binary is cross-built from Linux (soldr + `cargo-zigbuild` + managed Apple SDK) by the
+  Linux-hosted native workflows, `release-auto.yml` and `build.yml`. Do not add a
+  `macos-latest` lane back.
 - Every directory with files must have a README.md (enforced by hook)
 
 ## Commands

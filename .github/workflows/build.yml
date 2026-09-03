@@ -35,16 +35,21 @@ jobs:
             linux_cross: true
             macos_cross: false
 
-          # x86_64-apple-darwin removed: Intel Macs use ARM wheel via Rosetta.
-          # Cross-compiling ring crate ARM→x86 fails; native macos-13 runners
-          # are perpetually unavailable. Re-enable when ring supports cross or
-          # GitHub restores Intel runner capacity.
+          # x86_64-apple-darwin is not built here. This workflow builds
+          # binaries on demand; the release matrix (release-auto.yml) is
+          # what produces the Intel archive when a release needs one, and
+          # it cross-builds that target from Linux too.
 
+          # aarch64-apple-darwin cross-compiles from the Linux runner via
+          # soldr + cargo-zigbuild + soldr's managed Apple SDK, matching the
+          # release matrix. No macos-latest runner is used anywhere in this
+          # workflow.
           - target: aarch64-apple-darwin
-            runner: macos-latest
+            runner: ubuntu-latest
             binary_ext: ""
             linux_cross: false
             macos_cross: false
+            mac_cross_linux: true
 
           - target: x86_64-pc-windows-msvc
             runner: windows-latest
@@ -59,4 +64,5 @@ jobs:
       binary_ext: ${{ matrix.binary_ext }}
       linux_cross: ${{ matrix.linux_cross }}
       macos_cross: ${{ matrix.macos_cross }}
+      mac_cross_linux: ${{ matrix.mac_cross_linux == true }}
       ref: ${{ github.event.inputs.ref || 'main' }}

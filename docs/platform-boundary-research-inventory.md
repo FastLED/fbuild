@@ -17,10 +17,12 @@ external/vendor sources are outside this research union.
 
 Because the scanner walks source rather than expanded modules, the same checkout
 produces the same union on every host. `.github/workflows/platform-boundary-research.yml`
-runs the drift check and fixture tests on Windows, Linux, and macOS and prints a
-host-labelled total. Phase 2 must still reconcile the three raw parser/Dylint
-inventories before it freezes its authoritative ledger; compiler hooks alone
-cannot see wrong-host or orphaned module files.
+runs the drift check and fixture tests on Windows and Linux and prints a
+host-labelled total (the macOS runner lane was dropped from CI; macOS binaries
+are cross-built from Linux, and the host-independent scanner reports the same
+union there). Phase 2 must still reconcile the raw parser/Dylint inventories
+before it freezes its authoritative ledger; compiler hooks alone cannot see
+wrong-host or orphaned module files.
 
 Reproduce locally with:
 

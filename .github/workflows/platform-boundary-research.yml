@@ -27,8 +27,6 @@ jobs:
             host: linux
           - os: windows-latest
             host: windows
-          - os: macos-latest
-            host: macos
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v6
