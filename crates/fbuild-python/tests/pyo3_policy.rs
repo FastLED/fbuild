@@ -156,41 +156,41 @@ fn pyo3_029_policy_stays_target_python_independent() {
         );
     }
 
+    // Every cross build must suppress the host-interpreter lookup, and the
+    // blessed path is the only entry point left. The template collapsed four
+    // per-target branches into these two commands.
     for command in [
-        "PYO3_NO_PYTHON=1 soldr cargo zigbuild --release \\",
-        "PYO3_NO_PYTHON=1 soldr --no-cache build --release \\",
-        "PYO3_NO_PYTHON=1 cargo zigbuild --release \\",
-        "PYO3_NO_PYTHON=1 soldr cargo build --release \\",
+        "PYO3_NO_PYTHON=1 soldr build --release \\",
+        "soldr build --release --target ${{ inputs.target }} \\",
     ] {
         assert!(
             workflow.contains(command),
-            "cross-build branch lost host-interpreter suppression: {command}"
+            "cross-build lost the blessed soldr entry point: {command}"
         );
     }
 
-    // The Windows MSVC branches route through `soldr --no-cache build`
-    // (the xwin CRT-casing fixes made the cache bypass part of the
-    // blessed invocation); the policy is the soldr entry point plus
-    // host-interpreter suppression, not the exact cache flags.
-    for command in [
-        "soldr --no-cache build --release --target ${{ inputs.target }} \\",
-        "PYO3_NO_PYTHON=1 soldr --no-cache build --release \\",
-    ] {
+    // The retired backends are gone with no exceptions. soldr's catalogue
+    // sysroot holds the manylinux glibc floor by itself -- the extension it
+    // produces for x86_64-unknown-linux-gnu tops out at GLIBC_2.16, below the
+    // 2.17 floor and below what the old zigbuild lane produced. There is no
+    // remaining reason for any of these to appear.
+    //
+    // Never reintroduce zigbuild's `.2.17` target suffix here either: soldr
+    // has no such target, warns, silently falls back to the host toolchain
+    // and exits 0, yielding a GLIBC_2.39 .so tagged manylinux_2_17.
+    // See agents/docs/cross-compilation.md.
+    // lint-allow: legacy-cross: this list is what the test forbids
+    for retired in ["zigbuild", "ziglang", "cargo-xwin", "cargo xwin"] {
+        let hits: Vec<&str> = workflow
+            .lines()
+            .filter(|line| !line.trim_start().starts_with('#'))
+            .filter(|line| line.contains(retired))
+            .collect();
         assert!(
-            workflow.contains(command),
-            "Windows MSVC cross-build lost the blessed soldr entry point: {command}"
+            hits.is_empty(),
+            "retired cross backend {retired} came back: {hits:?}"
         );
     }
-
-    assert!(
-        !workflow.lines().any(|line| {
-            line.split_whitespace()
-                .collect::<Vec<_>>()
-                .windows(3)
-                .any(|tokens| tokens == ["cargo", "xwin", "build"])
-        }),
-        "Windows MSVC commands must go through soldr build, not cargo-xwin directly"
-    );
 
     let release_workflow =
         fs::read_to_string(root.join(".github/workflows/release-auto.yml")).unwrap();

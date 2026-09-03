@@ -13,6 +13,7 @@ When operating in this repo on a task that isn't covered by the architectural ov
 | "What DTR/RTS state do I open this CDC port at?" | [`docs/usb-cdc-control-line-matrix.md`](docs/usb-cdc-control-line-matrix.md) |
 | "How do I run the serial detection code against a real ESP32?" | [`agents/docs/serial-testing.md`](agents/docs/serial-testing.md) (FastLED/fbuild#899 — Docker/WSL real-device harness) |
 | "Where does this path/cache/build dir live, and why won't my cache key hit?" | [`agents/docs/path-conventions.md`](agents/docs/path-conventions.md) |
+| "How do I cross-compile / why did a release lane break?" | [`agents/docs/cross-compilation.md`](agents/docs/cross-compilation.md) |
 | "Which crate owns this code?" | [`crates/CLAUDE.md`](crates/CLAUDE.md) |
 | "Which architecture doc maps to my crate?" | [`docs/CLAUDE.md`](docs/CLAUDE.md) |
 | "Is this serial port the right device?" | `fbuild serial probe list` (FastLED/fbuild#686) |
@@ -61,9 +62,14 @@ The four rules an agent must internalize before doing anything else (all listed 
 - MSRV: 1.95.0 | Edition: 2021 | Toolchain: 1.95.0 pinned in `rust-toolchain.toml` (clippy + rustfmt)
 - CI hosts: Linux, Windows. All warnings denied (`RUSTFLAGS="-D warnings"`). There are
   **no macOS runners** — macOS is a build *target*, not a test host: every apple-darwin
-  binary is cross-built from Linux (soldr + `cargo-zigbuild` + managed Apple SDK) by the
-  Linux-hosted native workflows, `release-auto.yml` and `build.yml`. Do not add a
-  `macos-latest` lane back.
+  binary is cross-built from Linux by the Linux-hosted native workflows,
+  `release-auto.yml` and `build.yml`. Do not add a `macos-latest` lane back.
+- **Cross-compilation goes through soldr, and only soldr** — `soldr prepare --target X`
+  then `soldr build --target X`. The zig- and xwin-based wrappers are retired and
+  enforced-out by `ci/check_no_legacy_cross.py` plus the `tool_guard.py` hook. Never pass zigbuild's `.2.17` glibc suffix to soldr: it has no
+  such target, warns, falls back to the host toolchain and still exits 0, shipping a
+  GLIBC_2.39 wheel tagged `manylinux_2_17`. soldr's own sysroot links at 2.16.
+  See [`agents/docs/cross-compilation.md`](agents/docs/cross-compilation.md).
 - Every directory with files must have a README.md (enforced by hook)
 
 ## Commands

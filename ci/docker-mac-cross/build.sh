@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Run inside the `fbuild-mac-cross` docker image (see Dockerfile).
 # Cross-compiles fbuild + fbuild-daemon + the PyO3 extension to one of
-# the Apple targets using soldr + cargo-zigbuild + soldr's Apple SDK.
+# the Apple targets using soldr's blessed cross path (`soldr prepare`
+# + `soldr build`) and soldr's managed Apple SDK.
 #
 # Usage:
 #   ./build.sh                         # default aarch64-apple-darwin
@@ -37,22 +38,20 @@ soldr toolchain ensure
 soldr rustup target add "$TARGET"
 echo "::endgroup::"
 
-echo "::group::cargo-zigbuild + soldr-managed apple SDK"
-which cargo-zigbuild
-cargo-zigbuild --version
-# Force a pre-fetch of the Apple SDK before the real build so a
-# slow / failing SDK download is debuggable separately from the cargo
-# build itself.
+echo "::group::soldr-managed apple SDK"
+# Pre-fetch the SDK before the real build so a slow / failing download is
+# debuggable separately from the compile. `soldr prepare` also exports the
+# target-scoped env that `soldr build` consumes.
 soldr prepare --target "$TARGET"
 echo "::endgroup::"
 
 echo "::group::Build fbuild-cli + fbuild-daemon"
-soldr cargo zigbuild --release --target "$TARGET" \
+soldr build --release --target "$TARGET" \
     -p fbuild-cli -p fbuild-daemon
 echo "::endgroup::"
 
 echo "::group::Build fbuild-python PyO3 extension"
-PYO3_NO_PYTHON=1 soldr cargo zigbuild --release \
+PYO3_NO_PYTHON=1 soldr build --release \
     --target-dir target/python-extension \
     --target "$TARGET" -p fbuild-python \
     --features extension-module
