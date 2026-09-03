@@ -5,6 +5,10 @@ use std::path::{Path, PathBuf};
 use super::Esp32Framework;
 use super::fs_utils::copy_dir_recursive;
 
+/// Archive whose presence proves a per-MCU SDK tree carries real libraries
+/// and not just the partial directory some core archives ship.
+const FREERTOS_ARCHIVE: &str = "libfreertos.a";
+
 const NEW_SDK_LAYOUT: &str = "esp32-arduino-libs";
 const OLD_SDK_LAYOUT: &str = "sdk";
 
@@ -57,7 +61,31 @@ fn mcu_sdk_complete(mcu_dir: &Path) -> bool {
         .join("FreeRTOS.h")
         .exists()
         && mcu_dir.join("flags").join("includes").exists()
-        && mcu_dir.join("lib").join("libfreertos.a").exists()
+        && has_freertos_archive(mcu_dir)
+}
+
+/// Locate `libfreertos.a` inside an installed per-MCU SDK tree.
+///
+/// Most MCUs put every archive in `lib/`. ESP32-S3 does not: its FreeRTOS
+/// build differs per flash/PSRAM mode, so `libfreertos.a` ships **only**
+/// under the memory-type variant dirs (`dio_opi`, `qio_qspi`, ...) while
+/// `lib/` holds the other 165 archives. Requiring `lib/libfreertos.a`
+/// therefore judged a complete S3 install incomplete forever, and
+/// [`Esp32Framework::ensure_libs`] re-downloaded and re-extracted the
+/// 298 MB SDK archive on *every* build — 132 s of a 136 s no-op
+/// (FastLED/fbuild#1411).
+fn has_freertos_archive(mcu_dir: &Path) -> bool {
+    if mcu_dir.join("lib").join(FREERTOS_ARCHIVE).exists() {
+        return true;
+    }
+    // Only one level deep: the variant dirs sit directly under the MCU dir.
+    std::fs::read_dir(mcu_dir)
+        .map(|entries| {
+            entries
+                .flatten()
+                .any(|entry| entry.path().join(FREERTOS_ARCHIVE).exists())
+        })
+        .unwrap_or(false)
 }
 
 /// Merge a requested MCU directory from a skeleton archive, regardless of a
@@ -126,6 +154,22 @@ impl Esp32Framework {
         for mcu_dir in mcu_sdk_dir_candidates(&tools_dir, mcu) {
             if mcu_sdk_complete(&mcu_dir) {
                 return Ok(());
+            }
+        }
+
+        // A present-but-incomplete MCU tree means the ~300 MB SDK is about
+        // to be installed again — re-extracted, and re-downloaded too
+        // unless the archive is still cached below. That is correct on a
+        // genuinely partial install and catastrophic when the completion
+        // check is simply wrong about the layout — the silent form of this
+        // cost every build 132 s on ESP32-S3 (FastLED/fbuild#1411). Say so.
+        for mcu_dir in mcu_sdk_dir_candidates(&tools_dir, mcu) {
+            if mcu_dir.exists() {
+                tracing::warn!(
+                    "{} SDK dir {} exists but is incomplete; reinstalling the SDK libs",
+                    mcu,
+                    mcu_dir.display()
+                );
             }
         }
 
@@ -248,6 +292,37 @@ mod tests {
         );
         write(&mcu_dir.join("flags").join("includes"), "");
         write(&mcu_dir.join("lib").join("libfreertos.a"), "");
+    }
+
+    /// ESP32-S3 is the one MCU whose `esp32-arduino-libs` tree ships
+    /// `libfreertos.a` **only** under the per-memory-type variant dirs
+    /// (`dio_opi`, `qio_qspi`, ...) — `lib/` holds the other 165 archives
+    /// but not that one. Requiring `lib/libfreertos.a` therefore judged
+    /// a fully-installed S3 SDK incomplete on every build, and
+    /// `ensure_libs` re-downloaded + re-extracted the 298 MB archive each
+    /// time: 132 s of a 136 s no-op build (FastLED/fbuild#1411).
+    #[test]
+    fn mcu_sdk_complete_accepts_memory_type_variant_freertos_lib() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let mcu_dir = tmp.path().join("esp32s3");
+
+        write(
+            &mcu_dir
+                .join("include")
+                .join("freertos")
+                .join("FreeRTOS-Kernel")
+                .join("include")
+                .join("freertos")
+                .join("FreeRTOS.h"),
+            "",
+        );
+        write(&mcu_dir.join("flags").join("includes"), "");
+        // 165 archives land in `lib/`, but not libfreertos.a.
+        write(&mcu_dir.join("lib").join("libdriver.a"), "");
+        assert!(!mcu_sdk_complete(&mcu_dir));
+
+        write(&mcu_dir.join("qio_qspi").join("libfreertos.a"), "");
+        assert!(mcu_sdk_complete(&mcu_dir));
     }
 
     #[test]
