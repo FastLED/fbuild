@@ -232,10 +232,20 @@ jobs:
       #   2. Building the PyO3 extension with a pinned glibc symbol version
       #      so manylinux_2_17 wheels actually run on glibc 2.17. The native
       #      ubuntu-latest linker would otherwise pull in glibc 2.39 symbols.
+      #
+      # PINNED. This install was unpinned and 0.23.4 broke the two
+      # apple-darwin lanes of the 2.5.22 release: rustc emits
+      # `-Wl,-exported_symbols_list -Wl,<path>` for a cdylib, 0.23.4
+      # reorders those linker args so zig reads the *next* flag as the
+      # list path, and the link dies with
+      #   error: unable to read exported symbols list '-dead_strip': FileNotFound
+      #   error: could not compile `zccache-watcher` (lib)
+      # 0.23.1 + ziglang 0.16.0 is the exact pair that built the 2.5.21
+      # release. Bump deliberately, with a release build to prove it.
       - name: Install cross-compilation tools
         if: runner.os == 'Linux' && !contains(inputs.target, 'pc-windows-msvc')
         timeout-minutes: 10
-        run: pip install --timeout 60 cargo-zigbuild
+        run: pip install --timeout 60 cargo-zigbuild==0.23.1 ziglang==0.16.0
 
       # Linux → mac cross — soldr fetches the Apple SDK ahead of the
       # cargo invocation so the SDKROOT export is debuggable independent
