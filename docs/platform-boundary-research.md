@@ -93,7 +93,9 @@ initially reported 490 candidate occurrences. Phase 2 Dylint/scanner
 reconciliation first corrected the union to 496 after adding missed constructs
 and removing local-module false positives, then incorporated eight host-cfg
 occurrences added to `fbuild-paths` on `main` before the baseline merged. The
-authoritative union is therefore 504. The checked-in rows and reproducible three-host protocol are described in
+authoritative union is therefore 504. The checked-in rows and the reproducible
+cross-host protocol (three hosts as run for phase 1; the macOS lane has since
+been dropped from CI) are described in
 `platform-boundary-research-inventory.md`. This is reviewed research input, not
 the phase-2 exact-occurrence baseline.
 

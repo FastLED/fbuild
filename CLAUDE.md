@@ -61,8 +61,9 @@ The four rules an agent must internalize before doing anything else (all listed 
 - MSRV: 1.95.0 | Edition: 2021 | Toolchain: 1.95.0 pinned in `rust-toolchain.toml` (clippy + rustfmt)
 - CI hosts: Linux, Windows. All warnings denied (`RUSTFLAGS="-D warnings"`). There are
   **no macOS runners** — macOS is a build *target*, not a test host: every apple-darwin
-  binary is cross-built from Linux (soldr + `cargo-zigbuild` + managed Apple SDK) in
-  `release-auto.yml`. Do not add a `macos-latest` lane back.
+  binary is cross-built from Linux (soldr + `cargo-zigbuild` + managed Apple SDK) by the
+  Linux-hosted native workflows, `release-auto.yml` and `build.yml`. Do not add a
+  `macos-latest` lane back.
 - Every directory with files must have a README.md (enforced by hook)
 
 ## Commands

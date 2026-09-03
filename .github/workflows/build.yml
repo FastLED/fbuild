@@ -35,10 +35,10 @@ jobs:
             linux_cross: true
             macos_cross: false
 
-          # x86_64-apple-darwin is not built here: Intel Macs install the
-          # ARM wheel via Rosetta, and the release matrix
-          # (release-auto.yml) is what produces the Intel archive when a
-          # release needs one.
+          # x86_64-apple-darwin is not built here. This workflow builds
+          # binaries on demand; the release matrix (release-auto.yml) is
+          # what produces the Intel archive when a release needs one, and
+          # it cross-builds that target from Linux too.
 
           # aarch64-apple-darwin cross-compiles from the Linux runner via
           # soldr + cargo-zigbuild + soldr's managed Apple SDK, matching the
