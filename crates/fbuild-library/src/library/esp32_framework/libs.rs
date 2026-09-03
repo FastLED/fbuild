@@ -157,15 +157,16 @@ impl Esp32Framework {
             }
         }
 
-        // A present-but-incomplete MCU tree means the ~300 MB archive is
-        // about to be fetched and extracted again. That is correct on a
+        // A present-but-incomplete MCU tree means the ~300 MB SDK is about
+        // to be installed again — re-extracted, and re-downloaded too
+        // unless the archive is still cached below. That is correct on a
         // genuinely partial install and catastrophic when the completion
         // check is simply wrong about the layout — the silent form of this
         // cost every build 132 s on ESP32-S3 (FastLED/fbuild#1411). Say so.
         for mcu_dir in mcu_sdk_dir_candidates(&tools_dir, mcu) {
             if mcu_dir.exists() {
                 tracing::warn!(
-                    "{} SDK dir {} exists but is incomplete; re-downloading the SDK libs archive",
+                    "{} SDK dir {} exists but is incomplete; reinstalling the SDK libs",
                     mcu,
                     mcu_dir.display()
                 );
