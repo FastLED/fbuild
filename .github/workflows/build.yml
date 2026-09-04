@@ -41,7 +41,7 @@ jobs:
           # it cross-builds that target from Linux too.
 
           # aarch64-apple-darwin cross-compiles from the Linux runner via
-          # soldr + cargo-zigbuild + soldr's managed Apple SDK, matching the
+          # soldr's blessed cross path + its managed Apple SDK, matching the
           # release matrix. No macos-latest runner is used anywhere in this
           # workflow.
           - target: aarch64-apple-darwin

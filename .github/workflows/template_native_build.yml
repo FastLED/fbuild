@@ -30,7 +30,7 @@ on:
         required: false
         type: boolean
         default: false
-        description: "Cross-compile macOS target from Linux via soldr + cargo-zigbuild + managed Apple SDK"
+        description: "Cross-compile a macOS target from Linux via soldr's blessed path + managed Apple SDK"
       ref:
         required: false
         type: string
@@ -116,7 +116,12 @@ jobs:
         # available through the v2 catalogue.
         uses: zackees/setup-soldr@v0
         with:
-          version: 0.9.6
+          # 0.9.12 is the first release carrying the pkg-config sysroot fix
+          # (zackees/soldr#3081): soldr exported PKG_CONFIG_SYSROOT_DIR, and
+          # pkg-config prefixed it onto every absolute -L, so the managed
+          # syslib path came out as sysroot+absolute and the musl lanes died
+          # with `ld: cannot find -lbz2`. Do not pin below this.
+          version: 0.9.12
           cache: true
           build-cache: true
           target-cache: true
@@ -192,69 +197,19 @@ jobs:
           sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::Retries=3 update
           sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::Retries=3 install -y musl-tools pkg-config
 
-      # Windows MSVC release artifacts can be cross-built from Linux with
-      # cargo-xwin, but native Windows runners use the standard cargo path.
-      - name: Install cargo-xwin
-        if: runner.os == 'Linux' && contains(inputs.target, 'pc-windows-msvc')
-        uses: taiki-e/install-action@v2
-        with:
-          tool: cargo-xwin
-
-      - name: Install xwin system dependencies
-        if: runner.os == 'Linux' && contains(inputs.target, 'pc-windows-msvc')
-        timeout-minutes: 10
-        run: |
-          sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::Retries=3 update
-          # llvm provides llvm-lib + llvm-rc which cc-rs invokes when
-          # compiling C build scripts (e.g. blake3's blake3.c) under
-          # cargo-xwin. Without it the win-msvc lane fails at
-          # `error: failed to find tool "llvm-lib"`.
-          sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::Retries=3 install -y --no-install-recommends clang lld llvm zip
-          # `clang-cl` is a driver-mode symlink, not a separate apt
-          # package. On Ubuntu the `clang` binary supports MSVC
-          # compatibility mode (`clang --driver-mode=cl`) but the
-          # `clang` package doesn't always create the `clang-cl`
-          # convenience symlink. The `CC_<target>=clang-cl` env vars
-          # at the top of this template require that binary to exist
-          # on PATH — without it, ring + cc-rs fail with
-          # `failed to find tool "clang-cl": No such file or
-          # directory` during `cargo xwin build`. Create the symlink
-          # ourselves so the env vars resolve. soldr >= v0.8.0 ships
-          # `soldr-clang-shim` in its release archive and `soldr build`
-          # installs it on PATH (zackees/soldr#1032); the symlink stays
-          # as a safety belt for any direct `cargo xwin` invocation.
-          if ! command -v clang-cl >/dev/null 2>&1; then
-            sudo ln -sf "$(command -v clang)" /usr/local/bin/clang-cl
-          fi
-
-      # cargo-zigbuild — used for two reasons on Linux:
-      #   1. musl cross-compilation (linux_cross targets)
-      #   2. Building the PyO3 extension with a pinned glibc symbol version
-      #      so manylinux_2_17 wheels actually run on glibc 2.17. The native
-      #      ubuntu-latest linker would otherwise pull in glibc 2.39 symbols.
+      # soldr's blessed cross path, step 1 of 2. `soldr prepare` installs the
+      # target stdlib and materializes the compiler, linker and SDK/sysroot,
+      # then exports the target-scoped environment that `soldr build`
+      # consumes. Run for EVERY target, native included: it is a no-op where
+      # nothing needs fetching, and running it unconditionally means one code
+      # path instead of a per-target branch.
       #
-      # PINNED. This install was unpinned and 0.23.4 broke the two
-      # apple-darwin lanes of the 2.5.22 release: rustc emits
-      # `-Wl,-exported_symbols_list -Wl,<path>` for a cdylib, 0.23.4
-      # reorders those linker args so zig reads the *next* flag as the
-      # list path, and the link dies with
-      #   error: unable to read exported symbols list '-dead_strip': FileNotFound
-      #   error: could not compile `zccache-watcher` (lib)
-      # 0.23.1 + ziglang 0.16.0 is the exact pair that built the 2.5.21
-      # release. Bump deliberately, with a release build to prove it.
-      - name: Install cross-compilation tools
-        if: runner.os == 'Linux' && !contains(inputs.target, 'pc-windows-msvc')
-        timeout-minutes: 10
-        run: pip install --timeout 60 cargo-zigbuild==0.23.1 ziglang==0.16.0
-
-      # Linux → mac cross — soldr fetches the Apple SDK ahead of the
-      # cargo invocation so the SDKROOT export is debuggable independent
-      # of the build itself.
+      # Kept as its own step so a slow or failing SDK/sysroot download is
+      # diagnosable separately from the compile.
       #
-      # SOLDR_TOOLCHAIN_ORIGIN is job-scoped above so this prepare step and
-      # both following build steps resolve the exact same catalogue.
-      - name: Prepare Apple SDK (Linux → mac cross)
-        if: inputs.mac_cross_linux
+      # SOLDR_TOOLCHAIN_ORIGIN is job-scoped above so this step and both
+      # build steps resolve the exact same catalogue.
+      - name: Prepare target toolchain
         timeout-minutes: 15
         shell: bash
         run: soldr prepare --target ${{ inputs.target }}
@@ -263,164 +218,59 @@ jobs:
         timeout-minutes: 45
         shell: bash
         run: |
-          if [ "${{ inputs.mac_cross_linux }}" = "true" ]; then
-            # Linux → aarch64-apple-darwin: zigbuild + soldr-managed SDK.
-            # Identical recipe to ci/docker-mac-cross/build.sh, which
-            # validates this same path against a minimal ubuntu:24.04 image.
-            soldr cargo zigbuild --release --target ${{ inputs.target }} \
-              -p fbuild-cli \
-              -p fbuild-daemon
-          elif [ "${{ runner.os }}" = "Linux" ] && [[ "${{ inputs.target }}" == *-pc-windows-msvc ]]; then
-            # Blessed Linux→Windows MSVC path (soldr#1012 PR 6),
-            # used by the aarch64-pc-windows-msvc lane. `soldr build`
-            # installs the soldr-clang-shim ahead of system clang on
-            # PATH so ring's hardcoded `c.compiler("clang")`
-            # (build.rs:563) routes to clang-cl for
-            # aarch64-windows-msvc. For x64 the shim is harmless
-            # passthrough. cargo-xwin is still installed (handles
-            # SDK download); soldr build delegates to cargo-xwin via
-            # internal env vars when the catalogue xwin-cache row is
-            # absent for the target arch. Requires soldr >= v0.8.0
-            # (first release whose archive ships the shim).
-            # Prepare explicitly so the managed xwin cache is available for
-            # the x64 CRT compatibility path below.
-            soldr prepare --target ${{ inputs.target }}
-            if [ "${{ inputs.target }}" = "x86_64-pc-windows-msvc" ]; then
-              # Keep the blessed compiler and derive the cache's actual CRT,
-              # UM, and UCRT library directories from their canonical files.
-              # The catalogue's directory labels differ between cache releases.
-              xwin_root="$(find "$SOLDR_CACHE_DIR/sdk/${{ inputs.target }}/xwin" -mindepth 2 -maxdepth 2 -type d -name xwin -print -quit)"
-              [ -n "$xwin_root" ] || { echo "managed xwin cache missing" >&2; exit 1; }
-              msvcrt="$(find "$xwin_root/crt/lib/x86_64" -type f -iname msvcrt.lib -print -quit)"
-              oldnames="$(find "$xwin_root/crt/lib/x86_64" -type f -iname oldnames.lib -print -quit)"
-              kernel32="$(find "$xwin_root/sdk/lib/um/x86_64" -type f -iname kernel32.lib -print -quit)"
-              ucrt="$(find "$xwin_root/sdk/lib/ucrt/x86_64" -type f -iname ucrt.lib -print -quit)"
-              [ -n "$msvcrt" ] && [ -n "$oldnames" ] && [ -n "$kernel32" ] && [ -n "$ucrt" ] || { echo "managed xwin libraries missing" >&2; exit 1; }
-              for library in "$msvcrt" "$oldnames"; do
-                directory="$(dirname "$library")"
-                base="$(basename "$library")"
-                lower="${base,,}"
-                upper="$(basename "$base" .lib | tr '[:lower:]' '[:upper:]').lib"
-                [ "$base" = "$lower" ] || ln -sf "$base" "$directory/$lower"
-                [ "$base" = "$upper" ] || ln -sf "$base" "$directory/$upper"
-              done
-              export RUSTFLAGS="-D warnings -C link-arg=/LIBPATH:$(dirname "$msvcrt") -C link-arg=/LIBPATH:$(dirname "$kernel32") -C link-arg=/LIBPATH:$(dirname "$ucrt")"
-            else
-              # Cargo's global RUSTFLAGS takes precedence over soldr's
-              # target-specific xwin linker flags.
-              unset RUSTFLAGS
-            fi
-            soldr --no-cache build --release --target ${{ inputs.target }} \
-              -p fbuild-cli \
-              -p fbuild-daemon
-          elif [[ "${{ inputs.target }}" == *-unknown-linux-musl ]]; then
-            # Direct `cargo zigbuild` (pip-installed wrapper) bypasses
-            # soldr's bin cache, which has been serving a corrupted
-            # cargo-zigbuild binary (`Syntax error: ")" unexpected` at
-            # line 10) and blocking PyPI publishes. See #331.
-            # mimalloc-pprof's vendored diagnostic banner expands
-            # __DATE__/__TIME__. Zig promotes that one warning to an error;
-            # demote only that diagnostic for this C dependency build.
-            cargo zigbuild --release --target ${{ inputs.target }} \
-              -p fbuild-cli \
-              -p fbuild-daemon
-          else
-            # Default: `soldr cargo build`. On the native
-            # windows-latest runner this picks up MSVC's
-            # link.exe / cl.exe automatically.
-            soldr cargo build --release --target ${{ inputs.target }} \
-              -p fbuild-cli \
-              -p fbuild-daemon
-          fi
+          # One invocation for every target, native and cross alike.
+          # `soldr build` is soldr's blessed-default surface and consumes
+          # exactly what `soldr prepare` set up above.
+          #
+          # This replaced four hand-rolled branches: `soldr cargo zigbuild`
+          # for the apple-darwin lanes, bare `cargo zigbuild` for musl,
+          # and for x86_64-pc-windows-msvc a cargo-xwin install plus ~40
+          # lines of shell that hunted through the xwin cache and created
+          # lower/upper-case symlinks for msvcrt.lib and oldnames.lib so a
+          # case-sensitive filesystem would satisfy MSVC's import
+          # libraries. soldr owns the xwin cache now; none of that is ours
+          # to carry. See agents/docs/cross-compilation.md.
+          soldr build --release --target ${{ inputs.target }} \
+            -p fbuild-cli \
+            -p fbuild-daemon
 
-      # PyO3 extension — built for ALL targets, including cross-compiled.
-      # Notes:
-      #   - PYO3_NO_PYTHON=1 + abi3-py310 feature lets pyo3-build-config skip
-      #     the host interpreter lookup on cross builds.
-      #   - All Linux builds (native AND cross) use cargo-zigbuild against
-      #     <arch>-unknown-linux-gnu.2.17 — manylinux wheels are glibc-based
-      #     and must work on glibc >= 2.17 (the manylinux_2_17 floor). Native
-      #     ubuntu-latest's system linker would otherwise pull in glibc 2.39
-      #     symbols, breaking the wheel on every distro older than ubuntu-24.04.
-      #     The CLI binaries stay on musl for static-link portability.
-      #   - macOS cross: cargo rustc with -undefined dynamic_lookup works the
-      #     same as native; just add --target.
+      # PyO3 extension — built for ALL targets, including cross-compiled,
+      # through the same blessed path as the binaries.
+      #
+      # manylinux wheels are glibc-based and must run on glibc >= 2.17. soldr's
+      # catalogue sysroot holds that floor on its own: the extension built via
+      # `soldr build --target x86_64-unknown-linux-gnu` tops out at GLIBC_2.16,
+      # measured 2026-09-03 with
+      #   objdump -T lib_native.so | grep -o 'GLIBC_[0-9.]*' | sort -Vu | tail
+      # That is *below* the floor, and below the 2.17 the retired
+      # `cargo zigbuild --target ...-gnu.2.17` lane produced.
+      #
+      # Do NOT pass zigbuild's `.2.17` target suffix to soldr. soldr has no
+      # such target, logs the miss as a warning, falls back to the bare host
+      # toolchain and still exits 0 — which yields a GLIBC_2.39 .so wearing a
+      # manylinux_2_17 tag. The plain triple is correct and is what holds the
+      # floor. See agents/docs/cross-compilation.md.
+      #
+      # PYO3_NO_PYTHON=1 + the abi3-py310 feature let pyo3-build-config skip
+      # the host-interpreter lookup on cross builds.
       - name: Build Python extension
         timeout-minutes: 30
         shell: bash
         run: |
           PYTHON_TARGET_DIR="target/python-extension"
-          if [ "${{ inputs.mac_cross_linux }}" = "true" ]; then
-            # Linux → aarch64-apple-darwin PyO3 extension. zigbuild +
-            # soldr-managed SDK + PYO3_NO_PYTHON=1 (PyO3's abi3-py310
-            # feature lets us skip host interpreter discovery on cross
-            # builds). Lands at
-            # target/python-extension/aarch64-apple-darwin/release/lib_native.dylib
-            # — same path the macOS native lane produced before, so the
-            # stage step is unchanged.
-            PYO3_NO_PYTHON=1 soldr cargo zigbuild --release \
-              --target-dir "${PYTHON_TARGET_DIR}" \
-              --target ${{ inputs.target }} -p fbuild-python \
-              --features extension-module
-          elif [ "${{ runner.os }}" = "Linux" ] && [[ "${{ inputs.target }}" == *-pc-windows-msvc ]]; then
-            # Blessed Linux→Windows MSVC path for the PyO3 ext
-            # (soldr#1012 PR 6, aarch64-pc-windows-msvc lane).
-            # `soldr build` installs the soldr-clang-shim so
-            # ring + cc-rs route through clang-cl correctly even
-            # for aarch64 PyO3 dylib compilation.
-            soldr prepare --target ${{ inputs.target }}
-            if [ "${{ inputs.target }}" = "x86_64-pc-windows-msvc" ]; then
-              xwin_root="$(find "$SOLDR_CACHE_DIR/sdk/${{ inputs.target }}/xwin" -mindepth 2 -maxdepth 2 -type d -name xwin -print -quit)"
-              [ -n "$xwin_root" ] || { echo "managed xwin cache missing" >&2; exit 1; }
-              msvcrt="$(find "$xwin_root/crt/lib/x86_64" -type f -iname msvcrt.lib -print -quit)"
-              oldnames="$(find "$xwin_root/crt/lib/x86_64" -type f -iname oldnames.lib -print -quit)"
-              kernel32="$(find "$xwin_root/sdk/lib/um/x86_64" -type f -iname kernel32.lib -print -quit)"
-              ucrt="$(find "$xwin_root/sdk/lib/ucrt/x86_64" -type f -iname ucrt.lib -print -quit)"
-              [ -n "$msvcrt" ] && [ -n "$oldnames" ] && [ -n "$kernel32" ] && [ -n "$ucrt" ] || { echo "managed xwin libraries missing" >&2; exit 1; }
-              for library in "$msvcrt" "$oldnames"; do
-                directory="$(dirname "$library")"
-                base="$(basename "$library")"
-                lower="${base,,}"
-                upper="$(basename "$base" .lib | tr '[:lower:]' '[:upper:]').lib"
-                [ "$base" = "$lower" ] || ln -sf "$base" "$directory/$lower"
-                [ "$base" = "$upper" ] || ln -sf "$base" "$directory/$upper"
-              done
-              export RUSTFLAGS="-D warnings -C link-arg=/LIBPATH:$(dirname "$msvcrt") -C link-arg=/LIBPATH:$(dirname "$kernel32") -C link-arg=/LIBPATH:$(dirname "$ucrt")"
-            else
-              unset RUSTFLAGS
-            fi
-            PYO3_NO_PYTHON=1 soldr --no-cache build --release \
-              --target-dir "${PYTHON_TARGET_DIR}" \
-              --target ${{ inputs.target }} -p fbuild-python \
-              --features extension-module
-          elif [ "${{ runner.os }}" = "Linux" ]; then
-            TARGET="${{ inputs.target }}"
-            ARCH="${TARGET%%-*}"
+          PYO3_TARGET="${{ inputs.target }}"
+          if [ "${{ runner.os }}" = "Linux" ] \
+             && [[ "${{ inputs.target }}" == *-unknown-linux-musl ]]; then
+            # The CLI binaries stay on musl for static-link portability, but a
+            # manylinux wheel is glibc-based -- build the extension for gnu.
+            ARCH="${PYO3_TARGET%%-*}"
             PYO3_TARGET="${ARCH}-unknown-linux-gnu"
-            rustup target add "$PYO3_TARGET"
-            # Direct `cargo zigbuild` (pip-installed wrapper) — see #331.
-            PYO3_NO_PYTHON=1 cargo zigbuild --release \
-              --target-dir "${PYTHON_TARGET_DIR}" \
-              --target "${PYO3_TARGET}.2.17" -p fbuild-python \
-              --features extension-module
-          elif [ "${{ inputs.macos_cross }}" = "true" ]; then
-            PYO3_NO_PYTHON=1 soldr cargo build --release \
-              --target-dir "${PYTHON_TARGET_DIR}" \
-              --target ${{ inputs.target }} -p fbuild-python \
-              --features extension-module
-          elif [ "${{ runner.os }}" = "macOS" ]; then
-            soldr cargo build --release --target-dir "${PYTHON_TARGET_DIR}" \
-              --target ${{ inputs.target }} \
-              -p fbuild-python \
-              --features extension-module
-          else
-            # native windows-latest runner: cargo build picks up the
-            # MSVC toolchain auto-installed on the runner image.
-            soldr cargo build --release --target-dir "${PYTHON_TARGET_DIR}" \
-              --target ${{ inputs.target }} \
-              -p fbuild-python \
-              --features extension-module
+            soldr prepare --target "$PYO3_TARGET"
           fi
+          PYO3_NO_PYTHON=1 soldr build --release \
+            --target-dir "${PYTHON_TARGET_DIR}" \
+            --target "$PYO3_TARGET" -p fbuild-python \
+            --features extension-module
 
       - name: Stage artifacts
         shell: bash

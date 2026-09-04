@@ -3,7 +3,7 @@
 Reproduces fbuild's Apple release lanes on **Linux x86_64** with **no
 Apple-side tooling and no pre-installed Rust toolchain**. Soldr
 bootstraps rustup, the pinned 1.95.0 channel, zig, the Apple SDK, and
-`cargo-zigbuild` from a vanilla `ubuntu:24.04` base.
+`soldr's blessed cross path` from a vanilla `ubuntu:24.04` base.
 
 This is the proof-of-concept that lets fbuild's release pipeline drop
 its `macos-latest` runners entirely and route both mac arches to the

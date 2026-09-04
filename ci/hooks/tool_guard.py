@@ -89,6 +89,23 @@ def uv_run_target(parts):
     return ""
 
 
+# Retired cross-compilation backends. `cargo zigbuild`, `zig cc`/`zig c++`
+# and `cargo xwin` are all replaced by soldr's blessed path.
+LEGACY_CROSS_RE = re.compile(
+    r"\bcargo[- ]zigbuild\b|\bcargo[- ]xwin\b|\bzig\s+(?:cc|c\+\+)(?![\w-])"
+)
+
+DENY_LEGACY_CROSS = (
+    "`{found}` is retired. soldr owns cross-compilation:\n"
+    "    soldr prepare --target <triple>\n"
+    "    soldr build --release --target <triple> -p <crate>\n"
+    "Do NOT pass zigbuild's `.2.17` glibc suffix to soldr -- it has no such "
+    "target, warns, falls back to the host toolchain and still exits 0. "
+    "soldr's own sysroot already links below the manylinux_2_17 floor. "
+    "See agents/docs/cross-compilation.md."
+)
+
+
 def check_command(command):
     """Check a command string for forbidden bare invocations.
 
@@ -99,6 +116,17 @@ def check_command(command):
     # uv run --script bench/x.py, ./bench/x.py, python tests/x.py, etc.
     if FORBIDDEN_SCRIPT_DIRS.search(command):
         return ("python", DENY_PYTHON_IN_CODE)
+
+    # ── Global check: retired cross-compilation backends ─────────────
+    # soldr's blessed path (`soldr prepare --target X` + `soldr build
+    # --target X`) replaced cargo-zigbuild, zig-as-a-C-compiler and
+    # cargo-xwin. Checked before the soldr passthrough below, because
+    # `soldr cargo zigbuild ...` is the exact shape the old recipes used.
+    # Batch enforcement lives in ci/check_no_legacy_cross.py; this is the
+    # real-time half. See agents/docs/cross-compilation.md.
+    legacy = LEGACY_CROSS_RE.search(command)
+    if legacy:
+        return ("cross", DENY_LEGACY_CROSS.format(found=legacy.group(0).strip()))
 
     # ── Per-segment checks ───────────────────────────────────────────
     segments = re.split(r"&&|\|\||;", command)

@@ -42,3 +42,11 @@ jobs:
         run: uv run --with pyyaml --no-project python ci/check_workflow_concurrency.py
       - name: Unit-test the concurrency guard
         run: uv run --with pyyaml --no-project python -m unittest ci.test_workflow_concurrency
+      # soldr's blessed cross path is the only sanctioned one; cargo-zigbuild,
+      # ziglang, zig cc and cargo-xwin are retired. This gate keeps them from
+      # coming back via a copy-pasted snippet or a half-remembered recipe.
+      # See agents/docs/cross-compilation.md.
+      - name: Verify the retired cross backends stay purged
+        run: uv run --no-project python ci/check_no_legacy_cross.py
+      - name: Unit-test the cross-backend guard
+        run: uv run --no-project python -m unittest ci.test_no_legacy_cross

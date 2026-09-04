@@ -84,15 +84,14 @@ RUN for bin in soldr soldr-clang-shim cargo-chef crgx; do \
 ENV HOME=/root
 RUN soldr --version
 
-# cargo-zigbuild from PyPI — same approach fbuild's existing
-# template_native_build.yml takes for its linux musl + linux PyO3 cross
-# steps (see #331). Ships zig in the venv.
-RUN /opt/soldr-venv/bin/pip install --no-cache-dir cargo-zigbuild ziglang \
- && ln -s /opt/soldr-venv/bin/cargo-zigbuild /usr/local/bin/cargo-zigbuild
+# Nothing to install for cross-compilation: `soldr prepare --target` fetches
+# and materializes the Apple SDK, compiler and linker itself. The image used
+# to pip-install cargo-zigbuild + ziglang here; soldr's blessed path replaced
+# both. See agents/docs/cross-compilation.md.
 
 # Soldr-controlled defaults:
-#   - SOLDR_APPLE_SDK_VERSION pins the Apple SDK soldr fetches at
-#     `cargo zigbuild --target *-apple-darwin` time.
+#   - SOLDR_APPLE_SDK_VERSION pins the Apple SDK soldr fetches during
+#     `soldr prepare --target *-apple-darwin`.
 #   - SOLDR_TRUST_MODE=permissive accepts unpinned managed downloads
 #     (the Phase A catalogue blobs are sha-pinned by soldr itself).
 ENV SOLDR_APPLE_SDK_VERSION=11.3 \

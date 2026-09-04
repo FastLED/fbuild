@@ -12,6 +12,11 @@ routing table sends an agent here by task.
   factory functions that pick them, and why a mis-spelled/absolute path
   silently defeats a cache key. **Read before touching any cache dir,
   build dir, or cache-key/signature code** (FastLED/fbuild#952).
+- [`cross-compilation.md`](cross-compilation.md) — soldr's blessed
+  cross path (`soldr prepare` + `soldr build`), the banned wrappers and
+  the lint that enforces it, and the **manylinux glibc-floor trap**: a
+  wheel can build green, be tagged `manylinux_2_17`, and still require
+  glibc 2.39. **Read before touching any release lane.**
 - [`deploy-architecture.md`](deploy-architecture.md) — the
   `Deployer` trait, `post_deploy_recovery`, board-family dispatch
   model.
