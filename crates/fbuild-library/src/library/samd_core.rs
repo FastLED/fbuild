@@ -259,21 +259,39 @@ mod tests {
     /// `libraries/` (`Adafruit_TinyUSB_Arduino`, `Adafruit_ZeroDMA`). Going
     /// back to that URL form reinstates #1400: the unpack-time submodule
     /// check added in #1401 fails every SAMD build before a compiler runs.
+    ///
+    /// This is a shape check rather than an equality check on purpose: it
+    /// stays meaningful when the pin below is deliberately moved to a new
+    /// version, which is the moment the wrong URL form is most likely to be
+    /// reintroduced. Both auto-generated forms are rejected --
+    /// `/archive/refs/tags/<tag>` and `/archive/<sha>` -- because both omit
+    /// submodules, and `ch32v-core` shows the second form is in live use.
     #[test]
     fn test_core_url_is_not_a_github_source_archive() {
         assert!(
-            !SAMD_CORE_URL.contains("/archive/refs/"),
+            !(SAMD_CORE_URL.starts_with("https://github.com/")
+                && SAMD_CORE_URL.contains("/archive/")),
             "samd-core must use Adafruit's prepared bundle, not a GitHub \
              source archive (see #1400); got {SAMD_CORE_URL}"
         );
     }
 
-    /// A pinned bundle is only trustworthy with a checksum, and the bundle is
-    /// served from a GitHub Pages site rather than an immutable release asset.
+    /// Both constants are pinned exactly, so moving either one has to be a
+    /// deliberate edit that shows up in review.
+    ///
+    /// The bundle is served from a GitHub Pages site rather than an immutable
+    /// release asset, so an unnoticed change to the URL without a matching
+    /// checksum -- or the reverse -- is the failure worth catching.
     #[test]
-    fn test_core_checksum_is_pinned() {
-        assert_eq!(SAMD_CORE_SHA256.len(), 64);
-        assert!(SAMD_CORE_SHA256.chars().all(|c| c.is_ascii_hexdigit()));
+    fn test_core_url_and_checksum_are_pinned() {
+        assert_eq!(
+            SAMD_CORE_URL,
+            "https://adafruit.github.io/arduino-board-index/boards/adafruit-samd-1.7.16.tar.bz2"
+        );
+        assert_eq!(
+            SAMD_CORE_SHA256,
+            "56a099437b0fc6d160922e34a49147a05600d028d3c780c2f575c4d50106f9e0"
+        );
     }
 
     #[test]
