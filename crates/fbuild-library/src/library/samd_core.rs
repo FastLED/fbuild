@@ -1,6 +1,7 @@
 //! Adafruit SAMD core (ArduinoCore-samd) framework package.
 //!
-//! Downloads and manages the Adafruit SAMD core for SAMD21/SAMD51 boards from GitHub.
+//! Downloads and manages the Adafruit SAMD core for SAMD21/SAMD51 boards from
+//! Adafruit's Arduino board index.
 //! Provides paths to: `cores/arduino`, `variants/<board>`, and `libraries/`.
 
 use std::path::{Path, PathBuf};
@@ -8,8 +9,17 @@ use std::path::{Path, PathBuf};
 use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 
 const SAMD_CORE_VERSION: &str = "1.7.16";
+// Adafruit's board-index bundle, not GitHub's auto-generated source archive.
+// The GitHub archive omits the two submodules the tag declares
+// (`libraries/Adafruit_TinyUSB_Arduino`, `libraries/Adafruit_ZeroDMA`), so
+// since the unpack-time submodule check (#1401) every SAMD build failed with
+// "samd-core unpacked without its submodule contents" (#1400). Adafruit
+// publishes no release asset for 1.7.16, but the archive its Arduino package
+// index points at is prepared with both trees populated. URL and SHA-256 are
+// taken verbatim from `package_adafruit_index.json`.
 const SAMD_CORE_URL: &str =
-    "https://github.com/adafruit/ArduinoCore-samd/archive/refs/tags/1.7.16.tar.gz";
+    "https://adafruit.github.io/arduino-board-index/boards/adafruit-samd-1.7.16.tar.bz2";
+const SAMD_CORE_SHA256: &str = "56a099437b0fc6d160922e34a49147a05600d028d3c780c2f575c4d50106f9e0";
 
 /// Adafruit SAMD core framework manager.
 pub struct SamdCores {
@@ -25,7 +35,7 @@ impl SamdCores {
                 SAMD_CORE_VERSION,
                 SAMD_CORE_URL,
                 SAMD_CORE_URL,
-                None,
+                Some(SAMD_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
             ),
@@ -44,7 +54,7 @@ impl SamdCores {
                 SAMD_CORE_VERSION,
                 SAMD_CORE_URL,
                 SAMD_CORE_URL,
-                None,
+                Some(SAMD_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
             )
@@ -61,7 +71,7 @@ impl SamdCores {
                 SAMD_CORE_VERSION,
                 SAMD_CORE_URL,
                 SAMD_CORE_URL,
-                None,
+                Some(SAMD_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
                 cache_root,
@@ -172,7 +182,7 @@ impl Framework for SamdCores {
 
 /// Find the actual core root inside an extracted archive.
 ///
-/// GitHub archives extract as `ArduinoCore-samd-1.7.16/` with the core inside.
+/// The bundle extracts as `adafruit-samd-1.7.16/` with the core inside.
 fn find_core_root(install_dir: &Path) -> PathBuf {
     if install_dir.join("cores").exists() {
         return install_dir.to_path_buf();
@@ -243,6 +253,47 @@ mod tests {
         assert!(!core.is_installed());
     }
 
+    /// The core must not come from a GitHub auto-generated source archive.
+    ///
+    /// Those omit submodules by design, and tag 1.7.16 declares two under
+    /// `libraries/` (`Adafruit_TinyUSB_Arduino`, `Adafruit_ZeroDMA`). Going
+    /// back to that URL form reinstates #1400: the unpack-time submodule
+    /// check added in #1401 fails every SAMD build before a compiler runs.
+    ///
+    /// This is a shape check rather than an equality check on purpose: it
+    /// stays meaningful when the pin below is deliberately moved to a new
+    /// version, which is the moment the wrong URL form is most likely to be
+    /// reintroduced. Both auto-generated forms are rejected --
+    /// `/archive/refs/tags/<tag>` and `/archive/<sha>` -- because both omit
+    /// submodules, and `ch32v-core` shows the second form is in live use.
+    #[test]
+    fn test_core_url_is_not_a_github_source_archive() {
+        assert!(
+            !(SAMD_CORE_URL.starts_with("https://github.com/")
+                && SAMD_CORE_URL.contains("/archive/")),
+            "samd-core must use Adafruit's prepared bundle, not a GitHub \
+             source archive (see #1400); got {SAMD_CORE_URL}"
+        );
+    }
+
+    /// Both constants are pinned exactly, so moving either one has to be a
+    /// deliberate edit that shows up in review.
+    ///
+    /// The bundle is served from a GitHub Pages site rather than an immutable
+    /// release asset, so an unnoticed change to the URL without a matching
+    /// checksum -- or the reverse -- is the failure worth catching.
+    #[test]
+    fn test_core_url_and_checksum_are_pinned() {
+        assert_eq!(
+            SAMD_CORE_URL,
+            "https://adafruit.github.io/arduino-board-index/boards/adafruit-samd-1.7.16.tar.bz2"
+        );
+        assert_eq!(
+            SAMD_CORE_SHA256,
+            "56a099437b0fc6d160922e34a49147a05600d028d3c780c2f575c4d50106f9e0"
+        );
+    }
+
     #[test]
     fn test_find_core_root_direct() {
         let tmp = tempfile::TempDir::new().unwrap();
@@ -253,7 +304,7 @@ mod tests {
     #[test]
     fn test_find_core_root_nested() {
         let tmp = tempfile::TempDir::new().unwrap();
-        let nested = tmp.path().join("ArduinoCore-samd-1.7.16");
+        let nested = tmp.path().join("adafruit-samd-1.7.16");
         std::fs::create_dir_all(nested.join("cores/arduino")).unwrap();
         assert_eq!(find_core_root(tmp.path()), nested);
     }
