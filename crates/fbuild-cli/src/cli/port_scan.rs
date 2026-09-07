@@ -72,6 +72,20 @@ pub enum PortAction {
         #[arg(long, conflicts_with_all = ["port", "fix", "dry_run"])]
         hub: Option<String>,
     },
+    /// Print udev rules granting serial access for every vendor in the
+    /// FastLED/boards registry (FastLED/fbuild#1424).
+    ///
+    /// Prints rather than installs. On NixOS `/etc` is generated from
+    /// declarative config, so a written file there is out-of-band and liable
+    /// to be clobbered -- those users need the content for
+    /// `services.udev.extraRules`, not a mutation. Everywhere else, redirect
+    /// it yourself so the privileged write stays explicit.
+    Udev {
+        /// Group to grant access to. Defaults to `plugdev`, which unlike
+        /// `dialout` does not also confer modem/PPP access.
+        #[arg(long)]
+        group: Option<String>,
+    },
 }
 
 /// Top-level entry — dispatcher calls this.
@@ -94,6 +108,38 @@ pub fn run_port(action: PortAction) -> Result<()> {
                 super::port_doctor::run(port.as_deref(), hub.as_deref(), json)
             }
         }
+        PortAction::Udev { group } => run_udev(group.as_deref()),
+    }
+}
+
+/// Emit udev rules derived from the ingested registry.
+fn run_udev(group: Option<&str>) -> Result<()> {
+    use super::udev::{DEFAULT_UDEV_GROUP, UDEV_RULES_FILENAME, render_udev_rules};
+
+    // Refresh first, exactly as `scan` does: rules generated from a stale or
+    // absent overlay would silently omit vendors the user has plugged in.
+    populate_online_overlay();
+
+    let vids = fbuild_core::usb::online_vendor_vids();
+    let group = group.unwrap_or(DEFAULT_UDEV_GROUP);
+    match render_udev_rules(&vids, group) {
+        Some(rules) => {
+            print!("{rules}");
+            eprintln!(
+                "# {} vendor rule(s) from the FastLED/boards registry. \
+                 Install as /etc/udev/rules.d/{UDEV_RULES_FILENAME}.",
+                vids.len()
+            );
+            Ok(())
+        }
+        // Refuse rather than emit an empty file: one that looks configured
+        // and grants nothing is worse than none at all.
+        None => Err(FbuildError::Other(
+            "USB vendor registry is empty — cannot generate udev rules. Run \
+             `fbuild port scan` once with network access to populate the \
+             FastLED/boards cache, then retry."
+                .to_string(),
+        )),
     }
 }
 

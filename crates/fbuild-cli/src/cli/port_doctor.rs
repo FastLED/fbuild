@@ -32,6 +32,13 @@ pub struct PortDiagnosis {
     /// a single-port query — see `query_last_seen_secs` for why.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub last_seen_secs_ago: Option<i64>,
+    /// Whether this process can actually open the port.
+    ///
+    /// `None` when not probed. Never silently `true`: a port the host lists
+    /// as healthy can still be unopenable, and reporting that as fine is the
+    /// failure this field exists to stop (FastLED/fbuild#1424).
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub openable: Option<bool>,
 }
 
 /// What the diagnosis means and what to do about it.
@@ -68,10 +75,51 @@ pub fn diagnose(port: &DetectedPort, power_rows: &[(String, bool)]) -> PortDiagn
         parent_instance_id: port.parent_instance_id.clone(),
         suspend_allowed: suspend_for_ancestors(power_rows, &port.ancestor_instance_ids),
         last_seen_secs_ago: None,
+        openable: probe_openable(&port.info.port_name),
     }
 }
 
+/// Whether the current process can open `port`, or `None` where the question
+/// is not meaningful.
+///
+/// Linux only. Elsewhere serial access is not group-gated the same way and a
+/// speculative open would be a side effect in a command documented as
+/// strictly read-only. Opening for read is enough to surface `EACCES` and
+/// does not disturb a device: no DTR/RTS assertion, no write.
+#[cfg(target_os = "linux")]
+pub fn probe_openable(port: &str) -> Option<bool> {
+    use std::io::ErrorKind;
+    match std::fs::OpenOptions::new().read(true).open(port) {
+        Ok(_) => Some(true),
+        Err(e) if e.kind() == ErrorKind::PermissionDenied => Some(false),
+        // Busy, absent, or anything else is a different question that the
+        // presence/problem-code verdict already covers. Claiming "not
+        // openable" here would blame permissions for an unrelated fault.
+        Err(_) => None,
+    }
+}
+
+#[cfg(not(target_os = "linux"))]
+pub fn probe_openable(_port: &str) -> Option<bool> {
+    None
+}
+
 pub fn verdict(diagnosis: &PortDiagnosis) -> Verdict {
+    // Checked before presence/problem-code: a port can be attached, healthy,
+    // and still impossible to open. That combination previously rendered as
+    // "attached and healthy" with an empty remedy, so `fbuild deploy` would
+    // flash successfully and then time out reopening the port it had just
+    // reported healthy — with recovery advice about cables and BOOTSEL that
+    // had nothing to do with the cause (FastLED/fbuild#1424).
+    if diagnosis.openable == Some(false) {
+        return Verdict {
+            summary: "attached, but this process cannot open the port (permission denied)"
+                .to_string(),
+            remedy: "serial nodes are typically root:dialout 0660 and your user is not in                      that group. Generate rules with `fbuild port udev`, install them as                      /etc/udev/rules.d/99-fbuild.rules, then `sudo udevadm control                      --reload-rules && sudo udevadm trigger`. Adding your user to the                      group works too, but needs a fresh login. A one-shot chmod does not                      hold: deploy re-enumerates the board and udev recreates the node"
+                .to_string(),
+            needs_hands: true,
+        };
+    }
     match (diagnosis.presence, diagnosis.problem_code) {
         // The case this command exists for. A phantom record is not a fault.
         (Some(false), _) => Verdict {
@@ -593,7 +641,57 @@ mod tests {
             parent_instance_id: None,
             suspend_allowed: None,
             last_seen_secs_ago: None,
+            openable: None,
         }
+    }
+
+    fn diag_openable(presence: Option<bool>, openable: Option<bool>) -> PortDiagnosis {
+        PortDiagnosis {
+            openable,
+            ..diag(presence, None)
+        }
+    }
+
+    /// The bug this branch exists for: a port the host lists as healthy but
+    /// that cannot be opened used to render as "attached and healthy" with an
+    /// empty remedy, so deploy flashed fine and then timed out reopening it.
+    #[test]
+    fn unopenable_port_is_not_reported_as_healthy() {
+        let v = verdict(&diag_openable(Some(true), Some(false)));
+        assert!(v.summary.contains("cannot open"), "got: {}", v.summary);
+        assert!(v.summary.contains("permission denied"), "got: {}", v.summary);
+        assert!(!v.summary.contains("attached and healthy"), "got: {}", v.summary);
+        assert!(!v.remedy.is_empty(), "an unopenable port must carry a remedy");
+        assert!(v.needs_hands);
+    }
+
+    /// The remedy has to name a fix that survives re-enumeration. A one-shot
+    /// chmod is wiped when deploy cycles the board through BOOTSEL.
+    #[test]
+    fn permission_remedy_points_at_udev_not_a_chmod() {
+        let v = verdict(&diag_openable(Some(true), Some(false)));
+        assert!(v.remedy.contains("udev"), "got: {}", v.remedy);
+        assert!(v.remedy.contains("fbuild port udev"), "got: {}", v.remedy);
+        assert!(!v.remedy.contains("cable"), "cables are unrelated: {}", v.remedy);
+        assert!(!v.remedy.contains("BOOTSEL"), "BOOTSEL is unrelated: {}", v.remedy);
+    }
+
+    /// Permission state must not mask the absent-board verdict, which is the
+    /// case this whole command was written for.
+    #[test]
+    fn openable_port_still_reports_the_presence_verdict() {
+        let v = verdict(&diag_openable(Some(true), Some(true)));
+        assert!(v.summary.contains("attached and healthy"), "got: {}", v.summary);
+
+        let absent = verdict(&diag_openable(Some(false), None));
+        assert!(absent.summary.contains("not attached"), "got: {}", absent.summary);
+    }
+
+    /// An unprobed port must fall through untouched — `None` is "unknown",
+    /// never "fine".
+    #[test]
+    fn unprobed_openability_changes_nothing() {
+        assert_eq!(verdict(&diag_openable(Some(true), None)), verdict(&diag(Some(true), None)));
     }
 
     /// The headline: an absent board must be called out as absent, and the

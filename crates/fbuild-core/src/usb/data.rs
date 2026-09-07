@@ -457,6 +457,31 @@ pub(crate) fn install_online_cache_map(map: HashMap<u32, UsbInfo>) {
     *guard = Some(map);
 }
 
+/// Every vendor VID present in the runtime overlay, ascending and deduped.
+///
+/// Exists so callers that must enumerate the whole supported device set --
+/// udev rule generation is the motivating one (FastLED/fbuild#1424) -- can
+/// derive it from the published FastLED/boards registry instead of carrying
+/// their own vendor list. A hand-maintained copy would drift the moment a
+/// vendor is ingested, which is precisely what the VID/PID source-of-truth
+/// rule exists to prevent.
+///
+/// Empty when no overlay is installed. Callers must treat that as "unknown",
+/// never as "no devices are supported" -- emitting rules from an empty
+/// registry would silently produce a file that grants nothing.
+pub fn online_vendor_vids() -> Vec<u16> {
+    let Ok(guard) = ONLINE_MAP.read() else {
+        return Vec::new();
+    };
+    let Some(map) = guard.as_ref() else {
+        return Vec::new();
+    };
+    let mut vids: Vec<u16> = map.keys().map(|key| (key >> 16) as u16).collect();
+    vids.sort_unstable();
+    vids.dedup();
+    vids
+}
+
 /// Runtime online overlay only (freshest, curated at workflow time).
 pub(crate) fn online_lookup(vid: u16, pid: u16) -> Option<UsbInfo> {
     let key = pack(vid, pid);
