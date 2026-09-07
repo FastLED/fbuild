@@ -34,7 +34,6 @@ pub mod monitor_parse;
 pub mod pio;
 pub mod plotter;
 pub mod port_doctor;
-pub mod udev;
 pub mod port_doctor_fix;
 pub mod port_scan;
 pub mod purge;
@@ -43,6 +42,7 @@ pub mod serial_probe;
 pub mod show;
 pub mod symbols_cmd;
 pub mod sync_cmd;
+pub mod udev;
 // #1148 supplies the helper foundation; #1147 is deliberately its first
 // production consumer once RP2040 deployment can emit a typed request.
 #[allow(

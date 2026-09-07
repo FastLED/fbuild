@@ -29,13 +29,35 @@ pub const DEFAULT_UDEV_GROUP: &str = "plugdev";
 /// prefix keeps it last so it overrides earlier distro rules.
 pub const UDEV_RULES_FILENAME: &str = "99-fbuild.rules";
 
+/// Whether `group` is a plausible Unix group name.
+///
+/// The rendered value lands inside a quoted udev field in a file an operator
+/// installs as root, so a `"` or a newline here could close the quote and
+/// append rules of the caller's choosing. udev only unescapes `\\"` inside a
+/// standard quoted string, so there is no encoding that makes arbitrary input
+/// safe -- reject it instead. Mirrors the useradd(8) NAME_REGEX: an initial
+/// alphanumeric or underscore, then alphanumerics, underscore, hyphen or dot.
+pub fn is_valid_group_name(group: &str) -> bool {
+    if group.is_empty() || group.len() > 32 {
+        return false;
+    }
+    let mut chars = group.chars();
+    let first = chars.next().unwrap_or('\0');
+    if !(first.is_ascii_alphanumeric() || first == '_') {
+        return false;
+    }
+    chars.all(|c| c.is_ascii_alphanumeric() || c == '_' || c == '-' || c == '.')
+}
+
 /// Render udev rules granting `group` access to every vendor in `vids`.
 ///
-/// Returns `None` when `vids` is empty. That is a real case -- the registry
-/// overlay may not be installed -- and emitting a header with no rules would
-/// hand back a file that looks configured and grants nothing.
+/// Returns `None` when `vids` is empty, or when `group` is not a valid group
+/// name. Both are real cases -- the registry overlay may not be installed, and
+/// `--group` is caller-supplied -- and emitting a header with no rules, or a
+/// rule built from an unvalidated group, would hand back a file that looks
+/// configured while granting nothing or granting the wrong thing.
 pub fn render_udev_rules(vids: &[u16], group: &str) -> Option<String> {
-    if vids.is_empty() {
+    if vids.is_empty() || !is_valid_group_name(group) {
         return None;
     }
     let mut sorted: Vec<u16> = vids.to_vec();
@@ -50,9 +72,13 @@ pub fn render_udev_rules(vids: &[u16], group: &str) -> Option<String> {
     out.push_str("# after the board re-enumerates. Regenerate after upgrading fbuild to\n");
     out.push_str("# pick up newly ingested vendors.\n");
     out.push_str("#\n");
-    out.push_str(&format!("# Install as /etc/udev/rules.d/{UDEV_RULES_FILENAME}, then:\n"));
+    out.push_str(&format!(
+        "# Install as /etc/udev/rules.d/{UDEV_RULES_FILENAME}, then:\n"
+    ));
     out.push_str("#   sudo udevadm control --reload-rules && sudo udevadm trigger\n");
-    out.push_str(&format!("# Ensure your user is in the '{group}' group, then log out and back in.\n"));
+    out.push_str(&format!(
+        "# Ensure your user is in the '{group}' group, then log out and back in.\n"
+    ));
     out.push_str("#\n");
     out.push_str("# On NixOS, paste the rules below into services.udev.extraRules instead;\n");
     out.push_str("# /etc there is generated and a hand-written file will not persist.\n");
@@ -100,10 +126,47 @@ mod tests {
     #[test]
     fn sorts_and_dedups() {
         let out = render_udev_rules(&[0x303a, 0x2e8a, 0x303a], DEFAULT_UDEV_GROUP).unwrap();
-        let rules: Vec<&str> = out.lines().filter(|l| l.starts_with("SUBSYSTEM==")).collect();
+        let rules: Vec<&str> = out
+            .lines()
+            .filter(|l| l.starts_with("SUBSYSTEM=="))
+            .collect();
         assert_eq!(rules.len(), 2, "duplicate VID must collapse: {out}");
         assert!(rules[0].contains("2e8a"), "not sorted: {out}");
         assert!(rules[1].contains("303a"), "not sorted: {out}");
+    }
+
+    #[test]
+    fn rejects_a_group_that_could_break_out_of_the_quoted_value() {
+        // The rendered value sits inside a quoted udev field in a file an
+        // operator installs as root; a quote or newline could append rules.
+        for bad in [
+            "plug\"dev",
+            "plugdev\nSUBSYSTEM==\"tty\", MODE=\"0666\"",
+            "",
+            "-leading-hyphen",
+            ".leading-dot",
+            "has space",
+            "semi;colon",
+            "sl/ash",
+        ] {
+            assert!(
+                render_udev_rules(&[0x2e8a], bad).is_none(),
+                "must reject {bad:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn accepts_ordinary_group_names() {
+        for good in ["plugdev", "dialout", "users", "_svc", "grp.1", "a-b_c.d"] {
+            assert!(is_valid_group_name(good), "must accept {good:?}");
+        }
+    }
+
+    #[test]
+    fn rejects_an_overlong_group_name() {
+        assert!(!is_valid_group_name(&"a".repeat(33)));
+        assert!(is_valid_group_name(&"a".repeat(32)));
     }
 
     #[test]

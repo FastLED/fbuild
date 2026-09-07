@@ -678,9 +678,20 @@ mod tests {
     fn unopenable_port_is_not_reported_as_healthy() {
         let v = verdict(&diag_openable(Some(true), Some(false)));
         assert!(v.summary.contains("cannot open"), "got: {}", v.summary);
-        assert!(v.summary.contains("permission denied"), "got: {}", v.summary);
-        assert!(!v.summary.contains("attached and healthy"), "got: {}", v.summary);
-        assert!(!v.remedy.is_empty(), "an unopenable port must carry a remedy");
+        assert!(
+            v.summary.contains("permission denied"),
+            "got: {}",
+            v.summary
+        );
+        assert!(
+            !v.summary.contains("attached and healthy"),
+            "got: {}",
+            v.summary
+        );
+        assert!(
+            !v.remedy.is_empty(),
+            "an unopenable port must carry a remedy"
+        );
         assert!(v.needs_hands);
     }
 
@@ -691,8 +702,16 @@ mod tests {
         let v = verdict(&diag_openable(Some(true), Some(false)));
         assert!(v.remedy.contains("udev"), "got: {}", v.remedy);
         assert!(v.remedy.contains("fbuild port udev"), "got: {}", v.remedy);
-        assert!(!v.remedy.contains("cable"), "cables are unrelated: {}", v.remedy);
-        assert!(!v.remedy.contains("BOOTSEL"), "BOOTSEL is unrelated: {}", v.remedy);
+        assert!(
+            !v.remedy.contains("cable"),
+            "cables are unrelated: {}",
+            v.remedy
+        );
+        assert!(
+            !v.remedy.contains("BOOTSEL"),
+            "BOOTSEL is unrelated: {}",
+            v.remedy
+        );
     }
 
     /// Permission state must not mask the absent-board verdict, which is the
@@ -700,17 +719,28 @@ mod tests {
     #[test]
     fn openable_port_still_reports_the_presence_verdict() {
         let v = verdict(&diag_openable(Some(true), Some(true)));
-        assert!(v.summary.contains("attached and healthy"), "got: {}", v.summary);
+        assert!(
+            v.summary.contains("attached and healthy"),
+            "got: {}",
+            v.summary
+        );
 
         let absent = verdict(&diag_openable(Some(false), None));
-        assert!(absent.summary.contains("not attached"), "got: {}", absent.summary);
+        assert!(
+            absent.summary.contains("not attached"),
+            "got: {}",
+            absent.summary
+        );
     }
 
     /// An unprobed port must fall through untouched — `None` is "unknown",
     /// never "fine".
     #[test]
     fn unprobed_openability_changes_nothing() {
-        assert_eq!(verdict(&diag_openable(Some(true), None)), verdict(&diag(Some(true), None)));
+        assert_eq!(
+            verdict(&diag_openable(Some(true), None)),
+            verdict(&diag(Some(true), None))
+        );
     }
 
     /// The headline: an absent board must be called out as absent, and the
