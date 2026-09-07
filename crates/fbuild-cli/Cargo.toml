@@ -39,4 +39,9 @@ sha2 = { workspace = true }
 tempfile = { workspace = true }
 walkdir = { workspace = true }
 owo-colors = { workspace = true }
+
+# O_NONBLOCK / O_NOCTTY for the read-only serial probe in `port doctor`
+# (FastLED/fbuild#1424). Unix-only: the probe itself is cfg'd to Linux.
+[target.'cfg(unix)'.dependencies]
+libc = { workspace = true }
 semver = { workspace = true }

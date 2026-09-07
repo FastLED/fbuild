@@ -89,7 +89,18 @@ pub fn diagnose(port: &DetectedPort, power_rows: &[(String, bool)]) -> PortDiagn
 #[cfg(target_os = "linux")]
 pub fn probe_openable(port: &str) -> Option<bool> {
     use std::io::ErrorKind;
-    match std::fs::OpenOptions::new().read(true).open(port) {
+    use std::os::unix::fs::OpenOptionsExt;
+    // O_NONBLOCK: without CLOCAL set, a terminal open blocks until carrier
+    // detect is asserted, which would hang a command documented as a quick
+    // read-only diagnostic. O_NOCTTY: never let the probe acquire a
+    // controlling terminal -- signals delivered to that terminal would then
+    // reach fbuild. Both matter here: an open on a contended port was
+    // measured at 13.3 s on the bench that motivated FastLED/fbuild#1424.
+    match std::fs::OpenOptions::new()
+        .read(true)
+        .custom_flags(libc::O_NONBLOCK | libc::O_NOCTTY)
+        .open(port)
+    {
         Ok(_) => Some(true),
         Err(e) if e.kind() == ErrorKind::PermissionDenied => Some(false),
         // Busy, absent, or anything else is a different question that the
@@ -115,8 +126,16 @@ pub fn verdict(diagnosis: &PortDiagnosis) -> Verdict {
         return Verdict {
             summary: "attached, but this process cannot open the port (permission denied)"
                 .to_string(),
-            remedy: "serial nodes are typically root:dialout 0660 and your user is not in                      that group. Generate rules with `fbuild port udev`, install them as                      /etc/udev/rules.d/99-fbuild.rules, then `sudo udevadm control                      --reload-rules && sudo udevadm trigger`. Adding your user to the                      group works too, but needs a fresh login. A one-shot chmod does not                      hold: deploy re-enumerates the board and udev recreates the node"
-                .to_string(),
+            remedy: concat!(
+                "serial nodes are typically root:dialout 0660 and your user ",
+                "is not in that group. Generate rules with `fbuild port udev`, ",
+                "install them as /etc/udev/rules.d/99-fbuild.rules, then ",
+                "`sudo udevadm control --reload-rules && sudo udevadm trigger`. ",
+                "Adding your user to the group works too, but needs a fresh ",
+                "login. A one-shot chmod does not hold: deploy re-enumerates ",
+                "the board and udev recreates the node",
+            )
+            .to_string(),
             needs_hands: true,
         };
     }
