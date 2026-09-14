@@ -489,6 +489,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 build_dir,
                 compiler_cache.as_deref(),
                 &mut library_archives,
+                &mut ctx.build_log,
             )
             .await?;
         }
@@ -648,7 +649,13 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let build_log_mutex = std::sync::Mutex::new(ctx.build_log);
         {
             let _g = perf.phase("core-cache-hydrate");
-            match core_cache.hydrate(core_build_dir, &compiler, &all_core_sources, &user_overlay) {
+            let outcome =
+                core_cache.hydrate(core_build_dir, &compiler, &all_core_sources, &user_overlay);
+            build_log_mutex
+                .lock()
+                .unwrap_or_else(|e| e.into_inner())
+                .push(core_cache.hydrate_summary(&outcome));
+            match &outcome {
                 Ok(stats) if stats.copied > 0 || stats.skipped > 0 => tracing::info!(
                     "framework core cache hydrate key={} copied={} skipped={} from {}",
                     core_cache.key(),
@@ -683,7 +690,12 @@ impl BuildOrchestrator for Esp32Orchestrator {
         };
         {
             let _g = perf.phase("core-cache-store");
-            match core_cache.store(core_build_dir) {
+            let outcome = core_cache.store(core_build_dir);
+            build_log_mutex
+                .lock()
+                .unwrap_or_else(|e| e.into_inner())
+                .push(core_cache.store_summary(&outcome));
+            match &outcome {
                 Ok(stats) if stats.copied > 0 => tracing::info!(
                     "framework core cache store key={} copied={} to {}",
                     core_cache.key(),

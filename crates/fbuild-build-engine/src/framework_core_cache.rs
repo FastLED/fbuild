@@ -127,6 +127,36 @@ impl FrameworkCoreCache {
         Ok(copy_artifacts(core_build_dir, &self.path, true, true)?.stats)
     }
 
+    /// Build-output line for a [`Self::hydrate`] outcome. CI logs only carry
+    /// build output, so this is how a restored cache shows it was used
+    /// (FastLED/fbuild#1433).
+    pub fn hydrate_summary(&self, outcome: &std::io::Result<ArtifactCopyStats>) -> String {
+        let key = short_key(&self.key);
+        match outcome {
+            Ok(stats) if stats.copied > 0 || stats.skipped > 0 => format!(
+                "framework core cache: hit key={key} copied={} skipped={}",
+                stats.copied, stats.skipped
+            ),
+            Ok(_) => format!("framework core cache: miss key={key}"),
+            Err(error) => format!("framework core cache: hydrate failed key={key}: {error}"),
+        }
+    }
+
+    /// Build-output line for a [`Self::store`] outcome.
+    pub fn store_summary(&self, outcome: &std::io::Result<ArtifactCopyStats>) -> String {
+        let key = short_key(&self.key);
+        match outcome {
+            Ok(stats) if stats.copied > 0 => {
+                format!(
+                    "framework core cache: stored key={key} copied={}",
+                    stats.copied
+                )
+            }
+            Ok(_) => format!("framework core cache: up to date key={key}"),
+            Err(error) => format!("framework core cache: store failed key={key}: {error}"),
+        }
+    }
+
     /// Remove only this content-addressed cache entry.
     ///
     /// The parent cache root may contain entries for other projects,
@@ -138,6 +168,11 @@ impl FrameworkCoreCache {
             Err(error) => Err(error),
         }
     }
+}
+
+/// Enough of a sha256 key to tell entries apart in a log line.
+fn short_key(key: &str) -> &str {
+    &key[..key.len().min(12)]
 }
 
 fn core_cache_key(
@@ -362,6 +397,56 @@ mod tests {
             }
             format!("{:x}", hasher.finalize())
         }
+    }
+
+    fn cache_with_key(key: &str) -> FrameworkCoreCache {
+        FrameworkCoreCache {
+            key: key.to_string(),
+            path: PathBuf::from("/cache/core").join(key),
+        }
+    }
+
+    #[test]
+    fn hydrate_summary_names_hit_miss_and_failure() {
+        let cache = cache_with_key("0123456789abcdef0123");
+        let hit = cache.hydrate_summary(&Ok(ArtifactCopyStats {
+            copied: 3,
+            skipped: 1,
+        }));
+        assert_eq!(
+            hit,
+            "framework core cache: hit key=0123456789ab copied=3 skipped=1"
+        );
+        let miss = cache.hydrate_summary(&Ok(ArtifactCopyStats::default()));
+        assert_eq!(miss, "framework core cache: miss key=0123456789ab");
+        let failed = cache.hydrate_summary(&Err(std::io::Error::other("disk gone")));
+        assert_eq!(
+            failed,
+            "framework core cache: hydrate failed key=0123456789ab: disk gone"
+        );
+    }
+
+    #[test]
+    fn store_summary_names_stored_up_to_date_and_failure() {
+        let cache = cache_with_key("fedcba9876543210");
+        let stored = cache.store_summary(&Ok(ArtifactCopyStats {
+            copied: 5,
+            skipped: 0,
+        }));
+        assert_eq!(
+            stored,
+            "framework core cache: stored key=fedcba987654 copied=5"
+        );
+        let unchanged = cache.store_summary(&Ok(ArtifactCopyStats::default()));
+        assert_eq!(
+            unchanged,
+            "framework core cache: up to date key=fedcba987654"
+        );
+        let failed = cache.store_summary(&Err(std::io::Error::other("read-only")));
+        assert_eq!(
+            failed,
+            "framework core cache: store failed key=fedcba987654: read-only"
+        );
     }
 
     #[test]

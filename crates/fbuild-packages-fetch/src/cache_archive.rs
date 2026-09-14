@@ -66,9 +66,12 @@ struct SliceDef {
     default: bool,
 }
 
-/// The full slice registry. Everything fbuild owns under the cache root is on
-/// by default; the `zccache` engine store (a different root, content-addressed,
-/// often better left to zccache itself) is opt-in.
+/// The full slice registry. Downloaded packages are on by default. Build
+/// payloads (`core`, `framework-libs`, `library-selection`) are opt-in: they
+/// are per board, so CI keeps them in their own cache entry instead of mixing
+/// them into the packages every board shares (FastLED/fbuild#1433). The
+/// `zccache` engine store (a different root, content-addressed, often better
+/// left to zccache itself) is opt-in too.
 const SLICES: &[SliceDef] = &[
     SliceDef {
         name: "toolchains",
@@ -118,6 +121,27 @@ const SLICES: &[SliceDef] = &[
         rel: "index.sqlite",
         is_file: true,
         default: true,
+    },
+    SliceDef {
+        name: "core",
+        root: Root::Cache,
+        rel: "core",
+        is_file: false,
+        default: false,
+    },
+    SliceDef {
+        name: "framework-libs",
+        root: Root::Cache,
+        rel: "framework-libs",
+        is_file: false,
+        default: false,
+    },
+    SliceDef {
+        name: "library-selection",
+        root: Root::Cache,
+        rel: "library-selection",
+        is_file: false,
+        default: false,
     },
     SliceDef {
         name: "zccache",
@@ -539,6 +563,76 @@ mod tests {
         write(cache, "archives/arm-gcc.tar.gz", "TARBALL");
         write(cache, "installed/marker", "OK");
         write(cache, "index.sqlite", "SQLITE-DB");
+    }
+
+    fn seed_build_payload(cache: &Path) {
+        write(cache, "core/0123abcd/main.cpp.o", "OBJ");
+        write(cache, "framework-libs/4567ef/libWiFi.a", "LIB");
+        write(cache, "library-selection/esp32/89ab.pb", "SEL");
+    }
+
+    const BUILD_PAYLOAD: [&str; 3] = ["core", "framework-libs", "library-selection"];
+
+    #[test]
+    fn default_save_leaves_out_build_payload_slices() {
+        let src = tempfile::tempdir().unwrap();
+        seed_cache(src.path());
+        seed_build_payload(src.path());
+        let archive = src.path().join("out.tar.zst");
+
+        let saved = save(
+            src.path(),
+            &archive,
+            &SliceSelection::Default,
+            &[],
+            DEFAULT_ZSTD_LEVEL,
+        )
+        .unwrap();
+
+        let names: Vec<_> = saved.slices.iter().map(|s| s.name.as_str()).collect();
+        for payload in BUILD_PAYLOAD {
+            assert!(
+                !names.contains(&payload),
+                "per-board payload slice {payload} must be opt-in: {names:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn build_payload_slices_round_trip_when_included() {
+        let src = tempfile::tempdir().unwrap();
+        seed_cache(src.path());
+        seed_build_payload(src.path());
+        let archive = src.path().join("payload.tar.zst");
+
+        let saved = save(
+            src.path(),
+            &archive,
+            &SliceSelection::Explicit(BUILD_PAYLOAD.iter().map(|s| s.to_string()).collect()),
+            &[],
+            DEFAULT_ZSTD_LEVEL,
+        )
+        .unwrap();
+        let names: Vec<_> = saved.slices.iter().map(|s| s.name.as_str()).collect();
+        assert_eq!(names, BUILD_PAYLOAD.to_vec());
+
+        let dst = tempfile::tempdir().unwrap();
+        restore(&archive, dst.path()).unwrap();
+        for rel in [
+            "core/0123abcd/main.cpp.o",
+            "framework-libs/4567ef/libWiFi.a",
+            "library-selection/esp32/89ab.pb",
+        ] {
+            assert_eq!(
+                std::fs::read(src.path().join(rel)).unwrap(),
+                std::fs::read(dst.path().join(rel)).unwrap(),
+                "mismatch restoring {rel}"
+            );
+        }
+        assert!(
+            !dst.path().join("toolchains").exists(),
+            "a payload archive must not carry packages"
+        );
     }
 
     #[test]

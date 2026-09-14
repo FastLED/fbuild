@@ -145,12 +145,17 @@ pub async fn run_sequential_build_with_libs(
     {
         let cache = &core_cache;
         let _g = perf.phase("core-cache-hydrate");
-        match cache.hydrate(
+        let outcome = cache.hydrate(
             &ctx.core_build_dir,
             compiler,
             &core_and_variant,
             &user_overlay,
-        ) {
+        );
+        build_log_mutex
+            .lock()
+            .unwrap_or_else(|e| e.into_inner())
+            .push(cache.hydrate_summary(&outcome));
+        match &outcome {
             Ok(stats) if stats.copied > 0 || stats.skipped > 0 => tracing::info!(
                 "framework core cache hydrate key={} copied={} skipped={} from {}",
                 cache.key(),
@@ -201,7 +206,12 @@ pub async fn run_sequential_build_with_libs(
     {
         let cache = &core_cache;
         let _g = perf.phase("core-cache-store");
-        match cache.store(&ctx.core_build_dir) {
+        let outcome = cache.store(&ctx.core_build_dir);
+        build_log_mutex
+            .lock()
+            .unwrap_or_else(|e| e.into_inner())
+            .push(cache.store_summary(&outcome));
+        match &outcome {
             Ok(stats) if stats.copied > 0 => tracing::info!(
                 "framework core cache store key={} copied={} to {}",
                 cache.key(),

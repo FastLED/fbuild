@@ -142,7 +142,7 @@ fn render_manifest(
     for s in &m.slices {
         let _ = writeln!(
             out,
-            "  {:<12} {:>6} file(s)  {:>10}  {}",
+            "  {:<18} {:>6} file(s)  {:>10}  {}",
             s.name,
             s.file_count,
             human_bytes(s.byte_count),
@@ -151,7 +151,7 @@ fn render_manifest(
     }
     let _ = write!(
         out,
-        "  {:<12} {:>6} file(s)  {:>10}",
+        "  {:<18} {:>6} file(s)  {:>10}",
         "TOTAL",
         m.total_files(),
         human_bytes(m.total_bytes())

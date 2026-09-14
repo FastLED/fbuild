@@ -766,7 +766,9 @@ pub enum Commands {
 
     /// Save / restore / list / verify the fbuild cache as a single
     /// portable `.tar.zst` archive (toolchains, platforms, framework,
-    /// downloaded archives, sqlite index). FastLED/fbuild#527.
+    /// downloaded archives, sqlite index). FastLED/fbuild#527. Per-board
+    /// build payloads (`core`, `framework-libs`, `library-selection`) and
+    /// `zccache` are opt-in via `--include` (FastLED/fbuild#1433).
     Cache {
         #[command(subcommand)]
         action: super::cache::CacheAction,
