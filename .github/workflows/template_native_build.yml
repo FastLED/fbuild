@@ -97,8 +97,31 @@ jobs:
       - name: Setup soldr
         id: setup-soldr
         timeout-minutes: 10
+        # FastLED/fbuild#800 release history:
+        #   - Was pinned to v0.7.59 because v0.7.65 shipped broken zig
+        #     0.14.1 extraction + missing soldr-clang-shim binary.
+        #   - v0.7.59's Apple SDK fetcher points at the retired
+        #     `manifest` branch of `zackees/soldr` (soldr#988 Phase 5,
+        #     merged 2026-06-27 via soldr#992) — that URL now 404s
+        #     and every `apple-darwin` build fails at
+        #     "Apple SDK download failed: HTTP 404 Not Found".
+        #   - The "setup-soldr version --json incompatibility" that
+        #     blocked bumping past v0.7.66 was a misdiagnosis: soldr
+        #     v0.7.85/v0.7.87 were broken releases that shipped silent
+        #     binaries (no output at all), which setup-soldr@v0.9.63
+        #     surfaced as a version-JSON parse failure.
+        # Pin a fully published soldr release. v0.9.5 is the first version
+        # that consumes catalogue-v2 multipart assets; v0.8.23 still probes
+        # the retired direct-LFS Apple SDK URLs even though the SDKs are
+        # available through the v2 catalogue.
         uses: zackees/setup-soldr@v0
         with:
+          # 0.9.12 is the first release carrying the pkg-config sysroot fix
+          # (zackees/soldr#3081): soldr exported PKG_CONFIG_SYSROOT_DIR, and
+          # pkg-config prefixed it onto every absolute -L, so the managed
+          # syslib path came out as sysroot+absolute and the musl lanes died
+          # with `ld: cannot find -lbz2`. Do not pin below this.
+          version: 0.9.12
           cache: true
           build-cache: true
           target-cache: true

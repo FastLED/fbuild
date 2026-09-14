@@ -117,19 +117,18 @@ reorders the `-Wl,-exported_symbols_list` / `-Wl,<path>` pair rustc
 emits for a cdylib so zig reads the following flag as the list path.
 Nothing in fbuild had changed.
 
-The rule: **pin every pip install in a release lane.** When a pin moves,
-prove it with a release build before merging.
+The rule: **a release lane may not install a floating version of
+anything.** soldr's binary version is pinned explicitly in the workflow;
+any remaining pip install is pinned too. When a pin moves, prove it with
+a release build before merging.
 
-soldr is the exception. `zackees/setup-soldr@v0` steps omit the `version:`
-input, so every lane installs the latest soldr release (the input's
-default). Do not add a soldr pin back.
+## Why the version pin matters more than it looks
 
-## Diagnosing a break with no fbuild change
-
-`zackees/setup-soldr@v0` is a floating major tag and installs the latest
-soldr binary. If a cross lane breaks with no corresponding fbuild change,
-compare the action SHA and the installed tool versions against the last
-good run before touching fbuild's own code:
+`zackees/setup-soldr@v0` is a floating major tag; the `version:` input
+pins only the soldr *binary*, not the action. If a cross lane breaks
+with no corresponding fbuild change, compare the action SHA and the
+installed tool versions against the last good run before touching
+fbuild's own code:
 
 ```bash
 gh run view --job <id> --repo FastLED/fbuild --log | grep -E "Download action repository|Successfully installed"

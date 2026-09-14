@@ -98,6 +98,7 @@ jobs:
           # workspace validation domain. Dylint deliberately remains on its
           # separate pinned nightly/driver lifecycle in the explicit steps
           # below, so it cannot invalidate the stable target tree.
+          version: 0.9.10
           cache: true
           toolchain: 1.95.0
           cache-key-suffix: dylint
