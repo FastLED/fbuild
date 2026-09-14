@@ -6,6 +6,9 @@ crates/fbuild-core/Cargo.toml	56	native_dependency	libc	fs	host_mechanic
 crates/fbuild-core/Cargo.toml	58	target_dependency_table	[target.'cfg(windows)'.dependencies]	fs	host_mechanic
 crates/fbuild-core/Cargo.toml	66	native_dependency	windows-sys	fs	host_mechanic
 crates/fbuild-core/src/platform/executable.rs	56	native_path	std::env::current_exe	host_executable	host_mechanic
+crates/fbuild-core/src/platform/linux/device.rs	33	native_path	std::os::unix::fs::OpenOptionsExt	fs	host_mechanic
+crates/fbuild-core/src/platform/linux/device.rs	41	native_path	libc::	process	host_mechanic
+crates/fbuild-core/src/platform/linux/device.rs	41	native_path	libc::	process	host_mechanic
 crates/fbuild-core/src/platform/linux/fs.rs	2	native_path	std::os::unix::fs::PermissionsExt	fs	host_mechanic
 crates/fbuild-core/src/platform/linux/fs.rs	40	native_path	std::os::unix::fs::symlink	fs	host_mechanic
 crates/fbuild-core/src/platform/linux/fs.rs	84	native_path	std::os::unix::ffi::OsStrExt	process	host_mechanic

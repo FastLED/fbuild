@@ -266,6 +266,10 @@ mod tests {
     use crate::esp32::mcu_config::get_mcu_config;
 
     fn test_compiler(mcu: &str) -> Esp32Compiler {
+        test_compiler_with_profile(mcu, BuildProfile::Release)
+    }
+
+    fn test_compiler_with_profile(mcu: &str, profile: BuildProfile) -> Esp32Compiler {
         let config = get_mcu_config(mcu).unwrap();
         let mut defines = config.defines_map();
         defines.insert("PLATFORMIO".to_string(), "1".to_string());
@@ -279,7 +283,7 @@ mod tests {
             "160000000L",
             defines,
             vec![PathBuf::from("/framework/cores/esp32")],
-            BuildProfile::Release,
+            profile,
             false,
         )
     }
@@ -318,6 +322,25 @@ mod tests {
         assert!(flags.contains(&"-mlongcalls".to_string()));
         // Xtensa ESP32 has no -march
         assert!(!flags.iter().any(|f| f.starts_with("-march=")));
+    }
+
+    #[test]
+    fn xtensa_profiles_omit_the_frame_pointer() {
+        // Xtensa backtraces unwind through the windowed ABI, so a frame pointer
+        // gives the crash decoder nothing and costs flash in every compiled
+        // function. PlatformIO does not pass it (FastLED/fbuild#1432).
+        for mcu in ["esp32", "esp32s2", "esp32s3"] {
+            for profile in [BuildProfile::Release, BuildProfile::Quick] {
+                let compiler = test_compiler_with_profile(mcu, profile);
+                for flags in [compiler.c_flags(), compiler.cpp_flags()] {
+                    assert!(
+                        !flags.contains(&"-fno-omit-frame-pointer".to_string()),
+                        "{mcu} {} profile keeps -fno-omit-frame-pointer",
+                        profile.as_dir_name()
+                    );
+                }
+            }
+        }
     }
 
     #[test]

@@ -139,6 +139,17 @@ pub fn detect_serial_kernel_driver(port_name: &str) -> Option<KernelDriverClass>
     super::selected::device::detect_serial_kernel_driver(port_name)
 }
 
+/// Whether the current process may open the serial devnode `port_name`.
+///
+/// `Some(false)` means the open was refused with permission denied. `None`
+/// means the host does not gate serial access by permissions the same way, or
+/// the open failed for a reason other than permissions. Where a probe runs it
+/// opens read-only without asserting DTR/RTS, so it never disturbs the device
+/// (FastLED/fbuild#1424).
+pub fn probe_serial_openable(port_name: &str) -> Option<bool> {
+    super::selected::device::probe_serial_openable(port_name)
+}
+
 /// Live sysfs USB topology root (`/sys/bus/usb/devices`-shaped) when the
 /// host provides one, `None` elsewhere.
 pub fn live_sysfs_usb_root() -> Option<crate::path::NormalizedPath> {

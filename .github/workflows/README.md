@@ -51,6 +51,7 @@ block fails CI with a copy-paste fix.
 ## Scheduled Benchmarks
 
 - **`benchmark-build-comparison.yml`** -- Arduino CLI vs PlatformIO vs fbuild Blink cold/warm benchmark; runs nightly, manually, and for relevant pushes to `main`, then force-publishes the one-commit `benchmark-stats` branch and deploys its site to GitHub Pages
+- **`esp32s3-size-parity.yml`** -- builds an ESP32-S3 Blink with PlatformIO and fbuild on the same pinned pioarduino platform and fails if fbuild's `firmware.bin` is larger (#1432); runs once a day and manually, never on push/PR
 
 ## Per-Board Builds (push/PR)
 

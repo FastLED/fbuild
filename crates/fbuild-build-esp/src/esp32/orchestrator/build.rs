@@ -17,7 +17,7 @@ use super::cdc::warn_if_cdc_on_boot;
 use super::embed_stage::stage_embed_files;
 use super::fingerprint::Esp32FingerprintMetadata;
 use super::framework_libs::compile_framework_builtin_libs;
-use super::helpers::{compile_db_is_current, profile_label};
+use super::helpers::{compile_db_is_current, framework_macro_prefix_map, profile_label};
 use super::local_libs::compile_local_libraries;
 use super::packages::resolve_pioarduino_packages;
 
@@ -304,6 +304,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // Read user build_flags early â€” needed for both library and sketch compilation.
         // SDK defines (from flags/defines) are prepended so user flags can override them.
         let mut user_flags = sdk_defines;
+        // Before the user's build_flags, so their own prefix maps still win.
+        user_flags.extend(framework_macro_prefix_map(&core_dir));
         let mut user_build_flags = ctx.config.get_build_flags(&params.env_name)?;
         user_build_flags.extend(params.extra_build_flags.clone());
         user_flags.extend(user_build_flags.clone());
@@ -791,8 +793,31 @@ impl BuildOrchestrator for Esp32Orchestrator {
         };
 
         // 12-13. Link + convert
-        // Library archives join core_objects in the archives parameter
-        let mut all_archives: Vec<std::path::PathBuf> = core_objects;
+        // The core reaches the linker as an archive, like PlatformIO's
+        // libFrameworkArduino.a. Loose objects are always linked whole, which
+        // kept every core file's constructors and the SDK code they reach:
+        // about 11 KB on an ESP32-S3 Blink (FastLED/fbuild#1432).
+        let mut all_archives: Vec<std::path::PathBuf> = Vec::new();
+        if !core_objects.is_empty() {
+            let _g = perf.phase("archive-core");
+            let core_archive = core_build_dir.join("libFrameworkArduino.a");
+            let ar_path = toolchain.get_ar_path();
+            let gcc_ar_path = toolchain.get_gcc_ar_path();
+            let archiver = crate::pipeline::pick_archiver(
+                &ar_path,
+                &gcc_ar_path,
+                &compiler.c_flags(),
+                &compiler.cpp_flags(),
+            );
+            crate::linker::LinkerBase::archive_if_stale(
+                archiver,
+                &core_objects,
+                &core_archive,
+                "ar",
+            )
+            .await?;
+            all_archives.push(core_archive);
+        }
         all_archives.extend(library_archives);
 
         let linker = Esp32Linker::new(

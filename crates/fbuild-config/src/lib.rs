@@ -23,5 +23,6 @@ pub use pio_env::{
     scan_warn_only,
 };
 pub use platform_packages::{
-    PackageOverride, parse_platform_packages_entry, parse_platform_packages_value,
+    PackageOverride, parse_platform_archive_url, parse_platform_packages_entry,
+    parse_platform_packages_value,
 };

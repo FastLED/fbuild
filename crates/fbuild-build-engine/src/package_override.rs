@@ -33,6 +33,19 @@ pub fn resolve_override(
     fbuild_config::parse_platform_packages_value(raw, package_name)
 }
 
+/// Look up the pin for a platform package such as `platform-espressif32`.
+///
+/// A `platform_packages` entry wins, as in PlatformIO. Otherwise a
+/// `platform = <archive URL>` pin applies: ignoring it silently built against a
+/// different framework release than the one the ini named (FastLED/fbuild#1432).
+pub fn resolve_platform_override(
+    env_config: &HashMap<String, String>,
+    package_name: &str,
+) -> Option<PackageOverride> {
+    resolve_override(env_config, package_name)
+        .or_else(|| fbuild_config::parse_platform_archive_url(env_config.get("platform")?))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -80,6 +93,31 @@ mod tests {
         )]);
         let ovr = resolve_override(&env, "framework-arduino-lpc8xx").unwrap();
         assert_eq!(ovr.version, "0.0.0+gdeadbee");
+    }
+
+    const PLATFORM_54: &str = "https://github.com/pioarduino/platform-espressif32/releases/download/54.03.20/platform-espressif32.zip";
+    const PLATFORM_55: &str = "https://github.com/pioarduino/platform-espressif32/releases/download/55.03.35/platform-espressif32.zip";
+
+    #[test]
+    fn platform_archive_url_pins_the_platform_package() {
+        let env = env(&[("platform", PLATFORM_54)]);
+        let ovr = resolve_platform_override(&env, "platform-espressif32").expect("pin honored");
+        assert_eq!(ovr.url, PLATFORM_54);
+        assert_eq!(ovr.version, "54.03.20");
+    }
+
+    #[test]
+    fn platform_packages_entry_wins_over_platform_url() {
+        let packages = format!("platform-espressif32@{PLATFORM_55}");
+        let env = env(&[("platform", PLATFORM_54), ("platform_packages", &packages)]);
+        let ovr = resolve_platform_override(&env, "platform-espressif32").unwrap();
+        assert_eq!(ovr.url, PLATFORM_55);
+    }
+
+    #[test]
+    fn unpinned_platform_name_resolves_no_override() {
+        let env = env(&[("platform", "espressif32")]);
+        assert!(resolve_platform_override(&env, "platform-espressif32").is_none());
     }
 
     #[test]

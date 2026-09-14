@@ -107,6 +107,21 @@ fn elf_is_up_to_date<'a>(elf_path: &Path, inputs: impl Iterator<Item = &'a PathB
     true
 }
 
+/// Sidecar next to an archive naming the objects it was built from.
+fn archive_manifest_path(archive: &Path) -> PathBuf {
+    let mut name = archive.as_os_str().to_owned();
+    name.push(".inputs");
+    PathBuf::from(name)
+}
+
+fn archive_manifest(objects: &[PathBuf]) -> String {
+    objects
+        .iter()
+        .map(|o| o.to_string_lossy())
+        .collect::<Vec<_>>()
+        .join("\n")
+}
+
 /// Trait for platform-specific linkers.
 ///
 /// FastLED/fbuild#820 (Phase B of #813): every method that invokes a
@@ -413,6 +428,36 @@ impl LinkerBase {
         Ok(())
     }
 
+    /// Whether `archive` already holds exactly `objects` and no object is newer.
+    ///
+    /// The object list is compared through a sidecar manifest: an mtime check
+    /// alone would keep members of objects that no longer exist, and a stale
+    /// member can still satisfy a symbol at link time.
+    pub fn archive_is_current(archive: &Path, objects: &[PathBuf]) -> bool {
+        match std::fs::read_to_string(archive_manifest_path(archive)) {
+            Ok(manifest) => {
+                manifest == archive_manifest(objects) && elf_is_up_to_date(archive, objects.iter())
+            }
+            Err(_) => false,
+        }
+    }
+
+    /// Rebuild `archive` from `objects` unless [`Self::archive_is_current`]
+    /// holds, so an unchanged archive keeps its mtime and the link can skip.
+    pub async fn archive_if_stale(
+        ar_path: &Path,
+        objects: &[PathBuf],
+        archive: &Path,
+        tool_label: &str,
+    ) -> Result<()> {
+        if Self::archive_is_current(archive, objects) {
+            return Ok(());
+        }
+        Self::archive(ar_path, objects, archive, tool_label).await?;
+        std::fs::write(archive_manifest_path(archive), archive_manifest(objects))?;
+        Ok(())
+    }
+
     /// Report firmware size by running the size tool and parsing its output.
     pub async fn report_size(
         size_path: &Path,
@@ -589,6 +634,51 @@ impl LinkerBase {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn set_mtime(path: &Path, time: std::time::SystemTime) {
+        std::fs::File::options()
+            .write(true)
+            .open(path)
+            .unwrap()
+            .set_modified(time)
+            .unwrap();
+    }
+
+    #[test]
+    fn archive_is_current_requires_the_same_objects_and_no_newer_object() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let a = tmp.path().join("a.o");
+        let b = tmp.path().join("b.o");
+        std::fs::write(&a, b"a").unwrap();
+        std::fs::write(&b, b"b").unwrap();
+        let archive = tmp.path().join("libcore.a");
+        let objects = vec![a.clone(), b.clone()];
+        assert!(
+            !LinkerBase::archive_is_current(&archive, &objects),
+            "no archive yet"
+        );
+
+        // What `archive_if_stale` leaves behind, without running `ar`.
+        std::fs::write(&archive, b"!<arch>\n").unwrap();
+        std::fs::write(archive_manifest_path(&archive), archive_manifest(&objects)).unwrap();
+        let past = std::time::SystemTime::now() - std::time::Duration::from_secs(60);
+        set_mtime(&a, past);
+        set_mtime(&b, past);
+        assert!(LinkerBase::archive_is_current(&archive, &objects));
+
+        assert!(
+            !LinkerBase::archive_is_current(&archive, std::slice::from_ref(&a)),
+            "an object left the build, so its member is stale"
+        );
+        set_mtime(
+            &b,
+            std::time::SystemTime::now() + std::time::Duration::from_secs(60),
+        );
+        assert!(
+            !LinkerBase::archive_is_current(&archive, &objects),
+            "an object was rebuilt after the archive"
+        );
+    }
 
     /// Absolute path for the running platform (`/x` is *not* absolute on
     /// Windows — it has a root but no drive prefix).

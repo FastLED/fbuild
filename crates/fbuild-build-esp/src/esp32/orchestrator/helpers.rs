@@ -87,3 +87,43 @@ pub(super) fn compile_db_is_current(build_dir: &Path, project_dir: &Path) -> boo
     }
     crate::compile_database::CompileDatabase::expected_output_path(build_dir, project_dir).exists()
 }
+
+/// `-fmacro-prefix-map` that shortens the framework's install root in `__FILE__`.
+///
+/// The core's log macros embed `__FILE__` in flash, so fbuild's long cache path
+/// cost bytes PlatformIO's shorter package path did not (FastLED/fbuild#1432).
+/// Only macros are remapped: debug info keeps absolute paths for addr2line.
+/// `core_dir` is the framework's `cores/<core>` directory.
+pub(super) fn framework_macro_prefix_map(core_dir: &Path) -> Option<String> {
+    let root = core_dir.parent()?.parent()?;
+    Some(format!(
+        "-fmacro-prefix-map={}=framework-arduinoespressif32",
+        root.display()
+    ))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn macro_prefix_map_names_the_framework_root() {
+        let core_dir = Path::new("/cache/framework-arduinoespressif32/abc/3.3.5/esp32-3.3.5")
+            .join("cores")
+            .join("esp32");
+        let flag = framework_macro_prefix_map(&core_dir).unwrap();
+        let root = core_dir.parent().unwrap().parent().unwrap();
+        assert_eq!(
+            flag,
+            format!(
+                "-fmacro-prefix-map={}=framework-arduinoespressif32",
+                root.display()
+            )
+        );
+    }
+
+    #[test]
+    fn macro_prefix_map_needs_a_cores_parent() {
+        assert_eq!(framework_macro_prefix_map(Path::new("esp32")), None);
+    }
+}

@@ -27,15 +27,19 @@ pub(super) async fn resolve_pioarduino_packages(
     Option<NormalizedPath>,
 )> {
     // Ensure pioarduino platform (contains platform.json with metadata URLs).
-    // Honor `platform_packages = platform-espressif32@<URL>#<sha>` from the env
-    // section (FastLED/fbuild#672): if set, the override URL replaces the
-    // const-pinned default and gets its own cache subdir via
-    // `PackageBase::with_override`.
-    let platform_ovr = env_config
-        .and_then(|env| crate::package_override::resolve_override(env, "platform-espressif32"));
+    // Honor `platform_packages = platform-espressif32@<URL>#<sha>`
+    // (FastLED/fbuild#672), then `platform = <release archive URL>`
+    // (FastLED/fbuild#1432): the pin replaces the const-pinned default and gets
+    // its own cache subdir via `PackageBase::with_override`.
+    let platform_ovr = env_config.and_then(|env| {
+        crate::package_override::resolve_platform_override(env, "platform-espressif32")
+    });
     let platform = match platform_ovr {
         Some(o) => fbuild_packages::library::Esp32Platform::with_override(project_dir, o),
-        None => fbuild_packages::library::Esp32Platform::new(project_dir),
+        None => {
+            warn_unhonored_platform_pin(env_config);
+            fbuild_packages::library::Esp32Platform::new(project_dir)
+        }
     };
     fbuild_packages::Package::ensure_installed(&platform).await?;
 
@@ -138,6 +142,23 @@ pub(super) async fn resolve_pioarduino_packages(
     let esptool_py = esptool_res?;
 
     Ok((toolchain, framework, esptool_py))
+}
+
+/// Name a `platform` pin fbuild cannot honor instead of dropping it silently
+/// (FastLED/fbuild#1407). Registry pins and git URLs fall back to the
+/// pioarduino stable platform, which carries a different framework release.
+fn warn_unhonored_platform_pin(env_config: Option<&HashMap<String, String>>) {
+    let Some(value) = env_config.and_then(|env| env.get("platform")) else {
+        return;
+    };
+    let value = value.trim();
+    if value.contains('@') || value.contains("://") {
+        tracing::warn!(
+            "platform pin `{value}` is not a downloadable archive URL; building with the \
+             pioarduino stable platform instead. Pin a release with `platform = \
+             https://github.com/pioarduino/platform-espressif32/releases/download/<tag>/platform-espressif32.zip`"
+        );
+    }
 }
 
 /// Provision the managed `tool-esptoolpy` package (the tasmota PyInstaller

@@ -86,6 +86,21 @@ Supported behavior includes:
 The library selection design is documented in
 [`docs/architecture/library-selection.md`](../architecture/library-selection.md).
 
+## ESP32 Platform Pins
+
+For ESP32 environments fbuild honors a pioarduino release archive as the
+`platform` value, as PlatformIO does, and builds against the framework that
+release names (FastLED/fbuild#1432):
+
+```ini
+platform = https://github.com/pioarduino/platform-espressif32/releases/download/55.03.35/platform-espressif32.zip
+```
+
+A `platform_packages = platform-espressif32@<URL>` entry takes precedence. A
+bare `espressif32` uses the pioarduino `stable` release. Registry pins
+(`espressif32@6.5.0`) and git URLs cannot be fetched; fbuild logs a warning and
+uses `stable` instead (FastLED/fbuild#1407).
+
 ## ESP QEMU Flash Mode
 
 ESP32-family QEMU requires DIO flash mode:
