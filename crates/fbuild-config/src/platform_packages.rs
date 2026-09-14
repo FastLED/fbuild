@@ -141,6 +141,26 @@ pub fn parse_platform_packages_value(value: &str, package_name: &str) -> Option<
         .next()
 }
 
+/// Archive extensions fbuild can download and unpack.
+const ARCHIVE_EXTENSIONS: [&str; 4] = [".zip", ".tar.gz", ".tar.bz2", ".tar.xz"];
+
+/// Parse an env's `platform = <value>` as a pinned, downloadable platform archive.
+///
+/// PlatformIO accepts a release archive URL as the `platform` value, and that is
+/// how consumers pin a pioarduino release. Only `http(s)` URLs ending in an
+/// archive extension qualify, because those are what fbuild can fetch. Registry
+/// pins (`espressif32@6.5.0`), bare names and git URLs return `None`.
+pub fn parse_platform_archive_url(value: &str) -> Option<PackageOverride> {
+    let url = value.trim();
+    if !(url.starts_with("http://") || url.starts_with("https://")) {
+        return None;
+    }
+    if !ARCHIVE_EXTENSIONS.iter().any(|ext| url.ends_with(ext)) {
+        return None;
+    }
+    Some(PackageOverride::new(url, version_from_url_tail(url)))
+}
+
 fn version_string(sha: &str) -> String {
     // `0.0.0+g<short-sha>` — keeps the cache-subdir distinct from the default
     // pin (which uses its own `<base>+g<short-sha>` pattern). The `0.0.0+` base
@@ -149,7 +169,22 @@ fn version_string(sha: &str) -> String {
     format!("0.0.0+g{}", short)
 }
 
+/// The `<tag>` of a GitHub `.../releases/download/<tag>/<asset>` URL, when it
+/// is safe to use as a cache path segment.
+fn release_tag(url: &str) -> Option<&str> {
+    let (_, rest) = url.split_once("/releases/download/")?;
+    let tag = rest.split('/').next()?;
+    let path_safe = tag
+        .chars()
+        .all(|c| c.is_ascii_alphanumeric() || matches!(c, '.' | '-' | '_' | '+'));
+    (!tag.is_empty() && path_safe).then_some(tag)
+}
+
 fn version_from_url_tail(url: &str) -> String {
+    // A release asset URL names its version in the tag segment.
+    if let Some(tag) = release_tag(url) {
+        return tag.to_string();
+    }
     // For `https://.../archive/<sha>.tar.gz` (no explicit `#sha`), pull the
     // sha out of the URL tail. Falls back to a generic `override` tag if the
     // tail isn't a recognizable sha-shaped token.
@@ -246,6 +281,43 @@ mod tests {
         let got = parse_platform_packages_value(value, "framework-arduino-lpc8xx").unwrap();
         assert_eq!(got.version, "0.0.0+gdeadbee");
         assert!(got.url.contains("ArduinoCore-LPC8xx"));
+    }
+
+    #[test]
+    fn platform_release_zip_url_is_an_archive_pin() {
+        let url = "https://github.com/pioarduino/platform-espressif32/releases/download/54.03.20/platform-espressif32.zip";
+        let got = parse_platform_archive_url(url).unwrap();
+        assert_eq!(got.url, url);
+        assert_eq!(got.version, "54.03.20");
+        assert_eq!(got.checksum, None);
+    }
+
+    #[test]
+    fn platform_archive_tarball_url_is_an_archive_pin() {
+        let url = "https://github.com/pioarduino/platform-espressif32/archive/abcdef1234567890abcdef1234567890abcdef12.tar.gz";
+        let got = parse_platform_archive_url(url).unwrap();
+        assert_eq!(got.url, url);
+        assert_eq!(got.version, "0.0.0+gabcdef1");
+    }
+
+    #[test]
+    fn platform_values_that_are_not_downloadable_archives_are_not_pins() {
+        for value in [
+            "",
+            "espressif32",
+            "espressif32@6.5.0",
+            "https://github.com/pioarduino/platform-espressif32.git#develop",
+            "https://github.com/pioarduino/platform-espressif32",
+        ] {
+            assert_eq!(parse_platform_archive_url(value), None, "{value:?}");
+        }
+    }
+
+    #[test]
+    fn release_download_url_in_platform_packages_uses_the_release_tag() {
+        let line = "platform-espressif32@https://github.com/pioarduino/platform-espressif32/releases/download/55.03.35/platform-espressif32.zip";
+        let got = parse_platform_packages_entry(line, "platform-espressif32").unwrap();
+        assert_eq!(got.version, "55.03.35");
     }
 
     #[test]

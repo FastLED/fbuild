@@ -1,0 +1,55 @@
+name: ESP32-S3 size parity (#1432)
+
+on:
+  # Two cold ESP32 builds (PlatformIO + fbuild) per run, so this is a smoke
+  # test that runs at most once a day, plus on demand. No push/PR trigger.
+  workflow_dispatch:
+  schedule:
+    - cron: '41 8 * * *'
+
+# Non-PR events key on run_id so each gets its own group -- a shared group
+# keeps only ONE pending run, which would silently drop a queued dispatch.
+concurrency:
+  group: esp32s3-size-parity.yml-${{ github.run_id }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: "-D warnings"
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+  PLATFORMIO_CORE_VERSION: "6.1.19"
+
+jobs:
+  size-parity:
+    name: fbuild <= PlatformIO (esp32s3 Blink)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - uses: astral-sh/setup-uv@v3
+
+      - name: Setup soldr
+        uses: zackees/setup-soldr@v0
+        with:
+          version: 0.8.23
+          cache: true
+          build-cache: true
+          target-cache: true
+          prebuild-deps: none
+          linker: platform-default
+          cache-payload-warn-bytes: 2GiB
+
+      # pioarduino's platform refuses Python 3.14+ ("Python version must be
+      # between 3.10 and 3.13"), so pin the interpreter PlatformIO runs on.
+      - name: Install PlatformIO
+        run: uv tool install --python 3.13 "platformio==${PLATFORMIO_CORE_VERSION}"
+
+      - name: Compare ESP32-S3 Blink firmware size
+        run: |
+          soldr cargo test -p fbuild-build --test esp32s3_size_parity -- --ignored --nocapture --test-threads=1

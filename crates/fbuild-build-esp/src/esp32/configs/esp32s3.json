@@ -126,11 +126,11 @@
 
   "profiles": {
     "release": {
-      "compile_flags": ["-Os", "-flto=auto", "-fno-fat-lto-objects", "-fno-omit-frame-pointer"],
+      "compile_flags": ["-Os", "-flto=auto", "-fno-fat-lto-objects"],
       "link_flags": ["-flto=auto", "-fuse-linker-plugin"]
     },
     "quick": {
-      "compile_flags": ["-Os", "-g0", "-fno-omit-frame-pointer"],
+      "compile_flags": ["-Os", "-g0"],
       "link_flags": []
     }
   },
