@@ -13,10 +13,8 @@
 //! soldr cargo test -p fbuild-build --test esp32s3_size_parity -- --ignored --nocapture
 //! ```
 
-use std::ffi::OsString;
 use std::fs;
 use std::path::Path;
-use std::process::Command;
 
 use fbuild_build::{BuildOrchestrator, BuildParams, compile_backend};
 use fbuild_core::BuildProfile;
@@ -76,20 +74,25 @@ void loop() {
 }
 
 /// Build with PlatformIO and return the directory holding its artifacts.
-fn build_with_platformio(project_dir: &Path) -> NormalizedPath {
-    let pio = std::env::var_os("FBUILD_PARITY_PIO").unwrap_or_else(|| OsString::from("pio"));
-    // allow-direct-spawn: integration test driver invoking the PlatformIO binary it compares against.
-    let output = Command::new(&pio)
-        .args(["run", "-e", ENV_NAME, "-d"])
-        .arg(project_dir)
-        .output()
-        .unwrap_or_else(|e| panic!("failed to run PlatformIO ({pio:?}): {e}"));
+async fn build_with_platformio(project_dir: &Path) -> NormalizedPath {
+    let pio = std::env::var("FBUILD_PARITY_PIO").unwrap_or_else(|_| "pio".to_string());
+    let project = project_dir.to_str().expect("temp project path is UTF-8");
+    // Same budget as the fbuild build: a stalled PlatformIO build must not
+    // hold the job past it (FastLED/fbuild#806).
+    let output = fbuild_core::subprocess::run_command(
+        &[pio.as_str(), "run", "-e", ENV_NAME, "-d", project],
+        None,
+        None,
+        Some(REAL_BUILD_TIMEOUT),
+    )
+    .await
+    .unwrap_or_else(|e| panic!("failed to run PlatformIO ({pio}): {e}"));
     assert!(
-        output.status.success(),
-        "PlatformIO build failed ({}):\n{}\n{}",
-        output.status,
-        String::from_utf8_lossy(&output.stdout),
-        String::from_utf8_lossy(&output.stderr)
+        output.success(),
+        "PlatformIO build failed (exit {}):\n{}\n{}",
+        output.exit_code,
+        output.stdout,
+        output.stderr
     );
     NormalizedPath::from(project_dir.join(".pio/build").join(ENV_NAME))
 }
@@ -169,7 +172,7 @@ async fn esp32s3_blink_is_no_larger_than_platformio() {
     write_blink_project(pio_tmp.path());
     write_blink_project(fbuild_tmp.path());
 
-    let pio_artifacts = build_with_platformio(pio_tmp.path());
+    let pio_artifacts = build_with_platformio(pio_tmp.path()).await;
     let fbuild_artifacts = build_with_fbuild(fbuild_tmp.path()).await;
 
     let pio_size = report("PlatformIO", &pio_artifacts);

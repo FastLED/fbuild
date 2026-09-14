@@ -177,7 +177,10 @@ fn release_tag(url: &str) -> Option<&str> {
     let path_safe = tag
         .chars()
         .all(|c| c.is_ascii_alphanumeric() || matches!(c, '.' | '-' | '_' | '+'));
-    (!tag.is_empty() && path_safe).then_some(tag)
+    // `.` and `..` pass the character check but name the cache directory
+    // itself or its parent.
+    let names_a_directory = matches!(tag, "" | "." | "..");
+    (path_safe && !names_a_directory).then_some(tag)
 }
 
 fn version_from_url_tail(url: &str) -> String {
@@ -318,6 +321,19 @@ mod tests {
         let line = "platform-espressif32@https://github.com/pioarduino/platform-espressif32/releases/download/55.03.35/platform-espressif32.zip";
         let got = parse_platform_packages_entry(line, "platform-espressif32").unwrap();
         assert_eq!(got.version, "55.03.35");
+    }
+
+    #[test]
+    fn dot_release_tags_are_never_cache_versions() {
+        // `.` and `..` would name the cache directory itself or its parent,
+        // which could pass for an installed package and skip the download.
+        for tag in [".", ".."] {
+            let url = format!(
+                "https://github.com/pioarduino/platform-espressif32/releases/download/{tag}/platform-espressif32.zip"
+            );
+            let got = parse_platform_archive_url(&url).unwrap();
+            assert_eq!(got.version, "0.0.0+override", "{tag:?}");
+        }
     }
 
     #[test]
