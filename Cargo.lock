@@ -1229,6 +1229,7 @@ dependencies = [
  "fbuild-paths",
  "fbuild-serial",
  "futures",
+ "libc",
  "owo-colors",
  "regex",
  "reqwest",
