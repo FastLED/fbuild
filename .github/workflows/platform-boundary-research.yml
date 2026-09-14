@@ -47,4 +47,7 @@ jobs:
           uv run --no-project python ci/enforce_platform_boundary.py --print-totals
           uv run --no-project python ci/check_rust_toolchain_pins.py
       - name: Preserve RED compile evidence
-        run: soldr rustc --edition 2021 -D warnings --crate-type lib --emit metadata ci/fixtures/platform_boundary/research_red_pass.rs
+        # --no-cache: a single-file rustc probe gains nothing from the compile
+        # cache, and the cached route fails on current soldr ("rustc primary
+        # output was not found").
+        run: soldr --no-cache rustc --edition 2021 -D warnings --crate-type lib --emit metadata ci/fixtures/platform_boundary/research_red_pass.rs
