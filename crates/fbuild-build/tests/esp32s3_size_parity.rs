@@ -77,6 +77,7 @@ void loop() {
 /// Build with PlatformIO and return the directory holding its artifacts.
 fn build_with_platformio(project_dir: &Path) -> PathBuf {
     let pio = std::env::var_os("FBUILD_PARITY_PIO").unwrap_or_else(|| OsString::from("pio"));
+    // allow-direct-spawn: integration test driver invoking the PlatformIO binary it compares against.
     let output = Command::new(&pio)
         .args(["run", "-e", ENV_NAME, "-d"])
         .arg(project_dir)

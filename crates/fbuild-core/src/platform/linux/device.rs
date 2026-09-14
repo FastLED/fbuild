@@ -25,6 +25,31 @@ pub(crate) fn detect_serial_kernel_driver(port_name: &str) -> Option<KernelDrive
     detect_with_sysfs_root(port_name, Path::new("/sys"))
 }
 
+/// Open `port_name` read-only to learn whether permissions allow it.
+///
+/// Opening for read is enough to surface `EACCES` and does not disturb a
+/// device: no DTR/RTS assertion, no write (FastLED/fbuild#1424).
+pub(crate) fn probe_serial_openable(port_name: &str) -> Option<bool> {
+    use std::os::unix::fs::OpenOptionsExt;
+    // O_NONBLOCK: without CLOCAL set, a terminal open blocks until carrier
+    // detect is asserted, which would hang a quick read-only diagnostic.
+    // O_NOCTTY: never let the probe acquire a controlling terminal -- signals
+    // delivered to that terminal would then reach fbuild. Both matter: an open
+    // on a contended port was measured at 13.3 s on the #1424 bench.
+    match std::fs::OpenOptions::new()
+        .read(true)
+        .custom_flags(libc::O_NONBLOCK | libc::O_NOCTTY)
+        .open(port_name)
+    {
+        Ok(_) => Some(true),
+        Err(e) if e.kind() == io::ErrorKind::PermissionDenied => Some(false),
+        // Busy, absent, or anything else is a different question that the
+        // presence/problem-code verdict already covers. Claiming "not
+        // openable" here would blame permissions for an unrelated fault.
+        Err(_) => None,
+    }
+}
+
 pub(crate) fn live_sysfs_usb_root() -> Option<NormalizedPath> {
     let root = Path::new(SYSFS_USB_ROOT);
     if !root.is_dir() {

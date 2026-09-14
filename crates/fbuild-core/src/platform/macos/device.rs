@@ -24,6 +24,12 @@ pub(crate) fn detect_serial_kernel_driver(port_name: &str) -> Option<KernelDrive
     classify_macos_devnode(port_name)
 }
 
+pub(crate) fn probe_serial_openable(_port_name: &str) -> Option<bool> {
+    // Serial nodes are not group-gated the way Linux dialout nodes are, and a
+    // speculative open would be a side effect in a read-only diagnostic.
+    None
+}
+
 pub(crate) fn live_sysfs_usb_root() -> Option<crate::path::NormalizedPath> {
     None
 }

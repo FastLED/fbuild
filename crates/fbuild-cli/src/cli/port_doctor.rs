@@ -80,39 +80,10 @@ pub fn diagnose(port: &DetectedPort, power_rows: &[(String, bool)]) -> PortDiagn
 }
 
 /// Whether the current process can open `port`, or `None` where the question
-/// is not meaningful.
-///
-/// Linux only. Elsewhere serial access is not group-gated the same way and a
-/// speculative open would be a side effect in a command documented as
-/// strictly read-only. Opening for read is enough to surface `EACCES` and
-/// does not disturb a device: no DTR/RTS assertion, no write.
-#[cfg(target_os = "linux")]
+/// is not meaningful. The host mechanics live behind the platform facade
+/// (see [`fbuild_core::platform::device::probe_serial_openable`]).
 pub fn probe_openable(port: &str) -> Option<bool> {
-    use std::io::ErrorKind;
-    use std::os::unix::fs::OpenOptionsExt;
-    // O_NONBLOCK: without CLOCAL set, a terminal open blocks until carrier
-    // detect is asserted, which would hang a command documented as a quick
-    // read-only diagnostic. O_NOCTTY: never let the probe acquire a
-    // controlling terminal -- signals delivered to that terminal would then
-    // reach fbuild. Both matter here: an open on a contended port was
-    // measured at 13.3 s on the bench that motivated FastLED/fbuild#1424.
-    match std::fs::OpenOptions::new()
-        .read(true)
-        .custom_flags(libc::O_NONBLOCK | libc::O_NOCTTY)
-        .open(port)
-    {
-        Ok(_) => Some(true),
-        Err(e) if e.kind() == ErrorKind::PermissionDenied => Some(false),
-        // Busy, absent, or anything else is a different question that the
-        // presence/problem-code verdict already covers. Claiming "not
-        // openable" here would blame permissions for an unrelated fault.
-        Err(_) => None,
-    }
-}
-
-#[cfg(not(target_os = "linux"))]
-pub fn probe_openable(_port: &str) -> Option<bool> {
-    None
+    fbuild_core::platform::device::probe_serial_openable(port)
 }
 
 pub fn verdict(diagnosis: &PortDiagnosis) -> Verdict {
