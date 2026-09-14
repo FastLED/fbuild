@@ -15,11 +15,12 @@
 
 use std::ffi::OsString;
 use std::fs;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::process::Command;
 
 use fbuild_build::{BuildOrchestrator, BuildParams, compile_backend};
 use fbuild_core::BuildProfile;
+use fbuild_core::path::NormalizedPath;
 
 const ENV_NAME: &str = "esp32s3";
 
@@ -75,7 +76,7 @@ void loop() {
 }
 
 /// Build with PlatformIO and return the directory holding its artifacts.
-fn build_with_platformio(project_dir: &Path) -> PathBuf {
+fn build_with_platformio(project_dir: &Path) -> NormalizedPath {
     let pio = std::env::var_os("FBUILD_PARITY_PIO").unwrap_or_else(|| OsString::from("pio"));
     // allow-direct-spawn: integration test driver invoking the PlatformIO binary it compares against.
     let output = Command::new(&pio)
@@ -90,11 +91,11 @@ fn build_with_platformio(project_dir: &Path) -> PathBuf {
         String::from_utf8_lossy(&output.stdout),
         String::from_utf8_lossy(&output.stderr)
     );
-    project_dir.join(".pio/build").join(ENV_NAME)
+    NormalizedPath::from(project_dir.join(".pio/build").join(ENV_NAME))
 }
 
 /// Build with fbuild's ESP32 orchestrator and return its artifact directory.
-async fn build_with_fbuild(project_dir: &Path) -> PathBuf {
+async fn build_with_fbuild(project_dir: &Path) -> NormalizedPath {
     let build_dir = project_dir.join(format!(
         "{}/{}/{ENV_NAME}/release",
         fbuild_paths::FBUILD_DIR_NAME,
@@ -129,7 +130,7 @@ async fn build_with_fbuild(project_dir: &Path) -> PathBuf {
         .expect("fbuild build exceeded the real-toolchain budget (FastLED/fbuild#806)")
         .expect("fbuild build should succeed");
     assert!(result.success, "fbuild build should report success");
-    build_dir
+    NormalizedPath::from(build_dir)
 }
 
 /// Non-debug ELF sections with their sizes, for a readable failure report.
