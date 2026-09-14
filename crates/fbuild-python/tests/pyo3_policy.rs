@@ -216,9 +216,10 @@ fn native_release_workflow_uses_current_cross_toolchains() {
 
     assert_eq!(
         yaml_step_mapping_value(&workflow_lines, "Setup soldr", &["with", "version"]),
-        Some("0.9.12"),
-        "the setup-soldr step needs soldr >= 0.9.5 for catalogue-v2 Apple SDK \
-         assets and >= 0.9.12 for the pkg-config sysroot fix"
+        None,
+        "the setup-soldr step must not pin soldr: the input's default installs the \
+         latest release, which already carries catalogue-v2 Apple SDK assets (>= 0.9.5) \
+         and the pkg-config sysroot fix (>= 0.9.12)"
     );
     assert_eq!(
         yaml_mapping_value(
