@@ -50,3 +50,7 @@ jobs:
         run: uv run --no-project python ci/check_no_legacy_cross.py
       - name: Unit-test the cross-backend guard
         run: uv run --no-project python -m unittest ci.test_no_legacy_cross
+      # clud force-reinstalls a pinned soldr as the global uv tool on every
+      # launch, downgrading every other project's soldr. See FastLED/fbuild#1436.
+      - name: Verify .clud/settings.json does not pin soldr
+        run: uv run --no-project python -m unittest ci.test_clud_settings_soldr
