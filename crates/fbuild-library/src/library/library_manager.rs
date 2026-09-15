@@ -69,15 +69,26 @@ pub struct LibraryResult {
     pub archives: Vec<PathBuf>,
 }
 
+/// Parse `lib_deps` and drop `lib_ignore` entries.
+pub fn parse_lib_specs(lib_specs: &[String], lib_ignore: &[String]) -> Vec<LibrarySpec> {
+    lib_specs
+        .iter()
+        .filter_map(|s| LibrarySpec::parse(s))
+        .filter(|spec| {
+            !lib_ignore
+                .iter()
+                .any(|ig| ig.eq_ignore_ascii_case(&spec.name))
+        })
+        .collect()
+}
+
 /// Ensure all library dependencies are downloaded and compiled.
 ///
 /// Flow:
-/// 1. Parse specs from `lib_deps`
-/// 2. Filter out `lib_ignore` entries
-/// 3. Download all libraries
-/// 4. Collect all include dirs (needed before compilation for cross-includes)
-/// 5. Compile each library
-/// 6. Return include dirs + archives
+/// 1. Download every library with [`download_libraries`]
+/// 2. Collect all include dirs (needed before compilation for cross-includes)
+/// 3. Compile each library
+/// 4. Return include dirs + archives
 #[allow(clippy::too_many_arguments)]
 pub async fn ensure_libraries(
     lib_specs: &[String],
@@ -94,73 +105,13 @@ pub async fn ensure_libraries(
     jobs: usize,
     compiler_cache: Option<&Path>,
 ) -> Result<LibraryResult> {
-    // 1. Parse specs, filter ignored
-    let specs: Vec<LibrarySpec> = lib_specs
-        .iter()
-        .filter_map(|s| LibrarySpec::parse(s))
-        .filter(|spec| {
-            !lib_ignore
-                .iter()
-                .any(|ig| ig.eq_ignore_ascii_case(&spec.name))
-        })
-        .collect();
-
-    if specs.is_empty() {
+    let installed = download_libraries(lib_specs, lib_ignore, project_dir, libs_dir).await?;
+    if installed.is_empty() {
         return Ok(LibraryResult {
             include_dirs: Vec::new(),
             archives: Vec::new(),
         });
     }
-
-    tracing::info!("resolving {} library dependencies", specs.len());
-
-    // 2. Resolve named local libraries and download remote libraries in parallel.
-    // Local libraries compile into `libs_dir`, never their checked-out source
-    // directory, so a build cannot leave generated artifacts in a dependency.
-    std::fs::create_dir_all(libs_dir)?;
-    let mut installed: Vec<InstalledLibrary> = Vec::new();
-    let mut downloaded_names: std::collections::HashSet<String> = std::collections::HashSet::new();
-
-    let libs_dir_owned = libs_dir.to_path_buf();
-    let mut tasks: tokio::task::JoinSet<
-        std::result::Result<(std::path::PathBuf, String, String), fbuild_core::FbuildError>,
-    > = tokio::task::JoinSet::new();
-    for spec in &specs {
-        if let Some(local_path) = &spec.local_path {
-            let lib_dir = resolve_local_library_dir(project_dir, local_path, &spec.name)?;
-            let sanitized = spec.sanitized_name();
-            installed.push(InstalledLibrary::with_build_dir(
-                &lib_dir,
-                &sanitized,
-                &libs_dir.join(&sanitized),
-            ));
-            downloaded_names.insert(spec.name.to_lowercase());
-            continue;
-        }
-        let spec_clone = spec.clone();
-        let dir = libs_dir_owned.clone();
-        tasks.spawn(async move {
-            let lib_dir = library_downloader::download_library(&spec_clone, &dir).await?;
-            Ok((
-                lib_dir,
-                spec_clone.sanitized_name(),
-                spec_clone.name.to_lowercase(),
-            ))
-        });
-    }
-
-    while let Some(joined) = tasks.join_next().await {
-        let (lib_dir, sanitized, name_lower) = joined.map_err(|e| {
-            fbuild_core::FbuildError::PackageError(format!("library download task failed: {}", e))
-        })??;
-        installed.push(InstalledLibrary::new(&lib_dir, &sanitized));
-        downloaded_names.insert(name_lower);
-    }
-
-    // 2b. Resolve transitive dependencies from library.json files
-    let ignore_set: std::collections::HashSet<String> =
-        lib_ignore.iter().map(|s| s.to_lowercase()).collect();
-    resolve_transitive_deps(&mut installed, &mut downloaded_names, &ignore_set, libs_dir).await?;
 
     // 3. Collect all include dirs (needed for cross-library includes)
     let mut all_include_dirs: Vec<PathBuf> = base_includes.to_vec();
@@ -217,6 +168,74 @@ pub async fn ensure_libraries(
         include_dirs: lib_include_dirs,
         archives,
     })
+}
+
+/// Download (or resolve locally) every `lib_deps` library and its transitive
+/// dependencies, without compiling. `fbuild install` stops here; builds go on
+/// to compile in [`ensure_libraries`] (FastLED/fbuild#1433).
+pub async fn download_libraries(
+    lib_specs: &[String],
+    lib_ignore: &[String],
+    project_dir: &Path,
+    libs_dir: &Path,
+) -> Result<Vec<InstalledLibrary>> {
+    // 1. Parse specs, filter ignored
+    let specs = parse_lib_specs(lib_specs, lib_ignore);
+    if specs.is_empty() {
+        return Ok(Vec::new());
+    }
+
+    tracing::info!("resolving {} library dependencies", specs.len());
+
+    // 2. Resolve named local libraries and download remote libraries in parallel.
+    // Local libraries compile into `libs_dir`, never their checked-out source
+    // directory, so a build cannot leave generated artifacts in a dependency.
+    std::fs::create_dir_all(libs_dir)?;
+    let mut installed: Vec<InstalledLibrary> = Vec::new();
+    let mut downloaded_names: std::collections::HashSet<String> = std::collections::HashSet::new();
+
+    let libs_dir_owned = libs_dir.to_path_buf();
+    let mut tasks: tokio::task::JoinSet<
+        std::result::Result<(std::path::PathBuf, String, String), fbuild_core::FbuildError>,
+    > = tokio::task::JoinSet::new();
+    for spec in &specs {
+        if let Some(local_path) = &spec.local_path {
+            let lib_dir = resolve_local_library_dir(project_dir, local_path, &spec.name)?;
+            let sanitized = spec.sanitized_name();
+            installed.push(InstalledLibrary::with_build_dir(
+                &lib_dir,
+                &sanitized,
+                &libs_dir.join(&sanitized),
+            ));
+            downloaded_names.insert(spec.name.to_lowercase());
+            continue;
+        }
+        let spec_clone = spec.clone();
+        let dir = libs_dir_owned.clone();
+        tasks.spawn(async move {
+            let lib_dir = library_downloader::download_library(&spec_clone, &dir).await?;
+            Ok((
+                lib_dir,
+                spec_clone.sanitized_name(),
+                spec_clone.name.to_lowercase(),
+            ))
+        });
+    }
+
+    while let Some(joined) = tasks.join_next().await {
+        let (lib_dir, sanitized, name_lower) = joined.map_err(|e| {
+            fbuild_core::FbuildError::PackageError(format!("library download task failed: {}", e))
+        })??;
+        installed.push(InstalledLibrary::new(&lib_dir, &sanitized));
+        downloaded_names.insert(name_lower);
+    }
+
+    // 2b. Resolve transitive dependencies from library.json files
+    let ignore_set: std::collections::HashSet<String> =
+        lib_ignore.iter().map(|s| s.to_lowercase()).collect();
+    resolve_transitive_deps(&mut installed, &mut downloaded_names, &ignore_set, libs_dir).await?;
+
+    Ok(installed)
 }
 
 /// Resolve transitive dependencies by scanning library.json files.

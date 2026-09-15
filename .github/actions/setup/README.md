@@ -51,6 +51,28 @@ jobs:
           }
 ```
 
+## Split caches (`cache-mode: split`)
+
+For large board matrices, split mode keeps packages shared per platform family and build payloads per board (FastLED/fbuild#1433). It needs an fbuild release with `fbuild install`.
+
+```yaml
+- uses: FastLED/fbuild/.github/actions/setup@main
+  id: fbuild
+  with:
+    cache-mode: split
+    environments: ${{ matrix.board }}
+    cache-key-extra: ${{ hashFiles('platformio.ini') }}
+    save: ${{ github.event_name != 'pull_request' }}
+- run: fbuild build examples/Blink -e ${{ matrix.board }}
+```
+
+In split mode the action:
+
+1. Runs `fbuild install --dry-run --json` to learn each environment's platform, without touching the network.
+2. Restores the packages cache (`toolchains`, `platforms`, `packages`, `libraries`, `archives`, `installed`, `index.sqlite`) by the prefix `fbuild-pkgs-<cache-version>-<os>-<arch>-<family>-`.
+3. Runs `fbuild install` as its own step, then saves the packages cache under that prefix plus the `packages_hash`. It skips the save when the restored key already matches.
+4. Restores the build-payload cache (`core`, `framework-libs`, `library-selection`, the zccache store) keyed by fbuild hash, board and `cache-key-extra`, without falling back to other boards. It is saved at the end of the job unless `save` is `false`.
+
 ## Caching the zccache store
 
 The built-in `cache: true` wiring covers the fbuild package/tool cache rooted at `FBUILD_CACHE_DIR`. If you also want cross-run reuse of zccache's object store, add your own `actions/cache@v5` step for the resolved zccache directory and your project build outputs:
@@ -94,6 +116,11 @@ Use `steps.<id>.outputs.zccache-store-path` inside workflow expressions. The sam
 | `fbuild-version` | `latest` | PyPI version spec. Pin to an exact version (`2.1.16`) for reproducible CI. |
 | `python-version` | `3.12` | Python used to install fbuild. Must be >= 3.9. |
 | `cache` | `true` | Set to `false` to install fbuild without wiring `actions/cache`. |
+| `cache-mode` | `combined` | `combined` keeps one `FBUILD_CACHE_DIR` entry per key. `split` restores a packages cache shared per platform family and a per-board build-payload cache, and runs `fbuild install` as its own step. |
+| `save` | `true` | `false` restores caches without saving; use it on pull requests. |
+| `project-dir` | `.` | Split mode: project passed to `fbuild install`. |
+| `environments` | `""` | Split mode: space-separated environments to provision. Required in split mode. |
+| `board` | `""` | Split mode: name in the build-payload cache key. Defaults to `environments` joined with `_`. |
 | `cache-key-extra` | `""` | String baked into the cache key. Use `hashFiles(...)` over your graph inputs so edits invalidate stale artifacts. |
 | `cache-version` | `v1` | Manual cache bump. Increment when you want to force-invalidate across your matrix. |
 | `cache-dir` | `$RUNNER_TEMP/fbuild-cache` | Override if you need a different cache root. |
@@ -103,7 +130,11 @@ Use `steps.<id>.outputs.zccache-store-path` inside workflow expressions. The sam
 
 | Output | Description |
 |---|---|
-| `cache-hit` | `true` if the cache was restored from a previous run, `false` on miss. |
+| `cache-hit` | Combined mode: `true` if the cache was restored from an exact key match, `false` otherwise. |
+| `platform-family` | Split mode: the platform family the packages cache is shared across. |
+| `packages-hash` | Split mode: `packages_hash` from `fbuild install --json`. |
+| `packages-cache-hit` | Split mode: the restored packages cache key, empty on a miss. |
+| `build-cache-hit` | Split mode: `true` if the build-payload cache was restored from an exact key match. |
 | `cache-dir` | Resolved cache directory path. Useful for diagnostic steps. |
 | `fbuild-hash` | sha256 prefix (16 hex chars) of the installed fbuild wheel's `RECORD` file. Baked into the cache key so any fbuild change, including a re-released wheel at the same version, invalidates stale cache artifacts. |
 | `zccache-store-path` | Resolved zccache object-store directory. The same path is exported to later steps as `ZCCACHE_DIR`, so consumer-managed `actions/cache@v5` blocks can reuse it without guessing platform-specific defaults. |
@@ -117,7 +148,7 @@ Use `steps.<id>.outputs.zccache-store-path` inside workflow expressions. The sam
 5. Installs fbuild from PyPI at the requested version (skipped on install-cache hit). Install uses `pip install --target=$RUNNER_TEMP/fbuild-install` so the cached directory is the entire install surface.
 6. Activates the install dir by appending `bin/` (POSIX) and `Scripts/` (Windows) to `$GITHUB_PATH` and prepending `PYTHONPATH`.
 7. **Computes the installed fbuild's content hash** (sha256 of its dist-info `RECORD`) and bakes it into the **build artifact** cache key. This guarantees the artifact cache is tied to the exact fbuild you're running, not just the PyPI version string, so `latest` is safe and a re-released wheel won't poison the cache.
-8. Restores (and on job-end, saves) the fbuild build artifact cache via `actions/cache@v5`.
+8. Restores (and on job-end, saves) the fbuild build artifact cache via `actions/cache@v5`. With `save: false` it only restores. In `cache-mode: split` this step is replaced by the packages and build-payload caches described in [Split caches](#split-caches-cache-mode-split).
 
 ### Why hash-pinning matters
 

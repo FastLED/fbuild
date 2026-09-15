@@ -114,6 +114,32 @@ impl Esptool {
         )
     }
 
+    /// The esptool binary [`Self::ensure_installed`] would return, if it is
+    /// already usable: the [`ESPTOOL_PATH_ENV_VAR`] override, or a cached
+    /// install that contains the executable. Never installs anything, so
+    /// `fbuild install --check` can ask it (FastLED/fbuild#1433).
+    pub fn installed_binary(&self) -> Result<Option<NormalizedPath>> {
+        if let Some(override_path) = esptool_path_override()? {
+            return Ok(Some(override_path));
+        }
+        let url = Self::release_url(&self.version, host_platform_tag()?);
+        let base = PackageBase::new(
+            "tool-esptoolpy",
+            &self.version,
+            &url,
+            &url,
+            None,
+            CacheSubdir::Toolchains,
+            self.project_dir.as_path(),
+        );
+        // An interrupted install can hold the executable without the
+        // completion sentinel; that is not an install.
+        if !base.is_cached() {
+            return Ok(None);
+        }
+        Ok(find_esptool_binary(&base.install_path()))
+    }
+
     /// Ensure the standalone esptool binary is installed and return its path.
     /// The caller runs it directly as `<bin> --chip <chip> elf2image …`.
     ///

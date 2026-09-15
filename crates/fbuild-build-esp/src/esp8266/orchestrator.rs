@@ -39,6 +39,28 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
     }
 }
 
+/// The ESP8266 toolchain and Arduino framework for an env, honoring the
+/// `framework-arduinoespressif8266` `platform_packages` override
+/// (FastLED/fbuild#664, #681). Shared by the build and `fbuild install`, so
+/// both provision the same packages (FastLED/fbuild#1433).
+pub(crate) fn esp8266_packages(
+    project_dir: &Path,
+    env_config: Option<&HashMap<String, String>>,
+) -> (
+    fbuild_packages::toolchain::Esp8266Toolchain,
+    fbuild_packages::library::Esp8266Framework,
+) {
+    let toolchain = fbuild_packages::toolchain::Esp8266Toolchain::new(project_dir);
+    let override_pin = env_config.and_then(|env| {
+        crate::package_override::resolve_override(env, "framework-arduinoespressif8266")
+    });
+    let framework = match override_pin {
+        Some(o) => fbuild_packages::library::Esp8266Framework::with_override(project_dir, o),
+        None => fbuild_packages::library::Esp8266Framework::new(project_dir),
+    };
+    (toolchain, framework)
+}
+
 #[async_trait::async_trait]
 impl BuildOrchestrator for Esp8266Orchestrator {
     fn platform(&self) -> Platform {
@@ -56,8 +78,11 @@ impl BuildOrchestrator for Esp8266Orchestrator {
         let eh_frame_policy =
             crate::eh_frame_policy_compute::compute_eh_frame_policy(&ctx, params.profile, None);
 
-        // 3. Ensure toolchain
-        let toolchain = fbuild_packages::toolchain::Esp8266Toolchain::new(&params.project_dir);
+        // 3-4. Toolchain and framework
+        let (toolchain, framework) = esp8266_packages(
+            &params.project_dir,
+            ctx.config.get_env_config(&params.env_name).ok(),
+        );
         let _toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("ESP8266 toolchain ready");
 
@@ -69,21 +94,6 @@ impl BuildOrchestrator for Esp8266Orchestrator {
         )
         .await;
 
-        // 4. Ensure framework
-        // Honor `platform_packages` override (FastLED/fbuild#664, #681).
-        let __ovr = ctx
-            .config
-            .get_env_config(&params.env_name)
-            .ok()
-            .and_then(|env| {
-                crate::package_override::resolve_override(env, "framework-arduinoespressif8266")
-            });
-        let framework = match __ovr {
-            Some(o) => {
-                fbuild_packages::library::Esp8266Framework::with_override(&params.project_dir, o)
-            }
-            None => fbuild_packages::library::Esp8266Framework::new(&params.project_dir),
-        };
         let _framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("ESP8266 framework ready");
         let board_id = ctx

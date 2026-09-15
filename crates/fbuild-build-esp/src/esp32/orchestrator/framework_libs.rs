@@ -10,7 +10,7 @@ use fbuild_packages::Framework;
 
 use super::super::esp32_compiler::Esp32Compiler;
 use super::super::mcu_config::Esp32McuConfig;
-use super::framework_library_cache::FrameworkLibraryCache;
+use super::framework_library_cache::{FrameworkLibraryCache, hydrate_summary, store_summary};
 use super::helpers::{
     framework_failure_marker, framework_signature, record_failed_framework_lib,
     should_skip_failed_framework_lib,
@@ -36,6 +36,7 @@ pub(super) async fn compile_framework_builtin_libs(
     build_dir: &Path,
     compiler_cache: Option<&Path>,
     library_archives: &mut Vec<PathBuf>,
+    build_log: &mut fbuild_core::BuildLog,
 ) -> Result<()> {
     use fbuild_packages::Toolchain;
 
@@ -113,8 +114,10 @@ pub(super) async fn compile_framework_builtin_libs(
     if params.clean_only {
         return Ok(());
     }
-    match framework_cache.hydrate(&fw_libs_build_dir) {
-        Ok(copied) if copied > 0 => tracing::info!(
+    let hydrate_outcome = framework_cache.hydrate(&fw_libs_build_dir);
+    build_log.push(hydrate_summary(&hydrate_outcome));
+    match &hydrate_outcome {
+        Ok(copied) if *copied > 0 => tracing::info!(
             "hydrated {} cached ESP32 framework library archives",
             copied
         ),
@@ -122,6 +125,7 @@ pub(super) async fn compile_framework_builtin_libs(
         Err(error) => tracing::warn!("failed to hydrate ESP32 framework library cache: {}", error),
     }
 
+    let mut fw_lib_stored = 0;
     let mut fw_lib_count = 0;
     let mut fw_lib_seen = 0;
     if let Ok(entries) = std::fs::read_dir(&builtin_libs_dir) {
@@ -232,8 +236,13 @@ pub(super) async fn compile_framework_builtin_libs(
             {
                 Ok(Some(archive)) => {
                     let _ = std::fs::remove_file(&failure_marker);
-                    if let Err(error) = framework_cache.store_archive(&archive) {
-                        tracing::warn!("failed to cache framework library {}: {}", lib_name, error);
+                    match framework_cache.store_archive(&archive) {
+                        Ok(()) => fw_lib_stored += 1,
+                        Err(error) => tracing::warn!(
+                            "failed to cache framework library {}: {}",
+                            lib_name,
+                            error
+                        ),
                     }
                     library_archives.push(archive);
                     fw_lib_count += 1;
@@ -279,6 +288,7 @@ pub(super) async fn compile_framework_builtin_libs(
     if fw_lib_count > 0 {
         tracing::info!("compiled {} framework built-in libraries", fw_lib_count);
     }
+    build_log.push(store_summary(fw_lib_stored));
     perf.record("fw-libs", fw_libs_started.elapsed());
     perf.checkpoint("fw-libs-finish");
     Ok(())

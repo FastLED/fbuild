@@ -57,6 +57,30 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
     }
 }
 
+/// NRF52's ARM GCC toolchain, Adafruit nRF52 cores and CMSIS for an env,
+/// honoring the `framework-arduinoadafruitnrf52` `platform_packages` override
+/// (FastLED/fbuild#664, #681). Shared by the build and `fbuild install`, so
+/// both provision the same packages (FastLED/fbuild#1433).
+pub(crate) fn nrf52_packages(
+    project_dir: &Path,
+    env_config: Option<&std::collections::HashMap<String, String>>,
+) -> (
+    fbuild_packages::toolchain::ArmToolchain,
+    fbuild_packages::library::Nrf52Cores,
+    fbuild_packages::library::CmsisFramework,
+) {
+    let toolchain = fbuild_packages::toolchain::ArmToolchain::new(project_dir);
+    let override_pin = env_config.and_then(|env| {
+        crate::package_override::resolve_override(env, "framework-arduinoadafruitnrf52")
+    });
+    let cores = match override_pin {
+        Some(o) => fbuild_packages::library::Nrf52Cores::with_override(project_dir, o),
+        None => fbuild_packages::library::Nrf52Cores::new(project_dir),
+    };
+    let cmsis = fbuild_packages::library::CmsisFramework::new(project_dir);
+    (toolchain, cores, cmsis)
+}
+
 #[async_trait::async_trait]
 impl BuildOrchestrator for Nrf52Orchestrator {
     fn platform(&self) -> Platform {
@@ -70,8 +94,12 @@ impl BuildOrchestrator for Nrf52Orchestrator {
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
         let mut ctx = pipeline::BuildContext::new(params).await?;
 
-        // 3. Ensure ARM GCC toolchain
-        let toolchain = fbuild_packages::toolchain::ArmToolchain::new(&params.project_dir);
+        // 3-4. ARM GCC toolchain and NRF52 cores (Adafruit nRF52 Arduino
+        // core). CMSIS is installed later, once include discovery needs it.
+        let (toolchain, framework, cmsis) = nrf52_packages(
+            &params.project_dir,
+            ctx.config.get_env_config(&params.env_name).ok(),
+        );
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("arm-none-eabi toolchain at {}", toolchain_dir.display());
 
@@ -83,19 +111,6 @@ impl BuildOrchestrator for Nrf52Orchestrator {
         )
         .await;
 
-        // 4. Ensure NRF52 cores (Adafruit nRF52 Arduino core)
-        // Honor `platform_packages` override (FastLED/fbuild#664, #681).
-        let __ovr = ctx
-            .config
-            .get_env_config(&params.env_name)
-            .ok()
-            .and_then(|env| {
-                crate::package_override::resolve_override(env, "framework-arduinoadafruitnrf52")
-            });
-        let framework = match __ovr {
-            Some(o) => fbuild_packages::library::Nrf52Cores::with_override(&params.project_dir, o),
-            None => fbuild_packages::library::Nrf52Cores::new(&params.project_dir),
-        };
         let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("NRF52 cores at {}", framework_dir.display());
 
@@ -244,7 +259,6 @@ impl BuildOrchestrator for Nrf52Orchestrator {
         // Toolchain sysroot includes
         include_dirs.extend(toolchain.get_include_dirs());
         // CMSIS Core includes (core_cm4.h, etc.)
-        let cmsis = fbuild_packages::library::CmsisFramework::new(&params.project_dir);
         let _cmsis_dir = fbuild_packages::Package::ensure_installed(&cmsis).await?;
         tracing::info!("CMSIS framework installed");
         include_dirs.push(cmsis.get_core_include_dir());

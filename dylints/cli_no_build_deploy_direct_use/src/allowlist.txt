@@ -24,6 +24,12 @@ crates/fbuild-cli/src/cli/graph_cmd.rs
 crates/fbuild-cli/src/cli/symbols_cmd.rs
 crates/fbuild-cli/src/cli/compile_many.rs
 
+# `fbuild install` calls `fbuild_build::provision_env` in-process: it only
+# resolves and downloads packages (no compile, no build lock), and CI runs it
+# as its own step before any build, so a daemon round-trip and its compile
+# backend startup would only add time (FastLED/fbuild#1433).
+crates/fbuild-cli/src/cli/install.rs
+
 # `fbuild reset` calls into `fbuild_deploy::reset` directly because
 # resetting a device is a single, fast, no-build-state operation —
 # wrapping it in a daemon HTTP round-trip adds latency for no

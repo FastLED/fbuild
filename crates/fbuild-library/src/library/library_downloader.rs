@@ -10,6 +10,14 @@ use fbuild_core::{FbuildError, Result};
 use super::library_spec::LibrarySpec;
 use super::registry;
 
+/// Whether `spec` is already downloaded into `libs_dir` — the test
+/// [`download_library`] uses to skip the network. Offline, so `fbuild install
+/// --check` can ask it (FastLED/fbuild#1433).
+pub fn is_downloaded(spec: &LibrarySpec, libs_dir: &Path) -> bool {
+    let lib_dir = libs_dir.join(spec.sanitized_name());
+    lib_dir.join("library.json").exists() && lib_dir.join("src").exists()
+}
+
 /// Download a library from its spec, returning the library directory.
 ///
 /// - GitHub URL deps: download archive from `{url}/archive/refs/heads/main.zip`
@@ -20,9 +28,7 @@ pub async fn download_library(spec: &LibrarySpec, libs_dir: &Path) -> Result<Pat
     let lib_name = spec.sanitized_name();
     let lib_dir = libs_dir.join(&lib_name);
 
-    // Check if already downloaded
-    let info_file = lib_dir.join("library.json");
-    if info_file.exists() && lib_dir.join("src").exists() {
+    if is_downloaded(spec, libs_dir) {
         tracing::debug!("library {} already downloaded", spec.name);
         return Ok(lib_dir);
     }

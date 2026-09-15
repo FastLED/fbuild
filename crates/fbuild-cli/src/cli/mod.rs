@@ -28,6 +28,7 @@ pub mod dispatch;
 pub mod graph_cmd;
 pub mod ide;
 pub mod ide_debug;
+pub mod install;
 pub mod libraries;
 pub mod lnk;
 pub mod monitor_parse;

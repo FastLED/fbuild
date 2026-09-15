@@ -109,6 +109,19 @@ pub fn resolve_toolchain_url_sync(
     }
 }
 
+/// Resolve from a metadata package that is already on disk, without touching
+/// the network. `Ok(None)` when the metadata has never been fetched, which
+/// `fbuild install --check` reports as something to fetch (FastLED/fbuild#1433).
+pub fn resolve_toolchain_url_cached(
+    toolchain_name: &str,
+    cache_dir: &Path,
+) -> Result<Option<ResolvedToolchain>> {
+    match find_tools_json(&cache_dir.join("metadata")) {
+        Some(tools_json) => parse_tools_json(&tools_json, toolchain_name).map(Some),
+        None => Ok(None),
+    }
+}
+
 /// Find tools.json in a directory (may be at root or one level deep).
 fn find_tools_json(dir: &Path) -> Option<PathBuf> {
     let direct = dir.join("tools.json");

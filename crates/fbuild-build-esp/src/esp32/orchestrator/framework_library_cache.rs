@@ -107,6 +107,26 @@ impl FrameworkLibraryCache {
     }
 }
 
+/// Build-output line for a [`FrameworkLibraryCache::hydrate`] outcome. CI logs
+/// only carry build output, so this is how a restored cache shows it was used
+/// (FastLED/fbuild#1433).
+pub(super) fn hydrate_summary(outcome: &std::io::Result<usize>) -> String {
+    match outcome {
+        Ok(copied) if *copied > 0 => format!("framework-libs cache: hit restored={copied}"),
+        Ok(_) => "framework-libs cache: miss".to_string(),
+        Err(error) => format!("framework-libs cache: hydrate failed: {error}"),
+    }
+}
+
+/// Build-output line for the archives compiled and stored by this build.
+pub(super) fn store_summary(stored: usize) -> String {
+    if stored > 0 {
+        format!("framework-libs cache: stored {stored}")
+    } else {
+        "framework-libs cache: up to date".to_string()
+    }
+}
+
 fn cache_key(
     project_dir: &Path,
     profile: BuildProfile,
@@ -185,6 +205,21 @@ fn is_header(path: &Path) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn summaries_name_hit_miss_failure_and_stores() {
+        assert_eq!(
+            hydrate_summary(&Ok(4)),
+            "framework-libs cache: hit restored=4"
+        );
+        assert_eq!(hydrate_summary(&Ok(0)), "framework-libs cache: miss");
+        assert_eq!(
+            hydrate_summary(&Err(std::io::Error::other("gone"))),
+            "framework-libs cache: hydrate failed: gone"
+        );
+        assert_eq!(store_summary(2), "framework-libs cache: stored 2");
+        assert_eq!(store_summary(0), "framework-libs cache: up to date");
+    }
 
     #[test]
     fn cache_key_is_independent_of_project_path_when_headers_match() {

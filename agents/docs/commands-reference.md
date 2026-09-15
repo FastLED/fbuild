@@ -51,6 +51,7 @@ help text).
 | `fbuild show` | Show daemon logs or other introspection. | `fbuild help show` |
 | `fbuild device` | List / inspect connected devices the daemon knows about. | `fbuild help device` |
 | `fbuild purge` | Purge cached packages — full purge or LRU-only via `--gc`. | `fbuild help purge` |
+| `fbuild install [project_dir] [-e <env>]... [--all-envs] [--check] [--dry-run] [--json]` | You want an env's platform, toolchains, framework, tools and `lib_deps` downloaded without compiling — e.g. a separate, observable CI step before the build. One line per package (`present` / `fetched` / `would-fetch` / `failed`); `--json` adds a `packages_hash` to key a packages cache on. `--check` and `--dry-run` never touch the network; `--check` exits 2 when anything is missing. Runs in-process, no daemon. | `fbuild help install`, FastLED/fbuild#1433, `docs/reference/cli.md#fbuild-install` |
 | `fbuild lnk` | Manage `.fetch` blob pointers (fetch / verify / add). `.lnk` is still read for pointers written before FastLED/fbuild#1369; FastLED's runtime `.lnk` asset links are a different format and are skipped. | `fbuild help lnk` |
 
 ## Serial-port introspection (FastLED/fbuild#686)

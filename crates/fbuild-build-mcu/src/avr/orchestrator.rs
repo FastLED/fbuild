@@ -96,20 +96,7 @@ impl BuildOrchestrator for AvrOrchestrator {
         let eh_frame_policy =
             crate::eh_frame_policy_compute::compute_eh_frame_policy(&ctx, params.profile, None);
 
-        // 3. Ensure toolchain
-        let (toolchain, toolchain_dir) = {
-            let _g = perf.phase("toolchain-ensure");
-            let toolchain = fbuild_packages::toolchain::AvrToolchain::new(&params.project_dir);
-            let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
-            (toolchain, toolchain_dir)
-        };
-        tracing::info!("avr-gcc toolchain at {}", toolchain_dir.display());
-
-        use fbuild_packages::Toolchain as _;
-        pipeline::log_toolchain_version(&toolchain.get_gcc_path(), "avr-gcc", &mut ctx.build_log)
-            .await;
-
-        // 4. Ensure Arduino core
+        // 3-4. Resolve the avr-gcc toolchain and Arduino core packages.
         //
         // Honor `platform_packages = framework-arduino-avr@<URL>` (FastLED/fbuild#667)
         // and `platform_packages = framework-arduino-avr-attiny@<URL>`
@@ -123,24 +110,27 @@ impl BuildOrchestrator for AvrOrchestrator {
         // they all fall under the atmelavr platform — but only the two PIO
         // canonical names are resolved here. If those alt-core PIO package
         // names land in the registry later, add additional resolution branches.
-        let env_cfg = ctx.config.get_env_config(&params.env_name).ok();
-        let __avr_ovr = env_cfg.as_ref().and_then(|env| {
-            crate::package_override::resolve_override(env, "framework-arduino-avr")
-        });
-        let __attiny_ovr = env_cfg.as_ref().and_then(|env| {
-            crate::package_override::resolve_override(env, "framework-arduino-avr-attiny")
-        });
+        let (toolchain, framework) = avr_packages(
+            &params.project_dir,
+            ctx.config.get_env_config(&params.env_name).ok(),
+            &ctx.board,
+        )?;
+
+        // 3. Ensure toolchain
+        let toolchain_dir = {
+            let _g = perf.phase("toolchain-ensure");
+            fbuild_packages::Package::ensure_installed(&toolchain).await?
+        };
+        tracing::info!("avr-gcc toolchain at {}", toolchain_dir.display());
+
+        use fbuild_packages::Toolchain as _;
+        pipeline::log_toolchain_version(&toolchain.get_gcc_path(), "avr-gcc", &mut ctx.build_log)
+            .await;
+
+        // 4. Ensure Arduino core
         let (_framework_dir, core_dir, variant_dir) = {
             let _g = perf.phase("framework-ensure");
-            ensure_avr_framework(
-                &params.project_dir,
-                &ctx.board.core,
-                &ctx.board.variant,
-                ctx.board.platform(),
-                __avr_ovr,
-                __attiny_ovr,
-            )
-            .await?
+            ensure_avr_framework(&framework, &ctx.board.core, &ctx.board.variant).await?
         };
 
         // 4.5. Warm-build fast path.
@@ -387,7 +377,57 @@ pub fn create() -> Box<dyn BuildOrchestrator> {
     Box::new(AvrOrchestrator)
 }
 
-/// Select and install the correct AVR Arduino framework based on the board's core name.
+/// The avr-gcc toolchain and the Arduino framework package for an env's board,
+/// honoring the `framework-arduino-avr` / `framework-arduino-avr-attiny`
+/// `platform_packages` overrides. Shared by the build and `fbuild install`, so
+/// both provision the same packages (FastLED/fbuild#1433).
+pub(crate) fn avr_packages(
+    project_dir: &Path,
+    env_config: Option<&std::collections::HashMap<String, String>>,
+    board: &fbuild_config::BoardConfig,
+) -> Result<(
+    fbuild_packages::toolchain::AvrToolchain,
+    fbuild_packages::library::AvrFramework,
+)> {
+    let toolchain = fbuild_packages::toolchain::AvrToolchain::new(project_dir);
+    let avr_override = env_config
+        .and_then(|env| crate::package_override::resolve_override(env, "framework-arduino-avr"));
+    let attiny_override = env_config.and_then(|env| {
+        crate::package_override::resolve_override(env, "framework-arduino-avr-attiny")
+    });
+    let framework = avr_framework_package(
+        project_dir,
+        &board.core,
+        board.platform(),
+        avr_override,
+        attiny_override,
+    )?;
+    Ok((toolchain, framework))
+}
+
+/// Install an AVR framework package and resolve the board's core and variant
+/// directories inside it.
+///
+/// Returns (framework_root, core_dir, variant_dir).
+async fn ensure_avr_framework(
+    framework: &fbuild_packages::library::AvrFramework,
+    core_name: &str,
+    variant_name: &str,
+) -> fbuild_core::Result<(PathBuf, PathBuf, PathBuf)> {
+    use fbuild_packages::Package;
+
+    let framework_dir = framework.ensure_installed().await?;
+    tracing::info!(
+        "AVR framework for core '{}' at {}",
+        core_name,
+        framework_dir.display()
+    );
+    let core_dir = framework.get_core_dir(core_name);
+    let variant_dir = framework.get_variant_dir(variant_name);
+    Ok((framework_dir, core_dir, variant_dir))
+}
+
+/// Select the correct AVR Arduino framework package based on the board's core name.
 ///
 /// Uses the data-driven `avr_frameworks.json` registry to resolve the correct
 /// framework package (GitHub URL, version) for any board core.
@@ -401,18 +441,13 @@ pub fn create() -> Box<dyn BuildOrchestrator> {
 /// supersedes the registry-pinned default; the cache subdir is derived from
 /// the override URL via `PackageBase::with_override` so an override doesn't
 /// collide with the default cache entry.
-///
-/// Returns (framework_root, core_dir, variant_dir).
-async fn ensure_avr_framework(
+fn avr_framework_package(
     project_dir: &Path,
     core_name: &str,
-    variant_name: &str,
     platform: Option<fbuild_core::Platform>,
     avr_override: Option<fbuild_config::PackageOverride>,
     attiny_override: Option<fbuild_config::PackageOverride>,
-) -> fbuild_core::Result<(PathBuf, PathBuf, PathBuf)> {
-    use fbuild_packages::Package;
-
+) -> fbuild_core::Result<fbuild_packages::library::AvrFramework> {
     // megaAVR boards (e.g. nano_every) share core name "arduino" with standard AVR
     // but need ArduinoCore-megaavr instead of ArduinoCore-avr.
     let lookup_key =
@@ -435,24 +470,14 @@ async fn ensure_avr_framework(
         _ => None,
     };
 
-    let framework = match routed_override {
+    match routed_override {
         Some(ovr) => fbuild_packages::library::AvrFramework::for_core_with_override(
             lookup_key,
             project_dir,
             ovr,
-        )?,
-        None => fbuild_packages::library::AvrFramework::for_core(lookup_key, project_dir)?,
-    };
-    let framework_dir = framework.ensure_installed().await?;
-    tracing::info!(
-        "AVR framework for core '{}' (lookup '{}') at {}",
-        core_name,
-        lookup_key,
-        framework_dir.display()
-    );
-    let core_dir = framework.get_core_dir(core_name);
-    let variant_dir = framework.get_variant_dir(variant_name);
-    Ok((framework_dir, core_dir, variant_dir))
+        ),
+        None => fbuild_packages::library::AvrFramework::for_core(lookup_key, project_dir),
+    }
 }
 
 /// Check if a project is configured for AVR by reading its platformio.ini.

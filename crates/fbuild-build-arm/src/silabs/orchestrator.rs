@@ -25,6 +25,27 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
     }
 }
 
+/// Silicon Labs' ARM GCC toolchain and Arduino cores for an env, honoring the
+/// `framework-arduinosilabs` `platform_packages` override (FastLED/fbuild#664,
+/// #681). Shared by the build and `fbuild install`, so both provision the same
+/// packages (FastLED/fbuild#1433).
+pub(crate) fn silabs_packages(
+    project_dir: &Path,
+    env_config: Option<&HashMap<String, String>>,
+) -> (
+    fbuild_packages::toolchain::ArmToolchain,
+    fbuild_packages::library::SilabsCores,
+) {
+    let toolchain = fbuild_packages::toolchain::ArmToolchain::new(project_dir);
+    let override_pin = env_config
+        .and_then(|env| crate::package_override::resolve_override(env, "framework-arduinosilabs"));
+    let cores = match override_pin {
+        Some(o) => fbuild_packages::library::SilabsCores::with_override(project_dir, o),
+        None => fbuild_packages::library::SilabsCores::new(project_dir),
+    };
+    (toolchain, cores)
+}
+
 #[async_trait::async_trait]
 impl BuildOrchestrator for SilabsOrchestrator {
     fn platform(&self) -> Platform {
@@ -36,7 +57,10 @@ impl BuildOrchestrator for SilabsOrchestrator {
 
         let mut ctx = pipeline::BuildContext::new(params).await?;
 
-        let toolchain = fbuild_packages::toolchain::ArmToolchain::new(&params.project_dir);
+        let (toolchain, framework) = silabs_packages(
+            &params.project_dir,
+            ctx.config.get_env_config(&params.env_name).ok(),
+        );
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("arm-gcc toolchain at {}", toolchain_dir.display());
 
@@ -48,18 +72,6 @@ impl BuildOrchestrator for SilabsOrchestrator {
         )
         .await;
 
-        // Honor `platform_packages` override (FastLED/fbuild#664, #681).
-        let __ovr = ctx
-            .config
-            .get_env_config(&params.env_name)
-            .ok()
-            .and_then(|env| {
-                crate::package_override::resolve_override(env, "framework-arduinosilabs")
-            });
-        let framework = match __ovr {
-            Some(o) => fbuild_packages::library::SilabsCores::with_override(&params.project_dir, o),
-            None => fbuild_packages::library::SilabsCores::new(&params.project_dir),
-        };
         let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("Silicon Labs cores at {}", framework_dir.display());
 

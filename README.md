@@ -183,6 +183,7 @@ These commands extend beyond the PlatformIO workflow surface:
 | `fbuild reset` | Reset a device without flashing it. |
 | `fbuild purge` | Purge downloaded packages or run cache garbage collection. |
 | `fbuild sync` | Resolve `platformio.ini` dependencies into a deterministic lock file. |
+| `fbuild install` | Download an environment's platform, toolchains, framework, tools and `lib_deps` without compiling (`--check` exits 2 when something is missing). |
 | `fbuild daemon` | Manage the background build daemon, locks, and cache. |
 | `fbuild show` | Show daemon logs and other runtime information. |
 | `fbuild device` | List devices and manage device leases. |

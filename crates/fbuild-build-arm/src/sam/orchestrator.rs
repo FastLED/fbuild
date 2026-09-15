@@ -102,6 +102,83 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
     }
 }
 
+/// The Arduino core (and its external CMSIS packages) a SAM-family board
+/// builds against.
+// Built once per build or provision and consumed immediately, so the size gap
+// between variants never multiplies; boxing would only add indirection.
+#[allow(clippy::large_enum_variant)]
+pub(crate) enum SamCore {
+    /// ArduinoCore-sam for classic SAM3X boards (Due).
+    Sam(fbuild_packages::library::SamCores),
+    /// Adafruit ArduinoCore-samd for SAMD21/51 and SAME5x, plus the CMSIS and
+    /// CMSIS-Atmel device headers it does not bundle.
+    Samd {
+        cores: fbuild_packages::library::SamdCores,
+        cmsis: fbuild_packages::library::CmsisFramework,
+        cmsis_atmel: fbuild_packages::library::CmsisAtmel,
+    },
+    /// Teknic's ClearCore Arduino package for ATSAME53, plus generic CMSIS for
+    /// the Cortex-M4 core headers and DSP library.
+    ClearCore {
+        cores: fbuild_packages::library::ClearCoreCores,
+        cmsis: fbuild_packages::library::CmsisFramework,
+    },
+}
+
+/// SAM's toolchain and Arduino core packages for an env and board.
+///
+/// Teknic's precompiled ClearCore/LwIP libraries are built with GCC 7, so
+/// ClearCore gets fbuild's GCC 9 package — the closest supported toolchain,
+/// avoiding the much larger GCC 15 ABI/version gap; every other board gets
+/// the current ARM GCC. SAM (Arduino ArduinoCore-sam), SAMD (Adafruit
+/// ArduinoCore-samd, PIO package `framework-arduino-samd-adafruit` per
+/// FastLED/fbuild#677) and ClearCore are distinct PIO packages, each honoring
+/// its own `platform_packages` override (FastLED/fbuild#664, #681). Shared by
+/// the build and `fbuild install`, so both provision the same packages
+/// (FastLED/fbuild#1433).
+pub(crate) fn sam_packages(
+    project_dir: &Path,
+    env_config: Option<&std::collections::HashMap<String, String>>,
+    board: &fbuild_config::BoardConfig,
+) -> (Box<dyn fbuild_packages::Toolchain>, SamCore) {
+    let override_for = |package: &str| {
+        env_config.and_then(|env| crate::package_override::resolve_override(env, package))
+    };
+    if is_clearcore_board(board) {
+        let cores = match override_for("framework-arduino-sam-clearcore") {
+            Some(o) => fbuild_packages::library::ClearCoreCores::with_override(project_dir, o),
+            None => fbuild_packages::library::ClearCoreCores::new(project_dir),
+        };
+        return (
+            Box::new(fbuild_packages::toolchain::ArmGcc8Toolchain::new(
+                project_dir,
+            )),
+            SamCore::ClearCore {
+                cores,
+                cmsis: fbuild_packages::library::CmsisFramework::new(project_dir),
+            },
+        );
+    }
+    let toolchain: Box<dyn fbuild_packages::Toolchain> =
+        Box::new(fbuild_packages::toolchain::ArmToolchain::new(project_dir));
+    let core = if is_samd_mcu(&board.mcu) {
+        SamCore::Samd {
+            cores: match override_for("framework-arduino-samd-adafruit") {
+                Some(o) => fbuild_packages::library::SamdCores::with_override(project_dir, o),
+                None => fbuild_packages::library::SamdCores::new(project_dir),
+            },
+            cmsis: fbuild_packages::library::CmsisFramework::new(project_dir),
+            cmsis_atmel: fbuild_packages::library::CmsisAtmel::new(project_dir),
+        }
+    } else {
+        SamCore::Sam(match override_for("framework-arduino-sam") {
+            Some(o) => fbuild_packages::library::SamCores::with_override(project_dir, o),
+            None => fbuild_packages::library::SamCores::new(project_dir),
+        })
+    };
+    (toolchain, core)
+}
+
 #[async_trait::async_trait]
 impl BuildOrchestrator for SamOrchestrator {
     fn platform(&self) -> Platform {
@@ -116,20 +193,12 @@ impl BuildOrchestrator for SamOrchestrator {
         let mut ctx = pipeline::BuildContext::new(params).await?;
         let clearcore = is_clearcore_board(&ctx.board);
 
-        // 3. Ensure ARM GCC toolchain
-        // Teknic's precompiled ClearCore/LwIP libraries are built with GCC 7.
-        // fbuild's GCC 9 package is the closest supported toolchain and avoids
-        // needlessly crossing the much larger GCC 15 ABI/version gap.
-        use fbuild_packages::Toolchain;
-        let toolchain: Box<dyn Toolchain> = if clearcore {
-            Box::new(fbuild_packages::toolchain::ArmGcc8Toolchain::new(
-                &params.project_dir,
-            ))
-        } else {
-            Box::new(fbuild_packages::toolchain::ArmToolchain::new(
-                &params.project_dir,
-            ))
-        };
+        // 3. Ensure ARM GCC toolchain (GCC 9 for ClearCore; see `sam_packages`)
+        let (toolchain, core) = sam_packages(
+            &params.project_dir,
+            ctx.config.get_env_config(&params.env_name).ok(),
+            &ctx.board,
+        );
         let toolchain_dir = toolchain.ensure_installed().await?;
         tracing::info!("arm-none-eabi toolchain at {}", toolchain_dir.display());
 
@@ -141,36 +210,6 @@ impl BuildOrchestrator for SamOrchestrator {
         .await;
 
         // 4. Ensure correct Arduino core based on MCU family
-        // Honor `platform_packages` override (FastLED/fbuild#664, #681). Only
-        // SAM (Due) is wired through this PR — SAMD's framework_name needs
-        // separate verification (see issue thread).
-        // FastLED/fbuild#664, #681: honor `platform_packages` override per
-        // framework. SAMD (Adafruit ArduinoCore-samd) and SAM (Arduino
-        // ArduinoCore-sam) are distinct PIO packages, so resolve both
-        // overrides and route to the branch that runs.
-        let __sam_ovr = ctx
-            .config
-            .get_env_config(&params.env_name)
-            .ok()
-            .and_then(|env| {
-                crate::package_override::resolve_override(env, "framework-arduino-sam")
-            });
-        // FastLED/fbuild#677: fbuild ships Adafruit's `ArduinoCore-samd`,
-        // so the matching PIO package name is `framework-arduino-samd-adafruit`.
-        let __samd_ovr = ctx
-            .config
-            .get_env_config(&params.env_name)
-            .ok()
-            .and_then(|env| {
-                crate::package_override::resolve_override(env, "framework-arduino-samd-adafruit")
-            });
-        let __clearcore_ovr = ctx
-            .config
-            .get_env_config(&params.env_name)
-            .ok()
-            .and_then(|env| {
-                crate::package_override::resolve_override(env, "framework-arduino-sam-clearcore")
-            });
         let SamCoreInstall {
             framework_dir,
             core_dir,
@@ -179,13 +218,27 @@ impl BuildOrchestrator for SamOrchestrator {
             system_includes,
             library_dirs,
             libraries,
-        } = if clearcore {
-            install_clearcore_core(params, &ctx.board.core, &ctx.board.variant, __clearcore_ovr)
+        } = match core {
+            SamCore::ClearCore { cores, cmsis } => {
+                install_clearcore_core(cores, cmsis, &ctx.board.core, &ctx.board.variant).await?
+            }
+            SamCore::Samd {
+                cores,
+                cmsis,
+                cmsis_atmel,
+            } => {
+                install_samd_core(
+                    cores,
+                    cmsis,
+                    cmsis_atmel,
+                    &ctx.board.core,
+                    &ctx.board.variant,
+                )
                 .await?
-        } else if is_samd_mcu(&ctx.board.mcu) {
-            install_samd_core(params, &ctx.board.core, &ctx.board.variant, __samd_ovr).await?
-        } else {
-            install_sam_core(params, &ctx.board.core, &ctx.board.variant, __sam_ovr).await?
+            }
+            SamCore::Sam(cores) => {
+                install_sam_core(cores, &ctx.board.core, &ctx.board.variant).await?
+            }
         };
 
         let build_dir = &ctx.build_dir;
@@ -440,15 +493,10 @@ impl BuildOrchestrator for SamOrchestrator {
 
 /// Install ArduinoCore-sam for classic SAM3X boards (Due).
 async fn install_sam_core(
-    params: &BuildParams,
+    framework: fbuild_packages::library::SamCores,
     core_name: &str,
     variant_name: &str,
-    ovr: Option<fbuild_config::PackageOverride>,
 ) -> Result<SamCoreInstall> {
-    let framework = match ovr {
-        Some(o) => fbuild_packages::library::SamCores::with_override(&params.project_dir, o),
-        None => fbuild_packages::library::SamCores::new(&params.project_dir),
-    };
     let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
     tracing::info!("SAM cores at {}", framework_dir.display());
 
@@ -479,15 +527,12 @@ async fn install_sam_core(
 
 /// Install Adafruit ArduinoCore-samd for SAMD21/SAMD51 boards.
 async fn install_samd_core(
-    params: &BuildParams,
+    framework: fbuild_packages::library::SamdCores,
+    cmsis: fbuild_packages::library::CmsisFramework,
+    cmsis_atmel: fbuild_packages::library::CmsisAtmel,
     core_name: &str,
     variant_name: &str,
-    override_: Option<fbuild_config::PackageOverride>,
 ) -> Result<SamCoreInstall> {
-    let framework = match override_ {
-        Some(o) => fbuild_packages::library::SamdCores::with_override(&params.project_dir, o),
-        None => fbuild_packages::library::SamdCores::new(&params.project_dir),
-    };
     let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
     tracing::info!("SAMD cores at {}", framework_dir.display());
 
@@ -496,11 +541,9 @@ async fn install_samd_core(
     let linker_script = framework.get_linker_script(variant_name);
 
     // SAMD core needs external CMSIS and CMSIS-Atmel packages for device headers
-    let cmsis = fbuild_packages::library::CmsisFramework::new(&params.project_dir);
     let cmsis_dir = fbuild_packages::Package::ensure_installed(&cmsis).await?;
     tracing::info!("CMSIS at {}", cmsis_dir.display());
 
-    let cmsis_atmel = fbuild_packages::library::CmsisAtmel::new(&params.project_dir);
     let _cmsis_atmel_dir = fbuild_packages::Package::ensure_installed(&cmsis_atmel).await?;
     tracing::info!("CMSIS-Atmel installed");
 
@@ -543,15 +586,11 @@ async fn install_samd_core(
 /// device headers and precompiled ClearCore/LwIP libraries. Generic CMSIS
 /// supplies the Cortex-M4 core headers and DSP library.
 async fn install_clearcore_core(
-    params: &BuildParams,
+    framework: fbuild_packages::library::ClearCoreCores,
+    cmsis: fbuild_packages::library::CmsisFramework,
     core_name: &str,
     variant_name: &str,
-    override_: Option<fbuild_config::PackageOverride>,
 ) -> Result<SamCoreInstall> {
-    let framework = match override_ {
-        Some(o) => fbuild_packages::library::ClearCoreCores::with_override(&params.project_dir, o),
-        None => fbuild_packages::library::ClearCoreCores::new(&params.project_dir),
-    };
     let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
     tracing::info!("ClearCore Arduino core at {}", framework_dir.display());
 
@@ -559,7 +598,6 @@ async fn install_clearcore_core(
     let variant_dir = framework.get_variant_dir(variant_name);
     let linker_script = framework.get_linker_script(variant_name);
 
-    let cmsis = fbuild_packages::library::CmsisFramework::new(&params.project_dir);
     let cmsis_dir = fbuild_packages::Package::ensure_installed(&cmsis).await?;
     tracing::info!("CMSIS at {}", cmsis_dir.display());
 

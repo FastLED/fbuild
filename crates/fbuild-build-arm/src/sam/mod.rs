@@ -18,12 +18,35 @@ impl crate::PlatformSupport for SamPlatformSupport {
         orchestrator::create()
     }
 
-    async fn install_deps(&self, project_dir: &std::path::Path) -> fbuild_core::Result<()> {
-        use fbuild_packages::Package;
-        let tc = fbuild_packages::toolchain::ArmToolchain::new(project_dir);
-        Package::ensure_installed(&tc).await?;
-        tracing::info!("ARM toolchain installed");
-        Ok(())
+    async fn provision(
+        &self,
+        inputs: &crate::provision::ProvisionInputs<'_>,
+        mode: crate::provision::ProvisionMode,
+    ) -> fbuild_core::Result<Vec<crate::provision::ProvisionedPackage>> {
+        use crate::provision::{PackageKind, provision_package};
+        use orchestrator::SamCore;
+        let (toolchain, core) =
+            orchestrator::sam_packages(inputs.project_dir, Some(inputs.env_config), inputs.board);
+        let mut rows = vec![provision_package(PackageKind::Toolchain, &*toolchain, mode).await];
+        match core {
+            SamCore::Sam(cores) => {
+                rows.push(provision_package(PackageKind::Framework, &cores, mode).await);
+            }
+            SamCore::Samd {
+                cores,
+                cmsis,
+                cmsis_atmel,
+            } => {
+                rows.push(provision_package(PackageKind::Framework, &cores, mode).await);
+                rows.push(provision_package(PackageKind::Framework, &cmsis, mode).await);
+                rows.push(provision_package(PackageKind::Framework, &cmsis_atmel, mode).await);
+            }
+            SamCore::ClearCore { cores, cmsis } => {
+                rows.push(provision_package(PackageKind::Framework, &cores, mode).await);
+                rows.push(provision_package(PackageKind::Framework, &cmsis, mode).await);
+            }
+        }
+        Ok(rows)
     }
 
     fn default_board_id(&self) -> &str {

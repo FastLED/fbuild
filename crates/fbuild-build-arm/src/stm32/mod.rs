@@ -1,4 +1,4 @@
-﻿//! STM32 platform build support (STM32F1, STM32F4, STM32H7, etc.)
+//! STM32 platform build support (STM32F1, STM32F4, STM32H7, etc.)
 
 pub mod mcu_config;
 pub mod orchestrator;
@@ -14,12 +14,25 @@ impl crate::PlatformSupport for Stm32PlatformSupport {
         orchestrator::create()
     }
 
-    async fn install_deps(&self, project_dir: &std::path::Path) -> fbuild_core::Result<()> {
-        use fbuild_packages::Package;
-        let tc = fbuild_packages::toolchain::ArmToolchain::new(project_dir);
-        Package::ensure_installed(&tc).await?;
-        tracing::info!("ARM toolchain installed");
-        Ok(())
+    async fn provision(
+        &self,
+        inputs: &crate::provision::ProvisionInputs<'_>,
+        mode: crate::provision::ProvisionMode,
+    ) -> fbuild_core::Result<Vec<crate::provision::ProvisionedPackage>> {
+        use crate::provision::{PackageKind, provision_package};
+        let (toolchain, core) =
+            orchestrator::stm32_packages(inputs.project_dir, Some(inputs.env_config), inputs.board);
+        let mut rows = vec![provision_package(PackageKind::Toolchain, &toolchain, mode).await];
+        match core {
+            orchestrator::Stm32Core::Stm32duino { cores, cmsis } => {
+                rows.push(provision_package(PackageKind::Framework, &cores, mode).await);
+                rows.push(provision_package(PackageKind::Framework, &cmsis, mode).await);
+            }
+            orchestrator::Stm32Core::ArduinoMbed(core) => {
+                rows.push(provision_package(PackageKind::Framework, &core, mode).await);
+            }
+        }
+        Ok(rows)
     }
 
     fn default_board_id(&self) -> &str {

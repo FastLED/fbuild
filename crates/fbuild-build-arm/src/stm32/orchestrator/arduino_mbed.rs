@@ -32,23 +32,15 @@ pub(super) async fn build_arduino_mbed_stm32(
     params: &BuildParams,
     ctx: pipeline::BuildContext,
     toolchain: &fbuild_packages::toolchain::ArmToolchain,
+    framework: fbuild_packages::library::ArduinoMbedCore,
     start: Instant,
 ) -> Result<BuildResult> {
     // Compute eh_frame strip policy once per build (FastLED/fbuild#244).
     let eh_frame_policy =
         crate::eh_frame_policy_compute::compute_eh_frame_policy(&ctx, params.profile, None);
 
-    // Honor `platform_packages` override from the env section
-    // (FastLED/fbuild#664, #681).
-    let __ovr = ctx
-        .config
-        .get_env_config(&params.env_name)
-        .ok()
-        .and_then(|env| crate::package_override::resolve_override(env, "framework-arduino-mbed"));
-    let framework = match __ovr {
-        Some(o) => fbuild_packages::library::ArduinoMbedCore::with_override(&params.project_dir, o),
-        None => fbuild_packages::library::ArduinoMbedCore::new(&params.project_dir),
-    };
+    // `framework` honors the `framework-arduino-mbed` `platform_packages`
+    // override (FastLED/fbuild#664, #681); see `super::stm32_packages`.
     let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
     tracing::info!("Arduino mbed core at {}", framework_dir.display());
 

@@ -1,4 +1,4 @@
-﻿//! AVR platform build support (Arduino Uno, Mega, Nano, etc.)
+//! AVR platform build support (Arduino Uno, Mega, Nano, etc.)
 
 pub mod avr_compiler;
 pub mod avr_linker;
@@ -18,12 +18,18 @@ impl crate::PlatformSupport for AvrPlatformSupport {
         orchestrator::create()
     }
 
-    async fn install_deps(&self, project_dir: &std::path::Path) -> fbuild_core::Result<()> {
-        use fbuild_packages::Package;
-        let tc = fbuild_packages::toolchain::AvrToolchain::new(project_dir);
-        Package::ensure_installed(&tc).await?;
-        tracing::info!("AVR toolchain installed");
-        Ok(())
+    async fn provision(
+        &self,
+        inputs: &crate::provision::ProvisionInputs<'_>,
+        mode: crate::provision::ProvisionMode,
+    ) -> fbuild_core::Result<Vec<crate::provision::ProvisionedPackage>> {
+        use crate::provision::{PackageKind, provision_package};
+        let (toolchain, framework) =
+            orchestrator::avr_packages(inputs.project_dir, Some(inputs.env_config), inputs.board)?;
+        Ok(vec![
+            provision_package(PackageKind::Toolchain, &toolchain, mode).await,
+            provision_package(PackageKind::Framework, &framework, mode).await,
+        ])
     }
 
     fn default_board_id(&self) -> &str {

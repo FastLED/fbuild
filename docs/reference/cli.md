@@ -467,6 +467,39 @@ generated for.
 
 ## Batch And CI Commands
 
+### `fbuild install`
+
+Download everything an environment's build needs — platform package,
+toolchain, framework, SDK libs, tools such as esptool, and `lib_deps` — without
+compiling. It runs in-process (no daemon) and resolves packages through the
+same helpers the build uses, so a following `fbuild build` fetches nothing.
+
+```bash
+fbuild install -e esp32s3                  # fetch what is missing
+fbuild install -e uno -e teensy41 --json   # manifest with a packages_hash
+fbuild install --all-envs --check          # exit 2 if anything is missing
+fbuild install -e esp32s3 --dry-run        # list the resolved set
+```
+
+Each package prints one line: status (`present`, `fetched`, `would-fetch`,
+`failed`), kind, name, version, installed size, duration, URL and sha256.
+`--json` emits the same rows per environment plus a `packages_hash` — sha256
+over the sorted `(kind, name, version, url, sha256)` tuples, independent of
+status and size — which CI can use as a packages-cache key.
+
+| Flag | Behavior |
+|---|---|
+| `-e <env>` | Environment to provision; repeatable. Defaults to the project's default environment. |
+| `--all-envs` | Provision every environment in `platformio.ini`. |
+| `--check` | Report missing packages without fetching; exit 2 if any. Never touches the network. |
+| `--dry-run` | List the resolved packages without fetching; exit 0. Never touches the network. |
+| `--json` | Print the JSON manifest instead of text. |
+| `-j <N>` | Provision up to N environments in parallel. |
+
+Exit codes: `0` success, `1` a package failed to install, `2` `--check` found
+something to fetch. `--check` and `--dry-run` list direct `lib_deps` only;
+transitive library dependencies are known once the direct ones are downloaded.
+
 ### `fbuild compile-many`
 
 Build many sketches against one board using a two-stage pipeline: framework and

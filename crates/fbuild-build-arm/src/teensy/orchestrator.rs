@@ -62,6 +62,27 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
     }
 }
 
+/// Teensy's ARM GCC toolchain and cores for an env, honoring the
+/// `framework-arduinoteensy` `platform_packages` override (FastLED/fbuild#664,
+/// #681). Shared by the build and `fbuild install`, so both provision the same
+/// packages (FastLED/fbuild#1433).
+pub(crate) fn teensy_packages(
+    project_dir: &Path,
+    env_config: Option<&std::collections::HashMap<String, String>>,
+) -> (
+    fbuild_packages::toolchain::TeensyArmToolchain,
+    fbuild_packages::library::TeensyCores,
+) {
+    let toolchain = fbuild_packages::toolchain::TeensyArmToolchain::new(project_dir);
+    let override_pin = env_config
+        .and_then(|env| crate::package_override::resolve_override(env, "framework-arduinoteensy"));
+    let cores = match override_pin {
+        Some(o) => fbuild_packages::library::TeensyCores::with_override(project_dir, o),
+        None => fbuild_packages::library::TeensyCores::new(project_dir),
+    };
+    (toolchain, cores)
+}
+
 #[async_trait::async_trait]
 impl BuildOrchestrator for TeensyOrchestrator {
     fn platform(&self) -> Platform {
@@ -86,8 +107,8 @@ impl BuildOrchestrator for TeensyOrchestrator {
             fbuild_core::FbuildError::ConfigError("missing 'board' in environment config".into())
         })?;
 
-        // 3. Ensure Teensy-compatible ARM GCC toolchain
-        let toolchain = fbuild_packages::toolchain::TeensyArmToolchain::new(&params.project_dir);
+        // 3-4. Teensy-compatible ARM GCC toolchain and Teensy cores
+        let (toolchain, framework) = teensy_packages(&params.project_dir, Some(env_config));
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("Teensy ARM GCC toolchain at {}", toolchain_dir.display());
 
@@ -99,19 +120,6 @@ impl BuildOrchestrator for TeensyOrchestrator {
         )
         .await;
 
-        // 4. Ensure Teensy cores
-        // Honor `platform_packages` override (FastLED/fbuild#664, #681).
-        let __ovr = ctx
-            .config
-            .get_env_config(&params.env_name)
-            .ok()
-            .and_then(|env| {
-                crate::package_override::resolve_override(env, "framework-arduinoteensy")
-            });
-        let framework = match __ovr {
-            Some(o) => fbuild_packages::library::TeensyCores::with_override(&params.project_dir, o),
-            None => fbuild_packages::library::TeensyCores::new(&params.project_dir),
-        };
         let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("Teensy cores at {}", framework_dir.display());
 

@@ -144,6 +144,17 @@ fn patch_mcu_compatibility(mcu_dir: &Path, mcu: &str) -> fbuild_core::Result<()>
 }
 
 impl Esp32Framework {
+    /// Whether the per-MCU SDK is already complete under the framework's
+    /// `tools/` dir — the test [`Self::ensure_libs`] and
+    /// [`Self::ensure_mcu_libs`] use to skip work. Offline, so `fbuild install
+    /// --check` can ask it (FastLED/fbuild#1433).
+    pub fn sdk_libs_installed(&self, mcu: &str) -> bool {
+        let tools_dir = self.resolved_dir().join("tools");
+        mcu_sdk_dir_candidates(&tools_dir, mcu)
+            .iter()
+            .any(|mcu_dir| mcu_sdk_complete(mcu_dir))
+    }
+
     /// Ensure the SDK libs are downloaded and extracted into the framework's `tools/` dir.
     pub async fn ensure_libs(&self, libs_url: &str, mcu: &str) -> fbuild_core::Result<()> {
         let root = self.resolved_dir();

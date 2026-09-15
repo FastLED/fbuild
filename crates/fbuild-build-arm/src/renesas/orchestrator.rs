@@ -58,6 +58,27 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
     }
 }
 
+/// Renesas RA's ARM GCC toolchain and ArduinoCore-renesas for an env, honoring
+/// the `framework-arduinorenesas` `platform_packages` override
+/// (FastLED/fbuild#664, #681). Shared by the build and `fbuild install`, so
+/// both provision the same packages (FastLED/fbuild#1433).
+pub(crate) fn renesas_packages(
+    project_dir: &Path,
+    env_config: Option<&std::collections::HashMap<String, String>>,
+) -> (
+    fbuild_packages::toolchain::ArmToolchain,
+    fbuild_packages::library::RenesasCores,
+) {
+    let toolchain = fbuild_packages::toolchain::ArmToolchain::new(project_dir);
+    let override_pin = env_config
+        .and_then(|env| crate::package_override::resolve_override(env, "framework-arduinorenesas"));
+    let cores = match override_pin {
+        Some(o) => fbuild_packages::library::RenesasCores::with_override(project_dir, o),
+        None => fbuild_packages::library::RenesasCores::new(project_dir),
+    };
+    (toolchain, cores)
+}
+
 #[async_trait::async_trait]
 impl BuildOrchestrator for RenesasOrchestrator {
     fn platform(&self) -> Platform {
@@ -71,8 +92,11 @@ impl BuildOrchestrator for RenesasOrchestrator {
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
         let mut ctx = pipeline::BuildContext::new(params).await?;
 
-        // 3. Ensure ARM GCC toolchain
-        let toolchain = fbuild_packages::toolchain::ArmToolchain::new(&params.project_dir);
+        // 3-4. ARM GCC toolchain and Renesas cores (ArduinoCore-renesas)
+        let (toolchain, framework) = renesas_packages(
+            &params.project_dir,
+            ctx.config.get_env_config(&params.env_name).ok(),
+        );
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("arm-gcc toolchain at {}", toolchain_dir.display());
 
@@ -84,21 +108,6 @@ impl BuildOrchestrator for RenesasOrchestrator {
         )
         .await;
 
-        // 4. Ensure Renesas cores (ArduinoCore-renesas)
-        // Honor `platform_packages` override (FastLED/fbuild#664, #681).
-        let __ovr = ctx
-            .config
-            .get_env_config(&params.env_name)
-            .ok()
-            .and_then(|env| {
-                crate::package_override::resolve_override(env, "framework-arduinorenesas")
-            });
-        let framework = match __ovr {
-            Some(o) => {
-                fbuild_packages::library::RenesasCores::with_override(&params.project_dir, o)
-            }
-            None => fbuild_packages::library::RenesasCores::new(&params.project_dir),
-        };
         let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("Renesas cores at {}", framework_dir.display());
 

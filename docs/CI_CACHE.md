@@ -34,6 +34,23 @@ against local installs, dev builds, or a wheel re-uploaded with the same version
 The setup action computes the hash for you and uses it in its built-in
 `FBUILD_CACHE_DIR` cache key.
 
+## Split packages and build payloads
+
+For a large board matrix, set the setup action's `cache-mode: split` and pass
+the board's `environments` (FastLED/fbuild#1433). The action then:
+
+1. Restores a **packages cache** shared per platform family (toolchains,
+   platforms, frameworks, libraries, `index.sqlite`).
+2. Runs `fbuild install` as its own step and saves the packages cache under the
+   family prefix plus the `packages_hash` from `fbuild install --json`.
+3. Restores a **per-board build-payload cache** (`core/`, `framework-libs/`,
+   `library-selection/`, zccache) keyed by fbuild hash, board and
+   `cache-key-extra`, with no fallback across boards, and saves it at job end.
+
+Pass `save: ${{ github.event_name != 'pull_request' }}` so pull requests restore
+the default branch's entries without adding their own to the repository's
+cache budget. See [CI_CACHING.md](CI_CACHING.md#split-caches-for-large-board-matrices-fastledfbuild1433).
+
 ## Invalidation pattern
 
 Keep normal invalidation automatic by hashing graph inputs. Keep forced
