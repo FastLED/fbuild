@@ -418,6 +418,26 @@ pub async fn async_main() {
                 std::process::exit(code);
             }
         }
+        Some(Commands::Install {
+            project_dir,
+            environments,
+            all_envs,
+            check,
+            dry_run,
+            json,
+            jobs,
+        }) => {
+            super::install::run_install(super::install::InstallArgs {
+                project_dir: resolve_project_dir(project_dir, &top_level_project_dir),
+                environments,
+                all_envs,
+                check,
+                dry_run,
+                json,
+                jobs,
+            })
+            .await
+        }
         Some(Commands::Daemon { action }) => run_daemon(action).await,
         Some(Commands::Show {
             target,

@@ -28,6 +28,7 @@ pub mod package_override;
 pub mod parallel;
 pub mod perf_log;
 pub mod pipeline;
+pub mod provision;
 pub mod rebuild_signature;
 pub mod resolution;
 pub mod script_runtime;
@@ -39,25 +40,42 @@ pub mod zccache_embedded;
 
 pub use source_scanner::SourceScanner;
 
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
 use fbuild_core::{BuildProfile, Platform, Result, SizeInfo};
 
 /// Trait for platform-specific build support.
 ///
 /// Each platform crate implements this to provide orchestrator creation,
-/// dependency installation, and configuration. The `fbuild-build` facade's
+/// package provisioning, and configuration. The `fbuild-build` facade's
 /// `get_platform_support()` factory maps a [`Platform`] to the right impl.
-///
-/// FastLED/fbuild#820 (Phase B of #813): `install_deps` is `async` so
-/// per-platform impls can `.await` `fbuild_packages::Package::ensure_installed`.
 #[async_trait::async_trait]
 pub trait PlatformSupport: Send + Sync {
     /// Create the build orchestrator for this platform.
     fn create_orchestrator(&self) -> Box<dyn BuildOrchestrator>;
 
-    /// Install platform-specific dependencies (toolchain, framework).
-    async fn install_deps(&self, project_dir: &Path) -> Result<()>;
+    /// Provision every package this env's build downloads — platform,
+    /// toolchain, framework, SDK libs and tools — without compiling, one
+    /// report row per package. Implementations resolve packages through the
+    /// same helpers their orchestrator uses, so `fbuild install` fetches
+    /// exactly what a build would. `lib_deps` are provisioned by the caller
+    /// (FastLED/fbuild#1433).
+    async fn provision(
+        &self,
+        inputs: &provision::ProvisionInputs<'_>,
+        mode: provision::ProvisionMode,
+    ) -> Result<Vec<provision::ProvisionedPackage>>;
+
+    /// The `lib_deps` entries this platform's build downloads. Defaults to
+    /// all of them; a platform whose framework bundles libraries filters
+    /// those out.
+    fn downloadable_lib_deps(
+        &self,
+        _inputs: &provision::ProvisionInputs<'_>,
+        lib_deps: Vec<String>,
+    ) -> Vec<String> {
+        lib_deps
+    }
 
     /// Default board ID used as fallback when none is specified.
     fn default_board_id(&self) -> &str;

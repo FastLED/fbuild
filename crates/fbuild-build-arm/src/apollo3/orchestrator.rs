@@ -36,6 +36,29 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
     }
 }
 
+/// Apollo3's ARM GCC 8 toolchain (mbed-os requires GCC 8) and SparkFun Apollo3
+/// cores for an env, honoring the `framework-arduinoambiqapollo3`
+/// `platform_packages` override (FastLED/fbuild#664, #681). Shared by the
+/// build and `fbuild install`, so both provision the same packages
+/// (FastLED/fbuild#1433).
+pub(crate) fn apollo3_packages(
+    project_dir: &Path,
+    env_config: Option<&std::collections::HashMap<String, String>>,
+) -> (
+    fbuild_packages::toolchain::ArmGcc8Toolchain,
+    fbuild_packages::library::Apollo3Cores,
+) {
+    let toolchain = fbuild_packages::toolchain::ArmGcc8Toolchain::new(project_dir);
+    let override_pin = env_config.and_then(|env| {
+        crate::package_override::resolve_override(env, "framework-arduinoambiqapollo3")
+    });
+    let cores = match override_pin {
+        Some(o) => fbuild_packages::library::Apollo3Cores::with_override(project_dir, o),
+        None => fbuild_packages::library::Apollo3Cores::new(project_dir),
+    };
+    (toolchain, cores)
+}
+
 #[async_trait::async_trait]
 impl BuildOrchestrator for Apollo3Orchestrator {
     fn platform(&self) -> Platform {
@@ -52,8 +75,11 @@ impl BuildOrchestrator for Apollo3Orchestrator {
         let eh_frame_policy =
             crate::eh_frame_policy_compute::compute_eh_frame_policy(&ctx, params.profile, None);
 
-        // 3. Ensure ARM GCC 8 toolchain (Apollo3/mbed-os requires GCC 8)
-        let toolchain = fbuild_packages::toolchain::ArmGcc8Toolchain::new(&params.project_dir);
+        // 3-4. ARM GCC 8 toolchain and Apollo3 cores
+        let (toolchain, framework) = apollo3_packages(
+            &params.project_dir,
+            ctx.config.get_env_config(&params.env_name).ok(),
+        );
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("arm-gcc8 toolchain at {}", toolchain_dir.display());
 
@@ -65,24 +91,6 @@ impl BuildOrchestrator for Apollo3Orchestrator {
         )
         .await;
 
-        // 4. Ensure Apollo3 cores (SparkFun Arduino Apollo3 core)
-        // Honor `platform_packages` override from the env section
-        // (FastLED/fbuild#664, #681): if set, the override URL replaces the
-        // const-pinned default and gets its own cache subdir via
-        // `PackageBase::with_override`.
-        let __ovr = ctx
-            .config
-            .get_env_config(&params.env_name)
-            .ok()
-            .and_then(|env| {
-                crate::package_override::resolve_override(env, "framework-arduinoambiqapollo3")
-            });
-        let framework = match __ovr {
-            Some(o) => {
-                fbuild_packages::library::Apollo3Cores::with_override(&params.project_dir, o)
-            }
-            None => fbuild_packages::library::Apollo3Cores::new(&params.project_dir),
-        };
         let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("Apollo3 cores at {}", framework_dir.display());
 

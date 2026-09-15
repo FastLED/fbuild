@@ -159,7 +159,7 @@ fn render_manifest(
     out
 }
 
-fn human_bytes(n: u64) -> String {
+pub(crate) fn human_bytes(n: u64) -> String {
     const UNITS: &[&str] = &["B", "KB", "MB", "GB", "TB"];
     let mut v = n as f64;
     let mut i = 0;

@@ -20,8 +20,6 @@ pub mod orchestrator;
 // `fbuild_config::platform_packages` so every orchestrator gets the same
 // parser without duplication.
 
-use std::path::Path;
-
 use fbuild_core::Result;
 
 /// NXP LPC8xx platform support.
@@ -33,19 +31,19 @@ impl crate::PlatformSupport for NxpLpcPlatformSupport {
         orchestrator::create()
     }
 
-    async fn install_deps(&self, project_dir: &Path) -> Result<()> {
-        // ARM GCC is the right toolchain for Cortex-M0+ bare metal.
-        // Pre-install it (+ CMSIS + the Arduino core framework) so the
-        // orchestrator can `ensure_installed` cheaply.
-        use fbuild_packages::Package;
-        let tc = fbuild_packages::toolchain::ArmToolchain::new(project_dir);
-        Package::ensure_installed(&tc).await?;
-        let cmsis = fbuild_packages::library::CmsisFramework::new(project_dir);
-        Package::ensure_installed(&cmsis).await?;
-        let core = fbuild_packages::library::ArduinoCoreLpc8xx::new(project_dir);
-        Package::ensure_installed(&core).await?;
-        tracing::info!("ARM GCC toolchain + ArduinoCore-LPC8xx installed for NXP LPC8xx");
-        Ok(())
+    async fn provision(
+        &self,
+        inputs: &crate::provision::ProvisionInputs<'_>,
+        mode: crate::provision::ProvisionMode,
+    ) -> Result<Vec<crate::provision::ProvisionedPackage>> {
+        use crate::provision::{PackageKind, provision_package};
+        let (toolchain, cmsis, core) =
+            orchestrator::nxplpc_packages(inputs.project_dir, Some(inputs.env_config));
+        Ok(vec![
+            provision_package(PackageKind::Toolchain, &toolchain, mode).await,
+            provision_package(PackageKind::Framework, &cmsis, mode).await,
+            provision_package(PackageKind::Framework, &core, mode).await,
+        ])
     }
 
     fn default_board_id(&self) -> &str {

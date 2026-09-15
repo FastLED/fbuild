@@ -150,6 +150,11 @@ pub struct PackageInfo {
     pub version: String,
     pub url: String,
     pub install_path: PathBuf,
+    /// Pinned sha256 of the download archive, when the package has one.
+    pub checksum: Option<String>,
+    /// Installed size recorded in the package cache index, when it has a row
+    /// for this package (FastLED/fbuild#1433).
+    pub installed_bytes: Option<u64>,
 }
 
 /// Shared base for package implementations.
@@ -483,7 +488,20 @@ impl PackageBase {
             version: self.version.clone(),
             url: self.url.clone(),
             install_path: self.install_path(),
+            checksum: self.checksum.clone(),
+            installed_bytes: self.recorded_installed_bytes(),
         }
+    }
+
+    /// Installed size from the cache index row written by
+    /// [`Self::record_install_in_disk_cache`]. Read-only: unlike
+    /// [`Self::is_cached`] it does not bump the LRU timestamp.
+    fn recorded_installed_bytes(&self) -> Option<u64> {
+        let dc = self.disk_cache.as_ref()?;
+        let entry = dc
+            .lookup(self.cache_subdir.into(), &self.cache_key, &self.version)
+            .ok()??;
+        u64::try_from(entry.installed_bytes?).ok()
     }
 }
 
@@ -571,6 +589,8 @@ mod toolchain_gcc_ar_tests {
                 version: "0.0".to_string(),
                 url: String::new(),
                 install_path: PathBuf::new(),
+                checksum: None,
+                installed_bytes: None,
             }
         }
     }

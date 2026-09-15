@@ -34,6 +34,8 @@ mod helpers;
 mod local_libs;
 mod packages;
 
+pub(crate) use packages::provision_esp32;
+
 #[cfg(test)]
 mod tests;
 

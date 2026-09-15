@@ -66,16 +66,102 @@ pub fn get_orchestrator(platform: Platform) -> Result<Box<dyn BuildOrchestrator>
     get_platform_support(platform).map(|s| s.create_orchestrator())
 }
 
-/// Install platform-specific dependencies (toolchain, framework).
-pub async fn install_platform_deps(platform: Platform, project_dir: &Path) -> Result<()> {
-    get_platform_support(platform)?
-        .install_deps(project_dir)
-        .await
+/// Resolve an env's board and platform, then provision everything its build
+/// downloads — platform packages, toolchains, framework, tools and `lib_deps`
+/// — without compiling. The engine behind `fbuild install` and the daemon's
+/// `POST /api/install-deps` (FastLED/fbuild#1433).
+pub async fn provision_env(
+    project_dir: &Path,
+    env_name: &str,
+    mode: provision::ProvisionMode,
+) -> Result<provision::ProvisionReport> {
+    let config = fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini"))?;
+    let env_config = config.get_env_config(env_name)?;
+    let board =
+        resolution::ResolutionContext::new(project_dir, env_name, &config).resolve_board()?;
+    let platform = env_config
+        .get("platform")
+        .and_then(|value| Platform::from_platform_str(value))
+        .or_else(|| board.platform())
+        .ok_or_else(|| {
+            fbuild_core::FbuildError::ConfigError(format!(
+                "could not determine the platform for environment '{env_name}'"
+            ))
+        })?;
+    let support = get_platform_support(platform)?;
+    let inputs = provision::ProvisionInputs {
+        project_dir,
+        env_name,
+        env_config,
+        board: &board,
+    };
+
+    let mut packages = support.provision(&inputs, mode).await?;
+    let lib_deps = support.downloadable_lib_deps(&inputs, config.get_lib_deps(env_name)?);
+    let lib_ignore = config.get_lib_ignore(env_name)?;
+    // `fbuild build` downloads lib_deps into the release build dir's `libs/`.
+    let libs_dir = fbuild_paths::BuildLayout::new(
+        project_dir.to_path_buf(),
+        env_name.to_string(),
+        fbuild_core::BuildProfile::Release,
+    )
+    .resolve()
+    .join("libs");
+    packages.extend(
+        provision::provision_lib_deps(project_dir, &lib_deps, &lib_ignore, &libs_dir, mode).await,
+    );
+
+    Ok(provision::ProvisionReport {
+        env: env_name.to_string(),
+        platform: format!("{platform:?}"),
+        packages,
+    })
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn project(ini: &str) -> tempfile::TempDir {
+        let dir = tempfile::tempdir().unwrap();
+        std::fs::write(dir.path().join("platformio.ini"), ini).unwrap();
+        dir
+    }
+
+    #[tokio::test]
+    async fn provision_env_rejects_an_unknown_environment() {
+        let dir = project("[env:teensy41]\nplatform = teensy\nboard = teensy41\n");
+        let error = provision_env(dir.path(), "nope", provision::ProvisionMode::DryRun)
+            .await
+            .unwrap_err();
+        assert!(error.to_string().contains("nope"), "{error}");
+    }
+
+    #[tokio::test]
+    async fn provision_env_dry_run_lists_packages_without_fetching() {
+        let dir = project("[env:teensy41]\nplatform = teensy\nboard = teensy41\n");
+        let report = provision_env(dir.path(), "teensy41", provision::ProvisionMode::DryRun)
+            .await
+            .unwrap();
+        assert_eq!(report.env, "teensy41");
+        let kinds: Vec<_> = report.packages.iter().map(|p| p.kind).collect();
+        assert_eq!(
+            kinds,
+            vec![
+                provision::PackageKind::Toolchain,
+                provision::PackageKind::Framework
+            ]
+        );
+        for package in &report.packages {
+            assert!(
+                matches!(
+                    package.status,
+                    provision::ProvisionStatus::Present | provision::ProvisionStatus::WouldFetch
+                ),
+                "a dry run must not fetch: {package:?}"
+            );
+        }
+    }
 
     #[test]
     fn test_get_orchestrator_atmelmegaavr() {

@@ -91,6 +91,29 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
     }
 }
 
+/// NXP LPC8xx's ARM GCC toolchain, CMSIS and ArduinoCore-LPC8xx for an env,
+/// honoring the `framework-arduino-lpc8xx` `platform_packages` override
+/// (FastLED/fbuild#663, #681). Shared by the build and `fbuild install`, so
+/// both provision the same packages (FastLED/fbuild#1433).
+pub(crate) fn nxplpc_packages(
+    project_dir: &std::path::Path,
+    env_config: Option<&std::collections::HashMap<String, String>>,
+) -> (
+    fbuild_packages::toolchain::ArmToolchain,
+    fbuild_packages::library::CmsisFramework,
+    fbuild_packages::library::ArduinoCoreLpc8xx,
+) {
+    let toolchain = fbuild_packages::toolchain::ArmToolchain::new(project_dir);
+    let cmsis = fbuild_packages::library::CmsisFramework::new(project_dir);
+    let override_pin = env_config
+        .and_then(|env| crate::package_override::resolve_override(env, "framework-arduino-lpc8xx"));
+    let core = match override_pin {
+        Some(o) => fbuild_packages::library::ArduinoCoreLpc8xx::with_override(project_dir, o),
+        None => fbuild_packages::library::ArduinoCoreLpc8xx::new(project_dir),
+    };
+    (toolchain, cmsis, core)
+}
+
 #[async_trait::async_trait]
 impl BuildOrchestrator for NxpLpcOrchestrator {
     fn platform(&self) -> Platform {
@@ -108,14 +131,17 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
         let eh_frame_policy =
             crate::eh_frame_policy_compute::compute_eh_frame_policy(&ctx, params.profile, None);
 
-        // 3. Ensure ARM GCC. `install_deps` already pre-installs this when
-        // the platform is dispatched, but ensure_installed is idempotent
-        // and cheap when the toolchain is already on disk.
-        let toolchain = fbuild_packages::toolchain::ArmToolchain::new(&params.project_dir);
+        let env_config = ctx.config.get_env_config(&params.env_name).ok();
+        let core_override = env_config.and_then(|env| {
+            crate::package_override::resolve_override(env, "framework-arduino-lpc8xx")
+        });
+        let (toolchain, cmsis, core) = nxplpc_packages(&params.project_dir, env_config);
+
+        // 3. Ensure ARM GCC. ensure_installed is idempotent and cheap when
+        // the toolchain is already on disk.
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("arm-none-eabi-gcc toolchain at {}", toolchain_dir.display());
 
-        let cmsis = fbuild_packages::library::CmsisFramework::new(&params.project_dir);
         let cmsis_dir = fbuild_packages::Package::ensure_installed(&cmsis).await?;
         tracing::info!("CMSIS framework at {}", cmsis_dir.display());
 
@@ -138,25 +164,13 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
         //    cache subdir via `PackageBase::with_override`. The parser
         //    + resolver are shared across every framework orchestrator so
         //    nxplpc carries no platform-specific platform_packages logic.
-        let core_override = ctx
-            .config
-            .get_env_config(&params.env_name)
-            .ok()
-            .and_then(|env| {
-                crate::package_override::resolve_override(env, "framework-arduino-lpc8xx")
-            });
-        let core = match core_override {
-            Some(ovr) => {
-                let banner = format!(
-                    "ArduinoCore-LPC8xx OVERRIDE: {} (default pinned: {})",
-                    ovr.url,
-                    fbuild_packages::library::ArduinoCoreLpc8xx::commit()
-                );
-                ctx.build_log.push(banner);
-                fbuild_packages::library::ArduinoCoreLpc8xx::with_override(&params.project_dir, ovr)
-            }
-            None => fbuild_packages::library::ArduinoCoreLpc8xx::new(&params.project_dir),
-        };
+        if let Some(ovr) = &core_override {
+            ctx.build_log.push(format!(
+                "ArduinoCore-LPC8xx OVERRIDE: {} (default pinned: {})",
+                ovr.url,
+                fbuild_packages::library::ArduinoCoreLpc8xx::commit()
+            ));
+        }
         let core_root = fbuild_packages::Package::ensure_installed(&core).await?;
         tracing::info!("ArduinoCore-LPC8xx at {}", core_root.display());
 

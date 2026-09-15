@@ -452,6 +452,34 @@ pub enum Commands {
         #[arg(long = "upgrade-package")]
         upgrade_package: Option<String>,
     },
+    /// Download everything an environment's build needs — platform,
+    /// toolchains, framework, tools and lib_deps — without compiling, one
+    /// line per package. `--check` and `--dry-run` never touch the network;
+    /// `--check` exits 2 when anything would need fetching.
+    /// FastLED/fbuild#1433.
+    Install {
+        /// Project directory.
+        project_dir: Option<String>,
+        /// Environment to provision (repeatable). Defaults to the project's
+        /// default environment.
+        #[arg(short = 'e', long = "environment", conflicts_with = "all_envs")]
+        environments: Vec<String>,
+        /// Provision every environment in platformio.ini.
+        #[arg(long)]
+        all_envs: bool,
+        /// Report what is missing without fetching; exit 2 if anything is.
+        #[arg(long, conflicts_with = "dry_run")]
+        check: bool,
+        /// List the resolved packages without fetching.
+        #[arg(long = "dry-run")]
+        dry_run: bool,
+        /// Print a JSON manifest (rows plus `packages_hash`) instead of text.
+        #[arg(long)]
+        json: bool,
+        /// Environments provisioned in parallel.
+        #[arg(short = 'j', long, value_parser = parse_jobs)]
+        jobs: Option<usize>,
+    },
     /// Manage the fbuild daemon
     Daemon {
         #[command(subcommand)]
@@ -1072,6 +1100,7 @@ pub const KNOWN_SUBCOMMANDS: &[&str] = &[
     "symbols",
     "bloat",
     "sync",
+    "install",
 ];
 
 /// Rewrite `fbuild <dir> <subcommand> ...` → `fbuild <subcommand> <dir> ...`

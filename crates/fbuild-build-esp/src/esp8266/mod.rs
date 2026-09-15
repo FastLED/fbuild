@@ -18,12 +18,18 @@ impl crate::PlatformSupport for Esp8266PlatformSupport {
         orchestrator::create()
     }
 
-    async fn install_deps(&self, project_dir: &std::path::Path) -> fbuild_core::Result<()> {
-        use fbuild_packages::Package;
-        let tc = fbuild_packages::toolchain::Esp8266Toolchain::new(project_dir);
-        Package::ensure_installed(&tc).await?;
-        tracing::info!("ESP8266 toolchain installed");
-        Ok(())
+    async fn provision(
+        &self,
+        inputs: &crate::provision::ProvisionInputs<'_>,
+        mode: crate::provision::ProvisionMode,
+    ) -> fbuild_core::Result<Vec<crate::provision::ProvisionedPackage>> {
+        use crate::provision::{PackageKind, provision_package};
+        let (toolchain, framework) =
+            orchestrator::esp8266_packages(inputs.project_dir, Some(inputs.env_config));
+        Ok(vec![
+            provision_package(PackageKind::Toolchain, &toolchain, mode).await,
+            provision_package(PackageKind::Framework, &framework, mode).await,
+        ])
     }
 
     fn default_board_id(&self) -> &str {

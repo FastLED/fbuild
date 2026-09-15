@@ -9,6 +9,43 @@ fn deploy_admin_and_no_admin_conflict() {
     assert!(Cli::try_parse_from(["fbuild", "deploy", "--admin", "--no-admin"]).is_err());
 }
 
+// ---------- `fbuild install` CLI shape (FastLED/fbuild#1433) ----------
+
+#[test]
+fn install_parses_repeated_envs_and_flags() {
+    let cli = Cli::try_parse_from([
+        "fbuild", "install", "proj", "-e", "uno", "-e", "esp32s3", "--check", "--json", "-j", "4",
+    ])
+    .expect("parse");
+    match cli.command {
+        Some(Commands::Install {
+            project_dir,
+            environments,
+            all_envs,
+            check,
+            dry_run,
+            json,
+            jobs,
+        }) => {
+            assert_eq!(project_dir.as_deref(), Some("proj"));
+            assert_eq!(environments, vec!["uno", "esp32s3"]);
+            assert!(check && json && !dry_run && !all_envs);
+            assert_eq!(jobs, Some(4));
+        }
+        _ => panic!("expected Commands::Install"),
+    }
+}
+
+#[test]
+fn install_env_conflicts_with_all_envs() {
+    assert!(Cli::try_parse_from(["fbuild", "install", "-e", "uno", "--all-envs"]).is_err());
+}
+
+#[test]
+fn install_check_conflicts_with_dry_run() {
+    assert!(Cli::try_parse_from(["fbuild", "install", "--check", "--dry-run"]).is_err());
+}
+
 // ---------- `fbuild ide` / `fbuild ide select` CLI shape ----------
 
 #[test]

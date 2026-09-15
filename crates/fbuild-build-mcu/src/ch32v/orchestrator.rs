@@ -57,8 +57,11 @@ impl BuildOrchestrator for Ch32vOrchestrator {
             .map(String::as_str);
         validate_ch32v_framework(framework_name)?;
 
-        // 3. Ensure RISC-V GCC toolchain
-        let toolchain = fbuild_packages::toolchain::RiscvToolchain::new(&params.project_dir);
+        // 3-4. RISC-V GCC toolchain and OpenWCH CH32V cores
+        let (toolchain, framework) = ch32v_packages(
+            &params.project_dir,
+            ctx.config.get_env_config(&params.env_name).ok(),
+        );
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("riscv-gcc toolchain at {}", toolchain_dir.display());
 
@@ -70,19 +73,6 @@ impl BuildOrchestrator for Ch32vOrchestrator {
         )
         .await;
 
-        // 4. Ensure OpenWCH CH32V cores
-        // Honor `platform_packages` override (FastLED/fbuild#664, #681).
-        let __ovr = ctx
-            .config
-            .get_env_config(&params.env_name)
-            .ok()
-            .and_then(|env| {
-                crate::package_override::resolve_override(env, "framework-arduino-ch32v")
-            });
-        let framework = match __ovr {
-            Some(o) => fbuild_packages::library::Ch32vCores::with_override(&params.project_dir, o),
-            None => fbuild_packages::library::Ch32vCores::new(&params.project_dir),
-        };
         let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("CH32V cores at {}", framework_dir.display());
 
@@ -380,6 +370,27 @@ impl BuildOrchestrator for Ch32vOrchestrator {
 
         Ok(result)
     }
+}
+
+/// The RISC-V GCC toolchain and OpenWCH CH32V cores for an env, honoring the
+/// `framework-arduino-ch32v` `platform_packages` override (FastLED/fbuild#664,
+/// #681). Shared by the build and `fbuild install`, so both provision the same
+/// packages (FastLED/fbuild#1433).
+pub(crate) fn ch32v_packages(
+    project_dir: &Path,
+    env_config: Option<&std::collections::HashMap<String, String>>,
+) -> (
+    fbuild_packages::toolchain::RiscvToolchain,
+    fbuild_packages::library::Ch32vCores,
+) {
+    let toolchain = fbuild_packages::toolchain::RiscvToolchain::new(project_dir);
+    let override_pin = env_config
+        .and_then(|env| crate::package_override::resolve_override(env, "framework-arduino-ch32v"));
+    let cores = match override_pin {
+        Some(o) => fbuild_packages::library::Ch32vCores::with_override(project_dir, o),
+        None => fbuild_packages::library::Ch32vCores::new(project_dir),
+    };
+    (toolchain, cores)
 }
 
 /// Create a CH32V orchestrator (convenience for get_orchestrator dispatch).

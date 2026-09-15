@@ -25,4 +25,5 @@ here and is dispatched from `cli::async_main`.
 - **`show.rs`** -- `run_show`, `show_daemon_logs`
 - **`reset.rs`** -- `run_reset`
 - **`lnk.rs`** -- `run_lnk` (pull / check / add)
+- **`install.rs`** -- `run_install`: in-process `fbuild install` over `fbuild_build::provision_env`, text / JSON rendering, `--check` exit codes (FastLED/fbuild#1433)
 - **`tests.rs`** -- unit tests for argument normalization and `fbuild ci` parsing

@@ -83,43 +83,53 @@ pub async fn install_deps(
         .or_else(|| config.get_default_environment().map(|s| s.to_string()))
         .unwrap_or_else(|| "default".to_string());
 
-    let env_config = match config.get_env_config(&env_name) {
-        Ok(c) => c,
-        Err(e) => {
-            return (
-                StatusCode::BAD_REQUEST,
-                Json(OperationResponse::fail(
-                    request_id,
-                    format!("invalid environment '{}': {}", env_name, e),
-                )),
-            );
-        }
-    };
+    if let Err(e) = config.get_env_config(&env_name) {
+        return (
+            StatusCode::BAD_REQUEST,
+            Json(OperationResponse::fail(
+                request_id,
+                format!("invalid environment '{}': {}", env_name, e),
+            )),
+        );
+    }
 
-    let platform_str = env_config.get("platform").cloned().unwrap_or_default();
-    let platform = match fbuild_core::Platform::from_platform_str(&platform_str) {
-        Some(p) => p,
-        None => {
-            return (
-                StatusCode::BAD_REQUEST,
-                Json(OperationResponse::fail(
-                    request_id,
-                    format!("unsupported platform: {}", platform_str),
-                )),
-            );
-        }
-    };
-
-    // Install dependencies via the package manager
-    let env_label = env_name.clone();
-    let result = fbuild_build::install_platform_deps(platform, &project_dir).await;
+    // Provision everything the env's build downloads — the same set
+    // `fbuild install` reports (FastLED/fbuild#1433).
+    let result = fbuild_build::provision_env(
+        &project_dir,
+        &env_name,
+        fbuild_build::provision::ProvisionMode::Install,
+    )
+    .await;
 
     match result {
-        Ok(()) => (
+        Ok(report) if report.failed() => {
+            let failures = report
+                .packages
+                .iter()
+                .filter(|p| p.status == fbuild_build::provision::ProvisionStatus::Failed)
+                .map(|p| {
+                    format!(
+                        "{}: {}",
+                        p.name,
+                        p.error.as_deref().unwrap_or("unknown error")
+                    )
+                })
+                .collect::<Vec<_>>()
+                .join("; ");
+            (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(OperationResponse::fail(
+                    request_id,
+                    format!("install-deps error: {failures}"),
+                )),
+            )
+        }
+        Ok(_) => (
             StatusCode::OK,
             Json(OperationResponse::ok(
                 request_id,
-                format!("Dependencies installed for environment '{}'", env_label),
+                format!("Dependencies installed for environment '{}'", env_name),
             )),
         ),
         Err(e) => (

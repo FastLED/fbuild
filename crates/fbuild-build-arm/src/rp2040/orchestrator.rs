@@ -65,6 +65,30 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
     }
 }
 
+/// RP2040's arduino-pico-matched pqt-gcc toolchain, managed picotool and
+/// arduino-pico cores for an env, honoring the `framework-arduinopico`
+/// `platform_packages` override (FastLED/fbuild#664, #681). Shared by the
+/// build and `fbuild install`, so both provision the same packages
+/// (FastLED/fbuild#1433).
+pub(crate) fn rp2040_packages(
+    project_dir: &Path,
+    env_config: Option<&HashMap<String, String>>,
+) -> (
+    fbuild_packages::toolchain::Rp2040PqtToolchain,
+    fbuild_packages::toolchain::Rp2040Picotool,
+    fbuild_packages::library::Rp2040Cores,
+) {
+    let toolchain = fbuild_packages::toolchain::Rp2040PqtToolchain::new(project_dir);
+    let picotool = fbuild_packages::toolchain::Rp2040Picotool::new(project_dir);
+    let override_pin = env_config
+        .and_then(|env| crate::package_override::resolve_override(env, "framework-arduinopico"));
+    let cores = match override_pin {
+        Some(o) => fbuild_packages::library::Rp2040Cores::with_override(project_dir, o),
+        None => fbuild_packages::library::Rp2040Cores::new(project_dir),
+    };
+    (toolchain, picotool, cores)
+}
+
 #[async_trait::async_trait]
 impl BuildOrchestrator for Rp2040Orchestrator {
     fn platform(&self) -> Platform {
@@ -82,15 +106,18 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         let eh_frame_policy =
             crate::eh_frame_policy_compute::compute_eh_frame_policy(&ctx, params.profile, None);
 
+        let (toolchain, picotool, framework) = rp2040_packages(
+            &params.project_dir,
+            ctx.config.get_env_config(&params.env_name).ok(),
+        );
+
         // 3. Ensure the arduino-pico-matched pqt-gcc toolchain
-        let toolchain = fbuild_packages::toolchain::Rp2040PqtToolchain::new(&params.project_dir);
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("rp2040 pqt-gcc toolchain at {}", toolchain_dir.display());
 
         // Arduino-Pico generates its canonical UF2 from the linked ELF with
         // the managed pqt-picotool package. Do the same here rather than
         // flattening ELF segments in an fbuild-specific encoder.
-        let picotool = fbuild_packages::toolchain::Rp2040Picotool::new(&params.project_dir);
         let picotool_dir = fbuild_packages::Package::ensure_installed(&picotool).await?;
         tracing::info!("managed picotool at {}", picotool_dir.display());
 
@@ -103,18 +130,6 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         .await;
 
         // 4. Ensure RP2040 cores (arduino-pico by earlephilhower)
-        // Honor `platform_packages` override (FastLED/fbuild#664, #681).
-        let __ovr = ctx
-            .config
-            .get_env_config(&params.env_name)
-            .ok()
-            .and_then(|env| {
-                crate::package_override::resolve_override(env, "framework-arduinopico")
-            });
-        let framework = match __ovr {
-            Some(o) => fbuild_packages::library::Rp2040Cores::with_override(&params.project_dir, o),
-            None => fbuild_packages::library::Rp2040Cores::new(&params.project_dir),
-        };
         let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("RP2040 cores at {}", framework_dir.display());
         let board_id = ctx

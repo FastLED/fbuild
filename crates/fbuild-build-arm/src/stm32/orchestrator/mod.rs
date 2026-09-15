@@ -59,6 +59,54 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
     }
 }
 
+/// The Arduino core an STM32 board builds against.
+// Built once per build or provision and consumed immediately, so the size gap
+// between variants never multiplies; boxing would only add indirection.
+#[allow(clippy::large_enum_variant)]
+pub(crate) enum Stm32Core {
+    /// STM32duino cores plus the CMSIS Core headers they do not bundle.
+    Stm32duino {
+        cores: fbuild_packages::library::Stm32Cores,
+        cmsis: fbuild_packages::library::CmsisFramework,
+    },
+    /// Arduino's prebuilt mbed core for GIGA, PORTENTA, ... variants.
+    ArduinoMbed(fbuild_packages::library::ArduinoMbedCore),
+}
+
+/// STM32's ARM GCC toolchain and Arduino core for an env: the Arduino mbed
+/// core for mbed variants, otherwise STM32duino + CMSIS. Honors the
+/// `framework-arduino-mbed` / `framework-arduinoststm32` `platform_packages`
+/// overrides (FastLED/fbuild#664, #681). Shared by the build and `fbuild
+/// install`, so both provision the same packages (FastLED/fbuild#1433).
+pub(crate) fn stm32_packages(
+    project_dir: &Path,
+    env_config: Option<&std::collections::HashMap<String, String>>,
+    board: &fbuild_config::BoardConfig,
+) -> (fbuild_packages::toolchain::ArmToolchain, Stm32Core) {
+    let toolchain = fbuild_packages::toolchain::ArmToolchain::new(project_dir);
+    let core = if is_arduino_mbed_stm32_variant(&board.variant) {
+        let override_pin = env_config.and_then(|env| {
+            crate::package_override::resolve_override(env, "framework-arduino-mbed")
+        });
+        Stm32Core::ArduinoMbed(match override_pin {
+            Some(o) => fbuild_packages::library::ArduinoMbedCore::with_override(project_dir, o),
+            None => fbuild_packages::library::ArduinoMbedCore::new(project_dir),
+        })
+    } else {
+        let override_pin = env_config.and_then(|env| {
+            crate::package_override::resolve_override(env, "framework-arduinoststm32")
+        });
+        Stm32Core::Stm32duino {
+            cores: match override_pin {
+                Some(o) => fbuild_packages::library::Stm32Cores::with_override(project_dir, o),
+                None => fbuild_packages::library::Stm32Cores::new(project_dir),
+            },
+            cmsis: fbuild_packages::library::CmsisFramework::new(project_dir),
+        }
+    };
+    (toolchain, core)
+}
+
 #[async_trait::async_trait]
 impl BuildOrchestrator for Stm32Orchestrator {
     fn platform(&self) -> Platform {
@@ -75,8 +123,12 @@ impl BuildOrchestrator for Stm32Orchestrator {
         let eh_frame_policy =
             crate::eh_frame_policy_compute::compute_eh_frame_policy(&ctx, params.profile, None);
 
-        // 3. Ensure ARM GCC toolchain
-        let toolchain = fbuild_packages::toolchain::ArmToolchain::new(&params.project_dir);
+        // 3. ARM GCC toolchain and the board's Arduino core
+        let (toolchain, core) = stm32_packages(
+            &params.project_dir,
+            ctx.config.get_env_config(&params.env_name).ok(),
+            &ctx.board,
+        );
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("arm-gcc toolchain at {}", toolchain_dir.display());
 
@@ -87,22 +139,13 @@ impl BuildOrchestrator for Stm32Orchestrator {
         )
         .await;
 
-        if is_arduino_mbed_stm32_variant(&ctx.board.variant) {
-            return build_arduino_mbed_stm32(params, ctx, &toolchain, start).await;
-        }
-
-        // 4. Ensure STM32duino cores
-        // Honor `platform_packages` override (FastLED/fbuild#664, #681).
-        let __ovr = ctx
-            .config
-            .get_env_config(&params.env_name)
-            .ok()
-            .and_then(|env| {
-                crate::package_override::resolve_override(env, "framework-arduinoststm32")
-            });
-        let framework = match __ovr {
-            Some(o) => fbuild_packages::library::Stm32Cores::with_override(&params.project_dir, o),
-            None => fbuild_packages::library::Stm32Cores::new(&params.project_dir),
+        // 4. Ensure STM32duino cores (CMSIS is installed later, once include
+        // discovery needs it).
+        let (framework, cmsis) = match core {
+            Stm32Core::ArduinoMbed(framework) => {
+                return build_arduino_mbed_stm32(params, ctx, &toolchain, framework, start).await;
+            }
+            Stm32Core::Stm32duino { cores, cmsis } => (cores, cmsis),
         };
         let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("STM32 cores at {}", framework_dir.display());
@@ -344,7 +387,6 @@ impl BuildOrchestrator for Stm32Orchestrator {
         add_stm32_system_includes(&system_dir, family, &mut include_dirs);
 
         // CMSIS Core includes (core_cm3.h, core_cm4.h, etc.) â€” not bundled in STM32duino
-        let cmsis = fbuild_packages::library::CmsisFramework::new(&params.project_dir);
         let _cmsis_dir = fbuild_packages::Package::ensure_installed(&cmsis).await?;
         tracing::info!("CMSIS framework installed");
         include_dirs.push(cmsis.get_core_include_dir());
