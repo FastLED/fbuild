@@ -47,6 +47,26 @@ Keep the action's built-in cache for `FBUILD_CACHE_DIR`, then add a second cache
 
 Use `steps.<id>.outputs.zccache-store-path` inside workflow expressions such as `path:`. Use `ZCCACHE_DIR` in later shell steps when you need the resolved directory at runtime.
 
+### Split caches for large board matrices (FastLED/fbuild#1433)
+
+A single `FBUILD_CACHE_DIR` entry per board mixes packages every board shares with build payloads only that board uses. With cross-board `restore-keys`, each board's entry also inherits whatever toolchains the previous board had, so entries grow to 1–2 GB and a large matrix evicts itself from the repository's 10 GB cache budget. `cache-mode: split` keeps the two apart:
+
+```yaml
+- uses: FastLED/fbuild/.github/actions/setup@main
+  with:
+    cache-mode: split
+    environments: ${{ matrix.board }}
+    cache-key-extra: ${{ hashFiles('platformio.ini') }}
+    # Pull requests restore main's entries but add none of their own.
+    save: ${{ github.event_name != 'pull_request' }}
+- run: fbuild build examples/Blink -e ${{ matrix.board }}
+```
+
+- **Packages cache**, shared per platform family: the `toolchains`, `platforms`, `packages`, `libraries`, `archives`, `installed` and `index.sqlite` slices. It is restored by the family prefix `fbuild-pkgs-<cache-version>-<os>-<arch>-<family>-`, then `fbuild install` runs as its own step and the cache is saved under that prefix plus the `packages_hash` from `fbuild install --json`. An unchanged package set maps to an existing key, so nothing new is written.
+- **Build-payload cache**, per board: `core/`, `framework-libs/`, `library-selection/` and the zccache store, keyed by fbuild hash, board and `cache-key-extra`, with no fallback across boards. It is saved at the end of the job.
+
+Builds print one line per framework core cache and framework-libs cache hydrate and store (`framework core cache: hit …`, `framework-libs cache: miss`), so the CI log shows whether a restored payload was used.
+
 ### Raw snippet (if you don't want the action dependency)
 
 If you skip the composite action, you MUST still bake the fbuild content hash into the cache key - see [Cache-key strategy](#cache-key-strategy) below for why. Minimal version:
@@ -92,6 +112,8 @@ Adjust `hashFiles(...)` inputs to whatever files actually change the build graph
 | `~/.fbuild/prod/cache/archives/` | Downloaded toolchain + framework + library tarballs (pre-extract) | **Yes** |
 | `~/.fbuild/prod/cache/installed/` | Extracted, usable toolchains, frameworks, libraries | **Yes** |
 | `~/.fbuild/prod/cache/index.sqlite` | LRU index that pairs entries to URLs/versions | **Yes** (must match archives + installed) |
+| `~/.fbuild/prod/cache/{toolchains,platforms,packages,libraries}/` | Installed toolchains, platform packages, frameworks and libraries | **Yes** (the packages cache in split mode) |
+| `~/.fbuild/prod/cache/{core,framework-libs,library-selection}/` | Reusable framework core objects, ESP32 framework library archives, library-selection results | **Yes, per board** (the build-payload cache in split mode) |
 | `$ZCCACHE_DIR` | zccache object store for compiled translation units | **Yes, if you want cross-run zccache hits** |
 | `<project>/.fbuild/build/` | Per-project build outputs (object files, archives, compile DB, firmware) | **Yes** (the warm-build fast path depends on this) |
 | `~/.fbuild/prod/daemon/` | Daemon PID, port, log, status - **ephemeral runtime state** | **No** |
@@ -192,9 +214,10 @@ Matrix jobs sharing one `actions/cache` key will each read the same restore atom
 
 As of this doc:
 
-- `fbuild cache export <tarball>` / `fbuild cache import <tarball>`: **not implemented**. `actions/cache@v5` handles archive+extract. A native helper would only be needed for non-GHA CI systems.
+- `fbuild cache save|restore|list|verify` (FastLED/fbuild#527): **implemented**. Packs cache slices into one zstd `.tar.zst` with a manifest of per-slice file counts, sizes and content hashes. The default slices are the packages; `core`, `framework-libs`, `library-selection` and `zccache` are opt-in with `--include`, which is how a per-board build payload is archived separately. Useful on CI systems without `actions/cache`; the setup action still uses `actions/cache@v5`.
+- `fbuild install -e <env> [--check] [--json]` (FastLED/fbuild#1433): **implemented**. Provisions an env's packages without compiling and reports each one; `--check` exits 2 when anything is missing and never touches the network, and `--json` reports the `packages_hash` the split setup mode keys its packages cache on.
 - `fbuild cache pin <entry>`: **not implemented**. LRU eviction is based on recency; if you need to guarantee a toolchain never evicts on a shared cache, file a follow-up.
-- `fbuild cache stats`: yes - `DiskCache::stats()` exposes size and entry counts. Useful for CI debug output.
+- `fbuild cache stats`: **not implemented** as a subcommand. `fbuild daemon cache-stats` reports the daemon's view, and `DiskCache::stats()` exposes size and entry counts to code.
 
 ## Worked example: FastLED's matrix
 
@@ -230,10 +253,10 @@ steps:
   - name: Build
     run: fbuild build examples/Blink -e ${{ matrix.board }}
 
-  - name: Print cache stats
+  - name: Confirm packages are still installed
     run: |
       echo "zccache store: $ZCCACHE_DIR"
-      fbuild cache stats
+      fbuild install examples/Blink -e ${{ matrix.board }} --check
     shell: bash
     if: always()
 ```

@@ -18,6 +18,26 @@ inputs:
     description: "Whether to save/restore the fbuild cache via actions/cache. Set to 'false' to skip caching (install only)."
     required: false
     default: "true"
+  cache-mode:
+    description: "'combined' (default) keeps one FBUILD_CACHE_DIR entry per key. 'split' restores a packages cache shared per platform family plus a per-board build-payload cache, and runs `fbuild install` as its own step (FastLED/fbuild#1433). 'split' needs `environments` and an fbuild release with `fbuild install`."
+    required: false
+    default: "combined"
+  save:
+    description: "Whether to save caches. 'false' only restores; use it on pull requests so PR runs don't add entries of their own to the repository's cache budget."
+    required: false
+    default: "true"
+  project-dir:
+    description: "Project directory passed to `fbuild install` in split mode."
+    required: false
+    default: "."
+  environments:
+    description: "Space-separated environments to provision with `fbuild install` in split mode."
+    required: false
+    default: ""
+  board:
+    description: "Name for the per-board build-payload cache key in split mode. Defaults to `environments` joined with '_'."
+    required: false
+    default: ""
   cache-key-extra:
     description: "Extra string baked into the cache key. Typically hashFiles('platformio.ini', ...) so graph-input changes invalidate stale artifacts."
     required: false
@@ -37,8 +57,8 @@ inputs:
 
 outputs:
   cache-hit:
-    description: "true if the fbuild cache was restored from a previous run, false on miss."
-    value: ${{ steps.fbuild-cache.outputs.cache-hit }}
+    description: "Combined mode: true if the fbuild cache was restored from an exact key match, false otherwise."
+    value: ${{ steps.fbuild-cache.outputs.cache-hit || steps.fbuild-cache-restore-only.outputs.cache-hit }}
   cache-dir:
     description: "Resolved cache directory path (useful for diagnostic steps)."
     value: ${{ steps.resolve-paths.outputs.cache-dir }}
@@ -48,6 +68,18 @@ outputs:
   fbuild-hash:
     description: "sha256 prefix of the installed fbuild wheel's RECORD file. Baked into the cache key so an fbuild upgrade invalidates stale artifacts."
     value: ${{ steps.fbuild-hash.outputs.fbuild-hash }}
+  platform-family:
+    description: "Split mode: the platform family (e.g. 'espressif32') the packages cache is shared across."
+    value: ${{ steps.split-plan.outputs.family }}
+  packages-hash:
+    description: "Split mode: `packages_hash` reported by `fbuild install --json` for the provisioned environments."
+    value: ${{ steps.split-install.outputs.packages-hash }}
+  packages-cache-hit:
+    description: "Split mode: the packages cache key that was restored, or empty on a miss."
+    value: ${{ steps.packages-restore.outputs.cache-matched-key }}
+  build-cache-hit:
+    description: "Split mode: true if the per-board build-payload cache was restored from an exact key match."
+    value: ${{ steps.build-cache.outputs.cache-hit || steps.build-cache-restore-only.outputs.cache-hit }}
 
 runs:
   using: "composite"
@@ -177,8 +209,10 @@ runs:
         echo "fbuild-hash=${FBUILD_HASH}" >> "$GITHUB_OUTPUT"
         echo "Resolved fbuild content hash: ${FBUILD_HASH}"
 
+    # ── Combined mode (default): one FBUILD_CACHE_DIR entry per key ─────────
+
     - name: Restore fbuild cache
-      if: ${{ inputs.cache == 'true' }}
+      if: ${{ inputs.cache == 'true' && inputs.cache-mode != 'split' && inputs.save == 'true' }}
       id: fbuild-cache
       uses: actions/cache@v5
       with:
@@ -187,3 +221,130 @@ runs:
         restore-keys: |
           fbuild-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.fbuild-hash }}-
           fbuild-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-
+
+    - name: Restore fbuild cache (no save)
+      if: ${{ inputs.cache == 'true' && inputs.cache-mode != 'split' && inputs.save != 'true' }}
+      id: fbuild-cache-restore-only
+      uses: actions/cache/restore@v5
+      with:
+        path: ${{ steps.resolve-paths.outputs.cache-dir }}
+        key: fbuild-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.fbuild-hash }}-${{ inputs.cache-key-extra }}
+        restore-keys: |
+          fbuild-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.fbuild-hash }}-
+          fbuild-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-
+
+    # ── Split mode (FastLED/fbuild#1433) ───────────────────────────────────
+    # Packages (toolchains, platforms, frameworks, libraries) are shared per
+    # platform family and saved as soon as `fbuild install` finishes: they do
+    # not change during the build. Build payloads (core objects, framework
+    # library archives, library selection, the zccache store) are per board
+    # and saved at the end of the job. Neither falls back across boards, so a
+    # board's entry never grows into an all-toolchain blob.
+
+    - name: Plan split fbuild caches
+      if: ${{ inputs.cache == 'true' && inputs.cache-mode == 'split' }}
+      id: split-plan
+      shell: bash
+      env:
+        FBUILD_PROJECT_DIR: ${{ inputs.project-dir }}
+        FBUILD_ENVIRONMENTS: ${{ inputs.environments }}
+        FBUILD_BOARD: ${{ inputs.board }}
+      run: |
+        set -euo pipefail
+        read -r -a envs <<< "$FBUILD_ENVIRONMENTS"
+        if [ "${#envs[@]}" -eq 0 ]; then
+          echo "::error::cache-mode: split needs the 'environments' input" >&2
+          exit 1
+        fi
+        env_args=()
+        for env in "${envs[@]}"; do env_args+=(-e "$env"); done
+        # A dry run resolves the package set without touching the network;
+        # it names each env's platform before anything is restored.
+        plan="${RUNNER_TEMP}/fbuild-install-plan.json"
+        fbuild install "$FBUILD_PROJECT_DIR" "${env_args[@]}" --dry-run --json > "$plan"
+        family=$(python -c 'import json,sys; print("-".join(sorted({e["platform"].lower() for e in json.load(open(sys.argv[1]))["environments"]})))' "$plan")
+        board="${FBUILD_BOARD:-$(IFS=_; echo "${envs[*]}")}"
+        echo "family=${family}" >> "$GITHUB_OUTPUT"
+        echo "board=${board}" >> "$GITHUB_OUTPUT"
+        echo "Platform family: ${family}; board payload key: ${board}"
+
+    - name: Restore fbuild packages cache
+      if: ${{ inputs.cache == 'true' && inputs.cache-mode == 'split' }}
+      id: packages-restore
+      uses: actions/cache/restore@v5
+      with:
+        path: |
+          ${{ steps.resolve-paths.outputs.cache-dir }}/toolchains
+          ${{ steps.resolve-paths.outputs.cache-dir }}/platforms
+          ${{ steps.resolve-paths.outputs.cache-dir }}/packages
+          ${{ steps.resolve-paths.outputs.cache-dir }}/libraries
+          ${{ steps.resolve-paths.outputs.cache-dir }}/archives
+          ${{ steps.resolve-paths.outputs.cache-dir }}/installed
+          ${{ steps.resolve-paths.outputs.cache-dir }}/index.sqlite
+        # Saved keys end in the packages_hash, which is unknown until install
+        # runs; restore the newest entry for this platform family by prefix.
+        key: fbuild-pkgs-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.split-plan.outputs.family }}-restore
+        restore-keys: |
+          fbuild-pkgs-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.split-plan.outputs.family }}-
+
+    - name: Install fbuild packages
+      if: ${{ inputs.cache == 'true' && inputs.cache-mode == 'split' }}
+      id: split-install
+      shell: bash
+      env:
+        FBUILD_PROJECT_DIR: ${{ inputs.project-dir }}
+        FBUILD_ENVIRONMENTS: ${{ inputs.environments }}
+        FBUILD_PACKAGES_KEY_PREFIX: fbuild-pkgs-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.split-plan.outputs.family }}-
+      run: |
+        set -euo pipefail
+        read -r -a envs <<< "$FBUILD_ENVIRONMENTS"
+        env_args=()
+        for env in "${envs[@]}"; do env_args+=(-e "$env"); done
+        manifest="${RUNNER_TEMP}/fbuild-install.json"
+        fbuild install "$FBUILD_PROJECT_DIR" "${env_args[@]}" --json > "$manifest"
+        cat "$manifest"
+        hash=$(python -c 'import json,sys; print(json.load(open(sys.argv[1]))["packages_hash"])' "$manifest")
+        echo "packages-hash=${hash}" >> "$GITHUB_OUTPUT"
+        echo "packages-key=${FBUILD_PACKAGES_KEY_PREFIX}${hash}" >> "$GITHUB_OUTPUT"
+
+    - name: Save fbuild packages cache
+      if: ${{ inputs.cache == 'true' && inputs.cache-mode == 'split' && inputs.save == 'true' && steps.packages-restore.outputs.cache-matched-key != steps.split-install.outputs.packages-key }}
+      uses: actions/cache/save@v5
+      with:
+        path: |
+          ${{ steps.resolve-paths.outputs.cache-dir }}/toolchains
+          ${{ steps.resolve-paths.outputs.cache-dir }}/platforms
+          ${{ steps.resolve-paths.outputs.cache-dir }}/packages
+          ${{ steps.resolve-paths.outputs.cache-dir }}/libraries
+          ${{ steps.resolve-paths.outputs.cache-dir }}/archives
+          ${{ steps.resolve-paths.outputs.cache-dir }}/installed
+          ${{ steps.resolve-paths.outputs.cache-dir }}/index.sqlite
+        key: ${{ steps.split-install.outputs.packages-key }}
+
+    - name: Restore fbuild build-payload cache
+      if: ${{ inputs.cache == 'true' && inputs.cache-mode == 'split' && inputs.save == 'true' }}
+      id: build-cache
+      uses: actions/cache@v5
+      with:
+        path: |
+          ${{ steps.resolve-paths.outputs.cache-dir }}/core
+          ${{ steps.resolve-paths.outputs.cache-dir }}/framework-libs
+          ${{ steps.resolve-paths.outputs.cache-dir }}/library-selection
+          ${{ steps.resolve-paths.outputs.zccache-store-path }}
+        key: fbuild-build-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.fbuild-hash }}-${{ steps.split-plan.outputs.board }}-${{ inputs.cache-key-extra }}
+        restore-keys: |
+          fbuild-build-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.fbuild-hash }}-${{ steps.split-plan.outputs.board }}-
+
+    - name: Restore fbuild build-payload cache (no save)
+      if: ${{ inputs.cache == 'true' && inputs.cache-mode == 'split' && inputs.save != 'true' }}
+      id: build-cache-restore-only
+      uses: actions/cache/restore@v5
+      with:
+        path: |
+          ${{ steps.resolve-paths.outputs.cache-dir }}/core
+          ${{ steps.resolve-paths.outputs.cache-dir }}/framework-libs
+          ${{ steps.resolve-paths.outputs.cache-dir }}/library-selection
+          ${{ steps.resolve-paths.outputs.zccache-store-path }}
+        key: fbuild-build-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.fbuild-hash }}-${{ steps.split-plan.outputs.board }}-${{ inputs.cache-key-extra }}
+        restore-keys: |
+          fbuild-build-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.fbuild-hash }}-${{ steps.split-plan.outputs.board }}-
