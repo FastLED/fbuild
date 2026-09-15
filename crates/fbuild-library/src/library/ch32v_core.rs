@@ -10,6 +10,15 @@ use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 const CH32V_CORE_VERSION: &str = "1.0.4+d767162.ch32l103";
 const CH32V_CORE_URL: &str = "https://github.com/openwch/arduino_core_ch32/archive/d76716239cdf8a084a5045c3dfd3151b3f69eeec.tar.gz";
 
+// The core declares `libraries/Adafruit_TinyUSB_Arduino` as a submodule, and
+// GitHub's source archive ships it empty, which the unpack-time check (#1401)
+// rejects. openwch publishes no archive that bundles it, and the pin above
+// postdates every release, so the submodule is fetched on its own at the
+// commit the core's gitlink records (FastLED/fbuild#1420).
+const TINYUSB_SUBMODULE_PATH: &str = "libraries/Adafruit_TinyUSB_Arduino";
+const TINYUSB_URL: &str = "https://github.com/adafruit/Adafruit_TinyUSB_Arduino/archive/1f9da4918f2c05441a9bfc3866a5b9cc03f2da62.tar.gz";
+const TINYUSB_SHA256: &str = "e9ddbe3ac62adc402b33c1015bac0825c0b0bd1bad9a9e13d89183623b164080";
+
 /// OpenWCH CH32V Arduino core framework manager.
 pub struct Ch32vCores {
     base: PackageBase,
@@ -27,7 +36,8 @@ impl Ch32vCores {
                 None,
                 CacheSubdir::Platforms,
                 project_dir,
-            ),
+            )
+            .with_submodule_source(TINYUSB_SUBMODULE_PATH, TINYUSB_URL, TINYUSB_SHA256),
             install_dir: None,
         }
     }
@@ -64,7 +74,8 @@ impl Ch32vCores {
                 CacheSubdir::Platforms,
                 project_dir,
                 cache_root,
-            ),
+            )
+            .with_submodule_source(TINYUSB_SUBMODULE_PATH, TINYUSB_URL, TINYUSB_SHA256),
             install_dir: None,
         }
     }
@@ -212,6 +223,17 @@ mod tests {
         let nested = tmp.path().join("arduino_core_ch32-1.0.4");
         std::fs::create_dir_all(nested.join("cores/openwch")).unwrap();
         assert_eq!(find_core_root(tmp.path()), nested);
+    }
+
+    /// The TinyUSB pin must stay on the path the core's `.gitmodules` declares
+    /// and the commit its gitlink records at `d767162`. Moving the core pin
+    /// means re-reading both from the new commit, not keeping these.
+    #[test]
+    fn test_tinyusb_pin_matches_the_core_gitlink() {
+        assert!(CH32V_CORE_URL.contains("d76716239cdf8a084a5045c3dfd3151b3f69eeec"));
+        assert_eq!(TINYUSB_SUBMODULE_PATH, "libraries/Adafruit_TinyUSB_Arduino");
+        assert!(TINYUSB_URL.contains("/archive/1f9da4918f2c05441a9bfc3866a5b9cc03f2da62."));
+        assert_eq!(TINYUSB_SHA256.len(), 64);
     }
 
     #[test]
