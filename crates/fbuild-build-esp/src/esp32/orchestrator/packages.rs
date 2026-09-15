@@ -564,11 +564,32 @@ async fn provision_sdk_libs(
 
 /// The esptool row, or `None` when `platform.json` names no esptool (the build
 /// then relies on an `esptool` on PATH).
+///
+/// `FBUILD_ESPTOOL_PATH` is checked first, as `resolve_esptool` does: a valid
+/// override is the tool, and an invalid one fails the build before any
+/// metadata is read.
 async fn provision_esptool(
     platform: &fbuild_packages::library::Esp32Platform,
     project_dir: &Path,
     mode: ProvisionMode,
 ) -> Option<ProvisionedPackage> {
+    let override_row =
+        |status| ProvisionedPackage::new(PackageKind::Tool, "tool-esptoolpy", status);
+    match fbuild_packages::library::esptool_path_override() {
+        Ok(Some(path)) => {
+            return Some(ProvisionedPackage {
+                install_path: Some(path.display().to_string()),
+                ..override_row(ProvisionStatus::Present)
+            });
+        }
+        Err(error) => {
+            return Some(ProvisionedPackage {
+                error: Some(error.to_string()),
+                ..override_row(ProvisionStatus::Failed)
+            });
+        }
+        Ok(None) => {}
+    }
     let metadata_url = platform.get_package_url("tool-esptoolpy").ok()?;
     let esptool = fbuild_packages::library::Esptool::from_metadata_url(project_dir, &metadata_url);
     let started = Instant::now();

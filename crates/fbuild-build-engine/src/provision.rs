@@ -135,18 +135,41 @@ pub async fn provision_package(
     package: &dyn Package,
     mode: ProvisionMode,
 ) -> ProvisionedPackage {
+    provision_with(
+        kind,
+        package.is_installed(),
+        mode,
+        || async { package.ensure_installed().await.map(|_| ()) },
+        || package.get_info(),
+    )
+    .await
+}
+
+/// [`provision_package`] over a package's parts: whether it is installed, how
+/// to install it, and its metadata once that is settled.
+async fn provision_with<Install, Installing>(
+    kind: PackageKind,
+    installed: bool,
+    mode: ProvisionMode,
+    install: Install,
+    info: impl FnOnce() -> fbuild_packages::PackageInfo,
+) -> ProvisionedPackage
+where
+    Install: FnOnce() -> Installing,
+    Installing: std::future::Future<Output = fbuild_core::Result<()>>,
+{
     let started = Instant::now();
-    let (status, error) = if package.is_installed() {
+    let (status, error) = if installed {
         (ProvisionStatus::Present, None)
     } else if !mode.fetches() {
         (ProvisionStatus::WouldFetch, None)
     } else {
-        match package.ensure_installed().await {
-            Ok(_) => (ProvisionStatus::Fetched, None),
+        match install().await {
+            Ok(()) => (ProvisionStatus::Fetched, None),
             Err(error) => (ProvisionStatus::Failed, Some(error.to_string())),
         }
     };
-    let info = package.get_info();
+    let info = info();
     let installed = matches!(status, ProvisionStatus::Present | ProvisionStatus::Fetched);
     ProvisionedPackage {
         kind,
@@ -183,7 +206,11 @@ pub async fn provision_lib_deps(
     let started = Instant::now();
     let present_before: Vec<bool> = specs
         .iter()
-        .map(|spec| spec.local_path.is_some() || library_downloader::is_downloaded(spec, libs_dir))
+        .map(|spec| match &spec.local_path {
+            // Resolved the way the build resolves it: relative to the project.
+            Some(path) => project_dir.join(path.as_path()).is_dir(),
+            None => library_downloader::is_downloaded(spec, libs_dir),
+        })
         .collect();
     let mut rows: Vec<ProvisionedPackage> = specs
         .iter()
@@ -332,46 +359,54 @@ pub fn packages_hash<'a>(packages: impl IntoIterator<Item = &'a ProvisionedPacka
 mod tests {
     use super::*;
     use fbuild_packages::PackageInfo;
-    use std::path::PathBuf;
     use std::sync::atomic::{AtomicBool, Ordering};
 
-    struct FakePackage {
+    /// Stands in for a [`Package`] through [`provision_with`].
+    struct Fake {
         installed: AtomicBool,
         install_fails: bool,
     }
 
-    impl FakePackage {
+    impl Fake {
         fn new(installed: bool, install_fails: bool) -> Self {
             Self {
                 installed: AtomicBool::new(installed),
                 install_fails,
             }
         }
-    }
-
-    #[async_trait::async_trait]
-    impl Package for FakePackage {
-        async fn ensure_installed(&self) -> fbuild_core::Result<PathBuf> {
-            if self.install_fails {
-                return Err(fbuild_core::FbuildError::PackageError("404".into()));
-            }
-            self.installed.store(true, Ordering::SeqCst);
-            Ok(PathBuf::from("/cache/fake"))
-        }
 
         fn is_installed(&self) -> bool {
             self.installed.load(Ordering::SeqCst)
         }
 
-        fn get_info(&self) -> PackageInfo {
+        async fn install(&self) -> fbuild_core::Result<()> {
+            if self.install_fails {
+                return Err(fbuild_core::FbuildError::PackageError("404".into()));
+            }
+            self.installed.store(true, Ordering::SeqCst);
+            Ok(())
+        }
+
+        fn info(&self) -> PackageInfo {
             PackageInfo {
                 name: "toolchain-fake".into(),
                 version: "1.2.3".into(),
                 url: "https://example.com/fake.tar.gz".into(),
-                install_path: PathBuf::from("/cache/fake"),
+                install_path: "/cache/fake".into(),
                 checksum: Some("abc123".into()),
                 installed_bytes: Some(4096),
             }
+        }
+
+        async fn provision(&self, kind: PackageKind, mode: ProvisionMode) -> ProvisionedPackage {
+            provision_with(
+                kind,
+                self.is_installed(),
+                mode,
+                || self.install(),
+                || self.info(),
+            )
+            .await
         }
     }
 
@@ -382,9 +417,9 @@ mod tests {
             ProvisionMode::Check,
             ProvisionMode::DryRun,
         ] {
-            let row =
-                provision_package(PackageKind::Toolchain, &FakePackage::new(true, true), mode)
-                    .await;
+            let row = Fake::new(true, true)
+                .provision(PackageKind::Toolchain, mode)
+                .await;
             assert_eq!(row.status, ProvisionStatus::Present, "{mode:?}");
             assert_eq!(row.bytes, Some(4096));
             assert_eq!(row.sha256.as_deref(), Some("abc123"));
@@ -393,29 +428,32 @@ mod tests {
 
     #[tokio::test]
     async fn missing_package_is_fetched_only_by_install() {
-        let fake = FakePackage::new(false, false);
-        let row = provision_package(PackageKind::Toolchain, &fake, ProvisionMode::Check).await;
+        let fake = Fake::new(false, false);
+        let row = fake
+            .provision(PackageKind::Toolchain, ProvisionMode::Check)
+            .await;
         assert_eq!(row.status, ProvisionStatus::WouldFetch);
         assert_eq!(row.bytes, None);
         assert!(!fake.is_installed(), "a check must not install");
 
-        let row = provision_package(PackageKind::Toolchain, &fake, ProvisionMode::DryRun).await;
+        let row = fake
+            .provision(PackageKind::Toolchain, ProvisionMode::DryRun)
+            .await;
         assert_eq!(row.status, ProvisionStatus::WouldFetch);
         assert!(!fake.is_installed(), "a dry run must not install");
 
-        let row = provision_package(PackageKind::Toolchain, &fake, ProvisionMode::Install).await;
+        let row = fake
+            .provision(PackageKind::Toolchain, ProvisionMode::Install)
+            .await;
         assert_eq!(row.status, ProvisionStatus::Fetched);
         assert!(fake.is_installed());
     }
 
     #[tokio::test]
     async fn failed_install_carries_the_error() {
-        let row = provision_package(
-            PackageKind::Framework,
-            &FakePackage::new(false, true),
-            ProvisionMode::Install,
-        )
-        .await;
+        let row = Fake::new(false, true)
+            .provision(PackageKind::Framework, ProvisionMode::Install)
+            .await;
         assert_eq!(row.status, ProvisionStatus::Failed);
         assert!(row.error.as_deref().unwrap_or("").contains("404"));
     }

@@ -242,7 +242,7 @@ runs:
     # board's entry never grows into an all-toolchain blob.
 
     - name: Plan split fbuild caches
-      if: ${{ inputs.cache == 'true' && inputs.cache-mode == 'split' }}
+      if: ${{ inputs.cache-mode == 'split' }}
       id: split-plan
       shell: bash
       env:
@@ -288,7 +288,7 @@ runs:
           fbuild-pkgs-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.split-plan.outputs.family }}-
 
     - name: Install fbuild packages
-      if: ${{ inputs.cache == 'true' && inputs.cache-mode == 'split' }}
+      if: ${{ inputs.cache-mode == 'split' }}
       id: split-install
       shell: bash
       env:

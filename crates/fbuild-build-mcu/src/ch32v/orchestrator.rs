@@ -399,7 +399,7 @@ pub fn create() -> Box<dyn BuildOrchestrator> {
 }
 
 /// Only the Arduino framework is implemented for CH32V.
-fn validate_ch32v_framework(framework: Option<&str>) -> fbuild_core::Result<()> {
+pub(crate) fn validate_ch32v_framework(framework: Option<&str>) -> fbuild_core::Result<()> {
     match framework.map(str::trim) {
         None | Some("") | Some("arduino") => Ok(()),
         Some(other) => Err(fbuild_core::FbuildError::ConfigError(format!(

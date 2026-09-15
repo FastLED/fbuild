@@ -24,6 +24,10 @@ impl crate::PlatformSupport for Ch32vPlatformSupport {
         mode: crate::provision::ProvisionMode,
     ) -> fbuild_core::Result<Vec<crate::provision::ProvisionedPackage>> {
         use crate::provision::{PackageKind, provision_package};
+        // Reject what the build would reject before downloading for it.
+        orchestrator::validate_ch32v_framework(
+            inputs.env_config.get("framework").map(String::as_str),
+        )?;
         let (toolchain, cores) =
             orchestrator::ch32v_packages(inputs.project_dir, Some(inputs.env_config));
         Ok(vec![

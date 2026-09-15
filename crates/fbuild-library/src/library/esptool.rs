@@ -132,6 +132,11 @@ impl Esptool {
             CacheSubdir::Toolchains,
             self.project_dir.as_path(),
         );
+        // An interrupted install can hold the executable without the
+        // completion sentinel; that is not an install.
+        if !base.is_cached() {
+            return Ok(None);
+        }
         Ok(find_esptool_binary(&base.install_path()))
     }
 
