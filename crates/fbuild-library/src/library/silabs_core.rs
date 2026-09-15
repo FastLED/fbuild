@@ -11,6 +11,15 @@ const SILABS_CORE_VERSION: &str = "2.2.0";
 const SILABS_CORE_URL: &str =
     "https://github.com/SiliconLabs/arduino/archive/refs/tags/2.2.0.tar.gz";
 
+// The core declares `extra/core-api` as a submodule, and the source archive
+// ships it empty. Nothing reads it: `ensure_arduino_api()` installs
+// ArduinoCore-API into `cores/silabs/api` after every install. The release
+// asset that bundles it is 448 MB, so the directory is declared expected-empty
+// instead of fetched (FastLED/fbuild#1421).
+const CORE_API_SUBMODULE_PATH: &str = "extra/core-api";
+const CORE_API_SUBMODULE_REASON: &str =
+    "ArduinoCore-API is installed into cores/silabs/api by ensure_arduino_api()";
+
 /// Silicon Labs Arduino core framework manager.
 pub struct SilabsCores {
     base: PackageBase,
@@ -28,7 +37,8 @@ impl SilabsCores {
                 None,
                 CacheSubdir::Platforms,
                 project_dir,
-            ),
+            )
+            .expect_empty_submodule(CORE_API_SUBMODULE_PATH, CORE_API_SUBMODULE_REASON),
             install_dir: None,
         }
     }
@@ -65,7 +75,8 @@ impl SilabsCores {
                 CacheSubdir::Platforms,
                 project_dir,
                 cache_root,
-            ),
+            )
+            .expect_empty_submodule(CORE_API_SUBMODULE_PATH, CORE_API_SUBMODULE_REASON),
             install_dir: None,
         }
     }
