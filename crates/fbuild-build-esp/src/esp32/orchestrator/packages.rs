@@ -40,6 +40,13 @@ pub(super) async fn resolve_pioarduino_packages(
     // Ensure pioarduino platform (contains platform.json with metadata URLs).
     let platform = pioarduino_platform(project_dir, env_config);
     fbuild_packages::Package::ensure_installed(&platform).await?;
+    let platform = if legacy_toolchain_pin(&platform, env_config, mcu_config.is_riscv()) {
+        let stable = fbuild_packages::library::Esp32Platform::new(project_dir);
+        fbuild_packages::Package::ensure_installed(&stable).await?;
+        stable
+    } else {
+        platform
+    };
 
     // Resolve toolchain via metadata
     let toolchain = resolve_and_create_toolchain(&platform, project_dir, mcu_config)?;
@@ -132,6 +139,19 @@ pub(crate) async fn provision_esp32(
         // Every other package is named by the platform's platform.json.
         return Ok(rows);
     }
+    // Provision what the build will actually use (see `legacy_toolchain_pin`).
+    let platform = if legacy_toolchain_pin(&platform, env_config, mcu_config.is_riscv()) {
+        let stable = fbuild_packages::library::Esp32Platform::new(project_dir);
+        let stable_row = provision_package(PackageKind::Platform, &stable, mode).await;
+        let stable_ready = is_installed(&stable_row);
+        rows.push(stable_row);
+        if !stable_ready {
+            return Ok(rows);
+        }
+        stable
+    } else {
+        platform
+    };
 
     rows.push(provision_toolchain(&platform, project_dir, &mcu_config, mode).await);
 
@@ -253,6 +273,42 @@ async fn ensure_sdk_libs(
         framework.ensure_mcu_libs(url, mcu).await?;
     }
     Ok(())
+}
+
+/// True when an honored `platform` pin predates the unified ESP32 toolchain
+/// and the build must fall back to the pioarduino stable platform.
+///
+/// #1432 started honoring `platform = <release URL>`. Releases before the
+/// unified toolchain (pioarduino 51.x, arduino-esp32 3.0) name per-MCU
+/// registry packages (`toolchain-xtensa-esp32s3@12.2.0+20230208`) that toolchain
+/// resolution cannot read, so it fell through to legacy hardcoded URLs that
+/// 404 and failed the build outright. Until per-MCU registry toolchains are
+/// supported, such a pin warns and builds against stable -- exactly what
+/// every release before #1432 did with it.
+fn legacy_toolchain_pin(
+    platform: &fbuild_packages::library::Esp32Platform,
+    env_config: Option<&HashMap<String, String>>,
+    is_riscv: bool,
+) -> bool {
+    let pinned = env_config
+        .and_then(|env| {
+            crate::package_override::resolve_platform_override(env, "platform-espressif32")
+        })
+        .is_some();
+    if !pinned || platform.has_unified_toolchain(is_riscv) {
+        return false;
+    }
+    let pin = env_config
+        .and_then(|env| env.get("platform"))
+        .map(|p| p.trim())
+        .unwrap_or("the pinned platform");
+    tracing::warn!(
+        "platform pin `{pin}` predates the unified ESP32 toolchain (its platform.json has no \
+         toolchain metadata URL for this MCU) and fbuild cannot provision its per-MCU registry \
+         toolchain yet; building with the pioarduino stable platform instead, as fbuild did \
+         before it honored platform pins"
+    );
+    true
 }
 
 /// Name a `platform` pin fbuild cannot honor instead of dropping it silently
