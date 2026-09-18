@@ -3,7 +3,7 @@
 use super::common::{
     DeployRoute, EmulatorKind, OperationGuard, compute_esp32_image_hash, export_artifacts_bundle,
     infer_default_emulator_kind, parse_deploy_route, qemu_extra_build_flags, resolve_build_dir,
-    resolve_client_path, trust_device_hash_enabled,
+    resolve_client_path, resolve_request_project_dir, trust_device_hash_enabled,
 };
 use super::deploy_port::{append_warning_to_stderr, choose_deploy_port};
 use super::monitor::{MonitorOutcome, run_monitor_loop};
@@ -73,7 +73,7 @@ pub async fn deploy(
         .request_id
         .clone()
         .unwrap_or_else(|| uuid::Uuid::new_v4().to_string());
-    let project_dir = PathBuf::from(&req.project_dir);
+    let project_dir = resolve_request_project_dir(&req.project_dir, req.caller_cwd.as_deref());
 
     if !project_dir.exists() {
         return (
