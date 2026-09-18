@@ -96,6 +96,20 @@ impl Esp32Platform {
         self.get_package_url(package_name)
     }
 
+    /// Whether this platform names the MCU-primary toolchain by a metadata
+    /// URL -- the unified `toolchain-xtensa-esp-elf` / `toolchain-riscv32-esp`
+    /// scheme that toolchain resolution understands.
+    ///
+    /// Older pioarduino releases (e.g. 51.03.04) name per-MCU registry
+    /// packages instead (`toolchain-xtensa-esp32s3@12.2.0+20230208`), and
+    /// their `toolchain-riscv32-esp` entry is a registry version, not a URL.
+    pub fn has_unified_toolchain(&self, is_riscv: bool) -> bool {
+        matches!(
+            self.get_toolchain_metadata_url(is_riscv),
+            Ok(url) if url.starts_with("https://") || url.starts_with("http://")
+        )
+    }
+
     /// Read and parse the `packages` section of `platform.json`.
     ///
     /// Shared between [`Self::get_package_url`] and
@@ -394,5 +408,35 @@ mod tests {
             format!("{err}").contains("no `packages` section"),
             "wrong error: {err}"
         );
+    }
+
+    /// pioarduino `platform-espressif32@51.03.04` (arduino-esp32 3.0) predates
+    /// the unified toolchain: per-MCU registry packages, and a
+    /// `toolchain-riscv32-esp` entry that is a registry version, not a URL.
+    const PIOARDUINO_51_03_04_PACKAGES_FRAGMENT: &str = r#"{
+      "packages": {
+        "toolchain-xtensa-esp32s3": { "type": "toolchain", "owner": "espressif", "version": "12.2.0+20230208" },
+        "toolchain-riscv32-esp": { "type": "toolchain", "owner": "espressif", "version": "12.2.0+20230208" }
+      }
+    }"#;
+
+    #[test]
+    fn test_has_unified_toolchain_for_pioarduino_54_03_20() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        write_platform_json(tmp.path(), PIOARDUINO_54_03_20_PACKAGES_FRAGMENT);
+        let p = platform_with_install_dir(tmp.path());
+        assert!(p.has_unified_toolchain(false));
+        assert!(p.has_unified_toolchain(true));
+    }
+
+    #[test]
+    fn test_no_unified_toolchain_for_legacy_pioarduino_51_03_04() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        write_platform_json(tmp.path(), PIOARDUINO_51_03_04_PACKAGES_FRAGMENT);
+        let p = platform_with_install_dir(tmp.path());
+        // Xtensa: no `toolchain-xtensa-esp-elf` entry at all.
+        assert!(!p.has_unified_toolchain(false));
+        // RISC-V: the entry exists but names a registry version, not a URL.
+        assert!(!p.has_unified_toolchain(true));
     }
 }
