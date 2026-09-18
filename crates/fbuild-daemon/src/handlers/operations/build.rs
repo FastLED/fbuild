@@ -10,7 +10,6 @@ use axum::Json;
 use axum::extract::State;
 use axum::http::StatusCode;
 use fbuild_core::channel::{UnboundedReceiver, UnboundedSender, unbounded};
-use std::path::PathBuf;
 use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
 use tokio::sync::Notify;

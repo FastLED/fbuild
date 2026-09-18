@@ -7,7 +7,6 @@ use crate::models::{InstallDepsRequest, OperationResponse};
 use axum::Json;
 use axum::extract::State;
 use axum::http::StatusCode;
-use std::path::PathBuf;
 use std::sync::Arc;
 
 /// POST /api/install-deps
