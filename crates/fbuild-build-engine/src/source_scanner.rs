@@ -1339,3 +1339,6 @@ fn trim_trailing_spaces(text: &mut String) {
 
 #[cfg(test)]
 mod tests;
+
+#[cfg(test)]
+mod tests_include_hoisting;
