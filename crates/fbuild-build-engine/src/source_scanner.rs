@@ -791,6 +791,8 @@ struct LeadingLine {
     depth: usize,
     /// Part of an `#include` directive.
     is_include: bool,
+    /// A `\`-continuation of the directive on a previous line.
+    is_continuation: bool,
 }
 
 /// The lines before a tab's first line of code -- blank lines, comments and
@@ -811,6 +813,7 @@ fn leading_preprocessor_region(source: &str) -> Vec<LeadingLine> {
                 index,
                 depth: cont_depth,
                 is_include: cont_include,
+                is_continuation: true,
             });
             if !trimmed.ends_with('\\') {
                 continuation = None;
@@ -826,12 +829,14 @@ fn leading_preprocessor_region(source: &str) -> Vec<LeadingLine> {
                 index,
                 depth,
                 is_include: false,
+                is_continuation: false,
             });
         } else if trimmed.is_empty() || trimmed.starts_with("//") {
             lines.push(LeadingLine {
                 index,
                 depth,
                 is_include: false,
+                is_continuation: false,
             });
         } else if let Some(after_open) = trimmed.strip_prefix("/*") {
             match after_open.find("*/") {
@@ -843,6 +848,7 @@ fn leading_preprocessor_region(source: &str) -> Vec<LeadingLine> {
                 index,
                 depth,
                 is_include: false,
+                is_continuation: false,
             });
         } else if let Some(directive) = trimmed.strip_prefix('#') {
             let name: String = directive
@@ -870,6 +876,7 @@ fn leading_preprocessor_region(source: &str) -> Vec<LeadingLine> {
                 index,
                 depth: line_depth,
                 is_include,
+                is_continuation: false,
             });
             if trimmed.ends_with('\\') {
                 continuation = Some((line_depth, is_include));
@@ -928,7 +935,7 @@ fn hoist_leading_preprocessor(contents: &[String]) -> (Vec<String>, Vec<String>)
                 }
                 hoisted.push(line.to_string());
                 moved.insert(leading.index);
-            } else if unconditional_include && !line.trim_end().ends_with('\\') {
+            } else if unconditional_include && !leading.is_continuation && !line.trim_end().ends_with('\\') {
                 if seen_includes.insert(line.trim().to_string()) {
                     hoisted.push(line.trim().to_string());
                 }

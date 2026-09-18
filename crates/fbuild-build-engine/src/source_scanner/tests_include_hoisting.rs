@@ -117,3 +117,24 @@ fn test_later_tab_hoists_only_unconditional_includes() {
     assert_eq!(tab_lines[3], "#include <Audio.h>");
     assert_eq!(tab_lines[4], "#endif");
 }
+
+#[test]
+fn test_later_tab_continued_include_stays_whole() {
+    // A `\`-continued include in a later tab must not be split: hoisting its
+    // final line alone left a bare `<Wire.h>` in the prelude and a dangling
+    // `#include \` in the body.
+    let (_tmp, src_dir, build_dir) = setup_project(&[
+        ("main.ino", "#include <FastLED.h>\nvoid setup() {}\nvoid loop() {}\n"),
+        ("tab.ino", "#include \\\n<Wire.h>\nvoid helper() {}\n"),
+    ]);
+    let scanner = SourceScanner::new(&src_dir, &build_dir);
+    let sources = scanner.scan_sketch_sources().unwrap();
+    let content = fs::read_to_string(&sources[0]).unwrap();
+    let (prelude, rest) = content.split_once("#line 1 \"src/main.ino\"\n").unwrap();
+    let (_, tab_body) = rest.split_once("#line 1 \"src/tab.ino\"\n").unwrap();
+
+    assert!(!prelude.contains("Wire.h"));
+    let tab_lines: Vec<&str> = tab_body.lines().collect();
+    assert_eq!(tab_lines[0], "#include \\");
+    assert_eq!(tab_lines[1], "<Wire.h>");
+}
