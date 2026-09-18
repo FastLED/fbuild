@@ -124,7 +124,10 @@ fn test_later_tab_continued_include_stays_whole() {
     // final line alone left a bare `<Wire.h>` in the prelude and a dangling
     // `#include \` in the body.
     let (_tmp, src_dir, build_dir) = setup_project(&[
-        ("main.ino", "#include <FastLED.h>\nvoid setup() {}\nvoid loop() {}\n"),
+        (
+            "main.ino",
+            "#include <FastLED.h>\nvoid setup() {}\nvoid loop() {}\n",
+        ),
         ("tab.ino", "#include \\\n<Wire.h>\nvoid helper() {}\n"),
     ]);
     let scanner = SourceScanner::new(&src_dir, &build_dir);

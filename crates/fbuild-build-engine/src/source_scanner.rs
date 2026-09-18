@@ -935,7 +935,10 @@ fn hoist_leading_preprocessor(contents: &[String]) -> (Vec<String>, Vec<String>)
                 }
                 hoisted.push(line.to_string());
                 moved.insert(leading.index);
-            } else if unconditional_include && !leading.is_continuation && !line.trim_end().ends_with('\\') {
+            } else if unconditional_include
+                && !leading.is_continuation
+                && !line.trim_end().ends_with('\\')
+            {
                 if seen_includes.insert(line.trim().to_string()) {
                     hoisted.push(line.trim().to_string());
                 }
