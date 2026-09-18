@@ -349,17 +349,14 @@ impl SourceScanner {
             })
             .collect::<fbuild_core::Result<Vec<_>>>()?;
 
-        // Hoist every tab's `#include` directives into the prelude so that
+        // Hoist each tab's leading preprocessor lines into the prelude so that
         // auto-generated prototypes can reference types from library headers
         // (FastLED/fbuild#1275 — arduino-cli places prototypes *after* the
-        // include block for exactly this reason).  Replace each hoisted
-        // `#include` line with a blank line in the body to preserve line
-        // numbering for diagnostics.
-        let sketch_includes = hoist_include_directives(&contents);
-        let stripped_contents: Vec<String> = contents
-            .iter()
-            .map(|c| strip_include_directives(c))
-            .collect();
+        // include block for exactly this reason), without lifting an
+        // `#include` out of its `#if` (FastLED/fbuild#1440). Hoisted lines
+        // become blank lines in the body to preserve line numbering for
+        // diagnostics.
+        let (sketch_includes, stripped_contents) = hoist_leading_preprocessor(&contents);
 
         // Prototype extraction needs to see every tab's code, so it operates
         // on the plain concatenation (no #line noise).  We feed it the
@@ -787,44 +784,166 @@ fn walk_sources(dir: &Path) -> Vec<PathBuf> {
     files
 }
 
-/// Extract every `#include` directive across all tabs, deduplicated and in
-/// first-seen order, for hoisting into the prelude (FastLED/fbuild#1275).
-fn hoist_include_directives(contents: &[String]) -> Vec<String> {
-    let mut seen = HashSet::new();
-    let mut includes = Vec::new();
-    for content in contents {
-        for line in content.lines() {
-            let trimmed = line.trim();
-            if is_include_directive(trimmed) {
-                let normalized = trimmed.to_string();
-                if seen.insert(normalized.clone()) {
-                    includes.push(normalized);
-                }
+/// One line of a tab's leading preprocessor region.
+struct LeadingLine {
+    index: usize,
+    /// `#if` nesting depth the line sits at (0 = unconditional).
+    depth: usize,
+    /// Part of an `#include` directive.
+    is_include: bool,
+}
+
+/// The lines before a tab's first line of code -- blank lines, comments and
+/// preprocessor directives (with `\` continuations) -- cut back to the last
+/// point where `#if` nesting is closed, so a region never ends inside a
+/// conditional block.
+fn leading_preprocessor_region(source: &str) -> Vec<LeadingLine> {
+    let mut lines = Vec::new();
+    let mut depth = 0usize;
+    let mut in_block_comment = false;
+    let mut continuation: Option<(usize, bool)> = None;
+    let mut boundary = 0usize;
+
+    for (index, line) in source.lines().enumerate() {
+        let trimmed = line.trim();
+        if let Some((cont_depth, cont_include)) = continuation {
+            lines.push(LeadingLine {
+                index,
+                depth: cont_depth,
+                is_include: cont_include,
+            });
+            if !trimmed.ends_with('\\') {
+                continuation = None;
             }
+        } else if in_block_comment {
+            if let Some(end) = trimmed.find("*/") {
+                if !is_comment_tail(&trimmed[end + 2..]) {
+                    break;
+                }
+                in_block_comment = false;
+            }
+            lines.push(LeadingLine {
+                index,
+                depth,
+                is_include: false,
+            });
+        } else if trimmed.is_empty() || trimmed.starts_with("//") {
+            lines.push(LeadingLine {
+                index,
+                depth,
+                is_include: false,
+            });
+        } else if let Some(after_open) = trimmed.strip_prefix("/*") {
+            match after_open.find("*/") {
+                Some(end) if !is_comment_tail(&after_open[end + 2..]) => break,
+                Some(_) => {}
+                None => in_block_comment = true,
+            }
+            lines.push(LeadingLine {
+                index,
+                depth,
+                is_include: false,
+            });
+        } else if let Some(directive) = trimmed.strip_prefix('#') {
+            let name: String = directive
+                .trim_start()
+                .chars()
+                .take_while(|c| c.is_ascii_alphanumeric() || *c == '_')
+                .collect();
+            let line_depth = match name.as_str() {
+                "if" | "ifdef" | "ifndef" => {
+                    depth += 1;
+                    depth - 1
+                }
+                "elif" | "else" => depth.saturating_sub(1),
+                "endif" => {
+                    if depth == 0 {
+                        break;
+                    }
+                    depth -= 1;
+                    depth
+                }
+                _ => depth,
+            };
+            let is_include = name == "include";
+            lines.push(LeadingLine {
+                index,
+                depth: line_depth,
+                is_include,
+            });
+            if trimmed.ends_with('\\') {
+                continuation = Some((line_depth, is_include));
+            }
+        } else {
+            break;
+        }
+        if depth == 0 && continuation.is_none() && !in_block_comment {
+            boundary = lines.len();
         }
     }
-    includes
+    lines.truncate(boundary);
+    lines
 }
 
-/// Replace every `#include` line with an empty line so that line numbering
-/// is preserved when the hoisted directives are moved to the prelude
-/// (FastLED/fbuild#1275).
-fn strip_include_directives(source: &str) -> String {
-    source
-        .lines()
-        .map(|line| {
-            if is_include_directive(line.trim()) {
-                ""
-            } else {
-                line
+/// True when what follows a closing `*/` on the same line is nothing but
+/// whitespace or a `//` comment.
+fn is_comment_tail(rest: &str) -> bool {
+    let rest = rest.trim();
+    rest.is_empty() || rest.starts_with("//")
+}
+
+/// Move each tab's leading preprocessor lines into the prelude so the
+/// auto-generated prototypes, which sit in the prelude, can use types from
+/// the sketch's headers (FastLED/fbuild#1275). Moved lines become blank lines
+/// in the body so diagnostics keep their line numbers.
+///
+/// Only lines *before the first line of code* move, and an `#include` never
+/// leaves its conditional (FastLED/fbuild#1440): a Teensy-only
+/// `#if ... #include <Audio.h> #endif` used to be hoisted bare and compiled
+/// on every board.
+///
+/// - The first tab's region moves verbatim and in order -- includes, `#if`
+///   blocks, `#define`s and comments. It precedes all other code anyway, so a
+///   `#define` that configures a later header still precedes that header.
+/// - Later tabs contribute only their unconditional `#include`s. Their other
+///   directives stay put: moving a later tab's `#define` above the first
+///   tab's code would change what that code sees.
+///
+/// Unconditional includes are de-duplicated by trimmed text across tabs.
+/// Returns the hoisted lines and each tab's body with those lines blanked.
+fn hoist_leading_preprocessor(contents: &[String]) -> (Vec<String>, Vec<String>) {
+    let mut seen_includes = HashSet::new();
+    let mut hoisted = Vec::new();
+    let mut stripped = Vec::with_capacity(contents.len());
+
+    for (tab, content) in contents.iter().enumerate() {
+        let source_lines: Vec<&str> = content.lines().collect();
+        let mut moved = HashSet::new();
+        for leading in leading_preprocessor_region(content) {
+            let line = source_lines[leading.index];
+            let unconditional_include = leading.is_include && leading.depth == 0;
+            if tab == 0 {
+                if unconditional_include {
+                    seen_includes.insert(line.trim().to_string());
+                }
+                hoisted.push(line.to_string());
+                moved.insert(leading.index);
+            } else if unconditional_include && !line.trim_end().ends_with('\\') {
+                if seen_includes.insert(line.trim().to_string()) {
+                    hoisted.push(line.trim().to_string());
+                }
+                moved.insert(leading.index);
             }
-        })
-        .collect::<Vec<_>>()
-        .join("\n")
-}
-
-fn is_include_directive(trimmed: &str) -> bool {
-    trimmed.starts_with("#include")
+        }
+        let body = source_lines
+            .iter()
+            .enumerate()
+            .map(|(i, line)| if moved.contains(&i) { "" } else { *line })
+            .collect::<Vec<_>>()
+            .join("\n");
+        stripped.push(body);
+    }
+    (hoisted, stripped)
 }
 
 /// Extract function prototypes from concatenated .ino source using a C++ parser.
