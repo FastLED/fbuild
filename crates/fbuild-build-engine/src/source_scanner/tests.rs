@@ -5,7 +5,7 @@ use super::*;
 use std::fs;
 use tempfile::TempDir;
 
-fn setup_project(src_files: &[(&str, &str)]) -> (TempDir, PathBuf, PathBuf) {
+pub(super) fn setup_project(src_files: &[(&str, &str)]) -> (TempDir, PathBuf, PathBuf) {
     let tmp = TempDir::new().unwrap();
     let src_dir = tmp.path().join("src");
     let build_dir = tmp.path().join("build");
