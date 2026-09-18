@@ -295,7 +295,18 @@ impl BuildOrchestrator for Esp32Orchestrator {
         }
 
         // 8.5. Library dependencies
-        let lib_deps = ctx.config.get_lib_deps(&params.env_name)?;
+        //
+        // `lib_deps` may name libraries the Arduino core bundles (`FS`,
+        // `ArduinoOTA`, `ESPmDNS`, ...), as PlatformIO allows. Those are
+        // already on the include path above and compiled with the framework,
+        // so drop them rather than sending them to the registry, which does
+        // not carry them (FastLED/fbuild#1442). RP2040 does the same.
+        let lib_deps = fbuild_library_select::external_declared_deps(
+            &ctx.config.get_lib_deps(&params.env_name)?,
+            &fbuild_packages::library::framework_library::discover_framework_libraries(
+                &builtin_libs_dir,
+            ),
+        );
         let lib_ignore = ctx.config.get_lib_ignore(&params.env_name)?;
 
         use fbuild_packages::Toolchain;
