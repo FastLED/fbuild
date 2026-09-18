@@ -682,3 +682,35 @@ async fn provision_esptool(
     row.duration_ms = started.elapsed().as_millis() as u64;
     Some(row)
 }
+
+/// Drop `lib_deps` entries the installed Arduino core bundles (`FS`,
+/// `ArduinoOTA`, `ESPmDNS`, ...), exactly as the build does, so `fbuild
+/// install` does not send them to the registry (FastLED/fbuild#1442).
+/// Without an installed platform and framework there is nothing to compare
+/// against, and every entry is returned.
+pub(crate) fn downloadable_lib_deps(
+    inputs: &ProvisionInputs<'_>,
+    lib_deps: Vec<String>,
+) -> Vec<String> {
+    use fbuild_packages::{Framework as _, Package as _};
+    let env_config = Some(inputs.env_config);
+    let platform = pioarduino_platform(inputs.project_dir, env_config);
+    if !platform.is_installed() {
+        return lib_deps;
+    }
+    let framework = pioarduino_framework(
+        &platform,
+        inputs.project_dir,
+        inputs.board.mcu.as_str(),
+        env_config,
+    );
+    if !framework.is_installed() {
+        return lib_deps;
+    }
+    fbuild_library_select::external_declared_deps(
+        &lib_deps,
+        &fbuild_packages::library::framework_library::discover_framework_libraries(
+            &framework.get_libraries_dir(),
+        ),
+    )
+}

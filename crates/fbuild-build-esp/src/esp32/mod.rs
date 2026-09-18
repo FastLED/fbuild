@@ -28,6 +28,17 @@ impl crate::PlatformSupport for Esp32PlatformSupport {
         orchestrator::provision_esp32(inputs, mode).await
     }
 
+    /// The Arduino core bundles libraries (FS, WiFi, ESPmDNS, ...) that
+    /// `lib_deps` may name; the build filters them out before downloading,
+    /// so provisioning must too (FastLED/fbuild#1442).
+    fn downloadable_lib_deps(
+        &self,
+        inputs: &crate::provision::ProvisionInputs<'_>,
+        lib_deps: Vec<String>,
+    ) -> Vec<String> {
+        orchestrator::downloadable_lib_deps(inputs, lib_deps)
+    }
+
     fn default_board_id(&self) -> &str {
         "esp32dev"
     }

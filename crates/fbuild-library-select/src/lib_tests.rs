@@ -621,3 +621,32 @@ fn declared_dep_name_normalization() {
     assert_eq!(declared_dep_name("https://example.com/x.git"), None);
     assert_eq!(declared_dep_name("./local"), None);
 }
+
+#[test]
+fn esp32_core_bundled_lib_deps_are_not_sent_to_the_registry() {
+    // FastLED/fbuild#1442: arduino-esp32 ships FS, ArduinoOTA and ESPmDNS in
+    // its `libraries/`; naming them in lib_deps must not reach the registry,
+    // while real registry and git dependencies still do.
+    let tmp = tempdir();
+    let libraries = vec![
+        lib(tmp.path(), "FS"),
+        lib(tmp.path(), "ArduinoOTA"),
+        lib(tmp.path(), "ESPmDNS"),
+        lib(tmp.path(), "WiFi"),
+    ];
+    let declared = vec![
+        "https://github.com/dvarrel/AsyncTCP".to_string(),
+        "bblanchon/ArduinoJson".to_string(),
+        "FS".to_string(),
+        "ArduinoOTA".to_string(),
+        "ESPmDNS".to_string(),
+    ];
+
+    assert_eq!(
+        external_declared_deps(&declared, &libraries),
+        vec![
+            "https://github.com/dvarrel/AsyncTCP".to_string(),
+            "bblanchon/ArduinoJson".to_string(),
+        ]
+    );
+}
