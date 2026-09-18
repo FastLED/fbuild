@@ -199,7 +199,7 @@ mod request_project_dir_tests {
     //! A request's project dir must come out absolute, read against the
     //! caller's working directory (FastLED/fbuild#1441).
     use super::super::common::resolve_request_project_dir;
-    use std::path::{Path, PathBuf};
+    use std::path::Path;
 
     #[test]
     fn relative_dir_is_joined_onto_caller_cwd() {
@@ -230,7 +230,8 @@ mod request_project_dir_tests {
         assert!(resolved.is_absolute());
         // `std::path::absolute` keeps a trailing `.` component lexically on
         // some hosts; compare by components that matter.
-        let normalized: PathBuf = resolved.components().collect();
-        assert_eq!(normalized, cwd);
+        let components: Vec<_> = resolved.components().collect();
+        let expected: Vec<_> = cwd.components().collect();
+        assert_eq!(components, expected);
     }
 }
