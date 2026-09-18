@@ -2,6 +2,7 @@
 
 use super::common::{
     OperationGuard, export_artifacts_bundle, resolve_build_dir, resolve_client_path,
+    resolve_request_project_dir,
 };
 use crate::context::DaemonContext;
 use crate::models::{BuildRequest, OperationResponse};
@@ -146,7 +147,7 @@ pub async fn build(
     let request_id = req
         .request_id
         .unwrap_or_else(|| uuid::Uuid::new_v4().to_string());
-    let project_dir = PathBuf::from(&req.project_dir);
+    let project_dir = resolve_request_project_dir(&req.project_dir, req.caller_cwd.as_deref());
     let stream = req.stream;
 
     if !project_dir.exists() {

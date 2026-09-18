@@ -1066,9 +1066,17 @@ pub fn resolve_project_dir(
     subcommand_dir: Option<String>,
     top_level_dir: &Option<String>,
 ) -> String {
-    subcommand_dir
+    let raw = subcommand_dir
         .or_else(|| top_level_dir.clone())
-        .unwrap_or_else(|| ".".to_string())
+        .unwrap_or_else(|| ".".to_string());
+    // Send the daemon an absolute path. A relative one is read against the
+    // daemon's working directory, and every path derived from it stays
+    // relative while the compiler runs from the project dir -- which is how
+    // `fbuild ci/kitchensink build` lost its libraries' include paths
+    // (FastLED/fbuild#1441). Lexical only: symlinks are not resolved.
+    std::path::absolute(&raw)
+        .map(|p| p.to_string_lossy().into_owned())
+        .unwrap_or(raw)
 }
 
 /// Known subcommand names for arg rewriting.

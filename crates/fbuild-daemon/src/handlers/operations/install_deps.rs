@@ -1,7 +1,7 @@
 //! `POST /api/install-deps` — fetch toolchains, frameworks, and libraries
 //! without building.
 
-use super::common::OperationGuard;
+use super::common::{OperationGuard, resolve_request_project_dir};
 use crate::context::DaemonContext;
 use crate::models::{InstallDepsRequest, OperationResponse};
 use axum::Json;
@@ -21,7 +21,7 @@ pub async fn install_deps(
     let request_id = req
         .request_id
         .unwrap_or_else(|| uuid::Uuid::new_v4().to_string());
-    let project_dir = PathBuf::from(&req.project_dir);
+    let project_dir = resolve_request_project_dir(&req.project_dir, req.caller_cwd.as_deref());
 
     if !project_dir.exists() {
         return (

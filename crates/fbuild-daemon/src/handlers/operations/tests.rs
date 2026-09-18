@@ -194,3 +194,43 @@ mod image_hash_memo_tests {
         );
     }
 }
+
+mod request_project_dir_tests {
+    //! A request's project dir must come out absolute, read against the
+    //! caller's working directory (FastLED/fbuild#1441).
+    use super::super::common::resolve_request_project_dir;
+    use std::path::{Path, PathBuf};
+
+    #[test]
+    fn relative_dir_is_joined_onto_caller_cwd() {
+        let cwd = std::env::temp_dir().join("caller");
+        let resolved = resolve_request_project_dir("ci/kitchensink", Some(cwd.to_str().unwrap()));
+        assert!(resolved.is_absolute());
+        assert_eq!(resolved, cwd.join("ci").join("kitchensink"));
+    }
+
+    #[test]
+    fn absolute_dir_is_kept_as_is() {
+        let abs = std::env::temp_dir().join("proj");
+        let resolved = resolve_request_project_dir(abs.to_str().unwrap(), Some("/elsewhere"));
+        assert_eq!(resolved, abs);
+    }
+
+    #[test]
+    fn relative_dir_without_caller_cwd_is_still_absolute() {
+        let resolved = resolve_request_project_dir("proj", None);
+        assert!(resolved.is_absolute());
+        assert!(resolved.ends_with(Path::new("proj")));
+    }
+
+    #[test]
+    fn dot_resolves_to_the_caller_cwd_itself() {
+        let cwd = std::env::temp_dir().join("caller");
+        let resolved = resolve_request_project_dir(".", Some(cwd.to_str().unwrap()));
+        assert!(resolved.is_absolute());
+        // `std::path::absolute` keeps a trailing `.` component lexically on
+        // some hosts; compare by components that matter.
+        let normalized: PathBuf = resolved.components().collect();
+        assert_eq!(normalized, cwd);
+    }
+}

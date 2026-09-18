@@ -335,6 +335,26 @@ pub(crate) fn parse_deploy_route(
     }
 }
 
+/// A request's `project_dir` as an absolute path.
+///
+/// A relative project dir must be read against the *caller's* working
+/// directory, not the daemon's. Left relative, every path derived from it --
+/// the build dir, downloaded libraries, their `-I` flags -- stays relative,
+/// while the compiler runs from the absolute project dir, so those flags point
+/// nowhere (FastLED/fbuild#1441: `fbuild ci/kitchensink build` could not find
+/// a registry library's headers). Lexical only: symlinks are not resolved.
+pub(crate) fn resolve_request_project_dir(raw: &str, caller_cwd: Option<&str>) -> PathBuf {
+    let path = PathBuf::from(raw);
+    if path.is_absolute() {
+        return path;
+    }
+    let joined = match caller_cwd {
+        Some(cwd) => PathBuf::from(cwd).join(path),
+        None => path,
+    };
+    std::path::absolute(&joined).unwrap_or(joined)
+}
+
 pub(crate) fn resolve_client_path(
     raw: &str,
     caller_cwd: Option<&str>,
