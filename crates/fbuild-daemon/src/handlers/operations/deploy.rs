@@ -1182,6 +1182,18 @@ pub async fn deploy(
         {
             Some(rx) => rx,
             None => {
+                // open_port created the session above; a close/open race can
+                // drop its broadcaster before attach_reader runs. Release the
+                // handle the same way the normal path below does, or it stays
+                // open and the next client gets EBUSY (FastLED/fbuild#1426).
+                ctx.serial_manager.detach_reader(&monitor_port, &request_id);
+                if !ctx.serial_manager.has_clients(&monitor_port) {
+                    ctx.serial_manager.close_port_after_grace_if_idle(
+                        &monitor_port,
+                        &request_id,
+                        std::time::Duration::from_secs(2),
+                    );
+                }
                 return (
                     StatusCode::OK,
                     Json(OperationResponse {
