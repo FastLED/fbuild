@@ -114,7 +114,7 @@ Use `steps.<id>.outputs.zccache-store-path` inside workflow expressions. The sam
 | Input | Default | Description |
 |---|---|---|
 | `fbuild-version` | `latest` | PyPI version spec. Pin to an exact version (`2.1.16`) for reproducible CI. |
-| `python-version` | `3.12` | Python used to install fbuild. Must be >= 3.9. |
+| `python-version` | `3.10` | Python used to install fbuild. Must be >= 3.10. |
 | `cache` | `true` | Set to `false` to install fbuild without wiring `actions/cache`. |
 | `cache-mode` | `combined` | `combined` keeps one `FBUILD_CACHE_DIR` entry per key. `split` restores a packages cache shared per platform family and a per-board build-payload cache, and runs `fbuild install` as its own step. |
 | `save` | `true` | `false` restores caches without saving; use it on pull requests. |

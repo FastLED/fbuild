@@ -11,9 +11,9 @@ inputs:
     required: false
     default: "latest"
   python-version:
-    description: "Python version used to install fbuild. Must be >= 3.9."
+    description: "Python version used to install fbuild. Must be >= 3.10."
     required: false
-    default: "3.12"
+    default: "3.10"
   cache:
     description: "Whether to save/restore the fbuild cache via actions/cache. Set to 'false' to skip caching (install only)."
     required: false
