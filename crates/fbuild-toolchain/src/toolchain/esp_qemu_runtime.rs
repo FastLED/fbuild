@@ -99,6 +99,31 @@ impl QemuLinuxRuntime {
         })
     }
 
+    #[cfg(test)]
+    fn for_host_with_cache_root(
+        host: HostPlatform,
+        project_dir: &Path,
+        cache_root: &Path,
+    ) -> Result<Self> {
+        let arch = runtime_arch(host)?;
+        let url = format!(
+            "https://github.com/FastLED/fbuild/releases/download/{}/qemu-esp-linux-runtime-{}-{}.tar.zst",
+            RUNTIME_RELEASE_TAG, arch, RUNTIME_VERSION
+        );
+        Ok(Self {
+            base: PackageBase::with_cache_root(
+                "esp-qemu-linux-runtime",
+                RUNTIME_VERSION,
+                &url,
+                &format!("qemu-linux-runtime-{arch}"),
+                Some(runtime_sha256(arch)?),
+                CacheSubdir::Toolchains,
+                project_dir,
+                cache_root,
+            ),
+        })
+    }
+
     /// Directory to place on `LD_LIBRARY_PATH`.
     pub fn lib_dir(&self) -> NormalizedPath {
         NormalizedPath::from(self.base.install_path()).join(LIB_SUBDIR)
@@ -203,6 +228,10 @@ pub fn ld_library_path_with(lib_dir: &Path, current: Option<&str>) -> String {
 /// here and gets `None`.
 pub fn installed_lib_dir(project_dir: &Path) -> Option<NormalizedPath> {
     let runtime = QemuLinuxRuntime::new(project_dir).ok()?;
+    installed_lib_dir_for(&runtime)
+}
+
+fn installed_lib_dir_for(runtime: &QemuLinuxRuntime) -> Option<NormalizedPath> {
     if runtime.is_installed() {
         Some(runtime.lib_dir())
     } else {
@@ -495,9 +524,16 @@ mod tests {
     #[test]
     fn uninstalled_bundle_yields_no_ld_library_path() {
         let tmp = tempfile::TempDir::new().unwrap();
-        // Nothing is cached under a fresh project dir, so the spawn-time
-        // lookup must stay quiet rather than inventing a path.
-        assert!(build_linux_qemu_ld_library_path(tmp.path(), Some("/usr/lib")).is_none());
+        let cache = tempfile::TempDir::new().unwrap();
+        let runtime = QemuLinuxRuntime::for_host_with_cache_root(
+            linux(HostArch::X86_64),
+            tmp.path(),
+            cache.path(),
+        )
+        .unwrap();
+        // An isolated empty cache must stay quiet rather than inheriting a
+        // bundle installed in the developer's global fbuild cache.
+        assert!(installed_lib_dir_for(&runtime).is_none());
     }
 
     // ── probe_qemu_binary ───────────────────────────────────────────

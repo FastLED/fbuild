@@ -553,3 +553,33 @@ fn a_true_operand_settles_or_despite_an_undecidable_one() {
     let paths: Vec<&str> = refs.iter().map(|r| r.path.as_str()).collect();
     assert_eq!(paths, vec!["taken.h"], "{paths:?}");
 }
+
+#[test]
+fn nested_unknown_fastled_guards_remain_visible() {
+    let known: HashSet<String> = [
+        "FASTLED_AUTORESEARCH_LOW_MEMORY",
+        "FL_PLATFORM_HAS_LARGE_MEMORY",
+        "FL_IS_ESP32",
+        "SOC_WIFI_SUPPORTED",
+    ]
+    .into_iter()
+    .map(str::to_string)
+    .collect();
+    let refs = scan_active_with_known(
+        "#if !defined(FASTLED_AUTORESEARCH_LOW_MEMORY) && !FL_PLATFORM_HAS_LARGE_MEMORY\n\
+         #define FASTLED_AUTORESEARCH_LOW_MEMORY 1\n\
+         #endif\n\
+         #if !(defined(FASTLED_AUTORESEARCH_LOW_MEMORY) && FASTLED_AUTORESEARCH_LOW_MEMORY)\n\
+         #if defined(FL_IS_ESP32)\n\
+         #include <soc/soc_caps.h>\n\
+         #endif\n\
+         #if defined(FL_IS_ESP32) && defined(SOC_WIFI_SUPPORTED) && SOC_WIFI_SUPPORTED\n\
+         #include <LittleFS.h>\n\
+         #endif\n\
+         #endif\n",
+        &HashMap::new(),
+        &known,
+    );
+    let paths: Vec<&str> = refs.iter().map(|r| r.path.as_str()).collect();
+    assert!(paths.contains(&"LittleFS.h"), "{paths:?}");
+}

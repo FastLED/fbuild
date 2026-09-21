@@ -166,7 +166,7 @@ async fn build_esp32c6_blink() {
 
     fs::write(
         project_dir.join("platformio.ini"),
-        "[env:esp32c6]\nplatform = espressif32\nboard = esp32-c6\nframework = arduino\n",
+        "[env:esp32c6]\nplatform = espressif32\nboard = esp32-c6-devkitc-1\nframework = arduino\n",
     )
     .unwrap();
 
@@ -239,6 +239,107 @@ void loop() {
         size.max_ram.unwrap_or(0),
         size.ram_percent().unwrap_or(0.0),
         result.build_time_secs
+    );
+}
+
+/// Regression gate for #1452: SDK capability headers participate in library
+/// discovery, so a guarded LittleFS include selects both LittleFS and its FS
+/// dependency without a manual `lib_deps` declaration.
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
+#[ignore = "downloads ESP32 toolchain (~hundreds of MB)"]
+async fn build_esp32c6_discovers_guarded_littlefs() {
+    install_test_compile_backend().await;
+    let tmp = tempfile::TempDir::new().unwrap();
+    let project_dir = tmp.path();
+
+    fs::write(
+        project_dir.join("platformio.ini"),
+        "[env:esp32c6]\nplatform = espressif32\nboard = esp32-c6-devkitc-1\nframework = arduino\n",
+    )
+    .unwrap();
+
+    let src_dir = project_dir.join("src");
+    fs::create_dir_all(&src_dir).unwrap();
+    fs::write(
+        src_dir.join("platform_flags.h"),
+        "#define FL_IS_ESP32 1\n#define FL_PLATFORM_HAS_LARGE_MEMORY 1\n",
+    )
+    .unwrap();
+    fs::write(
+        src_dir.join("main.cpp"),
+        "\
+#include <Arduino.h>
+#include \"platform_flags.h\"
+#include <soc/soc_caps.h>
+
+#if !defined(FASTLED_AUTORESEARCH_LOW_MEMORY) && !FL_PLATFORM_HAS_LARGE_MEMORY
+#define FASTLED_AUTORESEARCH_LOW_MEMORY 1
+#endif
+
+#if !(defined(FASTLED_AUTORESEARCH_LOW_MEMORY) && FASTLED_AUTORESEARCH_LOW_MEMORY)
+#if defined(FL_IS_ESP32) && defined(SOC_WIFI_SUPPORTED) && SOC_WIFI_SUPPORTED
+#include <LittleFS.h>
+#endif
+#endif
+
+void setup() {
+#if !(defined(FASTLED_AUTORESEARCH_LOW_MEMORY) && FASTLED_AUTORESEARCH_LOW_MEMORY)
+#if defined(FL_IS_ESP32) && defined(SOC_WIFI_SUPPORTED) && SOC_WIFI_SUPPORTED
+  LittleFS.begin(true);
+  File file = LittleFS.open(\"/probe\", FILE_WRITE);
+  file.print(\"ok\");
+  file.close();
+#endif
+#endif
+}
+
+void loop() {}
+",
+    )
+    .unwrap();
+
+    let build_dir = project_dir.join(format!(
+        "{}/{}/esp32c6/release",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    ));
+    let params = BuildParams {
+        project_dir: project_dir.to_path_buf(),
+        env_name: "esp32c6".to_string(),
+        clean_all: false,
+        clean: true,
+        clean_only: false,
+        profile: BuildProfile::Release,
+        build_dir: build_dir.clone(),
+        verbose: true,
+        jobs: None,
+        generate_compiledb: false,
+        compiledb_only: false,
+        log_sender: None,
+        symbol_analysis: false,
+        symbol_analysis_path: None,
+        no_timestamp: false,
+        src_dir: None,
+        pio_env: Default::default(),
+        extra_build_flags: Vec::new(),
+        watch_set_cache: None,
+        bloat_analysis: false,
+        caller_path: None,
+    };
+
+    let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
+    let result = under_test_timeout(orchestrator.build(&params))
+        .await
+        .expect("ESP32-C6 LittleFS build should succeed without lib_deps");
+
+    assert!(result.success);
+    assert!(
+        build_dir.join("fw_libs/liblittlefs.a").is_file(),
+        "LittleFS must be auto-discovered from the guarded sketch include"
+    );
+    assert!(
+        build_dir.join("fw_libs/libfs.a").is_file(),
+        "FS must be discovered transitively from LittleFS.h"
     );
 }
 

@@ -21,7 +21,7 @@ use std::collections::{BTreeMap, BTreeSet, HashMap};
 use std::path::{Path, PathBuf};
 
 use fbuild_header_scan::{
-    WalkState, active_defines, collect_defined_macro_names, walk_with_state,
+    WalkState, active_defines_with_known, collect_defined_macro_names, walk_with_state,
     walk_with_state_active_known,
 };
 use fbuild_packages::library::FrameworkLibrary;
@@ -136,7 +136,16 @@ pub fn resolve_with_stats_active_declared(
     defines: &HashMap<String, String>,
     declared: &[String],
 ) -> (Selection, ResolveStats) {
-    let effective_defines = seed_defines(seeds, defines);
+    let mut full_search_paths = project_search_paths.to_vec();
+    for library in libraries {
+        for dir in &library.include_dirs {
+            if !full_search_paths.contains(dir) {
+                full_search_paths.push(dir.clone());
+            }
+        }
+    }
+    let defined_somewhere = collect_defined_macro_names(seeds, &full_search_paths);
+    let effective_defines = seed_defines(seeds, defines, &defined_somewhere);
     resolve_with_stats_impl_declared(
         seeds,
         project_search_paths,
@@ -204,13 +213,14 @@ pub fn external_declared_deps(declared: &[String], libraries: &[FrameworkLibrary
 fn seed_defines(
     seeds: &[PathBuf],
     compiler_defines: &HashMap<String, String>,
+    defined_somewhere: &std::collections::HashSet<String>,
 ) -> HashMap<String, String> {
     let mut defines = compiler_defines.clone();
     let mut ordered_seeds = seeds.to_vec();
     ordered_seeds.sort();
     for seed in ordered_seeds {
         if let Ok(source) = std::fs::read_to_string(seed) {
-            defines = active_defines(&source, &defines);
+            defines = active_defines_with_known(&source, &defines, defined_somewhere);
         }
     }
     defines

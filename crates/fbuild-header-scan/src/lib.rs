@@ -10,8 +10,8 @@ mod scanner;
 mod walker;
 
 pub use scanner::{
-    IncludeKind, IncludeRef, Span, active_defines, defined_macro_names, scan, scan_active,
-    scan_active_with_known,
+    IncludeKind, IncludeRef, Span, active_defines, active_defines_with_known, defined_macro_names,
+    scan, scan_active, scan_active_with_known,
 };
 pub use walker::{
     WalkResult, WalkState, collect_defined_macro_names, walk, walk_active, walk_with_state,
