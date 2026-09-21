@@ -777,3 +777,103 @@ fn external_library_source_selects_framework_dependency() {
 
     assert_eq!(selection.required_libraries, vec!["WiFi"]);
 }
+
+/// An SDK header on the compiler include path can define a capability macro
+/// that guards a later framework-library include. The selection scan must see
+/// the same include path as the compiler or it incorrectly prunes that branch.
+#[test]
+fn sdk_capability_header_keeps_framework_library_include_reachable() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let project_dir = tmp.path().join("project");
+    let src_dir = project_dir.join("src");
+    std::fs::create_dir_all(&src_dir).unwrap();
+    std::fs::write(
+        src_dir.join("main.cpp"),
+        "#include <soc/soc_caps.h>\n\
+         #if defined(SOC_WIFI_SUPPORTED) && SOC_WIFI_SUPPORTED\n\
+         #include <LittleFS.h>\n\
+         #endif\n",
+    )
+    .unwrap();
+
+    let sdk_dir = tmp.path().join("sdk");
+    std::fs::create_dir_all(sdk_dir.join("soc")).unwrap();
+    std::fs::write(
+        sdk_dir.join("soc").join("soc_caps.h"),
+        "#define SOC_WIFI_SUPPORTED 1\n",
+    )
+    .unwrap();
+
+    let littlefs_dir = tmp
+        .path()
+        .join("framework")
+        .join("libraries")
+        .join("LittleFS");
+    std::fs::create_dir_all(&littlefs_dir).unwrap();
+    std::fs::write(littlefs_dir.join("LittleFS.h"), "").unwrap();
+    std::fs::write(littlefs_dir.join("LittleFS.cpp"), "int littlefs;\n").unwrap();
+
+    let selection = resolve_framework_library_selection_active_declared_with_extra(
+        &[FrameworkLibrary {
+            name: "LittleFS".to_string(),
+            dir: littlefs_dir.clone(),
+            include_dirs: vec![littlefs_dir.clone()],
+            source_files: vec![littlefs_dir.join("LittleFS.cpp")],
+        }],
+        &project_dir,
+        &src_dir,
+        &HashMap::new(),
+        &[],
+        &[],
+        &[sdk_dir],
+    );
+
+    assert_eq!(selection.required_libraries, vec!["LittleFS"]);
+}
+
+#[test]
+fn compiler_include_order_wins_over_shadowing_project_header() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let project_dir = tmp.path().join("project");
+    let src_dir = project_dir.join("src");
+    std::fs::create_dir_all(&src_dir).unwrap();
+    std::fs::write(src_dir.join("main.cpp"), "#include <soc/capability.h>\n").unwrap();
+    std::fs::create_dir_all(src_dir.join("soc")).unwrap();
+    std::fs::write(
+        src_dir.join("soc").join("capability.h"),
+        "#define PROJECT_SHADOW 1\n",
+    )
+    .unwrap();
+
+    let sdk_dir = tmp.path().join("sdk");
+    std::fs::create_dir_all(sdk_dir.join("soc")).unwrap();
+    let sdk_header = sdk_dir.join("soc").join("capability.h");
+    std::fs::write(&sdk_header, "#define SDK_HEADER 1\n").unwrap();
+
+    let selection = resolve_framework_library_selection_active_declared_with_extra(
+        &[],
+        &project_dir,
+        &src_dir,
+        &HashMap::new(),
+        &[],
+        &[],
+        &[sdk_dir],
+    );
+
+    assert!(
+        selection
+            .included_files
+            .contains(&sdk_header.canonicalize().unwrap()),
+        "selection must resolve headers using compiler include order"
+    );
+    assert!(
+        !selection.included_files.contains(
+            &src_dir
+                .join("soc")
+                .join("capability.h")
+                .canonicalize()
+                .unwrap()
+        ),
+        "a project shadow searched after the SDK must not replace the compiler-selected header"
+    );
+}

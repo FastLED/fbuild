@@ -95,12 +95,15 @@ pub fn resolve_framework_library_selection_active_declared(
     )
 }
 
-/// Active framework selection with additional translation-unit seeds and
-/// include roots supplied by externally declared libraries.
+/// Active framework selection with additional translation-unit seeds and the
+/// compiler's complete include path.
 ///
 /// An external library can include a framework header from one of its own
 /// `.cpp` files. The compiler sees that dependency, so the LDF must see it as
 /// well or the selected framework archive is omitted from the final link.
+/// The complete include path also lets the scanner resolve SDK headers that
+/// define capability macros guarding later framework-library includes (for
+/// example `soc/soc_caps.h` guarding ESP32's `LittleFS.h`).
 pub fn resolve_framework_library_selection_active_declared_with_extra(
     libraries: &[FrameworkLibrary],
     project_dir: &Path,
@@ -108,15 +111,22 @@ pub fn resolve_framework_library_selection_active_declared_with_extra(
     defines: &HashMap<String, String>,
     declared: &[String],
     extra_source_files: &[PathBuf],
-    extra_include_dirs: &[PathBuf],
+    compiler_include_dirs: &[PathBuf],
 ) -> fbuild_library_select::Selection {
     let roots = framework_include_scan_roots(project_dir, src_dir);
     let filtered = filter_framework_libs_shadowed_by_project(libraries, &roots);
     let mut seeds = collect_project_seeds(&roots);
     seeds.extend_from_slice(extra_source_files);
-    let mut search_paths = project_search_paths(&roots);
-    for include_dir in extra_include_dirs {
+    // Preserve the compiler's observable include order. In particular, ESP32
+    // searches core/variant/SDK headers before project headers; reversing that
+    // order can make the LDF inspect a shadowing header the compiler never
+    // sees and derive the wrong capability set.
+    let mut search_paths = Vec::new();
+    for include_dir in compiler_include_dirs {
         push_existing_unique(&mut search_paths, include_dir.clone());
+    }
+    for project_path in project_search_paths(&roots) {
+        push_existing_unique(&mut search_paths, project_path);
     }
     fbuild_library_select::resolve_with_stats_active_declared(
         &seeds,

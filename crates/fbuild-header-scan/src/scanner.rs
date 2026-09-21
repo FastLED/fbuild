@@ -240,8 +240,18 @@ pub fn defined_macro_names(src: &str) -> Vec<String> {
 /// The LDF uses this for sketch translation units so a sketch-local feature
 /// define remains visible when its included headers are scanned.
 pub fn active_defines(src: &str, defines: &HashMap<String, String>) -> HashMap<String, String> {
+    active_defines_with_known(src, defines, &HashSet::new())
+}
+
+/// Return active source-local defines while treating macros defined elsewhere
+/// in the reachable corpus as undecidable.
+pub fn active_defines_with_known(
+    src: &str,
+    defines: &HashMap<String, String>,
+    defined_somewhere: &HashSet<String>,
+) -> HashMap<String, String> {
     let mut macros = defines.clone();
-    let _ = active_source(src, &mut macros, &HashSet::new());
+    let _ = active_source(src, &mut macros, defined_somewhere);
     macros
 }
 
