@@ -14,19 +14,32 @@ use std::path::{Path, PathBuf};
 use fbuild_core::Result;
 
 /// Apply the effective `-D` / `-U` compiler flags used by library selection.
-/// `build_unflags` remove inherited board/MCU defines before later user flags
-/// are applied, matching the compiler overlay order.
+/// SDK flags are inherited before `build_unflags`; user flags apply afterward
+/// unless an exact user token is also unflagged by the compiler.
 pub(super) fn apply_effective_define_flags(
     defines: &mut HashMap<String, String>,
-    flags: &[String],
+    sdk_flags: &[String],
+    user_flags: &[String],
     build_unflags: &[String],
 ) {
+    apply_define_flags(defines, sdk_flags, build_unflags);
     for flag in build_unflags {
         if let Some(name) = define_name(flag) {
             defines.remove(name);
         }
     }
+    apply_define_flags(defines, user_flags, build_unflags);
+}
+
+fn apply_define_flags(
+    defines: &mut HashMap<String, String>,
+    flags: &[String],
+    build_unflags: &[String],
+) {
     for flag in flags {
+        if build_unflags.contains(flag) {
+            continue;
+        }
         if let Some((name, value)) = define_value(flag) {
             defines.insert(name.to_string(), value.to_string());
         } else if let Some(name) = flag.strip_prefix("-U") {

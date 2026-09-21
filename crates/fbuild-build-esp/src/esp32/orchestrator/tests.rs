@@ -198,17 +198,33 @@ fn effective_define_flags_match_compiler_overlay_order() {
         ("BOARD_ONLY".to_string(), "1".to_string()),
         ("DISABLED_BY_UNFLAG".to_string(), "1".to_string()),
     ]);
-    let flags = vec![
+    let sdk_flags = vec![
+        "-DDISABLED_BY_UNFLAG".to_string(),
         "-DENABLE_WIFI".to_string(),
+    ];
+    let user_flags = vec![
+        "-DDISABLED_BY_UNFLAG=0".to_string(),
+        "-DREMOVED_USER_DEFINE".to_string(),
         "-DVALUE=42".to_string(),
         "-UVALUE".to_string(),
     ];
-    let build_unflags = vec!["-DDISABLED_BY_UNFLAG".to_string()];
+    let build_unflags = vec![
+        "-DDISABLED_BY_UNFLAG".to_string(),
+        "-DREMOVED_USER_DEFINE".to_string(),
+    ];
 
-    apply_effective_define_flags(&mut defines, &flags, &build_unflags);
+    apply_effective_define_flags(&mut defines, &sdk_flags, &user_flags, &build_unflags);
 
     assert_eq!(defines.get("BOARD_ONLY"), Some(&"1".to_string()));
     assert_eq!(defines.get("ENABLE_WIFI"), Some(&"1".to_string()));
-    assert!(!defines.contains_key("DISABLED_BY_UNFLAG"));
+    assert_eq!(
+        defines.get("DISABLED_BY_UNFLAG"),
+        Some(&"0".to_string()),
+        "user flags must override an unflagged SDK definition"
+    );
+    assert!(
+        !defines.contains_key("REMOVED_USER_DEFINE"),
+        "an exact user flag listed in build_unflags must remain removed"
+    );
     assert!(!defines.contains_key("VALUE"));
 }

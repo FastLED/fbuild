@@ -304,7 +304,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
 
         // Read user build_flags early â€” needed for both library and sketch compilation.
         // SDK defines (from flags/defines) are prepended so user flags can override them.
-        let mut user_flags = sdk_defines;
+        let mut user_flags = sdk_defines.clone();
         // Before the user's build_flags, so their own prefix maps still win.
         user_flags.extend(framework_macro_prefix_map(&core_dir));
         let mut user_build_flags = ctx.config.get_build_flags(&params.env_name)?;
@@ -418,7 +418,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
         library_selection_defines.extend(mcu_config.defines_map());
         apply_effective_define_flags(
             &mut library_selection_defines,
-            &user_flags,
+            &sdk_defines,
+            &user_build_flags,
             &ctx.build_unflags,
         );
         let framework_selection = resolve_framework_library_selection_active_declared_with_extra(
