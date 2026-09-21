@@ -65,6 +65,11 @@ fn resolve_local_library_dir(project_dir: &Path, local_path: &Path, name: &str) 
 pub struct LibraryResult {
     /// All include directories from all libraries (for compiler `-I` flags).
     pub include_dirs: Vec<PathBuf>,
+    /// Translation units compiled into the returned archives.
+    ///
+    /// Platform orchestrators use these as LDF seeds when an external library
+    /// includes a framework-bundled header.
+    pub source_files: Vec<PathBuf>,
     /// All compiled library archives (`.a` files) for the linker.
     pub archives: Vec<PathBuf>,
 }
@@ -109,6 +114,7 @@ pub async fn ensure_libraries(
     if installed.is_empty() {
         return Ok(LibraryResult {
             include_dirs: Vec::new(),
+            source_files: Vec::new(),
             archives: Vec::new(),
         });
     }
@@ -163,9 +169,14 @@ pub async fn ensure_libraries(
         .iter()
         .flat_map(|lib| lib.get_include_dirs())
         .collect();
+    let source_files: Vec<PathBuf> = installed
+        .iter()
+        .flat_map(|lib| lib.get_source_files())
+        .collect();
 
     Ok(LibraryResult {
         include_dirs: lib_include_dirs,
+        source_files,
         archives,
     })
 }

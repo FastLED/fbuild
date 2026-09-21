@@ -686,3 +686,94 @@ fn cached_resolution_round_trips_through_file_store() {
     assert!(hit_second, "second call must hit the cache");
     assert_eq!(first, second, "cache hit must yield identical sources");
 }
+
+#[test]
+fn active_selection_excludes_unreached_matter_library() {
+    // Regression guard for #1449: ESP32's framework library compiler must be
+    // able to receive the selected library records, not just a flattened source
+    // list, so it never compiles Arduino Matter for a Blink-like sketch.
+    let tmp = tempfile::TempDir::new().unwrap();
+    let project_dir = tmp.path().join("project");
+    let src_dir = project_dir.join("src");
+    std::fs::create_dir_all(&src_dir).unwrap();
+    std::fs::write(src_dir.join("main.cpp"), "#include <WiFi.h>\n").unwrap();
+
+    let wifi_dir = tmp.path().join("framework").join("libraries").join("WiFi");
+    std::fs::create_dir_all(&wifi_dir).unwrap();
+    std::fs::write(wifi_dir.join("WiFi.h"), "").unwrap();
+    std::fs::write(wifi_dir.join("WiFi.cpp"), "int wifi;\n").unwrap();
+
+    let matter_dir = tmp
+        .path()
+        .join("framework")
+        .join("libraries")
+        .join("Matter");
+    std::fs::create_dir_all(&matter_dir).unwrap();
+    std::fs::write(matter_dir.join("Matter.h"), "").unwrap();
+    std::fs::write(matter_dir.join("Matter.cpp"), "int matter;\n").unwrap();
+
+    let libraries = vec![
+        FrameworkLibrary {
+            name: "Matter".to_string(),
+            dir: matter_dir.clone(),
+            include_dirs: vec![matter_dir.clone()],
+            source_files: vec![matter_dir.join("Matter.cpp")],
+        },
+        FrameworkLibrary {
+            name: "WiFi".to_string(),
+            dir: wifi_dir.clone(),
+            include_dirs: vec![wifi_dir.clone()],
+            source_files: vec![wifi_dir.join("WiFi.cpp")],
+        },
+    ];
+
+    let selection = resolve_framework_library_selection_active_declared(
+        &libraries,
+        &project_dir,
+        &src_dir,
+        &HashMap::new(),
+        &[],
+    );
+
+    assert_eq!(selection.required_libraries, vec!["WiFi"]);
+    assert_eq!(selection.source_files, vec![wifi_dir.join("WiFi.cpp")]);
+    assert_eq!(selection.include_dirs, vec![wifi_dir]);
+}
+
+#[test]
+fn external_library_source_selects_framework_dependency() {
+    // An external lib is compiled from its own .cpp files, so those files must
+    // seed ESP32's LDF pass or a <WiFi.h> dependency is omitted at link time.
+    let tmp = tempfile::TempDir::new().unwrap();
+    let project_dir = tmp.path().join("project");
+    let src_dir = project_dir.join("src");
+    std::fs::create_dir_all(&src_dir).unwrap();
+    std::fs::write(src_dir.join("main.cpp"), "void setup() {}\n").unwrap();
+
+    let external_dir = tmp.path().join("external").join("src");
+    std::fs::create_dir_all(&external_dir).unwrap();
+    let external_source = external_dir.join("transport.cpp");
+    std::fs::write(&external_source, "#include <WiFi.h>\n").unwrap();
+
+    let wifi_dir = tmp.path().join("framework").join("libraries").join("WiFi");
+    std::fs::create_dir_all(&wifi_dir).unwrap();
+    std::fs::write(wifi_dir.join("WiFi.h"), "").unwrap();
+    std::fs::write(wifi_dir.join("WiFi.cpp"), "int wifi;\n").unwrap();
+
+    let selection = resolve_framework_library_selection_active_declared_with_extra(
+        &[FrameworkLibrary {
+            name: "WiFi".to_string(),
+            dir: wifi_dir.clone(),
+            include_dirs: vec![wifi_dir.clone()],
+            source_files: vec![wifi_dir.join("WiFi.cpp")],
+        }],
+        &project_dir,
+        &src_dir,
+        &HashMap::new(),
+        &[],
+        &[external_source],
+        &[external_dir],
+    );
+
+    assert_eq!(selection.required_libraries, vec!["WiFi"]);
+}

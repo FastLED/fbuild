@@ -8,9 +8,45 @@
 //! overlay) can reach them without depending on `esp32::orchestrator::helpers`.
 //! See FastLED/fbuild#587.
 
+use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
 use fbuild_core::Result;
+
+/// Apply the effective `-D` / `-U` compiler flags used by library selection.
+/// `build_unflags` remove inherited board/MCU defines before later user flags
+/// are applied, matching the compiler overlay order.
+pub(super) fn apply_effective_define_flags(
+    defines: &mut HashMap<String, String>,
+    flags: &[String],
+    build_unflags: &[String],
+) {
+    for flag in build_unflags {
+        if let Some(name) = define_name(flag) {
+            defines.remove(name);
+        }
+    }
+    for flag in flags {
+        if let Some((name, value)) = define_value(flag) {
+            defines.insert(name.to_string(), value.to_string());
+        } else if let Some(name) = flag.strip_prefix("-U") {
+            defines.remove(name.trim());
+        }
+    }
+}
+
+fn define_name(flag: &str) -> Option<&str> {
+    let raw = flag.strip_prefix("-D")?;
+    let name = raw.split_once('=').map_or(raw, |(name, _)| name).trim();
+    (!name.is_empty()).then_some(name)
+}
+
+fn define_value(flag: &str) -> Option<(&str, &str)> {
+    let raw = flag.strip_prefix("-D")?.trim();
+    let (name, value) = raw.split_once('=').unwrap_or((raw, "1"));
+    let name = name.trim();
+    (!name.is_empty()).then_some((name, value))
+}
 
 pub(super) fn framework_failure_marker(build_dir: &Path, lib_name: &str) -> PathBuf {
     build_dir.join(format!(".{lib_name}.failed"))
