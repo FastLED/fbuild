@@ -61,10 +61,63 @@ pub fn resolve_framework_library_sources_active_declared(
     defines: &HashMap<String, String>,
     declared: &[String],
 ) -> Vec<PathBuf> {
+    resolve_framework_library_selection_active_declared(
+        libraries,
+        project_dir,
+        src_dir,
+        defines,
+        declared,
+    )
+    .source_files
+}
+
+/// Resolve the selected framework-library records using active branches and
+/// explicit declarations.
+///
+/// Most orchestrators only need the flattened source list. ESP32 also needs
+/// the selected include roots and library names so it can retain its one-archive
+/// per library layout without compiling every bundled Arduino library.
+pub fn resolve_framework_library_selection_active_declared(
+    libraries: &[FrameworkLibrary],
+    project_dir: &Path,
+    src_dir: &Path,
+    defines: &HashMap<String, String>,
+    declared: &[String],
+) -> fbuild_library_select::Selection {
+    resolve_framework_library_selection_active_declared_with_extra(
+        libraries,
+        project_dir,
+        src_dir,
+        defines,
+        declared,
+        &[],
+        &[],
+    )
+}
+
+/// Active framework selection with additional translation-unit seeds and
+/// include roots supplied by externally declared libraries.
+///
+/// An external library can include a framework header from one of its own
+/// `.cpp` files. The compiler sees that dependency, so the LDF must see it as
+/// well or the selected framework archive is omitted from the final link.
+pub fn resolve_framework_library_selection_active_declared_with_extra(
+    libraries: &[FrameworkLibrary],
+    project_dir: &Path,
+    src_dir: &Path,
+    defines: &HashMap<String, String>,
+    declared: &[String],
+    extra_source_files: &[PathBuf],
+    extra_include_dirs: &[PathBuf],
+) -> fbuild_library_select::Selection {
     let roots = framework_include_scan_roots(project_dir, src_dir);
     let filtered = filter_framework_libs_shadowed_by_project(libraries, &roots);
-    let seeds = collect_project_seeds(&roots);
-    let search_paths = project_search_paths(&roots);
+    let mut seeds = collect_project_seeds(&roots);
+    seeds.extend_from_slice(extra_source_files);
+    let mut search_paths = project_search_paths(&roots);
+    for include_dir in extra_include_dirs {
+        push_existing_unique(&mut search_paths, include_dir.clone());
+    }
     fbuild_library_select::resolve_with_stats_active_declared(
         &seeds,
         &search_paths,
@@ -73,7 +126,6 @@ pub fn resolve_framework_library_sources_active_declared(
         declared,
     )
     .0
-    .source_files
 }
 
 /// Warn when a project sets `lib_ldf_mode`, which fbuild does not implement.

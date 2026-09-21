@@ -2,6 +2,7 @@
 
 use super::Esp32Orchestrator;
 use super::cdc::{cdc_on_boot_enabled, is_esp32_project, warn_if_cdc_on_boot};
+use super::helpers::apply_effective_define_flags;
 use super::helpers::{
     framework_failure_marker, framework_signature, record_failed_framework_lib,
     should_skip_failed_framework_lib,
@@ -189,4 +190,41 @@ fn test_retry_failed_framework_lib_after_signature_change() {
     record_failed_framework_lib(&marker, &sig_a, "compile failed");
 
     assert!(!should_skip_failed_framework_lib(&marker, &sig_b, &[source]).unwrap());
+}
+
+#[test]
+fn effective_define_flags_match_compiler_overlay_order() {
+    let mut defines = std::collections::HashMap::from([
+        ("BOARD_ONLY".to_string(), "1".to_string()),
+        ("DISABLED_BY_UNFLAG".to_string(), "1".to_string()),
+    ]);
+    let sdk_flags = vec![
+        "-DDISABLED_BY_UNFLAG".to_string(),
+        "-DENABLE_WIFI".to_string(),
+    ];
+    let user_flags = vec![
+        "-DDISABLED_BY_UNFLAG=0".to_string(),
+        "-DREMOVED_USER_DEFINE".to_string(),
+        "-DVALUE=42".to_string(),
+        "-UVALUE".to_string(),
+    ];
+    let build_unflags = vec![
+        "-DDISABLED_BY_UNFLAG".to_string(),
+        "-DREMOVED_USER_DEFINE".to_string(),
+    ];
+
+    apply_effective_define_flags(&mut defines, &sdk_flags, &user_flags, &build_unflags);
+
+    assert_eq!(defines.get("BOARD_ONLY"), Some(&"1".to_string()));
+    assert_eq!(defines.get("ENABLE_WIFI"), Some(&"1".to_string()));
+    assert_eq!(
+        defines.get("DISABLED_BY_UNFLAG"),
+        Some(&"0".to_string()),
+        "user flags must override an unflagged SDK definition"
+    );
+    assert!(
+        !defines.contains_key("REMOVED_USER_DEFINE"),
+        "an exact user flag listed in build_unflags must remain removed"
+    );
+    assert!(!defines.contains_key("VALUE"));
 }

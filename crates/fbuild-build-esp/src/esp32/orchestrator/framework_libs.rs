@@ -1,6 +1,10 @@
-//! Compile framework built-in libraries (WiFi, FS, SPIFFS, Network, etc.)
-//! shipped under `framework/libraries/<lib>/src/`. Linker `--gc-sections`
-//! strips unused code, so we err on the side of compiling everything.
+//! Compile selected framework built-in libraries (WiFi, FS, SPIFFS, Network,
+//! etc.) shipped under `framework/libraries/<lib>/src/`.
+//!
+//! The ESP32 linker cannot reliably garbage-collect every bundled Arduino
+//! library: Matter carries global roots that pull its full networking stack into
+//! otherwise empty sketches. Callers must therefore pass only the libraries
+//! selected by the active-branch LDF resolver (FastLED/fbuild#1449).
 
 use std::path::{Path, PathBuf};
 use std::time::Instant;
@@ -19,7 +23,7 @@ use crate::BuildParams;
 use crate::compiler::Compiler as _;
 use crate::flag_overlay::{LanguageExtraFlags, apply_overlay_flags};
 
-/// Compile every Arduino built-in library shipped with the ESP32 framework.
+/// Compile LDF-selected Arduino framework libraries for ESP32.
 /// Library archives are appended to `library_archives`.
 #[allow(clippy::too_many_arguments)]
 pub(super) async fn compile_framework_builtin_libs(
@@ -35,6 +39,7 @@ pub(super) async fn compile_framework_builtin_libs(
     user_overlay: &LanguageExtraFlags,
     build_dir: &Path,
     compiler_cache: Option<&Path>,
+    selected_libraries: &[fbuild_packages::library::FrameworkLibrary],
     library_archives: &mut Vec<PathBuf>,
     build_log: &mut fbuild_core::BuildLog,
 ) -> Result<()> {
@@ -128,158 +133,138 @@ pub(super) async fn compile_framework_builtin_libs(
     let mut fw_lib_stored = 0;
     let mut fw_lib_count = 0;
     let mut fw_lib_seen = 0;
-    if let Ok(entries) = std::fs::read_dir(&builtin_libs_dir) {
-        for entry in entries.flatten() {
-            let path = entry.path();
-            if !path.is_dir() {
-                continue;
-            }
-            let lib_name = path
-                .file_name()
-                .unwrap_or_default()
-                .to_string_lossy()
-                .to_lowercase();
-            if lib_name.starts_with('.') || already_compiled.contains(&lib_name) {
-                continue;
-            }
+    for library in selected_libraries {
+        let lib_name = library.name.to_lowercase();
+        if already_compiled.contains(&lib_name) {
+            continue;
+        }
 
-            let lib_src = path.join("src");
-            if !lib_src.is_dir() {
-                continue;
-            }
+        fw_lib_seen += 1;
 
-            fw_lib_seen += 1;
-
-            // Check if archive already exists
-            let archive_path = fw_libs_build_dir.join(format!("lib{}.a", lib_name));
-            if archive_path.exists() {
-                if perf.is_active() {
-                    perf.checkpoint(format!(
-                        "fw-lib-cache-hit name={} index={}",
-                        lib_name, fw_lib_seen
-                    ));
-                }
-                library_archives.push(archive_path);
-                fw_lib_count += 1;
-                continue;
-            }
-
-            // Collect source files
-            let lib_info =
-                fbuild_packages::library::library_info::InstalledLibrary::new(&path, &lib_name);
-            let sources = lib_info.get_source_files();
-            if sources.is_empty() {
-                continue;
-            }
-            let failure_marker = framework_failure_marker(&fw_libs_build_dir, &lib_name);
-            if should_skip_failed_framework_lib(&failure_marker, &fw_signature, &sources)? {
-                if perf.is_active() {
-                    perf.checkpoint(format!(
-                        "fw-lib-skip-failed name={} index={} sources={}",
-                        lib_name,
-                        fw_lib_seen,
-                        sources.len()
-                    ));
-                }
-                tracing::debug!(
-                    "skipping previously failed framework library '{}'",
-                    lib_name
-                );
-                continue;
-            }
-            if framework_cache.has_failed(&lib_name) {
-                if perf.is_active() {
-                    perf.checkpoint(format!(
-                        "fw-lib-cache-skip-failed name={} index={}",
-                        lib_name, fw_lib_seen
-                    ));
-                }
-                continue;
-            }
-
-            let fw_jobs = crate::parallel::effective_jobs(params.jobs);
+        // Check if archive already exists
+        let archive_path = fw_libs_build_dir.join(format!("lib{}.a", lib_name));
+        if archive_path.exists() {
             if perf.is_active() {
                 perf.checkpoint(format!(
-                    "fw-lib-compile-start name={} index={} sources={} jobs={}",
-                    lib_name,
-                    fw_lib_seen,
-                    sources.len(),
-                    fw_jobs
+                    "fw-lib-cache-hit name={} index={}",
+                    lib_name, fw_lib_seen
                 ));
             }
-            // Use gcc-ar for LTO archives so the linker-plugin index is written.
-            let fw_ar_path = toolchain.get_ar_path();
-            let fw_gcc_ar_path = toolchain.get_gcc_ar_path();
-            let fw_lib_ar_path = crate::pipeline::pick_archiver(
-                &fw_ar_path,
-                &fw_gcc_ar_path,
-                &fw_c_flags,
-                &fw_cpp_flags,
+            library_archives.push(archive_path);
+            fw_lib_count += 1;
+            continue;
+        }
+
+        let sources = &library.source_files;
+        if sources.is_empty() {
+            continue;
+        }
+        let failure_marker = framework_failure_marker(&fw_libs_build_dir, &lib_name);
+        if should_skip_failed_framework_lib(&failure_marker, &fw_signature, sources)? {
+            if perf.is_active() {
+                perf.checkpoint(format!(
+                    "fw-lib-skip-failed name={} index={} sources={}",
+                    lib_name,
+                    fw_lib_seen,
+                    sources.len()
+                ));
+            }
+            tracing::debug!(
+                "skipping previously failed framework library '{}'",
+                lib_name
             );
-            match fbuild_packages::library::library_compiler::compile_library_with_jobs(
-                &lib_name,
-                &sources,
-                include_dirs,
-                &toolchain.get_gcc_path(),
-                &toolchain.get_gxx_path(),
-                fw_lib_ar_path,
-                &fw_c_flags,
-                &fw_cpp_flags,
-                &fw_libs_build_dir,
-                params.verbose,
-                fw_jobs,
-                compiler_cache,
-                fw_compile_cwd.clone(),
-                Some(lib_backend.clone()),
-            )
-            .await
-            {
-                Ok(Some(archive)) => {
-                    let _ = std::fs::remove_file(&failure_marker);
-                    match framework_cache.store_archive(&archive) {
-                        Ok(()) => fw_lib_stored += 1,
-                        Err(error) => tracing::warn!(
-                            "failed to cache framework library {}: {}",
-                            lib_name,
-                            error
-                        ),
-                    }
-                    library_archives.push(archive);
-                    fw_lib_count += 1;
-                    if perf.is_active() {
-                        perf.checkpoint(format!(
-                            "fw-lib-compile-finish name={} index={} count={}",
-                            lib_name, fw_lib_seen, fw_lib_count
-                        ));
+            continue;
+        }
+        if framework_cache.has_failed(&lib_name) {
+            if perf.is_active() {
+                perf.checkpoint(format!(
+                    "fw-lib-cache-skip-failed name={} index={}",
+                    lib_name, fw_lib_seen
+                ));
+            }
+            continue;
+        }
+
+        let fw_jobs = crate::parallel::effective_jobs(params.jobs);
+        if perf.is_active() {
+            perf.checkpoint(format!(
+                "fw-lib-compile-start name={} index={} sources={} jobs={}",
+                lib_name,
+                fw_lib_seen,
+                sources.len(),
+                fw_jobs
+            ));
+        }
+        // Use gcc-ar for LTO archives so the linker-plugin index is written.
+        let fw_ar_path = toolchain.get_ar_path();
+        let fw_gcc_ar_path = toolchain.get_gcc_ar_path();
+        let fw_lib_ar_path = crate::pipeline::pick_archiver(
+            &fw_ar_path,
+            &fw_gcc_ar_path,
+            &fw_c_flags,
+            &fw_cpp_flags,
+        );
+        match fbuild_packages::library::library_compiler::compile_library_with_jobs(
+            &lib_name,
+            sources,
+            include_dirs,
+            &toolchain.get_gcc_path(),
+            &toolchain.get_gxx_path(),
+            fw_lib_ar_path,
+            &fw_c_flags,
+            &fw_cpp_flags,
+            &fw_libs_build_dir,
+            params.verbose,
+            fw_jobs,
+            compiler_cache,
+            fw_compile_cwd.clone(),
+            Some(lib_backend.clone()),
+        )
+        .await
+        {
+            Ok(Some(archive)) => {
+                let _ = std::fs::remove_file(&failure_marker);
+                match framework_cache.store_archive(&archive) {
+                    Ok(()) => fw_lib_stored += 1,
+                    Err(error) => {
+                        tracing::warn!("failed to cache framework library {}: {}", lib_name, error)
                     }
                 }
-                Ok(None) => {
-                    if perf.is_active() {
-                        perf.checkpoint(format!(
-                            "fw-lib-header-only name={} index={}",
-                            lib_name, fw_lib_seen
-                        ));
-                    }
+                library_archives.push(archive);
+                fw_lib_count += 1;
+                if perf.is_active() {
+                    perf.checkpoint(format!(
+                        "fw-lib-compile-finish name={} index={} count={}",
+                        lib_name, fw_lib_seen, fw_lib_count
+                    ));
                 }
-                Err(e) => {
-                    // Non-fatal: some framework libs may fail to compile
-                    // (e.g., platform-specific ones). The linker will report
-                    // if any actually-needed symbols are missing.
-                    if perf.is_active() {
-                        perf.checkpoint(format!(
-                            "fw-lib-compile-error name={} index={}",
-                            lib_name, fw_lib_seen
-                        ));
-                    }
-                    tracing::debug!("framework library {} failed to compile: {}", lib_name, e);
-                    record_failed_framework_lib(&failure_marker, &fw_signature, &e.to_string());
-                    if let Err(error) = framework_cache.record_failure(&lib_name) {
-                        tracing::warn!(
-                            "failed to cache framework library failure {}: {}",
-                            lib_name,
-                            error
-                        );
-                    }
+            }
+            Ok(None) => {
+                if perf.is_active() {
+                    perf.checkpoint(format!(
+                        "fw-lib-header-only name={} index={}",
+                        lib_name, fw_lib_seen
+                    ));
+                }
+            }
+            Err(e) => {
+                // Non-fatal: some framework libs may fail to compile
+                // (e.g., platform-specific ones). The linker will report
+                // if any actually-needed symbols are missing.
+                if perf.is_active() {
+                    perf.checkpoint(format!(
+                        "fw-lib-compile-error name={} index={}",
+                        lib_name, fw_lib_seen
+                    ));
+                }
+                tracing::debug!("framework library {} failed to compile: {}", lib_name, e);
+                record_failed_framework_lib(&failure_marker, &fw_signature, &e.to_string());
+                if let Err(error) = framework_cache.record_failure(&lib_name) {
+                    tracing::warn!(
+                        "failed to cache framework library failure {}: {}",
+                        lib_name,
+                        error
+                    );
                 }
             }
         }

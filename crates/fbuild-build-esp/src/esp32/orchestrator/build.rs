@@ -5,6 +5,7 @@
 
 use std::time::Instant;
 
+use fbuild_build_engine::framework_libs::resolve_framework_library_selection_active_declared_with_extra;
 use fbuild_core::{Platform, Result};
 use fbuild_packages::Framework;
 
@@ -17,7 +18,9 @@ use super::cdc::warn_if_cdc_on_boot;
 use super::embed_stage::stage_embed_files;
 use super::fingerprint::Esp32FingerprintMetadata;
 use super::framework_libs::compile_framework_builtin_libs;
-use super::helpers::{compile_db_is_current, framework_macro_prefix_map, profile_label};
+use super::helpers::{
+    apply_effective_define_flags, compile_db_is_current, framework_macro_prefix_map, profile_label,
+};
 use super::local_libs::compile_local_libraries;
 use super::packages::resolve_pioarduino_packages;
 
@@ -260,21 +263,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         include_dirs
             .extend(framework.get_sdk_include_dirs(&sdk_variant, sdk_memory_type.as_deref()));
 
-        // Add built-in Arduino library includes (Wire, SPI, WiFi, etc.)
         let builtin_libs_dir = framework.get_libraries_dir();
-        if builtin_libs_dir.is_dir() {
-            if let Ok(entries) = std::fs::read_dir(&builtin_libs_dir) {
-                for entry in entries.flatten() {
-                    let path = entry.path();
-                    if path.is_dir() {
-                        let lib_src = path.join("src");
-                        if lib_src.is_dir() {
-                            include_dirs.push(lib_src);
-                        }
-                    }
-                }
-            }
-        }
 
         include_dirs.push(ctx.src_dir.clone());
         crate::pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
@@ -301,12 +290,13 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // already on the include path above and compiled with the framework,
         // so drop them rather than sending them to the registry, which does
         // not carry them (FastLED/fbuild#1442). RP2040 does the same.
-        let lib_deps = fbuild_library_select::external_declared_deps(
-            &ctx.config.get_lib_deps(&params.env_name)?,
-            &fbuild_packages::library::framework_library::discover_framework_libraries(
+        let declared_lib_deps = ctx.config.get_lib_deps(&params.env_name)?;
+        let framework_libraries =
+            fbuild_packages::library::framework_library::discover_framework_libraries(
                 &builtin_libs_dir,
-            ),
-        );
+            );
+        let lib_deps =
+            fbuild_library_select::external_declared_deps(&declared_lib_deps, &framework_libraries);
         let lib_ignore = ctx.config.get_lib_ignore(&params.env_name)?;
 
         use fbuild_packages::Toolchain;
@@ -314,7 +304,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
 
         // Read user build_flags early â€” needed for both library and sketch compilation.
         // SDK defines (from flags/defines) are prepended so user flags can override them.
-        let mut user_flags = sdk_defines;
+        let mut user_flags = sdk_defines.clone();
         // Before the user's build_flags, so their own prefix maps still win.
         user_flags.extend(framework_macro_prefix_map(&core_dir));
         let mut user_build_flags = ctx.config.get_build_flags(&params.env_name)?;
@@ -333,6 +323,19 @@ impl BuildOrchestrator for Esp32Orchestrator {
         );
         crate::warn_debug_build_flags(&user_build_flags);
 
+        // External libraries compile before their framework dependencies are
+        // selected. Give that compilation all bundled include roots, then seed
+        // the later LDF pass with its source files to select only the archives
+        // that external code actually reaches.
+        let mut external_base_includes = include_dirs.clone();
+        external_base_includes.extend(
+            framework_libraries
+                .iter()
+                .flat_map(|library| library.include_dirs.iter().cloned()),
+        );
+        let mut external_library_sources = Vec::new();
+        let mut external_library_include_dirs = Vec::new();
+
         if !lib_deps.is_empty() {
             let libs_dir = build_dir.join("libs");
 
@@ -346,7 +349,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 mcu_config.clone(),
                 &ctx.board.f_cpu,
                 defines.clone(),
-                include_dirs.clone(),
+                external_base_includes.clone(),
                 params.profile,
                 params.verbose,
                 build_dir.join("tmp"),
@@ -377,7 +380,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 dep_lib_ar_path,
                 &c_flags,
                 &cpp_flags,
-                &include_dirs,
+                &external_base_includes,
                 &params.project_dir,
                 &libs_dir,
                 params.verbose,
@@ -393,7 +396,9 @@ impl BuildOrchestrator for Esp32Orchestrator {
             // `-I` flags and changes each TU's zccache context key, defeating
             // cross-project cache hits. Library includes are same-tier, so a
             // stable sort is safe for include resolution.
-            let mut lib_include_dirs = lib_result.include_dirs;
+            external_library_sources = lib_result.source_files;
+            external_library_include_dirs = lib_result.include_dirs;
+            let mut lib_include_dirs = external_library_include_dirs.clone();
             lib_include_dirs.sort();
             include_dirs.extend(lib_include_dirs);
             library_archives = lib_result.archives;
@@ -404,6 +409,44 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 include_dirs.len()
             );
         }
+
+        // Unlike section GC, Arduino's Matter archive can retain global roots
+        // which pull its entire Wi-Fi/BLE stack into an otherwise empty sketch.
+        // Select only active, reachable framework libraries (or explicit
+        // `lib_deps`) after external library translation units are available.
+        let mut library_selection_defines = ctx.board.get_defines();
+        library_selection_defines.extend(mcu_config.defines_map());
+        apply_effective_define_flags(
+            &mut library_selection_defines,
+            &sdk_defines,
+            &user_build_flags,
+            &ctx.build_unflags,
+        );
+        let framework_selection = resolve_framework_library_selection_active_declared_with_extra(
+            &framework_libraries,
+            &params.project_dir,
+            &ctx.src_dir,
+            &library_selection_defines,
+            &declared_lib_deps,
+            &external_library_sources,
+            &external_library_include_dirs,
+        );
+        let selected_framework_libraries: Vec<_> = framework_libraries
+            .iter()
+            .filter(|library| {
+                framework_selection
+                    .required_libraries
+                    .iter()
+                    .any(|name| name == &library.name)
+            })
+            .cloned()
+            .collect();
+        tracing::info!(
+            libraries = ?framework_selection.required_libraries,
+            "ESP32 framework libraries selected: {}",
+            selected_framework_libraries.len()
+        );
+        include_dirs.extend(framework_selection.include_dirs);
 
         // 8.5b. Project-as-library compilation â€” shared with sequential pipeline.
         // When the project root contains library.json or library.properties (e.g., FastLED),
@@ -482,8 +525,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
 
         tracing::info!("include paths: {} total", include_dirs.len());
 
-        // 8.6. Compile framework built-in libraries (WiFi, FS, SPIFFS, Network, etc.)
-        // The linker's --gc-sections will strip any unused code.
+        // 8.6. Compile the active LDF-selected framework libraries.
         // Skip when only generating compile_commands.json.
         if !params.compiledb_only {
             compile_framework_builtin_libs(
@@ -499,6 +541,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 &user_overlay,
                 build_dir,
                 compiler_cache.as_deref(),
+                &selected_framework_libraries,
                 &mut library_archives,
                 &mut ctx.build_log,
             )
