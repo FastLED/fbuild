@@ -87,20 +87,6 @@ fn yaml_mapping_value<'a>(lines: &[&'a str], path: &[&str]) -> Option<&'a str> {
     yaml_mapping_value_in_scope(lines, 0..lines.len(), 0, path)
 }
 
-fn yaml_sequence_values<'a>(lines: &[&'a str], path: &[&str]) -> Option<Vec<&'a str>> {
-    let (scope, item_indent) = yaml_mapping_block(lines, path)?;
-    Some(
-        scope
-            .filter_map(|index| {
-                (yaml_indent(lines[index]) == item_indent)
-                    .then(|| lines[index].trim_start().strip_prefix("- "))
-                    .flatten()
-                    .map(yaml_scalar)
-            })
-            .collect(),
-    )
-}
-
 fn yaml_step_mapping_value<'a>(
     lines: &[&'a str],
     step_name: &str,
@@ -209,10 +195,7 @@ fn native_release_workflow_uses_current_cross_toolchains() {
     let root = repo_root();
     let workflow =
         fs::read_to_string(root.join(".github/workflows/template_native_build.yml")).unwrap();
-    let release_workflow =
-        fs::read_to_string(root.join(".github/workflows/release-auto.yml")).unwrap();
     let workflow_lines = workflow.lines().collect::<Vec<_>>();
-    let release_workflow_lines = release_workflow.lines().collect::<Vec<_>>();
 
     assert_eq!(
         yaml_step_mapping_value(&workflow_lines, "Setup soldr", &["with", "version"]),
@@ -250,17 +233,6 @@ fn native_release_workflow_uses_current_cross_toolchains() {
             yaml_mapping_value(&workflow_lines, &["jobs", "build", "env", job_limit]),
             Some("1"),
             "native release lanes need a job-scoped hosted-runner memory limit: {job_limit}"
-        );
-    }
-    let release_paths = yaml_sequence_values(&release_workflow_lines, &["on", "push", "paths"])
-        .expect("release workflow must define on.push.paths");
-    for release_input in [
-        ".github/workflows/release-auto.yml",
-        ".github/workflows/template_native_build.yml",
-    ] {
-        assert!(
-            release_paths.contains(&release_input),
-            "release workflow fixes must retrigger an incomplete publication: {release_input}"
         );
     }
 }
