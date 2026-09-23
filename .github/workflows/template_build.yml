@@ -47,7 +47,8 @@ jobs:
 
       - name: Setup soldr
         id: setup-soldr
-        uses: zackees/setup-soldr@v0
+        # Canary setup-soldr#517's merged worker-lifecycle fix on full board CI.
+        uses: zackees/setup-soldr@f63d8987580fd50667d95b19130e82d9691ddd75
         with:
           # cache-preset: foundation expands to:
           #   build-cache: true, target-cache: false,

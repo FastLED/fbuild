@@ -111,6 +111,9 @@ block fails CI with a copy-paste fix.
 ### Bumping soldr
 
 All `zackees/setup-soldr@v0` steps pin the installed soldr binary version.
+The full board template temporarily pins the setup action itself to merged
+commit `f63d8987580fd50667d95b19130e82d9691ddd75` as a downstream canary
+for setup-soldr#517 before the floating `v0` reference moves.
 When bumping it, first confirm the proposed tag is a published, non-draft
 release with the required platform assets. Update every setup-soldr call site
 in one PR, retain the previous pin until that release exists, and require
