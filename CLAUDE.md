@@ -108,7 +108,7 @@ soldr cargo run -p fbuild-config --bin enrich_boards  # enrich from local Platfo
 
 ## Distribution
 
-Releases ship via the **Autonomous Release** GitHub Action (`.github/workflows/release-auto.yml`). PyPI is the distribution channel; per-platform native binaries are built, assembled into wheels, and uploaded via PyPI trusted publishing — there is no local publish script.
+Releases ship via the explicit-dispatch **Autonomous Release** GitHub Action (`.github/workflows/release-auto.yml`). PyPI is the distribution channel; per-platform native binaries are built, assembled into wheels, and uploaded via PyPI trusted publishing — there is no local publish script.
 
 To cut a release:
 
@@ -116,8 +116,10 @@ To cut a release:
 # 1. Bump version in both files (must match)
 #    Cargo.toml  -> [workspace.package] version
 #    pyproject.toml -> [project] version
-# 2. Push the bump commit to main (do NOT push a tag manually —
-#    the action creates one only after the build + upload succeed)
+# 2. Push the bump commit to main; this runs ordinary CI only.
+# 3. Dispatch release-auto.yml with the exact commit SHA and publish=false
+#    for a dry run. publish=true is currently blocked by the missing trusted
+#    all-platform physical runtime result; no tag can be minted yet.
 ```
 
 See [docs/RELEASING.md](docs/RELEASING.md) for the full flow, gating logic, and re-run instructions when a release stalls.

@@ -4,18 +4,6 @@ name: Build SparkFun Thing Plus Matter
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/sparkfun_thingplusmatter/**'
-      - 'crates/fbuild-build-arm/src/sam/**'
-      - '.github/workflows/build-thingplusmatter.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/sparkfun_thingplusmatter/**'
-      - 'crates/fbuild-build-arm/src/sam/**'
-      - '.github/workflows/build-thingplusmatter.yml'
 
 concurrency:
   group: build-thingplusmatter.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

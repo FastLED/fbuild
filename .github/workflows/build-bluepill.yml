@@ -4,18 +4,6 @@ name: Build BluePill F103C8
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/bluepill_f103c8/**'
-      - 'crates/fbuild-build-arm/src/stm32/**'
-      - '.github/workflows/build-bluepill.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/bluepill_f103c8/**'
-      - 'crates/fbuild-build-arm/src/stm32/**'
-      - '.github/workflows/build-bluepill.yml'
 
 concurrency:
   group: build-bluepill.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

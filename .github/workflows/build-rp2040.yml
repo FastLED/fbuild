@@ -4,18 +4,6 @@ name: Build RP2040
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/rp2040/**'
-      - 'crates/fbuild-build-arm/src/rp2040/**'
-      - '.github/workflows/build-rp2040.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/rp2040/**'
-      - 'crates/fbuild-build-arm/src/rp2040/**'
-      - '.github/workflows/build-rp2040.yml'
 
 concurrency:
   group: build-rp2040.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

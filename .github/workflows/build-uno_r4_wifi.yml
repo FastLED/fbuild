@@ -4,18 +4,6 @@ name: Build UNO R4 WiFi
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/uno_r4_wifi/**'
-      - 'crates/fbuild-build-arm/src/renesas/**'
-      - '.github/workflows/build-uno_r4_wifi.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/uno_r4_wifi/**'
-      - 'crates/fbuild-build-arm/src/renesas/**'
-      - '.github/workflows/build-uno_r4_wifi.yml'
 
 concurrency:
   group: build-uno_r4_wifi.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

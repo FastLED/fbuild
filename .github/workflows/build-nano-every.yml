@@ -4,18 +4,6 @@ name: Build Nano Every
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/nano_every/**'
-      - 'crates/fbuild-build-mcu/src/avr/**'
-      - '.github/workflows/build-nano-every.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/nano_every/**'
-      - 'crates/fbuild-build-mcu/src/avr/**'
-      - '.github/workflows/build-nano-every.yml'
 
 concurrency:
   group: build-nano-every.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

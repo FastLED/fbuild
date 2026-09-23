@@ -4,18 +4,6 @@ name: Build Nucleo F429ZI
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/nucleo_f429zi/**'
-      - 'crates/fbuild-build-arm/src/stm32/**'
-      - '.github/workflows/build-nucleo-f429zi.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/nucleo_f429zi/**'
-      - 'crates/fbuild-build-arm/src/stm32/**'
-      - '.github/workflows/build-nucleo-f429zi.yml'
 
 concurrency:
   group: build-nucleo-f429zi.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

@@ -4,18 +4,6 @@ name: Build Apollo3 RedBoard
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/apollo3_red/**'
-      - 'crates/fbuild-build-arm/src/apollo3/**'
-      - '.github/workflows/build-apollo3_red.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/apollo3_red/**'
-      - 'crates/fbuild-build-arm/src/apollo3/**'
-      - '.github/workflows/build-apollo3_red.yml'
 
 concurrency:
   group: build-apollo3_red.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

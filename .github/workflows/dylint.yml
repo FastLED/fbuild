@@ -1,14 +1,20 @@
 name: Dylint
 
-# Runs the custom dylints over the workspace. This is enforced as its own
-# required GitHub status check rather than being folded into `./lint`, because
-# Dylint builds the lint crates and rustc-dev driver and would force a heavy
-# recompile on every local lint call. See #264 and #994.
+# The required Dylint status checks policy files on ordinary PRs. The
+# compiler-heavy Linux/Windows lint matrix runs through ci-full or dispatch.
 
 on:
   workflow_dispatch: {}
-  push:
-    branches: [main]
+  workflow_call:
+    inputs:
+      ref:
+        type: string
+        required: false
+        default: ""
+      run_full:
+        type: boolean
+        required: false
+        default: false
   pull_request:
     branches: [main]
 
@@ -17,7 +23,7 @@ on:
 # events key on run_id so each gets its own group -- a shared group keeps
 # only ONE pending run, which would silently drop queued main SHAs.
 concurrency:
-  group: dylint.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
+  group: dylint.yml-${{ inputs.ref != '' && github.run_id || (github.event_name == 'pull_request' && github.ref || github.run_id) }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 # Read-only token. Every step here reads: checkout, a shallow `git fetch
@@ -40,12 +46,23 @@ env:
   SOLDR_JOBS: "1"
 
 jobs:
+  policy:
+    name: Dylint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.ref }}
+      - uses: astral-sh/setup-uv@v3
+      - name: Validate Dylint policy files
+        run: |
+          uv run --no-project python ci/check_dylint_allowlists.py
+          uv run --no-project python ci/enforce_platform_boundary.py --print-totals
+
   dylint:
-    # The matrix `name` is pinned per-leg rather than derived, so the ubuntu
-    # leg keeps reporting as exactly `Dylint` — that string is a required
-    # status check, and letting the matrix rename it to `Dylint
-    # (ubuntu-latest)` would leave the required check permanently pending on
-    # every PR. The Windows leg is additive and reports under its own name.
+    if: inputs.run_full || github.event_name == 'workflow_dispatch'
+    # The ordinary policy job retains the required `Dylint` status name;
+    # these full-run names distinguish compiler-heavy validation.
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -55,7 +72,7 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            name: Dylint
+            name: Dylint Full (linux)
           # FastLED/fbuild#1359 — `cargo check` only compiles the modules the
           # target platform selects, so every `#[cfg(windows)]` /
           # `platform/windows/**` module was invisible to a ubuntu-only gate.
@@ -68,7 +85,7 @@ jobs:
           # actually bite — #875, #885, #890 and #912 were all Windows path
           # handling.
           - os: windows-latest
-            name: Dylint (windows)
+            name: Dylint Full (windows)
     timeout-minutes: 90
     defaults:
       run:
@@ -78,6 +95,8 @@ jobs:
         shell: bash
     steps:
       - uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.ref }}
       - uses: astral-sh/setup-uv@v3
       - name: Validate Dylint allowlist paths
         if: matrix.os == 'ubuntu-latest'

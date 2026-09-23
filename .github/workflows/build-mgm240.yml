@@ -4,18 +4,6 @@ name: Build MGM240
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/mgm240/**'
-      - 'crates/fbuild-build-arm/src/silabs/**'
-      - '.github/workflows/build-mgm240.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/mgm240/**'
-      - 'crates/fbuild-build-arm/src/silabs/**'
-      - '.github/workflows/build-mgm240.yml'
 
 concurrency:
   group: build-mgm240.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

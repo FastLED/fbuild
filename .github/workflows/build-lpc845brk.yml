@@ -4,20 +4,6 @@ name: Build LPC845-BRK
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/lpc845brk/**'
-      - 'crates/fbuild-build-arm/src/nxplpc/**'
-      - 'crates/fbuild-build-arm/src/generic_arm/**'
-      - '.github/workflows/build-lpc845brk.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/lpc845brk/**'
-      - 'crates/fbuild-build-arm/src/nxplpc/**'
-      - 'crates/fbuild-build-arm/src/generic_arm/**'
-      - '.github/workflows/build-lpc845brk.yml'
 
 concurrency:
   group: build-lpc845brk.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

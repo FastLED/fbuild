@@ -4,23 +4,16 @@ on:
   # Don't run on every PR -- these tests take 10+ minutes each because they
   # download Teensyduino + arm-gcc + STM32duino. Trigger explicitly.
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      ref:
+        type: string
+        required: false
+        default: ""
   schedule:
     # Nightly at 04:00 UTC. Catches drift in Teensyduino / STM32duino
     # framework downloads and fbuild's resolver behaviour.
     - cron: '0 4 * * *'
-  pull_request:
-    paths:
-      # Run when something that could affect resolver behaviour changes.
-      - 'crates/fbuild-header-scan/**'
-      - 'crates/fbuild-library-select/**'
-      - 'crates/fbuild-build/src/framework_libs.rs'
-      - 'crates/fbuild-build/src/teensy/**'
-      - 'crates/fbuild-build/src/stm32/**'
-      - 'crates/fbuild-build/tests/teensylc_acceptance.rs'
-      - 'crates/fbuild-build/tests/teensy30_acceptance.rs'
-      - 'crates/fbuild-build/tests/teensy41_acceptance.rs'
-      - 'crates/fbuild-build/tests/stm32_acceptance.rs'
-      - '.github/workflows/acceptance-205.yml'
 
 # Auto-cancel superseded PR runs: pushing again to a feature branch
 # supersedes the in-flight run instead of queueing behind it. Non-PR
@@ -58,6 +51,8 @@ jobs:
             test_fn: teensy41_cold_library_selection_meets_205_ac6
     steps:
       - uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.ref }}
       - uses: astral-sh/setup-uv@v3
       - name: Setup soldr
         uses: zackees/setup-soldr@v0

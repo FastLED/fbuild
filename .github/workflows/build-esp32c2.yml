@@ -4,18 +4,6 @@ name: Build ESP32-C2
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/esp32c2/**'
-      - 'crates/fbuild-build-esp/src/esp32/**'
-      - '.github/workflows/build-esp32c2.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/esp32c2/**'
-      - 'crates/fbuild-build-esp/src/esp32/**'
-      - '.github/workflows/build-esp32c2.yml'
 
 concurrency:
   group: build-esp32c2.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

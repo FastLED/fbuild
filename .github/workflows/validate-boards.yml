@@ -2,6 +2,12 @@ name: Validate Boards
 
 on:
   workflow_dispatch: {}
+  workflow_call:
+    inputs:
+      ref:
+        type: string
+        required: false
+        default: ""
   push:
     branches: [main]
   pull_request:
@@ -12,7 +18,7 @@ on:
 # events key on run_id so each gets its own group -- a shared group keeps
 # only ONE pending run, which would silently drop queued main SHAs.
 concurrency:
-  group: validate-boards.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
+  group: validate-boards.yml-${{ inputs.ref != '' && github.run_id || (github.event_name == 'pull_request' && github.ref || github.run_id) }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
@@ -31,6 +37,8 @@ jobs:
       PLATFORMIO_TEENSY_VERSION: "5.1.0"
     steps:
       - uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.ref }}
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"

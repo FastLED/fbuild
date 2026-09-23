@@ -702,7 +702,8 @@
       "env_name": "uno",
       "firmware_ext": "hex",
       "family": "avr",
-      "core": true
+      "core": true,
+      "fractional": true
     },
     {
       "workflow": "build-uno_r4_wifi.yml",

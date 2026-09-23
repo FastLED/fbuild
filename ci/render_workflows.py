@@ -36,6 +36,9 @@ SOT_PATH = REPO / "ci" / "board_families.json"
 COMMON_PATH = REPO / "ci" / "ci_common_paths.txt"
 WORKFLOWS_DIR = REPO / ".github" / "workflows"
 NIGHTLY_PATH = WORKFLOWS_DIR / "nightly-platforms.yml"
+FULL_PATH = WORKFLOWS_DIR / "ci-full.yml"
+TEST_PATH = WORKFLOWS_DIR / "ci-test.yml"
+MINIMAL_PATH = WORKFLOWS_DIR / "ci-minimal.yml"
 
 BEGIN_MARKER = "# >>> RENDERED-ON-BEGIN (ci/render_workflows.py) -- do not edit by hand <<<\n"
 END_MARKER = "# >>> RENDERED-ON-END <<<\n"
@@ -132,21 +135,263 @@ def render_concurrency_block(board: dict) -> str:
 
 
 def render_on_block(board: dict, families: dict, common_paths: list[str]) -> str:
-    paths = render_paths_for_board(board, families, common_paths)
-    paths_yaml = "\n".join(f"      - '{p}'" for p in paths)
     return (
         "on:\n"
         "  workflow_dispatch: {}\n"
         "  workflow_call: {}\n"
+    ) + render_concurrency_block(board)
+
+
+def execution_boards(boards: list[dict]) -> list[dict]:
+    """Run identical build inputs once while retaining every workflow alias."""
+    unique: dict[tuple[str, str, str], dict] = {}
+    for board in boards:
+        key = (board["test_dir"], board["env_name"], board["firmware_ext"])
+        if key not in unique:
+            unique[key] = {**board, "workflow_aliases": [board["workflow"]]}
+        else:
+            unique[key]["workflow_aliases"].append(board["workflow"])
+    return list(unique.values())
+
+
+def render_ci(boards: list[dict], tier: str) -> str:
+    full = tier == "full"
+    minimal = tier == "minimal"
+    selected = execution_boards(boards if full else [b for b in boards if b.get("fractional", False)])
+    entries = "".join(
+        f"          - workflow: {json.dumps(b['workflow'])}\n"
+        f"            workflow_name: {json.dumps(b['workflow_name'])}\n"
+        f"            test_dir: {json.dumps(b['test_dir'])}\n"
+        f"            env_name: {json.dumps(b['env_name'])}\n"
+        f"            firmware_ext: {json.dumps(b['firmware_ext'])}\n"
+        f"            workflow_aliases: {json.dumps(b['workflow_aliases'])}\n"
+        for b in selected
+    )
+    if not selected:
+        raise ValueError("fractional CI requires at least one selected board")
+    name = f"ci-{tier}"
+    trigger = (
+        "  workflow_call:\n"
+        "    inputs:\n"
+        "      candidate_sha:\n"
+        "        type: string\n"
+        "        required: true\n"
+        + (
+            "    outputs:\n"
+            "      coverage:\n"
+            "        description: 'All full validation jobs passed on the candidate SHA'\n"
+            "        value: ${{ jobs.coverage.outputs.complete }}\n"
+            if full else ""
+        )
+        + "  workflow_dispatch:\n"
+        "    inputs:\n"
+        "      candidate_sha:\n"
+        "        description: 'Exact 40-character commit SHA to validate'\n"
+        "        type: string\n"
+        "        required: true\n"
+        if not minimal else
         "  push:\n"
         "    branches: [main]\n"
-        "    paths:\n"
-        f"{paths_yaml}\n"
         "  pull_request:\n"
         "    branches: [main]\n"
-        "    paths:\n"
-        f"{paths_yaml}\n"
-    ) + render_concurrency_block(board)
+        "    types: [opened, labeled, unlabeled, synchronize, reopened]\n"
+        "  workflow_dispatch: {}\n"
+    )
+    gate = (
+        f"    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, '{name}')\n"
+        if not minimal else ""
+    )
+    verified_ref = "${{ needs.verify.outputs.candidate_sha }}"
+    verify = (
+        "  verify:\n"
+        + gate
+        + "    runs-on: ubuntu-latest\n"
+        + "    outputs:\n"
+        + "      candidate_sha: ${{ steps.sha.outputs.candidate_sha }}\n"
+        + "    steps:\n"
+        + "      - uses: actions/checkout@v6\n"
+        + "        with:\n"
+        + "          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || inputs.candidate_sha }}\n"
+        + "          persist-credentials: false\n"
+        + "      - id: sha\n"
+        + "        env:\n"
+        + "          CANDIDATE_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || inputs.candidate_sha }}\n"
+        + "          WORKFLOW_SHA: ${{ github.sha }}\n"
+        + "          EVENT_NAME: ${{ github.event_name }}\n"
+        + "        run: |\n"
+        + "          if [[ ! \"$CANDIDATE_SHA\" =~ ^[0-9a-f]{40}$ ]]; then\n"
+        + "            echo 'candidate_sha must be an exact 40-character commit SHA' >&2\n"
+        + "            exit 1\n"
+        + "          fi\n"
+        + "          if [ \"$EVENT_NAME\" != pull_request ] && [ \"$CANDIDATE_SHA\" != \"$WORKFLOW_SHA\" ]; then\n"
+        + "            echo \"candidate $CANDIDATE_SHA differs from workflow revision $WORKFLOW_SHA; dispatch from a ref at the candidate commit\" >&2\n"
+        + "            exit 1\n"
+        + "          fi\n"
+        + "          actual=$(git rev-parse HEAD)\n"
+        + "          if [ \"$actual\" != \"$CANDIDATE_SHA\" ]; then\n"
+        + "            echo \"checkout SHA $actual does not match $CANDIDATE_SHA\" >&2\n"
+        + "            exit 1\n"
+        + "          fi\n"
+        + "          echo \"candidate_sha=$actual\" >> \"$GITHUB_OUTPUT\"\n"
+        if not minimal else ""
+    )
+    host = (
+        "  windows:\n"
+        + gate
+        + "    needs: verify\n"
+        + "    uses: ./.github/workflows/check-windows.yml\n"
+        + "    with:\n"
+        + f"      ref: {verified_ref}\n"
+        + "  dylint:\n"
+        + gate
+        + "    needs: verify\n"
+        + "    uses: ./.github/workflows/dylint.yml\n"
+        + "    with:\n"
+        + f"      ref: {verified_ref}\n"
+        + "      run_full: true\n"
+        + "  acceptance:\n"
+        + gate
+        + "    needs: verify\n"
+        + "    uses: ./.github/workflows/acceptance-205.yml\n"
+        + "    with:\n"
+        + f"      ref: {verified_ref}\n"
+        + "  bench:\n"
+        + gate
+        + "    needs: verify\n"
+        + "    uses: ./.github/workflows/bench-205.yml\n"
+        + "    with:\n"
+        + f"      ref: {verified_ref}\n"
+        + "  qemu:\n"
+        + gate
+        + "    needs: verify\n"
+        + "    uses: ./.github/workflows/qemu-linux-runtime.yml\n"
+        + "    with:\n"
+        + f"      ref: {verified_ref}\n"
+        if full else ""
+    )
+    policy = "".join(
+        f"  {job}:\n"
+        + gate
+        + "    needs: verify\n"
+        + f"    uses: ./.github/workflows/{workflow}\n"
+        + "    with:\n"
+        + f"      ref: {verified_ref}\n"
+        for job, workflow in (
+            ("fmt", "fmt.yml"),
+            ("docs", "docs.yml"),
+            ("msrv", "msrv.yml"),
+            ("validate_boards", "validate-boards.yml"),
+            ("crate_gate", "crate-gate.yml"),
+        )
+    ) if full else ""
+    return (
+        f"# Generated by ci/render_workflows.py from ci/board_families.json.\n"
+        f"name: {name}\n\n"
+        "on:\n" + trigger + "\n"
+        "concurrency:\n"
+        f"  group: {name}-${{{{ github.event_name == 'pull_request' && github.ref || github.run_id }}}}\n"
+        "  cancel-in-progress: ${{ github.event_name == 'pull_request' }}\n\n"
+        "jobs:\n"
+        + verify
+        + "  linux:\n"
+        + ("    if: github.event_name != 'pull_request' || (!contains(github.event.pull_request.labels.*.name, 'ci-test') && !contains(github.event.pull_request.labels.*.name, 'ci-full'))\n" if minimal else gate)
+        + ("" if minimal else "    needs: verify\n")
+        + "    uses: ./.github/workflows/check-ubuntu.yml\n"
+        + "    with:\n"
+        + ("      ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}\n" if minimal else f"      ref: {verified_ref}\n")
+        + host
+        + policy
+        + ("" if minimal else
+           "  boards:\n"
+           + gate
+           + "    needs: verify\n"
+           + "    name: ${{ matrix.workflow_name }}\n"
+           + "    strategy:\n"
+           + "      fail-fast: false\n"
+           + "      matrix:\n"
+           + "        include:\n"
+           + entries
+           + "    uses: ./.github/workflows/template_build.yml\n"
+           + "    with:\n"
+           + "      workflow-name: ${{ matrix.workflow_name }}\n"
+           + "      test-dir: ${{ matrix.test_dir }}\n"
+           + "      env-name: ${{ matrix.env_name }}\n"
+           + "      firmware-ext: ${{ matrix.firmware_ext }}\n"
+           + f"      checkout_ref: {verified_ref}\n")
+        + ("" if minimal else
+            "  coverage:\n"
+            + ("    name: Full coverage\n" if full else "    name: ci-test coverage\n")
+            + "    if: always()\n"
+            + ("    needs: [verify, boards, linux, windows, dylint, acceptance, bench, qemu, fmt, docs, msrv, validate_boards, crate_gate]\n" if full else "    needs: [verify, boards, linux]\n")
+            + "    runs-on: ubuntu-latest\n"
+            + "    outputs:\n"
+            + "      complete: ${{ steps.complete.outputs.complete }}\n"
+            + "    steps:\n"
+            + "      - id: complete\n"
+            + "        env:\n"
+            + "          EVENT_NAME: ${{ github.event_name }}\n"
+            + f"          LABEL_PRESENT: ${{{{ contains(github.event.pull_request.labels.*.name, '{name}') }}}}\n"
+            + "          VERIFY: ${{ needs.verify.result }}\n"
+            + "          BOARDS: ${{ needs.boards.result }}\n"
+            + "          LINUX: ${{ needs.linux.result }}\n"
+            + ("          WINDOWS: ${{ needs.windows.result }}\n"
+               "          DYLINT: ${{ needs.dylint.result }}\n"
+               "          ACCEPTANCE: ${{ needs.acceptance.result }}\n"
+               "          BENCH: ${{ needs.bench.result }}\n"
+               "          QEMU: ${{ needs.qemu.result }}\n"
+               "          FMT: ${{ needs.fmt.result }}\n"
+               "          DOCS: ${{ needs.docs.result }}\n"
+               "          MSRV: ${{ needs.msrv.result }}\n"
+               "          VALIDATE_BOARDS: ${{ needs.validate_boards.result }}\n"
+               "          CRATE_GATE: ${{ needs.crate_gate.result }}\n" if full else "")
+            + "        run: |\n"
+            + "          if [ \"$EVENT_NAME\" = pull_request ] && [ \"$LABEL_PRESENT\" != true ]; then\n"
+            + "            echo 'complete=false' >> \"$GITHUB_OUTPUT\"\n"
+            + "            echo 'Optional tier is not selected on this PR; coverage is incomplete' >&2\n"
+            + "            exit 1\n"
+            + "          fi\n"
+            + ("          for result in \"$VERIFY\" \"$BOARDS\" \"$LINUX\" \"$WINDOWS\" \"$DYLINT\" \"$ACCEPTANCE\" \"$BENCH\" \"$QEMU\" \"$FMT\" \"$DOCS\" \"$MSRV\" \"$VALIDATE_BOARDS\" \"$CRATE_GATE\"; do\n" if full else "          for result in \"$VERIFY\" \"$BOARDS\" \"$LINUX\"; do\n")
+            + "            if [ \"$result\" != success ]; then\n"
+            + "              echo \"coverage incomplete: $result\" >&2\n"
+            + "              exit 1\n"
+            + "            fi\n"
+            + "          done\n"
+            + "          echo 'complete=true' >> \"$GITHUB_OUTPUT\"\n"
+        )
+        + ("  test:\n"
+           "    if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'ci-test') && !contains(github.event.pull_request.labels.*.name, 'ci-full')\n"
+           "    uses: ./.github/workflows/ci-test.yml\n"
+           "    with:\n"
+           "      candidate_sha: ${{ github.event.pull_request.head.sha }}\n"
+           "  full:\n"
+           "    if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'ci-full')\n"
+           "    uses: ./.github/workflows/ci-full.yml\n"
+           "    with:\n"
+           "      candidate_sha: ${{ github.event.pull_request.head.sha }}\n"
+           "  selected-coverage:\n"
+           "    name: CI selected coverage\n"
+           "    if: always()\n"
+           "    needs: [linux, test, full]\n"
+           "    runs-on: ubuntu-latest\n"
+           "    steps:\n"
+           "      - env:\n"
+           "          LINUX: ${{ needs.linux.result }}\n"
+           "          TEST_SELECTED: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test') }}\n"
+           "          TEST_RESULT: ${{ needs.test.result }}\n"
+           "          FULL_SELECTED: ${{ contains(github.event.pull_request.labels.*.name, 'ci-full') }}\n"
+           "          FULL_RESULT: ${{ needs.full.result }}\n"
+           "          FULL_COVERAGE: ${{ needs.full.outputs.coverage }}\n"
+           "        run: |\n"
+           "          if [ \"$FULL_SELECTED\" = true ]; then\n"
+           "            test \"$FULL_RESULT\" = success\n"
+           "            test \"$FULL_COVERAGE\" = true\n"
+           "          elif [ \"$TEST_SELECTED\" = true ]; then\n"
+           "            test \"$TEST_RESULT\" = success\n"
+           "          else\n"
+           "            test \"$LINUX\" = success\n"
+           "          fi\n"
+           if minimal else "")
+    )
 
 
 def _find_on_and_jobs(lines: list[str]) -> tuple[int, int]:
@@ -218,12 +463,13 @@ def render_nightly(boards: list[dict]) -> str:
     expressions.
     """
     matrix_entries: list[str] = []
-    for b in boards:
+    for b in execution_boards(boards):
         matrix_entries.append(
             f"          - workflow_name: {json.dumps(b['workflow_name'])}\n"
             f"            test_dir: {json.dumps(b['test_dir'])}\n"
             f"            env_name: {json.dumps(b['env_name'])}\n"
             f"            firmware_ext: {json.dumps(b['firmware_ext'])}\n"
+            f"            workflow_aliases: {json.dumps(b['workflow_aliases'])}\n"
         )
     jobs_yaml = (
         "  build:\n"
@@ -352,6 +598,9 @@ def main() -> int:
         write_if_changed(path, new, args.check, drift, updated)
 
     write_if_changed(NIGHTLY_PATH, render_nightly(boards), args.check, drift, updated)
+    write_if_changed(MINIMAL_PATH, render_ci(boards, "minimal"), args.check, drift, updated)
+    write_if_changed(TEST_PATH, render_ci(boards, "test"), args.check, drift, updated)
+    write_if_changed(FULL_PATH, render_ci(boards, "full"), args.check, drift, updated)
 
     if args.check and drift:
         print("Drift detected -- the following workflows are out of sync with the SOT:", file=sys.stderr)

@@ -4,18 +4,6 @@ name: Build Raspberry Pi Pico 2
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/rpipico2/**'
-      - 'crates/fbuild-build-arm/src/rp2040/**'
-      - '.github/workflows/build-rpipico2.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/rpipico2/**'
-      - 'crates/fbuild-build-arm/src/rp2040/**'
-      - '.github/workflows/build-rpipico2.yml'
 
 concurrency:
   group: build-rpipico2.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

@@ -4,18 +4,6 @@ name: Build QT Py M0
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/qtpy_m0/**'
-      - 'crates/fbuild-build-arm/src/sam/**'
-      - '.github/workflows/build-qtpy_m0.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/qtpy_m0/**'
-      - 'crates/fbuild-build-arm/src/sam/**'
-      - '.github/workflows/build-qtpy_m0.yml'
 
 concurrency:
   group: build-qtpy_m0.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
