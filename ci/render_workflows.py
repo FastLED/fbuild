@@ -242,6 +242,12 @@ def render_ci(boards: list[dict], tier: str) -> str:
         + "    uses: ./.github/workflows/check-windows.yml\n"
         + "    with:\n"
         + f"      ref: {verified_ref}\n"
+        + "  macos:\n"
+        + gate
+        + "    needs: verify\n"
+        + "    uses: ./.github/workflows/check-macos.yml\n"
+        + "    with:\n"
+        + f"      ref: {verified_ref}\n"
         + "  dylint:\n"
         + gate
         + "    needs: verify\n"
@@ -322,7 +328,7 @@ def render_ci(boards: list[dict], tier: str) -> str:
             "  coverage:\n"
             + ("    name: Full coverage\n" if full else "    name: ci-test coverage\n")
             + "    if: always()\n"
-            + ("    needs: [verify, boards, linux, windows, dylint, acceptance, bench, qemu, fmt, docs, msrv, validate_boards, crate_gate]\n" if full else "    needs: [verify, boards, linux]\n")
+            + ("    needs: [verify, boards, linux, windows, macos, dylint, acceptance, bench, qemu, fmt, docs, msrv, validate_boards, crate_gate]\n" if full else "    needs: [verify, boards, linux]\n")
             + "    runs-on: ubuntu-latest\n"
             + "    outputs:\n"
             + "      complete: ${{ steps.complete.outputs.complete }}\n"
@@ -335,6 +341,7 @@ def render_ci(boards: list[dict], tier: str) -> str:
             + "          BOARDS: ${{ needs.boards.result }}\n"
             + "          LINUX: ${{ needs.linux.result }}\n"
             + ("          WINDOWS: ${{ needs.windows.result }}\n"
+               "          MACOS: ${{ needs.macos.result }}\n"
                "          DYLINT: ${{ needs.dylint.result }}\n"
                "          ACCEPTANCE: ${{ needs.acceptance.result }}\n"
                "          BENCH: ${{ needs.bench.result }}\n"
@@ -350,7 +357,7 @@ def render_ci(boards: list[dict], tier: str) -> str:
             + "            echo 'Optional tier is not selected on this PR; coverage is incomplete' >&2\n"
             + "            exit 1\n"
             + "          fi\n"
-            + ("          for result in \"$VERIFY\" \"$BOARDS\" \"$LINUX\" \"$WINDOWS\" \"$DYLINT\" \"$ACCEPTANCE\" \"$BENCH\" \"$QEMU\" \"$FMT\" \"$DOCS\" \"$MSRV\" \"$VALIDATE_BOARDS\" \"$CRATE_GATE\"; do\n" if full else "          for result in \"$VERIFY\" \"$BOARDS\" \"$LINUX\"; do\n")
+            + ("          for result in \"$VERIFY\" \"$BOARDS\" \"$LINUX\" \"$WINDOWS\" \"$MACOS\" \"$DYLINT\" \"$ACCEPTANCE\" \"$BENCH\" \"$QEMU\" \"$FMT\" \"$DOCS\" \"$MSRV\" \"$VALIDATE_BOARDS\" \"$CRATE_GATE\"; do\n" if full else "          for result in \"$VERIFY\" \"$BOARDS\" \"$LINUX\"; do\n")
             + "            if [ \"$result\" != success ]; then\n"
             + "              echo \"coverage incomplete: $result\" >&2\n"
             + "              exit 1\n"

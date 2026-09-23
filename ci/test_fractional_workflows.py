@@ -34,6 +34,14 @@ class FractionalWorkflowTests(unittest.TestCase):
         self.assertFalse(full["jobs"]["boards"]["strategy"]["fail-fast"])
         self.assertEqual("./.github/workflows/check-ubuntu.yml", full["jobs"]["linux"]["uses"])
         self.assertEqual("./.github/workflows/check-windows.yml", full["jobs"]["windows"]["uses"])
+        self.assertEqual("./.github/workflows/check-macos.yml", full["jobs"]["macos"]["uses"])
+        self.assertNotIn("macos", self.load("ci-minimal.yml")["jobs"])
+        self.assertNotIn("macos", self.load("ci-test.yml")["jobs"])
+        macos = self.load("check-macos.yml")
+        self.assertEqual(
+            {"macos-15-intel", "macos-15"},
+            set(macos["jobs"]["test"]["strategy"]["matrix"]["runner"]),
+        )
         self.assertEqual("./.github/workflows/dylint.yml", full["jobs"]["dylint"]["uses"])
         self.assertTrue(full["jobs"]["dylint"]["with"]["run_full"])
         dylint = self.load("dylint.yml")
@@ -141,13 +149,13 @@ class FractionalWorkflowTests(unittest.TestCase):
     def test_full_coverage_sentinel_and_release_gate(self):
         full = self.load("ci-full.yml")
         self.assertEqual(
-            {"verify", "boards", "linux", "windows", "dylint", "acceptance", "bench", "qemu", "fmt", "docs", "msrv", "validate_boards", "crate_gate"},
+            {"verify", "boards", "linux", "windows", "macos", "dylint", "acceptance", "bench", "qemu", "fmt", "docs", "msrv", "validate_boards", "crate_gate"},
             set(full["jobs"]["coverage"]["needs"]),
         )
         self.assertEqual("${{ jobs.coverage.outputs.complete }}", full[True]["workflow_call"]["outputs"]["coverage"]["value"])
         script = full["jobs"]["coverage"]["steps"][0]["run"]
         env = {**os.environ, "EVENT_NAME": "workflow_call", "LABEL_PRESENT": "false"}
-        env.update({key: "success" for key in ("VERIFY", "BOARDS", "LINUX", "WINDOWS", "DYLINT", "ACCEPTANCE", "BENCH", "QEMU", "FMT", "DOCS", "MSRV", "VALIDATE_BOARDS", "CRATE_GATE")})
+        env.update({key: "success" for key in ("VERIFY", "BOARDS", "LINUX", "WINDOWS", "MACOS", "DYLINT", "ACCEPTANCE", "BENCH", "QEMU", "FMT", "DOCS", "MSRV", "VALIDATE_BOARDS", "CRATE_GATE")})
         with tempfile.NamedTemporaryFile() as output:
             env["GITHUB_OUTPUT"] = output.name
             for missing in ("FMT", "DOCS", "MSRV", "VALIDATE_BOARDS", "CRATE_GATE"):
@@ -157,6 +165,12 @@ class FractionalWorkflowTests(unittest.TestCase):
             self.assertNotIn("complete=true", output.read().decode())
         release = self.load("release-auto.yml")
         self.assertEqual("${{ needs.prepare.outputs.release_ref }}", release["jobs"]["full-ci"]["with"]["candidate_sha"])
+        self.assertEqual(
+            {"macos-15-intel", "macos-15"},
+            {cell["runner"] for cell in release["jobs"]["macos-release-smoke"]["strategy"]["matrix"]["include"]},
+        )
+        self.assertIn("macos-release-smoke", release["jobs"]["publish"]["needs"])
+        self.assertIn("macos-release-smoke", release["jobs"]["build-pypi"]["needs"])
         for job in ("publish", "publish-pypi"):
             self.assertIn("needs.full-ci.outputs.coverage == 'true'", release["jobs"][job]["if"])
 

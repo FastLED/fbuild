@@ -265,6 +265,30 @@ jobs:
     with:
       candidate_sha: ${{ needs.prepare.outputs.release_ref }}
 
+  macos-release-smoke:
+    name: Smoke release binary (${{ matrix.target }})
+    needs: [prepare, build]
+    if: needs.prepare.outputs.should_build == 'true'
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: x86_64-apple-darwin
+            runner: macos-15-intel
+          - target: aarch64-apple-darwin
+            runner: macos-15
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: binaries-${{ matrix.target }}
+          path: dist
+      - name: Execute Linux-built macOS release binary
+        shell: bash
+        run: |
+          chmod +x dist/fbuild
+          dist/fbuild --version
+
   runtime-coverage:
     name: All-platform physical runtime coverage
     needs: [prepare, full-ci]
@@ -281,7 +305,7 @@ jobs:
 
   publish:
     name: Publish GitHub release
-    needs: [prepare, build, full-ci, runtime-coverage]
+    needs: [prepare, build, full-ci, macos-release-smoke, runtime-coverage]
     if: needs.prepare.outputs.should_publish_github == 'true' && needs.full-ci.outputs.coverage == 'true' && needs.runtime-coverage.result == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 30
@@ -351,7 +375,7 @@ jobs:
 
   build-pypi:
     name: Build PyPI wheels
-    needs: [prepare, build, full-ci, runtime-coverage]
+    needs: [prepare, build, full-ci, macos-release-smoke, runtime-coverage]
     if: needs.prepare.outputs.should_publish_pypi == 'true' && needs.full-ci.outputs.coverage == 'true' && needs.runtime-coverage.result == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 30
