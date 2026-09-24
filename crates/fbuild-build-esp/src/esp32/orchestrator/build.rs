@@ -26,7 +26,7 @@ use super::packages::resolve_pioarduino_packages;
 
 use crate::build_fingerprint::{
     BUILD_FINGERPRINT_VERSION, FastPathCheckInputs, FastPathContract, FastPathPersistInputs,
-    expected_fast_path_artifacts, stable_hash_json,
+    expected_fast_path_artifacts, stable_hash_with_build_config,
 };
 use crate::compiler::Compiler as _;
 use crate::flag_overlay::apply_overlay_flags;
@@ -132,35 +132,38 @@ impl BuildOrchestrator for Esp32Orchestrator {
             mcu_config.default_flash_size(),
         )
         .to_string();
-        let metadata_hash = stable_hash_json(&Esp32FingerprintMetadata {
-            version: BUILD_FINGERPRINT_VERSION,
-            env_name: params.env_name.clone(),
-            profile: profile_label(params.profile).to_string(),
-            board_name: ctx.board.name.clone(),
-            board_mcu: ctx.board.mcu.clone(),
-            board_define: ctx.board.board.clone(),
-            board_core: ctx.board.core.clone(),
-            board_variant: ctx.board.variant.clone(),
-            board_variant_h: ctx.board.variant_h.clone(),
-            board_chip_variant: ctx.board.chip_variant.clone(),
-            board_extra_flags: ctx.board.extra_flags.clone(),
-            board_upload_protocol: ctx.board.upload_protocol.clone(),
-            board_upload_speed: ctx.board.upload_speed.clone(),
-            board_partitions: ctx.board.partitions.clone(),
-            board_ldscript: ctx.board.ldscript.clone(),
-            board_platform: ctx.board.platform_str.clone(),
-            architecture: mcu_config.architecture.clone(),
-            platform: "espressif32".to_string(),
-            flash_mode: flash_mode.clone(),
-            flash_freq: flash_freq.clone(),
-            flash_size: flash_size.clone(),
-            max_flash: ctx.board.max_flash,
-            max_ram: ctx.board.max_ram,
-            eh_frame_policy: match eh_frame_policy {
-                crate::eh_frame_policy::EhFramePolicy::Strip => "strip",
-                crate::eh_frame_policy::EhFramePolicy::Preserve => "preserve",
+        let metadata_hash = stable_hash_with_build_config(
+            &Esp32FingerprintMetadata {
+                version: BUILD_FINGERPRINT_VERSION,
+                env_name: params.env_name.clone(),
+                profile: profile_label(params.profile).to_string(),
+                board_name: ctx.board.name.clone(),
+                board_mcu: ctx.board.mcu.clone(),
+                board_define: ctx.board.board.clone(),
+                board_core: ctx.board.core.clone(),
+                board_variant: ctx.board.variant.clone(),
+                board_variant_h: ctx.board.variant_h.clone(),
+                board_chip_variant: ctx.board.chip_variant.clone(),
+                board_extra_flags: ctx.board.extra_flags.clone(),
+                board_upload_protocol: ctx.board.upload_protocol.clone(),
+                board_upload_speed: ctx.board.upload_speed.clone(),
+                board_partitions: ctx.board.partitions.clone(),
+                board_ldscript: ctx.board.ldscript.clone(),
+                board_platform: ctx.board.platform_str.clone(),
+                architecture: mcu_config.architecture.clone(),
+                platform: "espressif32".to_string(),
+                flash_mode: flash_mode.clone(),
+                flash_freq: flash_freq.clone(),
+                flash_size: flash_size.clone(),
+                max_flash: ctx.board.max_flash,
+                max_ram: ctx.board.max_ram,
+                eh_frame_policy: match eh_frame_policy {
+                    crate::eh_frame_policy::EhFramePolicy::Strip => "strip",
+                    crate::eh_frame_policy::EhFramePolicy::Preserve => "preserve",
+                },
             },
-        })?;
+            &ctx,
+        )?;
         let (fast_elf, [fast_bin, fast_boot, fast_parts, fast_app0], fast_compile_db) =
             expected_fast_path_artifacts(
                 build_dir,

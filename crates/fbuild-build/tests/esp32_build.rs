@@ -83,6 +83,7 @@ void setup() {
   pinMode(2, OUTPUT);
 }
 
+
 void loop() {
   digitalWrite(2, HIGH);
   delay(1000);
@@ -154,6 +155,103 @@ void loop() {
         size.ram_percent().unwrap_or(0.0),
         result.build_time_secs
     );
+}
+
+/// Regression for #1458: effective flag changes invalidate the no-op fingerprint.
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
+#[ignore = "downloads ESP32 toolchain (~hundreds of MB)"]
+async fn esp32_effective_flags_invalidate_no_op_fingerprint() {
+    install_test_compile_backend().await;
+    let tmp = tempfile::TempDir::new().unwrap();
+    let project_dir = tmp.path();
+    let ini_path = project_dir.join("platformio.ini");
+    let base_ini =
+        "[env:esp32dev]\nplatform = espressif32\nboard = esp32dev\nframework = arduino\n";
+    fs::write(&ini_path, base_ini).unwrap();
+    fs::create_dir_all(project_dir.join("src")).unwrap();
+    fs::write(
+        project_dir.join("src/main.cpp"),
+        "#include <Arduino.h>\n#ifndef FINGERPRINT_PAYLOAD\n#define FINGERPRINT_PAYLOAD 0\n#endif\nvolatile int fingerprint_payload = FINGERPRINT_PAYLOAD;\nvoid setup() { Serial.begin(115200); Serial.print(fingerprint_payload); }\nvoid loop() {}\n",
+    )
+    .unwrap();
+
+    let build_dir = project_dir.join(format!(
+        "{}/{}/esp32dev/release",
+        fbuild_paths::FBUILD_DIR_NAME,
+        fbuild_paths::BUILD_DIR_NAME
+    ));
+    let mut params = BuildParams {
+        project_dir: project_dir.to_path_buf(),
+        env_name: "esp32dev".to_string(),
+        clean_all: false,
+        clean_only: false,
+        clean: true,
+        profile: BuildProfile::Release,
+        build_dir,
+        verbose: false,
+        jobs: None,
+        generate_compiledb: true,
+        compiledb_only: false,
+        log_sender: None,
+        symbol_analysis: false,
+        symbol_analysis_path: None,
+        no_timestamp: true,
+        src_dir: None,
+        pio_env: Default::default(),
+        extra_build_flags: Vec::new(),
+        watch_set_cache: None,
+        bloat_analysis: false,
+        caller_path: None,
+    };
+    let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
+    let is_fast_hit =
+        |result: &fbuild_build::BuildResult| result.message.contains("reused cached artifacts");
+
+    let baseline = under_test_timeout(orchestrator.build(&params))
+        .await
+        .unwrap();
+    params.clean = false;
+    let warm = under_test_timeout(orchestrator.build(&params))
+        .await
+        .unwrap();
+    assert!(
+        is_fast_hit(&warm),
+        "unchanged flags must reach the fast path"
+    );
+    let baseline_firmware = fs::read(baseline.firmware_path.unwrap()).unwrap();
+
+    fs::write(
+        &ini_path,
+        format!("{base_ini}build_flags = -DFINGERPRINT_PAYLOAD=1\n"),
+    )
+    .unwrap();
+    let defined = under_test_timeout(orchestrator.build(&params))
+        .await
+        .unwrap();
+    assert!(!is_fast_hit(&defined), "adding build_flags must rebuild");
+    let defined_firmware = fs::read(defined.firmware_path.unwrap()).unwrap();
+    assert_ne!(baseline_firmware, defined_firmware);
+    let compile_db = fs::read_to_string(defined.compile_database_path.unwrap()).unwrap();
+    assert!(compile_db.contains("-DFINGERPRINT_PAYLOAD=1"));
+
+    let warm_defined = under_test_timeout(orchestrator.build(&params))
+        .await
+        .unwrap();
+    assert!(is_fast_hit(&warm_defined));
+
+    fs::write(&ini_path, base_ini).unwrap();
+    let removed = under_test_timeout(orchestrator.build(&params))
+        .await
+        .unwrap();
+    assert!(!is_fast_hit(&removed), "removing build_flags must rebuild");
+
+    params.extra_build_flags = vec!["-DFINGERPRINT_PAYLOAD=2".to_string()];
+    let caller_flag = under_test_timeout(orchestrator.build(&params))
+        .await
+        .unwrap();
+    assert!(!is_fast_hit(&caller_flag), "extra_build_flags must rebuild");
+    let compile_db = fs::read_to_string(caller_flag.compile_database_path.unwrap()).unwrap();
+    assert!(compile_db.contains("-DFINGERPRINT_PAYLOAD=2"));
 }
 
 /// Build a self-contained ESP32-C6 blink sketch (RISC-V).

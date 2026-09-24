@@ -20,7 +20,7 @@ use serde::Serialize;
 
 use crate::build_fingerprint::{
     BUILD_FINGERPRINT_VERSION, FastPathCheckInputs, FastPathContract, FastPathPersistInputs,
-    expected_fast_path_artifacts, stable_hash_json,
+    expected_fast_path_artifacts, stable_hash_with_build_config,
 };
 use crate::compile_database::TargetArchitecture;
 use crate::pipeline;
@@ -132,22 +132,25 @@ impl BuildOrchestrator for Nrf52Orchestrator {
             .file_name()
             .map(|os| os.to_string_lossy().into_owned())
             .unwrap_or_else(|| ldscript_name.to_string());
-        let metadata_hash = stable_hash_json(&Nrf52FingerprintMetadata {
-            version: BUILD_FINGERPRINT_VERSION,
-            env_name: params.env_name.clone(),
-            profile: profile_label(params.profile).to_string(),
-            board_name: ctx.board.name.clone(),
-            board_mcu: ctx.board.mcu.clone(),
-            board_define: ctx.board.board.clone(),
-            board_core: ctx.board.core.clone(),
-            board_variant: ctx.board.variant.clone(),
-            board_f_cpu: ctx.board.f_cpu.clone(),
-            board_extra_flags: ctx.board.extra_flags.clone(),
-            linker_script: resolved_linker_script,
-            platform: "nordicnrf52".to_string(),
-            max_flash: ctx.board.max_flash,
-            max_ram: ctx.board.max_ram,
-        })?;
+        let metadata_hash = stable_hash_with_build_config(
+            &Nrf52FingerprintMetadata {
+                version: BUILD_FINGERPRINT_VERSION,
+                env_name: params.env_name.clone(),
+                profile: profile_label(params.profile).to_string(),
+                board_name: ctx.board.name.clone(),
+                board_mcu: ctx.board.mcu.clone(),
+                board_define: ctx.board.board.clone(),
+                board_core: ctx.board.core.clone(),
+                board_variant: ctx.board.variant.clone(),
+                board_f_cpu: ctx.board.f_cpu.clone(),
+                board_extra_flags: ctx.board.extra_flags.clone(),
+                linker_script: resolved_linker_script,
+                platform: "nordicnrf52".to_string(),
+                max_flash: ctx.board.max_flash,
+                max_ram: ctx.board.max_ram,
+            },
+            &ctx,
+        )?;
         let (fast_elf, [fast_hex], fast_compile_db) =
             expected_fast_path_artifacts(build_dir, &params.project_dir, ["firmware.hex"]);
         let fast_path = FastPathContract::for_project_outputs(

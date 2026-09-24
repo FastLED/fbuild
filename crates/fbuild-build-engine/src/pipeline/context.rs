@@ -39,7 +39,55 @@ pub struct BuildContext {
     pub build_unflags: Vec<String>,
 }
 
+/// Canonical, serializable view of every user-controlled compile/link input.
+///
+/// Platform orchestrators include this in their no-op metadata hash so the
+/// fast-path decision consumes the same normalized vectors as the real build.
+#[derive(serde::Serialize)]
+pub struct EffectiveBuildConfig<'a> {
+    user_flags: &'a [String],
+    src_flags: &'a [String],
+    global_compile_overlay: EffectiveLanguageFlags<'a>,
+    project_compile_overlay: EffectiveLanguageFlags<'a>,
+    overlay_link_flags: &'a [String],
+    overlay_link_libs: &'a [String],
+    build_unflags: &'a [String],
+}
+
+#[derive(serde::Serialize)]
+struct EffectiveLanguageFlags<'a> {
+    common: &'a [String],
+    c: &'a [String],
+    cxx: &'a [String],
+    asm: &'a [String],
+}
+
+impl<'a> From<&'a LanguageExtraFlags> for EffectiveLanguageFlags<'a> {
+    fn from(flags: &'a LanguageExtraFlags) -> Self {
+        Self {
+            common: &flags.common,
+            c: &flags.c,
+            cxx: &flags.cxx,
+            asm: &flags.asm,
+        }
+    }
+}
+
 impl BuildContext {
+    /// Inputs that affect emitted objects or the final link, after config
+    /// inheritance, debug-mode expansion, unflags, scripts, and caller flags.
+    pub fn effective_build_config(&self) -> EffectiveBuildConfig<'_> {
+        EffectiveBuildConfig {
+            user_flags: &self.user_flags,
+            src_flags: &self.src_flags,
+            global_compile_overlay: (&self.global_compile_overlay).into(),
+            project_compile_overlay: (&self.project_compile_overlay).into(),
+            overlay_link_flags: &self.overlay_link_flags,
+            overlay_link_libs: &self.overlay_link_libs,
+            build_unflags: &self.build_unflags,
+        }
+    }
+
     /// Parse platformio.ini, load board config, setup build directories,
     /// resolve source directory, and collect user flags.
     ///
@@ -298,6 +346,43 @@ fn assemble_compile_overlays(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn fingerprint_for_user_flags(flags: &[String]) -> String {
+        let empty = LanguageExtraFlags::default();
+        let config = EffectiveBuildConfig {
+            user_flags: flags,
+            src_flags: &[],
+            global_compile_overlay: (&empty).into(),
+            project_compile_overlay: (&empty).into(),
+            overlay_link_flags: &[],
+            overlay_link_libs: &[],
+            build_unflags: &[],
+        };
+        crate::build_fingerprint::stable_hash_json(&("platform-metadata", config)).unwrap()
+    }
+
+    #[test]
+    fn effective_flags_invalidate_no_op_metadata_hash() {
+        let baseline = fingerprint_for_user_flags(&[]);
+        let defined = fingerprint_for_user_flags(&["-DOUTPUT_AFFECTING_DEFINE=1".to_string()]);
+        let changed = fingerprint_for_user_flags(&["-DOUTPUT_AFFECTING_DEFINE=2".to_string()]);
+
+        assert_ne!(baseline, defined, "adding a flag must invalidate artifacts");
+        assert_ne!(
+            defined, changed,
+            "changing a flag must invalidate artifacts"
+        );
+        assert_eq!(
+            defined,
+            fingerprint_for_user_flags(&["-DOUTPUT_AFFECTING_DEFINE=1".to_string()]),
+            "unchanged effective flags must preserve the warm-build hash"
+        );
+        assert_eq!(
+            baseline,
+            fingerprint_for_user_flags(&[]),
+            "removing the flag must return to the baseline configuration hash"
+        );
+    }
 
     #[test]
     fn user_flags_reach_both_overlays_src_flags_only_src() {

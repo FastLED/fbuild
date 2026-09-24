@@ -25,7 +25,7 @@ use serde::Serialize;
 
 use crate::build_fingerprint::{
     BUILD_FINGERPRINT_VERSION, FastPathCheckInputs, FastPathContract, FastPathPersistInputs,
-    expected_fast_path_artifacts, stable_hash_json,
+    expected_fast_path_artifacts, stable_hash_with_build_config,
 };
 use crate::compile_database::TargetArchitecture;
 use crate::pipeline;
@@ -242,25 +242,28 @@ impl BuildOrchestrator for SamOrchestrator {
         };
 
         let build_dir = &ctx.build_dir;
-        let metadata_hash = stable_hash_json(&SamFingerprintMetadata {
-            version: BUILD_FINGERPRINT_VERSION,
-            env_name: params.env_name.clone(),
-            profile: profile_label(params.profile).to_string(),
-            board_name: ctx.board.name.clone(),
-            board_mcu: ctx.board.mcu.clone(),
-            board_define: ctx.board.board.clone(),
-            board_core: ctx.board.core.clone(),
-            board_variant: ctx.board.variant.clone(),
-            board_f_cpu: ctx.board.f_cpu.clone(),
-            board_extra_flags: ctx.board.extra_flags.clone(),
-            board_vid: ctx.board.vid.clone(),
-            board_pid: ctx.board.pid.clone(),
-            board_usb_product: ctx.board.usb_product.clone(),
-            board_usb_manufacturer: ctx.board.usb_manufacturer.clone(),
-            platform: "atmelsam".to_string(),
-            max_flash: ctx.board.max_flash,
-            max_ram: ctx.board.max_ram,
-        })?;
+        let metadata_hash = stable_hash_with_build_config(
+            &SamFingerprintMetadata {
+                version: BUILD_FINGERPRINT_VERSION,
+                env_name: params.env_name.clone(),
+                profile: profile_label(params.profile).to_string(),
+                board_name: ctx.board.name.clone(),
+                board_mcu: ctx.board.mcu.clone(),
+                board_define: ctx.board.board.clone(),
+                board_core: ctx.board.core.clone(),
+                board_variant: ctx.board.variant.clone(),
+                board_f_cpu: ctx.board.f_cpu.clone(),
+                board_extra_flags: ctx.board.extra_flags.clone(),
+                board_vid: ctx.board.vid.clone(),
+                board_pid: ctx.board.pid.clone(),
+                board_usb_product: ctx.board.usb_product.clone(),
+                board_usb_manufacturer: ctx.board.usb_manufacturer.clone(),
+                platform: "atmelsam".to_string(),
+                max_flash: ctx.board.max_flash,
+                max_ram: ctx.board.max_ram,
+            },
+            &ctx,
+        )?;
         let (fast_elf, [fast_bin], fast_compile_db) =
             expected_fast_path_artifacts(build_dir, &params.project_dir, ["firmware.bin"]);
         let fast_path = FastPathContract::for_project_outputs(

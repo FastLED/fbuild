@@ -20,7 +20,7 @@ use serde::Serialize;
 
 use crate::build_fingerprint::{
     BUILD_FINGERPRINT_VERSION, FastPathCheckInputs, FastPathContract, FastPathPersistInputs,
-    expected_fast_path_artifacts, stable_hash_json,
+    expected_fast_path_artifacts, stable_hash_with_build_config,
 };
 use crate::compile_database::TargetArchitecture;
 use crate::compiler::Compiler as _;
@@ -125,25 +125,28 @@ impl BuildOrchestrator for TeensyOrchestrator {
 
         let core_dir = framework.get_core_dir(&ctx.board.core);
         let build_dir = &ctx.build_dir;
-        let metadata_hash = stable_hash_json(&TeensyFingerprintMetadata {
-            version: BUILD_FINGERPRINT_VERSION,
-            env_name: params.env_name.clone(),
-            profile: profile_label(params.profile).to_string(),
-            board_name: ctx.board.name.clone(),
-            board_mcu: ctx.board.mcu.clone(),
-            board_define: ctx.board.board.clone(),
-            board_core: ctx.board.core.clone(),
-            board_f_cpu: ctx.board.f_cpu.clone(),
-            board_extra_flags: ctx.board.extra_flags.clone(),
-            board_ldscript: ctx.board.ldscript.clone(),
-            platform: "teensy".to_string(),
-            max_flash: ctx.board.max_flash,
-            max_ram: ctx.board.max_ram,
-            eh_frame_policy: match eh_frame_policy {
-                crate::eh_frame_policy::EhFramePolicy::Strip => "strip",
-                crate::eh_frame_policy::EhFramePolicy::Preserve => "preserve",
+        let metadata_hash = stable_hash_with_build_config(
+            &TeensyFingerprintMetadata {
+                version: BUILD_FINGERPRINT_VERSION,
+                env_name: params.env_name.clone(),
+                profile: profile_label(params.profile).to_string(),
+                board_name: ctx.board.name.clone(),
+                board_mcu: ctx.board.mcu.clone(),
+                board_define: ctx.board.board.clone(),
+                board_core: ctx.board.core.clone(),
+                board_f_cpu: ctx.board.f_cpu.clone(),
+                board_extra_flags: ctx.board.extra_flags.clone(),
+                board_ldscript: ctx.board.ldscript.clone(),
+                platform: "teensy".to_string(),
+                max_flash: ctx.board.max_flash,
+                max_ram: ctx.board.max_ram,
+                eh_frame_policy: match eh_frame_policy {
+                    crate::eh_frame_policy::EhFramePolicy::Strip => "strip",
+                    crate::eh_frame_policy::EhFramePolicy::Preserve => "preserve",
+                },
             },
-        })?;
+            &ctx,
+        )?;
         let (fast_elf, [fast_hex], fast_compile_db) =
             expected_fast_path_artifacts(build_dir, &params.project_dir, ["firmware.hex"]);
         let fast_path = FastPathContract::for_project_outputs(

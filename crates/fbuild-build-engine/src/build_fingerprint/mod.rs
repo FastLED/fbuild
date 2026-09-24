@@ -119,6 +119,15 @@ pub fn normalize_paths(paths: &[PathBuf]) -> Vec<String> {
     normalized
 }
 
+/// Hash platform metadata together with the canonical effective compile/link
+/// configuration used by the build pipeline.
+pub fn stable_hash_with_build_config<T: Serialize>(
+    metadata: &T,
+    ctx: &crate::pipeline::BuildContext,
+) -> Result<String> {
+    stable_hash_json(&(metadata, ctx.effective_build_config()))
+}
+
 pub fn stable_hash_json<T: Serialize>(value: &T) -> Result<String> {
     let bytes = serde_json::to_vec(value).map_err(|e| {
         fbuild_core::FbuildError::BuildFailed(format!("failed to serialize fingerprint input: {e}"))
