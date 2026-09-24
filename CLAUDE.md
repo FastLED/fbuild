@@ -118,8 +118,8 @@ To cut a release:
 #    pyproject.toml -> [project] version
 # 2. Push the bump commit to main; this runs ordinary CI only.
 # 3. Dispatch release-auto.yml with the exact commit SHA and publish=false
-#    for a dry run. publish=true is currently blocked by the missing trusted
-#    all-platform physical runtime result; no tag can be minted yet.
+#    for a dry run; after validation succeeds, dispatch the same SHA with
+#    publish=true to publish the release.
 ```
 
 See [docs/RELEASING.md](docs/RELEASING.md) for the full flow, gating logic, and re-run instructions when a release stalls.

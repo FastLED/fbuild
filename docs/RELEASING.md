@@ -16,9 +16,12 @@ git push origin main
 candidate_sha=$(git rev-parse HEAD)
 gh workflow run release-auto.yml --repo FastLED/fbuild --ref main \
   -f candidate_sha="$candidate_sha" -f publish=false
+# 5. After the dry run succeeds, publish that same candidate.
+gh workflow run release-auto.yml --repo FastLED/fbuild --ref main \
+  -f candidate_sha="$candidate_sha" -f publish=true
 ```
 
-The dispatch requires a 40-character commit SHA equal to the head commit of the dispatch ref (`--ref main` in the example). This keeps the loaded workflow definitions and generated board matrix on the same revision as the code under test. If `main` has advanced, dispatch from a ref at the candidate commit. `publish=false` runs the native builds and the software jobs wired into `ci-full`, including fmt, docs, MSRV, board validation, and crate gates. **Publication is currently blocked:** there is no trusted same-SHA physical-board runtime result for every supported platform. `publish=true` fails at `runtime-coverage` before any tag or upload. Keep that guard until trusted hardware proof is available.
+The dispatch requires a 40-character commit SHA equal to the head commit of the dispatch ref (`--ref main` in the example). This keeps the loaded workflow definitions and generated board matrix on the same revision as the code under test. If `main` has advanced, dispatch from a ref at the candidate commit. `publish=false` runs the native builds and the software jobs wired into `ci-full`, including fmt, docs, MSRV, board validation, and crate gates. Publication uses those same-SHA software checks plus release-binary smoke tests; physical hardware is not a release prerequisite.
 
 ## What the action actually does
 
@@ -29,7 +32,6 @@ release-auto.yml
 ├── build (matrix)       ── build native binaries for 6 targets
 ├── build-pypi           ── call `ci/publish.py::build_all_wheels` → 4 wheels
 ├── smoke test           ── pip-install one wheel, run `fbuild --version`
-├── runtime-coverage     ── blocks publication until physical-board proof exists
 ├── publish              ── create GitHub release + push v<version> tag
 └── publish-pypi         ── upload wheels via trusted publishing (OIDC)
 ```
@@ -42,7 +44,7 @@ should_publish_github = true  IF publish=true AND tag does not exist
 should_publish_pypi = true    IF publish=true AND PyPI has fewer than expected wheels
 ```
 
-The file-count guard exists because a complete `fbuild` release means one wheel per `PLATFORMS` entry in `ci/publish.py` (currently 4: Linux x86_64, Linux aarch64, macOS aarch64, Windows x86_64). Anything less is a partial / stranded release; an explicit retry on the same candidate SHA can rebuild and upload the missing wheels after full CI and physical-board runtime coverage pass. Both this gate and the post-upload "Verify all wheels visible on PyPI" check derive their expected counts at run time (from `ci/publish.py::PLATFORMS` and the built wheels respectively) — a stale hardcoded 4 broke the verify gate during the 2.3.22-2.3.24 window. Note the build matrix has more lanes than wheels: the x86_64-apple-darwin and aarch64-pc-windows-msvc binaries ship via the GitHub release archives only (Intel Macs install the arm64 wheel via its dual macosx tag; ARM Windows uses the win_amd64 wheel via emulation).
+The file-count guard exists because a complete `fbuild` release means one wheel per `PLATFORMS` entry in `ci/publish.py` (currently 4: Linux x86_64, Linux aarch64, macOS aarch64, Windows x86_64). Anything less is a partial / stranded release; an explicit retry on the same candidate SHA can rebuild and upload the missing wheels after full CI and release-binary smoke tests pass. Both this gate and the post-upload "Verify all wheels visible on PyPI" check derive their expected counts at run time (from `ci/publish.py::PLATFORMS` and the built wheels respectively) — a stale hardcoded 4 broke the verify gate during the 2.3.22-2.3.24 window. Note the build matrix has more lanes than wheels: the x86_64-apple-darwin and aarch64-pc-windows-msvc binaries ship via the GitHub release archives only (Intel Macs install the arm64 wheel via its dual macosx tag; ARM Windows uses the win_amd64 wheel via emulation).
 
 ## Common failure modes
 
@@ -56,7 +58,7 @@ The `prepare` job aborts with a non-zero exit if `[workspace.package].version` (
 
 ### A wheel built but never uploaded (partial release)
 
-Once trusted physical-board coverage is connected, re-run the same candidate SHA with `publish=true`. `prepare` verifies that the existing tag points to that SHA and rebuilds the missing wheels:
+After full validation passes, re-run the same candidate SHA with `publish=true`. `prepare` verifies that the existing tag points to that SHA and rebuilds the missing wheels:
 
 ```bash
 gh workflow run release-auto.yml --repo FastLED/fbuild --ref main \

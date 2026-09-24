@@ -147,9 +147,9 @@ For Windows artifacts, verify `fbuild.exe`, `fbuild-daemon.exe`, and
 ordinary version-file pushes never start it. It follows the attested release
 pattern used by `soldr`:
 
-Publication is presently fail-closed at `runtime-coverage`: no trusted same-SHA
-physical-board result covers every supported platform. Dry-run dispatches remain
-usable; `publish=true` cannot create a tag or upload until that CI proof is wired.
+Publication is gated by the exact-candidate `ci-full` result, release artifact
+builds, and binary smoke tests. Physical-board runtime coverage is not required
+for release; hardware bring-up remains a separate optional/nightly workflow.
 
 - reads the workspace/package version from `Cargo.toml` and `pyproject.toml`
 - skips the run if the tag already exists or PyPI already has that version

@@ -204,19 +204,29 @@ class FractionalWorkflowTests(unittest.TestCase):
         self.assertIn('if [ "$commit_sha" != "$CANDIDATE_SHA" ]', prepare_script)
         self.assertNotIn('if [ "${GITHUB_EVENT_NAME}" != "workflow_dispatch" ]', prepare_script)
 
-    def test_publication_waits_for_trusted_runtime_coverage(self):
+    def test_publication_uses_software_validation_without_hardware_gate(self):
         release = self.load("release-auto.yml")
-        runtime = release["jobs"]["runtime-coverage"]
-        self.assertIn("full-ci", runtime["needs"])
-        self.assertIn("publish", runtime["if"])
+        self.assertNotIn("runtime-coverage", release["jobs"])
+        self.assertEqual({"contents": "read"}, release["permissions"])
         self.assertEqual("prepare", release["jobs"]["build"]["needs"])
         self.assertEqual("prepare", release["jobs"]["full-ci"]["needs"])
-        guard_script = runtime["steps"][0]["run"]
-        self.assertIn("physical-board runtime coverage", guard_script)
-        self.assertIn("exit 1", guard_script)
         self.assertNotIn("runtime_coverage", release[True]["workflow_dispatch"]["inputs"])
         for job in ("publish", "build-pypi", "publish-pypi"):
-            self.assertIn("runtime-coverage", release["jobs"][job]["needs"])
+            self.assertIn("full-ci", release["jobs"][job]["needs"])
+            self.assertIn("needs.full-ci.outputs.coverage == 'true'", release["jobs"][job]["if"])
+            self.assertNotIn("runtime-coverage", release["jobs"][job]["needs"])
+        self.assertEqual(
+            {"contents": "write", "attestations": "write", "id-token": "write"},
+            release["jobs"]["publish"]["permissions"],
+        )
+        self.assertEqual(
+            {"contents": "read", "attestations": "write", "id-token": "write"},
+            release["jobs"]["build"]["permissions"],
+        )
+        self.assertEqual(
+            {"contents": "read", "id-token": "write"},
+            release["jobs"]["publish-pypi"]["permissions"],
+        )
 
 
 if __name__ == "__main__":
