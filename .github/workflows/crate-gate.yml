@@ -5,13 +5,19 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      ref:
+        type: string
+        required: false
+        default: ""
 
 # Auto-cancel superseded PR runs: pushing again to a feature branch
 # supersedes the in-flight run instead of queueing behind it. Non-PR
 # events key on run_id so each gets its own group -- a shared group keeps
 # only ONE pending run, which would silently drop queued main SHAs.
 concurrency:
-  group: crate-gate.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
+  group: crate-gate.yml-${{ inputs.ref != '' && github.run_id || (github.event_name == 'pull_request' && github.ref || github.run_id) }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
@@ -21,6 +27,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
 
       - name: Install uv
         uses: astral-sh/setup-uv@v3

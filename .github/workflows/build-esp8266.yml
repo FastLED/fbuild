@@ -4,18 +4,6 @@ name: Build ESP8266
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/esp8266/**'
-      - 'crates/fbuild-build-esp/src/esp8266/**'
-      - '.github/workflows/build-esp8266.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/esp8266/**'
-      - 'crates/fbuild-build-esp/src/esp8266/**'
-      - '.github/workflows/build-esp8266.yml'
 
 concurrency:
   group: build-esp8266.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

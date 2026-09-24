@@ -4,18 +4,6 @@ name: Build Apollo3 expLoRaBLE
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/apollo3_thing_explorable/**'
-      - 'crates/fbuild-build-arm/src/apollo3/**'
-      - '.github/workflows/build-apollo3_thing_explorable.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/apollo3_thing_explorable/**'
-      - 'crates/fbuild-build-arm/src/apollo3/**'
-      - '.github/workflows/build-apollo3_thing_explorable.yml'
 
 concurrency:
   group: build-apollo3_thing_explorable.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

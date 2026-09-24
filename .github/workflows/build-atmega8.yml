@@ -4,18 +4,6 @@ name: Build ATmega8
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/atmega8/**'
-      - 'crates/fbuild-build-mcu/src/avr/**'
-      - '.github/workflows/build-atmega8.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/atmega8/**'
-      - 'crates/fbuild-build-mcu/src/avr/**'
-      - '.github/workflows/build-atmega8.yml'
 
 concurrency:
   group: build-atmega8.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

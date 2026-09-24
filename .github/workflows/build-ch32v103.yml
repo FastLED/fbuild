@@ -4,18 +4,6 @@ name: Build CH32V103
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/ch32v103/**'
-      - 'crates/fbuild-build-mcu/src/ch32v/**'
-      - '.github/workflows/build-ch32v103.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/ch32v103/**'
-      - 'crates/fbuild-build-mcu/src/ch32v/**'
-      - '.github/workflows/build-ch32v103.yml'
 
 concurrency:
   group: build-ch32v103.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

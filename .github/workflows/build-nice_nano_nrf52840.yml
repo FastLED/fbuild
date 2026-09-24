@@ -4,18 +4,6 @@ name: Build nice!nano nRF52840
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/nice_nano_nrf52840/**'
-      - 'crates/fbuild-build-arm/src/nrf52/**'
-      - '.github/workflows/build-nice_nano_nrf52840.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/nice_nano_nrf52840/**'
-      - 'crates/fbuild-build-arm/src/nrf52/**'
-      - '.github/workflows/build-nice_nano_nrf52840.yml'
 
 concurrency:
   group: build-nice_nano_nrf52840.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

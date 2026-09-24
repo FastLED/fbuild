@@ -4,18 +4,6 @@ name: Build Arduino Due
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/due/**'
-      - 'crates/fbuild-build-arm/src/sam/**'
-      - '.github/workflows/build-due.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/due/**'
-      - 'crates/fbuild-build-arm/src/sam/**'
-      - '.github/workflows/build-due.yml'
 
 concurrency:
   group: build-due.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

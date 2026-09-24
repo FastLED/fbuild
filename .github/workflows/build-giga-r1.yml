@@ -4,18 +4,6 @@ name: Build Arduino Giga R1
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/giga_r1_m7/**'
-      - 'crates/fbuild-build-arm/src/stm32/**'
-      - '.github/workflows/build-giga-r1.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/giga_r1_m7/**'
-      - 'crates/fbuild-build-arm/src/stm32/**'
-      - '.github/workflows/build-giga-r1.yml'
 
 concurrency:
   group: build-giga-r1.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

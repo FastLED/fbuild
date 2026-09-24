@@ -1,17 +1,12 @@
 name: Autonomous Release
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - Cargo.toml
-      - pyproject.toml
-      # An incomplete release must be retried when its release machinery is
-      # repaired without forcing another public version bump.
-      - .github/workflows/release-auto.yml
-      - .github/workflows/template_native_build.yml
   workflow_dispatch:
     inputs:
+      candidate_sha:
+        description: "Exact 40-character commit SHA to build and validate"
+        required: true
+        type: string
       publish:
         description: "Publish GitHub Release and PyPI after building"
         required: false
@@ -24,7 +19,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: release-auto-${{ github.ref_name }}
+  group: release-auto-${{ inputs.candidate_sha }}
   cancel-in-progress: false
 
 env:
@@ -47,14 +42,32 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.candidate_sha }}
 
       - name: Check release eligibility
         id: prepare
         shell: bash
         env:
           PUBLISH_REQUESTED: ${{ inputs.publish }}
+          CANDIDATE_SHA: ${{ inputs.candidate_sha }}
+          WORKFLOW_SHA: ${{ github.sha }}
         run: |
           set -euo pipefail
+
+          if [[ ! "$CANDIDATE_SHA" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "candidate_sha must be an exact 40-character commit SHA" >&2
+            exit 1
+          fi
+          if [ "$CANDIDATE_SHA" != "$WORKFLOW_SHA" ]; then
+            echo "candidate $CANDIDATE_SHA differs from workflow revision $WORKFLOW_SHA; dispatch from a ref at the candidate commit" >&2
+            exit 1
+          fi
+          commit_sha="$(git rev-parse HEAD)"
+          if [ "$commit_sha" != "$CANDIDATE_SHA" ]; then
+            echo "checkout SHA $commit_sha does not match candidate $CANDIDATE_SHA" >&2
+            exit 1
+          fi
 
           cargo_version="$(
             python - <<'PY'
@@ -77,14 +90,18 @@ jobs:
           fi
 
           version="v${cargo_version}"
-          commit_sha="$(git rev-parse HEAD)"
           release_ref="${commit_sha}"
 
           tag_exists="false"
-          tag_sha=""
-          if tag_sha="$(git ls-remote --exit-code --tags origin "refs/tags/${version}" | awk '{print $1}' | tail -n1)"; then
+          tag_sha="$(git ls-remote --tags origin "refs/tags/${version}" | awk '{print $1}' | tail -n1)"
+          if [ -n "$tag_sha" ]; then
             tag_exists="true"
-            release_ref="${version}"
+            git fetch --no-tags --depth=1 origin "refs/tags/${version}"
+            tag_commit_sha="$(git rev-parse 'FETCH_HEAD^{commit}')"
+            if [ "$tag_commit_sha" != "$CANDIDATE_SHA" ]; then
+              echo "existing tag $version points to $tag_commit_sha, not candidate $CANDIDATE_SHA" >&2
+              exit 1
+            fi
           fi
 
           pypi_json="$(mktemp)"
@@ -92,14 +109,17 @@ jobs:
             latest="$(python -c 'import json,sys; print(json.load(open(sys.argv[1]))["info"]["version"])' "$pypi_json")"
             pypi_file_count="$(python -c 'import json,sys; data=json.load(open(sys.argv[1])); print(len(data.get("releases", {}).get(sys.argv[2], [])))' "$pypi_json" "$cargo_version")"
           else
+            if [ "${PUBLISH_REQUESTED:-false}" = "true" ]; then
+              echo "cannot verify existing PyPI files; refusing publication" >&2
+              exit 1
+            fi
             latest="0.0.0"
             pypi_file_count="0"
           fi
 
-          should_build="false"
+          should_build="true"
           should_publish_github="false"
           should_publish_pypi="false"
-          newest="$(printf '%s\n%s\n' "$latest" "$cargo_version" | sort -V | tail -n1)"
 
           # One wheel per PLATFORMS entry in ci/publish.py — derive the
           # expected count from the SOT instead of hardcoding it, so
@@ -107,30 +127,28 @@ jobs:
           # (a stale hardcoded 4 bit the 2.3.22-2.3.24 window).
           expected_wheels="$(python -c 'import ci.publish; print(len(ci.publish.PLATFORMS))')"
 
-          if [ "${GITHUB_EVENT_NAME}" != "workflow_dispatch" ] \
+          newest="$(printf '%s\n%s\n' "$latest" "$cargo_version" | sort -V | tail -n1)"
+          if [ "${PUBLISH_REQUESTED:-false}" = "true" ] \
             && [ "$tag_exists" != "true" ] \
-            && [ "$newest" = "$cargo_version" ] \
-            && [ "$pypi_file_count" -lt "$expected_wheels" ]; then
-            should_build="true"
-            should_publish_github="true"
-            should_publish_pypi="true"
+            && [ "$newest" != "$cargo_version" ]; then
+            echo "candidate version $cargo_version is older than latest PyPI $latest" >&2
+            exit 1
           fi
 
-          # Manual dispatch is always at least a build. Publishing is an
-          # explicit opt-in checkbox so release dry-runs are the default.
-          if [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ]; then
-            should_build="true"
-            release_ref="${commit_sha}"
-            should_publish_github="false"
-            should_publish_pypi="false"
-
-            if [ "${PUBLISH_REQUESTED:-false}" = "true" ]; then
+          # The version bump is ordinary CI. Only an explicit dispatch with
+          # publish=true can reach either publication job.
+          if [ "${PUBLISH_REQUESTED:-false}" = "true" ]; then
+            if [ "$tag_exists" != "true" ]; then
               should_publish_github="true"
-              should_publish_pypi="true"
-              if [ "$tag_exists" = "true" ]; then
-                release_ref="${version}"
-              fi
             fi
+            if [ "$pypi_file_count" -lt "$expected_wheels" ]; then
+              should_publish_pypi="true"
+            fi
+          fi
+
+          if [[ ! "$release_ref" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "release_ref is not an exact commit SHA: $release_ref" >&2
+            exit 1
           fi
 
           {
@@ -239,10 +257,56 @@ jobs:
       mac_cross_linux: ${{ matrix.mac_cross_linux == true }}
       ref: ${{ needs.prepare.outputs.release_ref }}
 
+  full-ci:
+    name: Full validation on release commit
+    needs: prepare
+    if: needs.prepare.outputs.should_build == 'true'
+    uses: ./.github/workflows/ci-full.yml
+    with:
+      candidate_sha: ${{ needs.prepare.outputs.release_ref }}
+
+  macos-release-smoke:
+    name: Smoke release binary (${{ matrix.target }})
+    needs: [prepare, build]
+    if: needs.prepare.outputs.should_build == 'true'
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: x86_64-apple-darwin
+            runner: macos-15-intel
+          - target: aarch64-apple-darwin
+            runner: macos-15
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: binaries-${{ matrix.target }}
+          path: dist
+      - name: Execute Linux-built macOS release binary
+        shell: bash
+        run: |
+          chmod +x dist/fbuild
+          dist/fbuild --version
+
+  runtime-coverage:
+    name: All-platform physical runtime coverage
+    needs: [prepare, full-ci]
+    if: needs.prepare.outputs.should_publish_github == 'true' || needs.prepare.outputs.should_publish_pypi == 'true'
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Require trusted runtime evidence
+        run: |
+          # ci-full proves the software and policy gates on this candidate SHA.
+          # Physical proof must come from trusted CI executing every supported
+          # board family; a dispatch input or self-attested file is not evidence.
+          echo '::error::physical-board runtime coverage for every supported platform is not available on this candidate SHA; publication is blocked'
+          exit 1
+
   publish:
     name: Publish GitHub release
-    needs: [prepare, build]
-    if: needs.prepare.outputs.should_publish_github == 'true'
+    needs: [prepare, build, full-ci, macos-release-smoke, runtime-coverage]
+    if: needs.prepare.outputs.should_publish_github == 'true' && needs.full-ci.outputs.coverage == 'true' && needs.runtime-coverage.result == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 30
 
@@ -311,8 +375,8 @@ jobs:
 
   build-pypi:
     name: Build PyPI wheels
-    needs: [prepare, build]
-    if: needs.prepare.outputs.should_publish_pypi == 'true'
+    needs: [prepare, build, full-ci, macos-release-smoke, runtime-coverage]
+    if: needs.prepare.outputs.should_publish_pypi == 'true' && needs.full-ci.outputs.coverage == 'true' && needs.runtime-coverage.result == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 30
 
@@ -386,8 +450,8 @@ jobs:
 
   publish-pypi:
     name: Publish PyPI
-    needs: [prepare, build-pypi]
-    if: needs.prepare.outputs.should_publish_pypi == 'true'
+    needs: [prepare, build-pypi, full-ci, runtime-coverage]
+    if: needs.prepare.outputs.should_publish_pypi == 'true' && needs.full-ci.outputs.coverage == 'true' && needs.runtime-coverage.result == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     environment: pypi

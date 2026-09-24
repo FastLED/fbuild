@@ -60,10 +60,10 @@ The four rules an agent must internalize before doing anything else (all listed 
 - **Always use a globally-installed `soldr` to execute Rust commands.** Bare cargo/rustc and legacy `uv run cargo` shims are blocked by hook. soldr uses `rustup which` to pick the rustup-managed toolchain from `rust-toolchain.toml`. The standard Cargo path is `soldr cargo ...`, so repo Rust builds get soldr's managed zccache path by default; do not add repo-specific `RUSTC_WRAPPER` wiring for normal builds. Install soldr globally via `uv tool install soldr` (or see https://github.com/zackees/soldr).
 - **Always use `uv` for Python.** Bare `python`/`pip` are blocked by hook. Use `uv run ...` or `uv pip ...`.
 - MSRV: 1.95.0 | Edition: 2021 | Toolchain: 1.95.0 pinned in `rust-toolchain.toml` (clippy + rustfmt)
-- CI hosts: Linux, Windows. All warnings denied (`RUSTFLAGS="-D warnings"`). There are
-  **no macOS runners** — macOS is a build *target*, not a test host: every apple-darwin
-  binary is cross-built from Linux by the Linux-hosted native workflows,
-  `release-auto.yml` and `build.yml`. Do not add a `macos-latest` lane back.
+- CI hosts: Linux and Windows for routine PRs and `main`; `ci-full` and release
+  validation also run tests on hosted Intel and Apple Silicon macOS. All warnings
+  denied (`RUSTFLAGS="-D warnings"`). Every apple-darwin release binary is still
+  cross-built from Linux by `release-auto.yml` and `build.yml`.
 - **Cross-compilation goes through soldr, and only soldr** — `soldr prepare --target X`
   then `soldr build --target X`. The zig- and xwin-based wrappers are retired and
   enforced-out by `ci/check_no_legacy_cross.py` plus the `tool_guard.py` hook. Never pass zigbuild's `.2.17` glibc suffix to soldr: it has no
@@ -108,7 +108,7 @@ soldr cargo run -p fbuild-config --bin enrich_boards  # enrich from local Platfo
 
 ## Distribution
 
-Releases ship via the **Autonomous Release** GitHub Action (`.github/workflows/release-auto.yml`). PyPI is the distribution channel; per-platform native binaries are built, assembled into wheels, and uploaded via PyPI trusted publishing — there is no local publish script.
+Releases ship via the explicit-dispatch **Autonomous Release** GitHub Action (`.github/workflows/release-auto.yml`). PyPI is the distribution channel; per-platform native binaries are built, assembled into wheels, and uploaded via PyPI trusted publishing — there is no local publish script.
 
 To cut a release:
 
@@ -116,8 +116,10 @@ To cut a release:
 # 1. Bump version in both files (must match)
 #    Cargo.toml  -> [workspace.package] version
 #    pyproject.toml -> [project] version
-# 2. Push the bump commit to main (do NOT push a tag manually —
-#    the action creates one only after the build + upload succeed)
+# 2. Push the bump commit to main; this runs ordinary CI only.
+# 3. Dispatch release-auto.yml with the exact commit SHA and publish=false
+#    for a dry run. publish=true is currently blocked by the missing trusted
+#    all-platform physical runtime result; no tag can be minted yet.
 ```
 
 See [docs/RELEASING.md](docs/RELEASING.md) for the full flow, gating logic, and re-run instructions when a release stalls.

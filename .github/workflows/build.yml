@@ -42,7 +42,7 @@ jobs:
 
           # aarch64-apple-darwin cross-compiles from the Linux runner via
           # soldr's blessed cross path + its managed Apple SDK, matching the
-          # release matrix. No macos-latest runner is used anywhere in this
+          # release matrix. Hosted macOS test runners are scoped to ci-full
           # workflow.
           - target: aarch64-apple-darwin
             runner: ubuntu-latest

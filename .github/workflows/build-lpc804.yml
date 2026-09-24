@@ -4,20 +4,6 @@ name: Build LPC804
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/lpc804/**'
-      - 'crates/fbuild-build-arm/src/nxplpc/**'
-      - 'crates/fbuild-build-arm/src/generic_arm/**'
-      - '.github/workflows/build-lpc804.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/lpc804/**'
-      - 'crates/fbuild-build-arm/src/nxplpc/**'
-      - 'crates/fbuild-build-arm/src/generic_arm/**'
-      - '.github/workflows/build-lpc804.yml'
 
 concurrency:
   group: build-lpc804.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

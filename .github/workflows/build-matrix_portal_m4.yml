@@ -4,18 +4,6 @@ name: Build Matrix Portal M4
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/matrix_portal_m4/**'
-      - 'crates/fbuild-build-arm/src/sam/**'
-      - '.github/workflows/build-matrix_portal_m4.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/matrix_portal_m4/**'
-      - 'crates/fbuild-build-arm/src/sam/**'
-      - '.github/workflows/build-matrix_portal_m4.yml'
 
 concurrency:
   group: build-matrix_portal_m4.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

@@ -9,52 +9,46 @@ fbuild is published to PyPI by the **Autonomous Release** GitHub Action (`.githu
 # 2. Bump it in BOTH files; the workflow refuses to release if they differ.
 #    - Cargo.toml         [workspace.package].version
 #    - pyproject.toml     [project].version
-# 3. Commit and push to main.
-#    DO NOT push a v<version> tag — the action only triggers when the
-#    tag is absent, and it creates the tag itself after the upload
-#    succeeds.
+# 3. Commit and push to main. This runs ordinary CI only.
 git commit -am "chore: bump version to X.Y.Z"
 git push origin main
+# 4. After reviewing the exact candidate commit, dispatch a full dry run.
+candidate_sha=$(git rev-parse HEAD)
+gh workflow run release-auto.yml --repo FastLED/fbuild --ref main \
+  -f candidate_sha="$candidate_sha" -f publish=false
 ```
 
-That's the entire happy path. Wait for the action to complete (~10-15 min for the full matrix + upload); the new wheels appear at `https://pypi.org/project/fbuild/X.Y.Z/`.
+The dispatch requires a 40-character commit SHA equal to the head commit of the dispatch ref (`--ref main` in the example). This keeps the loaded workflow definitions and generated board matrix on the same revision as the code under test. If `main` has advanced, dispatch from a ref at the candidate commit. `publish=false` runs the native builds and the software jobs wired into `ci-full`, including fmt, docs, MSRV, board validation, and crate gates. **Publication is currently blocked:** there is no trusted same-SHA physical-board runtime result for every supported platform. `publish=true` fails at `runtime-coverage` before any tag or upload. Keep that guard until trusted hardware proof is available.
 
 ## What the action actually does
 
 ```
 release-auto.yml
 ├── prepare              ── compute candidate version, check tag + PyPI state
+├── ci-full              ── validate exact candidate SHA and every board/platform job
 ├── build (matrix)       ── build native binaries for 6 targets
 ├── build-pypi           ── call `ci/publish.py::build_all_wheels` → 4 wheels
 ├── smoke test           ── pip-install one wheel, run `fbuild --version`
+├── runtime-coverage     ── blocks publication until physical-board proof exists
 ├── publish              ── create GitHub release + push v<version> tag
 └── publish-pypi         ── upload wheels via trusted publishing (OIDC)
 ```
 
-The `prepare` job is the trigger gate. It runs on every push that touches `Cargo.toml` or `pyproject.toml`, and decides whether the rest of the pipeline runs:
+The `prepare` job runs only on an explicit `workflow_dispatch`. It verifies that checkout HEAD matches `candidate_sha`, refuses an existing version tag pointing to another commit, and decides which publication jobs are needed. A version-file push cannot start this workflow.
 
 ```
-should_build = true  IF  (tag does not exist)
-                     AND (version on disk >= newest known PyPI version)
-                     AND (PyPI has < len(PLATFORMS) files for this version)
+should_build = true  for an explicit candidate dispatch
+should_publish_github = true  IF publish=true AND tag does not exist
+should_publish_pypi = true    IF publish=true AND PyPI has fewer than expected wheels
 ```
 
-The file-count guard exists because a complete `fbuild` release means one wheel per `PLATFORMS` entry in `ci/publish.py` (currently 4: Linux x86_64, Linux aarch64, macOS aarch64, Windows x86_64). Anything less is a partial / stranded release and the prep job will refuse to "fix it" by uploading more files to the same version. Both this gate and the post-upload "Verify all wheels visible on PyPI" check derive their expected counts at run time (from `ci/publish.py::PLATFORMS` and the built wheels respectively) — a stale hardcoded 4 broke the verify gate during the 2.3.22-2.3.24 window. Note the build matrix has more lanes than wheels: the x86_64-apple-darwin and aarch64-pc-windows-msvc binaries ship via the GitHub release archives only (Intel Macs install the arm64 wheel via its dual macosx tag; ARM Windows uses the win_amd64 wheel via emulation).
+The file-count guard exists because a complete `fbuild` release means one wheel per `PLATFORMS` entry in `ci/publish.py` (currently 4: Linux x86_64, Linux aarch64, macOS aarch64, Windows x86_64). Anything less is a partial / stranded release; an explicit retry on the same candidate SHA can rebuild and upload the missing wheels after full CI and physical-board runtime coverage pass. Both this gate and the post-upload "Verify all wheels visible on PyPI" check derive their expected counts at run time (from `ci/publish.py::PLATFORMS` and the built wheels respectively) — a stale hardcoded 4 broke the verify gate during the 2.3.22-2.3.24 window. Note the build matrix has more lanes than wheels: the x86_64-apple-darwin and aarch64-pc-windows-msvc binaries ship via the GitHub release archives only (Intel Macs install the arm64 wheel via its dual macosx tag; ARM Windows uses the win_amd64 wheel via emulation).
 
 ## Common failure modes
 
 ### "I pushed the version bump but nothing happened"
 
-The most common cause is a manually-pushed tag. If `v<version>` already exists on the remote when the `prepare` job runs, `should_build` stays false and every downstream job is skipped — the action conclusion shows `success` because nothing failed, but no wheels were built. Symptom: action completed quickly (<1 min), no `build` jobs ran.
-
-**Fix:** delete the tag and re-run the workflow.
-
-```bash
-git push --delete origin v<version>
-gh workflow run release-auto.yml --repo FastLED/fbuild --ref main
-```
-
-Then `gh run watch` to confirm `should_build=true` this time.
+That is expected: the version bump runs ordinary CI. Dispatch `release-auto.yml` with the exact candidate SHA when ready. Do not create the version tag manually.
 
 ### Cargo.toml and pyproject.toml versions disagree
 
@@ -62,10 +56,11 @@ The `prepare` job aborts with a non-zero exit if `[workspace.package].version` (
 
 ### A wheel built but never uploaded (partial release)
 
-Re-run via `workflow_dispatch`. The fallback branch in `prepare` allows builds when the tag exists but PyPI has fewer than the expected number of files — but only on a manual dispatch:
+Once trusted physical-board coverage is connected, re-run the same candidate SHA with `publish=true`. `prepare` verifies that the existing tag points to that SHA and rebuilds the missing wheels:
 
 ```bash
-gh workflow run release-auto.yml --repo FastLED/fbuild --ref main
+gh workflow run release-auto.yml --repo FastLED/fbuild --ref main \
+  -f candidate_sha=<original-40-character-commit-sha> -f publish=true
 ```
 
 The action will rebuild the missing wheels and upload, leaving the existing wheels in place. PyPI does not let you re-upload the same filename, so the new run produces fresh sdists/wheels only for the missing platforms.

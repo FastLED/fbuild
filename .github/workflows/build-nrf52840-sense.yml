@@ -4,18 +4,6 @@ name: Build Adafruit Feather NRF52840 Sense
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/adafruit_feather_nrf52840_sense/**'
-      - 'crates/fbuild-build-arm/src/nrf52/**'
-      - '.github/workflows/build-nrf52840-sense.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/adafruit_feather_nrf52840_sense/**'
-      - 'crates/fbuild-build-arm/src/nrf52/**'
-      - '.github/workflows/build-nrf52840-sense.yml'
 
 concurrency:
   group: build-nrf52840-sense.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

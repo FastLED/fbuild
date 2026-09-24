@@ -4,20 +4,6 @@ name: Build LPCXpresso845-MAX
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/lpcxpresso845max/**'
-      - 'crates/fbuild-build-arm/src/nxplpc/**'
-      - 'crates/fbuild-build-arm/src/generic_arm/**'
-      - '.github/workflows/build-lpcxpresso845max.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/lpcxpresso845max/**'
-      - 'crates/fbuild-build-arm/src/nxplpc/**'
-      - 'crates/fbuild-build-arm/src/generic_arm/**'
-      - '.github/workflows/build-lpcxpresso845max.yml'
 
 concurrency:
   group: build-lpcxpresso845max.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

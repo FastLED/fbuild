@@ -4,18 +4,6 @@ name: Build Teensy LC
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/teensylc/**'
-      - 'crates/fbuild-build-arm/src/teensy/**'
-      - '.github/workflows/build-teensylc.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/teensylc/**'
-      - 'crates/fbuild-build-arm/src/teensy/**'
-      - '.github/workflows/build-teensylc.yml'
 
 concurrency:
   group: build-teensylc.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

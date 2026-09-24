@@ -19,6 +19,10 @@ on:
         required: true
         type: string
         description: "Firmware file extension (bin or hex)"
+      checkout_ref:
+        required: false
+        type: string
+        default: ""
 
 env:
   CARGO_TERM_COLOR: always
@@ -38,10 +42,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.checkout_ref }}
 
       - name: Setup soldr
         id: setup-soldr
-        uses: zackees/setup-soldr@v0
+        # Canary exact setup-soldr main SHA before v0 promotion.
+        uses: zackees/setup-soldr@a71cd1c92c72f8effbe65862e1440e9627678189
         with:
           # cache-preset: foundation expands to:
           #   build-cache: true, target-cache: false,

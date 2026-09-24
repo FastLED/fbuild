@@ -4,18 +4,6 @@ name: Build SAMD21
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/samd21/**'
-      - 'crates/fbuild-build-arm/src/sam/**'
-      - '.github/workflows/build-samd21.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/samd21/**'
-      - 'crates/fbuild-build-arm/src/sam/**'
-      - '.github/workflows/build-samd21.yml'
 
 concurrency:
   group: build-samd21.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

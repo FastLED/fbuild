@@ -4,18 +4,6 @@ name: Build BlackPill F411CE
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/blackpill_f411ce/**'
-      - 'crates/fbuild-build-arm/src/stm32/**'
-      - '.github/workflows/build-blackpill.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/blackpill_f411ce/**'
-      - 'crates/fbuild-build-arm/src/stm32/**'
-      - '.github/workflows/build-blackpill.yml'
 
 concurrency:
   group: build-blackpill.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

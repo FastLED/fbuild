@@ -4,18 +4,6 @@ name: Build Arduino Zero
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/samd21_zero/**'
-      - 'crates/fbuild-build-arm/src/sam/**'
-      - '.github/workflows/build-samd21_zero.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/samd21_zero/**'
-      - 'crates/fbuild-build-arm/src/sam/**'
-      - '.github/workflows/build-samd21_zero.yml'
 
 concurrency:
   group: build-samd21_zero.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

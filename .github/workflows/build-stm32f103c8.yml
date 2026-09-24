@@ -4,18 +4,6 @@ name: Build STM32F103C8
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/stm32f103c8/**'
-      - 'crates/fbuild-build-arm/src/stm32/**'
-      - '.github/workflows/build-stm32f103c8.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/stm32f103c8/**'
-      - 'crates/fbuild-build-arm/src/stm32/**'
-      - '.github/workflows/build-stm32f103c8.yml'
 
 concurrency:
   group: build-stm32f103c8.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}

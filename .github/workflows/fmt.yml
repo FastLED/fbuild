@@ -2,6 +2,12 @@ name: Formatting
 
 on:
   workflow_dispatch: {}
+  workflow_call:
+    inputs:
+      ref:
+        type: string
+        required: false
+        default: ""
   push:
     branches: [main]
   pull_request:
@@ -12,7 +18,7 @@ on:
 # events key on run_id so each gets its own group -- a shared group keeps
 # only ONE pending run, which would silently drop queued main SHAs.
 concurrency:
-  group: fmt.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
+  group: fmt.yml-${{ inputs.ref != '' && github.run_id || (github.event_name == 'pull_request' && github.ref || github.run_id) }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
@@ -25,6 +31,8 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.ref }}
       - name: Setup soldr
         id: setup-soldr
         uses: zackees/setup-soldr@v0

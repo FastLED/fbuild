@@ -4,18 +4,6 @@ name: Build ATtiny85
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [main]
-    paths:
-      - 'tests/platform/attiny85/**'
-      - 'crates/fbuild-build-mcu/src/avr/**'
-      - '.github/workflows/build-attiny85.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'tests/platform/attiny85/**'
-      - 'crates/fbuild-build-mcu/src/avr/**'
-      - '.github/workflows/build-attiny85.yml'
 
 concurrency:
   group: build-attiny85.yml-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
