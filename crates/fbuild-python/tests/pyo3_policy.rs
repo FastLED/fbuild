@@ -191,6 +191,44 @@ fn pyo3_029_policy_stays_target_python_independent() {
 }
 
 #[test]
+fn python_api_and_fixed_ci_interpreters_use_py310() {
+    // FastLED/fbuild#1451: the public extension is abi3-py310.  Lock and run
+    // repository-owned Python tooling against that API floor; do not make a
+    // newer interpreter an accidental resolver requirement.
+    let root = repo_root();
+    let manifest = fs::read_to_string(root.join("pyproject.toml")).unwrap();
+    let lockfile = fs::read_to_string(root.join("uv.lock")).unwrap();
+    let install = fs::read_to_string(root.join("install")).unwrap();
+    let setup_action = fs::read_to_string(root.join(".github/actions/setup/action.yml")).unwrap();
+    let setup_readme = fs::read_to_string(root.join(".github/actions/setup/README.md")).unwrap();
+
+    for (name, contents) in [
+        ("pyproject.toml", manifest.as_str()),
+        ("uv.lock", lockfile.as_str()),
+        ("install", install.as_str()),
+    ] {
+        assert!(
+            contents.contains("requires-python = \">=3.10\""),
+            "{name} must retain Python 3.10 as its supported floor"
+        );
+    }
+    assert!(setup_action.contains("default: \"3.10\""));
+    assert!(setup_readme.contains("| `python-version` | `3.10` |"));
+
+    for workflow in [
+        ".github/workflows/template_native_build.yml",
+        ".github/workflows/audit-ignored-tests.yml",
+        ".github/workflows/validate-boards.yml",
+    ] {
+        let contents = fs::read_to_string(root.join(workflow)).unwrap();
+        assert!(
+            contents.contains("python-version: \"3.10\""),
+            "{workflow} must use the Python 3.10 API baseline"
+        );
+    }
+}
+
+#[test]
 fn native_release_workflow_uses_current_cross_toolchains() {
     let root = repo_root();
     let workflow =

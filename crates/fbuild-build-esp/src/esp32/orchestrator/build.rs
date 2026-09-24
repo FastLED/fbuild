@@ -334,7 +334,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 .flat_map(|library| library.include_dirs.iter().cloned()),
         );
         let mut external_library_sources = Vec::new();
-        let mut external_library_include_dirs = Vec::new();
 
         if !lib_deps.is_empty() {
             let libs_dir = build_dir.join("libs");
@@ -397,8 +396,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             // cross-project cache hits. Library includes are same-tier, so a
             // stable sort is safe for include resolution.
             external_library_sources = lib_result.source_files;
-            external_library_include_dirs = lib_result.include_dirs;
-            let mut lib_include_dirs = external_library_include_dirs.clone();
+            let mut lib_include_dirs = lib_result.include_dirs;
             lib_include_dirs.sort();
             include_dirs.extend(lib_include_dirs);
             library_archives = lib_result.archives;
@@ -429,7 +427,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &library_selection_defines,
             &declared_lib_deps,
             &external_library_sources,
-            &external_library_include_dirs,
+            &include_dirs,
         );
         let selected_framework_libraries: Vec<_> = framework_libraries
             .iter()
