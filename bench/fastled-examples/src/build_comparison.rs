@@ -389,7 +389,11 @@ fn perf_phases_after(
     let records = parse_perf_lines(content, offset);
     let mut merged: Option<BTreeMap<String, f64>> = None;
     for label in labels {
-        let Some(record) = records.iter().rev().find(|record| record["label"] == *label) else {
+        let Some(record) = records
+            .iter()
+            .rev()
+            .find(|record| record["label"] == *label)
+        else {
             continue;
         };
         let out = merged.get_or_insert_with(BTreeMap::new);
@@ -440,10 +444,17 @@ fn find_compile_db(project_dir: &Path) -> Option<PathBuf> {
     })
 }
 
-fn measure_raw_baseline(project_dir: &Path, trials: usize, log: &mut File) -> AppResult<Option<f64>> {
+fn measure_raw_baseline(
+    project_dir: &Path,
+    trials: usize,
+    log: &mut File,
+) -> AppResult<Option<f64>> {
     let Some(db) = find_compile_db(project_dir) else {
         eprintln!("warning: no compile_commands.json found for uno; raw_baseline_ms = null");
-        writeln!(log, "warning: no compile_commands.json found; raw baseline skipped")?;
+        writeln!(
+            log,
+            "warning: no compile_commands.json found; raw baseline skipped"
+        )?;
         return Ok(None);
     };
     let entries: Vec<CompileEntry> = match fs::read_to_string(&db)
@@ -452,7 +463,10 @@ fn measure_raw_baseline(project_dir: &Path, trials: usize, log: &mut File) -> Ap
     {
         Ok(entries) => entries,
         Err(error) => {
-            eprintln!("warning: unreadable {}: {error}; raw_baseline_ms = null", db.display());
+            eprintln!(
+                "warning: unreadable {}: {error}; raw_baseline_ms = null",
+                db.display()
+            );
             return Ok(None);
         }
     };
@@ -925,7 +939,9 @@ fn cold_of(results: &[ToolResult], tool: &str) -> Option<f64> {
 }
 
 fn fbuild_overhead_ms(metadata: &Metadata, results: &[ToolResult]) -> Option<f64> {
-    Some(round_millis(cold_of(results, "fbuild")? - metadata.raw_baseline_ms?))
+    Some(round_millis(
+        cold_of(results, "fbuild")? - metadata.raw_baseline_ms?,
+    ))
 }
 
 fn fbuild_vs_platformio_cold(results: &[ToolResult]) -> Option<f64> {
@@ -1124,7 +1140,12 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
     }
     let short_sha = metadata.git_sha.chars().take(12).collect::<String>();
     let floor_line = svg_floor_line(metadata, results)
-        .map(|text| format!("  <text x=\"692\" y=\"95\" class=\"meta\">{}</text>\n", xml_escape(&text)))
+        .map(|text| {
+            format!(
+                "  <text x=\"692\" y=\"95\" class=\"meta\">{}</text>\n",
+                xml_escape(&text)
+            )
+        })
         .unwrap_or_default();
     format!(
         r##"<svg xmlns="http://www.w3.org/2000/svg" width="{width:.0}" height="{height:.0}" viewBox="0 0 {width:.0} {height:.0}" role="img" aria-labelledby="title description">

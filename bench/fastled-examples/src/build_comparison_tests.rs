@@ -319,11 +319,16 @@ fn latest_payload_reports_overhead_and_platformio_ratio() {
     assert_eq!(latest["fbuild_overhead_ms"], 150.0);
     assert_eq!(latest["fbuild_vs_platformio_cold"], 0.667);
     assert_eq!(latest["results"][2]["cold_phases_ms"]["compile"], 400.0);
-    assert_eq!(latest["results"][2]["cold_phase_trials"][0]["compile"], 400.0);
-    assert!(latest["results"][0]["cold_phase_trials"]
-        .as_array()
-        .unwrap()
-        .is_empty());
+    assert_eq!(
+        latest["results"][2]["cold_phase_trials"][0]["compile"],
+        400.0
+    );
+    assert!(
+        latest["results"][0]["cold_phase_trials"]
+            .as_array()
+            .unwrap()
+            .is_empty()
+    );
 
     let mut metadata = sample_metadata();
     metadata.raw_baseline_ms = None;
@@ -363,7 +368,9 @@ fn ratio_regression_uses_seven_day_median() {
 fn svg_shows_raw_floor_and_overhead() {
     let svg = render_svg(&sample_metadata(), &sample_results());
     assert!(
-        svg.contains("raw compiler floor: 450.0 ms | fbuild overhead: 150.0 ms | fbuild/PIO cold: 0.667"),
+        svg.contains(
+            "raw compiler floor: 450.0 ms | fbuild overhead: 150.0 ms | fbuild/PIO cold: 0.667"
+        ),
         "{svg}"
     );
     let mut metadata = sample_metadata();
