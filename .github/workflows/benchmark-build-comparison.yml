@@ -106,6 +106,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          echo "Runner parallelism: nproc=$(nproc)"
           generated_at="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
           target/release/bench-build-comparison \
             --project-dir bench/blink \
@@ -118,6 +119,30 @@ jobs:
             --run-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
             --pages-url https://fastled.github.io/fbuild/ \
             --raw-base-url https://raw.githubusercontent.com/FastLED/fbuild/benchmark-stats
+
+      - name: Summarize cold-build breakdown
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          latest=benchmark-stats/latest.json
+          if [[ ! -f "${latest}" ]]; then
+            echo "No ${latest}; skipping summary." >> "${GITHUB_STEP_SUMMARY}"
+            exit 0
+          fi
+          {
+            echo "## Cold-build breakdown"
+            echo
+            echo "- nproc: $(nproc)"
+            jq -r '"- raw_baseline_ms: \(.raw_baseline_ms // "n/a")",
+                   "- fbuild_overhead_ms: \(.fbuild_overhead_ms // "n/a")",
+                   "- fbuild_vs_platformio_cold: \(.fbuild_vs_platformio_cold // "n/a")"' "${latest}"
+            echo
+            echo "| fbuild phase | cold ms |"
+            echo "|---|---:|"
+            jq -r '([.results[]? | select(.tool == "fbuild") | .cold_phases_ms // {}] | first // {})
+                   | to_entries[]? | "| \(.key) | \(.value // "n/a") |"' "${latest}"
+          } >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Upload benchmark site snapshot
         uses: actions/upload-artifact@v7

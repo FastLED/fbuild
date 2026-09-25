@@ -113,6 +113,10 @@ sample-numbers table above in lockstep.
 
 ## Cross-links
 
+- `bench-build-comparison` (the Blink whole-build comparison binary in this
+  crate) also emits a per-phase fbuild cold-build breakdown; see
+  [`../blink/README.md`](../blink/README.md#cold-build-breakdown).
+
 - Issue: [`FastLED/fbuild#205`](https://github.com/FastLED/fbuild/issues/205)
 - This harness: [`FastLED/fbuild#218`](https://github.com/FastLED/fbuild/issues/218)
 - Per-crate synthetic warm bench:

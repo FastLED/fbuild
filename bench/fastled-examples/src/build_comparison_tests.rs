@@ -11,6 +11,8 @@ fn sample_results() -> Vec<ToolResult> {
             speedup: 1.5,
             cold_trials_ms: vec![1100.0, 1200.0, 1300.0],
             warm_trials_ms: vec![750.0, 800.0, 850.0],
+            cold_phases_ms: BTreeMap::new(),
+            cold_phase_trials: Vec::new(),
         },
         ToolResult {
             tool: "platformio".into(),
@@ -21,6 +23,8 @@ fn sample_results() -> Vec<ToolResult> {
             speedup: 3.0,
             cold_trials_ms: vec![850.0, 900.0, 950.0],
             warm_trials_ms: vec![280.0, 300.0, 320.0],
+            cold_phases_ms: BTreeMap::new(),
+            cold_phase_trials: Vec::new(),
         },
         ToolResult {
             tool: "fbuild".into(),
@@ -31,6 +35,8 @@ fn sample_results() -> Vec<ToolResult> {
             speedup: 15.0,
             cold_trials_ms: vec![580.0, 600.0, 620.0],
             warm_trials_ms: vec![38.0, 40.0, 42.0],
+            cold_phases_ms: BTreeMap::from([("compile".to_string(), 400.0)]),
+            cold_phase_trials: vec![BTreeMap::from([("compile".to_string(), 400.0)])],
         },
     ]
 }
@@ -43,6 +49,7 @@ fn sample_metadata() -> Metadata {
         run_url: "https://github.com/FastLED/fbuild/actions/runs/1".into(),
         project: "bench/blink".into(),
         trials: 3,
+        raw_baseline_ms: Some(450.0),
     }
 }
 
@@ -227,4 +234,150 @@ fn outputs_include_agent_discovery_and_bounded_history() {
     assert!(html.contains("compiler-object caches"));
     assert!(html.contains("Arduino/PlatformIO download/HTTP caches"));
     assert!(html.contains("fbuild package archives"));
+}
+
+fn phases(pairs: &[(&str, f64)]) -> BTreeMap<String, f64> {
+    pairs.iter().map(|(k, v)| (k.to_string(), *v)).collect()
+}
+
+#[test]
+fn parses_perf_jsonl_lines_after_offset() {
+    let content = [
+        r#"{"label":"avr-orchestrator","phases":{"compile":1.0},"total_ms":1.0,"unix_ms":1}"#,
+        r#"{"label":"pipeline","phases":{"link":9.0},"total_ms":9.0,"unix_ms":2}"#,
+        "not json",
+        r#"{"label":"avr-orchestrator","phases":{"compile":250.5,"link":30.0},"total_ms":280.5,"unix_ms":3}"#,
+    ]
+    .join("\n");
+    assert_eq!(parse_perf_lines(&content, 1).len(), 2);
+    assert_eq!(
+        perf_phases_after(&content, 1, &["avr-orchestrator"]),
+        Some(phases(&[("compile", 250.5), ("link", 30.0)]))
+    );
+    // Both timers of one AVR build are merged (pipeline carries compile/link).
+    assert_eq!(
+        perf_phases_after(&content, 1, &["avr-orchestrator", "pipeline"]),
+        Some(phases(&[("compile", 250.5), ("link", 39.0)]))
+    );
+    assert_eq!(perf_phases_after(&content, 4, &["avr-orchestrator"]), None);
+    assert_eq!(perf_phases_after("", 0, &["avr-orchestrator"]), None);
+    let missing = tempfile::tempdir().unwrap();
+    assert_eq!(perf_line_count(&missing.path().join("absent.jsonl")), 0);
+}
+
+#[test]
+fn phase_medians_skip_missing_phases() {
+    let trials = vec![
+        phases(&[("compile", 100.0), ("link", 10.0)]),
+        phases(&[("compile", 300.0)]),
+        phases(&[("compile", 200.0), ("link", 30.0)]),
+    ];
+    assert_eq!(
+        phase_medians(&trials),
+        phases(&[("compile", 200.0), ("link", 20.0)])
+    );
+    assert!(phase_medians(&[]).is_empty());
+}
+
+#[test]
+fn strips_compiler_wrapper_prefix_and_redirects_output() {
+    let out = Path::new("/tmp/raw/0.o");
+    let argv = [
+        "/home/u/.cargo/bin/zccache",
+        "fbuild.exe",
+        "avr-g++",
+        "-c",
+        "blink.cpp",
+        "-o",
+        "build/blink.o",
+    ]
+    .map(String::from);
+    assert_eq!(
+        rewrite_compile_argv(&argv, out),
+        ["avr-g++", "-c", "blink.cpp", "-o", "/tmp/raw/0.o"].map(String::from)
+    );
+    let joined = ["avr-gcc", "-c", "x.c", "-obuild/x.o"].map(String::from);
+    assert_eq!(
+        rewrite_compile_argv(&joined, out),
+        ["avr-gcc", "-c", "x.c", "-o/tmp/raw/0.o"].map(String::from)
+    );
+    let no_output = ["avr-gcc", "-c", "x.c"].map(String::from);
+    assert_eq!(
+        rewrite_compile_argv(&no_output, out),
+        ["avr-gcc", "-c", "x.c", "-o", "/tmp/raw/0.o"].map(String::from)
+    );
+    assert_eq!(
+        split_command(r#"zccache avr-g++ "-DNAME=\"a b\"" -o out.o"#),
+        ["zccache", "avr-g++", "-DNAME=\"a b\"", "-o", "out.o"].map(String::from)
+    );
+}
+
+#[test]
+fn latest_payload_reports_overhead_and_platformio_ratio() {
+    let latest = latest_payload(&sample_metadata(), &sample_results());
+    assert_eq!(latest["raw_baseline_ms"], 450.0);
+    assert_eq!(latest["fbuild_overhead_ms"], 150.0);
+    assert_eq!(latest["fbuild_vs_platformio_cold"], 0.667);
+    assert_eq!(latest["results"][2]["cold_phases_ms"]["compile"], 400.0);
+    assert_eq!(
+        latest["results"][2]["cold_phase_trials"][0]["compile"],
+        400.0
+    );
+    assert!(
+        latest["results"][0]["cold_phase_trials"]
+            .as_array()
+            .unwrap()
+            .is_empty()
+    );
+
+    let mut metadata = sample_metadata();
+    metadata.raw_baseline_ms = None;
+    let latest = latest_payload(&metadata, &sample_results());
+    assert!(latest["raw_baseline_ms"].is_null());
+    assert!(latest["fbuild_overhead_ms"].is_null());
+
+    let temp = tempfile::tempdir().unwrap();
+    let path = NormalizedPath::new(temp.path().join("history.jsonl"));
+    write_history(path.clone(), &sample_metadata(), &sample_results()).unwrap();
+    let line: Value = serde_json::from_str(fs::read_to_string(&path).unwrap().trim()).unwrap();
+    assert_eq!(line["fbuild_overhead_ms"], 150.0);
+    assert_eq!(line["fbuild_vs_platformio_cold"], 0.667);
+}
+
+#[test]
+fn ratio_regression_uses_seven_day_median() {
+    let now = parse_timestamp_unix_s("2026-07-22T12:00:00Z").unwrap();
+    assert_eq!(now, 1_784_721_600);
+    let day = 86_400;
+    let history = vec![
+        json!({"ts": format!("unix:{}", now - 10 * day), "fbuild_vs_platformio_cold": 5.0}),
+        json!({"ts": format!("unix:{}", now - 8 * day), "fbuild_vs_platformio_cold": 5.0}),
+        json!({"ts": format!("unix:{}", now - 3 * day), "fbuild_vs_platformio_cold": 0.6}),
+        json!({"ts": "2026-07-20T12:00:00Z", "fbuild_vs_platformio_cold": 0.7}),
+        json!({"ts": format!("unix:{}", now - day), "fbuild_vs_platformio_cold": 0.8}),
+        json!({"ts": "garbage", "fbuild_vs_platformio_cold": 9.0}),
+        json!({"ts": format!("unix:{}", now - day)}),
+    ];
+    assert_eq!(ratio_regressed(&history, now, 0.75), Some(0.7));
+    assert_eq!(ratio_regressed(&history, now, 0.7), None);
+    assert_eq!(ratio_regressed(&history, now, 0.5), None);
+    assert_eq!(ratio_regressed(&[], now, 9.0), None);
+}
+
+#[test]
+fn svg_shows_raw_floor_and_overhead() {
+    let svg = render_svg(&sample_metadata(), &sample_results());
+    assert!(
+        svg.contains(
+            "raw compiler floor: 450.0 ms | fbuild overhead: 150.0 ms | fbuild/PIO cold: 0.667"
+        ),
+        "{svg}"
+    );
+    let mut metadata = sample_metadata();
+    metadata.raw_baseline_ms = None;
+    let svg = render_svg(&metadata, &sample_results());
+    assert!(!svg.contains("raw compiler floor"));
+    assert!(svg.contains("fbuild/PIO cold: 0.667"));
+    let html = render_html(&sample_metadata(), &sample_results());
+    assert!(html.contains("fbuild cold phase breakdown"));
 }

@@ -12,6 +12,11 @@
 //! also mirrored to stderr so it is visible in CLI output without requiring a
 //! tracing subscriber reconfiguration.
 //!
+//! Set `FBUILD_PERF_LOG_JSON=<absolute file path>` to additionally append one
+//! machine-readable JSON line per timer on drop (FastLED/fbuild#1465):
+//! `{"label":..,"phases":{"<name>":<ms f64>,..},"total_ms":<f64>,"unix_ms":<u64>}`.
+//! Setting it also enables the timer, exactly like `FBUILD_PERF_LOG=1`.
+//!
 //! ## Usage
 //!
 //! ```ignore
@@ -24,10 +29,14 @@
 //! // auto-summary on drop
 //! ```
 
+use std::io::Write;
+use std::path::{Path, PathBuf};
+use std::sync::OnceLock;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::time::{Duration, Instant};
 
-/// Returns `true` when `FBUILD_PERF_LOG=1` (or any non-empty, non-`0` value).
+/// Returns `true` when `FBUILD_PERF_LOG=1` (or any non-empty, non-`0` value)
+/// or when `FBUILD_PERF_LOG_JSON` names a sink file.
 ///
 /// Cached after the first call so repeated checks are O(1).
 pub fn enabled() -> bool {
@@ -36,11 +45,40 @@ pub fn enabled() -> bool {
     if !INIT.load(Ordering::Relaxed) {
         let v = std::env::var("FBUILD_PERF_LOG")
             .map(|v| !v.is_empty() && v != "0")
-            .unwrap_or(false);
+            .unwrap_or(false)
+            || json_sink_path().is_some();
         CACHED.store(v, Ordering::Relaxed);
         INIT.store(true, Ordering::Relaxed);
     }
     CACHED.load(Ordering::Relaxed)
+}
+
+/// Returns the `FBUILD_PERF_LOG_JSON` sink path when set and non-empty.
+///
+/// Cached after the first call.
+pub fn json_sink_path() -> Option<&'static Path> {
+    static SINK: OnceLock<Option<PathBuf>> = OnceLock::new();
+    SINK.get_or_init(|| {
+        std::env::var_os("FBUILD_PERF_LOG_JSON")
+            .filter(|v| !v.is_empty())
+            .map(PathBuf::from)
+    })
+    .as_deref()
+}
+
+/// Append `value` as a single JSON line to `path` (append + create).
+fn append_json_line(path: &Path, value: &serde_json::Value) -> std::io::Result<()> {
+    let mut line = serde_json::to_string(value)?;
+    line.push('\n');
+    let mut f = std::fs::OpenOptions::new()
+        .append(true)
+        .create(true)
+        .open(path)?;
+    f.write_all(line.as_bytes())
+}
+
+fn duration_ms(d: Duration) -> f64 {
+    d.as_secs_f64() * 1000.0
 }
 
 /// A single phase's accumulated duration.
@@ -109,6 +147,25 @@ impl PerfTimer {
         }
     }
 
+    /// Build the structured JSON summary line for this timer.
+    fn summary_json(&self, total: Duration) -> serde_json::Value {
+        let phases: serde_json::Map<String, serde_json::Value> = self
+            .phases
+            .iter()
+            .map(|p| (p.name.to_string(), serde_json::json!(duration_ms(p.total))))
+            .collect();
+        let unix_ms = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .map(|d| d.as_millis() as u64)
+            .unwrap_or(0);
+        serde_json::json!({
+            "label": self.label,
+            "phases": phases,
+            "total_ms": duration_ms(total),
+            "unix_ms": unix_ms,
+        })
+    }
+
     fn emit_event(&self, event: &str, name: &str, duration: Duration) {
         let wall_ms = self.start.elapsed().as_millis();
         let phase_ms = duration.as_millis();
@@ -136,6 +193,17 @@ impl Drop for PerfTimer {
         // regardless of whether a tracing subscriber is attached.
         tracing::info!(target: "fbuild_build::perf_log", "{}", summary);
         eprintln!("{}", summary);
+        if let Some(path) = json_sink_path() {
+            let value = self.summary_json(total);
+            if let Err(e) = append_json_line(path, &value) {
+                tracing::warn!(
+                    target: "fbuild_build::perf_log",
+                    "failed to append perf JSON to {}: {}",
+                    path.display(),
+                    e
+                );
+            }
+        }
     }
 }
 
@@ -167,6 +235,47 @@ impl<'a> Drop for PhaseGuard<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    impl PerfTimer {
+        fn new_active_for_test(label: &'static str) -> Self {
+            Self {
+                label,
+                start: Instant::now(),
+                phases: Vec::new(),
+                active: true,
+            }
+        }
+    }
+
+    #[test]
+    fn summary_json_contains_phases_and_total() {
+        let mut t = PerfTimer::new_active_for_test("avr-orchestrator");
+        t.record("compile-core", Duration::from_millis(12));
+        t.record("link", Duration::from_millis(5));
+        let v = t.summary_json(Duration::from_millis(40));
+        t.active = false; // suppress drop output
+        assert_eq!(v["label"], "avr-orchestrator");
+        assert_eq!(v["phases"]["compile-core"].as_f64(), Some(12.0));
+        assert_eq!(v["phases"]["link"].as_f64(), Some(5.0));
+        assert_eq!(v["total_ms"].as_f64(), Some(40.0));
+        assert!(v["unix_ms"].as_u64().unwrap_or(0) > 0);
+    }
+
+    #[test]
+    fn json_sink_appends_one_line_per_timer() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("perf.jsonl");
+        append_json_line(&path, &serde_json::json!({"label": "a", "total_ms": 1.0})).unwrap();
+        append_json_line(&path, &serde_json::json!({"label": "b", "total_ms": 2.0})).unwrap();
+        let text = std::fs::read_to_string(&path).unwrap();
+        let lines: Vec<serde_json::Value> = text
+            .lines()
+            .map(|l| serde_json::from_str(l).unwrap())
+            .collect();
+        assert_eq!(lines.len(), 2);
+        assert_eq!(lines[0]["label"], "a");
+        assert_eq!(lines[1]["label"], "b");
+    }
 
     #[test]
     fn phase_guard_records_duration() {

@@ -330,6 +330,9 @@ pub async fn run_sequential_build_with_libs(
         core_objects.push(archive);
     }
     let link_result = {
+        // FastLED/fbuild#1465: `link` covers `Linker::link_all` end to end
+        // (link + objcopy + size). No separate archive step exists: core
+        // objects are passed to the linker directly for LTO compatibility.
         let _g = perf.phase("link");
         crate::linker::Linker::link_all(
             linker,
