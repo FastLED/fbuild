@@ -23,6 +23,37 @@ The Rust runner records every trial and publishes the median. Cold bars are
 drawn behind narrower warm overlays using the same GitHub-dark gray, blue, and
 red palette as the zccache and soldr benchmark graphics.
 
+## Cold-build breakdown
+
+FastLED/fbuild#1465. Besides the three tool timings, each run records where
+fbuild's cold build spends its time:
+
+- **Raw-compiler floor (`raw_baseline_ms`)** — fbuild's `compile_commands.json`
+  replayed directly, in parallel (one job per `nproc` core), with no fbuild,
+  daemon, or zccache in the loop. This is the fastest the same compile set can
+  run on the runner. It covers compilation only; the link is not replayed.
+- **Per-phase fbuild timings (`cold_phases_ms`)** — the harness sets
+  `FBUILD_PERF_LOG_JSON` for the fbuild cold trials, so fbuild writes a
+  JSON perf log with one entry per phase the pipeline reports (e.g.
+  `compile-core`, `compile-variant`, `compile-sketch`, `compile-db`, `link`
+  (link + objcopy + size), `build-info`). The published value is the per-phase median across
+  cold trials; raw per-trial maps are kept in `cold_phase_trials`.
+- **`fbuild_overhead_ms`** — fbuild cold median minus `raw_baseline_ms`: time
+  fbuild spends above the raw compiler floor. `null` when the floor could not
+  be measured.
+- **`fbuild_vs_platformio_cold`** — fbuild cold median divided by the
+  PlatformIO cold median (below 1.0 means fbuild is faster).
+
+zccache miss overhead is not yet measured directly; until zccache exposes
+per-TU child time, approximate it as `compile-core` minus the raw floor's
+share for the same translation units.
+
+**Regression warning.** After writing `history.jsonl`, the harness compares
+this run's `fbuild_vs_platformio_cold` against the median of the entries
+from the last 7 days and emits a GitHub `::warning` annotation when it is
+higher. The workflow restores the rolling history before the harness runs so
+the median is available, and writes these fields to the job step summary.
+
 ## Run locally
 
 Install Arduino CLI, its `arduino:avr` core, and PlatformIO first. Build fbuild

@@ -4,17 +4,23 @@
 //! then renders the one-commit benchmark site's JSON, SVG, and HTML artifacts.
 
 use fbuild_core::path::NormalizedPath;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
+use std::collections::BTreeMap;
 use std::env;
 use std::ffi::{OsStr, OsString};
 use std::fs::{self, File};
 use std::io::{self, Write};
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::process::{Command, Output};
+use std::sync::Mutex;
+use std::sync::atomic::{AtomicUsize, Ordering};
 use std::time::{Instant, SystemTime, UNIX_EPOCH};
 
 const HISTORY_MAX_LINES: usize = 365;
+const PERF_LOG_FILE: &str = "fbuild-perf.jsonl";
+const PERF_PHASE_LABELS: &[&str] = &["avr-orchestrator", "pipeline"];
+const REGRESSION_WINDOW_S: u64 = 7 * 24 * 60 * 60;
 const DEFAULT_REPOSITORY: &str = "FastLED/fbuild";
 const DEFAULT_PAGES_URL: &str = "https://fastled.github.io/fbuild/";
 const DEFAULT_RAW_BASE_URL: &str =
@@ -104,6 +110,20 @@ struct ToolResult {
     speedup: f64,
     cold_trials_ms: Vec<f64>,
     warm_trials_ms: Vec<f64>,
+    /// Per-phase medians of fbuild's `avr-orchestrator` perf log (empty for other tools).
+    cold_phases_ms: BTreeMap<String, f64>,
+    /// Raw per-trial phase timings for each cold build (empty for other tools).
+    cold_phase_trials: Vec<BTreeMap<String, f64>>,
+}
+
+/// One entry of a clang-style `compile_commands.json`.
+#[derive(Clone, Debug, Deserialize)]
+struct CompileEntry {
+    directory: String,
+    #[serde(default)]
+    arguments: Option<Vec<String>>,
+    #[serde(default)]
+    command: Option<String>,
 }
 
 #[derive(Clone, Debug)]
@@ -114,6 +134,8 @@ struct Metadata {
     run_url: String,
     project: String,
     trials: usize,
+    /// Median wall clock of replaying fbuild's compile DB with the bare compiler.
+    raw_baseline_ms: Option<f64>,
 }
 
 fn main() {
@@ -168,6 +190,7 @@ fn run() -> AppResult<()> {
 
     let arduino_build_dir = repo_root.join("benchmark-output/arduino-build");
     let mut results = Vec::with_capacity(versions.len());
+    let mut raw_baseline_ms = None;
     for (kind, version) in versions {
         let result = measure_tool(
             kind,
@@ -175,9 +198,11 @@ fn run() -> AppResult<()> {
             &options,
             &repo_root,
             &project_dir,
+            &output_dir,
             &fbuild,
             &arduino_build_dir,
             &mut log,
+            &mut raw_baseline_ms,
         )?;
         println!(
             "{:<12} cold {:>10.3} ms | warm {:>10.3} ms | {:>7.2}x",
@@ -193,7 +218,20 @@ fn run() -> AppResult<()> {
         run_url: options.run_url.clone(),
         project: options.project_dir.display_slash(),
         trials: options.trials,
+        raw_baseline_ms,
     };
+    if let Some(ratio) = fbuild_vs_platformio_cold(&results) {
+        let history = read_history_values(&output_dir.join("history.jsonl"));
+        let now_unix_s = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .unwrap_or_default()
+            .as_secs();
+        if let Some(baseline) = ratio_regressed(&history, now_unix_s, ratio) {
+            println!(
+                "::warning title=fbuild cold regression::fbuild/PlatformIO cold ratio {ratio:.3} exceeds 7-day median {baseline:.3}"
+            );
+        }
+    }
     write_outputs(
         &output_dir,
         &metadata,
@@ -212,20 +250,33 @@ fn measure_tool(
     options: &Options,
     repo_root: &Path,
     project_dir: &Path,
+    output_dir: &Path,
     fbuild: &Path,
     arduino_build_dir: &Path,
     log: &mut File,
+    raw_baseline_ms: &mut Option<f64>,
 ) -> AppResult<ToolResult> {
     let mut cold_trials_ms = Vec::with_capacity(options.trials);
     let mut warm_trials_ms = Vec::with_capacity(options.trials);
+    let mut cold_phase_trials = Vec::new();
+    let perf_log = output_dir.join(PERF_LOG_FILE);
+    let envs: Vec<(&str, OsString)> = if matches!(kind, ToolKind::Fbuild) {
+        vec![
+            ("FBUILD_PERF_LOG", OsString::from("1")),
+            ("FBUILD_PERF_LOG_JSON", perf_log.clone().into_os_string()),
+        ]
+    } else {
+        Vec::new()
+    };
 
     if matches!(kind, ToolKind::Fbuild) {
         writeln!(log, "\n===== fbuild daemon preflight =====")?;
-        run_logged(
+        run_logged_env(
             fbuild.as_os_str(),
             &os_args(&["daemon", "restart"]),
             repo_root,
             log,
+            &envs,
         )?;
     }
 
@@ -248,7 +299,8 @@ fn measure_tool(
                     log,
                 )?;
             }
-            MeasurementStep::ColdBuild(_) => {
+            MeasurementStep::ColdBuild(trial) => {
+                let offset = perf_line_count(&perf_log);
                 let elapsed = timed_build(
                     kind,
                     options,
@@ -257,8 +309,18 @@ fn measure_tool(
                     fbuild,
                     arduino_build_dir,
                     log,
+                    &envs,
                 )?;
                 cold_trials_ms.push(round_millis(elapsed));
+                if matches!(kind, ToolKind::Fbuild) {
+                    let content = fs::read_to_string(&perf_log).unwrap_or_default();
+                    if let Some(phases) = perf_phases_after(&content, offset, PERF_PHASE_LABELS) {
+                        cold_phase_trials.push(phases);
+                    }
+                    if trial == 1 {
+                        *raw_baseline_ms = measure_raw_baseline(project_dir, options.trials, log)?;
+                    }
+                }
             }
             MeasurementStep::WarmBuild(_) => {
                 let elapsed = timed_build(
@@ -269,6 +331,7 @@ fn measure_tool(
                     fbuild,
                     arduino_build_dir,
                     log,
+                    &envs,
                 )?;
                 warm_trials_ms.push(round_millis(elapsed));
             }
@@ -292,7 +355,259 @@ fn measure_tool(
         speedup,
         cold_trials_ms,
         warm_trials_ms,
+        cold_phases_ms: phase_medians(&cold_phase_trials),
+        cold_phase_trials,
     })
+}
+
+/// Number of lines currently in the perf log; a missing file counts as zero.
+fn perf_line_count(path: &Path) -> usize {
+    fs::read_to_string(path)
+        .map(|content| content.lines().count())
+        .unwrap_or(0)
+}
+
+/// Parse perf JSONL records appended after the first `offset` lines.
+fn parse_perf_lines(content: &str, offset: usize) -> Vec<Value> {
+    content
+        .lines()
+        .skip(offset)
+        .filter(|line| !line.trim().is_empty())
+        .filter_map(|line| serde_json::from_str(line).ok())
+        .collect()
+}
+
+/// Merged phases of the last record for each of `labels` appended after
+/// `offset` lines. The AVR build emits two timers per build: the
+/// `avr-orchestrator` one (toolchain/framework/scan) and the inner
+/// `pipeline` one (compile/link), so both must be combined.
+fn perf_phases_after(
+    content: &str,
+    offset: usize,
+    labels: &[&str],
+) -> Option<BTreeMap<String, f64>> {
+    let records = parse_perf_lines(content, offset);
+    let mut merged: Option<BTreeMap<String, f64>> = None;
+    for label in labels {
+        let Some(record) = records.iter().rev().find(|record| record["label"] == *label) else {
+            continue;
+        };
+        let out = merged.get_or_insert_with(BTreeMap::new);
+        if let Some(phases) = record["phases"].as_object() {
+            for (name, ms) in phases {
+                if let Some(ms) = ms.as_f64() {
+                    *out.entry(name.clone()).or_insert(0.0) += ms;
+                }
+            }
+        }
+    }
+    merged
+}
+
+/// Per-phase medians, each computed only over the trials that recorded that phase.
+fn phase_medians(trials: &[BTreeMap<String, f64>]) -> BTreeMap<String, f64> {
+    let mut samples: BTreeMap<String, Vec<f64>> = BTreeMap::new();
+    for trial in trials {
+        for (name, ms) in trial {
+            samples.entry(name.clone()).or_default().push(*ms);
+        }
+    }
+    samples
+        .into_iter()
+        .map(|(name, values)| (name, round_millis(median(&values))))
+        .collect()
+}
+
+/// Locate the compile DB fbuild wrote for env `uno`.
+fn find_compile_db(project_dir: &Path) -> Option<PathBuf> {
+    fn search(dir: &Path) -> Option<PathBuf> {
+        let candidate = dir.join("compile_commands.json");
+        if candidate.is_file() {
+            return Some(candidate);
+        }
+        let mut subdirs = fs::read_dir(dir)
+            .ok()?
+            .filter_map(Result::ok)
+            .map(|entry| entry.path())
+            .filter(|path| path.is_dir())
+            .collect::<Vec<_>>();
+        subdirs.sort();
+        subdirs.iter().find_map(|sub| search(sub))
+    }
+    search(&project_dir.join(".fbuild/build/uno")).or_else(|| {
+        let fallback = project_dir.join("compile_commands.json");
+        fallback.is_file().then_some(fallback)
+    })
+}
+
+fn measure_raw_baseline(project_dir: &Path, trials: usize, log: &mut File) -> AppResult<Option<f64>> {
+    let Some(db) = find_compile_db(project_dir) else {
+        eprintln!("warning: no compile_commands.json found for uno; raw_baseline_ms = null");
+        writeln!(log, "warning: no compile_commands.json found; raw baseline skipped")?;
+        return Ok(None);
+    };
+    let entries: Vec<CompileEntry> = match fs::read_to_string(&db)
+        .map_err(|e| e.to_string())
+        .and_then(|text| serde_json::from_str(&text).map_err(|e| e.to_string()))
+    {
+        Ok(entries) => entries,
+        Err(error) => {
+            eprintln!("warning: unreadable {}: {error}; raw_baseline_ms = null", db.display());
+            return Ok(None);
+        }
+    };
+    let jobs = std::thread::available_parallelism()
+        .map(|n| n.get())
+        .unwrap_or(1);
+    writeln!(
+        log,
+        "----- raw compiler baseline: {} entries from {} ({jobs} jobs) -----",
+        entries.len(),
+        db.display()
+    )?;
+    let mut samples = Vec::with_capacity(trials);
+    for _ in 0..trials {
+        match raw_baseline_ms(&entries, jobs) {
+            Ok(ms) => samples.push(ms),
+            Err(error) => {
+                eprintln!("warning: raw compiler baseline failed: {error}; raw_baseline_ms = null");
+                writeln!(log, "warning: raw compiler baseline failed: {error}")?;
+                return Ok(None);
+            }
+        }
+    }
+    Ok(Some(round_millis(median(&samples))))
+}
+
+/// Split a compile DB `command` string, honouring double/single quotes and backslash escapes.
+fn split_command(command: &str) -> Vec<String> {
+    let mut args = Vec::new();
+    let mut current = String::new();
+    let mut in_token = false;
+    let mut quote: Option<char> = None;
+    let mut chars = command.chars();
+    while let Some(c) = chars.next() {
+        match (quote, c) {
+            (Some(q), c) if c == q => quote = None,
+            (Some('"'), '\\') => {
+                if let Some(next) = chars.next() {
+                    current.push(next);
+                }
+            }
+            (Some(_), c) => current.push(c),
+            (None, '"' | '\'') => {
+                quote = Some(c);
+                in_token = true;
+            }
+            (None, c) if c.is_whitespace() => {
+                if in_token {
+                    args.push(std::mem::take(&mut current));
+                    in_token = false;
+                }
+            }
+            (None, c) => {
+                current.push(c);
+                in_token = true;
+            }
+        }
+    }
+    if in_token {
+        args.push(current);
+    }
+    args
+}
+
+fn entry_argv(entry: &CompileEntry) -> Vec<String> {
+    match (&entry.arguments, &entry.command) {
+        (Some(arguments), _) if !arguments.is_empty() => arguments.clone(),
+        (_, Some(command)) => split_command(command),
+        _ => Vec::new(),
+    }
+}
+
+/// Drop leading compiler-wrapper argv entries (`zccache`, `fbuild`) and
+/// redirect the object output to `output`.
+fn rewrite_compile_argv(argv: &[String], output: &Path) -> Vec<String> {
+    let is_wrapper = |arg: &String| {
+        Path::new(arg)
+            .file_stem()
+            .and_then(OsStr::to_str)
+            .is_some_and(|stem| stem == "zccache" || stem == "fbuild")
+    };
+    let start = argv.iter().take_while(|arg| is_wrapper(arg)).count();
+    let output = output.to_string_lossy().into_owned();
+    let mut rewritten = Vec::with_capacity(argv.len() - start + 2);
+    let mut saw_output = false;
+    let mut args = argv[start..].iter();
+    while let Some(arg) = args.next() {
+        if arg == "-o" {
+            args.next();
+            rewritten.push("-o".to_string());
+            rewritten.push(output.clone());
+            saw_output = true;
+        } else if arg.len() > 2 && arg.starts_with("-o") {
+            rewritten.push(format!("-o{output}"));
+            saw_output = true;
+        } else {
+            rewritten.push(arg.clone());
+        }
+    }
+    if !saw_output {
+        rewritten.push("-o".to_string());
+        rewritten.push(output);
+    }
+    rewritten
+}
+
+/// Replay every compile DB entry with the bare compiler across `jobs` threads.
+fn raw_baseline_ms(entries: &[CompileEntry], jobs: usize) -> AppResult<f64> {
+    let temp = tempfile::TempDir::new()?;
+    let next = AtomicUsize::new(0);
+    let failure: Mutex<Option<String>> = Mutex::new(None);
+    let started = Instant::now();
+    std::thread::scope(|scope| {
+        for _ in 0..jobs.max(1) {
+            scope.spawn(|| {
+                loop {
+                    let index = next.fetch_add(1, Ordering::Relaxed);
+                    let Some(entry) = entries.get(index) else {
+                        break;
+                    };
+                    let output = temp.path().join(format!("{index}.o"));
+                    let argv = rewrite_compile_argv(&entry_argv(entry), &output);
+                    let Some((program, args)) = argv.split_first() else {
+                        continue;
+                    };
+                    let result = Command::new(program)
+                        .args(args)
+                        .current_dir(&entry.directory)
+                        .output();
+                    let error = match result {
+                        Ok(out) if out.status.success() => None,
+                        Ok(out) => Some(format!(
+                            "{program} exited with {}: {}",
+                            out.status,
+                            String::from_utf8_lossy(&out.stderr).trim()
+                        )),
+                        Err(error) => Some(format!("{program}: {error}")),
+                    };
+                    if let Some(error) = error {
+                        let mut slot = failure.lock().unwrap_or_else(|p| p.into_inner());
+                        if slot.is_none() {
+                            *slot = Some(error);
+                        }
+                        next.store(entries.len(), Ordering::Relaxed);
+                        break;
+                    }
+                }
+            });
+        }
+    });
+    let elapsed = started.elapsed().as_secs_f64() * 1000.0;
+    if let Some(error) = failure.into_inner().unwrap_or_else(|p| p.into_inner()) {
+        return Err(io::Error::other(error).into());
+    }
+    Ok(round_millis(elapsed))
 }
 
 fn measurement_plan(trials: usize) -> Vec<MeasurementStep> {
@@ -385,6 +700,7 @@ fn cold_cleanup_steps(
     }
 }
 
+#[allow(clippy::too_many_arguments)]
 fn timed_build(
     kind: ToolKind,
     options: &Options,
@@ -393,6 +709,7 @@ fn timed_build(
     fbuild: &Path,
     arduino_build_dir: &Path,
     log: &mut File,
+    envs: &[(&str, OsString)],
 ) -> AppResult<f64> {
     let (program, args) = match kind {
         ToolKind::Arduino => (
@@ -429,7 +746,7 @@ fn timed_build(
     };
 
     let started = Instant::now();
-    run_logged(program, &args, repo_root, log)?;
+    run_logged_env(program, &args, repo_root, log, envs)?;
     Ok(started.elapsed().as_secs_f64() * 1000.0)
 }
 
@@ -438,6 +755,16 @@ fn os_args(values: &[&str]) -> Vec<OsString> {
 }
 
 fn run_logged(program: &OsStr, args: &[OsString], cwd: &Path, log: &mut File) -> AppResult<Output> {
+    run_logged_env(program, args, cwd, log, &[])
+}
+
+fn run_logged_env(
+    program: &OsStr,
+    args: &[OsString],
+    cwd: &Path,
+    log: &mut File,
+    envs: &[(&str, OsString)],
+) -> AppResult<Output> {
     writeln!(log, "$ {}", display_command(program, args))?;
     log.flush()?;
     let output = Command::new(program)
@@ -445,6 +772,7 @@ fn run_logged(program: &OsStr, args: &[OsString], cwd: &Path, log: &mut File) ->
         .current_dir(cwd)
         .env("CI", "true")
         .env("PLATFORMIO_SETTING_ENABLE_TELEMETRY", "no")
+        .envs(envs.iter().map(|(key, value)| (*key, value)))
         .output()?;
     log.write_all(&output.stdout)?;
     log.write_all(&output.stderr)?;
@@ -582,8 +910,77 @@ fn latest_payload(metadata: &Metadata, results: &[ToolResult]) -> Value {
             "cold_definition": "project outputs, reusable framework objects, compiler-object caches, and Arduino/PlatformIO download/HTTP caches removed; installed packages/toolchains and fbuild package archives retained",
             "warm_definition": "immediate no-change rebuild after the cold build",
         },
+        "raw_baseline_ms": metadata.raw_baseline_ms,
+        "fbuild_overhead_ms": fbuild_overhead_ms(metadata, results),
+        "fbuild_vs_platformio_cold": fbuild_vs_platformio_cold(results),
         "results": results,
     })
+}
+
+fn cold_of(results: &[ToolResult], tool: &str) -> Option<f64> {
+    results
+        .iter()
+        .find(|result| result.tool == tool)
+        .map(|result| result.cold_ms)
+}
+
+fn fbuild_overhead_ms(metadata: &Metadata, results: &[ToolResult]) -> Option<f64> {
+    Some(round_millis(cold_of(results, "fbuild")? - metadata.raw_baseline_ms?))
+}
+
+fn fbuild_vs_platformio_cold(results: &[ToolResult]) -> Option<f64> {
+    let fbuild = cold_of(results, "fbuild")?;
+    let platformio = cold_of(results, "platformio")?;
+    (platformio > 0.0).then(|| round_to(fbuild / platformio, 3))
+}
+
+fn read_history_values(path: &Path) -> Vec<Value> {
+    fs::read_to_string(path)
+        .unwrap_or_default()
+        .lines()
+        .filter_map(|line| serde_json::from_str(line).ok())
+        .collect()
+}
+
+/// Days since 1970-01-01 for a proleptic Gregorian date (Howard Hinnant's algorithm).
+fn days_from_civil(year: i64, month: i64, day: i64) -> i64 {
+    let year = if month <= 2 { year - 1 } else { year };
+    let era = year.div_euclid(400);
+    let yoe = year - era * 400;
+    let mp = (month + 9) % 12;
+    let doy = (153 * mp + 2) / 5 + day - 1;
+    let doe = yoe * 365 + yoe / 4 - yoe / 100 + doy;
+    era * 146_097 + doe - 719_468
+}
+
+/// Parse a history `ts`: either `unix:<seconds>` or ISO8601 `YYYY-MM-DDTHH:MM:SS...`.
+fn parse_timestamp_unix_s(ts: &str) -> Option<u64> {
+    if let Some(seconds) = ts.strip_prefix("unix:") {
+        return seconds.parse().ok();
+    }
+    let field = |range: std::ops::Range<usize>| ts.get(range)?.parse::<i64>().ok();
+    let days = days_from_civil(field(0..4)?, field(5..7)?, field(8..10)?);
+    let seconds = days * 86_400 + field(11..13)? * 3_600 + field(14..16)? * 60 + field(17..19)?;
+    u64::try_from(seconds).ok()
+}
+
+/// 7-day median of `fbuild_vs_platformio_cold`, returned only when `current_ratio` exceeds it.
+fn ratio_regressed(history: &[Value], now_unix_s: u64, current_ratio: f64) -> Option<f64> {
+    let recent = history
+        .iter()
+        .filter(|entry| {
+            entry["ts"]
+                .as_str()
+                .and_then(parse_timestamp_unix_s)
+                .is_some_and(|ts| ts <= now_unix_s && now_unix_s - ts <= REGRESSION_WINDOW_S)
+        })
+        .filter_map(|entry| entry["fbuild_vs_platformio_cold"].as_f64())
+        .collect::<Vec<_>>();
+    if recent.is_empty() {
+        return None;
+    }
+    let baseline = median(&recent);
+    (current_ratio > baseline).then_some(baseline)
 }
 
 fn manifest_payload(metadata: &Metadata, pages_url: &str, raw_base_url: &str) -> Value {
@@ -665,6 +1062,8 @@ fn write_history(
     prior.push(serde_json::to_string(&json!({
         "ts": metadata.generated_at,
         "sha": metadata.git_sha,
+        "fbuild_overhead_ms": fbuild_overhead_ms(metadata, results),
+        "fbuild_vs_platformio_cold": fbuild_vs_platformio_cold(results),
         "results": compact_results,
     }))?);
     fs::write(path, prior.join("\n") + "\n")?;
@@ -724,6 +1123,9 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
         ));
     }
     let short_sha = metadata.git_sha.chars().take(12).collect::<String>();
+    let floor_line = svg_floor_line(metadata, results)
+        .map(|text| format!("  <text x=\"692\" y=\"95\" class=\"meta\">{}</text>\n", xml_escape(&text)))
+        .unwrap_or_default();
     format!(
         r##"<svg xmlns="http://www.w3.org/2000/svg" width="{width:.0}" height="{height:.0}" viewBox="0 0 {width:.0} {height:.0}" role="img" aria-labelledby="title description">
   <title id="title">Arduino CLI vs PlatformIO vs fbuild Blink build benchmark</title>
@@ -742,7 +1144,7 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
   <text x="24" y="43" class="heading">Arduino Uno Blink build times</text>
   <text x="24" y="72" class="meta">Arduino CLI vs PlatformIO vs fbuild | median of {trials} trials</text>
   <text x="24" y="95" class="meta">Generated {generated_at} | sha {sha}</text>
-  <rect x="24" y="128" width="76" height="24" rx="4" fill="#5b1f1c" />
+{floor_line}  <rect x="24" y="128" width="76" height="24" rx="4" fill="#5b1f1c" />
   <rect x="24" y="134" width="34" height="12" rx="3" fill="#f85149" />
   <text x="112" y="146" class="legend">cold (back) + warm (front overlay)</text>
   <text x="692" y="146" class="meta">scale: slowest median = {max_ms:.1} ms</text>
@@ -757,7 +1159,23 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
         sha = xml_escape(&short_sha),
         max_ms = max_ms,
         rows = rows,
+        floor_line = floor_line,
     )
+}
+
+/// `raw compiler floor: X ms | fbuild overhead: Y ms | fbuild/PIO cold: Z`, omitting null parts.
+fn svg_floor_line(metadata: &Metadata, results: &[ToolResult]) -> Option<String> {
+    let parts = [
+        metadata
+            .raw_baseline_ms
+            .map(|ms| format!("raw compiler floor: {ms:.1} ms")),
+        fbuild_overhead_ms(metadata, results).map(|ms| format!("fbuild overhead: {ms:.1} ms")),
+        fbuild_vs_platformio_cold(results).map(|ratio| format!("fbuild/PIO cold: {ratio:.3}")),
+    ]
+    .into_iter()
+    .flatten()
+    .collect::<Vec<_>>();
+    (!parts.is_empty()).then(|| parts.join(" | "))
 }
 
 fn render_html(metadata: &Metadata, results: &[ToolResult]) -> String {
@@ -775,6 +1193,32 @@ fn render_html(metadata: &Metadata, results: &[ToolResult]) -> String {
         })
         .collect::<Vec<_>>()
         .join("\n");
+    let phase_rows = results
+        .iter()
+        .filter(|result| result.tool == "fbuild")
+        .flat_map(|result| result.cold_phases_ms.iter())
+        .map(|(phase, ms)| {
+            format!(
+                "<tr><td>{}</td><td>{ms:.3} ms</td></tr>",
+                html_escape(phase)
+            )
+        })
+        .collect::<Vec<_>>()
+        .join("\n");
+    let phase_section = if phase_rows.is_empty() {
+        String::new()
+    } else {
+        format!(
+            r#"<h2>fbuild cold phase breakdown</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Phase</th><th>Cold median</th></tr></thead>
+          <tbody>{phase_rows}</tbody>
+        </table>
+      </div>
+"#
+        )
+    };
     format!(
         r#"<!doctype html>
 <html lang="en">
@@ -811,7 +1255,7 @@ fn render_html(metadata: &Metadata, results: &[ToolResult]) -> String {
           <tbody>{rows}</tbody>
         </table>
       </div>
-      <h2>Machine-readable data</h2>
+      {phase_section}<h2>Machine-readable data</h2>
       <ul>
         <li><a href="manifest.json">manifest.json</a> — stable discovery index for agents</li>
         <li><a href="latest.json">latest.json</a> — metadata, raw trials, and medians</li>
@@ -828,6 +1272,7 @@ fn render_html(metadata: &Metadata, results: &[ToolResult]) -> String {
         os = env::consts::OS,
         arch = env::consts::ARCH,
         rows = rows,
+        phase_section = phase_section,
         run_url = html_escape(&metadata.run_url),
         repository = html_escape(&metadata.repository),
     )
