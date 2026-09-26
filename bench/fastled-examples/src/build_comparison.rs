@@ -1214,11 +1214,14 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
     let height = 700.0;
     let bar_x = 190.0;
     let bar_width = 480.0;
-    let max_ms = results
-        .iter()
-        .flat_map(|result| [result.cold_ms, result.warm_ms])
-        .fold(0.0_f64, f64::max)
-        .max(1.0);
+    let board_max_ms = |board: &str| {
+        results
+            .iter()
+            .filter(|result| result.board == board)
+            .flat_map(|result| [result.cold_ms, result.warm_ms])
+            .fold(0.0_f64, f64::max)
+            .max(1.0)
+    };
     let mut rows = String::new();
     for (index, result) in results.iter().enumerate() {
         let kind = match result.tool.as_str() {
@@ -1229,6 +1232,7 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
         let style = kind.style();
         let board_gap = if result.board == "esp32s3" { 42.0 } else { 0.0 };
         let y = 194.0 + index as f64 * 68.0 + board_gap;
+        let max_ms = board_max_ms(&result.board);
         let cold_width = (result.cold_ms / max_ms * bar_width).max(3.0);
         let warm_width = (result.warm_ms / max_ms * bar_width).max(3.0);
         rows.push_str(&format!(
@@ -1292,9 +1296,8 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
 {floor_line}  <rect x="24" y="128" width="76" height="24" rx="4" fill="#5b1f1c" />
   <rect x="24" y="134" width="34" height="12" rx="3" fill="#f85149" />
   <text x="112" y="146" class="legend">cold (back) + warm (front overlay)</text>
-  <text x="692" y="146" class="meta">scale: slowest median = {max_ms:.1} ms</text>
-  <text x="24" y="182" class="legend">Arduino Uno</text>
-  <text x="24" y="428" class="legend">ESP32-S3</text>
+  <text x="24" y="182" class="legend">Arduino Uno | scale: slowest median = {uno_max_ms:.1} ms</text>
+  <text x="24" y="428" class="legend">ESP32-S3 | scale: slowest median = {esp32s3_max_ms:.1} ms</text>
 {rows}  <line x1="24" y1="672" x2="936" y2="672" stroke="#30363d" stroke-width="2" />
   <text x="24" y="692" class="meta">Machine data: manifest.json | latest.json | history.jsonl</text>
 </svg>
@@ -1304,7 +1307,8 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
         trials = metadata.trials,
         generated_at = xml_escape(&metadata.generated_at),
         sha = xml_escape(&short_sha),
-        max_ms = max_ms,
+        uno_max_ms = board_max_ms("uno"),
+        esp32s3_max_ms = board_max_ms("esp32s3"),
         rows = rows,
         floor_line = floor_line,
     )

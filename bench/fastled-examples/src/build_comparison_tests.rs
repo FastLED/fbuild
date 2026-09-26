@@ -246,6 +246,28 @@ fn svg_contains_uno_and_esp32s3_groups() {
 }
 
 #[test]
+fn svg_scales_each_board_independently() {
+    let mut results = sample_results();
+    results.extend(sample_results().into_iter().map(|mut result| {
+        result.board = "esp32s3".into();
+        result.board_name = "ESP32-S3".into();
+        result.cold_ms *= 10.0;
+        result.warm_ms *= 10.0;
+        result
+    }));
+
+    let svg = render_svg(&sample_metadata(), &results);
+    assert_eq!(
+        svg.matches("width=\"480.0\" height=\"28\" rx=\"4\" fill=\"#3b4046\"")
+            .count(),
+        2,
+        "the longest cold bar must fill each board section: {svg}"
+    );
+    assert!(svg.contains("Arduino Uno | scale: slowest median = 1200.0 ms"));
+    assert!(svg.contains("ESP32-S3 | scale: slowest median = 12000.0 ms"));
+}
+
+#[test]
 fn outputs_include_agent_discovery_and_bounded_history() {
     let temp = tempfile::tempdir().unwrap();
     let history = (0..HISTORY_MAX_LINES)
