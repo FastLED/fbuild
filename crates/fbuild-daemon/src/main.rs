@@ -241,7 +241,22 @@ async fn main() {
     DaemonContext::install_dependency_status_subscriber(&context);
     fbuild_daemon::broker::backend::spawn_backend_endpoint_if_requested(context.clone());
 
+    // Operation routes refuse new work once shutdown has started, so an
+    // exiting daemon never begins a build it would abandon.
+    let operation_routes = Router::new()
+        .route("/api/build", post(operations::build))
+        .route("/api/deploy", post(operations::deploy))
+        .route("/api/monitor", post(operations::monitor))
+        .route("/api/install-deps", post(operations::install_deps))
+        .route("/api/reset", post(operations::reset))
+        .route("/api/test-emu", post(emulator::test_emu))
+        .route_layer(axum::middleware::from_fn_with_state(
+            context.clone(),
+            fbuild_daemon::shutdown::refuse_new_operations_when_shutting_down,
+        ));
+
     let app = Router::new()
+        .merge(operation_routes)
         .route("/", get(health::root))
         .route("/health", get(health::health_check))
         .route("/api/daemon/image-hash", get(health::image_hash))
@@ -251,9 +266,6 @@ async fn main() {
         // misbehaving. Restarting to enable a profiler would destroy the
         // leak being investigated, which is what made #1360 hard to chase.
         .route("/api/daemon/heap-dump", post(health::heap_dump))
-        .route("/api/build", post(operations::build))
-        .route("/api/deploy", post(operations::deploy))
-        .route("/api/monitor", post(operations::monitor))
         .route("/api/devices/list", post(devices::list_devices))
         .route("/api/devices/:port/status", get(devices::device_status))
         .route("/api/devices/:port/lease", post(devices::device_lease))
@@ -263,9 +275,6 @@ async fn main() {
         .route("/api/locks/clear", post(locks::clear_locks))
         .route("/api/cache/stats", get(cache::cache_stats))
         .route("/api/cache/gc", post(cache::run_gc))
-        .route("/api/install-deps", post(operations::install_deps))
-        .route("/api/reset", post(operations::reset))
-        .route("/api/test-emu", post(emulator::test_emu))
         .route(
             "/api/emulator/avr8js/:session_id",
             get(emulator::avr8js_session_json),
@@ -394,6 +403,17 @@ async fn main() {
             "native daemon shutdown handler registration failed: {error}; native close events may bypass graceful shutdown"
         );
     }
+
+    // SIGTERM (Linux/macOS): bounded controlled exit — refuse new operations,
+    // give in-flight ones a few seconds, flush zccache, exit. The graceful
+    // HTTP drain below would instead wait out every running build.
+    tokio::spawn({
+        let ctx = context.clone();
+        async move {
+            fbuild_core::platform::process::daemon_terminate_signal().await;
+            fbuild_daemon::shutdown::exit_on_terminate(ctx).await
+        }
+    });
 
     // Spawn background maintenance task (self-eviction, idle timeout, stale lock cleanup)
     {
@@ -602,33 +622,9 @@ async fn main() {
             tracing::error!("server error: {}", e);
         });
 
-    // Clean up PID and port files, and the soldr-style owner claim.
-    let _ = fbuild_core::fs::remove_file(&pid_file).await;
-    let _ = fbuild_core::fs::remove_file(&port_file).await;
-    fbuild_paths::daemon_ownership::remove_owner_claim();
-    // ...and the status file, which was previously left behind on every clean
-    // shutdown, so `daemon status` kept reporting a dead PID (#1213 part 2).
-    let _ = fbuild_core::fs::remove_file(&fbuild_paths::get_daemon_status_file()).await;
-
-    // FastLED/fbuild#1480: `process::exit` runs no destructors and the
-    // backend lives in a `OnceLock`, so without this flush zccache never
-    // persisted `metadata.bin` (or the latest depgraph/index) and every
-    // restart began cold (zackees/zccache#1652). A normal flush takes well
-    // under 100 ms. The bound stays below `fbuild daemon stop`'s 5 s graceful
-    // budget and the 10 s a replacement daemon waits for the root-ownership
-    // lock this process still holds, so a slow flush never turns a stop or
-    // restart into a kill or a failed spawn.
-    if let Some(backend) = fbuild_build::compile_backend::get_global() {
-        const EXIT_FLUSH_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(4);
-        match tokio::time::timeout(EXIT_FLUSH_TIMEOUT, backend.service().flush()).await {
-            Ok(Ok(())) => tracing::info!("zccache backend flushed"),
-            Ok(Err(err)) => tracing::warn!("zccache backend flush on exit failed: {err}"),
-            Err(_) => tracing::warn!(
-                "zccache backend flush on exit timed out after {}s",
-                EXIT_FLUSH_TIMEOUT.as_secs()
-            ),
-        }
-    }
+    // Clean up PID/port/status files and the soldr-style owner claim, and
+    // flush the embedded zccache backend.
+    fbuild_daemon::shutdown::persist_and_clean_up().await;
 
     tracing::info!("daemon exiting");
     std::process::exit(0);

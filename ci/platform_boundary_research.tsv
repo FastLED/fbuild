@@ -54,11 +54,11 @@ crates/fbuild-core/src/platform/windows/ipc.rs	4	native_path	interprocess::os::w
 crates/fbuild-core/src/platform/windows/ipc.rs	5	native_path	socket2::	ipc	host_mechanic
 crates/fbuild-core/src/platform/windows/ipc.rs	6	native_path	std::os::windows::io::AsRawSocket	ipc	host_mechanic
 crates/fbuild-core/src/platform/windows/mod.rs	13	compile_host_fact	std::env::consts::ARCH	host	host_mechanic
-crates/fbuild-core/src/platform/windows/process.rs	77	native_path	std::os::windows::ffi::OsStrExt	process	host_mechanic
-crates/fbuild-core/src/platform/windows/process.rs	79	native_path	windows_sys::	process	host_mechanic
-crates/fbuild-core/src/platform/windows/process.rs	82	native_path	windows_sys::	process	host_mechanic
-crates/fbuild-core/src/platform/windows/process.rs	85	native_path	windows_sys::	process	host_mechanic
-crates/fbuild-core/src/platform/windows/process.rs	88	native_path	windows_sys::	process	host_mechanic
+crates/fbuild-core/src/platform/windows/process.rs	87	native_path	std::os::windows::ffi::OsStrExt	process	host_mechanic
+crates/fbuild-core/src/platform/windows/process.rs	89	native_path	windows_sys::	process	host_mechanic
+crates/fbuild-core/src/platform/windows/process.rs	92	native_path	windows_sys::	process	host_mechanic
+crates/fbuild-core/src/platform/windows/process.rs	95	native_path	windows_sys::	process	host_mechanic
+crates/fbuild-core/src/platform/windows/process.rs	98	native_path	windows_sys::	process	host_mechanic
 crates/fbuild-core/src/platform/windows/usb_pnp.rs	13	native_path	windows_sys::	process	host_mechanic
 crates/fbuild-core/src/platform/windows/usb_pnp.rs	24	native_path	windows_sys::	process	host_mechanic
 crates/fbuild-core/src/platform/windows/usb_pnp.rs	28	native_path	windows_sys::	process	host_mechanic
