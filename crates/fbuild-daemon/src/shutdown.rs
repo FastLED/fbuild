@@ -22,7 +22,6 @@ use axum::middleware::Next;
 use axum::response::{IntoResponse, Response};
 use fbuild_core::daemon_health::{EXIT_FLUSH_BUDGET, SHUTDOWN_DRAIN_BUDGET};
 use std::sync::Arc;
-use std::sync::atomic::Ordering;
 
 /// Message returned to operations refused because the daemon is stopping.
 pub const SHUTTING_DOWN_MESSAGE: &str = "fbuild daemon is shutting down and accepts no new work; rerun the command to start a fresh daemon";
@@ -35,7 +34,7 @@ pub async fn refuse_new_operations_when_shutting_down(
     request: Request,
     next: Next,
 ) -> Response {
-    if ctx.is_shutting_down.load(Ordering::Acquire) {
+    let Some(_admission) = ctx.begin_operation_admission() else {
         tracing::info!(path = %request.uri().path(), "refused operation: daemon is shutting down");
         return (
             StatusCode::SERVICE_UNAVAILABLE,
@@ -45,15 +44,14 @@ pub async fn refuse_new_operations_when_shutting_down(
             )),
         )
             .into_response();
-    }
+    };
     next.run(request).await
 }
 
 /// Controlled exit on SIGTERM: refuse new operations, give in-flight ones
 /// [`SHUTDOWN_DRAIN_BUDGET`], persist, exit.
 pub async fn exit_on_terminate(ctx: Arc<DaemonContext>) -> ! {
-    ctx.is_shutting_down.store(true, Ordering::Release);
-    let in_flight = ctx.active_operations.load(Ordering::Acquire);
+    let in_flight = ctx.begin_shutdown();
     tracing::info!(
         in_flight,
         "SIGTERM received: refusing new operations, waiting up to {}s for in-flight ones",
@@ -63,7 +61,7 @@ pub async fn exit_on_terminate(ctx: Arc<DaemonContext>) -> ! {
         tracing::info!("in-flight operations finished");
     } else {
         tracing::warn!(
-            remaining = ctx.active_operations.load(Ordering::Acquire),
+            remaining = ctx.operation_drain_count(),
             "in-flight operations still running after {}s; exiting anyway",
             SHUTDOWN_DRAIN_BUDGET.as_secs()
         );
@@ -106,6 +104,7 @@ mod tests {
     use super::*;
     use axum::Router;
     use axum::routing::post;
+    use std::sync::atomic::Ordering;
     use std::time::{Duration, Instant};
 
     fn context() -> Arc<DaemonContext> {
@@ -139,13 +138,34 @@ mod tests {
     async fn operations_are_refused_once_shutdown_starts() {
         let ctx = context();
         let url = serve_gated(Arc::clone(&ctx)).await;
-        ctx.is_shutting_down.store(true, Ordering::Release);
+        ctx.begin_shutdown();
 
         let resp = fbuild_core::http::client().post(&url).send().await.unwrap();
         assert_eq!(resp.status(), StatusCode::SERVICE_UNAVAILABLE);
         let body: serde_json::Value = resp.json().await.unwrap();
         assert_eq!(body["success"], false);
         assert_eq!(body["message"], SHUTTING_DOWN_MESSAGE);
+    }
+
+    #[tokio::test]
+    async fn shutdown_closes_admission_after_counting_existing_request() {
+        let ctx = context();
+        let admission = ctx.begin_operation_admission().unwrap();
+
+        assert_eq!(ctx.begin_shutdown(), 1);
+        assert!(ctx.begin_operation_admission().is_none());
+
+        drop(admission);
+        assert!(ctx.wait_for_operations(Duration::ZERO).await);
+    }
+
+    #[test]
+    fn non_forced_shutdown_is_refused_during_admission_gap() {
+        let ctx = context();
+        let _admission = ctx.begin_operation_admission().unwrap();
+
+        assert!(ctx.try_begin_shutdown(false).is_none());
+        assert!(ctx.begin_operation_admission().is_some());
     }
 
     #[tokio::test]

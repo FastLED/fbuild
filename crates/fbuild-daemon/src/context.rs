@@ -156,13 +156,15 @@ pub struct DaemonContext {
     pub serial_manager: Arc<SharedSerialManager>,
     /// Flag for graceful shutdown.
     pub is_shutting_down: Arc<AtomicBool>,
+    /// Serializes operation admission with the transition into shutdown.
+    operation_admission_gate: std::sync::Mutex<()>,
     /// Whether a build/deploy operation is currently in progress.
     pub operation_in_progress: Arc<AtomicBool>,
     /// Number of build/deploy/... operations in flight (`OperationGuard`s
-    /// alive). Unlike `operation_in_progress`, which the first of two
-    /// concurrent operations clears when it ends, this stays exact, so a
-    /// shutdown can wait for the last one (FastLED/fbuild#1480 follow-up).
+    /// alive), including work that outlives creation of a streaming response.
     pub active_operations: Arc<AtomicUsize>,
+    /// Number of operation request futures admitted by the route middleware.
+    admitted_operation_requests: Arc<AtomicUsize>,
     /// Number of WebSocket connections currently inside the serial-monitor
     /// handler (e.g. waiting for a port to open). Counted independently of
     /// `serial_manager` sessions because a port may take seconds to open
@@ -270,8 +272,10 @@ impl DaemonContext {
             port,
             serial_manager: Arc::new(SharedSerialManager::new()),
             is_shutting_down: Arc::new(AtomicBool::new(false)),
+            operation_admission_gate: std::sync::Mutex::new(()),
             operation_in_progress: Arc::new(AtomicBool::new(false)),
             active_operations: Arc::new(AtomicUsize::new(0)),
+            admitted_operation_requests: Arc::new(AtomicUsize::new(0)),
             pending_serial_attaches: Arc::new(AtomicUsize::new(0)),
             pending_serial_attach_details: DashMap::new(),
             pending_serial_attach_next_id: AtomicU64::new(1),
@@ -307,6 +311,60 @@ impl DaemonContext {
         if let Ok(mut t) = self.last_activity.lock() {
             *t = Instant::now();
         }
+    }
+
+    /// Admit an operation unless shutdown has begun.
+    ///
+    /// The gate is shared with [`Self::begin_shutdown`], so an admitted
+    /// request is counted before shutdown can observe the admission boundary.
+    pub fn begin_operation_admission(&self) -> Option<OperationAdmission> {
+        let _gate = self.operation_admission_gate.lock().ok()?;
+        if self
+            .is_shutting_down
+            .load(std::sync::atomic::Ordering::Acquire)
+        {
+            return None;
+        }
+        self.admitted_operation_requests
+            .fetch_add(1, std::sync::atomic::Ordering::AcqRel);
+        Some(OperationAdmission {
+            admitted_operation_requests: Arc::clone(&self.admitted_operation_requests),
+        })
+    }
+
+    /// Atomically close admission and return the amount of work to drain.
+    pub fn try_begin_shutdown(&self, force: bool) -> Option<usize> {
+        let _gate = self
+            .operation_admission_gate
+            .lock()
+            .unwrap_or_else(std::sync::PoisonError::into_inner);
+        let admitted = self
+            .admitted_operation_requests
+            .load(std::sync::atomic::Ordering::Acquire);
+        let active = self
+            .active_operations
+            .load(std::sync::atomic::Ordering::Acquire);
+        if !force && (admitted != 0 || active != 0) {
+            return None;
+        }
+        self.is_shutting_down
+            .store(true, std::sync::atomic::Ordering::Release);
+        Some(admitted + active)
+    }
+
+    /// Atomically close operation admission for an unconditional shutdown.
+    pub fn begin_shutdown(&self) -> usize {
+        self.try_begin_shutdown(true)
+            .expect("forced shutdown admission cannot be refused")
+    }
+
+    /// Number of admitted request futures plus active handler operations.
+    pub fn operation_drain_count(&self) -> usize {
+        self.admitted_operation_requests
+            .load(std::sync::atomic::Ordering::Acquire)
+            + self
+                .active_operations
+                .load(std::sync::atomic::Ordering::Acquire)
     }
 
     pub fn begin_pending_serial_attach(&self) -> u64 {
@@ -416,11 +474,7 @@ impl DaemonContext {
     pub async fn wait_for_operations(&self, budget: Duration) -> bool {
         let deadline = Instant::now() + budget;
         loop {
-            if self
-                .active_operations
-                .load(std::sync::atomic::Ordering::Acquire)
-                == 0
-            {
+            if self.operation_drain_count() == 0 {
                 return true;
             }
             if Instant::now() >= deadline {
@@ -585,6 +639,18 @@ impl DaemonContext {
                 }
             }
         }
+    }
+}
+
+/// Keeps an admitted operation counted until its response future completes.
+pub struct OperationAdmission {
+    admitted_operation_requests: Arc<AtomicUsize>,
+}
+
+impl Drop for OperationAdmission {
+    fn drop(&mut self) {
+        self.admitted_operation_requests
+            .fetch_sub(1, std::sync::atomic::Ordering::AcqRel);
     }
 }
 
