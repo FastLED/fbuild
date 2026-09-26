@@ -8,9 +8,8 @@ use std::sync::Mutex;
 use tokio::runtime::Runtime;
 use tokio_tungstenite::tungstenite;
 
-use crate::json_rpc::wait_for_remote_json_rpc_response;
 use crate::messages::{ClientMessage, ServerMessage, WsSink, WsSource};
-use crate::ws_session::{ReadYield, WsSession};
+use crate::ws_session::{ReadYield, RpcRoute, WsSession};
 
 /// Python-visible SerialMonitor class.
 ///
@@ -44,6 +43,10 @@ pub(crate) struct SerialMonitor {
     /// Lets `write`/`in_waiting` take the WebSocket read half from an
     /// in-flight `read_lines` (FastLED/fbuild#1431).
     read_yield: ReadYield,
+    /// Serializes request/reply calls (`write`, `in_waiting`) with each other.
+    requests: Mutex<()>,
+    /// Routes `REMOTE:` replies to waiting `write_json_rpc` calls.
+    rpc: RpcRoute,
     client_id: String,
     last_line: Mutex<String>,
     #[allow(dead_code)]
@@ -194,6 +197,8 @@ impl SerialMonitor {
             read: self.ws_read.as_ref()?,
             pending: &self.pending_lines,
             read_yield: &self.read_yield,
+            requests: &self.requests,
+            rpc: &self.rpc,
         })
     }
 
@@ -272,6 +277,8 @@ impl SerialMonitor {
             ws_read: None,
             pending_lines: Mutex::new(VecDeque::new()),
             read_yield: ReadYield::default(),
+            requests: Mutex::new(()),
+            rpc: RpcRoute::default(),
             client_id: uuid::Uuid::new_v4().to_string(),
             last_line: Mutex::new(String::new()),
             preempted: false,
@@ -397,11 +404,17 @@ impl SerialMonitor {
             .extract()?;
 
         let data = format!("{}\n", json_str);
+        // Take the RPC turn before writing, so every reader (including a
+        // concurrent `read_lines`) routes the `REMOTE:` reply to us. Serial
+        // lines that are not the reply stay queued for `read_lines`.
         let reply = py.detach(|| {
+            let session = self.session()?;
+            let _rpc = session.begin_rpc();
             self.write_session(&data);
-            wait_for_remote_json_rpc_response(timeout, |remaining| {
-                self.read_session_lines(remaining.min(1.0))
-            })
+            session.wait_rpc_reply(
+                std::time::Duration::from_secs_f64(timeout.max(0.0)),
+                self.auto_reconnect,
+            )
         });
 
         if let Some(json_part) = reply {

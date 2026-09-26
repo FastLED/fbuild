@@ -16,23 +16,6 @@ pub(crate) fn extract_remote_json_rpc_response(lines: &[String]) -> Option<Strin
     })
 }
 
-pub(crate) fn wait_for_remote_json_rpc_response<F>(timeout: f64, mut poll: F) -> Option<String>
-where
-    F: FnMut(f64) -> Vec<String>,
-{
-    let deadline = std::time::Instant::now() + std::time::Duration::from_secs_f64(timeout);
-
-    while std::time::Instant::now() < deadline {
-        let remaining = (deadline - std::time::Instant::now()).as_secs_f64();
-        let lines = poll(remaining);
-        if let Some(json_part) = extract_remote_json_rpc_response(&lines) {
-            return Some(json_part);
-        }
-    }
-
-    None
-}
-
 /// Shared async read-batch loop used by `AsyncSerialMonitor::read_lines`
 /// and `write_json_rpc`. Acquires the source mutex only for the duration
 /// of each `.next()` call so that concurrent `write` / `__aexit__`
@@ -171,7 +154,8 @@ pub(crate) async fn write_async(
     false
 }
 
-/// Async counterpart to `wait_for_remote_json_rpc_response`. Keeps
+/// Async `REMOTE:` JSON-RPC reply wait (the sync `SerialMonitor` uses
+/// `ws_session::WsSession::wait_rpc_reply`). Keeps
 /// polling `read_lines_async` until the deadline expires, even if an
 /// individual batch comes back empty — preserving the PR #57 fix.
 pub(crate) async fn wait_for_remote_json_rpc_response_async(

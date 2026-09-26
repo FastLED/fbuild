@@ -12,10 +12,15 @@
 //! and resumes when the caller has its reply. Serial lines that arrive while
 //! a request/reply caller holds the read half go to `pending`, so no line is
 //! lost or reordered.
+//!
+//! Request/reply calls are serialized with each other (`requests`), so two
+//! overlapping calls cannot consume each other's replies. While a
+//! `write_json_rpc` waits ([`RpcRoute`]), every reader routes `REMOTE:` reply
+//! lines to it instead of returning them to a `read_lines` caller.
 
 use std::collections::VecDeque;
-use std::sync::Mutex;
 use std::sync::atomic::{AtomicUsize, Ordering};
+use std::sync::{Mutex, TryLockError};
 use std::time::{Duration, Instant};
 
 use futures::{SinkExt, StreamExt};
@@ -27,6 +32,13 @@ use crate::messages::{ServerMessage, WsSink, WsSource};
 /// How often a reader that yielded re-checks whether the read half is free
 /// again. Request/reply callers hold it only until their reply arrives.
 const YIELD_POLL: Duration = Duration::from_millis(1);
+
+/// Longest a `write_json_rpc` waiter holds the read half before re-checking
+/// its reply queue.
+const RPC_SLICE: Duration = Duration::from_millis(50);
+
+/// Serial-line prefix of a device's JSON-RPC reply.
+const REMOTE_PREFIX: &str = "REMOTE:";
 
 /// Lets request/reply callers take the read half away from a waiting reader.
 #[derive(Default)]
@@ -58,6 +70,32 @@ impl Drop for YieldTurn<'_> {
     }
 }
 
+/// Collects `REMOTE:` reply lines for waiting `write_json_rpc` calls, so a
+/// concurrent `read_lines` cannot swallow them.
+#[derive(Default)]
+pub(crate) struct RpcRoute {
+    waiters: AtomicUsize,
+    replies: Mutex<VecDeque<String>>,
+}
+
+/// Held by a `write_json_rpc` call from before its write until it has its
+/// reply; while any is held, readers route `REMOTE:` lines to [`RpcRoute`].
+pub(crate) struct RpcTurn<'a>(&'a RpcRoute);
+
+impl Drop for RpcTurn<'_> {
+    fn drop(&mut self) {
+        if self.0.waiters.fetch_sub(1, Ordering::SeqCst) == 1 {
+            // No waiter left: a reply that arrived after its caller timed out
+            // must not satisfy the next call.
+            self.0
+                .replies
+                .lock()
+                .unwrap_or_else(|e| e.into_inner())
+                .clear();
+        }
+    }
+}
+
 /// Borrowed view of a live session's WebSocket halves.
 pub(crate) struct WsSession<'a> {
     pub(crate) rt: &'a Runtime,
@@ -65,6 +103,15 @@ pub(crate) struct WsSession<'a> {
     pub(crate) read: &'a Mutex<WsSource>,
     pub(crate) pending: &'a Mutex<VecDeque<String>>,
     pub(crate) read_yield: &'a ReadYield,
+    /// Serializes request/reply calls with each other.
+    pub(crate) requests: &'a Mutex<()>,
+    pub(crate) rpc: &'a RpcRoute,
+}
+
+/// Whether a reader keeps waiting after handling one WebSocket frame.
+enum Control {
+    Continue,
+    Stop,
 }
 
 enum Frame {
@@ -93,6 +140,54 @@ impl WsSession<'_> {
                 .lock()
                 .unwrap_or_else(|e| e.into_inner())
                 .extend(lines);
+        }
+    }
+
+    /// Take `REMOTE:` reply lines out of `lines` for waiting RPC calls.
+    fn route(&self, lines: Vec<String>) -> Vec<String> {
+        if self.rpc.waiters.load(Ordering::SeqCst) == 0 {
+            return lines;
+        }
+        let (replies, rest): (Vec<_>, Vec<_>) = lines
+            .into_iter()
+            .partition(|line| line.starts_with(REMOTE_PREFIX));
+        if !replies.is_empty() {
+            self.rpc
+                .replies
+                .lock()
+                .unwrap_or_else(|e| e.into_inner())
+                .extend(replies);
+        }
+        rest
+    }
+
+    /// Handle one frame read by a serial reader; serial lines for the caller
+    /// are appended to `lines`.
+    fn handle_frame(
+        &self,
+        message: Option<Result<tungstenite::Message, tungstenite::Error>>,
+        auto_reconnect: bool,
+        lines: &mut Vec<String>,
+    ) -> Control {
+        match message {
+            Some(Ok(tungstenite::Message::Text(text))) => {
+                match serde_json::from_str::<ServerMessage>(&text) {
+                    Ok(ServerMessage::Data {
+                        lines: data_lines, ..
+                    }) => {
+                        lines.extend(self.route(data_lines));
+                        Control::Continue
+                    }
+                    // Paused for a deploy; keep waiting if we reattach.
+                    Ok(ServerMessage::Preempted { .. }) if auto_reconnect => Control::Continue,
+                    Ok(ServerMessage::Preempted { .. })
+                    | Ok(ServerMessage::PortRebindFailed { .. })
+                    | Ok(ServerMessage::PortDisconnected { .. }) => Control::Stop,
+                    _ => Control::Continue,
+                }
+            }
+            Some(Ok(tungstenite::Message::Close(_))) | None => Control::Stop,
+            Some(_) => Control::Continue,
         }
     }
 
@@ -136,23 +231,11 @@ impl WsSession<'_> {
             match frame {
                 Frame::Yield => continue,
                 Frame::Timeout => break,
-                Frame::Message(Some(Ok(tungstenite::Message::Text(text)))) => {
-                    match serde_json::from_str::<ServerMessage>(&text) {
-                        Ok(ServerMessage::Data {
-                            lines: data_lines, ..
-                        }) => lines.extend(data_lines),
-                        // Paused for a deploy; keep waiting if we reattach.
-                        Ok(ServerMessage::Preempted { .. }) if auto_reconnect => continue,
-                        Ok(ServerMessage::Preempted { .. })
-                        | Ok(ServerMessage::PortRebindFailed { .. })
-                        | Ok(ServerMessage::PortDisconnected { .. }) => break,
-                        _ => continue,
+                Frame::Message(message) => {
+                    if let Control::Stop = self.handle_frame(message, auto_reconnect, &mut lines) {
+                        break;
                     }
                 }
-                Frame::Message(Some(Ok(tungstenite::Message::Close(_)))) | Frame::Message(None) => {
-                    break;
-                }
-                Frame::Message(_) => continue,
             }
         }
         lines
@@ -169,6 +252,9 @@ impl WsSession<'_> {
         wait: Duration,
         mut on_reply: impl FnMut(ServerMessage) -> Option<T>,
     ) -> Option<T> {
+        // One request/reply at a time, so overlapping calls cannot consume
+        // each other's replies.
+        let _request = self.requests.lock().unwrap_or_else(|e| e.into_inner());
         // Ask any waiting reader for the read half before sending, so the
         // reply cannot be consumed by the reader. Declared before `read` so
         // it is released after the lock.
@@ -185,7 +271,10 @@ impl WsSession<'_> {
             match next {
                 Ok(Some(Ok(tungstenite::Message::Text(text)))) => {
                     match serde_json::from_str::<ServerMessage>(&text) {
-                        Ok(ServerMessage::Data { lines, .. }) => self.push_pending(lines),
+                        Ok(ServerMessage::Data { lines, .. }) => {
+                            let lines = self.route(lines);
+                            self.push_pending(lines);
+                        }
                         Ok(message) => {
                             if let Some(reply) = on_reply(message) {
                                 return Some(reply);
@@ -200,6 +289,71 @@ impl WsSession<'_> {
         }
         None
     }
+
+    /// Start a JSON-RPC exchange: from now until the returned turn drops,
+    /// every reader hands `REMOTE:` lines to [`Self::wait_rpc_reply`]. Take
+    /// the turn before writing the request.
+    pub(crate) fn begin_rpc(&self) -> RpcTurn<'_> {
+        self.rpc.waiters.fetch_add(1, Ordering::SeqCst);
+        RpcTurn(self.rpc)
+    }
+
+    /// The JSON part of the next `REMOTE:` reply within `timeout`.
+    ///
+    /// Reads frames itself when the read half is free; when another thread
+    /// is reading, that reader routes the reply here. Serial lines it reads
+    /// that are not replies are kept for `read_lines`.
+    pub(crate) fn wait_rpc_reply(&self, timeout: Duration, auto_reconnect: bool) -> Option<String> {
+        let deadline = Instant::now() + timeout;
+        let mut stopped = false;
+        loop {
+            let reply = self
+                .rpc
+                .replies
+                .lock()
+                .unwrap_or_else(|e| e.into_inner())
+                .pop_front();
+            if let Some(reply) = reply {
+                return reply.strip_prefix(REMOTE_PREFIX).map(str::to_string);
+            }
+            let now = Instant::now();
+            if stopped || now >= deadline {
+                return None;
+            }
+            if self.read_yield.requested() {
+                std::thread::sleep(YIELD_POLL.min(deadline - now));
+                continue;
+            }
+            let mut read = match self.read.try_lock() {
+                Ok(read) => read,
+                Err(TryLockError::Poisoned(poisoned)) => poisoned.into_inner(),
+                Err(TryLockError::WouldBlock) => {
+                    std::thread::sleep(YIELD_POLL.min(deadline - now));
+                    continue;
+                }
+            };
+            let slice = (deadline - now).min(RPC_SLICE);
+            let frame = self.rt.block_on(async {
+                tokio::select! {
+                    biased;
+                    () = self.read_yield.notify.notified() => Frame::Yield,
+                    next = tokio::time::timeout(slice, read.next()) => match next {
+                        Ok(message) => Frame::Message(message),
+                        Err(_) => Frame::Timeout,
+                    },
+                }
+            });
+            drop(read);
+            if let Frame::Message(message) = frame {
+                let mut lines = Vec::new();
+                stopped = matches!(
+                    self.handle_frame(message, auto_reconnect, &mut lines),
+                    Control::Stop
+                );
+                self.push_pending(lines);
+            }
+        }
+    }
 }
 
 #[cfg(test)]
@@ -209,9 +363,13 @@ mod tests {
     use tokio::net::TcpListener;
 
     /// A daemon stand-in: answers every `write` with a `write_ack` and, after
-    /// `echo_delay`, echoes the written text back as a serial line.
+    /// `echo_delay`, echoes the written text back as a serial line. Text
+    /// starting with `REMOTE:` comes back verbatim, like a device's JSON-RPC
+    /// reply; anything else comes back as `echo:<text>`.
     async fn fake_daemon(listener: TcpListener, echo_delay: Duration) {
         let (stream, _) = listener.accept().await.unwrap();
+        // Small back-to-back frames (ack, then echo) otherwise wait on Nagle.
+        stream.set_nodelay(true).unwrap();
         let ws = tokio_tungstenite::accept_async(stream).await.unwrap();
         let (sink, mut source) = ws.split();
         let sink = Arc::new(tokio::sync::Mutex::new(sink));
@@ -229,8 +387,13 @@ mod tests {
                 .send(tungstenite::Message::Text(ack.to_string()))
                 .await
                 .unwrap();
+            let echoed = if data.starts_with(REMOTE_PREFIX) {
+                data.clone()
+            } else {
+                format!("echo:{data}")
+            };
             let line = serde_json::json!({
-                "type": "data", "lines": [format!("echo:{data}")], "current_index": 0
+                "type": "data", "lines": [echoed], "current_index": 0
             })
             .to_string();
             if echo_delay.is_zero() {
@@ -260,6 +423,8 @@ mod tests {
         read: Mutex<WsSource>,
         pending: Mutex<VecDeque<String>>,
         read_yield: ReadYield,
+        requests: Mutex<()>,
+        rpc: RpcRoute,
     }
 
     impl Session {
@@ -270,6 +435,8 @@ mod tests {
                 read: &self.read,
                 pending: &self.pending,
                 read_yield: &self.read_yield,
+                requests: &self.requests,
+                rpc: &self.rpc,
             }
         }
     }
@@ -295,6 +462,8 @@ mod tests {
             read: Mutex::new(read),
             pending: Mutex::default(),
             read_yield: ReadYield::default(),
+            requests: Mutex::default(),
+            rpc: RpcRoute::default(),
         })
     }
 
@@ -363,5 +532,52 @@ mod tests {
         let lines = session.view().read_lines(Duration::from_millis(150), true);
         assert!(lines.is_empty());
         assert!(started.elapsed() >= Duration::from_millis(150));
+    }
+
+    /// A `write_json_rpc` reply must reach the RPC waiter even while another
+    /// thread sits in `read_lines`, and even when it arrives several empty
+    /// read slices later; the reader must not see it.
+    #[test]
+    fn rpc_reply_reaches_the_waiter_despite_a_concurrent_reader() {
+        let session = connect(RPC_SLICE * 3);
+        let reader = {
+            let session = Arc::clone(&session);
+            std::thread::spawn(move || session.view().read_lines(Duration::from_secs(1), true))
+        };
+        std::thread::sleep(Duration::from_millis(100));
+
+        let view = session.view();
+        let turn = view.begin_rpc();
+        assert_eq!(write(&view, "REMOTE:{\"id\":1}"), Some(15));
+        let reply = view.wait_rpc_reply(Duration::from_secs(5), true);
+        drop(turn);
+        assert_eq!(reply.as_deref(), Some("{\"id\":1}"));
+        assert!(
+            reader.join().unwrap().is_empty(),
+            "the concurrent reader must not receive the RPC reply"
+        );
+    }
+
+    /// Overlapping request/reply calls from several threads each get their
+    /// own reply, never another call's.
+    #[test]
+    fn overlapping_writes_each_get_their_own_ack() {
+        let session = connect(Duration::ZERO);
+        for _round in 0..5 {
+            let start = Arc::new(std::sync::Barrier::new(32));
+            let writers: Vec<_> = (1..=32)
+                .map(|len| {
+                    let (session, start) = (Arc::clone(&session), Arc::clone(&start));
+                    std::thread::spawn(move || {
+                        start.wait();
+                        (len, write(&session.view(), &"x".repeat(len)))
+                    })
+                })
+                .collect();
+            for writer in writers {
+                let (len, acked) = writer.join().unwrap();
+                assert_eq!(acked, Some(len), "a write got another write's ack");
+            }
+        }
     }
 }

@@ -105,7 +105,7 @@ fn _native(m: &Bound<'_, PyModule>) -> PyResult<()> {
 #[cfg(test)]
 mod tests {
     use crate::PYTHON_MODULE_VERSION;
-    use crate::json_rpc::{extract_remote_json_rpc_response, wait_for_remote_json_rpc_response};
+    use crate::json_rpc::extract_remote_json_rpc_response;
     use crate::outcome::{OpRequest, parse_outcome, platformio_src_dir_from_env, send_op_async};
     use std::sync::Mutex;
     use tokio::io::{AsyncReadExt, AsyncWriteExt};
@@ -301,22 +301,6 @@ mod tests {
             extract_remote_json_rpc_response(&lines).as_deref(),
             Some(r#" {"ok": true}"#)
         );
-    }
-
-    #[test]
-    fn wait_for_remote_json_rpc_response_keeps_polling_after_empty_batch() {
-        let mut polls = 0usize;
-        let result = wait_for_remote_json_rpc_response(0.05, |_| {
-            polls += 1;
-            match polls {
-                1 => vec![],
-                2 => vec!["REMOTE: {\"ok\": true}".to_string()],
-                _ => vec![],
-            }
-        });
-
-        assert_eq!(polls, 2, "an empty batch must not end the overall wait");
-        assert_eq!(result.as_deref(), Some(r#" {"ok": true}"#));
     }
 
     fn sample_op_request() -> OpRequest {
