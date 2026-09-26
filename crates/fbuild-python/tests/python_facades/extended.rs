@@ -1,4 +1,44 @@
 use super::*;
+
+/// Connection-phase timeouts remain ConnectionError for both public facades.
+/// FastLED's daemon-start/retry path catches that exception specifically;
+/// operation timeouts still use TimeoutError.
+#[test]
+#[ignore = "embeds CPython; run by the python-facade CI job"]
+fn connect_attach_timeout_is_connection_error() {
+    init_python();
+    let (_port, _env_guard) = start_daemon_and_set_env(DaemonKnobs {
+        attach_delay: Duration::from_secs(8),
+        ..Default::default()
+    });
+    pyo3::Python::attach(|py| {
+        run_snippet(
+            py,
+            r#"
+import asyncio, faulthandler
+faulthandler.dump_traceback_later(25, exit=True)
+from _native import SerialMonitor, AsyncSerialMonitor
+
+try:
+    SerialMonitor(port="TEST_PORT", baud_rate=115200).__enter__()
+except ConnectionError as exc:
+    assert "attach/handshake timed out" in str(exc), str(exc)
+else:
+    raise AssertionError("sync attach timeout must raise ConnectionError")
+
+async def check_async():
+    try:
+        await AsyncSerialMonitor(port="TEST_PORT", baud_rate=115200).__aenter__()
+    except ConnectionError as exc:
+        assert "attach/handshake timed out" in str(exc), str(exc)
+    else:
+        raise AssertionError("async attach timeout must raise ConnectionError")
+
+asyncio.run(check_async())
+"#,
+        );
+    });
+}
 /// AT-P10: FastLED #3219 replay. The adapter pattern (a reader thread per
 /// request, abandoned via `interrupt_reads()` in `finally` after the
 /// reply), 100 RPCs — every one succeeds, none waits for its timeout.

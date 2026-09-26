@@ -29,6 +29,15 @@ fn map_err(err: SessionError) -> PyErr {
     }
 }
 
+fn map_connect_err(err: SessionError) -> PyErr {
+    match err {
+        SessionError::Timeout => pyo3::exceptions::PyConnectionError::new_err(
+            "daemon WebSocket attach/handshake timed out",
+        ),
+        other => map_err(other),
+    }
+}
+
 /// `Err` if called from inside the shared tokio runtime (§4.9 rule 5):
 /// `block_on` would otherwise panic instead of deadlocking silently. Free
 /// function so it can be used both from `&self` methods and from
@@ -132,7 +141,7 @@ impl SerialMonitor {
         let cfg = slf.config();
         let session = py
             .detach(|| block_on_guarded(rt, SerialSession::connect(cfg)))?
-            .map_err(map_err)?;
+            .map_err(map_connect_err)?;
         slf.runtime = Some(rt);
         slf.session = Some(session);
         Ok(slf)
