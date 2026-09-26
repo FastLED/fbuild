@@ -317,6 +317,7 @@ fn start_fake_daemon(
         "emit_boot_line": knobs.emit_boot_line,
         "fail_first_write": knobs.fail_first_write,
     });
+    // allow-direct-spawn: integration test runs its own binary as a fake daemon child.
     let mut child = std::process::Command::new(std::env::current_exe().unwrap())
         .args(["--ignored", "--exact", "fake_daemon_child", "--nocapture"])
         .env("FBUILD_FACADE_DAEMON_KNOBS", knobs_json.to_string())
