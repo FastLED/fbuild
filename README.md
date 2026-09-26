@@ -138,7 +138,7 @@ Board descriptions and family deep-dives live in
 
 ## Build performance
 
-[![Arduino Uno and ESP32-S3 Blink build benchmark](https://raw.githubusercontent.com/FastLED/fbuild/benchmark-stats/benchmark.svg?view=esp32s3)](https://fastled.github.io/fbuild/)
+[![Arduino Uno and ESP32-S3 Blink build benchmark](https://raw.githubusercontent.com/FastLED/fbuild/benchmark-stats/benchmark.svg?view=per-board-scale)](https://fastled.github.io/fbuild/)
 
 The chart is regenerated nightly from clean-output (cold) and immediate repeat
 (warm) Arduino Uno and ESP32-S3 Blink builds. Raw measurements are discoverable through the
