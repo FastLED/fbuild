@@ -263,6 +263,54 @@ impl DaemonClient {
             .unwrap_or(false)
     }
 
+    /// Wait until the daemon answers `/health` successfully.
+    ///
+    /// FastLED/fbuild#1480: waits `base` for a daemon that does not answer,
+    /// but keeps waiting (up to
+    /// [`fbuild_core::daemon_health::STARTING_BUDGET`]) while one reports
+    /// `starting`, so a slow but healthy start is not reported as a failure
+    /// (FastLED/fbuild#1462). Says once on stderr what it is waiting for when
+    /// the start is slow enough to notice.
+    ///
+    /// A daemon still `starting` when the wait ends is stuck: returns an error
+    /// naming its phase rather than letting the caller respawn, since a new
+    /// daemon would only yield to it and wait again.
+    pub async fn wait_until_healthy(&self, base: std::time::Duration) -> fbuild_core::Result<bool> {
+        let mut announced = false;
+        let outcome = fbuild_core::daemon_health::wait_until_healthy(
+            &self.client,
+            &format!("{}/health", self.base_url),
+            base,
+            fbuild_core::time::SHORT_HTTP_TIMEOUT,
+            |phase, waited| {
+                if !announced && waited >= STARTING_NOTICE_AFTER {
+                    announced = true;
+                    eprintln!(
+                        "fbuild daemon is still starting (phase: {}, {:.0}s so far); waiting...",
+                        phase.unwrap_or("unknown"),
+                        waited.as_secs_f64()
+                    );
+                }
+            },
+        )
+        .await;
+        match outcome {
+            fbuild_core::daemon_health::WaitOutcome::Healthy => Ok(true),
+            fbuild_core::daemon_health::WaitOutcome::TimedOut {
+                last: fbuild_core::daemon_health::DaemonHealth::Starting { phase },
+            } => Err(fbuild_core::FbuildError::DaemonError(format!(
+                "fbuild daemon at {} is still starting (phase: {}) after {}s. \
+                 This is a daemon problem, not a defect in the code being built — \
+                 no compilation was attempted. See the daemon log at {}.",
+                self.base_url,
+                phase.as_deref().unwrap_or("unknown"),
+                fbuild_core::daemon_health::STARTING_BUDGET.as_secs(),
+                fbuild_paths::get_daemon_log_file().display()
+            ))),
+            fbuild_core::daemon_health::WaitOutcome::TimedOut { .. } => Ok(false),
+        }
+    }
+
     /// Get full health response including source_mtime for stale detection.
     pub async fn health_full(&self) -> Option<HealthResponseFull> {
         self.client
@@ -777,15 +825,15 @@ async fn try_acquire_broker_daemon() -> fbuild_core::Result<bool> {
             });
 
             let client = DaemonClient::new();
-            for _ in 0..100 {
-                if client.health().await {
-                    let info = client.daemon_info().await?;
-                    if let Some(err) = daemon_cache_identity_error(&info) {
-                        return Err(fbuild_core::FbuildError::DaemonError(err));
-                    }
-                    return Ok(true);
+            if client
+                .wait_until_healthy(std::time::Duration::from_secs(READINESS_TIMEOUT_SECS))
+                .await?
+            {
+                let info = client.daemon_info().await?;
+                if let Some(err) = daemon_cache_identity_error(&info) {
+                    return Err(fbuild_core::FbuildError::DaemonError(err));
                 }
-                tokio::time::sleep(std::time::Duration::from_millis(100)).await;
+                return Ok(true);
             }
             Err(fbuild_core::FbuildError::DaemonError(
                 "broker negotiated fbuild-daemon, but its HTTP endpoint did not become healthy"
@@ -829,6 +877,24 @@ fn broker_refusal_is_fatal(kind: Option<RefusalKind>) -> bool {
 /// Legacy direct HTTP daemon acquisition path.
 async fn ensure_direct_daemon_running() -> fbuild_core::Result<()> {
     let client = DaemonClient::new();
+
+    // FastLED/fbuild#1480: a daemon that owns the endpoint and reports
+    // `starting` is already on its way up; wait for it rather than spawning a
+    // duplicate that would only yield to it.
+    if matches!(
+        fbuild_core::daemon_health::probe(
+            &client.client,
+            &format!("{}/health", client.base_url),
+            fbuild_core::time::SHORT_HTTP_TIMEOUT,
+        )
+        .await,
+        fbuild_core::daemon_health::DaemonHealth::Starting { .. }
+    ) {
+        client
+            .wait_until_healthy(std::time::Duration::from_secs(READINESS_TIMEOUT_SECS))
+            .await?;
+    }
+
     let sibling = restart_diag::SiblingDaemon::discover();
     let restarted = match probe_running_daemon(&client, &sibling).await {
         DaemonProbe::Keep => return Ok(()),
@@ -915,11 +981,11 @@ async fn start_daemon(client: &DaemonClient) -> fbuild_core::Result<Option<u32>>
     // their own daemon. Only the winner of this single-flight lock actually
     // spawns; losers wait for the winner's daemon to become healthy instead.
     let Some(_spawn_guard) = daemon_client_spawn_lock() else {
-        for _ in 0..50 {
-            tokio::time::sleep(std::time::Duration::from_millis(100)).await;
-            if client.health().await {
-                return Ok(None);
-            }
+        if client
+            .wait_until_healthy(std::time::Duration::from_secs(5))
+            .await?
+        {
+            return Ok(None);
         }
         return Err(fbuild_core::FbuildError::DaemonError(
             "daemon did not become healthy while another process was spawning it".to_string(),
@@ -979,14 +1045,17 @@ async fn start_daemon(client: &DaemonClient) -> fbuild_core::Result<Option<u32>>
         // burns its own ~2s request timeout. 100 iterations then took ~3.5
         // minutes per attempt and ~10 minutes across all three, with no
         // output — indistinguishable from a wedged build.
-        let deadline =
-            std::time::Instant::now() + std::time::Duration::from_secs(READINESS_TIMEOUT_SECS);
-        while std::time::Instant::now() < deadline {
-            tokio::time::sleep(std::time::Duration::from_millis(100)).await;
-            if client.health().await {
-                tracing::info!("daemon started successfully (spawned pid {spawned_pid})");
-                return Ok(Some(spawned_pid));
-            }
+        //
+        // FastLED/fbuild#1480: the budget stretches while the daemon reports
+        // `starting`, so a spawned daemon that is initializing slowly (40+ s
+        // of embedded zccache bring-up in #1462) is waited on instead of being
+        // respawned and then reported as failed.
+        if client
+            .wait_until_healthy(std::time::Duration::from_secs(READINESS_TIMEOUT_SECS))
+            .await?
+        {
+            tracing::info!("daemon started successfully (spawned pid {spawned_pid})");
+            return Ok(Some(spawned_pid));
         }
 
         tracing::warn!(
@@ -1042,8 +1111,13 @@ fn wedged_daemon_note(live_daemon_pid: Option<u32>) -> String {
     )
 }
 
-/// Wall-clock budget for a spawned daemon to answer `health()`.
+/// Wall-clock budget for a spawned daemon to answer `health()`. Stretched while
+/// the daemon reports `starting` (FastLED/fbuild#1480).
 const READINESS_TIMEOUT_SECS: u64 = 10;
+
+/// How long a daemon may report `starting` before the CLI says on stderr what
+/// it is waiting for.
+const STARTING_NOTICE_AFTER: std::time::Duration = std::time::Duration::from_secs(5);
 
 /// Acquire the spawn-herd single-flight lock (FastLED/fbuild#1159). Thin
 /// wrapper kept local to this module so the call site above reads naturally;

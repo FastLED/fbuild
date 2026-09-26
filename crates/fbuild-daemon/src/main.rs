@@ -141,6 +141,18 @@ async fn main() {
     let listener = bind_listener_with_retry(&addr).await;
     tracing::info!("listening on {}", addr);
 
+    // FastLED/fbuild#1480: answer `/health` with `starting` (and the phase
+    // below) until the full router takes the endpoint, so a client can tell
+    // "a daemon owns this port and is initializing" from "nothing is here"
+    // and keeps waiting instead of giving up on a slow start (#1462).
+    let startup = match fbuild_daemon::startup::StartupGate::open(listener, "usb_overlay") {
+        Ok(gate) => gate,
+        Err(err) => {
+            eprintln!("fatal: failed to hold the daemon listener during startup: {err}");
+            std::process::exit(1);
+        }
+    };
+
     // Populate the FastLED/boards USB caches used by device discovery and
     // deployment before starting any compile work. The typed profile provides
     // USB_VID/USB_PID for cores such as Adafruit SAMD, so serving a build
@@ -157,6 +169,7 @@ async fn main() {
     // version-blind proof that no daemon still owns the cache root before
     // deleting it. Poll briefly rather than blocking forever: a wedged
     // holder must produce a clear fatal error, not a silent hang.
+    startup.set_phase("root_ownership");
     let _root_ownership_guard = {
         const POLL: std::time::Duration = std::time::Duration::from_millis(100);
         const WAIT: std::time::Duration = std::time::Duration::from_secs(10);
@@ -188,6 +201,7 @@ async fn main() {
     // handle BEFORE any compile work begins. The wrapper-binary path is
     // gone; failing to start here is a hard error — the daemon refuses
     // to come up rather than silently degrading.
+    startup.set_phase("compile_backend");
     let compile_backend = match CompileBackend::start().await {
         Ok(backend) => backend,
         Err(err) => {
@@ -291,7 +305,8 @@ async fn main() {
 
     // NOTE: the endpoint is already bound at the top of `main` (before any
     // heavy init) — see the `bind_listener_with_retry` call after tracing
-    // setup. FastLED/fbuild#1010. `listener` is held from there.
+    // setup. FastLED/fbuild#1010. `startup` holds it from there and hands it
+    // over just before `axum::serve` below.
 
     // Write PID file and port file
     let pid_file = fbuild_paths::get_daemon_pid_file();
@@ -548,6 +563,14 @@ async fn main() {
     let shutdown_tx_signal = context.shutdown_tx.clone();
     let op_in_progress = context.operation_in_progress.clone();
 
+    let listener = match startup.finish().await {
+        Ok(listener) => listener,
+        Err(err) => {
+            eprintln!("fatal: failed to hand the daemon listener to the router: {err}");
+            std::process::exit(1);
+        }
+    };
+
     axum::serve(listener, app.into_make_service_with_connect_info::<std::net::SocketAddr>())
         .with_graceful_shutdown(async move {
             // Wait for either the HTTP shutdown endpoint or Ctrl+C / SIGTERM
@@ -585,6 +608,26 @@ async fn main() {
     // ...and the status file, which was previously left behind on every clean
     // shutdown, so `daemon status` kept reporting a dead PID (#1213 part 2).
     let _ = fbuild_core::fs::remove_file(&fbuild_paths::get_daemon_status_file()).await;
+
+    // FastLED/fbuild#1480: `process::exit` runs no destructors and the
+    // backend lives in a `OnceLock`, so without this flush zccache never
+    // persisted `metadata.bin` (or the latest depgraph/index) and every
+    // restart began cold (zackees/zccache#1652). A normal flush takes well
+    // under 100 ms. The bound stays below `fbuild daemon stop`'s 5 s graceful
+    // budget and the 10 s a replacement daemon waits for the root-ownership
+    // lock this process still holds, so a slow flush never turns a stop or
+    // restart into a kill or a failed spawn.
+    if let Some(backend) = fbuild_build::compile_backend::get_global() {
+        const EXIT_FLUSH_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(4);
+        match tokio::time::timeout(EXIT_FLUSH_TIMEOUT, backend.service().flush()).await {
+            Ok(Ok(())) => tracing::info!("zccache backend flushed"),
+            Ok(Err(err)) => tracing::warn!("zccache backend flush on exit failed: {err}"),
+            Err(_) => tracing::warn!(
+                "zccache backend flush on exit timed out after {}s",
+                EXIT_FLUSH_TIMEOUT.as_secs()
+            ),
+        }
+    }
 
     tracing::info!("daemon exiting");
     std::process::exit(0);
