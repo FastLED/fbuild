@@ -2,9 +2,17 @@
 
 use std::path::{Path, PathBuf};
 
+use fbuild_core::daemon_health::{DaemonHealth, WaitOutcome};
 use pyo3::prelude::*;
 use running_process::broker::adopt::{AdoptError, AsyncBrokerSession, OwnedConnectRequest};
 use running_process::broker::client::RefusalKind;
+
+/// Budget for a daemon that does not answer `/health` at all; stretched while
+/// it reports `starting` (FastLED/fbuild#1480).
+const READINESS_BUDGET: std::time::Duration = std::time::Duration::from_secs(10);
+
+/// Per-request `/health` timeout; a busy daemon can take a few seconds.
+const HEALTH_PROBE_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(5);
 
 /// Filename of the daemon binary on this platform.
 ///
@@ -179,20 +187,9 @@ async fn ensure_running_via_broker_async(url: &str) -> Result<bool, String> {
     );
     match AsyncBrokerSession::adopt(request).await {
         Ok(_session) => {
-            let client = fbuild_core::http::client();
-            for _ in 0..100 {
-                if let Ok(resp) = client
-                    .get(url)
-                    .timeout(std::time::Duration::from_secs(5))
-                    .send()
-                    .await
-                {
-                    if resp.status().is_success() {
-                        verify_broker_daemon_cache_identity_async().await?;
-                        return Ok(true);
-                    }
-                }
-                tokio::time::sleep(std::time::Duration::from_millis(100)).await;
+            if wait_until_healthy(url).await {
+                verify_broker_daemon_cache_identity_async().await?;
+                return Ok(true);
             }
             Err(
                 "broker negotiated fbuild-daemon, but its HTTP endpoint did not become healthy"
@@ -237,18 +234,15 @@ async fn ensure_running_async_impl(
         Err(_) => return false,
     }
 
-    let client = fbuild_core::http::client();
-
-    // Fast path: daemon is already up.
-    if let Ok(resp) = client
-        .get(url)
-        .timeout(std::time::Duration::from_secs(5))
-        .send()
+    // Fast path: daemon is already up — or is starting, in which case it will
+    // be up shortly and a second spawn would only yield to it
+    // (FastLED/fbuild#1480).
+    match fbuild_core::daemon_health::probe(fbuild_core::http::client(), url, HEALTH_PROBE_TIMEOUT)
         .await
     {
-        if resp.status().is_success() {
-            return true;
-        }
+        DaemonHealth::Healthy => return true,
+        DaemonHealth::Starting { .. } => return wait_until_healthy(url).await,
+        DaemonHealth::Unreachable => {}
     }
 
     // INTENTIONALLY DETACHED (FastLED/fbuild#32): the Python host spawns
@@ -278,20 +272,21 @@ async fn ensure_running_async_impl(
         return false;
     }
 
-    for _ in 0..100 {
-        tokio::time::sleep(std::time::Duration::from_millis(100)).await;
-        if let Ok(resp) = client
-            .get(url)
-            .timeout(std::time::Duration::from_secs(5))
-            .send()
-            .await
-        {
-            if resp.status().is_success() {
-                return true;
-            }
-        }
-    }
-    false
+    wait_until_healthy(url).await
+}
+
+/// Wait up to [`READINESS_BUDGET`] for the daemon at `url` to answer, longer
+/// while it reports `starting` (FastLED/fbuild#1480).
+async fn wait_until_healthy(url: &str) -> bool {
+    fbuild_core::daemon_health::wait_until_healthy(
+        fbuild_core::http::client(),
+        url,
+        READINESS_BUDGET,
+        HEALTH_PROBE_TIMEOUT,
+        |_, _| {},
+    )
+    .await
+        == WaitOutcome::Healthy
 }
 
 /// Shared async implementation of `stop`. Returns `true` iff the daemon

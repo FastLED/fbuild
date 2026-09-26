@@ -37,5 +37,6 @@ pub mod heap_profile;
 pub mod lock_models;
 pub mod log_layer;
 pub mod models;
+pub mod startup;
 pub mod status_manager;
 pub mod watch_set_cache;

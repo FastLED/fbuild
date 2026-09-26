@@ -7,5 +7,6 @@
 - **`context.rs`** -- `DaemonContext` (shared state), `BroadcastHub`, self-eviction/idle timeout constants
 - **`device_manager.rs`** -- `DeviceManager` with exclusive/monitor leases, preemption, and stale device cleanup
 - **`models.rs`** -- Request/response serde types for all API endpoints (build, deploy, monitor, devices, locks, reset)
+- **`startup.rs`** -- `StartupGate`: answers every request with `503 {"status":"starting","phase":...}` on a duplicate of the bound listener while `main` initializes, then hands the endpoint to the full router (FastLED/fbuild#1480)
 - **`status_manager.rs`** -- `StatusManager` for atomic read-modify-write of `daemon_status.json`
 - **`handlers/`** -- HTTP and WebSocket route handler modules
