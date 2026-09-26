@@ -253,8 +253,14 @@ mod tests {
             let started = std::time::Instant::now();
             let now = self.in_flight.fetch_add(1, Ordering::SeqCst) + 1;
             self.max_in_flight.fetch_max(now, Ordering::SeqCst);
-            tokio::time::sleep(std::time::Duration::from_millis(40)).await;
-            self.in_flight.fetch_sub(1, Ordering::SeqCst);
+            // Decrements even if the task is aborted mid-sleep.
+            let _in_flight = InFlight(&self.in_flight);
+            let fail = source.to_string_lossy().contains("bad");
+            let delay = if fail { 5 } else { 40 };
+            tokio::time::sleep(std::time::Duration::from_millis(delay)).await;
+            if fail {
+                return Err(FbuildError::BuildFailed("synthetic failure".into()));
+            }
             self.spans.lock().unwrap().push((
                 source.to_path_buf(),
                 started,
@@ -288,6 +294,55 @@ mod tests {
         fn rebuild_signature(&self, source: &Path, _extra: &[String], _out: &Path) -> String {
             source.to_string_lossy().into_owned()
         }
+    }
+
+    struct InFlight<'a>(&'a std::sync::atomic::AtomicUsize);
+
+    impl Drop for InFlight<'_> {
+        fn drop(&mut self) {
+            self.0.fetch_sub(1, std::sync::atomic::Ordering::SeqCst);
+        }
+    }
+
+    /// FastLED/fbuild#1468: the pipeline runs compile phases concurrently
+    /// with borrowed state that `compile_sources_parallel_shared` extends to
+    /// `'static`. That is only sound if a failing call still returns only
+    /// after none of its tasks can run, so a failure must not leave compiles
+    /// in flight.
+    #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
+    async fn a_failing_compile_returns_only_after_its_tasks_stop() {
+        let tmp = tempfile::tempdir().unwrap();
+        let sources: Vec<PathBuf> = ["bad.c", "ok0.c", "ok1.c", "ok2.c"]
+            .iter()
+            .map(|name| {
+                let path = tmp.path().join(name);
+                std::fs::write(&path, "int x;\n").unwrap();
+                path
+            })
+            .collect();
+        let compiler = TracingCompiler {
+            gcc: PathBuf::from("/toolchain/bin/gcc"),
+            in_flight: Default::default(),
+            max_in_flight: Default::default(),
+            spans: Default::default(),
+        };
+        let slots = Arc::new(Semaphore::new(4));
+        let result = compile_sources_parallel_shared(
+            &compiler,
+            &sources,
+            &tmp.path().join("obj"),
+            &LanguageExtraFlags::default(),
+            &slots,
+            None,
+        )
+        .await;
+        assert!(result.is_err());
+        assert_eq!(
+            compiler.in_flight.load(std::sync::atomic::Ordering::SeqCst),
+            0,
+            "no compile may still be running once the call returns"
+        );
+        assert_eq!(slots.available_permits(), 4, "every permit is released");
     }
 
     /// FastLED/fbuild#1468: compile phases sharing one semaphore overlap

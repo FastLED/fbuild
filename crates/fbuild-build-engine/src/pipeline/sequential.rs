@@ -184,8 +184,15 @@ pub async fn run_sequential_build_with_libs(
     // local libraries compile alongside and fill the permits the framework
     // tail leaves idle; the store overlaps them too. Each branch times
     // itself, so the per-phase perf entries overlap in wall time.
+    //
+    // SAFETY-relevant: every branch must run to completion. The compile
+    // helpers hand `'static`-extended borrows of the build log and flags to
+    // spawned tasks and are only sound if awaited until those tasks finish
+    // (see `compile_sources_parallel_shared`). `try_join!` would drop the
+    // sibling branches on the first error while their tasks still run, so
+    // use `join!` and propagate errors afterwards.
     let framework = async {
-        let (core, variant) = tokio::try_join!(
+        let (core, variant) = tokio::join!(
             timed(compile_sources(
                 compiler,
                 &sources.core_sources,
@@ -202,7 +209,8 @@ pub async fn run_sequential_build_with_libs(
                 &compile_slots,
                 &build_log_mutex,
             )),
-        )?;
+        );
+        let (core, variant) = (core?, variant?);
         let store_started = std::time::Instant::now();
         let cache = &core_cache;
         let outcome = cache.store(&ctx.core_build_dir);
@@ -263,7 +271,10 @@ pub async fn run_sequential_build_with_libs(
         ((mut core_objects, core_time), (variant_objects, variant_time), store_time),
         (sketch_objects, sketch_time),
         (library_objects, library_time),
-    ) = tokio::try_join!(framework, sketch, libraries)?;
+    ) = {
+        let (framework, sketch, libraries) = tokio::join!(framework, sketch, libraries);
+        (framework?, sketch?, libraries?)
+    };
     perf.record("compile-core", core_time);
     perf.record("compile-variant", variant_time);
     perf.record("core-cache-store", store_time);
