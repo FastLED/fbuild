@@ -6,9 +6,9 @@
 //! `rp_*_public` native symbols, so two resolved identities (two
 //! versions, two sources, or two revisions) would link two copies of
 //! those symbols into fbuild. The dependency cascade discipline is:
-//! fbuild's direct git pin must be byte-identical to the pin inside the
-//! zccache release fbuild embeds — this test fails the build when the
-//! pins drift apart.
+//! fbuild's direct pin (a git `rev`, or an exact `=X.Y.Z` crates.io
+//! version) must resolve to the same identity as the pin inside the zccache
+//! fbuild embeds — this test fails the build when the pins drift apart.
 
 use std::path::Path;
 
@@ -44,22 +44,35 @@ fn locked_packages(lock: &str, name: &str) -> Vec<(String, String)> {
     found
 }
 
-/// The `rev = "..."` recorded for `dep` in the workspace Cargo.toml.
-fn workspace_pin_rev(cargo_toml: &str, dep: &str) -> String {
+/// How the workspace Cargo.toml pins a dependency.
+#[derive(Debug)]
+enum Pin {
+    /// `git = "...", rev = "<sha>"`.
+    GitRev(String),
+    /// Registry `version = "=X.Y.Z"` (exact).
+    ExactVersion(String),
+}
+
+/// Quoted value of `key = "..."` on `line`, if present.
+fn quoted_value<'a>(line: &'a str, key: &str) -> Option<&'a str> {
+    let marker = format!("{key} = \"");
+    let start = line.find(&marker)? + marker.len();
+    line[start..].split('"').next()
+}
+
+/// The pin recorded for `dep` in the workspace Cargo.toml.
+fn workspace_pin(cargo_toml: &str, dep: &str) -> Pin {
     let line = cargo_toml
         .lines()
         .find(|l| l.trim_start().starts_with(&format!("{dep} = {{")))
         .unwrap_or_else(|| panic!("no `{dep}` dependency line in workspace Cargo.toml"));
-    let rev_key = "rev = \"";
-    let start = line
-        .find(rev_key)
-        .unwrap_or_else(|| panic!("`{dep}` line has no rev pin: {line}"))
-        + rev_key.len();
-    line[start..]
-        .split('"')
-        .next()
-        .expect("terminated rev string")
-        .to_string()
+    if let Some(rev) = quoted_value(line, "rev") {
+        return Pin::GitRev(rev.to_string());
+    }
+    let version = quoted_value(line, "version")
+        .and_then(|v| v.strip_prefix('='))
+        .unwrap_or_else(|| panic!("`{dep}` must pin a git rev or an exact `=` version: {line}"));
+    Pin::ExactVersion(version.to_string())
 }
 
 #[test]
@@ -79,12 +92,16 @@ fn exactly_one_running_process_identity_matching_the_workspace_pin() {
     );
 
     let (version, source) = &packages[0];
-    let pinned_rev = workspace_pin_rev(&cargo_toml, "running-process");
+    let pin = workspace_pin(&cargo_toml, "running-process");
+    let matches = match &pin {
+        Pin::GitRev(rev) => source.contains(rev.as_str()),
+        Pin::ExactVersion(pinned) => source.starts_with("registry+") && version == pinned,
+    };
     assert!(
-        source.contains(&pinned_rev),
-        "the locked running-process source must be the workspace-pinned rev.\n  \
+        matches,
+        "the locked running-process must be the workspace-pinned identity.\n  \
          locked:  {version} @ {source}\n  \
-         pinned:  {pinned_rev}\n  \
+         pinned:  {pin:?}\n  \
          The direct pin and the zccache release's transitive pin have drifted — \
          re-run the FastLED/fbuild#1239 cascade (running-process -> zccache -> fbuild)."
     );

@@ -87,11 +87,12 @@ tar = { workspace = true }
 # off-CPU/async profile pipeline, exercised by tests/cpu_profiling.rs.
 #
 # It lives here rather than on fbuild-daemon for a linker reason, not a
-# taste one. `running-process-probe` pulls crash-handler 0.7 while the
-# pinned zccache 1.13.1 pulls 0.6.3, and both export the same unmangled C
-# symbols (`ehsetjmp`, `handle_invalid_parameter`, ...). Any binary
-# linking both fails with duplicate symbols. fbuild-core is the deepest
-# crate that does NOT depend on zccache, so its test binary links exactly
-# one copy. The heap half of #1361 stays in fbuild-daemon, which needs no
+# taste one. `running-process-probe` pulls crash-handler 0.7, and zccache
+# 1.13.1 pulled 0.6.3; both export the same unmangled C symbols
+# (`ehsetjmp`, `handle_invalid_parameter`, ...), so a binary linking both
+# failed with duplicate symbols. Since the FastLED/fbuild#1464 repin both
+# resolve 0.7, but keeping the probe off zccache-linking crates avoids a
+# relapse on the next repin: fbuild-core is the deepest crate that does
+# NOT depend on zccache, so its test binary links exactly one copy. The heap half of #1361 stays in fbuild-daemon, which needs no
 # probe crate at all.
 running-process-probe-daemon = { workspace = true }

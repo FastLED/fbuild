@@ -153,10 +153,10 @@ mimalloc-pprof = "0.9"
 
 # On-CPU sampling, stack symbolization, and the off-CPU/async profile
 # pipeline. Dev-only: this is how the profiling contract is tested, not
-# something the shipped daemon links. The git rev MUST equal the
+# something the shipped daemon links. The version MUST equal the
 # `running-process` rev pinned above, for the same `rp_*_public`
 # symbol-duplication reason documented there.
-running-process-probe-daemon = { version = "4.8.1", git = "https://github.com/zackees/running-process.git", rev = "359b4e3d92660e54eb9b16b6e83de8ce26932ff8" }
+running-process-probe-daemon = "=4.10.14"
 object = { version = "0.36", default-features = false, features = ["read", "std", "elf", "write"] }
 rusqlite = { version = "0.32", features = ["bundled"] }
 shell-words = "1"
@@ -195,15 +195,14 @@ owo-colors = "4"
 # containment. `RUNNING_PROCESS_DISABLE=1` still selects the legacy direct
 # loopback-HTTP path (see crates/fbuild-daemon/src/broker).
 #
-# Source must match zccache's `running-process` pin exactly (same git rev, not
-# just the same semver). `running-process` exports unmangled `rp_*_public` C
+# Source must match zccache's `running-process` pin exactly (same source and
+# version, not just the same semver; zccache takes =4.10.14 from crates.io). `running-process` exports unmangled `rp_*_public` C
 # symbols; Cargo treats a registry package and a git package as two distinct
 # packages, so a registry pin here plus zccache's git pin puts BOTH copies in
 # the link and every one of those symbols collides (`rust-lld: error:
-# duplicate symbol: rp_native_process_start_public`, …). Keep this rev in
-# lockstep with the `rev` in zccache's workspace Cargo.toml when repinning
-# zccache.
-running-process = { version = "4.8.1", git = "https://github.com/zackees/running-process.git", rev = "359b4e3d92660e54eb9b16b6e83de8ce26932ff8", default-features = false, features = ["client-async"] }
+# duplicate symbol: rp_native_process_start_public`, …). Keep this pin in
+# lockstep with zccache's resolved `running-process` when repinning zccache.
+running-process = { version = "=4.10.14", default-features = false, features = ["client-async"] }
 
 [profile.dev]
 debug = "line-tables-only"
