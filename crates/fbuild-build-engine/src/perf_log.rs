@@ -29,7 +29,7 @@
 //! // auto-summary on drop
 //! ```
 
-use fbuild_core::path::NormalizedPath;
+use std::ffi::OsString;
 use std::io::Write;
 use std::path::Path;
 use std::sync::OnceLock;
@@ -58,14 +58,12 @@ pub fn enabled() -> bool {
 ///
 /// Cached after the first call.
 pub fn json_sink_path() -> Option<&'static Path> {
-    static SINK: OnceLock<Option<NormalizedPath>> = OnceLock::new();
-    SINK.get_or_init(|| {
-        std::env::var_os("FBUILD_PERF_LOG_JSON")
-            .filter(|v| !v.is_empty())
-            .map(NormalizedPath::new)
-    })
-    .as_ref()
-    .map(NormalizedPath::as_path)
+    // Keep the raw value: lexical normalization would resolve `..` across
+    // symlinks and could open a different file than the caller named.
+    static SINK: OnceLock<Option<OsString>> = OnceLock::new();
+    SINK.get_or_init(|| std::env::var_os("FBUILD_PERF_LOG_JSON").filter(|v| !v.is_empty()))
+        .as_ref()
+        .map(Path::new)
 }
 
 /// Append `value` as a single JSON line to `path` (append + create).
