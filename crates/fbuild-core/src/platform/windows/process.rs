@@ -1,4 +1,3 @@
-use std::os::windows::io::AsHandle;
 use std::sync::OnceLock;
 
 use crate::path::NormalizedPath;
@@ -165,7 +164,7 @@ pub(crate) fn spawn_detached(
     environment: DetachedEnvironment,
 ) -> std::io::Result<u32> {
     let stderr = match stderr {
-        Some(file) => running_process::DaemonStdioSource::Handle(file.as_handle()),
+        Some(file) => running_process::DaemonStdioSource::File(file),
         None => running_process::DaemonStdioSource::Null,
     };
     let child = running_process::spawn_daemon_with_stdio_and_env_policy(
