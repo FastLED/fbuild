@@ -109,6 +109,8 @@ jobs:
           uv python install 3.10
           PYO3_PYTHON="$(uv python find 3.10)"
           echo "PYO3_PYTHON=$PYO3_PYTHON" >> "$GITHUB_ENV"
+          PYTHONHOME="$("$PYO3_PYTHON" -c 'import sys; print(sys.prefix)')"
+          echo "PYTHONHOME=$PYTHONHOME" >> "$GITHUB_ENV"
           LIBDIR="$("$PYO3_PYTHON" -c 'import sysconfig; print(sysconfig.get_config_var("LIBDIR"))')"
           echo "LD_LIBRARY_PATH=$LIBDIR:$LD_LIBRARY_PATH" >> "$GITHUB_ENV"
       - name: Test (python facades, --ignored)
