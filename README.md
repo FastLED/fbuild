@@ -138,10 +138,10 @@ Board descriptions and family deep-dives live in
 
 ## Build performance
 
-[![Arduino CLI vs PlatformIO vs fbuild Blink build benchmark](https://raw.githubusercontent.com/FastLED/fbuild/benchmark-stats/benchmark.svg)](https://fastled.github.io/fbuild/)
+[![Arduino Uno and ESP32-S3 Blink build benchmark](https://raw.githubusercontent.com/FastLED/fbuild/benchmark-stats/benchmark.svg?view=esp32s3)](https://fastled.github.io/fbuild/)
 
 The chart is regenerated nightly from clean-output (cold) and immediate repeat
-(warm) Arduino Uno Blink builds. Raw measurements are discoverable through the
+(warm) Arduino Uno and ESP32-S3 Blink builds. Raw measurements are discoverable through the
 [benchmark manifest](https://raw.githubusercontent.com/FastLED/fbuild/benchmark-stats/manifest.json).
 
 ## Installation
