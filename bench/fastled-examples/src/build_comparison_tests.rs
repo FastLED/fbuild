@@ -402,4 +402,14 @@ fn find_compile_db_prefers_the_raw_toolchain_database() {
         find_compile_db(project).unwrap().file_name().unwrap(),
         "compile_commands.raw.json"
     );
+
+    // A quick-profile database sorts before `release` but must not be used:
+    // the timed builds are `--release`.
+    let quick_dir = fbuild_paths::get_project_build_root(project).join("uno/quick");
+    fs::create_dir_all(&quick_dir).unwrap();
+    fs::write(quick_dir.join("compile_commands.raw.json"), "[]").unwrap();
+    assert_eq!(
+        find_compile_db(project).unwrap().as_path(),
+        env_dir.join("compile_commands.raw.json")
+    );
 }

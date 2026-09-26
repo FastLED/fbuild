@@ -422,7 +422,7 @@ fn phase_medians(trials: &[BTreeMap<String, f64>]) -> BTreeMap<String, f64> {
         .collect()
 }
 
-/// Locate the compile DB fbuild wrote for env `uno`.
+/// Locate the compile DB fbuild wrote for env `uno`, release profile.
 ///
 /// Prefers `compile_commands.raw.json`, the real toolchain invocations
 /// (FastLED/fbuild#1467). `compile_commands.json` is rewritten for clangd
@@ -443,7 +443,11 @@ fn find_compile_db(project_dir: &Path) -> Option<NormalizedPath> {
         subdirs.sort();
         subdirs.iter().find_map(|sub| search(sub, name))
     }
-    let env_root = fbuild_paths::get_project_build_root(project_dir).join("uno");
+    // The timed builds use `--release`; `uno/quick` may also exist and must
+    // not win the sorted search.
+    let env_root = fbuild_paths::get_project_build_root(project_dir)
+        .join("uno")
+        .join("release");
     ["compile_commands.raw.json", "compile_commands.json"]
         .into_iter()
         .find_map(|name| search(&env_root, name))
