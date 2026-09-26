@@ -7,8 +7,25 @@ use fbuild_core::Result;
 use super::types::CompileDatabase;
 
 impl CompileDatabase {
+    /// File holding the real (untranslated) toolchain invocations, written
+    /// next to the clangd-oriented `compile_commands.json` in the build dir
+    /// (FastLED/fbuild#1467). `compile_commands.json` is rewritten for
+    /// clangd (`clang++ --target=...`, GCC-only flags such as `-flto`
+    /// dropped), so it cannot be used to compare flags or replay a build.
+    pub const RAW_FILE_NAME: &'static str = "compile_commands.raw.json";
+
     /// Write `compile_commands.json` to the given directory.
     pub fn write(&self, dir: &Path) -> Result<PathBuf> {
+        self.write_named(dir, "compile_commands.json")
+    }
+
+    /// Write this database as [`Self::RAW_FILE_NAME`] in `dir`. Callers pass
+    /// the database *before* clang translation.
+    pub fn write_raw(&self, dir: &Path) -> Result<PathBuf> {
+        self.write_named(dir, Self::RAW_FILE_NAME)
+    }
+
+    fn write_named(&self, dir: &Path, name: &str) -> Result<PathBuf> {
         std::fs::create_dir_all(dir).map_err(|e| {
             fbuild_core::FbuildError::BuildFailed(format!(
                 "failed to create directory {}: {}",
@@ -17,7 +34,7 @@ impl CompileDatabase {
             ))
         })?;
 
-        let path = dir.join("compile_commands.json");
+        let path = dir.join(name);
         let json = serde_json::to_string_pretty(&self.entries).map_err(|e| {
             fbuild_core::FbuildError::BuildFailed(format!(
                 "failed to serialize compile database: {}",

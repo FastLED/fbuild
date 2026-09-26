@@ -381,3 +381,25 @@ fn svg_shows_raw_floor_and_overhead() {
     let html = render_html(&sample_metadata(), &sample_results());
     assert!(html.contains("fbuild cold phase breakdown"));
 }
+
+/// FastLED/fbuild#1467: the raw-compiler baseline must replay the real
+/// toolchain commands, not the clangd-flavored database.
+#[test]
+fn find_compile_db_prefers_the_raw_toolchain_database() {
+    let tmp = tempfile::tempdir().unwrap();
+    let project = tmp.path();
+    let env_dir = fbuild_paths::get_project_build_root(project).join("uno/release");
+    fs::create_dir_all(&env_dir).unwrap();
+    fs::write(env_dir.join("compile_commands.json"), "[]").unwrap();
+    assert_eq!(
+        find_compile_db(project).unwrap().file_name().unwrap(),
+        "compile_commands.json",
+        "older fbuild builds only wrote the clangd database"
+    );
+
+    fs::write(env_dir.join("compile_commands.raw.json"), "[]").unwrap();
+    assert_eq!(
+        find_compile_db(project).unwrap().file_name().unwrap(),
+        "compile_commands.raw.json"
+    );
+}

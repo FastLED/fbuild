@@ -28,8 +28,9 @@ red palette as the zccache and soldr benchmark graphics.
 FastLED/fbuild#1465. Besides the three tool timings, each run records where
 fbuild's cold build spends its time:
 
-- **Raw-compiler floor (`raw_baseline_ms`)** — fbuild's `compile_commands.json`
-  replayed directly, in parallel (one job per `nproc` core), with no fbuild,
+- **Raw-compiler floor (`raw_baseline_ms`)** — fbuild's
+  `compile_commands.raw.json` (the real `avr-gcc`/`avr-g++` invocations,
+  FastLED/fbuild#1467) replayed directly, in parallel (one job per `nproc` core), with no fbuild,
   daemon, or zccache in the loop. This is the fastest the same compile set can
   run on the runner. It covers compilation only; the link is not replayed.
 - **Per-phase fbuild timings (`cold_phases_ms`)** — the harness sets

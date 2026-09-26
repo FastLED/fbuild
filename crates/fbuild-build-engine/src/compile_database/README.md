@@ -7,7 +7,7 @@ GCC response files (`@file`).
 ## Modules
 
 - **`types.rs`** -- `CompileEntry`, `CompileDatabase` struct, `TargetArchitecture` enum.
-- **`database.rs`** -- File IO (`write`, `write_and_copy`, `expected_output_path`) and `is_library_project` detection.
+- **`database.rs`** -- File IO (`write`, `write_raw`, `write_and_copy`, `expected_output_path`) and `is_library_project` detection. `write_raw` writes `compile_commands.raw.json`, the untranslated toolchain invocations, next to the clangd database in the build dir (FastLED/fbuild#1467).
 - **`cache_wrapper.rs`** -- `strip_cache_wrapper`: strips sccache/zccache/ccache wrappers from arg lists.
 - **`clang.rs`** -- GCC-to-clang flag translation and IWYU (include-what-you-use) preparation.
 - **`generate.rs`** -- `generate_entries`: builds entries from compiler flags and a list of sources.
