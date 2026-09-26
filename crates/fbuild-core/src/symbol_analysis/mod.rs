@@ -22,6 +22,7 @@
 pub mod callgraph;
 pub mod cref;
 pub mod graph;
+pub mod markers;
 
 use std::collections::BTreeMap;
 
@@ -32,6 +33,7 @@ pub use graph::{
     BackrefGraph, GraphConfig, GraphDepth, GraphEdge, GraphNode, NodeKind, TuIndex,
     sanitize_filename, sanitize_id,
 };
+pub use markers::{parse_linker_script_symbols, strip_linker_markers, strip_unsized_symbols};
 
 use crate::MemoryRegion;
 
@@ -133,6 +135,17 @@ pub struct FineGrainedSymbolMap {
     pub map_path: Option<String>,
     pub total_flash: u64,
     pub total_ram: u64,
+    /// Physical firmware-image bytes (FastLED/fbuild#1456): the sum of
+    /// `sh_size` over ELF sections that are allocated (`SHF_ALLOC`) and
+    /// carry file contents (not `SHT_NOBITS`), i.e. every byte that is
+    /// programmed into flash, including initialised RAM data loaded from
+    /// flash. Read from section headers, so it does not depend on `nm`,
+    /// the map, or symbol attribution. Prefer it over `total_flash` for
+    /// cross-machine size gates: `total_flash` is the sum of attributed
+    /// symbol rows and is a diagnostic breakdown, not the image size.
+    /// `None` when the ELF section headers could not be read.
+    #[serde(default)]
+    pub image_flash: Option<u64>,
     pub symbols: Vec<FineGrainedSymbol>,
     /// Per-`(archive, object, output_section)` byte totals from the map.
     /// Empty when no map file was supplied. Complements `symbols` by
@@ -832,6 +845,7 @@ pub fn build_fine_grained_map_with_synth(
         map_path,
         total_flash,
         total_ram,
+        image_flash: None,
         symbols,
         sections,
     }

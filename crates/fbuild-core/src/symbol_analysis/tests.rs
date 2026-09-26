@@ -511,6 +511,7 @@ fn retain_loaded_symbols_drops_boundary_markers() {
         map_path: None,
         total_flash: 0,
         total_ram: 0,
+        image_flash: None,
         symbols,
         sections: Vec::new(),
     };
@@ -692,6 +693,7 @@ fn retain_loaded_symbols_no_op_when_regions_empty() {
         map_path: None,
         total_flash: 0x40,
         total_ram: 0x80,
+        image_flash: None,
         symbols: vec![
             sample_symbol(0x00026100, 0x40, MemoryRegion::Flash, "real_text"),
             sample_symbol(0x20006000, 0x80, MemoryRegion::Ram, "real_bss"),
@@ -719,6 +721,7 @@ fn find_symbol_dispatches_correctly() {
         map_path: None,
         total_flash: 175,
         total_ram: 0,
+        image_flash: None,
         symbols: vec![foo, foo_bar, other],
         sections: Vec::new(),
     };
@@ -794,4 +797,100 @@ fn called_by_roundtrips_via_serde_with_default() {
     let parsed: FineGrainedSymbol = serde_json::from_value(without).unwrap();
     assert!(parsed.called_by.is_empty());
     assert!(parsed.references_to.is_empty());
+}
+
+// ---- FastLED/fbuild#1456: linker-script markers must not own bytes ----
+
+/// Map excerpt modelled on the ESP32-S3 `.flash.text` start: the
+/// script label `_stext` sits on the same address as the first live
+/// `.literal.*` input section of `main.cpp.o`.
+const MARKER_MAP: &str = "\
+Linker script and memory map
+
+.flash.text     0x42000020      0x100
+                0x42000020                        _stext = .
+                0x42000020                        _text_start = ABSOLUTE (.)
+                0x60000000                        PROVIDE (UART0 = 0x60000000)
+                0x42000020                        . = ALIGN (0x4)
+ .literal._ZN2fl3fooEv
+                0x42000020       0x40 src/main.cpp.o
+ .literal._ZN2fl3barEv
+                0x42000060       0x30 src/main.cpp.o
+ .text._ZN2fl3bazEv
+                0x42000090       0x70 src/main.cpp.o
+";
+
+fn marker_nm_rows(with_marker: bool) -> Vec<(u64, u64, char, String)> {
+    let mut rows = vec![(0x42000090u64, 0x70u64, 'T', "_ZN2fl3bazEv".to_string())];
+    if with_marker {
+        // Host binutils `nm --size-sort` synthesises the gap to the
+        // next sized symbol as `_stext`'s size.
+        rows.push((0x42000020, 0x70, 'T', "_stext".to_string()));
+    }
+    rows
+}
+
+fn build_marker_map(nm: Vec<(u64, u64, char, String)>) -> FineGrainedSymbolMap {
+    let demangled = nm.iter().map(|r| r.3.clone()).collect();
+    build_fine_grained_map(
+        "fw.elf".into(),
+        Some("fw.map".into()),
+        nm,
+        demangled,
+        parse_linker_map(MARKER_MAP),
+    )
+}
+
+#[test]
+fn parse_linker_script_symbols_collects_assignments_only() {
+    let syms = parse_linker_script_symbols(MARKER_MAP);
+    let got: Vec<&str> = syms.iter().map(String::as_str).collect();
+    assert_eq!(got, vec!["UART0", "_stext", "_text_start"]);
+}
+
+#[test]
+fn sized_linker_marker_inflates_totals_without_stripping() {
+    // RED evidence for #1456: fed straight into the builder, the marker
+    // is credited 0x70 B and masks both `.literal.*` owners.
+    let map = build_marker_map(marker_nm_rows(true));
+    assert!(map.symbols.iter().any(|s| s.mangled == "_stext"));
+    assert!(!map.symbols.iter().any(|s| s.source == "map-derived"));
+}
+
+#[test]
+fn stripping_linker_markers_restores_literal_owners() {
+    let markers = parse_linker_script_symbols(MARKER_MAP);
+    let map = build_marker_map(strip_linker_markers(marker_nm_rows(true), &markers));
+    assert!(!map.symbols.iter().any(|s| s.mangled == "_stext"));
+    let synth: Vec<&str> = map
+        .symbols
+        .iter()
+        .filter(|s| s.source == "map-derived")
+        .map(|s| s.mangled.as_str())
+        .collect();
+    assert_eq!(synth, vec!["_ZN2fl3fooEv", "_ZN2fl3barEv"]);
+    assert_eq!(map.total_flash, 0x40 + 0x30 + 0x70);
+}
+
+#[test]
+fn paired_fixture_totals_agree_with_and_without_sized_marker() {
+    let markers = parse_linker_script_symbols(MARKER_MAP);
+    let with = build_marker_map(strip_linker_markers(marker_nm_rows(true), &markers));
+    let without = build_marker_map(strip_linker_markers(marker_nm_rows(false), &markers));
+    assert_eq!(with.total_flash, without.total_flash);
+    assert_eq!(with.symbols.len(), without.symbols.len());
+}
+
+#[test]
+fn strip_unsized_symbols_drops_nm_synthesised_sizes() {
+    // Host binutils sized `_WindowOverflow4` (st_size 0 in the ELF);
+    // the cross `nm` did not. After stripping both agree.
+    let host = vec![
+        (0x40374000u64, 0x40u64, 'T', "_WindowOverflow4".to_string()),
+        (0x40374100, 0x20, 'T', "real_fn".to_string()),
+    ];
+    let cross = vec![(0x40374100u64, 0x20u64, 'T', "real_fn".to_string())];
+    let zero_sized: std::collections::BTreeSet<(u64, String)> =
+        [(0x40374000u64, "_WindowOverflow4".to_string())].into();
+    assert_eq!(strip_unsized_symbols(host, &zero_sized), cross);
 }

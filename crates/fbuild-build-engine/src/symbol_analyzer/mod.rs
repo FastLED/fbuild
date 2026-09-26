@@ -15,7 +15,8 @@ use std::collections::BTreeMap;
 use fbuild_core::subprocess::run_command_with_stdin;
 use fbuild_core::symbol_analysis::{
     FineGrainedSymbolMap, LoadedRegion, SymbolReference, build_fine_grained_map_with_synth,
-    collect_map_derived_owners, parse_cref_table, parse_linker_map, parse_nm_output,
+    collect_map_derived_owners, parse_cref_table, parse_linker_map, parse_linker_script_symbols,
+    parse_nm_output, strip_linker_markers, strip_unsized_symbols,
 };
 use fbuild_core::{FbuildError, Result};
 
@@ -113,6 +114,91 @@ pub fn read_pt_load_regions(elf_path: &Path) -> Result<Vec<LoadedRegion>> {
         }
     }
     Ok(regions)
+}
+
+/// Sum the bytes the firmware image actually carries (FastLED/fbuild#1456):
+/// `sh_size` of every section that is allocated (`SHF_ALLOC`) and has
+/// file contents (not `SHT_NOBITS`). Debug info, symbol tables and
+/// `.bss`-style sections are excluded. Unlike the attributed-symbol
+/// `total_flash`, this comes straight from section headers, so it is
+/// independent of which `nm` ran and how the map was attributed.
+pub fn read_image_flash_bytes(elf_path: &Path) -> Result<u64> {
+    use object::read::elf::{ElfFile32, ElfFile64, FileHeader, SectionHeader};
+    use object::{Endianness, FileKind};
+
+    fn sum<Elf: FileHeader<Endian = Endianness>>(
+        elf: &object::read::elf::ElfFile<'_, Elf>,
+    ) -> Result<u64> {
+        let endian = elf
+            .elf_header()
+            .endian()
+            .map_err(|e| FbuildError::BuildFailed(format!("ELF endian probe failed: {e}")))?;
+        let mut total = 0u64;
+        for sh in elf.elf_section_table().iter() {
+            let flags: u64 = sh.sh_flags(endian).into();
+            if flags & u64::from(object::elf::SHF_ALLOC) == 0
+                || sh.sh_type(endian) == object::elf::SHT_NOBITS
+            {
+                continue;
+            }
+            total = total.saturating_add(sh.sh_size(endian).into());
+        }
+        Ok(total)
+    }
+
+    let bytes = std::fs::read(elf_path).map_err(|e| {
+        FbuildError::BuildFailed(format!(
+            "could not read ELF at {} for image-size probe: {e}",
+            elf_path.display()
+        ))
+    })?;
+    let kind = FileKind::parse(&bytes[..]).map_err(|e| {
+        FbuildError::BuildFailed(format!(
+            "could not identify file kind for {}: {e}",
+            elf_path.display()
+        ))
+    })?;
+    match kind {
+        FileKind::Elf32 => sum(&ElfFile32::<Endianness>::parse(&bytes[..])
+            .map_err(|e| FbuildError::BuildFailed(format!("ELF32 parse failed: {e}")))?),
+        FileKind::Elf64 => sum(&ElfFile64::<Endianness>::parse(&bytes[..])
+            .map_err(|e| FbuildError::BuildFailed(format!("ELF64 parse failed: {e}")))?),
+        other => Err(FbuildError::BuildFailed(format!(
+            "expected ELF, got {other:?} at {}",
+            elf_path.display()
+        ))),
+    }
+}
+
+/// Collect `(address, name)` of every ELF symbol-table entry with
+/// `st_size == 0` that has no sized entry under the same address and
+/// name (FastLED/fbuild#1456). Feeds
+/// [`fbuild_core::symbol_analysis::strip_unsized_symbols`] so sizes
+/// that `nm` synthesised for labels are not credited as code.
+pub fn read_unsized_symbols(elf_path: &Path) -> Result<std::collections::BTreeSet<(u64, String)>> {
+    use object::{Object, ObjectSymbol};
+
+    let bytes = std::fs::read(elf_path).map_err(|e| {
+        FbuildError::BuildFailed(format!(
+            "could not read ELF at {} for symbol-size probe: {e}",
+            elf_path.display()
+        ))
+    })?;
+    let file = object::File::parse(&bytes[..]).map_err(|e| {
+        FbuildError::BuildFailed(format!("ELF parse failed for {}: {e}", elf_path.display()))
+    })?;
+    let mut zero_sized = std::collections::BTreeSet::new();
+    let mut sized = std::collections::BTreeSet::new();
+    for sym in file.symbols() {
+        let Ok(name) = sym.name() else { continue };
+        let key = (sym.address(), name.to_string());
+        if sym.size() == 0 {
+            zero_sized.insert(key);
+        } else {
+            sized.insert(key);
+        }
+    }
+    Ok(zero_sized.difference(&sized).cloned().collect())
 }
 
 /// Auto-detect the cross-toolchain prefix from the directory containing
@@ -243,7 +329,29 @@ pub async fn analyze_elf(cfg: AnalyzeConfig<'_>) -> Result<FineGrainedSymbolMap>
         )));
     }
 
-    let nm_rows = parse_nm_output(&result.stdout);
+    let map_text = cfg.map_path.map(|p| (p, std::fs::read_to_string(p)));
+
+    // #1456: drop linker-script labels (`_stext`, ...) before anything
+    // else sees them. Some `nm` builds synthesise a size for them from
+    // the gap to the next symbol, which credits real code to the label
+    // and masks the map-derived owners behind it.
+    let markers = match &map_text {
+        Some((_, Ok(text))) => parse_linker_script_symbols(text),
+        _ => Default::default(),
+    };
+    let nm_rows = strip_linker_markers(parse_nm_output(&result.stdout), &markers);
+    // Likewise drop every symbol the ELF itself records as zero-sized
+    // (assembly labels): a size on its nm row is nm-version dependent.
+    let nm_rows = match read_unsized_symbols(cfg.elf_path) {
+        Ok(zero_sized) => strip_unsized_symbols(nm_rows, &zero_sized),
+        Err(e) => {
+            tracing::warn!(
+                "symbol-size probe failed for {} ({e}); nm-synthesised sizes kept",
+                cfg.elf_path.display()
+            );
+            nm_rows
+        }
+    };
     let mangled: Vec<String> = nm_rows.iter().map(|r| r.3.clone()).collect();
 
     let demangled = if let Some(cppfilt) = cfg.cppfilt_path {
@@ -258,9 +366,9 @@ pub async fn analyze_elf(cfg: AnalyzeConfig<'_>) -> Result<FineGrainedSymbolMap>
         mangled.clone()
     };
 
-    let (ranges, cref_map) = if let Some(map_path) = cfg.map_path {
-        match std::fs::read_to_string(map_path) {
-            Ok(text) => (parse_linker_map(&text), parse_cref_table(&text)),
+    let (ranges, cref_map) = if let Some((map_path, read)) = &map_text {
+        match read {
+            Ok(text) => (parse_linker_map(text), parse_cref_table(text)),
             Err(e) => {
                 tracing::warn!(
                     "could not read map file {}: {e}; archive attribution and \
@@ -331,6 +439,14 @@ pub async fn analyze_elf(cfg: AnalyzeConfig<'_>) -> Result<FineGrainedSymbolMap>
                 cfg.elf_path.display()
             );
         }
+    }
+
+    match read_image_flash_bytes(cfg.elf_path) {
+        Ok(bytes) => map.image_flash = Some(bytes),
+        Err(e) => tracing::warn!(
+            "image-size probe failed for {} ({e}); image_flash will be null",
+            cfg.elf_path.display()
+        ),
     }
 
     // #471: per-symbol forward edges from `objdump -d`. When the

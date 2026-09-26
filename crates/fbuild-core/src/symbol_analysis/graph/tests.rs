@@ -44,6 +44,7 @@ fn map(symbols: Vec<FineGrainedSymbol>) -> FineGrainedSymbolMap {
         map_path: None,
         total_flash: symbols.iter().map(|s| s.size).sum(),
         total_ram: 0,
+        image_flash: None,
         symbols,
         sections: Vec::<SectionBytes>::new(),
     }

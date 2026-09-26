@@ -105,6 +105,7 @@ fn format_markdown_report_emits_tables() {
         map_path: Some("fw.map".into()),
         total_flash: 100,
         total_ram: 50,
+        image_flash: None,
         symbols: vec![
             FineGrainedSymbol {
                 mangled: "_Z3fooi".into(),
@@ -161,6 +162,7 @@ fn format_markdown_report_escapes_pipes_in_symbol_names() {
         map_path: None,
         total_flash: 10,
         total_ram: 0,
+        image_flash: None,
         symbols: vec![FineGrainedSymbol {
             mangled: "_ZorRKiS_".into(),
             demangled: "operator|(int const&, int const&)".into(),
@@ -195,6 +197,7 @@ fn format_markdown_report_renders_referenced_by_column() {
         map_path: None,
         total_flash: 11309,
         total_ram: 0,
+        image_flash: None,
         symbols: vec![FineGrainedSymbol {
             mangled: "_vfprintf_r".into(),
             demangled: "_vfprintf_r".into(),
@@ -260,6 +263,7 @@ fn markdown_report_with_graphs_embeds_dot_blocks_for_top_symbols() {
         map_path: None,
         total_flash: 11_309,
         total_ram: 0,
+        image_flash: None,
         symbols: vec![FineGrainedSymbol {
             mangled: "_vfprintf_r".into(),
             demangled: "_vfprintf_r".into(),
@@ -403,6 +407,7 @@ fn markdown_report_emits_dual_ranked_callees_subtable() {
         map_path: None,
         total_flash: 12_860,
         total_ram: 0,
+        image_flash: None,
         symbols: all,
         sections: Vec::<SectionBytes>::new(),
     };
@@ -445,6 +450,7 @@ fn markdown_report_legacy_path_skips_graph_blocks() {
         map_path: None,
         total_flash: 10,
         total_ram: 0,
+        image_flash: None,
         symbols: vec![FineGrainedSymbol {
             mangled: "main".into(),
             demangled: "main".into(),
@@ -478,6 +484,7 @@ fn sidecar_dot_files_written_for_symbols_above_min_bytes() {
         map_path: None,
         total_flash: 1_200,
         total_ram: 0,
+        image_flash: None,
         symbols: vec![
             FineGrainedSymbol {
                 mangled: "big".into(),
@@ -549,6 +556,7 @@ fn sidecar_disabled_writes_nothing() {
         map_path: None,
         total_flash: 1_000,
         total_ram: 0,
+        image_flash: None,
         symbols: vec![FineGrainedSymbol {
             mangled: "x".into(),
             demangled: "x".into(),
@@ -589,6 +597,7 @@ fn format_markdown_report_referenced_by_empty_renders_dash() {
         map_path: None,
         total_flash: 10,
         total_ram: 0,
+        image_flash: None,
         symbols: vec![FineGrainedSymbol {
             mangled: "main".into(),
             demangled: "main".into(),
@@ -612,4 +621,78 @@ fn format_markdown_report_referenced_by_empty_renders_dash() {
         md.contains("| 10 | (none) | main.cpp.o | .flash.text | nm | - | `main` |"),
         "expected dash in referenced_by cell, got:\n{md}"
     );
+}
+
+// ---- FastLED/fbuild#1456: image_flash from section headers ----
+
+fn write_sectioned_elf(path: &Path) {
+    use object::write::Object;
+    use object::{Architecture, BinaryFormat, Endianness, SectionKind};
+    let mut obj = Object::new(BinaryFormat::Elf, Architecture::Arm, Endianness::Little);
+    let text = obj.add_section(Vec::new(), b".flash.text".to_vec(), SectionKind::Text);
+    obj.append_section_data(text, &[0u8; 0x100], 4);
+    let rodata = obj.add_section(
+        Vec::new(),
+        b".flash.rodata".to_vec(),
+        SectionKind::ReadOnlyData,
+    );
+    obj.append_section_data(rodata, &[0u8; 0x30], 4);
+    let data = obj.add_section(Vec::new(), b".dram0.data".to_vec(), SectionKind::Data);
+    obj.append_section_data(data, &[0u8; 0x10], 4);
+    // NOBITS: occupies RAM at run time but no image bytes.
+    let bss = obj.add_section(
+        Vec::new(),
+        b".dram0.bss".to_vec(),
+        SectionKind::UninitializedData,
+    );
+    obj.append_section_bss(bss, 0x400, 4);
+    // Non-allocated metadata never reaches the image.
+    let dbg = obj.add_section(Vec::new(), b".debug_info".to_vec(), SectionKind::Debug);
+    obj.append_section_data(dbg, &[0u8; 0x80], 1);
+    std::fs::write(path, obj.write().unwrap()).unwrap();
+}
+
+#[test]
+fn read_image_flash_bytes_sums_allocated_progbits_only() {
+    let tmp = tempfile::tempdir().unwrap();
+    let elf = tmp.path().join("fw.elf");
+    write_sectioned_elf(&elf);
+    assert_eq!(read_image_flash_bytes(&elf).unwrap(), 0x100 + 0x30 + 0x10);
+}
+
+#[test]
+fn read_image_flash_bytes_rejects_non_elf() {
+    let tmp = tempfile::tempdir().unwrap();
+    let bogus = tmp.path().join("fw.elf");
+    std::fs::write(&bogus, b"not an elf").unwrap();
+    assert!(read_image_flash_bytes(&bogus).is_err());
+}
+
+#[test]
+fn read_unsized_symbols_lists_zero_size_entries_only() {
+    use object::write::{Object, Symbol, SymbolSection};
+    use object::{
+        Architecture, BinaryFormat, Endianness, SectionKind, SymbolFlags, SymbolKind, SymbolScope,
+    };
+    let mut obj = Object::new(BinaryFormat::Elf, Architecture::Arm, Endianness::Little);
+    let text = obj.add_section(Vec::new(), b".text".to_vec(), SectionKind::Text);
+    obj.append_section_data(text, &[0u8; 0x40], 4);
+    for (name, value, size) in [("label", 0u64, 0u64), ("func", 0x10, 0x30)] {
+        obj.add_symbol(Symbol {
+            name: name.as_bytes().to_vec(),
+            value,
+            size,
+            kind: SymbolKind::Text,
+            scope: SymbolScope::Linkage,
+            weak: false,
+            section: SymbolSection::Section(text),
+            flags: SymbolFlags::None,
+        });
+    }
+    let tmp = tempfile::tempdir().unwrap();
+    let elf = tmp.path().join("fw.elf");
+    std::fs::write(&elf, obj.write().unwrap()).unwrap();
+    let zero_sized = read_unsized_symbols(&elf).unwrap();
+    assert!(zero_sized.contains(&(0, "label".to_string())));
+    assert!(!zero_sized.iter().any(|(_, n)| n == "func"));
 }

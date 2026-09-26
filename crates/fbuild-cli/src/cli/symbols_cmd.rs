@@ -95,10 +95,13 @@ pub async fn run_symbols(
     if let Some(json_path) = json_out {
         write_json(&report, &json_path).await?;
         output::result(format!(
-            "Wrote {} symbols to {} (flash={} B, ram={} B)",
+            "Wrote {} symbols to {} (flash={} B attributed, image_flash={} B, ram={} B)",
             report.symbols.len(),
             json_path,
             report.total_flash,
+            report
+                .image_flash
+                .map_or_else(|| "?".to_string(), |b| b.to_string()),
             report.total_ram
         ));
         wrote_anything = true;
@@ -155,11 +158,14 @@ pub async fn run_symbols(
             )?
         };
         output::result(format!(
-            "Wrote {} symbols to {} and {} (flash={} B, ram={} B); {} sidecar graphs",
+            "Wrote {} symbols to {} and {} (flash={} B attributed, image_flash={} B, ram={} B); {} sidecar graphs",
             report.symbols.len(),
             json_target.display(),
             md_target.display(),
             report.total_flash,
+            report
+                .image_flash
+                .map_or_else(|| "?".to_string(), |b| b.to_string()),
             report.total_ram,
             sidecar_count,
         ));
