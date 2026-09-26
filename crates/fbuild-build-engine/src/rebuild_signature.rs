@@ -297,7 +297,7 @@ fn version_slot(path: &Path) -> VersionSlot {
 }
 
 /// `<compiler> -dumpversion`, probed at most once per compiler (see
-/// [`COMPILER_VERSIONS`]). Empty when the probe fails.
+/// `COMPILER_VERSIONS`). Empty when the probe fails.
 pub async fn cached_compiler_version(path: &Path) -> String {
     version_slot(path)
         .get_or_init(|| probe_compiler_version(path))
