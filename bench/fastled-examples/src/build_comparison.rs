@@ -11,7 +11,7 @@ use std::env;
 use std::ffi::{OsStr, OsString};
 use std::fs::{self, File};
 use std::io::{self, Write};
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::process::{Command, Output};
 use std::sync::Mutex;
 use std::sync::atomic::{AtomicUsize, Ordering};
@@ -423,11 +423,11 @@ fn phase_medians(trials: &[BTreeMap<String, f64>]) -> BTreeMap<String, f64> {
 }
 
 /// Locate the compile DB fbuild wrote for env `uno`.
-fn find_compile_db(project_dir: &Path) -> Option<PathBuf> {
-    fn search(dir: &Path) -> Option<PathBuf> {
+fn find_compile_db(project_dir: &Path) -> Option<NormalizedPath> {
+    fn search(dir: &Path) -> Option<NormalizedPath> {
         let candidate = dir.join("compile_commands.json");
         if candidate.is_file() {
-            return Some(candidate);
+            return Some(NormalizedPath::from(candidate));
         }
         let mut subdirs = fs::read_dir(dir)
             .ok()?
@@ -438,9 +438,9 @@ fn find_compile_db(project_dir: &Path) -> Option<PathBuf> {
         subdirs.sort();
         subdirs.iter().find_map(|sub| search(sub))
     }
-    search(&project_dir.join(".fbuild/build/uno")).or_else(|| {
+    search(&fbuild_paths::get_project_build_root(project_dir).join("uno")).or_else(|| {
         let fallback = project_dir.join("compile_commands.json");
-        fallback.is_file().then_some(fallback)
+        fallback.is_file().then(|| NormalizedPath::from(fallback))
     })
 }
 
@@ -575,7 +575,7 @@ fn rewrite_compile_argv(argv: &[String], output: &Path) -> Vec<String> {
 
 /// Replay every compile DB entry with the bare compiler across `jobs` threads.
 fn raw_baseline_ms(entries: &[CompileEntry], jobs: usize) -> AppResult<f64> {
-    let temp = tempfile::TempDir::new()?;
+    let temp = tempfile::TempDir::new_in(fbuild_paths::temp_subdir("fastled-examples-bench"))?;
     let next = AtomicUsize::new(0);
     let failure: Mutex<Option<String>> = Mutex::new(None);
     let started = Instant::now();
