@@ -280,11 +280,14 @@ pub trait Linker: Send + Sync {
             .link(sketch_objects, core_objects, output_dir, extra)
             .await?;
 
-        // Convert
-        let firmware_path = self.convert_firmware(&elf_path, output_dir).await?;
-
-        // Size
-        let size_info = self.report_size(&elf_path).await.ok();
+        // Convert and size. Both only read the ELF, so they run together
+        // instead of back to back on the critical path (FastLED/fbuild#1468).
+        let (firmware_path, size_info) = tokio::join!(
+            self.convert_firmware(&elf_path, output_dir),
+            self.report_size(&elf_path)
+        );
+        let firmware_path = firmware_path?;
+        let size_info = size_info.ok();
         if !extra.bloat_analysis {
             enforce_size_limits(size_info.as_ref(), self.ram_overflow_is_fatal())?;
         }

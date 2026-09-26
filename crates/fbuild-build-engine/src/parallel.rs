@@ -58,6 +58,31 @@ pub async fn compile_sources_parallel(
     jobs: usize,
     build_log: Option<&std::sync::Mutex<BuildLog>>,
 ) -> Result<ParallelCompileResult> {
+    let permits = jobs.min(sources.len()).max(1);
+    compile_sources_parallel_shared(
+        compiler,
+        sources,
+        build_dir,
+        extra_flags,
+        &Arc::new(Semaphore::new(permits)),
+        build_log,
+    )
+    .await
+}
+
+/// [`compile_sources_parallel`] drawing permits from a caller-owned
+/// semaphore, so several compile phases (framework core, variant, sketch,
+/// libraries) can run at the same time without exceeding one job budget
+/// (FastLED/fbuild#1468). The semaphore is FIFO, so sources submitted
+/// earlier start first.
+pub async fn compile_sources_parallel_shared(
+    compiler: &(dyn Compiler + Send + Sync),
+    sources: &[PathBuf],
+    build_dir: &Path,
+    extra_flags: &LanguageExtraFlags,
+    semaphore: &Arc<Semaphore>,
+    build_log: Option<&std::sync::Mutex<BuildLog>>,
+) -> Result<ParallelCompileResult> {
     // Build work list: (source, object) pairs needing rebuild
     let mut work: Vec<(PathBuf, PathBuf)> = Vec::new();
     let mut objects: Vec<PathBuf> = Vec::new();
@@ -83,14 +108,12 @@ pub async fn compile_sources_parallel(
     }
 
     let total = work.len();
-    let parallelism = jobs.min(total).max(1);
     tracing::info!(
-        "compiling {} files with {} concurrent tasks",
+        "compiling {} files with up to {} concurrent tasks",
         total,
-        parallelism
+        semaphore.available_permits().min(total)
     );
 
-    let semaphore = Arc::new(Semaphore::new(parallelism));
     let compiled_count = Arc::new(std::sync::atomic::AtomicUsize::new(0));
     let mut warnings: Vec<String> = Vec::new();
     let mut first_error: Option<String> = None;
@@ -206,5 +229,191 @@ mod tests {
     fn test_effective_jobs_default() {
         let jobs = effective_jobs(None);
         assert!(jobs >= 2);
+    }
+
+    /// Records in-flight compiles and each compile's start/end instants.
+    struct TracingCompiler {
+        gcc: PathBuf,
+        in_flight: std::sync::atomic::AtomicUsize,
+        max_in_flight: std::sync::atomic::AtomicUsize,
+        spans: std::sync::Mutex<Vec<(PathBuf, std::time::Instant, std::time::Instant)>>,
+    }
+
+    #[async_trait::async_trait]
+    impl Compiler for TracingCompiler {
+        async fn compile_one(
+            &self,
+            _compiler_path: &Path,
+            source: &Path,
+            output: &Path,
+            _flags: &[String],
+            _extra_flags: &[String],
+        ) -> Result<crate::compiler::CompileResult> {
+            use std::sync::atomic::Ordering;
+            let started = std::time::Instant::now();
+            let now = self.in_flight.fetch_add(1, Ordering::SeqCst) + 1;
+            self.max_in_flight.fetch_max(now, Ordering::SeqCst);
+            // Decrements even if the task is aborted mid-sleep.
+            let _in_flight = InFlight(&self.in_flight);
+            let fail = source.to_string_lossy().contains("bad");
+            let delay = if fail { 5 } else { 40 };
+            tokio::time::sleep(std::time::Duration::from_millis(delay)).await;
+            if fail {
+                return Err(FbuildError::BuildFailed("synthetic failure".into()));
+            }
+            self.spans.lock().unwrap().push((
+                source.to_path_buf(),
+                started,
+                std::time::Instant::now(),
+            ));
+            Ok(crate::compiler::CompileResult {
+                success: true,
+                object_file: output.to_path_buf(),
+                stdout: String::new(),
+                stderr: String::new(),
+                exit_code: 0,
+            })
+        }
+
+        fn gcc_path(&self) -> &Path {
+            &self.gcc
+        }
+
+        fn gxx_path(&self) -> &Path {
+            &self.gcc
+        }
+
+        fn c_flags(&self) -> Vec<String> {
+            Vec::new()
+        }
+
+        fn cpp_flags(&self) -> Vec<String> {
+            Vec::new()
+        }
+
+        fn rebuild_signature(&self, source: &Path, _extra: &[String], _out: &Path) -> String {
+            source.to_string_lossy().into_owned()
+        }
+    }
+
+    struct InFlight<'a>(&'a std::sync::atomic::AtomicUsize);
+
+    impl Drop for InFlight<'_> {
+        fn drop(&mut self) {
+            self.0.fetch_sub(1, std::sync::atomic::Ordering::SeqCst);
+        }
+    }
+
+    /// FastLED/fbuild#1468: the pipeline runs compile phases concurrently
+    /// with borrowed state that `compile_sources_parallel_shared` extends to
+    /// `'static`. That is only sound if a failing call still returns only
+    /// after none of its tasks can run, so a failure must not leave compiles
+    /// in flight.
+    #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
+    async fn a_failing_compile_returns_only_after_its_tasks_stop() {
+        let tmp = tempfile::tempdir().unwrap();
+        let sources: Vec<PathBuf> = ["bad.c", "ok0.c", "ok1.c", "ok2.c"]
+            .iter()
+            .map(|name| {
+                let path = tmp.path().join(name);
+                std::fs::write(&path, "int x;\n").unwrap();
+                path
+            })
+            .collect();
+        let compiler = TracingCompiler {
+            gcc: PathBuf::from("/toolchain/bin/gcc"),
+            in_flight: Default::default(),
+            max_in_flight: Default::default(),
+            spans: Default::default(),
+        };
+        let slots = Arc::new(Semaphore::new(4));
+        let result = compile_sources_parallel_shared(
+            &compiler,
+            &sources,
+            &tmp.path().join("obj"),
+            &LanguageExtraFlags::default(),
+            &slots,
+            None,
+        )
+        .await;
+        assert!(result.is_err());
+        assert_eq!(
+            compiler.in_flight.load(std::sync::atomic::Ordering::SeqCst),
+            0,
+            "no compile may still be running once the call returns"
+        );
+        assert_eq!(slots.available_permits(), 4, "every permit is released");
+    }
+
+    /// FastLED/fbuild#1468: compile phases sharing one semaphore overlap
+    /// (the second phase fills permits the first phase's tail leaves idle)
+    /// without ever exceeding the shared job budget.
+    #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
+    async fn phases_sharing_a_semaphore_overlap_within_the_budget() {
+        let tmp = tempfile::tempdir().unwrap();
+        let sources = |phase: &str| -> Vec<PathBuf> {
+            (0..3)
+                .map(|i| {
+                    let path = tmp.path().join(format!("{phase}{i}.c"));
+                    std::fs::write(&path, "int x;\n").unwrap();
+                    path
+                })
+                .collect()
+        };
+        let (core, sketch) = (sources("core"), sources("sketch"));
+        let compiler = TracingCompiler {
+            gcc: PathBuf::from("/toolchain/bin/gcc"),
+            in_flight: Default::default(),
+            max_in_flight: Default::default(),
+            spans: Default::default(),
+        };
+        let slots = Arc::new(Semaphore::new(2));
+        let flags = LanguageExtraFlags::default();
+        let (core_build, sketch_build) = (tmp.path().join("core"), tmp.path().join("src"));
+
+        let (a, b) = tokio::join!(
+            compile_sources_parallel_shared(&compiler, &core, &core_build, &flags, &slots, None),
+            compile_sources_parallel_shared(
+                &compiler,
+                &sketch,
+                &sketch_build,
+                &flags,
+                &slots,
+                None
+            ),
+        );
+        assert_eq!(a.unwrap().objects.len(), 3);
+        assert_eq!(b.unwrap().objects.len(), 3);
+
+        assert_eq!(
+            compiler
+                .max_in_flight
+                .load(std::sync::atomic::Ordering::SeqCst),
+            2,
+            "the shared budget of 2 permits bounds both phases together"
+        );
+        let spans = compiler.spans.lock().unwrap();
+        let is_core = |path: &Path| {
+            path.file_name()
+                .unwrap()
+                .to_string_lossy()
+                .starts_with("core")
+        };
+        let last_core_end = spans
+            .iter()
+            .filter(|s| is_core(&s.0))
+            .map(|s| s.2)
+            .max()
+            .unwrap();
+        let first_sketch_start = spans
+            .iter()
+            .filter(|s| !is_core(&s.0))
+            .map(|s| s.1)
+            .min()
+            .unwrap();
+        assert!(
+            first_sketch_start < last_core_end,
+            "the sketch phase must start while core compiles are still running"
+        );
     }
 }
