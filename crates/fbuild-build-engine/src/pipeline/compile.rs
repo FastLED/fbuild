@@ -100,6 +100,9 @@ pub async fn compile_local_libraries(
 
 /// Generate `compile_commands.json` from core/variant and sketch sources.
 ///
+/// Also writes the untranslated toolchain commands to
+/// `compile_commands.raw.json` in `build_dir` (FastLED/fbuild#1467).
+///
 /// IDE-flavored: when `ino_preludes` is non-empty (i.e. the sketch had
 /// `.ino` tabs preprocessed into a generated `<stem>.ino.cpp`), the
 /// generated file's entry is swapped for one raw-`.ino` entry per tab so
@@ -147,13 +150,15 @@ pub fn generate_compile_db(
         src_build_dir,
         project_dir,
     ));
+    if !compile_db.has_entries() {
+        return Ok(None);
+    }
+    // FastLED/fbuild#1467: record the real toolchain invocations before the
+    // clangd rewrite drops GCC-only flags such as `-flto`.
+    compile_db.write_raw(build_dir)?;
     let compile_db = compile_db.translate_for_clang(arch);
     let compile_db = compile_db.swap_ino_entries_for_raw(ino_preludes);
-    if compile_db.has_entries() {
-        Ok(Some(compile_db.write_and_copy(build_dir, project_dir)?))
-    } else {
-        Ok(None)
-    }
+    Ok(Some(compile_db.write_and_copy(build_dir, project_dir)?))
 }
 
 /// Log the version of a GCC toolchain (`gcc -dumpversion`).
@@ -165,5 +170,89 @@ pub async fn log_toolchain_version(gcc_path: &Path, label: &str, build_log: &mut
     let version = crate::rebuild_signature::cached_compiler_version(gcc_path).await;
     if !version.is_empty() {
         crate::build_output::log_toolchain_version(build_log, label, &version);
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn arguments(db: &serde_json::Value, file_suffix: &str) -> Vec<String> {
+        let entry = db
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|entry| entry["file"].as_str().unwrap().ends_with(file_suffix))
+            .unwrap_or_else(|| panic!("no entry for {file_suffix}"));
+        entry["arguments"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|arg| arg.as_str().unwrap().to_string())
+            .collect()
+    }
+
+    /// FastLED/fbuild#1467: `compile_commands.json` is clangd-flavored
+    /// (`clang++ --target=avr`, no `-flto`). The real toolchain invocations
+    /// must also be recorded, in `compile_commands.raw.json`, so flags can
+    /// be compared and commands replayed.
+    #[test]
+    fn raw_compile_db_keeps_the_real_compiler_and_flags() {
+        let tmp = tempfile::tempdir().unwrap();
+        let project = tmp.path().join("project");
+        let build = project.join(".fbuild/build/uno/release");
+        let core_src = project.join("core/wiring.c");
+        let sketch_src = project.join("src/main.cpp");
+        std::fs::create_dir_all(core_src.parent().unwrap()).unwrap();
+        std::fs::create_dir_all(sketch_src.parent().unwrap()).unwrap();
+        std::fs::write(&core_src, "int x;\n").unwrap();
+        std::fs::write(&sketch_src, "int y;\n").unwrap();
+        let gcc = tmp.path().join("toolchain/bin/avr-gcc");
+        let gxx = tmp.path().join("toolchain/bin/avr-g++");
+        let c_flags = vec!["-Os".to_string(), "-flto".to_string()];
+        let cpp_flags = vec![
+            "-Os".to_string(),
+            "-flto".to_string(),
+            "-fno-exceptions".to_string(),
+        ];
+
+        generate_compile_db(
+            &gcc,
+            &gxx,
+            &c_flags,
+            &cpp_flags,
+            &[],
+            &LanguageExtraFlags::default(),
+            &LanguageExtraFlags::default(),
+            &[core_src],
+            &[sketch_src],
+            &[],
+            &build.join("core"),
+            &build.join("src"),
+            &build,
+            &project,
+            TargetArchitecture::Avr,
+        )
+        .unwrap()
+        .expect("database written");
+
+        let read = |path: PathBuf| -> serde_json::Value {
+            serde_json::from_str(&std::fs::read_to_string(path).unwrap()).unwrap()
+        };
+        let raw = read(build.join(CompileDatabase::RAW_FILE_NAME));
+        let raw_c = arguments(&raw, "wiring.c");
+        let raw_cpp = arguments(&raw, "main.cpp");
+        assert_eq!(raw_c[0], gcc.to_string_lossy());
+        assert_eq!(raw_cpp[0], gxx.to_string_lossy());
+        assert!(raw_c.contains(&"-flto".to_string()), "{raw_c:?}");
+        assert!(raw_cpp.contains(&"-flto".to_string()), "{raw_cpp:?}");
+
+        // The clangd-oriented database is unchanged: translated, no LTO.
+        let clangd = read(build.join("compile_commands.json"));
+        let clangd_cpp = arguments(&clangd, "main.cpp");
+        assert!(!clangd_cpp.contains(&"-flto".to_string()), "{clangd_cpp:?}");
+        // The raw database stays in the build dir; the project root keeps
+        // only the IDE database.
+        assert!(!project.join(CompileDatabase::RAW_FILE_NAME).exists());
     }
 }

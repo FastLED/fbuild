@@ -422,10 +422,15 @@ fn phase_medians(trials: &[BTreeMap<String, f64>]) -> BTreeMap<String, f64> {
         .collect()
 }
 
-/// Locate the compile DB fbuild wrote for env `uno`.
+/// Locate the compile DB fbuild wrote for env `uno`, release profile.
+///
+/// Prefers `compile_commands.raw.json`, the real toolchain invocations
+/// (FastLED/fbuild#1467). `compile_commands.json` is rewritten for clangd
+/// (`clang++ --target=avr`, no `-flto`) and cannot be replayed, so it is
+/// only a fallback for older fbuild builds.
 fn find_compile_db(project_dir: &Path) -> Option<NormalizedPath> {
-    fn search(dir: &Path) -> Option<NormalizedPath> {
-        let candidate = dir.join("compile_commands.json");
+    fn search(dir: &Path, name: &str) -> Option<NormalizedPath> {
+        let candidate = dir.join(name);
         if candidate.is_file() {
             return Some(NormalizedPath::from(candidate));
         }
@@ -436,12 +441,20 @@ fn find_compile_db(project_dir: &Path) -> Option<NormalizedPath> {
             .filter(|path| path.is_dir())
             .collect::<Vec<_>>();
         subdirs.sort();
-        subdirs.iter().find_map(|sub| search(sub))
+        subdirs.iter().find_map(|sub| search(sub, name))
     }
-    search(&fbuild_paths::get_project_build_root(project_dir).join("uno")).or_else(|| {
-        let fallback = project_dir.join("compile_commands.json");
-        fallback.is_file().then(|| NormalizedPath::from(fallback))
-    })
+    // The timed builds use `--release`; `uno/quick` may also exist and must
+    // not win the sorted search.
+    let env_root = fbuild_paths::get_project_build_root(project_dir)
+        .join("uno")
+        .join("release");
+    ["compile_commands.raw.json", "compile_commands.json"]
+        .into_iter()
+        .find_map(|name| search(&env_root, name))
+        .or_else(|| {
+            let fallback = project_dir.join("compile_commands.json");
+            fallback.is_file().then(|| NormalizedPath::from(fallback))
+        })
 }
 
 fn measure_raw_baseline(

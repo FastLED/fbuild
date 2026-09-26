@@ -77,6 +77,8 @@
 
 **Consequences**: Library developers building from their own repo keep their meson/cmake-generated `compile_commands.json`. Sketch projects get a clangd-compatible database automatically. The compile database is always available at `.fbuild/build/<env>/compile_commands.json` regardless.
 
+> Update (FastLED/fbuild#1467): `compile_commands.json` is rewritten for clangd (`clang++ --target=...`, GCC-only flags such as `-flto` dropped), so it misrepresents the real build. Every compile-DB generation also writes `.fbuild/build/<env>/compile_commands.raw.json` with the untranslated toolchain invocations, for comparing flags and replaying commands. It is never copied to the project root, so IDEs keep seeing only the clangd database.
+
 ## DD-009: Data-Driven Configuration over Hardcoded Values
 
 **Decision**: All external URLs, versions, package metadata, and hardware-specific mappings must live in data files (JSON registries, board JSONs, config assets), never as constants or literals in Rust/Python source code.
