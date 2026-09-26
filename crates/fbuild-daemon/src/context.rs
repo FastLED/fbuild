@@ -113,6 +113,17 @@ pub const STALE_LOCK_CHECK_INTERVAL: Duration = Duration::from_secs(60);
 
 use std::time::Duration;
 
+/// Path of the running binary, or an empty string if it cannot be resolved.
+///
+/// Reported on `/health` next to [`compute_binary_mtime`] so a CLI that
+/// decides to restart this daemon can name the exact image it compared
+/// against (FastLED/fbuild#1476).
+fn compute_binary_path() -> String {
+    fbuild_core::platform::executable::current_image()
+        .map(|p| p.display().to_string())
+        .unwrap_or_default()
+}
+
 /// Compute the modification time of the running binary (for stale daemon detection).
 /// Returns 0.0 if the mtime cannot be determined.
 fn compute_binary_mtime() -> f64 {
@@ -187,6 +198,10 @@ pub struct DaemonContext {
     pub shutdown_tx: tokio::sync::watch::Sender<bool>,
     /// Modification time of the daemon binary at startup (for stale detection).
     pub source_mtime: f64,
+    /// Path of the daemon binary at startup (FastLED/fbuild#1476 diagnostics).
+    pub source_exe: String,
+    /// Whether the running-process broker launched this daemon as a backend.
+    pub launched_by_broker: bool,
     /// Last time any request was processed (for idle timeout).
     pub last_activity: Arc<std::sync::Mutex<Instant>>,
     /// Working directory of the client that spawned this daemon.
@@ -240,6 +255,8 @@ impl DaemonContext {
             .unwrap_or_default()
             .as_secs_f64();
         let source_mtime = compute_binary_mtime();
+        let source_exe = compute_binary_path();
+        let launched_by_broker = crate::broker::backend::launched_by_broker();
         Self {
             started_at: Instant::now(),
             started_at_unix: now_unix,
@@ -262,6 +279,8 @@ impl DaemonContext {
             ),
             shutdown_tx,
             source_mtime,
+            source_exe,
+            launched_by_broker,
             last_activity: Arc::new(std::sync::Mutex::new(Instant::now())),
             spawner_cwd,
             broadcast_hub,

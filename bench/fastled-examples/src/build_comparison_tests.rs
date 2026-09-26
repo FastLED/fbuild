@@ -13,6 +13,7 @@ fn sample_results() -> Vec<ToolResult> {
             warm_trials_ms: vec![750.0, 800.0, 850.0],
             cold_phases_ms: BTreeMap::new(),
             cold_phase_trials: Vec::new(),
+            daemon_restarts: 0,
         },
         ToolResult {
             tool: "platformio".into(),
@@ -25,6 +26,7 @@ fn sample_results() -> Vec<ToolResult> {
             warm_trials_ms: vec![280.0, 300.0, 320.0],
             cold_phases_ms: BTreeMap::new(),
             cold_phase_trials: Vec::new(),
+            daemon_restarts: 0,
         },
         ToolResult {
             tool: "fbuild".into(),
@@ -37,6 +39,7 @@ fn sample_results() -> Vec<ToolResult> {
             warm_trials_ms: vec![38.0, 40.0, 42.0],
             cold_phases_ms: BTreeMap::from([("compile".to_string(), 400.0)]),
             cold_phase_trials: vec![BTreeMap::from([("compile".to_string(), 400.0)])],
+            daemon_restarts: 0,
         },
     ]
 }
@@ -411,5 +414,29 @@ fn find_compile_db_prefers_the_raw_toolchain_database() {
     assert_eq!(
         find_compile_db(project).unwrap().as_path(),
         env_dir.join("compile_commands.raw.json")
+    );
+}
+
+#[test]
+fn daemon_restarts_are_counted_only_in_the_fbuild_section() {
+    let log = "\
+$ pio run
+daemon binary updated, restarting... (not fbuild's)
+===== fbuild daemon preflight =====
+$ fbuild daemon restart
+daemon restarted
+$ fbuild build
+daemon binary updated, restarting... (sibling binary is 0.5s newer; ...)
+$ fbuild build
+daemon binary updated, restarting... (sibling binary is 0.5s newer; ...)
+";
+    assert_eq!(count_daemon_restarts(log), 2);
+}
+
+#[test]
+fn daemon_restarts_are_zero_without_an_fbuild_section() {
+    assert_eq!(
+        count_daemon_restarts("daemon binary updated, restarting..."),
+        0
     );
 }

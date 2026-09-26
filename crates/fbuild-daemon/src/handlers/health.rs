@@ -30,6 +30,8 @@ pub async fn health_check(State(ctx): State<Arc<DaemonContext>>) -> Json<HealthR
         version: env!("CARGO_PKG_VERSION").to_string(),
         pid: std::process::id(),
         source_mtime: ctx.source_mtime,
+        source_exe: ctx.source_exe.clone(),
+        launched_by_broker: ctx.launched_by_broker,
     })
 }
 
