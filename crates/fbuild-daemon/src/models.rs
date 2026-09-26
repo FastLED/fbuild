@@ -261,6 +261,11 @@ pub struct HealthResponse {
     pub version: String,
     pub pid: u32,
     pub source_mtime: f64,
+    /// Path of the running daemon binary; lets a restarting CLI name the image
+    /// behind `source_mtime` (FastLED/fbuild#1476).
+    pub source_exe: String,
+    /// Whether the running-process broker launched this daemon.
+    pub launched_by_broker: bool,
 }
 
 /// GET /api/daemon/info
@@ -914,8 +919,12 @@ mod tests {
             version: "2.0.0".into(),
             pid: 1234,
             source_mtime: 1700000000.0,
+            source_exe: "/opt/fbuild/fbuild-daemon".into(),
+            launched_by_broker: false,
         };
         let json = serde_json::to_string(&resp).unwrap();
+        assert!(json.contains("\"source_exe\":\"/opt/fbuild/fbuild-daemon\""));
+        assert!(json.contains("\"launched_by_broker\":false"));
         assert!(json.contains("uptime_seconds"));
         assert!(!json.contains("uptime_secs"));
         assert!(json.contains("\"healthy\""));

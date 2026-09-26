@@ -213,6 +213,17 @@ async fn main() {
         args.spawner_cwd,
         broadcast_hub,
     ));
+    // FastLED/fbuild#1476: record which image this daemon runs from and who
+    // launched it, so a CLI that keeps restarting "stale" daemons can be
+    // matched against daemon.log.
+    tracing::info!(
+        pid = std::process::id(),
+        version = env!("CARGO_PKG_VERSION"),
+        exe = %context.source_exe,
+        source_mtime = context.source_mtime,
+        launched_by_broker = context.launched_by_broker,
+        "fbuild-daemon identity"
+    );
     DaemonContext::install_dependency_status_subscriber(&context);
     fbuild_daemon::broker::backend::spawn_backend_endpoint_if_requested(context.clone());
 

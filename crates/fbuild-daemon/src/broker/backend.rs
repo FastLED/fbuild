@@ -43,6 +43,12 @@ pub fn spawn_backend_endpoint_if_requested(ctx: Arc<DaemonContext>) {
     }
 }
 
+/// Whether the running-process broker launched this process as a backend
+/// (it passes the backend endpoint through the environment).
+pub fn launched_by_broker() -> bool {
+    broker_backend_endpoint_from_env().is_some()
+}
+
 fn broker_backend_endpoint_from_env() -> Option<Endpoint> {
     let path = std::env::var(BACKEND_ENV_ENDPOINT_PATH).ok()?;
     if path.is_empty() {
@@ -139,6 +145,8 @@ fn health_response(ctx: &DaemonContext) -> HealthResponse {
         version: env!("CARGO_PKG_VERSION").to_string(),
         pid: std::process::id(),
         source_mtime: ctx.source_mtime,
+        source_exe: ctx.source_exe.clone(),
+        launched_by_broker: ctx.launched_by_broker,
     }
 }
 

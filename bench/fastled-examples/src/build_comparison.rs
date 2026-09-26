@@ -19,6 +19,10 @@ use std::time::{Instant, SystemTime, UNIX_EPOCH};
 
 const HISTORY_MAX_LINES: usize = 365;
 const PERF_LOG_FILE: &str = "fbuild-perf.jsonl";
+/// Prefix of the CLI's per-command daemon restart notice (FastLED/fbuild#1476).
+const DAEMON_RESTART_NOTICE: &str = "daemon binary updated, restarting";
+/// Lines of the daemon's own log appended to `benchmark.log` on restart mode.
+const DAEMON_LOG_TAIL_LINES: usize = 200;
 const PERF_PHASE_LABELS: &[&str] = &["avr-orchestrator", "pipeline"];
 const REGRESSION_WINDOW_S: u64 = 7 * 24 * 60 * 60;
 const DEFAULT_REPOSITORY: &str = "FastLED/fbuild";
@@ -114,6 +118,9 @@ struct ToolResult {
     cold_phases_ms: BTreeMap<String, f64>,
     /// Raw per-trial phase timings for each cold build (empty for other tools).
     cold_phase_trials: Vec<BTreeMap<String, f64>>,
+    /// Timed fbuild builds that restarted the daemon (FastLED/fbuild#1476);
+    /// each adds ~200 ms, so a non-zero count marks inflated fbuild timings.
+    daemon_restarts: usize,
 }
 
 /// One entry of a clang-style `compile_commands.json`.
@@ -204,6 +211,13 @@ fn run() -> AppResult<()> {
             &mut log,
             &mut raw_baseline_ms,
         )?;
+        if result.daemon_restarts > 0 {
+            println!(
+                "::warning title=fbuild daemon restart mode::{} timed fbuild builds restarted the daemon (~200 ms each), so fbuild timings are inflated; the restart notices and daemon.log tail are in benchmark.log (FastLED/fbuild#1476)",
+                result.daemon_restarts
+            );
+            append_daemon_log_tail(&mut log)?;
+        }
         println!(
             "{:<12} cold {:>10.3} ms | warm {:>10.3} ms | {:>7.2}x",
             result.display_name, result.cold_ms, result.warm_ms, result.speedup
@@ -259,6 +273,7 @@ fn measure_tool(
     let mut cold_trials_ms = Vec::with_capacity(options.trials);
     let mut warm_trials_ms = Vec::with_capacity(options.trials);
     let mut cold_phase_trials = Vec::new();
+    let mut daemon_restarts = 0;
     let perf_log = output_dir.join(PERF_LOG_FILE);
     let envs: Vec<(&str, OsString)> = if matches!(kind, ToolKind::Fbuild) {
         vec![
@@ -301,7 +316,7 @@ fn measure_tool(
             }
             MeasurementStep::ColdBuild(trial) => {
                 let offset = perf_line_count(&perf_log);
-                let elapsed = timed_build(
+                let (elapsed, restarted) = timed_build(
                     kind,
                     options,
                     repo_root,
@@ -311,6 +326,7 @@ fn measure_tool(
                     log,
                     &envs,
                 )?;
+                daemon_restarts += usize::from(restarted);
                 cold_trials_ms.push(round_millis(elapsed));
                 if matches!(kind, ToolKind::Fbuild) {
                     let content = fs::read_to_string(&perf_log).unwrap_or_default();
@@ -323,7 +339,7 @@ fn measure_tool(
                 }
             }
             MeasurementStep::WarmBuild(_) => {
-                let elapsed = timed_build(
+                let (elapsed, restarted) = timed_build(
                     kind,
                     options,
                     repo_root,
@@ -333,6 +349,7 @@ fn measure_tool(
                     log,
                     &envs,
                 )?;
+                daemon_restarts += usize::from(restarted);
                 warm_trials_ms.push(round_millis(elapsed));
             }
         }
@@ -357,7 +374,35 @@ fn measure_tool(
         warm_trials_ms,
         cold_phases_ms: phase_medians(&cold_phase_trials),
         cold_phase_trials,
+        daemon_restarts,
     })
+}
+
+/// Whether a command's stderr carries the CLI's daemon restart notice.
+fn restarted_daemon(stderr: &[u8]) -> bool {
+    String::from_utf8_lossy(stderr).contains(DAEMON_RESTART_NOTICE)
+}
+
+/// Append the tail of the fbuild daemon's own log, which records each
+/// daemon's identity (image, mtime, launcher) at startup.
+fn append_daemon_log_tail(log: &mut File) -> io::Result<()> {
+    let daemon_log = fbuild_paths::get_daemon_log_file();
+    writeln!(
+        log,
+        "\n===== fbuild daemon.log tail ({}) =====",
+        daemon_log.display()
+    )?;
+    match fs::read_to_string(&daemon_log) {
+        Ok(content) => {
+            let lines: Vec<&str> = content.lines().collect();
+            let start = lines.len().saturating_sub(DAEMON_LOG_TAIL_LINES);
+            for line in &lines[start..] {
+                writeln!(log, "{line}")?;
+            }
+        }
+        Err(error) => writeln!(log, "(unreadable: {error})")?,
+    }
+    log.flush()
 }
 
 /// Number of lines currently in the perf log; a missing file counts as zero.
@@ -737,7 +782,7 @@ fn timed_build(
     arduino_build_dir: &Path,
     log: &mut File,
     envs: &[(&str, OsString)],
-) -> AppResult<f64> {
+) -> AppResult<(f64, bool)> {
     let (program, args) = match kind {
         ToolKind::Arduino => (
             options.arduino_cli.as_os_str(),
@@ -773,8 +818,9 @@ fn timed_build(
     };
 
     let started = Instant::now();
-    run_logged_env(program, &args, repo_root, log, envs)?;
-    Ok(started.elapsed().as_secs_f64() * 1000.0)
+    let output = run_logged_env(program, &args, repo_root, log, envs)?;
+    let elapsed_ms = started.elapsed().as_secs_f64() * 1000.0;
+    Ok((elapsed_ms, restarted_daemon(&output.stderr)))
 }
 
 fn os_args(values: &[&str]) -> Vec<OsString> {

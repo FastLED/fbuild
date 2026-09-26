@@ -9,6 +9,7 @@ use running_process::broker::client::RefusalKind;
 use serde::Serialize;
 
 mod identity;
+mod restart_diag;
 mod types;
 pub use identity::warn_if_daemon_identity_mismatch;
 pub use types::*;
@@ -172,6 +173,7 @@ impl DaemonAcquisition {
 static LAST_DAEMON_ACQUISITION: OnceLock<Mutex<Option<DaemonAcquisition>>> = OnceLock::new();
 
 fn record_daemon_acquisition(acquisition: DaemonAcquisition) {
+    tracing::info!("daemon acquisition: {}", acquisition.summary());
     let slot = LAST_DAEMON_ACQUISITION.get_or_init(|| Mutex::new(None));
     if let Ok(mut guard) = slot.lock() {
         *guard = Some(acquisition);
@@ -700,23 +702,6 @@ fn insert_shutdown_header(
 }
 
 /// Compute the modification time of the fbuild-daemon binary on disk.
-fn compute_daemon_binary_mtime() -> f64 {
-    if let Ok(candidates) =
-        fbuild_core::platform::executable::current_image_sibling_candidates("fbuild-daemon")
-    {
-        for candidate in candidates {
-            if let Ok(meta) = candidate.metadata() {
-                if let Ok(mtime) = meta.modified() {
-                    if let Ok(dur) = mtime.duration_since(std::time::UNIX_EPOCH) {
-                        return dur.as_secs_f64();
-                    }
-                }
-            }
-        }
-    }
-    0.0
-}
-
 /// Decide whether the CLI should restart the running daemon it just probed.
 ///
 /// FastLED/fbuild#1009 — arbitrate by version, not raw binary mtime:
@@ -844,7 +829,37 @@ fn broker_refusal_is_fatal(kind: Option<RefusalKind>) -> bool {
 /// Legacy direct HTTP daemon acquisition path.
 async fn ensure_direct_daemon_running() -> fbuild_core::Result<()> {
     let client = DaemonClient::new();
+    let sibling = restart_diag::SiblingDaemon::discover();
+    let restarted = match probe_running_daemon(&client, &sibling).await {
+        DaemonProbe::Keep => return Ok(()),
+        DaemonProbe::Restarted => true,
+        DaemonProbe::NotRunning => false,
+    };
+    let spawned_pid = start_daemon(&client).await?;
+    if restarted {
+        // FastLED/fbuild#1476: whichever branch `start_daemon` took (spawned,
+        // adopted a concurrent start, or lost the spawn election), the daemon
+        // now answering must not be one this CLI would restart again.
+        warn_if_restart_did_not_take(&client, &sibling, spawned_pid).await;
+    }
+    Ok(())
+}
 
+enum DaemonProbe {
+    /// A daemon is running and should be kept.
+    Keep,
+    /// A stale daemon was asked to shut down.
+    Restarted,
+    /// No daemon is answering.
+    NotRunning,
+}
+
+/// Probe the running daemon; shut it down if this CLI's sibling binary
+/// supersedes it.
+async fn probe_running_daemon(
+    client: &DaemonClient,
+    sibling: &restart_diag::SiblingDaemon,
+) -> DaemonProbe {
     // Check if already running
     if client.health().await {
         if let Some(health) = client.health_full().await {
@@ -856,17 +871,23 @@ async fn ensure_direct_daemon_running() -> fbuild_core::Result<()> {
             if should_restart_daemon(
                 env!("CARGO_PKG_VERSION"),
                 &health.version,
-                compute_daemon_binary_mtime(),
+                sibling.mtime,
                 health.source_mtime,
             ) {
-                tracing::info!(
-                    "daemon needs restart (daemon v{} mtime={}, cli v{} mtime={})",
-                    health.version,
-                    health.source_mtime,
+                // FastLED/fbuild#1476: always print both sides of the
+                // comparison — a bare notice made the per-command restart
+                // mode undiagnosable from CI logs.
+                let acquisition = last_daemon_acquisition()
+                    .map(|a| a.summary())
+                    .unwrap_or_else(|| "not attempted".to_string());
+                let notice = restart_diag::restart_notice(
+                    &health,
                     env!("CARGO_PKG_VERSION"),
-                    compute_daemon_binary_mtime(),
+                    sibling,
+                    &acquisition,
                 );
-                eprintln!("daemon binary updated, restarting...");
+                tracing::info!("{notice}");
+                eprintln!("{notice}");
                 let _ = client.shutdown().await;
                 // Wait for it to stop
                 for _ in 0..50 {
@@ -875,15 +896,18 @@ async fn ensure_direct_daemon_running() -> fbuild_core::Result<()> {
                         break;
                     }
                 }
-                // Fall through to spawn a fresh daemon below
-            } else {
-                return Ok(());
+                // The caller spawns (or adopts) a fresh daemon next.
+                return DaemonProbe::Restarted;
             }
-        } else {
-            return Ok(());
         }
+        return DaemonProbe::Keep;
     }
+    DaemonProbe::NotRunning
+}
 
+/// Spawn the daemon (or adopt one a concurrent caller started). Returns the
+/// pid this call spawned, or `None` when it adopted an existing daemon.
+async fn start_daemon(client: &DaemonClient) -> fbuild_core::Result<Option<u32>> {
     tracing::info!("daemon not running, starting...");
 
     // Spawn-herd election (FastLED/fbuild#1159): a fan-out of concurrent CLI
@@ -894,7 +918,7 @@ async fn ensure_direct_daemon_running() -> fbuild_core::Result<()> {
         for _ in 0..50 {
             tokio::time::sleep(std::time::Duration::from_millis(100)).await;
             if client.health().await {
-                return Ok(());
+                return Ok(None);
             }
         }
         return Err(fbuild_core::FbuildError::DaemonError(
@@ -928,16 +952,19 @@ async fn ensure_direct_daemon_running() -> fbuild_core::Result<()> {
         // slip through cheap.
         if client.health().await {
             tracing::info!("adopted concurrently-started daemon");
-            return Ok(());
+            return Ok(None);
         }
 
-        if let Err(e) = spawn_daemon_process().await {
-            tracing::warn!("daemon spawn attempt {} failed: {}", attempt + 1, e);
-            if attempt + 1 >= backoff_delays.len() {
-                return Err(e);
+        let spawned_pid = match spawn_daemon_process().await {
+            Ok(pid) => pid,
+            Err(e) => {
+                tracing::warn!("daemon spawn attempt {} failed: {}", attempt + 1, e);
+                if attempt + 1 >= backoff_delays.len() {
+                    return Err(e);
+                }
+                continue;
             }
-            continue;
-        }
+        };
 
         // Poll health until the readiness deadline.
         //
@@ -957,8 +984,8 @@ async fn ensure_direct_daemon_running() -> fbuild_core::Result<()> {
         while std::time::Instant::now() < deadline {
             tokio::time::sleep(std::time::Duration::from_millis(100)).await;
             if client.health().await {
-                tracing::info!("daemon started successfully");
-                return Ok(());
+                tracing::info!("daemon started successfully (spawned pid {spawned_pid})");
+                return Ok(Some(spawned_pid));
             }
         }
 
@@ -1043,7 +1070,27 @@ where
 }
 
 /// Spawn a single daemon process instance.
-async fn spawn_daemon_process() -> fbuild_core::Result<()> {
+/// FastLED/fbuild#1476: after a restart, confirm the daemon now answering is
+/// one this CLI would keep; otherwise say loudly that another launcher owns
+/// the endpoint.
+async fn warn_if_restart_did_not_take(
+    client: &DaemonClient,
+    sibling: &restart_diag::SiblingDaemon,
+    spawned_pid: Option<u32>,
+) {
+    let Some(health) = client.health_full().await else {
+        return;
+    };
+    if let Some(warning) =
+        restart_diag::post_respawn_warning(&health, env!("CARGO_PKG_VERSION"), sibling, spawned_pid)
+    {
+        tracing::warn!("{warning}");
+        eprintln!("{warning}");
+    }
+}
+
+/// Spawn a detached daemon; returns the spawned process id.
+async fn spawn_daemon_process() -> fbuild_core::Result<u32> {
     // FastLED/fbuild#830: prefer a `fbuild-daemon` binary sitting next
     // to the current `fbuild` CLI binary. The previous bare-name spawn
     // delegated entirely to the OS PATH lookup, which on Windows could
@@ -1135,9 +1182,7 @@ async fn spawn_daemon_process() -> fbuild_core::Result<()> {
             "failed to spawn daemon at {daemon_exe:?} (is fbuild-daemon next to the fbuild CLI or on PATH?): {}",
             e
         ))
-    })?;
-
-    Ok(())
+    })
 }
 
 #[cfg(test)]

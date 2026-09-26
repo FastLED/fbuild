@@ -402,14 +402,19 @@ pub struct GcResponse {
 pub struct HealthResponseFull {
     #[allow(dead_code)]
     pub status: String,
-    #[allow(dead_code)]
     pub uptime_seconds: f64,
-    #[allow(dead_code)]
     pub version: String,
-    #[allow(dead_code)]
     pub pid: u32,
     #[serde(default)]
     pub source_mtime: f64,
+    /// Image the daemon runs from; absent on daemons that predate
+    /// FastLED/fbuild#1476.
+    #[serde(default)]
+    pub source_exe: Option<String>,
+    /// Whether the running-process broker launched the daemon; absent on
+    /// daemons that predate FastLED/fbuild#1476.
+    #[serde(default)]
+    pub launched_by_broker: Option<bool>,
 }
 
 #[derive(Debug, Deserialize)]
