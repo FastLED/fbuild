@@ -4,7 +4,7 @@ requires-python = ">=3.10"
 
 [[package]]
 name = "fbuild"
-version = "2.5.27"
+version = "2.5.28"
 source = { editable = "." }
 
 [package.dev-dependencies]
@@ -39,15 +39,15 @@ wheels = [
 
 [[package]]
 name = "soldr"
-version = "0.9.16"
+version = "0.9.23"
 source = { registry = "https://pypi.org/simple" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/73/a5/3d3d531f9ef253e9f6a4e659b7216be7bbdf1b2a372fec515190a535df50/soldr-0.9.16-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:968de35c9c1ca55b3861f38c7be28b02031843083a76510652b24d2613c578c7", size = 9937244, upload-time = "2026-09-14T22:05:26.878Z" },
-    { url = "https://files.pythonhosted.org/packages/67/9f/923075b2d4bc9d738252b50049cd0d4eaf5ef8ad8745bcbf1f265089541f/soldr-0.9.16-py3-none-macosx_11_0_arm64.whl", hash = "sha256:c7148f4ca01be4d0abfb0a71d9ff3969364f75f0214a19beb95fb9b38bd28ae8", size = 9395410, upload-time = "2026-09-14T22:05:29.519Z" },
-    { url = "https://files.pythonhosted.org/packages/8e/16/ed8871c5a799a275811ffb9f70bc495bffb7a1a876491f541e6c4ae9346a/soldr-0.9.16-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:a010b856f2d8a153fe2903d270344e14be9ca3bb5c7c9a40425bf04dd16c740a", size = 10419644, upload-time = "2026-09-14T22:05:32.075Z" },
-    { url = "https://files.pythonhosted.org/packages/26/68/6e2f0e6f48da6446b152c45a9ff15e271bfeae4f7c9bdaa9b217a1aa66cc/soldr-0.9.16-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:a1fd3ce8ccc3c21caead140f1ac4960aa4e493d74ca670dd0428311405ff5959", size = 10935812, upload-time = "2026-09-14T22:05:34.816Z" },
-    { url = "https://files.pythonhosted.org/packages/ac/2a/18cdf5606b21aea516105bba1744cbf6181d6c063fceb612cce214ece5fe/soldr-0.9.16-py3-none-musllinux_1_2_aarch64.whl", hash = "sha256:74c9edbf549fa8c7f60923a0f65db776a683327f8c97ed412be2d94af7a926eb", size = 10473391, upload-time = "2026-09-14T22:05:37.278Z" },
-    { url = "https://files.pythonhosted.org/packages/d2/30/eb2b11d1766aaaa683f0851705421e0122d6b49d546a71ee7b1d24734494/soldr-0.9.16-py3-none-musllinux_1_2_x86_64.whl", hash = "sha256:cee5a8ced4ee51a0a016cdc54fe386c635c7447c298a42ec1370d14f4abee27e", size = 10324370, upload-time = "2026-09-14T22:05:39.762Z" },
-    { url = "https://files.pythonhosted.org/packages/59/46/8a05afc6ea238e937393921f4078820dd9bbe96b147392555e69fd63b50d/soldr-0.9.16-py3-none-win_amd64.whl", hash = "sha256:7d872744d6c5f91d909d36c055cdad34d8a724cfae2a3af899ba9a6bb0f3c506", size = 10773106, upload-time = "2026-09-14T22:05:42.151Z" },
-    { url = "https://files.pythonhosted.org/packages/a2/16/7dbfb0b12d2e185d226d45a827c0ad4d93e01299f7cb85a3095ef687b50d/soldr-0.9.16-py3-none-win_arm64.whl", hash = "sha256:9f1d3bf579cfea01c0b79ebbc6dc060794bcf95274fb657dc3f7bf9e4692d9fa", size = 10175538, upload-time = "2026-09-14T22:05:44.685Z" },
+    { url = "https://files.pythonhosted.org/packages/a7/5a/1149ff3181f35d6fa02bac2a331b94e5fc5fb0e15bb67672f5e7c4e39ae7/soldr-0.9.23-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:8a5e58a210907188011fd3a350dc417c6a1071aed18b007534948f60160a5866", size = 10113610, upload-time = "2026-09-26T06:52:45.762Z" },
+    { url = "https://files.pythonhosted.org/packages/4f/a7/28f7539f0eb67e678e1b0d2b18a75a4047d0eaa49433209bdba67f0a14c9/soldr-0.9.23-py3-none-macosx_11_0_arm64.whl", hash = "sha256:bfac766377625a9052579d991661ea9ed4939ff3620c19cdec29af5487e62dfd", size = 9573910, upload-time = "2026-09-26T06:52:48.772Z" },
+    { url = "https://files.pythonhosted.org/packages/7c/52/096cc1571063a6d59e9dec8f1f1036503077ff113bfa36b2bc1616386500/soldr-0.9.23-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:36da482444c1e60a6843b3d7c3eefeb5bb64244d23c5e6d9182f90538d93fa73", size = 10699264, upload-time = "2026-09-26T06:52:51.2Z" },
+    { url = "https://files.pythonhosted.org/packages/db/34/9634f72b70ce8ab2bf7d3ced10b7726b2d07d367f19a21c70b23857f3613/soldr-0.9.23-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:38d21a36be6ed6d636ed173516a5108cc19eb7de8c3bcad8971e8bed429b840b", size = 11213292, upload-time = "2026-09-26T06:52:53.898Z" },
+    { url = "https://files.pythonhosted.org/packages/f9/80/f62417e479be86ddc6810629e43f1cd552f4601ba70d0cd4a2cef4fd3ebe/soldr-0.9.23-py3-none-musllinux_1_2_aarch64.whl", hash = "sha256:518faa931f10d366d065a52b221390600deeaaa574c5317e7086b301fd67cf9a", size = 10715830, upload-time = "2026-09-26T06:52:56.533Z" },
+    { url = "https://files.pythonhosted.org/packages/bf/86/064fd2e7098d99aae4068f06bedfe06727e98cfef0315c47a5c3f585f13f/soldr-0.9.23-py3-none-musllinux_1_2_x86_64.whl", hash = "sha256:1a4f855768acae8b7d96a8e98447a90bef08b65b007c532500e119b788cc87c6", size = 10536661, upload-time = "2026-09-26T06:52:58.932Z" },
+    { url = "https://files.pythonhosted.org/packages/df/34/8a8ba08a4e020f345ed058bcfd3926e993e3611664eb9d6b2c42828fc39a/soldr-0.9.23-py3-none-win_amd64.whl", hash = "sha256:32044bd7ee62dad90d9bc9b754eddd4084f0b98899c87484201be2458d78ab8a", size = 11030300, upload-time = "2026-09-26T06:53:01.535Z" },
+    { url = "https://files.pythonhosted.org/packages/ab/98/58a0801342960533f702f4527c42b13fead26cedebe4a2680e63b01f110a/soldr-0.9.23-py3-none-win_arm64.whl", hash = "sha256:67fabfe840d7047a3b8f12fbbaf741fcd91a6cbd167e47c727a45c925aab743f", size = 10349223, upload-time = "2026-09-26T06:53:04.024Z" },
 ]
