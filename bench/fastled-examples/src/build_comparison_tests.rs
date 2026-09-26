@@ -418,25 +418,14 @@ fn find_compile_db_prefers_the_raw_toolchain_database() {
 }
 
 #[test]
-fn daemon_restarts_are_counted_only_in_the_fbuild_section() {
-    let log = "\
-$ pio run
-daemon binary updated, restarting... (not fbuild's)
-===== fbuild daemon preflight =====
-$ fbuild daemon restart
-daemon restarted
-$ fbuild build
-daemon binary updated, restarting... (sibling binary is 0.5s newer; ...)
-$ fbuild build
-daemon binary updated, restarting... (sibling binary is 0.5s newer; ...)
-";
-    assert_eq!(count_daemon_restarts(log), 2);
+fn restart_notice_is_detected_in_a_command_stderr() {
+    assert!(restarted_daemon(
+        b"daemon binary updated, restarting... (sibling binary is 0.5s newer; ...)\n"
+    ));
 }
 
 #[test]
-fn daemon_restarts_are_zero_without_an_fbuild_section() {
-    assert_eq!(
-        count_daemon_restarts("daemon binary updated, restarting..."),
-        0
-    );
+fn clean_command_stderr_is_not_a_restart() {
+    assert!(!restarted_daemon(b"build succeeded in 0.0s\n"));
+    assert!(!restarted_daemon(b""));
 }

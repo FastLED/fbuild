@@ -98,10 +98,14 @@ pub(super) fn restart_notice(
 }
 
 /// After respawning, the daemon that answers `/health` must be one this CLI
-/// would not restart again. If it still would, something other than this
-/// CLI's spawn owns the endpoint (e.g. a daemon launched by the
-/// running-process broker from a different image) and every later command
-/// will pay for another restart. Returns the warning to print, if any.
+/// would not restart again. If it still would, every later command will pay
+/// for another restart. The evidence distinguishes two causes:
+/// - the daemon runs from this CLI's sibling path, so the binary changed on
+///   disk after the daemon read its mtime;
+/// - the daemon runs from another image, so a second launcher (e.g. the
+///   running-process broker or another fbuild install) owns the endpoint.
+///
+/// Returns the warning to print, if any.
 pub(super) fn post_respawn_warning(
     health: &HealthResponseFull,
     cli_version: &str,
@@ -117,11 +121,19 @@ pub(super) fn post_respawn_warning(
         return None;
     }
     let spawned = spawned_pid.map_or_else(|| "unknown".to_string(), |pid| pid.to_string());
+    let same_image = health.source_exe.is_some() && health.source_exe == sibling.path;
+    let cause = if same_image {
+        "It runs from this CLI's sibling binary, so that file changed on disk after the \
+         daemon started"
+    } else if health.source_exe.is_some() {
+        "It runs from a different image, so another launcher is serving this endpoint"
+    } else {
+        "The daemon does not report its image, so the cause cannot be told apart"
+    };
     Some(format!(
         "warning: the daemon answering after the restart would be restarted again \
          (running daemon: {}; this CLI spawned pid {spawned}; this CLI: {}). \
-         Another launcher is serving this endpoint, so every command will restart it \
-         (FastLED/fbuild#1476).",
+         {cause}; every command will restart it (FastLED/fbuild#1476).",
         describe_daemon(health),
         describe_sibling(cli_version, sibling),
     ))
@@ -198,5 +210,24 @@ mod tests {
         assert!(warning.contains("this CLI spawned pid 7"));
         assert!(warning.contains("pid 4242 v2.5.28 uptime 1.000s mtime 100"));
         assert!(warning.contains("FastLED/fbuild#1476"));
+    }
+
+    #[test]
+    fn post_respawn_warning_blames_the_file_when_the_image_is_the_sibling() {
+        let warning =
+            post_respawn_warning(&health("2.5.28", 100.0), "2.5.28", &sibling(150.0), Some(7))
+                .expect("stale after respawn");
+        assert!(warning.contains("changed on disk after the daemon started"));
+        assert!(!warning.contains("another launcher"));
+    }
+
+    #[test]
+    fn post_respawn_warning_blames_another_launcher_for_a_foreign_image() {
+        let mut foreign = health("2.5.28", 100.0);
+        foreign.source_exe = Some("/elsewhere/fbuild-daemon".to_string());
+        let warning = post_respawn_warning(&foreign, "2.5.28", &sibling(150.0), None)
+            .expect("stale after respawn");
+        assert!(warning.contains("another launcher is serving this endpoint"));
+        assert!(warning.contains("this CLI spawned pid unknown"));
     }
 }
