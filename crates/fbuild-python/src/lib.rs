@@ -38,6 +38,7 @@ mod json_rpc;
 mod messages;
 mod outcome;
 mod serial_monitor;
+mod ws_session;
 
 use async_daemon_connection::AsyncDaemonConnection;
 use async_serial_monitor::AsyncSerialMonitor;

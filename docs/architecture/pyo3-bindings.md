@@ -59,6 +59,20 @@ The PyO3 `SerialMonitor` wraps the Rust `SharedSerialManager` via WebSocket:
 Internally uses the process-shared `pyo3-async-runtimes` tokio runtime with
 `block_on()` to bridge sync Python calls to async Rust.
 
+### Concurrency (FastLED/fbuild#1431)
+
+`read_lines`, `write`, `write_json_rpc`, `in_waiting` and `run_until` take
+`&self` and release the GIL while they block. One thread can therefore sit in
+`read_lines(timeout=...)` while another calls `write()`. The two share the
+WebSocket's read half (`crates/fbuild-python/src/ws_session.rs`). A
+request/reply call (`write` waiting for `write_ack`, `in_waiting`) announces
+itself, and the in-flight read hands over the socket immediately. The read
+resumes once the reply arrives. Serial lines that arrive in between are kept
+for the reader. A write never waits out a read's timeout, so callers don't need
+a single-worker executor or a short polling cap on `read_lines` to keep
+request/reply latency down. `__enter__`, `__exit__` and `reset_device` still
+need exclusive access.
+
 ## DaemonConnection API
 
 ```python

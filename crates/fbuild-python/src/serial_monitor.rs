@@ -10,6 +10,7 @@ use tokio_tungstenite::tungstenite;
 
 use crate::json_rpc::wait_for_remote_json_rpc_response;
 use crate::messages::{ClientMessage, ServerMessage, WsSink, WsSource};
+use crate::ws_session::{ReadYield, WsSession};
 
 /// Python-visible SerialMonitor class.
 ///
@@ -40,8 +41,11 @@ pub(crate) struct SerialMonitor {
     ws_write: Option<Mutex<WsSink>>,
     ws_read: Option<Mutex<WsSource>>,
     pending_lines: Mutex<VecDeque<String>>,
+    /// Lets `write`/`in_waiting` take the WebSocket read half from an
+    /// in-flight `read_lines` (FastLED/fbuild#1431).
+    read_yield: ReadYield,
     client_id: String,
-    last_line: String,
+    last_line: Mutex<String>,
     #[allow(dead_code)]
     preempted: bool,
 }
@@ -181,19 +185,54 @@ impl SerialMonitor {
         Ok(())
     }
 
-    fn push_pending_lines(&self, lines: Vec<String>) {
-        if lines.is_empty() {
-            return;
-        }
-        let mut pending = self.pending_lines.lock().unwrap_or_else(|e| e.into_inner());
-        pending.extend(lines);
+    /// The live WebSocket session, or `None` before `__enter__` / after
+    /// `__exit__`.
+    fn session(&self) -> Option<WsSession<'_>> {
+        Some(WsSession {
+            rt: self.runtime?,
+            write: self.ws_write.as_ref()?,
+            read: self.ws_read.as_ref()?,
+            pending: &self.pending_lines,
+            read_yield: &self.read_yield,
+        })
     }
 
-    fn drain_pending_lines_into(&self, lines: &mut Vec<String>) {
-        let mut pending = self.pending_lines.lock().unwrap_or_else(|e| e.into_inner());
-        while let Some(line) = pending.pop_front() {
-            lines.push(line);
-        }
+    /// Serial lines within `timeout`, without hook dispatch. Call with the
+    /// GIL released.
+    fn read_session_lines(&self, timeout: f64) -> Vec<String> {
+        self.session().map_or_else(Vec::new, |session| {
+            session.read_lines(
+                std::time::Duration::from_secs_f64(timeout.max(0.0)),
+                self.auto_reconnect,
+            )
+        })
+    }
+
+    /// Write `data` and wait for its `write_ack`. Call with the GIL released.
+    fn write_session(&self, data: &str) -> usize {
+        let Some(session) = self.session() else {
+            return 0;
+        };
+        let encoded = base64::engine::general_purpose::STANDARD.encode(data.as_bytes());
+        let msg = serde_json::to_string(&ClientMessage::Write { data: encoded })
+            .expect("fbuild-python: ClientMessage::Write serialization is infallible");
+        session
+            .request(
+                msg,
+                std::time::Duration::from_secs(5),
+                |reply| match reply {
+                    ServerMessage::WriteAck {
+                        success,
+                        bytes_written,
+                        ..
+                    } => Some(if success { bytes_written } else { 0 }),
+                    ServerMessage::Error { .. }
+                    | ServerMessage::PortDisconnected { .. }
+                    | ServerMessage::PortRebindFailed { .. } => Some(0),
+                    _ => None,
+                },
+            )
+            .unwrap_or(0)
     }
 
     fn pending_line_count(&self) -> usize {
@@ -232,8 +271,9 @@ impl SerialMonitor {
             ws_write: None,
             ws_read: None,
             pending_lines: Mutex::new(VecDeque::new()),
+            read_yield: ReadYield::default(),
             client_id: uuid::Uuid::new_v4().to_string(),
-            last_line: String::new(),
+            last_line: Mutex::new(String::new()),
             preempted: false,
         }
     }
@@ -271,151 +311,47 @@ impl SerialMonitor {
 
     /// The last line received from the serial port.
     #[getter]
-    fn last_line(&self) -> &str {
-        &self.last_line
+    fn last_line(&self) -> String {
+        self.last_line
+            .lock()
+            .unwrap_or_else(|e| e.into_inner())
+            .clone()
     }
 
     /// Iterate over serial output lines.
     ///
     /// Returns a list of lines received within the timeout period.
+    ///
+    /// Takes `&self`, so `write` can run from another thread while a read
+    /// is in flight; the read hands the socket to the write and resumes
+    /// (FastLED/fbuild#1431).
     #[pyo3(signature = (timeout=30.0))]
-    fn read_lines(&mut self, py: Python<'_>, timeout: f64) -> Vec<String> {
-        let (Some(rt), Some(ws_read)) = (&self.runtime, &self.ws_read) else {
-            return vec![];
-        };
-
-        let mut lines = Vec::new();
-        self.drain_pending_lines_into(&mut lines);
-        let deadline = std::time::Instant::now() + std::time::Duration::from_secs_f64(timeout);
-        let auto_reconnect = self.auto_reconnect;
-
-        if lines.is_empty() {
-            py.detach(|| {
-                while std::time::Instant::now() < deadline {
-                    let remaining = deadline - std::time::Instant::now();
-                    let result = {
-                        let mut read = ws_read.lock().unwrap_or_else(|e| e.into_inner());
-                        // tokio::time::timeout MUST be constructed inside the
-                        // runtime context, otherwise it panics with "there is
-                        // no reactor running" because the Sleep future needs
-                        // Handle::current() to register with the timer driver.
-                        rt.block_on(async { tokio::time::timeout(remaining, read.next()).await })
-                    };
-
-                    match result {
-                        Ok(Some(Ok(tungstenite::Message::Text(text)))) => {
-                            match serde_json::from_str::<ServerMessage>(&text) {
-                                Ok(ServerMessage::Data {
-                                    lines: data_lines, ..
-                                }) => {
-                                    lines.extend(data_lines);
-                                    if !lines.is_empty() {
-                                        break;
-                                    }
-                                }
-                                Ok(ServerMessage::Preempted { .. }) => {
-                                    // Pause — deploy is happening
-                                    if auto_reconnect {
-                                        continue;
-                                    }
-                                    break;
-                                }
-                                Ok(ServerMessage::Reconnected { .. }) => {
-                                    // Resume after deploy
-                                    continue;
-                                }
-                                Ok(ServerMessage::PortRenumbered { .. })
-                                | Ok(ServerMessage::PortReattached { .. }) => continue,
-                                Ok(ServerMessage::PortRebindFailed { .. }) => break,
-                                Ok(ServerMessage::PortDisconnected { .. }) => break,
-                                _ => continue,
-                            }
-                        }
-                        Ok(Some(Ok(tungstenite::Message::Close(_)))) | Ok(None) => break,
-                        Err(_) => break, // timeout
-                        _ => continue,
-                    }
-                }
-            });
-        }
+    fn read_lines(&self, py: Python<'_>, timeout: f64) -> Vec<String> {
+        let lines = py.detach(|| self.read_session_lines(timeout));
 
         // Update last_line and dispatch hooks
         if let Some(last) = lines.last() {
-            self.last_line = last.clone();
+            *self.last_line.lock().unwrap_or_else(|e| e.into_inner()) = last.clone();
         }
 
         // Dispatch hooks for each line
         if !self.hooks.is_empty() && !lines.is_empty() {
-            Python::attach(|py| {
-                for line in &lines {
-                    for hook in &self.hooks {
-                        let _ = hook.call1(py, (line,));
-                    }
+            for line in &lines {
+                for hook in &self.hooks {
+                    let _ = hook.call1(py, (line,));
                 }
-            });
+            }
         }
 
         lines
     }
 
     /// Write data to the serial port.
-    fn write(&self, data: &str) -> usize {
-        let (Some(rt), Some(ws_write), Some(ws_read)) =
-            (&self.runtime, &self.ws_write, &self.ws_read)
-        else {
-            return 0;
-        };
-
-        let encoded = base64::engine::general_purpose::STANDARD.encode(data.as_bytes());
-        let msg = serde_json::to_string(&ClientMessage::Write { data: encoded })
-            .expect("fbuild-python: ClientMessage::Write serialization is infallible");
-
-        {
-            let mut write = ws_write.lock().unwrap_or_else(|e| e.into_inner());
-            if rt
-                .block_on(write.send(tungstenite::Message::Text(msg)))
-                .is_err()
-            {
-                return 0;
-            }
-        }
-
-        // Wait for write_ack. Serial data can race ahead of the ack on the
-        // WebSocket; preserve it for the next read instead of discarding it.
-        let mut read = ws_read.lock().unwrap_or_else(|e| e.into_inner());
-        let deadline = std::time::Instant::now() + std::time::Duration::from_secs(5);
-        while std::time::Instant::now() < deadline {
-            let remaining = deadline - std::time::Instant::now();
-            // tokio::time::timeout must be created inside the runtime context.
-            match rt.block_on(async { tokio::time::timeout(remaining, read.next()).await }) {
-                Ok(Some(Ok(tungstenite::Message::Text(text)))) => {
-                    match serde_json::from_str::<ServerMessage>(&text) {
-                        Ok(ServerMessage::WriteAck {
-                            success,
-                            bytes_written,
-                            ..
-                        }) => return if success { bytes_written } else { 0 },
-                        Ok(ServerMessage::Data { lines, .. }) => {
-                            self.push_pending_lines(lines);
-                            continue;
-                        }
-                        Ok(ServerMessage::Preempted { .. })
-                        | Ok(ServerMessage::Reconnected { .. })
-                        | Ok(ServerMessage::PortRenumbered { .. })
-                        | Ok(ServerMessage::PortReattached { .. })
-                        | Ok(ServerMessage::Other) => continue,
-                        Ok(ServerMessage::Error { .. })
-                        | Ok(ServerMessage::PortDisconnected { .. })
-                        | Ok(ServerMessage::PortRebindFailed { .. }) => return 0,
-                        _ => continue,
-                    }
-                }
-                Ok(Some(Ok(tungstenite::Message::Close(_)))) | Ok(None) => break,
-                Err(_) => break,
-                _ => continue,
-            }
-        }
-        0
+    ///
+    /// Releases the GIL while waiting for the daemon's `write_ack`, and does
+    /// not wait for an in-flight `read_lines` to finish (FastLED/fbuild#1431).
+    fn write(&self, py: Python<'_>, data: &str) -> usize {
+        py.detach(|| self.write_session(data))
     }
 
     /// Run monitor until condition returns True or timeout expires.
@@ -423,7 +359,7 @@ impl SerialMonitor {
     /// Calls `condition(line)` for each received line. Returns True if
     /// the condition was met, False on timeout.
     #[pyo3(signature = (condition, timeout=30.0))]
-    fn run_until(&mut self, py: Python<'_>, condition: Py<PyAny>, timeout: f64) -> PyResult<bool> {
+    fn run_until(&self, py: Python<'_>, condition: Py<PyAny>, timeout: f64) -> PyResult<bool> {
         let deadline = std::time::Instant::now() + std::time::Duration::from_secs_f64(timeout);
 
         while std::time::Instant::now() < deadline {
@@ -461,13 +397,14 @@ impl SerialMonitor {
             .extract()?;
 
         let data = format!("{}\n", json_str);
-        self.write(&data);
+        let reply = py.detach(|| {
+            self.write_session(&data);
+            wait_for_remote_json_rpc_response(timeout, |remaining| {
+                self.read_session_lines(remaining.min(1.0))
+            })
+        });
 
-        if let Some(json_part) = wait_for_remote_json_rpc_response(timeout, |remaining| {
-            // read_lines takes &mut self but we only have &self here —
-            // use the raw WS read directly.
-            self.read_lines_inner(remaining.min(1.0))
-        }) {
+        if let Some(json_part) = reply {
             let json_module = py.import("json")?;
             let result = json_module.call_method1("loads", (json_part.trim(),))?;
             return Ok(result.unbind());
@@ -490,53 +427,26 @@ impl SerialMonitor {
     /// FastLED/fbuild#605 — added as part of the deprecation of direct
     /// pyserial use by fbuild clients.
     #[getter]
-    fn in_waiting(&self) -> usize {
-        let (Some(rt), Some(ws_write), Some(ws_read)) =
-            (&self.runtime, &self.ws_write, &self.ws_read)
-        else {
-            return 0;
-        };
-
-        let msg = serde_json::to_string(&ClientMessage::GetInWaiting)
-            .expect("fbuild-python: ClientMessage::GetInWaiting serialization is infallible");
-        {
-            let mut write = ws_write.lock().unwrap_or_else(|e| e.into_inner());
-            if rt
-                .block_on(write.send(tungstenite::Message::Text(msg)))
-                .is_err()
-            {
+    fn in_waiting(&self, py: Python<'_>) -> usize {
+        py.detach(|| {
+            let Some(session) = self.session() else {
                 return 0;
-            }
-        }
-
-        // Read until we see an InWaiting reply. Other messages (e.g.
-        // streaming Data frames or Preempted notifications) can arrive
-        // in front of the reply; ignore them and keep waiting for the
-        // typed answer until the 2s deadline expires.
-        let mut read = ws_read.lock().unwrap_or_else(|e| e.into_inner());
-        let deadline = std::time::Instant::now() + std::time::Duration::from_secs(2);
-        while std::time::Instant::now() < deadline {
-            let remaining = deadline - std::time::Instant::now();
-            let result = rt.block_on(async { tokio::time::timeout(remaining, read.next()).await });
-            match result {
-                Ok(Some(Ok(tungstenite::Message::Text(text)))) => {
-                    match serde_json::from_str::<ServerMessage>(&text) {
-                        Ok(ServerMessage::InWaiting { count }) => {
-                            return self.pending_line_count() + count;
-                        }
-                        Ok(ServerMessage::Data { lines, .. }) => {
-                            self.push_pending_lines(lines);
-                            continue;
-                        }
-                        _ => continue,
-                    }
-                }
-                Ok(Some(Ok(tungstenite::Message::Close(_)))) | Ok(None) => break,
-                Err(_) => break,
-                _ => continue,
-            }
-        }
-        0
+            };
+            let msg = serde_json::to_string(&ClientMessage::GetInWaiting)
+                .expect("fbuild-python: ClientMessage::GetInWaiting serialization is infallible");
+            // Other messages (streaming Data frames, Preempted notifications)
+            // can arrive in front of the reply; `request` keeps the lines and
+            // waits for the typed answer until the 2s deadline expires.
+            let count = session.request(
+                msg,
+                std::time::Duration::from_secs(2),
+                |reply| match reply {
+                    ServerMessage::InWaiting { count } => Some(count),
+                    _ => None,
+                },
+            );
+            count.map_or(0, |count| self.pending_line_count() + count)
+        })
     }
 
     /// Drop any serial-line data the daemon has buffered for this
@@ -547,13 +457,12 @@ impl SerialMonitor {
     /// pyserial use by fbuild clients.
     fn reset_input_buffer(&self) {
         self.clear_pending_lines();
-        let (Some(rt), Some(ws_write)) = (&self.runtime, &self.ws_write) else {
+        let Some(session) = self.session() else {
             return;
         };
         let msg = serde_json::to_string(&ClientMessage::ClearBuffer)
             .expect("fbuild-python: ClientMessage::ClearBuffer serialization is infallible");
-        let mut write = ws_write.lock().unwrap_or_else(|e| e.into_inner());
-        let _ = rt.block_on(write.send(tungstenite::Message::Text(msg)));
+        session.send(msg);
     }
 
     /// Reset the device via the daemon's DTR/RTS reset endpoint.
@@ -632,13 +541,13 @@ impl SerialMonitor {
         // If WebSocket is connected (__enter__ was called), poll via read_lines.
         // Note: the daemon preempts our session during reset and sends a
         // "Reconnected" message after. With auto_reconnect=true the WebSocket
-        // transparently re-attaches, so read_lines_inner will see new output.
+        // transparently re-attaches, so read_session_lines will see new output.
         if self.runtime.is_some() && self.ws_read.is_some() {
             while std::time::Instant::now() < deadline {
                 let remaining = (deadline - std::time::Instant::now())
                     .as_secs_f64()
                     .min(0.2);
-                let lines = self.read_lines_inner(remaining);
+                let lines = self.read_session_lines(remaining);
                 if !lines.is_empty() {
                     return Ok(true);
                 }
@@ -652,63 +561,5 @@ impl SerialMonitor {
         let wait = timeout.min(1.0);
         std::thread::sleep(std::time::Duration::from_secs_f64(wait));
         Ok(true)
-    }
-}
-
-impl SerialMonitor {
-    /// Internal read_lines without hook dispatch (for write_json_rpc which has &self).
-    fn read_lines_inner(&self, timeout: f64) -> Vec<String> {
-        let (Some(rt), Some(ws_read)) = (&self.runtime, &self.ws_read) else {
-            return vec![];
-        };
-
-        let mut lines = Vec::new();
-        self.drain_pending_lines_into(&mut lines);
-        let deadline = std::time::Instant::now() + std::time::Duration::from_secs_f64(timeout);
-        let auto_reconnect = self.auto_reconnect;
-
-        while lines.is_empty() && std::time::Instant::now() < deadline {
-            let remaining = deadline - std::time::Instant::now();
-            let result = {
-                let mut read = ws_read.lock().unwrap_or_else(|e| e.into_inner());
-                // tokio::time::timeout must be created inside the runtime
-                // context (otherwise: "there is no reactor running" panic).
-                rt.block_on(async { tokio::time::timeout(remaining, read.next()).await })
-            };
-
-            match result {
-                Ok(Some(Ok(tungstenite::Message::Text(text)))) => {
-                    match serde_json::from_str::<ServerMessage>(&text) {
-                        Ok(ServerMessage::Data {
-                            lines: data_lines, ..
-                        }) => {
-                            lines.extend(data_lines);
-                            if !lines.is_empty() {
-                                break;
-                            }
-                        }
-                        Ok(ServerMessage::Preempted { .. }) => {
-                            if auto_reconnect {
-                                continue;
-                            }
-                            break;
-                        }
-                        Ok(ServerMessage::Reconnected { .. }) => {
-                            continue;
-                        }
-                        Ok(ServerMessage::PortRenumbered { .. })
-                        | Ok(ServerMessage::PortReattached { .. }) => continue,
-                        Ok(ServerMessage::PortRebindFailed { .. }) => break,
-                        Ok(ServerMessage::PortDisconnected { .. }) => break,
-                        _ => continue,
-                    }
-                }
-                Ok(Some(Ok(tungstenite::Message::Close(_)))) | Ok(None) => break,
-                Err(_) => break,
-                _ => continue,
-            }
-        }
-
-        lines
     }
 }
