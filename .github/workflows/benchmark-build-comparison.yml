@@ -59,7 +59,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          uv tool install "platformio==${PLATFORMIO_CORE_VERSION}"
+          uv tool install --with pip "platformio==${PLATFORMIO_CORE_VERSION}"
           arduino-cli config add board_manager.additional_urls \
             https://espressif.github.io/arduino-esp32/package_esp32_index.json
           arduino-cli core update-index
