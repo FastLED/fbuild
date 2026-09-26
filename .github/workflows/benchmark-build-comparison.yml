@@ -26,6 +26,7 @@ env:
   PLATFORMIO_CORE_VERSION: '6.1.19'
   ARDUINO_CLI_VERSION: '1.5.0'
   ARDUINO_AVR_CORE_VERSION: '1.8.8'
+  ARDUINO_ESP32_CORE_VERSION: '3.3.7'
 
 jobs:
   benchmark:
@@ -58,10 +59,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          uv tool install "platformio==${PLATFORMIO_CORE_VERSION}"
+          uv tool install --with pip "platformio==${PLATFORMIO_CORE_VERSION}"
+          arduino-cli config add board_manager.additional_urls \
+            https://espressif.github.io/arduino-esp32/package_esp32_index.json
           arduino-cli core update-index
           arduino-cli core install "arduino:avr@${ARDUINO_AVR_CORE_VERSION}"
+          arduino-cli core install "esp32:esp32@${ARDUINO_ESP32_CORE_VERSION}"
           pio pkg install --project-dir bench/blink --environment uno
+          pio pkg install --project-dir bench/blink --environment esp32s3
 
       - name: Build fbuild and benchmark runner
         shell: bash
@@ -83,6 +88,14 @@ jobs:
             bench/blink
           target/release/fbuild build bench/blink -e uno --release
           target/release/fbuild clean all bench/blink -e uno --release
+          rm -rf benchmark-output/bootstrap-arduino
+          mkdir -p benchmark-output/bootstrap-arduino
+          arduino-cli compile \
+            --fqbn esp32:esp32:esp32s3 \
+            --build-path benchmark-output/bootstrap-arduino \
+            bench/blink
+          target/release/fbuild build bench/blink -e esp32s3 --release
+          target/release/fbuild clean all bench/blink -e esp32s3 --release
           rm -rf benchmark-output/bootstrap-arduino
 
       - name: Restore rolling history

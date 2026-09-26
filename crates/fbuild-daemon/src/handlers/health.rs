@@ -2,8 +2,8 @@
 
 use crate::context::DaemonContext;
 use crate::models::{
-    DaemonInfoResponse, HealthResponse, HeapDumpResponse, RootResponse, ShutdownParams,
-    ShutdownResponse,
+    DaemonInfoResponse, HealthResponse, HeapDumpResponse, ImageHashResponse, RootResponse,
+    ShutdownParams, ShutdownResponse,
 };
 use axum::Json;
 use axum::extract::{ConnectInfo, Query, State};
@@ -33,6 +33,87 @@ pub async fn health_check(State(ctx): State<Arc<DaemonContext>>) -> Json<HealthR
         source_exe: ctx.source_exe.clone(),
         launched_by_broker: ctx.launched_by_broker,
     })
+}
+
+/// Hash the running image on demand. On Linux `/proc/self/exe` names the
+/// loaded inode even if the original path was replaced after startup.
+pub async fn image_hash(
+    ConnectInfo(peer): ConnectInfo<SocketAddr>,
+    State(ctx): State<Arc<DaemonContext>>,
+) -> Result<Json<ImageHashResponse>, StatusCode> {
+    if !peer.ip().is_loopback() {
+        return Err(StatusCode::FORBIDDEN);
+    }
+    ctx.touch_activity();
+    let hash = tokio::task::spawn_blocking(move || {
+        ctx.source_hash
+            .get_or_init(|| {
+                #[cfg(target_os = "linux")]
+                let path = std::path::Path::new("/proc/self/exe");
+                #[cfg(not(target_os = "linux"))]
+                let path = {
+                    let path = std::path::Path::new(&ctx.source_exe);
+                    // A replaced pathname no longer identifies the running image.
+                    // If it changed after startup, retain the mtime restart decision.
+                    let current_mtime = path
+                        .metadata()
+                        .and_then(|meta| meta.modified())
+                        .ok()
+                        .and_then(|time| time.duration_since(std::time::UNIX_EPOCH).ok())
+                        .map(|duration| duration.as_secs_f64());
+                    if current_mtime != Some(ctx.source_mtime) {
+                        return None;
+                    }
+                    path
+                };
+                fbuild_paths::executable_hash::blake3_file(path)
+                    .map(|digest| digest.to_hex().to_string())
+                    .map_err(|error| tracing::warn!("cannot hash daemon image: {error}"))
+                    .ok()
+            })
+            .clone()
+    })
+    .await
+    .map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?
+    .ok_or(StatusCode::INTERNAL_SERVER_ERROR)?;
+    Ok(Json(ImageHashResponse {
+        pid: std::process::id(),
+        blake3: hash,
+    }))
+}
+
+#[cfg(test)]
+mod image_hash_tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn hashes_loaded_image_only_for_loopback_callers() {
+        let (shutdown, _receiver) = tokio::sync::watch::channel(false);
+        let ctx = Arc::new(DaemonContext::new(8765, shutdown, "test".into()));
+        assert!(ctx.source_hash.get().is_none());
+
+        let remote = "192.0.2.1:1234".parse().unwrap();
+        let denied = image_hash(ConnectInfo(remote), State(Arc::clone(&ctx))).await;
+        assert!(matches!(denied, Err(StatusCode::FORBIDDEN)));
+        assert!(ctx.source_hash.get().is_none());
+
+        let local = "127.0.0.1:1234".parse().unwrap();
+        let response = image_hash(ConnectInfo(local), State(Arc::clone(&ctx)))
+            .await
+            .unwrap()
+            .0;
+        #[cfg(target_os = "linux")]
+        let path = std::path::Path::new("/proc/self/exe");
+        #[cfg(not(target_os = "linux"))]
+        let path = std::path::Path::new(&ctx.source_exe);
+        let expected = fbuild_paths::executable_hash::blake3_file(path)
+            .unwrap()
+            .to_hex()
+            .to_string();
+        assert_eq!(response.pid, std::process::id());
+        assert_eq!(response.blake3, expected);
+        assert!(ctx.source_hash.get().is_some());
+    }
 }
 
 /// GET /api/daemon/info

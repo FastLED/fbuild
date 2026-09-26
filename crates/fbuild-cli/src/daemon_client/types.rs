@@ -418,6 +418,12 @@ pub struct HealthResponseFull {
 }
 
 #[derive(Debug, Deserialize)]
+pub struct ImageHashResponse {
+    pub pid: u32,
+    pub blake3: String,
+}
+
+#[derive(Debug, Deserialize)]
 pub struct DeviceListResponse {
     #[allow(dead_code)]
     pub success: bool,

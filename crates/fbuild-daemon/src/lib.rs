@@ -13,6 +13,7 @@
 //!
 //! Management:
 //! - GET  /health
+//! - GET  /api/daemon/image-hash (loopback only; lazy restart verification)
 //! - GET  /api/daemon/info
 //! - POST /api/daemon/shutdown
 //!

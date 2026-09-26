@@ -2,8 +2,9 @@
 //! parent file under the 1000-LOC gate (see ci.yml LOC Gate workflow).
 
 use super::{
-    DaemonAcquisition, DaemonInfoResponse, broker_refusal_is_fatal, daemon_cache_identity_error,
-    launcher_path, should_restart_daemon, wedged_daemon_note,
+    DaemonAcquisition, DaemonClient, DaemonInfoResponse, HealthResponseFull,
+    broker_refusal_is_fatal, daemon_cache_identity_error, launcher_path,
+    restart_diag::SiblingDaemon, same_running_image, should_restart_daemon, wedged_daemon_note,
 };
 use running_process::broker::client::RefusalKind::{VersionBlocked, VersionUnsupported};
 
@@ -141,6 +142,63 @@ fn same_version_restarts_only_on_newer_binary_mtime() {
 fn unparseable_versions_fall_back_to_mtime() {
     assert!(should_restart_daemon("not-semver", "2.4.0", 200.0, 100.0));
     assert!(!should_restart_daemon("2.4.0", "garbage", 100.0, 200.0));
+}
+
+#[tokio::test]
+async fn content_check_resolves_newer_mtime_without_hiding_different_images() {
+    use std::io::{Read, Write};
+
+    let image = tempfile::NamedTempFile::new().unwrap();
+    let memo_dir = tempfile::tempdir().unwrap();
+    std::fs::write(image.path(), b"running image bytes").unwrap();
+    let sibling = SiblingDaemon {
+        path: Some(image.path().to_string_lossy().into_owned()),
+        mtime: 200.0,
+    };
+    let health = HealthResponseFull {
+        status: "healthy".into(),
+        uptime_seconds: 1.0,
+        version: "2.4.0".into(),
+        pid: 42,
+        source_mtime: 100.0,
+        source_exe: None,
+        launched_by_broker: None,
+    };
+    assert!(should_restart_daemon(
+        "2.4.0",
+        "2.4.0",
+        sibling.mtime,
+        health.source_mtime
+    ));
+
+    for (remote_pid, remote_bytes, expected_match) in [
+        (42, b"running image bytes".as_slice(), true),
+        (42, b"different image bytes".as_slice(), false),
+        (99, b"running image bytes".as_slice(), false),
+    ] {
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        let port = listener.local_addr().unwrap().port();
+        let digest = blake3::hash(remote_bytes).to_hex().to_string();
+        let response = format!(r#"{{"pid":{remote_pid},"blake3":"{digest}"}}"#);
+        let server = std::thread::spawn(move || {
+            let (mut stream, _) = listener.accept().unwrap();
+            let mut request = [0_u8; 1024];
+            let count = stream.read(&mut request).unwrap();
+            assert!(String::from_utf8_lossy(&request[..count]).contains("/api/daemon/image-hash"));
+            let reply = format!(
+                "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",
+                response.len(),
+                response
+            );
+            stream.write_all(reply.as_bytes()).unwrap();
+        });
+        let client = DaemonClient::with_port(port);
+        assert_eq!(
+            same_running_image(&client, &health, &sibling, memo_dir.path()).await,
+            expected_match
+        );
+        server.join().unwrap();
+    }
 }
 
 /// FastLED/fbuild#1360: when a daemon is alive but not answering, the spawn
