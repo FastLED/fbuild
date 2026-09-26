@@ -65,6 +65,8 @@ workspace = true
 
 [dev-dependencies]
 fbuild-test-support = { path = "../fbuild-test-support" }
+libc = { workspace = true }
+tokio-tungstenite = { workspace = true }
 # reqwest is used by tests/test_emu_endpoint.rs to issue a real HTTP POST
 # against a router mounted on an ephemeral loopback port, matching the
 # client-side path that fails in issue #130.

@@ -5,6 +5,27 @@ use super::*;
 use serialport::{ClearBuffer, DataBits, FlowControl, Parity, StopBits};
 use std::io::{Read, Write};
 
+#[tokio::test]
+async fn deploy_preemption_notifies_attached_serial_subscribers_before_close() {
+    let mgr = SharedSerialManager::new();
+    let port = "COM_PREEMPT_TEST";
+    let (tx, mut rx) = broadcast::channel(BROADCAST_CHANNEL_SIZE);
+    mgr.broadcasters.insert(port.to_string(), tx);
+
+    mgr.preempt_for_deploy(port, "deploy".to_string(), "request-1".to_string())
+        .await
+        .expect("preempt port");
+
+    assert_eq!(
+        rx.try_recv()
+            .expect("preemption event before broadcaster close"),
+        SerialStreamEvent::Preempted {
+            reason: "deploy".to_string(),
+            preempted_by: "request-1".to_string(),
+        }
+    );
+}
+
 #[derive(Clone)]
 struct FakeSerialPort {
     name: String,
@@ -770,5 +791,50 @@ async fn write_to_port_completes_partial_writes_and_reports_full_length() {
         payload,
         "every byte of the payload must reach the OS handle — write_all loops \
          until the buffer is drained"
+    );
+}
+#[tokio::test]
+async fn deploy_recovery_keeps_original_monitor_alias_across_two_renumberings() {
+    let manager = SharedSerialManager::new();
+    manager
+        .preemption_tracker()
+        .preempt("COM1", "deploy".into(), "test".into())
+        .await;
+    manager.complete_deploy_preemption("COM1", "COM2").await;
+    assert_eq!(manager.deploy_recovery_port("COM1"), "COM2");
+    assert!(!manager.is_preempted("COM1").await);
+
+    manager
+        .preemption_tracker()
+        .preempt("COM2", "deploy".into(), "test".into())
+        .await;
+    manager.port_aliases.remove("COM1"); // physical close removes aliases
+    assert!(
+        manager
+            .is_preempted(&manager.deploy_recovery_port("COM1"))
+            .await
+    );
+    manager.complete_deploy_preemption("COM2", "COM3").await;
+    assert_eq!(manager.deploy_recovery_port("COM1"), "COM3");
+    assert!(!manager.is_preempted("COM1").await);
+    assert_eq!(manager.resolve_port_key("COM1"), "COM3");
+}
+
+#[tokio::test]
+async fn failed_deploy_recovery_releases_preemption_and_reports_terminal_failure() {
+    let manager = SharedSerialManager::new();
+    manager
+        .preempt_for_deploy("COM1", "deploy".into(), "test".into())
+        .await
+        .unwrap();
+    assert!(manager.is_deploy_recovery_pending("COM1"));
+    manager
+        .fail_deploy_preemption("COM1", "no runtime port")
+        .await;
+    assert!(!manager.is_deploy_recovery_pending("COM1"));
+    assert!(!manager.is_preempted("COM1").await);
+    assert_eq!(
+        manager.deploy_recovery_failure("COM1").as_deref(),
+        Some("no runtime port")
     );
 }

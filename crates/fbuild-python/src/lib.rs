@@ -38,7 +38,17 @@ mod json_rpc;
 mod messages;
 mod outcome;
 mod serial_monitor;
-mod ws_session;
+#[deny(clippy::await_holding_lock, clippy::await_holding_refcell_ref)]
+mod serial_session;
+
+/// How many `SerialSession`s are currently live. Debug-only (compiled out of
+/// a release wheel); used by the embedded-CPython AT-P16 test to prove a
+/// session dropped without `close()`/`__exit__` doesn't leak its reader task
+/// (FastLED/fbuild#1485 §5.2).
+#[cfg(debug_assertions)]
+pub fn live_session_count() -> usize {
+    serial_session::live_session_count()
+}
 
 use async_daemon_connection::AsyncDaemonConnection;
 use async_serial_monitor::AsyncSerialMonitor;
@@ -78,6 +88,14 @@ fn find_firmware(
     .map(|path| path.to_string_lossy().into_owned())
 }
 
+/// Python-visible wrapper around [`live_session_count`] (test-only, debug
+/// builds only).
+#[cfg(debug_assertions)]
+#[pyfunction]
+fn _live_session_count() -> usize {
+    live_session_count()
+}
+
 /// The version string exposed to Python as `fbuild.__version__`.
 ///
 /// Sourced from `CARGO_PKG_VERSION` at compile time so it always tracks the
@@ -87,8 +105,12 @@ fn find_firmware(
 const PYTHON_MODULE_VERSION: &str = env!("CARGO_PKG_VERSION");
 
 /// The fbuild Python module (imported as fbuild._native).
+///
+/// `pub` (rather than the usual private `#[pymodule]` fn) so the embedded-
+/// CPython integration tests in `tests/python_facades.rs` can register it
+/// via `pyo3::append_to_inittab!` before starting the interpreter.
 #[pymodule]
-fn _native(m: &Bound<'_, PyModule>) -> PyResult<()> {
+pub fn _native(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add("__version__", PYTHON_MODULE_VERSION)?;
     m.add_class::<SerialMonitor>()?;
     m.add_class::<AsyncSerialMonitor>()?;
@@ -99,6 +121,8 @@ fn _native(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(connect_daemon, m)?)?;
     m.add_function(wrap_pyfunction!(connect_daemon_async, m)?)?;
     m.add_function(wrap_pyfunction!(find_firmware, m)?)?;
+    #[cfg(debug_assertions)]
+    m.add_function(wrap_pyfunction!(_live_session_count, m)?)?;
     Ok(())
 }
 
@@ -586,109 +610,5 @@ mod tests {
             json.contains(r#""src_dir":"examples/AutoResearch""#),
             "src_dir must serialize verbatim when set, got {json}"
         );
-    }
-
-    /// `read_lines_async` must drain the cross-call `pending_lines` queue
-    /// before touching the wire. The PR fix for write_ack ordering parks
-    /// Data frames that arrive ahead of the ack into this queue, so the
-    /// next `read_lines` MUST see them even if the wire is idle (or, as
-    /// here, never connected).
-    #[test]
-    fn read_lines_async_drains_pending_before_wire() {
-        use crate::json_rpc::read_lines_async;
-        use std::collections::VecDeque;
-        use std::sync::Arc;
-        let rt = tokio::runtime::Runtime::new().unwrap();
-        rt.block_on(async {
-            let ws_read_slot = Arc::new(tokio::sync::Mutex::new(None));
-            let pending = Arc::new(tokio::sync::Mutex::new(VecDeque::from(vec![
-                "line-a".to_string(),
-                "line-b".to_string(),
-            ])));
-            let lines = read_lines_async(ws_read_slot, pending.clone(), false, 0.1).await;
-            assert_eq!(lines, vec!["line-a".to_string(), "line-b".to_string()]);
-            assert!(
-                pending.lock().await.is_empty(),
-                "pending queue must be drained after read"
-            );
-        });
-    }
-
-    /// Regression guard for the write_ack vs Data ordering bug: if a
-    /// `Data` frame lands on the wire before the `WriteAck`, `write_async`
-    /// must enqueue the data lines into `pending_lines` (so the next read
-    /// surfaces them) AND still return `true` once the ack arrives.
-    /// Previous behavior silently consumed the data frame.
-    #[test]
-    fn write_async_queues_data_arriving_before_ack() {
-        use crate::json_rpc::write_async;
-        use futures::{SinkExt, StreamExt};
-        use std::collections::VecDeque;
-        use std::sync::Arc;
-        use tokio_tungstenite::tungstenite;
-
-        let rt = tokio::runtime::Runtime::new().unwrap();
-        rt.block_on(async {
-            let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
-            let addr = listener.local_addr().unwrap();
-            let server = tokio::spawn(async move {
-                let (sock, _) = listener.accept().await.unwrap();
-                let mut ws = tokio_tungstenite::accept_async(sock).await.unwrap();
-                let _ = ws.next().await;
-                ws.send(tungstenite::Message::Text(
-                    r#"{"type":"data","lines":["serial-out"],"current_index":1}"#.to_string(),
-                ))
-                .await
-                .unwrap();
-                ws.send(tungstenite::Message::Text(
-                    r#"{"type":"write_ack","success":true,"bytes_written":3,"message":null}"#
-                        .to_string(),
-                ))
-                .await
-                .unwrap();
-                tokio::time::sleep(std::time::Duration::from_millis(100)).await;
-            });
-
-            let url = format!("ws://{}/", addr);
-            let (ws_stream, _) = tokio_tungstenite::connect_async(url).await.unwrap();
-            let (sink, source) = ws_stream.split();
-
-            let ws_write = Arc::new(tokio::sync::Mutex::new(Some(sink)));
-            let ws_read = Arc::new(tokio::sync::Mutex::new(Some(source)));
-            let pending = Arc::new(tokio::sync::Mutex::new(VecDeque::<String>::new()));
-
-            let ok = write_async(ws_write, ws_read, pending.clone(), "AAA=".to_string()).await;
-            assert!(ok, "write_async must return true after seeing WriteAck");
-            let pending_snapshot: Vec<String> = pending.lock().await.iter().cloned().collect();
-            assert_eq!(
-                pending_snapshot,
-                vec!["serial-out".to_string()],
-                "data frame arriving before write_ack must be queued for the next read"
-            );
-
-            let _ = server.await;
-        });
-    }
-
-    /// `wait_for_remote_json_rpc_response_async` must consult the
-    /// pending queue via `read_lines_async`, so a `REMOTE: ...` line
-    /// parked there by `write_async` (Data-before-WriteAck case) is
-    /// surfaced on the very next poll — without ever touching the
-    /// wire. Closes the loop on the write_ack ordering fix.
-    #[test]
-    fn wait_for_remote_response_async_picks_up_pending_remote_line() {
-        use crate::json_rpc::wait_for_remote_json_rpc_response_async;
-        use std::collections::VecDeque;
-        use std::sync::Arc;
-        let rt = tokio::runtime::Runtime::new().unwrap();
-        rt.block_on(async {
-            let ws_read_slot = Arc::new(tokio::sync::Mutex::new(None));
-            let pending = Arc::new(tokio::sync::Mutex::new(VecDeque::from(vec![
-                r#"REMOTE: {"id":1,"result":"ok"}"#.to_string(),
-            ])));
-            let payload =
-                wait_for_remote_json_rpc_response_async(0.5, ws_read_slot, pending, false).await;
-            assert_eq!(payload.as_deref(), Some(r#" {"id":1,"result":"ok"}"#));
-        });
     }
 }

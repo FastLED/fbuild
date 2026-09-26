@@ -229,6 +229,28 @@ fn python_api_and_fixed_ci_interpreters_use_py310() {
 }
 
 #[test]
+fn soldr_is_a_global_tool_not_a_python_dependency() {
+    let root = repo_root();
+    let manifest = fs::read_to_string(root.join("pyproject.toml")).unwrap();
+    let lockfile = fs::read_to_string(root.join("uv.lock")).unwrap();
+
+    assert!(manifest.contains("build-backend = \"setuptools.build_meta\""));
+    assert!(
+        !manifest.lines().any(|line| {
+            let line = line.trim();
+            !line.starts_with('#') && line.contains("soldr")
+        }),
+        "pyproject.toml must not install or configure a repo-local soldr"
+    );
+    assert!(
+        !lockfile
+            .lines()
+            .any(|line| line.trim() == "name = \"soldr\""),
+        "uv.lock must not install soldr into the project environment"
+    );
+}
+
+#[test]
 fn native_release_workflow_uses_current_cross_toolchains() {
     let root = repo_root();
     let workflow =
