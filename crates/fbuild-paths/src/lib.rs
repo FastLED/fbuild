@@ -9,6 +9,7 @@ use fbuild_core::BuildProfile;
 
 pub mod daemon_ownership;
 pub mod dev_daemon_namespace;
+pub mod executable_hash;
 pub mod running_process;
 
 /// The project-local and home-local fbuild directory segment: `.fbuild`.

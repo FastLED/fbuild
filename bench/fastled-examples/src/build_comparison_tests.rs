@@ -1,5 +1,24 @@
 use super::*;
 
+#[test]
+fn fbuild_benchmark_env_enables_phase_logging_and_restart_diagnostics() {
+    let envs = tool_envs(ToolKind::Fbuild, Path::new("benchmark-output/perf.jsonl"));
+    let envs = envs
+        .into_iter()
+        .map(|(key, value)| (key, value.to_string_lossy().into_owned()))
+        .collect::<BTreeMap<_, _>>();
+    assert_eq!(envs.get("FBUILD_PERF_LOG").map(String::as_str), Some("1"));
+    assert_eq!(
+        envs.get("FBUILD_PERF_LOG_JSON").map(String::as_str),
+        Some("benchmark-output/perf.jsonl")
+    );
+    assert_eq!(
+        envs.get("RUST_LOG").map(String::as_str),
+        Some("fbuild_cli=info")
+    );
+    assert!(tool_envs(ToolKind::Arduino, Path::new("unused")).is_empty());
+}
+
 fn sample_results() -> Vec<ToolResult> {
     vec![
         ToolResult {

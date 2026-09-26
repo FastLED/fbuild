@@ -324,6 +324,21 @@ impl DaemonClient {
             .ok()
     }
 
+    /// Fetch the daemon's loaded image digest only when mtimes disagree.
+    async fn image_hash(&self) -> Option<ImageHashResponse> {
+        self.client
+            .get(format!("{}/api/daemon/image-hash", self.base_url))
+            .timeout(std::time::Duration::from_secs(10))
+            .send()
+            .await
+            .ok()?
+            .error_for_status()
+            .ok()?
+            .json::<ImageHashResponse>()
+            .await
+            .ok()
+    }
+
     /// List connected devices.
     pub async fn list_devices(&self, refresh: bool) -> fbuild_core::Result<DeviceListResponse> {
         let url = if refresh {
@@ -782,6 +797,36 @@ fn should_restart_daemon(
     }
 }
 
+/// Compare content only on the same-version, newer-mtime path. A daemon from
+/// an older release still needs an upgrade, and a hash failure retains the
+/// original conservative restart behavior.
+async fn same_running_image(
+    client: &DaemonClient,
+    health: &HealthResponseFull,
+    sibling: &restart_diag::SiblingDaemon,
+    memo_dir: &std::path::Path,
+) -> bool {
+    let Some(path) = sibling.path.as_ref() else {
+        return false;
+    };
+    let Some(remote) = client.image_hash().await else {
+        return false;
+    };
+    if remote.pid != health.pid {
+        return false;
+    }
+    let path = std::path::PathBuf::from(path);
+    let memo_dir = memo_dir.to_path_buf();
+    let Ok(Ok(local)) = tokio::task::spawn_blocking(move || {
+        fbuild_paths::executable_hash::memoized_blake3_file(&path, &memo_dir)
+    })
+    .await
+    else {
+        return false;
+    };
+    local.to_hex().as_str() == remote.blake3
+}
+
 /// Ensure the daemon is running. Spawn it if not.
 /// If the daemon binary has been updated since the running daemon started,
 /// gracefully restart it (stale source detection, matching Python behavior).
@@ -940,6 +985,20 @@ async fn probe_running_daemon(
                 sibling.mtime,
                 health.source_mtime,
             ) {
+                if health.version == env!("CARGO_PKG_VERSION")
+                    && same_running_image(
+                        client,
+                        &health,
+                        sibling,
+                        &fbuild_paths::get_daemon_dir().join("image-hashes"),
+                    )
+                    .await
+                {
+                    tracing::info!(
+                        "daemon image matches sibling despite newer mtime; keeping running daemon"
+                    );
+                    return DaemonProbe::Keep;
+                }
                 // FastLED/fbuild#1476: always print both sides of the
                 // comparison — a bare notice made the per-command restart
                 // mode undiagnosable from CI logs.
@@ -1155,6 +1214,23 @@ async fn warn_if_restart_did_not_take(
     let Some(health) = client.health_full().await else {
         return;
     };
+    if health.version == env!("CARGO_PKG_VERSION")
+        && should_restart_daemon(
+            env!("CARGO_PKG_VERSION"),
+            &health.version,
+            sibling.mtime,
+            health.source_mtime,
+        )
+        && same_running_image(
+            client,
+            &health,
+            sibling,
+            &fbuild_paths::get_daemon_dir().join("image-hashes"),
+        )
+        .await
+    {
+        return;
+    }
     if let Some(warning) =
         restart_diag::post_respawn_warning(&health, env!("CARGO_PKG_VERSION"), sibling, spawned_pid)
     {

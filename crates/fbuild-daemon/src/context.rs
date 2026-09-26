@@ -9,7 +9,7 @@ use fbuild_core::path::NormalizedPath;
 use fbuild_serial::SharedSerialManager;
 use std::path::PathBuf;
 use std::sync::atomic::{AtomicBool, AtomicU64, AtomicUsize};
-use std::sync::{Arc, Weak};
+use std::sync::{Arc, OnceLock, Weak};
 use std::time::Instant;
 use tokio::sync::Mutex;
 
@@ -200,6 +200,8 @@ pub struct DaemonContext {
     pub source_mtime: f64,
     /// Path of the daemon binary at startup (FastLED/fbuild#1476 diagnostics).
     pub source_exe: String,
+    /// Computed only if a CLI sees a newer mtime and asks for content identity.
+    pub source_hash: OnceLock<Option<String>>,
     /// Whether the running-process broker launched this daemon as a backend.
     pub launched_by_broker: bool,
     /// Last time any request was processed (for idle timeout).
@@ -280,6 +282,7 @@ impl DaemonContext {
             shutdown_tx,
             source_mtime,
             source_exe,
+            source_hash: OnceLock::new(),
             launched_by_broker,
             last_activity: Arc::new(std::sync::Mutex::new(Instant::now())),
             spawner_cwd,

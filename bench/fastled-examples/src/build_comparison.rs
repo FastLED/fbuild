@@ -55,6 +55,20 @@ const BOARDS: [Board; 2] = [
 
 type AppResult<T> = Result<T, Box<dyn std::error::Error>>;
 
+fn tool_envs(kind: ToolKind, perf_log: &Path) -> Vec<(&'static str, OsString)> {
+    if matches!(kind, ToolKind::Fbuild) {
+        vec![
+            ("FBUILD_PERF_LOG", OsString::from("1")),
+            ("FBUILD_PERF_LOG_JSON", perf_log.as_os_str().to_os_string()),
+            // Include the mtime comparison in benchmark.log if a run hits the
+            // intermittent restart path (FastLED/fbuild#1476).
+            ("RUST_LOG", OsString::from("fbuild_cli=info")),
+        ]
+    } else {
+        Vec::new()
+    }
+}
+
 #[derive(Debug)]
 struct Options {
     output_dir: NormalizedPath,
@@ -304,14 +318,7 @@ fn measure_tool(
     let mut cold_phase_trials = Vec::new();
     let mut daemon_restarts = 0;
     let perf_log = output_dir.join(PERF_LOG_FILE);
-    let envs: Vec<(&str, OsString)> = if matches!(kind, ToolKind::Fbuild) {
-        vec![
-            ("FBUILD_PERF_LOG", OsString::from("1")),
-            ("FBUILD_PERF_LOG_JSON", perf_log.clone().into_os_string()),
-        ]
-    } else {
-        Vec::new()
-    };
+    let envs = tool_envs(kind, &perf_log);
 
     if matches!(kind, ToolKind::Fbuild) {
         writeln!(log, "\n===== fbuild daemon preflight =====")?;
@@ -341,6 +348,7 @@ fn measure_tool(
                     project_dir,
                     fbuild,
                     arduino_build_dir,
+                    &envs,
                     log,
                 )?;
             }
@@ -745,6 +753,7 @@ fn prepare_cold(
     project_dir: &Path,
     fbuild: &Path,
     arduino_build_dir: &Path,
+    envs: &[(&str, OsString)],
     log: &mut File,
 ) -> AppResult<()> {
     writeln!(log, "----- untimed cold-cache preparation -----")?;
@@ -759,7 +768,7 @@ fn prepare_cold(
     ) {
         match step {
             ColdCleanupStep::Command { program, args } => {
-                run_logged(&program, &args, repo_root, log)?;
+                run_logged_env(&program, &args, repo_root, log, envs)?;
             }
             ColdCleanupStep::RemoveDir(path) => remove_dir_within(repo_root, &path)?,
         }
@@ -872,10 +881,6 @@ fn timed_build(
 
 fn os_args(values: &[&str]) -> Vec<OsString> {
     values.iter().map(OsString::from).collect()
-}
-
-fn run_logged(program: &OsStr, args: &[OsString], cwd: &Path, log: &mut File) -> AppResult<Output> {
-    run_logged_env(program, args, cwd, log, &[])
 }
 
 fn run_logged_env(

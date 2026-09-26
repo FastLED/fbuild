@@ -244,6 +244,7 @@ async fn main() {
     let app = Router::new()
         .route("/", get(health::root))
         .route("/health", get(health::health_check))
+        .route("/api/daemon/image-hash", get(health::image_hash))
         .route("/api/daemon/info", get(health::daemon_info))
         .route("/api/daemon/shutdown", post(health::shutdown))
         // FastLED/fbuild#1361 — obtainable from a daemon that is already

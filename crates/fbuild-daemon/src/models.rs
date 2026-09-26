@@ -268,6 +268,13 @@ pub struct HealthResponse {
     pub launched_by_broker: bool,
 }
 
+/// GET /api/daemon/image-hash, requested only after an mtime mismatch.
+#[derive(Debug, Serialize)]
+pub struct ImageHashResponse {
+    pub pid: u32,
+    pub blake3: String,
+}
+
 /// GET /api/daemon/info
 #[derive(Debug, Serialize)]
 pub struct DaemonInfoResponse {
