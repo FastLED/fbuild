@@ -24,6 +24,10 @@ pub(crate) async fn daemon_terminate_signal() {
     }
 }
 
+pub(crate) fn daemon_graceful_termination_budget() -> std::time::Duration {
+    std::time::Duration::from_secs(crate::daemon_health::TERMINATE_EXIT_BUDGET.as_secs() + 1)
+}
+
 pub(crate) fn configure_tokio_owner_death(
     command: &mut tokio::process::Command,
 ) -> std::io::Result<()> {

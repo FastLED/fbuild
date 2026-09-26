@@ -344,7 +344,10 @@ impl DaemonContext {
         let active = self
             .active_operations
             .load(std::sync::atomic::Ordering::Acquire);
-        if !force && (admitted != 0 || active != 0) {
+        let operation_in_progress = self
+            .operation_in_progress
+            .load(std::sync::atomic::Ordering::Acquire);
+        if !force && (admitted != 0 || active != 0 || operation_in_progress) {
             return None;
         }
         self.is_shutting_down
