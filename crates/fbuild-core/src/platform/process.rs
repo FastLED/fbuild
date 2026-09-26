@@ -254,6 +254,13 @@ pub fn register_daemon_shutdown_handler(
     super::selected::process::register_daemon_shutdown_handler(shutdown_tx)
 }
 
+/// Resolve when the host asks the daemon process to terminate (SIGTERM on
+/// Unix). Never resolves on hosts whose termination requests arrive through
+/// [`register_daemon_shutdown_handler`] instead (Windows close/logoff/shutdown).
+pub async fn daemon_terminate_signal() {
+    super::selected::process::daemon_terminate_signal().await
+}
+
 /// Build the host-correct child environment while preserving caller overlays.
 pub(crate) fn command_environment(
     program: &str,
