@@ -110,30 +110,6 @@ pub fn namespace_to_export() -> std::io::Result<Option<String>> {
 mod tests {
     use super::*;
 
-    /// Restores a single env var on drop; tests here mutate process state
-    /// that outlives a single test.
-    struct EnvVarGuard {
-        name: &'static str,
-        prior: Option<String>,
-    }
-
-    impl EnvVarGuard {
-        fn set(name: &'static str, value: &str) -> Self {
-            let prior = std::env::var(name).ok();
-            unsafe { std::env::set_var(name, value) };
-            Self { name, prior }
-        }
-    }
-
-    impl Drop for EnvVarGuard {
-        fn drop(&mut self) {
-            match &self.prior {
-                Some(value) => unsafe { std::env::set_var(self.name, value) },
-                None => unsafe { std::env::remove_var(self.name) },
-            }
-        }
-    }
-
     fn hash(byte: u8) -> [u8; 32] {
         [byte; 32]
     }
@@ -213,17 +189,16 @@ mod tests {
         assert_eq!(error.kind(), std::io::ErrorKind::PermissionDenied);
     }
 
-    /// The dev-mode branches of `namespace_to_export` are covered by the
-    /// pure-function tests above; an env-level test for them would race the
-    /// parallel tests in this crate that also flip `FBUILD_DEV_MODE`
-    /// process-globally. Inheritance is the one composition worth proving
-    /// end-to-end, and it is dev-flag-independent.
+    /// Keep inheritance coverage on the pure seam: mutating the process
+    /// environment here can race every parallel test that reads `HOME` or any
+    /// other variable (FastLED/fbuild#1483).
     #[test]
     fn export_honors_an_inherited_stamp() {
-        let _ns = EnvVarGuard::set(ZCCACHE_DAEMON_NAMESPACE_ENV, "checkout-b-fedcba9876543210");
-
         assert_eq!(
-            namespace_to_export().unwrap(),
+            namespace_for_process(Some("checkout-b-fedcba9876543210"), false, || {
+                Err(std::io::Error::other("must not be called"))
+            })
+            .unwrap(),
             Some("checkout-b-fedcba9876543210".to_string())
         );
     }

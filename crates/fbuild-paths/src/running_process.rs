@@ -134,10 +134,18 @@ pub struct DaemonCacheIdentity {
 impl DaemonCacheIdentity {
     pub fn discover() -> Self {
         let cache_root = crate::get_cache_root();
+        Self::from_resolved(
+            cache_root,
+            crate::is_dev_mode(),
+            std::env::var_os(FBUILD_CACHE_DIR_ENV).is_some(),
+        )
+    }
+
+    fn from_resolved(cache_root: PathBuf, dev_mode: bool, cache_dir_overridden: bool) -> Self {
         Self {
-            mode: if crate::is_dev_mode() { "dev" } else { "prod" },
+            mode: if dev_mode { "dev" } else { "prod" },
             cache_root_key: stable_path_key(&cache_root),
-            cache_dir_source: if std::env::var_os(FBUILD_CACHE_DIR_ENV).is_some() {
+            cache_dir_source: if cache_dir_overridden {
                 FBUILD_CACHE_DIR_ENV
             } else {
                 "default"
@@ -209,15 +217,19 @@ impl CacheRoots {
     /// this crate's path resolution.
     pub fn discover(runtime_dir: impl Into<PathBuf>) -> Self {
         let cache = crate::get_cache_root();
-        let daemon_dir = crate::get_daemon_dir();
+        Self::from_resolved(runtime_dir.into(), cache, crate::get_fbuild_root())
+    }
+
+    fn from_resolved(runtime_dir: PathBuf, cache: PathBuf, fbuild_root: PathBuf) -> Self {
+        let daemon_dir = fbuild_root.join("daemon");
         Self {
             index: cache.join("index"),
             artifact: cache,
-            temp: crate::get_fbuild_root().join("tmp"),
+            temp: fbuild_root.join("tmp"),
             log: daemon_dir.clone(),
             lock: daemon_dir,
-            runtime: runtime_dir.into(),
-            config: crate::get_fbuild_root(),
+            runtime: runtime_dir,
+            config: fbuild_root,
         }
     }
 }
@@ -245,13 +257,25 @@ fn platform_service_definition_dir() -> PathBuf {
             })
             .unwrap_or_else(fbuild_owned_service_definition_dir);
     }
-    if let Some(config_home) = std::env::var_os("XDG_CONFIG_HOME")
-        .map(PathBuf::from)
-        .or_else(|| std::env::var_os("HOME").map(|home| PathBuf::from(home).join(".config")))
-    {
-        return config_home.join("running-process").join("services");
-    }
-    fbuild_owned_service_definition_dir()
+    platform_service_definition_dir_from(
+        std::env::var_os("XDG_CONFIG_HOME").map(PathBuf::from),
+        std::env::var_os("HOME").map(PathBuf::from),
+        fbuild_owned_service_definition_dir,
+    )
+}
+
+fn platform_service_definition_dir_from<F>(
+    config_home: Option<PathBuf>,
+    home: Option<PathBuf>,
+    fallback: F,
+) -> PathBuf
+where
+    F: FnOnce() -> PathBuf,
+{
+    config_home
+        .or_else(|| home.map(|home| home.join(".config")))
+        .map(|config_home| config_home.join("running-process").join("services"))
+        .unwrap_or_else(fallback)
 }
 
 fn fbuild_owned_service_definition_dir() -> PathBuf {
@@ -263,37 +287,6 @@ fn fbuild_owned_service_definition_dir() -> PathBuf {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::sync::Mutex;
-
-    static ENV_LOCK: Mutex<()> = Mutex::new(());
-
-    struct EnvVarGuard {
-        name: &'static str,
-        previous: Option<std::ffi::OsString>,
-    }
-
-    impl EnvVarGuard {
-        fn set(name: &'static str, value: impl AsRef<std::ffi::OsStr>) -> Self {
-            let previous = std::env::var_os(name);
-            std::env::set_var(name, value);
-            Self { name, previous }
-        }
-
-        fn remove(name: &'static str) -> Self {
-            let previous = std::env::var_os(name);
-            std::env::remove_var(name);
-            Self { name, previous }
-        }
-    }
-
-    impl Drop for EnvVarGuard {
-        fn drop(&mut self) {
-            match self.previous.take() {
-                Some(value) => std::env::set_var(self.name, value),
-                None => std::env::remove_var(self.name),
-            }
-        }
-    }
 
     #[test]
     fn service_definition_metadata_matches_tracker() {
@@ -317,18 +310,26 @@ mod tests {
         if !fbuild_core::platform::host::is_linux() {
             return;
         }
-        let _env = ENV_LOCK.lock().unwrap();
         let cache_root = crate::temp_subdir(&format!(
             "fbuild-service-def-cache-root-{}",
             std::process::id()
         ));
-        let _cache_guard = EnvVarGuard::set(FBUILD_CACHE_DIR_ENV, &cache_root);
-        let _xdg_guard = EnvVarGuard::remove("XDG_CONFIG_HOME");
-        let _home_guard = EnvVarGuard::remove("HOME");
+        let fallback = cache_root.join("running-process").join("services");
+        assert_eq!(
+            platform_service_definition_dir_from(None, None, || fallback.clone()),
+            fallback
+        );
+    }
+
+    #[test]
+    fn service_definition_dir_does_not_resolve_fallback_when_xdg_is_set() {
+        let xdg = PathBuf::from("/tmp/xdg");
 
         assert_eq!(
-            platform_service_definition_dir(),
-            cache_root.join("running-process").join("services")
+            platform_service_definition_dir_from(Some(xdg.clone()), None, || {
+                panic!("fallback must remain lazy")
+            }),
+            xdg.join("running-process").join("services")
         );
     }
 
@@ -362,12 +363,11 @@ mod tests {
 
     #[test]
     fn cache_roots_respect_fbuild_cache_dir_as_artifact_owner() {
-        let _env = ENV_LOCK.lock().unwrap();
         let cache_root = crate::temp_subdir(&format!("fbuild-cache-roots-{}", std::process::id()));
-        let _cache_guard = EnvVarGuard::set(FBUILD_CACHE_DIR_ENV, &cache_root);
         let runtime = PathBuf::from("/opt/fbuild/bin");
+        let fbuild_root = PathBuf::from("/home/test/.fbuild/prod");
 
-        let roots = CacheRoots::discover(&runtime);
+        let roots = CacheRoots::from_resolved(runtime.clone(), cache_root.clone(), fbuild_root);
 
         assert_eq!(roots.artifact, cache_root);
         assert_eq!(roots.index, cache_root.join("index"));
@@ -380,15 +380,15 @@ mod tests {
 
     #[test]
     fn cache_roots_keep_artifacts_stable_across_runtime_dirs() {
-        let _env = ENV_LOCK.lock().unwrap();
         let cache_root =
             crate::temp_subdir(&format!("fbuild-cache-roots-stable-{}", std::process::id()));
-        let _cache_guard = EnvVarGuard::set(FBUILD_CACHE_DIR_ENV, &cache_root);
+        let fbuild_root = PathBuf::from("/home/test/.fbuild/prod");
         let runtime_v1 = PathBuf::from("/opt/fbuild-1/bin");
         let runtime_v2 = PathBuf::from("/opt/fbuild-2/bin");
 
-        let roots_v1 = CacheRoots::discover(&runtime_v1);
-        let roots_v2 = CacheRoots::discover(&runtime_v2);
+        let roots_v1 =
+            CacheRoots::from_resolved(runtime_v1.clone(), cache_root.clone(), fbuild_root.clone());
+        let roots_v2 = CacheRoots::from_resolved(runtime_v2.clone(), cache_root, fbuild_root);
 
         assert_eq!(roots_v1.artifact, roots_v2.artifact);
         assert_eq!(roots_v1.index, roots_v2.index);
@@ -404,15 +404,15 @@ mod tests {
 
     #[test]
     fn dev_mode_default_cache_roots_stay_stable_across_runtime_dirs() {
-        let _env = ENV_LOCK.lock().unwrap();
-        let _dev_guard = EnvVarGuard::set("FBUILD_DEV_MODE", "1");
-        let _cache_guard = EnvVarGuard::remove(FBUILD_CACHE_DIR_ENV);
         let runtime_v1 = PathBuf::from("/opt/fbuild-dev-1/bin");
         let runtime_v2 = PathBuf::from("/opt/fbuild-dev-2/bin");
+        let fbuild_root = PathBuf::from("/home/test/.fbuild/dev");
+        let cache_root = fbuild_root.join("cache");
 
-        let identity = DaemonCacheIdentity::discover();
-        let roots_v1 = CacheRoots::discover(&runtime_v1);
-        let roots_v2 = CacheRoots::discover(&runtime_v2);
+        let identity = DaemonCacheIdentity::from_resolved(cache_root.clone(), true, false);
+        let roots_v1 =
+            CacheRoots::from_resolved(runtime_v1.clone(), cache_root.clone(), fbuild_root.clone());
+        let roots_v2 = CacheRoots::from_resolved(runtime_v2.clone(), cache_root, fbuild_root);
 
         assert_eq!(identity.mode, "dev");
         assert_eq!(identity.cache_dir_source, "default");
