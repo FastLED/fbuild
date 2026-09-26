@@ -799,8 +799,13 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // PlatformIO discovers and compiles these automatically.
         {
             let _g = perf.phase("compile-local-libs");
-            compile_local_libraries(
+            let local_libraries = crate::framework_libs::select_local_libraries(
                 &params.project_dir,
+                &ctx.src_dir,
+                &declared_lib_deps,
+            );
+            compile_local_libraries(
+                &local_libraries,
                 build_dir,
                 &compiler,
                 &toolchain,
@@ -904,7 +909,12 @@ impl BuildOrchestrator for Esp32Orchestrator {
             esptool_bin.clone().map(|path| path.into_path_buf()),
             params.verbose,
         )
-        .with_caller_path(params.caller_path.clone());
+        .with_caller_path(params.caller_path.clone())
+        .with_app_size_limit(super::boot_artifacts::app_partition_limit(
+            &params.project_dir,
+            &framework,
+            &ctx.board,
+        ));
 
         let link_result = {
             let _g = perf.phase("link-convert-size");

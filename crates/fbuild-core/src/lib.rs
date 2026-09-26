@@ -261,6 +261,28 @@ impl SizeInfo {
             .map(|max| (self.total_ram as f64 / max as f64) * 100.0)
     }
 
+    /// PlatformIO's `checkprogsize` message when the image exceeds flash.
+    pub fn flash_overflow(&self) -> Option<String> {
+        let max = self.max_flash.filter(|&max| max > 0)?;
+        (self.total_flash > max).then(|| {
+            format!(
+                "The program size ({} bytes) is greater than maximum allowed ({} bytes)",
+                self.total_flash, max
+            )
+        })
+    }
+
+    /// PlatformIO's `checkprogsize` message when static RAM exceeds the board.
+    pub fn ram_overflow(&self) -> Option<String> {
+        let max = self.max_ram.filter(|&max| max > 0)?;
+        (self.total_ram > max).then(|| {
+            format!(
+                "The data size ({} bytes) is greater than maximum allowed ({} bytes)",
+                self.total_ram, max
+            )
+        })
+    }
+
     /// Parse size output from avr-size or arm-none-eabi-size.
     ///
     /// Supports two formats:
@@ -472,6 +494,46 @@ mod tests {
         };
         assert!(info.flash_percent().is_none());
         assert!(info.ram_percent().is_none());
+        assert!(info.flash_overflow().is_none());
+        assert!(info.ram_overflow().is_none());
+    }
+
+    /// FastLED/fbuild#1409: the Uno image from the report, 135% flash and
+    /// 2059% RAM, must be recognizable as not fitting.
+    #[test]
+    fn size_info_overflow_reports_both_regions() {
+        let info = SizeInfo {
+            text: 1478,
+            data: 42184,
+            bss: 0,
+            total_flash: 43662,
+            total_ram: 42184,
+            max_flash: Some(32256),
+            max_ram: Some(2048),
+        };
+        assert_eq!(
+            info.flash_overflow().as_deref(),
+            Some("The program size (43662 bytes) is greater than maximum allowed (32256 bytes)")
+        );
+        assert_eq!(
+            info.ram_overflow().as_deref(),
+            Some("The data size (42184 bytes) is greater than maximum allowed (2048 bytes)")
+        );
+    }
+
+    #[test]
+    fn size_info_exactly_full_is_not_an_overflow() {
+        let info = SizeInfo {
+            text: 32000,
+            data: 256,
+            bss: 1792,
+            total_flash: 32256,
+            total_ram: 2048,
+            max_flash: Some(32256),
+            max_ram: Some(2048),
+        };
+        assert!(info.flash_overflow().is_none());
+        assert!(info.ram_overflow().is_none());
     }
 
     #[test]

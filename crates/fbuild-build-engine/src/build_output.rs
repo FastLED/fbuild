@@ -116,6 +116,11 @@ pub fn log_size_report(log: &mut BuildLog, size: &SizeInfo) {
         format_bytes(size.max_ram.unwrap_or(0)),
         size.ram_percent().unwrap_or(0.0),
     ));
+    // A fatal overflow never reaches here (`enforce_size_limits` failed the
+    // link), so this only fires for the RAM figure left as a warning.
+    if let Some(msg) = size.ram_overflow() {
+        log.push(format!("Warning! {msg}"));
+    }
 }
 
 /// Emit an artifact listing line with its on-disk size.

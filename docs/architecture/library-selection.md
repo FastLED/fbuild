@@ -94,6 +94,16 @@ before its framework dependencies can be selected. This prevents an inactive
 header anywhere in a large library from self-selecting an unrelated framework
 library (FastLED/fbuild#1094).
 
+The same rule decides which local `lib/` libraries are compiled at all
+(`select_local_libraries`, FastLED/fbuild#1410). A `lib/<name>/` library is
+compiled only when the walk from the project's translation units reaches one
+of its files — directly, or through another selected local library — or when
+`lib_deps` names it. That walk is textual (every `#if` arm is scanned), because
+a guard on a compiler-builtin macro such as `__XTENSA__` looks "defined
+nowhere" to the branch evaluator below and would drop a library the compiler
+actually includes. Only the selected local libraries' sources then seed the
+framework-library walk, so what compiles is what seeds.
+
 ## Conditional includes: decided, undecidable, or a hint
 
 The walk evaluates preprocessor branches, but only where it honestly can. The

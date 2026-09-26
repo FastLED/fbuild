@@ -163,6 +163,14 @@ impl BuildContext {
         for note in &overlay.notes {
             build_log.push(format!("extra_scripts: {}", note));
         }
+        // FastLED/fbuild#1407: a registry version pin builds against fbuild's
+        // own packages; say so in the build output, not just the daemon log.
+        if let Ok(env_config) = config.get_env_config(env_name) {
+            for warning in fbuild_config::ignored_version_pins(env_config) {
+                tracing::warn!("{warning}");
+                build_log.push(format!("Warning: {warning}"));
+            }
+        }
 
         // 4. Setup build directories
         //

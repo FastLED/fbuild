@@ -233,6 +233,12 @@ impl Linker for AvrLinker {
         Some(&self.gcc_path)
     }
 
+    /// AVR has one SRAM region and `data + bss` is exactly its static use, so
+    /// an image over it cannot run (FastLED/fbuild#1409).
+    fn ram_overflow_is_fatal(&self) -> bool {
+        true
+    }
+
     async fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
         crate::linker::LinkerBase::report_size(
             &self.size_path,
