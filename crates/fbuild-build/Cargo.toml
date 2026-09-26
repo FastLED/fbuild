@@ -48,15 +48,16 @@ tree-sitter-cpp = { workspace = true }
 # child processes) was deleted in the same PR; there is no
 # `--no-default-features` escape hatch.
 #
-# Pinned at zccache main `8475316` (1.14.14 + zackees/zccache#1670's
-# single-pass include lexer, FastLED/fbuild#1464), which takes
+# Pinned at zccache main `126380b` (1.14.14 + zackees/zccache#1670's
+# single-pass include lexer and #1708's single-flight toolchain probes,
+# FastLED/fbuild#1464/#1466), which takes
 # running-process =4.10.14 from crates.io. Keep both pins aligned when
 # repinning so fbuild links exactly one copy of the exported broker symbols.
 #
 # `running-process` in the workspace root must be pinned to the SAME source
 # and version zccache uses, or its unmangled `rp_*_public` C symbols get
 # linked twice (guarded by crates/fbuild-core/tests/dep_identity.rs).
-zccache = { git = "https://github.com/zackees/zccache", rev = "8475316e52abdb98a0c768107aff2431ee88dce7" }
+zccache = { git = "https://github.com/zackees/zccache", rev = "126380b40889a50d4a5a5bbfbda2016b236b07b8" }
 
 [dev-dependencies]
 filetime = { workspace = true }
