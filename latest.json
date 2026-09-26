@@ -1,0 +1,270 @@
+{
+  "fbuild_overhead_ms": 160.194,
+  "fbuild_vs_platformio_cold": 0.48,
+  "metadata": {
+    "boards": [
+      {
+        "environment": "uno",
+        "fqbn": "arduino:avr:uno",
+        "key": "uno",
+        "name": "Arduino Uno"
+      },
+      {
+        "environment": "esp32s3",
+        "fqbn": "esp32:esp32:esp32s3",
+        "key": "esp32s3",
+        "name": "ESP32-S3"
+      }
+    ],
+    "cold_definition": "project outputs, reusable framework objects, compiler-object caches, and Arduino/PlatformIO download/HTTP caches removed; installed packages/toolchains and fbuild package archives retained",
+    "fixture": "bench/blink",
+    "generated_at": "2026-09-26T22:03:01Z",
+    "git_sha": "e76cc5195a4314da6f099b2e14ed4bb84596dcf1",
+    "repository": "FastLED/fbuild",
+    "run_url": "https://github.com/FastLED/fbuild/actions/runs/36274431761",
+    "runner": {
+      "arch": "x86_64",
+      "os": "linux"
+    },
+    "statistic": "median",
+    "toolchain_pins": {
+      "esp32s3": {
+        "arduino_core": "esp32:esp32@3.3.7",
+        "platformio_platform": "espressif32@6.13.0"
+      },
+      "note": "ecosystem framework distributions are pinned independently",
+      "uno": {
+        "arduino_core": "arduino:avr@1.8.8",
+        "platformio_platform": "atmelavr@5.1.0"
+      }
+    },
+    "trials": 3,
+    "warm_definition": "immediate no-change rebuild after the cold build"
+  },
+  "raw_baseline_ms": 173.539,
+  "results": [
+    {
+      "board": "uno",
+      "board_name": "Arduino Uno",
+      "cold_ms": 633.502,
+      "cold_phase_trials": [],
+      "cold_phases_ms": {},
+      "cold_trials_ms": [
+        634.619,
+        632.187,
+        633.502
+      ],
+      "daemon_restarts": 0,
+      "display_name": "Arduino CLI",
+      "speedup": 1.687,
+      "tool": "arduino",
+      "version": "arduino-cli  Version: 1.5.0 Commit: dd407d42d Date: 2026-05-19T14:07:51Z",
+      "warm_ms": 375.455,
+      "warm_trials_ms": [
+        379.982,
+        375.455,
+        374.172
+      ]
+    },
+    {
+      "board": "uno",
+      "board_name": "Arduino Uno",
+      "cold_ms": 695.231,
+      "cold_phase_trials": [],
+      "cold_phases_ms": {},
+      "cold_trials_ms": [
+        696.991,
+        695.231,
+        685.757
+      ],
+      "daemon_restarts": 0,
+      "display_name": "PlatformIO",
+      "speedup": 1.404,
+      "tool": "platformio",
+      "version": "PlatformIO Core, version 6.1.19",
+      "warm_ms": 495.178,
+      "warm_trials_ms": [
+        493.69,
+        496.547,
+        495.178
+      ]
+    },
+    {
+      "board": "uno",
+      "board_name": "Arduino Uno",
+      "cold_ms": 333.733,
+      "cold_phase_trials": [
+        {
+          "board-load": 0.014932,
+          "build-dirs": 0.06057,
+          "build-info": 1.652187,
+          "compile-core": 266.564358,
+          "compile-db": 3.381427,
+          "compile-local-libs": 0.00024,
+          "compile-sketch": 99.642071,
+          "compile-variant": 0.000491,
+          "config-parse": 0.27196099999999995,
+          "core-cache-hydrate": 0.004517,
+          "core-cache-store": 4.033549,
+          "fast-path-check": 0.017997,
+          "flag-collect": 0.001712,
+          "fp-watches-collect": 0.003856,
+          "framework-ensure": 0.06735,
+          "link": 37.350306,
+          "project-as-lib": 0.010466,
+          "source-scan": 0.415724,
+          "toolchain-ensure": 0.060439
+        },
+        {
+          "board-load": 0.013049,
+          "build-dirs": 0.056543,
+          "build-info": 1.444921,
+          "compile-core": 276.16756599999997,
+          "compile-db": 2.40011,
+          "compile-local-libs": 0.000321,
+          "compile-sketch": 71.854585,
+          "compile-variant": 0.00029,
+          "config-parse": 0.26822599999999996,
+          "core-cache-hydrate": 0.0044859999999999995,
+          "core-cache-store": 4.148369,
+          "fast-path-check": 0.018648,
+          "flag-collect": 0.002374,
+          "fp-watches-collect": 0.002984,
+          "framework-ensure": 0.06690900000000001,
+          "link": 37.48506,
+          "project-as-lib": 0.007710999999999999,
+          "source-scan": 0.397296,
+          "toolchain-ensure": 0.060179
+        },
+        {
+          "board-load": 0.014761,
+          "build-dirs": 0.054851,
+          "build-info": 1.5514979999999998,
+          "compile-core": 272.733917,
+          "compile-db": 2.395604,
+          "compile-local-libs": 0.00042,
+          "compile-sketch": 36.845011,
+          "compile-variant": 0.00051,
+          "config-parse": 0.27361300000000005,
+          "core-cache-hydrate": 0.004137,
+          "core-cache-store": 4.343465999999999,
+          "fast-path-check": 0.02026,
+          "flag-collect": 0.001642,
+          "fp-watches-collect": 0.004246,
+          "framework-ensure": 0.070003,
+          "link": 37.023344,
+          "project-as-lib": 0.007762,
+          "source-scan": 0.411417,
+          "toolchain-ensure": 0.06213199999999999
+        }
+      ],
+      "cold_phases_ms": {
+        "board-load": 0.015,
+        "build-dirs": 0.057,
+        "build-info": 1.551,
+        "compile-core": 272.734,
+        "compile-db": 2.4,
+        "compile-local-libs": 0.0,
+        "compile-sketch": 71.855,
+        "compile-variant": 0.0,
+        "config-parse": 0.272,
+        "core-cache-hydrate": 0.004,
+        "core-cache-store": 4.148,
+        "fast-path-check": 0.019,
+        "flag-collect": 0.002,
+        "fp-watches-collect": 0.004,
+        "framework-ensure": 0.067,
+        "link": 37.35,
+        "project-as-lib": 0.008,
+        "source-scan": 0.411,
+        "toolchain-ensure": 0.06
+      },
+      "cold_trials_ms": [
+        324.912,
+        333.733,
+        336.59
+      ],
+      "daemon_restarts": 0,
+      "display_name": "fbuild",
+      "speedup": 7.332,
+      "tool": "fbuild",
+      "version": "fbuild 2.5.28",
+      "warm_ms": 45.517,
+      "warm_trials_ms": [
+        45.824,
+        45.216,
+        45.517
+      ]
+    },
+    {
+      "board": "esp32s3",
+      "board_name": "ESP32-S3",
+      "cold_ms": 9127.055,
+      "cold_phase_trials": [],
+      "cold_phases_ms": {},
+      "cold_trials_ms": [
+        9257.51,
+        9110.985,
+        9127.055
+      ],
+      "daemon_restarts": 0,
+      "display_name": "Arduino CLI",
+      "speedup": 4.937,
+      "tool": "arduino",
+      "version": "arduino-cli  Version: 1.5.0 Commit: dd407d42d Date: 2026-05-19T14:07:51Z",
+      "warm_ms": 1848.731,
+      "warm_trials_ms": [
+        1847.115,
+        1848.731,
+        1851.539
+      ]
+    },
+    {
+      "board": "esp32s3",
+      "board_name": "ESP32-S3",
+      "cold_ms": 5034.047,
+      "cold_phase_trials": [],
+      "cold_phases_ms": {},
+      "cold_trials_ms": [
+        5060.578,
+        4989.624,
+        5034.047
+      ],
+      "daemon_restarts": 0,
+      "display_name": "PlatformIO",
+      "speedup": 5.012,
+      "tool": "platformio",
+      "version": "PlatformIO Core, version 6.1.19",
+      "warm_ms": 1004.458,
+      "warm_trials_ms": [
+        1004.458,
+        1005.609,
+        1001.643
+      ]
+    },
+    {
+      "board": "esp32s3",
+      "board_name": "ESP32-S3",
+      "cold_ms": 12517.711,
+      "cold_phase_trials": [],
+      "cold_phases_ms": {},
+      "cold_trials_ms": [
+        12627.881,
+        12444.27,
+        12517.711
+      ],
+      "daemon_restarts": 0,
+      "display_name": "fbuild",
+      "speedup": 46.154,
+      "tool": "fbuild",
+      "version": "fbuild 2.5.28",
+      "warm_ms": 271.217,
+      "warm_trials_ms": [
+        271.217,
+        274.049,
+        269.84
+      ]
+    }
+  ],
+  "schema_version": 2
+}
