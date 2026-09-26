@@ -680,3 +680,7 @@ fn is_translation_unit(path: &Path) -> bool {
 #[cfg(test)]
 #[path = "framework_libs_tests.rs"]
 mod tests;
+
+#[cfg(test)]
+#[path = "framework_libs_local_tests.rs"]
+mod local_tests;
