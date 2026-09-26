@@ -158,6 +158,11 @@ pub struct DaemonContext {
     pub is_shutting_down: Arc<AtomicBool>,
     /// Whether a build/deploy operation is currently in progress.
     pub operation_in_progress: Arc<AtomicBool>,
+    /// Number of build/deploy/... operations in flight (`OperationGuard`s
+    /// alive). Unlike `operation_in_progress`, which the first of two
+    /// concurrent operations clears when it ends, this stays exact, so a
+    /// shutdown can wait for the last one (FastLED/fbuild#1480 follow-up).
+    pub active_operations: Arc<AtomicUsize>,
     /// Number of WebSocket connections currently inside the serial-monitor
     /// handler (e.g. waiting for a port to open). Counted independently of
     /// `serial_manager` sessions because a port may take seconds to open
@@ -266,6 +271,7 @@ impl DaemonContext {
             serial_manager: Arc::new(SharedSerialManager::new()),
             is_shutting_down: Arc::new(AtomicBool::new(false)),
             operation_in_progress: Arc::new(AtomicBool::new(false)),
+            active_operations: Arc::new(AtomicUsize::new(0)),
             pending_serial_attaches: Arc::new(AtomicUsize::new(0)),
             pending_serial_attach_details: DashMap::new(),
             pending_serial_attach_next_id: AtomicU64::new(1),
@@ -403,6 +409,25 @@ impl DaemonContext {
     /// How long since the daemon started.
     pub fn uptime(&self) -> Duration {
         self.started_at.elapsed()
+    }
+
+    /// Wait up to `budget` for every in-flight operation to finish. Returns
+    /// whether none are left.
+    pub async fn wait_for_operations(&self, budget: Duration) -> bool {
+        let deadline = Instant::now() + budget;
+        loop {
+            if self
+                .active_operations
+                .load(std::sync::atomic::Ordering::Acquire)
+                == 0
+            {
+                return true;
+            }
+            if Instant::now() >= deadline {
+                return false;
+            }
+            tokio::time::sleep(Duration::from_millis(50)).await;
+        }
     }
 
     /// How long since the last activity (request processed).
