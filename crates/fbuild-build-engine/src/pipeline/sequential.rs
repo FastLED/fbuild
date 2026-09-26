@@ -248,9 +248,18 @@ pub async fn run_sequential_build_with_libs(
     // Compile local libraries (lib/* — loose objects, LTO-safe; per-lib parallel)
     let library_objects = {
         let _g = perf.phase("compile-local-libs");
+        let declared = ctx
+            .config
+            .get_lib_deps(&params.env_name)
+            .unwrap_or_default();
+        let local_libraries = crate::framework_libs::select_local_libraries(
+            &params.project_dir,
+            &ctx.src_dir,
+            &declared,
+        );
         compile_local_libraries(
             compiler,
-            &params.project_dir,
+            &local_libraries,
             &ctx.build_dir,
             &src_overlay,
             jobs,

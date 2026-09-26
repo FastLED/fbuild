@@ -8,11 +8,13 @@ use super::super::esp32_compiler::Esp32Compiler;
 use crate::compiler::Compiler as _;
 use crate::flag_overlay::{LanguageExtraFlags, apply_overlay_flags};
 
-/// Walk `project_dir/lib/*` and compile each subdirectory as a library archive.
-/// Archives are appended to `library_archives`.
+/// Compile each selected `lib/` library as an archive, appended to
+/// `library_archives`. `libraries` comes from
+/// [`crate::framework_libs::select_local_libraries`], so a library nothing
+/// includes is never compiled (FastLED/fbuild#1410).
 #[allow(clippy::too_many_arguments)]
 pub(super) async fn compile_local_libraries(
-    project_dir: &Path,
+    libraries: &[fbuild_packages::library::FrameworkLibrary],
     build_dir: &Path,
     compiler: &Esp32Compiler,
     toolchain: &fbuild_packages::toolchain::Esp32Toolchain,
@@ -25,29 +27,9 @@ pub(super) async fn compile_local_libraries(
 ) -> Result<()> {
     use fbuild_packages::Toolchain;
 
-    let local_lib_dir = project_dir.join("lib");
-    if !local_lib_dir.is_dir() {
-        return Ok(());
-    }
-    let entries = match std::fs::read_dir(&local_lib_dir) {
-        Ok(it) => it,
-        Err(_) => return Ok(()),
-    };
-
-    for entry in entries.flatten() {
-        let lib_path = entry.path();
-        if !lib_path.is_dir() {
-            continue;
-        }
-        let lib_name = lib_path
-            .file_name()
-            .unwrap_or_default()
-            .to_string_lossy()
-            .to_string();
-
-        let lib_info =
-            fbuild_packages::library::library_info::InstalledLibrary::new(&lib_path, &lib_name);
-        let lib_sources = lib_info.get_source_files();
+    for library in libraries {
+        let lib_name = library.name.clone();
+        let lib_sources = &library.source_files;
         if lib_sources.is_empty() {
             continue;
         }
@@ -72,7 +54,7 @@ pub(super) async fn compile_local_libraries(
         );
         match fbuild_packages::library::library_compiler::compile_library_with_jobs(
             &lib_name,
-            &lib_sources,
+            lib_sources,
             include_dirs,
             &toolchain.get_gcc_path(),
             &toolchain.get_gxx_path(),

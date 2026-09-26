@@ -141,6 +141,63 @@ pub fn parse_platform_packages_value(value: &str, package_name: &str) -> Option<
         .next()
 }
 
+/// Describe every registry version pin in an env that fbuild will not honor.
+///
+/// fbuild has no PlatformIO registry resolver, so `platform = espressif32@6.5.0`
+/// and a bare `platform_packages = <name>@<version>` both build against the
+/// packages fbuild pins itself. That used to happen silently, which left the
+/// ini claiming a version that was never built (FastLED/fbuild#1407). Each
+/// returned message names the ignored pin and the URL form that does work;
+/// callers surface them in the build output.
+pub fn ignored_version_pins(env: &std::collections::HashMap<String, String>) -> Vec<String> {
+    let mut warnings = Vec::new();
+    let platform = env.get("platform").map(|v| v.trim()).unwrap_or_default();
+    let is_esp32 = fbuild_core::Platform::from_platform_str(platform)
+        == Some(fbuild_core::Platform::Espressif32);
+    let hint = if is_esp32 {
+        "To pin ESP32, use a URL: `platform = https://github.com/pioarduino/platform-espressif32/releases/download/<tag>/platform-espressif32.zip` or `platform_packages = platform-espressif32@<archive URL>`."
+    } else {
+        "To pin a package, give its archive URL: `platform_packages = <package>@<URL>` or `<package>@<owner>/<repo>#<sha>`."
+    };
+
+    if let Some((name, version)) = registry_version_pin(platform) {
+        warnings.push(format!(
+            "`platform = {platform}`: version pin `{version}` is ignored; fbuild does not \
+             resolve PlatformIO registry versions and builds with its own pinned `{name}` \
+             packages. {hint}"
+        ));
+    }
+
+    if let Some(raw) = env.get("platform_packages") {
+        for line in raw.lines() {
+            let entry = line.trim().trim_end_matches([',', ';']).trim();
+            if let Some((name, version)) = registry_version_pin(entry) {
+                warnings.push(format!(
+                    "`platform_packages = {entry}`: version pin `{version}` is ignored; \
+                     fbuild does not resolve PlatformIO registry versions and uses its own \
+                     pinned `{name}`. {hint}"
+                ));
+            }
+        }
+    }
+    warnings
+}
+
+/// Split `name@<version>` when the right-hand side is a registry version, not
+/// one of the URL / `owner/repo#sha` forms [`parse_platform_packages_entry`]
+/// honors.
+fn registry_version_pin(value: &str) -> Option<(&str, &str)> {
+    if value.contains("://") {
+        return None;
+    }
+    let (name, version) = value.split_once('@')?;
+    let (name, version) = (name.trim(), version.trim());
+    if name.is_empty() || version.is_empty() || (version.contains('/') && version.contains('#')) {
+        return None;
+    }
+    Some((name, version))
+}
+
 /// Archive extensions fbuild can download and unpack.
 const ARCHIVE_EXTENSIONS: [&str; 4] = [".zip", ".tar.gz", ".tar.bz2", ".tar.xz"];
 
@@ -341,5 +398,81 @@ mod tests {
         let line = "framework-arduino-lpc8xx@zackees/ArduinoCore-LPC8xx#abc,";
         let got = parse_platform_packages_entry(line, "framework-arduino-lpc8xx").unwrap();
         assert!(got.url.contains("archive/abc.tar.gz"));
+    }
+
+    fn env(pairs: &[(&str, &str)]) -> std::collections::HashMap<String, String> {
+        pairs
+            .iter()
+            .map(|(k, v)| ((*k).to_string(), (*v).to_string()))
+            .collect()
+    }
+
+    /// FastLED/fbuild#1407: `platform = espressif32@6.5.0` used to resolve to
+    /// the default platform with no word about the dropped version.
+    #[test]
+    fn platform_version_pin_is_reported_with_the_url_escape_hatch() {
+        let warnings = ignored_version_pins(&env(&[("platform", "espressif32@6.5.0")]));
+        assert_eq!(warnings.len(), 1, "{warnings:?}");
+        assert!(
+            warnings[0].contains("`6.5.0` is ignored"),
+            "{}",
+            warnings[0]
+        );
+        assert!(
+            warnings[0].contains("platform-espressif32@<archive URL>"),
+            "{}",
+            warnings[0]
+        );
+    }
+
+    #[test]
+    fn owner_prefixed_spaced_platform_pin_is_reported() {
+        let warnings = ignored_version_pins(&env(&[("platform", "platformio/atmelavr @ ~5.0.0")]));
+        assert_eq!(warnings.len(), 1, "{warnings:?}");
+        assert!(
+            warnings[0].contains("`~5.0.0` is ignored"),
+            "{}",
+            warnings[0]
+        );
+        assert!(warnings[0].contains("<package>@<URL>"), "{}", warnings[0]);
+    }
+
+    #[test]
+    fn bare_platform_packages_version_pin_is_reported() {
+        let warnings = ignored_version_pins(&env(&[
+            ("platform", "espressif32"),
+            (
+                "platform_packages",
+                "platform-espressif32@6.5.0\nframework-arduinoespressif32@https://example.com/a.tar.gz",
+            ),
+        ]));
+        assert_eq!(warnings.len(), 1, "{warnings:?}");
+        assert!(
+            warnings[0].contains("`platform_packages = platform-espressif32@6.5.0`"),
+            "{}",
+            warnings[0]
+        );
+    }
+
+    #[test]
+    fn honored_forms_produce_no_warning() {
+        for (key, value) in [
+            ("platform", "espressif32"),
+            (
+                "platform",
+                "https://github.com/pioarduino/platform-espressif32/releases/download/54.03.20/platform-espressif32.zip",
+            ),
+            (
+                "platform_packages",
+                "platform-espressif32@https://github.com/pioarduino/platform-espressif32/archive/abc.tar.gz",
+            ),
+            (
+                "platform_packages",
+                "framework-arduino-lpc8xx@zackees/ArduinoCore-LPC8xx#abc",
+            ),
+        ] {
+            let warnings = ignored_version_pins(&env(&[(key, value)]));
+            assert!(warnings.is_empty(), "{key} = {value}: {warnings:?}");
+        }
     }
 }

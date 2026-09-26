@@ -41,47 +41,30 @@ pub async fn compile_sources(
     Ok(result.objects)
 }
 
-/// Compile all libraries in the project's `lib/` directory.
+/// Compile the project `lib/` libraries the build uses.
 ///
+/// `libraries` comes from [`crate::framework_libs::select_local_libraries`],
+/// so a library nothing includes is never compiled (FastLED/fbuild#1410).
 /// Each library's source files are compiled in parallel via
 /// [`crate::parallel::compile_sources_parallel`]. Libraries themselves are
 /// processed one after another so the per-lib `jobs` budget isn't oversubscribed.
 pub async fn compile_local_libraries(
     compiler: &dyn Compiler,
-    project_dir: &Path,
+    libraries: &[fbuild_packages::library::FrameworkLibrary],
     build_dir: &Path,
     extra_flags: &LanguageExtraFlags,
     jobs: usize,
     build_log: &std::sync::Mutex<BuildLog>,
 ) -> Result<Vec<PathBuf>> {
     let mut library_objects = Vec::new();
-    let local_lib_dir = project_dir.join("lib");
-    if !local_lib_dir.is_dir() {
-        return Ok(library_objects);
-    }
-    let entries = match std::fs::read_dir(&local_lib_dir) {
-        Ok(e) => e,
-        Err(_) => return Ok(library_objects),
-    };
-    for entry in entries.flatten() {
-        let lib_path = entry.path();
-        if !lib_path.is_dir() {
-            continue;
-        }
-        let lib_name = lib_path
-            .file_name()
-            .unwrap_or_default()
-            .to_string_lossy()
-            .to_string();
-
-        let lib_info =
-            fbuild_packages::library::library_info::InstalledLibrary::new(&lib_path, &lib_name);
-        let lib_sources = lib_info.get_source_files();
+    for library in libraries {
+        let lib_name = &library.name;
+        let lib_sources = &library.source_files;
         if lib_sources.is_empty() {
             continue;
         }
 
-        let lib_build_dir = build_dir.join("lib").join(&lib_name);
+        let lib_build_dir = build_dir.join("lib").join(lib_name);
         std::fs::create_dir_all(&lib_build_dir)?;
         tracing::info!(
             "compiling local library '{}': {} source files",
@@ -91,7 +74,7 @@ pub async fn compile_local_libraries(
 
         let result = crate::parallel::compile_sources_parallel(
             compiler,
-            &lib_sources,
+            lib_sources,
             &lib_build_dir,
             extra_flags,
             jobs,

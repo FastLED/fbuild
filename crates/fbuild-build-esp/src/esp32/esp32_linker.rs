@@ -155,6 +155,9 @@ pub struct Esp32Linker {
     /// against the caller's environment instead of the daemon's
     /// spawn-time PATH (FastLED/fbuild#1219). `None` = daemon env.
     caller_path: Option<String>,
+    /// The app partition's size, which is what the image must fit. `None`
+    /// falls back to `max_flash` (FastLED/fbuild#1409).
+    app_size_limit: Option<u64>,
 }
 
 impl Esp32Linker {
@@ -194,7 +197,20 @@ impl Esp32Linker {
             esptool_bin,
             verbose,
             caller_path: None,
+            app_size_limit: None,
         }
+    }
+
+    /// Builder: size-check the image against the app partition instead of
+    /// the board's flash size. `max_flash` still drives esptool's
+    /// `--flash-size`, so it cannot carry this limit.
+    pub fn with_app_size_limit(mut self, limit: Option<u64>) -> Self {
+        self.app_size_limit = limit;
+        self
+    }
+
+    fn flash_limit(&self) -> Option<u64> {
+        self.app_size_limit.or(self.max_flash)
     }
 
     /// Builder: forward the CLI caller's PATH to the esptool `elf2image`
@@ -551,15 +567,18 @@ impl Linker for Esp32Linker {
     }
 
     async fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
-        if let Some(size_info) = self.load_cached_size(elf_path) {
+        if let Some(mut size_info) = self.load_cached_size(elf_path) {
             tracing::info!("size: firmware.elf is unchanged, reusing cached size report");
+            // The limits come from config, which can change without a relink.
+            size_info.max_flash = self.flash_limit();
+            size_info.max_ram = self.max_ram;
             return Ok(size_info);
         }
 
         let size_info = super::size_report::esp32_report_size(
             &self.size_path,
             elf_path,
-            self.max_flash,
+            self.flash_limit(),
             self.max_ram,
         )
         .await?;

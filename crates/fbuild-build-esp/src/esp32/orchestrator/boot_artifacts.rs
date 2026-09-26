@@ -197,6 +197,66 @@ pub(super) async fn prepare_boot_artifacts(
     Ok(())
 }
 
+/// Size of the app partition the firmware is flashed into, which is what an
+/// ESP32 image has to fit — not the chip's flash size that most ESP32 board
+/// JSONs carry as `upload.maximum_size`. PlatformIO's espressif32 builder
+/// overwrites that value the same way (FastLED/fbuild#1409). `None` when the
+/// partition table cannot be read; the caller keeps the board value.
+pub(super) fn app_partition_limit(
+    project_dir: &Path,
+    framework: &fbuild_packages::library::Esp32Framework,
+    board: &fbuild_config::BoardConfig,
+) -> Option<u64> {
+    let partitions_name = board.partitions.as_deref().unwrap_or("default.csv");
+    let csv = resolve_partitions_csv(
+        project_dir,
+        framework.get_partitions_csv(partitions_name).into(),
+        board.partitions.as_deref(),
+    )
+    .ok()?;
+    parse_app_partition_size(&std::fs::read_to_string(csv.as_path()).ok()?)
+}
+
+/// The `factory` app partition's size, else `ota_0`'s — PlatformIO's choice.
+fn parse_app_partition_size(csv: &str) -> Option<u64> {
+    let mut factory = None;
+    let mut ota_0 = None;
+    for line in csv.lines() {
+        let line = line.trim();
+        if line.is_empty() || line.starts_with('#') {
+            continue;
+        }
+        let cols: Vec<&str> = line.split(',').map(str::trim).collect();
+        if cols.len() < 5 || !matches!(cols[1], "app" | "0" | "0x00" | "0x0") {
+            continue;
+        }
+        let size = parse_partition_size(cols[4]);
+        match cols[2] {
+            "factory" => factory = factory.or(size),
+            "ota_0" => ota_0 = ota_0.or(size),
+            _ => {}
+        }
+    }
+    factory.or(ota_0)
+}
+
+/// `gen_esp32part.py` size syntax: decimal, `0x` hex, or a `K`/`M` suffix.
+fn parse_partition_size(value: &str) -> Option<u64> {
+    let value = value.trim();
+    if let Some(hex) = value
+        .strip_prefix("0x")
+        .or_else(|| value.strip_prefix("0X"))
+    {
+        return u64::from_str_radix(hex, 16).ok();
+    }
+    let (digits, scale) = match value.char_indices().last()? {
+        (i, 'k' | 'K') => (&value[..i], 1024),
+        (i, 'm' | 'M') => (&value[..i], 1024 * 1024),
+        _ => (value, 1),
+    };
+    digits.trim().parse::<u64>().ok().map(|n| n * scale)
+}
+
 /// Resolve the partitions CSV with PlatformIO semantics
 /// (FastLED/fbuild#955): an explicitly configured `board_build.partitions`
 /// path is project-relative first; the framework `tools/partitions/`
@@ -230,6 +290,35 @@ fn resolve_partitions_csv(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// Arduino-ESP32's `default.csv`: two OTA slots, no factory.
+    const DEFAULT_CSV: &str = "# Name,   Type, SubType, Offset,  Size, Flags
+nvs,      data, nvs,     0x9000,  0x5000,
+otadata,  data, ota,     0xe000,  0x2000,
+app0,     app,  ota_0,   0x10000, 0x140000,
+app1,     app,  ota_1,   0x150000,0x140000,
+spiffs,   data, spiffs,  0x290000,0x160000,
+coredump, data, coredump,0x3F0000,0x10000,
+";
+
+    #[test]
+    fn app_limit_is_ota_0_without_a_factory_partition() {
+        assert_eq!(parse_app_partition_size(DEFAULT_CSV), Some(0x140000));
+    }
+
+    #[test]
+    fn app_limit_prefers_factory_and_reads_suffixed_sizes() {
+        let csv = "nvs, data, nvs, 0x9000, 20K,\nfactory, app, factory, 0x10000, 3M,\n";
+        assert_eq!(parse_app_partition_size(csv), Some(3 * 1024 * 1024));
+    }
+
+    #[test]
+    fn app_limit_is_none_without_an_app_partition() {
+        assert_eq!(
+            parse_app_partition_size("nvs, data, nvs, 0x9000, 0x5000,"),
+            None
+        );
+    }
 
     #[test]
     fn explicit_partitions_csv_resolves_project_relative_first() {

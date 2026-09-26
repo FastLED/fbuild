@@ -71,6 +71,39 @@ pub struct LinkResult {
     pub stderr: String,
 }
 
+/// Fail a link whose image cannot fit the target (FastLED/fbuild#1409).
+///
+/// The linker scripts behind several targets (avr5's default text region is
+/// 128 KB, for one) accept an image far larger than the board holds, so
+/// exiting 0 here handed callers a firmware that cannot be flashed. Flash
+/// overflow is always fatal, matching PlatformIO's `checkprogsize` and
+/// arduino-cli; RAM overflow is fatal only when `ram_fatal`, otherwise a
+/// warning. `size_info` is `None` when the size tool failed, which is not
+/// evidence of overflow.
+pub fn enforce_size_limits(size_info: Option<&SizeInfo>, ram_fatal: bool) -> Result<()> {
+    let Some(size) = size_info else {
+        return Ok(());
+    };
+    let mut errors = Vec::new();
+    if let Some(msg) = size.flash_overflow() {
+        errors.push(msg);
+    }
+    if let Some(msg) = size.ram_overflow() {
+        if ram_fatal {
+            errors.push(msg);
+        } else {
+            tracing::warn!("{msg}");
+        }
+    }
+    if errors.is_empty() {
+        return Ok(());
+    }
+    Err(fbuild_core::FbuildError::BuildFailed(format!(
+        "firmware does not fit the target: {}",
+        errors.join("; ")
+    )))
+}
+
 /// Additional link arguments resolved outside the platform linker config.
 #[derive(Debug, Clone, Default)]
 pub struct LinkExtraArgs {
@@ -179,6 +212,17 @@ pub trait Linker: Send + Sync {
         None
     }
 
+    /// Whether static RAM over the board's maximum fails the build.
+    ///
+    /// Default `false`: like PlatformIO, RAM overflow is a warning, because the
+    /// `data + bss` figure over-counts on MCUs with several RAM regions (e.g.
+    /// Teensy 4 `DMAMEM`/`EXTMEM`). Linkers whose figure is the whole of the
+    /// MCU's RAM (AVR) override this to fail, as arduino-cli does
+    /// (FastLED/fbuild#1409).
+    fn ram_overflow_is_fatal(&self) -> bool {
+        false
+    }
+
     /// Full link pipeline: archive core → link → convert → size → optional symbol analysis.
     ///
     /// Skips relinking when the existing firmware.elf is newer than all input
@@ -202,6 +246,9 @@ pub trait Linker: Send + Sync {
                 tracing::info!("link: firmware.elf is up-to-date, skipping relink");
                 let firmware_path = self.convert_firmware(&candidate_elf, output_dir).await?;
                 let size_info = self.report_size(&candidate_elf).await.ok();
+                if !extra.bloat_analysis {
+                    enforce_size_limits(size_info.as_ref(), self.ram_overflow_is_fatal())?;
+                }
                 let symbol_map = if symbol_analysis {
                     LinkerBase::analyze_symbols(self.size_tool_path(), &candidate_elf)
                         .await
@@ -238,6 +285,9 @@ pub trait Linker: Send + Sync {
 
         // Size
         let size_info = self.report_size(&elf_path).await.ok();
+        if !extra.bloat_analysis {
+            enforce_size_limits(size_info.as_ref(), self.ram_overflow_is_fatal())?;
+        }
 
         // Symbol analysis
         let symbol_map = if symbol_analysis {
@@ -642,6 +692,45 @@ mod tests {
             .unwrap()
             .set_modified(time)
             .unwrap();
+    }
+
+    fn size(total_flash: u64, total_ram: u64) -> SizeInfo {
+        SizeInfo {
+            text: total_flash,
+            data: 0,
+            bss: total_ram,
+            total_flash,
+            total_ram,
+            max_flash: Some(32256),
+            max_ram: Some(2048),
+        }
+    }
+
+    /// FastLED/fbuild#1409: an Uno image at 135% flash linked and exited 0.
+    #[test]
+    fn flash_overflow_fails_the_link() {
+        let err = enforce_size_limits(Some(&size(43662, 100)), false).unwrap_err();
+        let msg = err.to_string();
+        assert!(
+            msg.contains("program size (43662 bytes) is greater than maximum allowed (32256"),
+            "{msg}"
+        );
+    }
+
+    #[test]
+    fn ram_overflow_fails_only_where_fatal() {
+        let over = size(1000, 42184);
+        assert!(enforce_size_limits(Some(&over), false).is_ok());
+        let msg = enforce_size_limits(Some(&over), true)
+            .unwrap_err()
+            .to_string();
+        assert!(msg.contains("data size (42184 bytes)"), "{msg}");
+    }
+
+    #[test]
+    fn fitting_or_unmeasured_image_passes() {
+        assert!(enforce_size_limits(Some(&size(32256, 2048)), true).is_ok());
+        assert!(enforce_size_limits(None, true).is_ok());
     }
 
     #[test]

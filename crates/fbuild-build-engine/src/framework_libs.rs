@@ -115,7 +115,7 @@ pub fn resolve_framework_library_selection_active_declared_with_extra(
 ) -> fbuild_library_select::Selection {
     let roots = framework_include_scan_roots(project_dir, src_dir);
     let filtered = filter_framework_libs_shadowed_by_project(libraries, &roots);
-    let mut seeds = collect_project_seeds(&roots);
+    let mut seeds = collect_project_seeds(&roots, declared);
     seeds.extend_from_slice(extra_source_files);
     // Preserve the compiler's observable include order. In particular, ESP32
     // searches core/variant/SDK headers before project headers; reversing that
@@ -307,7 +307,7 @@ pub fn resolve_framework_library_sources_from_libraries(
         return Vec::new();
     }
 
-    let seeds = collect_project_seeds(roots);
+    let seeds = collect_project_seeds(roots, &[]);
     let search_paths = project_search_paths(roots);
     let selection = resolve_library_selection(&seeds, &search_paths, libraries);
 
@@ -372,7 +372,7 @@ pub(crate) fn resolve_framework_library_sources_cached_with_hit(
         return (Vec::new(), false);
     }
 
-    let seeds = collect_project_seeds(&roots);
+    let seeds = collect_project_seeds(&roots, key_inputs.declared_deps);
     let search_paths = project_search_paths(&roots);
 
     match resolve_cached(&seeds, &search_paths, &filtered, key_inputs, store) {
@@ -498,42 +498,144 @@ fn project_search_paths(roots: &[PathBuf]) -> Vec<PathBuf> {
     paths
 }
 
+/// Local `lib/` libraries the project's include graph reaches, plus any named
+/// in `lib_deps` (FastLED/fbuild#1410).
+///
+/// PlatformIO's LDF compiles a `lib/` library only when something includes
+/// it. fbuild compiled every one, so a SAMD-only library sitting in `lib/`
+/// failed an AVR build whose sketch never included it. The walk starts at the
+/// project's translation units and follows library-to-library includes, so a
+/// library reached only through another local library is still selected.
+///
+/// The scan is textual — every `#if` arm — on purpose. The active scan treats
+/// a compiler-builtin macro (`__XTENSA__`, `__AVR__`) as defined nowhere, so
+/// it would prune a guarded include the compiler does take and drop a library
+/// the link needs. Scanning every arm can only over-select, which is the
+/// behavior every local library had before this.
+pub fn select_local_libraries(
+    project_dir: &Path,
+    src_dir: &Path,
+    declared: &[String],
+) -> Vec<FrameworkLibrary> {
+    select_local_libraries_in(
+        &framework_include_scan_roots(project_dir, src_dir),
+        declared,
+    )
+}
+
+fn select_local_libraries_in(roots: &[PathBuf], declared: &[String]) -> Vec<FrameworkLibrary> {
+    let libraries: Vec<FrameworkLibrary> = roots
+        .iter()
+        .filter(|root| is_library_root(root))
+        .flat_map(|root| discover_local_libraries(root))
+        .collect();
+    if libraries.is_empty() {
+        return libraries;
+    }
+    let selection = fbuild_library_select::resolve_declared(
+        &collect_sketch_seeds(roots),
+        &project_search_paths(roots),
+        &libraries,
+        declared,
+    );
+    libraries
+        .into_iter()
+        .filter(|library| {
+            let used = selection.required_libraries.contains(&library.name);
+            if !used {
+                tracing::info!(
+                    library = %library.name,
+                    "skipping local library: no project source includes it and lib_deps does not name it"
+                );
+            }
+            used
+        })
+        .collect()
+}
+
+/// Every library directory under a `lib/` root, described by what the build
+/// compiles for it ([`InstalledLibrary::get_source_files`]).
+///
+/// The library root is always an attribution dir, so a header anywhere in the
+/// library — not only under the `src/` the compiler searches first — counts as
+/// reaching it.
+///
+/// [`InstalledLibrary::get_source_files`]: fbuild_packages::library::library_info::InstalledLibrary::get_source_files
+fn discover_local_libraries(lib_root: &Path) -> Vec<FrameworkLibrary> {
+    let Ok(entries) = std::fs::read_dir(lib_root) else {
+        return Vec::new();
+    };
+    let mut libraries = Vec::new();
+    for entry in entries.flatten() {
+        let dir = entry.path();
+        if !dir.is_dir() {
+            continue;
+        }
+        let name = entry.file_name().to_string_lossy().to_string();
+        let mut include_dirs =
+            fbuild_packages::library::framework_library::library_include_dirs(&dir);
+        if !include_dirs.contains(&dir) {
+            include_dirs.push(dir.clone());
+        }
+        let source_files =
+            fbuild_packages::library::library_info::InstalledLibrary::new(&dir, &name)
+                .get_source_files();
+        libraries.push(FrameworkLibrary {
+            name,
+            dir,
+            include_dirs,
+            source_files,
+        });
+    }
+    libraries.sort_by(|a, b| a.name.cmp(&b.name));
+    libraries
+}
+
 /// Collect translation units as walker seeds.
 ///
 /// Headers are never seeds: they must be reached through some TU's include
 /// graph, or an inactive header anywhere under `lib/` turns into a false
 /// framework-library dependency (FastLED/fbuild#1094).
 ///
-/// Translation units under `lib/` *are* seeds, though, and that is a change
-/// from the original sketch-only rule. A local library's `.cpp` files are
-/// compiled and linked, so an include one of them makes is a real dependency
-/// — FastLED expresses its Adafruit_NeoPixel and Audio dependencies exactly
-/// there, and seeding only the sketch meant those libraries were on the
-/// include path but never on the link line, failing all eight Teensy boards
-/// with `undefined reference` (FastLED/fbuild#1337, the #1214 class).
+/// Translation units of a local library the build compiles *are* seeds. A
+/// local library's `.cpp` files are compiled and linked, so an include one of
+/// them makes is a real dependency — FastLED expresses its Adafruit_NeoPixel
+/// and Audio dependencies exactly there, and seeding only the sketch meant
+/// those libraries were on the include path but never on the link line,
+/// failing all eight Teensy boards with `undefined reference`
+/// (FastLED/fbuild#1337, the #1214 class).
 ///
-/// The invariant that replaces "sketch only" is *"what compiles is what
-/// seeds"*: the scanner's view of the build has to match the compiler's, or
-/// the two disagree about a dependency and the link breaks.
-fn collect_project_seeds(roots: &[PathBuf]) -> Vec<PathBuf> {
+/// The invariant is *"what compiles is what seeds"*: the scanner's view of the
+/// build has to match the compiler's, or the two disagree about a dependency
+/// and the link breaks. That is why only the local libraries
+/// [`select_local_libraries`] picks seed — an unselected one is not compiled
+/// (FastLED/fbuild#1410).
+fn collect_project_seeds(roots: &[PathBuf], declared: &[String]) -> Vec<PathBuf> {
+    let mut seeds = collect_sketch_seeds(roots);
+    for library in select_local_libraries_in(roots, declared) {
+        seeds.extend(library.source_files);
+    }
+    seeds
+}
+
+/// Translation units outside every `lib/` root. The project directory itself
+/// is a root when the sketch has no `src/`, so `lib/` is pruned from the walk
+/// rather than left to [`is_library_root`].
+fn collect_sketch_seeds(roots: &[PathBuf]) -> Vec<PathBuf> {
+    let lib_roots: Vec<&PathBuf> = roots.iter().filter(|r| is_library_root(r)).collect();
     let mut seeds = Vec::new();
     for root in roots {
-        if !root.exists() {
-            continue;
-        }
-        if is_library_root(root) {
-            collect_local_library_seeds(root, &mut seeds);
+        if !root.exists() || is_library_root(root) {
             continue;
         }
         for entry in WalkDir::new(root)
             .into_iter()
-            .filter_entry(should_scan_entry)
+            .filter_entry(|e| {
+                should_scan_entry(e) && !lib_roots.iter().any(|l| e.path() == l.as_path())
+            })
             .flatten()
         {
-            if !entry.file_type().is_file() {
-                continue;
-            }
-            if is_translation_unit(entry.path()) {
+            if entry.file_type().is_file() && is_translation_unit(entry.path()) {
                 seeds.push(entry.path().to_path_buf());
             }
         }
@@ -546,50 +648,6 @@ fn is_library_root(path: &Path) -> bool {
         .and_then(|name| name.to_str())
         .map(|name| name.eq_ignore_ascii_case("lib"))
         .unwrap_or(false)
-}
-
-/// Seed from the translation units a local library actually compiles.
-///
-/// Layout matters here, and getting it wrong breaks the invariant in the
-/// other direction. An Arduino 1.5 library keeps its sources in `src/`; a 1.0
-/// library keeps them at the library root. Either way `examples/`, `extras/`
-/// and test trees are **not** compiled — seeding an example sketch would make
-/// the scanner claim dependencies the build never links, which is the same
-/// disagreement #1337 is about, mirrored.
-fn collect_local_library_seeds(lib_root: &Path, seeds: &mut Vec<PathBuf>) {
-    let Ok(entries) = std::fs::read_dir(lib_root) else {
-        return;
-    };
-    for entry in entries.flatten() {
-        let library_dir = entry.path();
-        if !library_dir.is_dir() {
-            continue;
-        }
-        let src = library_dir.join("src");
-        let scan_root = if src.is_dir() { src } else { library_dir };
-        for found in WalkDir::new(&scan_root)
-            .into_iter()
-            .filter_entry(should_scan_library_entry)
-            .flatten()
-        {
-            if found.file_type().is_file() && is_translation_unit(found.path()) {
-                seeds.push(found.path().to_path_buf());
-            }
-        }
-    }
-}
-
-/// [`should_scan_entry`] plus the directories a library ships but never
-/// compiles.
-fn should_scan_library_entry(entry: &DirEntry) -> bool {
-    if !should_scan_entry(entry) {
-        return false;
-    }
-    let name = entry.file_name().to_string_lossy().to_lowercase();
-    !matches!(
-        name.as_str(),
-        "examples" | "example" | "extras" | "test" | "tests" | "docs"
-    )
 }
 
 fn should_scan_entry(entry: &DirEntry) -> bool {
@@ -622,3 +680,7 @@ fn is_translation_unit(path: &Path) -> bool {
 #[cfg(test)]
 #[path = "framework_libs_tests.rs"]
 mod tests;
+
+#[cfg(test)]
+#[path = "framework_libs_local_tests.rs"]
+mod local_tests;

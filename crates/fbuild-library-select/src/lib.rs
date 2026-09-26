@@ -91,6 +91,22 @@ pub fn resolve_active(
     resolve_with_stats_active(seeds, project_search_paths, libraries, defines).0
 }
 
+/// [`resolve`] plus explicitly declared (`lib_deps`) libraries.
+///
+/// The textual counterpart to [`resolve_with_stats_active_declared`]: every
+/// `#if` arm is scanned, so a guard on a compiler-builtin macro the scanner
+/// cannot see cannot hide a dependency. Used to pick project `lib/`
+/// libraries, where a false negative drops a library the link needs
+/// (FastLED/fbuild#1410).
+pub fn resolve_declared(
+    seeds: &[PathBuf],
+    project_search_paths: &[PathBuf],
+    libraries: &[FrameworkLibrary],
+    declared: &[String],
+) -> Selection {
+    resolve_with_stats_impl_declared(seeds, project_search_paths, libraries, None, declared).0
+}
+
 /// Same contract as [`resolve`] but also returns [`ResolveStats`] so callers
 /// can observe the number of physical file reads and LDF passes performed.
 ///
