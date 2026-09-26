@@ -1,6 +1,9 @@
 //! Source compilation helpers and `compile_commands.json` generation.
 
 use std::path::{Path, PathBuf};
+use std::sync::Arc;
+
+use tokio::sync::Semaphore;
 
 use fbuild_core::{BuildLog, Result};
 
@@ -20,10 +23,10 @@ pub async fn compile_sources(
     sources: &[PathBuf],
     build_dir: &Path,
     extra_flags: &LanguageExtraFlags,
-    jobs: usize,
+    jobs: &Arc<Semaphore>,
     build_log: &std::sync::Mutex<BuildLog>,
 ) -> Result<Vec<PathBuf>> {
-    let result = crate::parallel::compile_sources_parallel(
+    let result = crate::parallel::compile_sources_parallel_shared(
         compiler,
         sources,
         build_dir,
@@ -46,14 +49,15 @@ pub async fn compile_sources(
 /// `libraries` comes from [`crate::framework_libs::select_local_libraries`],
 /// so a library nothing includes is never compiled (FastLED/fbuild#1410).
 /// Each library's source files are compiled in parallel via
-/// [`crate::parallel::compile_sources_parallel`]. Libraries themselves are
-/// processed one after another so the per-lib `jobs` budget isn't oversubscribed.
+/// [`crate::parallel::compile_sources_parallel_shared`], drawing on the
+/// build's shared `jobs` semaphore (FastLED/fbuild#1468). Libraries
+/// themselves are processed one after another.
 pub async fn compile_local_libraries(
     compiler: &dyn Compiler,
     libraries: &[fbuild_packages::library::FrameworkLibrary],
     build_dir: &Path,
     extra_flags: &LanguageExtraFlags,
-    jobs: usize,
+    jobs: &Arc<Semaphore>,
     build_log: &std::sync::Mutex<BuildLog>,
 ) -> Result<Vec<PathBuf>> {
     let mut library_objects = Vec::new();
@@ -72,7 +76,7 @@ pub async fn compile_local_libraries(
             lib_sources.len()
         );
 
-        let result = crate::parallel::compile_sources_parallel(
+        let result = crate::parallel::compile_sources_parallel_shared(
             compiler,
             lib_sources,
             &lib_build_dir,

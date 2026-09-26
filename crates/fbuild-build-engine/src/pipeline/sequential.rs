@@ -92,10 +92,12 @@ pub async fn run_sequential_build_with_libs(
     }
 
     // Wrap the build log so it can be shared across parallel compile phases.
-    // Phases still run one after another (compile core → variant → sketch →
-    // libs → link), but each phase fans out file compilation across `jobs`
-    // threads via `compile_sources_parallel`.
+    // The compile phases (core, variant, sketch, local libs) run
+    // concurrently and draw from one `jobs`-permit semaphore
+    // (FastLED/fbuild#1468): nothing but the link needs their outputs, so a
+    // strict phase order only left cores idle in each phase's tail.
     let jobs = crate::parallel::effective_jobs(params.jobs);
+    let compile_slots = std::sync::Arc::new(tokio::sync::Semaphore::new(jobs));
     let core_cache = crate::framework_core_cache::FrameworkCoreCache::new(
         &params.project_dir,
         platform_label,
@@ -177,35 +179,32 @@ pub async fn run_sequential_build_with_libs(
         }
     }
 
-    // Compile core + variant
-    let mut core_objects = {
-        let _g = perf.phase("compile-core");
-        compile_sources(
-            compiler,
-            &sources.core_sources,
-            &ctx.core_build_dir,
-            &user_overlay,
-            jobs,
-            &build_log_mutex,
-        )
-        .await?
-    };
-    let variant_objects = {
-        let _g = perf.phase("compile-variant");
-        compile_sources(
-            compiler,
-            &sources.variant_sources,
-            &ctx.core_build_dir,
-            &user_overlay,
-            jobs,
-            &build_log_mutex,
-        )
-        .await?
-    };
-    core_objects.extend(variant_objects);
-    {
+    // Framework core + variant, then the core cache store (which copies
+    // everything in `core_build_dir`, so it waits for both). The sketch and
+    // local libraries compile alongside and fill the permits the framework
+    // tail leaves idle; the store overlaps them too. Each branch times
+    // itself, so the per-phase perf entries overlap in wall time.
+    let framework = async {
+        let (core, variant) = tokio::try_join!(
+            timed(compile_sources(
+                compiler,
+                &sources.core_sources,
+                &ctx.core_build_dir,
+                &user_overlay,
+                &compile_slots,
+                &build_log_mutex,
+            )),
+            timed(compile_sources(
+                compiler,
+                &sources.variant_sources,
+                &ctx.core_build_dir,
+                &user_overlay,
+                &compile_slots,
+                &build_log_mutex,
+            )),
+        )?;
+        let store_started = std::time::Instant::now();
         let cache = &core_cache;
-        let _g = perf.phase("core-cache-store");
         let outcome = cache.store(&ctx.core_build_dir);
         build_log_mutex
             .lock()
@@ -229,44 +228,48 @@ pub async fn run_sequential_build_with_libs(
                 e
             ),
         }
-    }
-
-    // Compile sketch
-    let sketch_objects = {
-        let _g = perf.phase("compile-sketch");
-        compile_sources(
-            compiler,
-            &sources.sketch_sources,
-            &ctx.src_build_dir,
-            &src_overlay,
-            jobs,
-            &build_log_mutex,
-        )
-        .await?
+        Ok::<_, fbuild_core::FbuildError>((core, variant, store_started.elapsed()))
     };
+
+    let sketch = timed(compile_sources(
+        compiler,
+        &sources.sketch_sources,
+        &ctx.src_build_dir,
+        &src_overlay,
+        &compile_slots,
+        &build_log_mutex,
+    ));
 
     // Compile local libraries (lib/* — loose objects, LTO-safe; per-lib parallel)
-    let library_objects = {
-        let _g = perf.phase("compile-local-libs");
-        let declared = ctx
-            .config
-            .get_lib_deps(&params.env_name)
-            .unwrap_or_default();
-        let local_libraries = crate::framework_libs::select_local_libraries(
-            &params.project_dir,
-            &ctx.src_dir,
-            &declared,
-        );
-        compile_local_libraries(
-            compiler,
-            &local_libraries,
-            &ctx.build_dir,
-            &src_overlay,
-            jobs,
-            &build_log_mutex,
-        )
-        .await?
-    };
+    let declared_lib_deps = ctx
+        .config
+        .get_lib_deps(&params.env_name)
+        .unwrap_or_default();
+    let local_libraries = crate::framework_libs::select_local_libraries(
+        &params.project_dir,
+        &ctx.src_dir,
+        &declared_lib_deps,
+    );
+    let libraries = timed(compile_local_libraries(
+        compiler,
+        &local_libraries,
+        &ctx.build_dir,
+        &src_overlay,
+        &compile_slots,
+        &build_log_mutex,
+    ));
+
+    let (
+        ((mut core_objects, core_time), (variant_objects, variant_time), store_time),
+        (sketch_objects, sketch_time),
+        (library_objects, library_time),
+    ) = tokio::try_join!(framework, sketch, libraries)?;
+    perf.record("compile-core", core_time);
+    perf.record("compile-variant", variant_time);
+    perf.record("core-cache-store", store_time);
+    perf.record("compile-sketch", sketch_time);
+    perf.record("compile-local-libs", library_time);
+    core_objects.extend(variant_objects);
 
     // Unwrap the build log Mutex back into the context for the remaining
     // single-threaded phases (link, result assembly).
@@ -410,4 +413,13 @@ pub async fn run_sequential_build_with_libs(
         compile_database_path,
         ctx.build_log,
     ))
+}
+
+/// Await `future`, returning its value with the wall time it took.
+async fn timed<T>(
+    future: impl std::future::Future<Output = Result<T>>,
+) -> Result<(T, std::time::Duration)> {
+    let started = std::time::Instant::now();
+    let value = future.await?;
+    Ok((value, started.elapsed()))
 }
