@@ -9,11 +9,11 @@
 //!
 //! # Fixed lock order
 //!
-//! `sink` -> `reply FIFO` -> `line queue` -> `status`.
+//! `sink` -> `request gate` -> `reply FIFO` -> `line queue` -> `status`.
 //!
-//! The reader task only ever takes `reply FIFO`, `line queue` and `status` —
-//! never `sink`. `sink` is taken only by writers, and never while any other
-//! lock in this module is held.
+//! The reader task only ever takes the request gate, reply FIFO, line queue
+//! and status — never `sink`. Writers take `sink` before the request gate,
+//! and drop the gate before awaiting the WebSocket send.
 //!
 //! # Deadlock-freedom rules enforced here
 //!
@@ -27,7 +27,7 @@
 
 use std::collections::VecDeque;
 use std::sync::Arc;
-use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
+use std::sync::atomic::{AtomicBool, AtomicU64, AtomicUsize, Ordering};
 use std::time::Duration;
 
 use futures::{SinkExt, StreamExt};
@@ -44,16 +44,31 @@ const REMOTE_PREFIX: &str = "REMOTE:";
 /// oldest lines and counts them (`SerialSession::lines_dropped`); see §4.3.
 pub(crate) const DEFAULT_MAX_BUFFERED_LINES: usize = 10_000;
 
+/// How many `SerialSession`s are currently live (incremented on a
+/// successful `connect`, decremented in `Drop`). Compiled only in debug
+/// builds (on for `cargo test`, off for a release wheel): AT-P16 uses this,
+/// via `crate::live_session_count()`, to prove a dropped-without-`close()`
+/// session's reader task actually terminates instead of leaking.
+#[cfg(debug_assertions)]
+static LIVE_SESSIONS: AtomicUsize = AtomicUsize::new(0);
+
+#[cfg(debug_assertions)]
+pub(crate) fn live_session_count() -> usize {
+    LIVE_SESSIONS.load(Ordering::SeqCst)
+}
+
 /// Errors surfaced by every core operation. Mapped to Python exceptions in
-/// the facades (`Timeout` -> `TimeoutError`, `Closed`/`PortGone`/`Preempted`
-/// -> `ConnectionError`, `ProtocolDesync` -> `RuntimeError`).
+/// the facades (`Timeout` -> `TimeoutError`, `Closed`/`PortGone`/`Preempted`/`ConnectionFailed`
+/// -> `ConnectionError`, `ProtocolDesync`/`WriteFailed` -> `RuntimeError`).
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub(crate) enum SessionError {
     Timeout,
     Closed,
+    ConnectionFailed(String),
     PortGone,
     Preempted,
     ProtocolDesync,
+    WriteFailed(String),
 }
 
 impl std::fmt::Display for SessionError {
@@ -61,9 +76,13 @@ impl std::fmt::Display for SessionError {
         let msg = match self {
             SessionError::Timeout => "timed out",
             SessionError::Closed => "session closed",
+            SessionError::ConnectionFailed(message) => return f.write_str(message),
             SessionError::PortGone => "port disconnected",
             SessionError::Preempted => "session preempted by a deploy",
             SessionError::ProtocolDesync => "protocol desync (unexpected reply order)",
+            SessionError::WriteFailed(message) => {
+                return write!(f, "serial write failed: {message}");
+            }
         };
         f.write_str(msg)
     }
@@ -75,9 +94,8 @@ impl std::error::Error for SessionError {}
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub(crate) enum SessionStatus {
     Active,
-    /// Paused for a deploy; only reached with `auto_reconnect == false`
-    /// (with `auto_reconnect == true` the reader keeps `Active` across a
-    /// preemption and readers simply keep waiting, per §4.5).
+    /// Paused for a deploy. Readers keep waiting when auto-reconnect is on;
+    /// writes fail promptly in either mode.
     Preempted,
     Closed,
 }
@@ -93,19 +111,41 @@ enum ReplyKind {
 
 struct ReplyEntry {
     kind: ReplyKind,
-    tx: oneshot::Sender<Result<usize, SessionError>>,
+    tx: Option<oneshot::Sender<Result<usize, SessionError>>>,
+    rpc_id: Option<u64>,
+}
+
+struct RpcEntry {
+    id: u64,
+    tx: Option<oneshot::Sender<Result<String, SessionError>>>,
 }
 
 struct Inner {
     sink: tokio::sync::Mutex<Option<WsSink>>,
+    /// Serializes status checks plus FIFO registration with terminal/preempt
+    /// sweeps. Never held across a WebSocket send or any other `.await`.
+    request_gate: Mutex<()>,
     reply_fifo: Mutex<VecDeque<ReplyEntry>>,
-    rpc_fifo: Mutex<VecDeque<oneshot::Sender<Result<String, SessionError>>>>,
+    rpc_fifo: Mutex<VecDeque<RpcEntry>>,
+    next_rpc_id: AtomicU64,
     line_queue: Mutex<VecDeque<String>>,
     line_notify: Notify,
+    read_interrupt_epoch: AtomicUsize,
     lines_dropped: AtomicUsize,
+    #[cfg(test)]
+    lines_received_for_test: AtomicUsize,
+    #[cfg(test)]
+    lines_delivered_for_test: AtomicUsize,
+    #[cfg(test)]
+    lines_discarded_for_test: AtomicUsize,
+    overflow_warned: AtomicBool,
     max_buffered_lines: usize,
     status_tx: watch::Sender<SessionStatus>,
     reader_alive: AtomicBool,
+    /// The reader task's handle, behind a lock so `close()` can take `&self`
+    /// (needed for AT-20: closing a shared `Arc<SerialSession>` while other
+    /// holders have calls in flight).
+    reader: Mutex<Option<tokio::task::JoinHandle<()>>>,
 }
 
 impl Inner {
@@ -114,7 +154,24 @@ impl Inner {
     }
 
     fn set_status(&self, status: SessionStatus) {
-        self.status_tx.send_replace(status);
+        self.status_tx.send_if_modified(|current| {
+            if *current == SessionStatus::Closed && status != SessionStatus::Closed {
+                return false;
+            }
+            *current = status;
+            true
+        });
+        self.line_notify.notify_waiters();
+    }
+
+    fn reconnect_if_preempted(&self) {
+        self.status_tx.send_if_modified(|current| {
+            if *current != SessionStatus::Preempted {
+                return false;
+            }
+            *current = SessionStatus::Active;
+            true
+        });
         self.line_notify.notify_waiters();
     }
 
@@ -122,7 +179,14 @@ impl Inner {
         let mut queue = self.line_queue.lock().unwrap_or_else(|e| e.into_inner());
         if queue.len() >= self.max_buffered_lines {
             queue.pop_front();
-            self.lines_dropped.fetch_add(1, Ordering::Relaxed);
+            let dropped = self.lines_dropped.fetch_add(1, Ordering::Relaxed) + 1;
+            if !self.overflow_warned.swap(true, Ordering::Relaxed) {
+                tracing::warn!(
+                    dropped,
+                    max_buffered_lines = self.max_buffered_lines,
+                    "serial line queue overflow; dropping oldest lines"
+                );
+            }
         }
         queue.push_back(line);
         drop(queue);
@@ -133,6 +197,8 @@ impl Inner {
     /// registered and the line is a `REMOTE:` reply, otherwise to the line
     /// queue.
     fn dispatch_data_line(&self, line: String) {
+        #[cfg(test)]
+        self.lines_received_for_test.fetch_add(1, Ordering::Relaxed);
         if let Some(stripped) = line.strip_prefix(REMOTE_PREFIX) {
             let waiter = {
                 self.rpc_fifo
@@ -140,8 +206,20 @@ impl Inner {
                     .unwrap_or_else(|e| e.into_inner())
                     .pop_front()
             };
-            if let Some(tx) = waiter {
-                let _ = tx.send(Ok(stripped.to_string()));
+            if let Some(entry) = waiter {
+                let delivered = entry
+                    .tx
+                    .is_some_and(|tx| tx.send(Ok(stripped.to_string())).is_ok());
+                #[cfg(test)]
+                if delivered {
+                    self.lines_delivered_for_test
+                        .fetch_add(1, Ordering::Relaxed);
+                } else {
+                    self.lines_discarded_for_test
+                        .fetch_add(1, Ordering::Relaxed);
+                }
+                #[cfg(not(test))]
+                let _ = delivered;
                 return;
             }
         }
@@ -167,10 +245,26 @@ impl Inner {
                 got = ?kind,
                 "protocol desync: reply kind does not match the head of the FIFO"
             );
-            let _ = entry.tx.send(Err(SessionError::ProtocolDesync));
+            if let Some(tx) = entry.tx {
+                let _ = tx.send(Err(SessionError::ProtocolDesync));
+            }
             return;
         }
-        let _ = entry.tx.send(value);
+        if value.is_err() {
+            self.remove_rpc(entry.rpc_id);
+        }
+        if let Some(tx) = entry.tx {
+            let _ = tx.send(value);
+        }
+    }
+
+    fn remove_rpc(&self, rpc_id: Option<u64>) {
+        if let Some(id) = rpc_id {
+            self.rpc_fifo
+                .lock()
+                .unwrap_or_else(|e| e.into_inner())
+                .retain(|entry| entry.id != id);
+        }
     }
 
     /// An `error` frame replaces whatever the head of the FIFO was
@@ -183,28 +277,63 @@ impl Inner {
                 .pop_front()
         };
         if let Some(entry) = entry {
-            let _ = entry.tx.send(Err(SessionError::ProtocolDesync));
+            self.remove_rpc(entry.rpc_id);
+            if let Some(tx) = entry.tx {
+                let _ = tx.send(Err(SessionError::ProtocolDesync));
+            }
         }
+    }
+
+    /// Fail callers immediately, but keep their FIFO slots so replies already
+    /// in flight cannot be mistaken for replies to post-reconnect requests.
+    fn preempt_everyone(&self) {
+        let _request_gate = self.request_gate.lock().unwrap_or_else(|e| e.into_inner());
+        for entry in self
+            .reply_fifo
+            .lock()
+            .unwrap_or_else(|e| e.into_inner())
+            .iter_mut()
+        {
+            if let Some(tx) = entry.tx.take() {
+                let _ = tx.send(Err(SessionError::Preempted));
+            }
+        }
+        for entry in self
+            .rpc_fifo
+            .lock()
+            .unwrap_or_else(|e| e.into_inner())
+            .iter_mut()
+        {
+            if let Some(tx) = entry.tx.take() {
+                let _ = tx.send(Err(SessionError::Preempted));
+            }
+        }
+        self.line_notify.notify_waiters();
     }
 
     /// Fail every pending reply, RPC waiter, and wake every line-queue
     /// waiter. Used on close, port-gone, and reader-task death.
     fn fail_everyone(&self, err: SessionError) {
+        let _request_gate = self.request_gate.lock().unwrap_or_else(|e| e.into_inner());
         for entry in self
             .reply_fifo
             .lock()
             .unwrap_or_else(|e| e.into_inner())
             .drain(..)
         {
-            let _ = entry.tx.send(Err(err.clone()));
+            if let Some(tx) = entry.tx {
+                let _ = tx.send(Err(err.clone()));
+            }
         }
-        for tx in self
+        for entry in self
             .rpc_fifo
             .lock()
             .unwrap_or_else(|e| e.into_inner())
             .drain(..)
         {
-            let _ = tx.send(Err(err.clone()));
+            if let Some(tx) = entry.tx {
+                let _ = tx.send(Err(err.clone()));
+            }
         }
         self.line_notify.notify_waiters();
     }
@@ -227,7 +356,6 @@ pub(crate) struct SessionConfig {
 /// a Python interpreter.
 pub(crate) struct SerialSession {
     inner: Arc<Inner>,
-    reader: Option<tokio::task::JoinHandle<()>>,
     auto_reconnect: bool,
 }
 
@@ -236,16 +364,20 @@ impl SerialSession {
     /// handshake, then spawn the sole reader task. Capped at
     /// `cfg.handshake_timeout` (default callers use 5s).
     pub(crate) async fn connect(cfg: SessionConfig) -> Result<Self, SessionError> {
-        let (ws_stream, _) = match tokio::time::timeout(
-            cfg.handshake_timeout,
-            tokio_tungstenite::connect_async(&cfg.ws_url),
-        )
-        .await
-        {
-            Ok(Ok(ok)) => ok,
-            Ok(Err(_)) => return Err(SessionError::Closed),
-            Err(_) => return Err(SessionError::Timeout),
-        };
+        let deadline = tokio::time::Instant::now() + cfg.handshake_timeout;
+        let (ws_stream, _) =
+            match tokio::time::timeout_at(deadline, tokio_tungstenite::connect_async(&cfg.ws_url))
+                .await
+            {
+                Ok(Ok(ok)) => ok,
+                Ok(Err(error)) => {
+                    return Err(SessionError::ConnectionFailed(format!(
+                        "failed to connect to daemon WebSocket at {}: {error}",
+                        cfg.ws_url
+                    )));
+                }
+                Err(_) => return Err(SessionError::Timeout),
+            };
         let (mut write, mut read) = ws_stream.split();
 
         let attach = ClientMessage::Attach {
@@ -258,8 +390,8 @@ impl SerialSession {
         };
         let attach_json = serde_json::to_string(&attach)
             .expect("fbuild-python: ClientMessage::Attach serialization is infallible");
-        match tokio::time::timeout(
-            cfg.handshake_timeout,
+        match tokio::time::timeout_at(
+            deadline,
             write.send(tungstenite::Message::Text(attach_json)),
         )
         .await
@@ -269,39 +401,56 @@ impl SerialSession {
             Err(_) => return Err(SessionError::Timeout),
         }
 
-        let msg = match tokio::time::timeout(cfg.handshake_timeout, read.next()).await {
+        let msg = match tokio::time::timeout_at(deadline, read.next()).await {
             Ok(Some(Ok(msg))) => msg,
             Ok(Some(Err(_))) | Ok(None) => return Err(SessionError::Closed),
             Err(_) => return Err(SessionError::Timeout),
         };
-        if let tungstenite::Message::Text(text) = msg {
-            match serde_json::from_str::<ServerMessage>(&text) {
-                Ok(ServerMessage::Attached { success, .. }) if success => {
-                    if cfg.verbose {
-                        eprintln!("attached");
+        match msg {
+            tungstenite::Message::Text(text) => {
+                match serde_json::from_str::<ServerMessage>(&text) {
+                    Ok(ServerMessage::Attached { success, .. }) if success => {
+                        if cfg.verbose {
+                            eprintln!("attached");
+                        }
                     }
+                    _ => return Err(SessionError::Closed),
                 }
-                _ => return Err(SessionError::Closed),
             }
+            _ => return Err(SessionError::Closed),
         }
 
         let inner = Arc::new(Inner {
             sink: tokio::sync::Mutex::new(Some(write)),
+            request_gate: Mutex::new(()),
             reply_fifo: Mutex::new(VecDeque::new()),
             rpc_fifo: Mutex::new(VecDeque::new()),
+            next_rpc_id: AtomicU64::new(0),
             line_queue: Mutex::new(VecDeque::new()),
             line_notify: Notify::new(),
+            read_interrupt_epoch: AtomicUsize::new(0),
             lines_dropped: AtomicUsize::new(0),
+            #[cfg(test)]
+            lines_received_for_test: AtomicUsize::new(0),
+            #[cfg(test)]
+            lines_delivered_for_test: AtomicUsize::new(0),
+            #[cfg(test)]
+            lines_discarded_for_test: AtomicUsize::new(0),
+            overflow_warned: AtomicBool::new(false),
             max_buffered_lines: cfg.max_buffered_lines.max(1),
             status_tx: watch::Sender::new(SessionStatus::Active),
             reader_alive: AtomicBool::new(true),
+            reader: Mutex::new(None),
         });
 
         let reader = tokio::spawn(reader_task(Arc::clone(&inner), read, cfg.auto_reconnect));
+        *inner.reader.lock().unwrap_or_else(|e| e.into_inner()) = Some(reader);
+
+        #[cfg(debug_assertions)]
+        LIVE_SESSIONS.fetch_add(1, Ordering::SeqCst);
 
         Ok(Self {
             inner,
-            reader: Some(reader),
             auto_reconnect: cfg.auto_reconnect,
         })
     }
@@ -311,26 +460,46 @@ impl SerialSession {
     /// nothing (AT-6/AT-P7).
     pub(crate) async fn read_lines(&self, timeout: Duration) -> Vec<String> {
         let deadline = tokio::time::Instant::now() + timeout;
+        let interrupt_epoch = self.inner.read_interrupt_epoch.load(Ordering::Acquire);
         loop {
+            // Register for notification before inspecting the queue. This
+            // closes the gap where a line (or interrupt) could arrive after
+            // the inspection but before the waiter was registered.
+            let notified = self.inner.line_notify.notified();
+            tokio::pin!(notified);
+            notified.as_mut().enable();
+            let mut status_rx = self.inner.status_tx.subscribe();
             {
                 let mut queue = self
                     .inner
                     .line_queue
                     .lock()
                     .unwrap_or_else(|e| e.into_inner());
+                // Interruption and draining share this lock: an interrupt
+                // that wins the race must leave the queued lines untouched
+                // for the next reader (FastLED #3219).
+                if self.inner.read_interrupt_epoch.load(Ordering::Acquire) != interrupt_epoch {
+                    return Vec::new();
+                }
                 if !queue.is_empty() {
-                    return queue.drain(..).collect();
+                    let lines: Vec<String> = queue.drain(..).collect();
+                    #[cfg(test)]
+                    self.inner
+                        .lines_delivered_for_test
+                        .fetch_add(lines.len(), Ordering::Relaxed);
+                    self.inner.overflow_warned.store(false, Ordering::Relaxed);
+                    return lines;
                 }
             }
-            if self.inner.status() == SessionStatus::Closed {
+            if self.inner.status() == SessionStatus::Closed
+                || (self.inner.status() == SessionStatus::Preempted && !self.auto_reconnect)
+            {
                 return Vec::new();
             }
             let now = tokio::time::Instant::now();
             if now >= deadline {
                 return Vec::new();
             }
-            let mut status_rx = self.inner.status_tx.subscribe();
-            let notified = self.inner.line_notify.notified();
             tokio::select! {
                 () = notified => {}
                 _ = status_rx.changed() => {}
@@ -342,6 +511,42 @@ impl SerialSession {
     /// Wakes every blocked sync reader (used by `interrupt_reads`): the
     /// caller's `read_lines` returns `[]` without draining the queue.
     pub(crate) fn interrupt_reads(&self) {
+        let queue_guard = self
+            .inner
+            .line_queue
+            .lock()
+            .unwrap_or_else(|e| e.into_inner());
+        self.inner
+            .read_interrupt_epoch
+            .fetch_add(1, Ordering::AcqRel);
+        drop(queue_guard);
+        self.inner.line_notify.notify_waiters();
+    }
+
+    /// Restore a batch when Python cancels after the core read resolved but
+    /// before the async bridge delivered it. The core read future itself is
+    /// cancel-safe; this closes the bridge's separate delivery window.
+    pub(crate) fn restore_cancelled_read(&self, lines: Vec<String>) {
+        if lines.is_empty() {
+            return;
+        }
+        #[cfg(test)]
+        self.inner
+            .lines_delivered_for_test
+            .fetch_sub(lines.len(), Ordering::Relaxed);
+        let mut queue = self
+            .inner
+            .line_queue
+            .lock()
+            .unwrap_or_else(|e| e.into_inner());
+        for line in lines.into_iter().rev() {
+            if queue.len() >= self.inner.max_buffered_lines {
+                queue.pop_back();
+                self.inner.lines_dropped.fetch_add(1, Ordering::Relaxed);
+            }
+            queue.push_front(line);
+        }
+        drop(queue);
         self.inner.line_notify.notify_waiters();
     }
 
@@ -351,25 +556,79 @@ impl SerialSession {
         kind: ReplyKind,
         timeout: Duration,
     ) -> Result<usize, SessionError> {
+        self.send_and_await_reply_with_rpc_waiter(text, kind, timeout, None)
+            .await
+    }
+
+    /// Like [`Self::send_and_await_reply`], but when `rpc_waiter` is
+    /// `Some`, registers it on the RPC-reply FIFO in the **same** critical
+    /// section as the reply-FIFO entry and the send itself. This is what
+    /// [`Self::json_rpc`] needs: registering the RPC waiter before taking
+    /// the sink lock (as an earlier version of this code did) let two
+    /// concurrent `json_rpc` calls register their RPC waiters in one order
+    /// but send in the other, so a reply could be delivered to the wrong
+    /// caller (FIFO order must match wire order exactly).
+    async fn send_and_await_reply_with_rpc_waiter(
+        &self,
+        text: String,
+        kind: ReplyKind,
+        timeout: Duration,
+        rpc_waiter: Option<oneshot::Sender<Result<String, SessionError>>>,
+    ) -> Result<usize, SessionError> {
+        let deadline = tokio::time::Instant::now() + timeout;
         if self.inner.status() == SessionStatus::Closed {
             return Err(SessionError::Closed);
         }
-        if self.inner.status() == SessionStatus::Preempted && !self.auto_reconnect {
+        if self.inner.status() == SessionStatus::Preempted {
             return Err(SessionError::Preempted);
         }
         let (tx, rx) = oneshot::channel();
-        // Register, then send, atomically under the sink lock (§4.2): two
-        // writers cannot register in one order and send in the other.
+        // Register (both the write-reply FIFO and, if present, the RPC
+        // waiter), then send, atomically under the sink lock (§4.2/§4.4):
+        // two callers cannot register in one order and send in the other.
         let send_result = {
-            let mut sink = self.inner.sink.lock().await;
+            let mut sink = tokio::time::timeout_at(deadline, self.inner.sink.lock())
+                .await
+                .map_err(|_| SessionError::Timeout)?;
+            // close() can run while this caller waits for the sink.
+            let _request_gate = self
+                .inner
+                .request_gate
+                .lock()
+                .unwrap_or_else(|e| e.into_inner());
+            if self.inner.status() == SessionStatus::Closed {
+                return Err(SessionError::Closed);
+            }
+            if self.inner.status() == SessionStatus::Preempted {
+                return Err(SessionError::Preempted);
+            }
+            let rpc_id = rpc_waiter
+                .as_ref()
+                .map(|_| self.inner.next_rpc_id.fetch_add(1, Ordering::Relaxed));
             self.inner
                 .reply_fifo
                 .lock()
                 .unwrap_or_else(|e| e.into_inner())
-                .push_back(ReplyEntry { kind, tx });
+                .push_back(ReplyEntry {
+                    kind,
+                    tx: Some(tx),
+                    rpc_id,
+                });
+            if let Some(rpc_waiter) = rpc_waiter {
+                self.inner
+                    .rpc_fifo
+                    .lock()
+                    .unwrap_or_else(|e| e.into_inner())
+                    .push_back(RpcEntry {
+                        id: rpc_id.expect("RPC waiter has an ID"),
+                        tx: Some(rpc_waiter),
+                    });
+            }
+            drop(_request_gate);
             match sink.as_mut() {
                 Some(s) => {
-                    tokio::time::timeout(timeout, s.send(tungstenite::Message::Text(text))).await
+                    tokio::time::timeout_at(deadline, s.send(tungstenite::Message::Text(text)))
+                        .await
                 }
                 None => return Err(SessionError::Closed),
             }
@@ -389,7 +648,7 @@ impl SerialSession {
                 return Err(SessionError::Timeout);
             }
         }
-        match tokio::time::timeout(timeout, rx).await {
+        match tokio::time::timeout_at(deadline, rx).await {
             Ok(Ok(result)) => result,
             // Timed out or sender dropped (reader died): leave the FIFO
             // entry's slot abandoned; the reader already discards replies
@@ -426,8 +685,11 @@ impl SerialSession {
                 .len())
     }
 
-    /// Registers before writing (§4.4), so the reply cannot race the
-    /// write's own FIFO entry.
+    /// Registers the RPC waiter atomically with the write's own reply-FIFO
+    /// entry and the send itself (§4.4): registering the RPC waiter as a
+    /// separate, earlier step let two concurrent `json_rpc` calls register
+    /// in one order but reach the sink lock (and so hit the wire) in the
+    /// other, so a reply could resolve the wrong caller's waiter.
     pub(crate) async fn json_rpc(
         &self,
         line: &str,
@@ -435,21 +697,14 @@ impl SerialSession {
     ) -> Result<String, SessionError> {
         let deadline = tokio::time::Instant::now() + timeout;
         let (rpc_tx, rpc_rx) = oneshot::channel();
-        self.inner
-            .rpc_fifo
-            .lock()
-            .unwrap_or_else(|e| e.into_inner())
-            .push_back(rpc_tx);
 
         let data = format!("{line}\n");
         let encoded =
             base64::Engine::encode(&base64::engine::general_purpose::STANDARD, data.as_bytes());
         let msg = serde_json::to_string(&ClientMessage::Write { data: encoded })
             .expect("fbuild-python: ClientMessage::Write serialization is infallible");
-        let write_result = self
-            .send_and_await_reply(msg, ReplyKind::Write, timeout)
-            .await;
-        write_result?;
+        self.send_and_await_reply_with_rpc_waiter(msg, ReplyKind::Write, timeout, Some(rpc_tx))
+            .await?;
 
         let remaining = deadline.saturating_duration_since(tokio::time::Instant::now());
         match tokio::time::timeout(remaining, rpc_rx).await {
@@ -460,20 +715,40 @@ impl SerialSession {
     }
 
     pub(crate) async fn clear_input(&self) {
-        self.inner
-            .line_queue
-            .lock()
-            .unwrap_or_else(|e| e.into_inner())
-            .clear();
+        {
+            let mut queue = self
+                .inner
+                .line_queue
+                .lock()
+                .unwrap_or_else(|e| e.into_inner());
+            #[cfg(test)]
+            self.inner
+                .lines_discarded_for_test
+                .fetch_add(queue.len(), Ordering::Relaxed);
+            queue.clear();
+        }
+        self.inner.overflow_warned.store(false, Ordering::Relaxed);
         let msg = serde_json::to_string(&ClientMessage::ClearBuffer)
             .expect("fbuild-python: ClientMessage::ClearBuffer serialization is infallible");
-        let mut sink = self.inner.sink.lock().await;
+        let deadline = tokio::time::Instant::now() + Duration::from_secs(5);
+        let Ok(mut sink) = tokio::time::timeout_at(deadline, self.inner.sink.lock()).await else {
+            return;
+        };
+        if self.inner.status() == SessionStatus::Closed {
+            return;
+        }
         if let Some(s) = sink.as_mut() {
-            let _ = s.send(tungstenite::Message::Text(msg)).await;
+            if !matches!(
+                tokio::time::timeout_at(deadline, s.send(tungstenite::Message::Text(msg))).await,
+                Ok(Ok(()))
+            ) {
+                // A cancelled WebSocket send may have left a partial frame.
+                self.inner.set_status(SessionStatus::Closed);
+                self.inner.fail_everyone(SessionError::Closed);
+            }
         }
     }
 
-    #[cfg(test)]
     pub(crate) fn lines_dropped(&self) -> usize {
         self.inner.lines_dropped.load(Ordering::Relaxed)
     }
@@ -485,44 +760,77 @@ impl SerialSession {
 
     #[cfg(test)]
     pub(crate) fn is_reader_alive(&self) -> bool {
-        self.reader
+        self.inner
+            .reader
+            .lock()
+            .unwrap_or_else(|e| e.into_inner())
             .as_ref()
             .map(|h| !h.is_finished())
             .unwrap_or(false)
     }
 
-    /// Detach, close, and join the reader task.
-    pub(crate) async fn close(mut self) {
-        self.close_inner().await;
-    }
-
-    async fn close_inner(&mut self) {
+    /// Detach, mark closed, fail every pending call, and join the reader
+    /// task. Takes `&self` (not ownership) so a session shared behind an
+    /// `Arc<SerialSession>` can be closed while other holders have calls in
+    /// flight (AT-20): those calls observe `Closed` and return promptly
+    /// instead of hanging until their own timeout. Idempotent — a second
+    /// call (or `Drop` running afterwards) finds the reader handle already
+    /// taken and is a no-op beyond re-marking `Closed`.
+    pub(crate) async fn close(&self) {
+        self.inner.set_status(SessionStatus::Closed);
+        self.inner.fail_everyone(SessionError::Closed);
+        // Best-effort detach/close notice to the daemon, bounded so a peer
+        // that isn't reading (e.g. busy handling an earlier request) can't
+        // make `close()` — and so `__aexit__` — hang (AT-P15).
+        if let Ok(mut sink) =
+            tokio::time::timeout(Duration::from_millis(200), self.inner.sink.lock()).await
         {
-            let mut sink = self.inner.sink.lock().await;
             if let Some(s) = sink.as_mut() {
                 let detach = serde_json::to_string(&ClientMessage::Detach)
                     .expect("fbuild-python: ClientMessage::Detach serialization is infallible");
-                let _ = s.send(tungstenite::Message::Text(detach)).await;
-                let _ = s.send(tungstenite::Message::Close(None)).await;
+                let _ = tokio::time::timeout(Duration::from_millis(200), async {
+                    let _ = s.send(tungstenite::Message::Text(detach)).await;
+                    s.send(tungstenite::Message::Close(None)).await
+                })
+                .await;
             }
             *sink = None;
         }
-        self.inner.set_status(SessionStatus::Closed);
-        self.inner.fail_everyone(SessionError::Closed);
-        if let Some(reader) = self.reader.take() {
-            let _ = tokio::time::timeout(Duration::from_secs(5), reader).await;
+        // Abort the reader immediately rather than waiting for it to
+        // notice the peer closing: application-level cleanup is already
+        // done above (every pending call has been failed), so `close()`
+        // must not depend on the peer's responsiveness to complete.
+        let reader = self
+            .inner
+            .reader
+            .lock()
+            .unwrap_or_else(|e| e.into_inner())
+            .take();
+        if let Some(reader) = reader {
+            reader.abort();
+            let _ = reader.await;
         }
     }
 }
 
 impl Drop for SerialSession {
     fn drop(&mut self) {
+        #[cfg(debug_assertions)]
+        LIVE_SESSIONS.fetch_sub(1, Ordering::SeqCst);
         // Best-effort teardown for a drop without `close()` (GC, an
         // exception in `with`, a leaked object): mark closed and abort the
         // reader so nobody waits on a dead session forever (§4.9 rule 7).
+        // A prior `close()` already took the reader handle, so this is a
+        // no-op in that case beyond re-marking `Closed`.
         self.inner.set_status(SessionStatus::Closed);
         self.inner.fail_everyone(SessionError::Closed);
-        if let Some(reader) = self.reader.take() {
+        let reader = self
+            .inner
+            .reader
+            .lock()
+            .unwrap_or_else(|e| e.into_inner())
+            .take();
+        if let Some(reader) = reader {
             reader.abort();
         }
     }
@@ -544,6 +852,10 @@ async fn reader_task(inner: Arc<Inner>, mut read: WsSource, auto_reconnect: bool
         let message = read.next().await;
         match message {
             Some(Ok(tungstenite::Message::Text(text))) => {
+                #[cfg(test)]
+                if text == "__fbuild_test_reader_panic__" {
+                    panic!("injected reader-task failure for AT-17");
+                }
                 match serde_json::from_str::<ServerMessage>(&text) {
                     Ok(ServerMessage::Data { lines, .. }) => {
                         for line in lines {
@@ -553,9 +865,15 @@ async fn reader_task(inner: Arc<Inner>, mut read: WsSource, auto_reconnect: bool
                     Ok(ServerMessage::WriteAck {
                         success,
                         bytes_written,
-                        ..
+                        message,
                     }) => {
-                        let value = if success { Ok(bytes_written) } else { Ok(0) };
+                        let value = if success {
+                            Ok(bytes_written)
+                        } else {
+                            Err(SessionError::WriteFailed(
+                                message.unwrap_or_else(|| "daemon rejected write".to_string()),
+                            ))
+                        };
                         inner.complete_reply(ReplyKind::Write, value);
                     }
                     Ok(ServerMessage::InWaiting { count }) => {
@@ -566,15 +884,13 @@ async fn reader_task(inner: Arc<Inner>, mut read: WsSource, auto_reconnect: bool
                         inner.complete_reply_with_error();
                     }
                     Ok(ServerMessage::Preempted { .. }) => {
-                        if auto_reconnect {
-                            // Keep Active; readers keep waiting.
-                        } else {
-                            inner.set_status(SessionStatus::Preempted);
-                            inner.fail_everyone(SessionError::Preempted);
-                        }
+                        inner.set_status(SessionStatus::Preempted);
+                        inner.preempt_everyone();
                     }
                     Ok(ServerMessage::Reconnected { .. }) => {
-                        inner.set_status(SessionStatus::Active);
+                        if auto_reconnect {
+                            inner.reconnect_if_preempted();
+                        }
                     }
                     Ok(ServerMessage::PortRenumbered { .. })
                     | Ok(ServerMessage::PortReattached { .. }) => {}
@@ -592,666 +908,13 @@ async fn reader_task(inner: Arc<Inner>, mut read: WsSource, auto_reconnect: bool
             Some(Ok(tungstenite::Message::Close(_))) | None => return,
             Some(Ok(_)) => {}
             Some(Err(e)) => {
-                tracing::debug!(error = %e, "websocket read error, ignoring frame");
+                tracing::warn!(error = %e, "websocket read failed; closing serial session");
+                return;
             }
         }
     }
 }
 
 #[cfg(test)]
-mod tests {
-    use super::*;
-    use std::sync::atomic::AtomicU64;
-    use tokio::net::TcpListener;
-
-    /// Fault hooks the fake daemon can be told to trigger.
-    #[derive(Default, Clone)]
-    struct DaemonKnobs {
-        echo_delay: Duration,
-        ack_delay: Duration,
-        inject_error_on_nth_write: Option<usize>,
-        stop_reading_after_writes: Option<usize>,
-    }
-
-    async fn fake_daemon(listener: TcpListener, knobs: DaemonKnobs) {
-        let (stream, _) = listener.accept().await.unwrap();
-        stream.set_nodelay(true).unwrap();
-        let ws = tokio_tungstenite::accept_async(stream).await.unwrap();
-        let (sink, mut source) = ws.split();
-        let sink = Arc::new(tokio::sync::Mutex::new(sink));
-        let attach_seen = Arc::new(std::sync::atomic::AtomicBool::new(false));
-        let write_count = Arc::new(AtomicU64::new(0));
-
-        while let Some(Ok(msg)) = source.next().await {
-            let tungstenite::Message::Text(text) = msg else {
-                continue;
-            };
-            let request: serde_json::Value = match serde_json::from_str(&text) {
-                Ok(v) => v,
-                Err(_) => continue,
-            };
-            if !attach_seen.load(Ordering::Relaxed) {
-                attach_seen.store(true, Ordering::Relaxed);
-                let ack = serde_json::json!({
-                    "type": "attached", "success": true, "message": "ok", "writer_pre_acquired": true
-                });
-                sink.lock()
-                    .await
-                    .send(tungstenite::Message::Text(ack.to_string()))
-                    .await
-                    .unwrap();
-                continue;
-            }
-            match request["type"].as_str() {
-                Some("write") => {
-                    let n = write_count.fetch_add(1, Ordering::SeqCst) + 1;
-                    if let Some(stop_after) = knobs.stop_reading_after_writes {
-                        if n as usize > stop_after {
-                            // Simulate a peer that stops reading: never ack,
-                            // never disconnect.
-                            std::future::pending::<()>().await;
-                        }
-                    }
-                    let data = request["data"].as_str().unwrap().to_string();
-                    if knobs.ack_delay.is_zero() {
-                        // no-op, ack below
-                    } else {
-                        tokio::time::sleep(knobs.ack_delay).await;
-                    }
-                    if knobs.inject_error_on_nth_write == Some(n as usize) {
-                        let err = serde_json::json!({"type": "error", "message": "bad base64"});
-                        sink.lock()
-                            .await
-                            .send(tungstenite::Message::Text(err.to_string()))
-                            .await
-                            .unwrap();
-                        continue;
-                    }
-                    let decoded = base64::Engine::decode(
-                        &base64::engine::general_purpose::STANDARD,
-                        data.as_bytes(),
-                    )
-                    .unwrap_or_default();
-                    let ack = serde_json::json!({
-                        "type": "write_ack", "success": true, "bytes_written": decoded.len(), "message": null
-                    });
-                    sink.lock()
-                        .await
-                        .send(tungstenite::Message::Text(ack.to_string()))
-                        .await
-                        .unwrap();
-                    let text = String::from_utf8_lossy(&decoded).trim().to_string();
-                    let echoed = if text.starts_with(REMOTE_PREFIX) {
-                        text
-                    } else {
-                        format!("echo:{text}")
-                    };
-                    let line =
-                        serde_json::json!({ "type": "data", "lines": [echoed], "current_index": 0 })
-                            .to_string();
-                    if knobs.echo_delay.is_zero() {
-                        sink.lock()
-                            .await
-                            .send(tungstenite::Message::Text(line))
-                            .await
-                            .unwrap();
-                    } else {
-                        let sink = Arc::clone(&sink);
-                        let delay = knobs.echo_delay;
-                        tokio::spawn(async move {
-                            tokio::time::sleep(delay).await;
-                            let _ = sink
-                                .lock()
-                                .await
-                                .send(tungstenite::Message::Text(line))
-                                .await;
-                        });
-                    }
-                }
-                Some("get_in_waiting") => {
-                    let reply = serde_json::json!({ "type": "in_waiting", "count": 0 });
-                    sink.lock()
-                        .await
-                        .send(tungstenite::Message::Text(reply.to_string()))
-                        .await
-                        .unwrap();
-                }
-                Some("clear_buffer") | Some("detach") => {}
-                _ => {}
-            }
-        }
-    }
-
-    async fn connect_to(knobs: DaemonKnobs) -> (SerialSession, u16) {
-        let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
-        let port = listener.local_addr().unwrap().port();
-        tokio::spawn(fake_daemon(listener, knobs));
-        let cfg = SessionConfig {
-            ws_url: format!("ws://127.0.0.1:{port}"),
-            port: "COM_TEST".into(),
-            baud_rate: 115200,
-            auto_reconnect: true,
-            verbose: false,
-            client_id: "test".into(),
-            max_buffered_lines: DEFAULT_MAX_BUFFERED_LINES,
-            handshake_timeout: Duration::from_secs(5),
-        };
-        let session = SerialSession::connect(cfg).await.expect("connect");
-        (session, port)
-    }
-
-    /// §5.3 watchdog: wraps a test body in a budget; on expiry, panics with
-    /// core-state evidence instead of letting CI's job timeout eat it.
-    async fn with_watchdog<F: std::future::Future<Output = ()>>(budget: Duration, fut: F) {
-        match tokio::time::timeout(budget, fut).await {
-            Ok(()) => {}
-            Err(_) => panic!("test exceeded its {budget:?} watchdog budget"),
-        }
-    }
-
-    #[tokio::test]
-    async fn at1_write_during_long_read_does_not_stall() {
-        with_watchdog(Duration::from_secs(20), async {
-            let (session, _) = connect_to(DaemonKnobs {
-                echo_delay: Duration::from_millis(20),
-                ..Default::default()
-            })
-            .await;
-            let session = Arc::new(session);
-            let reader = {
-                let session = Arc::clone(&session);
-                tokio::spawn(async move { session.read_lines(Duration::from_secs(10)).await })
-            };
-            tokio::time::sleep(Duration::from_millis(100)).await;
-            let started = tokio::time::Instant::now();
-            let n = session
-                .write(b"ping", Duration::from_secs(5))
-                .await
-                .unwrap();
-            assert_eq!(n, 4);
-            assert!(started.elapsed() < Duration::from_secs(1));
-            let lines = tokio::time::timeout(Duration::from_secs(5), reader)
-                .await
-                .unwrap()
-                .unwrap();
-            assert_eq!(lines, ["echo:ping"]);
-        })
-        .await;
-    }
-
-    #[tokio::test]
-    async fn at2_json_rpc_reply_not_stolen_by_concurrent_reader() {
-        with_watchdog(Duration::from_secs(20), async {
-            let (session, _) = connect_to(DaemonKnobs {
-                echo_delay: Duration::from_millis(150),
-                ..Default::default()
-            })
-            .await;
-            let session = Arc::new(session);
-            let reader = {
-                let session = Arc::clone(&session);
-                tokio::spawn(async move { session.read_lines(Duration::from_secs(10)).await })
-            };
-            tokio::time::sleep(Duration::from_millis(50)).await;
-            let reply = session
-                .json_rpc("REMOTE:{\"id\":1}", Duration::from_secs(5))
-                .await
-                .unwrap();
-            assert_eq!(reply.trim(), "{\"id\":1}");
-            let lines = reader.await.unwrap();
-            assert!(
-                lines.iter().all(|l| !l.starts_with(REMOTE_PREFIX)),
-                "reader must never see a REMOTE: line: {lines:?}"
-            );
-        })
-        .await;
-    }
-
-    #[tokio::test]
-    async fn at3_concurrent_writers_each_get_their_own_ack() {
-        with_watchdog(Duration::from_secs(30), async {
-            let (session, _) = connect_to(DaemonKnobs::default()).await;
-            let session = Arc::new(session);
-            for _round in 0..5 {
-                let mut handles = Vec::new();
-                for len in 1..=32usize {
-                    let session = Arc::clone(&session);
-                    handles.push(tokio::spawn(async move {
-                        let payload = "x".repeat(len);
-                        let n = session
-                            .write(payload.as_bytes(), Duration::from_secs(5))
-                            .await
-                            .unwrap();
-                        (len, n)
-                    }));
-                }
-                for h in handles {
-                    let (len, n) = h.await.unwrap();
-                    assert_eq!(n, len, "a write got another write's ack");
-                }
-            }
-        })
-        .await;
-    }
-
-    #[tokio::test]
-    async fn at4_write_and_in_waiting_interleaved() {
-        with_watchdog(Duration::from_secs(20), async {
-            let (session, _) = connect_to(DaemonKnobs::default()).await;
-            let session = Arc::new(session);
-            let mut handles = Vec::new();
-            for i in 0..16 {
-                let session = Arc::clone(&session);
-                if i % 2 == 0 {
-                    handles.push(tokio::spawn(async move {
-                        session
-                            .write(b"ab", Duration::from_secs(5))
-                            .await
-                            .map(|_| ())
-                    }));
-                } else {
-                    handles.push(tokio::spawn(async move {
-                        session.in_waiting(Duration::from_secs(5)).await.map(|_| ())
-                    }));
-                }
-            }
-            for h in handles {
-                h.await.unwrap().unwrap();
-            }
-        })
-        .await;
-    }
-
-    #[tokio::test]
-    async fn at5_error_frame_does_not_shift_the_fifo() {
-        with_watchdog(Duration::from_secs(10), async {
-            let (session, _) = connect_to(DaemonKnobs {
-                inject_error_on_nth_write: Some(1),
-                ..Default::default()
-            })
-            .await;
-            let first = session.write(b"a", Duration::from_secs(2)).await;
-            assert_eq!(first, Err(SessionError::ProtocolDesync));
-            let second = session.write(b"bb", Duration::from_secs(2)).await.unwrap();
-            assert_eq!(second, 2, "the next write must get its own ack");
-        })
-        .await;
-    }
-
-    #[tokio::test]
-    async fn at6_cancelling_read_lines_loses_nothing() {
-        with_watchdog(Duration::from_secs(30), async {
-            let (session, _) = connect_to(DaemonKnobs::default()).await;
-            let session = Arc::new(session);
-            let total_sent = 50usize;
-            let sender = {
-                let session = Arc::clone(&session);
-                tokio::spawn(async move {
-                    for i in 0..total_sent {
-                        session
-                            .write(format!("m{i}").as_bytes(), Duration::from_secs(2))
-                            .await
-                            .unwrap();
-                    }
-                })
-            };
-            let mut delivered = Vec::new();
-            for _ in 0..1000 {
-                if delivered.len() >= total_sent {
-                    break;
-                }
-                let fut = session.read_lines(Duration::from_secs(2));
-                match tokio::time::timeout(Duration::from_millis(1), fut).await {
-                    Ok(lines) => delivered.extend(lines),
-                    Err(_) => continue,
-                }
-            }
-            sender.await.unwrap();
-            // Drain anything left over after the cancel storm.
-            loop {
-                let batch = session.read_lines(Duration::from_millis(200)).await;
-                if batch.is_empty() {
-                    break;
-                }
-                delivered.extend(batch);
-            }
-            assert_eq!(delivered.len(), total_sent, "lines lost or duplicated");
-            let mut sorted = delivered.clone();
-            sorted.sort();
-            sorted.dedup();
-            assert_eq!(sorted.len(), total_sent, "duplicate lines delivered");
-        })
-        .await;
-    }
-
-    #[tokio::test]
-    async fn at7_late_ack_after_timeout_is_discarded() {
-        with_watchdog(Duration::from_secs(10), async {
-            let (session, _) = connect_to(DaemonKnobs {
-                ack_delay: Duration::from_millis(300),
-                ..Default::default()
-            })
-            .await;
-            let timed_out = session.write(b"a", Duration::from_millis(50)).await;
-            assert_eq!(timed_out, Err(SessionError::Timeout));
-            // Let the late ack land, then issue a second write.
-            tokio::time::sleep(Duration::from_millis(500)).await;
-            let second = session.write(b"bb", Duration::from_secs(2)).await.unwrap();
-            assert_eq!(second, 2);
-        })
-        .await;
-    }
-
-    #[tokio::test]
-    async fn at9_preempted_write_fails_fast_without_auto_reconnect() {
-        with_watchdog(Duration::from_secs(10), async {
-            let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
-            let port = listener.local_addr().unwrap().port();
-            tokio::spawn(async move {
-                let (stream, _) = listener.accept().await.unwrap();
-                let ws = tokio_tungstenite::accept_async(stream).await.unwrap();
-                let (mut sink, _source) = ws.split();
-                let ack = serde_json::json!({"type":"attached","success":true,"message":"ok","writer_pre_acquired":true});
-                sink.send(tungstenite::Message::Text(ack.to_string()))
-                    .await
-                    .unwrap();
-                let preempted =
-                    serde_json::json!({"type":"preempted","reason":"deploy","preempted_by":"x"});
-                sink.send(tungstenite::Message::Text(preempted.to_string()))
-                    .await
-                    .unwrap();
-                std::future::pending::<()>().await;
-            });
-            let cfg = SessionConfig {
-                ws_url: format!("ws://127.0.0.1:{port}"),
-                port: "COM_TEST".into(),
-                baud_rate: 115200,
-                auto_reconnect: false,
-                verbose: false,
-                client_id: "test".into(),
-                max_buffered_lines: DEFAULT_MAX_BUFFERED_LINES,
-                handshake_timeout: Duration::from_secs(5),
-            };
-            let session = SerialSession::connect(cfg).await.unwrap();
-            // Give the preempted frame time to be processed.
-            tokio::time::sleep(Duration::from_millis(100)).await;
-            let started = tokio::time::Instant::now();
-            let result = session.write(b"x", Duration::from_secs(10)).await;
-            assert_eq!(result, Err(SessionError::Preempted));
-            assert!(started.elapsed() < Duration::from_secs(1));
-        })
-        .await;
-    }
-
-    #[tokio::test]
-    async fn at10_port_disconnected_wakes_everyone() {
-        with_watchdog(Duration::from_secs(10), async {
-            let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
-            let port = listener.local_addr().unwrap().port();
-            tokio::spawn(async move {
-                let (stream, _) = listener.accept().await.unwrap();
-                let ws = tokio_tungstenite::accept_async(stream).await.unwrap();
-                let (mut sink, _source) = ws.split();
-                let ack = serde_json::json!({"type":"attached","success":true,"message":"ok","writer_pre_acquired":true});
-                sink.send(tungstenite::Message::Text(ack.to_string()))
-                    .await
-                    .unwrap();
-                tokio::time::sleep(Duration::from_millis(100)).await;
-                let disconnected =
-                    serde_json::json!({"type":"port_disconnected","port":"COM1","reason":"unplugged","message":"gone"});
-                sink.send(tungstenite::Message::Text(disconnected.to_string()))
-                    .await
-                    .unwrap();
-                std::future::pending::<()>().await;
-            });
-            let cfg = SessionConfig {
-                ws_url: format!("ws://127.0.0.1:{port}"),
-                port: "COM_TEST".into(),
-                baud_rate: 115200,
-                auto_reconnect: true,
-                verbose: false,
-                client_id: "test".into(),
-                max_buffered_lines: DEFAULT_MAX_BUFFERED_LINES,
-                handshake_timeout: Duration::from_secs(5),
-            };
-            let session = Arc::new(SerialSession::connect(cfg).await.unwrap());
-            let reader = {
-                let session = Arc::clone(&session);
-                tokio::spawn(async move { session.read_lines(Duration::from_secs(10)).await })
-            };
-            let write_result = session.write(b"x", Duration::from_secs(10)).await;
-            assert_eq!(write_result, Err(SessionError::PortGone));
-            let lines = tokio::time::timeout(Duration::from_secs(2), reader)
-                .await
-                .unwrap()
-                .unwrap();
-            assert!(lines.is_empty());
-            tokio::time::sleep(Duration::from_millis(50)).await;
-            assert!(!session.is_reader_alive(), "reader task must have finished");
-        })
-        .await;
-    }
-
-    #[tokio::test]
-    async fn at11_overflow_drops_oldest_and_counts() {
-        with_watchdog(Duration::from_secs(30), async {
-            let (session, _) = connect_to(DaemonKnobs::default()).await;
-            let session = Arc::new(session);
-            // Small cap isn't configurable per-connect in this test harness
-            // helper, so drive it directly via a custom config.
-            drop(session);
-            let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
-            let port = listener.local_addr().unwrap().port();
-            tokio::spawn(fake_daemon(listener, DaemonKnobs::default()));
-            let cfg = SessionConfig {
-                ws_url: format!("ws://127.0.0.1:{port}"),
-                port: "COM_TEST".into(),
-                baud_rate: 115200,
-                auto_reconnect: true,
-                verbose: false,
-                client_id: "test".into(),
-                max_buffered_lines: 10,
-                handshake_timeout: Duration::from_secs(5),
-            };
-            let session = SerialSession::connect(cfg).await.unwrap();
-            for i in 0..50 {
-                session
-                    .write(format!("m{i}").as_bytes(), Duration::from_secs(2))
-                    .await
-                    .unwrap();
-            }
-            tokio::time::sleep(Duration::from_millis(200)).await;
-            let remaining = session.read_lines(Duration::from_millis(50)).await;
-            assert_eq!(remaining.len(), 10);
-            assert_eq!(session.lines_dropped(), 40);
-            // The socket kept draining: a write after the overflow still acks.
-            let n = session.write(b"zz", Duration::from_secs(2)).await.unwrap();
-            assert_eq!(n, 2);
-        })
-        .await;
-    }
-
-    #[tokio::test]
-    async fn at12_clear_input_registers_no_reply() {
-        with_watchdog(Duration::from_secs(10), async {
-            let (session, _) = connect_to(DaemonKnobs::default()).await;
-            session.write(b"a", Duration::from_secs(2)).await.unwrap();
-            tokio::time::sleep(Duration::from_millis(50)).await;
-            session.clear_input().await;
-            assert!(
-                session
-                    .read_lines(Duration::from_millis(50))
-                    .await
-                    .is_empty()
-            );
-            let n = session.write(b"bb", Duration::from_secs(2)).await.unwrap();
-            assert_eq!(n, 2, "clear_input must not consume the next write's ack");
-        })
-        .await;
-    }
-
-    #[tokio::test]
-    async fn at14_abandoned_reader_does_not_eat_the_reply() {
-        with_watchdog(Duration::from_secs(30), async {
-            let (session, _) = connect_to(DaemonKnobs::default()).await;
-            let session = Arc::new(session);
-            for _ in 0..100 {
-                let a = {
-                    let session = Arc::clone(&session);
-                    tokio::spawn(async move { session.read_lines(Duration::from_secs(10)).await })
-                };
-                tokio::time::sleep(Duration::from_millis(2)).await;
-                a.abort(); // abandon reader A: cancellation removes nothing
-                let n = session
-                    .write(b"z", Duration::from_millis(500))
-                    .await
-                    .unwrap();
-                assert_eq!(n, 1);
-                let b = session.read_lines(Duration::from_millis(500)).await;
-                assert!(b.contains(&"echo:z".to_string()));
-            }
-        })
-        .await;
-    }
-
-    #[tokio::test]
-    async fn at15_peer_stops_reading_write_times_out_and_closes() {
-        with_watchdog(Duration::from_secs(10), async {
-            let (session, _) = connect_to(DaemonKnobs {
-                stop_reading_after_writes: Some(0),
-                ..Default::default()
-            })
-            .await;
-            let session = Arc::new(session);
-            let started = tokio::time::Instant::now();
-            let result = session.write(b"x", Duration::from_millis(200)).await;
-            assert_eq!(result, Err(SessionError::Timeout));
-            assert!(started.elapsed() < Duration::from_secs(2));
-            // A concurrent reader must return promptly too.
-            let lines = session.read_lines(Duration::from_secs(2)).await;
-            assert!(lines.is_empty());
-        })
-        .await;
-    }
-
-    #[tokio::test]
-    async fn at16_handshake_stall_times_out() {
-        with_watchdog(Duration::from_secs(10), async {
-            let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
-            let port = listener.local_addr().unwrap().port();
-            tokio::spawn(async move {
-                // Accept the TCP connection but never complete the WS
-                // handshake.
-                let (_stream, _) = listener.accept().await.unwrap();
-                std::future::pending::<()>().await
-            });
-            let cfg = SessionConfig {
-                ws_url: format!("ws://127.0.0.1:{port}"),
-                port: "COM_TEST".into(),
-                baud_rate: 115200,
-                auto_reconnect: true,
-                verbose: false,
-                client_id: "test".into(),
-                max_buffered_lines: DEFAULT_MAX_BUFFERED_LINES,
-                handshake_timeout: Duration::from_millis(300),
-            };
-            let started = tokio::time::Instant::now();
-            let result = SerialSession::connect(cfg).await;
-            assert_eq!(result.err(), Some(SessionError::Timeout));
-            assert!(started.elapsed() < Duration::from_secs(5));
-        })
-        .await;
-    }
-
-    #[tokio::test]
-    async fn at18_malformed_frames_are_ignored() {
-        with_watchdog(Duration::from_secs(10), async {
-            let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
-            let port = listener.local_addr().unwrap().port();
-            tokio::spawn(async move {
-                let (stream, _) = listener.accept().await.unwrap();
-                let ws = tokio_tungstenite::accept_async(stream).await.unwrap();
-                let (mut sink, mut source) = ws.split();
-                let ack = serde_json::json!({"type":"attached","success":true,"message":"ok","writer_pre_acquired":true});
-                sink.send(tungstenite::Message::Text(ack.to_string()))
-                    .await
-                    .unwrap();
-                sink.send(tungstenite::Message::Text("not json".into()))
-                    .await
-                    .unwrap();
-                sink.send(tungstenite::Message::Text(r#"{"type":"unknown_thing"}"#.into()))
-                    .await
-                    .unwrap();
-                sink.send(tungstenite::Message::Binary(vec![1, 2, 3].into()))
-                    .await
-                    .unwrap();
-                while let Some(Ok(tungstenite::Message::Text(text))) = source.next().await {
-                    let req: serde_json::Value = serde_json::from_str(&text).unwrap();
-                    if req["type"] == "write" {
-                        let data = req["data"].as_str().unwrap();
-                        let decoded = base64::Engine::decode(
-                            &base64::engine::general_purpose::STANDARD,
-                            data.as_bytes(),
-                        )
-                        .unwrap();
-                        let reply = serde_json::json!({"type":"write_ack","success":true,"bytes_written":decoded.len(),"message":null});
-                        sink.send(tungstenite::Message::Text(reply.to_string()))
-                            .await
-                            .unwrap();
-                    }
-                }
-            });
-            let cfg = SessionConfig {
-                ws_url: format!("ws://127.0.0.1:{port}"),
-                port: "COM_TEST".into(),
-                baud_rate: 115200,
-                auto_reconnect: true,
-                verbose: false,
-                client_id: "test".into(),
-                max_buffered_lines: DEFAULT_MAX_BUFFERED_LINES,
-                handshake_timeout: Duration::from_secs(5),
-            };
-            let session = SerialSession::connect(cfg).await.unwrap();
-            tokio::time::sleep(Duration::from_millis(100)).await;
-            let n = session.write(b"ok", Duration::from_secs(2)).await.unwrap();
-            assert_eq!(n, 2, "session must keep working after malformed frames");
-        })
-        .await;
-    }
-
-    #[tokio::test]
-    async fn at20_teardown_races_in_flight_calls() {
-        with_watchdog(Duration::from_secs(30), async {
-            for _ in 0..10 {
-                let (session, _) = connect_to(DaemonKnobs {
-                    echo_delay: Duration::from_millis(50),
-                    ..Default::default()
-                })
-                .await;
-                let session = Arc::new(session);
-                let mut handles = Vec::new();
-                for i in 0..16 {
-                    let session = Arc::clone(&session);
-                    handles.push(tokio::spawn(async move {
-                        if i % 2 == 0 {
-                            let _ = session.write(b"x", Duration::from_secs(2)).await;
-                        } else {
-                            let _ = session.read_lines(Duration::from_secs(2)).await;
-                        }
-                    }));
-                }
-                tokio::time::sleep(Duration::from_millis(5)).await;
-                // Every in-flight call must resolve within 1s of the
-                // session closing, never hang until its own 2s timeout.
-                let all = futures::future::join_all(handles);
-                tokio::time::timeout(Duration::from_secs(1) + Duration::from_secs(2), all)
-                    .await
-                    .expect("in-flight calls must not hang past close");
-                // The Arc may still be held by a spawned task momentarily;
-                // once all handles joined, this is the sole owner.
-                assert_eq!(Arc::strong_count(&session), 1);
-            }
-        })
-        .await;
-    }
-}
+#[path = "serial_session/tests.rs"]
+mod tests;

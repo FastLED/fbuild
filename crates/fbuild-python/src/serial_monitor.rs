@@ -2,7 +2,14 @@
 //!
 //! A thin facade over the shared [`crate::serial_session::SerialSession`]
 //! core (FastLED/fbuild#1485). Every blocking call releases the GIL
-//! (`py.detach`) and runs `rt.block_on(session.op(...))`.
+//! (`py.detach`) and runs `rt.block_on(session.op(...))` — and, per §4.9
+//! rule 5, first checks it is not already running *inside* the shared
+//! tokio runtime (which would otherwise panic `block_on` or deadlock),
+//! raising `RuntimeError` instead. This applies uniformly to every
+//! blocking method, not just `write_json_rpc`: `__enter__`, `__exit__`,
+//! `read_lines`, `write`, `in_waiting`, `reset_input_buffer` and
+//! `reset_device` all go through [`SerialMonitor::block_on`] /
+//! [`block_on_guarded`].
 
 use pyo3::prelude::*;
 use tokio::runtime::Runtime;
@@ -12,11 +19,27 @@ use crate::serial_session::{SerialSession, SessionConfig, SessionError, SessionS
 fn map_err(err: SessionError) -> PyErr {
     match err {
         SessionError::Timeout => pyo3::exceptions::PyTimeoutError::new_err(err.to_string()),
-        SessionError::Closed | SessionError::PortGone | SessionError::Preempted => {
-            pyo3::exceptions::PyConnectionError::new_err(err.to_string())
+        SessionError::Closed
+        | SessionError::ConnectionFailed(_)
+        | SessionError::PortGone
+        | SessionError::Preempted => pyo3::exceptions::PyConnectionError::new_err(err.to_string()),
+        SessionError::ProtocolDesync | SessionError::WriteFailed(_) => {
+            pyo3::exceptions::PyRuntimeError::new_err(err.to_string())
         }
-        SessionError::ProtocolDesync => pyo3::exceptions::PyRuntimeError::new_err(err.to_string()),
     }
+}
+
+/// `Err` if called from inside the shared tokio runtime (§4.9 rule 5):
+/// `block_on` would otherwise panic instead of deadlocking silently. Free
+/// function so it can be used both from `&self` methods and from
+/// `__enter__`, which only has a `PyRefMut`.
+fn block_on_guarded<T>(rt: &Runtime, fut: impl std::future::Future<Output = T>) -> PyResult<T> {
+    if tokio::runtime::Handle::try_current().is_ok() {
+        return Err(pyo3::exceptions::PyRuntimeError::new_err(
+            "SerialMonitor called from inside the async runtime; use AsyncSerialMonitor",
+        ));
+    }
+    Ok(rt.block_on(fut))
 }
 
 /// Python-visible SerialMonitor class.
@@ -57,18 +80,23 @@ impl SerialMonitor {
         }
     }
 
-    /// `Err` if called from inside the shared tokio runtime (§4.9 rule 5):
-    /// `block_on` would otherwise panic instead of deadlocking silently.
     fn block_on<T>(&self, fut: impl std::future::Future<Output = T>) -> PyResult<T> {
-        if tokio::runtime::Handle::try_current().is_ok() {
-            return Err(pyo3::exceptions::PyRuntimeError::new_err(
-                "SerialMonitor called from inside the async runtime; use AsyncSerialMonitor",
-            ));
-        }
         let rt = self.runtime.ok_or_else(|| {
             pyo3::exceptions::PyRuntimeError::new_err("SerialMonitor runtime is not active")
         })?;
-        Ok(rt.block_on(fut))
+        block_on_guarded(rt, fut)
+    }
+
+    /// Serial lines within `timeout`, without hook dispatch — the shared
+    /// implementation behind the public `read_lines` and the internal
+    /// polling `run_until`/`reset_device(wait_for_output=True)` use.
+    fn read_lines_no_hooks(&self, py: Python<'_>, timeout: f64) -> PyResult<Vec<String>> {
+        let Some(session) = &self.session else {
+            return Ok(Vec::new());
+        };
+        py.detach(|| {
+            self.block_on(session.read_lines(std::time::Duration::from_secs_f64(timeout.max(0.0))))
+        })
     }
 }
 
@@ -101,11 +129,11 @@ impl SerialMonitor {
         py: Python<'py>,
     ) -> PyResult<PyRefMut<'py, Self>> {
         let rt: &'static Runtime = pyo3_async_runtimes::tokio::get_runtime();
-        slf.runtime = Some(rt);
         let cfg = slf.config();
         let session = py
-            .detach(|| rt.block_on(SerialSession::connect(cfg)))
+            .detach(|| block_on_guarded(rt, SerialSession::connect(cfg)))?
             .map_err(map_err)?;
+        slf.runtime = Some(rt);
         slf.session = Some(session);
         Ok(slf)
     }
@@ -117,12 +145,12 @@ impl SerialMonitor {
         _exc_type: Option<&Bound<'_, PyAny>>,
         _exc_val: Option<&Bound<'_, PyAny>>,
         _exc_tb: Option<&Bound<'_, PyAny>>,
-    ) -> bool {
+    ) -> PyResult<bool> {
         if let (Some(session), Some(rt)) = (self.session.take(), self.runtime) {
-            py.detach(|| rt.block_on(session.close()));
+            py.detach(|| block_on_guarded(rt, session.close()))?;
         }
         self.runtime = None;
-        false
+        Ok(false)
     }
 
     #[getter]
@@ -137,16 +165,8 @@ impl SerialMonitor {
     /// the timeout period. Takes `&self`, so `write` can run from another
     /// thread while a read is in flight (FastLED/fbuild#1431).
     #[pyo3(signature = (timeout=30.0))]
-    fn read_lines(&self, py: Python<'_>, timeout: f64) -> Vec<String> {
-        let Some(session) = &self.session else {
-            return Vec::new();
-        };
-        let Some(rt) = self.runtime else {
-            return Vec::new();
-        };
-        let lines = py.detach(|| {
-            rt.block_on(session.read_lines(std::time::Duration::from_secs_f64(timeout.max(0.0))))
-        });
+    fn read_lines(&self, py: Python<'_>, timeout: f64) -> PyResult<Vec<String>> {
+        let lines = self.read_lines_no_hooks(py, timeout)?;
 
         if let Some(last) = lines.last() {
             *self.last_line.lock().unwrap_or_else(|e| e.into_inner()) = last.clone();
@@ -158,7 +178,7 @@ impl SerialMonitor {
                 }
             }
         }
-        lines
+        Ok(lines)
     }
 
     /// Wakes every blocked sync reader; each returns `[]` without draining,
@@ -170,20 +190,27 @@ impl SerialMonitor {
         }
     }
 
+    /// Number of oldest lines discarded because the bounded queue filled.
+    #[getter]
+    fn lines_dropped(&self) -> usize {
+        self.session
+            .as_ref()
+            .map_or(0, SerialSession::lines_dropped)
+    }
+
     /// Write data to the serial port. Releases the GIL while waiting for
     /// the daemon's `write_ack`; does not wait for an in-flight
     /// `read_lines` to finish (FastLED/fbuild#1431). Returns `0` on
     /// failure, matching the historical contract (see `write_json_rpc` /
     /// docs for the async surface's differing, raising, contract).
-    fn write(&self, py: Python<'_>, data: &str) -> usize {
+    fn write(&self, py: Python<'_>, data: &str) -> PyResult<usize> {
         let Some(session) = &self.session else {
-            return 0;
+            return Ok(0);
         };
-        let Some(rt) = self.runtime else {
-            return 0;
-        };
-        py.detach(|| rt.block_on(session.write(data.as_bytes(), std::time::Duration::from_secs(5))))
-            .unwrap_or(0)
+        let result = py.detach(|| {
+            self.block_on(session.write(data.as_bytes(), std::time::Duration::from_secs(5)))
+        })?;
+        Ok(result.unwrap_or(0))
     }
 
     #[pyo3(signature = (condition, timeout=30.0))]
@@ -194,7 +221,7 @@ impl SerialMonitor {
             if remaining <= 0.0 {
                 break;
             }
-            let lines = self.read_lines(py, remaining.min(1.0));
+            let lines = self.read_lines(py, remaining.min(1.0))?;
             for line in &lines {
                 let result: bool = condition.call1(py, (line,))?.extract(py)?;
                 if result {
@@ -223,11 +250,12 @@ impl SerialMonitor {
                 "SerialMonitor session is not open",
             ));
         };
-        let reply = self.block_on(session.json_rpc(
-            &json_str,
-            std::time::Duration::from_secs_f64(timeout.max(0.0)),
-        ))?;
-        let reply = py.detach(|| reply);
+        let reply = py.detach(|| {
+            self.block_on(session.json_rpc(
+                &json_str,
+                std::time::Duration::from_secs_f64(timeout.max(0.0)),
+            ))
+        })?;
         let json_part = reply.map_err(map_err)?;
 
         let json_module = py.import("json")?;
@@ -239,27 +267,22 @@ impl SerialMonitor {
     /// Maps to pyserial's `Serial.in_waiting`. Returns 0 when the session
     /// is not open.
     #[getter]
-    fn in_waiting(&self, py: Python<'_>) -> usize {
+    fn in_waiting(&self, py: Python<'_>) -> PyResult<usize> {
         let Some(session) = &self.session else {
-            return 0;
+            return Ok(0);
         };
-        let Some(rt) = self.runtime else {
-            return 0;
-        };
-        py.detach(|| rt.block_on(session.in_waiting(std::time::Duration::from_secs(2))))
-            .unwrap_or(0)
+        let result =
+            py.detach(|| self.block_on(session.in_waiting(std::time::Duration::from_secs(2))))?;
+        Ok(result.unwrap_or(0))
     }
 
     /// Drop any buffered serial-line data. Matches pyserial's
     /// `Serial.reset_input_buffer()`. No-op when the session is not open.
-    fn reset_input_buffer(&self, py: Python<'_>) {
+    fn reset_input_buffer(&self, py: Python<'_>) -> PyResult<()> {
         let Some(session) = &self.session else {
-            return;
+            return Ok(());
         };
-        let Some(rt) = self.runtime else {
-            return;
-        };
-        py.detach(|| rt.block_on(session.clear_input()));
+        py.detach(|| self.block_on(session.clear_input()))
     }
 
     /// Reset the device via the daemon's DTR/RTS reset endpoint.
@@ -276,13 +299,18 @@ impl SerialMonitor {
         wait_for_output: bool,
         timeout: f64,
     ) -> PyResult<bool> {
+        let was_connected = self.session.is_some();
+        if let (Some(session), Some(rt)) = (self.session.take(), self.runtime) {
+            py.detach(|| block_on_guarded(rt, session.close()))?;
+        }
         let port = self.port.clone();
         let success = match self.runtime {
             Some(rt) => py.detach(|| {
-                rt.block_on(crate::async_serial_monitor::post_reset_request_async(
-                    port, board,
-                ))
-            })?,
+                block_on_guarded(
+                    rt,
+                    crate::async_serial_monitor::post_reset_request_async(port, board),
+                )
+            })??,
             None => {
                 let rt = tokio::runtime::Builder::new_current_thread()
                     .enable_all()
@@ -293,26 +321,21 @@ impl SerialMonitor {
                         ))
                     })?;
                 py.detach(|| {
-                    rt.block_on(crate::async_serial_monitor::post_reset_request_async(
-                        port, board,
-                    ))
-                })?
+                    block_on_guarded(
+                        &rt,
+                        crate::async_serial_monitor::post_reset_request_async(port, board),
+                    )
+                })??
             }
         };
 
-        let was_connected = self.session.is_some();
-        if was_connected {
-            if let (Some(session), Some(rt)) = (self.session.take(), self.runtime) {
-                py.detach(|| rt.block_on(session.close()));
-            }
-            if success && self.auto_reconnect {
-                if let Some(rt) = self.runtime {
-                    let cfg = self.config();
-                    let session = py
-                        .detach(|| rt.block_on(SerialSession::connect(cfg)))
-                        .map_err(map_err)?;
-                    self.session = Some(session);
-                }
+        if was_connected && success {
+            if let Some(rt) = self.runtime {
+                let cfg = self.config();
+                let session = py
+                    .detach(|| block_on_guarded(rt, SerialSession::connect(cfg)))?
+                    .map_err(map_err)?;
+                self.session = Some(session);
             }
         }
 
@@ -321,14 +344,14 @@ impl SerialMonitor {
         }
 
         let deadline = std::time::Instant::now() + std::time::Duration::from_secs_f64(timeout);
-        std::thread::sleep(std::time::Duration::from_millis(300));
+        py.detach(|| std::thread::sleep(std::time::Duration::from_millis(300)));
 
         if self.session.is_some() {
             while std::time::Instant::now() < deadline {
                 let remaining = (deadline - std::time::Instant::now())
                     .as_secs_f64()
                     .min(0.2);
-                let lines = self.read_lines(py, remaining);
+                let lines = self.read_lines_no_hooks(py, remaining)?;
                 if !lines.is_empty() {
                     return Ok(true);
                 }
@@ -337,7 +360,7 @@ impl SerialMonitor {
         }
 
         let wait = timeout.min(1.0);
-        std::thread::sleep(std::time::Duration::from_secs_f64(wait));
+        py.detach(|| std::thread::sleep(std::time::Duration::from_secs_f64(wait)));
         Ok(true)
     }
 }

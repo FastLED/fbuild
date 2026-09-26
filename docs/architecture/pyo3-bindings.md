@@ -49,16 +49,13 @@ class SerialMonitor:
 
 ### Implementation Strategy
 
-The PyO3 `SerialMonitor` wraps the Rust `SharedSerialManager` via WebSocket:
-
-1. `__enter__`: Connect to daemon WebSocket at `/ws/serial-monitor`, send `attach` message
-2. `read_lines`: Poll WebSocket for `data` messages, yield lines
-3. `write`: Send `write` message via WebSocket, wait for `write_ack`
-4. `write_json_rpc`: Write JSON-RPC request, scan responses for matching `id`
-5. `__exit__`: Send `detach`, close WebSocket
-
-Internally uses the process-shared `pyo3-async-runtimes` tokio runtime with
-`block_on()` to bridge sync Python calls to async Rust.
+`__enter__` attaches the shared `SerialSession` to the daemon's
+`/ws/serial-monitor` WebSocket. The session's reader task dispatches data and
+FIFO replies while `read_lines`, `write`, and `write_json_rpc` operate through
+the shared core. `__exit__` detaches, closes the socket, and joins that reader.
+The sync facade uses the process-shared `pyo3-async-runtimes` Tokio runtime and
+releases the GIL around blocking calls. The daemon does not correlate RPC IDs;
+`REMOTE:` serial lines go to RPC waiters in FIFO order.
 
 ### Concurrency: the shared session core (FastLED/fbuild#1485)
 
@@ -89,7 +86,7 @@ never blocks a concurrent `write` — the sync facade releases the GIL
 (`py.detach`) for every call that can block, and the async facade awaits the
 same core methods via `pyo3_async_runtimes::tokio::future_into_py`.
 
-**Fixed lock order:** `sink` -> `reply FIFO` -> `line queue` -> `status`. The
+**Fixed lock order:** `sink` -> `request gate` -> `reply FIFO` -> `line queue` -> `status`. The
 reader task never takes `sink`.
 
 **Write registration is atomic.** A writer takes the `sink` lock, pushes its
@@ -107,13 +104,17 @@ reordering. `clear_input` (`clear_buffer`) registers no reply.
 
 **Line-queue overflow policy:** bounded at `max_buffered_lines` (default
 10,000); the *oldest* lines are dropped and counted
-(`SerialSession::lines_dropped`, plus a `tracing::warn!` per drop). The
+(`SerialSession::lines_dropped`, exposed as `lines_dropped` on both facades,
+plus a `tracing::warn!` once per overflow burst). The
 reader never stops draining the socket to apply backpressure — that would
 also stall `write_ack`s, which travel on the same connection.
 
 `read_lines` is cancel-safe: lines leave the queue only inside a synchronous
 critical section that also returns them, so a dropped/cancelled future (or a
-cancelled asyncio task) removes nothing. For the sync facade, a blocked
+cancelled asyncio task) removes nothing. The async facade also keeps a pending
+delivery copy until Python's Future completes; if asyncio cancels after the
+Rust read resolves but before Python receives it, the batch returns to the
+front of the queue. For the sync facade, a blocked
 Python thread can't be cancelled that way, so `SerialMonitor.interrupt_reads()`
 is an **additive** method that wakes every blocked reader; each returns `[]`
 without draining, so queued lines stay for the next reader (FastLED #3219 —
@@ -131,6 +132,13 @@ the "every 2nd RPC times out" abandoned-reader failure mode).
 | `in_waiting` | `await mon.in_waiting()` (awaitable method; a property can't be awaited) | `int` |
 | `reset_input_buffer` | `await mon.reset_input_buffer()` | `None` |
 | `reset_device` | `await mon.reset_device(board=None, wait_for_output=False, timeout=5.0)` | `bool` |
+| `lines_dropped` | `mon.lines_dropped` | `int` |
+
+Migration note for the first release of this API: async `write()` now returns
+the number of bytes written instead of `bool`. The old `read_lines(timeout_secs=)`
+keyword remains accepted for one release, emits `DeprecationWarning`, and should
+be replaced with `timeout=`. The synchronous `SerialMonitor.write()` contract is
+unchanged; it still returns `0` on failure, whereas async `write()` raises.
 
 ### Error mapping (§4.8)
 
@@ -140,8 +148,8 @@ exceptions:
 | `SessionError` | Python exception |
 |---|---|
 | `Timeout` | `TimeoutError` |
-| `Closed`, `PortGone`, `Preempted` | `ConnectionError` |
-| `ProtocolDesync` | `RuntimeError` |
+| `Closed`, `ConnectionFailed`, `PortGone`, `Preempted` | `ConnectionError` |
+| `ProtocolDesync`, `WriteFailed` | `RuntimeError` |
 
 The sync `write` keeps returning `0` on failure (compatibility); the async
 `write` raises instead — document this difference to callers porting from
@@ -150,7 +158,7 @@ sync to async.
 ### Deadlock-freedom rules (enforced, not just documented)
 
 1. No lock is held across `.await` — the `serial_session` module is
-   `#[deny(clippy::await_holding_lock)]`.
+   `#[deny(clippy::await_holding_lock, clippy::await_holding_refcell_ref)]`.
 2. No lock is held while calling into Python (hooks, `run_until` conditions,
    exception construction all run after every core lock is released).
 3. The fixed lock order above.

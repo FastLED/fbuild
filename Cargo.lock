@@ -1266,6 +1266,7 @@ dependencies = [
  "fbuild-serial",
  "fbuild-test-support",
  "futures",
+ "libc",
  "mimalloc-pprof",
  "prost",
  "regex",
@@ -1278,6 +1279,7 @@ dependencies = [
  "tempfile",
  "thiserror 2.0.20",
  "tokio",
+ "tokio-tungstenite",
  "tower-http 0.5.2",
  "tracing",
  "tracing-subscriber",
@@ -1467,6 +1469,7 @@ dependencies = [
  "tokio",
  "tokio-tungstenite",
  "tracing",
+ "tracing-subscriber",
  "uuid",
 ]
 

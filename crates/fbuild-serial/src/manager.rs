@@ -18,6 +18,11 @@ use tokio::sync::{Mutex, broadcast};
 const OUTPUT_BUFFER_CAP: usize = 10_000;
 const BROADCAST_CHANNEL_SIZE: usize = 1024;
 const READ_BUF_SIZE: usize = 4096;
+// The reader holds the shared serial-handle mutex while its blocking read
+// waits. A 100 ms timeout therefore added roughly 100 ms to every RPC write
+// on an idle Pico 2; 10 ms bounds that lock hand-off without busy-spinning
+// (the timeout path also sleeps 10 ms).
+const SERIAL_READ_TIMEOUT: Duration = Duration::from_millis(10);
 
 fn now_unix_secs() -> f64 {
     std::time::SystemTime::now()
@@ -52,6 +57,14 @@ pub struct SharedSerialManager {
     /// Alias from an OS port observed after USB renumbering back to the
     /// logical session key that existing clients attached to.
     port_aliases: DashMap<String, String>,
+    /// Physical post-deploy port for monitors attached before USB renumbering.
+    deploy_recovery_ports: DashMap<String, String>,
+    /// Resolved logical key at preempt time; close removes port aliases.
+    deploy_preempted_keys: DashMap<String, String>,
+    /// Keeps a monitor paused while post-flash recovery probes the port.
+    deploy_pending_ports: DashMap<String, ()>,
+    /// Terminal failure reported to monitors when no runtime port returned.
+    deploy_failed_ports: DashMap<String, String>,
     /// Broadcast channels per port for output distribution.
     broadcasters: DashMap<String, broadcast::Sender<SerialStreamEvent>>,
     /// Monotonic per-port generation that invalidates delayed physical closes.
@@ -68,6 +81,10 @@ impl SharedSerialManager {
         Self {
             sessions: DashMap::new(),
             port_aliases: DashMap::new(),
+            deploy_recovery_ports: DashMap::new(),
+            deploy_preempted_keys: DashMap::new(),
+            deploy_pending_ports: DashMap::new(),
+            deploy_failed_ports: DashMap::new(),
             broadcasters: DashMap::new(),
             close_generations: DashMap::new(),
             preemption: Arc::new(PreemptionTracker::new()),
@@ -132,7 +149,6 @@ impl SharedSerialManager {
         let mut last_err = String::new();
 
         for attempt in 0..max_retries {
-            let timeout_ms = 100;
             // serialport::open() and DTR/RTS toggling are synchronous Win32 /
             // POSIX system calls. Running them directly inside an `async fn`
             // pins a tokio worker thread for the duration of `CreateFile`
@@ -168,7 +184,7 @@ impl SharedSerialManager {
                     "serial_manager: opening port (family inferred from VID/PID, idle_dtr_rts applied at open)"
                 );
                 let mut serial = serialport::new(&port_for_open, baud_rate)
-                    .timeout(Duration::from_millis(timeout_ms))
+                    .timeout(SERIAL_READ_TIMEOUT)
                     .open()?;
                 // Set the post-open DTR/RTS idle state. Failures here are
                 // non-fatal — some adapters (e.g. CP210x in CDC mode) reject
@@ -538,7 +554,7 @@ impl SharedSerialManager {
 
             // Wait for the reader task to finish, but cap how long
             // close can hang. The reader's per-iteration `serial.read()`
-            // has a 100ms timeout, so a healthy reader exits well under
+            // has a 10ms timeout, so a healthy reader exits well under
             // 1s once `stop_flag` is set. A wedged Windows USB-CDC
             // driver can occasionally ignore the configured read
             // timeout — in that case we leak the JoinHandle and proceed
@@ -904,10 +920,20 @@ impl SharedSerialManager {
         preempted_by: String,
     ) -> fbuild_core::Result<()> {
         let session_key = self.resolve_port_key(port);
+        self.deploy_preempted_keys
+            .insert(port.to_string(), session_key.clone());
+        self.deploy_pending_ports.insert(port.to_string(), ());
+        self.deploy_failed_ports.remove(port);
         let generation = self.close_generation(&session_key);
         self.preemption
-            .preempt(&session_key, reason, preempted_by)
+            .preempt(&session_key, reason.clone(), preempted_by.clone())
             .await;
+        if let Some(tx) = self.broadcasters.get(&session_key) {
+            let _ = tx.send(SerialStreamEvent::Preempted {
+                reason,
+                preempted_by,
+            });
+        }
         self.close_port_if_generation(&session_key, "deploy_preemption", generation)
             .await?;
         Ok(())
@@ -917,6 +943,85 @@ impl SharedSerialManager {
     pub async fn clear_preemption(&self, port: &str) {
         let session_key = self.resolve_port_key(port);
         self.preemption.clear(&session_key).await;
+    }
+
+    /// Release a deploy's original logical port and remember its recovered
+    /// physical endpoint. Existing WebSockets still address the original
+    /// port, so alias it to the new session after the preemption is cleared.
+    pub async fn complete_deploy_preemption(&self, original: &str, recovered: &str) {
+        let session_key = self
+            .deploy_preempted_keys
+            .remove(original)
+            .map(|(_, key)| key)
+            .unwrap_or_else(|| self.resolve_port_key(original));
+        // A monitor may have attached before an earlier renumber. Advance all
+        // such logical names to the newest physical endpoint as one deploy
+        // completes, including when close_port removed their old aliases.
+        let prior_names: Vec<String> = self
+            .deploy_recovery_ports
+            .iter()
+            .filter_map(|entry| (entry.value() == &session_key).then(|| entry.key().clone()))
+            .collect();
+        for name in prior_names {
+            self.deploy_recovery_ports
+                .insert(name.clone(), recovered.to_string());
+            self.deploy_pending_ports.remove(&name);
+            self.deploy_failed_ports.remove(&name);
+            if name != recovered {
+                self.port_aliases.insert(name, recovered.to_string());
+            }
+        }
+        self.deploy_recovery_ports
+            .insert(original.to_string(), recovered.to_string());
+        self.deploy_pending_ports.remove(original);
+        self.deploy_failed_ports.remove(original);
+        self.preemption.clear(&session_key).await;
+        if original != recovered {
+            self.port_aliases
+                .insert(original.to_string(), recovered.to_string());
+        }
+        self.preemption.clear(recovered).await;
+    }
+
+    /// Finish a deploy with no safe runtime endpoint. Existing monitors must
+    /// receive a terminal port event rather than waiting for reconnect forever.
+    pub async fn fail_deploy_preemption(&self, original: &str, message: &str) {
+        let session_key = self
+            .deploy_preempted_keys
+            .remove(original)
+            .map(|(_, key)| key)
+            .unwrap_or_else(|| self.resolve_port_key(original));
+        let prior_names: Vec<String> = self
+            .deploy_recovery_ports
+            .iter()
+            .filter_map(|entry| (entry.value() == &session_key).then(|| entry.key().clone()))
+            .collect();
+        for name in prior_names
+            .into_iter()
+            .chain(std::iter::once(original.to_string()))
+        {
+            self.deploy_pending_ports.remove(&name);
+            self.deploy_failed_ports.insert(name, message.to_string());
+        }
+        self.preemption.clear(&session_key).await;
+    }
+
+    pub fn is_deploy_recovery_pending(&self, port: &str) -> bool {
+        self.deploy_pending_ports.contains_key(port)
+    }
+
+    pub fn deploy_recovery_failure(&self, port: &str) -> Option<String> {
+        self.deploy_failed_ports
+            .get(port)
+            .map(|entry| entry.clone())
+    }
+
+    /// Physical port to reopen for a preempted monitor's original attach.
+    pub fn deploy_recovery_port(&self, original: &str) -> String {
+        self.deploy_recovery_ports
+            .get(original)
+            .map(|port| port.clone())
+            .unwrap_or_else(|| original.to_string())
     }
 
     /// Check if a port is preempted.
@@ -1031,7 +1136,7 @@ impl SharedSerialManager {
                     .map(|family| family.idle_dtr_rts())
                     .unwrap_or((true, true));
                 let mut serial = serialport::new(&port_for_open, baud_rate)
-                    .timeout(Duration::from_millis(100))
+                    .timeout(SERIAL_READ_TIMEOUT)
                     .open()?;
                 match serial.write_data_terminal_ready(dtr) {
                     Ok(()) => tracing::debug!(

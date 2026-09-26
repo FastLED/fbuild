@@ -38,8 +38,17 @@ mod json_rpc;
 mod messages;
 mod outcome;
 mod serial_monitor;
-#[deny(clippy::await_holding_lock)]
+#[deny(clippy::await_holding_lock, clippy::await_holding_refcell_ref)]
 mod serial_session;
+
+/// How many `SerialSession`s are currently live. Debug-only (compiled out of
+/// a release wheel); used by the embedded-CPython AT-P16 test to prove a
+/// session dropped without `close()`/`__exit__` doesn't leak its reader task
+/// (FastLED/fbuild#1485 §5.2).
+#[cfg(debug_assertions)]
+pub fn live_session_count() -> usize {
+    serial_session::live_session_count()
+}
 
 use async_daemon_connection::AsyncDaemonConnection;
 use async_serial_monitor::AsyncSerialMonitor;
@@ -79,6 +88,14 @@ fn find_firmware(
     .map(|path| path.to_string_lossy().into_owned())
 }
 
+/// Python-visible wrapper around [`live_session_count`] (test-only, debug
+/// builds only).
+#[cfg(debug_assertions)]
+#[pyfunction]
+fn _live_session_count() -> usize {
+    live_session_count()
+}
+
 /// The version string exposed to Python as `fbuild.__version__`.
 ///
 /// Sourced from `CARGO_PKG_VERSION` at compile time so it always tracks the
@@ -104,6 +121,8 @@ pub fn _native(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(connect_daemon, m)?)?;
     m.add_function(wrap_pyfunction!(connect_daemon_async, m)?)?;
     m.add_function(wrap_pyfunction!(find_firmware, m)?)?;
+    #[cfg(debug_assertions)]
+    m.add_function(wrap_pyfunction!(_live_session_count, m)?)?;
     Ok(())
 }
 

@@ -8,14 +8,14 @@ Repository-level contract tests for the `fbuild-python` PyO3 extension.
   `libpython` at link and run time (the `pyo3` `auto-initialize`
   dev-dependency feature), so every test is `#[ignore]`d and run separately
   with `--ignored` by the `python-facade-tests` CI job
-  (`.github/workflows/ci-test.yml`), not by `bash test`. Locally:
+  (`.github/workflows/check-ubuntu.yml`), not by `bash test`. Locally:
 
   ```bash
-  export PYO3_PYTHON=$(which python3.13)   # or your local interpreter
-  export LD_LIBRARY_PATH="$(python3 -c 'import sysconfig; print(sysconfig.get_config_var("LIBDIR"))"):$LD_LIBRARY_PATH"
+  export PYO3_PYTHON="$(uv python find 3.13)"   # or your local interpreter
+  export LD_LIBRARY_PATH="$("$PYO3_PYTHON" -c 'import sysconfig; print(sysconfig.get_config_var("LIBDIR"))'):${LD_LIBRARY_PATH:-}"
   soldr cargo test -p fbuild-python --test python_facades -- --ignored
   ```
 
-  Only a representative subset of the spec's AT-P1..AT-P16 table is
-  implemented (AT-P1, AT-P9); see the module doc comment for the full gap
-  list and rationale.
+  The `LD_LIBRARY_PATH` setup is still manual; FastLED/fbuild#1487 tracks a
+  single interpreter-consistent local/CI runner. The tests cover AT-P1..AT-P16;
+  see each test's comment for the scenario and acceptance criterion.

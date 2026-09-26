@@ -1,5 +1,341 @@
 use super::*;
 
+/// #1485's client FIFO relies on the daemon emitting request replies in
+/// request order. Exercise the production WebSocket handler with a real
+/// pseudo-terminal, so this catches a future inbound/writer concurrency
+/// change that reorders `write_ack` and `in_waiting` frames.
+#[cfg(target_os = "linux")]
+#[tokio::test]
+async fn serial_ws_replies_follow_request_order() {
+    use std::ffi::CStr;
+    use std::os::fd::{AsRawFd, FromRawFd, OwnedFd};
+    use tokio_tungstenite::tungstenite::Message as ClientMessage;
+
+    let mut master_fd = -1;
+    let mut slave_fd = -1;
+    // SAFETY: openpty initializes both fds on success. OwnedFd takes over
+    // each descriptor exactly once, and ttyname_r writes into a sized buffer.
+    let rc = unsafe {
+        libc::openpty(
+            &mut master_fd,
+            &mut slave_fd,
+            std::ptr::null_mut(),
+            std::ptr::null(),
+            std::ptr::null(),
+        )
+    };
+    assert_eq!(rc, 0, "openpty failed: {}", std::io::Error::last_os_error());
+    let _master = unsafe { OwnedFd::from_raw_fd(master_fd) };
+    let slave = unsafe { OwnedFd::from_raw_fd(slave_fd) };
+    let mut name = [0i8; 256];
+    let rc = unsafe { libc::ttyname_r(slave.as_raw_fd(), name.as_mut_ptr(), name.len()) };
+    assert_eq!(rc, 0, "ttyname_r failed: {rc}");
+    let port = unsafe { CStr::from_ptr(name.as_ptr()) }
+        .to_str()
+        .unwrap()
+        .to_owned();
+
+    let (shutdown_tx, _shutdown_rx) = tokio::sync::watch::channel(false);
+    let ctx = Arc::new(DaemonContext::new(8765, shutdown_tx, "test".to_string()));
+    let router = axum::Router::new()
+        .route("/ws/serial-monitor", axum::routing::get(ws_serial_monitor))
+        .with_state(ctx);
+    let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+    let address = listener.local_addr().unwrap();
+    let server = tokio::spawn(async move { axum::serve(listener, router).await.unwrap() });
+
+    let (mut ws, _) = tokio_tungstenite::connect_async(format!("ws://{address}/ws/serial-monitor"))
+        .await
+        .unwrap();
+    let attach = serde_json::json!({
+        "type": "attach", "client_id": "fifo-order-test", "port": port,
+        "baud_rate": 115200, "open_if_needed": true, "pre_acquire_writer": true
+    });
+    ws.send(ClientMessage::Text(attach.to_string()))
+        .await
+        .unwrap();
+    let attached = tokio::time::timeout(Duration::from_secs(5), ws.next())
+        .await
+        .unwrap()
+        .unwrap()
+        .unwrap();
+    let ClientMessage::Text(attached) = attached else {
+        panic!("expected attached text frame");
+    };
+    let attached: serde_json::Value = serde_json::from_str(&attached).unwrap();
+    assert_eq!(attached["type"], "attached", "{attached}");
+    assert_eq!(attached["success"], true, "{attached}");
+    assert_eq!(attached["writer_pre_acquired"], true, "{attached}");
+
+    let mut expected = Vec::new();
+    for len in 1..=20usize {
+        let payload = vec![b'x'; len];
+        let write = serde_json::json!({
+            "type": "write",
+            "data": base64::engine::general_purpose::STANDARD.encode(payload)
+        });
+        ws.send(ClientMessage::Text(write.to_string()))
+            .await
+            .unwrap();
+        expected.push(("write_ack", len));
+        ws.send(ClientMessage::Text(r#"{"type":"get_in_waiting"}"#.into()))
+            .await
+            .unwrap();
+        expected.push(("in_waiting", 0));
+    }
+    // A decode error replaces one write_ack; it must occupy exactly that
+    // request's position so the following valid write is still matched.
+    ws.send(ClientMessage::Text(
+        r#"{"type":"write","data":"not-base64!"}"#.into(),
+    ))
+    .await
+    .unwrap();
+    expected.push(("error", 0));
+    let last_write = serde_json::json!({
+        "type": "write",
+        "data": base64::engine::general_purpose::STANDARD.encode(b"end")
+    });
+    ws.send(ClientMessage::Text(last_write.to_string()))
+        .await
+        .unwrap();
+    expected.push(("write_ack", 3));
+
+    for (index, (kind, byte_count)) in expected.into_iter().enumerate() {
+        let frame = tokio::time::timeout(Duration::from_secs(5), ws.next())
+            .await
+            .unwrap_or_else(|_| panic!("reply {index} timed out"))
+            .unwrap()
+            .unwrap();
+        let ClientMessage::Text(text) = frame else {
+            panic!("reply {index} was not a text frame: {frame:?}");
+        };
+        let reply: serde_json::Value = serde_json::from_str(&text).unwrap();
+        assert_eq!(reply["type"], kind, "reply {index}: {reply}");
+        if kind == "write_ack" {
+            assert_eq!(reply["bytes_written"], byte_count, "reply {index}: {reply}");
+        }
+    }
+
+    ws.send(ClientMessage::Text(r#"{"type":"detach"}"#.into()))
+        .await
+        .unwrap();
+    server.abort();
+}
+
+/// The real handler must keep one WebSocket alive across deploy's physical
+/// port close and re-open its serial subscription after preemption clears.
+#[cfg(target_os = "linux")]
+#[tokio::test]
+async fn serial_ws_preemption_reconnects_after_deploy() {
+    serial_ws_preemption_reconnects_after_deploy_impl(false, false).await;
+}
+
+#[cfg(target_os = "linux")]
+#[tokio::test]
+async fn serial_ws_preemption_reconnects_to_renumbered_port() {
+    serial_ws_preemption_reconnects_after_deploy_impl(true, false).await;
+}
+
+#[cfg(target_os = "linux")]
+#[tokio::test]
+async fn serial_ws_preemption_without_recovered_port_closes_monitor() {
+    serial_ws_preemption_reconnects_after_deploy_impl(false, true).await;
+}
+
+#[cfg(target_os = "linux")]
+async fn serial_ws_preemption_reconnects_after_deploy_impl(renumber: bool, fail_recovery: bool) {
+    use std::ffi::CStr;
+    use std::os::fd::{AsRawFd, FromRawFd, OwnedFd};
+    use tokio_tungstenite::tungstenite::Message as ClientMessage;
+
+    let mut master_fd = -1;
+    let mut slave_fd = -1;
+    // SAFETY: openpty initializes both descriptors on success; OwnedFd takes
+    // each exactly once and ttyname_r writes into the sized buffer.
+    assert_eq!(
+        unsafe {
+            libc::openpty(
+                &mut master_fd,
+                &mut slave_fd,
+                std::ptr::null_mut(),
+                std::ptr::null_mut(),
+                std::ptr::null(),
+            )
+        },
+        0
+    );
+    let master = unsafe { OwnedFd::from_raw_fd(master_fd) };
+    let slave = unsafe { OwnedFd::from_raw_fd(slave_fd) };
+    let mut name = [0i8; 256];
+    assert_eq!(
+        unsafe { libc::ttyname_r(slave.as_raw_fd(), name.as_mut_ptr(), name.len()) },
+        0
+    );
+    let port = unsafe { CStr::from_ptr(name.as_ptr()) }
+        .to_str()
+        .unwrap()
+        .to_owned();
+    let mut recovered_master = None;
+    let mut recovered_slave = None;
+    let recovered_port = if renumber {
+        let mut new_master_fd = -1;
+        let mut new_slave_fd = -1;
+        assert_eq!(
+            unsafe {
+                libc::openpty(
+                    &mut new_master_fd,
+                    &mut new_slave_fd,
+                    std::ptr::null_mut(),
+                    std::ptr::null_mut(),
+                    std::ptr::null(),
+                )
+            },
+            0
+        );
+        recovered_master = Some(unsafe { OwnedFd::from_raw_fd(new_master_fd) });
+        let new_slave = unsafe { OwnedFd::from_raw_fd(new_slave_fd) };
+        let mut new_name = [0i8; 256];
+        assert_eq!(
+            unsafe {
+                libc::ttyname_r(new_slave.as_raw_fd(), new_name.as_mut_ptr(), new_name.len())
+            },
+            0
+        );
+        let new_port = unsafe { CStr::from_ptr(new_name.as_ptr()) }
+            .to_str()
+            .unwrap()
+            .to_owned();
+        recovered_slave = Some(new_slave);
+        new_port
+    } else {
+        port.clone()
+    };
+
+    let (shutdown_tx, _shutdown_rx) = tokio::sync::watch::channel(false);
+    let ctx = Arc::new(DaemonContext::new(8765, shutdown_tx, "test".to_string()));
+    let router = axum::Router::new()
+        .route("/ws/serial-monitor", axum::routing::get(ws_serial_monitor))
+        .with_state(Arc::clone(&ctx));
+    let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+    let address = listener.local_addr().unwrap();
+    let server = tokio::spawn(async move { axum::serve(listener, router).await.unwrap() });
+
+    let (mut ws, _) = tokio_tungstenite::connect_async(format!("ws://{address}/ws/serial-monitor"))
+        .await
+        .unwrap();
+    let attach = serde_json::json!({
+        "type": "attach", "client_id": "preempt-test", "port": port,
+        "baud_rate": 115200, "open_if_needed": true, "pre_acquire_writer": true
+    });
+    ws.send(ClientMessage::Text(attach.to_string()))
+        .await
+        .unwrap();
+    let attached = tokio::time::timeout(Duration::from_secs(5), ws.next())
+        .await
+        .unwrap()
+        .unwrap()
+        .unwrap();
+    assert!(matches!(attached, ClientMessage::Text(_)));
+
+    ctx.serial_manager
+        .preempt_for_deploy(&port, "deploy".to_string(), "test".to_string())
+        .await
+        .unwrap();
+    let preempted = tokio::time::timeout(Duration::from_secs(5), ws.next())
+        .await
+        .expect("preempted frame timeout")
+        .expect("socket closed before preempted frame")
+        .unwrap();
+    let ClientMessage::Text(preempted) = preempted else {
+        panic!("expected preempted text frame");
+    };
+    let preempted: serde_json::Value = serde_json::from_str(&preempted).unwrap();
+    assert_eq!(preempted["type"], "preempted", "{preempted}");
+
+    if fail_recovery {
+        ctx.serial_manager
+            .fail_deploy_preemption(&port, "no healthy runtime serial port")
+            .await;
+        let frame = tokio::time::timeout(Duration::from_secs(5), ws.next())
+            .await
+            .expect("port_disconnected frame timeout")
+            .expect("socket closed before port_disconnected frame")
+            .unwrap();
+        let ClientMessage::Text(frame) = frame else {
+            panic!("expected port_disconnected text frame");
+        };
+        let disconnected: serde_json::Value = serde_json::from_str(&frame).unwrap();
+        assert_eq!(disconnected["type"], "port_disconnected", "{disconnected}");
+        assert_eq!(disconnected["reason"], "deploy_recovery_failed");
+        assert!(!ctx.serial_manager.is_preempted(&port).await);
+        server.abort();
+        return;
+    }
+
+    if renumber {
+        drop(master);
+        drop(slave);
+    }
+
+    ctx.serial_manager
+        .complete_deploy_preemption(&port, &recovered_port)
+        .await;
+    let reconnected = tokio::time::timeout(Duration::from_secs(10), ws.next())
+        .await
+        .expect("reconnected frame timeout")
+        .expect("socket closed before reconnected frame")
+        .unwrap();
+    let ClientMessage::Text(reconnected) = reconnected else {
+        panic!("expected reconnected text frame");
+    };
+    let reconnected: serde_json::Value = serde_json::from_str(&reconnected).unwrap();
+    assert_eq!(reconnected["type"], "reconnected", "{reconnected}");
+    assert!(
+        reconnected["message"]
+            .as_str()
+            .unwrap()
+            .contains(&recovered_port),
+        "{reconnected}"
+    );
+
+    let write = serde_json::json!({
+        "type": "write", "data": base64::engine::general_purpose::STANDARD.encode(b"after")
+    });
+    ws.send(ClientMessage::Text(write.to_string()))
+        .await
+        .unwrap();
+    let ack = tokio::time::timeout(Duration::from_secs(5), ws.next())
+        .await
+        .expect("post-reconnect write ack timeout")
+        .unwrap()
+        .unwrap();
+    let ClientMessage::Text(ack) = ack else {
+        panic!("expected write ack text frame");
+    };
+    let ack: serde_json::Value = serde_json::from_str(&ack).unwrap();
+    assert_eq!(ack["type"], "write_ack", "{ack}");
+    assert_eq!(ack["success"], true, "{ack}");
+    assert_eq!(ack["bytes_written"], 5, "{ack}");
+    if let Some(master) = recovered_master.as_ref() {
+        let mut poll_fd = libc::pollfd {
+            fd: master.as_raw_fd(),
+            events: libc::POLLIN,
+            revents: 0,
+        };
+        assert_eq!(unsafe { libc::poll(&mut poll_fd, 1, 2_000) }, 1);
+        let mut bytes = [0u8; 16];
+        let count =
+            unsafe { libc::read(master.as_raw_fd(), bytes.as_mut_ptr().cast(), bytes.len()) };
+        assert_eq!(&bytes[..count as usize], b"after");
+    }
+
+    ws.send(ClientMessage::Text(r#"{"type":"detach"}"#.into()))
+        .await
+        .unwrap();
+    drop((recovered_master, recovered_slave));
+    server.abort();
+}
+
 #[test]
 fn build_status_snapshot_produces_valid_json() {
     let (tx, _rx) = tokio::sync::watch::channel(false);

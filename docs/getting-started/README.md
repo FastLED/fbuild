@@ -19,17 +19,17 @@ cd fbuild
 pip install -e .
 ```
 
-Source installs use Rust's fast dev profile by default (no Rust LTO), which
-keeps local rebuilds quick. To explicitly build an optimized Rust wheel, pass
-the PEP 517 backend setting:
+Source installs require a globally installed `soldr` executable and use Rust's
+fast dev profile by default (no Rust LTO), which keeps local rebuilds quick.
+To explicitly build an optimized Rust wheel, set the build environment flag:
 
 ```bash
-pip install . --config-settings profile=release
+FBUILD_BUILD_RELEASE=1 pip install .
 ```
 
-`pip install . -- --release` is not supported: pip does not forward arbitrary
-arguments after `--` to a PEP 517 backend. The `profile=release` setting (or
-`FBUILD_BUILD_RELEASE=1`) is the supported release override.
+`pip install . --config-settings profile=release` is no longer supported; the
+setuptools backend does not interpret that setting. On Windows, set the same
+environment variable before invoking pip.
 
 ## First Project
 
