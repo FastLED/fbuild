@@ -172,6 +172,7 @@ impl OperationGuard {
         description: Option<String>,
     ) -> Self {
         ctx.touch_activity();
+        ctx.active_operations.fetch_add(1, Ordering::AcqRel);
         ctx.operation_in_progress.store(true, Ordering::Relaxed);
         if let Ok(mut s) = ctx.daemon_state.write() {
             *s = daemon_state;
@@ -190,6 +191,7 @@ impl OperationGuard {
 
 impl Drop for OperationGuard {
     fn drop(&mut self) {
+        self.ctx.active_operations.fetch_sub(1, Ordering::AcqRel);
         self.flag.store(false, Ordering::Relaxed);
         if let Ok(mut s) = self.state.write() {
             *s = fbuild_core::DaemonState::Idle;
@@ -204,6 +206,23 @@ impl Drop for OperationGuard {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn operation_guards_count_concurrent_operations_exactly() {
+        let (shutdown_tx, _shutdown_rx) = tokio::sync::watch::channel(false);
+        let ctx = Arc::new(DaemonContext::new(0, shutdown_tx, ".".to_string()));
+        let first = OperationGuard::new(&ctx, fbuild_core::DaemonState::Building, None);
+        let second = OperationGuard::new(&ctx, fbuild_core::DaemonState::Building, None);
+        assert_eq!(ctx.active_operations.load(Ordering::Acquire), 2);
+
+        drop(first);
+        // The shutdown drain waits on this count, not on the bool the first
+        // finisher clears while the second is still running.
+        assert_eq!(ctx.active_operations.load(Ordering::Acquire), 1);
+
+        drop(second);
+        assert_eq!(ctx.active_operations.load(Ordering::Acquire), 0);
+    }
 
     #[test]
     fn operation_guard_drop_clears_dependency_install_through_context() {
