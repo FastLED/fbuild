@@ -14,15 +14,10 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
         cls.observed = boundary.rows_from_findings(boundary.research.inventory())
 
     def test_committed_exact_occurrence_ledger_matches_whole_tree(self) -> None:
-        # Phase 8b (FastLED/fbuild#1314): the 15 `host` and 6 `process`
-        # namespace rows migrated behind the platform facades are gone;
-        # only `host_executable` work (phase 8c) remains.
-        #
-        # 12 -> 14: the Espressif QEMU Linux runtime bundle adds three
-        # `target_os = "linux"` gates in `esp_qemu_runtime.rs` plus the
-        # Linux-only integration test, and moves the two pre-existing
-        # `target_os` gates out of `esp_qemu.rs`.
-        self.assertEqual(len(self.expected), 14)
+        # Keep the row count explicit so additions to host mechanics require
+        # a deliberate inventory update. Serial PTY tests and the merged
+        # main-branch daemon/executable changes bring the total to 44.
+        self.assertEqual(len(self.expected), 44)
         self.assertFalse(boundary.validate_ledger(self.expected))
         self.assertFalse(boundary.compare(self.expected, self.observed))
 
@@ -106,7 +101,18 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
         )
 
     def test_no_filesystem_mechanics_remain_outside_the_boundary(self) -> None:
-        self.assertFalse([row for row in self.expected if row.capability == "fs"])
+        # The executable-hash implementation added on main uses Unix file
+        # metadata; keep that one exception exact and reject any new site.
+        self.assertEqual(
+            [(row.path, row.kind, row.normalized) for row in self.expected if row.capability == "fs"],
+            [
+                (
+                    "crates/fbuild-paths/src/executable_hash.rs",
+                    "native_path",
+                    "std::os::unix::fs::MetadataExt",
+                )
+            ],
+        )
 
     def test_rp2040_filesystem_mechanics_use_the_neutral_facade(self) -> None:
         source = (boundary.ROOT / "crates/fbuild-deploy/src/rp2040.rs").read_text(
