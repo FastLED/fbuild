@@ -39,6 +39,13 @@ futures = { workspace = true }
 base64 = { workspace = true }
 uuid = { workspace = true }
 running-process = { workspace = true }
+tracing = { workspace = true }
 
 [dev-dependencies]
 tempfile = { workspace = true }
+tracing-subscriber = { workspace = true }
+# Only pulled in for the `tests/python_facades.rs` integration binary, which
+# embeds CPython to exercise the Python-visible facades under real GIL and
+# asyncio behavior (FastLED/fbuild#1485 §5.2). Cargo's per-target feature
+# resolution keeps this out of the normal `cdylib`/`rlib` build.
+pyo3 = { workspace = true, features = ["auto-initialize"] }

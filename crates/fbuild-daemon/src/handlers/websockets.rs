@@ -4,7 +4,7 @@ use base64::Engine;
 
 use crate::context::DaemonContext;
 use axum::extract::ws::{Message, WebSocket};
-use axum::extract::{Path, State, WebSocketUpgrade};
+use axum::extract::{State, WebSocketUpgrade};
 use axum::response::IntoResponse;
 use fbuild_core::channel as mpsc;
 use fbuild_serial::{SerialClientMessage, SerialServerMessage, SerialStreamEvent};
@@ -121,6 +121,7 @@ const WS_ATTACH_HANDSHAKE_TIMEOUT: std::time::Duration = std::time::Duration::fr
 /// so a wedged USB driver cannot leave a pending attach counted forever. See
 /// FastLED/fbuild#977.
 const WS_SERIAL_OPEN_PORT_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(3);
+const WS_SERIAL_RECOVERY_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(30);
 
 fn format_timeout_for_error(timeout: Duration) -> String {
     let millis = timeout.as_millis();
@@ -336,13 +337,15 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
     let (control_tx, mut control_rx) = mpsc::unbounded::<ReaderControl>();
 
     // READER task -- broadcast -> mpsc queue.
-    let reader_handle = {
+    let mut reader_handle = {
         let ctx = ctx.clone();
         let port_owned = port.clone();
         let client_id_owned = client_id.clone();
+        let client_metadata_owned = client_metadata.clone();
         let out_tx_reader = out_tx.clone();
         tokio::spawn(async move {
             let mut line_index: u64 = 0;
+            let mut was_preempted = false;
             loop {
                 tokio::select! {
                     biased; // prefer broadcast events over control messages,
@@ -368,6 +371,16 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                         if out_tx_reader.send(msg).is_err() {
                             break; // writer dropped its receiver -> session over
                         }
+                    }
+                    Ok(SerialStreamEvent::Preempted {
+                        reason,
+                        preempted_by,
+                    }) => {
+                        was_preempted = true;
+                        let _ = out_tx_reader.send(SerialServerMessage::Preempted {
+                            reason,
+                            preempted_by,
+                        });
                     }
                     Ok(SerialStreamEvent::PortDisconnected {
                         port,
@@ -430,6 +443,100 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                             "reader lagged at broadcast layer, skipping lines"
                         );
                     }
+                    Err(tokio::sync::broadcast::error::RecvError::Closed)
+                        if was_preempted =>
+                    {
+                        // Keep the WebSocket alive while deploy reopens serial.
+                        let recovery = async {
+                            let overall_deadline = tokio::time::Instant::now() + Duration::from_secs(300);
+                            let mut reopen_deadline = None;
+                            loop {
+                                let recovered_port = ctx.serial_manager.deploy_recovery_port(&port_owned);
+                                if let Some(message) = ctx.serial_manager.deploy_recovery_failure(&port_owned) {
+                                    break Err(message);
+                                }
+                                if tokio::time::Instant::now() >= overall_deadline {
+                                    break Err("serial deploy recovery did not finish within 5 minutes".to_string());
+                                }
+                                if reopen_deadline.is_some_and(|deadline| tokio::time::Instant::now() >= deadline) {
+                                    break Err(format!(
+                                        "serial port did not recover within {} seconds after deploy",
+                                        WS_SERIAL_RECOVERY_TIMEOUT.as_secs()
+                                    ));
+                                }
+                                if ctx.serial_manager.is_deploy_recovery_pending(&port_owned)
+                                    || ctx.serial_manager.is_deploy_recovery_pending(&recovered_port)
+                                    || ctx.serial_manager.is_preempted(&port_owned).await
+                                    || ctx.serial_manager.is_preempted(&recovered_port).await
+                                {
+                                    tokio::time::sleep(Duration::from_millis(100)).await;
+                                    continue;
+                                }
+                                reopen_deadline.get_or_insert_with(|| {
+                                    tokio::time::Instant::now() + WS_SERIAL_RECOVERY_TIMEOUT
+                                });
+                                let opened = await_ws_serial_open_port(
+                                    &recovered_port,
+                                    ctx.serial_manager.open_port(
+                                        &recovered_port,
+                                        baud_rate,
+                                        &client_id_owned,
+                                        None,
+                                        client_metadata_owned.clone(),
+                                    ),
+                                    WS_SERIAL_OPEN_PORT_TIMEOUT,
+                                )
+                                .await;
+                                if opened.is_ok() {
+                                    if pre_acquire_writer {
+                                        let _ = ctx
+                                            .serial_manager
+                                            .acquire_writer(&port_owned, &client_id_owned)
+                                            .await;
+                                    }
+                                    if let Some(new_rx) = ctx.serial_manager.attach_reader(
+                                        &port_owned,
+                                        &client_id_owned,
+                                        client_metadata_owned.clone(),
+                                    ) {
+                                        break Ok((new_rx, recovered_port));
+                                    }
+                                }
+                                tokio::time::sleep(Duration::from_millis(250)).await;
+                            }
+                        };
+                        tokio::pin!(recovery);
+                        // Keep serving control RPCs while the old receiver is closed.
+                        let result = loop {
+                            tokio::select! {
+                                result = &mut recovery => break result,
+                                control_opt = control_rx.recv() => {
+                                    let Some(cmd) = control_opt else { return };
+                                    let reply = match cmd {
+                                        ReaderControl::Drain { reply } | ReaderControl::GetDepth { reply } => reply,
+                                    };
+                                    let _ = reply.send(0);
+                                }
+                            }
+                        };
+                        match result {
+                            Ok((new_rx, recovered_port)) => {
+                                rx = new_rx;
+                                was_preempted = false;
+                                let _ = out_tx_reader.send(SerialServerMessage::Reconnected {
+                                    message: format!("reattached to {recovered_port}"),
+                                });
+                            }
+                            Err(message) => {
+                                let _ = out_tx_reader.send(SerialServerMessage::PortDisconnected {
+                                    port: port_owned.clone(),
+                                    reason: "deploy_recovery_failed".to_string(),
+                                    message,
+                                });
+                                std::future::pending::<()>().await;
+                            }
+                        }
+                    }
                     Err(tokio::sync::broadcast::error::RecvError::Closed) => break,
                     }, // end broadcast_result match
 
@@ -469,7 +576,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
     };
 
     // WRITER task -- mpsc queue -> WS sink, coalescing adjacent Data.
-    let writer_handle = tokio::spawn(async move {
+    let mut writer_handle = tokio::spawn(async move {
         loop {
             // Block until at least one message is available. As soon as
             // `socket.send().await` returns from the PREVIOUS flush we
@@ -512,6 +619,8 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                         last_index = current_index;
                     }
                     other => {
+                        let close_after_send =
+                            matches!(other, SerialServerMessage::PortDisconnected { .. });
                         if !data_batch.is_empty() {
                             let coalesced = SerialServerMessage::Data {
                                 lines: std::mem::take(&mut data_batch),
@@ -537,6 +646,10 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                             .await
                             .is_err()
                         {
+                            send_failed = true;
+                            break;
+                        }
+                        if close_after_send {
                             send_failed = true;
                             break;
                         }
@@ -569,7 +682,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
     // INBOUND task -- WS stream -> serial manager + ack reply via mpsc.
     // Also owns the producer side of the #756 ReaderControl channel for
     // ClearBuffer / GetInWaiting requests.
-    let inbound_handle = {
+    let mut inbound_handle = {
         let control_tx_inbound = control_tx;
         let ctx = ctx.clone();
         let port_owned = port.clone();
@@ -697,10 +810,13 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
     // Reader exits only when the broadcast channel closes (server-side
     // teardown). Inbound exits on Detach / Close / WS read error.
     tokio::select! {
-        _ = writer_handle => {}
-        _ = inbound_handle => {}
-        _ = reader_handle => {}
+        _ = &mut writer_handle => {}
+        _ = &mut inbound_handle => {}
+        _ = &mut reader_handle => {}
     }
+    reader_handle.abort();
+    writer_handle.abort();
+    inbound_handle.abort();
 
     // Cleanup: detach reader, release writer, and close the port if we
     // were the last client. Without the close, the daemon's background
@@ -876,95 +992,8 @@ async fn handle_logs_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
     tracing::info!("Logs WebSocket disconnected");
 }
 
-// ---------------------------------------------------------------------------
-// /ws/monitor/:session_id — serial monitor session by ID
-// ---------------------------------------------------------------------------
-
-/// GET /ws/monitor/:session_id — upgrade to WebSocket for a named monitor session.
-///
-/// A simpler monitor endpoint identified by `session_id`. Clients receive
-/// serial data pushed by the connection manager and can write data back.
-///
-/// Client → Server: `{"type":"write","data":"…"}`, `{"type":"ping"}`
-/// Server → Client: `{"type":"monitor_data","session_id":"…","data":"…","timestamp":…}`
-pub async fn ws_monitor_session(
-    ws: WebSocketUpgrade,
-    Path(session_id): Path<String>,
-    State(ctx): State<Arc<DaemonContext>>,
-) -> impl IntoResponse {
-    ws.on_upgrade(move |socket| handle_monitor_session_ws(socket, session_id, ctx))
-}
-
-async fn handle_monitor_session_ws(
-    mut socket: WebSocket,
-    session_id: String,
-    _ctx: Arc<DaemonContext>,
-) {
-    tracing::info!(session_id, "Monitor session WebSocket connected");
-
-    // Send welcome message
-    let welcome = serde_json::json!({
-        "type": "monitor_data",
-        "session_id": &session_id,
-        "data": format!("Connected to monitor session: {}\n", session_id),
-        "timestamp": now_unix(),
-    })
-    .to_string();
-    if socket.send(Message::Text(welcome)).await.is_err() {
-        return;
-    }
-
-    // Keep connection alive and handle client messages.
-    // FastLED/fbuild#808: idle clients used to keep this task pinned
-    // forever; close the socket if no frame arrives within
-    // `MONITOR_SESSION_IDLE_TIMEOUT`.
-    const MONITOR_SESSION_IDLE_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(300);
-    loop {
-        tokio::select! {
-            recv = socket.recv() => match recv {
-                Some(Ok(Message::Text(text))) => {
-                    if let Ok(obj) = serde_json::from_str::<serde_json::Value>(&text) {
-                        match obj.get("type").and_then(|t| t.as_str()) {
-                            Some("ping") => {
-                                let pong = serde_json::json!({"type": "pong", "timestamp": now_unix()})
-                                    .to_string();
-                                let _ = socket.send(Message::Text(pong)).await;
-                            }
-                            Some("write") => {
-                                // Acknowledge write (actual serial routing is done via
-                                // /ws/serial-monitor which has full attach/detach protocol)
-                                let ack = serde_json::json!({"type": "ack", "timestamp": now_unix()})
-                                    .to_string();
-                                let _ = socket.send(Message::Text(ack)).await;
-                            }
-                            _ => {}
-                        }
-                    } else {
-                        let err = serde_json::json!({
-                            "type": "error",
-                            "error": "Invalid JSON",
-                            "detail": "Could not parse message",
-                        })
-                        .to_string();
-                        let _ = socket.send(Message::Text(err)).await;
-                    }
-                }
-                Some(Ok(Message::Close(_))) | None => break,
-                _ => {}
-            },
-            _ = tokio::time::sleep(MONITOR_SESSION_IDLE_TIMEOUT) => {
-                tracing::info!(
-                    session_id,
-                    "Monitor session WebSocket idle for {}s; closing",
-                    MONITOR_SESSION_IDLE_TIMEOUT.as_secs()
-                );
-                break;
-            }
-        }
-    }
-
-    tracing::info!(session_id, "Monitor session WebSocket disconnected");
-}
+mod monitor_session;
+pub use monitor_session::ws_monitor_session;
 
 #[cfg(test)]
 #[path = "websockets_tests.rs"]

@@ -928,6 +928,8 @@ pub async fn deploy(
             .and_then(|result| result.port.clone()),
     );
     if let Some(ref p) = recovery_port {
+        // The recovery probe needs the port un-preempted (#605), but attached
+        // WebSockets must stay paused until that probe finishes.
         ctx.serial_manager.clear_preemption(p).await;
         if !deploy_skipped_bus_work {
             if let Some(deployer) = deployer_for_recovery {
@@ -960,6 +962,18 @@ pub async fn deploy(
                 }
             }
         }
+        if let Some(ref original) = deploy_port_str {
+            ctx.serial_manager
+                .complete_deploy_preemption(original, p)
+                .await;
+        }
+    } else if let Some(ref original) = deploy_port_str {
+        ctx.serial_manager
+            .fail_deploy_preemption(
+                original,
+                "no healthy runtime serial port recovered after deploy",
+            )
+            .await;
     }
 
     // FastLED/fbuild#1152: when an RP2040 deploy failed outright, or flashed

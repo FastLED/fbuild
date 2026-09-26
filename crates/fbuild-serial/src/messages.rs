@@ -115,6 +115,10 @@ pub enum SerialServerMessage {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum SerialStreamEvent {
     Data(String),
+    Preempted {
+        reason: String,
+        preempted_by: String,
+    },
     PortDisconnected {
         port: String,
         reason: String,

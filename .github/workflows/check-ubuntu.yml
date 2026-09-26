@@ -72,3 +72,46 @@ jobs:
         run: uv run --no-project python ci/check_usb_vidpid_literals.py
       - name: Test
         run: soldr cargo test --workspace
+
+  python-facade-tests:
+    # FastLED/fbuild#1485 §5.2/§6: the embedded-CPython AT-P integration
+    # tests need libpython at link and run time, so they're `#[ignore]`d
+    # out of the default `soldr cargo test --workspace` sweep above and run
+    # here instead, under a pinned interpreter, with `--ignored`.
+    name: Python facade tests (ubuntu-latest)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: ${{ inputs.ref }}
+      - name: Verify candidate SHA
+        if: inputs.ref != ''
+        env:
+          CANDIDATE_SHA: ${{ inputs.ref }}
+        run: |
+          [[ "$CANDIDATE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          test "$(git rev-parse HEAD)" = "$CANDIDATE_SHA"
+      - uses: astral-sh/setup-uv@v3
+        with:
+          python-version: "3.10"
+      - name: Setup soldr
+        uses: zackees/setup-soldr@v0
+        with:
+          cache: true
+          build-cache: true
+          target-cache: true
+          prebuild-deps: none
+          linker: platform-default
+      - name: Run embedded-CPython facade tests
+        run: |
+          uv python install 3.10
+          PYO3_PYTHON="$(uv python find 3.10)"
+          echo "PYO3_PYTHON=$PYO3_PYTHON" >> "$GITHUB_ENV"
+          PYTHONHOME="$("$PYO3_PYTHON" -c 'import sys; print(sys.prefix)')"
+          echo "PYTHONHOME=$PYTHONHOME" >> "$GITHUB_ENV"
+          LIBDIR="$("$PYO3_PYTHON" -c 'import sysconfig; print(sysconfig.get_config_var("LIBDIR"))')"
+          echo "LD_LIBRARY_PATH=$LIBDIR:$LD_LIBRARY_PATH" >> "$GITHUB_ENV"
+      - name: Test (python facades, --ignored)
+        run: soldr cargo test -p fbuild-python --test python_facades -- --ignored

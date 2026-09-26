@@ -192,6 +192,9 @@ pub(crate) async fn run_monitor_loop(
                     return outcome;
                 }
             }
+            Ok(Ok(SerialStreamEvent::Preempted { reason, .. })) => {
+                return MonitorOutcome::Error(format!("serial monitor preempted: {reason}"));
+            }
             Ok(Ok(SerialStreamEvent::PortDisconnected {
                 port,
                 reason,
