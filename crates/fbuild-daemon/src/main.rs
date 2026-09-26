@@ -410,7 +410,7 @@ async fn main() {
     tokio::spawn({
         let ctx = context.clone();
         async move {
-            fbuild_daemon::shutdown::terminate_signal().await;
+            fbuild_core::platform::process::daemon_terminate_signal().await;
             fbuild_daemon::shutdown::exit_on_terminate(ctx).await
         }
     });

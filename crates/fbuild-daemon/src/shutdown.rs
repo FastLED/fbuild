@@ -49,28 +49,6 @@ pub async fn refuse_new_operations_when_shutting_down(
     next.run(request).await
 }
 
-/// Resolve when the process receives SIGTERM. Never resolves on Windows,
-/// where close/logoff/shutdown events go through the console handler
-/// (`register_daemon_shutdown_handler`) instead.
-pub async fn terminate_signal() {
-    #[cfg(unix)]
-    {
-        use tokio::signal::unix::{SignalKind, signal};
-        match signal(SignalKind::terminate()) {
-            Ok(mut sigterm) => {
-                sigterm.recv().await;
-                return;
-            }
-            Err(error) => {
-                tracing::warn!(
-                    "cannot install SIGTERM handler ({error}); SIGTERM will kill the daemon without a flush"
-                );
-            }
-        }
-    }
-    std::future::pending::<()>().await
-}
-
 /// Controlled exit on SIGTERM: refuse new operations, give in-flight ones
 /// [`SHUTDOWN_DRAIN_BUDGET`], persist, exit.
 pub async fn exit_on_terminate(ctx: Arc<DaemonContext>) -> ! {

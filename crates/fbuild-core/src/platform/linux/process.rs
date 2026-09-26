@@ -9,6 +9,21 @@ pub(crate) fn register_daemon_shutdown_handler(
     Ok(())
 }
 
+pub(crate) async fn daemon_terminate_signal() {
+    use tokio::signal::unix::{SignalKind, signal};
+    match signal(SignalKind::terminate()) {
+        Ok(mut sigterm) => {
+            sigterm.recv().await;
+        }
+        Err(error) => {
+            tracing::warn!(
+                "cannot install SIGTERM handler ({error}); SIGTERM will kill the daemon without a flush"
+            );
+            std::future::pending::<()>().await
+        }
+    }
+}
+
 pub(crate) fn configure_tokio_owner_death(
     command: &mut tokio::process::Command,
 ) -> std::io::Result<()> {
