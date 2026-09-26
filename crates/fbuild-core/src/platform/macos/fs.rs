@@ -9,6 +9,23 @@ pub(crate) fn file_identity(path: &Path) -> std::io::Result<same_file::Handle> {
     same_file::Handle::from_path(path)
 }
 
+pub(crate) fn executable_memo_identity(metadata: &std::fs::Metadata) -> std::io::Result<String> {
+    use std::os::unix::fs::MetadataExt;
+    let modified = metadata
+        .modified()?
+        .duration_since(std::time::UNIX_EPOCH)
+        .map_err(|error| std::io::Error::new(std::io::ErrorKind::InvalidData, error))?;
+    Ok(format!(
+        "{} {} {} {} {}.{}",
+        metadata.len(),
+        modified.as_nanos(),
+        metadata.dev(),
+        metadata.ino(),
+        metadata.ctime(),
+        metadata.ctime_nsec()
+    ))
+}
+
 pub(crate) fn comparison_key(path: &Path) -> String {
     path.as_os_str().to_string_lossy().to_lowercase()
 }
