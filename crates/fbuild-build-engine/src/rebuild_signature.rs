@@ -6,17 +6,23 @@
 
 use std::collections::HashMap;
 use std::path::{Component, Path};
-use std::sync::{Mutex, OnceLock};
+use std::sync::{Arc, Mutex, OnceLock};
 
 use fbuild_core::path::NormalizedPath;
 use sha2::{Digest, Sha256};
 
-/// Memoized `compiler_identity` results, keyed by
+/// Memoized `<compiler> -dumpversion` output, keyed by
 /// `fbuild_core::path::normalize_for_key` rather than the raw path. Two
 /// spellings of the same compiler (case differences on Windows, a
 /// verbatim prefix, a trailing slash) are the same toolchain and must
-/// not each pay for a `--version` subprocess — FastLED/fbuild#952.
-static COMPILER_IDENTITY_CACHE: OnceLock<Mutex<HashMap<String, String>>> = OnceLock::new();
+/// not each pay for a subprocess — FastLED/fbuild#952.
+///
+/// Each compiler gets one `OnceCell`, so concurrent first callers share a
+/// single probe instead of each spawning one (FastLED/fbuild#1466): one
+/// `-dumpversion` per compiler per daemon lifetime, shared by rebuild
+/// signatures and the build log's toolchain line.
+type VersionSlot = Arc<tokio::sync::OnceCell<String>>;
+static COMPILER_VERSIONS: OnceLock<Mutex<HashMap<String, VersionSlot>>> = OnceLock::new();
 
 /// Stable fingerprint of a compile invocation, used for incremental rebuild
 /// invalidation.
@@ -271,68 +277,117 @@ fn looks_like_absolute_path(path: &Path, raw: &str) -> bool {
 }
 
 fn compiler_identity(path: &Path) -> String {
-    let cache = COMPILER_IDENTITY_CACHE.get_or_init(|| Mutex::new(HashMap::new()));
-    let key = fbuild_core::path::normalize_for_key(path);
-    if let Some(identity) = cache
-        .lock()
-        .unwrap_or_else(|e| e.into_inner())
-        .get(&key)
-        .cloned()
-    {
-        return identity;
-    }
-
     let stem = path
         .file_stem()
         .and_then(|value| value.to_str())
-        .unwrap_or_default()
-        .to_string();
-    let version = compiler_version(path);
-    let identity = format!("{stem}\0{version}");
-    cache
-        .lock()
-        .unwrap_or_else(|e| e.into_inner())
-        .insert(key, identity.clone());
-    identity
+        .unwrap_or_default();
+    format!("{stem}\0{}", compiler_version(path))
+}
+
+fn version_slot(path: &Path) -> VersionSlot {
+    let key = fbuild_core::path::normalize_for_key(path);
+    let slots = COMPILER_VERSIONS.get_or_init(|| Mutex::new(HashMap::new()));
+    Arc::clone(
+        slots
+            .lock()
+            .unwrap_or_else(|e| e.into_inner())
+            .entry(key)
+            .or_default(),
+    )
+}
+
+/// `<compiler> -dumpversion`, probed at most once per compiler (see
+/// [`COMPILER_VERSIONS`]). Empty when the probe fails.
+pub async fn cached_compiler_version(path: &Path) -> String {
+    version_slot(path)
+        .get_or_init(|| probe_compiler_version(path))
+        .await
+        .clone()
 }
 
 fn compiler_version(path: &Path) -> String {
-    // FastLED/fbuild#820 (Phase B of #813): `fbuild_core::subprocess::
-    // run_command` is now `async`. `compiler_version` is called from
-    // the sync `rebuild_signature` trait method (which is in turn
-    // called from sync rebuild-check code paths), so we bridge to the
-    // ambient tokio runtime via `block_in_place` + `block_on`. This is
-    // safe because the daemon runs on a multi-thread tokio runtime and
-    // `block_in_place` permits this exact pattern.
-    let program = path.to_string_lossy().to_string();
-    let result = match tokio::runtime::Handle::try_current() {
+    let slot = version_slot(path);
+    if let Some(version) = slot.get() {
+        return version.clone();
+    }
+    // FastLED/fbuild#820 (Phase B of #813): the probe is `async`, while
+    // `compiler_version` is called from the sync `rebuild_signature` trait
+    // method, so bridge to the ambient tokio runtime via `block_in_place` +
+    // `block_on`. This is safe because the daemon runs on a multi-thread
+    // tokio runtime and `block_in_place` permits this exact pattern.
+    match tokio::runtime::Handle::try_current() {
         Ok(handle) => tokio::task::block_in_place(|| {
-            handle.block_on(async {
-                let args = [program.as_str(), "-dumpversion"];
-                // FastLED/fbuild#809: `gcc -dumpversion` is trivial; a
-                // hung toolchain binary (corrupt EXE, missing-DLL hang
-                // on Windows) should not block the whole pipeline.
-                fbuild_core::subprocess::run_command(
-                    &args,
-                    None,
-                    None,
-                    Some(std::time::Duration::from_secs(5)),
-                )
-                .await
-            })
-        }),
-        Err(_) => {
-            // No ambient runtime — happens in unit-test contexts that
-            // don't spin up a tokio runtime. Returning an empty version
-            // is a graceful degradation: rebuild-signature loses the
-            // compiler-version contribution but still encodes path +
-            // flags, which is enough for the tests that don't touch a
-            // real toolchain.
-            return String::new();
-        }
-    };
-    match result {
+            handle.block_on(slot.get_or_init(|| probe_compiler_version(path)))
+        })
+        .clone(),
+        // No ambient runtime — happens in unit-test contexts that don't spin
+        // up a tokio runtime. Returning an empty version (uncached) is a
+        // graceful degradation: rebuild-signature loses the compiler-version
+        // contribution but still encodes path + flags, which is enough for
+        // the tests that don't touch a real toolchain.
+        Err(_) => String::new(),
+    }
+}
+
+async fn probe_compiler_version(path: &Path) -> String {
+    let program = path.to_string_lossy().to_string();
+    // FastLED/fbuild#809: `gcc -dumpversion` is trivial; a hung toolchain
+    // binary (corrupt EXE, missing-DLL hang on Windows) should not block
+    // the whole pipeline.
+    match fbuild_core::subprocess::run_command(
+        &[program.as_str(), "-dumpversion"],
+        None,
+        None,
+        Some(std::time::Duration::from_secs(5)),
+    )
+    .await
+    {
         Ok(output) if output.success() => output.stdout.trim().to_string(),
         _ => String::new(),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// FastLED/fbuild#1466: concurrent first callers, from both the async
+    /// build-log path and the sync rebuild-signature path, share a single
+    /// `-dumpversion` probe per compiler.
+    #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
+    async fn compiler_version_probes_each_compiler_once() {
+        // The fake compiler is a POSIX shell script.
+        if fbuild_core::platform::host::is_windows() {
+            return;
+        }
+        let tmp = tempfile::tempdir().unwrap();
+        let log = tmp.path().join("probes.log");
+        let gcc = tmp.path().join("avr-gcc");
+        std::fs::write(
+            &gcc,
+            format!(
+                "#!/bin/sh\necho \"$*\" >> '{}'\nsleep 0.2\necho 7.3.0\n",
+                log.display()
+            ),
+        )
+        .unwrap();
+        fbuild_core::platform::fs::set_executable(&gcc).unwrap();
+
+        let mut callers = tokio::task::JoinSet::new();
+        for i in 0..16 {
+            let gcc = gcc.clone();
+            if i % 2 == 0 {
+                callers.spawn(async move { cached_compiler_version(&gcc).await });
+            } else {
+                callers.spawn_blocking(move || compiler_version(&gcc));
+            }
+        }
+        while let Some(version) = callers.join_next().await {
+            assert_eq!(version.unwrap(), "7.3.0");
+        }
+        assert_eq!(compiler_identity(&gcc), "avr-gcc\x007.3.0");
+
+        let probes = std::fs::read_to_string(&log).unwrap().lines().count();
+        assert_eq!(probes, 1, "16 concurrent callers spawned {probes} probes");
     }
 }

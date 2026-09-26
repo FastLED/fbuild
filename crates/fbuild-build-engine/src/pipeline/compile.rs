@@ -156,21 +156,14 @@ pub fn generate_compile_db(
     }
 }
 
-/// Log the version of a GCC toolchain by running `gcc -dumpversion`.
+/// Log the version of a GCC toolchain (`gcc -dumpversion`).
+///
+/// Reuses the per-compiler memoized probe behind rebuild signatures, so a
+/// warm build spawns nothing and a cold one probes each compiler once
+/// (FastLED/fbuild#1466).
 pub async fn log_toolchain_version(gcc_path: &Path, label: &str, build_log: &mut BuildLog) {
-    // FastLED/fbuild#809: `gcc -dumpversion` is a trivial probe; bound
-    // it tightly so a wedged toolchain binary cannot stall build init.
-    if let Ok(ver_out) = fbuild_core::subprocess::run_command(
-        &[gcc_path.to_string_lossy().as_ref(), "-dumpversion"],
-        None,
-        None,
-        Some(std::time::Duration::from_secs(5)),
-    )
-    .await
-    {
-        let version = ver_out.stdout.trim().to_string();
-        if !version.is_empty() {
-            crate::build_output::log_toolchain_version(build_log, label, &version);
-        }
+    let version = crate::rebuild_signature::cached_compiler_version(gcc_path).await;
+    if !version.is_empty() {
+        crate::build_output::log_toolchain_version(build_log, label, &version);
     }
 }
