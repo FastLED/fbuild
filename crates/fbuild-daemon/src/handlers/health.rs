@@ -235,7 +235,7 @@ pub async fn shutdown(
     let force = query.force.unwrap_or(false);
     let caller = ShutdownCaller::from_headers(peer, &headers);
 
-    if !force && ctx.operation_in_progress.load(Ordering::Relaxed) {
+    if ctx.try_begin_shutdown(force).is_none() {
         tracing::warn!(
             peer = %caller.peer,
             client_pid = caller.pid.as_deref().unwrap_or("unknown"),
@@ -253,7 +253,6 @@ pub async fn shutdown(
         );
     }
 
-    ctx.is_shutting_down.store(true, Ordering::Relaxed);
     let _ = ctx.shutdown_tx.send(true);
     tracing::info!(
         peer = %caller.peer,

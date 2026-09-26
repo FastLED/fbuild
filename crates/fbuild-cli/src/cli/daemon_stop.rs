@@ -84,6 +84,7 @@ const TERMINATION_BUDGET: std::time::Duration = std::time::Duration::from_secs(5
 /// the forced kill. The daemon answers SIGTERM with a bounded controlled exit
 /// (drain in-flight operations, then flush zccache); escalating before that
 /// budget would kill it mid-flush.
+#[cfg(unix)]
 const GRACEFUL_TERMINATION_BUDGET: std::time::Duration =
     std::time::Duration::from_secs(fbuild_core::daemon_health::TERMINATE_EXIT_BUDGET.as_secs() + 1);
 
@@ -196,7 +197,10 @@ async fn terminate_and_confirm(pid: u32) -> fbuild_core::Result<()> {
     // A delivered terminate gets the daemon's full controlled-exit budget; a
     // refused one keeps the plain liveness wait.
     let graceful_budget = match kill_process(pid, false).await {
+        #[cfg(unix)]
         Ok(()) => GRACEFUL_TERMINATION_BUDGET,
+        #[cfg(not(unix))]
+        Ok(()) => TERMINATION_BUDGET,
         Err(error) => {
             tracing::debug!(pid, %error, "graceful terminate refused; escalating to a forced kill");
             TERMINATION_BUDGET
