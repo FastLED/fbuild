@@ -48,7 +48,7 @@ jobs:
       - name: Setup soldr
         id: setup-soldr
         # Canary exact setup-soldr main SHA before v0 promotion.
-        uses: zackees/setup-soldr@a71cd1c92c72f8effbe65862e1440e9627678189
+        uses: zackees/setup-soldr@dfbe9627f6cb0226716b61625b99a58949162720
         with:
           # cache-preset: foundation expands to:
           #   build-cache: true, target-cache: false,

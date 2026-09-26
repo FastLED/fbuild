@@ -29,8 +29,9 @@
 //! // auto-summary on drop
 //! ```
 
+use std::ffi::OsString;
 use std::io::Write;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::sync::OnceLock;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::time::{Duration, Instant};
@@ -57,13 +58,12 @@ pub fn enabled() -> bool {
 ///
 /// Cached after the first call.
 pub fn json_sink_path() -> Option<&'static Path> {
-    static SINK: OnceLock<Option<PathBuf>> = OnceLock::new();
-    SINK.get_or_init(|| {
-        std::env::var_os("FBUILD_PERF_LOG_JSON")
-            .filter(|v| !v.is_empty())
-            .map(PathBuf::from)
-    })
-    .as_deref()
+    // Keep the raw value: lexical normalization would resolve `..` across
+    // symlinks and could open a different file than the caller named.
+    static SINK: OnceLock<Option<OsString>> = OnceLock::new();
+    SINK.get_or_init(|| std::env::var_os("FBUILD_PERF_LOG_JSON").filter(|v| !v.is_empty()))
+        .as_ref()
+        .map(Path::new)
 }
 
 /// Append `value` as a single JSON line to `path` (append + create).
