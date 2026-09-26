@@ -44,6 +44,7 @@ class SerialMonitor:
     def read_lines(self, timeout: float = 30.0) -> Iterator[str]: ...
     def write(self, data: str) -> int: ...
     def write_json_rpc(self, request: dict, timeout: float = 5.0) -> dict: ...
+    def interrupt_reads(self) -> None: ...  # additive, FastLED/fbuild#1485
 ```
 
 ### Implementation Strategy
@@ -59,26 +60,111 @@ The PyO3 `SerialMonitor` wraps the Rust `SharedSerialManager` via WebSocket:
 Internally uses the process-shared `pyo3-async-runtimes` tokio runtime with
 `block_on()` to bridge sync Python calls to async Rust.
 
-### Concurrency (FastLED/fbuild#1431)
+### Concurrency: the shared session core (FastLED/fbuild#1485)
 
-`read_lines`, `write`, `write_json_rpc`, `in_waiting` and `run_until` take
-`&self` and release the GIL while they block. One thread can therefore sit in
-`read_lines(timeout=...)` while another calls `write()`. The two share the
-WebSocket's read half (`crates/fbuild-python/src/ws_session.rs`). A
-request/reply call (`write` waiting for `write_ack`, `in_waiting`) announces
-itself, and the in-flight read hands over the socket immediately. The read
-resumes once the reply arrives. Serial lines that arrive in between are kept
-for the reader. A write never waits out a read's timeout, so callers don't need
-a single-worker executor or a short polling cap on `read_lines` to keep
-request/reply latency down.
+`SerialMonitor` (sync) and `AsyncSerialMonitor` (async) are thin facades over
+one shared, PyO3-free core: `crate::serial_session::SerialSession`
+(`crates/fbuild-python/src/serial_session.rs`). This superseded the #1431/#1484
+polling hand-off (`ws_session::ReadYield`/`RpcRoute`) with a dedicated reader
+task per session:
 
-Request/reply calls are serialized with each other, so overlapping `write`
-and `in_waiting` calls from different threads never consume each other's
-replies. While a `write_json_rpc` waits for its reply, every reader, including
-a concurrent `read_lines`, routes `REMOTE:` lines to the RPC call instead of
-returning them. Other serial lines read during the wait are kept for the next
-`read_lines`; they are no longer dropped. `__enter__`, `__exit__` and
-`reset_device` still need exclusive access.
+```
+                       ┌────────────────────────── serial_session.rs ───────────────────────────┐
+ WebSocket read half ──► reader task (one per session, owns WsSource)                            │
+                       │   data lines ─(REMOTE:, RPC waiting)──► rpc slot    (oneshot per RPC)    │
+                       │   data lines ─(everything else)───────► line queue  (bounded, Notify)    │
+                       │   write_ack / in_waiting / error ─────► reply FIFO  (oneshot per request) │
+                       │   port events ────────────────────────► status      (watch)              │
+                       │ write path: sink mutex + "register pending reply, then send", atomically │
+                       └───────────────▲──────────────────────────────────────▲───────────────────┘
+                                       │                                      │
+              serial_monitor.rs (sync facade)              async_serial_monitor.rs (async facade)
+              waits on channels with py.detach              future_into_py over the same calls
+```
+
+The reader task is the **sole owner** of the WebSocket read half; nothing
+else ever calls `.next()` on it. `read_lines`, `write`, `write_json_rpc` and
+`in_waiting` all talk to the reader through channels, so a long `read_lines`
+never blocks a concurrent `write` — the sync facade releases the GIL
+(`py.detach`) for every call that can block, and the async facade awaits the
+same core methods via `pyo3_async_runtimes::tokio::future_into_py`.
+
+**Fixed lock order:** `sink` -> `reply FIFO` -> `line queue` -> `status`. The
+reader task never takes `sink`.
+
+**Write registration is atomic.** A writer takes the `sink` lock, pushes its
+oneshot onto the reply FIFO, *then* sends — under the same lock — so two
+concurrent writers cannot register in one order and have their acks arrive in
+the other. A `write_json_rpc` registers its RPC-reply oneshot *before*
+writing, for the same reason.
+
+**Replies are matched by FIFO order**, not by request id (the daemon has none
+today); an `error` frame is treated as the reply to whatever the head of the
+FIFO expected (the daemon can emit `error` in place of a `write_ack`, e.g. on
+a bad-base64 write). A reply kind that doesn't match the head is a protocol
+desync: it fails that request loudly (`RuntimeError`) rather than silently
+reordering. `clear_input` (`clear_buffer`) registers no reply.
+
+**Line-queue overflow policy:** bounded at `max_buffered_lines` (default
+10,000); the *oldest* lines are dropped and counted
+(`SerialSession::lines_dropped`, plus a `tracing::warn!` per drop). The
+reader never stops draining the socket to apply backpressure — that would
+also stall `write_ack`s, which travel on the same connection.
+
+`read_lines` is cancel-safe: lines leave the queue only inside a synchronous
+critical section that also returns them, so a dropped/cancelled future (or a
+cancelled asyncio task) removes nothing. For the sync facade, a blocked
+Python thread can't be cancelled that way, so `SerialMonitor.interrupt_reads()`
+is an **additive** method that wakes every blocked reader; each returns `[]`
+without draining, so queued lines stay for the next reader (FastLED #3219 —
+the "every 2nd RPC times out" abandoned-reader failure mode).
+
+### Async API (`AsyncSerialMonitor`, §4.7 — a supported API, not experimental)
+
+| method | signature | returns |
+|---|---|---|
+| ctor | `AsyncSerialMonitor(port, baud_rate=115200, auto_reconnect=True, verbose=False)` | — |
+| `__aenter__` / `__aexit__` | — | self / `False` |
+| `read_lines` | `read_lines(timeout=30.0)` (`timeout_secs=` kept as a deprecated alias for one release) | `list[str]` |
+| `write` | `write(data: str)` | **`int`** bytes written (breaking change from the pre-#1485 `bool`) |
+| `write_json_rpc` | `write_json_rpc(request: dict, timeout=5.0)` | `dict` |
+| `in_waiting` | `await mon.in_waiting()` (awaitable method; a property can't be awaited) | `int` |
+| `reset_input_buffer` | `await mon.reset_input_buffer()` | `None` |
+| `reset_device` | `await mon.reset_device(board=None, wait_for_output=False, timeout=5.0)` | `bool` |
+
+### Error mapping (§4.8)
+
+`SerialSession`'s `SessionError` is mapped once, in each facade, to Python
+exceptions:
+
+| `SessionError` | Python exception |
+|---|---|
+| `Timeout` | `TimeoutError` |
+| `Closed`, `PortGone`, `Preempted` | `ConnectionError` |
+| `ProtocolDesync` | `RuntimeError` |
+
+The sync `write` keeps returning `0` on failure (compatibility); the async
+`write` raises instead — document this difference to callers porting from
+sync to async.
+
+### Deadlock-freedom rules (enforced, not just documented)
+
+1. No lock is held across `.await` — the `serial_session` module is
+   `#[deny(clippy::await_holding_lock)]`.
+2. No lock is held while calling into Python (hooks, `run_until` conditions,
+   exception construction all run after every core lock is released).
+3. The fixed lock order above.
+4. The GIL is released for every sync call that can block, including
+   `__enter__`/`__exit__`, not just `read_lines`.
+5. `SerialMonitor` detects `tokio::runtime::Handle::try_current()` before
+   blocking and raises `RuntimeError` instead of panicking/deadlocking if
+   called from inside the async runtime (use `AsyncSerialMonitor` there).
+6. The reader task runs under a drop guard: on panic or exit it marks the
+   session `Closed` and fails every pending reply/RPC/line-waiter, so nobody
+   waits on a dead task.
+7. A `Drop` without `close()`/`__exit__` (GC, an exception in `with`, a
+   leaked object) runs the same teardown: mark closed, abort the reader,
+   wake everyone.
 
 ## DaemonConnection API
 
