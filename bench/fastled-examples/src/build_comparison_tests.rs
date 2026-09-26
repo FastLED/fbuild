@@ -3,6 +3,8 @@ use super::*;
 fn sample_results() -> Vec<ToolResult> {
     vec![
         ToolResult {
+            board: "uno".into(),
+            board_name: "Arduino Uno".into(),
             tool: "arduino".into(),
             display_name: "Arduino CLI".into(),
             version: "arduino-cli 1.5.0".into(),
@@ -16,6 +18,8 @@ fn sample_results() -> Vec<ToolResult> {
             daemon_restarts: 0,
         },
         ToolResult {
+            board: "uno".into(),
+            board_name: "Arduino Uno".into(),
             tool: "platformio".into(),
             display_name: "PlatformIO".into(),
             version: "PlatformIO Core 6.1.19".into(),
@@ -29,6 +33,8 @@ fn sample_results() -> Vec<ToolResult> {
             daemon_restarts: 0,
         },
         ToolResult {
+            board: "uno".into(),
+            board_name: "Arduino Uno".into(),
             tool: "fbuild".into(),
             display_name: "fbuild".into(),
             version: "fbuild 0.1.0".into(),
@@ -114,6 +120,7 @@ fn each_tool_has_the_complete_cold_cleanup_sequence() {
     assert_eq!(
         cold_cleanup_steps(
             ToolKind::Arduino,
+            BOARDS[0],
             OsStr::new("arduino-cli"),
             OsStr::new("pio"),
             project,
@@ -128,6 +135,7 @@ fn each_tool_has_the_complete_cold_cleanup_sequence() {
     assert_eq!(
         cold_cleanup_steps(
             ToolKind::PlatformIo,
+            BOARDS[0],
             OsStr::new("arduino-cli"),
             OsStr::new("pio"),
             project,
@@ -153,6 +161,7 @@ fn each_tool_has_the_complete_cold_cleanup_sequence() {
     assert_eq!(
         cold_cleanup_steps(
             ToolKind::Fbuild,
+            BOARDS[0],
             OsStr::new("arduino-cli"),
             OsStr::new("pio"),
             project,
@@ -174,6 +183,24 @@ fn each_tool_has_the_complete_cold_cleanup_sequence() {
 }
 
 #[test]
+fn esp32s3_cleanup_uses_its_environment() {
+    let steps = cold_cleanup_steps(
+        ToolKind::PlatformIo,
+        BOARDS[1],
+        OsStr::new("arduino-cli"),
+        OsStr::new("pio"),
+        Path::new("bench/blink"),
+        Path::new("target/release/fbuild"),
+        Path::new("benchmark-output/arduino-esp32s3"),
+    );
+    assert!(matches!(
+        &steps[1],
+        ColdCleanupStep::Command { args, .. }
+            if args.windows(2).any(|pair| pair == os_args(&["--environment", "esp32s3"]))
+    ));
+}
+
+#[test]
 fn svg_uses_reference_palette_and_warm_overlay() {
     let svg = render_svg(&sample_metadata(), &sample_results());
     for color in [
@@ -184,6 +211,19 @@ fn svg_uses_reference_palette_and_warm_overlay() {
     assert!(svg.contains("height=\"28\""));
     assert!(svg.contains("height=\"14\""));
     assert!(svg.contains("cold (back) + warm (front overlay)"));
+}
+
+#[test]
+fn svg_contains_uno_and_esp32s3_groups() {
+    let mut results = sample_results();
+    results.extend(sample_results().into_iter().map(|mut result| {
+        result.board = "esp32s3".into();
+        result.board_name = "ESP32-S3".into();
+        result
+    }));
+    let svg = render_svg(&sample_metadata(), &results);
+    assert!(svg.contains("Arduino Uno"), "{svg}");
+    assert!(svg.contains("ESP32-S3"), "{svg}");
 }
 
 #[test]
@@ -222,12 +262,20 @@ fn outputs_include_agent_discovery_and_bounded_history() {
         manifest["artifacts"]["history"]["max_lines"],
         HISTORY_MAX_LINES
     );
+    assert_eq!(manifest["artifacts"]["latest"]["schema_version"], 2);
     let history = fs::read_to_string(temp.path().join("history.jsonl")).unwrap();
     assert_eq!(history.lines().count(), HISTORY_MAX_LINES);
     assert!(history.lines().last().unwrap().contains("0123456789abcdef"));
     let latest: Value =
         serde_json::from_str(&fs::read_to_string(temp.path().join("latest.json")).unwrap())
             .unwrap();
+    assert_eq!(latest["schema_version"], 2);
+    assert_eq!(latest["metadata"]["boards"][0]["name"], "Arduino Uno");
+    assert_eq!(latest["metadata"]["boards"][1]["name"], "ESP32-S3");
+    assert_eq!(
+        latest["metadata"]["toolchain_pins"]["esp32s3"]["arduino_core"],
+        "esp32:esp32@3.3.7"
+    );
     assert_eq!(
         latest["metadata"]["cold_definition"],
         "project outputs, reusable framework objects, compiler-object caches, and Arduino/PlatformIO download/HTTP caches removed; installed packages/toolchains and fbuild package archives retained"
@@ -395,14 +443,20 @@ fn find_compile_db_prefers_the_raw_toolchain_database() {
     fs::create_dir_all(&env_dir).unwrap();
     fs::write(env_dir.join("compile_commands.json"), "[]").unwrap();
     assert_eq!(
-        find_compile_db(project).unwrap().file_name().unwrap(),
+        find_compile_db(project, "uno")
+            .unwrap()
+            .file_name()
+            .unwrap(),
         "compile_commands.json",
         "older fbuild builds only wrote the clangd database"
     );
 
     fs::write(env_dir.join("compile_commands.raw.json"), "[]").unwrap();
     assert_eq!(
-        find_compile_db(project).unwrap().file_name().unwrap(),
+        find_compile_db(project, "uno")
+            .unwrap()
+            .file_name()
+            .unwrap(),
         "compile_commands.raw.json"
     );
 
@@ -412,7 +466,7 @@ fn find_compile_db_prefers_the_raw_toolchain_database() {
     fs::create_dir_all(&quick_dir).unwrap();
     fs::write(quick_dir.join("compile_commands.raw.json"), "[]").unwrap();
     assert_eq!(
-        find_compile_db(project).unwrap().as_path(),
+        find_compile_db(project, "uno").unwrap().as_path(),
         env_dir.join("compile_commands.raw.json")
     );
 }

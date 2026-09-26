@@ -1,6 +1,6 @@
 //! Nightly Arduino CLI vs PlatformIO vs fbuild whole-build benchmark.
 //!
-//! The harness measures the same Arduino Uno Blink sketch with each real CLI,
+//! The harness measures the same Arduino Uno and ESP32-S3 Blink sketch with each real CLI,
 //! then renders the one-commit benchmark site's JSON, SVG, and HTML artifacts.
 
 use fbuild_core::path::NormalizedPath;
@@ -29,6 +29,29 @@ const DEFAULT_REPOSITORY: &str = "FastLED/fbuild";
 const DEFAULT_PAGES_URL: &str = "https://fastled.github.io/fbuild/";
 const DEFAULT_RAW_BASE_URL: &str =
     "https://raw.githubusercontent.com/FastLED/fbuild/benchmark-stats";
+
+#[derive(Clone, Copy, Debug)]
+struct Board {
+    key: &'static str,
+    name: &'static str,
+    environment: &'static str,
+    fqbn: &'static str,
+}
+
+const BOARDS: [Board; 2] = [
+    Board {
+        key: "uno",
+        name: "Arduino Uno",
+        environment: "uno",
+        fqbn: "arduino:avr:uno",
+    },
+    Board {
+        key: "esp32s3",
+        name: "ESP32-S3",
+        environment: "esp32s3",
+        fqbn: "esp32:esp32:esp32s3",
+    },
+];
 
 type AppResult<T> = Result<T, Box<dyn std::error::Error>>;
 
@@ -106,6 +129,8 @@ impl ToolKind {
 
 #[derive(Clone, Debug, Serialize)]
 struct ToolResult {
+    board: String,
+    board_name: String,
     tool: String,
     display_name: String,
     version: String,
@@ -195,34 +220,37 @@ fn run() -> AppResult<()> {
         ),
     ];
 
-    let arduino_build_dir = repo_root.join("benchmark-output/arduino-build");
-    let mut results = Vec::with_capacity(versions.len());
+    let mut results = Vec::with_capacity(versions.len() * BOARDS.len());
     let mut raw_baseline_ms = None;
-    for (kind, version) in versions {
-        let result = measure_tool(
-            kind,
-            &version,
-            &options,
-            &repo_root,
-            &project_dir,
-            &output_dir,
-            &fbuild,
-            &arduino_build_dir,
-            &mut log,
-            &mut raw_baseline_ms,
-        )?;
-        if result.daemon_restarts > 0 {
+    for board in BOARDS {
+        let arduino_build_dir = repo_root.join(format!("benchmark-output/arduino-{}", board.key));
+        for (kind, version) in &versions {
+            let result = measure_tool(
+                *kind,
+                version,
+                board,
+                &options,
+                &repo_root,
+                &project_dir,
+                &output_dir,
+                &fbuild,
+                &arduino_build_dir,
+                &mut log,
+                &mut raw_baseline_ms,
+            )?;
+            if result.daemon_restarts > 0 {
+                println!(
+                    "::warning title=fbuild daemon restart mode::{} timed fbuild builds restarted the daemon (~200 ms each), so fbuild timings are inflated; the restart notices and daemon.log tail are in benchmark.log (FastLED/fbuild#1476)",
+                    result.daemon_restarts
+                );
+                append_daemon_log_tail(&mut log)?;
+            }
             println!(
-                "::warning title=fbuild daemon restart mode::{} timed fbuild builds restarted the daemon (~200 ms each), so fbuild timings are inflated; the restart notices and daemon.log tail are in benchmark.log (FastLED/fbuild#1476)",
-                result.daemon_restarts
+                "{:<11} {:<12} cold {:>10.3} ms | warm {:>10.3} ms | {:>7.2}x",
+                board.name, result.display_name, result.cold_ms, result.warm_ms, result.speedup
             );
-            append_daemon_log_tail(&mut log)?;
+            results.push(result);
         }
-        println!(
-            "{:<12} cold {:>10.3} ms | warm {:>10.3} ms | {:>7.2}x",
-            result.display_name, result.cold_ms, result.warm_ms, result.speedup
-        );
-        results.push(result);
     }
 
     let metadata = Metadata {
@@ -261,6 +289,7 @@ fn run() -> AppResult<()> {
 fn measure_tool(
     kind: ToolKind,
     version: &str,
+    board: Board,
     options: &Options,
     repo_root: &Path,
     project_dir: &Path,
@@ -306,6 +335,7 @@ fn measure_tool(
                 )?;
                 prepare_cold(
                     kind,
+                    board,
                     options,
                     repo_root,
                     project_dir,
@@ -318,6 +348,7 @@ fn measure_tool(
                 let offset = perf_line_count(&perf_log);
                 let (elapsed, restarted) = timed_build(
                     kind,
+                    board,
                     options,
                     repo_root,
                     project_dir,
@@ -333,14 +364,20 @@ fn measure_tool(
                     if let Some(phases) = perf_phases_after(&content, offset, PERF_PHASE_LABELS) {
                         cold_phase_trials.push(phases);
                     }
-                    if trial == 1 {
-                        *raw_baseline_ms = measure_raw_baseline(project_dir, options.trials, log)?;
+                    if trial == 1 && board.key == "uno" {
+                        *raw_baseline_ms = measure_raw_baseline(
+                            project_dir,
+                            board.environment,
+                            options.trials,
+                            log,
+                        )?;
                     }
                 }
             }
             MeasurementStep::WarmBuild(_) => {
                 let (elapsed, restarted) = timed_build(
                     kind,
+                    board,
                     options,
                     repo_root,
                     project_dir,
@@ -364,6 +401,8 @@ fn measure_tool(
     };
     let style = kind.style();
     Ok(ToolResult {
+        board: board.key.to_string(),
+        board_name: board.name.to_string(),
         tool: style.key.to_string(),
         display_name: style.label.to_string(),
         version: version.to_string(),
@@ -473,7 +512,7 @@ fn phase_medians(trials: &[BTreeMap<String, f64>]) -> BTreeMap<String, f64> {
 /// (FastLED/fbuild#1467). `compile_commands.json` is rewritten for clangd
 /// (`clang++ --target=avr`, no `-flto`) and cannot be replayed, so it is
 /// only a fallback for older fbuild builds.
-fn find_compile_db(project_dir: &Path) -> Option<NormalizedPath> {
+fn find_compile_db(project_dir: &Path, environment: &str) -> Option<NormalizedPath> {
     fn search(dir: &Path, name: &str) -> Option<NormalizedPath> {
         let candidate = dir.join(name);
         if candidate.is_file() {
@@ -491,7 +530,7 @@ fn find_compile_db(project_dir: &Path) -> Option<NormalizedPath> {
     // The timed builds use `--release`; `uno/quick` may also exist and must
     // not win the sorted search.
     let env_root = fbuild_paths::get_project_build_root(project_dir)
-        .join("uno")
+        .join(environment)
         .join("release");
     ["compile_commands.raw.json", "compile_commands.json"]
         .into_iter()
@@ -504,11 +543,14 @@ fn find_compile_db(project_dir: &Path) -> Option<NormalizedPath> {
 
 fn measure_raw_baseline(
     project_dir: &Path,
+    environment: &str,
     trials: usize,
     log: &mut File,
 ) -> AppResult<Option<f64>> {
-    let Some(db) = find_compile_db(project_dir) else {
-        eprintln!("warning: no compile_commands.json found for uno; raw_baseline_ms = null");
+    let Some(db) = find_compile_db(project_dir, environment) else {
+        eprintln!(
+            "warning: no compile_commands.json found for {environment}; raw_baseline_ms = null"
+        );
         writeln!(
             log,
             "warning: no compile_commands.json found; raw baseline skipped"
@@ -694,8 +736,10 @@ fn measurement_plan(trials: usize) -> Vec<MeasurementStep> {
         .collect()
 }
 
+#[allow(clippy::too_many_arguments)]
 fn prepare_cold(
     kind: ToolKind,
+    board: Board,
     options: &Options,
     repo_root: &Path,
     project_dir: &Path,
@@ -706,6 +750,7 @@ fn prepare_cold(
     writeln!(log, "----- untimed cold-cache preparation -----")?;
     for step in cold_cleanup_steps(
         kind,
+        board,
         &options.arduino_cli,
         &options.platformio,
         project_dir,
@@ -725,6 +770,7 @@ fn prepare_cold(
 
 fn cold_cleanup_steps(
     kind: ToolKind,
+    board: Board,
     arduino_cli: &OsStr,
     platformio: &OsStr,
     project_dir: &Path,
@@ -752,7 +798,7 @@ fn cold_cleanup_steps(
                     "--project-dir",
                     &project_dir.to_string_lossy(),
                     "--environment",
-                    "uno",
+                    board.environment,
                     "--target",
                     "clean",
                 ]),
@@ -765,7 +811,7 @@ fn cold_cleanup_steps(
                 "cache",
                 &project_dir.to_string_lossy(),
                 "--environment",
-                "uno",
+                board.environment,
                 "--release",
             ]),
         )],
@@ -775,6 +821,7 @@ fn cold_cleanup_steps(
 #[allow(clippy::too_many_arguments)]
 fn timed_build(
     kind: ToolKind,
+    board: Board,
     options: &Options,
     repo_root: &Path,
     project_dir: &Path,
@@ -789,7 +836,7 @@ fn timed_build(
             os_args(&[
                 "compile",
                 "--fqbn",
-                "arduino:avr:uno",
+                board.fqbn,
                 "--build-path",
                 &arduino_build_dir.to_string_lossy(),
                 &project_dir.to_string_lossy(),
@@ -802,7 +849,7 @@ fn timed_build(
                 "--project-dir",
                 &project_dir.to_string_lossy(),
                 "--environment",
-                "uno",
+                board.environment,
             ]),
         ),
         ToolKind::Fbuild => (
@@ -811,7 +858,7 @@ fn timed_build(
                 "build",
                 &project_dir.to_string_lossy(),
                 "--environment",
-                "uno",
+                board.environment,
                 "--release",
             ]),
         ),
@@ -960,7 +1007,7 @@ fn write_outputs(
 
 fn latest_payload(metadata: &Metadata, results: &[ToolResult]) -> Value {
     json!({
-        "schema_version": 1,
+        "schema_version": 2,
         "metadata": {
             "generated_at": metadata.generated_at,
             "git_sha": metadata.git_sha,
@@ -971,11 +1018,21 @@ fn latest_payload(metadata: &Metadata, results: &[ToolResult]) -> Value {
                 "arch": env::consts::ARCH,
             },
             "fixture": metadata.project,
-            "board": "Arduino Uno",
-            "fqbn": "arduino:avr:uno",
+            "boards": BOARDS.iter().map(|board| json!({
+                "key": board.key,
+                "name": board.name,
+                "environment": board.environment,
+                "fqbn": board.fqbn,
+            })).collect::<Vec<_>>(),
             "toolchain_pins": {
-                "arduino_core": "arduino:avr@1.8.8",
-                "platformio_platform": "atmelavr@5.1.0",
+                "uno": {
+                    "arduino_core": "arduino:avr@1.8.8",
+                    "platformio_platform": "atmelavr@5.1.0",
+                },
+                "esp32s3": {
+                    "arduino_core": "esp32:esp32@3.3.7",
+                    "platformio_platform": "espressif32@6.13.0",
+                },
                 "note": "ecosystem framework distributions are pinned independently",
             },
             "trials": metadata.trials,
@@ -1077,7 +1134,7 @@ fn manifest_payload(metadata: &Metadata, pages_url: &str, raw_base_url: &str) ->
                 "description": "Full metadata, raw trials, and median cold/warm timings for the newest run.",
                 "url": format!("{raw}/latest.json"),
                 "content_type": "application/json",
-                "schema_version": 1,
+                "schema_version": 2,
             },
             "history": {
                 "description": "Rolling compact history, one JSON object per benchmark run.",
@@ -1127,6 +1184,8 @@ fn write_history(
         .iter()
         .map(|result| {
             json!({
+                "board": result.board,
+                "board_name": result.board_name,
                 "tool": result.tool,
                 "cold_ms": result.cold_ms,
                 "warm_ms": result.warm_ms,
@@ -1147,7 +1206,7 @@ fn write_history(
 
 fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
     let width = 960.0;
-    let height = 410.0;
+    let height = 700.0;
     let bar_x = 190.0;
     let bar_width = 480.0;
     let max_ms = results
@@ -1163,7 +1222,8 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
             _ => ToolKind::Fbuild,
         };
         let style = kind.style();
-        let y = 174.0 + index as f64 * 68.0;
+        let board_gap = if result.board == "esp32s3" { 42.0 } else { 0.0 };
+        let y = 194.0 + index as f64 * 68.0 + board_gap;
         let cold_width = (result.cold_ms / max_ms * bar_width).max(3.0);
         let warm_width = (result.warm_ms / max_ms * bar_width).max(3.0);
         rows.push_str(&format!(
@@ -1208,8 +1268,8 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
         .unwrap_or_default();
     format!(
         r##"<svg xmlns="http://www.w3.org/2000/svg" width="{width:.0}" height="{height:.0}" viewBox="0 0 {width:.0} {height:.0}" role="img" aria-labelledby="title description">
-  <title id="title">Arduino CLI vs PlatformIO vs fbuild Blink build benchmark</title>
-  <desc id="description">Cold build bars with narrower warm build timing overlays for an Arduino Uno Blink sketch.</desc>
+  <title id="title">Arduino Uno and ESP32-S3 Blink build benchmark</title>
+  <desc id="description">Cold build bars with narrower warm build timing overlays for Arduino Uno and ESP32-S3 Blink sketches.</desc>
   <style>
     text {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }}
     .heading {{ font-size: 30px; font-weight: 700; fill: #f0f6fc; }}
@@ -1221,15 +1281,17 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
   </style>
   <rect width="{width:.0}" height="{height:.0}" fill="#0d1117" />
   <rect width="{width:.0}" height="112" fill="#161b22" />
-  <text x="24" y="43" class="heading">Arduino Uno Blink build times</text>
+  <text x="24" y="43" class="heading">Arduino Uno + ESP32-S3 Blink build times</text>
   <text x="24" y="72" class="meta">Arduino CLI vs PlatformIO vs fbuild | median of {trials} trials</text>
   <text x="24" y="95" class="meta">Generated {generated_at} | sha {sha}</text>
 {floor_line}  <rect x="24" y="128" width="76" height="24" rx="4" fill="#5b1f1c" />
   <rect x="24" y="134" width="34" height="12" rx="3" fill="#f85149" />
   <text x="112" y="146" class="legend">cold (back) + warm (front overlay)</text>
   <text x="692" y="146" class="meta">scale: slowest median = {max_ms:.1} ms</text>
-{rows}  <line x1="24" y1="382" x2="936" y2="382" stroke="#30363d" stroke-width="2" />
-  <text x="24" y="402" class="meta">Machine data: manifest.json | latest.json | history.jsonl</text>
+  <text x="24" y="182" class="legend">Arduino Uno</text>
+  <text x="24" y="428" class="legend">ESP32-S3</text>
+{rows}  <line x1="24" y1="672" x2="936" y2="672" stroke="#30363d" stroke-width="2" />
+  <text x="24" y="692" class="meta">Machine data: manifest.json | latest.json | history.jsonl</text>
 </svg>
 "##,
         width = width,
@@ -1263,7 +1325,8 @@ fn render_html(metadata: &Metadata, results: &[ToolResult]) -> String {
         .iter()
         .map(|result| {
             format!(
-                "<tr><th>{}</th><td>{:.3} ms</td><td>{:.3} ms</td><td>{:.2}x</td><td>{}</td></tr>",
+                "<tr><th>{}</th><th>{}</th><td>{:.3} ms</td><td>{:.3} ms</td><td>{:.2}x</td><td>{}</td></tr>",
+                html_escape(&result.board_name),
                 html_escape(&result.display_name),
                 result.cold_ms,
                 result.warm_ms,
@@ -1276,10 +1339,16 @@ fn render_html(metadata: &Metadata, results: &[ToolResult]) -> String {
     let phase_rows = results
         .iter()
         .filter(|result| result.tool == "fbuild")
-        .flat_map(|result| result.cold_phases_ms.iter())
-        .map(|(phase, ms)| {
+        .flat_map(|result| {
+            result
+                .cold_phases_ms
+                .iter()
+                .map(move |(phase, ms)| (&result.board_name, phase, ms))
+        })
+        .map(|(board, phase, ms)| {
             format!(
-                "<tr><td>{}</td><td>{ms:.3} ms</td></tr>",
+                "<tr><td>{}</td><td>{}</td><td>{ms:.3} ms</td></tr>",
+                html_escape(board),
                 html_escape(phase)
             )
         })
@@ -1292,7 +1361,7 @@ fn render_html(metadata: &Metadata, results: &[ToolResult]) -> String {
             r#"<h2>fbuild cold phase breakdown</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Phase</th><th>Cold median</th></tr></thead>
+          <thead><tr><th>Board</th><th>Phase</th><th>Cold median</th></tr></thead>
           <tbody>{phase_rows}</tbody>
         </table>
       </div>
@@ -1327,11 +1396,11 @@ fn render_html(metadata: &Metadata, results: &[ToolResult]) -> String {
     <main>
       <h1>fbuild Blink build benchmark</h1>
       <p class="meta">Generated {generated_at} from <code>{sha}</code>. Median of {trials} trials on {os}/{arch}.</p>
-      <p class="note">All three tools compile the same Arduino Uno <code>bench/blink/blink.ino</code>. Cold removes project outputs, reusable framework objects, compiler-object caches, and Arduino/PlatformIO download/HTTP caches while retaining installed packages/toolchains and fbuild package archives. Warm is the immediate no-change rebuild. The narrower warm bar overlays the cold bar.</p>
+      <p class="note">All three tools compile the same Arduino Uno and ESP32-S3 <code>bench/blink/blink.ino</code>. Cold removes project outputs, reusable framework objects, compiler-object caches, and Arduino/PlatformIO download/HTTP caches while retaining installed packages/toolchains and fbuild package archives. Warm is the immediate no-change rebuild. The narrower warm bar overlays the cold bar.</p>
       <a href="benchmark.svg"><img src="benchmark.svg" alt="Arduino CLI vs PlatformIO vs fbuild cold and warm Blink build timings" /></a>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Tool</th><th>Cold median</th><th>Warm median</th><th>Cold / warm</th><th>Version</th></tr></thead>
+          <thead><tr><th>Board</th><th>Tool</th><th>Cold median</th><th>Warm median</th><th>Cold / warm</th><th>Version</th></tr></thead>
           <tbody>{rows}</tbody>
         </table>
       </div>

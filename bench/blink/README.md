@@ -1,10 +1,9 @@
 # Blink build comparison
 
-This directory is one shared Arduino Uno Blink sketch for the nightly
+This directory is one shared Arduino Uno and ESP32-S3 Blink sketch for the nightly
 whole-build comparison. Arduino CLI, PlatformIO, and fbuild compile the exact
-same `blink.ino` file for the Arduino Uno target. Each ecosystem's framework
-distribution is pinned independently: `arduino:avr@1.8.8` for Arduino CLI and
-`atmelavr@5.1.0` for PlatformIO/fbuild.
+same `blink.ino` file for both targets. Each ecosystem's framework distribution
+is pinned independently in the benchmark workflow and `platformio.ini`.
 
 Each tool is measured for three trials by default:
 
