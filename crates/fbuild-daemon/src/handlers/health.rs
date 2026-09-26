@@ -346,7 +346,7 @@ mod tests {
     #[tokio::test]
     async fn shutdown_refuses_non_force_when_operation_in_progress() {
         let ctx = test_context();
-        ctx.operation_in_progress.store(true, Ordering::Relaxed);
+        let _admission = ctx.begin_operation_admission().unwrap();
         *ctx.current_operation.write().unwrap() = Some("Building C:/work/fastled".to_string());
 
         let (status, body) = shutdown(
