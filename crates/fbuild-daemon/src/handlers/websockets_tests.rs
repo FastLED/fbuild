@@ -252,6 +252,26 @@ async fn serial_ws_preemption_reconnects_after_deploy_impl(renumber: bool, fail_
     let preempted: serde_json::Value = serde_json::from_str(&preempted).unwrap();
     assert_eq!(preempted["type"], "preempted", "{preempted}");
 
+    // The broadcast receiver is closed during deploy recovery. Inbound
+    // buffer requests must still complete, not block detach or later writes.
+    tokio::time::sleep(Duration::from_millis(50)).await;
+    ws.send(ClientMessage::Text(
+        serde_json::json!({"type": "get_in_waiting"}).to_string(),
+    ))
+    .await
+    .unwrap();
+    let depth = tokio::time::timeout(Duration::from_secs(1), ws.next())
+        .await
+        .expect("get_in_waiting blocked during deploy recovery")
+        .expect("socket closed before in_waiting reply")
+        .unwrap();
+    let ClientMessage::Text(depth) = depth else {
+        panic!("expected in_waiting text frame");
+    };
+    let depth: serde_json::Value = serde_json::from_str(&depth).unwrap();
+    assert_eq!(depth["type"], "in_waiting", "{depth}");
+    assert_eq!(depth["count"], 0);
+
     if fail_recovery {
         ctx.serial_manager
             .fail_deploy_preemption(&port, "no healthy runtime serial port")

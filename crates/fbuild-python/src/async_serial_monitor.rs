@@ -245,7 +245,7 @@ impl AsyncSerialMonitor {
             let lines = session
                 .read_lines(std::time::Duration::from_secs_f64(timeout.max(0.0)))
                 .await;
-            if *session.status().borrow() == SessionStatus::Closed {
+            if lines.is_empty() && *session.status().borrow() == SessionStatus::Closed {
                 return Err(map_err(SessionError::Closed));
             }
             let mut pending_batch = pending.batch.lock().unwrap_or_else(|e| e.into_inner());
@@ -356,7 +356,7 @@ impl AsyncSerialMonitor {
                 session.close().await;
             }
             let success = post_reset_request_async(port, board).await?;
-            if was_connected && success {
+            if was_connected {
                 let new_session = SerialSession::connect(cfg).await.map_err(map_connect_err)?;
                 *session_slot.write().await = Some(Arc::new(new_session));
             }

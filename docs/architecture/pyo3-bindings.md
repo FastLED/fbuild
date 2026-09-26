@@ -55,7 +55,8 @@ FIFO replies while `read_lines`, `write`, and `write_json_rpc` operate through
 the shared core. `__exit__` detaches, closes the socket, and joins that reader.
 The sync facade uses the process-shared `pyo3-async-runtimes` Tokio runtime and
 releases the GIL around blocking calls. The daemon does not correlate RPC IDs;
-`REMOTE:` serial lines go to RPC waiters in FIFO order.
+the core matches `REMOTE:` lines by JSON-RPC `id` when both sides provide one,
+falling back to FIFO for id-less replies.
 
 ### Concurrency: the shared session core (FastLED/fbuild#1485)
 
@@ -101,6 +102,11 @@ FIFO expected (the daemon can emit `error` in place of a `write_ack`, e.g. on
 a bad-base64 write). A reply kind that doesn't match the head is a protocol
 desync: it fails that request loudly (`RuntimeError`) rather than silently
 reordering. `clear_input` (`clear_buffer`) registers no reply.
+
+JSON-RPC replies are ordinary serial `REMOTE:` lines, not daemon acks. For
+these, the core uses the JSON `id` when present. A timed-out ID is kept in a
+bounded recent-ID list so its late reply is discarded rather than delivered to a new call;
+id-less replies retain the FIFO/abandoned-slot rule.
 
 **Line-queue overflow policy:** bounded at `max_buffered_lines` (default
 10,000); the *oldest* lines are dropped and counted

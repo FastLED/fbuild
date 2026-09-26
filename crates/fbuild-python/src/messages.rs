@@ -42,7 +42,6 @@ impl ClientMetadata {
 pub(crate) enum ServerMessage {
     Attached {
         success: bool,
-        #[allow(dead_code)]
         message: String,
         #[allow(dead_code)]
         writer_pre_acquired: bool,

@@ -117,8 +117,14 @@ struct ReplyEntry {
 
 struct RpcEntry {
     id: u64,
+    request_id: Option<String>,
     tx: Option<oneshot::Sender<Result<String, SessionError>>>,
 }
+
+type RpcWaiter = (
+    oneshot::Sender<Result<String, SessionError>>,
+    Option<String>,
+);
 
 struct Inner {
     sink: tokio::sync::Mutex<Option<WsSink>>,
@@ -127,6 +133,7 @@ struct Inner {
     request_gate: Mutex<()>,
     reply_fifo: Mutex<VecDeque<ReplyEntry>>,
     rpc_fifo: Mutex<VecDeque<RpcEntry>>,
+    stale_rpc_ids: Mutex<VecDeque<String>>,
     next_rpc_id: AtomicU64,
     line_queue: Mutex<VecDeque<String>>,
     line_notify: Notify,
@@ -165,6 +172,19 @@ impl Inner {
     }
 
     fn reconnect_if_preempted(&self) {
+        if self.status() != SessionStatus::Preempted {
+            return;
+        }
+        // A deploy has destroyed the old device session. Replies for RPCs
+        // already failed by preempt_everyone can never arrive from it.
+        self.rpc_fifo
+            .lock()
+            .unwrap_or_else(|e| e.into_inner())
+            .retain(|entry| entry.tx.is_some());
+        self.stale_rpc_ids
+            .lock()
+            .unwrap_or_else(|e| e.into_inner())
+            .clear();
         self.status_tx.send_if_modified(|current| {
             if *current != SessionStatus::Preempted {
                 return false;
@@ -200,11 +220,29 @@ impl Inner {
         #[cfg(test)]
         self.lines_received_for_test.fetch_add(1, Ordering::Relaxed);
         if let Some(stripped) = line.strip_prefix(REMOTE_PREFIX) {
+            let reply_id = serde_json::from_str::<serde_json::Value>(stripped)
+                .ok()
+                .and_then(|value| value.get("id").map(ToString::to_string));
+            if let Some(ref id) = reply_id {
+                let mut stale = self.stale_rpc_ids.lock().unwrap_or_else(|e| e.into_inner());
+                if let Some(pos) = stale.iter().position(|old| old == id) {
+                    stale.remove(pos);
+                    #[cfg(test)]
+                    self.lines_discarded_for_test
+                        .fetch_add(1, Ordering::Relaxed);
+                    return;
+                }
+            }
             let waiter = {
-                self.rpc_fifo
-                    .lock()
-                    .unwrap_or_else(|e| e.into_inner())
-                    .pop_front()
+                let mut fifo = self.rpc_fifo.lock().unwrap_or_else(|e| e.into_inner());
+                if let Some(ref id) = reply_id {
+                    fifo.iter()
+                        .position(|entry| entry.request_id.as_ref() == Some(id))
+                        .or_else(|| fifo.iter().position(|entry| entry.request_id.is_none()))
+                        .and_then(|pos| fifo.remove(pos))
+                } else {
+                    fifo.pop_front()
+                }
             };
             if let Some(entry) = waiter {
                 let delivered = entry
@@ -264,6 +302,21 @@ impl Inner {
                 .lock()
                 .unwrap_or_else(|e| e.into_inner())
                 .retain(|entry| entry.id != id);
+        }
+    }
+
+    fn abandon_rpc_id(&self, request_id: &str) {
+        let mut fifo = self.rpc_fifo.lock().unwrap_or_else(|e| e.into_inner());
+        if let Some(pos) = fifo
+            .iter()
+            .position(|entry| entry.request_id.as_deref() == Some(request_id))
+        {
+            fifo.remove(pos);
+            let mut stale = self.stale_rpc_ids.lock().unwrap_or_else(|e| e.into_inner());
+            if stale.len() == 1024 {
+                stale.pop_front();
+            }
+            stale.push_back(request_id.to_string());
         }
     }
 
@@ -414,6 +467,11 @@ impl SerialSession {
                             eprintln!("attached");
                         }
                     }
+                    Ok(ServerMessage::Attached { message, .. }) => {
+                        return Err(SessionError::ConnectionFailed(format!(
+                            "daemon rejected serial attach: {message}"
+                        )));
+                    }
                     _ => return Err(SessionError::Closed),
                 }
             }
@@ -425,6 +483,7 @@ impl SerialSession {
             request_gate: Mutex::new(()),
             reply_fifo: Mutex::new(VecDeque::new()),
             rpc_fifo: Mutex::new(VecDeque::new()),
+            stale_rpc_ids: Mutex::new(VecDeque::new()),
             next_rpc_id: AtomicU64::new(0),
             line_queue: Mutex::new(VecDeque::new()),
             line_notify: Notify::new(),
@@ -573,7 +632,7 @@ impl SerialSession {
         text: String,
         kind: ReplyKind,
         timeout: Duration,
-        rpc_waiter: Option<oneshot::Sender<Result<String, SessionError>>>,
+        rpc_waiter: Option<RpcWaiter>,
     ) -> Result<usize, SessionError> {
         let deadline = tokio::time::Instant::now() + timeout;
         if self.inner.status() == SessionStatus::Closed {
@@ -614,13 +673,14 @@ impl SerialSession {
                     tx: Some(tx),
                     rpc_id,
                 });
-            if let Some(rpc_waiter) = rpc_waiter {
+            if let Some((rpc_waiter, request_id)) = rpc_waiter {
                 self.inner
                     .rpc_fifo
                     .lock()
                     .unwrap_or_else(|e| e.into_inner())
                     .push_back(RpcEntry {
                         id: rpc_id.expect("RPC waiter has an ID"),
+                        request_id,
                         tx: Some(rpc_waiter),
                     });
             }
@@ -697,20 +757,35 @@ impl SerialSession {
     ) -> Result<String, SessionError> {
         let deadline = tokio::time::Instant::now() + timeout;
         let (rpc_tx, rpc_rx) = oneshot::channel();
+        let request_id = serde_json::from_str::<serde_json::Value>(
+            line.strip_prefix(REMOTE_PREFIX).unwrap_or(line),
+        )
+        .ok()
+        .and_then(|value| value.get("id").map(ToString::to_string));
 
         let data = format!("{line}\n");
         let encoded =
             base64::Engine::encode(&base64::engine::general_purpose::STANDARD, data.as_bytes());
         let msg = serde_json::to_string(&ClientMessage::Write { data: encoded })
             .expect("fbuild-python: ClientMessage::Write serialization is infallible");
-        self.send_and_await_reply_with_rpc_waiter(msg, ReplyKind::Write, timeout, Some(rpc_tx))
-            .await?;
+        self.send_and_await_reply_with_rpc_waiter(
+            msg,
+            ReplyKind::Write,
+            timeout,
+            Some((rpc_tx, request_id.clone())),
+        )
+        .await?;
 
         let remaining = deadline.saturating_duration_since(tokio::time::Instant::now());
         match tokio::time::timeout(remaining, rpc_rx).await {
             Ok(Ok(result)) => result,
             Ok(Err(_)) => Err(SessionError::Closed),
-            Err(_) => Err(SessionError::Timeout),
+            Err(_) => {
+                if let Some(id) = request_id {
+                    self.inner.abandon_rpc_id(&id);
+                }
+                Err(SessionError::Timeout)
+            }
         }
     }
 

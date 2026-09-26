@@ -338,12 +338,12 @@ impl SerialMonitor {
             }
         };
 
-        if was_connected && success {
+        if was_connected {
             if let Some(rt) = self.runtime {
                 let cfg = self.config();
                 let session = py
                     .detach(|| block_on_guarded(rt, SerialSession::connect(cfg)))?
-                    .map_err(map_err)?;
+                    .map_err(map_connect_err)?;
                 self.session = Some(session);
             }
         }

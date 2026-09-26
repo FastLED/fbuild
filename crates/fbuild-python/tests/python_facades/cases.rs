@@ -447,3 +447,36 @@ asyncio.run(main())
         );
     });
 }
+
+/// A reset request can report failure without closing the still-live serial
+/// endpoint. Both facades must restore their monitor session before returning
+/// False so callers can retry or continue reading.
+#[test]
+#[ignore = "embeds CPython; run by the python-facade CI job"]
+fn failed_reset_preserves_connected_facades() {
+    init_python();
+    let (_port, _env_guard) = start_daemon_and_set_env(DaemonKnobs::default());
+    pyo3::Python::attach(|py| {
+        run_snippet(
+            py,
+            r#"
+import asyncio, faulthandler
+faulthandler.dump_traceback_later(30, exit=True)
+from _native import SerialMonitor, AsyncSerialMonitor
+
+with SerialMonitor(port="TEST_PORT") as sync_mon:
+    assert sync_mon.reset_device(board=None) is False
+    assert sync_mon.write("still-live") > 0
+    assert sync_mon.read_lines(timeout=2.0) == ["echo:still-live"]
+
+async def check_async():
+    async with AsyncSerialMonitor(port="TEST_PORT") as mon:
+        assert await mon.reset_device(board=None) is False
+        assert await mon.write("still-live-async") > 0
+        assert await mon.read_lines(timeout=2.0) == ["echo:still-live-async"]
+
+asyncio.run(check_async())
+"#,
+        );
+    });
+}

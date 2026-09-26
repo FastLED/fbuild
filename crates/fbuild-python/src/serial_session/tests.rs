@@ -38,6 +38,8 @@ struct DaemonKnobs {
     stop_reading_after_writes: Option<usize>,
     bulk_lines_on_attach: usize,
     suppress_write_echo: bool,
+    suppress_echo_on_nth_write: Option<usize>,
+    attach_reject_message: Option<&'static str>,
 }
 
 async fn fake_daemon(listener: TcpListener, knobs: DaemonKnobs) {
@@ -60,13 +62,19 @@ async fn fake_daemon(listener: TcpListener, knobs: DaemonKnobs) {
         if !attach_seen.load(Ordering::Relaxed) {
             attach_seen.store(true, Ordering::Relaxed);
             let ack = serde_json::json!({
-                "type": "attached", "success": true, "message": "ok", "writer_pre_acquired": true
+                "type": "attached",
+                "success": knobs.attach_reject_message.is_none(),
+                "message": knobs.attach_reject_message.unwrap_or("ok"),
+                "writer_pre_acquired": true
             });
             sink.lock()
                 .await
                 .send(tungstenite::Message::Text(ack.to_string()))
                 .await
                 .unwrap();
+            if knobs.attach_reject_message.is_some() {
+                return;
+            }
             if let Some(delay) = knobs.disconnect_after {
                 let sink = Arc::clone(&sink);
                 tokio::spawn(async move {
@@ -200,7 +208,8 @@ async fn fake_daemon(listener: TcpListener, knobs: DaemonKnobs) {
                 {
                     return;
                 }
-                if knobs.suppress_write_echo {
+                if knobs.suppress_write_echo || knobs.suppress_echo_on_nth_write == Some(n as usize)
+                {
                     continue;
                 }
                 let text = String::from_utf8_lossy(&decoded).trim().to_string();
@@ -318,6 +327,37 @@ async fn at7_failed_write_ack_is_an_error_not_a_zero_byte_success() {
 }
 
 #[tokio::test]
+async fn rejected_attach_reports_daemon_reason() {
+    with_watchdog(Duration::from_secs(10), async {
+        let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let port = listener.local_addr().unwrap().port();
+        tokio::spawn(fake_daemon(
+            listener,
+            DaemonKnobs {
+                attach_reject_message: Some("port is busy"),
+                ..Default::default()
+            },
+        ));
+        let result = SerialSession::connect(SessionConfig {
+            ws_url: format!("ws://127.0.0.1:{port}"),
+            port: "COM_TEST".into(),
+            baud_rate: 115200,
+            auto_reconnect: true,
+            verbose: false,
+            client_id: "test".into(),
+            max_buffered_lines: DEFAULT_MAX_BUFFERED_LINES,
+            handshake_timeout: Duration::from_secs(5),
+        })
+        .await;
+        assert!(matches!(
+            result,
+            Err(SessionError::ConnectionFailed(message)) if message.contains("port is busy")
+        ));
+    })
+    .await;
+}
+
+#[tokio::test]
 async fn closed_session_cannot_be_revived_by_late_reconnect() {
     with_watchdog(Duration::from_secs(10), async {
         let (session, _) = connect_to(DaemonKnobs::default()).await;
@@ -325,6 +365,28 @@ async fn closed_session_cannot_be_revived_by_late_reconnect() {
         session.close().await;
         session.inner.reconnect_if_preempted();
         assert_eq!(session.inner.status(), SessionStatus::Closed);
+    })
+    .await;
+}
+
+#[tokio::test]
+async fn reconnect_discards_rpc_slots_failed_by_preemption() {
+    with_watchdog(Duration::from_secs(10), async {
+        let (session, _) = connect_to(DaemonKnobs::default()).await;
+        let (old_tx, _old_rx) = oneshot::channel();
+        session.inner.rpc_fifo.lock().unwrap().push_back(RpcEntry {
+            id: 1,
+            request_id: Some("1".to_string()),
+            tx: Some(old_tx),
+        });
+        session.inner.set_status(SessionStatus::Preempted);
+        session.inner.preempt_everyone();
+        assert_eq!(session.inner.rpc_fifo.lock().unwrap().len(), 1);
+
+        session.inner.reconnect_if_preempted();
+        assert!(session.inner.rpc_fifo.lock().unwrap().is_empty());
+        assert_eq!(session.inner.status(), SessionStatus::Active);
+        session.close().await;
     })
     .await;
 }
@@ -540,6 +602,55 @@ async fn at8_late_rpc_reply_is_not_given_to_next_request() {
             .await
             .unwrap();
         assert_eq!(second, "{\"id\":2}");
+    })
+    .await;
+}
+
+#[tokio::test]
+async fn timed_out_rpc_without_late_reply_does_not_poison_next_id() {
+    with_watchdog(Duration::from_secs(10), async {
+        let (session, _) = connect_to(DaemonKnobs {
+            suppress_echo_on_nth_write: Some(1),
+            ..Default::default()
+        })
+        .await;
+        let first = session
+            .json_rpc("REMOTE:{\"id\":1}", Duration::from_millis(50))
+            .await;
+        assert_eq!(first, Err(SessionError::Timeout));
+        let second = session
+            .json_rpc("REMOTE:{\"id\":2}", Duration::from_secs(2))
+            .await;
+        assert_eq!(second, Ok("{\"id\":2}".to_string()));
+        assert!(session.inner.rpc_fifo.lock().unwrap().is_empty());
+        session.close().await;
+    })
+    .await;
+}
+
+#[tokio::test]
+async fn rpc_ids_route_out_of_order_serial_replies() {
+    with_watchdog(Duration::from_secs(10), async {
+        let (session, _) = connect_to(DaemonKnobs::default()).await;
+        let (first_tx, first_rx) = oneshot::channel();
+        let (second_tx, second_rx) = oneshot::channel();
+        session.inner.rpc_fifo.lock().unwrap().extend([
+            RpcEntry {
+                id: 1,
+                request_id: Some("1".into()),
+                tx: Some(first_tx),
+            },
+            RpcEntry {
+                id: 2,
+                request_id: Some("2".into()),
+                tx: Some(second_tx),
+            },
+        ]);
+        session.inner.dispatch_data_line("REMOTE:{\"id\":2}".into());
+        session.inner.dispatch_data_line("REMOTE:{\"id\":1}".into());
+        assert_eq!(first_rx.await.unwrap(), Ok("{\"id\":1}".into()));
+        assert_eq!(second_rx.await.unwrap(), Ok("{\"id\":2}".into()));
+        session.close().await;
     })
     .await;
 }

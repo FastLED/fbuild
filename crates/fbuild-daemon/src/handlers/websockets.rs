@@ -121,6 +121,7 @@ const WS_ATTACH_HANDSHAKE_TIMEOUT: std::time::Duration = std::time::Duration::fr
 /// so a wedged USB driver cannot leave a pending attach counted forever. See
 /// FastLED/fbuild#977.
 const WS_SERIAL_OPEN_PORT_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(3);
+const WS_SERIAL_RECOVERY_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(30);
 
 fn format_timeout_for_error(timeout: Duration) -> String {
     let millis = timeout.as_millis();
@@ -445,68 +446,95 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                     Err(tokio::sync::broadcast::error::RecvError::Closed)
                         if was_preempted =>
                     {
-                        // Deploy closed the physical serial handle, not this
-                        // WebSocket monitor. Keep its writer task and client
-                        // socket alive, then attach a fresh broadcast receiver
-                        // after the deploy releases the port.
-                        loop {
-                            let recovered_port = ctx.serial_manager.deploy_recovery_port(&port_owned);
-                            if let Some(message) = ctx.serial_manager.deploy_recovery_failure(&port_owned) {
+                        // Keep the WebSocket alive while deploy reopens serial.
+                        let recovery = async {
+                            let overall_deadline = tokio::time::Instant::now() + Duration::from_secs(300);
+                            let mut reopen_deadline = None;
+                            loop {
+                                let recovered_port = ctx.serial_manager.deploy_recovery_port(&port_owned);
+                                if let Some(message) = ctx.serial_manager.deploy_recovery_failure(&port_owned) {
+                                    break Err(message);
+                                }
+                                if tokio::time::Instant::now() >= overall_deadline {
+                                    break Err("serial deploy recovery did not finish within 5 minutes".to_string());
+                                }
+                                if reopen_deadline.is_some_and(|deadline| tokio::time::Instant::now() >= deadline) {
+                                    break Err(format!(
+                                        "serial port did not recover within {} seconds after deploy",
+                                        WS_SERIAL_RECOVERY_TIMEOUT.as_secs()
+                                    ));
+                                }
+                                if ctx.serial_manager.is_deploy_recovery_pending(&port_owned)
+                                    || ctx.serial_manager.is_deploy_recovery_pending(&recovered_port)
+                                    || ctx.serial_manager.is_preempted(&port_owned).await
+                                    || ctx.serial_manager.is_preempted(&recovered_port).await
+                                {
+                                    tokio::time::sleep(Duration::from_millis(100)).await;
+                                    continue;
+                                }
+                                reopen_deadline.get_or_insert_with(|| {
+                                    tokio::time::Instant::now() + WS_SERIAL_RECOVERY_TIMEOUT
+                                });
+                                let opened = await_ws_serial_open_port(
+                                    &recovered_port,
+                                    ctx.serial_manager.open_port(
+                                        &recovered_port,
+                                        baud_rate,
+                                        &client_id_owned,
+                                        None,
+                                        client_metadata_owned.clone(),
+                                    ),
+                                    WS_SERIAL_OPEN_PORT_TIMEOUT,
+                                )
+                                .await;
+                                if opened.is_ok() {
+                                    if pre_acquire_writer {
+                                        let _ = ctx
+                                            .serial_manager
+                                            .acquire_writer(&port_owned, &client_id_owned)
+                                            .await;
+                                    }
+                                    if let Some(new_rx) = ctx.serial_manager.attach_reader(
+                                        &port_owned,
+                                        &client_id_owned,
+                                        client_metadata_owned.clone(),
+                                    ) {
+                                        break Ok((new_rx, recovered_port));
+                                    }
+                                }
+                                tokio::time::sleep(Duration::from_millis(250)).await;
+                            }
+                        };
+                        tokio::pin!(recovery);
+                        // Keep serving control RPCs while the old receiver is closed.
+                        let result = loop {
+                            tokio::select! {
+                                result = &mut recovery => break result,
+                                control_opt = control_rx.recv() => {
+                                    let Some(cmd) = control_opt else { return };
+                                    let reply = match cmd {
+                                        ReaderControl::Drain { reply } | ReaderControl::GetDepth { reply } => reply,
+                                    };
+                                    let _ = reply.send(0);
+                                }
+                            }
+                        };
+                        match result {
+                            Ok((new_rx, recovered_port)) => {
+                                rx = new_rx;
+                                was_preempted = false;
+                                let _ = out_tx_reader.send(SerialServerMessage::Reconnected {
+                                    message: format!("reattached to {recovered_port}"),
+                                });
+                            }
+                            Err(message) => {
                                 let _ = out_tx_reader.send(SerialServerMessage::PortDisconnected {
                                     port: port_owned.clone(),
                                     reason: "deploy_recovery_failed".to_string(),
                                     message,
                                 });
-                                // The writer closes the socket after forwarding
-                                // this terminal event; handle_serial_ws then
-                                // aborts this reader and cleans up the attach.
                                 std::future::pending::<()>().await;
                             }
-                            if ctx.serial_manager.is_deploy_recovery_pending(&port_owned)
-                                || ctx.serial_manager.is_deploy_recovery_pending(&recovered_port)
-                            {
-                                tokio::time::sleep(Duration::from_millis(100)).await;
-                                continue;
-                            }
-                            if ctx.serial_manager.is_preempted(&port_owned).await
-                                || ctx.serial_manager.is_preempted(&recovered_port).await
-                            {
-                                tokio::time::sleep(Duration::from_millis(100)).await;
-                                continue;
-                            }
-                            let opened = await_ws_serial_open_port(
-                                &recovered_port,
-                                ctx.serial_manager.open_port(
-                                    &recovered_port,
-                                    baud_rate,
-                                    &client_id_owned,
-                                    None,
-                                    client_metadata_owned.clone(),
-                                ),
-                                WS_SERIAL_OPEN_PORT_TIMEOUT,
-                            )
-                            .await;
-                            if opened.is_ok() {
-                                if pre_acquire_writer {
-                                    let _ = ctx
-                                        .serial_manager
-                                        .acquire_writer(&port_owned, &client_id_owned)
-                                        .await;
-                                }
-                                if let Some(new_rx) = ctx.serial_manager.attach_reader(
-                                    &port_owned,
-                                    &client_id_owned,
-                                    client_metadata_owned.clone(),
-                                ) {
-                                    rx = new_rx;
-                                    was_preempted = false;
-                                    let _ = out_tx_reader.send(SerialServerMessage::Reconnected {
-                                        message: format!("reattached to {recovered_port}"),
-                                    });
-                                    break;
-                                }
-                            }
-                            tokio::time::sleep(Duration::from_millis(250)).await;
                         }
                     }
                     Err(tokio::sync::broadcast::error::RecvError::Closed) => break,
