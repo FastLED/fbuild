@@ -25,7 +25,8 @@ impl crate::PlatformSupport for AvrPlatformSupport {
     ) -> fbuild_core::Result<Vec<crate::provision::ProvisionedPackage>> {
         use crate::provision::{PackageKind, provision_package};
         let (toolchain, framework) =
-            orchestrator::avr_packages(inputs.project_dir, Some(inputs.env_config), inputs.board)?;
+            orchestrator::avr_packages(inputs.project_dir, Some(inputs.env_config), inputs.board)
+                .await?;
         Ok(vec![
             provision_package(PackageKind::Toolchain, &toolchain, mode).await,
             provision_package(PackageKind::Framework, &framework, mode).await,

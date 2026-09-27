@@ -318,7 +318,6 @@ fn teensy_51_manifest_honors_explicit_framework_pin_offline() {
         Some("~1.110301.0")
     );
 }
-
 #[test]
 fn stm32_20_arduino_board_requirements_select_published_payloads_offline() {
     let platform = parse_package_spec("platformio/ststm32@20.0.0").unwrap();

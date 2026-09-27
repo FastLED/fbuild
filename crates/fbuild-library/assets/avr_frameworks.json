@@ -52,6 +52,42 @@
       "validation_path": "cores/MCUdude_corefiles/Arduino.h",
       "core_dir": "MCUdude_corefiles"
     },
+    "MajorCore": {
+      "name": "majorcore",
+      "github": "MCUdude/MajorCore",
+      "url": "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-avr-majorcore/3.1.0/framework-arduino-avr-majorcore-3.1.0.tar.gz",
+      "version": "3.1.0",
+      "tag_prefix": "v",
+      "checksum": "99b606a1ef59ee3c8caed7c7a3778875a22b0af6fdfcc7f21890b2caeca662e6",
+      "validation_path": "cores/MajorCore/Arduino.h"
+    },
+    "MegaCore": {
+      "name": "megacore",
+      "github": "MCUdude/MegaCore",
+      "url": "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-avr-megacore/3.1.0/framework-arduino-avr-megacore-3.1.0.tar.gz",
+      "version": "3.1.0",
+      "tag_prefix": "v",
+      "checksum": "b2daa8f3432141ce21557b419b91605275b9e5fdb5f49eb8b1d3aaca5ff256ed",
+      "validation_path": "cores/MegaCore/Arduino.h"
+    },
+    "MicroCore": {
+      "name": "microcore",
+      "github": "MCUdude/MicroCore",
+      "url": "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-avr-microcore/2.5.2/framework-arduino-avr-microcore-2.5.2.tar.gz",
+      "version": "2.5.2",
+      "tag_prefix": "v",
+      "checksum": "9fd6d1074fac692e15e1f4cbfc7c7b0df7bfedcddfafccb39889c622b97ddc11",
+      "validation_path": "cores/MicroCore/Arduino.h"
+    },
+    "MightyCore": {
+      "name": "mightycore",
+      "github": "MCUdude/MightyCore",
+      "url": "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-avr-mightycore/3.1.0/framework-arduino-avr-mightycore-3.1.0.tar.gz",
+      "version": "3.1.0",
+      "tag_prefix": "v",
+      "checksum": "adba55b2b6254974cce65a63ecb75c3407ac7140b095c32e930394f27d18030b",
+      "validation_path": "cores/MightyCore/Arduino.h"
+    },
     "megatinycore": {
       "name": "megatinycore",
       "github": "SpenceKonde/megaTinyCore",
@@ -79,6 +115,15 @@
       "validation_path": "cores/arduino/Arduino.h",
       "core_dir": "arduino",
       "needs_arduino_api": true
+    },
+    "dxcore": {
+      "name": "dxcore",
+      "github": "SpenceKonde/DxCore",
+      "url": "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-megaavr-dxcore/1.6.2/framework-arduino-megaavr-dxcore-1.6.2.tar.gz",
+      "version": "1.6.2",
+      "tag_prefix": "",
+      "checksum": "72a8cdff1dba8da9f7cabb18db0e8e9ef5f412bc68bb269e72cfa5ad1ab9f911",
+      "validation_path": "cores/dxcore/Arduino.h"
     }
   }
 }

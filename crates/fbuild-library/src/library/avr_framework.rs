@@ -17,6 +17,7 @@ const AVR_FRAMEWORKS_JSON: &str = include_str!("../../assets/avr_frameworks.json
 struct FrameworkEntry {
     name: String,
     github: String,
+    url: Option<String>,
     version: String,
     tag_prefix: String,
     checksum: Option<String>,
@@ -43,6 +44,7 @@ fn load_registry() -> HashMap<String, FrameworkEntry> {
     for (core_name, entry) in frameworks {
         let name = entry["name"].as_str().unwrap_or("").to_string();
         let github = entry["github"].as_str().unwrap_or("").to_string();
+        let url = entry["url"].as_str().map(str::to_string);
         let version = entry["version"].as_str().unwrap_or("").to_string();
         let tag_prefix = entry["tag_prefix"].as_str().unwrap_or("").to_string();
         let checksum = entry["checksum"].as_str().map(|s| s.to_string());
@@ -55,6 +57,7 @@ fn load_registry() -> HashMap<String, FrameworkEntry> {
             FrameworkEntry {
                 name,
                 github,
+                url,
                 version,
                 tag_prefix,
                 checksum,
@@ -79,6 +82,15 @@ fn lookup_entry(core_name: &str) -> fbuild_core::Result<FrameworkEntry> {
     })
 }
 
+fn framework_url(entry: &FrameworkEntry) -> String {
+    entry.url.clone().unwrap_or_else(|| {
+        format!(
+            "https://github.com/{}/archive/refs/tags/{}{}.tar.gz",
+            entry.github, entry.tag_prefix, entry.version
+        )
+    })
+}
+
 /// Data-driven AVR framework manager.
 ///
 /// Resolves the correct Arduino framework for any AVR board core
@@ -100,10 +112,7 @@ impl AvrFramework {
     /// The core name comes from the board JSON (e.g., "arduino", "tiny", "tinymodern").
     pub fn for_core(core_name: &str, project_dir: &Path) -> fbuild_core::Result<Self> {
         let entry = lookup_entry(core_name)?;
-        let url = format!(
-            "https://github.com/{}/archive/refs/tags/{}{}.tar.gz",
-            entry.github, entry.tag_prefix, entry.version
-        );
+        let url = framework_url(&entry);
 
         Ok(Self {
             base: PackageBase::new(
@@ -139,10 +148,23 @@ impl AvrFramework {
         ovr: fbuild_config::PackageOverride,
     ) -> fbuild_core::Result<Self> {
         let entry = lookup_entry(core_name)?;
-        let url = format!(
-            "https://github.com/{}/archive/refs/tags/{}{}.tar.gz",
-            entry.github, entry.tag_prefix, entry.version
-        );
+        let url = framework_url(&entry);
+        // PlatformIO repacks MiniCore with `cores/MiniCore`, while its
+        // upstream GitHub tag uses `cores/MCUdude_corefiles`. Preserve the
+        // GitHub/URL-override layout unless the resolved payload is the
+        // PlatformIO package archive.
+        let platformio_minicore =
+            core_name == "MiniCore" && ovr.url.contains("/tool/framework-arduino-avr-minicore/");
+        let validation_path = if platformio_minicore {
+            "cores/MiniCore/Arduino.h".to_string()
+        } else {
+            entry.validation_path
+        };
+        let core_dir_override = if platformio_minicore {
+            Some("MiniCore".to_string())
+        } else {
+            entry.core_dir
+        };
 
         Ok(Self {
             base: PackageBase::new(
@@ -156,8 +178,8 @@ impl AvrFramework {
             )
             .with_override(ovr),
             core_name: core_name.to_string(),
-            validation_path: entry.validation_path,
-            core_dir_override: entry.core_dir,
+            validation_path,
+            core_dir_override,
             needs_arduino_api: entry.needs_arduino_api,
         })
     }
@@ -404,6 +426,22 @@ mod tests {
     }
 
     #[test]
+    fn published_alternate_core_defaults_have_verified_archives() {
+        for (core, version) in [
+            ("MajorCore", "3.1.0"),
+            ("MegaCore", "3.1.0"),
+            ("MicroCore", "2.5.2"),
+            ("MightyCore", "3.1.0"),
+            ("dxcore", "1.6.2"),
+        ] {
+            let entry = lookup_entry(core).unwrap();
+            assert_eq!(entry.version, version, "{core}");
+            assert!(framework_url(&entry).starts_with("https://dl.registry.platformio.org/"));
+            assert_eq!(entry.checksum.as_ref().map(String::len), Some(64));
+        }
+    }
+
+    #[test]
     fn test_digispark_dtiny_registered() {
         let registry = load_registry();
         assert!(
@@ -428,33 +466,48 @@ mod tests {
         assert_eq!(entry.core_dir.as_deref(), Some("pro"));
     }
 
-    /// Tripwire: `MicroCore` (MCUdude/MicroCore, used by `attiny13` /
-    /// `attiny13a` board JSONs) is not yet wired into `avr_frameworks.json`.
-    /// Source issue FastLED/FastLED#581, tracker FastLED/fbuild#389. When
-    /// MicroCore lands in the registry, flip this assertion to
-    /// `is_ok()` and update the gap tracker in
-    /// `tests/platform/attiny13/README.md`.
+    /// MicroCore is used by the ATtiny13 board family (FastLED/fbuild#389).
     #[test]
-    fn test_microcore_gap_tracked() {
+    fn test_microcore_framework_registered() {
+        let entry = lookup_entry("MicroCore").unwrap();
+        assert_eq!(entry.validation_path, "cores/MicroCore/Arduino.h");
+        assert!(entry.checksum.is_some());
+    }
+
+    #[test]
+    fn platformio_minicore_uses_repacked_core_directory() {
+        let project = tempfile::tempdir().unwrap();
+        let registry = AvrFramework::for_core_with_override(
+            "MiniCore",
+            project.path(),
+            fbuild_config::PackageOverride {
+                url: "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-avr-minicore/3.1.2/framework-arduino-avr-minicore-3.1.2.tar.gz".to_string(),
+                version: "3.1.2".to_string(),
+                checksum: None,
+            },
+        )
+        .unwrap();
+        assert_eq!(registry.validation_path, "cores/MiniCore/Arduino.h");
         assert!(
-            lookup_entry("MicroCore").is_err(),
-            "MicroCore lookup unexpectedly succeeded — see FastLED/fbuild#389; \
-             update test_microcore_gap_tracked and tests/platform/attiny13/README.md"
+            registry
+                .get_core_dir("MiniCore")
+                .ends_with("cores/MiniCore")
+        );
+
+        let github = AvrFramework::for_core("MiniCore", project.path()).unwrap();
+        assert_eq!(github.validation_path, "cores/MCUdude_corefiles/Arduino.h");
+        assert!(
+            github
+                .get_core_dir("MiniCore")
+                .ends_with("cores/MCUdude_corefiles")
         );
     }
 
-    /// Tripwire: `dxcore` (SpenceKonde/DxCore, used by the AVR-Dx family —
-    /// `AVR128DA*`, `AVR128DB*`, `AVR64DA*`, `AVR64DB*`, `AVR64DD*`,
-    /// `AVR32DA*`, `AVR32DB*`) is not yet wired into `avr_frameworks.json`.
-    /// Source issue FastLED/FastLED#1307, tracker FastLED/fbuild#389. When
-    /// DxCore lands in the registry, flip this assertion to `is_ok()` and
-    /// update the gap tracker in `tests/platform/avr128da64/README.md`.
+    /// DxCore is used by the AVR-Dx family (FastLED/fbuild#389).
     #[test]
-    fn test_dxcore_gap_tracked() {
-        assert!(
-            lookup_entry("dxcore").is_err(),
-            "dxcore lookup unexpectedly succeeded — see FastLED/fbuild#389; \
-             update test_dxcore_gap_tracked and tests/platform/avr128da64/README.md"
-        );
+    fn test_dxcore_framework_registered() {
+        let entry = lookup_entry("dxcore").unwrap();
+        assert_eq!(entry.validation_path, "cores/dxcore/Arduino.h");
+        assert!(entry.checksum.is_some());
     }
 }

@@ -186,6 +186,10 @@ impl BuildContext {
                 Some(fbuild_core::Platform::RaspberryPi) => {
                     Some(fbuild_core::Platform::RaspberryPi)
                 }
+                Some(fbuild_core::Platform::AtmelAvr) => Some(fbuild_core::Platform::AtmelAvr),
+                Some(fbuild_core::Platform::AtmelMegaAvr) => {
+                    Some(fbuild_core::Platform::AtmelMegaAvr)
+                }
                 _ => None,
             };
             let resolved_packages: &[&str] = match resolved_platform {
@@ -230,6 +234,29 @@ impl BuildContext {
                     "framework-arduinopico",
                     "toolchain-rp2040-earlephilhower",
                     "tool-picotool-rp2040-earlephilhower",
+                ],
+                Some(fbuild_core::Platform::AtmelAvr) => &[
+                    "framework-arduino-avr",
+                    "framework-arduino-avr-attiny",
+                    "framework-arduino-avr-digistump",
+                    "framework-arduino-avr-minicore",
+                    "framework-arduino-avr-majorcore",
+                    "framework-arduino-avr-megacore",
+                    "framework-arduino-avr-microcore",
+                    "framework-arduino-avr-mightycore",
+                    "framework-arduino-avr-bean",
+                    "framework-arduino-avr-dwenguino",
+                    "framework-arduino-avr-nicai",
+                    "framework-arduino-avr-panstamp",
+                    "framework-arduino-avr-prusa_rambo",
+                    "toolchain-atmelavr",
+                ],
+                Some(fbuild_core::Platform::AtmelMegaAvr) => &[
+                    "framework-arduino-megaavr",
+                    "framework-arduino-megaavr-megacorex",
+                    "framework-arduino-megaavr-megatinycore",
+                    "framework-arduino-megaavr-dxcore",
+                    "toolchain-atmelavr",
                 ],
                 _ => &[],
             };
