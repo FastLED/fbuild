@@ -83,7 +83,7 @@ impl BuildOrchestrator for Ch32vOrchestrator {
 
         // 3-4. RISC-V GCC toolchain and OpenWCH CH32V cores
         let (toolchain, framework, selected_board, platform_resolution) =
-            ch32v_packages(&params.project_dir, env_config, &ctx.board.core).await?;
+            ch32v_packages(&params.project_dir, env_config, &ctx.board.core, false).await?;
         use fbuild_packages::Package as _;
         let toolchain_info = toolchain.get_info();
         let framework_info = framework.get_info();
@@ -495,6 +495,7 @@ pub(crate) async fn ch32v_packages(
     project_dir: &Path,
     env_config: Option<&std::collections::HashMap<String, String>>,
     board_core: &str,
+    refresh: bool,
 ) -> fbuild_core::Result<(
     fbuild_packages::toolchain::RiscvToolchain,
     fbuild_packages::library::Ch32vCores,
@@ -506,8 +507,13 @@ pub(crate) async fn ch32v_packages(
             .get("board_build.core")
             .map(String::as_str)
             .unwrap_or(board_core);
-        if let Some(packages) =
-            super::platform_source::resolve_source_packages(project_dir, env, selected_core).await?
+        if let Some(packages) = super::platform_source::resolve_source_packages(
+            project_dir,
+            env,
+            selected_core,
+            refresh,
+        )
+        .await?
         {
             return Ok((packages.0, packages.1, Some(packages.2), Some(packages.3)));
         }

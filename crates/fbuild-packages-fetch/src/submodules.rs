@@ -160,7 +160,9 @@ pub struct SubmodulePlan {
 
 impl SubmodulePlan {
     fn is_empty(&self) -> bool {
-        self.sources.is_empty() && self.expected_empty.is_empty() && !self.github_gitlinks
+        // Dynamic gitlink resolution is optional when the archive declares
+        // no submodules; only explicit entries imply a stale plan.
+        self.sources.is_empty() && self.expected_empty.is_empty()
     }
 }
 
@@ -269,7 +271,9 @@ async fn github_submodule_sources(
     declared: &[String],
 ) -> fbuild_core::Result<Vec<SubmoduleSource>> {
     let (owner, repo, commit) = github_archive_identity(parent_archive)?;
-    let checkout = tempfile::TempDir::new().map_err(package_error)?;
+    let checkout =
+        tempfile::TempDir::new_in(fbuild_paths::temp_subdir("platformio-gitlink-resolve"))
+            .map_err(package_error)?;
     let git_dir = checkout
         .path()
         .to_str()
@@ -328,7 +332,7 @@ async fn github_submodule_sources(
     Ok(sources)
 }
 
-fn checked_submodule_dest(root: &Path, path: &str) -> fbuild_core::Result<std::path::PathBuf> {
+fn checked_submodule_dest(root: &Path, path: &str) -> fbuild_core::Result<NormalizedPath> {
     if path.starts_with('/')
         || path
             .split('/')
@@ -337,9 +341,10 @@ fn checked_submodule_dest(root: &Path, path: &str) -> fbuild_core::Result<std::p
     {
         return Err(package_error(format!("unsafe submodule path `{path}`")));
     }
-    let canonical_root = root.canonicalize().map_err(package_error)?;
-    let canonical_dest = root.join(path).canonicalize().map_err(package_error)?;
-    if !canonical_dest.starts_with(&canonical_root) {
+    let canonical_root = NormalizedPath::from(root.canonicalize().map_err(package_error)?);
+    let canonical_dest =
+        NormalizedPath::from(root.join(path).canonicalize().map_err(package_error)?);
+    if canonical_dest.relative_to(&canonical_root).is_none() {
         return Err(package_error(format!(
             "submodule `{path}` escapes the extracted package"
         )));
@@ -348,22 +353,23 @@ fn checked_submodule_dest(root: &Path, path: &str) -> fbuild_core::Result<std::p
 }
 
 async fn git_command<const N: usize>(args: [&str; N]) -> fbuild_core::Result<String> {
-    // Git avoids GitHub REST API quota for PlatformIO's VCS dependencies.
-    // allow-direct-spawn: resolve immutable gitlinks with Git, without a shell.
-    let mut command = tokio::process::Command::new("git");
-    command.args(args).kill_on_drop(true);
-    let output = tokio::time::timeout(std::time::Duration::from_secs(60), command.output())
-        .await
-        .map_err(|_| package_error("timed out resolving GitHub submodule gitlink"))?
-        .map_err(package_error)?;
-    if !output.status.success() {
+    let mut command = vec!["git"];
+    command.extend(args);
+    let output = fbuild_core::subprocess::run_command(
+        &command,
+        None,
+        None,
+        Some(std::time::Duration::from_secs(60)),
+    )
+    .await?;
+    if !output.success() {
         return Err(package_error(format!(
             "git exited {}: {}",
-            output.status,
-            String::from_utf8_lossy(&output.stderr).trim()
+            output.exit_code,
+            output.stderr.trim()
         )));
     }
-    String::from_utf8(output.stdout).map_err(package_error)
+    Ok(output.stdout)
 }
 
 fn github_archive_identity(url: &str) -> fbuild_core::Result<(String, String, String)> {
@@ -624,7 +630,7 @@ mod tests {
         std::fs::create_dir(root.path().join("safe")).unwrap();
         assert_eq!(
             checked_submodule_dest(root.path(), "safe").unwrap(),
-            root.path().join("safe").canonicalize().unwrap()
+            NormalizedPath::from(root.path().join("safe").canonicalize().unwrap())
         );
         for path in ["../escape", "/escape", "safe/../escape", "safe\\escape"] {
             assert!(checked_submodule_dest(root.path(), path).is_err(), "{path}");
@@ -730,6 +736,24 @@ mod tests {
         let tmp = tempfile::TempDir::new().unwrap();
         write(tmp.path(), "cores/arduino/main.cpp", "int main(){}");
         assert!(find_empty_submodules(tmp.path()).is_empty());
+    }
+
+    #[tokio::test]
+    async fn dynamic_gitlinks_allow_an_archive_without_gitmodules() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        write(tmp.path(), "cores/arduino/main.cpp", "int main(){}");
+        let plan = SubmodulePlan {
+            github_gitlinks: true,
+            ..SubmodulePlan::default()
+        };
+        prepare_submodules(
+            "core",
+            "https://example.invalid/core.tar.gz",
+            tmp.path(),
+            &plan,
+        )
+        .await
+        .unwrap();
     }
 
     /// A declared submodule whose directory is missing entirely is a

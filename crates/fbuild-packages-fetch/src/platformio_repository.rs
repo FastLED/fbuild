@@ -3,6 +3,8 @@
 use fbuild_config::PackageOverride;
 use fbuild_core::platformio_package::{PackageLock, PackageSource};
 use sha2::{Digest, Sha256};
+use std::io::Write;
+use std::path::Path;
 use std::time::Duration;
 use tokio::io::AsyncReadExt;
 
@@ -18,6 +20,8 @@ pub enum RepositoryError {
     InvalidCommit(String),
     #[error("PlatformIO archive resolution failed: {0}")]
     Archive(String),
+    #[error("PlatformIO source lock storage failed: {0}")]
+    Storage(String),
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -32,6 +36,116 @@ pub struct ResolvedArchive {
     pub archive: PackageOverride,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ResolvedSource {
+    pub lock: PackageLock,
+    pub archive: PackageOverride,
+}
+
+/// Reuse a previously resolved source identity for ordinary builds. Explicit
+/// install refreshes it; a changed request receives a different cache key.
+/// This keeps warm/offline builds from fetching mutable archives or running
+/// `git ls-remote` before their firmware fast-path check.
+pub async fn resolve_cached_source(
+    source: &PackageSource,
+    cache_root: &Path,
+    refresh: bool,
+) -> Result<ResolvedSource, RepositoryError> {
+    if !matches!(
+        source,
+        PackageSource::Repository { .. } | PackageSource::Archive { .. }
+    ) {
+        return Err(RepositoryError::UnsupportedUrl(format!("{source:?}")));
+    }
+    let request =
+        serde_json::to_vec(source).map_err(|error| RepositoryError::Storage(error.to_string()))?;
+    let key = format!("{:x}", Sha256::digest(request));
+    let directory = cache_root.join("platformio-source-locks");
+    let path = directory.join(format!("{key}.json"));
+    if !refresh {
+        match std::fs::read(&path) {
+            Ok(bytes) => {
+                let lock: PackageLock = serde_json::from_slice(&bytes)
+                    .map_err(|error| RepositoryError::Storage(error.to_string()))?;
+                return source_from_lock(source, lock);
+            }
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
+            Err(error) => return Err(RepositoryError::Storage(error.to_string())),
+        }
+    }
+    let resolved = match source {
+        PackageSource::Repository { .. } => {
+            let result = resolve_github_repository(source).await?;
+            ResolvedSource {
+                lock: result.lock,
+                archive: result.archive,
+            }
+        }
+        PackageSource::Archive { url, revision } => {
+            let result = resolve_archive_source(url, revision.as_deref()).await?;
+            ResolvedSource {
+                lock: result.lock,
+                archive: result.archive,
+            }
+        }
+        _ => unreachable!("source kind checked above"),
+    };
+    std::fs::create_dir_all(&directory)
+        .map_err(|error| RepositoryError::Storage(error.to_string()))?;
+    let mut staged = tempfile::NamedTempFile::new_in(&directory)
+        .map_err(|error| RepositoryError::Storage(error.to_string()))?;
+    staged
+        .write_all(
+            &serde_json::to_vec(&resolved.lock)
+                .map_err(|error| RepositoryError::Storage(error.to_string()))?,
+        )
+        .map_err(|error| RepositoryError::Storage(error.to_string()))?;
+    staged
+        .persist(&path)
+        .map_err(|error| RepositoryError::Storage(error.error.to_string()))?;
+    Ok(resolved)
+}
+
+fn source_from_lock(
+    source: &PackageSource,
+    lock: PackageLock,
+) -> Result<ResolvedSource, RepositoryError> {
+    let archive = match (source, &lock) {
+        (
+            PackageSource::Repository { url, .. },
+            PackageLock::Repository {
+                url: locked_url,
+                commit,
+            },
+        ) if url == locked_url && is_full_sha(commit) => {
+            let (owner, repo) = github_owner_repo(url)?;
+            github_archive(url, &owner, &repo, commit).archive
+        }
+        (
+            PackageSource::Archive { url, revision },
+            PackageLock::Archive {
+                url: locked_url,
+                sha256,
+            },
+        ) if url == locked_url
+            && sha256.len() == 64
+            && sha256.bytes().all(|byte| byte.is_ascii_hexdigit()) =>
+        {
+            PackageOverride {
+                url: url.clone(),
+                version: revision.clone().unwrap_or_else(|| "archive".into()),
+                checksum: Some(sha256.clone()),
+            }
+        }
+        _ => {
+            return Err(RepositoryError::Storage(
+                "cached source lock does not match request".into(),
+            ));
+        }
+    };
+    Ok(ResolvedSource { lock, archive })
+}
+
 /// Fetch a mutable archive URL to establish its content identity before it
 /// becomes a package-cache key. The later staged install verifies this digest,
 /// so a server changing between resolution and installation fails closed.
@@ -39,8 +153,8 @@ pub async fn resolve_archive_source(
     url: &str,
     revision: Option<&str>,
 ) -> Result<ResolvedArchive, RepositoryError> {
-    let temp =
-        tempfile::TempDir::new().map_err(|error| RepositoryError::Archive(error.to_string()))?;
+    let temp = tempfile::TempDir::new_in(fbuild_paths::temp_subdir("platformio-archive-resolve"))
+        .map_err(|error| RepositoryError::Archive(error.to_string()))?;
     let path = crate::downloader::download_file(url, temp.path())
         .await
         .map_err(|error| RepositoryError::Archive(error.to_string()))?;
@@ -91,23 +205,16 @@ pub async fn resolve_github_repository(
         reference.to_ascii_lowercase()
     } else {
         let candidates = candidate_refs(reference);
-        // allow-direct-spawn: PlatformIO VCS package ref lookup, no shell.
-        let mut command = tokio::process::Command::new("git");
-        command
-            .args(["ls-remote", url])
-            .args(&candidates)
-            .kill_on_drop(true);
-        let output = tokio::time::timeout(Duration::from_secs(30), command.output())
-            .await
-            .map_err(|_| RepositoryError::Git(format!("timed out resolving {reference}")))?
-            .map_err(|error| RepositoryError::Git(error.to_string()))?;
-        if !output.status.success() {
-            return Err(RepositoryError::Git(
-                String::from_utf8_lossy(&output.stderr).trim().to_string(),
-            ));
+        let mut args = vec!["git", "ls-remote", url];
+        args.extend(candidates.iter().map(String::as_str));
+        let output =
+            fbuild_core::subprocess::run_command(&args, None, None, Some(Duration::from_secs(30)))
+                .await
+                .map_err(|error| RepositoryError::Git(error.to_string()))?;
+        if !output.success() {
+            return Err(RepositoryError::Git(output.stderr.trim().to_string()));
         }
-        let stdout = String::from_utf8_lossy(&output.stdout);
-        let commit = select_remote_commit(&stdout, &candidates)
+        let commit = select_remote_commit(&output.stdout, &candidates)
             .ok_or_else(|| RepositoryError::InvalidRef(reference.into()))?;
         if !is_full_sha(commit) {
             return Err(RepositoryError::InvalidCommit(commit.into()));
@@ -239,6 +346,44 @@ mod tests {
         assert_eq!(first.archive.version, second.archive.version);
         assert_ne!(first.archive.checksum, second.archive.checksum);
         assert_ne!(first.lock.cache_identity(), second.lock.cache_identity());
+    }
+
+    #[tokio::test]
+    async fn cached_archive_lock_supports_offline_rebuild_and_explicit_refresh() {
+        let bytes = std::sync::Arc::new(tokio::sync::RwLock::new(b"first archive".to_vec()));
+        let served = bytes.clone();
+        let app = axum::Router::new().route(
+            "/platform.tar.gz",
+            axum::routing::get(move || {
+                let served = served.clone();
+                async move { axum::body::Bytes::from(served.read().await.clone()) }
+            }),
+        );
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let url = format!("http://{}/platform.tar.gz", listener.local_addr().unwrap());
+        let server = tokio::spawn(async move { axum::serve(listener, app).await.unwrap() });
+        let source = PackageSource::Archive {
+            url,
+            revision: Some("test-revision".into()),
+        };
+        let cache = tempfile::TempDir::new().unwrap();
+        let first = resolve_cached_source(&source, cache.path(), false)
+            .await
+            .unwrap();
+        *bytes.write().await = b"second archive".to_vec();
+        let warm = resolve_cached_source(&source, cache.path(), false)
+            .await
+            .unwrap();
+        assert_eq!(first, warm, "warm builds must keep the locked payload");
+        let refreshed = resolve_cached_source(&source, cache.path(), true)
+            .await
+            .unwrap();
+        assert_ne!(first.lock, refreshed.lock);
+        server.abort();
+        let offline = resolve_cached_source(&source, cache.path(), false)
+            .await
+            .unwrap();
+        assert_eq!(offline, refreshed, "cached rebuild must work offline");
     }
 
     #[tokio::test]

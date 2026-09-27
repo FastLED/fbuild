@@ -1,9 +1,10 @@
 //! Select the packages described by a CH32V PlatformIO source checkout.
 
 use std::collections::HashMap;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 use fbuild_config::PackageOverride;
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::platformio_package::{
     PackageKind, PackageRequirement, PackageSource, PackageSpec, parse_package_spec,
     require_platform_package, resolve_platform_requirements,
@@ -32,6 +33,7 @@ pub(crate) async fn resolve_source_packages(
     project_dir: &Path,
     env: &HashMap<String, String>,
     board_core: &str,
+    refresh: bool,
 ) -> fbuild_core::Result<
     Option<(
         fbuild_packages::toolchain::RiscvToolchain,
@@ -64,18 +66,12 @@ pub(crate) async fn resolve_source_packages(
                 payload.cache_identity(),
             )
         }
-        PackageSource::Repository { .. } => {
-            let resolved =
-                fbuild_packages::platformio_repository::resolve_github_repository(&platform.source)
-                    .await
-                    .map_err(package_error)?;
-            let identity = resolved.lock.cache_identity();
-            (resolved.archive, identity)
-        }
-        PackageSource::Archive { url, revision } => {
-            let resolved = fbuild_packages::platformio_repository::resolve_archive_source(
-                url,
-                revision.as_deref(),
+        PackageSource::Repository { .. } | PackageSource::Archive { .. } => {
+            let cache_root = fbuild_packages::Cache::new(project_dir).platforms_dir();
+            let resolved = fbuild_packages::platformio_repository::resolve_cached_source(
+                &platform.source,
+                &cache_root,
+                refresh,
             )
             .await
             .map_err(package_error)?;
@@ -160,6 +156,7 @@ pub(crate) async fn resolve_source_packages(
         &selected.toolchain.spec,
         PackageKind::Tool,
         host,
+        refresh,
     )
     .await?;
     let framework_override = package_override_for_spec(
@@ -167,6 +164,7 @@ pub(crate) async fn resolve_source_packages(
         &selected.framework.spec,
         PackageKind::Framework,
         host,
+        refresh,
     )
     .await?;
     tracing::info!(
@@ -267,13 +265,13 @@ fn is_legacy_default(registry: &fbuild_core::platformio_package::RegistrySpec) -
         && registry.name == "ch32v"
 }
 
-fn find_platform_manifest(root: &Path) -> Option<PathBuf> {
+fn find_platform_manifest(root: &Path) -> Option<NormalizedPath> {
     walkdir::WalkDir::new(root)
         .max_depth(3)
         .into_iter()
         .filter_map(Result::ok)
         .find(|entry| entry.file_type().is_file() && entry.file_name() == "platform.json")
-        .map(|entry| entry.path().to_path_buf())
+        .map(|entry| NormalizedPath::from(entry.path()))
 }
 
 fn parse_explicit_packages(env: &HashMap<String, String>) -> fbuild_core::Result<Vec<PackageSpec>> {
@@ -291,6 +289,7 @@ async fn package_override_for_spec(
     spec: &PackageSpec,
     kind: PackageKind,
     host: &str,
+    refresh: bool,
 ) -> fbuild_core::Result<PackageOverride> {
     match &spec.source {
         PackageSource::Registry(registry) => {
@@ -306,21 +305,19 @@ async fn package_override_for_spec(
                 checksum: Some(payload.sha256),
             })
         }
-        PackageSource::Repository { .. } => Ok(
-            fbuild_packages::platformio_repository::resolve_github_repository(&spec.source)
+        PackageSource::Repository { .. } | PackageSource::Archive { .. } => {
+            let cache_root = fbuild_packages::Cache::new(project_dir).platforms_dir();
+            Ok(
+                fbuild_packages::platformio_repository::resolve_cached_source(
+                    &spec.source,
+                    &cache_root,
+                    refresh,
+                )
                 .await
                 .map_err(package_error)?
                 .archive,
-        ),
-        PackageSource::Archive { url, revision } => Ok(
-            fbuild_packages::platformio_repository::resolve_archive_source(
-                url,
-                revision.as_deref(),
             )
-            .await
-            .map_err(package_error)?
-            .archive,
-        ),
+        }
         PackageSource::LocalPath { .. } => Err(package_error(
             "local CH32V package directories are not supported by the native adapter",
         )),
@@ -640,7 +637,7 @@ mod tests {
             "https://github.com/Community-PIO-CH32V/platform-ch32v.git#b7397c29a71101175bfc94f6ab06f9daac336458".to_string(),
         ), ("board".to_string(), "genericCH32V003F4P6".to_string())]);
         let (toolchain, framework, board_isa, platform_resolution) =
-            resolve_source_packages(project.path(), &env, "openwch")
+            resolve_source_packages(project.path(), &env, "openwch", false)
                 .await
                 .unwrap()
                 .unwrap();
@@ -660,12 +657,17 @@ mod tests {
         assert!(toolchain_root.is_dir());
         assert!(framework_root.is_dir());
         assert!(toolchain.get_gcc_path().is_file());
-        // allow-direct-spawn: integration test probes the selected compiler binary.
-        let version = std::process::Command::new(toolchain.get_gcc_path())
-            .arg("--version")
-            .output()
-            .unwrap();
-        assert!(version.status.success());
-        assert!(String::from_utf8_lossy(&version.stdout).contains("8.2.0"));
+        let gcc = toolchain.get_gcc_path();
+        let gcc = gcc.to_str().expect("compiler path is UTF-8");
+        let version = fbuild_core::subprocess::run_command(
+            &[gcc, "--version"],
+            None,
+            None,
+            Some(std::time::Duration::from_secs(10)),
+        )
+        .await
+        .unwrap();
+        assert!(version.success());
+        assert!(version.stdout.contains("8.2.0"));
     }
 }

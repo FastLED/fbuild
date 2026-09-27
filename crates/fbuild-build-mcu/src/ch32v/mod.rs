@@ -33,6 +33,7 @@ impl crate::PlatformSupport for Ch32vPlatformSupport {
             inputs.project_dir,
             Some(inputs.env_config),
             &inputs.board.core,
+            mode.fetches(),
         )
         .await?;
         Ok(vec![
