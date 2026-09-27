@@ -49,6 +49,34 @@ fn is_clearcore_board(board: &fbuild_config::BoardConfig) -> bool {
         || board.variant.eq_ignore_ascii_case("clearcore")
 }
 
+fn samd_build_core<'a>(
+    board: &'a fbuild_config::BoardConfig,
+    env_config: Option<&'a std::collections::HashMap<String, String>>,
+) -> &'a str {
+    env_config
+        .and_then(|env| env.get("board_build.core"))
+        .map(String::as_str)
+        .unwrap_or_else(|| {
+            if board.core.is_empty() {
+                "adafruit"
+            } else {
+                &board.core
+            }
+        })
+}
+
+fn samd_framework_package(
+    board: &fbuild_config::BoardConfig,
+    env_config: Option<&std::collections::HashMap<String, String>>,
+) -> String {
+    let core = samd_build_core(board, env_config);
+    if core == "arduino" {
+        "framework-arduino-samd".into()
+    } else {
+        format!("framework-arduino-samd-{core}")
+    }
+}
+
 fn is_clearcore_core_source(path: &Path) -> bool {
     // ClearCore's Arduino API supplies ltoa/ultoa definitions from itoa.h when
     // the ARM C library already has itoa/utoa. Compiling api/itoa.c as a
@@ -129,10 +157,11 @@ pub(crate) enum SamCore {
 ///
 /// Teknic's precompiled ClearCore/LwIP libraries are built with GCC 7, so
 /// ClearCore gets fbuild's GCC 9 package — the closest supported toolchain,
-/// avoiding the much larger GCC 15 ABI/version gap; every other board gets
-/// the current ARM GCC. SAM (Arduino ArduinoCore-sam), SAMD (Adafruit
-/// ArduinoCore-samd, PIO package `framework-arduino-samd-adafruit` per
-/// FastLED/fbuild#677) and ClearCore are distinct PIO packages, each honoring
+/// avoiding the much larger GCC 15 ABI/version gap. Unpinned boards use the
+/// current ARM GCC; registry-pinned boards use their selected platform stack.
+/// SAM (Arduino ArduinoCore-sam), SAMD (board-selected
+/// Arduino or vendor core, including Adafruit per FastLED/fbuild#677), and
+/// ClearCore are distinct PIO packages, each honoring
 /// its own `platform_packages` override (FastLED/fbuild#664, #681). Shared by
 /// the build and `fbuild install`, so both provision the same packages
 /// (FastLED/fbuild#1433).
@@ -145,6 +174,8 @@ pub(crate) async fn sam_packages(
 
     let clearcore = is_clearcore_board(board);
     let samd = is_samd_mcu(&board.mcu);
+    let samd_framework = samd_framework_package(board, env_config);
+    let build_core = samd_build_core(board, env_config);
     let package_names: &[&str] = if clearcore {
         &[
             "framework-arduino-sam-clearcore",
@@ -153,7 +184,7 @@ pub(crate) async fn sam_packages(
         ]
     } else if samd {
         &[
-            "framework-arduino-samd-adafruit",
+            &samd_framework,
             "framework-cmsis",
             "framework-cmsis-atmel",
             "toolchain-gccarmnoneeabi",
@@ -163,7 +194,8 @@ pub(crate) async fn sam_packages(
     };
     // platform-atmelsam/platform.py specializes these requirements for the
     // Adafruit core; the platform.json defaults target Arduino's own core.
-    let board_defaults: &[(&str, PlatformDefaultVersion<'_>)] = if samd && !clearcore {
+    let board_defaults: &[(&str, PlatformDefaultVersion<'_>)] = if samd && build_core == "adafruit"
+    {
         &[
             (
                 "toolchain-gccarmnoneeabi",
@@ -174,6 +206,8 @@ pub(crate) async fn sam_packages(
             ),
             ("framework-cmsis", PlatformDefaultVersion::SoleOptional),
         ]
+    } else if samd && build_core == "seeed" {
+        &[("framework-cmsis", PlatformDefaultVersion::SoleOptional)]
     } else {
         &[]
     };
@@ -237,8 +271,9 @@ fn sam_packages_from_resolved(
             None => fbuild_packages::toolchain::ArmToolchain::new(project_dir),
         });
     let core = if is_samd_mcu(&board.mcu) {
+        let framework_package = samd_framework_package(board, env_config);
         SamCore::Samd {
-            cores: match override_for("framework-arduino-samd-adafruit") {
+            cores: match override_for(&framework_package) {
                 Some(o) => fbuild_packages::library::SamdCores::with_override(project_dir, o),
                 None => fbuild_packages::library::SamdCores::new(project_dir),
             },
@@ -829,6 +864,50 @@ mod tests {
         assert_eq!(
             fbuild_packages::Package::get_info(&cmsis_atmel).version,
             "1.2.2"
+        );
+    }
+
+    #[test]
+    fn arduino_zero_samd_consumes_standard_framework_and_default_stack() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let board = fbuild_config::BoardConfig {
+            mcu: "samd21g18a".into(),
+            core: "arduino".into(),
+            ..Default::default()
+        };
+        assert_eq!(
+            samd_framework_package(&board, None),
+            "framework-arduino-samd"
+        );
+        let overrides = std::collections::HashMap::from([
+            (
+                "framework-arduino-samd".into(),
+                fbuild_config::PackageOverride::new(
+                    "https://example.test/arduino-samd.tar.gz",
+                    "1.8.14",
+                ),
+            ),
+            (
+                "toolchain-gccarmnoneeabi".into(),
+                fbuild_config::PackageOverride::new("https://example.test/gcc.tar.gz", "1.70201.0"),
+            ),
+            (
+                "framework-cmsis".into(),
+                fbuild_config::PackageOverride::new(
+                    "https://example.test/cmsis.tar.gz",
+                    "1.40500.0",
+                ),
+            ),
+        ]);
+        let (toolchain, core) = sam_packages_from_resolved(tmp.path(), None, &board, &overrides);
+        assert_eq!(toolchain.get_info().version, "1.70201.0");
+        let SamCore::Samd { cores, cmsis, .. } = core else {
+            panic!("expected standard Arduino SAMD core");
+        };
+        assert_eq!(fbuild_packages::Package::get_info(&cores).version, "1.8.14");
+        assert_eq!(
+            fbuild_packages::Package::get_info(&cmsis).version,
+            "1.40500.0"
         );
     }
 

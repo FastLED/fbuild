@@ -542,6 +542,13 @@ fn atmelsam_9_due_resolves_published_sam_stack_offline() {
             "c657856d3aa8e8355c2feac26b8865b580725a914ac614a0b8c1d5fdd27494b9",
         ),
         (
+            "framework-arduino-samd",
+            "1.8.14",
+            "*",
+            "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-samd/1.8.14/framework-arduino-samd-1.8.14.tar.gz",
+            "4b93d510727f3cd19e85c900342e8ba1a12d36d5d228bb739708ef53b3d7fe07",
+        ),
+        (
             "framework-cmsis",
             "1.40500.0",
             "*",

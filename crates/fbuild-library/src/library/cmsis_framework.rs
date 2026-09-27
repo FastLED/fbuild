@@ -1,7 +1,7 @@
 //! ARM CMSIS framework package.
 //!
-//! Downloads and manages ARM CMSIS 5.7.0 headers from PlatformIO's registry.
-//! Provides paths to: CMSIS/Core/Include (core_cm4.h, etc.), CMSIS/DSP/Include.
+//! Downloads and manages ARM CMSIS headers from PlatformIO's registry.
+//! Supports both legacy `CMSIS/Include` and modern `CMSIS/Core/Include` layouts.
 
 use std::path::{Path, PathBuf};
 
@@ -56,46 +56,58 @@ impl CmsisFramework {
 
     /// Validate the extracted package has required structure.
     fn validate(install_dir: &Path) -> fbuild_core::Result<()> {
-        let core_cm4 = install_dir
-            .join("CMSIS")
-            .join("Core")
-            .join("Include")
-            .join("core_cm4.h");
+        let core_cm4 = Self::core_include_at(install_dir).join("core_cm4.h");
         if !core_cm4.exists() {
             return Err(fbuild_core::FbuildError::PackageError(format!(
-                "CMSIS missing CMSIS/Core/Include/core_cm4.h (in {})",
+                "CMSIS missing core_cm4.h in modern or legacy include layout (in {})",
                 install_dir.display()
             )));
         }
         Ok(())
     }
 
+    fn core_include_at(root: &Path) -> PathBuf {
+        let modern = root.join("CMSIS/Core/Include");
+        if modern.join("core_cm4.h").exists() {
+            modern
+        } else {
+            let legacy = root.join("CMSIS/Include");
+            if legacy.join("core_cm4.h").exists() {
+                legacy
+            } else {
+                modern
+            }
+        }
+    }
+
+    fn is_legacy_layout(root: &Path) -> bool {
+        root.join("CMSIS/Include/core_cm4.h").exists()
+            && !root.join("CMSIS/Core/Include/core_cm4.h").exists()
+    }
+
     /// Get the CMSIS Core include directory (contains core_cm4.h, etc.).
     pub fn get_core_include_dir(&self) -> PathBuf {
-        self.base
-            .install_path()
-            .join("CMSIS")
-            .join("Core")
-            .join("Include")
+        Self::core_include_at(&self.base.install_path())
     }
 
     /// Get the CMSIS DSP include directory.
     pub fn get_dsp_include_dir(&self) -> PathBuf {
-        self.base
-            .install_path()
-            .join("CMSIS")
-            .join("DSP")
-            .join("Include")
+        let root = self.base.install_path();
+        if Self::is_legacy_layout(&root) {
+            root.join("CMSIS/Include")
+        } else {
+            root.join("CMSIS/DSP/Include")
+        }
     }
 
     /// Get the GCC CMSIS-DSP library directory.
     pub fn get_gcc_library_dir(&self) -> PathBuf {
-        self.base
-            .install_path()
-            .join("CMSIS")
-            .join("DSP")
-            .join("Lib")
-            .join("GCC")
+        let root = self.base.install_path();
+        if Self::is_legacy_layout(&root) {
+            root.join("CMSIS/Lib/GCC")
+        } else {
+            root.join("CMSIS/DSP/Lib/GCC")
+        }
     }
 }
 
@@ -114,11 +126,7 @@ impl crate::Package for CmsisFramework {
         if !self.base.is_cached() {
             return false;
         }
-        self.base
-            .install_path()
-            .join("CMSIS")
-            .join("Core")
-            .join("Include")
+        Self::core_include_at(&self.base.install_path())
             .join("core_cm4.h")
             .exists()
     }
@@ -156,5 +164,16 @@ mod tests {
                 .get_gcc_library_dir()
                 .ends_with(Path::new("CMSIS/DSP/Lib/GCC"))
         );
+    }
+
+    #[test]
+    fn accepts_legacy_cmsis_registry_layout() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let include = tmp.path().join("CMSIS/Include");
+        std::fs::create_dir_all(&include).unwrap();
+        std::fs::write(include.join("core_cm4.h"), "").unwrap();
+        CmsisFramework::validate(tmp.path()).unwrap();
+        assert_eq!(CmsisFramework::core_include_at(tmp.path()), include);
+        assert!(CmsisFramework::is_legacy_layout(tmp.path()));
     }
 }
