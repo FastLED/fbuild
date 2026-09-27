@@ -67,7 +67,7 @@ crates/fbuild-core/src/platform/windows/usb_pnp.rs	35	native_path	windows_sys::	
 crates/fbuild-core/src/platform/windows/usb_pnp.rs	39	native_path	windows_sys::	process	host_mechanic
 crates/fbuild-core/src/platform/windows/usb_pnp.rs	40	native_path	windows_sys::	process	host_mechanic
 crates/fbuild-core/tests/platformio_package_resolution.rs	5	attr_cfg	#[cfg(windows)]	host	host_mechanic
-crates/fbuild-core/tests/platformio_package_resolution.rs	76	attr_cfg	#[cfg(windows)]	host	host_mechanic
+crates/fbuild-core/tests/platformio_package_resolution.rs	106	attr_cfg	#[cfg(windows)]	host	host_mechanic
 crates/fbuild-daemon/Cargo.toml	68	native_dependency	libc	process	host_mechanic
 crates/fbuild-daemon/src/handlers/emulator/tests_npm_cache.rs	146	attr_cfg	#[cfg(windows)]	host_executable	host_artifact_policy
 crates/fbuild-daemon/src/handlers/emulator/tests_process.rs	9	attr_cfg	#[cfg(windows)]	host_executable	host_artifact_policy
