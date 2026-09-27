@@ -35,10 +35,16 @@ pub async fn reset(
     );
 
     // Preempt serial if someone is monitoring this port
-    let _ = ctx
+    if let Err(error) = ctx
         .serial_manager
         .preempt_for_deploy(&port, "reset".to_string(), request_id.clone())
-        .await;
+        .await
+    {
+        return (
+            StatusCode::CONFLICT,
+            Json(OperationResponse::fail(request_id, error.to_string())),
+        );
+    }
 
     let platform_str = platform.to_string();
     // FastLED/fbuild#808 (CRITICAL): DTR/RTS toggling is fundamentally

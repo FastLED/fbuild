@@ -434,10 +434,20 @@ pub async fn deploy(
     // Preempt serial if port specified or auto-selected.
     let deploy_port_str = deploy_port_choice.port;
     if let Some(ref p) = deploy_port_str {
-        let _ = ctx
+        if let Err(error) = ctx
             .serial_manager
-            .preempt_for_deploy(p, "deploy".to_string(), request_id.clone())
-            .await;
+            .preempt_for_deploy(
+                p,
+                format!("deploy (project {})", project_dir.display()),
+                request_id.clone(),
+            )
+            .await
+        {
+            return (
+                StatusCode::CONFLICT,
+                Json(OperationResponse::fail(request_id, error.to_string())),
+            );
+        }
     }
 
     // Deploy
@@ -880,17 +890,10 @@ pub async fn deploy(
         fbuild_deploy::DeploymentResult,
     )> = match tokio::time::timeout(DEPLOY_PIPELINE_HARD_DEADLINE, deploy_pipeline_fut).await {
         Ok(r) => r,
-        Err(_) => {
-            // Clear preemption so the port can be reused once the
-            // stuck flasher process is reaped by the OS.
-            if let Some(ref p) = deploy_port_str {
-                ctx.serial_manager.clear_preemption(p).await;
-            }
-            Err(fbuild_core::FbuildError::DeployFailed(format!(
-                "deploy pipeline exceeded hard deadline ({}s); flasher may be wedged on USB",
-                DEPLOY_PIPELINE_HARD_DEADLINE.as_secs()
-            )))
-        }
+        Err(_) => Err(fbuild_core::FbuildError::DeployFailed(format!(
+            "deploy pipeline exceeded hard deadline ({}s); flasher may be wedged on USB",
+            DEPLOY_PIPELINE_HARD_DEADLINE.as_secs()
+        ))),
     };
 
     // Split the deployer out so it can drive recovery while `deploy_result`
@@ -928,9 +931,9 @@ pub async fn deploy(
             .and_then(|result| result.port.clone()),
     );
     if let Some(ref p) = recovery_port {
-        // The recovery probe needs the port un-preempted (#605), but attached
-        // WebSockets must stay paused until that probe finishes.
-        ctx.serial_manager.clear_preemption(p).await;
+        // Keep the per-port lease held through recovery. The deployer's probe
+        // talks to the OS directly, while WebSocket attach must remain paused
+        // until recovery and alias updates are complete (#1461).
         if !deploy_skipped_bus_work {
             if let Some(deployer) = deployer_for_recovery {
                 let port_name = p.clone();

@@ -116,17 +116,35 @@ impl SharedSerialManager {
         client_metadata: Option<SerialClientMetadata>,
     ) -> fbuild_core::Result<()> {
         let session_key = self.resolve_port_key(port);
-        // If already open, just return Ok
-        if let Some(mut session) = self.sessions.get_mut(&session_key) {
-            if session.is_open {
-                session.last_activity_at = now_unix_secs();
-                if let Some(metadata) = client_metadata {
-                    session
-                        .client_metadata
-                        .insert(client_id.to_string(), metadata);
-                }
-                drop(session);
-                self.bump_close_generation(&session_key);
+        // Existing-session reuse is serialized with deploy/reset acquisition
+        // for the same reason as new-session publication below: an attach
+        // must not become visible after a preemption event was emitted.
+        if self
+            .sessions
+            .get(&session_key)
+            .is_some_and(|session| session.is_open)
+        {
+            let reused = self
+                .preemption
+                .publish_if_available(&session_key, || {
+                    let Some(mut session) = self.sessions.get_mut(&session_key) else {
+                        return false;
+                    };
+                    if !session.is_open {
+                        return false;
+                    }
+                    session.last_activity_at = now_unix_secs();
+                    if let Some(metadata) = client_metadata.clone() {
+                        session
+                            .client_metadata
+                            .insert(client_id.to_string(), metadata);
+                    }
+                    drop(session);
+                    self.bump_close_generation(&session_key);
+                    true
+                })
+                .map_err(|error| fbuild_core::FbuildError::SerialError(error.to_string()))?;
+            if reused {
                 tracing::info!(port, client_id, "port already open, reusing");
                 return Ok(());
             }
@@ -241,7 +259,7 @@ impl SharedSerialManager {
                     let stop_flag = Arc::new(AtomicBool::new(false));
 
                     let (tx, _rx) = broadcast::channel(BROADCAST_CHANNEL_SIZE);
-                    self.broadcasters.insert(port_name.clone(), tx.clone());
+                    let broadcaster_tx = tx.clone();
 
                     // Create shared output buffer for the background reader
                     let port_buf = Arc::new(PortOutputBuffer {
@@ -249,14 +267,12 @@ impl SharedSerialManager {
                         total_bytes_read: std::sync::atomic::AtomicU64::new(0),
                         last_read_at_ms: std::sync::atomic::AtomicU64::new(0),
                     });
-                    self.output_buffers
-                        .insert(port_name.clone(), Arc::clone(&port_buf));
-
                     // Spawn background reader
                     let reader_handle = {
                         let serial_clone = Arc::clone(&serial_handle);
                         let stop_clone = Arc::clone(&stop_flag);
                         let port_clone = port_name.clone();
+                        let reader_port_buf = Arc::clone(&port_buf);
 
                         tokio::task::spawn_blocking(move || {
                             let mut buf = [0u8; READ_BUF_SIZE];
@@ -274,10 +290,10 @@ impl SharedSerialManager {
                                         partial_line.push_str(&text);
 
                                         // Update bytes read
-                                        port_buf
+                                        reader_port_buf
                                             .total_bytes_read
                                             .fetch_add(n as u64, Ordering::Relaxed);
-                                        port_buf
+                                        reader_port_buf
                                             .last_read_at_ms
                                             .store(now_unix_millis(), Ordering::Relaxed);
 
@@ -296,7 +312,7 @@ impl SharedSerialManager {
                                             let _ = tx.send(SerialStreamEvent::Data(line.clone()));
 
                                             // Append to output buffer
-                                            if let Ok(mut ob) = port_buf.buffer.lock() {
+                                            if let Ok(mut ob) = reader_port_buf.buffer.lock() {
                                                 if ob.len() >= OUTPUT_BUFFER_CAP {
                                                     ob.pop_front();
                                                 }
@@ -346,12 +362,20 @@ impl SharedSerialManager {
                     }
                     session.serial_handle = Some(serial_handle);
                     session.reader_handle = Some(reader_handle);
-                    session.stop_flag = stop_flag;
+                    session.stop_flag = Arc::clone(&stop_flag);
                     session.started_at = now;
                     session.last_activity_at = now;
 
-                    self.sessions.insert(port_name.clone(), session);
-                    self.bump_close_generation(&port_name);
+                    if let Err(error) = self.preemption.publish_if_available(&session_key, || {
+                        self.broadcasters.insert(port_name.clone(), broadcaster_tx);
+                        self.output_buffers
+                            .insert(port_name.clone(), Arc::clone(&port_buf));
+                        self.sessions.insert(port_name.clone(), session);
+                        self.bump_close_generation(&port_name);
+                    }) {
+                        stop_flag.store(true, Ordering::Relaxed);
+                        return Err(fbuild_core::FbuildError::SerialError(error.to_string()));
+                    }
 
                     tracing::info!(port, client_id, attempt, "port opened successfully");
                     return Ok(());
@@ -666,22 +690,27 @@ impl SharedSerialManager {
         client_metadata: Option<SerialClientMetadata>,
     ) -> Option<broadcast::Receiver<SerialStreamEvent>> {
         let session_key = self.resolve_port_key(port);
-        let rx = self
-            .broadcasters
-            .get(&session_key)
-            .map(|tx| tx.subscribe())?;
-        if let Some(mut session) = self.sessions.get_mut(&session_key) {
-            session.last_activity_at = now_unix_secs();
-            session.reader_client_ids.insert(client_id.to_string());
-            if let Some(metadata) = client_metadata {
-                session
-                    .client_metadata
-                    .insert(client_id.to_string(), metadata);
-            }
-            drop(session);
-            self.bump_close_generation(&session_key);
-        }
-        Some(rx)
+        self.preemption
+            .publish_if_available(&session_key, || {
+                let rx = self
+                    .broadcasters
+                    .get(&session_key)
+                    .map(|tx| tx.subscribe())?;
+                if let Some(mut session) = self.sessions.get_mut(&session_key) {
+                    session.last_activity_at = now_unix_secs();
+                    session.reader_client_ids.insert(client_id.to_string());
+                    if let Some(metadata) = client_metadata {
+                        session
+                            .client_metadata
+                            .insert(client_id.to_string(), metadata);
+                    }
+                    drop(session);
+                    self.bump_close_generation(&session_key);
+                }
+                Some(rx)
+            })
+            .ok()
+            .flatten()
     }
 
     /// Detach a reader.
@@ -920,22 +949,30 @@ impl SharedSerialManager {
         preempted_by: String,
     ) -> fbuild_core::Result<()> {
         let session_key = self.resolve_port_key(port);
+        self.preemption
+            .preempt(&session_key, reason.clone(), preempted_by.clone())
+            .await
+            .map_err(|error| fbuild_core::FbuildError::SerialError(error.to_string()))?;
         self.deploy_preempted_keys
             .insert(port.to_string(), session_key.clone());
         self.deploy_pending_ports.insert(port.to_string(), ());
         self.deploy_failed_ports.remove(port);
         let generation = self.close_generation(&session_key);
-        self.preemption
-            .preempt(&session_key, reason.clone(), preempted_by.clone())
-            .await;
         if let Some(tx) = self.broadcasters.get(&session_key) {
             let _ = tx.send(SerialStreamEvent::Preempted {
                 reason,
                 preempted_by,
             });
         }
-        self.close_port_if_generation(&session_key, "deploy_preemption", generation)
-            .await?;
+        if let Err(error) = self
+            .close_port_if_generation(&session_key, "deploy_preemption", generation)
+            .await
+        {
+            self.deploy_preempted_keys.remove(port);
+            self.deploy_pending_ports.remove(port);
+            self.preemption.clear(&session_key).await;
+            return Err(error);
+        }
         Ok(())
     }
 
@@ -1028,6 +1065,21 @@ impl SharedSerialManager {
     pub async fn is_preempted(&self, port: &str) -> bool {
         let session_key = self.resolve_port_key(port);
         self.preemption.is_preempted(&session_key).await
+    }
+
+    /// Return a human-readable active deploy/reset holder for fail-fast
+    /// attachment diagnostics.
+    pub async fn preemption_holder(&self, port: &str) -> Option<String> {
+        let session_key = self.resolve_port_key(port);
+        self.preemption.holder(&session_key).await.map(|holder| {
+            format!(
+                "port {} is in use: {} by request {} for {}s",
+                port,
+                holder.reason,
+                holder.preempted_by,
+                holder.started_at.elapsed().as_secs()
+            )
+        })
     }
 
     /// Get the preemption tracker for external use.

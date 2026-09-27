@@ -383,6 +383,28 @@ fn ws_open_port_timeout_is_short_for_localhost_clients() {
 }
 
 #[tokio::test]
+async fn ws_attach_reports_active_deploy_holder_instead_of_driver_wedge() {
+    let (tx, _rx) = tokio::sync::watch::channel(false);
+    let ctx = DaemonContext::new(8765, tx, "test".to_string());
+    ctx.serial_manager
+        .preempt_for_deploy(
+            "COM_BUSY",
+            "deploy (project /work/first)".to_string(),
+            "request-1".to_string(),
+        )
+        .await
+        .unwrap();
+
+    let message = active_preemption_error(&ctx, "COM_BUSY")
+        .await
+        .expect("active deploy must be reported before open_port");
+    assert!(message.contains("port COM_BUSY is in use"), "{message}");
+    assert!(message.contains("request-1"), "{message}");
+    assert!(message.contains("/work/first"), "{message}");
+    assert!(!message.contains("wedged"), "{message}");
+}
+
+#[tokio::test]
 async fn ws_open_port_timeout_returns_error_with_deadline() {
     let result = tokio::time::timeout(
         std::time::Duration::from_secs(1),
