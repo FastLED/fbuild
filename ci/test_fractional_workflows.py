@@ -53,8 +53,30 @@ class FractionalWorkflowTests(unittest.TestCase):
         self.assertEqual("dylint-unified-v2", setup["with"]["cache-key-suffix"])
         self.assertEqual("Dylint policy", dylint["jobs"]["policy"]["name"])
         self.assertNotIn("if", dylint["jobs"]["dylint"])
-        self.assertEqual("ubuntu-latest", dylint["jobs"]["dylint"]["runs-on"])
-        self.assertNotIn("strategy", dylint["jobs"]["dylint"])
+        lint_job = dylint["jobs"]["dylint"]
+        self.assertEqual("ubuntu-latest", lint_job["runs-on"])
+        self.assertNotIn("strategy", lint_job)
+        lint_run = next(
+            step["run"]
+            for step in lint_job["steps"]
+            if step.get("name") == "Run dylint over workspace"
+        )
+        for triple in (
+            "x86_64-unknown-linux-gnu",
+            "x86_64-pc-windows-msvc",
+            "x86_64-apple-darwin",
+        ):
+            self.assertIn(triple, lint_run)
+        self.assertIn("inputs.ref != ''", next(step for step in lint_job["steps"] if step.get("name") == "Run dylint over workspace")["env"]["FULL_TARGETS"])
+        target_install = next(step for step in lint_job["steps"] if step.get("name") == "Install cross-target nightly standard libraries")
+        self.assertIn("inputs.ref != ''", target_install["if"])
+        setup = next(step for step in lint_job["steps"] if step.get("uses", "").startswith("zackees/setup-soldr@"))
+        self.assertIs(setup["with"]["dylint-output-cache"], False)
+        restore = next(step for step in lint_job["steps"] if step.get("name") == "Restore compiled Dylint libraries")
+        self.assertIn("hashFiles('dylints/**')", restore["with"]["key"])
+        self.assertTrue(any(step.get("name") == "Save compiled Dylint libraries" for step in lint_job["steps"]))
+        ui_tests = next(step for step in lint_job["steps"] if step.get("name") == "Test Dylint libraries")
+        self.assertIn("git diff --quiet FETCH_HEAD HEAD -- dylints", ui_tests["run"])
         gate = dylint["jobs"]["gate"]
         self.assertEqual("Dylint", gate["name"])
         self.assertEqual({"policy", "dylint"}, set(gate["needs"]))
