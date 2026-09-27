@@ -1,4 +1,5 @@
 # path<TAB>kind<TAB>normalized<TAB>ordinal
+crates/fbuild-core/tests/platformio_package_resolution.rs	attr_cfg	windows	0
 crates/fbuild-daemon/src/handlers/emulator/tests_npm_cache.rs	attr_cfg	windows	0
 crates/fbuild-daemon/src/handlers/emulator/tests_process.rs	attr_cfg	windows	0
 crates/fbuild-daemon/src/handlers/emulator/tests_process.rs	attr_cfg	windows	1

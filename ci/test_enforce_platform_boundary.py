@@ -16,8 +16,9 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
     def test_committed_exact_occurrence_ledger_matches_whole_tree(self) -> None:
         # Keep the row count explicit so additions to host mechanics require
         # a deliberate inventory update. Serial PTY tests and the merged
-        # main-branch daemon/executable changes bring the total to 44.
-        self.assertEqual(len(self.expected), 44)
+        # main-branch daemon/executable changes and the Windows file-URL
+        # resolver fixture bring the total to 45.
+        self.assertEqual(len(self.expected), 45)
         self.assertFalse(boundary.validate_ledger(self.expected))
         self.assertFalse(boundary.compare(self.expected, self.observed))
 

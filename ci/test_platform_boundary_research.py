@@ -8,6 +8,18 @@ from ci import platform_boundary_research
 
 
 class PlatformBoundaryResearchTests(unittest.TestCase):
+    def test_hidden_worktree_parent_does_not_hide_repo_sources(self) -> None:
+        with TemporaryDirectory() as directory:
+            root = Path(directory) / ".claude" / "worktrees" / "repo"
+            source = root / "crates" / "core" / "src" / "example.rs"
+            source.parent.mkdir(parents=True)
+            source.write_text("fn main() {}\n", encoding="utf-8")
+            hidden = root / "crates" / "core" / ".hidden" / "ignored.rs"
+            hidden.parent.mkdir(parents=True)
+            hidden.write_text("fn main() {}\n", encoding="utf-8")
+
+            self.assertEqual(platform_boundary_research.source_files(root), [source])
+
     def test_red_fixture_contains_every_representative_violation(self) -> None:
         fixture = Path(__file__).parent / "fixtures/platform_boundary/research_red_pass.rs"
         findings = platform_boundary_research.scan_rust(fixture, platform_boundary_research.ROOT)
