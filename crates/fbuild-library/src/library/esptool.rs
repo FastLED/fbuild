@@ -285,7 +285,7 @@ fn validate_source_esptool(dir: &Path) -> Result<()> {
 }
 
 fn source_esptool_path(dir: &Path) -> std::path::PathBuf {
-    source_esptool_path_for_host(dir, cfg!(windows))
+    source_esptool_path_for_host(dir, fbuild_core::platform::host::is_windows())
 }
 
 fn source_esptool_path_for_host(dir: &Path, windows: bool) -> std::path::PathBuf {
