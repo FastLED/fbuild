@@ -167,12 +167,12 @@ pub(crate) async fn sam_packages(
         &[
             (
                 "toolchain-gccarmnoneeabi",
-                PlatformDefaultVersion::Fixed("~1.90301.0"),
+                PlatformDefaultVersion::BuilderBranch {
+                    marker: "if build_core == \"adafruit\":",
+                    after: None,
+                },
             ),
-            (
-                "framework-cmsis",
-                PlatformDefaultVersion::Fixed("~2.50400.0"),
-            ),
+            ("framework-cmsis", PlatformDefaultVersion::SoleOptional),
         ]
     } else {
         &[]

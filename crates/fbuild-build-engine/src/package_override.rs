@@ -25,12 +25,15 @@ use fbuild_core::platformio_package::{
 };
 
 /// A board/core-specific requirement selected by a PlatformIO platform
-/// builder. `SoleOptional` follows the published manifest for the pinned
-/// platform instead of freezing a value from the newest release.
+/// builder. `BuilderBranch` reads the requested release's `platform.py`
+/// rather than freezing a value from another release.
 #[derive(Clone, Copy)]
 pub enum PlatformDefaultVersion<'a> {
-    Fixed(&'a str),
     SoleOptional,
+    BuilderBranch {
+        marker: &'a str,
+        after: Option<&'a str>,
+    },
 }
 
 /// Resolve a pinned PlatformIO platform and its selected package requirements
@@ -180,10 +183,31 @@ async fn resolve_registry_overrides_with_client(
                     installed.display()
                 ))
             })?;
-            let manifest = std::fs::read_to_string(manifest_path)
+            let manifest = std::fs::read_to_string(&manifest_path)
                 .map_err(|error| fbuild_core::FbuildError::PackageError(error.to_string()))?;
+            let builder = if platform_default_requirements
+                .iter()
+                .any(|(name, selection)| {
+                    matches!(selection, PlatformDefaultVersion::BuilderBranch { .. })
+                        && !explicit
+                            .iter()
+                            .any(|spec| spec.package_name() == Some(name))
+                }) {
+                Some(
+                    std::fs::read_to_string(manifest_path.with_file_name("platform.py")).map_err(
+                        |error| {
+                            fbuild_core::FbuildError::PackageError(format!(
+                                "selected PlatformIO platform has no readable platform.py: {error}"
+                            ))
+                        },
+                    )?,
+                )
+            } else {
+                None
+            };
             requirements_with_platform_defaults(
                 &manifest,
+                builder.as_deref(),
                 &explicit,
                 platform_default_requirements,
             )?
@@ -245,6 +269,7 @@ async fn resolve_registry_overrides_with_client(
 
 fn requirements_with_platform_defaults(
     manifest: &str,
+    builder: Option<&str>,
     explicit: &[PackageSpec],
     defaults: &[(&str, PlatformDefaultVersion<'_>)],
 ) -> fbuild_core::Result<Vec<PackageRequirement>> {
@@ -253,16 +278,82 @@ fn requirements_with_platform_defaults(
     // selected platform release, not the newest release's static values.
     let mut overrides = explicit.to_vec();
     for (name, selection) in defaults {
+        if explicit
+            .iter()
+            .any(|spec| spec.package_name() == Some(name))
+        {
+            continue;
+        }
         let requirement = match selection {
-            PlatformDefaultVersion::Fixed(value) => (*value).to_string(),
             PlatformDefaultVersion::SoleOptional => {
                 sole_optional_manifest_version(manifest, name).map_err(package_error)?
+            }
+            PlatformDefaultVersion::BuilderBranch { marker, after } => {
+                let source = builder.ok_or_else(|| {
+                    fbuild_core::FbuildError::PackageError(
+                        "selected PlatformIO platform has no platform.py".into(),
+                    )
+                })?;
+                builder_branch_requirement(source, marker, *after, name)?
             }
         };
         overrides
             .push(parse_package_spec(&format!("{name}@{requirement}")).map_err(package_error)?);
     }
     resolve_platform_requirements(manifest, &overrides).map_err(package_error)
+}
+
+/// Read a literal package assignment from one known PlatformIO builder branch.
+/// This deliberately does not execute or interpret Python: if the upstream
+/// branch changes shape, fail before compilation instead of guessing a pin.
+fn builder_branch_requirement(
+    source: &str,
+    marker: &str,
+    after: Option<&str>,
+    package: &str,
+) -> fbuild_core::Result<String> {
+    let lines: Vec<_> = source.lines().collect();
+    let start = if let Some(after) = after {
+        lines
+            .iter()
+            .position(|line| line.trim() == after)
+            .map(|index| {
+                (
+                    index + 1,
+                    Some(lines[index].len() - lines[index].trim_start().len()),
+                )
+            })
+    } else {
+        Some((0, None))
+    }
+    .ok_or_else(|| package_error(format!("platform.py has no `{after:?}` branch")))?;
+    let branch = lines[start.0..]
+        .iter()
+        .enumerate()
+        .find(|(_, line)| {
+            line.trim() == marker
+                && start
+                    .1
+                    .is_none_or(|indent| line.len() - line.trim_start().len() == indent)
+        })
+        .map(|(index, line)| (start.0 + index, line.len() - line.trim_start().len()))
+        .ok_or_else(|| package_error(format!("platform.py has no `{marker}` branch")))?;
+    let assignment = format!("self.packages[\"{package}\"][\"version\"] =");
+    for line in &lines[branch.0 + 1..] {
+        let indent = line.len() - line.trim_start().len();
+        if !line.trim().is_empty() && indent <= branch.1 {
+            break;
+        }
+        if let Some(value) = line.trim().strip_prefix(&assignment) {
+            let value = value.trim().trim_matches(['\'', '"']);
+            fbuild_core::platformio_package::parse_package_spec(&format!("{package}@{value}"))
+                .map_err(package_error)?;
+            return Ok(value.to_string());
+        }
+    }
+    Err(package_error(format!(
+        "platform.py `{marker}` branch has no literal `{package}` version"
+    )))
 }
 
 fn explicit_registry_requirements(explicit: &[PackageSpec]) -> Vec<PackageRequirement> {
@@ -433,37 +524,107 @@ mod tests {
     }
 
     #[test]
-    fn pinned_stm32_manifest_drives_cmsis_default_but_explicit_pin_wins() {
+    fn pinned_stm32_builder_and_manifest_drive_requirements() {
         let defaults = [
             (
                 "toolchain-gccarmnoneeabi",
-                PlatformDefaultVersion::Fixed("~1.120301.0"),
+                PlatformDefaultVersion::BuilderBranch {
+                    marker: "else:",
+                    after: Some("elif build_core == \"stm32l0\":"),
+                },
             ),
             ("framework-cmsis", PlatformDefaultVersion::SoleOptional),
         ];
-        for (platform_version, expected_cmsis) in
-            [("19.0.0", "~2.50900.0"), ("20.0.0", "~2.60300.0")]
-        {
+        for (platform_version, expected_gcc, expected_cmsis) in [
+            ("14.0.0", "~1.90201.0", "~2.50700.0"),
+            ("16.1.0", "~1.100301.0", "~2.50700.0"),
+            ("19.0.0", "~1.120301.0", "~2.50900.0"),
+            ("20.0.0", "~1.120301.0", "~2.60300.0"),
+        ] {
             let manifest = format!(
-                r#"{{"version":"{platform_version}","packages":{{"framework-cmsis":{{"type":"framework","owner":"platformio","version":"~2.50501.0","optionalVersions":["{expected_cmsis}"]}},"toolchain-gccarmnoneeabi":{{"type":"toolchain","owner":"platformio","version":">=1.60301.0,<1.80000.0","optionalVersions":["~1.120301.0"]}}}}}}"#
+                r#"{{"version":"{platform_version}","packages":{{"framework-cmsis":{{"type":"framework","owner":"platformio","version":"~2.50501.0","optionalVersions":["{expected_cmsis}"]}},"toolchain-gccarmnoneeabi":{{"type":"toolchain","owner":"platformio","version":">=1.60301.0,<1.80000.0","optionalVersions":["{expected_gcc}"]}}}}}}"#
+            );
+            let builder = format!(
+                "        if \"arduino\" in frameworks:\n            if board.startswith((\"giga\",)):\n                pass\n            elif build_core == \"stm32l0\":\n                pass\n            else:\n                self.packages[\"toolchain-gccarmnoneeabi\"][\"version\"] = \"{expected_gcc}\"\n"
             );
             let requirements =
-                requirements_with_platform_defaults(&manifest, &[], &defaults).unwrap();
+                requirements_with_platform_defaults(&manifest, Some(&builder), &[], &defaults)
+                    .unwrap();
             let cmsis = require_platform_package(&requirements, "framework-cmsis").unwrap();
             assert_eq!(
                 cmsis.spec.registry().unwrap().requirement.as_deref(),
                 Some(expected_cmsis),
                 "ststm32@{platform_version}"
             );
+            let gcc = require_platform_package(&requirements, "toolchain-gccarmnoneeabi").unwrap();
+            assert_eq!(
+                gcc.spec.registry().unwrap().requirement.as_deref(),
+                Some(expected_gcc),
+                "ststm32@{platform_version}"
+            );
             let explicit = parse_package_spec("framework-cmsis@2.50501.0").unwrap();
-            let requirements =
-                requirements_with_platform_defaults(&manifest, &[explicit], &defaults).unwrap();
+            let requirements = requirements_with_platform_defaults(
+                &manifest,
+                Some(&builder),
+                &[explicit],
+                &defaults,
+            )
+            .unwrap();
             let cmsis = require_platform_package(&requirements, "framework-cmsis").unwrap();
             assert_eq!(
                 cmsis.spec.registry().unwrap().requirement.as_deref(),
                 Some("2.50501.0")
             );
         }
+    }
+
+    #[test]
+    fn pinned_sam_builder_selects_adafruit_gcc_and_rejects_changed_rule() {
+        let builder = "    if build_core == \"adafruit\":\n        self.packages[\"toolchain-gccarmnoneeabi\"][\"version\"] = \"~1.90301.0\"\n";
+        assert_eq!(
+            builder_branch_requirement(
+                builder,
+                "if build_core == \"adafruit\":",
+                None,
+                "toolchain-gccarmnoneeabi"
+            )
+            .unwrap(),
+            "~1.90301.0"
+        );
+        assert!(
+            builder_branch_requirement(
+                "    if build_core == \"adafruit\":\n        pass\n",
+                "if build_core == \"adafruit\":",
+                None,
+                "toolchain-gccarmnoneeabi"
+            )
+            .is_err()
+        );
+
+        let explicit = parse_package_spec("toolchain-gccarmnoneeabi@1.100301.0").unwrap();
+        let manifest = r#"{"packages":{"toolchain-gccarmnoneeabi":{"type":"toolchain","owner":"platformio","version":"~1.70201.0"}}}"#;
+        let requirements = requirements_with_platform_defaults(
+            manifest,
+            None,
+            &[explicit],
+            &[(
+                "toolchain-gccarmnoneeabi",
+                PlatformDefaultVersion::BuilderBranch {
+                    marker: "if build_core == \"adafruit\":",
+                    after: None,
+                },
+            )],
+        )
+        .unwrap();
+        assert_eq!(
+            requirements[0]
+                .spec
+                .registry()
+                .unwrap()
+                .requirement
+                .as_deref(),
+            Some("1.100301.0")
+        );
     }
 
     #[tokio::test]

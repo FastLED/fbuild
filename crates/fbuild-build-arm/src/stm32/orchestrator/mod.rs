@@ -107,7 +107,10 @@ pub(crate) async fn stm32_packages(
         &[
             (
                 "toolchain-gccarmnoneeabi",
-                PlatformDefaultVersion::Fixed("~1.120301.0"),
+                PlatformDefaultVersion::BuilderBranch {
+                    marker: "else:",
+                    after: Some("elif build_core == \"stm32l0\":"),
+                },
             ),
             ("framework-cmsis", PlatformDefaultVersion::SoleOptional),
         ]
