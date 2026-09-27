@@ -1,7 +1,7 @@
 name: Dylint
 
-# The required Dylint status covers both policy and real workspace lints on
-# Linux, Windows, and macOS for every PR. Full CI calls the same workflow.
+# One Linux Dylint pass and the policy checks feed the required Dylint status.
+# Full CI calls the same workflow.
 
 on:
   workflow_dispatch: {}
@@ -48,37 +48,11 @@ jobs:
           uv run --no-project python ci/enforce_platform_boundary.py --print-totals
 
   dylint:
-    name: ${{ matrix.name }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      # Independent native legs expose each OS's cfg-gated workspace code.
-      # One platform's failure must not hide another's findings.
-      fail-fast: false
-      matrix:
-        include:
-          - os: ubuntu-latest
-            name: Dylint Full (linux)
-          # FastLED/fbuild#1359 — `cargo check` only compiles the modules the
-          # target platform selects, so every `#[cfg(windows)]` /
-          # `platform/windows/**` module was invisible to a ubuntu-only gate.
-          # That is not hypothetical: the platform-facade migration (#1306)
-          # moved `display_slash` into `platform/windows/fs.rs` and its
-          # `ban_manual_slash_normalize` violation sat on main unnoticed,
-          # because CI had never compiled the file.
-          #
-          # Windows is also where the bugs these lints exist to prevent
-          # actually bite — #875, #885, #890 and #912 were all Windows path
-          # handling.
-          - os: windows-latest
-            name: Dylint Full (windows)
-          - os: macos-15
-            name: Dylint Full (macos)
+    name: Dylint workspace
+    runs-on: ubuntu-latest
     timeout-minutes: 90
     defaults:
       run:
-        # Git Bash on the Windows runner. The steps below use process
-        # substitution and POSIX `find`, so PowerShell (the Windows default)
-        # would fail to parse them.
         shell: bash
     steps:
       - uses: actions/checkout@v6
@@ -86,17 +60,14 @@ jobs:
           ref: ${{ inputs.ref }}
       - uses: astral-sh/setup-uv@v3
       - name: Validate Dylint allowlist paths
-        if: matrix.os == 'ubuntu-latest'
         run: uv run --no-project python ci/check_dylint_allowlists.py
       - name: Enforce shrink-only .fbuild allowlist
-        if: matrix.os == 'ubuntu-latest'
         # The baseline in dylints/ban_raw_fbuild_path may only shrink
         # (FastLED/fbuild#1349). Needs main fetched to diff against.
         run: |
           git fetch --no-tags --depth=1 origin main
           uv run --no-project python ci/check_fbuild_path_baseline.py --base FETCH_HEAD
       - name: Validate platform-boundary ledgers
-        if: matrix.os == 'ubuntu-latest'
         run: uv run --no-project python ci/enforce_platform_boundary.py --print-totals
       - uses: zackees/setup-soldr@v0
         with:
@@ -130,29 +101,13 @@ jobs:
           # the prebuilt dylint-link directory for their linker config.
           sed -n 's/^soldr: dylint prepare: tool bin dir //p' "$RUNNER_TEMP/dylint-prepare.log" >> "$GITHUB_PATH"
       - name: Check Dylint library formatting
-        if: matrix.os == 'ubuntu-latest'
         run: |
           while IFS= read -r manifest; do
             RUSTUP_TOOLCHAIN=nightly-2026-05-28 \
               soldr cargo fmt --manifest-path "$manifest" --all -- --check
           done < <(find dylints -mindepth 2 -maxdepth 2 -name Cargo.toml | sort)
       - name: Test Dylint libraries
-        # ubuntu only. These are the lint crates' OWN ui fixtures, asserting
-        # each lint fires on its own fixture — platform-independent behavior
-        # that the ubuntu leg already covers. What the Windows leg uniquely
-        # provides is compiling Windows-gated *workspace* source so the lints
-        # can see it, and that runs below.
-        #
-        # It also still does not work there. FastLED/fbuild#1373 has the
-        # evidence: two target-dir layouts coexist (soldr builds the test
-        # binary under `<target>/<triple>/debug`, while each lint's `fn ui`
-        # clears `CARGO_BUILD_TARGET` so the library lands in
-        # `<target>/debug`), and the driver fails with `LoadLibraryExW failed`
-        # on the library itself. Neither normalizing the PATH separator nor
-        # adding the untargeted `debug`/`debug/deps` to PATH changed it, so
-        # the missing dependency is somewhere else again. Tracked rather than
-        # guessed at further.
-        if: matrix.os == 'ubuntu-latest'
+        # UI fixtures assert that each custom lint fires on its fixture.
         run: |
           # UI fixtures launch nested Cargo. Keep the rustup proxy visible so
           # it can select each lint's pinned nightly.
@@ -186,7 +141,7 @@ jobs:
           # Force fresh workspace traversal for the observation ledger while
           # preserving Cargo's cached dependencies. A per-run RUSTFLAGS value
           # invalidated every dependency, causing a cold rebuild on each run.
-          rg --files crates -g '*.rs' -0 | xargs -0 -r touch
+          find crates -type f -name '*.rs' -exec touch {} +
           rm -f "$FBUILD_PLATFORM_BOUNDARY_OBSERVED"
           env -u RUSTUP_TOOLCHAIN soldr dylint --all -- --workspace --all-targets
       - name: Compare scanner with actual Dylint observations

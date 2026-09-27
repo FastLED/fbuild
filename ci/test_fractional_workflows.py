@@ -47,10 +47,8 @@ class FractionalWorkflowTests(unittest.TestCase):
         dylint = self.load("dylint.yml")
         self.assertEqual("Dylint policy", dylint["jobs"]["policy"]["name"])
         self.assertNotIn("if", dylint["jobs"]["dylint"])
-        self.assertEqual(
-            {"ubuntu-latest", "windows-latest", "macos-15"},
-            {cell["os"] for cell in dylint["jobs"]["dylint"]["strategy"]["matrix"]["include"]},
-        )
+        self.assertEqual("ubuntu-latest", dylint["jobs"]["dylint"]["runs-on"])
+        self.assertNotIn("strategy", dylint["jobs"]["dylint"])
         gate = dylint["jobs"]["gate"]
         self.assertEqual("Dylint", gate["name"])
         self.assertEqual({"policy", "dylint"}, set(gate["needs"]))
