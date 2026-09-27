@@ -519,6 +519,23 @@ mod tests {
     }
 
     #[test]
+    fn resolved_teensy_registry_pins_do_not_claim_they_were_ignored() {
+        let config = env(&[
+            ("platform", "teensy@5.1.0"),
+            (
+                "platform_packages",
+                "framework-arduinoteensy@1.159.0\ntoolchain-gccarmnoneeabi-teensy@1.110301.0",
+            ),
+        ]);
+        let warnings = ignored_version_pins_with_resolved_packages(
+            &config,
+            Some(fbuild_core::Platform::Teensy),
+            &["framework-arduinoteensy", "toolchain-gccarmnoneeabi-teensy"],
+        );
+        assert!(warnings.is_empty(), "{warnings:?}");
+    }
+
+    #[test]
     fn owner_prefixed_spaced_platform_pin_is_reported() {
         let warnings = ignored_version_pins(&env(&[("platform", "platformio/atmelavr @ ~5.0.0")]));
         assert_eq!(warnings.len(), 1, "{warnings:?}");

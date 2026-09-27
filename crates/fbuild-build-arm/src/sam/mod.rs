@@ -26,7 +26,8 @@ impl crate::PlatformSupport for SamPlatformSupport {
         use crate::provision::{PackageKind, provision_package};
         use orchestrator::SamCore;
         let (toolchain, core) =
-            orchestrator::sam_packages(inputs.project_dir, Some(inputs.env_config), inputs.board);
+            orchestrator::sam_packages(inputs.project_dir, Some(inputs.env_config), inputs.board)
+                .await?;
         let mut rows = vec![provision_package(PackageKind::Toolchain, &*toolchain, mode).await];
         match core {
             SamCore::Sam(cores) => {

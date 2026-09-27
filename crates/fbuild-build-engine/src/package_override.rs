@@ -16,8 +16,236 @@
 //! handling, owner/repo expansion, or empty-value tolerance.
 
 use std::collections::HashMap;
+use std::path::Path;
 
 use fbuild_config::PackageOverride;
+use fbuild_core::platformio_package::{
+    PackageKind, PackageRequirement, PackageSource, PackageSpec, parse_package_spec,
+    resolve_platform_requirements,
+};
+
+/// Resolve a pinned PlatformIO platform and its selected package requirements
+/// before a family adapter constructs its framework/toolchain packages. The
+/// registry lookup and manifest parsing are intentionally independent of the
+/// native platform enum; adapters only provide the package names they use.
+pub async fn resolve_registry_overrides(
+    project_dir: &Path,
+    env_config: &HashMap<String, String>,
+    platform_name: &str,
+    package_names: &[&str],
+    platform_default_requirements: &[(&str, &str)],
+) -> fbuild_core::Result<HashMap<String, PackageOverride>> {
+    let cache_root = fbuild_packages::Cache::new(project_dir).platforms_dir();
+    let client = fbuild_packages::platformio_registry::RegistryClient::default();
+    resolve_registry_overrides_with_client(
+        project_dir,
+        env_config,
+        platform_name,
+        package_names,
+        platform_default_requirements,
+        &client,
+        &cache_root,
+    )
+    .await
+}
+
+async fn resolve_registry_overrides_with_client(
+    project_dir: &Path,
+    env_config: &HashMap<String, String>,
+    platform_name: &str,
+    package_names: &[&str],
+    platform_default_requirements: &[(&str, &str)],
+    client: &fbuild_packages::platformio_registry::RegistryClient,
+    cache_root: &Path,
+) -> fbuild_core::Result<HashMap<String, PackageOverride>> {
+    let raw_platform = env_config
+        .get("platform")
+        .map(String::as_str)
+        .unwrap_or(platform_name)
+        .trim();
+    let platform_spec = parse_package_spec(raw_platform).map_err(package_error)?;
+    let mut explicit = package_names
+        .iter()
+        .filter_map(|name| {
+            env_config
+                .get("platform_packages")
+                .map(|raw| fbuild_config::parse_platform_packages_spec(raw, name))
+        })
+        .collect::<std::result::Result<Vec<_>, _>>()
+        .map_err(package_error)?
+        .into_iter()
+        .flatten()
+        .collect::<Vec<PackageSpec>>();
+    let has_registry_pin = platform_spec
+        .registry()
+        .and_then(|registry| registry.requirement.as_ref())
+        .is_some()
+        || explicit.iter().any(|spec| spec.registry().is_some());
+    if !has_registry_pin {
+        return Ok(HashMap::new());
+    }
+    let host = fbuild_core::platformio_package::host_system(fbuild_core::platform::host::current())
+        .ok_or_else(|| {
+            fbuild_core::FbuildError::PackageError("unsupported PlatformIO host".into())
+        })?;
+    let registry_platform = matches!(platform_spec.source, PackageSource::Registry(_));
+    let requirements = if let PackageSource::Registry(platform_registry) = platform_spec.source {
+        if platform_registry.name != platform_name {
+            return Err(fbuild_core::FbuildError::PackageError(format!(
+                "expected PlatformIO platform `{platform_name}`, got `{}`",
+                platform_registry.name
+            )));
+        }
+        // PlatformIO platform.py can specialize package requirements by board
+        // and framework. Keep consumer overrides first.
+        for (name, requirement) in platform_default_requirements {
+            explicit
+                .push(parse_package_spec(&format!("{name}@{requirement}")).map_err(package_error)?);
+        }
+        let platform = client
+            .resolve_cached(
+                &platform_registry,
+                PackageKind::Platform,
+                host,
+                cache_root,
+                true,
+            )
+            .await
+            .map_err(package_error)?
+            .ok_or_else(|| {
+                fbuild_core::FbuildError::PackageError("PlatformIO platform unavailable".into())
+            })?;
+        tracing::info!(
+            "resolved requested PlatformIO platform {}@{}: {} (sha256 {})",
+            platform.name,
+            platform.version,
+            platform.url,
+            platform.sha256
+        );
+        let platform_base = fbuild_packages::PackageBase::new(
+            &platform.name,
+            &platform.version,
+            &platform.url,
+            &platform.cache_identity(),
+            Some(&platform.sha256),
+            fbuild_packages::CacheSubdir::Platforms,
+            project_dir,
+        );
+        let installed = platform_base
+            .staged_install(|dir| {
+                find_platform_manifest(dir).ok_or_else(|| {
+                    fbuild_core::FbuildError::PackageError(format!(
+                        "{} has no platform.json",
+                        dir.display()
+                    ))
+                })?;
+                Ok(())
+            })
+            .await?;
+        let manifest_path = find_platform_manifest(&installed).ok_or_else(|| {
+            fbuild_core::FbuildError::PackageError(format!(
+                "{} has no platform.json",
+                installed.display()
+            ))
+        })?;
+        let manifest = std::fs::read_to_string(manifest_path)
+            .map_err(|error| fbuild_core::FbuildError::PackageError(error.to_string()))?;
+        resolve_platform_requirements(&manifest, &explicit).map_err(package_error)?
+    } else {
+        // A platform URL, repository ref, or local directory remains the
+        // platform source. Its explicitly registry-pinned packages still need
+        // payload resolution; no registry platform manifest is implied.
+        explicit_registry_requirements(&explicit)
+    };
+    let mut overrides = HashMap::new();
+    for name in package_names {
+        if explicit
+            .iter()
+            .any(|spec| spec.package_name() == Some(name) && spec.registry().is_none())
+        {
+            continue;
+        }
+        let requirement = requirements
+            .iter()
+            .find(|requirement| requirement.name == *name);
+        let Some(requirement) = requirement else {
+            if registry_platform {
+                return Err(fbuild_core::FbuildError::PackageError(format!(
+                    "PlatformIO platform `{raw_platform}` has no package `{name}`"
+                )));
+            }
+            continue;
+        };
+        let Some(registry) = requirement.spec.registry() else {
+            continue;
+        };
+        let payload = client
+            .resolve_cached(registry, requirement.kind, host, cache_root, true)
+            .await
+            .map_err(package_error)?
+            .ok_or_else(|| {
+                fbuild_core::FbuildError::PackageError(format!(
+                    "PlatformIO package `{name}` unavailable"
+                ))
+            })?;
+        tracing::info!(
+            "resolved PlatformIO package {}@{}: {} (sha256 {})",
+            payload.name,
+            payload.version,
+            payload.url,
+            payload.sha256
+        );
+        overrides.insert(
+            (*name).to_string(),
+            PackageOverride {
+                url: payload.url,
+                version: payload.version,
+                checksum: Some(payload.sha256),
+            },
+        );
+    }
+    Ok(overrides)
+}
+
+fn explicit_registry_requirements(explicit: &[PackageSpec]) -> Vec<PackageRequirement> {
+    explicit
+        .iter()
+        .filter_map(|spec| {
+            spec.registry().map(|_| {
+                let name = spec.package_name().unwrap_or_default();
+                PackageRequirement {
+                    name: name.to_string(),
+                    kind: package_kind_from_name(name),
+                    optional: false,
+                    spec: spec.clone(),
+                }
+            })
+        })
+        .collect()
+}
+
+fn package_kind_from_name(name: &str) -> PackageKind {
+    if name.starts_with("framework-") {
+        PackageKind::Framework
+    } else if name.starts_with("platform-") {
+        PackageKind::Platform
+    } else {
+        PackageKind::Tool
+    }
+}
+
+fn find_platform_manifest(root: &Path) -> Option<std::path::PathBuf> {
+    walkdir::WalkDir::new(root)
+        .max_depth(3)
+        .into_iter()
+        .filter_map(std::result::Result::ok)
+        .find(|entry| entry.file_type().is_file() && entry.file_name() == "platform.json")
+        .map(|entry| entry.path().to_path_buf())
+}
+
+fn package_error(error: impl std::fmt::Display) -> fbuild_core::FbuildError {
+    fbuild_core::FbuildError::PackageError(error.to_string())
+}
 
 /// Look up a `platform_packages` override for `package_name` in the resolved
 /// env config (`PlatformIOConfig::get_env_config(env)`).
@@ -125,5 +353,83 @@ mod tests {
         // `name @ 1.2.3` is a registry version pin, not a URL override.
         let env = env(&[("platform_packages", "framework-arduino-lpc8xx @ 1.2.3")]);
         assert!(resolve_override(&env, "framework-arduino-lpc8xx").is_none());
+    }
+
+    #[test]
+    fn repository_platform_keeps_explicit_registry_package_resolution() {
+        let platform =
+            parse_package_spec("https://github.com/maxgerhardt/platform-raspberrypi.git").unwrap();
+        assert!(matches!(platform.source, PackageSource::Repository { .. }));
+        let framework = parse_package_spec("platformio/framework-arduino-mbed@4.6.0").unwrap();
+        let toolchain =
+            parse_package_spec("platformio/toolchain-gccarmnoneeabi@1.90201.0").unwrap();
+        let url_override =
+            parse_package_spec("framework-arduinopico@https://example.test/arduino-pico.tar.gz")
+                .unwrap();
+        let requirements = explicit_registry_requirements(&[framework, toolchain, url_override]);
+        assert_eq!(requirements.len(), 2);
+        assert_eq!(requirements[0].name, "framework-arduino-mbed");
+        assert_eq!(requirements[0].kind, PackageKind::Framework);
+        assert_eq!(requirements[1].name, "toolchain-gccarmnoneeabi");
+        assert_eq!(requirements[1].kind, PackageKind::Tool);
+    }
+
+    #[tokio::test]
+    async fn repository_platform_resolves_pinned_package_without_replacing_platform_source() {
+        use tokio::io::{AsyncReadExt, AsyncWriteExt};
+
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let address = listener.local_addr().unwrap();
+        let server = tokio::spawn(async move {
+            let (mut socket, _) = listener.accept().await.unwrap();
+            let mut request = [0_u8; 2048];
+            let bytes = socket.read(&mut request).await.unwrap();
+            let request = std::str::from_utf8(&request[..bytes]).unwrap();
+            assert!(
+                request.starts_with("GET /v3/packages/platformio/tool/framework-arduino-mbed ")
+            );
+            let body = r#"{"name":"framework-arduino-mbed","owner":{"username":"platformio"},"versions":[{"name":"4.6.0","files":[{"system":"*","download_url":"https://example.test/framework-arduino-mbed-4.6.0.tar.gz","checksum":{"sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}}]}]}"#;
+            let response = format!(
+                "HTTP/1.1 200 OK\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}",
+                body.len()
+            );
+            socket.write_all(response.as_bytes()).await.unwrap();
+        });
+        let client = fbuild_packages::platformio_registry::RegistryClient::new(
+            format!("http://{address}/v3"),
+            reqwest::Client::new(),
+        );
+        let temp = tempfile::tempdir().unwrap();
+        let env = env(&[
+            (
+                "platform",
+                "https://github.com/maxgerhardt/platform-raspberrypi.git",
+            ),
+            (
+                "platform_packages",
+                "platformio/framework-arduino-mbed@4.6.0",
+            ),
+        ]);
+        let overrides = resolve_registry_overrides_with_client(
+            temp.path(),
+            &env,
+            "raspberrypi",
+            &["framework-arduino-mbed"],
+            &[],
+            &client,
+            &temp.path().join("cache"),
+        )
+        .await
+        .unwrap();
+        server.await.unwrap();
+        assert_eq!(overrides["framework-arduino-mbed"].version, "4.6.0");
+        assert_eq!(
+            overrides["framework-arduino-mbed"].url,
+            "https://example.test/framework-arduino-mbed-4.6.0.tar.gz"
+        );
+        assert_eq!(
+            overrides["framework-arduino-mbed"].checksum.as_deref(),
+            Some("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+        );
     }
 }

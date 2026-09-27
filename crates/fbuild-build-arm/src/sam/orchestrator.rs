@@ -136,39 +136,112 @@ pub(crate) enum SamCore {
 /// its own `platform_packages` override (FastLED/fbuild#664, #681). Shared by
 /// the build and `fbuild install`, so both provision the same packages
 /// (FastLED/fbuild#1433).
-pub(crate) fn sam_packages(
+pub(crate) async fn sam_packages(
     project_dir: &Path,
     env_config: Option<&std::collections::HashMap<String, String>>,
     board: &fbuild_config::BoardConfig,
+) -> Result<(Box<dyn fbuild_packages::Toolchain>, SamCore)> {
+    let clearcore = is_clearcore_board(board);
+    let samd = is_samd_mcu(&board.mcu);
+    let package_names: &[&str] = if clearcore {
+        &[
+            "framework-arduino-sam-clearcore",
+            "framework-cmsis",
+            "toolchain-gccarmnoneeabi",
+        ]
+    } else if samd {
+        &[
+            "framework-arduino-samd-adafruit",
+            "framework-cmsis",
+            "framework-cmsis-atmel",
+            "toolchain-gccarmnoneeabi",
+        ]
+    } else {
+        &["framework-arduino-sam", "toolchain-gccarmnoneeabi"]
+    };
+    // platform-atmelsam/platform.py specializes these requirements for the
+    // Adafruit core; the platform.json defaults target Arduino's own core.
+    let board_defaults: &[(&str, &str)] = if samd && !clearcore {
+        &[
+            ("toolchain-gccarmnoneeabi", "~1.90301.0"),
+            ("framework-cmsis", "~2.50400.0"),
+        ]
+    } else {
+        &[]
+    };
+    let registry_overrides = match env_config {
+        Some(env) => {
+            crate::package_override::resolve_registry_overrides(
+                project_dir,
+                env,
+                "atmelsam",
+                package_names,
+                board_defaults,
+            )
+            .await?
+        }
+        None => std::collections::HashMap::new(),
+    };
+    Ok(sam_packages_from_resolved(
+        project_dir,
+        env_config,
+        board,
+        &registry_overrides,
+    ))
+}
+
+fn sam_packages_from_resolved(
+    project_dir: &Path,
+    env_config: Option<&std::collections::HashMap<String, String>>,
+    board: &fbuild_config::BoardConfig,
+    registry_overrides: &std::collections::HashMap<String, fbuild_config::PackageOverride>,
 ) -> (Box<dyn fbuild_packages::Toolchain>, SamCore) {
     let override_for = |package: &str| {
-        env_config.and_then(|env| crate::package_override::resolve_override(env, package))
+        registry_overrides.get(package).cloned().or_else(|| {
+            env_config.and_then(|env| crate::package_override::resolve_override(env, package))
+        })
     };
     if is_clearcore_board(board) {
         let cores = match override_for("framework-arduino-sam-clearcore") {
             Some(o) => fbuild_packages::library::ClearCoreCores::with_override(project_dir, o),
             None => fbuild_packages::library::ClearCoreCores::new(project_dir),
         };
+        let toolchain = match override_for("toolchain-gccarmnoneeabi") {
+            Some(o) => fbuild_packages::toolchain::ArmGcc8Toolchain::with_override(project_dir, o),
+            None => fbuild_packages::toolchain::ArmGcc8Toolchain::new(project_dir),
+        };
         return (
-            Box::new(fbuild_packages::toolchain::ArmGcc8Toolchain::new(
-                project_dir,
-            )),
+            Box::new(toolchain),
             SamCore::ClearCore {
                 cores,
-                cmsis: fbuild_packages::library::CmsisFramework::new(project_dir),
+                cmsis: match override_for("framework-cmsis") {
+                    Some(o) => {
+                        fbuild_packages::library::CmsisFramework::with_override(project_dir, o)
+                    }
+                    None => fbuild_packages::library::CmsisFramework::new(project_dir),
+                },
             },
         );
     }
     let toolchain: Box<dyn fbuild_packages::Toolchain> =
-        Box::new(fbuild_packages::toolchain::ArmToolchain::new(project_dir));
+        Box::new(match override_for("toolchain-gccarmnoneeabi") {
+            Some(o) => fbuild_packages::toolchain::ArmToolchain::with_override(project_dir, o),
+            None => fbuild_packages::toolchain::ArmToolchain::new(project_dir),
+        });
     let core = if is_samd_mcu(&board.mcu) {
         SamCore::Samd {
             cores: match override_for("framework-arduino-samd-adafruit") {
                 Some(o) => fbuild_packages::library::SamdCores::with_override(project_dir, o),
                 None => fbuild_packages::library::SamdCores::new(project_dir),
             },
-            cmsis: fbuild_packages::library::CmsisFramework::new(project_dir),
-            cmsis_atmel: fbuild_packages::library::CmsisAtmel::new(project_dir),
+            cmsis: match override_for("framework-cmsis") {
+                Some(o) => fbuild_packages::library::CmsisFramework::with_override(project_dir, o),
+                None => fbuild_packages::library::CmsisFramework::new(project_dir),
+            },
+            cmsis_atmel: match override_for("framework-cmsis-atmel") {
+                Some(o) => fbuild_packages::library::CmsisAtmel::with_override(project_dir, o),
+                None => fbuild_packages::library::CmsisAtmel::new(project_dir),
+            },
         }
     } else {
         SamCore::Sam(match override_for("framework-arduino-sam") {
@@ -198,7 +271,8 @@ impl BuildOrchestrator for SamOrchestrator {
             &params.project_dir,
             ctx.config.get_env_config(&params.env_name).ok(),
             &ctx.board,
-        );
+        )
+        .await?;
         let toolchain_dir = toolchain.ensure_installed().await?;
         tracing::info!("arm-none-eabi toolchain at {}", toolchain_dir.display());
 
@@ -662,6 +736,92 @@ mod tests {
             "cores/arduino/api/String.cpp"
         )));
         assert!(is_clearcore_core_source(Path::new("project/itoa.c")));
+    }
+
+    #[test]
+    fn due_consumes_resolved_framework_and_toolchain() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let board = fbuild_config::BoardConfig {
+            mcu: "at91sam3x8e".into(),
+            ..Default::default()
+        };
+        let overrides = std::collections::HashMap::from([
+            (
+                "framework-arduino-sam".into(),
+                fbuild_config::PackageOverride::new("https://example.test/sam.tar.gz", "1.6.11"),
+            ),
+            (
+                "toolchain-gccarmnoneeabi".into(),
+                fbuild_config::PackageOverride::new("https://example.test/gcc.tar.gz", "1.70201.0"),
+            ),
+        ]);
+        let (toolchain, core) = sam_packages_from_resolved(tmp.path(), None, &board, &overrides);
+        assert_eq!(toolchain.get_info().version, "1.70201.0");
+        let SamCore::Sam(cores) = core else {
+            panic!("expected Arduino SAM core");
+        };
+        assert_eq!(fbuild_packages::Package::get_info(&cores).version, "1.6.11");
+    }
+
+    #[test]
+    fn adafruit_samd_consumes_resolved_framework_cmsis_and_toolchain() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let board = fbuild_config::BoardConfig {
+            mcu: "samd51j19a".into(),
+            ..Default::default()
+        };
+        let overrides = std::collections::HashMap::from([
+            (
+                "framework-arduino-samd-adafruit".into(),
+                fbuild_config::PackageOverride::new(
+                    "https://example.test/samd.tar.gz",
+                    "1.10716.0",
+                ),
+            ),
+            (
+                "toolchain-gccarmnoneeabi".into(),
+                fbuild_config::PackageOverride::new(
+                    "https://example.test/gcc.tar.gz",
+                    "1.90301.200702",
+                ),
+            ),
+            (
+                "framework-cmsis".into(),
+                fbuild_config::PackageOverride::new(
+                    "https://example.test/cmsis.tar.gz",
+                    "2.50400.181126",
+                ),
+            ),
+            (
+                "framework-cmsis-atmel".into(),
+                fbuild_config::PackageOverride::new(
+                    "https://example.test/cmsis-atmel.tar.gz",
+                    "1.2.2",
+                ),
+            ),
+        ]);
+        let (toolchain, core) = sam_packages_from_resolved(tmp.path(), None, &board, &overrides);
+        assert_eq!(toolchain.get_info().version, "1.90301.200702");
+        let SamCore::Samd {
+            cores,
+            cmsis,
+            cmsis_atmel,
+        } = core
+        else {
+            panic!("expected Adafruit SAMD core");
+        };
+        assert_eq!(
+            fbuild_packages::Package::get_info(&cores).version,
+            "1.10716.0"
+        );
+        assert_eq!(
+            fbuild_packages::Package::get_info(&cmsis).version,
+            "2.50400.181126"
+        );
+        assert_eq!(
+            fbuild_packages::Package::get_info(&cmsis_atmel).version,
+            "1.2.2"
+        );
     }
 
     #[test]

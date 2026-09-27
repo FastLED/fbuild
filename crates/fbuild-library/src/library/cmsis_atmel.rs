@@ -30,6 +30,13 @@ impl CmsisAtmel {
         }
     }
 
+    /// Use the selected PlatformIO registry package instead of the default.
+    pub fn with_override(project_dir: &Path, ovr: fbuild_config::PackageOverride) -> Self {
+        Self {
+            base: Self::new(project_dir).base.with_override(ovr),
+        }
+    }
+
     #[cfg(test)]
     fn with_cache_root(project_dir: &Path, cache_root: &Path) -> Self {
         Self {

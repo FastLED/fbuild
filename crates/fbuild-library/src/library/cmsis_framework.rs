@@ -31,6 +31,13 @@ impl CmsisFramework {
         }
     }
 
+    /// Use the CMSIS headers declared by the selected PlatformIO manifest.
+    pub fn with_override(project_dir: &Path, ovr: fbuild_config::PackageOverride) -> Self {
+        let mut framework = Self::new(project_dir);
+        framework.base = framework.base.with_override(ovr);
+        framework
+    }
+
     #[cfg(test)]
     fn with_cache_root(project_dir: &Path, cache_root: &Path) -> Self {
         Self {

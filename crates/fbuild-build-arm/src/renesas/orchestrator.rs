@@ -62,16 +62,56 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
 /// the `framework-arduinorenesas` `platform_packages` override
 /// (FastLED/fbuild#664, #681). Shared by the build and `fbuild install`, so
 /// both provision the same packages (FastLED/fbuild#1433).
-pub(crate) fn renesas_packages(
+pub(crate) async fn renesas_packages(
     project_dir: &Path,
     env_config: Option<&std::collections::HashMap<String, String>>,
+) -> Result<(
+    fbuild_packages::toolchain::ArmToolchain,
+    fbuild_packages::library::RenesasCores,
+)> {
+    let registry_overrides = match env_config {
+        Some(env) => {
+            crate::package_override::resolve_registry_overrides(
+                project_dir,
+                env,
+                "renesas-ra",
+                &["framework-arduinorenesas-uno", "toolchain-gccarmnoneeabi"],
+                &[],
+            )
+            .await?
+        }
+        None => std::collections::HashMap::new(),
+    };
+    Ok(renesas_packages_from_resolved(
+        project_dir,
+        env_config,
+        &registry_overrides,
+    ))
+}
+
+fn renesas_packages_from_resolved(
+    project_dir: &Path,
+    env_config: Option<&std::collections::HashMap<String, String>>,
+    registry_overrides: &std::collections::HashMap<String, fbuild_config::PackageOverride>,
 ) -> (
     fbuild_packages::toolchain::ArmToolchain,
     fbuild_packages::library::RenesasCores,
 ) {
-    let toolchain = fbuild_packages::toolchain::ArmToolchain::new(project_dir);
-    let override_pin = env_config
-        .and_then(|env| crate::package_override::resolve_override(env, "framework-arduinorenesas"));
+    let toolchain = match registry_overrides.get("toolchain-gccarmnoneeabi").cloned() {
+        Some(o) => fbuild_packages::toolchain::ArmToolchain::with_override(project_dir, o),
+        None => fbuild_packages::toolchain::ArmToolchain::new(project_dir),
+    };
+    let override_pin = registry_overrides
+        .get("framework-arduinorenesas-uno")
+        .cloned()
+        .or_else(|| {
+            env_config.and_then(|env| {
+                crate::package_override::resolve_override(env, "framework-arduinorenesas-uno")
+                    .or_else(|| {
+                        crate::package_override::resolve_override(env, "framework-arduinorenesas")
+                    })
+            })
+        });
     let cores = match override_pin {
         Some(o) => fbuild_packages::library::RenesasCores::with_override(project_dir, o),
         None => fbuild_packages::library::RenesasCores::new(project_dir),
@@ -96,7 +136,8 @@ impl BuildOrchestrator for RenesasOrchestrator {
         let (toolchain, framework) = renesas_packages(
             &params.project_dir,
             ctx.config.get_env_config(&params.env_name).ok(),
-        );
+        )
+        .await?;
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("arm-gcc toolchain at {}", toolchain_dir.display());
 
@@ -264,6 +305,7 @@ impl BuildOrchestrator for RenesasOrchestrator {
             params.verbose,
         )
         .with_build_unflags(ctx.build_unflags.clone())
+        .with_toolchain_package_version(&fbuild_packages::Package::get_info(&toolchain).version)
         // Scope the four FSP `-Wno-error=` C demotions to ArduinoCore-renesas
         // sources only. FastLED and user-sketch C code stays under the
         // stricter default `-Werror=` posture so those bug-class diagnostics
@@ -380,6 +422,30 @@ pub fn is_renesas_project(project_dir: &Path, env_name: &str) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn uno_r4_consumes_registry_framework_and_toolchain() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let overrides = std::collections::HashMap::from([
+            (
+                "framework-arduinorenesas-uno".into(),
+                fbuild_config::PackageOverride::new("https://example.test/uno.tar.gz", "1.6.0"),
+            ),
+            (
+                "toolchain-gccarmnoneeabi".into(),
+                fbuild_config::PackageOverride::new("https://example.test/gcc.tar.gz", "1.70201.0"),
+            ),
+        ]);
+        let (toolchain, framework) = renesas_packages_from_resolved(tmp.path(), None, &overrides);
+        assert_eq!(
+            fbuild_packages::Package::get_info(&toolchain).version,
+            "1.70201.0"
+        );
+        assert_eq!(
+            fbuild_packages::Package::get_info(&framework).version,
+            "1.6.0"
+        );
+    }
 
     #[test]
     fn test_discover_header_subdirs() {

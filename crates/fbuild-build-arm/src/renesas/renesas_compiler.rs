@@ -42,6 +42,9 @@ pub struct RenesasCompiler {
     /// classes still fail the build when introduced in user code. See
     /// FastLED/fbuild#404.
     framework_root: Option<PathBuf>,
+    /// GCC 7 predates `-Wreturn-mismatch`; passing its `-Wno-error=` form
+    /// fails before any vendor source is compiled.
+    legacy_gcc7: bool,
 }
 
 impl RenesasCompiler {
@@ -72,6 +75,7 @@ impl RenesasCompiler {
             temp_dir: fbuild_core::response_file::windows_temp_dir(),
             build_unflags: Vec::new(),
             framework_root: None,
+            legacy_gcc7: false,
         }
     }
 
@@ -91,6 +95,19 @@ impl RenesasCompiler {
     pub fn with_framework_root(mut self, root: PathBuf) -> Self {
         self.framework_root = Some(root);
         self
+    }
+
+    /// Adapt the vendor-only diagnostic flags to the selected registry GCC.
+    pub fn with_toolchain_package_version(mut self, version: &str) -> Self {
+        self.legacy_gcc7 = version.starts_with("1.702");
+        self
+    }
+
+    fn framework_c_suppressions(&self) -> impl Iterator<Item = &'static str> + '_ {
+        framework_c_suppression_flags()
+            .iter()
+            .copied()
+            .filter(|flag| !self.legacy_gcc7 || *flag != "-Wno-error=return-mismatch")
     }
 
     /// Build the common ARM Cortex-M4 compiler flags.
@@ -175,11 +192,7 @@ impl Compiler for RenesasCompiler {
             suppressed_extra = extra_flags
                 .iter()
                 .cloned()
-                .chain(
-                    framework_c_suppression_flags()
-                        .iter()
-                        .map(|s| (*s).to_string()),
-                )
+                .chain(self.framework_c_suppressions().map(str::to_string))
                 .collect();
             &suppressed_extra
         } else {
@@ -240,11 +253,7 @@ impl Compiler for RenesasCompiler {
             extra_flags
                 .iter()
                 .cloned()
-                .chain(
-                    framework_c_suppression_flags()
-                        .iter()
-                        .map(|s| (*s).to_string()),
-                )
+                .chain(self.framework_c_suppressions().map(str::to_string))
                 .collect()
         } else {
             extra_flags.to_vec()
@@ -282,11 +291,7 @@ impl Compiler for RenesasCompiler {
             extra_flags
                 .iter()
                 .cloned()
-                .chain(
-                    framework_c_suppression_flags()
-                        .iter()
-                        .map(|s| (*s).to_string()),
-                )
+                .chain(self.framework_c_suppressions().map(str::to_string))
                 .collect()
         } else {
             extra_flags.to_vec()
@@ -427,6 +432,21 @@ mod tests {
                 "-Wno-error=int-conversion",
                 "-Wno-error=incompatible-pointer-types",
             ]
+        );
+    }
+
+    #[test]
+    fn gcc7_registry_stack_omits_unsupported_return_mismatch_flag() {
+        let gcc7 = test_compiler().with_toolchain_package_version("1.70201.0");
+        let flags = gcc7.framework_c_suppressions().collect::<Vec<_>>();
+        assert!(!flags.contains(&"-Wno-error=return-mismatch"));
+        assert!(flags.contains(&"-Wno-error=implicit-function-declaration"));
+
+        let gcc15 = test_compiler().with_toolchain_package_version("15.2.Rel1");
+        assert!(
+            gcc15
+                .framework_c_suppressions()
+                .any(|flag| flag == "-Wno-error=return-mismatch")
         );
     }
 

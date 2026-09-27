@@ -164,21 +164,55 @@ impl BuildContext {
             build_log.push(format!("extra_scripts: {}", note));
         }
         // FastLED/fbuild#1407: warn about registry pins still ignored by a
-        // family adapter, but not ESP32 platform pins resolved by #1489.
+        // family adapter, but not pins whose adapter resolves them.
         if let Ok(env_config) = config.get_env_config(env_name) {
             let platform = env_config.get("platform").map(String::as_str).unwrap_or("");
             let resolved_platform = match fbuild_core::Platform::from_platform_str(platform) {
                 Some(fbuild_core::Platform::Espressif32) => {
                     Some(fbuild_core::Platform::Espressif32)
                 }
+                Some(fbuild_core::Platform::Teensy) => Some(fbuild_core::Platform::Teensy),
+                Some(fbuild_core::Platform::Ststm32) => Some(fbuild_core::Platform::Ststm32),
+                Some(fbuild_core::Platform::NordicNrf52) => {
+                    Some(fbuild_core::Platform::NordicNrf52)
+                }
+                Some(fbuild_core::Platform::AtmelSam) => Some(fbuild_core::Platform::AtmelSam),
+                Some(fbuild_core::Platform::RenesasRa) => Some(fbuild_core::Platform::RenesasRa),
+                Some(fbuild_core::Platform::Apollo3) => Some(fbuild_core::Platform::Apollo3),
                 _ => None,
             };
-            let resolved_packages: &[&str] =
-                if resolved_platform == Some(fbuild_core::Platform::Espressif32) {
-                    &["framework-arduinoespressif32"]
-                } else {
-                    &[]
-                };
+            let resolved_packages: &[&str] = match resolved_platform {
+                Some(fbuild_core::Platform::Espressif32) => &["framework-arduinoespressif32"],
+                Some(fbuild_core::Platform::Teensy) => {
+                    &["framework-arduinoteensy", "toolchain-gccarmnoneeabi-teensy"]
+                }
+                Some(fbuild_core::Platform::Ststm32) => &[
+                    "framework-arduinoststm32",
+                    "framework-arduino-mbed",
+                    "framework-cmsis",
+                    "toolchain-gccarmnoneeabi",
+                ],
+                Some(fbuild_core::Platform::NordicNrf52) => &[
+                    "framework-arduinoadafruitnrf52",
+                    "framework-cmsis",
+                    "toolchain-gccarmnoneeabi",
+                ],
+                Some(fbuild_core::Platform::AtmelSam) => &[
+                    "framework-arduino-sam",
+                    "framework-arduino-samd-adafruit",
+                    "framework-arduino-sam-clearcore",
+                    "framework-cmsis",
+                    "framework-cmsis-atmel",
+                    "toolchain-gccarmnoneeabi",
+                ],
+                Some(fbuild_core::Platform::RenesasRa) => {
+                    &["framework-arduinorenesas-uno", "toolchain-gccarmnoneeabi"]
+                }
+                Some(fbuild_core::Platform::Apollo3) => {
+                    &["framework-arduinoapollo3", "toolchain-gccarmnoneeabi"]
+                }
+                _ => &[],
+            };
             for warning in fbuild_config::ignored_version_pins_with_resolved_packages(
                 env_config,
                 resolved_platform,

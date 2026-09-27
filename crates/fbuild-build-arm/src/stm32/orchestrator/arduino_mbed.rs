@@ -103,6 +103,12 @@ pub(super) async fn build_arduino_mbed_stm32(
         &framework.read_variant_file(&ctx.board.variant, "ldflags.txt"),
     );
     variant_ldflags.extend(board_ldflags.iter().cloned());
+    apply_mbed_flash_layout(
+        &ctx.board.board_id,
+        ctx.config.get_env_config(&params.env_name).ok(),
+        &mut defines,
+        &mut variant_ldflags,
+    )?;
     dedupe_strings(&mut variant_ldflags);
     let linker_script = preprocess_linker_script(
         toolchain.get_gxx_path(),
@@ -220,6 +226,101 @@ pub(super) async fn build_arduino_mbed_stm32(
         start,
     )
     .await
+}
+
+/// Match PlatformIO's ArduinoCore-mbed flash partition selection. Its
+/// packaged GIGA/Portenta linker scripts and variant sources reference these
+/// symbols, but the default layout is encoded in the platform builder rather
+/// than in the downloaded framework archive.
+fn apply_mbed_flash_layout(
+    board_id: &str,
+    env_config: Option<&HashMap<String, String>>,
+    defines: &mut HashMap<String, String>,
+    linker_flags: &mut Vec<String>,
+) -> Result<()> {
+    if !board_id.starts_with("giga")
+        && !board_id.starts_with("portenta_h7")
+        && !board_id.starts_with("opta")
+        && !board_id.starts_with("nicla_vision")
+    {
+        return Ok(());
+    }
+    let layout = env_config
+        .and_then(|env| env.get("board_build.arduino.flash_layout"))
+        .map(String::as_str)
+        .unwrap_or("50_50");
+    let cm4_start = match layout {
+        "50_50" => "0x08100000",
+        "75_25" => "0x08180000",
+        "100_0" => "0x60000000",
+        other => {
+            return Err(fbuild_core::FbuildError::ConfigError(format!(
+                "unsupported Arduino Mbed flash layout `{other}`"
+            )));
+        }
+    };
+    defines.insert("CM4_BINARY_START".into(), cm4_start.into());
+    linker_flags.push(format!("-DCM4_BINARY_START={cm4_start}"));
+    if board_id.ends_with("_m4") {
+        let external_ram = layout == "100_0"
+            && (board_id.starts_with("giga") || board_id.starts_with("portenta_h7"));
+        let cm4_end = if external_ram {
+            "0x60040000"
+        } else {
+            "0x08200000"
+        };
+        defines.insert("CM4_BINARY_END".into(), cm4_end.into());
+        linker_flags.push(format!("-DCM4_BINARY_END={cm4_end}"));
+        if external_ram {
+            defines.insert("CM4_RAM_END".into(), "0x60080000".into());
+            linker_flags.push("-DCM4_RAM_END=0x60080000".into());
+        }
+    }
+    Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn giga_flash_layout_matches_platformio_default_and_override() {
+        for (layout, expected) in [
+            (None, "0x08100000"),
+            (Some("75_25"), "0x08180000"),
+            (Some("100_0"), "0x60000000"),
+        ] {
+            let env = layout.map(|value| {
+                HashMap::from([("board_build.arduino.flash_layout".into(), value.into())])
+            });
+            let mut defines = HashMap::new();
+            let mut linker_flags = Vec::new();
+            apply_mbed_flash_layout("giga_r1_m7", env.as_ref(), &mut defines, &mut linker_flags)
+                .unwrap();
+            assert_eq!(
+                defines.get("CM4_BINARY_START").map(String::as_str),
+                Some(expected)
+            );
+            assert!(linker_flags.contains(&format!("-DCM4_BINARY_START={expected}")));
+        }
+    }
+
+    #[test]
+    fn invalid_mbed_flash_layout_fails_before_compile() {
+        let env = HashMap::from([("board_build.arduino.flash_layout".into(), "bad".into())]);
+        let error = apply_mbed_flash_layout(
+            "giga_r1_m7",
+            Some(&env),
+            &mut HashMap::new(),
+            &mut Vec::new(),
+        )
+        .unwrap_err();
+        assert!(
+            error
+                .to_string()
+                .contains("unsupported Arduino Mbed flash layout")
+        );
+    }
 }
 
 fn build_arduino_mbed_mcu_config(

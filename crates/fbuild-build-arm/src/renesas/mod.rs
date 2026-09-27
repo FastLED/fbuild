@@ -25,7 +25,7 @@ impl crate::PlatformSupport for RenesasPlatformSupport {
     ) -> fbuild_core::Result<Vec<crate::provision::ProvisionedPackage>> {
         use crate::provision::{PackageKind, provision_package};
         let (toolchain, cores) =
-            orchestrator::renesas_packages(inputs.project_dir, Some(inputs.env_config));
+            orchestrator::renesas_packages(inputs.project_dir, Some(inputs.env_config)).await?;
         Ok(vec![
             provision_package(PackageKind::Toolchain, &toolchain, mode).await,
             provision_package(PackageKind::Framework, &cores, mode).await,

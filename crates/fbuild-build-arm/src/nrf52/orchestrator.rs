@@ -61,24 +61,88 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
 /// honoring the `framework-arduinoadafruitnrf52` `platform_packages` override
 /// (FastLED/fbuild#664, #681). Shared by the build and `fbuild install`, so
 /// both provision the same packages (FastLED/fbuild#1433).
-pub(crate) fn nrf52_packages(
+pub(crate) async fn nrf52_packages(
     project_dir: &Path,
     env_config: Option<&std::collections::HashMap<String, String>>,
+) -> Result<(
+    fbuild_packages::toolchain::ArmToolchain,
+    fbuild_packages::library::Nrf52Cores,
+    fbuild_packages::library::CmsisFramework,
+)> {
+    let registry_overrides = match env_config {
+        Some(env) => {
+            crate::package_override::resolve_registry_overrides(
+                project_dir,
+                env,
+                "nordicnrf52",
+                &[
+                    "framework-arduinoadafruitnrf52",
+                    "framework-cmsis",
+                    "toolchain-gccarmnoneeabi",
+                ],
+                &[],
+            )
+            .await?
+        }
+        None => std::collections::HashMap::new(),
+    };
+    Ok(nrf52_packages_from_resolved(
+        project_dir,
+        env_config,
+        &registry_overrides,
+    ))
+}
+
+fn nrf52_packages_from_resolved(
+    project_dir: &Path,
+    env_config: Option<&std::collections::HashMap<String, String>>,
+    registry_overrides: &std::collections::HashMap<String, fbuild_config::PackageOverride>,
 ) -> (
     fbuild_packages::toolchain::ArmToolchain,
     fbuild_packages::library::Nrf52Cores,
     fbuild_packages::library::CmsisFramework,
 ) {
-    let toolchain = fbuild_packages::toolchain::ArmToolchain::new(project_dir);
-    let override_pin = env_config.and_then(|env| {
-        crate::package_override::resolve_override(env, "framework-arduinoadafruitnrf52")
-    });
+    let toolchain = match registry_overrides.get("toolchain-gccarmnoneeabi").cloned() {
+        Some(pin) => fbuild_packages::toolchain::ArmToolchain::with_override(project_dir, pin),
+        None => fbuild_packages::toolchain::ArmToolchain::new(project_dir),
+    };
+    let override_pin = registry_overrides
+        .get("framework-arduinoadafruitnrf52")
+        .cloned()
+        .or_else(|| {
+            env_config.and_then(|env| {
+                crate::package_override::resolve_override(env, "framework-arduinoadafruitnrf52")
+            })
+        });
     let cores = match override_pin {
         Some(o) => fbuild_packages::library::Nrf52Cores::with_override(project_dir, o),
         None => fbuild_packages::library::Nrf52Cores::new(project_dir),
     };
-    let cmsis = fbuild_packages::library::CmsisFramework::new(project_dir);
+    let cmsis = match registry_overrides.get("framework-cmsis").cloned() {
+        Some(pin) => fbuild_packages::library::CmsisFramework::with_override(project_dir, pin),
+        None => fbuild_packages::library::CmsisFramework::new(project_dir),
+    };
     (toolchain, cores, cmsis)
+}
+
+fn align_nrf52_flags_with_registry_toolchain(
+    config: &mut super::mcu_config::Nrf52McuConfig,
+    toolchain_version: &str,
+) {
+    // platform-nordicnrf52's Adafruit builder uses GCC 7.2 without LTO.
+    // fbuild's default GCC 15 release recipe enables LTO, but that profile
+    // fails in GCC 7's assembler with `offset out of range` at link time.
+    if !toolchain_version.starts_with("1.70201.") {
+        return;
+    }
+    if let Some(release) = config.profiles.get_mut("release") {
+        release
+            .compile_flags
+            .retain(|flag| flag != "-flto" && flag != "-fno-fat-lto-objects");
+        release
+            .link_flags
+            .retain(|flag| flag != "-flto" && flag != "-fuse-linker-plugin");
+    }
 }
 
 #[async_trait::async_trait]
@@ -99,7 +163,8 @@ impl BuildOrchestrator for Nrf52Orchestrator {
         let (toolchain, framework, cmsis) = nrf52_packages(
             &params.project_dir,
             ctx.config.get_env_config(&params.env_name).ok(),
-        );
+        )
+        .await?;
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("arm-none-eabi toolchain at {}", toolchain_dir.display());
 
@@ -199,7 +264,9 @@ impl BuildOrchestrator for Nrf52Orchestrator {
         )?;
 
         // Add TinyUSB sources (USB CDC Serial support for nRF52840).
-        // Compile arduino/ wrapper + device stack + CDC class + nRF5x port.
+        // Compile arduino/ wrapper, device and host stacks, USB classes, and
+        // the nRF5x port. Newer published TinyUSB configs enable host-side
+        // endpoint helpers from tusb.c even for device-oriented sketches.
         let tinyusb_root = framework_dir
             .join("libraries")
             .join("Adafruit_TinyUSB_Arduino")
@@ -208,6 +275,7 @@ impl BuildOrchestrator for Nrf52Orchestrator {
             for subdir in &[
                 "arduino",
                 "device",
+                "host",
                 "common",
                 "class/cdc",
                 "class/vendor",
@@ -219,6 +287,7 @@ impl BuildOrchestrator for Nrf52Orchestrator {
                 "class/dfu",
                 "class/net",
                 "class/usbtmc",
+                "portable/analog/max3421",
                 "portable/nordic/nrf5x",
             ] {
                 let dir = tinyusb_root.join(subdir);
@@ -230,6 +299,17 @@ impl BuildOrchestrator for Nrf52Orchestrator {
             let tusb_c = tinyusb_root.join("tusb.c");
             if tusb_c.exists() {
                 sources.core_sources.push(tusb_c);
+            }
+            // The nRF52 TinyUSB host adapter calls SPIClass directly for its
+            // MAX3421 shield. That dependency is in framework code, not the
+            // sketch's include graph, so library selection cannot infer it.
+            let spi_cpp = framework_dir.join("libraries").join("SPI").join("SPI.cpp");
+            if tinyusb_root
+                .join("arduino/Adafruit_USBH_Host.cpp")
+                .is_file()
+                && spi_cpp.is_file()
+            {
+                sources.core_sources.push(spi_cpp);
             }
             tracing::info!(
                 "TinyUSB sources added to core (total core: {})",
@@ -246,7 +326,11 @@ impl BuildOrchestrator for Nrf52Orchestrator {
 
         // 6. Build include dirs + compiler
         let mcu_lower = ctx.board.mcu.to_lowercase();
-        let mcu_config = super::mcu_config::get_nrf52_config_for_mcu(&mcu_lower)?;
+        let mut mcu_config = super::mcu_config::get_nrf52_config_for_mcu(&mcu_lower)?;
+        align_nrf52_flags_with_registry_toolchain(
+            &mut mcu_config,
+            &fbuild_packages::Package::get_info(&toolchain).version,
+        );
         let mut defines = ctx.board.get_defines();
         defines.extend(mcu_config.defines_map());
         // Reuse the alias-resolved core_dir/variant_dir computed at step 5.
@@ -463,6 +547,67 @@ mod tests {
     fn test_nrf52_orchestrator_platform() {
         let orch = Nrf52Orchestrator;
         assert_eq!(orch.platform(), Platform::NordicNrf52);
+    }
+
+    #[test]
+    fn nrf52_consumes_registry_framework_toolchain_and_cmsis() {
+        let temp = tempfile::TempDir::new().unwrap();
+        let resolved = std::collections::HashMap::from([
+            (
+                "framework-arduinoadafruitnrf52".to_string(),
+                fbuild_config::PackageOverride::new(
+                    "https://example.test/nrf52.tar.gz",
+                    "1.10700.0",
+                ),
+            ),
+            (
+                "framework-cmsis".to_string(),
+                fbuild_config::PackageOverride::new(
+                    "https://example.test/cmsis.tar.gz",
+                    "2.50700.210515",
+                ),
+            ),
+            (
+                "toolchain-gccarmnoneeabi".to_string(),
+                fbuild_config::PackageOverride::new("https://example.test/gcc.tar.gz", "1.70201.0"),
+            ),
+        ]);
+        let (toolchain, framework, cmsis) =
+            nrf52_packages_from_resolved(temp.path(), None, &resolved);
+        assert_eq!(
+            fbuild_packages::Package::get_info(&toolchain).version,
+            "1.70201.0"
+        );
+        assert_eq!(
+            fbuild_packages::Package::get_info(&framework).version,
+            "1.10700.0"
+        );
+        assert_eq!(
+            fbuild_packages::Package::get_info(&cmsis).version,
+            "2.50700.210515"
+        );
+    }
+
+    #[test]
+    fn gcc7_registry_stack_omits_default_lto_flags() {
+        let mut config = crate::nrf52::mcu_config::get_nrf52_config_for_mcu("nrf52840").unwrap();
+        align_nrf52_flags_with_registry_toolchain(&mut config, "1.70201.0");
+        let release = config.profiles.get("release").unwrap();
+        assert!(
+            !release
+                .compile_flags
+                .iter()
+                .any(|flag| flag.contains("lto"))
+        );
+        assert!(!release.link_flags.iter().any(|flag| flag.contains("lto")));
+
+        let mut default = crate::nrf52::mcu_config::get_nrf52_config_for_mcu("nrf52840").unwrap();
+        align_nrf52_flags_with_registry_toolchain(&mut default, "15.2.Rel1");
+        assert!(
+            default.profiles["release"]
+                .compile_flags
+                .contains(&"-flto".into())
+        );
     }
 
     #[test]

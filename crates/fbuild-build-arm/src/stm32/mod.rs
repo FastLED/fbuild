@@ -21,7 +21,8 @@ impl crate::PlatformSupport for Stm32PlatformSupport {
     ) -> fbuild_core::Result<Vec<crate::provision::ProvisionedPackage>> {
         use crate::provision::{PackageKind, provision_package};
         let (toolchain, core) =
-            orchestrator::stm32_packages(inputs.project_dir, Some(inputs.env_config), inputs.board);
+            orchestrator::stm32_packages(inputs.project_dir, Some(inputs.env_config), inputs.board)
+                .await?;
         let mut rows = vec![provision_package(PackageKind::Toolchain, &toolchain, mode).await];
         match core {
             orchestrator::Stm32Core::Stm32duino { cores, cmsis } => {
