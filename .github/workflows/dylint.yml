@@ -163,6 +163,18 @@ jobs:
           # UI fixtures invoke Cargo outside soldr's Dylint front door.
           # Reuse the verified driver fetched by `soldr dylint prepare`.
           export DYLINT_DRIVER_PATH="${SOLDR_CACHE_DIR:?}/dylint/drivers"
+          # Dylint's UI runner asks for the short nightly directory; Soldr's
+          # verified asset lives under the host-qualified directory.
+          host="$(RUSTUP_TOOLCHAIN=nightly-2026-05-28 soldr rustc -vV | sed -n 's/^host: //p')"
+          short="nightly-2026-05-28"
+          qualified="${short}-${host}"
+          test -f "$DYLINT_DRIVER_PATH/$qualified/dylint-driver"
+          test -d "${RUSTUP_HOME:?}/toolchains/$qualified"
+          ln -sfnT "$qualified" "$DYLINT_DRIVER_PATH/$short"
+          # The driver reads RUSTUP_HOME/toolchains/$RUSTUP_TOOLCHAIN
+          # literally. Cargo's short nightly tag must resolve to the same
+          # installed sysroot while keeping the lint library's short tag.
+          ln -sfnT "$qualified" "$RUSTUP_HOME/toolchains/$short"
           while IFS= read -r manifest; do
             RUSTUP_TOOLCHAIN=nightly-2026-05-28 \
               soldr cargo test --manifest-path "$manifest"
