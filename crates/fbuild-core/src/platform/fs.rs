@@ -46,6 +46,11 @@ pub fn same_file(left: &Path, right: &Path) -> std::io::Result<bool> {
     Ok(file_identity(left)? == file_identity(right)?)
 }
 
+/// Return a change-sensitive identity for a short-lived executable hash memo.
+pub fn executable_memo_identity(metadata: &std::fs::Metadata) -> std::io::Result<String> {
+    super::selected::fs::executable_memo_identity(metadata)
+}
+
 /// Normalize a lexical path into the host's comparison-key representation.
 #[must_use]
 pub fn comparison_key(path: &Path) -> String {

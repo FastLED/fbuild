@@ -288,7 +288,15 @@ pub async fn build(
         let guard_request_id = request_id.clone();
         let worker_cancel = Arc::clone(&cancel_notify);
         let worker_fired_normal_terminal = Arc::clone(&fired_normal_terminal);
+        // Construct before spawning so middleware admission cannot end before
+        // the streaming worker is represented in the shutdown drain count.
+        let op_guard = OperationGuard::new(
+            &ctx,
+            fbuild_core::DaemonState::Building,
+            Some(format!("Building {}", project_dir_desc)),
+        );
         tokio::spawn(async move {
+            let _op_guard = op_guard;
             let mut termination_guard =
                 StreamTerminationGuard::new(async_tx.clone(), guard_request_id);
             // FBUILD_PERF_LOG=1 enables daemon-side coarse phase timing
@@ -298,11 +306,6 @@ pub async fn build(
                 .unwrap_or(false);
             let daemon_start = std::time::Instant::now();
 
-            let _op_guard = OperationGuard::new(
-                &ctx,
-                fbuild_core::DaemonState::Building,
-                Some(format!("Building {}", project_dir_desc)),
-            );
             // Daemon state goes to `Building` *before* the lock is taken
             // (the OperationGuard above). Without per-phase tracing, an
             // indefinite stall here looks identical to an indefinite
