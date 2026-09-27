@@ -26,7 +26,8 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
 }
 
 /// Silicon Labs' ARM GCC toolchain and Arduino cores for an env, honoring the
-/// `framework-arduinosilabs` `platform_packages` override (FastLED/fbuild#664,
+/// `framework-arduino-silabs` and legacy `framework-arduinosilabs`
+/// `platform_packages` URL overrides (FastLED/fbuild#664,
 /// #681). Shared by the build and `fbuild install`, so both provision the same
 /// packages (FastLED/fbuild#1433).
 pub(crate) async fn silabs_packages(
@@ -73,7 +74,9 @@ fn silabs_packages_from_resolved(
         .cloned()
         .or_else(|| {
             env_config.and_then(|env| {
-                crate::package_override::resolve_override(env, "framework-arduinosilabs")
+                crate::package_override::resolve_override(env, "framework-arduino-silabs").or_else(
+                    || crate::package_override::resolve_override(env, "framework-arduinosilabs"),
+                )
             })
         });
     let cores = match override_pin {
@@ -470,6 +473,22 @@ mod tests {
             "1.120301.0"
         );
         assert_eq!(fbuild_packages::Package::get_info(&core).version, "2.2.1");
+    }
+
+    #[test]
+    fn silabs_honors_canonical_and_legacy_framework_url_overrides() {
+        let tmp = tempfile::tempdir().unwrap();
+        for package in ["framework-arduino-silabs", "framework-arduinosilabs"] {
+            let env = HashMap::from([(
+                "platform_packages".into(),
+                format!("{package}@https://example.test/silabs-2.2.1.tar.gz"),
+            )]);
+            let (_, core) = silabs_packages_from_resolved(tmp.path(), Some(&env), &HashMap::new());
+            assert_eq!(
+                fbuild_packages::Package::get_info(&core).url,
+                "https://example.test/silabs-2.2.1.tar.gz"
+            );
+        }
     }
 
     #[test]

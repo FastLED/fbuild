@@ -288,12 +288,16 @@ fn apply_mbed_flash_layout(
                 .iter()
                 .any(|board| board == board_id);
         let cm4_end = if external_ram {
-            &config.external_cm4_binary_end
+            Some(&config.external_cm4_binary_end)
+        } else if layout == config.external_ram_layout {
+            None
         } else {
-            &config.cm4_binary_end
+            Some(&config.cm4_binary_end)
         };
-        defines.insert("CM4_BINARY_END".into(), cm4_end.into());
-        linker_flags.push(format!("-DCM4_BINARY_END={cm4_end}"));
+        if let Some(cm4_end) = cm4_end {
+            defines.insert("CM4_BINARY_END".into(), cm4_end.into());
+            linker_flags.push(format!("-DCM4_BINARY_END={cm4_end}"));
+        }
         if external_ram {
             defines.insert("CM4_RAM_END".into(), config.external_cm4_ram_end.clone());
             linker_flags.push(format!("-DCM4_RAM_END={}", config.external_cm4_ram_end));
@@ -469,7 +473,7 @@ mod tests {
             &mut Vec::new(),
         )
         .unwrap();
-        assert_eq!(nicla_defines["CM4_BINARY_END"], "0x08200000");
+        assert!(!nicla_defines.contains_key("CM4_BINARY_END"));
         assert!(!nicla_defines.contains_key("CM4_RAM_END"));
     }
 
