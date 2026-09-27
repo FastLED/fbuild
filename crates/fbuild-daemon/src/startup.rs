@@ -154,7 +154,7 @@ fn spawn_responder(listener: tokio::net::TcpListener, progress: Arc<Progress>) -
 #[cfg(test)]
 mod tests {
     use super::*;
-    use fbuild_core::daemon_health::{DaemonHealth, probe};
+    use fbuild_core::daemon_health::{DaemonHealth, WaitOutcome, probe, wait_until_healthy};
     use fbuild_core::time::SHORT_HTTP_TIMEOUT;
 
     async fn bound() -> (tokio::net::TcpListener, String) {
@@ -218,8 +218,15 @@ mod tests {
         tokio::spawn(async move { axum::serve(listener, app).await });
 
         assert_eq!(
-            probe(client, &url, SHORT_HTTP_TIMEOUT).await,
-            DaemonHealth::Healthy
+            wait_until_healthy(
+                client,
+                &url,
+                Duration::from_secs(10),
+                SHORT_HTTP_TIMEOUT,
+                |_, _| {}
+            )
+            .await,
+            WaitOutcome::Healthy
         );
     }
 }
