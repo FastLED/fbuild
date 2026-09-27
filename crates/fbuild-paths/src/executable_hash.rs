@@ -42,7 +42,7 @@ pub fn memoized_blake3_file(path: &Path, memo_dir: &Path) -> io::Result<blake3::
     }
 
     let mut file = std::fs::File::open(path)?;
-    if metadata_identity(&file.metadata()?)? != before {
+    if fbuild_core::platform::fs::executable_memo_identity(&file.metadata()?)? != before {
         return Err(io::Error::new(
             io::ErrorKind::WouldBlock,
             "executable changed before hashing",
@@ -70,25 +70,7 @@ pub fn memoized_blake3_file(path: &Path, _memo_dir: &Path) -> io::Result<blake3:
 
 #[cfg(unix)]
 fn file_identity(path: &Path) -> io::Result<String> {
-    metadata_identity(&path.metadata()?)
-}
-
-#[cfg(unix)]
-fn metadata_identity(metadata: &std::fs::Metadata) -> io::Result<String> {
-    use std::os::unix::fs::MetadataExt;
-    let modified = metadata
-        .modified()?
-        .duration_since(std::time::UNIX_EPOCH)
-        .map_err(|error| io::Error::new(io::ErrorKind::InvalidData, error))?;
-    Ok(format!(
-        "{} {} {} {} {}.{}",
-        metadata.len(),
-        modified.as_nanos(),
-        metadata.dev(),
-        metadata.ino(),
-        metadata.ctime(),
-        metadata.ctime_nsec()
-    ))
+    fbuild_core::platform::fs::executable_memo_identity(&path.metadata()?)
 }
 
 #[cfg(unix)]

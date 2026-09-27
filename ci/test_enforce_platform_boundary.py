@@ -15,10 +15,9 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
 
     def test_committed_exact_occurrence_ledger_matches_whole_tree(self) -> None:
         # Keep the row count explicit so additions to host mechanics require
-        # a deliberate inventory update. Serial PTY tests and the merged
-        # main-branch daemon/executable changes and the Windows file-URL
-        # resolver fixture and its Windows-only import bring the total to 46.
-        self.assertEqual(len(self.expected), 46)
+        # a deliberate inventory update. The executable identity now lives
+        # behind the platform boundary, leaving 44 occurrences.
+        self.assertEqual(len(self.expected), 44)
         self.assertFalse(boundary.validate_ledger(self.expected))
         self.assertFalse(boundary.compare(self.expected, self.observed))
 
@@ -102,17 +101,10 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
         )
 
     def test_no_filesystem_mechanics_remain_outside_the_boundary(self) -> None:
-        # The executable-hash implementation added on main uses Unix file
-        # metadata; keep that one exception exact and reject any new site.
+        # Filesystem mechanics belong behind the platform boundary.
         self.assertEqual(
             [(row.path, row.kind, row.normalized) for row in self.expected if row.capability == "fs"],
-            [
-                (
-                    "crates/fbuild-paths/src/executable_hash.rs",
-                    "native_path",
-                    "std::os::unix::fs::MetadataExt",
-                )
-            ],
+            [],
         )
 
     def test_rp2040_filesystem_mechanics_use_the_neutral_facade(self) -> None:

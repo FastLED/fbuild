@@ -35,6 +35,36 @@ fn parses_generic_registry_aliases_without_platform_dispatch() {
 }
 
 #[test]
+fn explicit_registry_type_paths_normalize_without_native_dispatch() {
+    let owner_first =
+        parse_package_spec("platformio/tool/toolchain-gccarmnoneeabi@1.90201.191206").unwrap();
+    let type_first =
+        parse_package_spec("tool/platformio/toolchain-gccarmnoneeabi@1.90201.191206").unwrap();
+    let ordinary =
+        parse_package_spec("platformio/toolchain-gccarmnoneeabi@1.90201.191206").unwrap();
+    assert_eq!(owner_first.registry(), type_first.registry());
+    assert_eq!(
+        owner_first.registry().unwrap().name,
+        ordinary.registry().unwrap().name
+    );
+    assert_eq!(
+        registry_api_url(PackageKind::Tool, owner_first.registry().unwrap()).unwrap(),
+        "https://api.registry.platformio.org/v3/packages/platformio/tool/toolchain-gccarmnoneeabi"
+    );
+    assert!(registry_api_url(PackageKind::Platform, owner_first.registry().unwrap()).is_err());
+    assert!(parse_package_spec("platformio/unknown/toolchain-gccarmnoneeabi@1.0.0").is_err());
+    let type_named_owner = parse_package_spec("tool/library/example@1.0.0").unwrap();
+    assert_eq!(
+        type_named_owner.registry().unwrap().owner.as_deref(),
+        Some("tool")
+    );
+    assert_eq!(
+        registry_api_url(PackageKind::Library, type_named_owner.registry().unwrap()).unwrap(),
+        "https://api.registry.platformio.org/v3/packages/tool/library/example"
+    );
+}
+
+#[test]
 fn classifies_archive_repository_and_local_payload_paths() {
     let archive = parse_package_spec("https://example.test/platform.zip").unwrap();
     let named_archive =

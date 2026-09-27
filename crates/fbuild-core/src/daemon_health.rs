@@ -30,6 +30,22 @@ pub const STARTING_BUDGET: Duration = Duration::from_secs(120);
 /// Interval between `/health` polls.
 pub const POLL_INTERVAL: Duration = Duration::from_millis(100);
 
+/// Longest a daemon told to terminate (SIGTERM) waits for in-flight
+/// operations before it exits anyway. New operations are refused from the
+/// moment the signal arrives.
+pub const SHUTDOWN_DRAIN_BUDGET: Duration = Duration::from_secs(5);
+
+/// Cap on the daemon's final zccache flush. A normal flush takes well under
+/// 100 ms; the cap only matters when zccache is stuck behind a slow disk or a
+/// startup load (zackees/zccache#1652).
+pub const EXIT_FLUSH_BUDGET: Duration = Duration::from_secs(4);
+
+/// Longest a terminated daemon can take to exit: drain, then flush. Clients
+/// that send SIGTERM must wait at least this long before escalating to a
+/// forced kill, or the kill lands mid-flush.
+pub const TERMINATE_EXIT_BUDGET: Duration =
+    Duration::from_secs(SHUTDOWN_DRAIN_BUDGET.as_secs() + EXIT_FLUSH_BUDGET.as_secs());
+
 /// What one `/health` probe says about the daemon.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum DaemonHealth {
