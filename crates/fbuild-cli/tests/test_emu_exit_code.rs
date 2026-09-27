@@ -173,8 +173,7 @@ fn deploy_output_survives_nonzero_exit() {
     let port = spawn_mock_daemon(Arc::clone(&stop));
 
     let project = make_test_project();
-    let bin =
-        option_env!("CARGO_BIN_EXE_fbuild").expect("cargo test must provide CARGO_BIN_EXE_fbuild");
+    let bin = env!("CARGO_BIN_EXE_fbuild");
 
     // allow-direct-spawn: integration test driver that invokes the compiled fbuild binary.
     let mut cmd = Command::new(bin);
@@ -216,8 +215,7 @@ fn test_emu_exits_non_zero_when_daemon_returns_failure() {
     let port = spawn_mock_daemon(Arc::clone(&stop));
 
     let project = make_test_project();
-    let bin =
-        option_env!("CARGO_BIN_EXE_fbuild").expect("cargo test must provide CARGO_BIN_EXE_fbuild");
+    let bin = env!("CARGO_BIN_EXE_fbuild");
 
     // Drive the CLI at the mock daemon. We clear FBUILD_DEV_MODE so the
     // CLI sticks to prod-mode path assumptions, and pin
