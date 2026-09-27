@@ -2,6 +2,7 @@
 //! platform dispatch. These fixtures are offline and intentionally include a
 //! platform name that fbuild cannot build.
 
+#[cfg(windows)]
 use fbuild_core::path::NormalizedPath;
 use fbuild_core::platformio_package::{
     PackageKind, PackageLock, PackageSource, parse_package_spec, registry_api_url,
