@@ -186,7 +186,7 @@ jobs:
           # Force fresh workspace traversal for the observation ledger while
           # preserving Cargo's cached dependencies. A per-run RUSTFLAGS value
           # invalidated every dependency, causing a cold rebuild on each run.
-          rg --files crates -g '*.rs' -0 | xargs -0 -r touch
+          find crates -type f -name '*.rs' -exec touch {} +
           rm -f "$FBUILD_PLATFORM_BOUNDARY_OBSERVED"
           env -u RUSTUP_TOOLCHAIN soldr dylint --all -- --workspace --all-targets
       - name: Compare scanner with actual Dylint observations
