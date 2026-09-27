@@ -8,13 +8,11 @@
 //! provisions esptool as a managed package instead, so no user `pip install`
 //! is required.
 //!
-//! We provision the **PyInstaller standalone binary** from the
-//! [`tasmota/esptool`](https://github.com/tasmota/esptool) releases: a single
-//! self-contained executable with every Python dependency (`rich_click`,
-//! `pyserial`, …) bundled inside. This deliberately avoids the pioarduino
-//! `esptoolpy-vX.Y.Z.zip`, which is pure-Python *source* WITHOUT its deps and
-//! therefore dies at runtime with `ModuleNotFoundError: rich_click`. The
-//! standalone binary needs no Python interpreter and no network at build time.
+//! Modern metadata URLs use the **PyInstaller standalone binary** from
+//! [`tasmota/esptool`](https://github.com/tasmota/esptool). Older pioarduino
+//! releases instead pin a source-only `pioarduino/esptool` archive; those are
+//! installed at the exact URL in a private `uv tool` environment so their
+//! Python dependencies do not leak into fbuild's runtime.
 //!
 //! Flow:
 //! 1. The version is taken from the pioarduino `tool-esptoolpy` metadata URL,
@@ -71,7 +69,7 @@ pub fn esptool_path_override() -> Result<Option<NormalizedPath>> {
     )))
 }
 
-/// Managed `tool-esptoolpy` package (tasmota standalone binary).
+/// Managed `tool-esptoolpy` package (standalone binary or pinned source).
 ///
 /// Constructed from the `platform.json` metadata URL (used only to extract the
 /// pinned version) and resolved lazily in [`Self::ensure_installed`], which
@@ -79,6 +77,7 @@ pub fn esptool_path_override() -> Result<Option<NormalizedPath>> {
 pub struct Esptool {
     project_dir: NormalizedPath,
     version: String,
+    source_url: Option<String>,
 }
 
 impl Esptool {
@@ -90,6 +89,9 @@ impl Esptool {
         Self {
             project_dir: NormalizedPath::from(project_dir),
             version: extract_esptool_version(metadata_url),
+            source_url: metadata_url
+                .starts_with("https://github.com/pioarduino/esptool/releases/download/")
+                .then(|| metadata_url.to_string()),
         }
     }
 
@@ -105,6 +107,9 @@ impl Esptool {
     /// the host has no prebuilt binary. Reported alongside [`Self::version`]
     /// when provisioning fails.
     pub fn download_url(&self) -> Result<String> {
+        if let Some(url) = &self.source_url {
+            return Ok(url.clone());
+        }
         Ok(Self::release_url(&self.version, host_platform_tag()?))
     }
 
@@ -121,6 +126,13 @@ impl Esptool {
     pub fn installed_binary(&self) -> Result<Option<NormalizedPath>> {
         if let Some(override_path) = esptool_path_override()? {
             return Ok(Some(override_path));
+        }
+        if let Some(url) = &self.source_url {
+            let base = self.source_package(url);
+            return Ok(base
+                .is_cached()
+                .then(|| source_esptool_binary(&base.install_path()))
+                .flatten());
         }
         let url = Self::release_url(&self.version, host_platform_tag()?);
         let base = PackageBase::new(
@@ -158,6 +170,10 @@ impl Esptool {
                 override_path.display()
             );
             return Ok(override_path);
+        }
+
+        if let Some(url) = &self.source_url {
+            return self.ensure_source_installed(url).await;
         }
 
         let platform = host_platform_tag()?;
@@ -199,6 +215,107 @@ impl Esptool {
         }
 
         Ok(bin)
+    }
+
+    fn source_package(&self, url: &str) -> PackageBase {
+        PackageBase::new(
+            "tool-esptoolpy",
+            &self.version,
+            url,
+            url,
+            None,
+            CacheSubdir::Toolchains,
+            self.project_dir.as_path(),
+        )
+    }
+
+    /// Older pioarduino manifests publish esptool as Python source, not a
+    /// standalone executable. Install the exact archive in its own managed
+    /// environment so its declared dependencies cannot contaminate fbuild.
+    async fn ensure_source_installed(&self, url: &str) -> Result<NormalizedPath> {
+        let base = self.source_package(url);
+        let install_path = base.staged_install(validate_source_esptool).await?;
+        validate_source_esptool(&install_path)?;
+        let binary = source_esptool_path(&install_path);
+        if !binary.is_file() {
+            let tool_dir = install_path.join(".fbuild-tools");
+            let bin_dir = install_path.join(".fbuild-bin");
+            let tool_dir_arg = tool_dir.to_string_lossy();
+            let bin_dir_arg = bin_dir.to_string_lossy();
+            let source_arg = install_path.to_string_lossy();
+            let env = [
+                ("UV_TOOL_DIR", tool_dir_arg.as_ref()),
+                ("UV_TOOL_BIN_DIR", bin_dir_arg.as_ref()),
+            ];
+            run_uv(
+                &["uv", "tool", "install", "--python", "3.10", &source_arg],
+                Some(&env),
+            )
+            .await?;
+        }
+        verify_esptool_binary(&binary).await?;
+        let binary_arg = binary.to_string_lossy();
+        let output = run_command(
+            &[binary_arg.as_ref(), "version"],
+            None,
+            None,
+            Some(std::time::Duration::from_secs(10)),
+        )
+        .await?;
+        let expected = format!("v{}", self.version);
+        if !output.stdout.contains(&expected) && !output.stderr.contains(&expected) {
+            return Err(FbuildError::PackageError(format!(
+                "pinned esptool archive {url} installed the wrong version; expected {}",
+                self.version
+            )));
+        }
+        Ok(NormalizedPath::from(binary))
+    }
+}
+
+fn validate_source_esptool(dir: &Path) -> Result<()> {
+    if dir.join("pyproject.toml").is_file() && dir.join("esptool.py").is_file() {
+        Ok(())
+    } else {
+        Err(FbuildError::PackageError(format!(
+            "pinned esptool source archive is incomplete: {}",
+            dir.display()
+        )))
+    }
+}
+
+fn source_esptool_path(dir: &Path) -> std::path::PathBuf {
+    source_esptool_path_for_host(dir, cfg!(windows))
+}
+
+fn source_esptool_path_for_host(dir: &Path, windows: bool) -> std::path::PathBuf {
+    if windows {
+        dir.join(".fbuild-tools/esptool/Scripts/esptool.py.exe")
+    } else {
+        dir.join(".fbuild-tools/esptool/bin/esptool.py")
+    }
+}
+
+fn source_esptool_binary(dir: &Path) -> Option<NormalizedPath> {
+    let path = source_esptool_path(dir);
+    path.is_file().then(|| NormalizedPath::from(path))
+}
+
+async fn run_uv(args: &[&str], env: Option<&[(&str, &str)]>) -> Result<()> {
+    let output = run_command(args, None, env, Some(std::time::Duration::from_secs(300)))
+        .await
+        .map_err(|error| {
+            FbuildError::PackageError(format!(
+                "pinned esptool source needs uv for isolated Python dependencies: {error}"
+            ))
+        })?;
+    if output.success() {
+        Ok(())
+    } else {
+        Err(FbuildError::PackageError(format!(
+            "uv could not install pinned esptool source (exit {}): {} {}",
+            output.exit_code, output.stdout, output.stderr
+        )))
     }
 }
 
@@ -665,5 +782,24 @@ mod tests {
                 Esptool::release_url("5.3.0", tag)
             );
         }
+    }
+
+    #[test]
+    fn pinned_pioarduino_source_archive_is_not_replaced_by_tasmota() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let url = "https://github.com/pioarduino/esptool/releases/download/v4.7.5/esptool.zip";
+        let esptool = Esptool::from_metadata_url(tmp.path(), url);
+        assert_eq!(esptool.version(), "4.7.5");
+        assert_eq!(esptool.download_url().unwrap(), url);
+        assert_eq!(
+            source_esptool_path_for_host(tmp.path(), true),
+            tmp.path()
+                .join(".fbuild-tools/esptool/Scripts/esptool.py.exe")
+        );
+        assert_eq!(
+            source_esptool_path_for_host(tmp.path(), false),
+            tmp.path().join(".fbuild-tools/esptool/bin/esptool.py")
+        );
+        assert!(validate_source_esptool(tmp.path()).is_err());
     }
 }

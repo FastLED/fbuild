@@ -157,6 +157,26 @@ impl Esp32Platform {
             })
     }
 
+    /// Resolve one manifest entry through the shared PlatformIO parser. This
+    /// preserves its registry owner and version, unlike `get_package_url`.
+    pub fn get_package_requirement(
+        &self,
+        package_name: &str,
+    ) -> Result<fbuild_core::platformio_package::PackageRequirement> {
+        let packages = self.read_packages_section()?;
+        let package = packages.get(package_name).ok_or_else(|| {
+            FbuildError::PackageError(format!(
+                "package '{package_name}' not found in platform.json"
+            ))
+        })?;
+        let manifest = serde_json::json!({"packages": {package_name: package}});
+        fbuild_core::platformio_package::resolve_platform_requirements(&manifest.to_string(), &[])
+            .map_err(|error| FbuildError::PackageError(error.to_string()))?
+            .into_iter()
+            .next()
+            .ok_or_else(|| FbuildError::PackageError(format!("package '{package_name}' missing")))
+    }
+
     /// Enumerate every package listed in `platform.json`'s `packages` section.
     ///
     /// Returns `(name, version_url)` pairs sorted by name. The orchestrator
@@ -438,5 +458,12 @@ mod tests {
         assert!(!p.has_unified_toolchain(false));
         // RISC-V: the entry exists but names a registry version, not a URL.
         assert!(!p.has_unified_toolchain(true));
+        let requirement = p
+            .get_package_requirement("toolchain-xtensa-esp32s3")
+            .unwrap();
+        let registry = requirement.spec.registry().unwrap();
+        assert_eq!(registry.owner.as_deref(), Some("espressif"));
+        assert_eq!(registry.name, "toolchain-xtensa-esp32s3");
+        assert_eq!(registry.requirement.as_deref(), Some("12.2.0+20230208"));
     }
 }
