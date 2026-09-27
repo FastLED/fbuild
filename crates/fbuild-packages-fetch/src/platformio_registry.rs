@@ -1,12 +1,13 @@
 //! Network adapter for the platform-agnostic PlatformIO registry resolver.
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::platformio_package::{
     PackageKind, RegistrySpec, ResolutionError, ResolvedPayload, registry_api_url,
     resolve_registry_json,
 };
 use serde::Deserialize;
 use sha2::{Digest, Sha256};
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 const API_BASE: &str = "https://api.registry.platformio.org/v3";
 const SEARCH_PAGE_SIZE: usize = 50;
@@ -93,7 +94,7 @@ impl RegistryClient {
         &self,
         payload: &ResolvedPayload,
         cache_root: &Path,
-    ) -> Result<PathBuf, RegistryError> {
+    ) -> Result<NormalizedPath, RegistryError> {
         let url = reqwest::Url::parse(&payload.url)
             .map_err(|_| RegistryError::InvalidPayloadUrl(payload.url.clone()))?;
         let filename = url
@@ -102,13 +103,13 @@ impl RegistryClient {
             .filter(|name| !name.is_empty() && *name != "." && *name != "..")
             .ok_or_else(|| RegistryError::InvalidPayloadUrl(payload.url.clone()))?;
         let directory = cache_root.join(payload.cache_identity());
-        tokio::fs::create_dir_all(&directory).await?;
+        fbuild_core::fs::create_dir_all(&directory).await?;
         let destination = directory.join(filename);
         let mut replace_corrupt = false;
         if destination.is_file() {
-            let bytes = tokio::fs::read(&destination).await?;
+            let bytes = fbuild_core::fs::read(&destination).await?;
             if verify_bytes(payload, &bytes).is_ok() {
-                return Ok(destination);
+                return Ok(NormalizedPath::new(destination));
             }
             replace_corrupt = true;
         }
@@ -128,14 +129,14 @@ impl RegistryClient {
             temporary
                 .persist(&destination)
                 .map_err(|error| RegistryError::Storage(error.error))?;
-            return Ok(destination);
+            return Ok(NormalizedPath::new(destination));
         }
         match temporary.persist_noclobber(&destination) {
-            Ok(_) => Ok(destination),
+            Ok(_) => Ok(NormalizedPath::new(destination)),
             Err(error) if error.error.kind() == std::io::ErrorKind::AlreadyExists => {
-                let cached = tokio::fs::read(&destination).await?;
+                let cached = fbuild_core::fs::read(&destination).await?;
                 verify_bytes(payload, &cached)?;
-                Ok(destination)
+                Ok(NormalizedPath::new(destination))
             }
             Err(error) => Err(RegistryError::Storage(error.error)),
         }
@@ -289,7 +290,7 @@ mod tests {
             .await
             .unwrap();
         assert_eq!(
-            tokio::fs::read(&path).await.unwrap(),
+            fbuild_core::fs::read(&path).await.unwrap(),
             b"verified archive bytes"
         );
         assert_eq!(
@@ -299,7 +300,7 @@ mod tests {
                 .unwrap(),
             path
         );
-        tokio::fs::write(&path, b"corrupted").await.unwrap();
+        fbuild_core::fs::write(&path, b"corrupted").await.unwrap();
         assert_eq!(
             client
                 .download_verified(&payload, cache.path())
@@ -308,7 +309,7 @@ mod tests {
             path
         );
         assert_eq!(
-            tokio::fs::read(&path).await.unwrap(),
+            fbuild_core::fs::read(&path).await.unwrap(),
             b"verified archive bytes"
         );
         let mut wrong = payload.clone();

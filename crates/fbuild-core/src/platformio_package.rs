@@ -5,11 +5,11 @@
 //! Network access, downloads, and extraction belong to the package-fetch
 //! layer; callers pass registry and platform-manifest JSON to these functions.
 
-use std::path::PathBuf;
-
 use semver::{Version, VersionReq};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
+
+use crate::path::NormalizedPath;
 
 const REGISTRY_API: &str = "https://api.registry.platformio.org/v3/packages";
 
@@ -107,7 +107,7 @@ pub enum PackageSource {
         reference: Option<String>,
     },
     LocalPath {
-        path: PathBuf,
+        path: NormalizedPath,
     },
 }
 
@@ -177,9 +177,18 @@ impl ResolvedPayload {
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub enum PackageLock {
     Registry(ResolvedPayload),
-    Archive { url: String, sha256: String },
-    Repository { url: String, commit: String },
-    LocalPath { path: PathBuf, sha256: String },
+    Archive {
+        url: String,
+        sha256: String,
+    },
+    Repository {
+        url: String,
+        commit: String,
+    },
+    LocalPath {
+        path: NormalizedPath,
+        sha256: String,
+    },
 }
 
 impl PackageLock {
@@ -208,7 +217,7 @@ impl PackageLock {
             }
             Self::LocalPath { path, sha256 } => {
                 hash.update(b"local\0");
-                hash.update(path.to_string_lossy().as_bytes());
+                hash.update(path.display_slash().as_bytes());
                 hash.update([0]);
                 hash.update(sha256.as_bytes());
             }
@@ -362,7 +371,9 @@ fn parse_direct_source(value: &str) -> Result<PackageSource> {
             .ok()
             .and_then(|url| url.to_file_path().ok())
             .ok_or_else(|| ResolutionError::InvalidSpec(value.into()))?;
-        return Ok(PackageSource::LocalPath { path });
+        return Ok(PackageSource::LocalPath {
+            path: NormalizedPath::new(path),
+        });
     }
     if starts_with_any(value, &["./", "../", "/"])
         || (value.len() >= 3
@@ -370,7 +381,7 @@ fn parse_direct_source(value: &str) -> Result<PackageSource> {
             && matches!(value.as_bytes()[2], b'/' | b'\\'))
     {
         return Ok(PackageSource::LocalPath {
-            path: PathBuf::from(value),
+            path: NormalizedPath::new(value),
         });
     }
     if looks_like_github_ref(value) {

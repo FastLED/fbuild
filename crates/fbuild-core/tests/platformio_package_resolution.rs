@@ -2,6 +2,8 @@
 //! platform dispatch. These fixtures are offline and intentionally include a
 //! platform name that fbuild cannot build.
 
+#[cfg(windows)]
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::platformio_package::{
     PackageKind, PackageLock, PackageSource, parse_package_spec, registry_api_url,
     resolve_platform_requirements, resolve_registry_json,
@@ -45,7 +47,9 @@ fn classifies_archive_repository_and_local_payload_paths() {
     let revision_archive =
         parse_package_spec("framework-foo@https://example.test/core.tar.gz#deadbeef").unwrap();
     let local = parse_package_spec("../platforms/custom").unwrap();
-    let file_url = parse_package_spec("file:///tmp/custom-platform").unwrap();
+    let local_dir = tempfile::tempdir().unwrap();
+    let local_url = reqwest::Url::from_file_path(local_dir.path()).unwrap();
+    let file_url = parse_package_spec(local_url.as_str()).unwrap();
 
     assert!(matches!(archive.source, PackageSource::Archive { .. }));
     assert_eq!(
@@ -74,7 +78,7 @@ fn classifies_archive_repository_and_local_payload_paths() {
 fn windows_file_url_maps_to_drive_path() {
     let spec = parse_package_spec("file:///C:/platforms/custom").unwrap();
     assert!(
-        matches!(spec.source, PackageSource::LocalPath { path } if path == std::path::PathBuf::from(r"C:\platforms\custom"))
+        matches!(spec.source, PackageSource::LocalPath { path } if path == NormalizedPath::new(r"C:\platforms\custom"))
     );
 }
 

@@ -238,8 +238,8 @@ impl Esptool {
         validate_source_esptool(&install_path)?;
         let binary = source_esptool_path(&install_path);
         if !binary.is_file() {
-            let tool_dir = install_path.join(".fbuild-tools");
-            let bin_dir = install_path.join(".fbuild-bin");
+            let tool_dir = source_tools_dir(&install_path);
+            let bin_dir = source_bin_dir(&install_path);
             let tool_dir_arg = tool_dir.to_string_lossy();
             let bin_dir_arg = bin_dir.to_string_lossy();
             let source_arg = install_path.to_string_lossy();
@@ -269,7 +269,7 @@ impl Esptool {
                 self.version
             )));
         }
-        Ok(NormalizedPath::from(binary))
+        Ok(binary)
     }
 }
 
@@ -284,21 +284,30 @@ fn validate_source_esptool(dir: &Path) -> Result<()> {
     }
 }
 
-fn source_esptool_path(dir: &Path) -> std::path::PathBuf {
+fn source_tools_dir(dir: &Path) -> NormalizedPath {
+    NormalizedPath::new(dir.join(format!("{}-tools", fbuild_paths::FBUILD_DIR_NAME)))
+}
+
+fn source_bin_dir(dir: &Path) -> NormalizedPath {
+    NormalizedPath::new(dir.join(format!("{}-bin", fbuild_paths::FBUILD_DIR_NAME)))
+}
+
+fn source_esptool_path(dir: &Path) -> NormalizedPath {
     source_esptool_path_for_host(dir, fbuild_core::platform::host::is_windows())
 }
 
-fn source_esptool_path_for_host(dir: &Path, windows: bool) -> std::path::PathBuf {
+fn source_esptool_path_for_host(dir: &Path, windows: bool) -> NormalizedPath {
+    let tools_dir = source_tools_dir(dir);
     if windows {
-        dir.join(".fbuild-tools/esptool/Scripts/esptool.py.exe")
+        tools_dir.join("esptool/Scripts/esptool.py.exe")
     } else {
-        dir.join(".fbuild-tools/esptool/bin/esptool.py")
+        tools_dir.join("esptool/bin/esptool.py")
     }
 }
 
 fn source_esptool_binary(dir: &Path) -> Option<NormalizedPath> {
     let path = source_esptool_path(dir);
-    path.is_file().then(|| NormalizedPath::from(path))
+    path.is_file().then_some(path)
 }
 
 async fn run_uv(args: &[&str], env: Option<&[(&str, &str)]>) -> Result<()> {
@@ -793,12 +802,11 @@ mod tests {
         assert_eq!(esptool.download_url().unwrap(), url);
         assert_eq!(
             source_esptool_path_for_host(tmp.path(), true),
-            tmp.path()
-                .join(".fbuild-tools/esptool/Scripts/esptool.py.exe")
+            source_tools_dir(tmp.path()).join("esptool/Scripts/esptool.py.exe")
         );
         assert_eq!(
             source_esptool_path_for_host(tmp.path(), false),
-            tmp.path().join(".fbuild-tools/esptool/bin/esptool.py")
+            source_tools_dir(tmp.path()).join("esptool/bin/esptool.py")
         );
         assert!(validate_source_esptool(tmp.path()).is_err());
     }

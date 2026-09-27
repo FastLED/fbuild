@@ -17,8 +17,8 @@ class EnforcePlatformBoundaryTests(unittest.TestCase):
         # Keep the row count explicit so additions to host mechanics require
         # a deliberate inventory update. Serial PTY tests and the merged
         # main-branch daemon/executable changes and the Windows file-URL
-        # resolver fixture bring the total to 45.
-        self.assertEqual(len(self.expected), 45)
+        # resolver fixture and its Windows-only import bring the total to 46.
+        self.assertEqual(len(self.expected), 46)
         self.assertFalse(boundary.validate_ledger(self.expected))
         self.assertFalse(boundary.compare(self.expected, self.observed))
 

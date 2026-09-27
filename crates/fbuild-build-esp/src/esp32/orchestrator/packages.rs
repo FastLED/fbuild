@@ -627,14 +627,16 @@ fn registry_payload_path(
     cache_root: &Path,
     registry: &RegistrySpec,
     host: &str,
-) -> Result<std::path::PathBuf> {
+) -> Result<NormalizedPath> {
     let request = serde_json::to_vec(&(registry, host)).map_err(|error| {
         fbuild_core::FbuildError::PackageError(format!("cannot encode registry request: {error}"))
     })?;
     let key = format!("{:x}", Sha256::digest(request));
-    Ok(cache_root
-        .join("platformio-registry-resolutions")
-        .join(format!("{key}.json")))
+    Ok(NormalizedPath::new(
+        cache_root
+            .join("platformio-registry-resolutions")
+            .join(format!("{key}.json")),
+    ))
 }
 
 fn cache_registry_payload(

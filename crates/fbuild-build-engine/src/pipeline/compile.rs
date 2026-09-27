@@ -204,7 +204,9 @@ mod tests {
     fn raw_compile_db_keeps_the_real_compiler_and_flags() {
         let tmp = tempfile::tempdir().unwrap();
         let project = tmp.path().join("project");
-        let build = project.join(".fbuild/build/uno/release");
+        let build = fbuild_paths::get_project_fbuild_dir(&project)
+            .join(fbuild_paths::BUILD_DIR_NAME)
+            .join("uno/release");
         let core_src = project.join("core/wiring.c");
         let sketch_src = project.join("src/main.cpp");
         std::fs::create_dir_all(core_src.parent().unwrap()).unwrap();
