@@ -43,10 +43,35 @@ class FractionalWorkflowTests(unittest.TestCase):
             set(macos["jobs"]["test"]["strategy"]["matrix"]["runner"]),
         )
         self.assertEqual("./.github/workflows/dylint.yml", full["jobs"]["dylint"]["uses"])
-        self.assertTrue(full["jobs"]["dylint"]["with"]["run_full"])
+        self.assertNotIn("run_full", full["jobs"]["dylint"]["with"])
         dylint = self.load("dylint.yml")
-        self.assertEqual("Dylint", dylint["jobs"]["policy"]["name"])
-        self.assertIn("inputs.run_full", dylint["jobs"]["dylint"]["if"])
+        self.assertEqual("Dylint policy", dylint["jobs"]["policy"]["name"])
+        self.assertNotIn("if", dylint["jobs"]["dylint"])
+        self.assertEqual(
+            {"ubuntu-latest", "windows-latest", "macos-15"},
+            {cell["os"] for cell in dylint["jobs"]["dylint"]["strategy"]["matrix"]["include"]},
+        )
+        gate = dylint["jobs"]["gate"]
+        self.assertEqual("Dylint", gate["name"])
+        self.assertEqual({"policy", "dylint"}, set(gate["needs"]))
+        self.assertIn("always()", gate["if"])
+        self.assertIn("needs.dylint.result", gate["steps"][0]["env"]["FULL_DYLINT"])
+        gate_script = gate["steps"][0]["run"]
+        for policy_result, dylint_result, expected in (
+            ("success", "success", 0),
+            ("failure", "success", 1),
+            ("success", "failure", 1),
+            ("success", "skipped", 1),
+        ):
+            with self.subTest(policy=policy_result, dylint=dylint_result):
+                result = subprocess.run(
+                    ["bash", "-e", "-c", gate_script],
+                    env={**os.environ, "POLICY": policy_result, "FULL_DYLINT": dylint_result},
+                    capture_output=True,
+                    text=True,
+                    check=False,
+                )
+                self.assertEqual(expected, result.returncode)
         for job, workflow in (
             ("acceptance", "acceptance-205.yml"),
             ("bench", "bench-205.yml"),

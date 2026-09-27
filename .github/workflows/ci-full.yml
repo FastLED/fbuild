@@ -77,7 +77,6 @@ jobs:
     uses: ./.github/workflows/dylint.yml
     with:
       ref: ${{ needs.verify.outputs.candidate_sha }}
-      run_full: true
   acceptance:
     if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'ci-full')
     needs: verify
