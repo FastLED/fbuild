@@ -13,6 +13,24 @@ use sha2::{Digest, Sha256};
 
 const REGISTRY_API: &str = "https://api.registry.platformio.org/v3/packages";
 
+/// PlatformIO registry `system` selector for a native fbuild host. Unknown
+/// architectures fail resolution rather than selecting another host's binary.
+#[must_use]
+pub const fn host_system(host: crate::platform::host::HostPlatform) -> Option<&'static str> {
+    use crate::platform::host::{HostArch, HostOs};
+    match (host.os(), host.arch()) {
+        (HostOs::Linux, HostArch::X86_64) => Some("linux_x86_64"),
+        (HostOs::Linux, HostArch::Aarch64) => Some("linux_aarch64"),
+        (HostOs::Linux, HostArch::X86) => Some("linux_i686"),
+        (HostOs::Windows, HostArch::X86_64) => Some("windows_amd64"),
+        (HostOs::Windows, HostArch::Aarch64) => Some("windows_arm64"),
+        (HostOs::Windows, HostArch::X86) => Some("windows_x86"),
+        (HostOs::Macos, HostArch::X86_64) => Some("darwin_x86_64"),
+        (HostOs::Macos, HostArch::Aarch64) => Some("darwin_arm64"),
+        _ => None,
+    }
+}
+
 #[derive(Debug, thiserror::Error, PartialEq, Eq)]
 pub enum ResolutionError {
     #[error("invalid PlatformIO package specification: {0}")]

@@ -123,6 +123,30 @@ impl Esp32Toolchain {
         }
     }
 
+    /// Construct from the exact host payload published by the PlatformIO
+    /// registry. Its identity includes the package, version, host and digest
+    /// so per-MCU releases never collide with the unified toolchain cache.
+    pub fn from_registry_payload(
+        project_dir: &Path,
+        payload: &fbuild_core::platformio_package::ResolvedPayload,
+        prefix: &str,
+    ) -> Self {
+        let identity = payload.cache_identity();
+        Self {
+            base: PackageBase::new(
+                &payload.name,
+                &payload.version,
+                &payload.url,
+                &identity,
+                Some(&payload.sha256),
+                CacheSubdir::Toolchains,
+                project_dir,
+            ),
+            install_dir: None,
+            prefix: prefix.to_string(),
+        }
+    }
+
     /// Get the resolved install directory, or compute it.
     fn resolved_dir(&self) -> PathBuf {
         self.install_dir

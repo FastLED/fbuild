@@ -68,6 +68,20 @@ pub(crate) fn esptool_elf2image_argv(
     out_bin: &str,
 ) -> Vec<String> {
     let mut argv: Vec<String> = Vec::new();
+    // pioarduino's older pinned source package installs the v4 `esptool.py`
+    // entry point. Its elf2image options use underscores; v5 standalone
+    // executables use hyphens. The binary name comes from the exact selected
+    // package, so this does not substitute a different esptool release.
+    let source_v4 = esptool_bin.is_some_and(|bin| {
+        bin.file_name()
+            .and_then(|name| name.to_str())
+            .is_some_and(|name| name.starts_with("esptool.py"))
+    });
+    let (mode_flag, freq_flag, size_flag) = if source_v4 {
+        ("--flash_mode", "--flash_freq", "--flash_size")
+    } else {
+        ("--flash-mode", "--flash-freq", "--flash-size")
+    };
     match esptool_bin {
         Some(bin) => argv.push(bin.to_string_lossy().to_string()),
         None => argv.push("esptool".to_string()),
@@ -76,11 +90,11 @@ pub(crate) fn esptool_elf2image_argv(
         "--chip".to_string(),
         chip.to_string(),
         "elf2image".to_string(),
-        "--flash-mode".to_string(),
+        mode_flag.to_string(),
         flash_mode.to_string(),
-        "--flash-freq".to_string(),
+        freq_flag.to_string(),
         flash_freq.to_string(),
-        "--flash-size".to_string(),
+        size_flag.to_string(),
         flash_size.to_string(),
         elf.to_string(),
         "-o".to_string(),
@@ -631,6 +645,34 @@ mod tests {
         let linker = test_linker("esp32c6");
         assert_eq!(linker.max_flash, Some(3145728));
         assert_eq!(linker.max_ram, Some(327680));
+    }
+
+    #[test]
+    fn pinned_esptool_v4_uses_underscore_elf2image_options() {
+        let v4 = esptool_elf2image_argv(
+            Some(Path::new("/cache/bin/esptool.py")),
+            "esp32s3",
+            "dio",
+            "80m",
+            "8MB",
+            "firmware.elf",
+            "firmware.bin",
+        );
+        assert!(v4.iter().any(|arg| arg == "--flash_mode"));
+        assert!(v4.iter().any(|arg| arg == "--flash_freq"));
+        assert!(v4.iter().any(|arg| arg == "--flash_size"));
+        assert!(!v4.iter().any(|arg| arg == "--flash-mode"));
+
+        let v5 = esptool_elf2image_argv(
+            Some(Path::new("/cache/bin/esptool")),
+            "esp32s3",
+            "dio",
+            "80m",
+            "8MB",
+            "firmware.elf",
+            "firmware.bin",
+        );
+        assert!(v5.iter().any(|arg| arg == "--flash-mode"));
     }
 
     fn test_linker_with(esptool_bin: Option<PathBuf>, caller_path: Option<String>) -> Esp32Linker {

@@ -5,11 +5,14 @@
 //! always agree on what an env needs (FastLED/fbuild#1433).
 
 use std::collections::HashMap;
+use std::io::Write;
 use std::path::Path;
 use std::time::Instant;
 
 use fbuild_core::Result;
 use fbuild_core::path::NormalizedPath;
+use fbuild_core::platformio_package::{RegistrySpec, ResolvedPayload};
+use sha2::{Digest, Sha256};
 
 use super::super::mcu_config::{Esp32McuConfig, get_mcu_config};
 use crate::provision::{
@@ -17,10 +20,11 @@ use crate::provision::{
     provision_package,
 };
 
-/// Resolve framework + toolchain for pioarduino mode (GCC 14 + ESP-IDF 5.x).
+/// Resolve the selected pioarduino framework and matching toolchain.
 ///
-/// Downloads pioarduino platform.json, resolves toolchain via metadata,
-/// and downloads the split framework + libs packages.
+/// Downloads pioarduino platform.json, resolves unified toolchains via
+/// metadata or older per-MCU toolchains via the PlatformIO registry, and
+/// downloads the selected framework + libs packages.
 ///
 /// `env_config` is the resolved `[env:<name>]` section from `platformio.ini`,
 /// used to honor `platform_packages` overrides for both
@@ -40,16 +44,9 @@ pub(super) async fn resolve_pioarduino_packages(
     // Ensure pioarduino platform (contains platform.json with metadata URLs).
     let platform = pioarduino_platform(project_dir, env_config);
     fbuild_packages::Package::ensure_installed(&platform).await?;
-    let platform = if legacy_toolchain_pin(&platform, env_config, mcu_config.is_riscv()) {
-        let stable = fbuild_packages::library::Esp32Platform::new(project_dir);
-        fbuild_packages::Package::ensure_installed(&stable).await?;
-        stable
-    } else {
-        platform
-    };
-
-    // Resolve toolchain via metadata
-    let toolchain = resolve_and_create_toolchain(&platform, project_dir, mcu_config)?;
+    // Resolve the exact toolchain declared by the selected platform. Older
+    // pioarduino releases name per-MCU registry packages, not metadata URLs.
+    let toolchain = resolve_and_create_toolchain(&platform, project_dir, mcu_config).await?;
 
     // Opportunistically provision any helper toolchains listed in
     // `platform.json` alongside the MCU-primary toolchain — e.g.
@@ -139,20 +136,6 @@ pub(crate) async fn provision_esp32(
         // Every other package is named by the platform's platform.json.
         return Ok(rows);
     }
-    // Provision what the build will actually use (see `legacy_toolchain_pin`).
-    let platform = if legacy_toolchain_pin(&platform, env_config, mcu_config.is_riscv()) {
-        let stable = fbuild_packages::library::Esp32Platform::new(project_dir);
-        let stable_row = provision_package(PackageKind::Platform, &stable, mode).await;
-        let stable_ready = is_installed(&stable_row);
-        rows.push(stable_row);
-        if !stable_ready {
-            return Ok(rows);
-        }
-        stable
-    } else {
-        platform
-    };
-
     rows.push(provision_toolchain(&platform, project_dir, &mcu_config, mode).await);
 
     let framework = pioarduino_framework(&platform, project_dir, mcu, env_config);
@@ -275,42 +258,6 @@ async fn ensure_sdk_libs(
     Ok(())
 }
 
-/// True when an honored `platform` pin predates the unified ESP32 toolchain
-/// and the build must fall back to the pioarduino stable platform.
-///
-/// #1432 started honoring `platform = <release URL>`. Releases before the
-/// unified toolchain (pioarduino 51.x, arduino-esp32 3.0) name per-MCU
-/// registry packages (`toolchain-xtensa-esp32s3@12.2.0+20230208`) that toolchain
-/// resolution cannot read, so it fell through to legacy hardcoded URLs that
-/// 404 and failed the build outright. Until per-MCU registry toolchains are
-/// supported, such a pin warns and builds against stable -- exactly what
-/// every release before #1432 did with it.
-fn legacy_toolchain_pin(
-    platform: &fbuild_packages::library::Esp32Platform,
-    env_config: Option<&HashMap<String, String>>,
-    is_riscv: bool,
-) -> bool {
-    let pinned = env_config
-        .and_then(|env| {
-            crate::package_override::resolve_platform_override(env, "platform-espressif32")
-        })
-        .is_some();
-    if !pinned || platform.has_unified_toolchain(is_riscv) {
-        return false;
-    }
-    let pin = env_config
-        .and_then(|env| env.get("platform"))
-        .map(|p| p.trim())
-        .unwrap_or("the pinned platform");
-    tracing::warn!(
-        "platform pin `{pin}` predates the unified ESP32 toolchain (its platform.json has no \
-         toolchain metadata URL for this MCU) and fbuild cannot provision its per-MCU registry \
-         toolchain yet; building with the pioarduino stable platform instead, as fbuild did \
-         before it honored platform pins"
-    );
-    true
-}
-
 /// Name a `platform` pin fbuild cannot honor instead of dropping it silently
 /// (FastLED/fbuild#1407). Registry pins and git URLs fall back to the
 /// pioarduino stable platform, which carries a different framework release.
@@ -378,16 +325,12 @@ async fn resolve_esptool(
             let attempted = esptool
                 .download_url()
                 .unwrap_or_else(|_| "<no prebuilt binary for this host>".to_string());
-            tracing::error!(
-                "esptool provisioning failed: {e}\n  \
-                 metadata URL:  {url}\n  \
-                 parsed version: {}\n  \
-                 download URL:   {attempted}\n  \
-                 Falling back to an `esptool` on PATH; set {} to override.",
+            Err(fbuild_core::FbuildError::PackageError(format!(
+                "pinned esptool provisioning failed: {e}; metadata URL: {url}; \
+                 parsed version: {}; download URL: {attempted}; set {} to override",
                 esptool.version(),
                 fbuild_packages::library::ESPTOOL_PATH_ENV_VAR
-            );
-            Ok(None)
+            )))
         }
     }
 }
@@ -417,6 +360,12 @@ fn provision_helper_toolchains(
     let toolchains_dir = cache.toolchains_dir();
     for (name, metadata_url) in entries {
         if name == primary || !name.starts_with("toolchain-") {
+            continue;
+        }
+        if !metadata_url.starts_with("https://") && !metadata_url.starts_with("http://") {
+            // Older manifests declare registry versions here. The primary
+            // toolchain is resolved above; optional helpers are not metadata
+            // archives and must not be handed to the URL downloader.
             continue;
         }
         let cache_dir = toolchains_dir.join(&name);
@@ -457,13 +406,61 @@ fn primary_toolchain_name(is_riscv: bool) -> &'static str {
     }
 }
 
-fn resolve_and_create_toolchain(
+fn selected_toolchain_name(mcu_config: &Esp32McuConfig, unified: bool) -> String {
+    if !unified && !mcu_config.is_riscv() {
+        format!("toolchain-xtensa-{}", mcu_config.mcu)
+    } else {
+        primary_toolchain_name(mcu_config.is_riscv()).to_string()
+    }
+}
+
+async fn resolve_and_create_toolchain(
     platform: &fbuild_packages::library::Esp32Platform,
     project_dir: &Path,
     mcu_config: &Esp32McuConfig,
 ) -> Result<fbuild_packages::toolchain::Esp32Toolchain> {
     let is_riscv = mcu_config.is_riscv();
     let prefix = mcu_config.toolchain_prefix();
+
+    if !platform.has_unified_toolchain(is_riscv) {
+        let name = selected_toolchain_name(mcu_config, false);
+        let requirement = platform.get_package_requirement(&name)?;
+        let registry = requirement.spec.registry().ok_or_else(|| {
+            fbuild_core::FbuildError::PackageError(format!(
+                "{name} is not a PlatformIO registry toolchain"
+            ))
+        })?;
+        let host =
+            fbuild_core::platformio_package::host_system(fbuild_core::platform::host::current())
+                .ok_or_else(|| {
+                    fbuild_core::FbuildError::PackageError("unsupported PlatformIO host".into())
+                })?;
+        let payload = fbuild_packages::platformio_registry::RegistryClient::default()
+            .resolve(
+                registry,
+                fbuild_core::platformio_package::PackageKind::Tool,
+                host,
+            )
+            .await
+            .map_err(|error| fbuild_core::FbuildError::PackageError(error.to_string()))?;
+        let cache_root = fbuild_packages::Cache::new(project_dir).toolchains_dir();
+        cache_registry_payload(&cache_root, registry, host, &payload)?;
+        tracing::info!(
+            "resolved ESP32 toolchain {}@{} for {}: {} (sha256 {})",
+            payload.name,
+            payload.version,
+            payload.system,
+            payload.url,
+            payload.sha256
+        );
+        return Ok(
+            fbuild_packages::toolchain::Esp32Toolchain::from_registry_payload(
+                project_dir,
+                &payload,
+                &prefix,
+            ),
+        );
+    }
 
     // Try metadata-based resolution
     match platform.get_toolchain_metadata_url(is_riscv) {
@@ -522,23 +519,53 @@ async fn provision_toolchain(
     mode: ProvisionMode,
 ) -> ProvisionedPackage {
     let is_riscv = mcu_config.is_riscv();
-    let name = primary_toolchain_name(is_riscv);
+    let name = selected_toolchain_name(mcu_config, platform.has_unified_toolchain(is_riscv));
     let toolchain = if mode.fetches() {
-        resolve_and_create_toolchain(platform, project_dir, mcu_config).map(Some)
+        resolve_and_create_toolchain(platform, project_dir, mcu_config)
+            .await
+            .map(Some)
     } else {
         cached_toolchain(platform, project_dir, mcu_config)
     };
     match toolchain {
         Ok(Some(toolchain)) => provision_package(PackageKind::Toolchain, &toolchain, mode).await,
-        Ok(None) => ProvisionedPackage {
-            url: platform
-                .get_toolchain_metadata_url(is_riscv)
-                .unwrap_or_default(),
-            ..ProvisionedPackage::new(PackageKind::Toolchain, name, ProvisionStatus::WouldFetch)
-        },
+        Ok(None) => {
+            let requested = platform
+                .get_package_requirement(&name)
+                .ok()
+                .and_then(|entry| entry.spec.registry().cloned());
+            let version = requested
+                .as_ref()
+                .and_then(|registry| registry.requirement.clone())
+                .unwrap_or_default();
+            let url = requested.map_or_else(
+                || {
+                    platform
+                        .get_toolchain_metadata_url(is_riscv)
+                        .unwrap_or_default()
+                },
+                |registry| {
+                    format!(
+                        "{}/tool/{}@{}",
+                        registry.owner.as_deref().unwrap_or("<registry-owner>"),
+                        registry.name,
+                        registry.requirement.as_deref().unwrap_or("*")
+                    )
+                },
+            );
+            ProvisionedPackage {
+                version,
+                url,
+                ..ProvisionedPackage::new(
+                    PackageKind::Toolchain,
+                    &name,
+                    ProvisionStatus::WouldFetch,
+                )
+            }
+        }
         Err(error) => ProvisionedPackage {
             error: Some(error.to_string()),
-            ..ProvisionedPackage::new(PackageKind::Toolchain, name, ProvisionStatus::Failed)
+            ..ProvisionedPackage::new(PackageKind::Toolchain, &name, ProvisionStatus::Failed)
         },
     }
 }
@@ -552,12 +579,29 @@ fn cached_toolchain(
 ) -> Result<Option<fbuild_packages::toolchain::Esp32Toolchain>> {
     let is_riscv = mcu_config.is_riscv();
     let prefix = mcu_config.toolchain_prefix();
-    if platform.get_toolchain_metadata_url(is_riscv).is_err() {
-        return Ok(Some(fbuild_packages::toolchain::Esp32Toolchain::new(
-            project_dir,
-            is_riscv,
-            &prefix,
-        )));
+    if !platform.has_unified_toolchain(is_riscv) {
+        let name = selected_toolchain_name(mcu_config, false);
+        let requirement = platform.get_package_requirement(&name)?;
+        let registry = requirement.spec.registry().ok_or_else(|| {
+            fbuild_core::FbuildError::PackageError(format!(
+                "{name} is not a PlatformIO registry toolchain"
+            ))
+        })?;
+        let host =
+            fbuild_core::platformio_package::host_system(fbuild_core::platform::host::current())
+                .ok_or_else(|| {
+                    fbuild_core::FbuildError::PackageError("unsupported PlatformIO host".into())
+                })?;
+        let cache_root = fbuild_packages::Cache::new(project_dir).toolchains_dir();
+        return Ok(
+            cached_registry_payload(&cache_root, registry, host)?.map(|payload| {
+                fbuild_packages::toolchain::Esp32Toolchain::from_registry_payload(
+                    project_dir,
+                    &payload,
+                    &prefix,
+                )
+            }),
+        );
     }
     let name = primary_toolchain_name(is_riscv);
     let cache_dir = fbuild_packages::Cache::new(project_dir)
@@ -574,6 +618,89 @@ fn cached_toolchain(
             &prefix,
         )
     }))
+}
+
+/// Persist registry selection so `fbuild install --check` can reconstruct the
+/// same toolchain offline. The archive itself remains SHA-256-verified by the
+/// package installer; this sidecar is only a host-specific resolution record.
+fn registry_payload_path(
+    cache_root: &Path,
+    registry: &RegistrySpec,
+    host: &str,
+) -> Result<std::path::PathBuf> {
+    let request = serde_json::to_vec(&(registry, host)).map_err(|error| {
+        fbuild_core::FbuildError::PackageError(format!("cannot encode registry request: {error}"))
+    })?;
+    let key = format!("{:x}", Sha256::digest(request));
+    Ok(cache_root
+        .join("platformio-registry-resolutions")
+        .join(format!("{key}.json")))
+}
+
+fn cache_registry_payload(
+    cache_root: &Path,
+    registry: &RegistrySpec,
+    host: &str,
+    payload: &ResolvedPayload,
+) -> Result<()> {
+    let path = registry_payload_path(cache_root, registry, host)?;
+    let directory = cache_root.join("platformio-registry-resolutions");
+    std::fs::create_dir_all(&directory).map_err(|error| {
+        fbuild_core::FbuildError::PackageError(format!("cannot create registry cache: {error}"))
+    })?;
+    let mut temporary = tempfile::NamedTempFile::new_in(&directory).map_err(|error| {
+        fbuild_core::FbuildError::PackageError(format!("cannot stage registry cache: {error}"))
+    })?;
+    let bytes = serde_json::to_vec(payload).map_err(|error| {
+        fbuild_core::FbuildError::PackageError(format!("cannot encode registry payload: {error}"))
+    })?;
+    temporary.write_all(&bytes).map_err(|error| {
+        fbuild_core::FbuildError::PackageError(format!("cannot write registry cache: {error}"))
+    })?;
+    temporary.persist(&path).map_err(|error| {
+        fbuild_core::FbuildError::PackageError(format!(
+            "cannot publish registry cache: {}",
+            error.error
+        ))
+    })?;
+    Ok(())
+}
+
+fn cached_registry_payload(
+    cache_root: &Path,
+    registry: &RegistrySpec,
+    host: &str,
+) -> Result<Option<ResolvedPayload>> {
+    let path = registry_payload_path(cache_root, registry, host)?;
+    let bytes = match std::fs::read(&path) {
+        Ok(bytes) => bytes,
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(None),
+        Err(error) => {
+            return Err(fbuild_core::FbuildError::PackageError(format!(
+                "cannot read registry cache {}: {error}",
+                path.display()
+            )));
+        }
+    };
+    let payload: ResolvedPayload = serde_json::from_slice(&bytes).map_err(|error| {
+        fbuild_core::FbuildError::PackageError(format!(
+            "invalid registry cache {}: {error}",
+            path.display()
+        ))
+    })?;
+    if payload.name != registry.name
+        || payload.system != host
+        || registry
+            .owner
+            .as_deref()
+            .is_some_and(|owner| owner != payload.owner)
+    {
+        return Err(fbuild_core::FbuildError::PackageError(format!(
+            "registry cache {} does not match requested package or host",
+            path.display()
+        )));
+    }
+    Ok(Some(payload))
 }
 
 /// The SDK libs row. They extract into the framework's `tools/` dir rather
@@ -713,4 +840,137 @@ pub(crate) fn downloadable_lib_deps(
             &framework.get_libraries_dir(),
         ),
     )
+}
+
+#[cfg(test)]
+mod registry_toolchain_tests {
+    use super::*;
+    use fbuild_core::platformio_package::{PackageKind as RegistryKind, resolve_registry_json};
+
+    #[test]
+    fn legacy_esp32s3_manifest_selects_its_per_mcu_toolchain() {
+        let mcu = get_mcu_config("esp32s3").unwrap();
+        assert_eq!(
+            selected_toolchain_name(&mcu, false),
+            "toolchain-xtensa-esp32s3"
+        );
+        assert_eq!(
+            selected_toolchain_name(&mcu, true),
+            "toolchain-xtensa-esp-elf"
+        );
+        assert_eq!(mcu.toolchain_prefix(), "xtensa-esp32s3-elf-");
+    }
+
+    #[test]
+    fn registry_payload_becomes_exact_checked_toolchain_package() {
+        let manifest = r#"{"packages":{"toolchain-xtensa-esp32s3":{"type":"toolchain","owner":"espressif","version":"12.2.0+20230208"}}}"#;
+        let requirement =
+            fbuild_core::platformio_package::resolve_platform_requirements(manifest, &[])
+                .unwrap()
+                .remove(0);
+        let hash = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        let response = format!(
+            "{{\"name\":\"toolchain-xtensa-esp32s3\",\"owner\":{{\"username\":\"espressif\"}},\"versions\":[{{\"name\":\"12.2.0+20230208\",\"files\":[{{\"system\":[\"linux_x86_64\"],\"download_url\":\"https://example.test/s3-gcc12.tar.gz\",\"checksum\":{{\"sha256\":\"{hash}\"}}}}]}}]}}"
+        );
+        let payload = resolve_registry_json(
+            requirement.spec.registry().unwrap(),
+            RegistryKind::Tool,
+            "linux_x86_64",
+            &response,
+        )
+        .unwrap();
+        let temp = tempfile::tempdir().unwrap();
+        let toolchain = fbuild_packages::toolchain::Esp32Toolchain::from_registry_payload(
+            temp.path(),
+            &payload,
+            "xtensa-esp32s3-elf-",
+        );
+        let info = fbuild_packages::Package::get_info(&toolchain);
+        assert_eq!(info.name, "toolchain-xtensa-esp32s3");
+        assert_eq!(info.version, "12.2.0+20230208");
+        assert_eq!(info.url, "https://example.test/s3-gcc12.tar.gz");
+        assert_eq!(info.checksum.as_deref(), Some(hash));
+
+        cache_registry_payload(
+            temp.path(),
+            requirement.spec.registry().unwrap(),
+            "linux_x86_64",
+            &payload,
+        )
+        .unwrap();
+        assert_eq!(
+            cached_registry_payload(
+                temp.path(),
+                requirement.spec.registry().unwrap(),
+                "linux_x86_64"
+            )
+            .unwrap(),
+            Some(payload)
+        );
+        assert!(
+            cached_registry_payload(
+                temp.path(),
+                requirement.spec.registry().unwrap(),
+                "darwin_arm64"
+            )
+            .unwrap()
+            .is_none()
+        );
+    }
+
+    #[test]
+    fn legacy_xtensa_and_riscv_registry_files_select_each_host() {
+        let digest = "b".repeat(64);
+        for (name, prefix) in [
+            ("toolchain-xtensa-esp32s3", "xtensa-esp32s3-elf-"),
+            ("toolchain-riscv32-esp", "riscv32-esp-elf-"),
+        ] {
+            let manifest = serde_json::json!({"packages": {
+                name: {"type":"toolchain", "owner":"espressif", "version":"12.2.0+20230208"}
+            }});
+            let requirement = fbuild_core::platformio_package::resolve_platform_requirements(
+                &manifest.to_string(),
+                &[],
+            )
+            .unwrap()
+            .remove(0);
+            let response = serde_json::json!({
+                "name": name,
+                "owner": {"username":"espressif"},
+                "versions": [{"name":"12.2.0+20230208", "files": [
+                    {"system":["linux_x86_64"], "download_url":format!("https://example.test/{name}-linux.tar.gz"), "checksum":{"sha256":digest}},
+                    {"system":["windows_amd64","windows_arm64"], "download_url":format!("https://example.test/{name}-windows.tar.gz"), "checksum":{"sha256":digest}},
+                    {"system":["darwin_arm64"], "download_url":format!("https://example.test/{name}-macos.tar.gz"), "checksum":{"sha256":digest}}
+                ]}]
+            });
+            for (system, suffix) in [
+                ("linux_x86_64", "linux"),
+                ("windows_amd64", "windows"),
+                ("darwin_arm64", "macos"),
+            ] {
+                let payload = resolve_registry_json(
+                    requirement.spec.registry().unwrap(),
+                    RegistryKind::Tool,
+                    system,
+                    &response.to_string(),
+                )
+                .unwrap();
+                assert_eq!(
+                    payload.url,
+                    format!("https://example.test/{name}-{suffix}.tar.gz")
+                );
+                assert_eq!(payload.sha256, digest);
+                let temp = tempfile::tempdir().unwrap();
+                let package = fbuild_packages::toolchain::Esp32Toolchain::from_registry_payload(
+                    temp.path(),
+                    &payload,
+                    prefix,
+                );
+                assert_eq!(
+                    fbuild_packages::Package::get_info(&package).version,
+                    "12.2.0+20230208"
+                );
+            }
+        }
+    }
 }

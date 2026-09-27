@@ -77,6 +77,21 @@ pub struct Esp32McuConfig {
 }
 
 impl Esp32McuConfig {
+    /// Drop GCC 14 recipe flags when the platform selects an older per-MCU
+    /// Xtensa toolchain. The GCC 12 compiler rejects the atomics switch, and
+    /// its matching Arduino 3.0 SDK does not define `__dso_handle` for
+    /// `-fuse-cxa-atexit`-generated references.
+    pub fn adapt_to_toolchain(&mut self, package_name: &str) {
+        if package_name.starts_with("toolchain-xtensa-esp32") {
+            self.compiler_flags
+                .common
+                .retain(|flag| flag != "-mdisable-hardware-atomics");
+            self.compiler_flags
+                .cxx
+                .retain(|flag| flag != "-fuse-cxa-atexit");
+        }
+    }
+
     /// Whether this MCU uses RISC-V architecture.
     pub fn is_riscv(&self) -> bool {
         self.architecture.starts_with("riscv")
@@ -751,5 +766,42 @@ mod tests {
                 config.name
             );
         }
+    }
+
+    #[test]
+    fn per_mcu_xtensa_toolchain_uses_gcc12_compatible_flags() {
+        let mut legacy = get_mcu_config("esp32s3").unwrap();
+        let mut unified = legacy.clone();
+        legacy.adapt_to_toolchain("toolchain-xtensa-esp32s3");
+        unified.adapt_to_toolchain("toolchain-xtensa-esp-elf");
+
+        assert!(
+            !legacy
+                .compiler_flags
+                .common
+                .iter()
+                .any(|flag| flag == "-mdisable-hardware-atomics")
+        );
+        assert!(
+            !legacy
+                .compiler_flags
+                .cxx
+                .iter()
+                .any(|flag| flag == "-fuse-cxa-atexit")
+        );
+        assert!(
+            unified
+                .compiler_flags
+                .common
+                .iter()
+                .any(|flag| flag == "-mdisable-hardware-atomics")
+        );
+        assert!(
+            unified
+                .compiler_flags
+                .cxx
+                .iter()
+                .any(|flag| flag == "-fuse-cxa-atexit")
+        );
     }
 }
