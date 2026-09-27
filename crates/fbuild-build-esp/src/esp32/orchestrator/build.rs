@@ -93,6 +93,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         )
         .await?;
         drop(_resolve_phase);
+        mcu_config.adapt_to_toolchain(&fbuild_packages::Package::get_info(&toolchain).name);
         let _toolchain_cache_dir = fbuild_packages::Package::get_info(&toolchain).install_path;
         let _framework_cache_dir = fbuild_packages::Package::get_info(&framework).install_path;
 
@@ -247,14 +248,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("ESP32 framework at {}", framework_dir.display());
 
-        let tc_label = if mcu_config.is_riscv() {
-            "riscv32-esp-elf-gcc"
-        } else {
-            "xtensa-esp-elf-gcc"
-        };
+        let tc_label = format!("{}gcc", mcu_config.toolchain_prefix());
         crate::pipeline::log_toolchain_version(
             &toolchain.get_gcc_path(),
-            tc_label,
+            &tc_label,
             &mut ctx.build_log,
         )
         .await;

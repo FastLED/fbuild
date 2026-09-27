@@ -286,3 +286,24 @@ fn non_registry_locks_are_content_addressed() {
     assert_ne!(first.cache_identity(), local.cache_identity());
     assert_eq!(first.cache_identity(), first.clone().cache_identity());
 }
+
+#[test]
+fn native_host_maps_to_platformio_registry_system_without_substitution() {
+    use fbuild_core::platform::host::{HostArch, HostOs, HostPlatform};
+    use fbuild_core::platformio_package::host_system;
+
+    for (os, arch, expected) in [
+        (HostOs::Linux, HostArch::X86_64, "linux_x86_64"),
+        (HostOs::Linux, HostArch::Aarch64, "linux_aarch64"),
+        (HostOs::Windows, HostArch::X86_64, "windows_amd64"),
+        (HostOs::Windows, HostArch::Aarch64, "windows_arm64"),
+        (HostOs::Macos, HostArch::X86_64, "darwin_x86_64"),
+        (HostOs::Macos, HostArch::Aarch64, "darwin_arm64"),
+    ] {
+        assert_eq!(host_system(HostPlatform::new(os, arch)), Some(expected));
+    }
+    assert_eq!(
+        host_system(HostPlatform::new(HostOs::Linux, HostArch::Other)),
+        None
+    );
+}
