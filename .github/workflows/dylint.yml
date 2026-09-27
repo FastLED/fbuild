@@ -183,9 +183,10 @@ jobs:
         env:
           FBUILD_PLATFORM_BOUNDARY_OBSERVED: ${{ github.workspace }}/target/platform-boundary-dylint-observed.tsv
         run: |
-          # Force fresh traversal so the independent observation ledger sees
-          # every platform-gated source path on each run.
-          export RUSTFLAGS="${RUSTFLAGS:+${RUSTFLAGS} }--cfg fbuild_platform_boundary_observation_run_${GITHUB_RUN_ID}"
+          # Force fresh workspace traversal for the observation ledger while
+          # preserving Cargo's cached dependencies. A per-run RUSTFLAGS value
+          # invalidated every dependency, causing a cold rebuild on each run.
+          rg --files crates -g '*.rs' -0 | xargs -0 -r touch
           rm -f "$FBUILD_PLATFORM_BOUNDARY_OBSERVED"
           env -u RUSTUP_TOOLCHAIN soldr dylint --all -- --workspace --all-targets
       - name: Compare scanner with actual Dylint observations

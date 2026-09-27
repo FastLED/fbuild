@@ -44,7 +44,8 @@ fn run_cli_or_timeout(mut cmd: Command) -> Output {
 
 #[test]
 fn ci_help_lists_pio_compat_flags() {
-    let bin = env!("CARGO_BIN_EXE_fbuild");
+    let bin =
+        option_env!("CARGO_BIN_EXE_fbuild").expect("cargo test must provide CARGO_BIN_EXE_fbuild");
     // allow-direct-spawn: integration test driver invoking the compiled fbuild binary.
     let mut cmd = Command::new(bin);
     cmd.args(["ci", "--help"]);
@@ -76,7 +77,8 @@ fn ci_help_lists_pio_compat_flags() {
 
 #[test]
 fn ci_without_board_is_a_usage_error() {
-    let bin = env!("CARGO_BIN_EXE_fbuild");
+    let bin =
+        option_env!("CARGO_BIN_EXE_fbuild").expect("cargo test must provide CARGO_BIN_EXE_fbuild");
     // allow-direct-spawn: integration test driver.
     let mut cmd = Command::new(bin);
     cmd.args(["ci", "examples/Blink/Blink.ino"]);
@@ -92,7 +94,8 @@ fn ci_without_board_is_a_usage_error() {
 
 #[test]
 fn ci_without_sketches_is_a_usage_error() {
-    let bin = env!("CARGO_BIN_EXE_fbuild");
+    let bin =
+        option_env!("CARGO_BIN_EXE_fbuild").expect("cargo test must provide CARGO_BIN_EXE_fbuild");
     // allow-direct-spawn: integration test driver.
     let mut cmd = Command::new(bin);
     cmd.args(["ci", "--board", "uno"]);

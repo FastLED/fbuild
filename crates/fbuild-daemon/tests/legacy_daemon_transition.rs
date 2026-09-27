@@ -192,7 +192,8 @@ async fn wait_for_http_health(port: u16, timeout: Duration) -> bool {
 async fn real_daemon_root_ownership_released_on_kill() {
     let temp_home = tempfile::tempdir().expect("temp home");
     let port = free_port();
-    let bin = env!("CARGO_BIN_EXE_fbuild-daemon");
+    let bin = option_env!("CARGO_BIN_EXE_fbuild-daemon")
+        .expect("cargo test must provide CARGO_BIN_EXE_fbuild-daemon");
     let home_key = if fbuild_core::platform::host::is_windows() {
         "USERPROFILE"
     } else {
