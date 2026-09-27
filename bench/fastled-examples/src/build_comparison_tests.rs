@@ -14,7 +14,7 @@ fn fbuild_benchmark_env_enables_phase_logging_and_restart_diagnostics() {
     );
     assert_eq!(
         envs.get("RUST_LOG").map(String::as_str),
-        Some("fbuild_cli=info")
+        Some("fbuild=info")
     );
     assert!(tool_envs(ToolKind::Arduino, Path::new("unused")).is_empty());
 }
