@@ -45,6 +45,7 @@ class FractionalWorkflowTests(unittest.TestCase):
         self.assertEqual("./.github/workflows/dylint.yml", full["jobs"]["dylint"]["uses"])
         self.assertNotIn("run_full", full["jobs"]["dylint"]["with"])
         dylint = self.load("dylint.yml")
+        self.assertEqual(["main"], dylint[True]["push"]["branches"])
         self.assertEqual("Dylint policy", dylint["jobs"]["policy"]["name"])
         self.assertNotIn("if", dylint["jobs"]["dylint"])
         self.assertEqual("ubuntu-latest", dylint["jobs"]["dylint"]["runs-on"])
