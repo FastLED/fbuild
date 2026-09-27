@@ -58,8 +58,7 @@ fn wait_with_timeout(child: &mut Child, budget: Duration) -> bool {
 #[ignore = "expects a real fbuild-daemon binary; run with --ignored"]
 fn daemon_rebinds_cleanly_after_hard_kill_with_open_connection() {
     let port: u16 = 18900; // dedicated test port, avoids 8765 collisions
-    let bin = option_env!("CARGO_BIN_EXE_fbuild-daemon")
-        .expect("cargo test must provide CARGO_BIN_EXE_fbuild-daemon");
+    let bin = env!("CARGO_BIN_EXE_fbuild-daemon");
 
     // 1) Spawn the first daemon.
     // allow-direct-spawn: test driver spawns the real fbuild-daemon binary under test.
