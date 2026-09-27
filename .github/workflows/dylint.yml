@@ -1,7 +1,7 @@
 name: Dylint
 
-# The required Dylint status covers policy and Linux, Windows, and macOS
-# target code from one Linux builder. Full CI calls the same workflow.
+# The required PR Dylint status covers Linux host code quickly. ci-full and
+# manual dispatch check Linux, Windows, and macOS targets on one Linux builder.
 
 on:
   workflow_dispatch: {}
@@ -109,6 +109,7 @@ jobs:
           # the prebuilt dylint-link directory for their linker config.
           sed -n 's/^soldr: dylint prepare: tool bin dir //p' "$RUNNER_TEMP/dylint-prepare.log" >> "$GITHUB_PATH"
       - name: Install cross-target nightly standard libraries
+        if: ${{ inputs.ref != '' || github.event_name == 'workflow_dispatch' }}
         run: |
           soldr rustup target add --toolchain nightly-2026-05-28 \
             x86_64-pc-windows-msvc x86_64-apple-darwin
@@ -128,6 +129,13 @@ jobs:
         # UI fixtures execute on the Linux host; workspace checks below use
         # the same host lint libraries against each platform target.
         run: |
+          # UI fixtures test the lint implementations themselves. Repeating
+          # all 27 suites on a workflow-only or application-only PR spends
+          # minutes compiling their separate test-profile trees.
+          if git diff --quiet FETCH_HEAD HEAD -- dylints; then
+            echo "Dylint sources unchanged; skipping library UI fixtures"
+            exit 0
+          fi
           # UI fixtures launch nested Cargo. Keep the rustup proxy visible so
           # it can select each lint's pinned nightly.
           CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"
@@ -172,6 +180,8 @@ jobs:
             ln -s "$short" "$root/$qualified"
           fi
       - name: Run dylint over workspace
+        env:
+          FULL_TARGETS: ${{ inputs.ref != '' || github.event_name == 'workflow_dispatch' }}
         run: |
           status=0
           # The Linux pass covers the whole workspace. Cross-target passes
@@ -183,7 +193,11 @@ jobs:
               dylints/enforce_platform_boundary/src/baseline.txt | sort -u
           )
           test "${#platform_packages[@]}" -gt 0
-          for triple in x86_64-unknown-linux-gnu x86_64-pc-windows-msvc x86_64-apple-darwin; do
+          targets=(x86_64-unknown-linux-gnu)
+          if test "$FULL_TARGETS" = true; then
+            targets+=(x86_64-pc-windows-msvc x86_64-apple-darwin)
+          fi
+          for triple in "${targets[@]}"; do
             if test "$triple" = x86_64-unknown-linux-gnu; then
               package_args=(--workspace)
             else
