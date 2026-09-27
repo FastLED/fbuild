@@ -44,6 +44,8 @@ crates/fbuild-paths/src/lib.rs
 # result feeds a content hash, not a path-keyed cache lookup.
 crates/fbuild-build-esp/src/esp32/orchestrator/framework_library_cache.rs
 
-# SDK include ordering/filtering uses paths constructed under one include_dir;
-# these prefix comparisons never feed a path-keyed cache lookup.
+# SDK include filtering compares components built from the same include_dir;
+# ordering also handles the selected variant under the same SDK root but outside
+# include_dir. Returned paths feed framework_signature/FrameworkLibraryCache,
+# so same-root spelling makes these component-aware comparisons cache-stable.
 crates/fbuild-library/src/library/esp32_framework/sdk_paths.rs
