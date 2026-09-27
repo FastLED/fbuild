@@ -383,13 +383,13 @@ fn package_kind_from_name(name: &str) -> PackageKind {
     }
 }
 
-fn find_platform_manifest(root: &Path) -> Option<std::path::PathBuf> {
+fn find_platform_manifest(root: &Path) -> Option<fbuild_core::path::NormalizedPath> {
     walkdir::WalkDir::new(root)
         .max_depth(3)
         .into_iter()
         .filter_map(std::result::Result::ok)
         .find(|entry| entry.file_type().is_file() && entry.file_name() == "platform.json")
-        .map(|entry| entry.path().to_path_buf())
+        .map(|entry| fbuild_core::path::NormalizedPath::new(entry.path()))
 }
 
 fn package_error(error: impl std::fmt::Display) -> fbuild_core::FbuildError {
