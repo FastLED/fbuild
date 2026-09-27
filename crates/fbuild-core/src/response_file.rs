@@ -413,13 +413,25 @@ mod tests {
         let other = tmp.path().join("notes.txt");
 
         std::fs::write(&stale, "old").unwrap();
-        std::thread::sleep(Duration::from_millis(200));
         std::fs::write(&fresh, "new").unwrap();
         std::fs::write(&other, "keep").unwrap();
 
+        let now = SystemTime::now();
+        std::fs::OpenOptions::new()
+            .write(true)
+            .open(&stale)
+            .unwrap()
+            .set_modified(now - Duration::from_secs(1))
+            .unwrap();
+        std::fs::OpenOptions::new()
+            .write(true)
+            .open(&fresh)
+            .unwrap()
+            .set_modified(now)
+            .unwrap();
+
         let removed =
-            cleanup_stale_response_files(tmp.path(), Duration::from_millis(100), SystemTime::now())
-                .unwrap();
+            cleanup_stale_response_files(tmp.path(), Duration::from_millis(100), now).unwrap();
 
         assert_eq!(removed, 1);
         assert!(!stale.exists());
