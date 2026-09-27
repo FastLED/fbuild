@@ -1,7 +1,7 @@
 name: Dylint
 
-# One Linux Dylint pass and the policy checks feed the required Dylint status.
-# Full CI calls the same workflow.
+# The required Dylint status covers policy and Linux, Windows, and macOS
+# target code from one Linux builder. Full CI calls the same workflow.
 
 on:
   workflow_dispatch: {}
@@ -48,7 +48,7 @@ jobs:
           uv run --no-project python ci/enforce_platform_boundary.py --print-totals
 
   dylint:
-    name: Dylint workspace
+    name: Dylint Full (Linux builder, all OS targets)
     runs-on: ubuntu-latest
     timeout-minutes: 90
     defaults:
@@ -76,6 +76,12 @@ jobs:
           # separate pinned nightly/driver lifecycle in the explicit steps
           # below, so it cannot invalidate the stable target tree.
           cache: true
+          save-cache: true
+          cargo-registry-cache: true
+          dylint: true
+          dylint-cache: true
+          dylint-foundation-cache: true
+          dylint-output-cache: true
           toolchain: 1.95.0
           cache-key-suffix: dylint
           prebuild-deps: none
@@ -100,6 +106,10 @@ jobs:
           # Library UI tests invoke soldr cargo test separately, so preserve
           # the prebuilt dylint-link directory for their linker config.
           sed -n 's/^soldr: dylint prepare: tool bin dir //p' "$RUNNER_TEMP/dylint-prepare.log" >> "$GITHUB_PATH"
+      - name: Install cross-target nightly standard libraries
+        run: |
+          soldr rustup target add --toolchain nightly-2026-05-28 \
+            x86_64-pc-windows-msvc x86_64-apple-darwin
       - name: Check Dylint library formatting
         run: |
           while IFS= read -r manifest; do
@@ -107,7 +117,8 @@ jobs:
               soldr cargo fmt --manifest-path "$manifest" --all -- --check
           done < <(find dylints -mindepth 2 -maxdepth 2 -name Cargo.toml | sort)
       - name: Test Dylint libraries
-        # UI fixtures assert that each custom lint fires on its fixture.
+        # UI fixtures execute on the Linux host; workspace checks below use
+        # the same host lint libraries against each platform target.
         run: |
           # UI fixtures launch nested Cargo. Keep the rustup proxy visible so
           # it can select each lint's pinned nightly.
@@ -116,8 +127,9 @@ jobs:
           export PATH="${CARGO_BIN}:${PATH}"
           export CARGO_TARGET_DIR="$PWD/target/dylint-tests"
           # UI fixtures invoke Cargo outside soldr's Dylint front door.
-          # Reuse the verified driver fetched by `soldr dylint prepare`.
-          export DYLINT_DRIVER_PATH="${SOLDR_CACHE_DIR:?}/dylint/drivers"
+          # Reuse the verified driver path exported by setup-soldr's Dylint
+          # mode; it owns the driver cache outside SOLDR_CACHE_DIR.
+          : "${DYLINT_DRIVER_PATH:?}"
           # Dylint's UI runner asks for the short nightly directory; Soldr's
           # verified asset lives under the host-qualified directory.
           host="$(RUSTUP_TOOLCHAIN=nightly-2026-05-28 soldr rustc -vV | sed -n 's/^host: //p')"
@@ -134,18 +146,63 @@ jobs:
             RUSTUP_TOOLCHAIN=nightly-2026-05-28 \
               soldr cargo test --manifest-path "$manifest"
           done < <(find dylints -mindepth 2 -maxdepth 2 -name Cargo.toml | sort)
-      - name: Run dylint over workspace
-        env:
-          FBUILD_PLATFORM_BOUNDARY_OBSERVED: ${{ github.workspace }}/target/platform-boundary-dylint-observed.tsv
+      - name: Reuse cached Dylint library tree
         run: |
-          # Force fresh workspace traversal for the observation ledger while
-          # preserving Cargo's cached dependencies. A per-run RUSTFLAGS value
-          # invalidated every dependency, causing a cold rebuild on each run.
-          find crates -type f -name '*.rs' -exec touch {} +
-          rm -f "$FBUILD_PLATFORM_BOUNDARY_OBSERVED"
-          env -u RUSTUP_TOOLCHAIN soldr dylint --all -- --workspace --all-targets
-      - name: Compare scanner with actual Dylint observations
-        run: uv run --no-project python ci/enforce_platform_boundary.py --dylint-observed target/platform-boundary-dylint-observed.tsv --print-totals
+          # setup-soldr saves the short nightly path; Soldr writes a
+          # host-qualified path. Point both names at one tree so warm runs
+          # reuse the 27 compiled lint libraries without a copy over
+          # read-only restored cache files. Do not cache the much larger
+          # three-platform workspace target tree here.
+          short="${SOLDR_DYLINT_CONFIGURED_TOOLCHAIN}"
+          qualified="${short}-x86_64-unknown-linux-gnu"
+          root="$PWD/target/dylint/libraries"
+          mkdir -p "$root/$short"
+          if test -L "$root/$qualified"; then
+            test "$(readlink "$root/$qualified")" = "$short"
+          else
+            test ! -e "$root/$qualified"
+            ln -s "$short" "$root/$qualified"
+          fi
+      - name: Run dylint over workspace
+        run: |
+          status=0
+          # The Linux pass covers the whole workspace. Cross-target passes
+          # need only crates with target-specific source in the checked-in
+          # boundary baseline; deriving this list makes new platform code
+          # enter the cross-target check when its ledger is updated.
+          mapfile -t platform_packages < <(
+            awk -F '\t' '!/^#/ && $1 ~ /^crates\// { split($1, parts, "/"); print parts[2] }' \
+              dylints/enforce_platform_boundary/src/baseline.txt | sort -u
+          )
+          test "${#platform_packages[@]}" -gt 0
+          for triple in x86_64-unknown-linux-gnu x86_64-pc-windows-msvc x86_64-apple-darwin; do
+            if test "$triple" = x86_64-unknown-linux-gnu; then
+              package_args=(--workspace)
+            else
+              package_args=()
+              for package in "${platform_packages[@]}"; do
+                package_args+=(--package "$package")
+              done
+            fi
+            observed="$PWD/target/platform-boundary-dylint-observed-$triple.tsv"
+            export FBUILD_PLATFORM_BOUNDARY_OBSERVED="$observed"
+            rm -f "$observed"
+            if ! env -u RUSTUP_TOOLCHAIN soldr dylint --all -- "${package_args[@]}" --all-targets --target "$triple"; then
+              status=1
+              continue
+            fi
+            if ! uv run --no-project python ci/enforce_platform_boundary.py --dylint-observed "$observed" --print-totals; then
+              status=1
+            fi
+          done
+          test "$status" -eq 0
+          # Soldr's successful marker uses a host-qualified nightly, while
+          # setup-soldr expects the same compiler identity with a short name.
+          # Check all fields before letting the action cache these outputs.
+          identity="${SOLDR_DYLINT_CONFIGURED_TOOLCHAIN}|${SOLDR_DYLINT_CONFIGURED_RUSTC_RELEASE}|${SOLDR_DYLINT_CONFIGURED_RUSTC_COMMIT_HASH}"
+          qualified="${SOLDR_DYLINT_CONFIGURED_TOOLCHAIN}-x86_64-unknown-linux-gnu|${SOLDR_DYLINT_CONFIGURED_RUSTC_RELEASE}|${SOLDR_DYLINT_CONFIGURED_RUSTC_COMMIT_HASH}"
+          test "$(cat "$SOLDR_DYLINT_SUCCESS_MARKER")" = "$qualified"
+          printf '%s\n' "$identity" > "$SOLDR_DYLINT_SUCCESS_MARKER"
 
   gate:
     name: Dylint
