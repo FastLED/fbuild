@@ -47,7 +47,9 @@ fn classifies_archive_repository_and_local_payload_paths() {
     let revision_archive =
         parse_package_spec("framework-foo@https://example.test/core.tar.gz#deadbeef").unwrap();
     let local = parse_package_spec("../platforms/custom").unwrap();
-    let file_url = parse_package_spec("file:///tmp/custom-platform").unwrap();
+    let local_dir = tempfile::tempdir().unwrap();
+    let local_url = reqwest::Url::from_file_path(local_dir.path()).unwrap();
+    let file_url = parse_package_spec(local_url.as_str()).unwrap();
 
     assert!(matches!(archive.source, PackageSource::Archive { .. }));
     assert_eq!(
