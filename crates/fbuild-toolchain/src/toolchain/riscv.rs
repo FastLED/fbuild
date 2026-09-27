@@ -18,6 +18,7 @@ const RISCV_GCC_BASE_URL: &str =
 /// RISC-V GCC toolchain manager.
 pub struct RiscvToolchain {
     base: PackageBase,
+    executable_prefix: String,
     /// Resolved install path (set after ensure_installed)
     install_dir: Option<PathBuf>,
 }
@@ -35,7 +36,39 @@ impl RiscvToolchain {
                 CacheSubdir::Toolchains,
                 project_dir,
             ),
+            executable_prefix: "riscv-none-elf".into(),
             install_dir: None,
+        }
+    }
+
+    /// Use a selected PlatformIO toolchain package rather than the built-in
+    /// xPack release. Pass `auto` to discover the executable family from the
+    /// installed package instead of assuming that a registry pin uses xPack's
+    /// or one particular CH32V branch's layout.
+    pub fn with_platform_override(
+        project_dir: &Path,
+        override_package: fbuild_config::PackageOverride,
+        executable_prefix: &str,
+    ) -> Self {
+        let mut toolchain = Self::new(project_dir);
+        toolchain.base = toolchain.base.with_override(override_package);
+        toolchain.executable_prefix = executable_prefix.into();
+        toolchain
+    }
+
+    /// Executable family supplied by this package (`riscv-none-elf`,
+    /// `riscv-none-embed`, or `riscv-wch-elf`). CH32V's ISA spelling depends on
+    /// the selected compiler family.
+    pub fn executable_prefix(&self) -> String {
+        self.effective_prefix()
+    }
+
+    fn effective_prefix(&self) -> String {
+        if self.executable_prefix == "auto" {
+            detect_tool_prefix(&self.resolved_dir().join("bin"))
+                .unwrap_or_else(|| "auto".to_string())
+        } else {
+            self.executable_prefix.clone()
         }
     }
 
@@ -53,6 +86,7 @@ impl RiscvToolchain {
                 project_dir,
                 cache_root,
             ),
+            executable_prefix: "riscv-none-elf".into(),
             install_dir: None,
         }
     }
@@ -77,6 +111,7 @@ impl RiscvToolchain {
     /// 6. `<root>/riscv-none-elf/include/` — target system headers
     pub fn get_cxx_system_includes(&self, march: &str, mabi: &str) -> Vec<PathBuf> {
         let root = self.resolved_dir();
+        let prefix = self.effective_prefix();
         let mut dirs = Vec::new();
 
         // Ask GCC for the selected multilib instead of deriving its directory from
@@ -86,7 +121,7 @@ impl RiscvToolchain {
             .unwrap_or_else(|| PathBuf::from(march.split('_').next().unwrap_or(march)).join(mabi));
 
         // C++ headers: find the version directory dynamically
-        let cxx_base = root.join("riscv-none-elf").join("include").join("c++");
+        let cxx_base = root.join(&prefix).join("include").join("c++");
         if let Ok(entries) = std::fs::read_dir(&cxx_base) {
             for entry in entries.flatten() {
                 let version_dir = entry.path();
@@ -94,7 +129,7 @@ impl RiscvToolchain {
                     // 1. Base C++ headers
                     dirs.push(version_dir.clone());
                     // 2. Multilib-specific
-                    let multilib = multilib_include_path(&version_dir, &multilib_dir);
+                    let multilib = multilib_include_path(&version_dir, &prefix, &multilib_dir);
                     if multilib.is_dir() {
                         dirs.push(multilib);
                     }
@@ -109,7 +144,7 @@ impl RiscvToolchain {
         }
 
         // GCC internal headers: find the version directory dynamically
-        let gcc_lib = root.join("lib").join("gcc").join("riscv-none-elf");
+        let gcc_lib = root.join("lib").join("gcc").join(&prefix);
         if let Ok(entries) = std::fs::read_dir(&gcc_lib) {
             for entry in entries.flatten() {
                 let ver_dir = entry.path();
@@ -130,7 +165,7 @@ impl RiscvToolchain {
         }
 
         // 6. Target system headers
-        let sys_inc = root.join("riscv-none-elf").join("include");
+        let sys_inc = root.join(&prefix).join("include");
         if sys_inc.is_dir() {
             dirs.push(sys_inc);
         }
@@ -160,7 +195,7 @@ impl RiscvToolchain {
     }
 
     /// Validate that the toolchain installation has all required files.
-    fn validate(install_dir: &Path) -> fbuild_core::Result<()> {
+    fn validate(install_dir: &Path, executable_prefix: &str) -> fbuild_core::Result<()> {
         let root = find_bin_root(install_dir);
         let bin_dir = root.join("bin");
 
@@ -171,15 +206,21 @@ impl RiscvToolchain {
             )));
         }
 
-        let required_tools = [
-            "riscv-none-elf-gcc",
-            "riscv-none-elf-g++",
-            "riscv-none-elf-ar",
-            "riscv-none-elf-objcopy",
-            "riscv-none-elf-size",
-        ];
-        for tool in &required_tools {
-            let tool_path = tool_binary(&bin_dir, tool);
+        let detected;
+        let executable_prefix = if executable_prefix == "auto" {
+            detected = detect_tool_prefix(&bin_dir).ok_or_else(|| {
+                fbuild_core::FbuildError::PackageError(format!(
+                    "no complete RISC-V GCC tool suite found in {}",
+                    bin_dir.display()
+                ))
+            })?;
+            detected.as_str()
+        } else {
+            executable_prefix
+        };
+        for suffix in ["gcc", "g++", "ar", "objcopy", "size"] {
+            let tool = format!("{executable_prefix}-{suffix}");
+            let tool_path = tool_binary(&bin_dir, &tool);
             if !tool_path.exists() {
                 return Err(fbuild_core::FbuildError::PackageError(format!(
                     "required tool {} not found at {}",
@@ -193,8 +234,8 @@ impl RiscvToolchain {
     }
 }
 
-fn multilib_include_path(version_dir: &Path, multilib_dir: &Path) -> PathBuf {
-    version_dir.join("riscv-none-elf").join(multilib_dir)
+fn multilib_include_path(version_dir: &Path, prefix: &str, multilib_dir: &Path) -> PathBuf {
+    version_dir.join(prefix).join(multilib_dir)
 }
 
 #[async_trait::async_trait]
@@ -204,7 +245,11 @@ impl crate::Package for RiscvToolchain {
             return Ok(self.resolved_dir());
         }
 
-        let install_path = self.base.staged_install(Self::validate).await?;
+        let prefix = self.executable_prefix.clone();
+        let install_path = self
+            .base
+            .staged_install(move |dir| Self::validate(dir, &prefix))
+            .await?;
         Ok(find_bin_root(&install_path))
     }
 
@@ -213,8 +258,11 @@ impl crate::Package for RiscvToolchain {
             return false;
         }
         let root = find_bin_root(&self.base.install_path());
+        if self.executable_prefix == "auto" {
+            return detect_tool_prefix(&root.join("bin")).is_some();
+        }
         root.join("bin")
-            .join(tool_name("riscv-none-elf-gcc"))
+            .join(tool_name(&format!("{}-gcc", self.executable_prefix)))
             .exists()
     }
 
@@ -225,23 +273,38 @@ impl crate::Package for RiscvToolchain {
 
 impl Toolchain for RiscvToolchain {
     fn get_gcc_path(&self) -> PathBuf {
-        tool_binary(&self.resolved_dir().join("bin"), "riscv-none-elf-gcc")
+        tool_binary(
+            &self.resolved_dir().join("bin"),
+            &format!("{}-gcc", self.effective_prefix()),
+        )
     }
 
     fn get_gxx_path(&self) -> PathBuf {
-        tool_binary(&self.resolved_dir().join("bin"), "riscv-none-elf-g++")
+        tool_binary(
+            &self.resolved_dir().join("bin"),
+            &format!("{}-g++", self.effective_prefix()),
+        )
     }
 
     fn get_ar_path(&self) -> PathBuf {
-        tool_binary(&self.resolved_dir().join("bin"), "riscv-none-elf-ar")
+        tool_binary(
+            &self.resolved_dir().join("bin"),
+            &format!("{}-ar", self.effective_prefix()),
+        )
     }
 
     fn get_objcopy_path(&self) -> PathBuf {
-        tool_binary(&self.resolved_dir().join("bin"), "riscv-none-elf-objcopy")
+        tool_binary(
+            &self.resolved_dir().join("bin"),
+            &format!("{}-objcopy", self.effective_prefix()),
+        )
     }
 
     fn get_size_path(&self) -> PathBuf {
-        tool_binary(&self.resolved_dir().join("bin"), "riscv-none-elf-size")
+        tool_binary(
+            &self.resolved_dir().join("bin"),
+            &format!("{}-size", self.effective_prefix()),
+        )
     }
 
     fn get_bin_dir(&self) -> PathBuf {
@@ -350,6 +413,33 @@ fn tool_binary(bin_dir: &Path, name: &str) -> PathBuf {
     bin_dir.join(tool_name(name))
 }
 
+/// Find one complete RISC-V compiler suite in an extracted PlatformIO
+/// package. A package with multiple suites is ambiguous and must not be
+/// selected by directory iteration order.
+fn detect_tool_prefix(bin_dir: &Path) -> Option<String> {
+    let gcc_suffix = tool_name("-gcc");
+    let mut candidates = std::fs::read_dir(bin_dir)
+        .ok()?
+        .filter_map(Result::ok)
+        .filter_map(|entry| {
+            let name = entry.file_name().to_string_lossy().into_owned();
+            let prefix = name.strip_suffix(&gcc_suffix)?;
+            if !prefix.starts_with("riscv") || !entry.path().is_file() {
+                return None;
+            }
+            ["g++", "ar", "objcopy", "size"]
+                .iter()
+                .all(|suffix| tool_binary(bin_dir, &format!("{prefix}-{suffix}")).is_file())
+                .then(|| prefix.to_string())
+        })
+        .collect::<Vec<_>>();
+    if candidates.len() == 1 {
+        candidates.pop()
+    } else {
+        None
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -370,6 +460,56 @@ mod tests {
             name,
             fbuild_core::platform::executable::native_name("riscv-none-elf-gcc")
         );
+    }
+
+    #[test]
+    fn ch32v_platform_toolchain_uses_wch_executable_prefix() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let override_package = fbuild_config::PackageOverride::new(
+            "https://github.com/Community-PIO-CH32V/toolchain-riscv-linux/archive/fde267fb356efc11dee4c48ea58a1fd6dc787603.tar.gz",
+            "fde267fb356efc11dee4c48ea58a1fd6dc787603",
+        );
+        let toolchain =
+            RiscvToolchain::with_platform_override(tmp.path(), override_package, "riscv-wch-elf");
+        assert_eq!(
+            toolchain.get_gcc_path().file_name().unwrap(),
+            std::ffi::OsStr::new(&tool_name("riscv-wch-elf-gcc"))
+        );
+        assert_eq!(
+            toolchain.get_ar_path().file_name().unwrap(),
+            std::ffi::OsStr::new(&tool_name("riscv-wch-elf-ar"))
+        );
+        assert!(toolchain.get_info().url.contains("toolchain-riscv-linux"));
+    }
+
+    #[test]
+    fn platformio_toolchain_prefix_comes_from_complete_installed_suite() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let mut toolchain = RiscvToolchain::with_cache_root(tmp.path(), tmp.path());
+        toolchain.executable_prefix = "auto".into();
+        let bin = toolchain.base.install_path().join("bin");
+        std::fs::create_dir_all(&bin).unwrap();
+        for suffix in ["gcc", "g++", "ar", "objcopy", "size"] {
+            std::fs::write(tool_binary(&bin, &format!("riscv-none-embed-{suffix}")), "").unwrap();
+        }
+        std::fs::write(
+            crate::disk_cache::paths::install_complete_sentinel(&toolchain.base.install_path()),
+            "",
+        )
+        .unwrap();
+        assert_eq!(
+            detect_tool_prefix(&bin).as_deref(),
+            Some("riscv-none-embed")
+        );
+        assert!(toolchain.is_installed());
+        assert_eq!(toolchain.executable_prefix(), "riscv-none-embed");
+        assert_eq!(
+            toolchain.get_gcc_path(),
+            tool_binary(&bin, "riscv-none-embed-gcc")
+        );
+        std::fs::remove_file(tool_binary(&bin, "riscv-none-embed-ar")).unwrap();
+        assert_eq!(detect_tool_prefix(&bin), None);
+        assert!(!toolchain.is_installed());
     }
 
     #[test]
@@ -410,7 +550,7 @@ mod tests {
     fn test_multilib_include_path_maps_default_directory_to_sysroot() {
         let version_dir = Path::new("toolchain/include/c++/14.2.0");
         assert_eq!(
-            multilib_include_path(version_dir, Path::new("")),
+            multilib_include_path(version_dir, "riscv-none-elf", Path::new("")),
             PathBuf::from("toolchain/include/c++/14.2.0/riscv-none-elf")
         );
     }
@@ -419,7 +559,11 @@ mod tests {
     fn test_multilib_include_path_preserves_extension_directory() {
         let version_dir = Path::new("toolchain/include/c++/14.2.0");
         assert_eq!(
-            multilib_include_path(version_dir, Path::new("rv32imafc_zicsr/ilp32f")),
+            multilib_include_path(
+                version_dir,
+                "riscv-none-elf",
+                Path::new("rv32imafc_zicsr/ilp32f")
+            ),
             PathBuf::from("toolchain/include/c++/14.2.0/riscv-none-elf/rv32imafc_zicsr/ilp32f")
         );
     }

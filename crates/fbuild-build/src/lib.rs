@@ -94,6 +94,12 @@ pub async fn provision_env(
             "offline install check/dry-run cannot resolve a registry PlatformIO platform or package without fetching its metadata; run `fbuild install`".into(),
         ));
     }
+    if !mode.fetches() && platform == Platform::Ch32v && has_repository_platform_source(env_config)?
+    {
+        return Err(fbuild_core::FbuildError::PackageError(
+            "offline install check/dry-run cannot resolve a CH32V repository/archive platform without fetching its manifest; run `fbuild install`".into(),
+        ));
+    }
     let support = get_platform_support(platform)?;
     let inputs = provision::ProvisionInputs {
         project_dir,
@@ -265,6 +271,19 @@ fn has_registry_resolution(env: &std::collections::HashMap<String, String>) -> R
     Ok(false)
 }
 
+fn has_repository_platform_source(env: &std::collections::HashMap<String, String>) -> Result<bool> {
+    let Some(raw) = env.get("platform") else {
+        return Ok(false);
+    };
+    let spec = fbuild_core::platformio_package::parse_package_spec(raw)
+        .map_err(|error| fbuild_core::FbuildError::PackageError(error.to_string()))?;
+    Ok(matches!(
+        spec.source,
+        fbuild_core::platformio_package::PackageSource::Repository { .. }
+            | fbuild_core::platformio_package::PackageSource::Archive { .. }
+    ))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -332,6 +351,27 @@ mod tests {
                 );
                 assert!(!dir.path().join(fbuild_paths::FBUILD_DIR_NAME).exists());
             }
+        }
+    }
+
+    #[tokio::test]
+    async fn ch32v_repository_dry_run_never_fetches_platform_source() {
+        let dir = project(
+            "[env:ch32v003]\nplatform = https://github.com/Community-PIO-CH32V/platform-ch32v.git#b7397c29a71101175bfc94f6ab06f9daac336458\nboard = genericCH32V003F4P6\nframework = arduino\n",
+        );
+        for mode in [
+            provision::ProvisionMode::DryRun,
+            provision::ProvisionMode::Check,
+        ] {
+            let error = provision_env(dir.path(), "ch32v003", mode)
+                .await
+                .unwrap_err();
+            assert!(
+                error
+                    .to_string()
+                    .contains("cannot resolve a CH32V repository")
+            );
+            assert!(!dir.path().join(fbuild_paths::FBUILD_DIR_NAME).exists());
         }
     }
 
