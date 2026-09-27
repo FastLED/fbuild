@@ -1043,7 +1043,7 @@ fn core_compile_metadata(path: &Path) -> AppResult<(Option<usize>, Option<Vec<St
     let entries: Vec<CompileEntry> = serde_json::from_slice(&fs::read(path)?)?;
     let core = entries
         .iter()
-        .filter(|entry| entry.file.replace('\\', "/").contains("/cores/esp32/"))
+        .filter(|entry| is_esp32_core_source(&entry.file))
         .collect::<Vec<_>>();
     if core.is_empty() {
         return Ok((None, None));
@@ -1059,6 +1059,13 @@ fn core_compile_metadata(path: &Path) -> AppResult<(Option<usize>, Option<Vec<St
         .copied()
         .unwrap_or(core[0]);
     Ok((Some(source_count), Some(entry_argv(representative))))
+}
+
+fn is_esp32_core_source(file: &str) -> bool {
+    let components = file.split(['/', '\\']).collect::<Vec<_>>();
+    components
+        .windows(3)
+        .any(|parts| parts[0] == "cores" && parts[1] == "esp32")
 }
 
 fn os_args(values: &[&str]) -> Vec<OsString> {

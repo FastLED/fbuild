@@ -591,6 +591,15 @@ fn compile_database_records_distinct_esp32_core_sources_and_flags() {
 }
 
 #[test]
+fn esp32_core_source_accepts_both_separator_styles() {
+    assert!(is_esp32_core_source("/framework/cores/esp32/Esp.cpp"));
+    assert!(is_esp32_core_source(r"C:\framework\cores\esp32\Esp.cpp"));
+    assert!(is_esp32_core_source(r"C:\framework/cores\esp32/Esp.cpp"));
+    assert!(!is_esp32_core_source("/framework/cores/esp32s3/Esp.cpp"));
+    assert!(!is_esp32_core_source("/project/cores/esp32"));
+}
+
+#[test]
 fn ratio_regression_uses_seven_day_median() {
     let now = parse_timestamp_unix_s("2026-07-22T12:00:00Z").unwrap();
     assert_eq!(now, 1_784_721_600);
