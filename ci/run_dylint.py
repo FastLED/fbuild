@@ -24,6 +24,9 @@ def main(argv: list[str] | None = None) -> int:
     if not os.environ.get("CARGO_HOME"):
         os.environ["CARGO_HOME"] = str(Path.home() / ".cargo")
     env = os.environ.copy()
+    # setup-soldr pins the workspace's stable toolchain in this variable.
+    # Dylint must resolve the separate nightly from its library manifests.
+    env.pop("RUSTUP_TOOLCHAIN", None)
     # The ordinary local check can reuse Cargo fingerprints. CI's native OS
     # legs force fresh traversal and compare the independent observation ledger.
     env.pop("FBUILD_PLATFORM_BOUNDARY_OBSERVED", None)

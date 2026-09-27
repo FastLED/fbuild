@@ -125,7 +125,7 @@ jobs:
       - name: Prepare prebuilt Dylint tools and driver
         timeout-minutes: 10
         run: |
-          soldr dylint prepare 2>&1 | tee "$RUNNER_TEMP/dylint-prepare.log"
+          env -u RUSTUP_TOOLCHAIN soldr dylint prepare 2>&1 | tee "$RUNNER_TEMP/dylint-prepare.log"
           # Library UI tests invoke soldr cargo test separately, so preserve
           # the prebuilt dylint-link directory for their linker config.
           sed -n 's/^soldr: dylint prepare: tool bin dir //p' "$RUNNER_TEMP/dylint-prepare.log" >> "$GITHUB_PATH"
@@ -192,7 +192,7 @@ jobs:
           # every platform-gated source path on each run.
           export RUSTFLAGS="${RUSTFLAGS:+${RUSTFLAGS} }--cfg fbuild_platform_boundary_observation_run_${GITHUB_RUN_ID}"
           rm -f "$FBUILD_PLATFORM_BOUNDARY_OBSERVED"
-          soldr dylint --all -- --workspace --all-targets
+          env -u RUSTUP_TOOLCHAIN soldr dylint --all -- --workspace --all-targets
       - name: Compare scanner with actual Dylint observations
         run: uv run --no-project python ci/enforce_platform_boundary.py --dylint-observed target/platform-boundary-dylint-observed.tsv --print-totals
 

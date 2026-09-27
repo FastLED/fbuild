@@ -14,11 +14,12 @@ class RunDylintTests(unittest.TestCase):
         commands: list[list[str]] = []
 
         def run(args: list[str], **_kwargs):
+            self.assertNotIn("RUSTUP_TOOLCHAIN", _kwargs["env"])
             commands.append(args)
             return subprocess.CompletedProcess(args, 0)
 
         with (
-            patch.dict(os.environ, {"CARGO_HOME": "", "FBUILD_PLATFORM_BOUNDARY_OBSERVED": "stale"}),
+            patch.dict(os.environ, {"CARGO_HOME": "", "FBUILD_PLATFORM_BOUNDARY_OBSERVED": "stale", "RUSTUP_TOOLCHAIN": "1.95.0"}),
             patch.object(Path, "home", return_value=Path("/tmp/fbuild-test-home")),
             patch.object(run_dylint, "activate"),
             patch.object(run_dylint.subprocess, "run", side_effect=run),
