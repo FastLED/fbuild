@@ -329,7 +329,7 @@ mod tests {
                         .to_string()
                         .contains("cannot resolve a pinned PlatformIO")
                 );
-                assert!(!dir.path().join(".fbuild").exists());
+                assert!(!dir.path().join(fbuild_paths::FBUILD_DIR_NAME).exists());
             }
         }
     }
