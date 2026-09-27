@@ -13,6 +13,43 @@ use std::path::{Path, PathBuf};
 
 use fbuild_core::Result;
 
+/// Record the requested ESP32 package pins beside the installed stack so a
+/// successful build cannot conceal a cross-version framework or SDK.
+pub(super) fn esp32_package_stack_summary(
+    env_config: Option<&HashMap<String, String>>,
+    platform: &fbuild_packages::PackageInfo,
+    framework: &fbuild_packages::PackageInfo,
+    toolchain: &fbuild_packages::PackageInfo,
+    installed_framework: &fbuild_packages::library::Esp32Framework,
+    mcu: &str,
+) -> String {
+    let requested_platform = env_config
+        .and_then(|env| env.get("platform"))
+        .map_or("<default>", String::as_str);
+    let requested_framework = env_config
+        .and_then(|env| env.get("platform_packages"))
+        .and_then(|raw| {
+            raw.lines().find(|line| {
+                line.trim()
+                    .split_once('@')
+                    .is_some_and(|(name, _)| name.trim().ends_with("framework-arduinoespressif32"))
+            })
+        })
+        .map_or("<platform manifest>", str::trim);
+    let sdk_version = installed_framework
+        .bundled_esp_idf_version(mcu)
+        .unwrap_or_else(|| "unknown (bundled with framework)".to_string());
+    format!(
+        "ESP32 packages: requested platform={requested_platform}, framework={requested_framework}; resolved platform={}@{}, framework={}@{}, toolchain={}@{}, ESP-IDF SDK={sdk_version}",
+        platform.name,
+        platform.version,
+        framework.name,
+        framework.version,
+        toolchain.name,
+        toolchain.version,
+    )
+}
+
 /// Resolve the image settings once so the fingerprint and linker use identical values.
 pub(super) fn flash_settings(
     board: &fbuild_config::BoardConfig,

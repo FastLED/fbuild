@@ -94,36 +94,18 @@ impl BuildOrchestrator for Esp32Orchestrator {
         .await?;
         drop(_resolve_phase);
         let toolchain_info = fbuild_packages::Package::get_info(&toolchain);
-        let framework_info = fbuild_packages::Package::get_info(&framework);
-        let requested_platform = env_config
-            .and_then(|env| env.get("platform"))
-            .map_or("<default>", String::as_str);
-        let requested_framework = env_config
-            .and_then(|env| env.get("platform_packages"))
-            .and_then(|raw| {
-                raw.lines().find(|line| {
-                    line.trim().split_once('@').is_some_and(|(name, _)| {
-                        name.trim().ends_with("framework-arduinoespressif32")
-                    })
-                })
-            })
-            .map_or("<platform manifest>", str::trim);
-        ctx.build_log.push(format!(
-            "ESP32 packages: requested platform={requested_platform}, framework={requested_framework}; resolved platform={}@{}, framework={}@{}, toolchain={}@{}, ESP-IDF SDK={}",
-            platform_info.name,
-            platform_info.version,
-            framework_info.name,
-            framework_info.version,
-            toolchain_info.name,
-            toolchain_info.version,
-            framework
-                .bundled_esp_idf_version(&ctx.board.mcu)
-                .unwrap_or_else(|| "unknown (bundled with framework)".to_string()),
-        ));
+        ctx.build_log
+            .push(super::helpers::esp32_package_stack_summary(
+                env_config,
+                &platform_info,
+                &fbuild_packages::Package::get_info(&framework),
+                &toolchain_info,
+                &framework,
+                &ctx.board.mcu,
+            ));
         mcu_config.adapt_to_toolchain(&toolchain_info.name, &toolchain_info.version);
         let _toolchain_cache_dir = fbuild_packages::Package::get_info(&toolchain).install_path;
         let _framework_cache_dir = fbuild_packages::Package::get_info(&framework).install_path;
-
         // Aliases for build dirs (already set up by BuildContext::new())
         let build_dir = &ctx.build_dir;
         let core_build_dir = &ctx.core_build_dir;
