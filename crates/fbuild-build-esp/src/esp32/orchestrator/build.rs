@@ -20,6 +20,7 @@ use super::fingerprint::Esp32FingerprintMetadata;
 use super::framework_libs::compile_framework_builtin_libs;
 use super::helpers::{
     apply_effective_define_flags, compile_db_is_current, framework_macro_prefix_map, profile_label,
+    reject_unsupported_sdkconfig_overlay,
 };
 use super::local_libs::compile_local_libraries;
 use super::packages::resolve_pioarduino_packages;
@@ -40,6 +41,12 @@ impl BuildOrchestrator for Esp32Orchestrator {
     }
 
     async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
+        let config = fbuild_config::PlatformIOConfig::from_path_with_overrides(
+            &params.project_dir.join("platformio.ini"),
+            fbuild_config::PioEnvOverrides::from_map(params.pio_env.clone()),
+        )?;
+        reject_unsupported_sdkconfig_overlay(&config, &params.env_name)?;
+
         let start = Instant::now();
         // Env-gated per-phase timer (FBUILD_PERF_LOG=1); zero overhead when unset.
         let mut perf = crate::perf_log::PerfTimer::new("esp32-orchestrator");

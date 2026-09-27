@@ -13,6 +13,29 @@ use std::path::{Path, PathBuf};
 
 use fbuild_core::Result;
 
+/// Arduino's packaged ESP-IDF libraries cannot reflect sdkconfig changes without
+/// a hybrid IDF rebuild. Reject overlays before context setup has side effects.
+pub(super) fn reject_unsupported_sdkconfig_overlay(
+    config: &fbuild_config::PlatformIOConfig,
+    env_name: &str,
+) -> Result<()> {
+    let env = config.get_env_config(env_name)?;
+    if !env
+        .get("framework")
+        .is_some_and(|framework| framework.split(',').any(|part| part.trim() == "arduino"))
+    {
+        return Ok(());
+    }
+    for key in ["board_build.sdkconfig_defaults", "custom_sdkconfig"] {
+        if env.get(key).is_some_and(|value| !value.trim().is_empty()) {
+            return Err(fbuild_core::FbuildError::ConfigError(format!(
+                "{key} is unsupported for ESP32 Arduino environment '{env_name}': fbuild cannot apply an sdkconfig overlay to precompiled ESP-IDF libraries (see FastLED/fbuild#1460)"
+            )));
+        }
+    }
+    Ok(())
+}
+
 /// Apply the effective `-D` / `-U` compiler flags used by library selection.
 /// SDK flags are inherited before `build_unflags`; user flags apply afterward
 /// unless an exact user token is also unflagged by the compiler.
