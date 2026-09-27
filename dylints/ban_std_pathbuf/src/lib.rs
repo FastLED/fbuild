@@ -155,7 +155,7 @@ fn def_path_starts_with(
 
 #[test]
 fn ui() {
-    // Dylint 6.0.1 looks for its test library directly under
+    // Dylint 6.0.3 looks for its test library directly under
     // <target>/debug, while Soldr selects the host through
     // CARGO_BUILD_TARGET and Cargo writes to <target>/<host>/debug.
     // SAFETY: this test binary contains one test, so no peer can observe
