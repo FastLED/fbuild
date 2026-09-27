@@ -411,7 +411,8 @@ async fn main() {
         let ctx = context.clone();
         async move {
             fbuild_core::platform::process::daemon_terminate_signal().await;
-            fbuild_daemon::shutdown::exit_on_terminate(ctx).await
+            fbuild_daemon::shutdown::drain_and_persist_on_terminate(ctx).await;
+            std::process::exit(0);
         }
     });
 

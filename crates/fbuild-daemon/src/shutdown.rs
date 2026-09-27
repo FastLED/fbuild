@@ -48,9 +48,9 @@ pub async fn refuse_new_operations_when_shutting_down(
     next.run(request).await
 }
 
-/// Controlled exit on SIGTERM: refuse new operations, give in-flight ones
-/// [`SHUTDOWN_DRAIN_BUDGET`], persist, exit.
-pub async fn exit_on_terminate(ctx: Arc<DaemonContext>) -> ! {
+/// Prepare a controlled SIGTERM exit: refuse new operations, give in-flight
+/// ones [`SHUTDOWN_DRAIN_BUDGET`], then persist before the binary exits.
+pub async fn drain_and_persist_on_terminate(ctx: Arc<DaemonContext>) {
     let in_flight = ctx.begin_shutdown();
     tracing::info!(
         in_flight,
@@ -67,8 +67,7 @@ pub async fn exit_on_terminate(ctx: Arc<DaemonContext>) -> ! {
         );
     }
     persist_and_clean_up().await;
-    tracing::info!("daemon exiting (SIGTERM)");
-    std::process::exit(0)
+    tracing::info!("daemon ready to exit (SIGTERM)");
 }
 
 /// Remove this daemon's pid/port/claim/status records and flush the embedded
