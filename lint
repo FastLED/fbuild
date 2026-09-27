@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Run workspace linting: rustfmt check + clippy.
+"""Run workspace linting: rustfmt, Clippy, and pinned custom Dylint checks.
 
 Usage:
     uv run --script lint              # full workspace lint
     uv run --script lint --fix        # auto-fix formatting + clippy
-    uv run --script lint <file.rs>    # single-file rustfmt + per-crate clippy
+    uv run --script lint <file.rs>    # single-file rustfmt + per-crate Clippy/Dylint
 """
 
 import os
@@ -16,7 +16,7 @@ SCRIPT_DIR = Path(__file__).parent.resolve()
 
 # Activate rustup toolchain on PATH before any Rust tool invocations
 sys.path.insert(0, str(SCRIPT_DIR))
-from ci.env import activate  # noqa: E402
+from ci.env import activate
 
 activate()
 
@@ -34,8 +34,16 @@ def detect_crate(file_path: str) -> str:
 
 def run(args: list[str]) -> int:
     """Run a command and return exit code."""
-    result = subprocess.run(args, cwd=str(SCRIPT_DIR))
+    result = subprocess.run(args, cwd=str(SCRIPT_DIR), check=False)
     return result.returncode
+
+
+def run_dylint(crate: str = "") -> int:
+    """Run all custom lints over the workspace or an edited file's crate."""
+    args = [sys.executable, "-m", "ci.run_dylint"]
+    if crate:
+        args.extend(["--package", crate])
+    return run(args)
 
 
 def main() -> int:
@@ -52,13 +60,6 @@ def main() -> int:
         rc = run(["soldr", "cargo", "fmt", "--all"])
         if rc != 0:
             return rc
-        if not file_arg:
-            return run(
-                [
-                    "soldr", "cargo", "clippy",
-                    "--workspace", "--all-targets", "--", "-D", "warnings",
-                ]
-            )
 
     # Single file mode
     if file_arg:
@@ -71,19 +72,20 @@ def main() -> int:
             return rc
         crate = detect_crate(file_path)
         if crate:
-            return run(
+            rc = run(
                 [
                     "soldr", "cargo", "clippy",
                     "-p", crate, "--all-targets", "--", "-D", "warnings",
                 ]
             )
         else:
-            return run(
+            rc = run(
                 [
                     "soldr", "cargo", "clippy",
                     "--workspace", "--all-targets", "--", "-D", "warnings",
                 ]
             )
+        return rc if rc else run_dylint(crate)
 
     # Full workspace mode
     for checker in (
@@ -100,12 +102,13 @@ def main() -> int:
             file=sys.stderr,
         )
         return 1
-    return run(
+    rc = run(
         [
             "soldr", "cargo", "clippy",
             "--workspace", "--all-targets", "--", "-D", "warnings",
         ]
     )
+    return rc if rc else run_dylint()
 
 
 if __name__ == "__main__":

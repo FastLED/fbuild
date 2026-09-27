@@ -5,6 +5,14 @@ production code. Each lint lives in its own crate so it can pin its own
 nightly toolchain (the rustc internal API moves fast; the workspace
 itself stays on stable 1.95.0).
 
+Run `uv run --script lint` for the full local check. It now includes the real
+workspace Dylint pass after formatting and Clippy; its first run installs the
+pinned Dylint 6.0.1 tools and nightly driver under `target/`. A single-file
+`./lint` invocation runs every custom Dylint on that file's crate (not its
+dependents); a full invocation checks the entire workspace. Local Dylint
+checks the host platform; ordinary PR CI runs the same workspace lints
+natively on Linux, Windows, and macOS and requires all three to pass.
+
 ## Crates
 
 - **`ban_raw_subprocess/`** — forbids `Command::{spawn, output, status}`

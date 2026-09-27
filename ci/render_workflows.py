@@ -254,7 +254,6 @@ def render_ci(boards: list[dict], tier: str) -> str:
         + "    uses: ./.github/workflows/dylint.yml\n"
         + "    with:\n"
         + f"      ref: {verified_ref}\n"
-        + "      run_full: true\n"
         + "  acceptance:\n"
         + gate
         + "    needs: verify\n"
