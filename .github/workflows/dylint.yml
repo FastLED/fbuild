@@ -81,7 +81,9 @@ jobs:
           # below, so it cannot invalidate the stable target tree.
           cache: true
           toolchain: 1.95.0
-          cache-key-suffix: dylint
+          # The old "dylint" key contains an immutable, empty build-cache
+          # entry. Use a fresh stable key shared by main and future PRs.
+          cache-key-suffix: dylint-unified-v2
           prebuild-deps: none
           ci-tests: true
           dylint-toolchain: nightly-2026-05-28
