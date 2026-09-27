@@ -29,6 +29,7 @@
 
 use std::time::Duration;
 
+use fbuild_core::path::NormalizedPath;
 use futures::{SinkExt, StreamExt};
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio_tungstenite::tungstenite;
@@ -267,7 +268,7 @@ fn fake_daemon_child() {
 
 struct FakeDaemonGuard {
     child: std::process::Child,
-    event_file: std::path::PathBuf,
+    event_file: NormalizedPath,
     _temp_dir: tempfile::TempDir,
     _env_guard: std::sync::MutexGuard<'static, ()>,
 }
@@ -300,15 +301,10 @@ impl Drop for FakeDaemonGuard {
 
 fn start_fake_daemon(
     knobs: DaemonKnobs,
-) -> (
-    u16,
-    std::process::Child,
-    tempfile::TempDir,
-    std::path::PathBuf,
-) {
+) -> (u16, std::process::Child, tempfile::TempDir, NormalizedPath) {
     let port_dir = tempfile::tempdir().unwrap();
     let port_file = port_dir.path().join("port");
-    let event_file = port_dir.path().join("events");
+    let event_file = NormalizedPath::new(port_dir.path().join("events"));
     let knobs_json = serde_json::json!({
         "attach_delay_ms": knobs.attach_delay.as_millis() as u64,
         "ack_delay_ms": knobs.ack_delay.as_millis() as u64,
@@ -322,7 +318,7 @@ fn start_fake_daemon(
         .args(["--ignored", "--exact", "fake_daemon_child", "--nocapture"])
         .env("FBUILD_FACADE_DAEMON_KNOBS", knobs_json.to_string())
         .env("FBUILD_FACADE_DAEMON_PORT_FILE", &port_file)
-        .env("FBUILD_FACADE_DAEMON_EVENT_FILE", &event_file)
+        .env("FBUILD_FACADE_DAEMON_EVENT_FILE", event_file.as_path())
         .stdout(std::process::Stdio::null())
         .stderr(std::process::Stdio::inherit())
         .spawn()

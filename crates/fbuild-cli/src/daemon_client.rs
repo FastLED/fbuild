@@ -815,10 +815,10 @@ async fn same_running_image(
     if remote.pid != health.pid {
         return false;
     }
-    let path = std::path::PathBuf::from(path);
-    let memo_dir = memo_dir.to_path_buf();
+    let path = fbuild_core::path::NormalizedPath::new(path);
+    let memo_dir = fbuild_core::path::NormalizedPath::new(memo_dir);
     let Ok(Ok(local)) = tokio::task::spawn_blocking(move || {
-        fbuild_paths::executable_hash::memoized_blake3_file(&path, &memo_dir)
+        fbuild_paths::executable_hash::memoized_blake3_file(path.as_path(), memo_dir.as_path())
     })
     .await
     else {
