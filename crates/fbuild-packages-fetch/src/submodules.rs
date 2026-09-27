@@ -348,8 +348,8 @@ fn checked_submodule_dest(root: &Path, path: &str) -> fbuild_core::Result<std::p
 }
 
 async fn git_command<const N: usize>(args: [&str; N]) -> fbuild_core::Result<String> {
-    // allow-direct-spawn: Git resolves immutable VCS gitlinks without a shell
-    // or GitHub REST API quota, matching PlatformIO's VCS dependency.
+    // Git avoids GitHub REST API quota for PlatformIO's VCS dependencies.
+    // allow-direct-spawn: resolve immutable gitlinks with Git, without a shell.
     let mut command = tokio::process::Command::new("git");
     command.args(args).kill_on_drop(true);
     let output = tokio::time::timeout(std::time::Duration::from_secs(60), command.output())
