@@ -13,6 +13,28 @@ use std::path::{Path, PathBuf};
 
 use fbuild_core::Result;
 
+/// Resolve the image settings once so the fingerprint and linker use identical values.
+pub(super) fn flash_settings(
+    board: &fbuild_config::BoardConfig,
+    mcu_config: &crate::esp32::mcu_config::Esp32McuConfig,
+) -> (String, String, String) {
+    let f_for_image = board.f_image.as_deref().or(board.f_flash.as_deref());
+    let flash_freq = crate::esp32::esp32_linker::f_flash_to_esptool_freq(
+        f_for_image,
+        mcu_config.default_flash_freq(),
+    );
+    let flash_mode = board
+        .flash_mode
+        .clone()
+        .unwrap_or_else(|| mcu_config.default_flash_mode().to_string());
+    let flash_size = crate::esp32::mcu_config::bytes_to_flash_size(
+        board.max_flash,
+        mcu_config.default_flash_size(),
+    )
+    .to_string();
+    (flash_freq, flash_mode, flash_size)
+}
+
 /// Arduino's packaged ESP-IDF libraries cannot reflect sdkconfig changes without
 /// a hybrid IDF rebuild. Reject overlays before context setup has side effects.
 pub(super) fn reject_unsupported_sdkconfig_overlay(

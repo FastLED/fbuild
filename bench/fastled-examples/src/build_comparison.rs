@@ -6,7 +6,7 @@
 use fbuild_core::path::NormalizedPath;
 use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 use std::env;
 use std::ffi::{OsStr, OsString};
 use std::fs::{self, File};
@@ -23,7 +23,7 @@ const PERF_LOG_FILE: &str = "fbuild-perf.jsonl";
 const DAEMON_RESTART_NOTICE: &str = "daemon binary updated, restarting";
 /// Lines of the daemon's own log appended to `benchmark.log` on restart mode.
 const DAEMON_LOG_TAIL_LINES: usize = 200;
-const PERF_PHASE_LABELS: &[&str] = &["avr-orchestrator", "pipeline"];
+const PERF_PHASE_LABELS: &[&str] = &["avr-orchestrator", "esp32-orchestrator", "pipeline"];
 const REGRESSION_WINDOW_S: u64 = 7 * 24 * 60 * 60;
 const DEFAULT_REPOSITORY: &str = "FastLED/fbuild";
 const DEFAULT_PAGES_URL: &str = "https://fastled.github.io/fbuild/";
@@ -160,12 +160,20 @@ struct ToolResult {
     /// Timed fbuild builds that restarted the daemon (FastLED/fbuild#1476);
     /// each adds ~200 ms, so a non-zero count marks inflated fbuild timings.
     daemon_restarts: usize,
+    /// Package versions actually selected by this tool, not requested pins.
+    resolved_packages: BTreeMap<String, String>,
+    /// Distinct Arduino core sources in the tool's compile database.
+    core_source_count: Option<usize>,
+    /// Full compiler invocation for a representative core source.
+    core_compile_argv: Option<Vec<String>>,
 }
 
 /// One entry of a clang-style `compile_commands.json`.
 #[derive(Clone, Debug, Deserialize)]
 struct CompileEntry {
     directory: String,
+    #[serde(default)]
+    file: String,
     #[serde(default)]
     arguments: Option<Vec<String>>,
     #[serde(default)]
@@ -180,8 +188,8 @@ struct Metadata {
     run_url: String,
     project: String,
     trials: usize,
-    /// Median wall clock of replaying fbuild's compile DB with the bare compiler.
-    raw_baseline_ms: Option<f64>,
+    /// Per-board median wall clock of replaying the bare compiler.
+    raw_baselines_ms: BTreeMap<String, f64>,
 }
 
 fn main() {
@@ -235,7 +243,7 @@ fn run() -> AppResult<()> {
     ];
 
     let mut results = Vec::with_capacity(versions.len() * BOARDS.len());
-    let mut raw_baseline_ms = None;
+    let mut raw_baselines_ms = BTreeMap::new();
     for board in BOARDS {
         let arduino_build_dir = repo_root.join(format!("benchmark-output/arduino-{}", board.key));
         for (kind, version) in &versions {
@@ -250,7 +258,7 @@ fn run() -> AppResult<()> {
                 &fbuild,
                 &arduino_build_dir,
                 &mut log,
-                &mut raw_baseline_ms,
+                &mut raw_baselines_ms,
             )?;
             if result.daemon_restarts > 0 {
                 println!(
@@ -274,17 +282,22 @@ fn run() -> AppResult<()> {
         run_url: options.run_url.clone(),
         project: options.project_dir.display_slash(),
         trials: options.trials,
-        raw_baseline_ms,
+        raw_baselines_ms,
     };
-    if let Some(ratio) = fbuild_vs_platformio_cold(&results) {
-        let history = read_history_values(&output_dir.join("history.jsonl"));
-        let now_unix_s = SystemTime::now()
-            .duration_since(UNIX_EPOCH)
-            .unwrap_or_default()
-            .as_secs();
-        if let Some(baseline) = ratio_regressed(&history, now_unix_s, ratio) {
+    let history = read_history_values(&output_dir.join("history.jsonl"));
+    let now_unix_s = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap_or_default()
+        .as_secs();
+    for board in BOARDS {
+        if let Some(ratio) = board_cold_ratio(&results, board.key) {
+            let Some(baseline) = ratio_regressed_for_board(&history, now_unix_s, ratio, board.key)
+            else {
+                continue;
+            };
             println!(
-                "::warning title=fbuild cold regression::fbuild/PlatformIO cold ratio {ratio:.3} exceeds 7-day median {baseline:.3}"
+                "::warning title=fbuild cold regression ({})::fbuild/PlatformIO cold ratio {ratio:.3} exceeds 7-day median {baseline:.3}",
+                board.name
             );
         }
     }
@@ -311,12 +324,13 @@ fn measure_tool(
     fbuild: &Path,
     arduino_build_dir: &Path,
     log: &mut File,
-    raw_baseline_ms: &mut Option<f64>,
+    raw_baselines_ms: &mut BTreeMap<String, f64>,
 ) -> AppResult<ToolResult> {
     let mut cold_trials_ms = Vec::with_capacity(options.trials);
     let mut warm_trials_ms = Vec::with_capacity(options.trials);
     let mut cold_phase_trials = Vec::new();
     let mut daemon_restarts = 0;
+    let mut resolved_packages = BTreeMap::new();
     let perf_log = output_dir.join(PERF_LOG_FILE);
     let envs = tool_envs(kind, &perf_log);
 
@@ -354,7 +368,7 @@ fn measure_tool(
             }
             MeasurementStep::ColdBuild(trial) => {
                 let offset = perf_line_count(&perf_log);
-                let (elapsed, restarted) = timed_build(
+                let (elapsed, restarted, packages) = timed_build(
                     kind,
                     board,
                     options,
@@ -366,24 +380,29 @@ fn measure_tool(
                     &envs,
                 )?;
                 daemon_restarts += usize::from(restarted);
+                if matches!(kind, ToolKind::PlatformIo) && !packages.is_empty() {
+                    resolved_packages = packages;
+                }
                 cold_trials_ms.push(round_millis(elapsed));
                 if matches!(kind, ToolKind::Fbuild) {
                     let content = fs::read_to_string(&perf_log).unwrap_or_default();
                     if let Some(phases) = perf_phases_after(&content, offset, PERF_PHASE_LABELS) {
                         cold_phase_trials.push(phases);
                     }
-                    if trial == 1 && board.key == "uno" {
-                        *raw_baseline_ms = measure_raw_baseline(
+                    if trial == 1 {
+                        if let Some(ms) = measure_raw_baseline(
                             project_dir,
                             board.environment,
                             options.trials,
                             log,
-                        )?;
+                        )? {
+                            raw_baselines_ms.insert(board.key.to_string(), ms);
+                        }
                     }
                 }
             }
             MeasurementStep::WarmBuild(_) => {
-                let (elapsed, restarted) = timed_build(
+                let (elapsed, restarted, _) = timed_build(
                     kind,
                     board,
                     options,
@@ -399,6 +418,54 @@ fn measure_tool(
             }
         }
     }
+
+    if matches!(kind, ToolKind::Fbuild) {
+        let output = run_logged_env(
+            fbuild.as_os_str(),
+            &os_args(&[
+                "install",
+                &project_dir.to_string_lossy(),
+                "--environment",
+                board.environment,
+                "--check",
+                "--json",
+            ]),
+            repo_root,
+            log,
+            &[],
+        )?;
+        resolved_packages = parse_fbuild_packages(&output.stdout)?;
+    }
+    if matches!(kind, ToolKind::PlatformIo) {
+        run_logged_env(
+            options.platformio.as_os_str(),
+            &os_args(&[
+                "run",
+                "--project-dir",
+                &project_dir.to_string_lossy(),
+                "--environment",
+                board.environment,
+                "--target",
+                "compiledb",
+            ]),
+            repo_root,
+            log,
+            &[],
+        )?;
+    }
+    let compile_db = match kind {
+        ToolKind::Arduino => None,
+        ToolKind::PlatformIo => Some(NormalizedPath::new(
+            project_dir.join("compile_commands.json"),
+        )),
+        ToolKind::Fbuild => find_compile_db(project_dir, board.environment),
+    };
+    let (core_source_count, core_compile_argv) = compile_db
+        .as_deref()
+        .filter(|path| path.is_file())
+        .map(core_compile_metadata)
+        .transpose()?
+        .unwrap_or((None, None));
 
     let cold_ms = round_millis(median(&cold_trials_ms));
     let warm_ms = round_millis(median(&warm_trials_ms));
@@ -422,6 +489,9 @@ fn measure_tool(
         cold_phases_ms: phase_medians(&cold_phase_trials),
         cold_phase_trials,
         daemon_restarts,
+        resolved_packages,
+        core_source_count,
+        core_compile_argv,
     })
 }
 
@@ -607,16 +677,32 @@ fn split_command(command: &str) -> Vec<String> {
     let mut current = String::new();
     let mut in_token = false;
     let mut quote: Option<char> = None;
-    let mut chars = command.chars();
+    let mut chars = command.chars().peekable();
     while let Some(c) = chars.next() {
         match (quote, c) {
             (Some(q), c) if c == q => quote = None,
             (Some('"'), '\\') => {
-                if let Some(next) = chars.next() {
+                if chars.peek().is_some_and(|next| *next == '"') {
+                    let next = chars.next().expect("peeked character");
                     current.push(next);
+                } else {
+                    current.push('\\');
                 }
             }
             (Some(_), c) => current.push(c),
+            (None, '\\') => {
+                if chars
+                    .peek()
+                    .is_some_and(|next| *next == '"' || next.is_whitespace())
+                {
+                    let next = chars.next().expect("peeked character");
+                    current.push(next);
+                    in_token = true;
+                } else {
+                    current.push('\\');
+                    in_token = true;
+                }
+            }
             (None, '"' | '\'') => {
                 quote = Some(c);
                 in_token = true;
@@ -670,6 +756,11 @@ fn rewrite_compile_argv(argv: &[String], output: &Path) -> Vec<String> {
         } else if arg.len() > 2 && arg.starts_with("-o") {
             rewritten.push(format!("-o{output}"));
             saw_output = true;
+        } else if arg.starts_with("-D") {
+            // fbuild's raw DB retains shell-escaped macro quotes (\") even
+            // though the original compile launches via a shell. Replay uses
+            // Command::args, which must receive the unescaped quote itself.
+            rewritten.push(arg.replace("\\\"", "\""));
         } else {
             rewritten.push(arg.clone());
         }
@@ -838,7 +929,7 @@ fn timed_build(
     arduino_build_dir: &Path,
     log: &mut File,
     envs: &[(&str, OsString)],
-) -> AppResult<(f64, bool)> {
+) -> AppResult<(f64, bool, BTreeMap<String, String>)> {
     let (program, args) = match kind {
         ToolKind::Arduino => (
             options.arduino_cli.as_os_str(),
@@ -876,7 +967,98 @@ fn timed_build(
     let started = Instant::now();
     let output = run_logged_env(program, &args, repo_root, log, envs)?;
     let elapsed_ms = started.elapsed().as_secs_f64() * 1000.0;
-    Ok((elapsed_ms, restarted_daemon(&output.stderr)))
+    let packages = if matches!(kind, ToolKind::PlatformIo) {
+        parse_platformio_packages(&output.stdout, board)
+    } else {
+        BTreeMap::new()
+    };
+    Ok((elapsed_ms, restarted_daemon(&output.stderr), packages))
+}
+
+fn parse_platformio_packages(stdout: &[u8], board: Board) -> BTreeMap<String, String> {
+    let mut packages = BTreeMap::new();
+    for line in String::from_utf8_lossy(stdout).lines() {
+        if let Some(spec) = line.split("platform: ").nth(1) {
+            if let Some(pin) = spec.split(';').next() {
+                packages.insert(
+                    "platform".to_string(),
+                    pin.trim()
+                        .rsplit_once('@')
+                        .map_or(pin.trim(), |(_, version)| version)
+                        .to_string(),
+                );
+            }
+        }
+        let Some((name, version)) = line
+            .trim()
+            .strip_prefix("- ")
+            .and_then(|line| line.split_once(" @ "))
+        else {
+            continue;
+        };
+        let key = if name.starts_with("framework-") {
+            Some("framework")
+        } else if name.starts_with("toolchain-")
+            && (board.key != "esp32s3" || name == "toolchain-xtensa-esp32s3")
+        {
+            Some("toolchain")
+        } else if name == "tool-esptoolpy" {
+            Some("flash_tool")
+        } else {
+            None
+        };
+        if let Some(key) = key {
+            packages.insert(
+                key.to_string(),
+                version.split_whitespace().next().unwrap_or("").to_string(),
+            );
+        }
+    }
+    packages
+}
+
+fn parse_fbuild_packages(stdout: &[u8]) -> AppResult<BTreeMap<String, String>> {
+    let value: Value = serde_json::from_slice(stdout)?;
+    let packages = value["environments"][0]["packages"]
+        .as_array()
+        .ok_or_else(|| io::Error::other("fbuild install --json omitted packages"))?;
+    let mut resolved = BTreeMap::new();
+    for package in packages {
+        let Some(kind) = package["kind"].as_str() else {
+            continue;
+        };
+        let key = match kind {
+            "platform" | "framework" | "toolchain" => kind,
+            "tool" if package["name"] == "tool-esptoolpy" => "flash_tool",
+            _ => continue,
+        };
+        if let Some(version) = package["version"].as_str() {
+            resolved.insert(key.to_string(), version.to_string());
+        }
+    }
+    Ok(resolved)
+}
+
+fn core_compile_metadata(path: &Path) -> AppResult<(Option<usize>, Option<Vec<String>>)> {
+    let entries: Vec<CompileEntry> = serde_json::from_slice(&fs::read(path)?)?;
+    let core = entries
+        .iter()
+        .filter(|entry| entry.file.replace('\\', "/").contains("/cores/esp32/"))
+        .collect::<Vec<_>>();
+    if core.is_empty() {
+        return Ok((None, None));
+    }
+    let source_count = core
+        .iter()
+        .map(|entry| &entry.file)
+        .collect::<BTreeSet<_>>()
+        .len();
+    let representative = core
+        .iter()
+        .find(|entry| entry.file.ends_with("Esp.cpp"))
+        .copied()
+        .unwrap_or(core[0]);
+    Ok((Some(source_count), Some(entry_argv(representative))))
 }
 
 fn os_args(values: &[&str]) -> Vec<OsString> {
@@ -1045,30 +1227,95 @@ fn latest_payload(metadata: &Metadata, results: &[ToolResult]) -> Value {
             "cold_definition": "project outputs, reusable framework objects, compiler-object caches, and Arduino/PlatformIO download/HTTP caches removed; installed packages/toolchains and fbuild package archives retained",
             "warm_definition": "immediate no-change rebuild after the cold build",
         },
-        "raw_baseline_ms": metadata.raw_baseline_ms,
+        "comparison_board": comparison_board(results),
+        "raw_baseline_ms": selected_raw_baseline_ms(metadata, results),
+        "raw_baselines_ms": metadata.raw_baselines_ms,
         "fbuild_overhead_ms": fbuild_overhead_ms(metadata, results),
         "fbuild_vs_platformio_cold": fbuild_vs_platformio_cold(results),
+        "board_metrics": board_metrics(metadata, results),
         "results": results,
     })
 }
 
-fn cold_of(results: &[ToolResult], tool: &str) -> Option<f64> {
+fn cold_of(results: &[ToolResult], board: &str, tool: &str) -> Option<f64> {
     results
         .iter()
-        .find(|result| result.tool == tool)
+        .find(|result| result.board == board && result.tool == tool)
         .map(|result| result.cold_ms)
 }
 
 fn fbuild_overhead_ms(metadata: &Metadata, results: &[ToolResult]) -> Option<f64> {
+    let board = comparison_board(results)?;
     Some(round_millis(
-        cold_of(results, "fbuild")? - metadata.raw_baseline_ms?,
+        cold_of(results, board, "fbuild")? - selected_raw_baseline_ms(metadata, results)?,
     ))
 }
 
+fn selected_raw_baseline_ms(metadata: &Metadata, results: &[ToolResult]) -> Option<f64> {
+    metadata
+        .raw_baselines_ms
+        .get(comparison_board(results)?)
+        .copied()
+}
+
+fn board_cold_ratio(results: &[ToolResult], board: &str) -> Option<f64> {
+    let fbuild = results
+        .iter()
+        .find(|result| result.board == board && result.tool == "fbuild")?;
+    let platformio = results
+        .iter()
+        .find(|result| result.board == board && result.tool == "platformio")?;
+    if !board_stack_comparable(results, board) || platformio.cold_ms <= 0.0 {
+        return None;
+    }
+    Some(round_to(fbuild.cold_ms / platformio.cold_ms, 3))
+}
+
+fn board_stack_comparable(results: &[ToolResult], board: &str) -> bool {
+    results
+        .iter()
+        .find(|result| result.board == board && result.tool == "fbuild")
+        .zip(
+            results
+                .iter()
+                .find(|result| result.board == board && result.tool == "platformio"),
+        )
+        .is_some_and(|(fbuild, pio)| {
+            !fbuild.resolved_packages.is_empty()
+                && fbuild.resolved_packages == pio.resolved_packages
+        })
+}
+
+fn board_metrics(metadata: &Metadata, results: &[ToolResult]) -> Value {
+    let entries = BOARDS
+        .iter()
+        .map(|board| {
+            (
+                board.key.to_string(),
+                json!({
+                    "fbuild_vs_platformio_cold": board_cold_ratio(results, board.key),
+                    "stack_comparable": board_stack_comparable(results, board.key),
+                    "raw_baseline_ms": metadata.raw_baselines_ms.get(board.key),
+                    "fbuild_overhead_ms": cold_of(results, board.key, "fbuild")
+                        .zip(metadata.raw_baselines_ms.get(board.key))
+                        .map(|(cold, raw)| round_millis(cold - raw)),
+                }),
+            )
+        })
+        .collect::<serde_json::Map<String, Value>>();
+    Value::Object(entries)
+}
+
 fn fbuild_vs_platformio_cold(results: &[ToolResult]) -> Option<f64> {
-    let fbuild = cold_of(results, "fbuild")?;
-    let platformio = cold_of(results, "platformio")?;
-    (platformio > 0.0).then(|| round_to(fbuild / platformio, 3))
+    board_cold_ratio(results, comparison_board(results)?)
+}
+
+fn comparison_board(results: &[ToolResult]) -> Option<&'static str> {
+    BOARDS
+        .iter()
+        .filter_map(|board| board_cold_ratio(results, board.key).map(|ratio| (board.key, ratio)))
+        .max_by(|a, b| a.1.total_cmp(&b.1))
+        .map(|(board, _)| board)
 }
 
 fn read_history_values(path: &Path) -> Vec<Value> {
@@ -1118,6 +1365,28 @@ fn ratio_regressed(history: &[Value], now_unix_s: u64, current_ratio: f64) -> Op
     }
     let baseline = median(&recent);
     (current_ratio > baseline).then_some(baseline)
+}
+
+fn ratio_regressed_for_board(
+    history: &[Value],
+    now_unix_s: u64,
+    current_ratio: f64,
+    board: &str,
+) -> Option<f64> {
+    let matching = history
+        .iter()
+        .filter_map(|entry| {
+            let ratio = if entry.get("board_metrics").is_some() {
+                entry["board_metrics"][board]["fbuild_vs_platformio_cold"].as_f64()
+            } else if board == "uno" {
+                entry["fbuild_vs_platformio_cold"].as_f64()
+            } else {
+                None
+            }?;
+            Some(json!({"ts": entry["ts"], "fbuild_vs_platformio_cold": ratio}))
+        })
+        .collect::<Vec<_>>();
+    ratio_regressed(&matching, now_unix_s, current_ratio)
 }
 
 fn manifest_payload(metadata: &Metadata, pages_url: &str, raw_base_url: &str) -> Value {
@@ -1201,8 +1470,10 @@ fn write_history(
     prior.push(serde_json::to_string(&json!({
         "ts": metadata.generated_at,
         "sha": metadata.git_sha,
+        "comparison_board": comparison_board(results),
         "fbuild_overhead_ms": fbuild_overhead_ms(metadata, results),
         "fbuild_vs_platformio_cold": fbuild_vs_platformio_cold(results),
+        "board_metrics": board_metrics(metadata, results),
         "results": compact_results,
     }))?);
     fs::write(path, prior.join("\n") + "\n")?;
@@ -1223,6 +1494,13 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
             .max(1.0)
     };
     let mut rows = String::new();
+    let stack_note = |board: &str| {
+        if board_stack_comparable(results, board) {
+            " | fbuild/PIO stack matched"
+        } else {
+            " | fbuild/PIO stack differs; ratio excluded"
+        }
+    };
     for (index, result) in results.iter().enumerate() {
         let kind = match result.tool.as_str() {
             "arduino" => ToolKind::Arduino,
@@ -1296,8 +1574,8 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
 {floor_line}  <rect x="24" y="128" width="76" height="24" rx="4" fill="#5b1f1c" />
   <rect x="24" y="134" width="34" height="12" rx="3" fill="#f85149" />
   <text x="112" y="146" class="legend">cold (back) + warm (front overlay)</text>
-  <text x="24" y="182" class="legend">Arduino Uno | scale: slowest median = {uno_max_ms:.1} ms</text>
-  <text x="24" y="428" class="legend">ESP32-S3 | scale: slowest median = {esp32s3_max_ms:.1} ms</text>
+  <text x="24" y="182" class="legend">Arduino Uno | scale: slowest median = {uno_max_ms:.1} ms{uno_stack_note}</text>
+  <text x="24" y="428" class="legend">ESP32-S3 | scale: slowest median = {esp32s3_max_ms:.1} ms{esp32_stack_note}</text>
 {rows}  <line x1="24" y1="672" x2="936" y2="672" stroke="#30363d" stroke-width="2" />
   <text x="24" y="692" class="meta">Machine data: manifest.json | latest.json | history.jsonl</text>
 </svg>
@@ -1309,6 +1587,8 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
         sha = xml_escape(&short_sha),
         uno_max_ms = board_max_ms("uno"),
         esp32s3_max_ms = board_max_ms("esp32s3"),
+        uno_stack_note = stack_note("uno"),
+        esp32_stack_note = stack_note("esp32s3"),
         rows = rows,
         floor_line = floor_line,
     )
@@ -1317,8 +1597,7 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
 /// `raw compiler floor: X ms | fbuild overhead: Y ms | fbuild/PIO cold: Z`, omitting null parts.
 fn svg_floor_line(metadata: &Metadata, results: &[ToolResult]) -> Option<String> {
     let parts = [
-        metadata
-            .raw_baseline_ms
+        selected_raw_baseline_ms(metadata, results)
             .map(|ms| format!("raw compiler floor: {ms:.1} ms")),
         fbuild_overhead_ms(metadata, results).map(|ms| format!("fbuild overhead: {ms:.1} ms")),
         fbuild_vs_platformio_cold(results).map(|ratio| format!("fbuild/PIO cold: {ratio:.3}")),
@@ -1330,6 +1609,18 @@ fn svg_floor_line(metadata: &Metadata, results: &[ToolResult]) -> Option<String>
 }
 
 fn render_html(metadata: &Metadata, results: &[ToolResult]) -> String {
+    let comparison_note = BOARDS
+        .iter()
+        .map(|board| {
+            let status = if board_stack_comparable(results, board.key) {
+                "matched; fbuild/PlatformIO ratio shown"
+            } else {
+                "different or unverified; fbuild/PlatformIO ratio excluded"
+            };
+            format!("{}: {}", board.name, status)
+        })
+        .collect::<Vec<_>>()
+        .join(". ");
     let rows = results
         .iter()
         .map(|result| {
@@ -1406,6 +1697,7 @@ fn render_html(metadata: &Metadata, results: &[ToolResult]) -> String {
       <h1>fbuild Blink build benchmark</h1>
       <p class="meta">Generated {generated_at} from <code>{sha}</code>. Median of {trials} trials on {os}/{arch}.</p>
       <p class="note">All three tools compile the same Arduino Uno and ESP32-S3 <code>bench/blink/blink.ino</code>. Cold removes project outputs, reusable framework objects, compiler-object caches, and Arduino/PlatformIO download/HTTP caches while retaining installed packages/toolchains and fbuild package archives. Warm is the immediate no-change rebuild. The narrower warm bar overlays the cold bar.</p>
+      <p class="note">Resolved package stacks: {comparison_note}. Exact package versions and representative core compiler commands are in <a href="latest.json">latest.json</a>.</p>
       <a href="benchmark.svg"><img src="benchmark.svg" alt="Arduino CLI vs PlatformIO vs fbuild cold and warm Blink build timings" /></a>
       <div class="table-wrap">
         <table>
@@ -1425,6 +1717,7 @@ fn render_html(metadata: &Metadata, results: &[ToolResult]) -> String {
 </html>
 "#,
         generated_at = html_escape(&metadata.generated_at),
+        comparison_note = html_escape(&comparison_note),
         sha = html_escape(&metadata.git_sha),
         trials = metadata.trials,
         os = env::consts::OS,

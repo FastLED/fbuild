@@ -150,6 +150,15 @@ pub fn parse_platform_packages_value(value: &str, package_name: &str) -> Option<
 /// returned message names the ignored pin and the URL form that does work;
 /// callers surface them in the build output.
 pub fn ignored_version_pins(env: &std::collections::HashMap<String, String>) -> Vec<String> {
+    ignored_version_pins_with_resolved_platform(env, None)
+}
+
+/// Suppress the platform-pin warning only for a family whose build adapter
+/// actually resolves that registry alias. Package pins remain independent.
+pub fn ignored_version_pins_with_resolved_platform(
+    env: &std::collections::HashMap<String, String>,
+    resolved_platform: Option<fbuild_core::Platform>,
+) -> Vec<String> {
     let mut warnings = Vec::new();
     let platform = env.get("platform").map(|v| v.trim()).unwrap_or_default();
     let is_esp32 = fbuild_core::Platform::from_platform_str(platform)
@@ -160,7 +169,10 @@ pub fn ignored_version_pins(env: &std::collections::HashMap<String, String>) -> 
         "To pin a package, give its archive URL: `platform_packages = <package>@<URL>` or `<package>@<owner>/<repo>#<sha>`."
     };
 
-    if let Some((name, version)) = registry_version_pin(platform) {
+    if let Some((name, version)) = registry_version_pin(platform).filter(|_| {
+        fbuild_core::Platform::from_platform_str(platform) != resolved_platform
+            || resolved_platform.is_none()
+    }) {
         warnings.push(format!(
             "`platform = {platform}`: version pin `{version}` is ignored; fbuild does not \
              resolve PlatformIO registry versions and builds with its own pinned `{name}` \
@@ -423,6 +435,27 @@ mod tests {
             "{}",
             warnings[0]
         );
+    }
+
+    #[test]
+    fn resolved_esp32_platform_pin_is_not_reported_as_ignored() {
+        let config = env(&[
+            ("platform", "espressif32@6.13.0"),
+            (
+                "platform_packages",
+                "framework-arduinoespressif32@3.20017.0",
+            ),
+        ]);
+        let warnings = ignored_version_pins_with_resolved_platform(
+            &config,
+            Some(fbuild_core::Platform::Espressif32),
+        );
+        assert_eq!(
+            warnings.len(),
+            1,
+            "package pin is not yet resolved: {warnings:?}"
+        );
+        assert!(warnings[0].contains("platform_packages"));
     }
 
     #[test]

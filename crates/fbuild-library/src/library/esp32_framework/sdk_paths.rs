@@ -1,6 +1,7 @@
 //! SDK include, library, define, and linker flag accessors for the ESP-IDF SDK
 //! shipped with the ESP32 Arduino framework.
 
+use std::cmp::Ordering;
 use std::path::{Path, PathBuf};
 
 use super::Esp32Framework;
@@ -36,6 +37,26 @@ fn sdk_memory_variant_dir(sdk_dir: &Path, requested: Option<&str>) -> Option<Pat
     }
 
     None
+}
+
+fn sdk_include_order(a: &Path, b: &Path, root: &Path) -> Ordering {
+    let a = a.strip_prefix(root).unwrap_or(a);
+    let b = b.strip_prefix(root).unwrap_or(b);
+    for (left, right) in a.components().zip(b.components()) {
+        let left = left.as_os_str();
+        let right = right.as_os_str();
+        if left == right {
+            continue;
+        }
+        if left == "include" {
+            return Ordering::Less;
+        }
+        if right == "include" {
+            return Ordering::Greater;
+        }
+        return left.cmp(right);
+    }
+    a.components().count().cmp(&b.components().count())
 }
 
 impl Esp32Framework {
@@ -91,13 +112,30 @@ impl Esp32Framework {
         // which must come before SDK headers. PlatformIO also puts this first.
         let newlib_platform = include_dir.join("newlib").join("platform_include");
         if newlib_platform.exists() {
-            dirs.push(newlib_platform);
+            dirs.push(newlib_platform.clone());
         }
 
         // Scan 4 levels deep — matches PlatformIO's actual include depth.
         // ESP-IDF components have nested includes up to 4 levels deep
         // (e.g., freertos/include/esp_additions/freertos/).
         scan_include_dirs_recursive(&include_dir, &mut dirs, 0, 4);
+        // `time.h` in newlib/platform_include uses `#include_next` to reach
+        // the compiler's libc header. Treating its `sys/` child as a second
+        // `-I` directory makes that lookup land on `sys/time.h` instead.
+        dirs.retain(|dir| dir == &newlib_platform || !dir.starts_with(&newlib_platform));
+
+        // Old SDK bundles ROM headers for several chips. Adding every ROM
+        // subdirectory makes `#include "rom/gpio.h"` pick ESP32's definition
+        // before ESP32-S3's, unlike the selected platform recipe.
+        let rom_root = include_dir.join("esp_rom");
+        let allowed_rom_dirs = [
+            rom_root.join("include"),
+            rom_root.join("include").join(mcu),
+            rom_root.join(mcu),
+        ];
+        dirs.retain(|dir| {
+            !dir.starts_with(&rom_root) || allowed_rom_dirs.iter().any(|allowed| dir == allowed)
+        });
 
         // Add well-known ESP-IDF Xtensa/RISC-V port include paths that the
         // scanner misses because headers are nested too deeply for detection.
@@ -116,7 +154,12 @@ impl Esp32Framework {
             }
         }
 
-        dirs.sort();
+        dirs.sort_by(|a, b| sdk_include_order(a, b, &include_dir));
+        dirs.dedup();
+        if newlib_platform.exists() {
+            dirs.retain(|dir| dir != &newlib_platform);
+            dirs.insert(0, newlib_platform);
+        }
         dirs
     }
 
@@ -151,20 +194,33 @@ impl Esp32Framework {
             return flags;
         }
 
-        // Fallback: scan lib/ directory for .a files
+        // Old 2.x SDKs have no flags/ld_libs. Their selected flash-memory
+        // variant overrides several common archives (notably FreeRTOS and
+        // esp_system), so it must be searched before the common lib/ dir.
         let lib_dir = sdk_dir.join("lib");
         let mut flags = Vec::new();
+        let variant_dir = sdk_memory_variant_dir(&sdk_dir, memory_type);
+        if let Some(variant_dir) = &variant_dir {
+            flags.push(format!("-L{}", variant_dir.display()));
+        }
         if lib_dir.exists() {
             flags.push(format!("-L{}", lib_dir.display()));
         }
-        for lib in collect_archive_files(&lib_dir) {
+        let mut libraries = variant_dir
+            .as_ref()
+            .map(|dir| collect_archive_files(dir))
+            .unwrap_or_default();
+        libraries.extend(collect_archive_files(&lib_dir));
+        let mut names = std::collections::BTreeSet::new();
+        for lib in libraries {
             if let Some(stem) = lib.file_stem() {
                 let name = stem.to_string_lossy();
                 if let Some(stripped) = name.strip_prefix("lib") {
-                    flags.push(format!("-l{}", stripped));
+                    names.insert(stripped.to_string());
                 }
             }
         }
+        flags.extend(names.into_iter().map(|name| format!("-l{name}")));
         flags
     }
 
@@ -201,11 +257,14 @@ impl Esp32Framework {
     ///
     /// Returns the `-T` flags in the correct order, with the ld directory
     /// as the search path. Falls back to the ld/ directory if no flags file.
-    pub fn get_sdk_ld_scripts(&self, mcu: &str) -> Vec<String> {
+    pub fn get_sdk_ld_scripts(&self, mcu: &str, memory_type: Option<&str>) -> Vec<String> {
         let sdk_dir = self.sdk_mcu_dir(mcu);
         let ld_scripts_file = sdk_dir.join("flags").join("ld_scripts");
 
         let mut flags = vec![format!("-L{}", sdk_dir.join("ld").display())];
+        if let Some(variant_dir) = sdk_memory_variant_dir(&sdk_dir, memory_type) {
+            flags.push(format!("-L{}", variant_dir.display()));
+        }
 
         if let Ok(content) = std::fs::read_to_string(&ld_scripts_file) {
             flags.extend(fbuild_core::shell_split::split(&content));
