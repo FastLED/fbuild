@@ -2,6 +2,64 @@
 
 use super::*;
 
+fn explicit_framework_spec(
+    env_config: Option<&HashMap<String, String>>,
+) -> Result<Option<fbuild_core::platformio_package::PackageSpec>> {
+    let Some(raw) = env_config.and_then(|env| env.get("platform_packages")) else {
+        return Ok(None);
+    };
+    fbuild_config::parse_platform_packages_spec(raw, "framework-arduinoespressif32")
+        .map_err(|error| fbuild_core::FbuildError::PackageError(error.to_string()))
+}
+
+fn framework_url_override(
+    env_config: Option<&HashMap<String, String>>,
+) -> Result<Option<fbuild_config::PackageOverride>> {
+    if explicit_framework_spec(env_config)?
+        .as_ref()
+        .is_some_and(|spec| spec.registry().is_some())
+    {
+        return Ok(None);
+    }
+    Ok(env_config.and_then(|env| {
+        crate::package_override::resolve_override(env, "framework-arduinoespressif32")
+    }))
+}
+
+/// An explicit registry framework pin on an unversioned PlatformIO platform
+/// must use that platform's registry manifest, not pioarduino stable's SDK.
+fn platform_registry_spec(
+    env_config: Option<&HashMap<String, String>>,
+) -> Result<Option<RegistrySpec>> {
+    let Some(env) = env_config else {
+        return Ok(None);
+    };
+    let Some(platform) = env.get("platform").map(String::as_str).map(str::trim) else {
+        return Ok(None);
+    };
+    let framework_registry_pin =
+        explicit_framework_spec(Some(env))?.is_some_and(|spec| spec.registry().is_some());
+    if !platform.contains('@') && !framework_registry_pin {
+        return Ok(None);
+    }
+    if platform.starts_with("http://") || platform.starts_with("https://") {
+        return Ok(None);
+    }
+    let spec = parse_package_spec(platform)
+        .map_err(|error| fbuild_core::FbuildError::PackageError(error.to_string()))?;
+    let PackageSource::Registry(registry) = spec.source else {
+        return Err(fbuild_core::FbuildError::PackageError(format!(
+            "unsupported ESP32 platform source `{platform}`"
+        )));
+    };
+    if registry.name != "espressif32" {
+        return Err(fbuild_core::FbuildError::PackageError(format!(
+            "unsupported ESP32 platform alias `{platform}`"
+        )));
+    }
+    Ok(Some(registry))
+}
+
 /// The pioarduino platform package. Honors
 /// `platform_packages = platform-espressif32@<URL>#<sha>` (FastLED/fbuild#672),
 /// then `platform = <release archive URL>` (FastLED/fbuild#1432): the pin
@@ -20,24 +78,7 @@ pub(super) async fn pioarduino_platform(
             fbuild_packages::library::Esp32Platform::with_override(project_dir, override_package),
         ));
     }
-    if let Some(pin) = env_config
-        .and_then(|env| env.get("platform"))
-        .map(String::as_str)
-        .map(str::trim)
-        .filter(|pin| pin.contains('@'))
-    {
-        let spec = parse_package_spec(pin)
-            .map_err(|error| fbuild_core::FbuildError::PackageError(error.to_string()))?;
-        let PackageSource::Registry(registry) = spec.source else {
-            return Err(fbuild_core::FbuildError::PackageError(format!(
-                "unsupported ESP32 platform source `{pin}`"
-            )));
-        };
-        if registry.name != "espressif32" {
-            return Err(fbuild_core::FbuildError::PackageError(format!(
-                "unsupported ESP32 platform alias `{pin}`"
-            )));
-        }
+    if let Some(registry) = platform_registry_spec(env_config)? {
         let host =
             fbuild_core::platformio_package::host_system(fbuild_core::platform::host::current())
                 .ok_or_else(|| {
@@ -121,14 +162,16 @@ pub(super) async fn resolve_framework(
     env_config: Option<&HashMap<String, String>>,
     fetch: bool,
 ) -> Result<Option<fbuild_packages::library::Esp32Framework>> {
-    if let Some(override_package) = env_config.and_then(|env| {
-        crate::package_override::resolve_override(env, "framework-arduinoespressif32")
-    }) {
+    if let Some(override_package) = framework_url_override(env_config)? {
         return Ok(Some(
             fbuild_packages::library::Esp32Framework::with_override(project_dir, override_package),
         ));
     }
-    let requirement = platform.get_package_requirement("framework-arduinoespressif32")?;
+    let explicit = explicit_framework_spec(env_config)?;
+    let requirement = platform.get_package_requirement_with_overrides(
+        "framework-arduinoespressif32",
+        &explicit.into_iter().collect::<Vec<_>>(),
+    )?;
     if let Some(registry) = requirement.spec.registry() {
         let host =
             fbuild_core::platformio_package::host_system(fbuild_core::platform::host::current())
@@ -333,4 +376,66 @@ pub(super) async fn esptool_package(
         project_dir,
         url,
     )))
+}
+
+#[cfg(test)]
+mod registry_framework_override_tests {
+    use super::*;
+
+    #[test]
+    fn framework_registry_pin_selects_registry_platform_for_unversioned_alias() {
+        let env = HashMap::from([
+            ("platform".into(), "espressif32".into()),
+            (
+                "platform_packages".into(),
+                "framework-arduinoespressif32@3.20017.241212+sha.dcc1105b".into(),
+            ),
+        ]);
+        let registry = platform_registry_spec(Some(&env)).unwrap().unwrap();
+        assert_eq!(registry.name, "espressif32");
+        assert_eq!(registry.requirement, None);
+
+        let url_pin = HashMap::from([
+            (
+                "platform".into(),
+                "https://example.test/pioarduino/platform.zip".into(),
+            ),
+            (
+                "platform_packages".into(),
+                "framework-arduinoespressif32@3.20017.241212+sha.dcc1105b".into(),
+            ),
+        ]);
+        assert!(platform_registry_spec(Some(&url_pin)).unwrap().is_none());
+    }
+
+    #[test]
+    fn first_framework_entry_controls_registry_vs_url_precedence() {
+        let registry_first = HashMap::from([
+            ("platform".into(), "espressif32".into()),
+            (
+                "platform_packages".into(),
+                "framework-arduinoespressif32@3.20017.241212+sha.dcc1105b\nframework-arduinoespressif32@https://example.test/framework.tar.gz".into(),
+            ),
+        ]);
+        assert!(
+            platform_registry_spec(Some(&registry_first))
+                .unwrap()
+                .is_some()
+        );
+        assert!(
+            framework_url_override(Some(&registry_first))
+                .unwrap()
+                .is_none()
+        );
+
+        let url_first = HashMap::from([
+            ("platform".into(), "espressif32".into()),
+            (
+                "platform_packages".into(),
+                "framework-arduinoespressif32@https://example.test/framework.tar.gz\nframework-arduinoespressif32@3.20017.241212+sha.dcc1105b".into(),
+            ),
+        ]);
+        assert!(platform_registry_spec(Some(&url_first)).unwrap().is_none());
+        assert!(framework_url_override(Some(&url_first)).unwrap().is_some());
+    }
 }

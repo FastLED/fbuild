@@ -56,6 +56,37 @@ fn test_sdk_paths() {
 }
 
 #[test]
+fn bundled_esp_idf_version_is_read_from_legacy_sdk_header() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let root = tmp.path();
+    let header = root.join("tools/sdk/esp32s3/include/esp_common/include/esp_idf_version.h");
+    std::fs::create_dir_all(header.parent().unwrap()).unwrap();
+    std::fs::write(&header, "#define ESP_IDF_VERSION_MAJOR 4\n#define ESP_IDF_VERSION_MINOR 4\n#define ESP_IDF_VERSION_PATCH 7\n").unwrap();
+    let mut fw = Esp32Framework::new(root, "esp32s3");
+    fw.install_dir = Some(root.to_path_buf());
+    assert_eq!(
+        fw.bundled_esp_idf_version("esp32s3").as_deref(),
+        Some("4.4.7")
+    );
+}
+
+#[test]
+fn bundled_esp_idf_version_is_read_from_split_sdk_header() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let root = tmp.path();
+    let header =
+        root.join("tools/esp32-arduino-libs/esp32s3/include/esp_common/include/esp_idf_version.h");
+    std::fs::create_dir_all(header.parent().unwrap()).unwrap();
+    std::fs::write(&header, "#define ESP_IDF_VERSION_MAJOR 5\n#define ESP_IDF_VERSION_MINOR 5\n#define ESP_IDF_VERSION_PATCH 1\n").unwrap();
+    let mut fw = Esp32Framework::new(root, "esp32s3");
+    fw.install_dir = Some(root.to_path_buf());
+    assert_eq!(
+        fw.bundled_esp_idf_version("esp32s3").as_deref(),
+        Some("5.5.1")
+    );
+}
+
+#[test]
 fn test_collect_archive_files() {
     let tmp = tempfile::TempDir::new().unwrap();
     std::fs::write(tmp.path().join("libfreertos.a"), "").unwrap();

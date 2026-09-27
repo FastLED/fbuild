@@ -23,6 +23,7 @@ pub use pio_env::{
     scan_warn_only,
 };
 pub use platform_packages::{
-    PackageOverride, ignored_version_pins, ignored_version_pins_with_resolved_platform,
-    parse_platform_archive_url, parse_platform_packages_entry, parse_platform_packages_value,
+    PackageOverride, ignored_version_pins, ignored_version_pins_with_resolved_packages,
+    ignored_version_pins_with_resolved_platform, parse_platform_archive_url,
+    parse_platform_packages_entry, parse_platform_packages_spec, parse_platform_packages_value,
 };

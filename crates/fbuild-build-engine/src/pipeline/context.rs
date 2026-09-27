@@ -173,9 +173,16 @@ impl BuildContext {
                 }
                 _ => None,
             };
-            for warning in fbuild_config::ignored_version_pins_with_resolved_platform(
+            let resolved_packages: &[&str] =
+                if resolved_platform == Some(fbuild_core::Platform::Espressif32) {
+                    &["framework-arduinoespressif32"]
+                } else {
+                    &[]
+                };
+            for warning in fbuild_config::ignored_version_pins_with_resolved_packages(
                 env_config,
                 resolved_platform,
+                resolved_packages,
             ) {
                 tracing::warn!("{warning}");
                 build_log.push(format!("Warning: {warning}"));

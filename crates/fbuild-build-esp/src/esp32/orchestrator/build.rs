@@ -85,7 +85,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // packages can honor consumer-pinned URLs (FastLED/fbuild#672).
         let env_config = ctx.config.get_env_config(&params.env_name).ok();
         let _resolve_phase = perf.phase("pioarduino-resolve");
-        let (toolchain, framework, esptool_bin) = resolve_pioarduino_packages(
+        let (toolchain, framework, esptool_bin, platform_info) = resolve_pioarduino_packages(
             &params.project_dir,
             &ctx.board.mcu,
             &mcu_config,
@@ -94,10 +94,18 @@ impl BuildOrchestrator for Esp32Orchestrator {
         .await?;
         drop(_resolve_phase);
         let toolchain_info = fbuild_packages::Package::get_info(&toolchain);
+        ctx.build_log
+            .push(super::helpers::esp32_package_stack_summary(
+                env_config,
+                &platform_info,
+                &fbuild_packages::Package::get_info(&framework),
+                &toolchain_info,
+                &framework,
+                &ctx.board.mcu,
+            ));
         mcu_config.adapt_to_toolchain(&toolchain_info.name, &toolchain_info.version);
         let _toolchain_cache_dir = fbuild_packages::Package::get_info(&toolchain).install_path;
         let _framework_cache_dir = fbuild_packages::Package::get_info(&framework).install_path;
-
         // Aliases for build dirs (already set up by BuildContext::new())
         let build_dir = &ctx.build_dir;
         let core_build_dir = &ctx.core_build_dir;
