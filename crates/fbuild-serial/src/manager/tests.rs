@@ -799,7 +799,8 @@ async fn deploy_recovery_keeps_original_monitor_alias_across_two_renumberings() 
     manager
         .preemption_tracker()
         .preempt("COM1", "deploy".into(), "test".into())
-        .await;
+        .await
+        .unwrap();
     manager.complete_deploy_preemption("COM1", "COM2").await;
     assert_eq!(manager.deploy_recovery_port("COM1"), "COM2");
     assert!(!manager.is_preempted("COM1").await);
@@ -807,7 +808,8 @@ async fn deploy_recovery_keeps_original_monitor_alias_across_two_renumberings() 
     manager
         .preemption_tracker()
         .preempt("COM2", "deploy".into(), "test".into())
-        .await;
+        .await
+        .unwrap();
     manager.port_aliases.remove("COM1"); // physical close removes aliases
     assert!(
         manager
@@ -837,4 +839,30 @@ async fn failed_deploy_recovery_releases_preemption_and_reports_terminal_failure
         manager.deploy_recovery_failure("COM1").as_deref(),
         Some("no runtime port")
     );
+}
+
+#[tokio::test]
+async fn concurrent_deploy_preemption_rejects_second_request_and_preserves_first() {
+    let manager = SharedSerialManager::new();
+    manager
+        .preempt_for_deploy("COM1", "deploy".into(), "request-1".into())
+        .await
+        .unwrap();
+
+    let error = manager
+        .preempt_for_deploy("COM1", "deploy".into(), "request-2".into())
+        .await
+        .expect_err("second deploy must fail while the first owns the port");
+    assert!(error.to_string().contains("request-1"), "{error}");
+    assert!(manager.is_preempted("COM1").await);
+    assert!(
+        manager
+            .preemption_holder("COM1")
+            .await
+            .unwrap()
+            .contains("request-1")
+    );
+
+    manager.complete_deploy_preemption("COM1", "COM1").await;
+    assert!(!manager.is_preempted("COM1").await);
 }

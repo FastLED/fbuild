@@ -132,6 +132,10 @@ fn format_timeout_for_error(timeout: Duration) -> String {
     }
 }
 
+async fn active_preemption_error(ctx: &DaemonContext, port: &str) -> Option<String> {
+    ctx.serial_manager.preemption_holder(port).await
+}
+
 async fn await_ws_serial_open_port<F>(
     port: &str,
     open_future: F,
@@ -186,6 +190,13 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                     client_metadata,
                 }) => {
                     attach_guard.set_target(client_id.clone(), port.clone());
+                    if let Some(message) = active_preemption_error(&ctx, &port).await {
+                        let err_msg = SerialServerMessage::Error { message };
+                        let _ = socket
+                            .send(Message::Text(serialize_or_fallback(&err_msg)))
+                            .await;
+                        return;
+                    }
                     // Open port if needed
                     if open_if_needed {
                         let open_result = await_ws_serial_open_port(
@@ -262,9 +273,10 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
     {
         Some(rx) => rx,
         None => {
-            let err_msg = SerialServerMessage::Error {
-                message: format!("port {} not open", port),
-            };
+            let message = active_preemption_error(&ctx, &port)
+                .await
+                .unwrap_or_else(|| format!("port {} not open", port));
+            let err_msg = SerialServerMessage::Error { message };
             let _ = socket
                 .send(Message::Text(serialize_or_fallback(&err_msg)))
                 .await;
