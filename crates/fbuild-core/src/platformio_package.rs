@@ -88,6 +88,10 @@ pub struct RegistrySpec {
     pub owner: Option<String>,
     pub name: String,
     pub requirement: Option<String>,
+    /// Explicit PlatformIO registry category from an `owner/type/name` or
+    /// `type/owner/name` path. Framework/toolchain aliases both use `tool`.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub registry_type: Option<String>,
 }
 
 /// A source accepted by PlatformIO's package-spec grammar. An archive URL or
@@ -286,9 +290,22 @@ pub fn parse_package_spec(raw: &str) -> Result<PackageSpec> {
 }
 
 fn parse_registry(name: &str, requirement: Option<&str>) -> Result<RegistrySpec> {
-    let (owner, name) = match name.split_once('/') {
-        Some((owner, name)) => (Some(owner), name),
-        None => (None, name),
+    let parts = name.split('/').collect::<Vec<_>>();
+    let (owner, name, registry_type) = match parts.as_slice() {
+        [name] => (None, *name, None),
+        [owner, name] => (Some(*owner), *name, None),
+        [first, middle, name] => {
+            let first_type = canonical_registry_type(first);
+            let middle_type = canonical_registry_type(middle);
+            match (first_type, middle_type) {
+                (Some(kind), None) => (Some(*middle), *name, Some(kind)),
+                // Owner-first is canonical when both segments look like types:
+                // registry owner names are not reserved words.
+                (_, Some(kind)) => (Some(*first), *name, Some(kind)),
+                _ => return Err(ResolutionError::InvalidSpec(name.to_string())),
+            }
+        }
+        _ => return Err(ResolutionError::InvalidSpec(name.to_string())),
     };
     if !valid_segment(name) || owner.is_some_and(|o| !valid_segment(o)) {
         return Err(ResolutionError::InvalidSpec(name.into()));
@@ -300,7 +317,17 @@ fn parse_registry(name: &str, requirement: Option<&str>) -> Result<RegistrySpec>
         owner: owner.map(str::to_string),
         name: name.into(),
         requirement: requirement.map(str::to_string),
+        registry_type: registry_type.map(str::to_string),
     })
+}
+
+fn canonical_registry_type(raw: &str) -> Option<&'static str> {
+    match raw {
+        "platform" => Some("platform"),
+        "tool" | "toolchain" | "framework" | "uploader" | "debugger" => Some("tool"),
+        "library" => Some("library"),
+        _ => None,
+    }
 }
 
 fn valid_segment(value: &str) -> bool {
@@ -439,6 +466,7 @@ fn parse_direct_source(value: &str) -> Result<PackageSource> {
 
 /// Construct the metadata endpoint for an owner-qualified registry name.
 pub fn registry_api_url(kind: PackageKind, spec: &RegistrySpec) -> Result<String> {
+    validate_registry_type(kind, spec)?;
     let owner = spec
         .owner
         .as_deref()
@@ -454,6 +482,22 @@ pub fn registry_api_url(kind: PackageKind, spec: &RegistrySpec) -> Result<String
         kind.registry_type(),
         spec.name
     ))
+}
+
+fn validate_registry_type(kind: PackageKind, spec: &RegistrySpec) -> Result<()> {
+    if spec
+        .registry_type
+        .as_deref()
+        .is_some_and(|declared| declared != kind.registry_type())
+    {
+        return Err(ResolutionError::InvalidSpec(format!(
+            "{} is a {} package, not a {} package",
+            spec.name,
+            spec.registry_type.as_deref().unwrap_or_default(),
+            kind.registry_type()
+        )));
+    }
+    Ok(())
 }
 
 #[derive(Deserialize)]
@@ -534,6 +578,7 @@ pub fn resolve_registry_json(
     system: &str,
     metadata_json: &str,
 ) -> Result<ResolvedPayload> {
+    validate_registry_type(kind, spec)?;
     if let Some(requirement) = &spec.requirement {
         validate_requirement(requirement)?;
     }
