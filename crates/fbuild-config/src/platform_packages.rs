@@ -141,6 +141,35 @@ pub fn parse_platform_packages_value(value: &str, package_name: &str) -> Option<
         .next()
 }
 
+/// Return the first named `platform_packages` request in its original source
+/// form. Unlike [`parse_platform_packages_value`], this retains registry
+/// aliases for the shared core manifest resolver to apply and validate.
+pub fn parse_platform_packages_spec(
+    value: &str,
+    package_name: &str,
+) -> fbuild_core::platformio_package::Result<Option<fbuild_core::platformio_package::PackageSpec>> {
+    for line in value.lines() {
+        let entry = line.trim().trim_end_matches([',', ';']).trim();
+        if entry.is_empty() {
+            continue;
+        }
+        let candidate = entry
+            .split_once('@')
+            .map_or(entry, |(name, _)| name)
+            .trim()
+            .rsplit('/')
+            .next();
+        if candidate != Some(package_name) {
+            continue;
+        }
+        let spec = fbuild_core::platformio_package::parse_package_spec(entry)?;
+        if spec.package_name() == Some(package_name) {
+            return Ok(Some(spec));
+        }
+    }
+    Ok(None)
+}
+
 /// Describe every registry version pin in an env that fbuild will not honor.
 ///
 /// fbuild has no PlatformIO registry resolver, so `platform = espressif32@6.5.0`
@@ -158,6 +187,15 @@ pub fn ignored_version_pins(env: &std::collections::HashMap<String, String>) -> 
 pub fn ignored_version_pins_with_resolved_platform(
     env: &std::collections::HashMap<String, String>,
     resolved_platform: Option<fbuild_core::Platform>,
+) -> Vec<String> {
+    ignored_version_pins_with_resolved_packages(env, resolved_platform, &[])
+}
+
+/// Only suppress package warnings for aliases the selected adapter resolves.
+pub fn ignored_version_pins_with_resolved_packages(
+    env: &std::collections::HashMap<String, String>,
+    resolved_platform: Option<fbuild_core::Platform>,
+    resolved_packages: &[&str],
 ) -> Vec<String> {
     let mut warnings = Vec::new();
     let platform = env.get("platform").map(|v| v.trim()).unwrap_or_default();
@@ -184,6 +222,10 @@ pub fn ignored_version_pins_with_resolved_platform(
         for line in raw.lines() {
             let entry = line.trim().trim_end_matches([',', ';']).trim();
             if let Some((name, version)) = registry_version_pin(entry) {
+                let package_name = name.rsplit('/').next().unwrap_or(name);
+                if resolved_packages.contains(&package_name) {
+                    continue;
+                }
                 warnings.push(format!(
                     "`platform_packages = {entry}`: version pin `{version}` is ignored; \
                      fbuild does not resolve PlatformIO registry versions and uses its own \
@@ -459,6 +501,24 @@ mod tests {
     }
 
     #[test]
+    fn resolved_framework_pin_does_not_warn_but_unhandled_package_still_does() {
+        let config = env(&[
+            ("platform", "espressif32"),
+            (
+                "platform_packages",
+                "platformio/framework-arduinoespressif32@3.20017.241212+sha.dcc1105b\ntoolchain-xtensa-esp32s3@8.4.0",
+            ),
+        ]);
+        let warnings = ignored_version_pins_with_resolved_packages(
+            &config,
+            Some(fbuild_core::Platform::Espressif32),
+            &["framework-arduinoespressif32"],
+        );
+        assert_eq!(warnings.len(), 1, "{warnings:?}");
+        assert!(warnings[0].contains("toolchain-xtensa-esp32s3"));
+    }
+
+    #[test]
     fn owner_prefixed_spaced_platform_pin_is_reported() {
         let warnings = ignored_version_pins(&env(&[("platform", "platformio/atmelavr @ ~5.0.0")]));
         assert_eq!(warnings.len(), 1, "{warnings:?}");
@@ -484,6 +544,41 @@ mod tests {
             warnings[0].contains("`platform_packages = platform-espressif32@6.5.0`"),
             "{}",
             warnings[0]
+        );
+    }
+
+    #[test]
+    fn named_package_spec_preserves_registry_pin_and_owner() {
+        let raw = "toolchain-other@1.0.0\nframework-arduinoespressif32@3.20017.241212+sha.dcc1105b";
+        let short = parse_platform_packages_spec(raw, "framework-arduinoespressif32")
+            .unwrap()
+            .unwrap();
+        assert_eq!(
+            short.registry().unwrap().name,
+            "framework-arduinoespressif32"
+        );
+        assert_eq!(short.registry().unwrap().owner, None);
+        assert_eq!(
+            short.registry().unwrap().requirement.as_deref(),
+            Some("3.20017.241212+sha.dcc1105b")
+        );
+
+        let qualified = parse_platform_packages_spec(
+            "platformio/framework-arduinoespressif32@3.20017.241212+sha.dcc1105b",
+            "framework-arduinoespressif32",
+        )
+        .unwrap()
+        .unwrap();
+        assert_eq!(
+            qualified.registry().unwrap().owner.as_deref(),
+            Some("platformio")
+        );
+        assert!(
+            parse_platform_packages_spec(
+                "framework-arduinoespressif32@not a version",
+                "framework-arduinoespressif32"
+            )
+            .is_err()
         );
     }
 

@@ -125,6 +125,34 @@ impl Esp32Framework {
             .unwrap_or_else(|| find_framework_root(&self.base.install_path()))
     }
 
+    /// Return the ESP-IDF SDK version bundled with the installed framework.
+    /// Legacy Arduino cores place it under `tools/sdk`; newer split SDKs use
+    /// `tools/esp32-arduino-libs`.
+    pub fn bundled_esp_idf_version(&self, mcu: &str) -> Option<String> {
+        let root = self.resolved_dir();
+        let suffix = Path::new("include/esp_common/include/esp_idf_version.h");
+        let header = [
+            root.join("tools/sdk").join(mcu).join(suffix),
+            root.join("tools/esp32-arduino-libs").join(mcu).join(suffix),
+        ]
+        .into_iter()
+        .find_map(|path| std::fs::read_to_string(path).ok())?;
+        let value = |key: &str| {
+            header.lines().find_map(|line| {
+                let mut words = line.split_whitespace();
+                (words.next() == Some("#define") && words.next() == Some(key))
+                    .then(|| words.next()?.parse::<u32>().ok())
+                    .flatten()
+            })
+        };
+        Some(format!(
+            "{}.{}.{}",
+            value("ESP_IDF_VERSION_MAJOR")?,
+            value("ESP_IDF_VERSION_MINOR")?,
+            value("ESP_IDF_VERSION_PATCH")?
+        ))
+    }
+
     /// Validate the extracted framework has required structure.
     fn validate(install_dir: &Path) -> fbuild_core::Result<()> {
         let root = find_framework_root(install_dir);

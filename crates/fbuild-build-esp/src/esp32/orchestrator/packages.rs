@@ -43,6 +43,7 @@ pub(super) async fn resolve_pioarduino_packages(
     fbuild_packages::toolchain::Esp32Toolchain,
     fbuild_packages::library::Esp32Framework,
     Option<NormalizedPath>,
+    fbuild_packages::PackageInfo,
 )> {
     // Ensure pioarduino platform (contains platform.json with metadata URLs).
     let platform = pioarduino_platform(project_dir, env_config, true)
@@ -51,6 +52,7 @@ pub(super) async fn resolve_pioarduino_packages(
             fbuild_core::FbuildError::PackageError("ESP32 platform unavailable".into())
         })?;
     fbuild_packages::Package::ensure_installed(&platform).await?;
+    let platform_info = fbuild_packages::Package::get_info(&platform);
     // Resolve the exact toolchain declared by the selected platform. Older
     // pioarduino releases name per-MCU registry packages, not metadata URLs.
     let toolchain = resolve_and_create_toolchain(&platform, project_dir, mcu_config).await?;
@@ -120,7 +122,7 @@ pub(super) async fn resolve_pioarduino_packages(
     // failure still wins over a misconfigured override.
     let esptool_py = esptool_res?;
 
-    Ok((toolchain, framework, esptool_py))
+    Ok((toolchain, framework, esptool_py, platform_info))
 }
 
 /// Provision what [`resolve_pioarduino_packages`] installs — platform,
@@ -713,9 +715,19 @@ pub(crate) fn downloadable_lib_deps(
         .env_config
         .get("platform")
         .is_some_and(|value| value.contains('@'))
+        || inputs
+            .env_config
+            .get("platform_packages")
+            .is_some_and(|raw| {
+                fbuild_config::parse_platform_packages_spec(raw, "framework-arduinoespressif32")
+                    .ok()
+                    .flatten()
+                    .is_some_and(|spec| spec.registry().is_some())
+            })
     {
         // Library prefiltering is synchronous. Do not inspect the default
-        // pioarduino framework while a registry-pinned platform is selected.
+        // pioarduino framework while a registry-pinned platform or framework
+        // is selected.
         return lib_deps;
     }
     let platform_override = crate::package_override::resolve_platform_override(

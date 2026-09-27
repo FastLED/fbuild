@@ -163,6 +163,16 @@ impl Esp32Platform {
         &self,
         package_name: &str,
     ) -> Result<fbuild_core::platformio_package::PackageRequirement> {
+        self.get_package_requirement_with_overrides(package_name, &[])
+    }
+
+    /// Apply explicit PlatformIO package specs through the shared core
+    /// manifest resolver, preserving the manifest owner for short aliases.
+    pub fn get_package_requirement_with_overrides(
+        &self,
+        package_name: &str,
+        overrides: &[fbuild_core::platformio_package::PackageSpec],
+    ) -> Result<fbuild_core::platformio_package::PackageRequirement> {
         let packages = self.read_packages_section()?;
         let package = packages.get(package_name).ok_or_else(|| {
             FbuildError::PackageError(format!(
@@ -170,11 +180,14 @@ impl Esp32Platform {
             ))
         })?;
         let manifest = serde_json::json!({"packages": {package_name: package}});
-        fbuild_core::platformio_package::resolve_platform_requirements(&manifest.to_string(), &[])
-            .map_err(|error| FbuildError::PackageError(error.to_string()))?
-            .into_iter()
-            .next()
-            .ok_or_else(|| FbuildError::PackageError(format!("package '{package_name}' missing")))
+        fbuild_core::platformio_package::resolve_platform_requirements(
+            &manifest.to_string(),
+            overrides,
+        )
+        .map_err(|error| FbuildError::PackageError(error.to_string()))?
+        .into_iter()
+        .next()
+        .ok_or_else(|| FbuildError::PackageError(format!("package '{package_name}' missing")))
     }
 
     /// Enumerate every package listed in `platform.json`'s `packages` section.
@@ -465,5 +478,57 @@ mod tests {
         assert_eq!(registry.owner.as_deref(), Some("espressif"));
         assert_eq!(registry.name, "toolchain-xtensa-esp32s3");
         assert_eq!(registry.requirement.as_deref(), Some("12.2.0+20230208"));
+    }
+
+    #[test]
+    fn explicit_framework_registry_pin_overrides_manifest_without_changing_toolchain() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        write_platform_json(
+            tmp.path(),
+            r#"{"packages":{
+                "framework-arduinoespressif32":{"type":"framework","owner":"platformio","version":"~3.20017.0"},
+                "toolchain-xtensa-esp32s3":{"type":"toolchain","owner":"espressif","version":"8.4.0+2021r2-patch5"}
+            }}"#,
+        );
+        let platform = platform_with_install_dir(tmp.path());
+        let override_spec = fbuild_core::platformio_package::parse_package_spec(
+            "framework-arduinoespressif32@3.20017.241212+sha.dcc1105b",
+        )
+        .unwrap();
+        let framework = platform
+            .get_package_requirement_with_overrides(
+                "framework-arduinoespressif32",
+                std::slice::from_ref(&override_spec),
+            )
+            .unwrap();
+        let framework_registry = framework.spec.registry().unwrap();
+        assert_eq!(framework_registry.owner.as_deref(), Some("platformio"));
+        assert_eq!(
+            framework_registry.requirement.as_deref(),
+            Some("3.20017.241212+sha.dcc1105b")
+        );
+        let metadata = r#"{"name":"framework-arduinoespressif32","owner":{"username":"platformio"},"versions":[{"name":"3.20017.241212+sha.dcc1105b","files":[{"system":"*","download_url":"https://dl.registry.platformio.org/download/platformio/tool/framework-arduinoespressif32/3.20017.241212+sha.dcc1105b/framework-arduinoespressif32-3.20017.241212+sha.dcc1105b.tar.gz","checksum":{"sha256":"7dbcfb86f9dfd5ecf6c881ed8226239d9ef63f27e1e1a2ddd87a87762e2ffbc9"}}]}]}"#;
+        let payload = fbuild_core::platformio_package::resolve_registry_json(
+            framework_registry,
+            fbuild_core::platformio_package::PackageKind::Framework,
+            "linux_x86_64",
+            metadata,
+        )
+        .unwrap();
+        assert_eq!(
+            payload.url,
+            "https://dl.registry.platformio.org/download/platformio/tool/framework-arduinoespressif32/3.20017.241212+sha.dcc1105b/framework-arduinoespressif32-3.20017.241212+sha.dcc1105b.tar.gz"
+        );
+        assert_eq!(
+            payload.sha256,
+            "7dbcfb86f9dfd5ecf6c881ed8226239d9ef63f27e1e1a2ddd87a87762e2ffbc9"
+        );
+        let toolchain = platform
+            .get_package_requirement_with_overrides("toolchain-xtensa-esp32s3", &[override_spec])
+            .unwrap();
+        assert_eq!(
+            toolchain.spec.registry().unwrap().requirement.as_deref(),
+            Some("8.4.0+2021r2-patch5")
+        );
     }
 }
