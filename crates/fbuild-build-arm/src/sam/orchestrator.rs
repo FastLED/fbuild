@@ -141,6 +141,8 @@ pub(crate) async fn sam_packages(
     env_config: Option<&std::collections::HashMap<String, String>>,
     board: &fbuild_config::BoardConfig,
 ) -> Result<(Box<dyn fbuild_packages::Toolchain>, SamCore)> {
+    use crate::package_override::PlatformDefaultVersion;
+
     let clearcore = is_clearcore_board(board);
     let samd = is_samd_mcu(&board.mcu);
     let package_names: &[&str] = if clearcore {
@@ -161,10 +163,16 @@ pub(crate) async fn sam_packages(
     };
     // platform-atmelsam/platform.py specializes these requirements for the
     // Adafruit core; the platform.json defaults target Arduino's own core.
-    let board_defaults: &[(&str, &str)] = if samd && !clearcore {
+    let board_defaults: &[(&str, PlatformDefaultVersion<'_>)] = if samd && !clearcore {
         &[
-            ("toolchain-gccarmnoneeabi", "~1.90301.0"),
-            ("framework-cmsis", "~2.50400.0"),
+            (
+                "toolchain-gccarmnoneeabi",
+                PlatformDefaultVersion::Fixed("~1.90301.0"),
+            ),
+            (
+                "framework-cmsis",
+                PlatformDefaultVersion::Fixed("~2.50400.0"),
+            ),
         ]
     } else {
         &[]

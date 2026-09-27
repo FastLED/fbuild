@@ -7,6 +7,7 @@ use fbuild_core::path::NormalizedPath;
 use fbuild_core::platformio_package::{
     PackageKind, PackageLock, PackageSource, ResolutionError, parse_package_spec, registry_api_url,
     require_platform_package, resolve_platform_requirements, resolve_registry_json,
+    sole_optional_manifest_version,
 };
 
 #[test]
@@ -399,6 +400,25 @@ fn stm32_20_arduino_board_requirements_select_published_payloads_offline() {
             .as_deref(),
         Some("2.50900.0")
     );
+}
+
+#[test]
+fn stm32_arduino_cmsis_requirement_follows_the_pinned_platform_manifest() {
+    // platform-ststm32's Arduino builder selects the sole CMSIS optional
+    // version. That changed between published platform releases 19 and 20.
+    let releases = [("19.0.0", "~2.50900.0"), ("20.0.0", "~2.60300.0")];
+    for (platform_version, expected_cmsis) in releases {
+        let manifest = format!(
+            r#"{{"version":"{platform_version}","packages":{{"framework-cmsis":{{"type":"framework","owner":"platformio","version":"~2.50501.0","optionalVersions":["{expected_cmsis}"]}}}}}}"#
+        );
+        assert_eq!(
+            sole_optional_manifest_version(&manifest, "framework-cmsis").unwrap(),
+            expected_cmsis,
+            "ststm32@{platform_version}"
+        );
+    }
+    let ambiguous = r#"{"packages":{"framework-cmsis":{"version":"~2.50501.0","optionalVersions":["~2.50900.0","~2.60300.0"]}}}"#;
+    assert!(sole_optional_manifest_version(ambiguous, "framework-cmsis").is_err());
 }
 
 #[test]

@@ -64,5 +64,24 @@
 
   "defines": [
     ["ARDUINO", "10808"]
-  ]
+  ],
+
+  "arduino_mbed_flash": {
+    "boards": [
+      "giga_r1_m7", "giga_r1_m4", "portenta_h7_m7", "portenta_h7_m4",
+      "opta", "opta_m4", "nicla_vision", "nicla_vision_m4"
+    ],
+    "m4_boards": ["giga_r1_m4", "portenta_h7_m4", "opta_m4", "nicla_vision_m4"],
+    "external_ram_m4_boards": ["giga_r1_m4", "portenta_h7_m4"],
+    "default_layout": "50_50",
+    "external_ram_layout": "100_0",
+    "cm4_binary_start": {
+      "50_50": "0x08100000",
+      "75_25": "0x08180000",
+      "100_0": "0x60000000"
+    },
+    "cm4_binary_end": "0x08200000",
+    "external_cm4_binary_end": "0x60040000",
+    "external_cm4_ram_end": "0x60080000"
+  }
 }

@@ -85,6 +85,8 @@ pub(crate) async fn stm32_packages(
     env_config: Option<&std::collections::HashMap<String, String>>,
     board: &fbuild_config::BoardConfig,
 ) -> Result<(fbuild_packages::toolchain::ArmToolchain, Stm32Core)> {
+    use crate::package_override::PlatformDefaultVersion;
+
     let mbed = is_arduino_mbed_stm32_variant(&board.variant);
     let package_names: &[&str] = if mbed {
         &["framework-arduino-mbed", "toolchain-gccarmnoneeabi"]
@@ -99,12 +101,15 @@ pub(crate) async fn stm32_packages(
     // standard Arduino core (not the GIGA/Portenta mbed routing). The raw
     // platform.json toolchain range would select GCC 7, which cannot link the
     // current STM32duino linker scripts.
-    let platform_defaults: &[(&str, &str)] = if mbed {
+    let platform_defaults: &[(&str, PlatformDefaultVersion<'_>)] = if mbed {
         &[]
     } else {
         &[
-            ("toolchain-gccarmnoneeabi", "~1.120301.0"),
-            ("framework-cmsis", "~2.60300.0"),
+            (
+                "toolchain-gccarmnoneeabi",
+                PlatformDefaultVersion::Fixed("~1.120301.0"),
+            ),
+            ("framework-cmsis", PlatformDefaultVersion::SoleOptional),
         ]
     };
     let registry_overrides = match env_config {

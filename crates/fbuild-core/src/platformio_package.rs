@@ -761,3 +761,35 @@ pub fn require_platform_package<'a>(
         .find(|requirement| requirement.name == name)
         .ok_or_else(|| ResolutionError::MissingPackage(name.to_string()))
 }
+
+/// Return a package's sole alternate version requirement from a selected
+/// platform manifest. Some PlatformIO builders choose that alternate for a
+/// particular board/core. If multiple alternatives exist, their meaning is
+/// board-specific and must not be guessed from ordering.
+pub fn sole_optional_manifest_version(manifest_json: &str, name: &str) -> Result<String> {
+    let manifest: serde_json::Value = serde_json::from_str(manifest_json)
+        .map_err(|error| ResolutionError::InvalidMetadata(error.to_string()))?;
+    let package = manifest
+        .get("packages")
+        .and_then(|packages| packages.get(name))
+        .ok_or_else(|| ResolutionError::MissingPackage(name.to_string()))?;
+    let alternatives = package
+        .get("optionalVersions")
+        .and_then(serde_json::Value::as_array)
+        .ok_or_else(|| {
+            ResolutionError::InvalidMetadata(format!(
+                "{name} has no optionalVersions for this platform"
+            ))
+        })?;
+    let [only] = alternatives.as_slice() else {
+        return Err(ResolutionError::InvalidMetadata(format!(
+            "{name} has {} optionalVersions; board-specific selection is ambiguous",
+            alternatives.len()
+        )));
+    };
+    let requirement = only.as_str().ok_or_else(|| {
+        ResolutionError::InvalidMetadata(format!("{name} optional version is not a string"))
+    })?;
+    validate_requirement(requirement)?;
+    Ok(requirement.to_string())
+}

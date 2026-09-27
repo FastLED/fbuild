@@ -21,8 +21,17 @@ use std::path::Path;
 use fbuild_config::PackageOverride;
 use fbuild_core::platformio_package::{
     PackageKind, PackageRequirement, PackageSource, PackageSpec, parse_package_spec,
-    require_platform_package, resolve_platform_requirements,
+    require_platform_package, resolve_platform_requirements, sole_optional_manifest_version,
 };
+
+/// A board/core-specific requirement selected by a PlatformIO platform
+/// builder. `SoleOptional` follows the published manifest for the pinned
+/// platform instead of freezing a value from the newest release.
+#[derive(Clone, Copy)]
+pub enum PlatformDefaultVersion<'a> {
+    Fixed(&'a str),
+    SoleOptional,
+}
 
 /// Resolve a pinned PlatformIO platform and its selected package requirements
 /// before a family adapter constructs its framework/toolchain packages. The
@@ -33,7 +42,7 @@ pub async fn resolve_registry_overrides(
     env_config: &HashMap<String, String>,
     platform_name: &str,
     package_names: &[&str],
-    platform_default_requirements: &[(&str, &str)],
+    platform_default_requirements: &[(&str, PlatformDefaultVersion<'_>)],
 ) -> fbuild_core::Result<HashMap<String, PackageOverride>> {
     let cache_root = fbuild_packages::Cache::new(project_dir).platforms_dir();
     let client = fbuild_packages::platformio_registry::RegistryClient::default();
@@ -54,7 +63,7 @@ async fn resolve_registry_overrides_with_client(
     env_config: &HashMap<String, String>,
     platform_name: &str,
     package_names: &[&str],
-    platform_default_requirements: &[(&str, &str)],
+    platform_default_requirements: &[(&str, PlatformDefaultVersion<'_>)],
     client: &fbuild_packages::platformio_registry::RegistryClient,
     cache_root: &Path,
 ) -> fbuild_core::Result<HashMap<String, PackageOverride>> {
@@ -125,13 +134,6 @@ async fn resolve_registry_overrides_with_client(
             // native adapter's existing default stack.
             explicit_registry_requirements(&explicit)
         } else {
-            // PlatformIO platform.py can specialize package requirements by board
-            // and framework. Keep consumer overrides first.
-            for (name, requirement) in platform_default_requirements {
-                explicit.push(
-                    parse_package_spec(&format!("{name}@{requirement}")).map_err(package_error)?,
-                );
-            }
             let platform = client
                 .resolve_cached(
                     &platform_registry,
@@ -180,7 +182,11 @@ async fn resolve_registry_overrides_with_client(
             })?;
             let manifest = std::fs::read_to_string(manifest_path)
                 .map_err(|error| fbuild_core::FbuildError::PackageError(error.to_string()))?;
-            resolve_platform_requirements(&manifest, &explicit).map_err(package_error)?
+            requirements_with_platform_defaults(
+                &manifest,
+                &explicit,
+                platform_default_requirements,
+            )?
         }
     } else {
         // A platform URL, repository ref, or local directory remains the
@@ -235,6 +241,28 @@ async fn resolve_registry_overrides_with_client(
         );
     }
     Ok(overrides)
+}
+
+fn requirements_with_platform_defaults(
+    manifest: &str,
+    explicit: &[PackageSpec],
+    defaults: &[(&str, PlatformDefaultVersion<'_>)],
+) -> fbuild_core::Result<Vec<PackageRequirement>> {
+    // PlatformIO platform.py can specialize package requirements by board/core.
+    // Consumer overrides stay first. Manifest-derived selections follow the
+    // selected platform release, not the newest release's static values.
+    let mut overrides = explicit.to_vec();
+    for (name, selection) in defaults {
+        let requirement = match selection {
+            PlatformDefaultVersion::Fixed(value) => (*value).to_string(),
+            PlatformDefaultVersion::SoleOptional => {
+                sole_optional_manifest_version(manifest, name).map_err(package_error)?
+            }
+        };
+        overrides
+            .push(parse_package_spec(&format!("{name}@{requirement}")).map_err(package_error)?);
+    }
+    resolve_platform_requirements(manifest, &overrides).map_err(package_error)
 }
 
 fn explicit_registry_requirements(explicit: &[PackageSpec]) -> Vec<PackageRequirement> {
@@ -402,6 +430,40 @@ mod tests {
         assert_eq!(requirements[0].kind, PackageKind::Framework);
         assert_eq!(requirements[1].name, "toolchain-gccarmnoneeabi");
         assert_eq!(requirements[1].kind, PackageKind::Tool);
+    }
+
+    #[test]
+    fn pinned_stm32_manifest_drives_cmsis_default_but_explicit_pin_wins() {
+        let defaults = [
+            (
+                "toolchain-gccarmnoneeabi",
+                PlatformDefaultVersion::Fixed("~1.120301.0"),
+            ),
+            ("framework-cmsis", PlatformDefaultVersion::SoleOptional),
+        ];
+        for (platform_version, expected_cmsis) in
+            [("19.0.0", "~2.50900.0"), ("20.0.0", "~2.60300.0")]
+        {
+            let manifest = format!(
+                r#"{{"version":"{platform_version}","packages":{{"framework-cmsis":{{"type":"framework","owner":"platformio","version":"~2.50501.0","optionalVersions":["{expected_cmsis}"]}},"toolchain-gccarmnoneeabi":{{"type":"toolchain","owner":"platformio","version":">=1.60301.0,<1.80000.0","optionalVersions":["~1.120301.0"]}}}}}}"#
+            );
+            let requirements =
+                requirements_with_platform_defaults(&manifest, &[], &defaults).unwrap();
+            let cmsis = require_platform_package(&requirements, "framework-cmsis").unwrap();
+            assert_eq!(
+                cmsis.spec.registry().unwrap().requirement.as_deref(),
+                Some(expected_cmsis),
+                "ststm32@{platform_version}"
+            );
+            let explicit = parse_package_spec("framework-cmsis@2.50501.0").unwrap();
+            let requirements =
+                requirements_with_platform_defaults(&manifest, &[explicit], &defaults).unwrap();
+            let cmsis = require_platform_package(&requirements, "framework-cmsis").unwrap();
+            assert_eq!(
+                cmsis.spec.registry().unwrap().requirement.as_deref(),
+                Some("2.50501.0")
+            );
+        }
     }
 
     #[tokio::test]
