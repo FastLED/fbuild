@@ -672,16 +672,32 @@ fn split_command(command: &str) -> Vec<String> {
     let mut current = String::new();
     let mut in_token = false;
     let mut quote: Option<char> = None;
-    let mut chars = command.chars();
+    let mut chars = command.chars().peekable();
     while let Some(c) = chars.next() {
         match (quote, c) {
             (Some(q), c) if c == q => quote = None,
             (Some('"'), '\\') => {
-                if let Some(next) = chars.next() {
+                if chars.peek().is_some_and(|next| *next == '"') {
+                    let next = chars.next().expect("peeked character");
                     current.push(next);
+                } else {
+                    current.push('\\');
                 }
             }
             (Some(_), c) => current.push(c),
+            (None, '\\') => {
+                if chars
+                    .peek()
+                    .is_some_and(|next| *next == '"' || next.is_whitespace())
+                {
+                    let next = chars.next().expect("peeked character");
+                    current.push(next);
+                    in_token = true;
+                } else {
+                    current.push('\\');
+                    in_token = true;
+                }
+            }
             (None, '"' | '\'') => {
                 quote = Some(c);
                 in_token = true;

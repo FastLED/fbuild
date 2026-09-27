@@ -436,6 +436,36 @@ fn raw_replay_unescapes_shell_quoted_macro_values() {
 }
 
 #[test]
+fn platformio_compile_command_keeps_escaped_macro_quotes_as_one_argument() {
+    assert_eq!(
+        split_command(
+            r#"xtensa-esp32s3-elf-g++ -DMBEDTLS_CONFIG_FILE=\"mbedtls/esp_config.h\" -DIDF_VER=\"v4.4.7-dirty\" "-DARDUINO_BOARD=\"ESP32 S3\"" -c Esp.cpp"#
+        ),
+        [
+            "xtensa-esp32s3-elf-g++",
+            "-DMBEDTLS_CONFIG_FILE=\"mbedtls/esp_config.h\"",
+            "-DIDF_VER=\"v4.4.7-dirty\"",
+            "-DARDUINO_BOARD=\"ESP32 S3\"",
+            "-c",
+            "Esp.cpp",
+        ]
+        .map(String::from)
+    );
+    assert_eq!(
+        split_command(r#"cc -IC:\sdk\include -DNAME=\"board\""#),
+        ["cc", r#"-IC:\sdk\include"#, "-DNAME=\"board\""].map(String::from)
+    );
+    assert_eq!(
+        split_command(r#"cc "-IC:\Program Files\sdk""#),
+        ["cc", r#"-IC:\Program Files\sdk"#].map(String::from)
+    );
+    assert_eq!(
+        split_command(r#"cc -I\\server\share\sdk"#),
+        ["cc", r#"-I\\server\share\sdk"#].map(String::from)
+    );
+}
+
+#[test]
 fn latest_payload_reports_overhead_and_platformio_ratio() {
     let latest = latest_payload(&sample_metadata(), &sample_results());
     assert_eq!(latest["raw_baseline_ms"], 450.0);
