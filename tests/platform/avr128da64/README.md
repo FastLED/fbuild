@@ -4,17 +4,18 @@ Minimal AVR128DA64 project used to track fbuild support state for the
 AVR-Dx (DA / DB / DD) family. Source FastLED issue:
 FastLED/FastLED#1307. fbuild tracker: FastLED/fbuild#389.
 
-## Current fbuild status (2026-06-03)
+## Current fbuild status (2026-09-27)
 
 - **Board metadata**: present for the full AVR-Dx matrix
   (`crates/fbuild-config/assets/boards/json/AVR128DA*.json`,
   `AVR128DB*.json`, `AVR64DA*.json`, `AVR64DB*.json`, `AVR64DD*.json`,
   `AVR32DA*.json`, `AVR32DB*.json`, `AVR64DD14/20/28/32.json`).
   All entries declare `platform = atmelmegaavr` and `core = dxcore`.
-- **Framework registry**: `dxcore` is NOT mapped in
-  `crates/fbuild-packages/assets/avr_frameworks.json`. The AVR
-  orchestrator will fail at `AvrFramework::for_core("dxcore", ..)`
-  with "no AVR framework registered for core 'dxcore'".
+- **Framework registry**: `dxcore` is mapped to a checksummed PlatformIO
+  archive in `crates/fbuild-library/assets/avr_frameworks.json`. The
+  megaAVR adapter selects PlatformIO's newer AVR-GCC requirement for DxCore
+  when the platform version is pinned. An end-to-end DxCore build still needs
+  validation.
 - **FastLED platform support**: NO `AVR_DA` / `AVR128DA*` /
   `__AVR_AVR128DA*__` branch in `src/platforms/avr/`. The user-supplied
   pin map in FastLED/FastLED#1307 has not been merged into
@@ -22,17 +23,14 @@ FastLED/FastLED#1307. fbuild tracker: FastLED/fbuild#389.
 
 ## What this fixture proves
 
-This fixture intentionally does NOT `#include <FastLED.h>` — fbuild fails
-at framework resolve first, and even if it didn't, FastLED would `#error`
-on the missing platform support. Both gaps must close before this
-directory can be flipped to a real FastLED smoke build.
+This fixture intentionally does NOT `#include <FastLED.h>` so it can validate
+the fbuild-side framework/toolchain path. FastLED's AVR-Dx support remains
+separate and may still reject a FastLED sketch.
 
 ## Next steps (fbuild-side)
 
-Add a `dxcore` entry to `avr_frameworks.json` (github =
-`SpenceKonde/DxCore`, validation_path = `cores/dxcore/Arduino.h`,
-core_dir = `dxcore`). Possibly also gate the megaTinyCore-style toolchain
-on the newer AVR-LibC / GCC bundle that DxCore ships with.
+Run the fixture as a real build on each supported host and fix any
+compiler/linker incompatibility independently of package resolution.
 
 ## Next steps (FastLED-side)
 

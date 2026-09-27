@@ -98,23 +98,37 @@ impl BuildOrchestrator for AvrOrchestrator {
 
         // 3-4. Resolve the avr-gcc toolchain and Arduino core packages.
         //
-        // Honor `platform_packages = framework-arduino-avr@<URL>` (FastLED/fbuild#667)
-        // and `platform_packages = framework-arduino-avr-attiny@<URL>`
-        // (FastLED/fbuild#669) from the env section. The PIO atmelavr platform
-        // exposes the standard Arduino core as `framework-arduino-avr` and the
-        // ATTinyCore-based ATtiny core as `framework-arduino-avr-attiny`
-        // (see https://github.com/platformio/platform-atmelavr/blob/develop/platform.json);
-        // those names are the canonical override keys consumers will set in
-        // their `platformio.ini`. The non-ATtiny "tinyX/MiniCore/etc." JSON
-        // entries currently share the `framework-arduino-avr` override key —
-        // they all fall under the atmelavr platform — but only the two PIO
-        // canonical names are resolved here. If those alt-core PIO package
-        // names land in the registry later, add additional resolution branches.
-        let (toolchain, framework) = avr_packages(
-            &params.project_dir,
-            ctx.config.get_env_config(&params.env_name).ok(),
-            &ctx.board,
-        )?;
+        // The board core selects the PlatformIO framework package name.
+        // Registry pins resolve exact payloads; URL overrides keep their
+        // existing precedence and cache identity.
+        let env_config = ctx.config.get_env_config(&params.env_name).ok();
+        let (toolchain, framework) =
+            avr_packages(&params.project_dir, env_config, &ctx.board).await?;
+        use fbuild_packages::Package as _;
+        let toolchain_info = toolchain.get_info();
+        let framework_info = framework.get_info();
+        if let Some(env) = env_config {
+            let platform_request = env
+                .get("platform")
+                .map(String::as_str)
+                .unwrap_or("atmelavr");
+            let package_request = env
+                .get("platform_packages")
+                .map(|value| value.split_whitespace().collect::<Vec<_>>().join(", "))
+                .unwrap_or_else(|| "(default)".to_string());
+            ctx.build_log.push(format!(
+                "AVR requested: platform={platform_request}; platform_packages={package_request}"
+            ));
+        }
+        ctx.build_log.push(format!(
+            "AVR resolved: {}@{} ({}); {}@{} ({})",
+            toolchain_info.name,
+            toolchain_info.version,
+            toolchain_info.url,
+            framework_info.name,
+            framework_info.version,
+            framework_info.url,
+        ));
 
         // 3. Ensure toolchain
         let toolchain_dir = {
@@ -381,10 +395,10 @@ pub fn create() -> Box<dyn BuildOrchestrator> {
 }
 
 /// The avr-gcc toolchain and the Arduino framework package for an env's board,
-/// honoring the `framework-arduino-avr` / `framework-arduino-avr-attiny`
-/// `platform_packages` overrides. Shared by the build and `fbuild install`, so
-/// both provision the same packages (FastLED/fbuild#1433).
-pub(crate) fn avr_packages(
+/// honoring board-specific `platform_packages` and versioned `platform`
+/// aliases. Shared by the build and `fbuild install`, so both provision the
+/// same packages (FastLED/fbuild#1433, #1494).
+pub(crate) async fn avr_packages(
     project_dir: &Path,
     env_config: Option<&std::collections::HashMap<String, String>>,
     board: &fbuild_config::BoardConfig,
@@ -392,19 +406,88 @@ pub(crate) fn avr_packages(
     fbuild_packages::toolchain::AvrToolchain,
     fbuild_packages::library::AvrFramework,
 )> {
-    let toolchain = fbuild_packages::toolchain::AvrToolchain::new(project_dir);
-    let avr_override = env_config
-        .and_then(|env| crate::package_override::resolve_override(env, "framework-arduino-avr"));
-    let attiny_override = env_config.and_then(|env| {
-        crate::package_override::resolve_override(env, "framework-arduino-avr-attiny")
+    let platform = board.platform();
+    let (_, framework_name) = avr_core_package(&board.core, platform)?;
+    let platform_name = if platform == Some(Platform::AtmelMegaAvr) {
+        "atmelmegaavr"
+    } else {
+        "atmelavr"
+    };
+    let registry_overrides = if let Some(env) = env_config {
+        let mega_toolchain_defaults = [(
+            "toolchain-atmelavr",
+            crate::package_override::PlatformDefaultVersion::BuilderBranch {
+                marker: "if build_core in (\"megatinycore\", \"dxcore\"):",
+                after: None,
+            },
+        )];
+        let defaults = if platform == Some(Platform::AtmelMegaAvr)
+            && matches!(board.core.as_str(), "megatinycore" | "dxcore")
+        {
+            &mega_toolchain_defaults[..]
+        } else {
+            &[][..]
+        };
+        crate::package_override::resolve_registry_overrides(
+            project_dir,
+            env,
+            platform_name,
+            &[framework_name, "toolchain-atmelavr"],
+            defaults,
+        )
+        .await?
+    } else {
+        std::collections::HashMap::new()
+    };
+    avr_packages_from_resolved(project_dir, env_config, board, &registry_overrides)
+}
+
+fn avr_packages_from_resolved(
+    project_dir: &Path,
+    env_config: Option<&std::collections::HashMap<String, String>>,
+    board: &fbuild_config::BoardConfig,
+    registry_overrides: &std::collections::HashMap<String, fbuild_config::PackageOverride>,
+) -> Result<(
+    fbuild_packages::toolchain::AvrToolchain,
+    fbuild_packages::library::AvrFramework,
+)> {
+    let (core_key, framework_name) = avr_core_package(&board.core, board.platform())?;
+    let toolchain_override = registry_overrides
+        .get("toolchain-atmelavr")
+        .cloned()
+        .or_else(|| {
+            env_config.and_then(|env| {
+                crate::package_override::resolve_override(env, "toolchain-atmelavr")
+            })
+        });
+    let toolchain = match toolchain_override {
+        Some(ovr) => fbuild_packages::toolchain::AvrToolchain::with_override(project_dir, ovr),
+        None => fbuild_packages::toolchain::AvrToolchain::new(project_dir),
+    };
+    let framework_override = registry_overrides.get(framework_name).cloned().or_else(|| {
+        env_config.and_then(|env| crate::package_override::resolve_override(env, framework_name))
     });
-    let framework = avr_framework_package(
-        project_dir,
-        &board.core,
-        board.platform(),
-        avr_override,
-        attiny_override,
-    )?;
+    let framework = match framework_override {
+        Some(ovr) => fbuild_packages::library::AvrFramework::for_core_with_override(
+            core_key,
+            project_dir,
+            ovr,
+        )?,
+        None => fbuild_packages::library::AvrFramework::for_core(core_key, project_dir)?,
+    };
+    use fbuild_packages::Package as _;
+    let toolchain_info = toolchain.get_info();
+    let framework_info = framework.get_info();
+    tracing::info!(
+        "AVR packages for core `{}`: toolchain {}@{} ({}), framework {}@{} ({})",
+        board.core,
+        toolchain_info.name,
+        toolchain_info.version,
+        toolchain_info.url,
+        framework_info.name,
+        framework_info.version,
+        framework_info.url,
+    );
     Ok((toolchain, framework))
 }
 
@@ -430,27 +513,12 @@ async fn ensure_avr_framework(
     Ok((framework_dir, core_dir, variant_dir))
 }
 
-/// Select the correct AVR Arduino framework package based on the board's core name.
-///
-/// Uses the data-driven `avr_frameworks.json` registry to resolve the correct
-/// framework package (GitHub URL, version) for any board core.
-/// For `AtmelMegaAvr` boards whose core is `"arduino"`, the lookup key is remapped
-/// to `"arduino_megaavr"` so they get `ArduinoCore-megaavr` (which contains the
-/// megaAVR variants like `nona4809`) instead of `ArduinoCore-avr`.
-///
-/// `avr_override` / `attiny_override` are pre-resolved `platform_packages`
-/// overrides for `framework-arduino-avr` and `framework-arduino-avr-attiny`
-/// respectively (FastLED/fbuild#667, #669). When set, the resolved URL
-/// supersedes the registry-pinned default; the cache subdir is derived from
-/// the override URL via `PackageBase::with_override` so an override doesn't
-/// collide with the default cache entry.
-fn avr_framework_package(
-    project_dir: &Path,
+/// Map a board core to its local framework key and PlatformIO package alias.
+/// megaAVR `arduino` uses a distinct package from standard AVR `arduino`.
+fn avr_core_package(
     core_name: &str,
     platform: Option<fbuild_core::Platform>,
-    avr_override: Option<fbuild_config::PackageOverride>,
-    attiny_override: Option<fbuild_config::PackageOverride>,
-) -> fbuild_core::Result<fbuild_packages::library::AvrFramework> {
+) -> fbuild_core::Result<(&str, &'static str)> {
     // megaAVR boards (e.g. nano_every) share core name "arduino" with standard AVR
     // but need ArduinoCore-megaavr instead of ArduinoCore-avr.
     let lookup_key =
@@ -460,27 +528,31 @@ fn avr_framework_package(
             core_name
         };
 
-    // Route the appropriate `platform_packages` override to the matching PIO
-    // package. `framework-arduino-avr` covers the standard ArduinoCore-avr
-    // (board core "arduino" on the atmelavr platform);
-    // `framework-arduino-avr-attiny` covers SpenceKonde/ATTinyCore (board cores
-    // "tiny" and "tinymodern"). Other JSON entries (MiniCore, MegaCoreX,
-    // digistump, megatinycore, megaavr) ignore both overrides — their PIO
-    // package names are distinct and aren't wired in this PR.
-    let routed_override = match lookup_key {
-        "arduino" => avr_override,
-        "tiny" | "tinymodern" => attiny_override,
-        _ => None,
+    let package = match (platform, lookup_key) {
+        (Some(Platform::AtmelMegaAvr), "arduino_megaavr") => "framework-arduino-megaavr",
+        (Some(Platform::AtmelMegaAvr), "MegaCoreX") => "framework-arduino-megaavr-megacorex",
+        (Some(Platform::AtmelMegaAvr), "megatinycore") => "framework-arduino-megaavr-megatinycore",
+        (Some(Platform::AtmelMegaAvr), "dxcore") => "framework-arduino-megaavr-dxcore",
+        (_, "arduino") => "framework-arduino-avr",
+        (_, "tiny" | "tinymodern") => "framework-arduino-avr-attiny",
+        (_, "dtiny" | "pro") => "framework-arduino-avr-digistump",
+        (_, "MiniCore") => "framework-arduino-avr-minicore",
+        (_, "MajorCore") => "framework-arduino-avr-majorcore",
+        (_, "MegaCore") => "framework-arduino-avr-megacore",
+        (_, "MicroCore") => "framework-arduino-avr-microcore",
+        (_, "MightyCore") => "framework-arduino-avr-mightycore",
+        (_, "bean") => "framework-arduino-avr-bean",
+        (_, "dwenguino") => "framework-arduino-avr-dwenguino",
+        (_, "nicai") => "framework-arduino-avr-nicai",
+        (_, "panstamp") => "framework-arduino-avr-panstamp",
+        (_, "prusa_rambo") => "framework-arduino-avr-prusa_rambo",
+        _ => {
+            return Err(fbuild_core::FbuildError::ConfigError(format!(
+                "unsupported AVR framework core `{core_name}`"
+            )));
+        }
     };
-
-    match routed_override {
-        Some(ovr) => fbuild_packages::library::AvrFramework::for_core_with_override(
-            lookup_key,
-            project_dir,
-            ovr,
-        ),
-        None => fbuild_packages::library::AvrFramework::for_core(lookup_key, project_dir),
-    }
+    Ok((lookup_key, package))
 }
 
 /// Check if a project is configured for AVR by reading its platformio.ini.
@@ -519,6 +591,132 @@ mod tests {
         )
         .unwrap();
         assert!(!is_avr_project(tmp.path(), "esp32"));
+    }
+
+    #[test]
+    fn minicore_registry_pin_must_not_fall_back_to_embedded_default() {
+        use fbuild_packages::Package as _;
+
+        let project = tempfile::TempDir::new().unwrap();
+        let board =
+            fbuild_config::BoardConfig::from_board_id("ATmega8", &std::collections::HashMap::new())
+                .unwrap();
+        assert_eq!(board.core, "MiniCore");
+        let env = std::collections::HashMap::from([
+            ("platform".to_string(), "atmelavr".to_string()),
+            (
+                "platform_packages".to_string(),
+                "framework-arduino-avr-minicore@3.1.2".to_string(),
+            ),
+        ]);
+        let registry_overrides = std::collections::HashMap::from([(
+            "framework-arduino-avr-minicore".to_string(),
+            fbuild_config::PackageOverride {
+                url: "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-avr-minicore/3.1.2/framework-arduino-avr-minicore-3.1.2.tar.gz".to_string(),
+                version: "3.1.2".to_string(),
+                checksum: Some("3cc43553f35d2d00a277d488eefba628816104ae61a9ca9cecd60470f555c9f6".to_string()),
+            },
+        )]);
+        let (_, framework) =
+            avr_packages_from_resolved(project.path(), Some(&env), &board, &registry_overrides)
+                .unwrap();
+        assert_eq!(framework.get_info().version, "3.1.2");
+        assert_eq!(
+            framework.get_info().checksum.as_deref(),
+            Some("3cc43553f35d2d00a277d488eefba628816104ae61a9ca9cecd60470f555c9f6")
+        );
+    }
+
+    #[test]
+    fn avr_board_cores_select_their_platformio_package_names() {
+        for (board_id, expected_name) in [
+            ("uno", "framework-arduino-avr"),
+            ("attiny44", "framework-arduino-avr-attiny"),
+            ("ATmega8", "framework-arduino-avr-minicore"),
+            ("nano_every", "framework-arduino-megaavr"),
+            ("curiosity_nano_4809", "framework-arduino-megaavr-megacorex"),
+            ("ATtiny1616", "framework-arduino-megaavr-megatinycore"),
+        ] {
+            let board = fbuild_config::BoardConfig::from_board_id(
+                board_id,
+                &std::collections::HashMap::new(),
+            )
+            .unwrap();
+            assert_eq!(
+                avr_core_package(&board.core, board.platform()).unwrap().1,
+                expected_name,
+                "{board_id}"
+            );
+        }
+    }
+
+    #[test]
+    fn avr_adapter_uses_resolved_framework_and_toolchain_payloads() {
+        use fbuild_packages::Package as _;
+
+        let project = tempfile::TempDir::new().unwrap();
+        let board = fbuild_config::BoardConfig::from_board_id(
+            "nano_every",
+            &std::collections::HashMap::new(),
+        )
+        .unwrap();
+        let overrides = std::collections::HashMap::from([
+            (
+                "framework-arduino-megaavr".to_string(),
+                fbuild_config::PackageOverride {
+                    url: "https://example.test/megaavr-1.8.8.tar.gz".to_string(),
+                    version: "1.8.8".to_string(),
+                    checksum: Some(
+                        "7f13029f3a4621c89c4676bd6192f39ef5de3b9dd77316e9931d9b07e56411d7"
+                            .to_string(),
+                    ),
+                },
+            ),
+            (
+                "toolchain-atmelavr".to_string(),
+                fbuild_config::PackageOverride {
+                    url: "https://example.test/avr-gcc-1.70300.191015.tar.gz".to_string(),
+                    version: "1.70300.191015".to_string(),
+                    checksum: Some(
+                        "664f0b7b08a15e8d6362b87e2fdb5a4dcfd5959ebc5b19d938e7dff6f12f0524"
+                            .to_string(),
+                    ),
+                },
+            ),
+        ]);
+        let (toolchain, framework) =
+            avr_packages_from_resolved(project.path(), None, &board, &overrides).unwrap();
+        assert_eq!(toolchain.get_info().version, "1.70300.191015");
+        assert_eq!(framework.get_info().version, "1.8.8");
+        assert_ne!(
+            toolchain.get_info().install_path,
+            framework.get_info().install_path
+        );
+    }
+
+    #[test]
+    fn avr_archive_url_override_keeps_precedence_without_registry_lookup() {
+        use fbuild_packages::Package as _;
+
+        let project = tempfile::TempDir::new().unwrap();
+        let board =
+            fbuild_config::BoardConfig::from_board_id("ATmega8", &std::collections::HashMap::new())
+                .unwrap();
+        let env = std::collections::HashMap::from([(
+            "platform_packages".to_string(),
+            "framework-arduino-avr-minicore@https://example.test/minicore-custom.tar.gz"
+                .to_string(),
+        )]);
+        let (_, framework) = avr_packages_from_resolved(
+            project.path(),
+            Some(&env),
+            &board,
+            &std::collections::HashMap::new(),
+        )
+        .unwrap();
+        let info = framework.get_info();
+        assert_eq!(info.url, "https://example.test/minicore-custom.tar.gz");
+        assert_ne!(info.version, "2.2.2");
     }
 
     /// Verify that megaAVR boards remap "arduino" core to "arduino_megaavr" framework.

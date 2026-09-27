@@ -35,6 +35,13 @@ impl AvrToolchain {
         }
     }
 
+    /// Use a resolved PlatformIO toolchain payload instead of the Arduino CDN default.
+    pub fn with_override(project_dir: &Path, ovr: fbuild_config::PackageOverride) -> Self {
+        let mut toolchain = Self::new(project_dir);
+        toolchain.base = toolchain.base.with_override(ovr);
+        toolchain
+    }
+
     /// Create with an explicit cache root (for testing without env vars).
     #[cfg(test)]
     fn with_cache_root(project_dir: &Path, cache_root: &Path) -> Self {
