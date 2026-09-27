@@ -57,7 +57,8 @@ fn free_port() -> u16 {
 }
 
 fn cli_command(args: &[&str], port: u16, cache_dir: &std::path::Path) -> Command {
-    let bin = env!("CARGO_BIN_EXE_fbuild");
+    let bin =
+        option_env!("CARGO_BIN_EXE_fbuild").expect("cargo test must provide CARGO_BIN_EXE_fbuild");
     // allow-direct-spawn: test driver invoking the fbuild CLI binary under test.
     let mut command = Command::new(bin);
     command
@@ -173,7 +174,9 @@ fn client_recovers_after_daemon_is_killed_uncleanly() {
     // The production spawn path resolves the daemon binary as a sibling of
     // the CLI. Under `cargo test --workspace` (and any full build) it exists;
     // under an isolated `-p fbuild-cli` test run it may not — skip then.
-    let cli = NormalizedPath::new(env!("CARGO_BIN_EXE_fbuild"));
+    let cli = NormalizedPath::new(
+        option_env!("CARGO_BIN_EXE_fbuild").expect("cargo test must provide CARGO_BIN_EXE_fbuild"),
+    );
     let daemon_name = fbuild_core::platform::executable::name("fbuild-daemon", "fbuild-daemon.exe");
     let sibling = cli
         .parent()
