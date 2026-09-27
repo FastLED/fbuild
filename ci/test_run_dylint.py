@@ -10,6 +10,18 @@ from ci import run_dylint
 
 
 class RunDylintTests(unittest.TestCase):
+    def test_default_cargo_home_does_not_depend_on_rustup_binary_location(self) -> None:
+        with (
+            patch.dict(os.environ, {"CARGO_HOME": ""}),
+            patch.object(Path, "home", return_value=Path("/tmp/fbuild-test-home")),
+            patch.object(run_dylint, "activate"),
+            patch.object(run_dylint, "ensure_tools", return_value=Path("/tmp/fbuild-test-cargo-dylint")),
+            patch.object(run_dylint, "ensure_driver"),
+            patch.object(run_dylint.subprocess, "run", return_value=subprocess.CompletedProcess([], 0)) as runner,
+        ):
+            self.assertEqual(0, run_dylint.main([]))
+        self.assertEqual("/tmp/fbuild-test-home/.cargo", runner.call_args.kwargs["env"]["CARGO_HOME"])
+
     def test_matching_driver_is_reused(self) -> None:
         host = "host: x86_64-unknown-linux-gnu\n"
         version = "nightly-2026-04-16-x86_64-unknown-linux-gnu 6.0.1\n"

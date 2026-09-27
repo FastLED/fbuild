@@ -38,6 +38,9 @@ crates/fbuild-build-engine/src/compiler.rs
 crates/fbuild-build-engine/src/compiler_tests.rs
 crates/fbuild-build-esp/src/esp32/esp32_compiler.rs
 crates/fbuild-build-esp/src/esp32/esp32_linker.rs
+# Existing ESP32 linker test fixtures construct raw paths to match the legacy
+# production linker's PathBuf API; migrate together with that API (#1501).
+crates/fbuild-build-esp/src/esp32/esp32_linker_tests.rs
 crates/fbuild-build-esp/src/esp32/orchestrator/build.rs
 crates/fbuild-build-esp/src/esp32/orchestrator/embed.rs
 crates/fbuild-build-esp/src/esp32/orchestrator/embed_stage.rs

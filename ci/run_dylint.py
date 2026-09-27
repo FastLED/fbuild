@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import argparse
 import os
-import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -104,9 +103,7 @@ def main(argv: list[str] | None = None) -> int:
     # Python/uv environment leaves it unset; otherwise it resolves `.cargo`
     # relative to this checkout and its post-install self-check fails.
     if not os.environ.get("CARGO_HOME"):
-        rustup = shutil.which("rustup")
-        if rustup:
-            os.environ["CARGO_HOME"] = str(Path(rustup).resolve().parent.parent)
+        os.environ["CARGO_HOME"] = str(Path.home() / ".cargo")
     binary = ensure_tools()
     env = os.environ.copy()
     env["PATH"] = str(binary.parent) + os.pathsep + env.get("PATH", "")

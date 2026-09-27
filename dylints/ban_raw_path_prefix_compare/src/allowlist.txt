@@ -39,6 +39,10 @@ crates/fbuild-packages-fetch/src/cache.rs
 crates/fbuild-packages-fetch/src/disk_cache/paths.rs
 crates/fbuild-paths/src/lib.rs
 
+# ESP32 SDK include ordering and pruning compare paths joined/enumerated from
+# the same resolved framework/include root; none feed a path-keyed cache key.
+crates/fbuild-library/src/library/esp32_framework/sdk_paths.rs
+
 # WalkDir-derived file paths are stripped against the exact root spelling
 # they were enumerated from (same-normalized by construction); the relative
 # result feeds a content hash, not a path-keyed cache lookup.

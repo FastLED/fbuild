@@ -47,6 +47,7 @@ dylint_linting::declare_late_lint! {
 }
 
 const PATHBUF_DEF_PATH: &[&str] = &["std", "path", "PathBuf"];
+// The existing ESP32 linker test fixtures are tracked for migration in #1501.
 const ALLOWLIST: &str = include_str!("allowlist.txt");
 
 impl<'tcx> LateLintPass<'tcx> for BanStdPathbuf {
