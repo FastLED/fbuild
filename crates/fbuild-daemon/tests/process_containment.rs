@@ -60,7 +60,7 @@ fn wait_with_timeout(child: &mut Child, budget: Duration) -> bool {
 #[test]
 #[ignore = "spawns real subprocesses and issues hard-kills; run with --ignored"]
 fn daemon_children_die_when_daemon_dies() {
-    let harness = option_env!("CARGO_BIN_EXE_containment_harness")
+    let harness = std::env::var("CARGO_BIN_EXE_containment_harness")
         .expect("cargo test must provide CARGO_BIN_EXE_containment_harness");
 
     // Start the parent role.
