@@ -13,6 +13,10 @@ on:
         default: ""
   pull_request:
     branches: [main]
+  # setup-soldr skips cache uploads on PRs. A main run seeds the shared
+  # Dylint compile cache that subsequent PRs are allowed to restore.
+  push:
+    branches: [main]
 
 # Auto-cancel superseded PR runs: pushing again to a feature branch
 # supersedes the in-flight run instead of queueing behind it. Non-PR
