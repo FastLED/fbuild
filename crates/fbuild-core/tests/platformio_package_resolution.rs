@@ -74,7 +74,7 @@ fn classifies_archive_repository_and_local_payload_paths() {
 fn windows_file_url_maps_to_drive_path() {
     let spec = parse_package_spec("file:///C:/platforms/custom").unwrap();
     assert!(
-        matches!(spec.source, PackageSource::LocalPath { path } if path == std::path::PathBuf::from(r"C:\platforms\custom"))
+        matches!(spec.source, PackageSource::LocalPath { path } if path == r"C:\platforms\custom")
     );
 }
 
