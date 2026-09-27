@@ -32,8 +32,6 @@ crates/fbuild-paths/src/executable_hash.rs	attr_cfg	#[cfg(unix)]	1	host	host_mec
 crates/fbuild-paths/src/executable_hash.rs	attr_cfg	#[cfg(unix)]	2	host	host_mechanic
 crates/fbuild-paths/src/executable_hash.rs	attr_cfg	#[cfg(unix)]	3	host	host_mechanic
 crates/fbuild-paths/src/executable_hash.rs	attr_cfg	#[cfg(unix)]	4	host	host_mechanic
-crates/fbuild-paths/src/executable_hash.rs	attr_cfg	#[cfg(unix)]	5	host	host_mechanic
-crates/fbuild-paths/src/executable_hash.rs	native_path	std::os::unix::fs::MetadataExt	0	fs	host_mechanic
 crates/fbuild-python/tests/python_facades.rs	native_path	std::env::current_exe	0	host_executable	host_mechanic
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	attr_cfg	#[cfg(not(windows))]	0	host_executable	host_mechanic
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	attr_cfg	#[cfg(not(windows))]	1	host_executable	host_mechanic
