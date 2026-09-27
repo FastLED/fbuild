@@ -611,6 +611,35 @@ fn ratio_regression_uses_seven_day_median() {
 }
 
 #[test]
+fn ratio_regression_uses_only_matching_board_history() {
+    let now = parse_timestamp_unix_s("2026-07-22T12:00:00Z").unwrap();
+    let ts = format!("unix:{}", now - 86_400);
+    let history = vec![
+        json!({"ts": ts, "fbuild_vs_platformio_cold": 0.7}),
+        json!({"ts": ts, "comparison_board": "esp32s3", "board_metrics": {
+            "uno": {"fbuild_vs_platformio_cold": null},
+            "esp32s3": {"fbuild_vs_platformio_cold": 1.5}
+        }}),
+    ];
+    assert_eq!(
+        ratio_regressed_for_board(&history, now, 1.6, "esp32s3"),
+        Some(1.5)
+    );
+    assert_eq!(
+        ratio_regressed_for_board(&history, now, 0.8, "uno"),
+        Some(0.7)
+    );
+    assert_eq!(
+        ratio_regressed_for_board(&history, now, 1.4, "esp32s3"),
+        None
+    );
+    assert_eq!(
+        ratio_regressed_for_board(&history, now, 1.0, "unknown"),
+        None
+    );
+}
+
+#[test]
 fn svg_shows_raw_floor_and_overhead() {
     let svg = render_svg(&sample_metadata(), &sample_results());
     assert!(

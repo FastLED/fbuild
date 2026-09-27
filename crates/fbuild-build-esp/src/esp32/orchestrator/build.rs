@@ -144,6 +144,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 board_platform: ctx.board.platform_str.clone(),
                 architecture: mcu_config.architecture.clone(),
                 platform: "espressif32".to_string(),
+                toolchain_name: toolchain_info.name.clone(),
+                toolchain_version: toolchain_info.version.clone(),
                 flash_mode: flash_mode.clone(),
                 flash_freq: flash_freq.clone(),
                 flash_size: flash_size.clone(),

@@ -284,15 +284,20 @@ fn run() -> AppResult<()> {
         trials: options.trials,
         raw_baselines_ms,
     };
-    if let Some(ratio) = fbuild_vs_platformio_cold(&results) {
-        let history = read_history_values(&output_dir.join("history.jsonl"));
-        let now_unix_s = SystemTime::now()
-            .duration_since(UNIX_EPOCH)
-            .unwrap_or_default()
-            .as_secs();
-        if let Some(baseline) = ratio_regressed(&history, now_unix_s, ratio) {
+    let history = read_history_values(&output_dir.join("history.jsonl"));
+    let now_unix_s = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap_or_default()
+        .as_secs();
+    for board in BOARDS {
+        if let Some(ratio) = board_cold_ratio(&results, board.key) {
+            let Some(baseline) = ratio_regressed_for_board(&history, now_unix_s, ratio, board.key)
+            else {
+                continue;
+            };
             println!(
-                "::warning title=fbuild cold regression::fbuild/PlatformIO cold ratio {ratio:.3} exceeds 7-day median {baseline:.3}"
+                "::warning title=fbuild cold regression ({})::fbuild/PlatformIO cold ratio {ratio:.3} exceeds 7-day median {baseline:.3}",
+                board.name
             );
         }
     }
@@ -1360,6 +1365,28 @@ fn ratio_regressed(history: &[Value], now_unix_s: u64, current_ratio: f64) -> Op
     }
     let baseline = median(&recent);
     (current_ratio > baseline).then_some(baseline)
+}
+
+fn ratio_regressed_for_board(
+    history: &[Value],
+    now_unix_s: u64,
+    current_ratio: f64,
+    board: &str,
+) -> Option<f64> {
+    let matching = history
+        .iter()
+        .filter_map(|entry| {
+            let ratio = if entry.get("board_metrics").is_some() {
+                entry["board_metrics"][board]["fbuild_vs_platformio_cold"].as_f64()
+            } else if board == "uno" {
+                entry["fbuild_vs_platformio_cold"].as_f64()
+            } else {
+                None
+            }?;
+            Some(json!({"ts": entry["ts"], "fbuild_vs_platformio_cold": ratio}))
+        })
+        .collect::<Vec<_>>();
+    ratio_regressed(&matching, now_unix_s, current_ratio)
 }
 
 fn manifest_payload(metadata: &Metadata, pages_url: &str, raw_base_url: &str) -> Value {
