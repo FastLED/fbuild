@@ -46,7 +46,7 @@ fn run_cli_or_timeout(mut cmd: Command) -> Output {
 /// `fbuild lib-select --help` must exit 0 and document both modes.
 #[test]
 fn lib_select_help_lists_command() {
-    let bin = env!("CARGO_BIN_EXE_fbuild");
+    let bin = std::env::var("CARGO_BIN_EXE_fbuild").expect("fbuild binary path");
     // allow-direct-spawn: integration test driver invoking the compiled fbuild binary.
     let mut cmd = Command::new(bin);
     cmd.args(["lib-select", "--help"]);
@@ -76,7 +76,7 @@ fn lib_select_help_lists_command() {
 /// the precise code, only that callers (CI, scripts) can detect the error.
 #[test]
 fn lib_select_missing_project_exits_nonzero() {
-    let bin = env!("CARGO_BIN_EXE_fbuild");
+    let bin = std::env::var("CARGO_BIN_EXE_fbuild").expect("fbuild binary path");
     // allow-direct-spawn: integration test driver invoking the compiled fbuild binary.
     let mut cmd = Command::new(bin);
     cmd.args([
@@ -101,7 +101,7 @@ fn lib_select_missing_project_exits_nonzero() {
 /// Passing both must fail at argument-parse time, not silently pick one.
 #[test]
 fn lib_select_explain_and_json_conflict() {
-    let bin = env!("CARGO_BIN_EXE_fbuild");
+    let bin = std::env::var("CARGO_BIN_EXE_fbuild").expect("fbuild binary path");
     // allow-direct-spawn: integration test driver invoking the compiled fbuild binary.
     let mut cmd = Command::new(bin);
     cmd.args(["lib-select", ".", "--explain", "--json"]);

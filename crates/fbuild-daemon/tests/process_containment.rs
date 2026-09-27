@@ -60,7 +60,8 @@ fn wait_with_timeout(child: &mut Child, budget: Duration) -> bool {
 #[test]
 #[ignore = "spawns real subprocesses and issues hard-kills; run with --ignored"]
 fn daemon_children_die_when_daemon_dies() {
-    let harness = env!("CARGO_BIN_EXE_containment_harness");
+    let harness = std::env::var("CARGO_BIN_EXE_containment_harness")
+        .expect("containment harness binary path");
 
     // Start the parent role.
     // allow-direct-spawn: integration-test driver invoking the containment harness binary.

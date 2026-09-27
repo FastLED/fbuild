@@ -58,11 +58,11 @@ fn wait_with_timeout(child: &mut Child, budget: Duration) -> bool {
 #[ignore = "expects a real fbuild-daemon binary; run with --ignored"]
 fn daemon_rebinds_cleanly_after_hard_kill_with_open_connection() {
     let port: u16 = 18900; // dedicated test port, avoids 8765 collisions
-    let bin = env!("CARGO_BIN_EXE_fbuild-daemon");
+    let bin = std::env::var("CARGO_BIN_EXE_fbuild-daemon").expect("fbuild-daemon binary path");
 
     // 1) Spawn the first daemon.
     // allow-direct-spawn: test driver spawns the real fbuild-daemon binary under test.
-    let mut d1 = Command::new(bin)
+    let mut d1 = Command::new(&bin)
         .env("FBUILD_DAEMON_PORT", port.to_string())
         .stdout(Stdio::null())
         .stderr(Stdio::null())
@@ -95,7 +95,7 @@ fn daemon_rebinds_cleanly_after_hard_kill_with_open_connection() {
     //    With a *correct* fix (graceful shutdown + SO_EXCLUSIVEADDRUSE
     //    on Windows) this should succeed without permissive REUSEADDR.
     // allow-direct-spawn: test driver spawns the real fbuild-daemon binary under test.
-    let mut d2 = Command::new(bin)
+    let mut d2 = Command::new(&bin)
         .env("FBUILD_DAEMON_PORT", port.to_string())
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
