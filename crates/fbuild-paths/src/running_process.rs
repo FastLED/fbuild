@@ -365,7 +365,9 @@ mod tests {
     fn cache_roots_respect_fbuild_cache_dir_as_artifact_owner() {
         let cache_root = crate::temp_subdir(&format!("fbuild-cache-roots-{}", std::process::id()));
         let runtime = PathBuf::from("/opt/fbuild/bin");
-        let fbuild_root = PathBuf::from("/home/test/.fbuild/prod");
+        let fbuild_root = PathBuf::from("/home/test")
+            .join(crate::FBUILD_DIR_NAME)
+            .join("prod");
 
         let roots = CacheRoots::from_resolved(runtime.clone(), cache_root.clone(), fbuild_root);
 
@@ -382,7 +384,9 @@ mod tests {
     fn cache_roots_keep_artifacts_stable_across_runtime_dirs() {
         let cache_root =
             crate::temp_subdir(&format!("fbuild-cache-roots-stable-{}", std::process::id()));
-        let fbuild_root = PathBuf::from("/home/test/.fbuild/prod");
+        let fbuild_root = PathBuf::from("/home/test")
+            .join(crate::FBUILD_DIR_NAME)
+            .join("prod");
         let runtime_v1 = PathBuf::from("/opt/fbuild-1/bin");
         let runtime_v2 = PathBuf::from("/opt/fbuild-2/bin");
 
@@ -406,7 +410,9 @@ mod tests {
     fn dev_mode_default_cache_roots_stay_stable_across_runtime_dirs() {
         let runtime_v1 = PathBuf::from("/opt/fbuild-dev-1/bin");
         let runtime_v2 = PathBuf::from("/opt/fbuild-dev-2/bin");
-        let fbuild_root = PathBuf::from("/home/test/.fbuild/dev");
+        let fbuild_root = PathBuf::from("/home/test")
+            .join(crate::FBUILD_DIR_NAME)
+            .join("dev");
         let cache_root = fbuild_root.join("cache");
 
         let identity = DaemonCacheIdentity::from_resolved(cache_root.clone(), true, false);
