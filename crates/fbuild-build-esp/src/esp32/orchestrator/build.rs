@@ -20,6 +20,7 @@ use super::fingerprint::Esp32FingerprintMetadata;
 use super::framework_libs::compile_framework_builtin_libs;
 use super::helpers::{
     apply_effective_define_flags, compile_db_is_current, framework_macro_prefix_map, profile_label,
+    reject_unsupported_sdkconfig_overlay,
 };
 use super::local_libs::compile_local_libraries;
 use super::packages::resolve_pioarduino_packages;
@@ -996,27 +997,4 @@ impl BuildOrchestrator for Esp32Orchestrator {
             build_log,
         ))
     }
-}
-
-/// Arduino's packaged ESP-IDF libraries cannot reflect sdkconfig changes without
-/// a hybrid IDF rebuild. Reject overlays before package resolution or compilation.
-pub(super) fn reject_unsupported_sdkconfig_overlay(
-    config: &fbuild_config::PlatformIOConfig,
-    env_name: &str,
-) -> Result<()> {
-    let env = config.get_env_config(env_name)?;
-    if !env
-        .get("framework")
-        .is_some_and(|framework| framework.split(',').any(|part| part.trim() == "arduino"))
-    {
-        return Ok(());
-    }
-    for key in ["board_build.sdkconfig_defaults", "custom_sdkconfig"] {
-        if env.get(key).is_some_and(|value| !value.trim().is_empty()) {
-            return Err(fbuild_core::FbuildError::ConfigError(format!(
-                "{key} is unsupported for ESP32 Arduino environment '{env_name}': fbuild cannot apply an sdkconfig overlay to precompiled ESP-IDF libraries (see FastLED/fbuild#1460)"
-            )));
-        }
-    }
-    Ok(())
 }
