@@ -38,7 +38,7 @@ impl crate::PlatformSupport for NxpLpcPlatformSupport {
     ) -> Result<Vec<crate::provision::ProvisionedPackage>> {
         use crate::provision::{PackageKind, provision_package};
         let (toolchain, cmsis, core) =
-            orchestrator::nxplpc_packages(inputs.project_dir, Some(inputs.env_config));
+            orchestrator::nxplpc_packages(inputs.project_dir, Some(inputs.env_config)).await?;
         Ok(vec![
             provision_package(PackageKind::Toolchain, &toolchain, mode).await,
             provision_package(PackageKind::Framework, &cmsis, mode).await,

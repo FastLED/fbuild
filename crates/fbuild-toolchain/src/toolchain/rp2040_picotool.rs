@@ -35,6 +35,13 @@ impl Rp2040Picotool {
         }
     }
 
+    /// Use a host-specific PlatformIO picotool payload requested by the user.
+    pub fn with_override(project_dir: &Path, ovr: fbuild_config::PackageOverride) -> Self {
+        let mut tool = Self::new(project_dir);
+        tool.base = tool.base.with_override(ovr);
+        tool
+    }
+
     #[cfg(test)]
     fn with_cache_root(project_dir: &Path, cache_root: &Path) -> Self {
         let package = platform_package();

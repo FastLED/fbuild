@@ -97,7 +97,9 @@ pub async fn provision_env(
     };
 
     let mut packages = support.provision(&inputs, mode).await?;
-    let lib_deps = support.downloadable_lib_deps(&inputs, config.get_lib_deps(env_name)?);
+    let lib_deps = support
+        .downloadable_lib_deps(&inputs, config.get_lib_deps(env_name)?)
+        .await?;
     let lib_ignore = config.get_lib_ignore(env_name)?;
     // `fbuild build` downloads lib_deps into the release build dir's `libs/`.
     let libs_dir = fbuild_paths::BuildLayout::new(

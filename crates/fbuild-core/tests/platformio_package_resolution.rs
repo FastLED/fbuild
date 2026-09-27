@@ -5,8 +5,8 @@
 #[cfg(windows)]
 use fbuild_core::path::NormalizedPath;
 use fbuild_core::platformio_package::{
-    PackageKind, PackageLock, PackageSource, parse_package_spec, registry_api_url,
-    resolve_platform_requirements, resolve_registry_json,
+    PackageKind, PackageLock, PackageSource, ResolutionError, parse_package_spec, registry_api_url,
+    require_platform_package, resolve_platform_requirements, resolve_registry_json,
 };
 
 #[test]
@@ -621,6 +621,127 @@ fn atmelsam_9_due_resolves_published_sam_stack_offline() {
         assert_eq!(payload.url, url, "{name}");
         assert_eq!(payload.sha256, sha256, "{name}");
         assert_ne!(payload.cache_identity(), platform_payload.cache_identity());
+    }
+}
+
+#[test]
+fn clearcore_requires_explicit_framework_source_not_an_atmelsam_default() {
+    // The official atmelsam manifest has no ClearCore framework declaration.
+    // A valid platform payload must not manufacture one from native defaults.
+    let manifest = r#"{"packages":{
+        "toolchain-gccarmnoneeabi":{"type":"toolchain","owner":"platformio","version":"~1.70201.0"},
+        "framework-arduino-sam":{"type":"framework","owner":"platformio","version":"~1.6.12","optional":true},
+        "framework-cmsis":{"type":"framework","owner":"platformio","version":"~1.40500.0","optional":true}
+    }}"#;
+    let default_requirements = resolve_platform_requirements(manifest, &[]).unwrap();
+    assert_eq!(
+        require_platform_package(&default_requirements, "framework-arduino-sam-clearcore")
+            .unwrap_err(),
+        ResolutionError::MissingPackage("framework-arduino-sam-clearcore".into())
+    );
+
+    let explicit = parse_package_spec(
+        "framework-arduino-sam-clearcore@https://www.teknic.com/files/downloads/ClearCore-1.7.4.zip",
+    )
+    .unwrap();
+    let requirements = resolve_platform_requirements(manifest, &[explicit]).unwrap();
+    let framework =
+        require_platform_package(&requirements, "framework-arduino-sam-clearcore").unwrap();
+    assert!(matches!(
+        &framework.spec.source,
+        PackageSource::Archive { url, revision: None }
+            if url == "https://www.teknic.com/files/downloads/ClearCore-1.7.4.zip"
+    ));
+    let locked = PackageLock::Archive {
+        url: "https://www.teknic.com/files/downloads/ClearCore-1.7.4.zip".into(),
+        sha256: "87542411133e8b1b0bb88d12a5df6601c8054b61e213e358fa95bb08e8632270".into(),
+    };
+    assert_ne!(
+        locked.cache_identity(),
+        PackageLock::Archive {
+            url: "https://www.teknic.com/files/downloads/ClearCore-1.7.4.zip".into(),
+            sha256: "0".repeat(64),
+        }
+        .cache_identity()
+    );
+}
+
+#[test]
+fn custom_arduino_arm_families_do_not_substitute_official_registry_manifests() {
+    // These official PlatformIO platform releases are valid payloads, but
+    // their manifests do not declare the custom Arduino cores used by fbuild's
+    // RP, LPC8xx, and Silicon Labs adapters. Core resolution succeeds; the
+    // required framework lookup must fail independently of native dispatch.
+    let cases = [
+        (
+            "raspberrypi",
+            "1.20.0",
+            "80ffdadda508a7ad7973603f22e3cdf86f55ac1dfcc5b5afee1d87e46698e031",
+            "framework-arduinopico",
+            r#"{"packages":{"framework-arduino-mbed":{"type":"framework","owner":"platformio","version":"~4.6.0","optional":true},"toolchain-gccarmnoneeabi":{"type":"toolchain","owner":"platformio","version":"~1.90201.0"}}}"#,
+        ),
+        (
+            "nxplpc",
+            "11.0.0",
+            "e51b2c50b2f9797c3d8881442cbe2551973ae79f8d9e20052a616e36bdbb0686",
+            "framework-arduino-lpc8xx",
+            r#"{"packages":{"framework-mbed":{"type":"framework","owner":"platformio","version":"~6.61700.0","optional":true},"toolchain-gccarmnoneeabi":{"type":"toolchain","owner":"platformio","version":"~1.120301.0"}}}"#,
+        ),
+        (
+            "siliconlabsefm32",
+            "11.0.0",
+            "42673c84bcad9d079961df6406258d60186feee312ac8befb08116c0d19b233f",
+            "framework-arduino-silabs",
+            r#"{"packages":{"framework-mbed":{"type":"framework","owner":"platformio","version":"~6.61700.0","optional":true},"toolchain-gccarmnoneeabi":{"type":"toolchain","owner":"platformio","version":"~1.120301.0"}}}"#,
+        ),
+    ];
+    for (name, version, sha256, native_framework, manifest) in cases {
+        let spec = parse_package_spec(&format!("platformio/platform/{name}@{version}")).unwrap();
+        let url = format!(
+            "https://dl.registry.platformio.org/download/platformio/platform/{name}/{version}/{name}-{version}.tar.gz"
+        );
+        let metadata = format!(
+            r#"{{"name":"{name}","owner":{{"username":"platformio"}},"versions":[{{"name":"{version}","files":[{{"system":"*","download_url":"{url}","checksum":{{"sha256":"{sha256}"}}}}]}}]}}"#
+        );
+        let payload = resolve_registry_json(
+            spec.registry().unwrap(),
+            PackageKind::Platform,
+            "linux_x86_64",
+            &metadata,
+        )
+        .unwrap();
+        assert_eq!(payload.url, url, "{name}");
+        assert_eq!(payload.sha256, sha256, "{name}");
+        assert!(!payload.cache_identity().is_empty(), "{name}");
+
+        let requirements = resolve_platform_requirements(manifest, &[]).unwrap();
+        assert_eq!(
+            require_platform_package(&requirements, native_framework).unwrap_err(),
+            ResolutionError::MissingPackage(native_framework.into()),
+            "{name}"
+        );
+        let toolchain =
+            require_platform_package(&requirements, "toolchain-gccarmnoneeabi").unwrap();
+        assert_eq!(
+            toolchain.spec.registry().unwrap().owner.as_deref(),
+            Some("platformio"),
+            "{name}"
+        );
+
+        // A custom platform source may provide an explicit Arduino package;
+        // that source identity remains distinct from the official manifest.
+        let explicit = parse_package_spec(&format!(
+            "{native_framework}@https://example.test/{native_framework}.tar.gz"
+        ))
+        .unwrap();
+        let requirements = resolve_platform_requirements(manifest, &[explicit]).unwrap();
+        assert!(matches!(
+            &require_platform_package(&requirements, native_framework)
+                .unwrap()
+                .spec
+                .source,
+            PackageSource::Archive { .. }
+        ));
     }
 }
 

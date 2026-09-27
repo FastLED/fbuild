@@ -279,50 +279,6 @@ fn apply_mbed_flash_layout(
     Ok(())
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn giga_flash_layout_matches_platformio_default_and_override() {
-        for (layout, expected) in [
-            (None, "0x08100000"),
-            (Some("75_25"), "0x08180000"),
-            (Some("100_0"), "0x60000000"),
-        ] {
-            let env = layout.map(|value| {
-                HashMap::from([("board_build.arduino.flash_layout".into(), value.into())])
-            });
-            let mut defines = HashMap::new();
-            let mut linker_flags = Vec::new();
-            apply_mbed_flash_layout("giga_r1_m7", env.as_ref(), &mut defines, &mut linker_flags)
-                .unwrap();
-            assert_eq!(
-                defines.get("CM4_BINARY_START").map(String::as_str),
-                Some(expected)
-            );
-            assert!(linker_flags.contains(&format!("-DCM4_BINARY_START={expected}")));
-        }
-    }
-
-    #[test]
-    fn invalid_mbed_flash_layout_fails_before_compile() {
-        let env = HashMap::from([("board_build.arduino.flash_layout".into(), "bad".into())]);
-        let error = apply_mbed_flash_layout(
-            "giga_r1_m7",
-            Some(&env),
-            &mut HashMap::new(),
-            &mut Vec::new(),
-        )
-        .unwrap_err();
-        assert!(
-            error
-                .to_string()
-                .contains("unsupported Arduino Mbed flash layout")
-        );
-    }
-}
-
 fn build_arduino_mbed_mcu_config(
     framework: &fbuild_packages::library::ArduinoMbedCore,
     variant_name: &str,
@@ -444,4 +400,48 @@ async fn preprocess_linker_script(
     }
 
     Ok(output)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn giga_flash_layout_matches_platformio_default_and_override() {
+        for (layout, expected) in [
+            (None, "0x08100000"),
+            (Some("75_25"), "0x08180000"),
+            (Some("100_0"), "0x60000000"),
+        ] {
+            let env = layout.map(|value| {
+                HashMap::from([("board_build.arduino.flash_layout".into(), value.into())])
+            });
+            let mut defines = HashMap::new();
+            let mut linker_flags = Vec::new();
+            apply_mbed_flash_layout("giga_r1_m7", env.as_ref(), &mut defines, &mut linker_flags)
+                .unwrap();
+            assert_eq!(
+                defines.get("CM4_BINARY_START").map(String::as_str),
+                Some(expected)
+            );
+            assert!(linker_flags.contains(&format!("-DCM4_BINARY_START={expected}")));
+        }
+    }
+
+    #[test]
+    fn invalid_mbed_flash_layout_fails_before_compile() {
+        let env = HashMap::from([("board_build.arduino.flash_layout".into(), "bad".into())]);
+        let error = apply_mbed_flash_layout(
+            "giga_r1_m7",
+            Some(&env),
+            &mut HashMap::new(),
+            &mut Vec::new(),
+        )
+        .unwrap_err();
+        assert!(
+            error
+                .to_string()
+                .contains("unsupported Arduino Mbed flash layout")
+        );
+    }
 }

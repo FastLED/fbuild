@@ -21,7 +21,7 @@ use std::path::Path;
 use fbuild_config::PackageOverride;
 use fbuild_core::platformio_package::{
     PackageKind, PackageRequirement, PackageSource, PackageSpec, parse_package_spec,
-    resolve_platform_requirements,
+    require_platform_package, resolve_platform_requirements,
 };
 
 /// Resolve a pinned PlatformIO platform and its selected package requirements
@@ -64,18 +64,39 @@ async fn resolve_registry_overrides_with_client(
         .unwrap_or(platform_name)
         .trim();
     let platform_spec = parse_package_spec(raw_platform).map_err(package_error)?;
-    let mut explicit = package_names
-        .iter()
-        .filter_map(|name| {
-            env_config
-                .get("platform_packages")
-                .map(|raw| fbuild_config::parse_platform_packages_spec(raw, name))
-        })
-        .collect::<std::result::Result<Vec<_>, _>>()
-        .map_err(package_error)?
-        .into_iter()
-        .flatten()
-        .collect::<Vec<PackageSpec>>();
+    // Parse every entry through the generic core grammar before the native
+    // adapter filters package names. Otherwise an explicit registry pin for a
+    // package the adapter forgot to list is silently ignored and the build
+    // proceeds with its default stack.
+    let mut explicit = Vec::<PackageSpec>::new();
+    if let Some(raw) = env_config.get("platform_packages") {
+        for line in raw.lines() {
+            let entry = line.trim().trim_end_matches([',', ';']).trim();
+            if entry.is_empty() {
+                continue;
+            }
+            let spec = parse_package_spec(entry).map_err(package_error)?;
+            let name = spec.package_name().ok_or_else(|| {
+                fbuild_core::FbuildError::PackageError(format!(
+                    "PlatformIO platform_packages entry `{entry}` has no package name"
+                ))
+            })?;
+            if !package_names.contains(&name) {
+                if spec.registry().is_some() {
+                    return Err(fbuild_core::FbuildError::PackageError(format!(
+                        "PlatformIO package `{name}` is not supported by the `{platform_name}` adapter"
+                    )));
+                }
+                continue;
+            }
+            if !explicit
+                .iter()
+                .any(|prior| prior.package_name() == Some(name))
+            {
+                explicit.push(spec);
+            }
+        }
+    }
     let has_registry_pin = platform_spec
         .registry()
         .and_then(|registry| registry.requirement.as_ref())
@@ -88,7 +109,9 @@ async fn resolve_registry_overrides_with_client(
         .ok_or_else(|| {
             fbuild_core::FbuildError::PackageError("unsupported PlatformIO host".into())
         })?;
-    let registry_platform = matches!(platform_spec.source, PackageSource::Registry(_));
+    let registry_platform = platform_spec
+        .registry()
+        .is_some_and(|spec| spec.requirement.is_some());
     let requirements = if let PackageSource::Registry(platform_registry) = platform_spec.source {
         if platform_registry.name != platform_name {
             return Err(fbuild_core::FbuildError::PackageError(format!(
@@ -96,61 +119,69 @@ async fn resolve_registry_overrides_with_client(
                 platform_registry.name
             )));
         }
-        // PlatformIO platform.py can specialize package requirements by board
-        // and framework. Keep consumer overrides first.
-        for (name, requirement) in platform_default_requirements {
-            explicit
-                .push(parse_package_spec(&format!("{name}@{requirement}")).map_err(package_error)?);
-        }
-        let platform = client
-            .resolve_cached(
-                &platform_registry,
-                PackageKind::Platform,
-                host,
-                cache_root,
-                true,
-            )
-            .await
-            .map_err(package_error)?
-            .ok_or_else(|| {
-                fbuild_core::FbuildError::PackageError("PlatformIO platform unavailable".into())
-            })?;
-        tracing::info!(
-            "resolved requested PlatformIO platform {}@{}: {} (sha256 {})",
-            platform.name,
-            platform.version,
-            platform.url,
-            platform.sha256
-        );
-        let platform_base = fbuild_packages::PackageBase::new(
-            &platform.name,
-            &platform.version,
-            &platform.url,
-            &platform.cache_identity(),
-            Some(&platform.sha256),
-            fbuild_packages::CacheSubdir::Platforms,
-            project_dir,
-        );
-        let installed = platform_base
-            .staged_install(|dir| {
-                find_platform_manifest(dir).ok_or_else(|| {
-                    fbuild_core::FbuildError::PackageError(format!(
-                        "{} has no platform.json",
-                        dir.display()
-                    ))
+        if platform_registry.requirement.is_none() {
+            // An explicit package pin on an unpinned platform should not
+            // silently select a newer registry platform/manifest than the
+            // native adapter's existing default stack.
+            explicit_registry_requirements(&explicit)
+        } else {
+            // PlatformIO platform.py can specialize package requirements by board
+            // and framework. Keep consumer overrides first.
+            for (name, requirement) in platform_default_requirements {
+                explicit.push(
+                    parse_package_spec(&format!("{name}@{requirement}")).map_err(package_error)?,
+                );
+            }
+            let platform = client
+                .resolve_cached(
+                    &platform_registry,
+                    PackageKind::Platform,
+                    host,
+                    cache_root,
+                    true,
+                )
+                .await
+                .map_err(package_error)?
+                .ok_or_else(|| {
+                    fbuild_core::FbuildError::PackageError("PlatformIO platform unavailable".into())
                 })?;
-                Ok(())
-            })
-            .await?;
-        let manifest_path = find_platform_manifest(&installed).ok_or_else(|| {
-            fbuild_core::FbuildError::PackageError(format!(
-                "{} has no platform.json",
-                installed.display()
-            ))
-        })?;
-        let manifest = std::fs::read_to_string(manifest_path)
-            .map_err(|error| fbuild_core::FbuildError::PackageError(error.to_string()))?;
-        resolve_platform_requirements(&manifest, &explicit).map_err(package_error)?
+            tracing::info!(
+                "resolved requested PlatformIO platform {}@{}: {} (sha256 {})",
+                platform.name,
+                platform.version,
+                platform.url,
+                platform.sha256
+            );
+            let platform_base = fbuild_packages::PackageBase::new(
+                &platform.name,
+                &platform.version,
+                &platform.url,
+                &platform.cache_identity(),
+                Some(&platform.sha256),
+                fbuild_packages::CacheSubdir::Platforms,
+                project_dir,
+            );
+            let installed = platform_base
+                .staged_install(|dir| {
+                    find_platform_manifest(dir).ok_or_else(|| {
+                        fbuild_core::FbuildError::PackageError(format!(
+                            "{} has no platform.json",
+                            dir.display()
+                        ))
+                    })?;
+                    Ok(())
+                })
+                .await?;
+            let manifest_path = find_platform_manifest(&installed).ok_or_else(|| {
+                fbuild_core::FbuildError::PackageError(format!(
+                    "{} has no platform.json",
+                    installed.display()
+                ))
+            })?;
+            let manifest = std::fs::read_to_string(manifest_path)
+                .map_err(|error| fbuild_core::FbuildError::PackageError(error.to_string()))?;
+            resolve_platform_requirements(&manifest, &explicit).map_err(package_error)?
+        }
     } else {
         // A platform URL, repository ref, or local directory remains the
         // platform source. Its explicitly registry-pinned packages still need
@@ -165,15 +196,14 @@ async fn resolve_registry_overrides_with_client(
         {
             continue;
         }
-        let requirement = requirements
-            .iter()
-            .find(|requirement| requirement.name == *name);
+        let requirement = if registry_platform {
+            Some(require_platform_package(&requirements, name).map_err(package_error)?)
+        } else {
+            requirements
+                .iter()
+                .find(|requirement| requirement.name == *name)
+        };
         let Some(requirement) = requirement else {
-            if registry_platform {
-                return Err(fbuild_core::FbuildError::PackageError(format!(
-                    "PlatformIO platform `{raw_platform}` has no package `{name}`"
-                )));
-            }
             continue;
         };
         let Some(registry) = requirement.spec.registry() else {
@@ -430,6 +460,86 @@ mod tests {
         assert_eq!(
             overrides["framework-arduino-mbed"].checksum.as_deref(),
             Some("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+        );
+    }
+
+    #[tokio::test]
+    async fn unpinned_platform_keeps_explicit_registry_package_without_fetching_platform() {
+        use tokio::io::{AsyncReadExt, AsyncWriteExt};
+
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let address = listener.local_addr().unwrap();
+        let server = tokio::spawn(async move {
+            let (mut socket, _) = listener.accept().await.unwrap();
+            let mut request = [0_u8; 2048];
+            let bytes = socket.read(&mut request).await.unwrap();
+            let request = std::str::from_utf8(&request[..bytes]).unwrap();
+            assert!(
+                request.starts_with("GET /v3/packages/platformio/tool/toolchain-gccarmnoneeabi ")
+            );
+            let body = r#"{"name":"toolchain-gccarmnoneeabi","owner":{"username":"platformio"},"versions":[{"name":"1.90201.0","files":[{"system":"*","download_url":"https://example.test/arm-gcc.tar.gz","checksum":{"sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}}]}]}"#;
+            let response = format!(
+                "HTTP/1.1 200 OK\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}",
+                body.len()
+            );
+            socket.write_all(response.as_bytes()).await.unwrap();
+        });
+        let client = fbuild_packages::platformio_registry::RegistryClient::new(
+            format!("http://{address}/v3"),
+            reqwest::Client::new(),
+        );
+        let temp = tempfile::tempdir().unwrap();
+        let env = env(&[
+            ("platform", "nxplpc"),
+            (
+                "platform_packages",
+                "platformio/toolchain-gccarmnoneeabi@1.90201.0",
+            ),
+        ]);
+        let overrides = resolve_registry_overrides_with_client(
+            temp.path(),
+            &env,
+            "nxplpc",
+            &["framework-arduino-lpc8xx", "toolchain-gccarmnoneeabi"],
+            &[],
+            &client,
+            &temp.path().join("cache"),
+        )
+        .await
+        .unwrap();
+        server.await.unwrap();
+        assert_eq!(overrides["toolchain-gccarmnoneeabi"].version, "1.90201.0");
+    }
+
+    #[tokio::test]
+    async fn explicit_registry_pin_outside_adapter_packages_fails_instead_of_using_defaults() {
+        let temp = tempfile::tempdir().unwrap();
+        let client = fbuild_packages::platformio_registry::RegistryClient::new(
+            "http://127.0.0.1:1/v3",
+            reqwest::Client::new(),
+        );
+        let env = env(&[
+            ("platform", "nxplpc"),
+            (
+                "platform_packages",
+                "platformio/tool/framework-arduino-unknown@1.2.3",
+            ),
+        ]);
+        let result = resolve_registry_overrides_with_client(
+            temp.path(),
+            &env,
+            "nxplpc",
+            &["toolchain-gccarmnoneeabi"],
+            &[],
+            &client,
+            &temp.path().join("cache"),
+        )
+        .await;
+        assert!(
+            result
+                .unwrap_err()
+                .to_string()
+                .contains("framework-arduino-unknown")
         );
     }
 }

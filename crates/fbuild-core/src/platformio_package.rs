@@ -748,3 +748,16 @@ pub fn resolve_platform_requirements(
     }
     Ok(requirements)
 }
+
+/// Require a selected native package from the platform manifest after
+/// explicit overrides have been applied. An absent package is an
+/// incompatibility, never permission to use an unrelated adapter default.
+pub fn require_platform_package<'a>(
+    requirements: &'a [PackageRequirement],
+    name: &str,
+) -> Result<&'a PackageRequirement> {
+    requirements
+        .iter()
+        .find(|requirement| requirement.name == name)
+        .ok_or_else(|| ResolutionError::MissingPackage(name.to_string()))
+}

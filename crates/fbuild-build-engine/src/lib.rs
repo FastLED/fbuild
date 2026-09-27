@@ -69,12 +69,12 @@ pub trait PlatformSupport: Send + Sync {
     /// The `lib_deps` entries this platform's build downloads. Defaults to
     /// all of them; a platform whose framework bundles libraries filters
     /// those out.
-    fn downloadable_lib_deps(
+    async fn downloadable_lib_deps(
         &self,
         _inputs: &provision::ProvisionInputs<'_>,
         lib_deps: Vec<String>,
-    ) -> Vec<String> {
-        lib_deps
+    ) -> Result<Vec<String>> {
+        Ok(lib_deps)
     }
 
     /// Default board ID used as fallback when none is specified.

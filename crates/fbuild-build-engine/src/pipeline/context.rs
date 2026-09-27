@@ -179,6 +179,13 @@ impl BuildContext {
                 Some(fbuild_core::Platform::AtmelSam) => Some(fbuild_core::Platform::AtmelSam),
                 Some(fbuild_core::Platform::RenesasRa) => Some(fbuild_core::Platform::RenesasRa),
                 Some(fbuild_core::Platform::Apollo3) => Some(fbuild_core::Platform::Apollo3),
+                Some(fbuild_core::Platform::NxpLpc) => Some(fbuild_core::Platform::NxpLpc),
+                Some(fbuild_core::Platform::SiliconLabs) => {
+                    Some(fbuild_core::Platform::SiliconLabs)
+                }
+                Some(fbuild_core::Platform::RaspberryPi) => {
+                    Some(fbuild_core::Platform::RaspberryPi)
+                }
                 _ => None,
             };
             let resolved_packages: &[&str] = match resolved_platform {
@@ -211,6 +218,19 @@ impl BuildContext {
                 Some(fbuild_core::Platform::Apollo3) => {
                     &["framework-arduinoapollo3", "toolchain-gccarmnoneeabi"]
                 }
+                Some(fbuild_core::Platform::NxpLpc) => &[
+                    "framework-arduino-lpc8xx",
+                    "framework-cmsis",
+                    "toolchain-gccarmnoneeabi",
+                ],
+                Some(fbuild_core::Platform::SiliconLabs) => {
+                    &["framework-arduino-silabs", "toolchain-gccarmnoneeabi"]
+                }
+                Some(fbuild_core::Platform::RaspberryPi) => &[
+                    "framework-arduinopico",
+                    "toolchain-rp2040-earlephilhower",
+                    "tool-picotool-rp2040-earlephilhower",
+                ],
                 _ => &[],
             };
             for warning in fbuild_config::ignored_version_pins_with_resolved_packages(

@@ -825,6 +825,46 @@ mod tests {
     }
 
     #[test]
+    fn clearcore_consumes_explicit_framework_cmsis_and_toolchain() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let board = fbuild_config::BoardConfig {
+            board_id: "clearcore".into(),
+            mcu: "same53n19a".into(),
+            ..Default::default()
+        };
+        let overrides = std::collections::HashMap::from([
+            (
+                "framework-arduino-sam-clearcore".into(),
+                fbuild_config::PackageOverride::new(
+                    "https://example.test/ClearCore-1.7.4.zip",
+                    "1.7.4",
+                ),
+            ),
+            (
+                "framework-cmsis".into(),
+                fbuild_config::PackageOverride::new(
+                    "https://example.test/cmsis.tar.gz",
+                    "1.40500.0",
+                ),
+            ),
+            (
+                "toolchain-gccarmnoneeabi".into(),
+                fbuild_config::PackageOverride::new("https://example.test/gcc.tar.gz", "1.70201.0"),
+            ),
+        ]);
+        let (toolchain, core) = sam_packages_from_resolved(tmp.path(), None, &board, &overrides);
+        assert_eq!(toolchain.get_info().version, "1.70201.0");
+        let SamCore::ClearCore { cores, cmsis } = core else {
+            panic!("expected ClearCore core");
+        };
+        assert_eq!(fbuild_packages::Package::get_info(&cores).version, "1.7.4");
+        assert_eq!(
+            fbuild_packages::Package::get_info(&cmsis).version,
+            "1.40500.0"
+        );
+    }
+
+    #[test]
     fn test_fast_path_contract_preserves_missing_dep_libs() {
         let tmp = tempfile::TempDir::new().unwrap();
         let build_dir = tmp.path().join("build");

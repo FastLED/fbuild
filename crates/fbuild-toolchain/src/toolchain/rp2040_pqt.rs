@@ -36,6 +36,13 @@ impl Rp2040PqtToolchain {
         }
     }
 
+    /// Use a host-specific PlatformIO toolchain payload requested by the user.
+    pub fn with_override(project_dir: &Path, ovr: fbuild_config::PackageOverride) -> Self {
+        let mut toolchain = Self::new(project_dir);
+        toolchain.base = toolchain.base.with_override(ovr);
+        toolchain
+    }
+
     #[cfg(test)]
     fn with_cache_root(project_dir: &Path, cache_root: &Path) -> Self {
         let (url, checksum) = platform_package();
