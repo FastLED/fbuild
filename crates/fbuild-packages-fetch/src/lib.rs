@@ -11,6 +11,7 @@ pub mod disk_cache;
 pub mod downloader;
 pub mod extractor;
 pub mod http;
+pub mod platformio_registry;
 pub mod submodules;
 
 mod install_lock;

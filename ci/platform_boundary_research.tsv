@@ -1,10 +1,10 @@
 path	line	kind	normalized	capability	classification
-crates/fbuild-core/Cargo.toml	47	native_dependency	interprocess	ipc	host_mechanic
-crates/fbuild-core/Cargo.toml	48	native_dependency	socket2	ipc	host_mechanic
-crates/fbuild-core/Cargo.toml	54	target_dependency_table	[target.'cfg(unix)'.dependencies]	fs	host_mechanic
-crates/fbuild-core/Cargo.toml	56	native_dependency	libc	fs	host_mechanic
-crates/fbuild-core/Cargo.toml	58	target_dependency_table	[target.'cfg(windows)'.dependencies]	fs	host_mechanic
-crates/fbuild-core/Cargo.toml	66	native_dependency	windows-sys	fs	host_mechanic
+crates/fbuild-core/Cargo.toml	48	native_dependency	interprocess	ipc	host_mechanic
+crates/fbuild-core/Cargo.toml	49	native_dependency	socket2	ipc	host_mechanic
+crates/fbuild-core/Cargo.toml	55	target_dependency_table	[target.'cfg(unix)'.dependencies]	fs	host_mechanic
+crates/fbuild-core/Cargo.toml	57	native_dependency	libc	fs	host_mechanic
+crates/fbuild-core/Cargo.toml	59	target_dependency_table	[target.'cfg(windows)'.dependencies]	fs	host_mechanic
+crates/fbuild-core/Cargo.toml	67	native_dependency	windows-sys	fs	host_mechanic
 crates/fbuild-core/src/platform/executable.rs	56	native_path	std::env::current_exe	host_executable	host_mechanic
 crates/fbuild-core/src/platform/linux/device.rs	33	native_path	std::os::unix::fs::OpenOptionsExt	fs	host_mechanic
 crates/fbuild-core/src/platform/linux/device.rs	41	native_path	libc::	process	host_mechanic
@@ -66,6 +66,7 @@ crates/fbuild-core/src/platform/windows/usb_pnp.rs	32	native_path	windows_sys::	
 crates/fbuild-core/src/platform/windows/usb_pnp.rs	35	native_path	windows_sys::	process	host_mechanic
 crates/fbuild-core/src/platform/windows/usb_pnp.rs	39	native_path	windows_sys::	process	host_mechanic
 crates/fbuild-core/src/platform/windows/usb_pnp.rs	40	native_path	windows_sys::	process	host_mechanic
+crates/fbuild-core/tests/platformio_package_resolution.rs	72	attr_cfg	#[cfg(windows)]	host	host_mechanic
 crates/fbuild-daemon/Cargo.toml	68	native_dependency	libc	process	host_mechanic
 crates/fbuild-daemon/src/handlers/emulator/tests_npm_cache.rs	146	attr_cfg	#[cfg(windows)]	host_executable	host_artifact_policy
 crates/fbuild-daemon/src/handlers/emulator/tests_process.rs	9	attr_cfg	#[cfg(windows)]	host_executable	host_artifact_policy

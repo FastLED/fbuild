@@ -1232,6 +1232,7 @@ dependencies = [
  "running-process",
  "running-process-probe-daemon",
  "same-file",
+ "semver",
  "serde",
  "serde_json",
  "serialport",

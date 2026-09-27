@@ -256,7 +256,12 @@ def classify(path: str, kind: str, normalized: str = "", context: str = "") -> t
 
 
 def source_files(root: Path = ROOT) -> list[Path]:
-    return sorted(path for path in (root / "crates").rglob("*.rs") if "target" not in path.parts and not any(part.startswith(".") for part in path.parts))
+    return sorted(
+        path
+        for path in (root / "crates").rglob("*.rs")
+        if "target" not in path.relative_to(root).parts
+        and not any(part.startswith(".") for part in path.relative_to(root).parts)
+    )
 
 
 def scan_rust(path: Path, root: Path = ROOT) -> list[Finding]:
