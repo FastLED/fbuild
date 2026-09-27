@@ -11,7 +11,10 @@ use std::time::Instant;
 
 use fbuild_core::Result;
 use fbuild_core::path::NormalizedPath;
-use fbuild_core::platformio_package::{RegistrySpec, ResolvedPayload};
+use fbuild_core::platformio_package::{
+    PackageKind as RegistryPackageKind, PackageSource, RegistrySpec, ResolvedPayload,
+    parse_package_spec,
+};
 use sha2::{Digest, Sha256};
 
 use super::super::mcu_config::{Esp32McuConfig, get_mcu_config};
@@ -42,7 +45,11 @@ pub(super) async fn resolve_pioarduino_packages(
     Option<NormalizedPath>,
 )> {
     // Ensure pioarduino platform (contains platform.json with metadata URLs).
-    let platform = pioarduino_platform(project_dir, env_config);
+    let platform = pioarduino_platform(project_dir, env_config, true)
+        .await?
+        .ok_or_else(|| {
+            fbuild_core::FbuildError::PackageError("ESP32 platform unavailable".into())
+        })?;
     fbuild_packages::Package::ensure_installed(&platform).await?;
     // Resolve the exact toolchain declared by the selected platform. Older
     // pioarduino releases name per-MCU registry packages, not metadata URLs.
@@ -57,7 +64,11 @@ pub(super) async fn resolve_pioarduino_packages(
     // See fbuild#401.
     provision_helper_toolchains(&platform, project_dir, mcu_config);
 
-    let framework = pioarduino_framework(&platform, project_dir, mcu, env_config);
+    let framework = resolve_framework(&platform, project_dir, mcu, env_config, true)
+        .await?
+        .ok_or_else(|| {
+            fbuild_core::FbuildError::PackageError("ESP32 framework unavailable".into())
+        })?;
 
     // Download the GCC toolchain (~100+ MB) CONCURRENTLY with the framework +
     // SDK libs (~hundreds of MB). Once the platform's metadata URLs are
@@ -128,7 +139,13 @@ pub(crate) async fn provision_esp32(
     let mcu_config = get_mcu_config(mcu)?;
     let mut rows = Vec::new();
 
-    let platform = pioarduino_platform(project_dir, env_config);
+    let Some(platform) = pioarduino_platform(project_dir, env_config, mode.fetches()).await? else {
+        return Ok(vec![ProvisionedPackage::new(
+            PackageKind::Platform,
+            "platform-espressif32",
+            ProvisionStatus::WouldFetch,
+        )]);
+    };
     let platform_row = provision_package(PackageKind::Platform, &platform, mode).await;
     let platform_ready = is_installed(&platform_row);
     rows.push(platform_row);
@@ -138,7 +155,16 @@ pub(crate) async fn provision_esp32(
     }
     rows.push(provision_toolchain(&platform, project_dir, &mcu_config, mode).await);
 
-    let framework = pioarduino_framework(&platform, project_dir, mcu, env_config);
+    let Some(framework) =
+        resolve_framework(&platform, project_dir, mcu, env_config, mode.fetches()).await?
+    else {
+        rows.push(ProvisionedPackage::new(
+            PackageKind::Framework,
+            "framework-arduinoespressif32",
+            ProvisionStatus::WouldFetch,
+        ));
+        return Ok(rows);
+    };
     let framework_row = provision_package(PackageKind::Framework, &framework, mode).await;
     let framework_ready = is_installed(&framework_row);
     rows.push(framework_row);
@@ -171,169 +197,12 @@ fn is_installed(row: &ProvisionedPackage) -> bool {
     )
 }
 
-/// The pioarduino platform package. Honors
-/// `platform_packages = platform-espressif32@<URL>#<sha>` (FastLED/fbuild#672),
-/// then `platform = <release archive URL>` (FastLED/fbuild#1432): the pin
-/// replaces the const-pinned default and gets its own cache subdir via
-/// `PackageBase::with_override`.
-fn pioarduino_platform(
-    project_dir: &Path,
-    env_config: Option<&HashMap<String, String>>,
-) -> fbuild_packages::library::Esp32Platform {
-    let platform_ovr = env_config.and_then(|env| {
-        crate::package_override::resolve_platform_override(env, "platform-espressif32")
-    });
-    match platform_ovr {
-        Some(o) => fbuild_packages::library::Esp32Platform::with_override(project_dir, o),
-        None => {
-            warn_unhonored_platform_pin(env_config);
-            fbuild_packages::library::Esp32Platform::new(project_dir)
-        }
-    }
-}
-
-/// The Arduino framework package. Override precedence (FastLED/fbuild#672):
-///   1. `platform_packages = framework-arduinoespressif32@<URL>#<sha>` wins
-///      outright — consumer-supplied URL replaces the platform.json-derived
-///      URL and gets its own cache subdir.
-///   2. Otherwise, derive the URL from platform.json.
-///   3. Otherwise (very old / missing platform.json), fall back to the
-///      legacy hardcoded URL via `Esp32Framework::new`.
-fn pioarduino_framework(
-    platform: &fbuild_packages::library::Esp32Platform,
-    project_dir: &Path,
-    mcu: &str,
-    env_config: Option<&HashMap<String, String>>,
-) -> fbuild_packages::library::Esp32Framework {
-    let framework_ovr = env_config.and_then(|env| {
-        crate::package_override::resolve_override(env, "framework-arduinoespressif32")
-    });
-    match framework_ovr {
-        Some(o) => fbuild_packages::library::Esp32Framework::with_override(project_dir, o),
-        None => match platform.get_package_url("framework-arduinoespressif32") {
-            Ok(url) => {
-                tracing::info!("resolved framework URL from platform.json");
-                fbuild_packages::library::Esp32Framework::from_url(project_dir, &url)
-            }
-            Err(e) => {
-                tracing::warn!("could not resolve framework URL, using legacy: {}", e);
-                fbuild_packages::library::Esp32Framework::new(project_dir, mcu)
-            }
-        },
-    }
-}
-
-/// URLs of the split SDK libs package (pioarduino 3.3.7+) and, for MCUs that
-/// ship one, the MCU skeleton libs (e.g. ESP32-C2, ESP32-C61).
-fn sdk_libs_urls(
-    platform: &fbuild_packages::library::Esp32Platform,
-    mcu: &str,
-) -> (Option<String>, Option<String>) {
-    let mcu_suffix = mcu.strip_prefix("esp32").unwrap_or("");
-    let libs_url = platform
-        .get_package_url("framework-arduinoespressif32-libs")
-        .ok();
-    let skeleton_url = if mcu_suffix.is_empty() {
-        None
-    } else {
-        platform
-            .get_package_url(&format!("framework-arduino-{}-skeleton-lib", mcu_suffix))
-            .ok()
-    };
-    (libs_url, skeleton_url)
-}
-
-async fn ensure_sdk_libs(
-    framework: &fbuild_packages::library::Esp32Framework,
-    mcu: &str,
-    libs_url: Option<&str>,
-    skeleton_url: Option<&str>,
-) -> Result<()> {
-    if let Some(url) = libs_url {
-        framework.ensure_libs(url, mcu).await?;
-    }
-    if let Some(url) = skeleton_url {
-        framework.ensure_mcu_libs(url, mcu).await?;
-    }
-    Ok(())
-}
-
-/// Name a `platform` pin fbuild cannot honor instead of dropping it silently
-/// (FastLED/fbuild#1407). Registry pins and git URLs fall back to the
-/// pioarduino stable platform, which carries a different framework release.
-fn warn_unhonored_platform_pin(env_config: Option<&HashMap<String, String>>) {
-    let Some(value) = env_config.and_then(|env| env.get("platform")) else {
-        return;
-    };
-    let value = value.trim();
-    if value.contains('@') || value.contains("://") {
-        tracing::warn!(
-            "platform pin `{value}` is not a downloadable archive URL; building with the \
-             pioarduino stable platform instead. Pin a release with `platform = \
-             https://github.com/pioarduino/platform-espressif32/releases/download/<tag>/platform-espressif32.zip`"
-        );
-    }
-}
-
-/// Provision the managed `tool-esptoolpy` package (the tasmota PyInstaller
-/// standalone binary) from `platform.json` and return the path to the
-/// `esptool` executable.
-///
-/// Best-effort: a provisioning failure (missing `platform.json` entry,
-/// unsupported host, network error) is reported at error level — naming the
-/// parsed version and the URL that was tried — and yields `Ok(None)`, so the
-/// linker's existing "esptool on PATH" fallback still applies. See
-/// FastLED/fbuild#954.
-///
-/// The one *fatal* case is a bad `FBUILD_ESPTOOL_PATH`: an explicit override
-/// that pointed nowhere used to be indistinguishable from no override at all.
-/// It now fails the build immediately (FastLED/fbuild#1220).
-async fn resolve_esptool(
-    platform: &fbuild_packages::library::Esp32Platform,
-    project_dir: &Path,
-) -> Result<Option<NormalizedPath>> {
-    // Check the override before touching platform.json: when provisioning is
-    // the thing that's broken, the metadata lookup on the way to it should not
-    // be able to fail the resolution first.
-    if let Some(path) = fbuild_packages::library::esptool_path_override()? {
-        return Ok(Some(path));
-    }
-
-    let url = match platform.get_package_url("tool-esptoolpy") {
-        Ok(url) => url,
-        Err(e) => {
-            tracing::error!(
-                "esptool provisioning failed: could not resolve tool-esptoolpy \
-                 from platform.json: {e}. Falling back to an `esptool` on PATH; \
-                 set {} to override.",
-                fbuild_packages::library::ESPTOOL_PATH_ENV_VAR
-            );
-            return Ok(None);
-        }
-    };
-    let esptool = fbuild_packages::library::Esptool::from_metadata_url(project_dir, &url);
-    match esptool.ensure_installed().await {
-        Ok(path) => {
-            tracing::info!("provisioned esptool at {}", path.display());
-            Ok(Some(path))
-        }
-        Err(e) => {
-            // Name the parsed version and the exact URL. In #1217 the real
-            // fault was a 404 on a `vunknown` URL — invisible at default
-            // verbosity, and three minutes later the build died claiming
-            // esptool simply wasn't installed.
-            let attempted = esptool
-                .download_url()
-                .unwrap_or_else(|_| "<no prebuilt binary for this host>".to_string());
-            Err(fbuild_core::FbuildError::PackageError(format!(
-                "pinned esptool provisioning failed: {e}; metadata URL: {url}; \
-                 parsed version: {}; download URL: {attempted}; set {} to override",
-                esptool.version(),
-                fbuild_packages::library::ESPTOOL_PATH_ENV_VAR
-            )))
-        }
-    }
-}
+#[path = "packages_platform.rs"]
+mod platform;
+use platform::{
+    ensure_sdk_libs, esptool_package, pioarduino_framework, pioarduino_platform, resolve_esptool,
+    resolve_framework, sdk_libs_urls,
+};
 
 /// Provision toolchain-* packages listed in `platform.json` other than the
 /// MCU-primary toolchain — e.g. `toolchain-riscv32-esp` on ESP32-S3 (Xtensa
@@ -435,15 +304,23 @@ async fn resolve_and_create_toolchain(
                 .ok_or_else(|| {
                     fbuild_core::FbuildError::PackageError("unsupported PlatformIO host".into())
                 })?;
-        let payload = fbuild_packages::platformio_registry::RegistryClient::default()
-            .resolve(
-                registry,
-                fbuild_core::platformio_package::PackageKind::Tool,
-                host,
-            )
-            .await
-            .map_err(|error| fbuild_core::FbuildError::PackageError(error.to_string()))?;
         let cache_root = fbuild_packages::Cache::new(project_dir).toolchains_dir();
+        let payload = match cached_registry_payload(&cache_root, registry, host)? {
+            Some(payload) => payload,
+            None => fbuild_packages::platformio_registry::RegistryClient::default()
+                .resolve_cached(
+                    registry,
+                    fbuild_core::platformio_package::PackageKind::Tool,
+                    host,
+                    &cache_root,
+                    true,
+                )
+                .await
+                .map_err(|error| fbuild_core::FbuildError::PackageError(error.to_string()))?
+                .ok_or_else(|| {
+                    fbuild_core::FbuildError::PackageError("ESP32 toolchain unavailable".into())
+                })?,
+        };
         cache_registry_payload(&cache_root, registry, host, &payload)?;
         tracing::info!(
             "resolved ESP32 toolchain {}@{} for {}: {} (sha256 {})",
@@ -775,12 +652,21 @@ async fn provision_esptool(
         }
         Ok(None) => {}
     }
-    let metadata_url = platform.get_package_url("tool-esptoolpy").ok()?;
-    let esptool = fbuild_packages::library::Esptool::from_metadata_url(project_dir, &metadata_url);
+    let requirement = platform.get_package_requirement("tool-esptoolpy").ok()?;
+    let esptool = match esptool_package(&requirement, project_dir, mode.fetches()).await {
+        Ok(Some(esptool)) => esptool,
+        Ok(None) => return Some(override_row(ProvisionStatus::WouldFetch)),
+        Err(error) => {
+            return Some(ProvisionedPackage {
+                error: Some(error.to_string()),
+                ..override_row(ProvisionStatus::Failed)
+            });
+        }
+    };
     let started = Instant::now();
     let mut row = ProvisionedPackage {
         version: esptool.version().to_string(),
-        url: esptool.download_url().unwrap_or(metadata_url),
+        url: esptool.download_url().unwrap_or_default(),
         ..ProvisionedPackage::new(
             PackageKind::Tool,
             "tool-esptoolpy",
@@ -823,7 +709,26 @@ pub(crate) fn downloadable_lib_deps(
 ) -> Vec<String> {
     use fbuild_packages::{Framework as _, Package as _};
     let env_config = Some(inputs.env_config);
-    let platform = pioarduino_platform(inputs.project_dir, env_config);
+    if inputs
+        .env_config
+        .get("platform")
+        .is_some_and(|value| value.contains('@'))
+    {
+        // Library prefiltering is synchronous. Do not inspect the default
+        // pioarduino framework while a registry-pinned platform is selected.
+        return lib_deps;
+    }
+    let platform_override = crate::package_override::resolve_platform_override(
+        inputs.env_config,
+        "platform-espressif32",
+    );
+    let platform = match platform_override {
+        Some(override_package) => fbuild_packages::library::Esp32Platform::with_override(
+            inputs.project_dir,
+            override_package,
+        ),
+        None => fbuild_packages::library::Esp32Platform::new(inputs.project_dir),
+    };
     if !platform.is_installed() {
         return lib_deps;
     }

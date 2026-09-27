@@ -163,10 +163,20 @@ impl BuildContext {
         for note in &overlay.notes {
             build_log.push(format!("extra_scripts: {}", note));
         }
-        // FastLED/fbuild#1407: a registry version pin builds against fbuild's
-        // own packages; say so in the build output, not just the daemon log.
+        // FastLED/fbuild#1407: warn about registry pins still ignored by a
+        // family adapter, but not ESP32 platform pins resolved by #1489.
         if let Ok(env_config) = config.get_env_config(env_name) {
-            for warning in fbuild_config::ignored_version_pins(env_config) {
+            let platform = env_config.get("platform").map(String::as_str).unwrap_or("");
+            let resolved_platform = match fbuild_core::Platform::from_platform_str(platform) {
+                Some(fbuild_core::Platform::Espressif32) => {
+                    Some(fbuild_core::Platform::Espressif32)
+                }
+                _ => None,
+            };
+            for warning in fbuild_config::ignored_version_pins_with_resolved_platform(
+                env_config,
+                resolved_platform,
+            ) {
                 tracing::warn!("{warning}");
                 build_log.push(format!("Warning: {warning}"));
             }

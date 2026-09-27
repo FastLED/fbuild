@@ -93,7 +93,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
         )
         .await?;
         drop(_resolve_phase);
-        mcu_config.adapt_to_toolchain(&fbuild_packages::Package::get_info(&toolchain).name);
+        let toolchain_info = fbuild_packages::Package::get_info(&toolchain);
+        mcu_config.adapt_to_toolchain(&toolchain_info.name, &toolchain_info.version);
         let _toolchain_cache_dir = fbuild_packages::Package::get_info(&toolchain).install_path;
         let _framework_cache_dir = fbuild_packages::Package::get_info(&framework).install_path;
 
@@ -121,25 +122,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let embed_files = ctx.config.get_embed_files(&params.env_name)?;
         let embed_txtfiles = ctx.config.get_embed_txtfiles(&params.env_name)?;
 
-        let f_for_image = ctx
-            .board
-            .f_image
-            .as_deref()
-            .or(ctx.board.f_flash.as_deref());
-        let flash_freq = crate::esp32::esp32_linker::f_flash_to_esptool_freq(
-            f_for_image,
-            mcu_config.default_flash_freq(),
-        );
-        let flash_mode = ctx
-            .board
-            .flash_mode
-            .clone()
-            .unwrap_or_else(|| mcu_config.default_flash_mode().to_string());
-        let flash_size = crate::esp32::mcu_config::bytes_to_flash_size(
-            ctx.board.max_flash,
-            mcu_config.default_flash_size(),
-        )
-        .to_string();
+        let (flash_freq, flash_mode, flash_size) =
+            super::helpers::flash_settings(&ctx.board, &mcu_config);
         let metadata_hash = stable_hash_with_build_config(
             &Esp32FingerprintMetadata {
                 version: BUILD_FINGERPRINT_VERSION,
@@ -160,6 +144,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 board_platform: ctx.board.platform_str.clone(),
                 architecture: mcu_config.architecture.clone(),
                 platform: "espressif32".to_string(),
+                toolchain_name: toolchain_info.name.clone(),
+                toolchain_version: toolchain_info.version.clone(),
                 flash_mode: flash_mode.clone(),
                 flash_freq: flash_freq.clone(),
                 flash_size: flash_size.clone(),
@@ -280,8 +266,17 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // Read SDK flags early â€” needed to check LTO before compiling.
         let sdk_ld_flags = framework.get_sdk_ld_flags(&sdk_variant);
         let sdk_lib_flags = framework.get_sdk_lib_flags(&sdk_variant, sdk_memory_type.as_deref());
-        let sdk_ld_scripts =
-            LinkerScripts::from_raw_flags(&framework.get_sdk_ld_scripts(&sdk_variant));
+        let mut raw_ld_scripts =
+            framework.get_sdk_ld_scripts(&sdk_variant, sdk_memory_type.as_deref());
+        if !raw_ld_scripts
+            .iter()
+            .any(|flag| flag == "-T" || flag.starts_with("-T"))
+        {
+            for script in &mcu_config.linker_scripts {
+                raw_ld_scripts.extend(["-T".to_string(), script.clone()]);
+            }
+        }
+        let sdk_ld_scripts = LinkerScripts::from_raw_flags(&raw_ld_scripts);
         let sdk_defines = framework.get_sdk_defines(&sdk_variant);
 
         // If SDK specifies -fno-lto, disable LTO in MCU config profiles to avoid

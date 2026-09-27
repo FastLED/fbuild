@@ -78,6 +78,8 @@ pub struct Esptool {
     project_dir: NormalizedPath,
     version: String,
     source_url: Option<String>,
+    source_checksum: Option<String>,
+    expected_runtime_version: Option<String>,
 }
 
 impl Esptool {
@@ -92,6 +94,25 @@ impl Esptool {
             source_url: metadata_url
                 .starts_with("https://github.com/pioarduino/esptool/releases/download/")
                 .then(|| metadata_url.to_string()),
+            source_checksum: None,
+            expected_runtime_version: Some(extract_esptool_version(metadata_url)),
+        }
+    }
+
+    /// Use the exact PlatformIO-hosted source archive and published digest.
+    /// PlatformIO's package version (e.g. `2.41100.0`) is not esptool's CLI
+    /// version (`4.11.0`), so the digest, not a converted version string,
+    /// establishes package identity.
+    pub fn from_registry_payload(
+        project_dir: &Path,
+        payload: &fbuild_core::platformio_package::ResolvedPayload,
+    ) -> Self {
+        Self {
+            project_dir: NormalizedPath::from(project_dir),
+            version: payload.version.clone(),
+            source_url: Some(payload.url.clone()),
+            source_checksum: Some(payload.sha256.clone()),
+            expected_runtime_version: None,
         }
     }
 
@@ -223,7 +244,7 @@ impl Esptool {
             &self.version,
             url,
             url,
-            None,
+            self.source_checksum.as_deref(),
             CacheSubdir::Toolchains,
             self.project_dir.as_path(),
         )
@@ -262,12 +283,13 @@ impl Esptool {
             Some(std::time::Duration::from_secs(10)),
         )
         .await?;
-        let expected = format!("v{}", self.version);
-        if !output.stdout.contains(&expected) && !output.stderr.contains(&expected) {
-            return Err(FbuildError::PackageError(format!(
-                "pinned esptool archive {url} installed the wrong version; expected {}",
-                self.version
-            )));
+        if let Some(version) = &self.expected_runtime_version {
+            let expected = format!("v{version}");
+            if !output.stdout.contains(&expected) && !output.stderr.contains(&expected) {
+                return Err(FbuildError::PackageError(format!(
+                    "pinned esptool archive {url} installed the wrong version; expected {version}"
+                )));
+            }
         }
         Ok(binary)
     }

@@ -185,6 +185,48 @@ fn platform_manifest_dependencies_obey_package_override_precedence() {
 }
 
 #[test]
+fn esp32s3_613_manifest_resolves_exact_framework_and_compiler_payloads_offline() {
+    let manifest = r#"{"packages":{
+        "framework-arduinoespressif32":{"type":"framework","owner":"platformio","version":"~3.20017.0","optional":true},
+        "toolchain-xtensa-esp32s3":{"type":"toolchain","owner":"espressif","version":"8.4.0+2021r2-patch5","optional":true}
+    }}"#;
+    let requirements = resolve_platform_requirements(manifest, &[]).unwrap();
+    let cases = [
+        (
+            "framework-arduinoespressif32",
+            PackageKind::Framework,
+            r#"{"name":"framework-arduinoespressif32","owner":{"username":"platformio"},"versions":[{"name":"3.20017.241212+sha.dcc1105b","files":[{"system":"*","download_url":"https://dl.registry.platformio.org/download/platformio/tool/framework-arduinoespressif32/3.20017.241212+sha.dcc1105b/framework-arduinoespressif32-3.20017.241212+sha.dcc1105b.tar.gz","checksum":{"sha256":"7dbcfb86f9dfd5ecf6c881ed8226239d9ef63f27e1e1a2ddd87a87762e2ffbc9"}}]}]}"#,
+            "3.20017.241212+sha.dcc1105b",
+            "7dbcfb86f9dfd5ecf6c881ed8226239d9ef63f27e1e1a2ddd87a87762e2ffbc9",
+        ),
+        (
+            "toolchain-xtensa-esp32s3",
+            PackageKind::Tool,
+            r#"{"name":"toolchain-xtensa-esp32s3","owner":{"username":"espressif"},"versions":[{"name":"8.4.0+2021r2-patch5","files":[{"system":"linux_x86_64","download_url":"https://dl.registry.platformio.org/download/espressif/tool/toolchain-xtensa-esp32s3/8.4.0+2021r2-patch5/toolchain-xtensa-esp32s3-linux_x86_64-8.4.0+2021r2-patch5.tar.gz","checksum":{"sha256":"6618e8a91fca47da09c840a61bf008b1f06698553389c01c8788e595d8e84da9"}}]}]}"#,
+            "8.4.0+2021r2-patch5",
+            "6618e8a91fca47da09c840a61bf008b1f06698553389c01c8788e595d8e84da9",
+        ),
+    ];
+    for (name, kind, metadata, version, sha256) in cases {
+        let requirement = requirements.iter().find(|r| r.name == name).unwrap();
+        let payload = resolve_registry_json(
+            requirement.spec.registry().unwrap(),
+            kind,
+            "linux_x86_64",
+            metadata,
+        )
+        .unwrap();
+        assert_eq!(payload.version, version, "{name}");
+        assert_eq!(payload.sha256, sha256, "{name}");
+        assert!(
+            payload
+                .url
+                .starts_with("https://dl.registry.platformio.org/download/")
+        );
+    }
+}
+
+#[test]
 fn generic_package_paths_and_kinds_do_not_depend_on_native_platforms() {
     let cases = [
         ("acme/custom-board@1.2.3", Some("acme"), "custom-board"),
