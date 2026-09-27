@@ -42,7 +42,7 @@ jobs:
       - uses: astral-sh/setup-uv@v3
       - name: Setup soldr
         id: setup-soldr
-        uses: zackees/setup-soldr@v0
+        uses: zackees/setup-soldr@d4da9e980c643cdd203743b951d63201fed63701
         with:
           cache: true
           build-cache: true
@@ -97,7 +97,7 @@ jobs:
         with:
           python-version: "3.10"
       - name: Setup soldr
-        uses: zackees/setup-soldr@v0
+        uses: zackees/setup-soldr@d4da9e980c643cdd203743b951d63201fed63701
         with:
           cache: true
           build-cache: true
