@@ -88,10 +88,10 @@ pub async fn provision_env(
                 "could not determine the platform for environment '{env_name}'"
             ))
         })?;
-    if !mode.fetches() && platform != Platform::Espressif32 && has_registry_version_pin(env_config)?
+    if !mode.fetches() && platform != Platform::Espressif32 && has_registry_resolution(env_config)?
     {
         return Err(fbuild_core::FbuildError::PackageError(
-            "offline install check/dry-run cannot resolve a pinned PlatformIO platform or package without fetching its manifest; run `fbuild install`".into(),
+            "offline install check/dry-run cannot resolve a registry PlatformIO platform or package without fetching its metadata; run `fbuild install`".into(),
         ));
     }
     let support = get_platform_support(platform)?;
@@ -233,7 +233,7 @@ fn platform_base_for_payload(
     )
 }
 
-fn has_registry_version_pin(env: &std::collections::HashMap<String, String>) -> Result<bool> {
+fn has_registry_resolution(env: &std::collections::HashMap<String, String>) -> Result<bool> {
     use fbuild_core::platformio_package::parse_package_spec;
     let pinned_platform = env
         .get("platform")
@@ -311,10 +311,11 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn pinned_platform_and_package_dry_run_fail_before_registry_fetch() {
+    async fn registry_platform_and_package_dry_run_fail_before_registry_fetch() {
         for ini in [
             "[env:teensy41]\nplatform = teensy@5.1.0\nboard = teensy41\n",
             "[env:teensy41]\nplatform = teensy\nboard = teensy41\nplatform_packages = framework-arduinoteensy@1.159.0\n",
+            "[env:teensy41]\nplatform = teensy\nboard = teensy41\nplatform_packages = framework-arduinoteensy\n",
         ] {
             let dir = project(ini);
             for mode in [
@@ -327,7 +328,7 @@ mod tests {
                 assert!(
                     error
                         .to_string()
-                        .contains("cannot resolve a pinned PlatformIO")
+                        .contains("cannot resolve a registry PlatformIO")
                 );
                 assert!(!dir.path().join(fbuild_paths::FBUILD_DIR_NAME).exists());
             }

@@ -455,7 +455,7 @@ pub enum Commands {
     /// Download everything an environment's build needs — platform,
     /// toolchains, framework, tools and lib_deps — without compiling, one
     /// line per package. `--check` and `--dry-run` never touch the network;
-    /// registry-pinned paths that need a platform manifest fail clearly in
+    /// registry entries that need metadata or a platform manifest fail clearly in
     /// those modes. `--check` exits 2 when anything would need fetching.
     /// FastLED/fbuild#1433.
     Install {
@@ -471,7 +471,8 @@ pub enum Commands {
         /// Report what is missing without fetching; exit 2 if anything is.
         #[arg(long, conflicts_with = "dry_run")]
         check: bool,
-        /// List resolved packages without fetching (registry pins require install mode).
+        /// List resolved packages without fetching. For non-ESP32 platforms,
+        /// version-pinned platforms and registry package entries require install mode.
         #[arg(long = "dry-run")]
         dry_run: bool,
         /// Print a JSON manifest (rows plus `packages_hash`) instead of text.
