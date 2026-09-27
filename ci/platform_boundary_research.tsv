@@ -100,7 +100,7 @@ crates/fbuild-paths/src/executable_hash.rs	76	attr_cfg	#[cfg(unix)]	host	host_me
 crates/fbuild-paths/src/executable_hash.rs	78	native_path	std::os::unix::fs::MetadataExt	fs	host_mechanic
 crates/fbuild-paths/src/executable_hash.rs	94	attr_cfg	#[cfg(unix)]	host	host_mechanic
 crates/fbuild-paths/src/executable_hash.rs	103	attr_cfg	#[cfg(all(test,unix))]	host	host_mechanic
-crates/fbuild-python/tests/python_facades.rs	321	native_path	std::env::current_exe	host_executable	host_mechanic
+crates/fbuild-python/tests/python_facades.rs	317	native_path	std::env::current_exe	host_executable	host_mechanic
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	528	attr_cfg	#[cfg(windows)]	host_executable	host_mechanic
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	534	attr_cfg	#[cfg(windows)]	host_executable	host_mechanic
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	565	attr_cfg	#[cfg(not(windows))]	host_executable	host_mechanic
