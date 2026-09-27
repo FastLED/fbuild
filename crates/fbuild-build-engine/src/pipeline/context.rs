@@ -171,6 +171,9 @@ impl BuildContext {
                 Some(fbuild_core::Platform::Espressif32) => {
                     Some(fbuild_core::Platform::Espressif32)
                 }
+                Some(fbuild_core::Platform::Espressif8266) => {
+                    Some(fbuild_core::Platform::Espressif8266)
+                }
                 Some(fbuild_core::Platform::Teensy) => Some(fbuild_core::Platform::Teensy),
                 Some(fbuild_core::Platform::Ststm32) => Some(fbuild_core::Platform::Ststm32),
                 Some(fbuild_core::Platform::NordicNrf52) => {
@@ -194,6 +197,9 @@ impl BuildContext {
             };
             let resolved_packages: &[&str] = match resolved_platform {
                 Some(fbuild_core::Platform::Espressif32) => &["framework-arduinoespressif32"],
+                Some(fbuild_core::Platform::Espressif8266) => {
+                    &["framework-arduinoespressif8266", "toolchain-xtensa"]
+                }
                 Some(fbuild_core::Platform::Teensy) => {
                     &["framework-arduinoteensy", "toolchain-gccarmnoneeabi-teensy"]
                 }
