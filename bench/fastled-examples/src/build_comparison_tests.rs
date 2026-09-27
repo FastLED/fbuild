@@ -86,7 +86,6 @@ fn sample_metadata() -> Metadata {
         run_url: "https://github.com/FastLED/fbuild/actions/runs/1".into(),
         project: "bench/blink".into(),
         trials: 3,
-        raw_baseline_ms: Some(450.0),
         raw_baselines_ms: BTreeMap::from([("uno".into(), 450.0)]),
     }
 }
@@ -415,6 +414,28 @@ fn strips_compiler_wrapper_prefix_and_redirects_output() {
 }
 
 #[test]
+fn raw_replay_unescapes_shell_quoted_macro_values() {
+    let argv = [
+        "xtensa-esp32s3-elf-g++".to_string(),
+        r#"-DARDUINO_BOARD=\"ESP32_S3_DEVKITC_1\""#.to_string(),
+        "-c".to_string(),
+        "USB.cpp".to_string(),
+    ];
+    assert_eq!(
+        rewrite_compile_argv(&argv, Path::new("/tmp/raw/USB.o")),
+        [
+            "xtensa-esp32s3-elf-g++",
+            "-DARDUINO_BOARD=\"ESP32_S3_DEVKITC_1\"",
+            "-c",
+            "USB.cpp",
+            "-o",
+            "/tmp/raw/USB.o",
+        ]
+        .map(String::from)
+    );
+}
+
+#[test]
 fn latest_payload_reports_overhead_and_platformio_ratio() {
     let latest = latest_payload(&sample_metadata(), &sample_results());
     assert_eq!(latest["raw_baseline_ms"], 450.0);
@@ -434,7 +455,6 @@ fn latest_payload_reports_overhead_and_platformio_ratio() {
     );
 
     let mut metadata = sample_metadata();
-    metadata.raw_baseline_ms = None;
     metadata.raw_baselines_ms.clear();
     let latest = latest_payload(&metadata, &sample_results());
     assert!(latest["raw_baseline_ms"].is_null());
@@ -461,7 +481,9 @@ fn esp32_regression_is_not_hidden_by_uno_ratio() {
     fbuild.cold_ms = 15_000.0;
     results.extend([pio, fbuild]);
 
-    let latest = latest_payload(&sample_metadata(), &results);
+    let mut metadata = sample_metadata();
+    metadata.raw_baselines_ms.insert("esp32s3".into(), 9_000.0);
+    let latest = latest_payload(&metadata, &results);
     assert_eq!(
         latest["board_metrics"]["uno"]["fbuild_vs_platformio_cold"],
         0.667
@@ -471,6 +493,9 @@ fn esp32_regression_is_not_hidden_by_uno_ratio() {
         2.5
     );
     assert_eq!(latest["fbuild_vs_platformio_cold"], 2.5);
+    assert_eq!(latest["comparison_board"], "esp32s3");
+    assert_eq!(latest["raw_baseline_ms"], 9_000.0);
+    assert_eq!(latest["fbuild_overhead_ms"], 6_000.0);
 }
 
 #[test]
@@ -565,7 +590,7 @@ fn svg_shows_raw_floor_and_overhead() {
         "{svg}"
     );
     let mut metadata = sample_metadata();
-    metadata.raw_baseline_ms = None;
+    metadata.raw_baselines_ms.clear();
     let svg = render_svg(&metadata, &sample_results());
     assert!(!svg.contains("raw compiler floor"));
     assert!(svg.contains("fbuild/PIO cold: 0.667"));

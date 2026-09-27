@@ -188,8 +188,7 @@ struct Metadata {
     run_url: String,
     project: String,
     trials: usize,
-    /// Median wall clock of replaying fbuild's compile DB with the bare compiler.
-    raw_baseline_ms: Option<f64>,
+    /// Per-board median wall clock of replaying the bare compiler.
     raw_baselines_ms: BTreeMap<String, f64>,
 }
 
@@ -283,7 +282,6 @@ fn run() -> AppResult<()> {
         run_url: options.run_url.clone(),
         project: options.project_dir.display_slash(),
         trials: options.trials,
-        raw_baseline_ms: raw_baselines_ms.get("uno").copied(),
         raw_baselines_ms,
     };
     if let Some(ratio) = fbuild_vs_platformio_cold(&results) {
@@ -737,6 +735,11 @@ fn rewrite_compile_argv(argv: &[String], output: &Path) -> Vec<String> {
         } else if arg.len() > 2 && arg.starts_with("-o") {
             rewritten.push(format!("-o{output}"));
             saw_output = true;
+        } else if arg.starts_with("-D") {
+            // fbuild's raw DB retains shell-escaped macro quotes (\") even
+            // though the original compile launches via a shell. Replay uses
+            // Command::args, which must receive the unescaped quote itself.
+            rewritten.push(arg.replace("\\\"", "\""));
         } else {
             rewritten.push(arg.clone());
         }
@@ -1203,7 +1206,8 @@ fn latest_payload(metadata: &Metadata, results: &[ToolResult]) -> Value {
             "cold_definition": "project outputs, reusable framework objects, compiler-object caches, and Arduino/PlatformIO download/HTTP caches removed; installed packages/toolchains and fbuild package archives retained",
             "warm_definition": "immediate no-change rebuild after the cold build",
         },
-        "raw_baseline_ms": metadata.raw_baseline_ms,
+        "comparison_board": comparison_board(results),
+        "raw_baseline_ms": selected_raw_baseline_ms(metadata, results),
         "raw_baselines_ms": metadata.raw_baselines_ms,
         "fbuild_overhead_ms": fbuild_overhead_ms(metadata, results),
         "fbuild_vs_platformio_cold": fbuild_vs_platformio_cold(results),
@@ -1220,9 +1224,17 @@ fn cold_of(results: &[ToolResult], board: &str, tool: &str) -> Option<f64> {
 }
 
 fn fbuild_overhead_ms(metadata: &Metadata, results: &[ToolResult]) -> Option<f64> {
+    let board = comparison_board(results)?;
     Some(round_millis(
-        cold_of(results, "uno", "fbuild")? - metadata.raw_baseline_ms?,
+        cold_of(results, board, "fbuild")? - selected_raw_baseline_ms(metadata, results)?,
     ))
+}
+
+fn selected_raw_baseline_ms(metadata: &Metadata, results: &[ToolResult]) -> Option<f64> {
+    metadata
+        .raw_baselines_ms
+        .get(comparison_board(results)?)
+        .copied()
 }
 
 fn board_cold_ratio(results: &[ToolResult], board: &str) -> Option<f64> {
@@ -1274,10 +1286,15 @@ fn board_metrics(metadata: &Metadata, results: &[ToolResult]) -> Value {
 }
 
 fn fbuild_vs_platformio_cold(results: &[ToolResult]) -> Option<f64> {
+    board_cold_ratio(results, comparison_board(results)?)
+}
+
+fn comparison_board(results: &[ToolResult]) -> Option<&'static str> {
     BOARDS
         .iter()
-        .filter_map(|board| board_cold_ratio(results, board.key))
-        .max_by(f64::total_cmp)
+        .filter_map(|board| board_cold_ratio(results, board.key).map(|ratio| (board.key, ratio)))
+        .max_by(|a, b| a.1.total_cmp(&b.1))
+        .map(|(board, _)| board)
 }
 
 fn read_history_values(path: &Path) -> Vec<Value> {
@@ -1410,6 +1427,7 @@ fn write_history(
     prior.push(serde_json::to_string(&json!({
         "ts": metadata.generated_at,
         "sha": metadata.git_sha,
+        "comparison_board": comparison_board(results),
         "fbuild_overhead_ms": fbuild_overhead_ms(metadata, results),
         "fbuild_vs_platformio_cold": fbuild_vs_platformio_cold(results),
         "board_metrics": board_metrics(metadata, results),
@@ -1536,8 +1554,7 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
 /// `raw compiler floor: X ms | fbuild overhead: Y ms | fbuild/PIO cold: Z`, omitting null parts.
 fn svg_floor_line(metadata: &Metadata, results: &[ToolResult]) -> Option<String> {
     let parts = [
-        metadata
-            .raw_baseline_ms
+        selected_raw_baseline_ms(metadata, results)
             .map(|ms| format!("raw compiler floor: {ms:.1} ms")),
         fbuild_overhead_ms(metadata, results).map(|ms| format!("fbuild overhead: {ms:.1} ms")),
         fbuild_vs_platformio_cold(results).map(|ratio| format!("fbuild/PIO cold: {ratio:.3}")),
