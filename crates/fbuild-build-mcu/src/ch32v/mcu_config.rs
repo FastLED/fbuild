@@ -98,6 +98,17 @@ pub fn normalize_march(march: &str) -> String {
 
 /// Apply board ISA and ABI values to compiler and linker flags.
 pub fn apply_board_isa(config: &mut Ch32vMcuConfig, march: Option<&str>, mabi: Option<&str>) {
+    apply_board_isa_for_toolchain(config, march, mabi, "riscv-none-elf");
+}
+
+/// Preserve WCH's vendor ISA extensions for its own compiler; only the xPack
+/// compiler requires the stripped/modernized `zicsr` spelling.
+pub fn apply_board_isa_for_toolchain(
+    config: &mut Ch32vMcuConfig,
+    march: Option<&str>,
+    mabi: Option<&str>,
+    executable_prefix: &str,
+) {
     fn replace(flags: &mut [String], prefix: &str, value: &str) {
         for flag in flags {
             if flag.starts_with(prefix) {
@@ -107,7 +118,11 @@ pub fn apply_board_isa(config: &mut Ch32vMcuConfig, march: Option<&str>, mabi: O
     }
 
     if let Some(march) = march {
-        let normalized = normalize_march(march);
+        let normalized = if executable_prefix == "riscv-none-elf" {
+            normalize_march(march)
+        } else {
+            march.to_ascii_lowercase()
+        };
         replace(&mut config.compiler_flags.common, "-march=", &normalized);
         replace(&mut config.linker_flags, "-march=", &normalized);
     }
@@ -127,6 +142,30 @@ mod tests {
         assert_eq!(normalize_march("rv32imac"), "rv32imac_zicsr");
         assert_eq!(normalize_march("rv32ec_zicsr"), "rv32ec_zicsr");
         assert_eq!(normalize_march("rv32ecxw"), "rv32ec_zicsr");
+    }
+
+    #[test]
+    fn platformio_gcc8_preserves_wch_vendor_isa() {
+        let mut config = get_ch32v_config_for_mcu("ch32v003").unwrap();
+        apply_board_isa_for_toolchain(
+            &mut config,
+            Some("rv32ecxw"),
+            Some("ilp32e"),
+            "riscv-none-embed",
+        );
+        assert!(
+            config
+                .compiler_flags
+                .common
+                .contains(&"-march=rv32ecxw".into())
+        );
+        assert!(config.linker_flags.contains(&"-march=rv32ecxw".into()));
+        assert!(
+            !config
+                .compiler_flags
+                .common
+                .contains(&"-march=rv32ec_zicsr".into())
+        );
     }
 
     #[test]

@@ -137,7 +137,7 @@ pub struct SubmoduleSource {
     /// Archive of the submodule at the commit the parent's gitlink records.
     pub url: String,
     /// SHA-256 of that archive.
-    pub sha256: String,
+    pub sha256: Option<String>,
 }
 
 /// A declared submodule left empty on purpose.
@@ -155,11 +155,12 @@ pub struct ExpectedEmpty {
 pub struct SubmodulePlan {
     pub sources: Vec<SubmoduleSource>,
     pub expected_empty: Vec<ExpectedEmpty>,
+    pub github_gitlinks: bool,
 }
 
 impl SubmodulePlan {
     fn is_empty(&self) -> bool {
-        self.sources.is_empty() && self.expected_empty.is_empty()
+        self.sources.is_empty() && self.expected_empty.is_empty() && !self.github_gitlinks
     }
 }
 
@@ -171,8 +172,15 @@ impl PackageBase {
         self.submodules.sources.push(SubmoduleSource {
             path: path.to_string(),
             url: url.to_string(),
-            sha256: sha256.to_string(),
+            sha256: Some(sha256.to_string()),
         });
+        self
+    }
+
+    /// Resolve empty submodules from the selected GitHub archive's immutable
+    /// parent gitlinks, instead of reusing pins from another core revision.
+    pub fn with_github_gitlinks(mut self) -> Self {
+        self.submodules.github_gitlinks = true;
         self
     }
 
@@ -214,11 +222,23 @@ pub async fn prepare_submodules(
             continue;
         };
         let declared = declared_submodule_paths(&text);
-        check_plan(package, root, &declared, plan)?;
-        populate(package, root, &plan.sources).await?;
+        let mut resolved_plan = plan.clone();
+        if plan.github_gitlinks {
+            resolved_plan.sources.extend(
+                github_submodule_sources(url, root, &text, &declared)
+                    .await
+                    .map_err(|error| {
+                        fbuild_core::FbuildError::PackageError(format!(
+                            "{package}: resolving GitHub submodules failed: {error}"
+                        ))
+                    })?,
+            );
+        }
+        check_plan(package, root, &declared, &resolved_plan)?;
+        populate(package, root, &resolved_plan.sources).await?;
         applied = true;
 
-        let empty = unexpected_empty_submodules(root, plan);
+        let empty = unexpected_empty_submodules(root, &resolved_plan);
         if !empty.is_empty() {
             return Err(fbuild_core::FbuildError::PackageError(
                 empty_submodule_error(package, url, &empty),
@@ -240,6 +260,212 @@ pub async fn prepare_submodules(
         )));
     }
     Ok(())
+}
+
+async fn github_submodule_sources(
+    parent_archive: &str,
+    root: &Path,
+    gitmodules: &str,
+    declared: &[String],
+) -> fbuild_core::Result<Vec<SubmoduleSource>> {
+    let (owner, repo, commit) = github_archive_identity(parent_archive)?;
+    let checkout = tempfile::TempDir::new().map_err(package_error)?;
+    let git_dir = checkout
+        .path()
+        .to_str()
+        .ok_or_else(|| package_error("invalid temporary Git path"))?;
+    git_command(["init", "--bare", "--quiet", git_dir]).await?;
+    let repository = format!("https://github.com/{owner}/{repo}.git");
+    git_command([
+        "-C",
+        git_dir,
+        "fetch",
+        "--quiet",
+        "--depth",
+        "1",
+        "--filter=blob:none",
+        "--no-tags",
+        &repository,
+        &commit,
+    ])
+    .await?;
+    let declarations = declared_submodule_urls(gitmodules);
+    let mut sources = Vec::new();
+    for path in declared {
+        if !is_empty_dir(&root.join(path)) {
+            continue;
+        }
+        checked_submodule_dest(root, path)?;
+        let source_url = declarations
+            .iter()
+            .find(|(declared_path, _)| declared_path == path)
+            .map(|(_, url)| url)
+            .ok_or_else(|| {
+                package_error(format!("submodule `{path}` has no URL in .gitmodules"))
+            })?;
+        let listing = git_command(["-C", git_dir, "ls-tree", &commit, "--", path]).await?;
+        let mut words = listing.split_whitespace();
+        if words.next() != Some("160000") || words.next() != Some("commit") {
+            return Err(package_error(format!("submodule `{path}` has no gitlink")));
+        }
+        let gitlink = words
+            .next()
+            .ok_or_else(|| package_error("missing gitlink SHA"))?;
+        if !full_sha(gitlink) {
+            return Err(package_error(format!(
+                "submodule `{path}` has invalid gitlink"
+            )));
+        }
+        let (sub_owner, sub_repo) = github_repository_identity(source_url)?;
+        sources.push(SubmoduleSource {
+            path: path.clone(),
+            url: format!("https://github.com/{sub_owner}/{sub_repo}/archive/{gitlink}.tar.gz"),
+            // The immutable gitlink is the source identity. GitHub does not
+            // publish a SHA-256 for its generated archive.
+            sha256: None,
+        });
+    }
+    Ok(sources)
+}
+
+fn checked_submodule_dest(root: &Path, path: &str) -> fbuild_core::Result<std::path::PathBuf> {
+    if path.starts_with('/')
+        || path
+            .split('/')
+            .any(|component| matches!(component, "" | "." | ".."))
+        || path.contains(['\\', '\n', '\r'])
+    {
+        return Err(package_error(format!("unsafe submodule path `{path}`")));
+    }
+    let canonical_root = root.canonicalize().map_err(package_error)?;
+    let canonical_dest = root.join(path).canonicalize().map_err(package_error)?;
+    if !canonical_dest.starts_with(&canonical_root) {
+        return Err(package_error(format!(
+            "submodule `{path}` escapes the extracted package"
+        )));
+    }
+    Ok(canonical_dest)
+}
+
+async fn git_command<const N: usize>(args: [&str; N]) -> fbuild_core::Result<String> {
+    // allow-direct-spawn: Git resolves immutable VCS gitlinks without a shell
+    // or GitHub REST API quota, matching PlatformIO's VCS dependency.
+    let mut command = tokio::process::Command::new("git");
+    command.args(args).kill_on_drop(true);
+    let output = tokio::time::timeout(std::time::Duration::from_secs(60), command.output())
+        .await
+        .map_err(|_| package_error("timed out resolving GitHub submodule gitlink"))?
+        .map_err(package_error)?;
+    if !output.status.success() {
+        return Err(package_error(format!(
+            "git exited {}: {}",
+            output.status,
+            String::from_utf8_lossy(&output.stderr).trim()
+        )));
+    }
+    String::from_utf8(output.stdout).map_err(package_error)
+}
+
+fn github_archive_identity(url: &str) -> fbuild_core::Result<(String, String, String)> {
+    let parsed = reqwest::Url::parse(url).map_err(package_error)?;
+    if parsed.scheme() != "https"
+        || parsed.host_str() != Some("github.com")
+        || !parsed.username().is_empty()
+        || parsed.password().is_some()
+        || parsed.query().is_some()
+        || parsed.fragment().is_some()
+    {
+        return Err(package_error(format!("not a GitHub archive: {url}")));
+    }
+    let parts: Vec<_> = parsed
+        .path_segments()
+        .ok_or_else(|| package_error("GitHub archive has no path"))?
+        .collect();
+    let [owner, repo, "archive", file] = parts.as_slice() else {
+        return Err(package_error(format!(
+            "unsupported GitHub archive URL: {url}"
+        )));
+    };
+    let commit = file
+        .strip_suffix(".tar.gz")
+        .ok_or_else(|| package_error("GitHub archive is not a tar.gz"))?;
+    if !valid_github_segment(owner) || !valid_github_segment(repo) || !full_sha(commit) {
+        return Err(package_error(format!(
+            "invalid GitHub archive identity: {url}"
+        )));
+    }
+    Ok(((*owner).into(), (*repo).into(), commit.into()))
+}
+
+/// Whether a package URL names an immutable GitHub commit archive whose
+/// submodule gitlinks can be resolved from the same parent commit.
+pub fn is_github_commit_archive_url(url: &str) -> bool {
+    github_archive_identity(url).is_ok()
+}
+
+fn github_repository_identity(url: &str) -> fbuild_core::Result<(String, String)> {
+    let parsed = reqwest::Url::parse(url).map_err(package_error)?;
+    if parsed.scheme() != "https" || parsed.host_str() != Some("github.com") {
+        return Err(package_error(format!(
+            "unsupported submodule repository: {url}"
+        )));
+    }
+    let parts: Vec<_> = parsed
+        .path_segments()
+        .ok_or_else(|| package_error("submodule repository has no path"))?
+        .collect();
+    let [owner, repo] = parts.as_slice() else {
+        return Err(package_error(format!(
+            "invalid submodule repository: {url}"
+        )));
+    };
+    let repo = repo.strip_suffix(".git").unwrap_or(repo);
+    if !valid_github_segment(owner) || !valid_github_segment(repo) {
+        return Err(package_error(format!(
+            "invalid submodule repository: {url}"
+        )));
+    }
+    Ok(((*owner).into(), repo.into()))
+}
+
+fn valid_github_segment(value: &str) -> bool {
+    !value.is_empty()
+        && value != "."
+        && value != ".."
+        && value
+            .bytes()
+            .all(|byte| byte.is_ascii_alphanumeric() || matches!(byte, b'-' | b'_' | b'.'))
+}
+
+fn full_sha(value: &str) -> bool {
+    value.len() == 40 && value.bytes().all(|byte| byte.is_ascii_hexdigit())
+}
+
+fn declared_submodule_urls(gitmodules: &str) -> Vec<(String, String)> {
+    let mut result = Vec::new();
+    let mut path = None;
+    let mut url = None;
+    for line in gitmodules.lines().chain(std::iter::once("[end]")) {
+        let line = line.trim();
+        if line.starts_with('[') {
+            if let (Some(path), Some(url)) = (path.take(), url.take()) {
+                result.push((path, url));
+            }
+            continue;
+        }
+        if let Some((key, value)) = line.split_once('=') {
+            match key.trim() {
+                "path" => path = Some(value.trim().to_string()),
+                "url" => url = Some(value.trim().to_string()),
+                _ => {}
+            }
+        }
+    }
+    result
+}
+
+fn package_error(error: impl std::fmt::Display) -> fbuild_core::FbuildError {
+    fbuild_core::FbuildError::PackageError(error.to_string())
 }
 
 /// Every plan entry must name a path `.gitmodules` declares and that
@@ -323,7 +549,9 @@ async fn populate(
 
 async fn fetch_into(source: &SubmoduleSource, work: &Path, dest: &Path) -> fbuild_core::Result<()> {
     let archive = crate::downloader::download_file(&source.url, work).await?;
-    crate::downloader::verify_checksum(&archive, &source.sha256)?;
+    if let Some(sha256) = &source.sha256 {
+        crate::downloader::verify_checksum(&archive, sha256)?;
+    }
     let extracted = work.join("extracted");
     std::fs::create_dir_all(&extracted)?;
     crate::extractor::extract(&archive, &extracted)?;
@@ -374,14 +602,53 @@ mod tests {
 
     const TINYUSB: &str = "libraries/Adafruit_TinyUSB_Arduino";
 
+    #[test]
+    fn gitlink_resolution_only_accepts_immutable_github_commit_archives() {
+        let sha = "0123456789abcdef0123456789abcdef01234567";
+        assert!(is_github_commit_archive_url(&format!(
+            "https://github.com/openwch/arduino_core_ch32/archive/{sha}.tar.gz"
+        )));
+        for url in [
+            "https://registry.platformio.org/download/framework.tar.gz",
+            "https://github.com/openwch/arduino_core_ch32/archive/main.tar.gz",
+            "https://github.com/openwch/arduino_core_ch32/archive/0123456789abcdef0123456789abcdef01234567.tar.gz?unexpected=1",
+            "https://attacker@github.com/openwch/arduino_core_ch32/archive/0123456789abcdef0123456789abcdef01234567.tar.gz",
+        ] {
+            assert!(!is_github_commit_archive_url(url), "{url}");
+        }
+    }
+
+    #[test]
+    fn gitlink_paths_must_stay_inside_extracted_package() {
+        let root = tempfile::TempDir::new().unwrap();
+        std::fs::create_dir(root.path().join("safe")).unwrap();
+        assert_eq!(
+            checked_submodule_dest(root.path(), "safe").unwrap(),
+            root.path().join("safe").canonicalize().unwrap()
+        );
+        for path in ["../escape", "/escape", "safe/../escape", "safe\\escape"] {
+            assert!(checked_submodule_dest(root.path(), path).is_err(), "{path}");
+        }
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn gitlink_paths_reject_symlink_escape() {
+        let root = tempfile::TempDir::new().unwrap();
+        let outside = tempfile::TempDir::new().unwrap();
+        std::os::unix::fs::symlink(outside.path(), root.path().join("outside")).unwrap();
+        assert!(checked_submodule_dest(root.path(), "outside").is_err());
+    }
+
     fn tinyusb_plan() -> SubmodulePlan {
         SubmodulePlan {
             sources: vec![SubmoduleSource {
                 path: TINYUSB.to_string(),
                 url: "https://example.invalid/tinyusb.tar.gz".to_string(),
-                sha256: "0".repeat(64),
+                sha256: Some("0".repeat(64)),
             }],
             expected_empty: Vec::new(),
+            github_gitlinks: false,
         }
     }
 
@@ -392,6 +659,7 @@ mod tests {
                 path: path.to_string(),
                 reason: "supplied another way".to_string(),
             }],
+            github_gitlinks: false,
         }
     }
 
