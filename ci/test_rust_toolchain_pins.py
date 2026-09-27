@@ -61,6 +61,14 @@ class RustToolchainPinTests(unittest.TestCase):
 
         self.assertEqual(failures, [])
 
+    def test_rust_toolchain_struct_field_is_not_a_workflow_pin(self) -> None:
+        failures = check_rust_toolchain_pins.validate_discovered_pins(
+            "crates/example/src/platform_source.rs",
+            "        toolchain: require_platform_package(&requirements, name),\n",
+        )
+
+        self.assertEqual(failures, [])
+
 
 if __name__ == "__main__":
     unittest.main()

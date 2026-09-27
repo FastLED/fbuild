@@ -62,6 +62,19 @@ impl Ch32vCores {
         }
     }
 
+    /// Use a CH32V platform-selected GitHub core source. Resolve its declared
+    /// gitlinks from that exact parent commit, rather than reusing the default
+    /// core's fixed TinyUSB submodule pin.
+    pub fn with_platform_override(project_dir: &Path, ovr: fbuild_config::PackageOverride) -> Self {
+        let github_commit_archive =
+            fbuild_packages_fetch::submodules::is_github_commit_archive_url(&ovr.url);
+        let mut core = Self::with_override(project_dir, ovr);
+        if github_commit_archive {
+            core.base = core.base.with_github_gitlinks();
+        }
+        core
+    }
+
     #[cfg(test)]
     fn with_cache_root(project_dir: &Path, cache_root: &Path) -> Self {
         Self {

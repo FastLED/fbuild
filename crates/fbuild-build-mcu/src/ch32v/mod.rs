@@ -1,9 +1,10 @@
-﻿//! CH32V RISC-V platform build support (WCH CH32V003, CH32V203, etc.)
+//! CH32V RISC-V platform build support (WCH CH32V003, CH32V203, etc.)
 
 pub mod ch32v_compiler;
 pub mod ch32v_linker;
 pub mod mcu_config;
 pub mod orchestrator;
+mod platform_source;
 
 pub use ch32v_compiler::Ch32vCompiler;
 pub use ch32v_linker::Ch32vLinker;
@@ -28,8 +29,13 @@ impl crate::PlatformSupport for Ch32vPlatformSupport {
         orchestrator::validate_ch32v_framework(
             inputs.env_config.get("framework").map(String::as_str),
         )?;
-        let (toolchain, cores) =
-            orchestrator::ch32v_packages(inputs.project_dir, Some(inputs.env_config));
+        let (toolchain, cores, _, _) = orchestrator::ch32v_packages(
+            inputs.project_dir,
+            Some(inputs.env_config),
+            &inputs.board.core,
+            mode.fetches(),
+        )
+        .await?;
         Ok(vec![
             provision_package(PackageKind::Toolchain, &toolchain, mode).await,
             provision_package(PackageKind::Framework, &cores, mode).await,

@@ -38,6 +38,32 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
     }
 }
 
+fn preferred_board_value<'a>(
+    env: Option<&'a std::collections::HashMap<String, String>>,
+    key: &str,
+    selected: Option<&'a str>,
+    fallback: Option<&'a str>,
+) -> Option<&'a str> {
+    env.and_then(|values| values.get(key).map(String::as_str))
+        .or(selected)
+        .or(fallback)
+}
+
+fn board_fingerprint_fields(
+    march: Option<&str>,
+    mabi: Option<&str>,
+    variant_h: Option<&str>,
+) -> std::collections::BTreeMap<String, String> {
+    std::collections::BTreeMap::from([
+        ("board_march".into(), march.unwrap_or_default().into()),
+        ("board_mabi".into(), mabi.unwrap_or_default().into()),
+        (
+            "board_variant_h".into(),
+            variant_h.unwrap_or_default().into(),
+        ),
+    ])
+}
+
 #[async_trait::async_trait]
 impl BuildOrchestrator for Ch32vOrchestrator {
     fn platform(&self) -> Platform {
@@ -49,26 +75,58 @@ impl BuildOrchestrator for Ch32vOrchestrator {
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
         let mut ctx = pipeline::BuildContext::new(params).await?;
-        let framework_name = ctx
-            .config
-            .get_env_config(&params.env_name)
-            .ok()
+        let env_config = ctx.config.get_env_config(&params.env_name).ok();
+        let framework_name = env_config
             .and_then(|env| env.get("framework"))
             .map(String::as_str);
         validate_ch32v_framework(framework_name)?;
 
         // 3-4. RISC-V GCC toolchain and OpenWCH CH32V cores
-        let (toolchain, framework) = ch32v_packages(
-            &params.project_dir,
-            ctx.config.get_env_config(&params.env_name).ok(),
-        );
+        let (toolchain, framework, selected_board, platform_resolution) =
+            ch32v_packages(&params.project_dir, env_config, &ctx.board.core, false).await?;
+        use fbuild_packages::Package as _;
+        let toolchain_info = toolchain.get_info();
+        let framework_info = framework.get_info();
+        if let Some(env) = env_config {
+            let platform_request = env.get("platform").map(String::as_str).unwrap_or("ch32v");
+            let package_request = env
+                .get("platform_packages")
+                .map(|value| value.split_whitespace().collect::<Vec<_>>().join(", "))
+                .unwrap_or_else(|| "(default)".to_string());
+            ctx.build_log.push(format!(
+                "CH32V requested: platform={platform_request}; platform_packages={package_request}"
+            ));
+        }
+        if let Some(platform) = platform_resolution.as_deref() {
+            ctx.build_log
+                .push(format!("CH32V resolved platform: {platform}"));
+        }
+        ctx.build_log.push(format!(
+            "CH32V resolved: {}@{} ({}{}); {}@{} ({}{})",
+            toolchain_info.name,
+            toolchain_info.version,
+            toolchain_info.url,
+            toolchain_info
+                .checksum
+                .as_ref()
+                .map(|sha| format!("; sha256={sha}"))
+                .unwrap_or_default(),
+            framework_info.name,
+            framework_info.version,
+            framework_info.url,
+            framework_info
+                .checksum
+                .as_ref()
+                .map(|sha| format!("; sha256={sha}"))
+                .unwrap_or_default(),
+        ));
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("riscv-gcc toolchain at {}", toolchain_dir.display());
 
         use fbuild_packages::Toolchain;
         pipeline::log_toolchain_version(
             &toolchain.get_gcc_path(),
-            "riscv-none-elf-gcc",
+            "RISC-V GCC",
             &mut ctx.build_log,
         )
         .await;
@@ -99,10 +157,65 @@ impl BuildOrchestrator for Ch32vOrchestrator {
         let system_series = series_to_system_dir(&series);
 
         // 6. Scan sources
-        let core_dir = framework.get_core_dir(&ctx.board.core);
-        let variant_dir = resolve_variant_dir(&framework_dir, &ctx.board.variant, &system_series);
+        let effective_core = selected_board
+            .as_ref()
+            .map(|board| board.core.as_str())
+            .unwrap_or(&ctx.board.core);
+        let effective_variant = selected_board
+            .as_ref()
+            .map(|board| board.variant.as_str())
+            .unwrap_or(&ctx.board.variant);
+        let effective_variant_h = selected_board
+            .as_ref()
+            .and_then(|board| board.variant_h.as_deref())
+            .or(ctx.board.variant_h.as_deref());
+        let core_dir = framework.get_core_dir(effective_core);
+        let variant_dir = resolve_variant_dir(&framework_dir, effective_variant, &system_series);
+        let effective_variant_h = resolve_variant_h(&variant_dir, effective_variant_h);
+        let selected_march = preferred_board_value(
+            env_config,
+            "board_build.march",
+            selected_board.as_ref().map(|board| board.march.as_str()),
+            ctx.board.march.as_deref(),
+        );
+        let selected_mabi = preferred_board_value(
+            env_config,
+            "board_build.mabi",
+            selected_board.as_ref().map(|board| board.mabi.as_str()),
+            ctx.board.mabi.as_deref(),
+        );
 
         let build_dir = &ctx.build_dir;
+        let mut fingerprint_extra = std::collections::BTreeMap::from([
+            ("series".to_string(), series.clone()),
+            ("toolchain_url".to_string(), toolchain_info.url.clone()),
+            (
+                "toolchain_version".to_string(),
+                toolchain_info.version.clone(),
+            ),
+            (
+                "toolchain_sha256".to_string(),
+                toolchain_info.checksum.clone().unwrap_or_default(),
+            ),
+            ("framework_url".to_string(), framework_info.url.clone()),
+            (
+                "framework_version".to_string(),
+                framework_info.version.clone(),
+            ),
+            (
+                "framework_sha256".to_string(),
+                framework_info.checksum.clone().unwrap_or_default(),
+            ),
+            (
+                "platform_resolution".to_string(),
+                platform_resolution.clone().unwrap_or_default(),
+            ),
+        ]);
+        fingerprint_extra.extend(board_fingerprint_fields(
+            selected_march,
+            selected_mabi,
+            effective_variant_h.as_deref(),
+        ));
         let metadata_hash = stable_hash_with_build_config(
             &CoreFingerprintMetadata {
                 version: crate::build_fingerprint::BUILD_FINGERPRINT_VERSION,
@@ -111,19 +224,16 @@ impl BuildOrchestrator for Ch32vOrchestrator {
                 board_name: ctx.board.name.clone(),
                 board_mcu: ctx.board.mcu.clone(),
                 board_define: ctx.board.board.clone(),
-                board_core: ctx.board.core.clone(),
+                board_core: effective_core.to_string(),
                 board_f_cpu: ctx.board.f_cpu.clone(),
                 board_extra_flags: ctx.board.extra_flags.clone(),
                 board_ldscript: ctx.board.ldscript.clone(),
-                board_variant: Some(ctx.board.variant.clone()),
+                board_variant: Some(effective_variant.to_string()),
                 platform: "ch32v".to_string(),
                 max_flash: ctx.board.max_flash,
                 max_ram: ctx.board.max_ram,
                 eh_frame_policy: None,
-                extra: Some(std::collections::BTreeMap::from([(
-                    "series".to_string(),
-                    series.clone(),
-                )])),
+                extra: Some(fingerprint_extra),
             },
             &ctx,
         )?;
@@ -180,10 +290,12 @@ impl BuildOrchestrator for Ch32vOrchestrator {
 
         // 7. Build include dirs + compiler
         let mut mcu_config = super::mcu_config::get_ch32v_config_for_mcu(&series)?;
-        super::mcu_config::apply_board_isa(
+        let toolchain_prefix = toolchain.executable_prefix();
+        super::mcu_config::apply_board_isa_for_toolchain(
             &mut mcu_config,
-            ctx.board.march.as_deref(),
-            ctx.board.mabi.as_deref(),
+            selected_march,
+            selected_mabi,
+            &toolchain_prefix,
         );
         let mut defines = ctx.board.get_defines();
         defines.extend(mcu_config.defines_map());
@@ -195,7 +307,7 @@ impl BuildOrchestrator for Ch32vOrchestrator {
         )?;
         defines.insert(sysclk_name, sysclk_value);
         // CH32V cores use `#include VARIANT_H` â€” define it from the variant dir
-        if let Some(vh) = resolve_variant_h(&variant_dir, ctx.board.variant_h.as_deref()) {
+        if let Some(vh) = effective_variant_h {
             defines.insert("VARIANT_H".to_string(), format!("\\\"{}\\\"", vh));
         }
         // Use resolved core_dir/variant_dir directly â€” board.get_include_paths()
@@ -379,21 +491,67 @@ impl BuildOrchestrator for Ch32vOrchestrator {
 /// `framework-arduino-ch32v` `platform_packages` override (FastLED/fbuild#664,
 /// #681). Shared by the build and `fbuild install`, so both provision the same
 /// packages (FastLED/fbuild#1433).
-pub(crate) fn ch32v_packages(
+pub(crate) async fn ch32v_packages(
     project_dir: &Path,
     env_config: Option<&std::collections::HashMap<String, String>>,
-) -> (
+    board_core: &str,
+    refresh: bool,
+) -> fbuild_core::Result<(
     fbuild_packages::toolchain::RiscvToolchain,
     fbuild_packages::library::Ch32vCores,
-) {
-    let toolchain = fbuild_packages::toolchain::RiscvToolchain::new(project_dir);
+    Option<super::platform_source::SelectedBoardBuild>,
+    Option<String>,
+)> {
+    if let Some(env) = env_config {
+        let selected_core = env
+            .get("board_build.core")
+            .map(String::as_str)
+            .unwrap_or(board_core);
+        if let Some(packages) = super::platform_source::resolve_source_packages(
+            project_dir,
+            env,
+            selected_core,
+            refresh,
+        )
+        .await?
+        {
+            return Ok((packages.0, packages.1, Some(packages.2), Some(packages.3)));
+        }
+    }
+    let registry_overrides = if let Some(env) = env_config {
+        crate::package_override::resolve_registry_overrides(
+            project_dir,
+            env,
+            "ch32v",
+            &["toolchain-riscv", "framework-arduino-openwch-ch32"],
+            &[],
+        )
+        .await?
+    } else {
+        std::collections::HashMap::new()
+    };
+    let toolchain = registry_overrides.get("toolchain-riscv").map_or_else(
+        || fbuild_packages::toolchain::RiscvToolchain::new(project_dir),
+        |pin| {
+            fbuild_packages::toolchain::RiscvToolchain::with_platform_override(
+                project_dir,
+                pin.clone(),
+                "auto",
+            )
+        },
+    );
     let override_pin = env_config
-        .and_then(|env| crate::package_override::resolve_override(env, "framework-arduino-ch32v"));
+        .and_then(|env| crate::package_override::resolve_override(env, "framework-arduino-ch32v"))
+        .or_else(|| {
+            registry_overrides
+                .get("framework-arduino-openwch-ch32")
+                .cloned()
+        });
     let cores = match override_pin {
         Some(o) => fbuild_packages::library::Ch32vCores::with_override(project_dir, o),
         None => fbuild_packages::library::Ch32vCores::new(project_dir),
     };
-    (toolchain, cores)
+    Ok((toolchain, cores, None, None))
 }
 
 /// Create a CH32V orchestrator (convenience for get_orchestrator dispatch).
@@ -607,124 +765,5 @@ pub fn is_ch32v_project(project_dir: &Path, env_name: &str) -> bool {
 }
 
 #[cfg(test)]
-mod tests {
-    use super::*;
-
-    fn tempdir() -> tempfile::TempDir {
-        tempfile::TempDir::new_in(fbuild_paths::temp_subdir("fbuild-ch32v-tests")).unwrap()
-    }
-
-    #[test]
-    fn test_ch32v_orchestrator_platform() {
-        let orch = Ch32vOrchestrator;
-        assert_eq!(orch.platform(), Platform::Ch32v);
-    }
-
-    #[test]
-    fn test_is_ch32v_project() {
-        let tmp = tempdir();
-        std::fs::write(
-            tmp.path().join("platformio.ini"),
-            "[env:ch32v003]\nplatform = ch32v\nboard = genericCH32V003F4P6\nframework = arduino\n",
-        )
-        .unwrap();
-        assert!(is_ch32v_project(tmp.path(), "ch32v003"));
-        assert!(!is_ch32v_project(tmp.path(), "uno"));
-    }
-
-    #[test]
-    fn test_is_not_ch32v_project() {
-        let tmp = tempdir();
-        std::fs::write(
-            tmp.path().join("platformio.ini"),
-            "[env:uno]\nplatform = atmelavr\nboard = uno\nframework = arduino\n",
-        )
-        .unwrap();
-        assert!(!is_ch32v_project(tmp.path(), "uno"));
-    }
-
-    #[test]
-    fn test_validate_ch32v_framework() {
-        assert!(validate_ch32v_framework(None).is_ok());
-        assert!(validate_ch32v_framework(Some("arduino")).is_ok());
-        assert!(validate_ch32v_framework(Some(" arduino ")).is_ok());
-        let error = validate_ch32v_framework(Some("noneos-sdk")).unwrap_err();
-        assert!(error.to_string().contains("1108"));
-    }
-
-    #[test]
-    fn test_sysclk_define_uses_series_spelling_and_clock_source() {
-        assert_eq!(
-            sysclk_define("ch32v203", "144000000L", "hsi+pll").unwrap(),
-            (
-                "SYSCLK_FREQ_144MHz_HSI".to_string(),
-                "144000000".to_string()
-            )
-        );
-        assert_eq!(
-            sysclk_define("ch32v003", "48000000L", "hsi+pll").unwrap(),
-            ("SYSCLK_FREQ_48MHZ_HSI".to_string(), "48000000".to_string())
-        );
-    }
-
-    /// ch32v006 must NOT get ch32v003's uppercase spelling. Its vendor file
-    /// declares the setter under `SYSCLK_FREQ_48MHz_HSI` but dispatches on
-    /// `SYSCLK_FREQ_48MHZ_HSI`, so the uppercase form selects a call to an
-    /// undeclared `SetSysClockTo_48MHZ_HSI` and the core fails to compile.
-    #[test]
-    fn test_sysclk_define_ch32v006_uses_lowercase_mhz() {
-        assert_eq!(
-            sysclk_define("ch32v006", "48000000L", "hsi+pll").unwrap(),
-            ("SYSCLK_FREQ_48MHz_HSI".to_string(), "48000000".to_string())
-        );
-        // HSE was never part of the uppercase carve-out; keep it lowercase too.
-        assert_eq!(
-            sysclk_define("ch32v006", "24000000L", "hse").unwrap(),
-            ("SYSCLK_FREQ_24MHz_HSE".to_string(), "24000000".to_string())
-        );
-    }
-
-    #[test]
-    fn test_sysclk_define_rejects_unsupported_frequency() {
-        let error = sysclk_define("ch32v203", "8000000L", "hsi").unwrap_err();
-        assert!(error.to_string().contains("supported values"));
-    }
-
-    #[test]
-    fn test_series_to_system_dir() {
-        // CH32V series: last digit replaced with 'x'
-        assert_eq!(series_to_system_dir("ch32v003"), "CH32V00x");
-        assert_eq!(series_to_system_dir("ch32v006"), "CH32VM00X");
-        assert_eq!(series_to_system_dir("ch32v103"), "CH32V10x");
-        assert_eq!(series_to_system_dir("ch32v203"), "CH32V20x");
-        assert_eq!(series_to_system_dir("ch32v303"), "CH32V30x");
-        assert_eq!(series_to_system_dir("ch32v307"), "CH32V30x");
-        // CH32L follows the same family-directory pattern as CH32V.
-        assert_eq!(series_to_system_dir("ch32l103"), "CH32L10x");
-        // CH32X: exact uppercase name
-        assert_eq!(series_to_system_dir("ch32x035"), "CH32X035");
-    }
-
-    #[test]
-    fn test_resolve_variant_dir_falls_back_to_family_variant() {
-        let tmp = tempdir();
-        let fallback = tmp
-            .path()
-            .join("variants")
-            .join("CH32V00x")
-            .join("CH32V003F4");
-        std::fs::create_dir_all(&fallback).unwrap();
-
-        let resolved = resolve_variant_dir(tmp.path(), "CH32V00x/CH32V006K8", "CH32V00x");
-        assert_eq!(resolved, fallback);
-    }
-
-    #[test]
-    fn test_resolve_variant_h_ignores_missing_preferred_header() {
-        let tmp = tempdir();
-        std::fs::write(tmp.path().join("variant_CH32V003F4.h"), "").unwrap();
-
-        let resolved = resolve_variant_h(tmp.path(), Some("variant_CH32V006K8.h"));
-        assert_eq!(resolved.as_deref(), Some("variant_CH32V003F4.h"));
-    }
-}
+#[path = "orchestrator_tests.rs"]
+mod tests;

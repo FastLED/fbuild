@@ -12,6 +12,7 @@ pub mod downloader;
 pub mod extractor;
 pub mod http;
 pub mod platformio_registry;
+pub mod platformio_repository;
 pub mod submodules;
 
 mod install_lock;

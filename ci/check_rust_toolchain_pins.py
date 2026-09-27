@@ -100,6 +100,10 @@ def validate_discovered_pins(relative: str, text: str) -> list[str]:
     for line_number, line in enumerate(text.splitlines(), 1):
         versions: set[str] = set()
         for pattern in patterns:
+            if pattern is PIN_FIELD_PATTERNS[1] and Path(relative).suffix not in {".yml", ".yaml"}:
+                # `toolchain:` is also an ordinary Rust struct field; only
+                # workflow YAML declares a Rust toolchain with that spelling.
+                continue
             match = pattern.search(line)
             if match is not None:
                 versions.add(match.group("selector"))
