@@ -122,25 +122,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let embed_files = ctx.config.get_embed_files(&params.env_name)?;
         let embed_txtfiles = ctx.config.get_embed_txtfiles(&params.env_name)?;
 
-        let f_for_image = ctx
-            .board
-            .f_image
-            .as_deref()
-            .or(ctx.board.f_flash.as_deref());
-        let flash_freq = crate::esp32::esp32_linker::f_flash_to_esptool_freq(
-            f_for_image,
-            mcu_config.default_flash_freq(),
-        );
-        let flash_mode = ctx
-            .board
-            .flash_mode
-            .clone()
-            .unwrap_or_else(|| mcu_config.default_flash_mode().to_string());
-        let flash_size = crate::esp32::mcu_config::bytes_to_flash_size(
-            ctx.board.max_flash,
-            mcu_config.default_flash_size(),
-        )
-        .to_string();
+        let (flash_freq, flash_mode, flash_size) =
+            super::helpers::flash_settings(&ctx.board, &mcu_config);
         let metadata_hash = stable_hash_with_build_config(
             &Esp32FingerprintMetadata {
                 version: BUILD_FINGERPRINT_VERSION,
