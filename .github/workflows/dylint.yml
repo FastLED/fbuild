@@ -81,7 +81,9 @@ jobs:
           dylint: true
           dylint-cache: true
           dylint-foundation-cache: true
-          dylint-output-cache: true
+          # This layer keys by the whole source SHA, so every PR commit misses.
+          # The lint-library cache below keys only the lint source tree.
+          dylint-output-cache: false
           toolchain: 1.95.0
           cache-key-suffix: dylint
           prebuild-deps: none
@@ -116,6 +118,12 @@ jobs:
             RUSTUP_TOOLCHAIN=nightly-2026-05-28 \
               soldr cargo fmt --manifest-path "$manifest" --all -- --check
           done < <(find dylints -mindepth 2 -maxdepth 2 -name Cargo.toml | sort)
+      - name: Restore compiled Dylint libraries
+        id: dylint_libraries_cache
+        uses: actions/cache/restore@v5
+        with:
+          path: target/dylint/libraries/nightly-2026-05-28/release
+          key: fbuild-dylint-libraries-v1-linux-nightly-2026-05-28-${{ hashFiles('dylints/**') }}
       - name: Test Dylint libraries
         # UI fixtures execute on the Linux host; workspace checks below use
         # the same host lint libraries against each platform target.
@@ -203,6 +211,12 @@ jobs:
           qualified="${SOLDR_DYLINT_CONFIGURED_TOOLCHAIN}-x86_64-unknown-linux-gnu|${SOLDR_DYLINT_CONFIGURED_RUSTC_RELEASE}|${SOLDR_DYLINT_CONFIGURED_RUSTC_COMMIT_HASH}"
           test "$(cat "$SOLDR_DYLINT_SUCCESS_MARKER")" = "$qualified"
           printf '%s\n' "$identity" > "$SOLDR_DYLINT_SUCCESS_MARKER"
+      - name: Save compiled Dylint libraries
+        if: steps.dylint_libraries_cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v5
+        with:
+          path: target/dylint/libraries/nightly-2026-05-28/release
+          key: ${{ steps.dylint_libraries_cache.outputs.cache-primary-key }}
 
   gate:
     name: Dylint
