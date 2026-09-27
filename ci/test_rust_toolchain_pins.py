@@ -43,13 +43,13 @@ class RustToolchainPinTests(unittest.TestCase):
         self.assertFalse(
             check_rust_toolchain_pins.validate_discovered_pins(
                 "dylints/example/rust-toolchain.toml",
-                'channel = "nightly-2026-04-16"\n',
+                'channel = "nightly-2026-05-28"\n',
             )
         )
         self.assertTrue(
             check_rust_toolchain_pins.validate_discovered_pins(
                 ".github/workflows/new-rust-job.yml",
-                "toolchain: nightly-2026-04-16\n",
+                "toolchain: nightly-2026-05-28\n",
             )
         )
 

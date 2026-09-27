@@ -32,14 +32,6 @@ permissions:
 env:
   CARGO_TERM_COLOR: always
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
-  # Dylint owns a separate nightly/driver compile domain. It explicitly opts
-  # into two Cargo scheduling slots so Windows can install cargo-dylint within
-  # the ten-minute step budget. Compiler admission remains serialized: two
-  # concurrent Soldr admissions can race Dylint build-script executables on
-  # Linux (`Text file busy`). Normal ci-test consumers retain the action's
-  # safe one-job default for the shared stable test domain.
-  CARGO_BUILD_JOBS: "2"
-  SOLDR_JOBS: "1"
 
 jobs:
   policy:
@@ -117,35 +109,31 @@ jobs:
           cache-key-suffix: dylint
           prebuild-deps: none
           ci-tests: true
-          dylint-toolchain: nightly-2026-04-16
-          cargo-dylint-version: 6.0.1
-          dylint-link-version: 6.0.1
+          dylint-toolchain: nightly-2026-05-28
+          cargo-dylint-version: 6.0.3
+          dylint-link-version: 6.0.3
           # Opt out of the implicit `SOLDR_LINKER=fast` injection so cargo /
           # rust-toolchain.toml stays in charge. Silences the routine
           # "defaulting SOLDR_LINKER=fast" warning (issue #400 /
           # setup-soldr#377).
           linker: platform-default
-          # Dylint's build pulls in a full rustc-dev tree on first run
+          # Dylint's lint libraries pull in a full rustc-dev tree on first run
           # which can push the build-cache past the 512 MiB action default
           # (issue #400). Raise the soft warn threshold; hard cap stays
           # at the action default (6 GiB).
           cache-payload-warn-bytes: 2GiB
-      - name: Install Dylint nightly toolchain
+      - name: Prepare prebuilt Dylint tools and driver
         timeout-minutes: 10
-        run: soldr rustup toolchain install nightly-2026-04-16 --component llvm-tools-preview --component rust-src --component rustc-dev --component rustfmt --profile minimal
-      - name: Install Dylint
-        timeout-minutes: 10
-        run: soldr cargo install cargo-dylint dylint-link --version 6.0.1 --locked
-      - name: Build published Dylint driver
-        # Dylint is explicitly permitted to build under its separate nightly
-        # until its matching Windows driver becomes a published prebuilt.
-        timeout-minutes: 15
-        run: uv run --no-project python ci/build_dylint_driver.py
+        run: |
+          soldr dylint prepare 2>&1 | tee "$RUNNER_TEMP/dylint-prepare.log"
+          # Library UI tests invoke soldr cargo test separately, so preserve
+          # the prebuilt dylint-link directory for their linker config.
+          sed -n 's/^soldr: dylint prepare: tool bin dir //p' "$RUNNER_TEMP/dylint-prepare.log" >> "$GITHUB_PATH"
       - name: Check Dylint library formatting
         if: matrix.os == 'ubuntu-latest'
         run: |
           while IFS= read -r manifest; do
-            RUSTUP_TOOLCHAIN=nightly-2026-04-16 \
+            RUSTUP_TOOLCHAIN=nightly-2026-05-28 \
               soldr cargo fmt --manifest-path "$manifest" --all -- --check
           done < <(find dylints -mindepth 2 -maxdepth 2 -name Cargo.toml | sort)
       - name: Test Dylint libraries
@@ -193,26 +181,18 @@ jobs:
           export PATH="${CARGO_BIN}:${PATH}"
           export CARGO_TARGET_DIR="$PWD/target/dylint-tests"
           while IFS= read -r manifest; do
-            RUSTUP_TOOLCHAIN=nightly-2026-04-16 \
+            RUSTUP_TOOLCHAIN=nightly-2026-05-28 \
               soldr cargo test --manifest-path "$manifest"
           done < <(find dylints -mindepth 2 -maxdepth 2 -name Cargo.toml | sort)
       - name: Run dylint over workspace
         env:
           FBUILD_PLATFORM_BOUNDARY_OBSERVED: ${{ github.workspace }}/target/platform-boundary-dylint-observed.tsv
         run: |
-          # Invoke the exact binary installed above. The Soldr cargo front
-          # door otherwise injects its managed cargo-dylint toolchain, which
-          # overrides the shared nightly pinned by the library manifests.
-          # Give every job a distinct, inert cfg so Cargo cannot reuse check
-          # artifacts without running rustc/Dylint. Actual traversal is what
-          # makes the observation comparison below meaningful.
+          # Force fresh traversal so the independent observation ledger sees
+          # every platform-gated source path on each run.
           export RUSTFLAGS="${RUSTFLAGS:+${RUSTFLAGS} }--cfg fbuild_platform_boundary_observation_run_${GITHUB_RUN_ID}"
           rm -f "$FBUILD_PLATFORM_BOUNDARY_OBSERVED"
-          CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"
-          # Invoked as a single argument rather than through `PATH`, so the
-          # separator hazard in #1373 does not apply here. No `.exe` suffix
-          # needed: Git Bash resolves it on Windows.
-          "${CARGO_HOME}/bin/cargo-dylint" dylint --all -- --workspace --all-targets
+          soldr dylint --all -- --workspace --all-targets
       - name: Compare scanner with actual Dylint observations
         run: uv run --no-project python ci/enforce_platform_boundary.py --dylint-observed target/platform-boundary-dylint-observed.tsv --print-totals
 

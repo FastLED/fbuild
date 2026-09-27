@@ -55,7 +55,7 @@ synchronous discipline that justifies it.
 
 ## Toolchain
 
-Pinned to `nightly-2026-04-16` and Dylint 6.0.1, matching every other
+Pinned to `nightly-2026-05-28` and Dylint 6.0.3, matching every other
 Dylint library in this repository.
 
 ## Running locally

@@ -7,7 +7,7 @@ itself stays on stable 1.95.0).
 
 Run `uv run --script lint` for the full local check. It now includes the real
 workspace Dylint pass after formatting and Clippy; its first run installs the
-pinned Dylint 6.0.1 tools and nightly driver under `target/`. A single-file
+pinned Dylint 6.0.3 tools and nightly driver in Soldr’s cache. A single-file
 `./lint` invocation runs every custom Dylint on that file's crate (not its
 dependents); a full invocation checks the entire workspace. Local Dylint
 checks the host platform; ordinary PR CI runs the same workspace lints
@@ -186,16 +186,11 @@ natively on Linux, Windows, and macOS and requires all three to pass.
 ## Running locally
 
 ```bash
-# One-time setup
-soldr rustup toolchain install nightly-2026-04-16 \
-    --component llvm-tools-preview --component rust-src --component rustc-dev --component rustfmt \
-    --profile minimal
-soldr cargo install cargo-dylint dylint-link --version 6.0.1 --locked
-uv run --no-project python ci/build_dylint_driver.py
+# Fetch the published tools and driver for the lint manifests' nightly.
+soldr dylint prepare
 
-# Run all dylints over the workspace
-"${CARGO_HOME:-$HOME/.cargo}/bin/cargo-dylint" \
-    dylint --all -- --workspace --all-targets
+# Run all dylints over the workspace.
+soldr dylint --all -- --workspace --all-targets
 ```
 
 CI runs this on every push/PR via `.github/workflows/dylint.yml`.
@@ -205,7 +200,7 @@ CI runs this on every push/PR via `.github/workflows/dylint.yml`.
 `dylint_linting` builds against a specific nightly rustc; the rustc
 internal API (`rustc_lint`, `rustc_hir`, `rustc_span`) changes between
 nightlies. Keeping each dylint crate out of the stable workspace lets
-it pin `nightly-2026-04-16` in its own `rust-toolchain.toml` without
+it pin `nightly-2026-05-28` in its own `rust-toolchain.toml` without
 forcing the entire workspace to nightly.
 
 The workspace registers the lint directory via:
@@ -215,17 +210,7 @@ The workspace registers the lint directory via:
 libraries = [{ path = "dylints/*" }]
 ```
 
-so `cargo-dylint dylint --all` picks every dylint up automatically. The
-installed binary is invoked directly so Soldr's managed cargo-subcommand
-toolchain does not override the nightly pinned by each lint manifest.
-
-## Why one published stack
-
-Every lint crate, the test harness, and the CI front-end use Dylint
-6.0.1 with `nightly-2026-04-16`. No git checkout or library alias is
-needed. One narrow bootstrap remains because Dylint 6.0.1 clears
-`RUSTUP_TOOLCHAIN` before building its published driver even though the
-driver's build script requires that variable (the same failure class as
-trailofbits/dylint#1172). `ci/build_dylint_driver.py` builds the crates.io
-driver with the channel preserved and exports its standard path; remove
-the script when upstream propagates the channel.
+so `soldr dylint --all` picks every dylint up automatically. Soldr resolves
+Dylint 6.0.3, `dylint-link`, and the driver for `nightly-2026-05-28` from
+the verified prebuilt catalogue. An absent asset fails preparation instead
+of compiling a tool or driver during CI.
