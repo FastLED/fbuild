@@ -437,6 +437,9 @@ impl Esp32Linker {
 
         // SDK precompiled libraries (ordered flags from flags/ld_libs)
         link_args.extend(self.sdk_lib_flags.clone());
+        if !self.sdk_lib_flags.iter().any(|flag| flag == "-lstdc++") {
+            link_args.extend(self.mcu_config.linker_libs.iter().cloned());
+        }
         link_args.extend(extra.libs.iter().cloned());
 
         link_args.push("-Wl,--end-group".to_string());
@@ -795,6 +798,34 @@ mod tests {
             "expected -Wl,-Map=/build/firmware.map next to firmware.elf. Args: {:?}",
             args,
         );
+    }
+
+    #[test]
+    fn legacy_esp32s3_link_includes_cpp_runtime_once() {
+        let mut linker = test_linker("esp32s3");
+        linker.sdk_lib_flags.clear();
+        let args = linker.build_link_args(
+            &[],
+            &[],
+            Path::new("/build/firmware.elf"),
+            &LinkExtraArgs::default(),
+        );
+        assert_eq!(args.iter().filter(|arg| *arg == "-lstdc++").count(), 1);
+        let runtime = args.iter().position(|arg| arg == "-lstdc++").unwrap();
+        let end_group = args
+            .iter()
+            .position(|arg| arg == "-Wl,--end-group")
+            .unwrap();
+        assert!(runtime < end_group);
+
+        linker.sdk_lib_flags.push("-lstdc++".to_string());
+        let args = linker.build_link_args(
+            &[],
+            &[],
+            Path::new("/build/firmware.elf"),
+            &LinkExtraArgs::default(),
+        );
+        assert_eq!(args.iter().filter(|arg| *arg == "-lstdc++").count(), 1);
     }
 
     #[test]

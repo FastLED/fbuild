@@ -207,6 +207,96 @@ fn test_sdk_include_dirs_prefers_requested_memory_variant() {
 }
 
 #[test]
+fn old_sdk_keeps_newlib_platform_headers_first() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let include = tmp.path().join("tools/sdk/esp32s3/include");
+    let newlib = include.join("newlib/platform_include");
+    let esp = include.join("esp_hw_support/include");
+    std::fs::create_dir_all(&newlib).unwrap();
+    std::fs::create_dir_all(&esp).unwrap();
+    std::fs::write(newlib.join("assert.h"), "#define assert(x) ((void)0)\n").unwrap();
+    std::fs::create_dir_all(newlib.join("sys")).unwrap();
+    std::fs::write(newlib.join("sys/time.h"), "\n").unwrap();
+    std::fs::write(esp.join("soc.h"), "\n").unwrap();
+    let fw = Esp32Framework {
+        base: PackageBase::new(
+            "test",
+            "1.0",
+            "http://example.com",
+            "http://example.com",
+            None,
+            CacheSubdir::Platforms,
+            tmp.path(),
+        ),
+        install_dir: Some(tmp.path().to_path_buf()),
+    };
+
+    let dirs = fw.get_sdk_include_dirs("esp32s3", None);
+    assert_eq!(dirs.first(), Some(&newlib));
+    assert!(!dirs.contains(&newlib.join("sys")));
+}
+
+#[test]
+fn old_sdk_does_not_mix_rom_headers_from_other_mcus() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let rom = tmp.path().join("tools/sdk/esp32s3/include/esp_rom/include");
+    for chip in ["esp32", "esp32c3", "esp32s3"] {
+        let dir = rom.join(chip).join("rom");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(dir.join("gpio.h"), "\n").unwrap();
+    }
+    let linux = rom.join("linux/soc");
+    std::fs::create_dir_all(&linux).unwrap();
+    std::fs::write(linux.join("reset_reasons.h"), "\n").unwrap();
+    let fw = Esp32Framework {
+        base: PackageBase::new(
+            "test",
+            "1.0",
+            "http://example.com",
+            "http://example.com",
+            None,
+            CacheSubdir::Platforms,
+            tmp.path(),
+        ),
+        install_dir: Some(tmp.path().to_path_buf()),
+    };
+
+    let dirs = fw.get_sdk_include_dirs("esp32s3", None);
+    assert!(dirs.iter().any(|dir| dir == &rom.join("esp32s3")));
+    assert!(!dirs.iter().any(|dir| dir == &rom.join("esp32")));
+    assert!(!dirs.iter().any(|dir| dir == &rom.join("esp32c3")));
+    assert!(!dirs.iter().any(|dir| dir == &linux));
+}
+
+#[test]
+fn old_sdk_prefers_common_component_headers_before_chip_extensions() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let efuse = tmp.path().join("tools/sdk/esp32s3/include/efuse");
+    let common = efuse.join("include");
+    let chip = efuse.join("esp32s3/include");
+    std::fs::create_dir_all(&common).unwrap();
+    std::fs::create_dir_all(&chip).unwrap();
+    std::fs::write(common.join("esp_efuse.h"), "\n").unwrap();
+    std::fs::write(chip.join("esp_efuse_table.h"), "\n").unwrap();
+    let fw = Esp32Framework {
+        base: PackageBase::new(
+            "test",
+            "1.0",
+            "http://example.com",
+            "http://example.com",
+            None,
+            CacheSubdir::Platforms,
+            tmp.path(),
+        ),
+        install_dir: Some(tmp.path().to_path_buf()),
+    };
+    let dirs = fw.get_sdk_include_dirs("esp32s3", None);
+    let common_pos = dirs.iter().position(|dir| dir == &common).unwrap();
+    let chip_pos = dirs.iter().position(|dir| dir == &chip).unwrap();
+    assert!(common_pos < chip_pos);
+}
+
+#[test]
 fn test_sdk_lib_flags_prefers_requested_memory_variant() {
     let tmp = tempfile::TempDir::new().unwrap();
     let sdk_dir = tmp.path().join("tools").join("sdk").join("esp32s3");
@@ -241,6 +331,59 @@ fn test_sdk_lib_flags_prefers_requested_memory_variant() {
             .iter()
             .any(|f| f.ends_with("\\esp32s3\\qio_opi") || f.ends_with("/esp32s3/qio_opi"))
     );
+}
+
+#[test]
+fn old_sdk_linker_scripts_search_selected_memory_variant() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let sdk = tmp.path().join("tools/sdk/esp32s3");
+    std::fs::create_dir_all(sdk.join("ld")).unwrap();
+    std::fs::create_dir_all(sdk.join("dio_qspi")).unwrap();
+    std::fs::write(sdk.join("dio_qspi/sections.ld"), "\n").unwrap();
+    let fw = Esp32Framework {
+        base: PackageBase::new(
+            "test",
+            "1.0",
+            "http://example.com",
+            "http://example.com",
+            None,
+            CacheSubdir::Platforms,
+            tmp.path(),
+        ),
+        install_dir: Some(tmp.path().to_path_buf()),
+    };
+    let flags = fw.get_sdk_ld_scripts("esp32s3", Some("dio_qspi"));
+    assert!(flags.contains(&format!("-L{}", sdk.join("dio_qspi").display())));
+}
+
+#[test]
+fn old_sdk_libraries_use_selected_variant_before_common_archives() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let sdk = tmp.path().join("tools/sdk/esp32s3");
+    let variant = sdk.join("qio_qspi");
+    let common = sdk.join("lib");
+    std::fs::create_dir_all(&variant).unwrap();
+    std::fs::create_dir_all(&common).unwrap();
+    std::fs::write(variant.join("libfreertos.a"), "").unwrap();
+    std::fs::write(common.join("libfreertos.a"), "").unwrap();
+    std::fs::write(common.join("libesp_system.a"), "").unwrap();
+    let fw = Esp32Framework {
+        base: PackageBase::new(
+            "test",
+            "1.0",
+            "http://example.com",
+            "http://example.com",
+            None,
+            CacheSubdir::Platforms,
+            tmp.path(),
+        ),
+        install_dir: Some(tmp.path().to_path_buf()),
+    };
+    let flags = fw.get_sdk_lib_flags("esp32s3", Some("qio_qspi"));
+    assert_eq!(flags[0], format!("-L{}", variant.display()));
+    assert_eq!(flags[1], format!("-L{}", common.display()));
+    assert_eq!(flags.iter().filter(|flag| *flag == "-lfreertos").count(), 1);
+    assert!(flags.contains(&"-lesp_system".to_string()));
 }
 
 #[test]

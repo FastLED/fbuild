@@ -7,7 +7,9 @@ use fbuild_core::platformio_package::{
 };
 use serde::Deserialize;
 use sha2::{Digest, Sha256};
+use std::io::Write;
 use std::path::Path;
+use std::time::{Duration, SystemTime};
 
 const API_BASE: &str = "https://api.registry.platformio.org/v3";
 const SEARCH_PAGE_SIZE: usize = 50;
@@ -86,6 +88,69 @@ impl RegistryClient {
             .text()
             .await?;
         Ok(resolve_registry_json(&qualified, kind, system, &body)?)
+    }
+
+    /// Resolve through a host-specific on-disk metadata lock. Check/dry-run
+    /// callers pass `fetch = false` and never touch the network. Exact pins
+    /// remain immutable; range selections refresh after one hour online.
+    pub async fn resolve_cached(
+        &self,
+        spec: &RegistrySpec,
+        kind: PackageKind,
+        system: &str,
+        cache_root: &Path,
+        fetch: bool,
+    ) -> Result<Option<ResolvedPayload>, RegistryError> {
+        let request = serde_json::to_vec(&(&self.base_url, spec, kind, system))?;
+        let key = format!("{:x}", Sha256::digest(request));
+        let directory = cache_root.join("platformio-registry-resolutions");
+        let path = directory.join(format!("{key}.json"));
+        let cached = match std::fs::read(&path) {
+            Ok(bytes) => {
+                let payload: ResolvedPayload = serde_json::from_slice(&bytes)?;
+                if payload.name != spec.name
+                    || payload.kind != kind
+                    || payload.system != system
+                    || spec
+                        .owner
+                        .as_deref()
+                        .is_some_and(|owner| owner != payload.owner)
+                {
+                    return Err(RegistryError::Resolution(ResolutionError::InvalidMetadata(
+                        format!("cached registry payload does not match {}", path.display()),
+                    )));
+                }
+                Some(payload)
+            }
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => None,
+            Err(error) => return Err(RegistryError::Storage(error)),
+        };
+        if let Some(payload) = &cached {
+            let exact_pin = spec
+                .requirement
+                .as_deref()
+                .is_some_and(|requirement| semver::Version::parse(requirement).is_ok());
+            let fresh = path
+                .metadata()
+                .and_then(|metadata| metadata.modified())
+                .ok()
+                .and_then(|modified| SystemTime::now().duration_since(modified).ok())
+                .is_some_and(|age| age < Duration::from_secs(3600));
+            if !fetch || exact_pin || fresh {
+                return Ok(Some(payload.clone()));
+            }
+        }
+        if !fetch {
+            return Ok(None);
+        }
+        let payload = self.resolve(spec, kind, system).await?;
+        std::fs::create_dir_all(&directory)?;
+        let mut staged = tempfile::NamedTempFile::new_in(&directory)?;
+        staged.write_all(&serde_json::to_vec(&payload)?)?;
+        staged
+            .persist(&path)
+            .map_err(|error| RegistryError::Storage(error.error))?;
+        Ok(Some(payload))
     }
 
     /// Download a selected registry archive into a digest-keyed cache and
@@ -229,8 +294,98 @@ mod tests {
     use super::*;
     use axum::{Router, routing::get};
     use fbuild_core::platformio_package::parse_package_spec;
+    use std::sync::Arc;
+    use std::sync::atomic::{AtomicUsize, Ordering};
 
     const HASH: &str = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+
+    #[tokio::test]
+    async fn cached_payload_allows_offline_checks_and_warm_resolution() {
+        let requests = Arc::new(AtomicUsize::new(0));
+        let count = requests.clone();
+        let app = Router::new().route(
+            "/v3/packages/acme/platform/custom-board",
+            get(move || {
+                let count = count.clone();
+                async move {
+                    count.fetch_add(1, Ordering::Relaxed);
+                    format!("{{\"name\":\"custom-board\",\"owner\":{{\"username\":\"acme\"}},\"versions\":[{{\"name\":\"1.2.3\",\"files\":[{{\"system\":\"*\",\"download_url\":\"https://example.test/custom.tar.gz\",\"checksum\":{{\"sha256\":\"{HASH}\"}}}}]}}]}}")
+                }
+            }),
+        );
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let address = listener.local_addr().unwrap();
+        tokio::spawn(async move { axum::serve(listener, app).await.unwrap() });
+        let client = RegistryClient::new(format!("http://{address}/v3"), reqwest::Client::new());
+        let spec = parse_package_spec("acme/custom-board@1.2.3").unwrap();
+        let registry = spec.registry().unwrap();
+        let cache = tempfile::tempdir().unwrap();
+        assert!(
+            client
+                .resolve_cached(
+                    registry,
+                    PackageKind::Platform,
+                    "linux_x86_64",
+                    cache.path(),
+                    false
+                )
+                .await
+                .unwrap()
+                .is_none()
+        );
+        let first = client
+            .resolve_cached(
+                registry,
+                PackageKind::Platform,
+                "linux_x86_64",
+                cache.path(),
+                true,
+            )
+            .await
+            .unwrap()
+            .unwrap();
+        assert_eq!(requests.load(Ordering::Relaxed), 1);
+        assert_eq!(
+            client
+                .resolve_cached(
+                    registry,
+                    PackageKind::Platform,
+                    "linux_x86_64",
+                    cache.path(),
+                    false
+                )
+                .await
+                .unwrap(),
+            Some(first.clone())
+        );
+        assert_eq!(
+            client
+                .resolve_cached(
+                    registry,
+                    PackageKind::Platform,
+                    "linux_x86_64",
+                    cache.path(),
+                    true
+                )
+                .await
+                .unwrap(),
+            Some(first)
+        );
+        assert_eq!(requests.load(Ordering::Relaxed), 1);
+        assert!(
+            client
+                .resolve_cached(
+                    registry,
+                    PackageKind::Platform,
+                    "windows_amd64",
+                    cache.path(),
+                    false
+                )
+                .await
+                .unwrap()
+                .is_none()
+        );
+    }
 
     #[tokio::test]
     async fn resolves_short_and_qualified_aliases_from_offline_registry() {

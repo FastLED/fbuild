@@ -35,6 +35,9 @@ fn sample_results() -> Vec<ToolResult> {
             cold_phases_ms: BTreeMap::new(),
             cold_phase_trials: Vec::new(),
             daemon_restarts: 0,
+            resolved_packages: BTreeMap::from([("framework".into(), "1.8.8".into())]),
+            core_source_count: None,
+            core_compile_argv: None,
         },
         ToolResult {
             board: "uno".into(),
@@ -50,6 +53,9 @@ fn sample_results() -> Vec<ToolResult> {
             cold_phases_ms: BTreeMap::new(),
             cold_phase_trials: Vec::new(),
             daemon_restarts: 0,
+            resolved_packages: BTreeMap::from([("framework".into(), "1.8.8".into())]),
+            core_source_count: None,
+            core_compile_argv: None,
         },
         ToolResult {
             board: "uno".into(),
@@ -65,6 +71,9 @@ fn sample_results() -> Vec<ToolResult> {
             cold_phases_ms: BTreeMap::from([("compile".to_string(), 400.0)]),
             cold_phase_trials: vec![BTreeMap::from([("compile".to_string(), 400.0)])],
             daemon_restarts: 0,
+            resolved_packages: BTreeMap::from([("framework".into(), "1.8.8".into())]),
+            core_source_count: None,
+            core_compile_argv: None,
         },
     ]
 }
@@ -78,6 +87,7 @@ fn sample_metadata() -> Metadata {
         project: "bench/blink".into(),
         trials: 3,
         raw_baseline_ms: Some(450.0),
+        raw_baselines_ms: BTreeMap::from([("uno".into(), 450.0)]),
     }
 }
 
@@ -408,6 +418,7 @@ fn strips_compiler_wrapper_prefix_and_redirects_output() {
 fn latest_payload_reports_overhead_and_platformio_ratio() {
     let latest = latest_payload(&sample_metadata(), &sample_results());
     assert_eq!(latest["raw_baseline_ms"], 450.0);
+    assert_eq!(latest["board_metrics"]["uno"]["raw_baseline_ms"], 450.0);
     assert_eq!(latest["fbuild_overhead_ms"], 150.0);
     assert_eq!(latest["fbuild_vs_platformio_cold"], 0.667);
     assert_eq!(latest["results"][2]["cold_phases_ms"]["compile"], 400.0);
@@ -424,6 +435,7 @@ fn latest_payload_reports_overhead_and_platformio_ratio() {
 
     let mut metadata = sample_metadata();
     metadata.raw_baseline_ms = None;
+    metadata.raw_baselines_ms.clear();
     let latest = latest_payload(&metadata, &sample_results());
     assert!(latest["raw_baseline_ms"].is_null());
     assert!(latest["fbuild_overhead_ms"].is_null());
@@ -434,6 +446,93 @@ fn latest_payload_reports_overhead_and_platformio_ratio() {
     let line: Value = serde_json::from_str(fs::read_to_string(&path).unwrap().trim()).unwrap();
     assert_eq!(line["fbuild_overhead_ms"], 150.0);
     assert_eq!(line["fbuild_vs_platformio_cold"], 0.667);
+}
+
+#[test]
+fn esp32_regression_is_not_hidden_by_uno_ratio() {
+    let mut results = sample_results();
+    let mut pio = results[1].clone();
+    pio.board = "esp32s3".into();
+    pio.board_name = "ESP32-S3".into();
+    pio.cold_ms = 6_000.0;
+    let mut fbuild = results[2].clone();
+    fbuild.board = "esp32s3".into();
+    fbuild.board_name = "ESP32-S3".into();
+    fbuild.cold_ms = 15_000.0;
+    results.extend([pio, fbuild]);
+
+    let latest = latest_payload(&sample_metadata(), &results);
+    assert_eq!(
+        latest["board_metrics"]["uno"]["fbuild_vs_platformio_cold"],
+        0.667
+    );
+    assert_eq!(
+        latest["board_metrics"]["esp32s3"]["fbuild_vs_platformio_cold"],
+        2.5
+    );
+    assert_eq!(latest["fbuild_vs_platformio_cold"], 2.5);
+}
+
+#[test]
+fn different_resolved_esp32_stacks_cannot_publish_a_ratio() {
+    let mut results = sample_results();
+    for result in &mut results {
+        result.board = "esp32s3".into();
+        result.board_name = "ESP32-S3".into();
+        result.resolved_packages = BTreeMap::from([
+            ("platform".into(), "6.13.0".into()),
+            ("framework".into(), "3.20017.241212+sha.dcc1105b".into()),
+            ("toolchain".into(), "8.4.0+2021r2-patch5".into()),
+        ]);
+    }
+    results[2]
+        .resolved_packages
+        .insert("toolchain".into(), "14.2.0".into());
+    let latest = latest_payload(&sample_metadata(), &results);
+    assert_eq!(
+        latest["board_metrics"]["esp32s3"]["stack_comparable"],
+        false
+    );
+    assert!(latest["board_metrics"]["esp32s3"]["fbuild_vs_platformio_cold"].is_null());
+    assert!(latest["fbuild_vs_platformio_cold"].is_null());
+    assert_eq!(
+        latest["results"][2]["resolved_packages"]["toolchain"],
+        "14.2.0"
+    );
+    assert!(render_svg(&sample_metadata(), &results).contains("stack differs; ratio excluded"));
+    assert!(render_html(&sample_metadata(), &results).contains("ratio excluded"));
+}
+
+#[test]
+fn installed_package_parsers_capture_the_same_esp32_stack() {
+    let board = BOARDS[1];
+    let pio = parse_platformio_packages(
+        b"Processing esp32s3 (platform: espressif32@6.13.0; board: esp32-s3-devkitc-1; framework: arduino)\nPACKAGES:\n - framework-arduinoespressif32 @ 3.20017.241212+sha.dcc1105b\n - tool-esptoolpy @ 2.41100.260830 (4.11.0)\n - toolchain-riscv32-esp @ 8.4.0+2021r2-patch5\n - toolchain-xtensa-esp32s3 @ 8.4.0+2021r2-patch5\n",
+        board,
+    );
+    let fbuild = parse_fbuild_packages(
+        br#"{"environments":[{"packages":[{"kind":"platform","name":"platform-espressif32","version":"6.13.0"},{"kind":"framework","name":"esp32-arduino","version":"3.20017.241212+sha.dcc1105b"},{"kind":"toolchain","name":"toolchain-xtensa-esp32s3","version":"8.4.0+2021r2-patch5"},{"kind":"tool","name":"tool-esptoolpy","version":"2.41100.260830"}]}]}"#,
+    ).unwrap();
+    assert_eq!(pio, fbuild);
+}
+
+#[test]
+fn compile_database_records_distinct_esp32_core_sources_and_flags() {
+    let temp = tempfile::tempdir().unwrap();
+    let db = temp.path().join("compile_commands.json");
+    fs::write(
+        &db,
+        r#"[
+          {"directory":"/build","file":"/framework/cores/esp32/Esp.cpp","arguments":["xtensa-g++","-std=gnu++11","-c","/framework/cores/esp32/Esp.cpp"]},
+          {"directory":"/build","file":"/framework/cores/esp32/Esp.cpp","arguments":["xtensa-g++","-std=gnu++11","-c","/framework/cores/esp32/Esp.cpp"]},
+          {"directory":"/build","file":"/framework/cores/esp32/Print.cpp","arguments":["xtensa-g++","-std=gnu++11","-c","/framework/cores/esp32/Print.cpp"]},
+          {"directory":"/build","file":"/project/src/blink.ino.cpp","arguments":["xtensa-g++","-c","blink.ino.cpp"]}
+        ]"#,
+    )
+    .unwrap();
+    let (count, argv) = core_compile_metadata(&db).unwrap();
+    assert_eq!(count, Some(2));
+    assert_eq!(argv.unwrap()[1], "-std=gnu++11");
 }
 
 #[test]

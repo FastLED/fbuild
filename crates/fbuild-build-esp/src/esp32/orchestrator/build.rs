@@ -93,7 +93,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
         )
         .await?;
         drop(_resolve_phase);
-        mcu_config.adapt_to_toolchain(&fbuild_packages::Package::get_info(&toolchain).name);
+        let toolchain_info = fbuild_packages::Package::get_info(&toolchain);
+        mcu_config.adapt_to_toolchain(&toolchain_info.name, &toolchain_info.version);
         let _toolchain_cache_dir = fbuild_packages::Package::get_info(&toolchain).install_path;
         let _framework_cache_dir = fbuild_packages::Package::get_info(&framework).install_path;
 
@@ -280,8 +281,17 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // Read SDK flags early â€” needed to check LTO before compiling.
         let sdk_ld_flags = framework.get_sdk_ld_flags(&sdk_variant);
         let sdk_lib_flags = framework.get_sdk_lib_flags(&sdk_variant, sdk_memory_type.as_deref());
-        let sdk_ld_scripts =
-            LinkerScripts::from_raw_flags(&framework.get_sdk_ld_scripts(&sdk_variant));
+        let mut raw_ld_scripts =
+            framework.get_sdk_ld_scripts(&sdk_variant, sdk_memory_type.as_deref());
+        if !raw_ld_scripts
+            .iter()
+            .any(|flag| flag == "-T" || flag.starts_with("-T"))
+        {
+            for script in &mcu_config.linker_scripts {
+                raw_ld_scripts.extend(["-T".to_string(), script.clone()]);
+            }
+        }
+        let sdk_ld_scripts = LinkerScripts::from_raw_flags(&raw_ld_scripts);
         let sdk_defines = framework.get_sdk_defines(&sdk_variant);
 
         // If SDK specifies -fno-lto, disable LTO in MCU config profiles to avoid
