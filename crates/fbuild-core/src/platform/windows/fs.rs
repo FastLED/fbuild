@@ -11,6 +11,16 @@ pub(crate) fn file_identity(path: &Path) -> std::io::Result<same_file::Handle> {
     same_file::Handle::from_path(path)
 }
 
+pub(crate) fn executable_memo_identity(metadata: &std::fs::Metadata) -> std::io::Result<String> {
+    Ok(format!(
+        "{} {} {} {}",
+        metadata.file_size(),
+        metadata.last_write_time(),
+        metadata.creation_time(),
+        metadata.file_attributes()
+    ))
+}
+
 pub(crate) fn comparison_key(path: &Path) -> String {
     let mut value = display_slash(path);
     value.make_ascii_lowercase();

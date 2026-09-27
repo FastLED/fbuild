@@ -75,7 +75,7 @@ const DAEMON_PROCESS_STEM: &str = "fbuild-daemon";
 /// shutting down, it is stuck.
 const GRACEFUL_STOP_BUDGET: std::time::Duration = std::time::Duration::from_secs(5);
 
-/// How long a signalled process gets to actually disappear. Termination is
+/// How long a force-killed process gets to actually disappear. Termination is
 /// asynchronous on both OS families, but a process that has not gone in 5 s
 /// is not going.
 const TERMINATION_BUDGET: std::time::Duration = std::time::Duration::from_secs(5);
@@ -186,10 +186,16 @@ pub async fn run_daemon_stop(client: &DaemonClient) -> fbuild_core::Result<()> {
 /// anomaly — which is why the graceful attempt's exit status is ignored and
 /// only the liveness check decides.
 async fn terminate_and_confirm(pid: u32) -> fbuild_core::Result<()> {
-    if let Err(error) = kill_process(pid, false).await {
-        tracing::debug!(pid, %error, "graceful terminate refused; escalating to a forced kill");
-    }
-    if wait_for_process_exit(pid, TERMINATION_BUDGET).await {
+    // A delivered terminate gets the daemon's full controlled-exit budget; a
+    // refused one keeps the plain liveness wait.
+    let graceful_budget = match kill_process(pid, false).await {
+        Ok(()) => fbuild_core::platform::process::daemon_graceful_termination_budget(),
+        Err(error) => {
+            tracing::debug!(pid, %error, "graceful terminate refused; escalating to a forced kill");
+            TERMINATION_BUDGET
+        }
+    };
+    if wait_for_process_exit(pid, graceful_budget).await {
         return Ok(());
     }
 

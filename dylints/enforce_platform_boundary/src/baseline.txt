@@ -31,8 +31,6 @@ crates/fbuild-paths/src/executable_hash.rs	attr_cfg	unix	3
 crates/fbuild-paths/src/executable_hash.rs	attr_cfg	unix	4
 crates/fbuild-paths/src/executable_hash.rs	attr_cfg	unix	5
 crates/fbuild-paths/src/executable_hash.rs	attr_cfg	unix	6
-crates/fbuild-paths/src/executable_hash.rs	attr_cfg	unix	7
-crates/fbuild-paths/src/executable_hash.rs	native_import	std::os::unix	0
 crates/fbuild-python/tests/python_facades.rs	native_import	std::env::current_exe	0
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	attr_cfg	windows	0
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	attr_cfg	windows	1

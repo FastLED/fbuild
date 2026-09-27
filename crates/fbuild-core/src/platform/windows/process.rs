@@ -17,6 +17,16 @@ unsafe impl Sync for JobHandle {}
 static TOKIO_JOB: OnceLock<JobHandle> = OnceLock::new();
 static SHUTDOWN_TX: OnceLock<tokio::sync::watch::Sender<bool>> = OnceLock::new();
 
+/// Windows delivers termination requests as console control events, which
+/// `register_daemon_shutdown_handler` already routes to graceful shutdown.
+pub(crate) async fn daemon_terminate_signal() {
+    std::future::pending::<()>().await
+}
+
+pub(crate) fn daemon_graceful_termination_budget() -> std::time::Duration {
+    std::time::Duration::from_secs(5)
+}
+
 pub(crate) fn register_daemon_shutdown_handler(
     shutdown_tx: tokio::sync::watch::Sender<bool>,
 ) -> std::io::Result<()> {
