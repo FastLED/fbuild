@@ -1,6 +1,7 @@
 //! Unit tests for the ESP32 orchestrator's helpers and public API.
 
 use super::Esp32Orchestrator;
+use super::build::reject_unsupported_sdkconfig_overlay;
 use super::cdc::{cdc_on_boot_enabled, is_esp32_project, warn_if_cdc_on_boot};
 use super::helpers::apply_effective_define_flags;
 use super::helpers::{
@@ -16,6 +17,79 @@ use std::time::Duration;
 fn test_esp32_orchestrator_platform() {
     let orch = Esp32Orchestrator;
     assert_eq!(orch.platform(), Platform::Espressif32);
+}
+
+#[test]
+fn sdkconfig_overlays_fail_for_arduino_esp32() {
+    for key in ["board_build.sdkconfig_defaults", "custom_sdkconfig"] {
+        let tmp = tempfile::TempDir::new().unwrap();
+        std::fs::write(
+            tmp.path().join("platformio.ini"),
+            format!(
+                "[env]\nframework = arduino\n{key} = tools/size.defaults\n\
+                 [env:esp32s3]\nplatform = espressif32\nboard = esp32-s3-devkitc-1\n"
+            ),
+        )
+        .unwrap();
+        let config =
+            fbuild_config::PlatformIOConfig::from_path(&tmp.path().join("platformio.ini")).unwrap();
+        let error = reject_unsupported_sdkconfig_overlay(&config, "esp32s3").unwrap_err();
+        assert!(error.to_string().contains(key), "{error}");
+        assert!(error.to_string().contains("#1460"), "{error}");
+    }
+}
+
+#[test]
+fn sdkconfig_guard_allows_plain_arduino_build() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    std::fs::write(
+        tmp.path().join("platformio.ini"),
+        "[env:esp32s3]\nframework = arduino\nboard = esp32-s3-devkitc-1\n",
+    )
+    .unwrap();
+    let config =
+        fbuild_config::PlatformIOConfig::from_path(&tmp.path().join("platformio.ini")).unwrap();
+    reject_unsupported_sdkconfig_overlay(&config, "esp32s3").unwrap();
+}
+
+#[tokio::test]
+async fn sdkconfig_overlay_fails_before_cleaning_build_directory() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    std::fs::write(
+        tmp.path().join("platformio.ini"),
+        "[env:esp32s3]\nplatform = espressif32\nboard = esp32-s3-devkitc-1\nframework = arduino\ncustom_sdkconfig = sdkconfig.defaults\n",
+    )
+    .unwrap();
+    let build_dir = tmp.path().join("build");
+    std::fs::create_dir(&build_dir).unwrap();
+    let marker = build_dir.join("keep.txt");
+    std::fs::write(&marker, "keep").unwrap();
+    let params = crate::BuildParams {
+        project_dir: tmp.path().to_path_buf(),
+        env_name: "esp32s3".into(),
+        clean_all: false,
+        clean_only: false,
+        clean: true,
+        profile: fbuild_core::BuildProfile::Release,
+        build_dir,
+        verbose: false,
+        jobs: None,
+        generate_compiledb: false,
+        compiledb_only: false,
+        log_sender: None,
+        symbol_analysis: false,
+        symbol_analysis_path: None,
+        no_timestamp: true,
+        src_dir: None,
+        pio_env: Default::default(),
+        extra_build_flags: Vec::new(),
+        watch_set_cache: None,
+        bloat_analysis: false,
+        caller_path: None,
+    };
+    let error = Esp32Orchestrator.build(&params).await.err().unwrap();
+    assert!(error.to_string().contains("custom_sdkconfig"), "{error}");
+    assert_eq!(std::fs::read_to_string(marker).unwrap(), "keep");
 }
 
 #[test]

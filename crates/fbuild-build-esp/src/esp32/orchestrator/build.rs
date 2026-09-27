@@ -40,6 +40,12 @@ impl BuildOrchestrator for Esp32Orchestrator {
     }
 
     async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
+        let config = fbuild_config::PlatformIOConfig::from_path_with_overrides(
+            &params.project_dir.join("platformio.ini"),
+            fbuild_config::PioEnvOverrides::from_map(params.pio_env.clone()),
+        )?;
+        reject_unsupported_sdkconfig_overlay(&config, &params.env_name)?;
+
         let start = Instant::now();
         // Env-gated per-phase timer (FBUILD_PERF_LOG=1); zero overhead when unset.
         let mut perf = crate::perf_log::PerfTimer::new("esp32-orchestrator");
@@ -990,4 +996,27 @@ impl BuildOrchestrator for Esp32Orchestrator {
             build_log,
         ))
     }
+}
+
+/// Arduino's packaged ESP-IDF libraries cannot reflect sdkconfig changes without
+/// a hybrid IDF rebuild. Reject overlays before package resolution or compilation.
+pub(super) fn reject_unsupported_sdkconfig_overlay(
+    config: &fbuild_config::PlatformIOConfig,
+    env_name: &str,
+) -> Result<()> {
+    let env = config.get_env_config(env_name)?;
+    if !env
+        .get("framework")
+        .is_some_and(|framework| framework.split(',').any(|part| part.trim() == "arduino"))
+    {
+        return Ok(());
+    }
+    for key in ["board_build.sdkconfig_defaults", "custom_sdkconfig"] {
+        if env.get(key).is_some_and(|value| !value.trim().is_empty()) {
+            return Err(fbuild_core::FbuildError::ConfigError(format!(
+                "{key} is unsupported for ESP32 Arduino environment '{env_name}': fbuild cannot apply an sdkconfig overlay to precompiled ESP-IDF libraries (see FastLED/fbuild#1460)"
+            )));
+        }
+    }
+    Ok(())
 }
