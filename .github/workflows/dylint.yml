@@ -154,32 +154,15 @@ jobs:
         # guessed at further.
         if: matrix.os == 'ubuntu-latest'
         run: |
-          # Dylint's driver builder intentionally clears RUSTUP_TOOLCHAIN and
-          # relies on the rustup cargo proxy to re-select each lint's pinned
-          # toolchain. Keep that proxy ahead of Soldr's compiler shim.
-          #
-          # `CARGO_HOME` is defaulted rather than assumed: unset, the export
-          # below would silently prepend a bare `/bin` and the proxy would
-          # never be found.
+          # UI fixtures launch nested Cargo. Keep the rustup proxy visible so
+          # it can select each lint's pinned nightly.
           CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"
-          # FastLED/fbuild#1373. On Windows `CARGO_HOME` is a native path
-          # (`C:\Users\runneradmin\.cargo`), and `$PATH` inside Git Bash is
-          # POSIX and `:`-separated. Prepending one to the other produced
-          # `C:\Users\runneradmin\.cargo/bin:/usr/bin...`, whose drive-letter
-          # colon reads as a separator — the runner saw a `C` entry followed by
-          # a bogus `D:\Users\runneradmin\.cargo\bin`, the compiletest driver
-          # could not resolve the lint library's dependencies, and every ui
-          # fixture failed with `LoadLibraryExW failed`.
-          #
-          # `cygpath -u` converts to `/c/Users/.../.cargo/bin`, which is safe to
-          # join with `:`. Absent on Linux/macOS, where the path is already
-          # POSIX.
           CARGO_BIN="${CARGO_HOME}/bin"
-          if command -v cygpath >/dev/null 2>&1; then
-            CARGO_BIN="$(cygpath -u "${CARGO_BIN}")"
-          fi
           export PATH="${CARGO_BIN}:${PATH}"
           export CARGO_TARGET_DIR="$PWD/target/dylint-tests"
+          # UI fixtures invoke Cargo outside soldr's Dylint front door.
+          # Reuse the verified driver fetched by `soldr dylint prepare`.
+          export DYLINT_DRIVER_PATH="${SOLDR_CACHE_DIR:?}/dylint/drivers"
           while IFS= read -r manifest; do
             RUSTUP_TOOLCHAIN=nightly-2026-05-28 \
               soldr cargo test --manifest-path "$manifest"
