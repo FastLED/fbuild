@@ -163,6 +163,18 @@ jobs:
           # UI fixtures invoke Cargo outside soldr's Dylint front door.
           # Reuse the verified driver fetched by `soldr dylint prepare`.
           export DYLINT_DRIVER_PATH="${SOLDR_CACHE_DIR:?}/dylint/drivers"
+          # Dylint's UI runner asks for the short nightly directory; Soldr's
+          # verified asset lives under the host-qualified directory.
+          host="$(RUSTUP_TOOLCHAIN=nightly-2026-05-28 soldr rustc -vV | sed -n 's/^host: //p')"
+          short="nightly-2026-05-28"
+          qualified="${short}-${host}"
+          test -f "$DYLINT_DRIVER_PATH/$qualified/dylint-driver"
+          test -d "${RUSTUP_HOME:?}/toolchains/$qualified"
+          ln -sfnT "$qualified" "$DYLINT_DRIVER_PATH/$short"
+          # The driver reads RUSTUP_HOME/toolchains/$RUSTUP_TOOLCHAIN
+          # literally. Cargo's short nightly tag must resolve to the same
+          # installed sysroot while keeping the lint library's short tag.
+          ln -sfnT "$qualified" "$RUSTUP_HOME/toolchains/$short"
           while IFS= read -r manifest; do
             RUSTUP_TOOLCHAIN=nightly-2026-05-28 \
               soldr cargo test --manifest-path "$manifest"
@@ -171,9 +183,10 @@ jobs:
         env:
           FBUILD_PLATFORM_BOUNDARY_OBSERVED: ${{ github.workspace }}/target/platform-boundary-dylint-observed.tsv
         run: |
-          # Force fresh traversal so the independent observation ledger sees
-          # every platform-gated source path on each run.
-          export RUSTFLAGS="${RUSTFLAGS:+${RUSTFLAGS} }--cfg fbuild_platform_boundary_observation_run_${GITHUB_RUN_ID}"
+          # Force fresh workspace traversal for the observation ledger while
+          # preserving Cargo's cached dependencies. A per-run RUSTFLAGS value
+          # invalidated every dependency, causing a cold rebuild on each run.
+          rg --files crates -g '*.rs' -0 | xargs -0 -r touch
           rm -f "$FBUILD_PLATFORM_BOUNDARY_OBSERVED"
           env -u RUSTUP_TOOLCHAIN soldr dylint --all -- --workspace --all-targets
       - name: Compare scanner with actual Dylint observations

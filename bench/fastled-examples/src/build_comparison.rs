@@ -62,7 +62,7 @@ fn tool_envs(kind: ToolKind, perf_log: &Path) -> Vec<(&'static str, OsString)> {
             ("FBUILD_PERF_LOG_JSON", perf_log.as_os_str().to_os_string()),
             // Include the mtime comparison in benchmark.log if a run hits the
             // intermittent restart path (FastLED/fbuild#1476).
-            ("RUST_LOG", OsString::from("fbuild_cli=info")),
+            ("RUST_LOG", OsString::from("fbuild=info")),
         ]
     } else {
         Vec::new()
