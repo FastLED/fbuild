@@ -1043,7 +1043,11 @@ fn core_compile_metadata(path: &Path) -> AppResult<(Option<usize>, Option<Vec<St
     let entries: Vec<CompileEntry> = serde_json::from_slice(&fs::read(path)?)?;
     let core = entries
         .iter()
-        .filter(|entry| entry.file.replace('\\', "/").contains("/cores/esp32/"))
+        .filter(|entry| {
+            NormalizedPath::new(Path::new(&entry.file))
+                .display_slash()
+                .contains("/cores/esp32/")
+        })
         .collect::<Vec<_>>();
     if core.is_empty() {
         return Ok((None, None));

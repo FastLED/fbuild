@@ -1,7 +1,7 @@
 name: Dylint
 
-# The required Dylint status checks policy files on ordinary PRs. The
-# compiler-heavy Linux/Windows lint matrix runs through ci-full or dispatch.
+# The required Dylint status covers both policy and real workspace lints on
+# Linux, Windows, and macOS for every PR. Full CI calls the same workflow.
 
 on:
   workflow_dispatch: {}
@@ -11,10 +11,6 @@ on:
         type: string
         required: false
         default: ""
-      run_full:
-        type: boolean
-        required: false
-        default: false
   pull_request:
     branches: [main]
 
@@ -47,7 +43,7 @@ env:
 
 jobs:
   policy:
-    name: Dylint
+    name: Dylint policy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -60,14 +56,11 @@ jobs:
           uv run --no-project python ci/enforce_platform_boundary.py --print-totals
 
   dylint:
-    if: inputs.run_full || github.event_name == 'workflow_dispatch'
-    # The ordinary policy job retains the required `Dylint` status name;
-    # these full-run names distinguish compiler-heavy validation.
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
     strategy:
-      # Independent legs: a Windows-only violation should not hide a Linux
-      # one, or the reverse. Finding both in one run is the whole point.
+      # Independent native legs expose each OS's cfg-gated workspace code.
+      # One platform's failure must not hide another's findings.
       fail-fast: false
       matrix:
         include:
@@ -86,6 +79,8 @@ jobs:
           # handling.
           - os: windows-latest
             name: Dylint Full (windows)
+          - os: macos-15
+            name: Dylint Full (macos)
     timeout-minutes: 90
     defaults:
       run:
@@ -220,3 +215,16 @@ jobs:
           "${CARGO_HOME}/bin/cargo-dylint" dylint --all -- --workspace --all-targets
       - name: Compare scanner with actual Dylint observations
         run: uv run --no-project python ci/enforce_platform_boundary.py --dylint-observed target/platform-boundary-dylint-observed.tsv --print-totals
+
+  gate:
+    name: Dylint
+    if: always()
+    needs: [policy, dylint]
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          POLICY: ${{ needs.policy.result }}
+          FULL_DYLINT: ${{ needs.dylint.result }}
+        run: |
+          test "$POLICY" = success
+          test "$FULL_DYLINT" = success

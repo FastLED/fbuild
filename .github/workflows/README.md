@@ -5,19 +5,21 @@ CI/CD workflows for the fbuild project, covering lint, test, documentation, and 
 ## CI tiers
 
 - `ci-minimal.yml` runs on ordinary PRs and `main` pushes: Linux workspace
-  check, Clippy, tests, and the existing small independent policy gates below.
+  check, Clippy, tests, and the independent checks below. `dylint.yml` also
+  runs on every PR, with native Linux, Windows, and macOS workspace passes
+  behind the required `Dylint` status.
 - Add the `ci-test` PR label (or dispatch manually) for the Linux check plus
   the Arduino Uno quick/release firmware build.
 - Add the `ci-full` PR label (or dispatch manually) for all boards in
-  `ci/board_families.json`, Linux and Windows workspace checks, Dylint,
+  `ci/board_families.json`, Linux and Windows workspace checks, the same Dylint workflow,
   acceptance, benchmarks, QEMU runtime, fmt, docs, MSRV, board validation,
   and crate gates. The release workflow calls this tier at its selected
   commit ref before publication.
 - `ci-minimal` owns the PR status `CI selected coverage`. It runs the selected
   reusable tiers when labels are present, and fails if a selected tier is
   skipped, fails, or reports incomplete full coverage. Require this stable
-  status for ordinary PRs alongside the independent fmt, docs, MSRV, board
-  validation, and crate-gate statuses. The unselected tiers allocate no PR
+  status for ordinary PRs alongside `Dylint` and the independent fmt, docs,
+  MSRV, board validation, and crate-gate statuses. The unselected tiers allocate no PR
   runners. The selected tier owns the Linux workspace check; when both labels
   are present, `ci-full` subsumes `ci-test`.
 - The full and nightly board matrices execute identical build inputs once.
