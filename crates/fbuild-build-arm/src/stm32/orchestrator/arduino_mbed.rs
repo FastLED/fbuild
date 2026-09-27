@@ -103,6 +103,12 @@ pub(super) async fn build_arduino_mbed_stm32(
         &framework.read_variant_file(&ctx.board.variant, "ldflags.txt"),
     );
     variant_ldflags.extend(board_ldflags.iter().cloned());
+    apply_mbed_flash_layout(
+        &ctx.board.board_id,
+        ctx.config.get_env_config(&params.env_name).ok(),
+        &mut defines,
+        &mut variant_ldflags,
+    )?;
     dedupe_strings(&mut variant_ldflags);
     let linker_script = preprocess_linker_script(
         toolchain.get_gxx_path(),
@@ -220,6 +226,84 @@ pub(super) async fn build_arduino_mbed_stm32(
         start,
     )
     .await
+}
+
+/// Match PlatformIO's ArduinoCore-mbed flash partition selection. Its
+/// packaged GIGA/Portenta linker scripts and variant sources reference these
+/// symbols, but the default layout is encoded in the platform builder rather
+/// than in the downloaded framework archive.
+#[derive(serde::Deserialize)]
+struct MbedFlashLayoutConfig {
+    boards: Vec<String>,
+    m4_boards: Vec<String>,
+    external_ram_m4_boards: Vec<String>,
+    default_layout: String,
+    external_ram_layout: String,
+    cm4_binary_start: HashMap<String, String>,
+    cm4_binary_end: String,
+    external_cm4_binary_end: String,
+    external_cm4_ram_end: String,
+}
+
+#[derive(serde::Deserialize)]
+struct Stm32H7FlashConfig {
+    arduino_mbed_flash: MbedFlashLayoutConfig,
+}
+
+fn mbed_flash_layout_config() -> Result<MbedFlashLayoutConfig> {
+    serde_json::from_str::<Stm32H7FlashConfig>(include_str!("../configs/stm32h7.json"))
+        .map(|config| config.arduino_mbed_flash)
+        .map_err(|error| {
+            fbuild_core::FbuildError::ConfigError(format!(
+                "invalid STM32H7 Arduino Mbed flash configuration: {error}"
+            ))
+        })
+}
+
+fn apply_mbed_flash_layout(
+    board_id: &str,
+    env_config: Option<&HashMap<String, String>>,
+    defines: &mut HashMap<String, String>,
+    linker_flags: &mut Vec<String>,
+) -> Result<()> {
+    let config = mbed_flash_layout_config()?;
+    if !config.boards.iter().any(|board| board == board_id) {
+        return Ok(());
+    }
+    let layout = env_config
+        .and_then(|env| env.get("board_build.arduino.flash_layout"))
+        .map(String::as_str)
+        .unwrap_or(&config.default_layout);
+    let cm4_start = config.cm4_binary_start.get(layout).ok_or_else(|| {
+        fbuild_core::FbuildError::ConfigError(format!(
+            "unsupported Arduino Mbed flash layout `{layout}`"
+        ))
+    })?;
+    defines.insert("CM4_BINARY_START".into(), cm4_start.into());
+    linker_flags.push(format!("-DCM4_BINARY_START={cm4_start}"));
+    if config.m4_boards.iter().any(|board| board == board_id) {
+        let external_ram = layout == config.external_ram_layout
+            && config
+                .external_ram_m4_boards
+                .iter()
+                .any(|board| board == board_id);
+        let cm4_end = if external_ram {
+            Some(&config.external_cm4_binary_end)
+        } else if layout == config.external_ram_layout {
+            None
+        } else {
+            Some(&config.cm4_binary_end)
+        };
+        if let Some(cm4_end) = cm4_end {
+            defines.insert("CM4_BINARY_END".into(), cm4_end.into());
+            linker_flags.push(format!("-DCM4_BINARY_END={cm4_end}"));
+        }
+        if external_ram {
+            defines.insert("CM4_RAM_END".into(), config.external_cm4_ram_end.clone());
+            linker_flags.push(format!("-DCM4_RAM_END={}", config.external_cm4_ram_end));
+        }
+    }
+    Ok(())
 }
 
 fn build_arduino_mbed_mcu_config(
@@ -343,4 +427,70 @@ async fn preprocess_linker_script(
     }
 
     Ok(output)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn giga_flash_layout_matches_platformio_default_and_override() {
+        for (layout, expected) in [
+            (None, "0x08100000"),
+            (Some("75_25"), "0x08180000"),
+            (Some("100_0"), "0x60000000"),
+        ] {
+            let env = layout.map(|value| {
+                HashMap::from([("board_build.arduino.flash_layout".into(), value.into())])
+            });
+            let mut defines = HashMap::new();
+            let mut linker_flags = Vec::new();
+            apply_mbed_flash_layout("giga_r1_m7", env.as_ref(), &mut defines, &mut linker_flags)
+                .unwrap();
+            assert_eq!(
+                defines.get("CM4_BINARY_START").map(String::as_str),
+                Some(expected)
+            );
+            assert!(linker_flags.contains(&format!("-DCM4_BINARY_START={expected}")));
+        }
+    }
+
+    #[test]
+    fn m4_flash_layout_uses_board_configured_external_ram_addresses() {
+        let env = HashMap::from([("board_build.arduino.flash_layout".into(), "100_0".into())]);
+        let mut defines = HashMap::new();
+        let mut linker_flags = Vec::new();
+        apply_mbed_flash_layout("giga_r1_m4", Some(&env), &mut defines, &mut linker_flags).unwrap();
+        assert_eq!(defines["CM4_BINARY_START"], "0x60000000");
+        assert_eq!(defines["CM4_BINARY_END"], "0x60040000");
+        assert_eq!(defines["CM4_RAM_END"], "0x60080000");
+
+        let mut nicla_defines = HashMap::new();
+        apply_mbed_flash_layout(
+            "nicla_vision_m4",
+            Some(&env),
+            &mut nicla_defines,
+            &mut Vec::new(),
+        )
+        .unwrap();
+        assert!(!nicla_defines.contains_key("CM4_BINARY_END"));
+        assert!(!nicla_defines.contains_key("CM4_RAM_END"));
+    }
+
+    #[test]
+    fn invalid_mbed_flash_layout_fails_before_compile() {
+        let env = HashMap::from([("board_build.arduino.flash_layout".into(), "bad".into())]);
+        let error = apply_mbed_flash_layout(
+            "giga_r1_m7",
+            Some(&env),
+            &mut HashMap::new(),
+            &mut Vec::new(),
+        )
+        .unwrap_err();
+        assert!(
+            error
+                .to_string()
+                .contains("unsupported Arduino Mbed flash layout")
+        );
+    }
 }

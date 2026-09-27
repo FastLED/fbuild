@@ -250,7 +250,9 @@ impl PackageBase {
     /// Apply a consumer-provided override (e.g. parsed from `platform_packages`
     /// in `platformio.ini`).
     ///
-    /// Replaces `url`, `cache_key` (← override URL), `version`, and `checksum`.
+    /// Replaces `url`, `cache_key`, `version`, and `checksum`. A verified
+    /// archive includes its digest in the cache key, so changed registry
+    /// metadata cannot reuse an earlier install at the same URL and version.
     /// Preserves `name` and `cache_subdir`. The cache-key swap is what gives the
     /// override its own subdir under `~/.fbuild/<env>/cache/<kind>/<stem>/<hash>/<version>/`,
     /// so two different commit URLs hash to two different directories and a
@@ -267,8 +269,11 @@ impl PackageBase {
     /// remember to log it themselves.
     pub fn with_override(mut self, ovr: fbuild_config::PackageOverride) -> Self {
         tracing::info!("{} OVERRIDE: {} (was {})", self.name, ovr.url, self.url);
-        self.url = ovr.url.clone();
-        self.cache_key = ovr.url;
+        self.cache_key = match ovr.checksum.as_deref() {
+            Some(checksum) => format!("{}#sha256={checksum}", ovr.url),
+            None => ovr.url.clone(),
+        };
+        self.url = ovr.url;
         self.version = ovr.version;
         self.checksum = ovr.checksum;
         self.submodules = submodules::SubmodulePlan::default();
@@ -961,5 +966,24 @@ mod package_override_tests {
             overridden.name, "framework-test",
             "name is preserved across override"
         );
+    }
+
+    #[test]
+    fn registry_override_checksum_changes_install_identity_at_same_url_and_version() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let cache_root = tmp.path().join("cache");
+        let url = "https://dl.registry.platformio.org/download/acme/tool/gcc/1.0/gcc.tar.gz";
+        let first = make_base(tmp.path(), &cache_root).with_override(PackageOverride {
+            url: url.into(),
+            version: "1.0".into(),
+            checksum: Some("a".repeat(64)),
+        });
+        let changed = make_base(tmp.path(), &cache_root).with_override(PackageOverride {
+            url: url.into(),
+            version: "1.0".into(),
+            checksum: Some("b".repeat(64)),
+        });
+        assert_ne!(first.install_path(), changed.install_path());
+        assert_ne!(first.cache_key, changed.cache_key);
     }
 }

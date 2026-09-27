@@ -41,17 +41,60 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
 /// `platform_packages` override (FastLED/fbuild#664, #681). Shared by the
 /// build and `fbuild install`, so both provision the same packages
 /// (FastLED/fbuild#1433).
-pub(crate) fn apollo3_packages(
+pub(crate) async fn apollo3_packages(
     project_dir: &Path,
     env_config: Option<&std::collections::HashMap<String, String>>,
+) -> Result<(
+    fbuild_packages::toolchain::ArmGcc8Toolchain,
+    fbuild_packages::library::Apollo3Cores,
+)> {
+    let registry_overrides = match env_config {
+        Some(env) => {
+            crate::package_override::resolve_registry_overrides(
+                project_dir,
+                env,
+                "apollo3blue",
+                &["framework-arduinoapollo3", "toolchain-gccarmnoneeabi"],
+                &[],
+            )
+            .await?
+        }
+        None => std::collections::HashMap::new(),
+    };
+    Ok(apollo3_packages_from_resolved(
+        project_dir,
+        env_config,
+        &registry_overrides,
+    ))
+}
+
+fn apollo3_packages_from_resolved(
+    project_dir: &Path,
+    env_config: Option<&std::collections::HashMap<String, String>>,
+    registry_overrides: &std::collections::HashMap<String, fbuild_config::PackageOverride>,
 ) -> (
     fbuild_packages::toolchain::ArmGcc8Toolchain,
     fbuild_packages::library::Apollo3Cores,
 ) {
-    let toolchain = fbuild_packages::toolchain::ArmGcc8Toolchain::new(project_dir);
-    let override_pin = env_config.and_then(|env| {
-        crate::package_override::resolve_override(env, "framework-arduinoambiqapollo3")
-    });
+    let toolchain = match registry_overrides.get("toolchain-gccarmnoneeabi").cloned() {
+        Some(o) => fbuild_packages::toolchain::ArmGcc8Toolchain::with_override(project_dir, o),
+        None => fbuild_packages::toolchain::ArmGcc8Toolchain::new(project_dir),
+    };
+    let override_pin = registry_overrides
+        .get("framework-arduinoapollo3")
+        .cloned()
+        .or_else(|| {
+            env_config.and_then(|env| {
+                crate::package_override::resolve_override(env, "framework-arduinoapollo3").or_else(
+                    || {
+                        crate::package_override::resolve_override(
+                            env,
+                            "framework-arduinoambiqapollo3",
+                        )
+                    },
+                )
+            })
+        });
     let cores = match override_pin {
         Some(o) => fbuild_packages::library::Apollo3Cores::with_override(project_dir, o),
         None => fbuild_packages::library::Apollo3Cores::new(project_dir),
@@ -79,7 +122,8 @@ impl BuildOrchestrator for Apollo3Orchestrator {
         let (toolchain, framework) = apollo3_packages(
             &params.project_dir,
             ctx.config.get_env_config(&params.env_name).ok(),
-        );
+        )
+        .await?;
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("arm-gcc8 toolchain at {}", toolchain_dir.display());
 
@@ -450,5 +494,31 @@ mod tests {
     fn test_apollo3_orchestrator_platform() {
         let orch = Apollo3Orchestrator;
         assert_eq!(orch.platform(), Platform::Apollo3);
+    }
+
+    #[test]
+    fn apollo3_consumes_registry_toolchain_and_preserves_framework_url_override() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let env = std::collections::HashMap::from([(
+            "platform_packages".into(),
+            "framework-arduinoambiqapollo3@https://example.test/apollo3.tar.gz".into(),
+        )]);
+        let resolved = std::collections::HashMap::from([(
+            "toolchain-gccarmnoneeabi".into(),
+            fbuild_config::PackageOverride::new(
+                "https://example.test/gcc.tar.gz",
+                "1.90201.191206",
+            ),
+        )]);
+        let (toolchain, framework) =
+            apollo3_packages_from_resolved(tmp.path(), Some(&env), &resolved);
+        assert_eq!(
+            fbuild_packages::Package::get_info(&toolchain).version,
+            "1.90201.191206"
+        );
+        assert_eq!(
+            fbuild_packages::Package::get_info(&framework).url,
+            "https://example.test/apollo3.tar.gz"
+        );
     }
 }

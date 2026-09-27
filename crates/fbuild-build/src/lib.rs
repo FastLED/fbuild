@@ -88,6 +88,12 @@ pub async fn provision_env(
                 "could not determine the platform for environment '{env_name}'"
             ))
         })?;
+    if !mode.fetches() && platform != Platform::Espressif32 && has_registry_resolution(env_config)?
+    {
+        return Err(fbuild_core::FbuildError::PackageError(
+            "offline install check/dry-run cannot resolve a registry PlatformIO platform or package without fetching its metadata; run `fbuild install`".into(),
+        ));
+    }
     let support = get_platform_support(platform)?;
     let inputs = provision::ProvisionInputs {
         project_dir,
@@ -96,8 +102,97 @@ pub async fn provision_env(
         board: &board,
     };
 
+    let pinned_platform = (platform != Platform::Espressif32)
+        .then(|| env_config.get("platform"))
+        .flatten()
+        .map(|value| fbuild_core::platformio_package::parse_package_spec(value))
+        .transpose()
+        .map_err(|error| fbuild_core::FbuildError::PackageError(error.to_string()))?
+        .and_then(|spec| {
+            spec.registry()
+                .filter(|registry| registry.requirement.is_some())
+                .cloned()
+        });
+    let preinstalled_platform_identity = if let Some(registry) = &pinned_platform {
+        let host = registry_host_system()?;
+        let cache_root = fbuild_packages::Cache::new(project_dir).platforms_dir();
+        let client = fbuild_packages::platformio_registry::RegistryClient::default();
+        client
+            .resolve_cached(
+                registry,
+                fbuild_core::platformio_package::PackageKind::Platform,
+                host,
+                &cache_root,
+                false,
+            )
+            .await
+            .map_err(|error| fbuild_core::FbuildError::PackageError(error.to_string()))?
+            .and_then(|payload| {
+                platform_base_for_payload(project_dir, &payload)
+                    .is_cached()
+                    .then(|| payload.cache_identity())
+            })
+    } else {
+        None
+    };
     let mut packages = support.provision(&inputs, mode).await?;
-    let lib_deps = support.downloadable_lib_deps(&inputs, config.get_lib_deps(env_name)?);
+    if let Some(registry) = &pinned_platform {
+        let host = registry_host_system()?;
+        let cache_root = fbuild_packages::Cache::new(project_dir).platforms_dir();
+        let client = fbuild_packages::platformio_registry::RegistryClient::default();
+        let payload = client
+            .resolve_cached(
+                registry,
+                fbuild_core::platformio_package::PackageKind::Platform,
+                host,
+                &cache_root,
+                false,
+            )
+            .await
+            .map_err(|error| fbuild_core::FbuildError::PackageError(error.to_string()))?
+            .ok_or_else(|| {
+                fbuild_core::FbuildError::PackageError(format!(
+                    "pinned PlatformIO platform `{}` was not resolved during installation",
+                    registry.name
+                ))
+            })?;
+        let base = platform_base_for_payload(project_dir, &payload);
+        if !base.is_cached() {
+            return Err(fbuild_core::FbuildError::PackageError(format!(
+                "pinned PlatformIO platform `{}` was not installed",
+                registry.name
+            )));
+        }
+        if !packages.iter().any(|package| {
+            package.kind == provision::PackageKind::Platform && package.name == payload.name
+        }) {
+            let info = base.get_info();
+            packages.insert(
+                0,
+                provision::ProvisionedPackage {
+                    kind: provision::PackageKind::Platform,
+                    name: info.name,
+                    version: info.version,
+                    url: info.url,
+                    sha256: info.checksum,
+                    status: if preinstalled_platform_identity.as_deref()
+                        == Some(payload.cache_identity().as_str())
+                    {
+                        provision::ProvisionStatus::Present
+                    } else {
+                        provision::ProvisionStatus::Fetched
+                    },
+                    bytes: info.installed_bytes,
+                    duration_ms: 0,
+                    install_path: Some(info.install_path.display().to_string()),
+                    error: None,
+                },
+            );
+        }
+    }
+    let lib_deps = support
+        .downloadable_lib_deps(&inputs, config.get_lib_deps(env_name)?)
+        .await?;
     let lib_ignore = config.get_lib_ignore(env_name)?;
     // `fbuild build` downloads lib_deps into the release build dir's `libs/`.
     let libs_dir = fbuild_paths::BuildLayout::new(
@@ -116,6 +211,58 @@ pub async fn provision_env(
         platform: format!("{platform:?}"),
         packages,
     })
+}
+
+fn registry_host_system() -> Result<&'static str> {
+    fbuild_core::platformio_package::host_system(fbuild_core::platform::host::current())
+        .ok_or_else(|| fbuild_core::FbuildError::PackageError("unsupported PlatformIO host".into()))
+}
+
+fn platform_base_for_payload(
+    project_dir: &Path,
+    payload: &fbuild_core::platformio_package::ResolvedPayload,
+) -> fbuild_packages::PackageBase {
+    fbuild_packages::PackageBase::new(
+        &payload.name,
+        &payload.version,
+        &payload.url,
+        &payload.cache_identity(),
+        Some(&payload.sha256),
+        fbuild_packages::CacheSubdir::Platforms,
+        project_dir,
+    )
+}
+
+fn has_registry_resolution(env: &std::collections::HashMap<String, String>) -> Result<bool> {
+    use fbuild_core::platformio_package::parse_package_spec;
+    let pinned_platform = env
+        .get("platform")
+        .map(|value| parse_package_spec(value))
+        .transpose()
+        .map_err(|error| fbuild_core::FbuildError::PackageError(error.to_string()))?
+        .is_some_and(|spec| {
+            spec.registry()
+                .is_some_and(|registry| registry.requirement.is_some())
+        });
+    if pinned_platform {
+        return Ok(true);
+    }
+    for line in env
+        .get("platform_packages")
+        .into_iter()
+        .flat_map(|raw| raw.lines())
+    {
+        let entry = line.trim().trim_end_matches([',', ';']).trim();
+        if entry.is_empty() {
+            continue;
+        }
+        let spec = parse_package_spec(entry)
+            .map_err(|error| fbuild_core::FbuildError::PackageError(error.to_string()))?;
+        if spec.registry().is_some() {
+            return Ok(true);
+        }
+    }
+    Ok(false)
 }
 
 #[cfg(test)]
@@ -160,6 +307,31 @@ mod tests {
                 ),
                 "a dry run must not fetch: {package:?}"
             );
+        }
+    }
+
+    #[tokio::test]
+    async fn registry_platform_and_package_dry_run_fail_before_registry_fetch() {
+        for ini in [
+            "[env:teensy41]\nplatform = teensy@5.1.0\nboard = teensy41\n",
+            "[env:teensy41]\nplatform = teensy\nboard = teensy41\nplatform_packages = framework-arduinoteensy@1.159.0\n",
+            "[env:teensy41]\nplatform = teensy\nboard = teensy41\nplatform_packages = framework-arduinoteensy\n",
+        ] {
+            let dir = project(ini);
+            for mode in [
+                provision::ProvisionMode::DryRun,
+                provision::ProvisionMode::Check,
+            ] {
+                let error = provision_env(dir.path(), "teensy41", mode)
+                    .await
+                    .unwrap_err();
+                assert!(
+                    error
+                        .to_string()
+                        .contains("cannot resolve a registry PlatformIO")
+                );
+                assert!(!dir.path().join(fbuild_paths::FBUILD_DIR_NAME).exists());
+            }
         }
     }
 

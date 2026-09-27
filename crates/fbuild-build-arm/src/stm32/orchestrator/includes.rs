@@ -5,6 +5,16 @@
 use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 
+/// PlatformIO's packaged STM32duino core keeps Arduino API headers in
+/// `cores/arduino/api`, while older source archives expose them at the core
+/// root. Include the nested API only when the selected payload has it.
+pub(super) fn add_stm32_core_api_includes(core_dir: &Path, include_dirs: &mut Vec<PathBuf>) {
+    let api = core_dir.join("api");
+    if api.join("HardwareSerial.h").is_file() {
+        include_dirs.push(api);
+    }
+}
+
 /// Add STM32duino system include directories for CMSIS and HAL.
 ///
 /// The STM32duino core bundles CMSIS and HAL drivers under `system/`:
@@ -109,4 +119,21 @@ pub(super) fn stm32_generic_board_define(mcu: &str) -> String {
     }
     let trimmed: String = chars.into_iter().collect();
     format!("GENERIC_{trimmed}")
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn packaged_stm32duino_api_headers_join_core_include_path() {
+        let temp = tempfile::TempDir::new().unwrap();
+        let core = temp.path().join("cores/arduino");
+        let api = core.join("api");
+        std::fs::create_dir_all(&api).unwrap();
+        std::fs::write(api.join("HardwareSerial.h"), "// fixture").unwrap();
+        let mut includes = vec![core.clone()];
+        add_stm32_core_api_includes(&core, &mut includes);
+        assert!(includes.contains(&api));
+    }
 }

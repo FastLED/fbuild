@@ -95,18 +95,63 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
 /// honoring the `framework-arduino-lpc8xx` `platform_packages` override
 /// (FastLED/fbuild#663, #681). Shared by the build and `fbuild install`, so
 /// both provision the same packages (FastLED/fbuild#1433).
-pub(crate) fn nxplpc_packages(
+pub(crate) async fn nxplpc_packages(
     project_dir: &std::path::Path,
     env_config: Option<&std::collections::HashMap<String, String>>,
+) -> Result<(
+    fbuild_packages::toolchain::ArmToolchain,
+    fbuild_packages::library::CmsisFramework,
+    fbuild_packages::library::ArduinoCoreLpc8xx,
+)> {
+    let registry_overrides = match env_config {
+        Some(env) => {
+            crate::package_override::resolve_registry_overrides(
+                project_dir,
+                env,
+                "nxplpc",
+                &[
+                    "framework-arduino-lpc8xx",
+                    "framework-cmsis",
+                    "toolchain-gccarmnoneeabi",
+                ],
+                &[],
+            )
+            .await?
+        }
+        None => std::collections::HashMap::new(),
+    };
+    Ok(nxplpc_packages_from_resolved(
+        project_dir,
+        env_config,
+        &registry_overrides,
+    ))
+}
+
+fn nxplpc_packages_from_resolved(
+    project_dir: &std::path::Path,
+    env_config: Option<&std::collections::HashMap<String, String>>,
+    registry_overrides: &std::collections::HashMap<String, fbuild_config::PackageOverride>,
 ) -> (
     fbuild_packages::toolchain::ArmToolchain,
     fbuild_packages::library::CmsisFramework,
     fbuild_packages::library::ArduinoCoreLpc8xx,
 ) {
-    let toolchain = fbuild_packages::toolchain::ArmToolchain::new(project_dir);
-    let cmsis = fbuild_packages::library::CmsisFramework::new(project_dir);
-    let override_pin = env_config
-        .and_then(|env| crate::package_override::resolve_override(env, "framework-arduino-lpc8xx"));
+    let toolchain = match registry_overrides.get("toolchain-gccarmnoneeabi").cloned() {
+        Some(o) => fbuild_packages::toolchain::ArmToolchain::with_override(project_dir, o),
+        None => fbuild_packages::toolchain::ArmToolchain::new(project_dir),
+    };
+    let cmsis = match registry_overrides.get("framework-cmsis").cloned() {
+        Some(o) => fbuild_packages::library::CmsisFramework::with_override(project_dir, o),
+        None => fbuild_packages::library::CmsisFramework::new(project_dir),
+    };
+    let override_pin = registry_overrides
+        .get("framework-arduino-lpc8xx")
+        .cloned()
+        .or_else(|| {
+            env_config.and_then(|env| {
+                crate::package_override::resolve_override(env, "framework-arduino-lpc8xx")
+            })
+        });
     let core = match override_pin {
         Some(o) => fbuild_packages::library::ArduinoCoreLpc8xx::with_override(project_dir, o),
         None => fbuild_packages::library::ArduinoCoreLpc8xx::new(project_dir),
@@ -135,7 +180,7 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
         let core_override = env_config.and_then(|env| {
             crate::package_override::resolve_override(env, "framework-arduino-lpc8xx")
         });
-        let (toolchain, cmsis, core) = nxplpc_packages(&params.project_dir, env_config);
+        let (toolchain, cmsis, core) = nxplpc_packages(&params.project_dir, env_config).await?;
 
         // 3. Ensure ARM GCC. ensure_installed is idempotent and cheap when
         // the toolchain is already on disk.
@@ -477,6 +522,38 @@ pub fn create() -> Box<dyn BuildOrchestrator> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn nxplpc_consumes_resolved_framework_cmsis_and_toolchain() {
+        let tmp = tempfile::tempdir().unwrap();
+        let overrides = std::collections::HashMap::from([
+            (
+                "framework-arduino-lpc8xx".into(),
+                fbuild_config::PackageOverride::new("https://example.test/lpc.tar.gz", "0.2.2"),
+            ),
+            (
+                "framework-cmsis".into(),
+                fbuild_config::PackageOverride::new(
+                    "https://example.test/cmsis.tar.gz",
+                    "2.50400.0",
+                ),
+            ),
+            (
+                "toolchain-gccarmnoneeabi".into(),
+                fbuild_config::PackageOverride::new("https://example.test/gcc.tar.gz", "1.90201.0"),
+            ),
+        ]);
+        let (toolchain, cmsis, core) = nxplpc_packages_from_resolved(tmp.path(), None, &overrides);
+        assert_eq!(
+            fbuild_packages::Package::get_info(&toolchain).version,
+            "1.90201.0"
+        );
+        assert_eq!(
+            fbuild_packages::Package::get_info(&cmsis).version,
+            "2.50400.0"
+        );
+        assert_eq!(fbuild_packages::Package::get_info(&core).version, "0.2.2");
+    }
 
     #[test]
     fn orchestrator_reports_nxplpc_platform() {

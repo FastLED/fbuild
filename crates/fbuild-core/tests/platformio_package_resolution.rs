@@ -5,8 +5,9 @@
 #[cfg(windows)]
 use fbuild_core::path::NormalizedPath;
 use fbuild_core::platformio_package::{
-    PackageKind, PackageLock, PackageSource, parse_package_spec, registry_api_url,
-    resolve_platform_requirements, resolve_registry_json,
+    PackageKind, PackageLock, PackageSource, ResolutionError, parse_package_spec, registry_api_url,
+    require_platform_package, resolve_platform_requirements, resolve_registry_json,
+    sole_optional_manifest_version,
 };
 
 #[test]
@@ -254,6 +255,618 @@ fn esp32s3_613_manifest_resolves_exact_framework_and_compiler_payloads_offline()
                 .starts_with("https://dl.registry.platformio.org/download/")
         );
     }
+}
+
+#[test]
+fn teensy_51_manifest_honors_explicit_framework_pin_offline() {
+    let platform = parse_package_spec("platformio/teensy@5.1.0").unwrap();
+    let platform_metadata = r#"{"name":"teensy","owner":{"username":"platformio"},"versions":[{"name":"5.1.0","files":[{"system":"*","download_url":"https://dl.registry.platformio.org/download/platformio/platform/teensy/5.1.0/teensy-5.1.0.tar.gz","checksum":{"sha256":"f129fd2d6acedf3f9fa513b4aefbe01d02bb6d10d386c6348ac684f24c89d46d"}}]}]}"#;
+    let platform_payload = resolve_registry_json(
+        platform.registry().unwrap(),
+        PackageKind::Platform,
+        "linux_x86_64",
+        platform_metadata,
+    )
+    .unwrap();
+    assert_eq!(platform_payload.version, "5.1.0");
+    assert_eq!(
+        platform_payload.sha256,
+        "f129fd2d6acedf3f9fa513b4aefbe01d02bb6d10d386c6348ac684f24c89d46d"
+    );
+
+    let manifest = r#"{"packages":{
+        "framework-arduinoteensy":{"type":"framework","owner":"platformio","version":"~1.160.0","optional":true},
+        "toolchain-gccarmnoneeabi-teensy":{"type":"toolchain","owner":"platformio","version":"~1.110301.0","optional":false}
+    }}"#;
+    let framework_override = parse_package_spec("framework-arduinoteensy@1.159.0").unwrap();
+    let requirements = resolve_platform_requirements(manifest, &[framework_override]).unwrap();
+    let framework = requirements
+        .iter()
+        .find(|requirement| requirement.name == "framework-arduinoteensy")
+        .unwrap();
+    assert_eq!(
+        framework.spec.registry().unwrap().owner.as_deref(),
+        Some("platformio")
+    );
+    assert_eq!(
+        framework.spec.registry().unwrap().requirement.as_deref(),
+        Some("1.159.0")
+    );
+    let framework_metadata = r#"{"name":"framework-arduinoteensy","owner":{"username":"platformio"},"versions":[{"name":"1.159.0","files":[{"system":"*","download_url":"https://dl.registry.platformio.org/download/platformio/tool/framework-arduinoteensy/1.159.0/framework-arduinoteensy-1.159.0.tar.gz","checksum":{"sha256":"c511fa047471c656bc28cfe5e95eacb223f83cc7a3b31fcf652e25b5e73f7838"}}]}]}"#;
+    let framework_payload = resolve_registry_json(
+        framework.spec.registry().unwrap(),
+        framework.kind,
+        "linux_x86_64",
+        framework_metadata,
+    )
+    .unwrap();
+    assert_eq!(framework_payload.version, "1.159.0");
+    assert_eq!(
+        framework_payload.sha256,
+        "c511fa047471c656bc28cfe5e95eacb223f83cc7a3b31fcf652e25b5e73f7838"
+    );
+    assert_ne!(
+        framework_payload.cache_identity(),
+        platform_payload.cache_identity()
+    );
+    let toolchain = requirements
+        .iter()
+        .find(|requirement| requirement.name == "toolchain-gccarmnoneeabi-teensy")
+        .unwrap();
+    assert_eq!(
+        toolchain.spec.registry().unwrap().requirement.as_deref(),
+        Some("~1.110301.0")
+    );
+}
+
+#[test]
+fn stm32_20_arduino_board_requirements_select_published_payloads_offline() {
+    let platform = parse_package_spec("platformio/ststm32@20.0.0").unwrap();
+    let platform_metadata = r#"{"name":"ststm32","owner":{"username":"platformio"},"versions":[{"name":"20.0.0","files":[{"system":"*","download_url":"https://dl.registry.platformio.org/download/platformio/platform/ststm32/20.0.0/ststm32-20.0.0.tar.gz","checksum":{"sha256":"2a41b41fd27831994b18653e41f730a9a55f37f29d7792819244c079f1fcda74"}}]}]}"#;
+    let platform_payload = resolve_registry_json(
+        platform.registry().unwrap(),
+        PackageKind::Platform,
+        "linux_x86_64",
+        platform_metadata,
+    )
+    .unwrap();
+    assert_eq!(platform_payload.version, "20.0.0");
+    assert_eq!(
+        platform_payload.sha256,
+        "2a41b41fd27831994b18653e41f730a9a55f37f29d7792819244c079f1fcda74"
+    );
+
+    // platform-ststm32/platform.py selects GCC 12 and CMSIS 6 for a standard
+    // Arduino board. The raw platform.json defaults are GCC 7/CMSIS 5.
+    let manifest = r#"{"packages":{
+        "framework-arduinoststm32":{"type":"framework","owner":"platformio","version":"~4.30000.0","optional":true},
+        "framework-cmsis":{"type":"framework","owner":"platformio","version":"~2.50501.0","optional":true},
+        "toolchain-gccarmnoneeabi":{"type":"toolchain","owner":"platformio","version":">=1.60301.0,<1.80000.0","optional":false}
+    }}"#;
+    let board_defaults = [
+        parse_package_spec("toolchain-gccarmnoneeabi@~1.120301.0").unwrap(),
+        parse_package_spec("framework-cmsis@~2.60300.0").unwrap(),
+    ];
+    let requirements = resolve_platform_requirements(manifest, &board_defaults).unwrap();
+    let cases = [
+        (
+            "framework-arduinoststm32",
+            "4.30000.0",
+            r#"{"name":"framework-arduinoststm32","owner":{"username":"platformio"},"versions":[{"name":"4.30000.0","files":[{"system":"*","download_url":"https://dl.registry.platformio.org/download/platformio/tool/framework-arduinoststm32/4.30000.0/framework-arduinoststm32-4.30000.0.tar.gz","checksum":{"sha256":"ce42fefd75d7a183f3819fa1578de3c5a04db374201d117f5789d4a6a2d5dffe"}}]}]}"#,
+            "ce42fefd75d7a183f3819fa1578de3c5a04db374201d117f5789d4a6a2d5dffe",
+        ),
+        (
+            "framework-cmsis",
+            "2.60300.0",
+            r#"{"name":"framework-cmsis","owner":{"username":"platformio"},"versions":[{"name":"2.60300.0","files":[{"system":"*","download_url":"https://dl.registry.platformio.org/download/platformio/tool/framework-cmsis/2.60300.0/framework-cmsis-2.60300.0.tar.gz","checksum":{"sha256":"ca77d29356c77c2e45b7a5bb940fe1b431c9c1583d897ddc875b5dfcd9595398"}}]}]}"#,
+            "ca77d29356c77c2e45b7a5bb940fe1b431c9c1583d897ddc875b5dfcd9595398",
+        ),
+        (
+            "toolchain-gccarmnoneeabi",
+            "1.120301.0",
+            r#"{"name":"toolchain-gccarmnoneeabi","owner":{"username":"platformio"},"versions":[{"name":"1.120301.0","files":[{"system":"linux_x86_64","download_url":"https://dl.registry.platformio.org/download/platformio/tool/toolchain-gccarmnoneeabi/1.120301.0/toolchain-gccarmnoneeabi-linux_x86_64-1.120301.0.tar.gz","checksum":{"sha256":"d61c40c097032ea32c2fd1622e0fab72d2a6dc6ec9b69fa451a629eeb17448ed"}}]}]}"#,
+            "d61c40c097032ea32c2fd1622e0fab72d2a6dc6ec9b69fa451a629eeb17448ed",
+        ),
+    ];
+    for (name, version, metadata, sha256) in cases {
+        let requirement = requirements
+            .iter()
+            .find(|requirement| requirement.name == name)
+            .unwrap();
+        let payload = resolve_registry_json(
+            requirement.spec.registry().unwrap(),
+            requirement.kind,
+            "linux_x86_64",
+            metadata,
+        )
+        .unwrap();
+        assert_eq!(payload.version, version, "{name}");
+        assert_eq!(payload.sha256, sha256, "{name}");
+        assert_ne!(payload.cache_identity(), platform_payload.cache_identity());
+    }
+    let user_override = parse_package_spec("framework-cmsis@2.50900.0").unwrap();
+    let requirements =
+        resolve_platform_requirements(manifest, &[user_override, board_defaults[1].clone()])
+            .unwrap();
+    assert_eq!(
+        requirements
+            .iter()
+            .find(|requirement| requirement.name == "framework-cmsis")
+            .unwrap()
+            .spec
+            .registry()
+            .unwrap()
+            .requirement
+            .as_deref(),
+        Some("2.50900.0")
+    );
+}
+
+#[test]
+fn stm32_arduino_cmsis_requirement_follows_the_pinned_platform_manifest() {
+    // platform-ststm32's Arduino builder selects the sole CMSIS optional
+    // version. That changed between published platform releases 19 and 20.
+    let releases = [("19.0.0", "~2.50900.0"), ("20.0.0", "~2.60300.0")];
+    for (platform_version, expected_cmsis) in releases {
+        let manifest = format!(
+            r#"{{"version":"{platform_version}","packages":{{"framework-cmsis":{{"type":"framework","owner":"platformio","version":"~2.50501.0","optionalVersions":["{expected_cmsis}"]}}}}}}"#
+        );
+        assert_eq!(
+            sole_optional_manifest_version(&manifest, "framework-cmsis").unwrap(),
+            expected_cmsis,
+            "ststm32@{platform_version}"
+        );
+    }
+    let ambiguous = r#"{"packages":{"framework-cmsis":{"version":"~2.50501.0","optionalVersions":["~2.50900.0","~2.60300.0"]}}}"#;
+    assert!(sole_optional_manifest_version(ambiguous, "framework-cmsis").is_err());
+}
+
+#[test]
+fn nordicnrf52_11_adafruit_resolves_platform_and_host_packages_offline() {
+    let platform = parse_package_spec("platformio/nordicnrf52@11.0.0").unwrap();
+    let platform_metadata = r#"{"name":"nordicnrf52","owner":{"username":"platformio"},"versions":[{"name":"11.0.0","files":[{"system":"*","download_url":"https://dl.registry.platformio.org/download/platformio/platform/nordicnrf52/11.0.0/nordicnrf52-11.0.0.tar.gz","checksum":{"sha256":"94f2744925eb31e8287d2a36f5db34c0282957454a9111a15ee34ebdd93208e9"}}]}]}"#;
+    let platform_payload = resolve_registry_json(
+        platform.registry().unwrap(),
+        PackageKind::Platform,
+        "linux_x86_64",
+        platform_metadata,
+    )
+    .unwrap();
+    assert_eq!(platform_payload.version, "11.0.0");
+    assert_eq!(
+        platform_payload.sha256,
+        "94f2744925eb31e8287d2a36f5db34c0282957454a9111a15ee34ebdd93208e9"
+    );
+
+    let manifest = r#"{"packages":{
+        "framework-arduinoadafruitnrf52":{"type":"framework","owner":"platformio","version":"~1.10700.0","optional":true},
+        "framework-cmsis":{"type":"framework","owner":"platformio","version":"~2.50700.0","optional":true},
+        "toolchain-gccarmnoneeabi":{"type":"toolchain","owner":"platformio","version":">=1.60301.0,<1.80000.0","optional":false}
+    }}"#;
+    let requirements = resolve_platform_requirements(manifest, &[]).unwrap();
+    let cases = [
+        (
+            "framework-arduinoadafruitnrf52",
+            "1.10700.0",
+            "*",
+            "https://dl.registry.platformio.org/download/platformio/tool/framework-arduinoadafruitnrf52/1.10700.0/framework-arduinoadafruitnrf52-1.10700.0.tar.gz",
+            "59b3013b372cbaa17f46f3cd5aa7d00154996063b2e9151add7384471de66713",
+        ),
+        (
+            "framework-cmsis",
+            "2.50700.210515",
+            "*",
+            "https://dl.registry.platformio.org/download/platformio/tool/framework-cmsis/2.50700.210515/framework-cmsis-2.50700.210515.tar.gz",
+            "c45aee42cad60ce1167b3ee15f36f624bb0d9878d831d3d4e32665c47d9635bb",
+        ),
+        (
+            "toolchain-gccarmnoneeabi",
+            "1.70201.0",
+            "linux_x86_64",
+            "https://dl.registry.platformio.org/download/platformio/tool/toolchain-gccarmnoneeabi/1.70201.0/toolchain-gccarmnoneeabi-linux_x86_64-1.70201.0.tar.gz",
+            "26977183521a65bc2be43a81a6dabda0337430e104841078b20efba3fd0fddef",
+        ),
+    ];
+    for (name, version, system, url, sha256) in cases {
+        let kind = if name.starts_with("toolchain-") {
+            PackageKind::Tool
+        } else {
+            PackageKind::Framework
+        };
+        let metadata = format!(
+            r#"{{"name":"{name}","owner":{{"username":"platformio"}},"versions":[{{"name":"{version}","files":[{{"system":"{system}","download_url":"{url}","checksum":{{"sha256":"{sha256}"}}}}]}}]}}"#
+        );
+        let requirement = requirements.iter().find(|item| item.name == name).unwrap();
+        let payload = resolve_registry_json(
+            requirement.spec.registry().unwrap(),
+            kind,
+            "linux_x86_64",
+            &metadata,
+        )
+        .unwrap();
+        assert_eq!(payload.version, version, "{name}");
+        assert_eq!(payload.url, url, "{name}");
+        assert_eq!(payload.sha256, sha256, "{name}");
+        assert_ne!(payload.cache_identity(), platform_payload.cache_identity());
+    }
+
+    let explicit = parse_package_spec("framework-cmsis@2.50900.0").unwrap();
+    let requirements = resolve_platform_requirements(manifest, &[explicit]).unwrap();
+    assert_eq!(
+        requirements
+            .iter()
+            .find(|item| item.name == "framework-cmsis")
+            .unwrap()
+            .spec
+            .registry()
+            .unwrap()
+            .requirement
+            .as_deref(),
+        Some("2.50900.0")
+    );
+}
+
+#[test]
+fn atmelsam_9_due_resolves_published_sam_stack_offline() {
+    let platform = parse_package_spec("platformio/atmelsam@9.0.0").unwrap();
+    let platform_url = "https://dl.registry.platformio.org/download/platformio/platform/atmelsam/9.0.0/atmelsam-9.0.0.tar.gz";
+    let platform_sha = "ce12b1b2d1b2a0c776c2bbb932e4987cfd5072131ac1860d195874bff78862f9";
+    let platform_metadata = format!(
+        r#"{{"name":"atmelsam","owner":{{"username":"platformio"}},"versions":[{{"name":"9.0.0","files":[{{"system":"*","download_url":"{platform_url}","checksum":{{"sha256":"{platform_sha}"}}}}]}}]}}"#
+    );
+    let platform_payload = resolve_registry_json(
+        platform.registry().unwrap(),
+        PackageKind::Platform,
+        "linux_x86_64",
+        &platform_metadata,
+    )
+    .unwrap();
+    assert_eq!(platform_payload.url, platform_url);
+    assert_eq!(platform_payload.sha256, platform_sha);
+
+    let manifest = r#"{"packages":{
+        "toolchain-gccarmnoneeabi":{"type":"toolchain","owner":"platformio","version":"~1.70201.0"},
+        "framework-arduino-sam":{"type":"framework","owner":"platformio","version":"~1.6.12","optional":true},
+        "framework-arduino-samd":{"type":"framework","owner":"platformio","version":"~1.8.14","optional":true},
+        "framework-arduino-samd-adafruit":{"type":"framework","owner":"platformio","version":"~1.10716.0","optional":true},
+        "framework-cmsis":{"type":"framework","owner":"platformio","version":"~1.40500.0","optional":true},
+        "framework-cmsis-atmel":{"type":"framework","owner":"platformio","version":"~1.2.2","optional":true}
+    }}"#;
+    let requirements = resolve_platform_requirements(manifest, &[]).unwrap();
+    let cases = [
+        (
+            "framework-arduino-sam",
+            "1.6.12",
+            "*",
+            "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-sam/1.6.12/framework-arduino-sam-1.6.12.tar.gz",
+            "c657856d3aa8e8355c2feac26b8865b580725a914ac614a0b8c1d5fdd27494b9",
+        ),
+        (
+            "framework-arduino-samd",
+            "1.8.14",
+            "*",
+            "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-samd/1.8.14/framework-arduino-samd-1.8.14.tar.gz",
+            "4b93d510727f3cd19e85c900342e8ba1a12d36d5d228bb739708ef53b3d7fe07",
+        ),
+        (
+            "framework-cmsis",
+            "1.40500.0",
+            "*",
+            "https://dl.registry.platformio.org/download/platformio/tool/framework-cmsis/1.40500.0/framework-cmsis-1.40500.0.tar.gz",
+            "ec073dc0a74311fb4a63b2ba1a011e37491d494f1ef2abf87ec233c14a654f19",
+        ),
+        (
+            "framework-cmsis-atmel",
+            "1.2.2",
+            "*",
+            "https://dl.registry.platformio.org/download/platformio/tool/framework-cmsis-atmel/1.2.2/framework-cmsis-atmel-1.2.2.tar.gz",
+            "de7778f049e2558e1c8dbb50478f47c5680d4b393bc49e702203ffdd7a6ca60c",
+        ),
+        (
+            "toolchain-gccarmnoneeabi",
+            "1.70201.0",
+            "linux_x86_64",
+            "https://dl.registry.platformio.org/download/platformio/tool/toolchain-gccarmnoneeabi/1.70201.0/toolchain-gccarmnoneeabi-linux_x86_64-1.70201.0.tar.gz",
+            "26977183521a65bc2be43a81a6dabda0337430e104841078b20efba3fd0fddef",
+        ),
+    ];
+    for (name, version, system, url, sha256) in cases {
+        let requirement = requirements.iter().find(|item| item.name == name).unwrap();
+        let metadata = format!(
+            r#"{{"name":"{name}","owner":{{"username":"platformio"}},"versions":[{{"name":"{version}","files":[{{"system":"{system}","download_url":"{url}","checksum":{{"sha256":"{sha256}"}}}}]}}]}}"#
+        );
+        let payload = resolve_registry_json(
+            requirement.spec.registry().unwrap(),
+            requirement.kind,
+            "linux_x86_64",
+            &metadata,
+        )
+        .unwrap();
+        assert_eq!(payload.version, version, "{name}");
+        assert_eq!(payload.url, url, "{name}");
+        assert_eq!(payload.sha256, sha256, "{name}");
+        assert_ne!(payload.cache_identity(), platform_payload.cache_identity());
+    }
+
+    let explicit = parse_package_spec("framework-arduino-sam@1.6.11").unwrap();
+    let requirements = resolve_platform_requirements(manifest, &[explicit]).unwrap();
+    assert_eq!(
+        requirements
+            .iter()
+            .find(|item| item.name == "framework-arduino-sam")
+            .unwrap()
+            .spec
+            .registry()
+            .unwrap()
+            .requirement
+            .as_deref(),
+        Some("1.6.11")
+    );
+
+    // platform-atmelsam/platform.py selects these requirements for an
+    // Adafruit SAMD board instead of the manifest's Arduino-core defaults.
+    let adafruit_defaults = [
+        parse_package_spec("toolchain-gccarmnoneeabi@~1.90301.0").unwrap(),
+        parse_package_spec("framework-cmsis@~2.50400.0").unwrap(),
+    ];
+    let requirements = resolve_platform_requirements(manifest, &adafruit_defaults).unwrap();
+    let cases = [
+        (
+            "framework-arduino-samd-adafruit",
+            "1.10716.0",
+            "*",
+            "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-samd-adafruit/1.10716.0/framework-arduino-samd-adafruit-1.10716.0.tar.gz",
+            "f5266198218d316e62f205653b054c103cc4eb971bb689e7d699857aa80c267e",
+        ),
+        (
+            "framework-cmsis",
+            "2.50400.181126",
+            "*",
+            "https://dl.registry.platformio.org/download/platformio/tool/framework-cmsis/2.50400.181126/framework-cmsis-2.50400.181126.tar.gz",
+            "f38dacbdb00eaca555126be8fcc5d09a41a16e194e2a8564f9a37845dda4373e",
+        ),
+        (
+            "toolchain-gccarmnoneeabi",
+            "1.90301.200702",
+            "linux_x86_64",
+            "https://dl.registry.platformio.org/download/platformio/tool/toolchain-gccarmnoneeabi/1.90301.200702/toolchain-gccarmnoneeabi-linux_x86_64-1.90301.200702.tar.gz",
+            "fbbc57fe1560fbe6e1d5890a934258f6b1439fc976f3ef584d12bb8aae9b3c7d",
+        ),
+    ];
+    for (name, version, system, url, sha256) in cases {
+        let requirement = requirements.iter().find(|item| item.name == name).unwrap();
+        let metadata = format!(
+            r#"{{"name":"{name}","owner":{{"username":"platformio"}},"versions":[{{"name":"{version}","files":[{{"system":"{system}","download_url":"{url}","checksum":{{"sha256":"{sha256}"}}}}]}}]}}"#
+        );
+        let payload = resolve_registry_json(
+            requirement.spec.registry().unwrap(),
+            requirement.kind,
+            "linux_x86_64",
+            &metadata,
+        )
+        .unwrap();
+        assert_eq!(payload.url, url, "{name}");
+        assert_eq!(payload.sha256, sha256, "{name}");
+        assert_ne!(payload.cache_identity(), platform_payload.cache_identity());
+    }
+}
+
+#[test]
+fn clearcore_requires_explicit_framework_source_not_an_atmelsam_default() {
+    // The official atmelsam manifest has no ClearCore framework declaration.
+    // A valid platform payload must not manufacture one from native defaults.
+    let manifest = r#"{"packages":{
+        "toolchain-gccarmnoneeabi":{"type":"toolchain","owner":"platformio","version":"~1.70201.0"},
+        "framework-arduino-sam":{"type":"framework","owner":"platformio","version":"~1.6.12","optional":true},
+        "framework-cmsis":{"type":"framework","owner":"platformio","version":"~1.40500.0","optional":true}
+    }}"#;
+    let default_requirements = resolve_platform_requirements(manifest, &[]).unwrap();
+    assert_eq!(
+        require_platform_package(&default_requirements, "framework-arduino-sam-clearcore")
+            .unwrap_err(),
+        ResolutionError::MissingPackage("framework-arduino-sam-clearcore".into())
+    );
+
+    let explicit = parse_package_spec(
+        "framework-arduino-sam-clearcore@https://www.teknic.com/files/downloads/ClearCore-1.7.4.zip",
+    )
+    .unwrap();
+    let requirements = resolve_platform_requirements(manifest, &[explicit]).unwrap();
+    let framework =
+        require_platform_package(&requirements, "framework-arduino-sam-clearcore").unwrap();
+    assert!(matches!(
+        &framework.spec.source,
+        PackageSource::Archive { url, revision: None }
+            if url == "https://www.teknic.com/files/downloads/ClearCore-1.7.4.zip"
+    ));
+    let locked = PackageLock::Archive {
+        url: "https://www.teknic.com/files/downloads/ClearCore-1.7.4.zip".into(),
+        sha256: "87542411133e8b1b0bb88d12a5df6601c8054b61e213e358fa95bb08e8632270".into(),
+    };
+    assert_ne!(
+        locked.cache_identity(),
+        PackageLock::Archive {
+            url: "https://www.teknic.com/files/downloads/ClearCore-1.7.4.zip".into(),
+            sha256: "0".repeat(64),
+        }
+        .cache_identity()
+    );
+}
+
+#[test]
+fn custom_arduino_arm_families_do_not_substitute_official_registry_manifests() {
+    // These official PlatformIO platform releases are valid payloads, but
+    // their manifests do not declare the custom Arduino cores used by fbuild's
+    // RP, LPC8xx, and Silicon Labs adapters. Core resolution succeeds; the
+    // required framework lookup must fail independently of native dispatch.
+    let cases = [
+        (
+            "raspberrypi",
+            "1.20.0",
+            "80ffdadda508a7ad7973603f22e3cdf86f55ac1dfcc5b5afee1d87e46698e031",
+            "framework-arduinopico",
+            r#"{"packages":{"framework-arduino-mbed":{"type":"framework","owner":"platformio","version":"~4.6.0","optional":true},"toolchain-gccarmnoneeabi":{"type":"toolchain","owner":"platformio","version":"~1.90201.0"}}}"#,
+        ),
+        (
+            "nxplpc",
+            "11.0.0",
+            "e51b2c50b2f9797c3d8881442cbe2551973ae79f8d9e20052a616e36bdbb0686",
+            "framework-arduino-lpc8xx",
+            r#"{"packages":{"framework-mbed":{"type":"framework","owner":"platformio","version":"~6.61700.0","optional":true},"toolchain-gccarmnoneeabi":{"type":"toolchain","owner":"platformio","version":"~1.120301.0"}}}"#,
+        ),
+        (
+            "siliconlabsefm32",
+            "11.0.0",
+            "42673c84bcad9d079961df6406258d60186feee312ac8befb08116c0d19b233f",
+            "framework-arduino-silabs",
+            r#"{"packages":{"framework-mbed":{"type":"framework","owner":"platformio","version":"~6.61700.0","optional":true},"toolchain-gccarmnoneeabi":{"type":"toolchain","owner":"platformio","version":"~1.120301.0"}}}"#,
+        ),
+    ];
+    for (name, version, sha256, native_framework, manifest) in cases {
+        let spec = parse_package_spec(&format!("platformio/platform/{name}@{version}")).unwrap();
+        let url = format!(
+            "https://dl.registry.platformio.org/download/platformio/platform/{name}/{version}/{name}-{version}.tar.gz"
+        );
+        let metadata = format!(
+            r#"{{"name":"{name}","owner":{{"username":"platformio"}},"versions":[{{"name":"{version}","files":[{{"system":"*","download_url":"{url}","checksum":{{"sha256":"{sha256}"}}}}]}}]}}"#
+        );
+        let payload = resolve_registry_json(
+            spec.registry().unwrap(),
+            PackageKind::Platform,
+            "linux_x86_64",
+            &metadata,
+        )
+        .unwrap();
+        assert_eq!(payload.url, url, "{name}");
+        assert_eq!(payload.sha256, sha256, "{name}");
+        assert!(!payload.cache_identity().is_empty(), "{name}");
+
+        let requirements = resolve_platform_requirements(manifest, &[]).unwrap();
+        assert_eq!(
+            require_platform_package(&requirements, native_framework).unwrap_err(),
+            ResolutionError::MissingPackage(native_framework.into()),
+            "{name}"
+        );
+        let toolchain =
+            require_platform_package(&requirements, "toolchain-gccarmnoneeabi").unwrap();
+        assert_eq!(
+            toolchain.spec.registry().unwrap().owner.as_deref(),
+            Some("platformio"),
+            "{name}"
+        );
+
+        // A custom platform source may provide an explicit Arduino package;
+        // that source identity remains distinct from the official manifest.
+        let explicit = parse_package_spec(&format!(
+            "{native_framework}@https://example.test/{native_framework}.tar.gz"
+        ))
+        .unwrap();
+        let requirements = resolve_platform_requirements(manifest, &[explicit]).unwrap();
+        assert!(matches!(
+            &require_platform_package(&requirements, native_framework)
+                .unwrap()
+                .spec
+                .source,
+            PackageSource::Archive { .. }
+        ));
+    }
+}
+
+#[test]
+fn renesas_ra_19_uno_r4_resolves_published_stack_offline() {
+    let platform = parse_package_spec("platformio/renesas-ra@1.9.0").unwrap();
+    let platform_url = "https://dl.registry.platformio.org/download/platformio/platform/renesas-ra/1.9.0/renesas-ra-1.9.0.tar.gz";
+    let platform_sha = "f84ff1366c88e16e2feabf4a1355f270f85c3815fffd13abe6fde92a8e15533a";
+    let metadata = format!(
+        r#"{{"name":"renesas-ra","owner":{{"username":"platformio"}},"versions":[{{"name":"1.9.0","files":[{{"system":"*","download_url":"{platform_url}","checksum":{{"sha256":"{platform_sha}"}}}}]}}]}}"#
+    );
+    let platform_payload = resolve_registry_json(
+        platform.registry().unwrap(),
+        PackageKind::Platform,
+        "linux_x86_64",
+        &metadata,
+    )
+    .unwrap();
+    assert_eq!(platform_payload.url, platform_url);
+    assert_eq!(platform_payload.sha256, platform_sha);
+
+    let manifest = r#"{"packages":{
+        "framework-arduinorenesas-uno":{"type":"framework","owner":"platformio","version":"~1.6.0","optional":true},
+        "framework-renesas-fsp":{"type":"framework","owner":"platformio","version":"1.40000.0","optional":true},
+        "framework-cmsis-renesas":{"type":"framework","owner":"platformio","version":"1.40500.0","optional":true},
+        "toolchain-gccarmnoneeabi":{"type":"toolchain","owner":"platformio","version":"~1.70201.0"}
+    }}"#;
+    let requirements = resolve_platform_requirements(manifest, &[]).unwrap();
+    let cases = [
+        (
+            "framework-arduinorenesas-uno",
+            "1.6.0",
+            "*",
+            "https://dl.registry.platformio.org/download/platformio/tool/framework-arduinorenesas-uno/1.6.0/framework-arduinorenesas-uno-1.6.0.tar.gz",
+            "3e55bb831d8ab6a1a34137470980ef5ac65d18418f5083037f2fe569f60c1252",
+        ),
+        (
+            "toolchain-gccarmnoneeabi",
+            "1.70201.0",
+            "linux_x86_64",
+            "https://dl.registry.platformio.org/download/platformio/tool/toolchain-gccarmnoneeabi/1.70201.0/toolchain-gccarmnoneeabi-linux_x86_64-1.70201.0.tar.gz",
+            "26977183521a65bc2be43a81a6dabda0337430e104841078b20efba3fd0fddef",
+        ),
+    ];
+    for (name, version, system, url, sha256) in cases {
+        let requirement = requirements.iter().find(|item| item.name == name).unwrap();
+        let metadata = format!(
+            r#"{{"name":"{name}","owner":{{"username":"platformio"}},"versions":[{{"name":"{version}","files":[{{"system":"{system}","download_url":"{url}","checksum":{{"sha256":"{sha256}"}}}}]}}]}}"#
+        );
+        let payload = resolve_registry_json(
+            requirement.spec.registry().unwrap(),
+            requirement.kind,
+            "linux_x86_64",
+            &metadata,
+        )
+        .unwrap();
+        assert_eq!(payload.url, url, "{name}");
+        assert_eq!(payload.sha256, sha256, "{name}");
+        assert_ne!(payload.cache_identity(), platform_payload.cache_identity());
+    }
+    let explicit = parse_package_spec("framework-arduinorenesas-uno@1.5.0").unwrap();
+    let requirements = resolve_platform_requirements(manifest, &[explicit]).unwrap();
+    assert_eq!(
+        requirements
+            .iter()
+            .find(|item| item.name == "framework-arduinorenesas-uno")
+            .unwrap()
+            .spec
+            .registry()
+            .unwrap()
+            .requirement
+            .as_deref(),
+        Some("1.5.0")
+    );
+}
+
+#[test]
+fn apollo3_repository_platform_keeps_source_and_resolves_toolchain_payload_offline() {
+    let platform = parse_package_spec("https://github.com/nigelb/platform-apollo3blue").unwrap();
+    assert!(matches!(platform.source, PackageSource::Repository { .. }));
+    let toolchain =
+        parse_package_spec("platformio/tool/toolchain-gccarmnoneeabi@1.90201.191206").unwrap();
+    let url = "https://dl.registry.platformio.org/download/platformio/tool/toolchain-gccarmnoneeabi/1.90201.191206/toolchain-gccarmnoneeabi-linux_x86_64-1.90201.191206.tar.gz";
+    let sha256 = "140fb263798b9dc1950b3831c44d9ab01196f883012b78658b1e002b9035d26c";
+    let metadata = format!(
+        r#"{{"name":"toolchain-gccarmnoneeabi","owner":{{"username":"platformio"}},"versions":[{{"name":"1.90201.191206","files":[{{"system":"linux_x86_64","download_url":"{url}","checksum":{{"sha256":"{sha256}"}}}}]}}]}}"#
+    );
+    let payload = resolve_registry_json(
+        toolchain.registry().unwrap(),
+        PackageKind::Tool,
+        "linux_x86_64",
+        &metadata,
+    )
+    .unwrap();
+    assert_eq!(payload.url, url);
+    assert_eq!(payload.sha256, sha256);
+    assert_eq!(payload.version, "1.90201.191206");
+    assert!(!payload.cache_identity().is_empty());
 }
 
 #[test]

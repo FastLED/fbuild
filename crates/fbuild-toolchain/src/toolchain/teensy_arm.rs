@@ -35,6 +35,14 @@ impl TeensyArmToolchain {
         }
     }
 
+    /// Use the host-specific toolchain payload declared by the selected
+    /// PlatformIO platform instead of the built-in Teensy 5.1.0 default.
+    pub fn with_override(project_dir: &Path, ovr: fbuild_config::PackageOverride) -> Self {
+        let mut toolchain = Self::new(project_dir);
+        toolchain.base = toolchain.base.with_override(ovr);
+        toolchain
+    }
+
     #[cfg(test)]
     fn with_cache_root(project_dir: &Path, cache_root: &Path) -> Self {
         let package = platform_package();

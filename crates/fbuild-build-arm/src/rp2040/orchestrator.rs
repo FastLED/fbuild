@@ -70,18 +70,69 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
 /// `platform_packages` override (FastLED/fbuild#664, #681). Shared by the
 /// build and `fbuild install`, so both provision the same packages
 /// (FastLED/fbuild#1433).
-pub(crate) fn rp2040_packages(
+pub(crate) async fn rp2040_packages_resolved(
     project_dir: &Path,
     env_config: Option<&HashMap<String, String>>,
+) -> Result<(
+    fbuild_packages::toolchain::Rp2040PqtToolchain,
+    fbuild_packages::toolchain::Rp2040Picotool,
+    fbuild_packages::library::Rp2040Cores,
+)> {
+    let registry_overrides = match env_config {
+        Some(env) => {
+            crate::package_override::resolve_registry_overrides(
+                project_dir,
+                env,
+                "raspberrypi",
+                &[
+                    "framework-arduinopico",
+                    "toolchain-rp2040-earlephilhower",
+                    "tool-picotool-rp2040-earlephilhower",
+                ],
+                &[],
+            )
+            .await?
+        }
+        None => HashMap::new(),
+    };
+    Ok(rp2040_packages_from_resolved(
+        project_dir,
+        env_config,
+        &registry_overrides,
+    ))
+}
+
+fn rp2040_packages_from_resolved(
+    project_dir: &Path,
+    env_config: Option<&HashMap<String, String>>,
+    registry_overrides: &HashMap<String, fbuild_config::PackageOverride>,
 ) -> (
     fbuild_packages::toolchain::Rp2040PqtToolchain,
     fbuild_packages::toolchain::Rp2040Picotool,
     fbuild_packages::library::Rp2040Cores,
 ) {
-    let toolchain = fbuild_packages::toolchain::Rp2040PqtToolchain::new(project_dir);
-    let picotool = fbuild_packages::toolchain::Rp2040Picotool::new(project_dir);
-    let override_pin = env_config
-        .and_then(|env| crate::package_override::resolve_override(env, "framework-arduinopico"));
+    let toolchain = match registry_overrides
+        .get("toolchain-rp2040-earlephilhower")
+        .cloned()
+    {
+        Some(o) => fbuild_packages::toolchain::Rp2040PqtToolchain::with_override(project_dir, o),
+        None => fbuild_packages::toolchain::Rp2040PqtToolchain::new(project_dir),
+    };
+    let picotool = match registry_overrides
+        .get("tool-picotool-rp2040-earlephilhower")
+        .cloned()
+    {
+        Some(o) => fbuild_packages::toolchain::Rp2040Picotool::with_override(project_dir, o),
+        None => fbuild_packages::toolchain::Rp2040Picotool::new(project_dir),
+    };
+    let override_pin = registry_overrides
+        .get("framework-arduinopico")
+        .cloned()
+        .or_else(|| {
+            env_config.and_then(|env| {
+                crate::package_override::resolve_override(env, "framework-arduinopico")
+            })
+        });
     let cores = match override_pin {
         Some(o) => fbuild_packages::library::Rp2040Cores::with_override(project_dir, o),
         None => fbuild_packages::library::Rp2040Cores::new(project_dir),
@@ -106,10 +157,11 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         let eh_frame_policy =
             crate::eh_frame_policy_compute::compute_eh_frame_policy(&ctx, params.profile, None);
 
-        let (toolchain, picotool, framework) = rp2040_packages(
+        let (toolchain, picotool, framework) = rp2040_packages_resolved(
             &params.project_dir,
             ctx.config.get_env_config(&params.env_name).ok(),
-        );
+        )
+        .await?;
 
         // 3. Ensure the arduino-pico-matched pqt-gcc toolchain
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
@@ -975,6 +1027,39 @@ fn rp_support_objects(
 mod tests {
     use super::*;
     use std::collections::HashMap;
+
+    #[test]
+    fn rp2040_consumes_resolved_framework_toolchain_and_picotool() {
+        let tmp = tempfile::tempdir().unwrap();
+        let overrides = HashMap::from([
+            (
+                "framework-arduinopico".into(),
+                fbuild_config::PackageOverride::new("https://example.test/pico.zip", "4.4.0"),
+            ),
+            (
+                "toolchain-rp2040-earlephilhower".into(),
+                fbuild_config::PackageOverride::new("https://example.test/gcc.tar.gz", "5.0.0"),
+            ),
+            (
+                "tool-picotool-rp2040-earlephilhower".into(),
+                fbuild_config::PackageOverride::new(
+                    "https://example.test/picotool.tar.gz",
+                    "5.0.0",
+                ),
+            ),
+        ]);
+        let (toolchain, picotool, cores) =
+            rp2040_packages_from_resolved(tmp.path(), None, &overrides);
+        assert_eq!(
+            fbuild_packages::Package::get_info(&toolchain).version,
+            "5.0.0"
+        );
+        assert_eq!(
+            fbuild_packages::Package::get_info(&picotool).version,
+            "5.0.0"
+        );
+        assert_eq!(fbuild_packages::Package::get_info(&cores).version, "4.4.0");
+    }
 
     #[test]
     fn test_rp2040_orchestrator_platform() {

@@ -66,16 +66,58 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
 /// `framework-arduinoteensy` `platform_packages` override (FastLED/fbuild#664,
 /// #681). Shared by the build and `fbuild install`, so both provision the same
 /// packages (FastLED/fbuild#1433).
-pub(crate) fn teensy_packages(
+pub(crate) async fn teensy_packages(
     project_dir: &Path,
     env_config: Option<&std::collections::HashMap<String, String>>,
+) -> Result<(
+    fbuild_packages::toolchain::TeensyArmToolchain,
+    fbuild_packages::library::TeensyCores,
+)> {
+    let registry_overrides = match env_config {
+        Some(env) => {
+            crate::package_override::resolve_registry_overrides(
+                project_dir,
+                env,
+                "teensy",
+                &["framework-arduinoteensy", "toolchain-gccarmnoneeabi-teensy"],
+                &[],
+            )
+            .await?
+        }
+        None => std::collections::HashMap::new(),
+    };
+    Ok(teensy_packages_from_resolved(
+        project_dir,
+        env_config,
+        &registry_overrides,
+    ))
+}
+
+fn teensy_packages_from_resolved(
+    project_dir: &Path,
+    env_config: Option<&std::collections::HashMap<String, String>>,
+    registry_overrides: &std::collections::HashMap<String, fbuild_config::PackageOverride>,
 ) -> (
     fbuild_packages::toolchain::TeensyArmToolchain,
     fbuild_packages::library::TeensyCores,
 ) {
-    let toolchain = fbuild_packages::toolchain::TeensyArmToolchain::new(project_dir);
-    let override_pin = env_config
-        .and_then(|env| crate::package_override::resolve_override(env, "framework-arduinoteensy"));
+    let toolchain_override = registry_overrides
+        .get("toolchain-gccarmnoneeabi-teensy")
+        .cloned();
+    let toolchain = match toolchain_override {
+        Some(override_pin) => {
+            fbuild_packages::toolchain::TeensyArmToolchain::with_override(project_dir, override_pin)
+        }
+        None => fbuild_packages::toolchain::TeensyArmToolchain::new(project_dir),
+    };
+    let override_pin = registry_overrides
+        .get("framework-arduinoteensy")
+        .cloned()
+        .or_else(|| {
+            env_config.and_then(|env| {
+                crate::package_override::resolve_override(env, "framework-arduinoteensy")
+            })
+        });
     let cores = match override_pin {
         Some(o) => fbuild_packages::library::TeensyCores::with_override(project_dir, o),
         None => fbuild_packages::library::TeensyCores::new(project_dir),
@@ -108,7 +150,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
         })?;
 
         // 3-4. Teensy-compatible ARM GCC toolchain and Teensy cores
-        let (toolchain, framework) = teensy_packages(&params.project_dir, Some(env_config));
+        let (toolchain, framework) = teensy_packages(&params.project_dir, Some(env_config)).await?;
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("Teensy ARM GCC toolchain at {}", toolchain_dir.display());
 
@@ -423,6 +465,46 @@ mod tests {
     fn test_teensy_orchestrator_platform() {
         let orch = TeensyOrchestrator;
         assert_eq!(orch.platform(), Platform::Teensy);
+    }
+
+    #[test]
+    fn registry_framework_pin_selects_requested_teensy_payload() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let env = std::collections::HashMap::from([
+            ("platform".to_string(), "teensy@5.1.0".to_string()),
+            (
+                "platform_packages".to_string(),
+                "framework-arduinoteensy@1.159.0".to_string(),
+            ),
+        ]);
+        let overrides = std::collections::HashMap::from([
+            (
+                "framework-arduinoteensy".to_string(),
+                fbuild_config::PackageOverride {
+                    url: "https://dl.registry.platformio.org/download/platformio/tool/framework-arduinoteensy/1.159.0/framework-arduinoteensy-1.159.0.tar.gz".to_string(),
+                    version: "1.159.0".to_string(),
+                    checksum: Some("c511fa047471c656bc28cfe5e95eacb223f83cc7a3b31fcf652e25b5e73f7838".to_string()),
+                },
+            ),
+            (
+                "toolchain-gccarmnoneeabi-teensy".to_string(),
+                fbuild_config::PackageOverride {
+                    url: "https://example.test/toolchain.tar.gz".to_string(),
+                    version: "1.110301.0".to_string(),
+                    checksum: Some("a".repeat(64)),
+                },
+            ),
+        ]);
+        let (toolchain, framework) =
+            teensy_packages_from_resolved(tmp.path(), Some(&env), &overrides);
+        assert_eq!(
+            fbuild_packages::Package::get_info(&framework).version,
+            "1.159.0"
+        );
+        assert_eq!(
+            fbuild_packages::Package::get_info(&toolchain).version,
+            "1.110301.0"
+        );
     }
 
     #[test]

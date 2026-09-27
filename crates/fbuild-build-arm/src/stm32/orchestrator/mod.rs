@@ -46,7 +46,9 @@ use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 
 use self::arduino_mbed::{build_arduino_mbed_stm32, is_arduino_mbed_stm32_variant};
 use self::framework_props::load_stm32_framework_props;
-use self::includes::{add_stm32_system_includes, stm32_generic_board_define};
+use self::includes::{
+    add_stm32_core_api_includes, add_stm32_system_includes, stm32_generic_board_define,
+};
 use self::variant_files::{keep_variant_source, select_variant_files};
 
 /// STM32 platform build orchestrator.
@@ -78,30 +80,108 @@ pub(crate) enum Stm32Core {
 /// `framework-arduino-mbed` / `framework-arduinoststm32` `platform_packages`
 /// overrides (FastLED/fbuild#664, #681). Shared by the build and `fbuild
 /// install`, so both provision the same packages (FastLED/fbuild#1433).
-pub(crate) fn stm32_packages(
+pub(crate) async fn stm32_packages(
     project_dir: &Path,
     env_config: Option<&std::collections::HashMap<String, String>>,
     board: &fbuild_config::BoardConfig,
+) -> Result<(fbuild_packages::toolchain::ArmToolchain, Stm32Core)> {
+    use crate::package_override::PlatformDefaultVersion;
+
+    let mbed = is_arduino_mbed_stm32_variant(&board.variant);
+    let package_names: &[&str] = if mbed {
+        &["framework-arduino-mbed", "toolchain-gccarmnoneeabi"]
+    } else {
+        &[
+            "framework-arduinoststm32",
+            "framework-cmsis",
+            "toolchain-gccarmnoneeabi",
+        ]
+    };
+    // platform-ststm32/platform.py rewrites the manifest defaults for the
+    // standard Arduino core (not the GIGA/Portenta mbed routing). The raw
+    // platform.json toolchain range would select GCC 7, which cannot link the
+    // current STM32duino linker scripts.
+    let platform_defaults: &[(&str, PlatformDefaultVersion<'_>)] = if mbed {
+        &[]
+    } else {
+        &[
+            (
+                "toolchain-gccarmnoneeabi",
+                PlatformDefaultVersion::BuilderBranch {
+                    marker: "else:",
+                    after: Some("elif build_core == \"stm32l0\":"),
+                },
+            ),
+            ("framework-cmsis", PlatformDefaultVersion::SoleOptional),
+        ]
+    };
+    let registry_overrides = match env_config {
+        Some(env) => {
+            crate::package_override::resolve_registry_overrides(
+                project_dir,
+                env,
+                "ststm32",
+                package_names,
+                platform_defaults,
+            )
+            .await?
+        }
+        None => std::collections::HashMap::new(),
+    };
+    Ok(stm32_packages_from_resolved(
+        project_dir,
+        env_config,
+        mbed,
+        &registry_overrides,
+    ))
+}
+
+fn stm32_packages_from_resolved(
+    project_dir: &Path,
+    env_config: Option<&std::collections::HashMap<String, String>>,
+    mbed: bool,
+    registry_overrides: &std::collections::HashMap<String, fbuild_config::PackageOverride>,
 ) -> (fbuild_packages::toolchain::ArmToolchain, Stm32Core) {
-    let toolchain = fbuild_packages::toolchain::ArmToolchain::new(project_dir);
-    let core = if is_arduino_mbed_stm32_variant(&board.variant) {
-        let override_pin = env_config.and_then(|env| {
-            crate::package_override::resolve_override(env, "framework-arduino-mbed")
-        });
+    let toolchain = match registry_overrides.get("toolchain-gccarmnoneeabi").cloned() {
+        Some(override_pin) => {
+            fbuild_packages::toolchain::ArmToolchain::with_override(project_dir, override_pin)
+        }
+        None => fbuild_packages::toolchain::ArmToolchain::new(project_dir),
+    };
+    let core = if mbed {
+        let override_pin = registry_overrides
+            .get("framework-arduino-mbed")
+            .cloned()
+            .or_else(|| {
+                env_config.and_then(|env| {
+                    crate::package_override::resolve_override(env, "framework-arduino-mbed")
+                })
+            });
         Stm32Core::ArduinoMbed(match override_pin {
             Some(o) => fbuild_packages::library::ArduinoMbedCore::with_override(project_dir, o),
             None => fbuild_packages::library::ArduinoMbedCore::new(project_dir),
         })
     } else {
-        let override_pin = env_config.and_then(|env| {
-            crate::package_override::resolve_override(env, "framework-arduinoststm32")
-        });
+        let override_pin = registry_overrides
+            .get("framework-arduinoststm32")
+            .cloned()
+            .or_else(|| {
+                env_config.and_then(|env| {
+                    crate::package_override::resolve_override(env, "framework-arduinoststm32")
+                })
+            });
         Stm32Core::Stm32duino {
             cores: match override_pin {
                 Some(o) => fbuild_packages::library::Stm32Cores::with_override(project_dir, o),
                 None => fbuild_packages::library::Stm32Cores::new(project_dir),
             },
-            cmsis: fbuild_packages::library::CmsisFramework::new(project_dir),
+            cmsis: match registry_overrides.get("framework-cmsis").cloned() {
+                Some(override_pin) => fbuild_packages::library::CmsisFramework::with_override(
+                    project_dir,
+                    override_pin,
+                ),
+                None => fbuild_packages::library::CmsisFramework::new(project_dir),
+            },
         }
     };
     (toolchain, core)
@@ -128,7 +208,8 @@ impl BuildOrchestrator for Stm32Orchestrator {
             &params.project_dir,
             ctx.config.get_env_config(&params.env_name).ok(),
             &ctx.board,
-        );
+        )
+        .await?;
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("arm-gcc toolchain at {}", toolchain_dir.display());
 
@@ -367,6 +448,7 @@ impl BuildOrchestrator for Stm32Orchestrator {
         // Build include dirs manually (can't use get_include_paths because
         // STM32duino core dir is "arduino", not the board JSON's "stm32")
         let mut include_dirs = vec![core_dir.clone(), variant_dir.clone()];
+        add_stm32_core_api_includes(&core_dir, &mut include_dirs);
         // Core subdirectories (AVR compat, STM32 HAL wrapper)
         include_dirs.push(core_dir.join("avr"));
         include_dirs.push(core_dir.join("stm32"));
@@ -547,6 +629,61 @@ mod tests {
     fn test_stm32_orchestrator_platform() {
         let orch = Stm32Orchestrator;
         assert_eq!(orch.platform(), Platform::Ststm32);
+    }
+
+    #[test]
+    fn stm32duino_consumes_resolved_framework_toolchain_and_cmsis() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let overrides = std::collections::HashMap::from([
+            (
+                "framework-arduinoststm32".to_string(),
+                fbuild_config::PackageOverride::new(
+                    "https://example.test/stm32.tar.gz",
+                    "4.30000.0",
+                ),
+            ),
+            (
+                "toolchain-gccarmnoneeabi".to_string(),
+                fbuild_config::PackageOverride::new("https://example.test/gcc.tar.gz", "1.70201.0"),
+            ),
+            (
+                "framework-cmsis".to_string(),
+                fbuild_config::PackageOverride::new(
+                    "https://example.test/cmsis.tar.gz",
+                    "2.50501.0",
+                ),
+            ),
+        ]);
+        let (toolchain, core) = stm32_packages_from_resolved(tmp.path(), None, false, &overrides);
+        assert_eq!(
+            fbuild_packages::Package::get_info(&toolchain).version,
+            "1.70201.0"
+        );
+        let Stm32Core::Stm32duino { cores, cmsis } = core else {
+            panic!("expected STM32duino core");
+        };
+        assert_eq!(
+            fbuild_packages::Package::get_info(&cores).version,
+            "4.30000.0"
+        );
+        assert_eq!(
+            fbuild_packages::Package::get_info(&cmsis).version,
+            "2.50501.0"
+        );
+    }
+
+    #[test]
+    fn giga_consumes_resolved_mbed_framework() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let overrides = std::collections::HashMap::from([(
+            "framework-arduino-mbed".to_string(),
+            fbuild_config::PackageOverride::new("https://example.test/mbed.tar.gz", "4.6.0"),
+        )]);
+        let (_, core) = stm32_packages_from_resolved(tmp.path(), None, true, &overrides);
+        let Stm32Core::ArduinoMbed(core) = core else {
+            panic!("expected Arduino mbed core");
+        };
+        assert_eq!(fbuild_packages::Package::get_info(&core).version, "4.6.0");
     }
 
     #[test]

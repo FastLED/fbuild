@@ -35,6 +35,14 @@ impl ArmGcc8Toolchain {
         }
     }
 
+    /// Use a toolchain selected from a PlatformIO platform/package pin.
+    pub fn with_override(project_dir: &Path, ovr: fbuild_config::PackageOverride) -> Self {
+        Self {
+            base: Self::new(project_dir).base.with_override(ovr),
+            install_dir: None,
+        }
+    }
+
     fn resolved_dir(&self) -> PathBuf {
         self.install_dir
             .clone()

@@ -26,19 +26,59 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
 }
 
 /// Silicon Labs' ARM GCC toolchain and Arduino cores for an env, honoring the
-/// `framework-arduinosilabs` `platform_packages` override (FastLED/fbuild#664,
+/// `framework-arduino-silabs` and legacy `framework-arduinosilabs`
+/// `platform_packages` URL overrides (FastLED/fbuild#664,
 /// #681). Shared by the build and `fbuild install`, so both provision the same
 /// packages (FastLED/fbuild#1433).
-pub(crate) fn silabs_packages(
+pub(crate) async fn silabs_packages(
     project_dir: &Path,
     env_config: Option<&HashMap<String, String>>,
+) -> Result<(
+    fbuild_packages::toolchain::ArmToolchain,
+    fbuild_packages::library::SilabsCores,
+)> {
+    let registry_overrides = match env_config {
+        Some(env) => {
+            crate::package_override::resolve_registry_overrides(
+                project_dir,
+                env,
+                "siliconlabsefm32",
+                &["framework-arduino-silabs", "toolchain-gccarmnoneeabi"],
+                &[],
+            )
+            .await?
+        }
+        None => HashMap::new(),
+    };
+    Ok(silabs_packages_from_resolved(
+        project_dir,
+        env_config,
+        &registry_overrides,
+    ))
+}
+
+fn silabs_packages_from_resolved(
+    project_dir: &Path,
+    env_config: Option<&HashMap<String, String>>,
+    registry_overrides: &HashMap<String, fbuild_config::PackageOverride>,
 ) -> (
     fbuild_packages::toolchain::ArmToolchain,
     fbuild_packages::library::SilabsCores,
 ) {
-    let toolchain = fbuild_packages::toolchain::ArmToolchain::new(project_dir);
-    let override_pin = env_config
-        .and_then(|env| crate::package_override::resolve_override(env, "framework-arduinosilabs"));
+    let toolchain = match registry_overrides.get("toolchain-gccarmnoneeabi").cloned() {
+        Some(o) => fbuild_packages::toolchain::ArmToolchain::with_override(project_dir, o),
+        None => fbuild_packages::toolchain::ArmToolchain::new(project_dir),
+    };
+    let override_pin = registry_overrides
+        .get("framework-arduino-silabs")
+        .cloned()
+        .or_else(|| {
+            env_config.and_then(|env| {
+                crate::package_override::resolve_override(env, "framework-arduino-silabs").or_else(
+                    || crate::package_override::resolve_override(env, "framework-arduinosilabs"),
+                )
+            })
+        });
     let cores = match override_pin {
         Some(o) => fbuild_packages::library::SilabsCores::with_override(project_dir, o),
         None => fbuild_packages::library::SilabsCores::new(project_dir),
@@ -60,7 +100,8 @@ impl BuildOrchestrator for SilabsOrchestrator {
         let (toolchain, framework) = silabs_packages(
             &params.project_dir,
             ctx.config.get_env_config(&params.env_name).ok(),
-        );
+        )
+        .await?;
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("arm-gcc toolchain at {}", toolchain_dir.display());
 
@@ -409,6 +450,46 @@ pub fn is_silabs_project(project_dir: &Path, env_name: &str) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn silabs_consumes_resolved_framework_and_toolchain() {
+        let tmp = tempfile::tempdir().unwrap();
+        let overrides = std::collections::HashMap::from([
+            (
+                "framework-arduino-silabs".into(),
+                fbuild_config::PackageOverride::new("https://example.test/silabs.tar.gz", "2.2.1"),
+            ),
+            (
+                "toolchain-gccarmnoneeabi".into(),
+                fbuild_config::PackageOverride::new(
+                    "https://example.test/gcc.tar.gz",
+                    "1.120301.0",
+                ),
+            ),
+        ]);
+        let (toolchain, core) = silabs_packages_from_resolved(tmp.path(), None, &overrides);
+        assert_eq!(
+            fbuild_packages::Package::get_info(&toolchain).version,
+            "1.120301.0"
+        );
+        assert_eq!(fbuild_packages::Package::get_info(&core).version, "2.2.1");
+    }
+
+    #[test]
+    fn silabs_honors_canonical_and_legacy_framework_url_overrides() {
+        let tmp = tempfile::tempdir().unwrap();
+        for package in ["framework-arduino-silabs", "framework-arduinosilabs"] {
+            let env = HashMap::from([(
+                "platform_packages".into(),
+                format!("{package}@https://example.test/silabs-2.2.1.tar.gz"),
+            )]);
+            let (_, core) = silabs_packages_from_resolved(tmp.path(), Some(&env), &HashMap::new());
+            assert_eq!(
+                fbuild_packages::Package::get_info(&core).url,
+                "https://example.test/silabs-2.2.1.tar.gz"
+            );
+        }
+    }
 
     #[test]
     fn test_silabs_orchestrator_platform() {
