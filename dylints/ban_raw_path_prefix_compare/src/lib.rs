@@ -80,7 +80,8 @@ const BANNED_METHOD_PATHS: &[&[&str]] = &[
 
 // allowlist.txt is a compile-time input; CI build caches have been observed
 // serving a stale compiled lint after allowlist-only edits, so pair
-// allowlist updates with a source touch when the gate must move.
+// allowlist updates with a source touch when the gate must move. Keep the
+// include-path exception in sync with this compilation unit.
 const ALLOWLIST: &str = include_str!("allowlist.txt");
 
 /// Production-code scope. Only files whose path contains BOTH
