@@ -100,6 +100,8 @@ pub(super) fn restart_notice(
 /// After respawning, the daemon that answers `/health` must be one this CLI
 /// would not restart again. If it still would, every later command will pay
 /// for another restart. The evidence distinguishes two causes:
+/// - the CLI and daemon versions differ, so the version mismatch itself
+///   explains the restart decision;
 /// - the daemon runs from this CLI's sibling path, so the binary changed on
 ///   disk after the daemon read its mtime;
 /// - the daemon runs from another image, so a second launcher (e.g. the
@@ -122,7 +124,10 @@ pub(super) fn post_respawn_warning(
     }
     let spawned = spawned_pid.map_or_else(|| "unknown".to_string(), |pid| pid.to_string());
     let same_image = health.source_exe.is_some() && health.source_exe == sibling.path;
-    let cause = if same_image {
+    let cause = if cli_version != health.version {
+        "The CLI and daemon versions differ, so the restart decision does not imply an on-disk \
+         file replacement"
+    } else if same_image {
         "It runs from this CLI's sibling binary, so that file changed on disk after the \
          daemon started"
     } else if health.source_exe.is_some() {
@@ -219,6 +224,15 @@ mod tests {
                 .expect("stale after respawn");
         assert!(warning.contains("changed on disk after the daemon started"));
         assert!(!warning.contains("another launcher"));
+    }
+
+    #[test]
+    fn post_respawn_warning_does_not_blame_file_for_version_upgrade() {
+        let warning =
+            post_respawn_warning(&health("2.5.27", 100.0), "2.5.28", &sibling(50.0), Some(7))
+                .expect("older daemon version still serving after upgrade");
+        assert!(warning.contains("CLI and daemon versions differ"));
+        assert!(!warning.contains("file changed after the daemon started"));
     }
 
     #[test]
