@@ -14,8 +14,8 @@ FastLED/FastLED#1307. fbuild tracker: FastLED/fbuild#389.
 - **Framework registry**: `dxcore` is mapped to a checksummed PlatformIO
   archive in `crates/fbuild-library/assets/avr_frameworks.json`. The
   megaAVR adapter selects PlatformIO's newer AVR-GCC requirement for DxCore
-  when the platform version is pinned. An end-to-end DxCore build still needs
-  validation.
+  when the platform version is pinned. The `avr128da64_registry` environment
+  completed a Linux smoke build; other hosts remain to be validated by CI.
 - **FastLED platform support**: NO `AVR_DA` / `AVR128DA*` /
   `__AVR_AVR128DA*__` branch in `src/platforms/avr/`. The user-supplied
   pin map in FastLED/FastLED#1307 has not been merged into
@@ -27,10 +27,14 @@ This fixture intentionally does NOT `#include <FastLED.h>` so it can validate
 the fbuild-side framework/toolchain path. FastLED's AVR-Dx support remains
 separate and may still reject a FastLED sketch.
 
+`avr128da64_registry` pins megaAVR platform 1.10.0 and DxCore 1.6.2, which
+selects the platform builder's newer AVR-GCC package.
+
 ## Next steps (fbuild-side)
 
-Run the fixture as a real build on each supported host and fix any
-compiler/linker incompatibility independently of package resolution.
+Run the fixture as a real build on the remaining supported hosts and fix any
+host-specific compiler/linker incompatibility independently of package
+resolution.
 
 ## Next steps (FastLED-side)
 

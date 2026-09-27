@@ -579,6 +579,45 @@ mod tests {
     }
 
     #[test]
+    fn pinned_megaavr_tiny_core_selects_newer_avr_toolchain() {
+        let manifest = r#"{"packages":{"framework-arduino-megaavr-megatinycore":{"type":"framework","owner":"platformio","version":"~2.6.11","optional":true},"toolchain-atmelavr":{"type":"toolchain","owner":"platformio","version":"~1.70300.0","optionalVersions":["~3.70300.0"]}}}"#;
+        let builder = "        if build_core in (\"megatinycore\", \"dxcore\"):\n            self.packages[\"toolchain-atmelavr\"][\"version\"] = \"~3.70300.0\"\n";
+        let defaults = [(
+            "toolchain-atmelavr",
+            PlatformDefaultVersion::BuilderBranch {
+                marker: "if build_core in (\"megatinycore\", \"dxcore\"):",
+                after: None,
+            },
+        )];
+        let requirements =
+            requirements_with_platform_defaults(manifest, Some(builder), &[], &defaults).unwrap();
+        assert_eq!(
+            require_platform_package(&requirements, "toolchain-atmelavr")
+                .unwrap()
+                .spec
+                .registry()
+                .unwrap()
+                .requirement
+                .as_deref(),
+            Some("~3.70300.0")
+        );
+        let explicit = parse_package_spec("toolchain-atmelavr@1.70300.191015").unwrap();
+        let requirements =
+            requirements_with_platform_defaults(manifest, Some(builder), &[explicit], &defaults)
+                .unwrap();
+        assert_eq!(
+            require_platform_package(&requirements, "toolchain-atmelavr")
+                .unwrap()
+                .spec
+                .registry()
+                .unwrap()
+                .requirement
+                .as_deref(),
+            Some("1.70300.191015")
+        );
+    }
+
+    #[test]
     fn pinned_sam_builder_selects_adafruit_gcc_and_rejects_changed_rule() {
         let builder = "    if build_core == \"adafruit\":\n        self.packages[\"toolchain-gccarmnoneeabi\"][\"version\"] = \"~1.90301.0\"\n";
         assert_eq!(
