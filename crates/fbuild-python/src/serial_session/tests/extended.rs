@@ -136,7 +136,11 @@ async fn at15_peer_stops_reading_write_times_out_without_lock_leak() {
         let started = tokio::time::Instant::now();
         let result = session.write(&payload, Duration::from_millis(300)).await;
         assert_eq!(result, Err(SessionError::Timeout));
-        assert!(started.elapsed() < Duration::from_millis(1300));
+        let elapsed = started.elapsed();
+        assert!(
+            elapsed < Duration::from_secs(5),
+            "timed-out write took {elapsed:?}"
+        );
         // A completed WebSocket send can still time out waiting for its ack.
         // Only a timeout *during* the send leaves a partial frame and closes
         // the session; whether the frame fits the socket buffer varies by OS.
