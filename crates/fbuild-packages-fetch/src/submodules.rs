@@ -631,12 +631,19 @@ mod tests {
         }
     }
 
-    #[cfg(unix)]
     #[test]
     fn gitlink_paths_reject_symlink_escape() {
         let root = tempfile::TempDir::new().unwrap();
         let outside = tempfile::TempDir::new().unwrap();
-        std::os::unix::fs::symlink(outside.path(), root.path().join("outside")).unwrap();
+        if let Err(error) =
+            fbuild_core::platform::fs::symlink_dir(outside.path(), &root.path().join("outside"))
+        {
+            // Windows symlink creation can require a privilege absent on CI runners.
+            if error.kind() == std::io::ErrorKind::PermissionDenied {
+                return;
+            }
+            panic!("failed to create test symlink: {error}");
+        }
         assert!(checked_submodule_dest(root.path(), "outside").is_err());
     }
 
