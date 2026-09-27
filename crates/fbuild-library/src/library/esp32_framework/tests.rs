@@ -367,7 +367,7 @@ fn test_sdk_lib_flags_prefers_requested_memory_variant() {
 #[test]
 fn old_sdk_linker_scripts_search_selected_memory_variant() {
     let tmp = tempfile::TempDir::new().unwrap();
-    let sdk = tmp.path().join("tools/sdk/esp32s3");
+    let sdk = tmp.path().join("tools").join("sdk").join("esp32s3");
     std::fs::create_dir_all(sdk.join("ld")).unwrap();
     std::fs::create_dir_all(sdk.join("dio_qspi")).unwrap();
     std::fs::write(sdk.join("dio_qspi/sections.ld"), "\n").unwrap();
@@ -390,7 +390,7 @@ fn old_sdk_linker_scripts_search_selected_memory_variant() {
 #[test]
 fn old_sdk_libraries_use_selected_variant_before_common_archives() {
     let tmp = tempfile::TempDir::new().unwrap();
-    let sdk = tmp.path().join("tools/sdk/esp32s3");
+    let sdk = tmp.path().join("tools").join("sdk").join("esp32s3");
     let variant = sdk.join("qio_qspi");
     let common = sdk.join("lib");
     std::fs::create_dir_all(&variant).unwrap();
