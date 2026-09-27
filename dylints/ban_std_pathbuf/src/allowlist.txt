@@ -38,6 +38,8 @@ crates/fbuild-build-engine/src/compiler.rs
 crates/fbuild-build-engine/src/compiler_tests.rs
 crates/fbuild-build-esp/src/esp32/esp32_compiler.rs
 crates/fbuild-build-esp/src/esp32/esp32_linker.rs
+# Test constructors mirror esp32_linker.rs's raw PathBuf API; migrate and remove in #1512.
+crates/fbuild-build-esp/src/esp32/esp32_linker_tests.rs
 crates/fbuild-build-esp/src/esp32/orchestrator/build.rs
 crates/fbuild-build-esp/src/esp32/orchestrator/embed.rs
 crates/fbuild-build-esp/src/esp32/orchestrator/embed_stage.rs
