@@ -19,8 +19,8 @@ use super::embed_stage::stage_embed_files;
 use super::fingerprint::Esp32FingerprintMetadata;
 use super::framework_libs::compile_framework_builtin_libs;
 use super::helpers::{
-    apply_effective_define_flags, compile_db_is_current, framework_macro_prefix_map, profile_label,
-    reject_unsupported_sdkconfig_overlay,
+    SdkIncludeFarm, apply_effective_define_flags, compile_db_is_current, compile_include_dirs,
+    framework_macro_prefix_map, profile_label, reject_unsupported_sdkconfig_overlay,
 };
 use super::local_libs::compile_local_libraries;
 use super::packages::resolve_pioarduino_packages;
@@ -264,12 +264,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let sdk_block_start = include_dirs.len();
         include_dirs
             .extend(framework.get_sdk_include_dirs(&sdk_variant, sdk_memory_type.as_deref()));
-        let sdk_farm = super::helpers::SdkIncludeFarm::build(
-            &include_dirs,
-            sdk_block_start..include_dirs.len(),
-        )
-        .await;
-        let sdk_farm = sdk_farm.as_ref();
+        let sdk_farm =
+            SdkIncludeFarm::build(&include_dirs, sdk_block_start..include_dirs.len()).await;
 
         let builtin_libs_dir = framework.get_libraries_dir();
 
@@ -324,7 +320,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let mut user_flags = sdk_defines.clone();
         // Before the user's build_flags, so their own prefix maps still win.
         user_flags.extend(framework_macro_prefix_map(&core_dir));
-        user_flags.extend(sdk_farm.map(super::helpers::SdkIncludeFarm::macro_prefix_map));
+        user_flags.extend(sdk_farm.as_ref().map(SdkIncludeFarm::macro_prefix_map));
         let mut user_build_flags = ctx.config.get_build_flags(&params.env_name)?;
         user_build_flags.extend(params.extra_build_flags.clone());
         user_flags.extend(user_build_flags.clone());
@@ -352,7 +348,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 .flat_map(|library| library.include_dirs.iter().cloned()),
         );
         let external_compile_includes =
-            super::helpers::compile_include_dirs(sdk_farm, &external_base_includes);
+            compile_include_dirs(sdk_farm.as_ref(), &external_base_includes);
         let mut external_library_sources = Vec::new();
 
         if !lib_deps.is_empty() {
@@ -465,7 +461,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             selected_framework_libraries.len()
         );
         include_dirs.extend(framework_selection.include_dirs);
-        let compile_includes = super::helpers::compile_include_dirs(sdk_farm, &include_dirs);
+        let compile_includes = compile_include_dirs(sdk_farm.as_ref(), &include_dirs);
 
         // 8.5b. Project-as-library compilation â€” shared with sequential pipeline.
         // When the project root contains library.json or library.properties (e.g., FastLED),

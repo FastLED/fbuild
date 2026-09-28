@@ -304,26 +304,44 @@ fn plan_farm(before: &[NormalizedPath], block: &[NormalizedPath]) -> io::Result<
 }
 
 fn list_files(dir: &Path) -> io::Result<Vec<String>> {
-    if !dir.is_dir() {
-        // GCC ignores a missing `-I`; it contributes nothing to the farm.
-        return Ok(Vec::new());
-    }
     let mut rels = Vec::new();
-    for entry in walkdir::WalkDir::new(dir).follow_links(true) {
-        let entry = entry.map_err(io::Error::other)?;
-        if !entry.file_type().is_file() {
-            continue;
-        }
-        let rel = entry
-            .path()
-            .strip_prefix(dir)
-            .map_err(io::Error::other)?
-            .to_str()
-            .ok_or_else(|| io::Error::new(io::ErrorKind::InvalidData, "non-UTF-8 header path"))?
-            .replace('\\', "/");
-        rels.push(rel);
+    // GCC ignores a missing `-I`; it contributes nothing to the farm.
+    if dir.is_dir() {
+        collect_files(dir, "", 0, &mut rels)?;
     }
     Ok(rels)
+}
+
+/// Relative (`/`-joined) paths of the regular files under `dir`, following
+/// symlinks as `open` does. Dangling links are skipped, as GCC skips them.
+fn collect_files(dir: &Path, prefix: &str, depth: usize, out: &mut Vec<String>) -> io::Result<()> {
+    if depth > 64 {
+        return Err(io::Error::other(format!(
+            "include tree too deep (symlink loop?) at {}",
+            dir.display()
+        )));
+    }
+    for entry in std::fs::read_dir(dir)? {
+        let entry = entry?;
+        let name = entry
+            .file_name()
+            .into_string()
+            .map_err(|_| io::Error::new(io::ErrorKind::InvalidData, "non-UTF-8 header path"))?;
+        let rel = if prefix.is_empty() {
+            name
+        } else {
+            format!("{prefix}/{name}")
+        };
+        let Ok(meta) = std::fs::metadata(entry.path()) else {
+            continue;
+        };
+        if meta.is_dir() {
+            collect_files(&entry.path(), &rel, depth + 1, out)?;
+        } else if meta.is_file() {
+            out.push(rel);
+        }
+    }
+    Ok(())
 }
 
 fn build_tree(files: &[Vec<String>], farmed: &[bool]) -> Node {
