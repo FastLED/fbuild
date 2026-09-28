@@ -133,9 +133,11 @@ fn file_in_one_dir_and_directory_in_another_keeps_both() {
     assert_eq!(kept_indices(&plan), [0, 1]);
 }
 
-#[cfg(unix)]
 #[test]
 fn farm_resolves_every_header_to_the_original_file() {
+    if fbuild_core::platform::host::is_windows() {
+        return;
+    }
     let tmp = tempfile::TempDir::new().unwrap();
     let block = block_dirs(&tmp, 3);
     write(block[0].as_path(), "freertos/task.h", "task");
@@ -171,9 +173,11 @@ fn farm_resolves_every_header_to_the_original_file() {
     );
 }
 
-#[cfg(unix)]
 #[test]
 fn farm_path_is_deterministic_and_rebuilt_in_place() {
+    if fbuild_core::platform::host::is_windows() {
+        return;
+    }
     let tmp = tempfile::TempDir::new().unwrap();
     let block = block_dirs(&tmp, 2);
     write(block[0].as_path(), "a.h", "");

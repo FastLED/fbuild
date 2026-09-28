@@ -19,6 +19,7 @@
 //!   its directory out of the farm.
 //!
 //! Anything unexpected yields no farm; callers then keep the original list.
+//! Callers skip farms on Windows, where symlinks usually need elevated rights.
 
 use std::collections::{BTreeMap, HashMap};
 use std::io;
@@ -488,25 +489,20 @@ fn lexical_join(base: &Path, rel: &str) -> Option<String> {
     Some(format!("{prefix}{}", out.join("/")))
 }
 
-#[cfg(unix)]
 fn materialize(plan: &Plan, staging: &Path) -> io::Result<()> {
     std::fs::create_dir_all(staging)?;
     for dir in &plan.real_dirs {
         std::fs::create_dir_all(staging.join(dir))?;
     }
     for (rel, target) in &plan.links {
-        std::os::unix::fs::symlink(target.as_path(), staging.join(rel))?;
+        let link = staging.join(rel);
+        if target.as_path().is_dir() {
+            fbuild_core::platform::fs::symlink_dir(target.as_path(), &link)?;
+        } else {
+            fbuild_core::platform::fs::symlink_file(target.as_path(), &link)?;
+        }
     }
     Ok(())
-}
-
-#[cfg(not(unix))]
-fn materialize(_plan: &Plan, _staging: &Path) -> io::Result<()> {
-    // Directory symlinks need elevated rights on Windows; keep the plain list.
-    Err(io::Error::new(
-        io::ErrorKind::Unsupported,
-        "include farms are Unix-only",
-    ))
 }
 
 #[cfg(test)]

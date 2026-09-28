@@ -230,7 +230,7 @@ pub(super) struct SdkIncludeFarm {
 impl SdkIncludeFarm {
     /// Farm `dirs[range]`, the SDK block; `None` (plain `-I`) on any failure.
     pub(super) async fn build(dirs: &[PathBuf], range: std::ops::Range<usize>) -> Option<Self> {
-        if !cfg!(unix) || range.is_empty() {
+        if fbuild_core::platform::host::is_windows() || range.is_empty() {
             return None;
         }
         let before: Vec<_> = dirs[..range.start]

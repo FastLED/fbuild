@@ -60,6 +60,10 @@ pub(crate) fn symlink_dir(original: &Path, link: &Path) -> std::io::Result<()> {
     std::os::windows::fs::symlink_dir(original, link)
 }
 
+pub(crate) fn symlink_file(original: &Path, link: &Path) -> std::io::Result<()> {
+    std::os::windows::fs::symlink_file(original, link)
+}
+
 pub(crate) fn is_link_or_reparse(path: &Path) -> std::io::Result<bool> {
     const FILE_ATTRIBUTE_REPARSE_POINT: u32 = 0x0000_0400;
     Ok(std::fs::symlink_metadata(path)?.file_attributes() & FILE_ATTRIBUTE_REPARSE_POINT != 0)
