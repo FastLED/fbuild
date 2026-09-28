@@ -390,7 +390,7 @@ fn remove_cached_install(install_path: &Path) -> Result<()> {
 /// file whose interpreter or dynamic loader is unavailable, which surfaces as
 /// `ENOENT` only when the later `elf2image` command is spawned.
 /// Left in an install whose esptool already passed [`verify_esptool_once`].
-const VERIFIED_STAMP: &str = ".fbuild-esptool-verified";
+const VERIFIED_STAMP: &str = "esptool-verified.stamp";
 
 /// Run `<bin> version` once per install instead of on every build: each
 /// spawn starts a Python interpreter, which cost ~140 ms on every ESP32 build,
@@ -745,9 +745,9 @@ mod tests {
 
     /// A fake esptool that prints `esptool.py v4.5.1` and appends a line to
     /// `calls` on every run, so tests can count spawns.
-    fn counting_esptool(dir: &Path) -> (std::path::PathBuf, std::path::PathBuf) {
-        let bin = dir.join(esptool_bin_name());
-        let calls = dir.join("calls");
+    fn counting_esptool(dir: &Path) -> (NormalizedPath, NormalizedPath) {
+        let bin = NormalizedPath::new(dir.join(esptool_bin_name()));
+        let calls = NormalizedPath::new(dir.join("calls"));
         std::fs::write(
             &bin,
             format!(
