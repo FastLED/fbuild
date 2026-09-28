@@ -501,6 +501,23 @@ mod tests {
     }
 
     #[test]
+    fn resolved_esp8266_platform_and_packages_are_not_reported_as_ignored() {
+        let config = env(&[
+            ("platform", "espressif8266@4.0.1"),
+            (
+                "platform_packages",
+                "platformio/framework-arduinoespressif8266@3.30002.0\nplatformio/toolchain-xtensa@2.100300.220621",
+            ),
+        ]);
+        let warnings = ignored_version_pins_with_resolved_packages(
+            &config,
+            Some(fbuild_core::Platform::Espressif8266),
+            &["framework-arduinoespressif8266", "toolchain-xtensa"],
+        );
+        assert!(warnings.is_empty(), "{warnings:?}");
+    }
+
+    #[test]
     fn resolved_framework_pin_does_not_warn_but_unhandled_package_still_does() {
         let config = env(&[
             ("platform", "espressif32"),

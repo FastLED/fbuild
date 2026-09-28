@@ -1,4 +1,4 @@
-﻿//! ESP8266 platform build support (NodeMCU, Wemos D1, etc.)
+//! ESP8266 platform build support (NodeMCU, Wemos D1, etc.)
 
 pub mod esp8266_compiler;
 pub mod esp8266_linker;
@@ -23,9 +23,32 @@ impl crate::PlatformSupport for Esp8266PlatformSupport {
         inputs: &crate::provision::ProvisionInputs<'_>,
         mode: crate::provision::ProvisionMode,
     ) -> fbuild_core::Result<Vec<crate::provision::ProvisionedPackage>> {
-        use crate::provision::{PackageKind, provision_package};
-        let (toolchain, framework) =
-            orchestrator::esp8266_packages(inputs.project_dir, Some(inputs.env_config));
+        use crate::provision::{
+            PackageKind, ProvisionStatus, ProvisionedPackage, provision_package,
+        };
+        let selected = if mode.fetches() {
+            Some(orchestrator::esp8266_packages(inputs.project_dir, Some(inputs.env_config)).await?)
+        } else {
+            orchestrator::esp8266_packages_offline(inputs.project_dir, Some(inputs.env_config))
+                .await?
+        };
+        let Some((toolchain, framework)) = selected else {
+            // Metadata or the selected platform manifest is not cached.
+            // These modes cannot fetch it, so report uncertainty as missing
+            // instead of silently reporting the adapter's default packages.
+            return Ok(vec![
+                ProvisionedPackage::new(
+                    PackageKind::Toolchain,
+                    "toolchain-xtensa",
+                    ProvisionStatus::WouldFetch,
+                ),
+                ProvisionedPackage::new(
+                    PackageKind::Framework,
+                    "framework-arduinoespressif8266",
+                    ProvisionStatus::WouldFetch,
+                ),
+            ]);
+        };
         Ok(vec![
             provision_package(PackageKind::Toolchain, &toolchain, mode).await,
             provision_package(PackageKind::Framework, &framework, mode).await,

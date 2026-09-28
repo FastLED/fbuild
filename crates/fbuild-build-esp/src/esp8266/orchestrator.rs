@@ -39,26 +39,138 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
     }
 }
 
-/// The ESP8266 toolchain and Arduino framework for an env, honoring the
-/// `framework-arduinoespressif8266` `platform_packages` override
-/// (FastLED/fbuild#664, #681). Shared by the build and `fbuild install`, so
-/// both provision the same packages (FastLED/fbuild#1433).
-pub(crate) fn esp8266_packages(
+/// Resolve the selected PlatformIO platform's exact framework and toolchain
+/// payloads before constructing either package. Shared by build and install.
+pub(crate) async fn esp8266_packages(
     project_dir: &Path,
     env_config: Option<&HashMap<String, String>>,
+) -> Result<(
+    fbuild_packages::toolchain::Esp8266Toolchain,
+    fbuild_packages::library::Esp8266Framework,
+)> {
+    esp8266_packages_with_fetch(project_dir, env_config, true)
+        .await?
+        .ok_or_else(|| {
+            fbuild_core::FbuildError::PackageError("ESP8266 packages unavailable".into())
+        })
+}
+
+pub(crate) async fn esp8266_packages_offline(
+    project_dir: &Path,
+    env_config: Option<&HashMap<String, String>>,
+) -> Result<
+    Option<(
+        fbuild_packages::toolchain::Esp8266Toolchain,
+        fbuild_packages::library::Esp8266Framework,
+    )>,
+> {
+    esp8266_packages_with_fetch(project_dir, env_config, false).await
+}
+
+async fn esp8266_packages_with_fetch(
+    project_dir: &Path,
+    env_config: Option<&HashMap<String, String>>,
+    fetch: bool,
+) -> Result<
+    Option<(
+        fbuild_packages::toolchain::Esp8266Toolchain,
+        fbuild_packages::library::Esp8266Framework,
+    )>,
+> {
+    let registry_overrides = if let Some(env) = env_config {
+        if fetch {
+            Some(
+                crate::package_override::resolve_registry_overrides(
+                    project_dir,
+                    env,
+                    "espressif8266",
+                    &["framework-arduinoespressif8266", "toolchain-xtensa"],
+                    &[],
+                )
+                .await?,
+            )
+        } else {
+            crate::package_override::resolve_registry_overrides_offline(
+                project_dir,
+                env,
+                "espressif8266",
+                &["framework-arduinoespressif8266", "toolchain-xtensa"],
+                &[],
+            )
+            .await?
+        }
+    } else {
+        Some(HashMap::new())
+    };
+    Ok(registry_overrides.map(|registry_overrides| {
+        esp8266_packages_from_resolved(project_dir, env_config, &registry_overrides)
+    }))
+}
+
+fn esp8266_packages_from_resolved(
+    project_dir: &Path,
+    env_config: Option<&HashMap<String, String>>,
+    registry_overrides: &HashMap<String, fbuild_config::PackageOverride>,
 ) -> (
     fbuild_packages::toolchain::Esp8266Toolchain,
     fbuild_packages::library::Esp8266Framework,
 ) {
-    let toolchain = fbuild_packages::toolchain::Esp8266Toolchain::new(project_dir);
-    let override_pin = env_config.and_then(|env| {
-        crate::package_override::resolve_override(env, "framework-arduinoespressif8266")
-    });
+    let toolchain_pin = registry_overrides
+        .get("toolchain-xtensa")
+        .cloned()
+        .or_else(|| {
+            env_config
+                .and_then(|env| crate::package_override::resolve_override(env, "toolchain-xtensa"))
+        });
+    let toolchain = match toolchain_pin {
+        Some(pin) => fbuild_packages::toolchain::Esp8266Toolchain::with_override(project_dir, pin),
+        None => fbuild_packages::toolchain::Esp8266Toolchain::new(project_dir),
+    };
+    let override_pin = registry_overrides
+        .get("framework-arduinoespressif8266")
+        .cloned()
+        .or_else(|| {
+            env_config.and_then(|env| {
+                crate::package_override::resolve_override(env, "framework-arduinoespressif8266")
+            })
+        });
     let framework = match override_pin {
         Some(o) => fbuild_packages::library::Esp8266Framework::with_override(project_dir, o),
         None => fbuild_packages::library::Esp8266Framework::new(project_dir),
     };
     (toolchain, framework)
+}
+
+/// Read the registry identity already resolved by `esp8266_packages` for
+/// build output and the fast-path fingerprint. This is cache-only.
+async fn selected_platform_identity(
+    project_dir: &Path,
+    requested: &str,
+) -> Result<Option<fbuild_core::platformio_package::ResolvedPayload>> {
+    use fbuild_core::platformio_package::{PackageKind, host_system, parse_package_spec};
+
+    let spec = parse_package_spec(requested)
+        .map_err(|error| fbuild_core::FbuildError::PackageError(error.to_string()))?;
+    let Some(registry) = spec
+        .registry()
+        .filter(|registry| registry.requirement.is_some())
+    else {
+        return Ok(None);
+    };
+    let host = host_system(fbuild_core::platform::host::current()).ok_or_else(|| {
+        fbuild_core::FbuildError::PackageError("unsupported PlatformIO host".into())
+    })?;
+    let cache_root = fbuild_packages::Cache::new(project_dir).platforms_dir();
+    fbuild_packages::platformio_registry::RegistryClient::default()
+        .resolve_cached(registry, PackageKind::Platform, host, &cache_root, false)
+        .await
+        .map_err(|error| fbuild_core::FbuildError::PackageError(error.to_string()))?
+        .ok_or_else(|| {
+            fbuild_core::FbuildError::PackageError(format!(
+                "selected ESP8266 platform `{requested}` missing from registry cache"
+            ))
+        })
+        .map(Some)
 }
 
 #[async_trait::async_trait]
@@ -82,7 +194,38 @@ impl BuildOrchestrator for Esp8266Orchestrator {
         let (toolchain, framework) = esp8266_packages(
             &params.project_dir,
             ctx.config.get_env_config(&params.env_name).ok(),
-        );
+        )
+        .await?;
+        let toolchain_info = fbuild_packages::Package::get_info(&toolchain);
+        let framework_info = fbuild_packages::Package::get_info(&framework);
+        let requested_platform = ctx
+            .config
+            .get_env_config(&params.env_name)?
+            .get("platform")
+            .cloned()
+            .unwrap_or_else(|| "espressif8266".to_string());
+        let selected_platform =
+            selected_platform_identity(&params.project_dir, &requested_platform).await?;
+        ctx.build_log
+            .push(format!("ESP8266 requested platform: {requested_platform}"));
+        if let Some(selected) = &selected_platform {
+            ctx.build_log.push(format!(
+                "ESP8266 resolved platform: {}/{}@{}: {} (sha256 {})",
+                selected.owner, selected.name, selected.version, selected.url, selected.sha256,
+            ));
+        }
+        ctx.build_log.push(format!(
+            "ESP8266 toolchain-xtensa@{}: {} (sha256 {})",
+            toolchain_info.version,
+            toolchain_info.url,
+            toolchain_info.checksum.as_deref().unwrap_or("unverified"),
+        ));
+        ctx.build_log.push(format!(
+            "ESP8266 framework-arduinoespressif8266@{}: {} (sha256 {})",
+            framework_info.version,
+            framework_info.url,
+            framework_info.checksum.as_deref().unwrap_or("unverified"),
+        ));
         let _toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("ESP8266 toolchain ready");
 
@@ -148,11 +291,42 @@ impl BuildOrchestrator for Esp8266Orchestrator {
                     crate::eh_frame_policy::EhFramePolicy::Preserve => "preserve".to_string(),
                 }),
                 extra: Some(std::collections::BTreeMap::from([
+                    ("requested_platform".to_string(), requested_platform.clone()),
+                    (
+                        "resolved_platform".to_string(),
+                        selected_platform
+                            .as_ref()
+                            .map(|payload| {
+                                format!(
+                                    "{}/{}@{}#{}",
+                                    payload.owner, payload.name, payload.version, payload.sha256
+                                )
+                            })
+                            .unwrap_or_default(),
+                    ),
                     (
                         "flash_mode".to_string(),
                         ctx.board.flash_mode.clone().unwrap_or_default(),
                     ),
                     ("flash_freq".to_string(), flash_freq.clone()),
+                    (
+                        "toolchain_package".to_string(),
+                        format!(
+                            "{}@{}#{}",
+                            toolchain_info.url,
+                            toolchain_info.version,
+                            toolchain_info.checksum.as_deref().unwrap_or("unverified")
+                        ),
+                    ),
+                    (
+                        "framework_package".to_string(),
+                        format!(
+                            "{}@{}#{}",
+                            framework_info.url,
+                            framework_info.version,
+                            framework_info.checksum.as_deref().unwrap_or("unverified")
+                        ),
+                    ),
                 ])),
             },
             &ctx,
@@ -531,6 +705,205 @@ pub fn is_esp8266_project(project_dir: &Path, env_name: &str) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use fbuild_packages::Package as _;
+
+    #[test]
+    fn explicit_toolchain_registry_pin_does_not_use_fixed_github_toolchain() {
+        let temp = tempfile::tempdir().unwrap();
+        let env = HashMap::from([
+            ("platform".to_string(), "espressif8266".to_string()),
+            (
+                "platform_packages".to_string(),
+                "platformio/toolchain-xtensa@2.100300.220621".to_string(),
+            ),
+        ]);
+        let registry_overrides = HashMap::from([(
+            "toolchain-xtensa".to_string(),
+            fbuild_config::PackageOverride {
+                url: "https://dl.registry.platformio.org/download/platformio/tool/toolchain-xtensa/2.100300.220621/toolchain-xtensa-linux_x86_64-2.100300.220621.tar.gz".to_string(),
+                version: "2.100300.220621".to_string(),
+                checksum: Some("a3d51bebcfaa2f5cca154956fee3e9270b6d0e9c5d51de6034a86aaa606ea8a5".to_string()),
+            },
+        )]);
+        let (toolchain, _) =
+            esp8266_packages_from_resolved(temp.path(), Some(&env), &registry_overrides);
+        assert_eq!(toolchain.get_info().version, "2.100300.220621");
+        assert!(
+            toolchain
+                .get_info()
+                .url
+                .contains("dl.registry.platformio.org")
+        );
+        assert_eq!(
+            toolchain.get_info().checksum,
+            registry_overrides["toolchain-xtensa"].checksum
+        );
+    }
+
+    #[test]
+    fn framework_url_override_precedes_selected_platform_manifest() {
+        let temp = tempfile::tempdir().unwrap();
+        let url = "https://example.test/esp8266-framework.tar.gz";
+        let env = HashMap::from([
+            ("platform".to_string(), "espressif8266@4.0.1".to_string()),
+            (
+                "platform_packages".to_string(),
+                format!("framework-arduinoespressif8266@{url}"),
+            ),
+        ]);
+        let registry_overrides = HashMap::from([(
+            "toolchain-xtensa".to_string(),
+            fbuild_config::PackageOverride::new(
+                "https://example.test/toolchain.tar.gz",
+                "2.100300.220621",
+            ),
+        )]);
+        let (toolchain, framework) =
+            esp8266_packages_from_resolved(temp.path(), Some(&env), &registry_overrides);
+        assert_eq!(framework.get_info().url, url);
+        assert_eq!(toolchain.get_info().version, "2.100300.220621");
+    }
+
+    #[tokio::test]
+    async fn unpinned_platform_preserves_framework_archive_override() {
+        let temp = tempfile::tempdir().unwrap();
+        let url = "https://example.test/esp8266-framework.tar.gz";
+        let env = HashMap::from([
+            ("platform".to_string(), "espressif8266".to_string()),
+            (
+                "platform_packages".to_string(),
+                format!("framework-arduinoespressif8266@{url}"),
+            ),
+        ]);
+        let (_, framework) = esp8266_packages(temp.path(), Some(&env)).await.unwrap();
+        assert_eq!(framework.get_info().url, url);
+    }
+
+    #[tokio::test]
+    async fn unrelated_registry_platform_fails_before_package_install() {
+        let temp = tempfile::tempdir().unwrap();
+        let env = HashMap::from([("platform".to_string(), "unknown8266@4.0.1".to_string())]);
+        let error = esp8266_packages(temp.path(), Some(&env))
+            .await
+            .err()
+            .expect("wrong platform must fail");
+        assert!(
+            error
+                .to_string()
+                .contains("expected PlatformIO platform `espressif8266`")
+        );
+    }
+
+    #[tokio::test]
+    async fn unsupported_registry_package_fails_before_download() {
+        let temp = tempfile::tempdir().unwrap();
+        let env = HashMap::from([
+            ("platform".to_string(), "espressif8266".to_string()),
+            (
+                "platform_packages".to_string(),
+                "platformio/tool-esptoolpy@1.30000.201119".to_string(),
+            ),
+        ]);
+        let error = esp8266_packages(temp.path(), Some(&env))
+            .await
+            .err()
+            .expect("unsupported package must fail");
+        assert!(error.to_string().contains("tool-esptoolpy"));
+        assert!(error.to_string().contains("not supported"));
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    #[ignore = "downloads PlatformIO ESP8266 4.0.1 platform, GCC, and Arduino framework"]
+    async fn pinned_esp8266_401_builds_with_selected_registry_packages() {
+        let backend = crate::compile_backend::CompileBackend::start()
+            .await
+            .expect("compile backend starts");
+        crate::compile_backend::install_global(backend);
+        let project = tempfile::tempdir().unwrap();
+        std::fs::create_dir_all(project.path().join("src")).unwrap();
+        std::fs::write(
+            project.path().join("platformio.ini"),
+            "[env:esp8266]\nplatform = espressif8266@4.0.1\nboard = nodemcuv2\nframework = arduino\n",
+        )
+        .unwrap();
+        std::fs::copy(
+            concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/../../tests/platform/esp8266/src/main.ino"
+            ),
+            project.path().join("src/main.ino"),
+        )
+        .unwrap();
+        let build_dir = fbuild_paths::BuildLayout::new(
+            project.path().to_path_buf(),
+            "esp8266".into(),
+            fbuild_core::BuildProfile::Release,
+        )
+        .resolve();
+        let params = BuildParams {
+            project_dir: project.path().to_path_buf(),
+            env_name: "esp8266".into(),
+            clean_all: false,
+            clean_only: false,
+            clean: false,
+            profile: fbuild_core::BuildProfile::Release,
+            build_dir,
+            verbose: false,
+            jobs: Some(2),
+            generate_compiledb: false,
+            compiledb_only: false,
+            log_sender: None,
+            symbol_analysis: false,
+            symbol_analysis_path: None,
+            no_timestamp: true,
+            src_dir: None,
+            pio_env: Default::default(),
+            extra_build_flags: Vec::new(),
+            watch_set_cache: None,
+            bloat_analysis: false,
+            caller_path: None,
+        };
+        let built = Esp8266Orchestrator.build(&params).await.unwrap();
+        assert!(built.success);
+        assert!(built.elf_path.as_ref().is_some_and(|path| path.is_file()));
+        let config =
+            fbuild_config::PlatformIOConfig::from_path(&project.path().join("platformio.ini"))
+                .unwrap();
+        let env = config.get_env_config("esp8266").unwrap();
+        let (cached_toolchain, cached_framework) =
+            esp8266_packages_offline(project.path(), Some(env))
+                .await
+                .unwrap()
+                .expect("installed platform and payload metadata resolve offline");
+        assert_eq!(
+            fbuild_packages::Package::get_info(&cached_toolchain).version,
+            "2.100300.220621"
+        );
+        assert_eq!(
+            fbuild_packages::Package::get_info(&cached_framework).version,
+            "3.30002.0"
+        );
+        let (_, framework) = esp8266_packages(project.path(), Some(env)).await.unwrap();
+        let core_version =
+            std::fs::read_to_string(framework.get_core_dir("esp8266").join("core_version.h"))
+                .unwrap();
+        assert!(core_version.contains("ARDUINO_ESP8266_RELEASE   \"3.0.2\""));
+        let log = built.build_log.into_lines().join("\n");
+        assert!(
+            log.contains("ESP8266 requested platform: espressif8266@4.0.1"),
+            "{log}"
+        );
+        assert!(
+            log.contains("ESP8266 resolved platform: platformio/espressif8266@4.0.1"),
+            "{log}"
+        );
+        assert!(
+            log.contains("framework-arduinoespressif8266@3.30002.0"),
+            "{log}"
+        );
+        assert!(log.contains("toolchain-xtensa@2.100300.220621"), "{log}");
+        assert!(!log.contains("version pin `4.0.1` is ignored"), "{log}");
+    }
 
     #[test]
     fn test_esp8266_orchestrator_platform() {

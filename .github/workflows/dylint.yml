@@ -114,6 +114,10 @@ jobs:
           # Library UI tests invoke soldr cargo test separately, so preserve
           # the prebuilt dylint-link directory for their linker config.
           sed -n 's/^soldr: dylint prepare: tool bin dir //p' "$RUNNER_TEMP/dylint-prepare.log" >> "$GITHUB_PATH"
+      # setup-soldr prepares the nightly with a minimal profile. The Dylint
+      # library formatting check below needs rustfmt on that exact nightly.
+      - name: Install rustfmt for the Dylint toolchain
+        run: soldr rustup component add --toolchain nightly-2026-05-28 rustfmt
       - name: Install cross-target nightly standard libraries
         if: ${{ inputs.ref != '' || github.event_name == 'workflow_dispatch' }}
         run: |

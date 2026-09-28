@@ -36,6 +36,12 @@ pub enum PlatformDefaultVersion<'a> {
     },
 }
 
+struct RegistryResolutionAccess<'a> {
+    client: &'a fbuild_packages::platformio_registry::RegistryClient,
+    cache_root: &'a Path,
+    fetch: bool,
+}
+
 /// Resolve a pinned PlatformIO platform and its selected package requirements
 /// before a family adapter constructs its framework/toolchain packages. The
 /// registry lookup and manifest parsing are intentionally independent of the
@@ -61,6 +67,33 @@ pub async fn resolve_registry_overrides(
     .await
 }
 
+/// Resolve only from cached registry metadata and an installed platform
+/// manifest. `fbuild install --check/--dry-run` must never fetch a platform.
+/// `None` means a required payload or platform archive is not cached yet.
+pub async fn resolve_registry_overrides_offline(
+    project_dir: &Path,
+    env_config: &HashMap<String, String>,
+    platform_name: &str,
+    package_names: &[&str],
+    platform_default_requirements: &[(&str, PlatformDefaultVersion<'_>)],
+) -> fbuild_core::Result<Option<HashMap<String, PackageOverride>>> {
+    let cache_root = fbuild_packages::Cache::new(project_dir).platforms_dir();
+    let client = fbuild_packages::platformio_registry::RegistryClient::default();
+    resolve_registry_overrides_with_client_fetch(
+        project_dir,
+        env_config,
+        platform_name,
+        package_names,
+        platform_default_requirements,
+        RegistryResolutionAccess {
+            client: &client,
+            cache_root: &cache_root,
+            fetch: false,
+        },
+    )
+    .await
+}
+
 async fn resolve_registry_overrides_with_client(
     project_dir: &Path,
     env_config: &HashMap<String, String>,
@@ -70,6 +103,30 @@ async fn resolve_registry_overrides_with_client(
     client: &fbuild_packages::platformio_registry::RegistryClient,
     cache_root: &Path,
 ) -> fbuild_core::Result<HashMap<String, PackageOverride>> {
+    resolve_registry_overrides_with_client_fetch(
+        project_dir,
+        env_config,
+        platform_name,
+        package_names,
+        platform_default_requirements,
+        RegistryResolutionAccess {
+            client,
+            cache_root,
+            fetch: true,
+        },
+    )
+    .await?
+    .ok_or_else(|| package_error("PlatformIO registry payload unavailable"))
+}
+
+async fn resolve_registry_overrides_with_client_fetch(
+    project_dir: &Path,
+    env_config: &HashMap<String, String>,
+    platform_name: &str,
+    package_names: &[&str],
+    platform_default_requirements: &[(&str, PlatformDefaultVersion<'_>)],
+    access: RegistryResolutionAccess<'_>,
+) -> fbuild_core::Result<Option<HashMap<String, PackageOverride>>> {
     let raw_platform = env_config
         .get("platform")
         .map(String::as_str)
@@ -115,7 +172,7 @@ async fn resolve_registry_overrides_with_client(
         .is_some()
         || explicit.iter().any(|spec| spec.registry().is_some());
     if !has_registry_pin {
-        return Ok(HashMap::new());
+        return Ok(Some(HashMap::new()));
     }
     let host = fbuild_core::platformio_package::host_system(fbuild_core::platform::host::current())
         .ok_or_else(|| {
@@ -137,19 +194,23 @@ async fn resolve_registry_overrides_with_client(
             // native adapter's existing default stack.
             explicit_registry_requirements(&explicit)
         } else {
-            let platform = client
+            let platform = access
+                .client
                 .resolve_cached(
                     &platform_registry,
                     PackageKind::Platform,
                     host,
-                    cache_root,
-                    true,
+                    access.cache_root,
+                    access.fetch,
                 )
                 .await
-                .map_err(package_error)?
-                .ok_or_else(|| {
-                    fbuild_core::FbuildError::PackageError("PlatformIO platform unavailable".into())
-                })?;
+                .map_err(package_error)?;
+            let Some(platform) = platform else {
+                if !access.fetch {
+                    return Ok(None);
+                }
+                return Err(package_error("PlatformIO platform unavailable"));
+            };
             tracing::info!(
                 "resolved requested PlatformIO platform {}@{}: {} (sha256 {})",
                 platform.name,
@@ -166,17 +227,23 @@ async fn resolve_registry_overrides_with_client(
                 fbuild_packages::CacheSubdir::Platforms,
                 project_dir,
             );
-            let installed = platform_base
-                .staged_install(|dir| {
-                    find_platform_manifest(dir).ok_or_else(|| {
-                        fbuild_core::FbuildError::PackageError(format!(
-                            "{} has no platform.json",
-                            dir.display()
-                        ))
-                    })?;
-                    Ok(())
-                })
-                .await?;
+            let installed = if access.fetch {
+                platform_base
+                    .staged_install(|dir| {
+                        find_platform_manifest(dir).ok_or_else(|| {
+                            fbuild_core::FbuildError::PackageError(format!(
+                                "{} has no platform.json",
+                                dir.display()
+                            ))
+                        })?;
+                        Ok(())
+                    })
+                    .await?
+            } else if platform_base.is_cached() {
+                platform_base.install_path()
+            } else {
+                return Ok(None);
+            };
             let manifest_path = find_platform_manifest(&installed).ok_or_else(|| {
                 fbuild_core::FbuildError::PackageError(format!(
                     "{} has no platform.json",
@@ -239,15 +306,25 @@ async fn resolve_registry_overrides_with_client(
         let Some(registry) = requirement.spec.registry() else {
             continue;
         };
-        let payload = client
-            .resolve_cached(registry, requirement.kind, host, cache_root, true)
+        let payload = access
+            .client
+            .resolve_cached(
+                registry,
+                requirement.kind,
+                host,
+                access.cache_root,
+                access.fetch,
+            )
             .await
-            .map_err(package_error)?
-            .ok_or_else(|| {
-                fbuild_core::FbuildError::PackageError(format!(
-                    "PlatformIO package `{name}` unavailable"
-                ))
-            })?;
+            .map_err(package_error)?;
+        let Some(payload) = payload else {
+            if !access.fetch {
+                return Ok(None);
+            }
+            return Err(package_error(format!(
+                "PlatformIO package `{name}` unavailable"
+            )));
+        };
         tracing::info!(
             "resolved PlatformIO package {}@{}: {} (sha256 {})",
             payload.name,
@@ -264,7 +341,7 @@ async fn resolve_registry_overrides_with_client(
             },
         );
     }
-    Ok(overrides)
+    Ok(Some(overrides))
 }
 
 fn requirements_with_platform_defaults(
@@ -803,5 +880,30 @@ mod tests {
                 .to_string()
                 .contains("framework-arduino-unknown")
         );
+    }
+
+    #[tokio::test]
+    async fn offline_registry_resolution_does_not_contact_uncached_platform() {
+        let temp = tempfile::tempdir().unwrap();
+        let client = fbuild_packages::platformio_registry::RegistryClient::new(
+            "http://127.0.0.1:1/v3",
+            reqwest::Client::new(),
+        );
+        let env = env(&[("platform", "platformio/espressif8266@4.0.1")]);
+        let result = resolve_registry_overrides_with_client_fetch(
+            temp.path(),
+            &env,
+            "espressif8266",
+            &["framework-arduinoespressif8266", "toolchain-xtensa"],
+            &[],
+            RegistryResolutionAccess {
+                client: &client,
+                cache_root: &temp.path().join("uncached-platform-metadata"),
+                fetch: false,
+            },
+        )
+        .await
+        .unwrap();
+        assert!(result.is_none());
     }
 }

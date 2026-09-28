@@ -37,6 +37,13 @@ impl Esp8266Toolchain {
         }
     }
 
+    /// Use the host-specific archive selected by a PlatformIO registry pin.
+    pub fn with_override(project_dir: &Path, ovr: fbuild_config::PackageOverride) -> Self {
+        let mut toolchain = Self::new(project_dir);
+        toolchain.base = toolchain.base.with_override(ovr);
+        toolchain
+    }
+
     #[cfg(test)]
     fn with_cache_root(project_dir: &Path, cache_root: &Path) -> Self {
         let (url, checksum) = platform_package();
