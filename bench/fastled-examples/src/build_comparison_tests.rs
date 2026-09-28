@@ -35,7 +35,11 @@ fn sample_results() -> Vec<ToolResult> {
             cold_phases_ms: BTreeMap::new(),
             cold_phase_trials: Vec::new(),
             daemon_restarts: 0,
-            resolved_packages: BTreeMap::from([("framework".into(), "1.8.8".into())]),
+            resolved_packages: BTreeMap::from([
+                ("framework".into(), "1.8.8".into()),
+                ("toolchain".into(), "7.3.0".into()),
+            ]),
+            package_metadata_warning: None,
             core_source_count: None,
             core_compile_argv: None,
         },
@@ -53,7 +57,11 @@ fn sample_results() -> Vec<ToolResult> {
             cold_phases_ms: BTreeMap::new(),
             cold_phase_trials: Vec::new(),
             daemon_restarts: 0,
-            resolved_packages: BTreeMap::from([("framework".into(), "1.8.8".into())]),
+            resolved_packages: BTreeMap::from([
+                ("framework".into(), "1.8.8".into()),
+                ("toolchain".into(), "7.3.0".into()),
+            ]),
+            package_metadata_warning: None,
             core_source_count: None,
             core_compile_argv: None,
         },
@@ -71,7 +79,11 @@ fn sample_results() -> Vec<ToolResult> {
             cold_phases_ms: BTreeMap::from([("compile".to_string(), 400.0)]),
             cold_phase_trials: vec![BTreeMap::from([("compile".to_string(), 400.0)])],
             daemon_restarts: 0,
-            resolved_packages: BTreeMap::from([("framework".into(), "1.8.8".into())]),
+            resolved_packages: BTreeMap::from([
+                ("framework".into(), "1.8.8".into()),
+                ("toolchain".into(), "7.3.0".into()),
+            ]),
+            package_metadata_warning: None,
             core_source_count: None,
             core_compile_argv: None,
         },
@@ -505,10 +517,15 @@ fn esp32_regression_is_not_hidden_by_uno_ratio() {
     pio.board = "esp32s3".into();
     pio.board_name = "ESP32-S3".into();
     pio.cold_ms = 6_000.0;
+    pio.resolved_packages
+        .insert("platform".into(), "6.13.0".into());
     let mut fbuild = results[2].clone();
     fbuild.board = "esp32s3".into();
     fbuild.board_name = "ESP32-S3".into();
     fbuild.cold_ms = 15_000.0;
+    fbuild
+        .resolved_packages
+        .insert("platform".into(), "6.13.0".into());
     results.extend([pio, fbuild]);
 
     let mut metadata = sample_metadata();
@@ -559,16 +576,146 @@ fn different_resolved_esp32_stacks_cannot_publish_a_ratio() {
 }
 
 #[test]
-fn installed_package_parsers_capture_the_same_esp32_stack() {
+fn build_output_package_parsers_capture_the_same_esp32_stack() {
     let board = BOARDS[1];
     let pio = parse_platformio_packages(
         b"Processing esp32s3 (platform: espressif32@6.13.0; board: esp32-s3-devkitc-1; framework: arduino)\nPACKAGES:\n - framework-arduinoespressif32 @ 3.20017.241212+sha.dcc1105b\n - tool-esptoolpy @ 2.41100.260830 (4.11.0)\n - toolchain-riscv32-esp @ 8.4.0+2021r2-patch5\n - toolchain-xtensa-esp32s3 @ 8.4.0+2021r2-patch5\n",
         board,
     );
-    let fbuild = parse_fbuild_packages(
-        br#"{"environments":[{"packages":[{"kind":"platform","name":"platform-espressif32","version":"6.13.0"},{"kind":"framework","name":"esp32-arduino","version":"3.20017.241212+sha.dcc1105b"},{"kind":"toolchain","name":"toolchain-xtensa-esp32s3","version":"8.4.0+2021r2-patch5"},{"kind":"tool","name":"tool-esptoolpy","version":"2.41100.260830"}]}]}"#,
-    ).unwrap();
-    assert_eq!(pio, fbuild);
+    let fbuild = parse_fbuild_build_packages(
+        b"ESP32 packages: requested platform=espressif32@6.13.0, framework=old-framework@1.0; resolved platform=espressif32@6.13.0, framework=framework-arduinoespressif32@3.20017.241212+sha.dcc1105b, toolchain=toolchain-xtensa-esp32s3@8.4.0+2021r2-patch5, ESP-IDF SDK=4.4.7\n",
+        board,
+    );
+    assert_eq!(pio["platform"], fbuild["platform"]);
+    assert_eq!(pio["framework"], fbuild["framework"]);
+    assert_eq!(pio["toolchain"], fbuild["toolchain"]);
+    assert_eq!(fbuild["sdk"], "4.4.7");
+
+    let mut results = sample_results();
+    for result in &mut results {
+        result.board = "esp32s3".into();
+        result.board_name = "ESP32-S3".into();
+    }
+    results[1].resolved_packages = pio;
+    results[2].resolved_packages = fbuild;
+    assert_eq!(
+        board_stack_status(&results, "esp32s3"),
+        StackStatus::Matched
+    );
+}
+
+#[test]
+fn fbuild_avr_build_log_reports_selected_package_versions() {
+    let packages = parse_fbuild_build_packages(
+        b"AVR resolved: toolchain-atmelavr@1.70300.191015 (https://example.test/toolchain); framework-arduino@1.8.8 (https://example.test/framework),\n",
+        BOARDS[0],
+    );
+    assert_eq!(packages["toolchain"], "1.70300.191015");
+    assert_eq!(packages["framework"], "1.8.8");
+}
+
+#[test]
+fn changed_package_identities_across_trials_become_unverified() {
+    let mut packages = BTreeMap::new();
+    let mut warning = None;
+    let first = BTreeMap::from([
+        ("platform".into(), "6.13.0".into()),
+        ("framework".into(), "3.20017.241212+sha.dcc1105b".into()),
+        ("toolchain".into(), "8.4.0+2021r2-patch5".into()),
+    ]);
+    record_package_metadata(
+        &mut packages,
+        &mut warning,
+        first.clone(),
+        ToolKind::Fbuild,
+        BOARDS[1],
+    );
+    assert!(package_metadata_is_complete("esp32s3", &packages));
+
+    let mut changed = first.clone();
+    changed.insert("toolchain".into(), "14.2.0".into());
+    record_package_metadata(
+        &mut packages,
+        &mut warning,
+        changed,
+        ToolKind::Fbuild,
+        BOARDS[1],
+    );
+    record_package_metadata(
+        &mut packages,
+        &mut warning,
+        first,
+        ToolKind::Fbuild,
+        BOARDS[1],
+    );
+    assert!(packages.is_empty());
+    assert!(
+        warning
+            .as_deref()
+            .is_some_and(|message| message.contains("changed across cold trials"))
+    );
+}
+
+#[test]
+fn missing_package_identity_in_any_cold_trial_stays_unverified() {
+    let complete = BTreeMap::from([
+        ("platform".into(), "6.13.0".into()),
+        ("framework".into(), "3.20017.241212+sha.dcc1105b".into()),
+        ("toolchain".into(), "8.4.0+2021r2-patch5".into()),
+    ]);
+    for observations in [
+        vec![BTreeMap::new(), complete.clone()],
+        vec![complete.clone(), BTreeMap::new()],
+    ] {
+        let mut packages = BTreeMap::new();
+        let mut warning = None;
+        for observed in observations {
+            record_package_metadata(
+                &mut packages,
+                &mut warning,
+                observed,
+                ToolKind::Fbuild,
+                BOARDS[1],
+            );
+        }
+        assert!(packages.is_empty());
+        assert!(
+            warning
+                .as_deref()
+                .is_some_and(|message| message.contains("omitted resolved package identities"))
+        );
+    }
+}
+
+#[test]
+fn unavailable_fbuild_package_versions_are_not_reported_as_a_mismatch() {
+    let mut results = sample_results();
+    for result in &mut results {
+        result.board = "esp32s3".into();
+        result.board_name = "ESP32-S3".into();
+        result.resolved_packages = BTreeMap::from([
+            ("platform".into(), "6.13.0".into()),
+            ("framework".into(), "3.20017.241212+sha.dcc1105b".into()),
+            ("toolchain".into(), "8.4.0+2021r2-patch5".into()),
+        ]);
+    }
+    results[2].resolved_packages.clear();
+    results[2].package_metadata_warning = Some("build output omitted package identities".into());
+    let latest = latest_payload(&sample_metadata(), &results);
+    assert_eq!(
+        latest["board_metrics"]["esp32s3"]["stack_status"],
+        "unverified"
+    );
+    assert!(latest["board_metrics"]["esp32s3"]["fbuild_vs_platformio_cold"].is_null());
+    assert_eq!(
+        latest["results"][2]["package_metadata_warning"],
+        "build output omitted package identities"
+    );
+    assert!(render_svg(&sample_metadata(), &results).contains("stack unverified; ratio excluded"));
+    assert!(
+        render_html(&sample_metadata(), &results)
+            .contains("unverified; fbuild/PlatformIO ratio excluded")
+    );
 }
 
 #[test]

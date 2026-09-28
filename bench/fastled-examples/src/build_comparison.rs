@@ -162,6 +162,9 @@ struct ToolResult {
     daemon_restarts: usize,
     /// Package versions actually selected by this tool, not requested pins.
     resolved_packages: BTreeMap<String, String>,
+    /// Why package identity was unavailable, if a successful build omitted it.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    package_metadata_warning: Option<String>,
     /// Distinct Arduino core sources in the tool's compile database.
     core_source_count: Option<usize>,
     /// Full compiler invocation for a representative core source.
@@ -331,6 +334,7 @@ fn measure_tool(
     let mut cold_phase_trials = Vec::new();
     let mut daemon_restarts = 0;
     let mut resolved_packages = BTreeMap::new();
+    let mut package_metadata_warning = None;
     let perf_log = output_dir.join(PERF_LOG_FILE);
     let envs = tool_envs(kind, &perf_log);
 
@@ -380,8 +384,14 @@ fn measure_tool(
                     &envs,
                 )?;
                 daemon_restarts += usize::from(restarted);
-                if matches!(kind, ToolKind::PlatformIo) && !packages.is_empty() {
-                    resolved_packages = packages;
+                if matches!(kind, ToolKind::PlatformIo | ToolKind::Fbuild) {
+                    record_package_metadata(
+                        &mut resolved_packages,
+                        &mut package_metadata_warning,
+                        packages,
+                        kind,
+                        board,
+                    );
                 }
                 cold_trials_ms.push(round_millis(elapsed));
                 if matches!(kind, ToolKind::Fbuild) {
@@ -419,22 +429,20 @@ fn measure_tool(
         }
     }
 
-    if matches!(kind, ToolKind::Fbuild) {
-        let output = run_logged_env(
-            fbuild.as_os_str(),
-            &os_args(&[
-                "install",
-                &project_dir.to_string_lossy(),
-                "--environment",
-                board.environment,
-                "--check",
-                "--json",
-            ]),
-            repo_root,
-            log,
-            &[],
-        )?;
-        resolved_packages = parse_fbuild_packages(&output.stdout)?;
+    if matches!(kind, ToolKind::PlatformIo | ToolKind::Fbuild)
+        && !package_metadata_is_complete(board.key, &resolved_packages)
+    {
+        let warning = package_metadata_warning.get_or_insert_with(|| {
+            format!(
+                "{} build output omitted one or more required resolved package identities",
+                kind.style().label
+            )
+        });
+        println!(
+            "::warning title=benchmark package metadata unavailable::{} ({})",
+            board.name, warning
+        );
+        writeln!(log, "Package metadata warning: {warning}")?;
     }
     if matches!(kind, ToolKind::PlatformIo) {
         run_logged_env(
@@ -490,6 +498,7 @@ fn measure_tool(
         cold_phase_trials,
         daemon_restarts,
         resolved_packages,
+        package_metadata_warning,
         core_source_count,
         core_compile_argv,
     })
@@ -967,12 +976,99 @@ fn timed_build(
     let started = Instant::now();
     let output = run_logged_env(program, &args, repo_root, log, envs)?;
     let elapsed_ms = started.elapsed().as_secs_f64() * 1000.0;
-    let packages = if matches!(kind, ToolKind::PlatformIo) {
-        parse_platformio_packages(&output.stdout, board)
-    } else {
-        BTreeMap::new()
+    let packages = match kind {
+        ToolKind::PlatformIo => parse_platformio_packages(&output.stdout, board),
+        ToolKind::Fbuild => parse_fbuild_build_packages(&output.stdout, board),
+        ToolKind::Arduino => BTreeMap::new(),
     };
     Ok((elapsed_ms, restarted_daemon(&output.stderr), packages))
+}
+
+fn record_package_metadata(
+    current: &mut BTreeMap<String, String>,
+    warning: &mut Option<String>,
+    observed: BTreeMap<String, String>,
+    kind: ToolKind,
+    board: Board,
+) {
+    if observed.is_empty() {
+        current.clear();
+        if warning.is_none() {
+            *warning = Some(format!(
+                "{} build output omitted resolved package identities on {}",
+                kind.style().label,
+                board.name
+            ));
+        }
+        return;
+    }
+    // Every timed cold trial must agree. Once any trial is missing or has a
+    // different identity, later observations cannot restore comparability.
+    if warning.is_some() {
+        return;
+    }
+    if current.is_empty() {
+        *current = observed;
+    } else if *current != observed {
+        current.clear();
+        *warning = Some(format!(
+            "{} resolved package identities changed across cold trials on {}",
+            kind.style().label,
+            board.name
+        ));
+    }
+}
+
+fn parse_fbuild_build_packages(stdout: &[u8], board: Board) -> BTreeMap<String, String> {
+    let mut packages = BTreeMap::new();
+    for line in String::from_utf8_lossy(stdout).lines() {
+        if board.key == "esp32s3" {
+            let Some((_, resolved)) = line
+                .split_once("ESP32 packages:")
+                .and_then(|(_, packages)| packages.split_once("; resolved "))
+            else {
+                continue;
+            };
+            for (key, marker) in [
+                ("platform", "platform="),
+                ("framework", "framework="),
+                ("toolchain", "toolchain="),
+                ("sdk", "ESP-IDF SDK="),
+            ] {
+                if let Some(value) = resolved
+                    .split_once(marker)
+                    .map(|(_, value)| value.split([',', ';']).next().unwrap_or("").trim())
+                {
+                    let version = value.rsplit_once('@').map_or(value, |(_, version)| version);
+                    if !version.is_empty() {
+                        packages.insert(key.to_string(), version.to_string());
+                    }
+                }
+            }
+        } else if board.key == "uno" {
+            if let Some((_, resolved)) = line.split_once("AVR resolved:") {
+                for (key, package) in [
+                    ("toolchain", "toolchain-atmelavr"),
+                    ("framework", "framework-"),
+                ] {
+                    let field = if key == "toolchain" {
+                        resolved.split(';').next().unwrap_or("")
+                    } else {
+                        resolved.split(';').nth(1).unwrap_or("")
+                    };
+                    if let Some(value) = field.split_once(package).map(|(_, value)| value) {
+                        if let Some((_, version)) = value.split_once('@') {
+                            let version = version.split_whitespace().next().unwrap_or("");
+                            if !version.is_empty() {
+                                packages.insert(key.to_string(), version.to_string());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    packages
 }
 
 fn parse_platformio_packages(stdout: &[u8], board: Board) -> BTreeMap<String, String> {
@@ -1015,28 +1111,6 @@ fn parse_platformio_packages(stdout: &[u8], board: Board) -> BTreeMap<String, St
         }
     }
     packages
-}
-
-fn parse_fbuild_packages(stdout: &[u8]) -> AppResult<BTreeMap<String, String>> {
-    let value: Value = serde_json::from_slice(stdout)?;
-    let packages = value["environments"][0]["packages"]
-        .as_array()
-        .ok_or_else(|| io::Error::other("fbuild install --json omitted packages"))?;
-    let mut resolved = BTreeMap::new();
-    for package in packages {
-        let Some(kind) = package["kind"].as_str() else {
-            continue;
-        };
-        let key = match kind {
-            "platform" | "framework" | "toolchain" => kind,
-            "tool" if package["name"] == "tool-esptoolpy" => "flash_tool",
-            _ => continue,
-        };
-        if let Some(version) = package["version"].as_str() {
-            resolved.insert(key.to_string(), version.to_string());
-        }
-    }
-    Ok(resolved)
 }
 
 fn core_compile_metadata(path: &Path) -> AppResult<(Option<usize>, Option<Vec<String>>)> {
@@ -1276,6 +1350,30 @@ fn board_cold_ratio(results: &[ToolResult], board: &str) -> Option<f64> {
 }
 
 fn board_stack_comparable(results: &[ToolResult], board: &str) -> bool {
+    board_stack_status(results, board) == StackStatus::Matched
+}
+
+fn stack_package_keys(board: &str) -> &'static [&'static str] {
+    match board {
+        "esp32s3" => &["platform", "framework", "toolchain"],
+        "uno" => &["framework", "toolchain"],
+        _ => &[],
+    }
+}
+
+fn package_metadata_is_complete(board: &str, packages: &BTreeMap<String, String>) -> bool {
+    let required = stack_package_keys(board);
+    !required.is_empty() && required.iter().all(|key| packages.contains_key(*key))
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+enum StackStatus {
+    Matched,
+    Different,
+    Unverified,
+}
+
+fn board_stack_status(results: &[ToolResult], board: &str) -> StackStatus {
     results
         .iter()
         .find(|result| result.board == board && result.tool == "fbuild")
@@ -1284,9 +1382,30 @@ fn board_stack_comparable(results: &[ToolResult], board: &str) -> bool {
                 .iter()
                 .find(|result| result.board == board && result.tool == "platformio"),
         )
-        .is_some_and(|(fbuild, pio)| {
-            !fbuild.resolved_packages.is_empty()
-                && fbuild.resolved_packages == pio.resolved_packages
+        .map_or(StackStatus::Unverified, |(fbuild, pio)| {
+            let keys = stack_package_keys(board);
+            if keys.is_empty() {
+                return StackStatus::Unverified;
+            }
+            let resolved = keys
+                .iter()
+                .map(|key| {
+                    fbuild
+                        .resolved_packages
+                        .get(*key)
+                        .zip(pio.resolved_packages.get(*key))
+                })
+                .collect::<Vec<_>>();
+            if resolved.iter().any(Option::is_none) {
+                StackStatus::Unverified
+            } else if resolved
+                .iter()
+                .all(|pair| pair.is_some_and(|(fbuild, pio)| fbuild == pio))
+            {
+                StackStatus::Matched
+            } else {
+                StackStatus::Different
+            }
         })
 }
 
@@ -1299,6 +1418,11 @@ fn board_metrics(metadata: &Metadata, results: &[ToolResult]) -> Value {
                 json!({
                     "fbuild_vs_platformio_cold": board_cold_ratio(results, board.key),
                     "stack_comparable": board_stack_comparable(results, board.key),
+                    "stack_status": match board_stack_status(results, board.key) {
+                        StackStatus::Matched => "matched",
+                        StackStatus::Different => "different",
+                        StackStatus::Unverified => "unverified",
+                    },
                     "raw_baseline_ms": metadata.raw_baselines_ms.get(board.key),
                     "fbuild_overhead_ms": cold_of(results, board.key, "fbuild")
                         .zip(metadata.raw_baselines_ms.get(board.key))
@@ -1498,12 +1622,10 @@ fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
             .max(1.0)
     };
     let mut rows = String::new();
-    let stack_note = |board: &str| {
-        if board_stack_comparable(results, board) {
-            " | fbuild/PIO stack matched"
-        } else {
-            " | fbuild/PIO stack differs; ratio excluded"
-        }
+    let stack_note = |board: &str| match board_stack_status(results, board) {
+        StackStatus::Matched => " | fbuild/PIO stack matched",
+        StackStatus::Different => " | fbuild/PIO stack differs; ratio excluded",
+        StackStatus::Unverified => " | fbuild/PIO stack unverified; ratio excluded",
     };
     for (index, result) in results.iter().enumerate() {
         let kind = match result.tool.as_str() {
@@ -1616,10 +1738,10 @@ fn render_html(metadata: &Metadata, results: &[ToolResult]) -> String {
     let comparison_note = BOARDS
         .iter()
         .map(|board| {
-            let status = if board_stack_comparable(results, board.key) {
-                "matched; fbuild/PlatformIO ratio shown"
-            } else {
-                "different or unverified; fbuild/PlatformIO ratio excluded"
+            let status = match board_stack_status(results, board.key) {
+                StackStatus::Matched => "matched; fbuild/PlatformIO ratio shown",
+                StackStatus::Different => "different; fbuild/PlatformIO ratio excluded",
+                StackStatus::Unverified => "unverified; fbuild/PlatformIO ratio excluded",
             };
             format!("{}: {}", board.name, status)
         })
