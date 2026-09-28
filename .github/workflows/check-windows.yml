@@ -26,14 +26,16 @@ jobs:
   check:
     name: Check (windows-latest)
     runs-on: windows-latest
-    timeout-minutes: 30
+    # Cold Windows workspace tests exceeded the old 30-minute cap in the
+    # setup-soldr 0.9.25 full-coverage canary.
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v6
         with:
           ref: ${{ inputs.ref }}
       - name: Setup soldr
         id: setup-soldr
-        uses: zackees/setup-soldr@v0
+        uses: zackees/setup-soldr@67ed4018aca013f8388050ac9bc264244f9b742c
         with:
           cache: true
           build-cache: true
