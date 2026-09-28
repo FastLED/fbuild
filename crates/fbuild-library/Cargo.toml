@@ -14,6 +14,7 @@ fbuild-core = { path = "../fbuild-core" }
 fbuild-paths = { path = "../fbuild-paths" }
 fbuild-config = { path = "../fbuild-config" }
 async-trait = { workspace = true }
+futures = { workspace = true }
 tokio = { workspace = true }
 reqwest = { workspace = true }
 serde = { workspace = true }
