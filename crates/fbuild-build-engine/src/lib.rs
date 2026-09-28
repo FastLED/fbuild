@@ -22,6 +22,7 @@ pub mod eh_frame_policy_compute;
 pub mod flag_overlay;
 pub mod framework_core_cache;
 pub mod framework_libs;
+pub mod include_farm;
 pub mod linker;
 pub mod mcu_config;
 pub mod package_override;

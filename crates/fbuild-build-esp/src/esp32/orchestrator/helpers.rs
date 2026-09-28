@@ -219,6 +219,90 @@ pub(super) fn compile_db_is_current(build_dir: &Path, project_dir: &Path) -> boo
     crate::compile_database::CompileDatabase::expected_output_path(build_dir, project_dir).exists()
 }
 
+/// The SDK `-I` block collapsed into a header farm for compiler argv
+/// (FastLED/fbuild#1537). Library selection keeps the original list.
+pub(super) struct SdkIncludeFarm {
+    range: std::ops::Range<usize>,
+    block: Vec<PathBuf>,
+    farm: crate::include_farm::IncludeFarm,
+}
+
+impl SdkIncludeFarm {
+    /// Farm `dirs[range]`, the SDK block; `None` (plain `-I`) on any failure.
+    pub(super) async fn build(dirs: &[PathBuf], range: std::ops::Range<usize>) -> Option<Self> {
+        if fbuild_core::platform::host::is_windows() || range.is_empty() {
+            return None;
+        }
+        let before: Vec<_> = dirs[..range.start]
+            .iter()
+            .map(fbuild_core::path::NormalizedPath::new)
+            .collect();
+        let block: Vec<_> = dirs[range.clone()]
+            .iter()
+            .map(fbuild_core::path::NormalizedPath::new)
+            .collect();
+        let farms_root = fbuild_paths::get_cache_root().join("include-farms");
+        let planned = tokio::task::spawn_blocking(move || {
+            crate::include_farm::ensure_farm(&farms_root, &before, &block)
+        })
+        .await;
+        match planned {
+            Ok(Ok(farm)) => {
+                tracing::info!(
+                    "SDK include farm: {} -I dirs -> {} at {}",
+                    range.len(),
+                    farm.kept.len() + 1,
+                    farm.dir.display()
+                );
+                Some(Self {
+                    block: dirs[range.clone()].to_vec(),
+                    range,
+                    farm,
+                })
+            }
+            Ok(Err(error)) => {
+                tracing::warn!("SDK include farm unavailable, keeping plain -I: {error}");
+                None
+            }
+            Err(error) => {
+                tracing::warn!("SDK include farm task failed, keeping plain -I: {error}");
+                None
+            }
+        }
+    }
+
+    /// `-fmacro-prefix-map` for headers reached through the farm.
+    pub(super) fn macro_prefix_map(&self) -> String {
+        self.farm
+            .macro_prefix_map("framework-arduinoespressif32/sdk")
+    }
+}
+
+/// The `-I` list a compiler should receive: `dirs` with the SDK block swapped
+/// for the farm. Lists are only appended to after the block, so it sits at the
+/// recorded range; if it does not, the list is returned unchanged.
+pub(super) fn compile_include_dirs(
+    farm: Option<&SdkIncludeFarm>,
+    dirs: &[PathBuf],
+) -> Vec<PathBuf> {
+    let Some(farm) = farm else {
+        return dirs.to_vec();
+    };
+    if dirs.get(farm.range.clone()) != Some(farm.block.as_slice()) {
+        tracing::warn!("SDK include block moved; compiling with plain -I");
+        return dirs.to_vec();
+    }
+    let mut out = dirs[..farm.range.start].to_vec();
+    out.extend(
+        farm.farm
+            .replacement()
+            .into_iter()
+            .map(fbuild_core::path::NormalizedPath::into_path_buf),
+    );
+    out.extend_from_slice(&dirs[farm.range.end..]);
+    out
+}
+
 /// `-fmacro-prefix-map` that shortens the framework's install root in `__FILE__`.
 ///
 /// The core's log macros embed `__FILE__` in flash, so fbuild's long cache path

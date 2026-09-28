@@ -19,8 +19,8 @@ use super::embed_stage::stage_embed_files;
 use super::fingerprint::Esp32FingerprintMetadata;
 use super::framework_libs::compile_framework_builtin_libs;
 use super::helpers::{
-    apply_effective_define_flags, compile_db_is_current, framework_macro_prefix_map, profile_label,
-    reject_unsupported_sdkconfig_overlay,
+    SdkIncludeFarm, apply_effective_define_flags, compile_db_is_current, compile_include_dirs,
+    framework_macro_prefix_map, profile_label, reject_unsupported_sdkconfig_overlay,
 };
 use super::local_libs::compile_local_libraries;
 use super::packages::resolve_pioarduino_packages;
@@ -261,8 +261,11 @@ impl BuildOrchestrator for Esp32Orchestrator {
             include_dirs.push(variant_dir.clone());
         }
         // Add SDK include paths (294+ paths from ESP-IDF)
+        let sdk_block_start = include_dirs.len();
         include_dirs
             .extend(framework.get_sdk_include_dirs(&sdk_variant, sdk_memory_type.as_deref()));
+        let sdk_farm =
+            SdkIncludeFarm::build(&include_dirs, sdk_block_start..include_dirs.len()).await;
 
         let builtin_libs_dir = framework.get_libraries_dir();
 
@@ -317,6 +320,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let mut user_flags = sdk_defines.clone();
         // Before the user's build_flags, so their own prefix maps still win.
         user_flags.extend(framework_macro_prefix_map(&core_dir));
+        user_flags.extend(sdk_farm.as_ref().map(SdkIncludeFarm::macro_prefix_map));
         let mut user_build_flags = ctx.config.get_build_flags(&params.env_name)?;
         user_build_flags.extend(params.extra_build_flags.clone());
         user_flags.extend(user_build_flags.clone());
@@ -343,6 +347,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 .iter()
                 .flat_map(|library| library.include_dirs.iter().cloned()),
         );
+        let external_compile_includes =
+            compile_include_dirs(sdk_farm.as_ref(), &external_base_includes);
         let mut external_library_sources = Vec::new();
 
         if !lib_deps.is_empty() {
@@ -358,7 +364,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 mcu_config.clone(),
                 &ctx.board.f_cpu,
                 defines.clone(),
-                external_base_includes.clone(),
+                external_compile_includes.clone(),
                 params.profile,
                 params.verbose,
                 build_dir.join("tmp"),
@@ -389,7 +395,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 dep_lib_ar_path,
                 &c_flags,
                 &cpp_flags,
-                &external_base_includes,
+                &external_compile_includes,
                 &params.project_dir,
                 &libs_dir,
                 params.verbose,
@@ -455,6 +461,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             selected_framework_libraries.len()
         );
         include_dirs.extend(framework_selection.include_dirs);
+        let compile_includes = compile_include_dirs(sdk_farm.as_ref(), &include_dirs);
 
         // 8.5b. Project-as-library compilation â€” shared with sequential pipeline.
         // When the project root contains library.json or library.properties (e.g., FastLED),
@@ -473,7 +480,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 mcu_config.clone(),
                 &ctx.board.f_cpu,
                 p_defines,
-                include_dirs.clone(),
+                compile_includes.clone(),
                 params.profile,
                 params.verbose,
                 build_dir.join("tmp"),
@@ -513,7 +520,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 ar_path: lib_ar_path,
                 c_flags: &p_c_flags,
                 cpp_flags: &p_cpp_flags,
-                include_dirs: &include_dirs,
+                include_dirs: &compile_includes,
                 verbose: params.verbose,
                 jobs: crate::parallel::effective_jobs(params.jobs),
                 compiler_cache: compiler_cache.as_deref(),
@@ -545,7 +552,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 &ctx.board,
                 &ctx.build_unflags,
                 eh_frame_policy,
-                &include_dirs,
+                &compile_includes,
                 &user_overlay,
                 build_dir,
                 compiler_cache.as_deref(),
@@ -598,7 +605,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             mcu_config.clone(),
             &ctx.board.f_cpu,
             defines,
-            include_dirs.clone(),
+            compile_includes.clone(),
             params.profile,
             params.verbose,
             build_dir.join("tmp"),
@@ -823,7 +830,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 build_dir,
                 &compiler,
                 &toolchain,
-                &include_dirs,
+                &compile_includes,
                 &src_overlay,
                 jobs,
                 params.verbose,
