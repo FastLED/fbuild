@@ -73,6 +73,38 @@ struct IncludeResolver {
     search_paths: Vec<PathBuf>,
     by_name: HashMap<String, Option<PathBuf>>,
     canonical: HashMap<PathBuf, PathBuf>,
+    /// First path component -> indices of the search paths whose root holds
+    /// it, in search order. Built on the first miss; `Some(None)` means a root
+    /// could not be listed and every lookup probes each path instead.
+    roots: Option<Option<HashMap<String, Vec<usize>>>>,
+}
+
+/// Keys fold case so a case-insensitive filesystem's `Foo.h` still finds
+/// `foo.h`. That only widens the candidate set; each candidate is confirmed
+/// with `is_file` in search order, so the first match is the probe loop's.
+fn root_key(name: &str) -> String {
+    name.to_lowercase()
+}
+
+fn list_roots(search_paths: &[PathBuf]) -> Option<HashMap<String, Vec<usize>>> {
+    let mut roots: HashMap<String, Vec<usize>> = HashMap::new();
+    for (index, dir) in search_paths.iter().enumerate() {
+        let entries = match std::fs::read_dir(dir) {
+            Ok(entries) => entries,
+            // A missing search path holds nothing, exactly as probing it would.
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => continue,
+            Err(_) if !dir.is_dir() => continue,
+            Err(_) => return None,
+        };
+        for entry in entries {
+            let name = entry.ok()?.file_name().into_string().ok()?;
+            let owners = roots.entry(root_key(&name)).or_default();
+            if owners.last() != Some(&index) {
+                owners.push(index);
+            }
+        }
+    }
+    Some(roots)
 }
 
 impl IncludeResolver {
@@ -80,6 +112,7 @@ impl IncludeResolver {
         if self.search_paths != search_paths {
             self.search_paths = search_paths.to_vec();
             self.by_name.clear();
+            self.roots = None;
         }
     }
 
@@ -95,13 +128,37 @@ impl IncludeResolver {
         if let Some(found) = self.by_name.get(&inc.path) {
             return found.clone();
         }
-        let found = self
-            .search_paths
-            .iter()
-            .map(|sp| sp.join(&inc.path))
-            .find(|candidate| candidate.is_file());
+        let found = self.search(&inc.path);
         self.by_name.insert(inc.path.clone(), found.clone());
         found
+    }
+
+    /// The first search path holding `name`. Only paths whose root lists the
+    /// name's first component can hold it, so those are the only ones probed.
+    fn search(&mut self, name: &str) -> Option<PathBuf> {
+        let plain = !name.contains('\\')
+            && !Path::new(name).is_absolute()
+            && name
+                .split('/')
+                .all(|part| !part.is_empty() && part != "." && part != "..");
+        let roots = self
+            .roots
+            .get_or_insert_with(|| list_roots(&self.search_paths));
+        match (plain, roots) {
+            (true, Some(roots)) => {
+                let first = name.split('/').next().unwrap_or(name);
+                let owners = roots.get(&root_key(first))?;
+                owners
+                    .iter()
+                    .map(|&index| self.search_paths[index].join(name))
+                    .find(|candidate| candidate.is_file())
+            }
+            _ => self
+                .search_paths
+                .iter()
+                .map(|sp| sp.join(name))
+                .find(|candidate| candidate.is_file()),
+        }
     }
 
     fn canon(&mut self, path: &Path) -> PathBuf {
@@ -229,13 +286,20 @@ pub fn collect_defined_macro_names_with(
     };
     let result = walk_with_state(seeds, search_paths, &mut textual);
     state.resolver = textual.resolver;
-    let mut names = HashSet::new();
-    for path in &result.reached {
-        if let Ok(src) = std::fs::read_to_string(path) {
-            names.extend(defined_macro_names(&src));
-        }
-    }
-    names
+    // Parallel, like the walk's own reads: thousands of files on FastLED.
+    result
+        .reached
+        .par_iter()
+        .filter_map(|path| std::fs::read_to_string(path).ok())
+        .map(|src| {
+            defined_macro_names(&src)
+                .into_iter()
+                .collect::<HashSet<_>>()
+        })
+        .reduce(HashSet::new, |mut all, names| {
+            all.extend(names);
+            all
+        })
 }
 
 fn walk_with_state_scanner<F>(
@@ -523,6 +587,65 @@ mod tests {
         assert!(
             res.reached
                 .contains(&std::fs::canonicalize(second.join("only_second.h")).unwrap())
+        );
+    }
+
+    #[test]
+    fn w32_first_component_in_several_roots_keeps_search_order() {
+        let tmp = tempdir();
+        let (one, two, three) = (
+            tmp.path().join("one"),
+            tmp.path().join("two"),
+            tmp.path().join("three"),
+        );
+        std::fs::create_dir_all(one.join("a")).unwrap();
+        write(&two.join("a/x.h"), "");
+        write(&three.join("a/x.h"), "");
+        let main = tmp.path().join("src/main.cpp");
+        write(&main, "#include <a/x.h>\n");
+
+        let res = walk(std::slice::from_ref(&main), &[one, two.clone(), three]);
+
+        assert!(
+            res.reached
+                .contains(&std::fs::canonicalize(two.join("a/x.h")).unwrap())
+        );
+        assert!(res.unresolved.is_empty());
+    }
+
+    #[test]
+    fn w33_dot_dot_names_still_resolve() {
+        let tmp = tempdir();
+        let inc = tmp.path().join("inc");
+        std::fs::create_dir_all(inc.join("sub")).unwrap();
+        write(&inc.join("up.h"), "");
+        let main = tmp.path().join("src/main.cpp");
+        write(&main, "#include <sub/../up.h>\n");
+
+        let res = walk(std::slice::from_ref(&main), std::slice::from_ref(&inc));
+
+        assert!(
+            res.reached
+                .contains(&std::fs::canonicalize(inc.join("up.h")).unwrap())
+        );
+    }
+
+    #[test]
+    fn w34_missing_search_path_is_skipped() {
+        let tmp = tempdir();
+        let inc = tmp.path().join("inc");
+        write(&inc.join("x.h"), "");
+        let main = tmp.path().join("src/main.cpp");
+        write(&main, "#include <x.h>\n");
+
+        let res = walk(
+            std::slice::from_ref(&main),
+            &[tmp.path().join("absent"), inc.clone()],
+        );
+
+        assert!(
+            res.reached
+                .contains(&std::fs::canonicalize(inc.join("x.h")).unwrap())
         );
     }
 }
