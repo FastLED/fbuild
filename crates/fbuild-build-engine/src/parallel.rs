@@ -139,19 +139,33 @@ pub async fn compile_sources_parallel_shared(
     let build_log_ptr: Option<&'static std::sync::Mutex<BuildLog>> =
         unsafe { std::mem::transmute(build_log) };
 
+    let failed = Arc::new(std::sync::atomic::AtomicBool::new(false));
     for (source, obj) in work.into_iter() {
-        let sem = semaphore.clone();
+        if failed.load(std::sync::atomic::Ordering::Relaxed) {
+            break;
+        }
+        // Take the permit here, in dispatch order: on a multi-thread runtime
+        // spawned tasks first run in no particular order, so a permit taken
+        // inside the task would not honor `dispatch_rank`. A closed semaphore
+        // (shutdown) stops spawning; the drain below still awaits every task
+        // already spawned, which the `'static` borrows above rely on.
+        let permit = match semaphore.clone().acquire_owned().await {
+            Ok(permit) => permit,
+            Err(e) => {
+                first_error = Some(format!("semaphore closed: {e}"));
+                break;
+            }
+        };
         let counter = compiled_count.clone();
+        let failed = failed.clone();
         tasks.spawn(async move {
-            // Acquire permit; if Acquired returns Err, semaphore was closed
-            // (only happens on shutdown — propagate as immediate-error).
-            let _permit = sem
-                .acquire()
-                .await
-                .map_err(|e| format!("semaphore closed: {e}"))?;
-
+            let _permit = permit;
             let source_flags = extra_flags_ptr.for_source(&source);
-            match compiler_ptr.compile(&source, &obj, &source_flags).await {
+            let outcome = compiler_ptr.compile(&source, &obj, &source_flags).await;
+            if !matches!(&outcome, Ok(result) if result.success) {
+                failed.store(true, std::sync::atomic::Ordering::Relaxed);
+            }
+            match outcome {
                 Ok(result) if result.success => {
                     let stderr = result.stderr.trim().to_string();
                     let count = counter.fetch_add(1, std::sync::atomic::Ordering::Relaxed) + 1;
