@@ -224,7 +224,7 @@ impl Esptool {
         // runnable.
         let _ = fbuild_core::platform::fs::ensure_executable(bin.as_path());
 
-        if let Err(error) = verify_esptool_binary(bin.as_path()).await {
+        if let Err(error) = verify_esptool_once(bin.as_path(), &install_path, None).await {
             if let Err(remove_error) = remove_cached_install(&install_path) {
                 tracing::warn!(
                     path = %install_path.display(),
@@ -274,23 +274,15 @@ impl Esptool {
             )
             .await?;
         }
-        verify_esptool_binary(&binary).await?;
-        let binary_arg = binary.to_string_lossy();
-        let output = run_command(
-            &[binary_arg.as_ref(), "version"],
-            None,
-            None,
-            Some(std::time::Duration::from_secs(10)),
+        verify_esptool_once(
+            &binary,
+            &install_path,
+            self.expected_runtime_version.as_deref(),
         )
-        .await?;
-        if let Some(version) = &self.expected_runtime_version {
-            let expected = format!("v{version}");
-            if !output.stdout.contains(&expected) && !output.stderr.contains(&expected) {
-                return Err(FbuildError::PackageError(format!(
-                    "pinned esptool archive {url} installed the wrong version; expected {version}"
-                )));
-            }
-        }
+        .await
+        .map_err(|error| {
+            FbuildError::PackageError(format!("pinned esptool archive {url}: {error}"))
+        })?;
         Ok(binary)
     }
 }
@@ -397,7 +389,59 @@ fn remove_cached_install(install_path: &Path) -> Result<()> {
 /// `Path::is_file` is insufficient: a restored cache can retain a regular
 /// file whose interpreter or dynamic loader is unavailable, which surfaces as
 /// `ENOENT` only when the later `elf2image` command is spawned.
-async fn verify_esptool_binary(bin: &Path) -> Result<()> {
+/// Left in an install whose esptool already passed [`verify_esptool_once`].
+const VERIFIED_STAMP: &str = "esptool-verified.stamp";
+
+/// Run `<bin> version` once per install instead of on every build: each
+/// spawn starts a Python interpreter, which cost ~140 ms on every ESP32 build,
+/// warm ones included (FastLED/fbuild#1540). The stamp records the binary's
+/// size and mtime plus the expected version, so a replaced binary or a new pin
+/// verifies again. Failures are never stamped.
+async fn verify_esptool_once(
+    bin: &Path,
+    install: &Path,
+    expected_version: Option<&str>,
+) -> Result<()> {
+    let stamp_path = install.join(VERIFIED_STAMP);
+    let stamp = verified_stamp(bin, expected_version);
+    if stamp.is_some() && std::fs::read_to_string(&stamp_path).ok() == stamp {
+        return Ok(());
+    }
+    let output = verify_esptool_binary(bin).await?;
+    if let Some(version) = expected_version {
+        let expected = format!("v{version}");
+        if !output.stdout.contains(&expected) && !output.stderr.contains(&expected) {
+            return Err(FbuildError::PackageError(format!(
+                "esptool at {} is not the pinned version; expected {version}",
+                bin.display()
+            )));
+        }
+    }
+    if let Some(stamp) = stamp {
+        if let Err(error) = std::fs::write(&stamp_path, stamp) {
+            tracing::debug!(path = %stamp_path.display(), %error, "could not stamp verified esptool");
+        }
+    }
+    Ok(())
+}
+
+fn verified_stamp(bin: &Path, expected_version: Option<&str>) -> Option<String> {
+    let meta = std::fs::metadata(bin).ok()?;
+    let mtime = meta
+        .modified()
+        .ok()?
+        .duration_since(std::time::UNIX_EPOCH)
+        .ok()?
+        .as_nanos();
+    Some(format!(
+        "{}\n{}\n{mtime}\n{}\n",
+        bin.display(),
+        meta.len(),
+        expected_version.unwrap_or("")
+    ))
+}
+
+async fn verify_esptool_binary(bin: &Path) -> Result<fbuild_core::subprocess::ToolOutput> {
     let bin_arg = bin.to_string_lossy();
     let output = run_command(
         &[bin_arg.as_ref(), "version"],
@@ -414,7 +458,7 @@ async fn verify_esptool_binary(bin: &Path) -> Result<()> {
         ))
     })?;
     if output.success() {
-        Ok(())
+        Ok(output)
     } else {
         // Include the captured output. A bare "exited with status 2" is
         // undiagnosable, and that is exactly what a real user hit on Windows
@@ -697,6 +741,93 @@ mod tests {
         fbuild_core::platform::fs::set_executable(&bin).unwrap();
 
         verify_esptool_binary(&bin).await.unwrap();
+    }
+
+    /// A fake esptool that prints `esptool.py v4.5.1` and appends a line to
+    /// `calls` on every run, so tests can count spawns.
+    fn counting_esptool(dir: &Path) -> (NormalizedPath, NormalizedPath) {
+        let bin = NormalizedPath::new(dir.join(esptool_bin_name()));
+        let calls = NormalizedPath::new(dir.join("calls"));
+        std::fs::write(
+            &bin,
+            format!(
+                "#!/bin/sh\necho x >> '{}'\necho 'esptool.py v4.5.1'\n",
+                calls.display()
+            ),
+        )
+        .unwrap();
+        fbuild_core::platform::fs::set_executable(&bin).unwrap();
+        (bin, calls)
+    }
+
+    fn spawn_count(calls: &Path) -> usize {
+        std::fs::read_to_string(calls)
+            .map(|s| s.lines().count())
+            .unwrap_or(0)
+    }
+
+    #[tokio::test]
+    async fn verify_once_spawns_esptool_only_for_the_first_build() {
+        if fbuild_core::platform::host::is_windows() {
+            return;
+        }
+        let tmp = tempfile::TempDir::new().unwrap();
+        let (bin, calls) = counting_esptool(tmp.path());
+
+        verify_esptool_once(&bin, tmp.path(), Some("4.5.1"))
+            .await
+            .unwrap();
+        verify_esptool_once(&bin, tmp.path(), Some("4.5.1"))
+            .await
+            .unwrap();
+        verify_esptool_once(&bin, tmp.path(), Some("4.5.1"))
+            .await
+            .unwrap();
+
+        assert_eq!(spawn_count(&calls), 1);
+    }
+
+    #[tokio::test]
+    async fn verify_once_reverifies_a_replaced_binary() {
+        if fbuild_core::platform::host::is_windows() {
+            return;
+        }
+        let tmp = tempfile::TempDir::new().unwrap();
+        let (bin, calls) = counting_esptool(tmp.path());
+        verify_esptool_once(&bin, tmp.path(), None).await.unwrap();
+
+        let mut script = std::fs::read_to_string(&bin).unwrap();
+        script.push_str("# replaced\n");
+        std::fs::write(&bin, script).unwrap();
+        verify_esptool_once(&bin, tmp.path(), None).await.unwrap();
+
+        assert_eq!(spawn_count(&calls), 2);
+    }
+
+    #[tokio::test]
+    async fn verify_once_rejects_the_wrong_version_every_time() {
+        if fbuild_core::platform::host::is_windows() {
+            return;
+        }
+        let tmp = tempfile::TempDir::new().unwrap();
+        let (bin, calls) = counting_esptool(tmp.path());
+
+        assert!(
+            verify_esptool_once(&bin, tmp.path(), Some("9.9.9"))
+                .await
+                .is_err()
+        );
+        assert!(
+            verify_esptool_once(&bin, tmp.path(), Some("9.9.9"))
+                .await
+                .is_err()
+        );
+        assert_eq!(spawn_count(&calls), 2, "a failed check must not be stamped");
+
+        verify_esptool_once(&bin, tmp.path(), Some("4.5.1"))
+            .await
+            .unwrap();
+        assert_eq!(spawn_count(&calls), 3, "a new expected version re-verifies");
     }
 
     /// `FBUILD_ESPTOOL_PATH` is process-global; serialize the tests that touch
