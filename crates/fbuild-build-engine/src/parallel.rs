@@ -156,6 +156,10 @@ pub async fn compile_sources_parallel_shared(
                 break;
             }
         };
+        // A compile may have failed while this loop waited for the permit.
+        if failed.load(std::sync::atomic::Ordering::Relaxed) {
+            break;
+        }
         let counter = compiled_count.clone();
         let failed = failed.clone();
         tasks.spawn(async move {

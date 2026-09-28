@@ -87,13 +87,152 @@ pub fn parse_lib_specs(lib_specs: &[String], lib_ignore: &[String]) -> Vec<Libra
         .collect()
 }
 
-/// Ensure all library dependencies are downloaded and compiled.
+/// Libraries resolved and installed but not yet compiled.
+///
+/// `include_dirs` and `source_files` are known before any compile, so a build
+/// can construct its compilers and run library selection first, then compile
+/// the libraries in the same job pool as the rest of the build
+/// (FastLED/fbuild#1559).
+pub struct ResolvedLibraries {
+    /// All include directories from all libraries (for compiler `-I` flags).
+    pub include_dirs: Vec<PathBuf>,
+    /// Translation units the plan compiles (LDF seeds).
+    pub source_files: Vec<PathBuf>,
+    /// The compile work, deferred until a job gate is available.
+    pub plan: LibraryCompilePlan,
+}
+
+/// Deferred compilation of resolved libraries; see [`Self::compile`].
+pub struct LibraryCompilePlan {
+    libraries: Vec<PlannedLibrary>,
+    all_include_dirs: Vec<PathBuf>,
+    gcc_path: PathBuf,
+    gxx_path: PathBuf,
+    ar_path: PathBuf,
+    c_flags: Vec<String>,
+    cpp_flags: Vec<String>,
+    verbose: bool,
+    compiler_cache: Option<PathBuf>,
+}
+
+struct PlannedLibrary {
+    name: String,
+    sources: Vec<PathBuf>,
+    build_dir: PathBuf,
+}
+
+impl LibraryCompilePlan {
+    /// Whether there is nothing to compile.
+    pub fn is_empty(&self) -> bool {
+        self.libraries.is_empty()
+    }
+
+    /// Compile every library concurrently, each TU drawing a permit from
+    /// `gate`. Archives come back in library order (the link order).
+    ///
+    /// Every library goes through the compiler's own up-to-date check, so an
+    /// unchanged library costs only stats and an edited local or symlinked
+    /// one is rebuilt (FastLED/fbuild#1560).
+    pub async fn compile(self, gate: &library_compiler::JobGate) -> Result<Vec<PathBuf>> {
+        let plan = &self;
+        // join_all runs every compile to completion even if one fails.
+        let archives = futures::future::join_all(plan.libraries.iter().map(|lib| async move {
+            library_compiler::compile_library_gated(
+                &lib.name,
+                &lib.sources,
+                &plan.all_include_dirs,
+                &plan.gcc_path,
+                &plan.gxx_path,
+                &plan.ar_path,
+                &plan.c_flags,
+                &plan.cpp_flags,
+                &lib.build_dir,
+                plan.verbose,
+                gate,
+                plan.compiler_cache.as_deref(),
+                None,
+                None,
+            )
+            .await
+        }))
+        .await;
+        let mut out = Vec::new();
+        for archive in archives {
+            out.extend(archive?);
+        }
+        Ok(out)
+    }
+}
+
+/// Download (or resolve) every library and plan its compilation.
 ///
 /// Flow:
 /// 1. Download every library with [`download_libraries`]
 /// 2. Collect all include dirs (needed before compilation for cross-includes)
-/// 3. Compile each library
-/// 4. Return include dirs + archives
+/// 3. Plan one compile per library that has sources
+#[allow(clippy::too_many_arguments)]
+pub async fn resolve_libraries(
+    lib_specs: &[String],
+    lib_ignore: &[String],
+    gcc_path: &Path,
+    gxx_path: &Path,
+    ar_path: &Path,
+    c_flags: &[String],
+    cpp_flags: &[String],
+    base_includes: &[PathBuf],
+    project_dir: &Path,
+    libs_dir: &Path,
+    verbose: bool,
+    compiler_cache: Option<&Path>,
+) -> Result<ResolvedLibraries> {
+    let installed = download_libraries(lib_specs, lib_ignore, project_dir, libs_dir).await?;
+
+    let mut all_include_dirs: Vec<PathBuf> = base_includes.to_vec();
+    for lib in &installed {
+        all_include_dirs.extend(lib.get_include_dirs());
+    }
+
+    let libraries = installed
+        .iter()
+        .filter_map(|lib| {
+            if lib.is_header_only() {
+                tracing::info!("library {} is header-only", lib.name);
+                return None;
+            }
+            Some(PlannedLibrary {
+                name: lib.name.clone(),
+                sources: lib.get_source_files(),
+                build_dir: lib.build_dir.clone(),
+            })
+        })
+        .collect();
+
+    Ok(ResolvedLibraries {
+        // Library includes only, not base includes.
+        include_dirs: installed
+            .iter()
+            .flat_map(|lib| lib.get_include_dirs())
+            .collect(),
+        source_files: installed
+            .iter()
+            .flat_map(|lib| lib.get_source_files())
+            .collect(),
+        plan: LibraryCompilePlan {
+            libraries,
+            all_include_dirs,
+            gcc_path: gcc_path.to_path_buf(),
+            gxx_path: gxx_path.to_path_buf(),
+            ar_path: ar_path.to_path_buf(),
+            c_flags: c_flags.to_vec(),
+            cpp_flags: cpp_flags.to_vec(),
+            verbose,
+            compiler_cache: compiler_cache.map(Path::to_path_buf),
+        },
+    })
+}
+
+/// Ensure all library dependencies are downloaded and compiled: [`resolve_libraries`]
+/// then [`LibraryCompilePlan::compile`] on a gate of `jobs` permits.
 #[allow(clippy::too_many_arguments)]
 pub async fn ensure_libraries(
     lib_specs: &[String],
@@ -110,73 +249,28 @@ pub async fn ensure_libraries(
     jobs: usize,
     compiler_cache: Option<&Path>,
 ) -> Result<LibraryResult> {
-    let installed = download_libraries(lib_specs, lib_ignore, project_dir, libs_dir).await?;
-    if installed.is_empty() {
-        return Ok(LibraryResult {
-            include_dirs: Vec::new(),
-            source_files: Vec::new(),
-            archives: Vec::new(),
-        });
-    }
-
-    // 3. Collect all include dirs (needed for cross-library includes)
-    let mut all_include_dirs: Vec<PathBuf> = base_includes.to_vec();
-    for lib in &installed {
-        all_include_dirs.extend(lib.get_include_dirs());
-    }
-
-    // 4. Compile each library
-    let mut archives = Vec::new();
-    for lib in &installed {
-        if lib.is_header_only() {
-            tracing::info!("library {} is header-only", lib.name);
-            continue;
-        }
-
-        // Check if archive already exists
-        let archive = lib.archive_path();
-        if archive.exists() {
-            tracing::debug!("library {} already compiled", lib.name);
-            archives.push(archive);
-            continue;
-        }
-
-        let sources = lib.get_source_files();
-        if let Some(archive_path) = library_compiler::compile_library_with_jobs(
-            &lib.name,
-            &sources,
-            &all_include_dirs,
-            gcc_path,
-            gxx_path,
-            ar_path,
-            c_flags,
-            cpp_flags,
-            &lib.build_dir,
-            verbose,
-            jobs,
-            compiler_cache,
-            None,
-            None,
-        )
-        .await?
-        {
-            archives.push(archive_path);
-        }
-    }
-
-    // Return include dirs (library includes only, not base includes)
-    let lib_include_dirs: Vec<PathBuf> = installed
-        .iter()
-        .flat_map(|lib| lib.get_include_dirs())
-        .collect();
-    let source_files: Vec<PathBuf> = installed
-        .iter()
-        .flat_map(|lib| lib.get_source_files())
-        .collect();
-
+    let resolved = resolve_libraries(
+        lib_specs,
+        lib_ignore,
+        gcc_path,
+        gxx_path,
+        ar_path,
+        c_flags,
+        cpp_flags,
+        base_includes,
+        project_dir,
+        libs_dir,
+        verbose,
+        compiler_cache,
+    )
+    .await?;
+    let archives = resolved
+        .plan
+        .compile(&library_compiler::job_gate(jobs))
+        .await?;
     Ok(LibraryResult {
-        include_dirs: lib_include_dirs,
-        source_files,
+        include_dirs: resolved.include_dirs,
+        source_files: resolved.source_files,
         archives,
     })
 }
@@ -416,6 +510,7 @@ pub fn ensure_libraries_sync(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::time::Duration;
 
     #[test]
     fn test_empty_specs() {
@@ -493,5 +588,161 @@ mod tests {
         // symlink to `/private/var`).
         let expected = fbuild_core::path::strip_unc_prefix(&local_src.canonicalize().unwrap());
         assert_eq!(result.include_dirs, vec![expected]);
+    }
+
+    // ---- FastLED/fbuild#1559 / #1560 plan-level scheduling tests ----
+
+    /// Install a fake compiler shell script at `path` that parses `-o <obj>`,
+    /// touches the object file, and appends the compiled source path to
+    /// `log`. Installed via staging + rename to avoid ETXTBSY under parallel
+    /// tests.
+    fn install_fake_compiler(path: &Path, log: &Path) {
+        let script = format!(
+            "#!/bin/sh\n\
+             obj=\"\"\n\
+             src=\"\"\n\
+             prev=\"\"\n\
+             for arg in \"$@\"; do\n\
+             \x20 if [ \"$prev\" = \"-o\" ]; then obj=\"$arg\"; fi\n\
+             \x20 if [ \"$prev\" = \"-c\" ]; then src=\"$arg\"; fi\n\
+             \x20 prev=\"$arg\"\n\
+             done\n\
+             echo \"$src\" >> \"{log}\"\n\
+             mkdir -p \"$(dirname \"$obj\")\"\n\
+             touch \"$obj\"\n",
+            log = log.display()
+        );
+        let staging = path.with_extension("staging");
+        std::fs::write(&staging, script).unwrap();
+        fbuild_core::platform::fs::set_executable(&staging).unwrap();
+        std::fs::rename(&staging, path).unwrap();
+    }
+
+    /// Install a fake `ar` shell script that creates its 2nd arg (the
+    /// archive) as an empty file.
+    fn install_fake_ar(path: &Path) {
+        let script = "#!/bin/sh\ntouch \"$2\"\n";
+        let staging = path.with_extension("staging");
+        std::fs::write(&staging, script).unwrap();
+        fbuild_core::platform::fs::set_executable(&staging).unwrap();
+        std::fs::rename(&staging, path).unwrap();
+    }
+
+    fn make_local_library(project: &Path, rel: &str, name: &str) -> PathBuf {
+        let lib_dir = project.join(rel);
+        let src = lib_dir.join("src");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(src.join(format!("{name}.cpp")), "int f() { return 1; }\n").unwrap();
+        std::fs::write(src.join(format!("{name}.h")), "int f();\n").unwrap();
+        lib_dir
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
+    async fn test_plan_compiles_concurrently_and_recompiles_edited_local_library() {
+        if fbuild_core::platform::host::is_windows() {
+            return;
+        }
+        let tmp = tempfile::TempDir::new().unwrap();
+        let project = tmp.path().join("project");
+        make_local_library(&project, "liba", "liba");
+        make_local_library(&project, "libb", "libb");
+        let libs_dir = tmp.path().join("build").join("libs");
+        std::fs::create_dir_all(&libs_dir).unwrap();
+
+        let tools_dir = tmp.path().join("tools");
+        std::fs::create_dir_all(&tools_dir).unwrap();
+        let log = tmp.path().join("compile.log");
+        let gcc = tools_dir.join("gcc");
+        let gxx = tools_dir.join("g++");
+        let ar = tools_dir.join("ar");
+        install_fake_compiler(&gcc, &log);
+        install_fake_compiler(&gxx, &log);
+        install_fake_ar(&ar);
+
+        let specs = vec![
+            "LibA=symlink://liba".to_string(),
+            "LibB=symlink://libb".to_string(),
+        ];
+
+        let resolved = resolve_libraries(
+            &specs,
+            &[],
+            &gcc,
+            &gxx,
+            &ar,
+            &[],
+            &[],
+            &[],
+            &project,
+            &libs_dir,
+            false,
+            None,
+        )
+        .await
+        .unwrap();
+
+        let archives = resolved
+            .plan
+            .compile(&library_compiler::job_gate(4))
+            .await
+            .unwrap();
+
+        let expected_a = libs_dir.join("liba").join("libliba.a");
+        let expected_b = libs_dir.join("libb").join("liblibb.a");
+        assert_eq!(archives, vec![expected_a.clone(), expected_b.clone()]);
+        assert!(expected_a.exists());
+        assert!(expected_b.exists());
+
+        let log_after_first = std::fs::read_to_string(&log).unwrap();
+        assert!(log_after_first.contains("liba.cpp"));
+        assert!(log_after_first.contains("libb.cpp"));
+
+        // Modify LibA's source and push its mtime into the future so the
+        // up-to-date check (source mtime vs. object mtime) reliably sees it
+        // as stale on any filesystem timestamp granularity.
+        let liba_src = project.join("liba").join("src").join("liba.cpp");
+        std::fs::write(&liba_src, "int f() { return 2; }\n").unwrap();
+        let future = std::time::SystemTime::now() + Duration::from_secs(3600);
+        std::fs::File::options()
+            .write(true)
+            .open(&liba_src)
+            .unwrap()
+            .set_modified(future)
+            .unwrap();
+
+        let resolved2 = resolve_libraries(
+            &specs,
+            &[],
+            &gcc,
+            &gxx,
+            &ar,
+            &[],
+            &[],
+            &[],
+            &project,
+            &libs_dir,
+            false,
+            None,
+        )
+        .await
+        .unwrap();
+        let archives2 = resolved2
+            .plan
+            .compile(&library_compiler::job_gate(4))
+            .await
+            .unwrap();
+        assert_eq!(archives2, vec![expected_a, expected_b]);
+
+        let log_after_second = std::fs::read_to_string(&log).unwrap();
+        let liba_compiles = log_after_second.matches("liba.cpp").count();
+        let libb_compiles = log_after_second.matches("libb.cpp").count();
+        assert_eq!(
+            liba_compiles, 2,
+            "edited LibA source must be recompiled on the second resolve+compile"
+        );
+        assert_eq!(
+            libb_compiles, 1,
+            "untouched LibB must not be recompiled on the second resolve+compile"
+        );
     }
 }

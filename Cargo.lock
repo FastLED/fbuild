@@ -1338,6 +1338,7 @@ dependencies = [
  "fbuild-packages-fetch",
  "fbuild-paths",
  "flate2",
+ "futures",
  "prost",
  "reqwest",
  "rusqlite",

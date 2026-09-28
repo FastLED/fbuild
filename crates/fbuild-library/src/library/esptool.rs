@@ -606,6 +606,25 @@ fn extract_esptool_version(url: &str) -> String {
 mod tests {
     use super::*;
 
+    /// Retry an exec that failed with ETXTBSY. A sibling test thread that
+    /// forks while a fake esptool is being written inherits the write fd until
+    /// its child execs, so even a staged-and-renamed script can be briefly busy.
+    macro_rules! busy_retry {
+        ($call:expr) => {{
+            let mut attempts = 0;
+            loop {
+                let result = $call.await;
+                match &result {
+                    Err(error) if attempts < 50 && error.to_string().contains("Text file busy") => {
+                        attempts += 1;
+                        tokio::time::sleep(std::time::Duration::from_millis(10)).await;
+                    }
+                    _ => break result,
+                }
+            }
+        }};
+    }
+
     #[test]
     fn extract_version_from_pioarduino_metadata_url() {
         // The registry release tag (0.0.1) must NOT win over the real esptool
@@ -738,7 +757,7 @@ mod tests {
             "#!/bin/sh\n[ \"$#\" -eq 1 ] && [ \"$1\" = \"version\" ]\n",
         );
 
-        verify_esptool_binary(&bin).await.unwrap();
+        busy_retry!(verify_esptool_binary(&bin)).unwrap();
     }
 
     /// A fake esptool that prints `esptool.py v4.5.1` and appends a line to
@@ -780,15 +799,9 @@ mod tests {
         let tmp = tempfile::TempDir::new().unwrap();
         let (bin, calls) = counting_esptool(tmp.path());
 
-        verify_esptool_once(&bin, tmp.path(), Some("4.5.1"))
-            .await
-            .unwrap();
-        verify_esptool_once(&bin, tmp.path(), Some("4.5.1"))
-            .await
-            .unwrap();
-        verify_esptool_once(&bin, tmp.path(), Some("4.5.1"))
-            .await
-            .unwrap();
+        busy_retry!(verify_esptool_once(&bin, tmp.path(), Some("4.5.1"))).unwrap();
+        busy_retry!(verify_esptool_once(&bin, tmp.path(), Some("4.5.1"))).unwrap();
+        busy_retry!(verify_esptool_once(&bin, tmp.path(), Some("4.5.1"))).unwrap();
 
         assert_eq!(spawn_count(&calls), 1);
     }
@@ -800,12 +813,12 @@ mod tests {
         }
         let tmp = tempfile::TempDir::new().unwrap();
         let (bin, calls) = counting_esptool(tmp.path());
-        verify_esptool_once(&bin, tmp.path(), None).await.unwrap();
+        busy_retry!(verify_esptool_once(&bin, tmp.path(), None)).unwrap();
 
         let mut script = std::fs::read_to_string(&bin).unwrap();
         script.push_str("# replaced\n");
         write_script(&bin, &script);
-        verify_esptool_once(&bin, tmp.path(), None).await.unwrap();
+        busy_retry!(verify_esptool_once(&bin, tmp.path(), None)).unwrap();
 
         assert_eq!(spawn_count(&calls), 2);
     }
@@ -818,21 +831,11 @@ mod tests {
         let tmp = tempfile::TempDir::new().unwrap();
         let (bin, calls) = counting_esptool(tmp.path());
 
-        assert!(
-            verify_esptool_once(&bin, tmp.path(), Some("9.9.9"))
-                .await
-                .is_err()
-        );
-        assert!(
-            verify_esptool_once(&bin, tmp.path(), Some("9.9.9"))
-                .await
-                .is_err()
-        );
+        assert!(busy_retry!(verify_esptool_once(&bin, tmp.path(), Some("9.9.9"))).is_err());
+        assert!(busy_retry!(verify_esptool_once(&bin, tmp.path(), Some("9.9.9"))).is_err());
         assert_eq!(spawn_count(&calls), 2, "a failed check must not be stamped");
 
-        verify_esptool_once(&bin, tmp.path(), Some("4.5.1"))
-            .await
-            .unwrap();
+        busy_retry!(verify_esptool_once(&bin, tmp.path(), Some("4.5.1"))).unwrap();
         assert_eq!(spawn_count(&calls), 3, "a new expected version re-verifies");
     }
 
