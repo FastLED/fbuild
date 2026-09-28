@@ -6,6 +6,7 @@ parallelism (FastLED/fbuild#1008).
 Holds every shared engine module — `pipeline`, `compiler`, `compile_many`,
 `source_scanner`, `linker`, `build_fingerprint`, `compile_database`,
 `symbol_analyzer`, `shrink`, `framework_libs`, `framework_core_cache`,
+`include_farm`,
 `script_runtime`, `flag_overlay`, `build_info`, `build_output`,
 `eh_frame_policy`, `zccache`/`zccache_embedded`, `arduino_props`,
 `compile_backend`, `parallel`, `perf_log`, `package_override`, `resolution`,
