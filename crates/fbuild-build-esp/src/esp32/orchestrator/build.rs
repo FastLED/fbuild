@@ -739,8 +739,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
             }
         }
         // Core and sketch compile concurrently against one shared job gate
-        // (FastLED/fbuild#1537, cause 2); see `compile_phases`.
-        let (core_result, sketch_result) = super::compile_phases::compile_core_and_sketch(
+        // (FastLED/fbuild#1537, cause 2); see `compile_phases`. Boot artifacts
+        // depend on nothing compiled, so they are staged alongside instead of
+        // serially after the link.
+        let compile = super::compile_phases::compile_core_and_sketch(
             &compiler,
             &mut perf,
             jobs,
@@ -755,8 +757,20 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 overlay: &src_overlay,
             },
             &build_log_mutex,
-        )
-        .await?;
+        );
+        let boot_artifacts = prepare_boot_artifacts(
+            build_dir,
+            &params.project_dir,
+            &framework,
+            &ctx.board,
+            &mcu_config,
+            &flash_freq,
+            esptool_bin.as_ref().map(|path| path.as_path()),
+            params.caller_path.as_deref(),
+        );
+        let (compiled, boot_artifacts) = tokio::join!(compile, boot_artifacts);
+        let (core_result, sketch_result) = compiled?;
+        perf.record("boot-artifacts", boot_artifacts?);
         {
             let _g = perf.phase("core-cache-store");
             let outcome = core_cache.store(core_build_dir);
@@ -932,20 +946,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
             )
             .await?
         };
-
-        // 14. Prepare boot artifacts for deployment / emulation
-        prepare_boot_artifacts(
-            build_dir,
-            &params.project_dir,
-            &framework,
-            &ctx.board,
-            &mcu_config,
-            &flash_freq,
-            esptool_bin.as_ref().map(|path| path.as_path()),
-            params.caller_path.as_deref(),
-            &mut perf,
-        )
-        .await?;
 
         // 15. Size reporting + result assembly
         let fingerprint_started = Instant::now();
