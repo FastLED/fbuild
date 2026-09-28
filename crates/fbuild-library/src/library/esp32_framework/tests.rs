@@ -2,7 +2,7 @@ use std::path::Path;
 
 use super::Esp32Framework;
 use super::fs_utils::{collect_archive_files, find_framework_root};
-use super::parsing::{parse_include_flags, split_defines};
+use super::parsing::{parse_include_flags, parse_pio_cppdefines, split_defines};
 use crate::{CacheSubdir, Package, PackageBase};
 
 #[test]
@@ -579,4 +579,80 @@ fn old_sdk_rejects_builder_script_padded_with_duplicate_entries() {
         dirs.contains(&scanned),
         "duplicate-padded script should have been rejected in favour of the tree scan"
     );
+}
+
+/// The `CPPDEFINES` block of arduino-esp32 2.x `platformio-build-esp32s3.py`.
+const PIO_BUILD_SCRIPT: &str = r#"
+env.Append(
+    CPPDEFINES=[
+        "HAVE_CONFIG_H",
+        ("MBEDTLS_CONFIG_FILE", '\\"mbedtls/esp_config.h\\"'),
+        "UNITY_INCLUDE_CONFIG_H",
+        "WITH_POSIX",
+        "_GNU_SOURCE",
+        ("IDF_VER", '\\"v4.4.7-dirty\\"'),
+        "ESP_PLATFORM",
+        "_POSIX_READER_WRITER_LOCKS",
+        "ARDUINO_ARCH_ESP32",
+        "ESP32",
+        ("F_CPU", "$BOARD_F_CPU"),
+        ("ARDUINO", 10812),
+        ("ARDUINO_VARIANT", '\\"%s\\"' % env.BoardConfig().get("build.variant").replace('"', "")),
+        "ARDUINO_PARTITION_%s" % basename(env.BoardConfig().get(
+            "build.partitions", "default.csv")).replace(".csv", "").replace("-", "_")
+    ]
+)
+"#;
+
+#[test]
+fn pio_cppdefines_yield_the_sdk_defines_in_flags_defines_form() {
+    assert_eq!(
+        parse_pio_cppdefines(PIO_BUILD_SCRIPT),
+        [
+            "-DHAVE_CONFIG_H",
+            r#"-DMBEDTLS_CONFIG_FILE=\"mbedtls/esp_config.h\""#,
+            "-DUNITY_INCLUDE_CONFIG_H",
+            "-DWITH_POSIX",
+            "-D_GNU_SOURCE",
+            r#"-DIDF_VER=\"v4.4.7-dirty\""#,
+            "-DESP_PLATFORM",
+            "-D_POSIX_READER_WRITER_LOCKS",
+        ]
+    );
+}
+
+#[test]
+fn sdk_defines_fall_back_to_the_pio_build_script_without_flags_defines() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let root = tmp.path();
+    std::fs::create_dir_all(root.join("tools/sdk/esp32s3")).unwrap();
+    std::fs::write(
+        root.join("tools/platformio-build-esp32s3.py"),
+        PIO_BUILD_SCRIPT,
+    )
+    .unwrap();
+    let mut fw = Esp32Framework::new(root, "esp32s3");
+    fw.install_dir = Some(root.to_path_buf());
+
+    let defines = fw.get_sdk_defines("esp32s3");
+
+    assert!(defines.contains(&"-DESP_PLATFORM".to_string()));
+    assert_eq!(defines.len(), 8);
+}
+
+#[test]
+fn sdk_defines_prefer_flags_defines_over_the_pio_build_script() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let root = tmp.path();
+    std::fs::create_dir_all(root.join("tools/sdk/esp32s3/flags")).unwrap();
+    std::fs::write(root.join("tools/sdk/esp32s3/flags/defines"), "-DFROM_FLAGS").unwrap();
+    std::fs::write(
+        root.join("tools/platformio-build-esp32s3.py"),
+        PIO_BUILD_SCRIPT,
+    )
+    .unwrap();
+    let mut fw = Esp32Framework::new(root, "esp32s3");
+    fw.install_dir = Some(root.to_path_buf());
+
+    assert_eq!(fw.get_sdk_defines("esp32s3"), ["-DFROM_FLAGS"]);
 }

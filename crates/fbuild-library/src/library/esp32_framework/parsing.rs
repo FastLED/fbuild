@@ -107,3 +107,77 @@ pub(crate) fn extract_framework_version(url: &str) -> String {
     // Fallback: hash
     crate::cache::hash_url(url)
 }
+
+/// SDK `-D` flags from the `CPPDEFINES` block of an arduino-esp32 2.x
+/// `tools/platformio-build-<mcu>.py`, in the raw form `flags/defines` uses.
+///
+/// Those SDK layouts ship no `flags/defines`, so this block is the only place
+/// PlatformIO's SDK defines (`ESP_PLATFORM`, `IDF_VER`, `MBEDTLS_CONFIG_FILE`,
+/// ...) are written down (FastLED/fbuild#1549). Entries computed from the
+/// SCons environment are skipped, as are the Arduino/board-level names
+/// (`ARDUINO*`, `ESP32`, `F_CPU`) that fbuild derives from the board itself.
+pub(crate) fn parse_pio_cppdefines(script: &str) -> Vec<String> {
+    let mut defines = Vec::new();
+    let mut in_block = false;
+    for line in script.lines() {
+        let entry = line.trim();
+        if !in_block {
+            in_block = entry.starts_with("CPPDEFINES=[") || entry.starts_with("CPPDEFINES = [");
+            continue;
+        }
+        if entry.starts_with(']') {
+            break;
+        }
+        let entry = entry.trim_end_matches(',').trim();
+        if entry.contains('%') || entry.contains('$') || entry.contains("env.") {
+            continue;
+        }
+        let (name, value) = match entry.strip_prefix('(').and_then(|e| e.strip_suffix(')')) {
+            Some(tuple) => {
+                let Some((name, value)) = tuple.split_once(',') else {
+                    continue;
+                };
+                let Some(value) = python_literal(value.trim()) else {
+                    continue;
+                };
+                (name.trim(), Some(value))
+            }
+            None => (entry, None),
+        };
+        let Some(name) = python_literal(name).filter(|n| is_sdk_define_name(n)) else {
+            continue;
+        };
+        defines.push(match value {
+            Some(value) => format!("-D{name}={value}"),
+            None => format!("-D{name}"),
+        });
+    }
+    defines
+}
+
+fn is_sdk_define_name(name: &str) -> bool {
+    !name.is_empty()
+        && name.chars().all(|c| c.is_ascii_alphanumeric() || c == '_')
+        && !name.starts_with("ARDUINO")
+        && !matches!(name, "ESP32" | "F_CPU")
+}
+
+/// A Python string literal's contents (`\\` -> `\`, `\'` -> `'`, `\"` -> `"`),
+/// or an integer literal as written.
+fn python_literal(token: &str) -> Option<String> {
+    if !token.is_empty() && token.chars().all(|c| c.is_ascii_digit()) {
+        return Some(token.to_string());
+    }
+    let quote = token.chars().next().filter(|c| matches!(c, '"' | '\''))?;
+    let body = token.strip_prefix(quote)?.strip_suffix(quote)?;
+    let mut out = String::with_capacity(body.len());
+    let mut chars = body.chars();
+    while let Some(c) = chars.next() {
+        if c == '\\' {
+            out.push(chars.next()?);
+        } else {
+            out.push(c);
+        }
+    }
+    Some(out)
+}

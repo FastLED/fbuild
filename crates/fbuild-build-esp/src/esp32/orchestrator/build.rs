@@ -124,9 +124,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
             mcu_config.disable_lto();
         }
 
-        let mut user_flags = sdk_defines;
-        let user_build_flags = ctx.config.get_build_flags(&params.env_name)?;
-        user_flags.extend(user_build_flags.clone());
         let embed_files = ctx.config.get_embed_files(&params.env_name)?;
         let embed_txtfiles = ctx.config.get_embed_txtfiles(&params.env_name)?;
 
@@ -163,6 +160,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                     crate::eh_frame_policy::EhFramePolicy::Strip => "strip",
                     crate::eh_frame_policy::EhFramePolicy::Preserve => "preserve",
                 },
+                sdk_defines,
             },
             &ctx,
         )?;

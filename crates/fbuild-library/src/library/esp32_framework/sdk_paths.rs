@@ -7,7 +7,7 @@ use std::path::{Path, PathBuf};
 
 use super::Esp32Framework;
 use super::fs_utils::{collect_archive_files, scan_include_dirs_recursive};
-use super::parsing::{parse_include_flags, split_defines};
+use super::parsing::{parse_include_flags, parse_pio_cppdefines, split_defines};
 
 /// A parsed builder script yielding fewer entries than this is treated as a
 /// failed parse. An upstream format change must degrade to the tree scan,
@@ -326,8 +326,10 @@ impl Esp32Framework {
     /// Get the SDK compiler defines from `flags/defines`.
     ///
     /// Returns `-D` flags that must be passed to the compiler for SDK headers
-    /// to work correctly (e.g., `MBEDTLS_CONFIG_FILE`, `IDF_VER`).
-    /// Returns empty if the flags file doesn't exist.
+    /// to work correctly (e.g., `MBEDTLS_CONFIG_FILE`, `IDF_VER`). SDK layouts
+    /// without `flags/defines` (arduino-esp32 2.x) fall back to the
+    /// `CPPDEFINES` block of the framework's PlatformIO builder script; empty
+    /// when neither exists.
     ///
     /// Uses `split_defines` instead of `shell_split` because define values
     /// like `-DMBEDTLS_CONFIG_FILE=\"mbedtls/esp_config.h\"` contain escaped
@@ -337,7 +339,13 @@ impl Esp32Framework {
         if let Ok(content) = std::fs::read_to_string(&defines_file) {
             return split_defines(&content);
         }
-        Vec::new()
+        let script = self
+            .resolved_dir()
+            .join("tools")
+            .join(format!("platformio-build-{mcu}.py"));
+        std::fs::read_to_string(script)
+            .map(|content| parse_pio_cppdefines(&content))
+            .unwrap_or_default()
     }
 
     /// Get the ordered SDK linker flags from `flags/ld_flags`.
