@@ -801,7 +801,7 @@ fn svg_shows_raw_floor_and_overhead() {
     assert!(!svg.contains("raw compiler floor"));
     assert!(svg.contains("fbuild/PIO cold: 0.667"));
     let html = render_html(&sample_metadata(), &sample_results());
-    assert!(html.contains("fbuild cold phase breakdown"));
+    assert!(html.contains("Cold phase breakdown"));
 }
 
 /// FastLED/fbuild#1467: the raw-compiler baseline must replay the real
