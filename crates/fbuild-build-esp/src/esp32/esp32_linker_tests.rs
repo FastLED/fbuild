@@ -409,15 +409,19 @@ async fn link_runs_the_linker_under_the_c_locale() {
     let tmp = tempfile::TempDir::new().unwrap();
     let recorded = tmp.path().join("lc_all");
     let fake_gcc = tmp.path().join("fake-gcc");
+    // Staged and renamed into place: exec'ing a file another thread's fork
+    // may still hold open for writing fails with ETXTBSY.
+    let staging = tmp.path().join("fake-gcc.staging");
     std::fs::write(
-        &fake_gcc,
+        &staging,
         format!(
             "#!/bin/sh\nprintf '%s' \"$LC_ALL\" > '{}'\n",
             recorded.display()
         ),
     )
     .unwrap();
-    fbuild_core::platform::fs::set_executable(&fake_gcc).unwrap();
+    fbuild_core::platform::fs::set_executable(&staging).unwrap();
+    std::fs::rename(&staging, &fake_gcc).unwrap();
     let mut linker = test_linker("esp32s3");
     linker.gcc_path = fake_gcc;
 
