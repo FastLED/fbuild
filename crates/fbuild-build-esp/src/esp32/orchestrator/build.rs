@@ -738,18 +738,56 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 ),
             }
         }
-        let core_result = {
-            let _g = perf.phase("compile-core-variant");
-            crate::parallel::compile_sources_parallel(
+        // Framework core and sketch compile against ONE shared job gate so the
+        // sketch translation unit starts in the first wave instead of waiting
+        // for all 46 core objects to drain and being compiled strictly
+        // afterwards (FastLED/fbuild#1537, cause 2). The sketch is submitted
+        // first and there are far more permits than the first wave needs, so
+        // its single task starts alongside the core fan-out instead of being
+        // scheduled after it.
+        //
+        // Sharing one semaphore is also what keeps the two phases from
+        // multiplying the job budget: the whole region still runs at most
+        // `jobs` compilers, where giving each phase its own pool would allow
+        // two. (Measured on a 16-core box, this build never exceeds ~12
+        // concurrent compilers even at `jobs = ncpu * 2`, so the budget is not
+        // the limit here — the shared gate is what keeps it that way once the
+        // phases overlap.)
+        let compile_gate = std::sync::Arc::new(tokio::sync::Semaphore::new(jobs.max(1)));
+        let sketch_started = Instant::now();
+        let sketch_fut = async {
+            let result = crate::parallel::compile_sources_parallel_shared(
+                &compiler,
+                &sources.sketch_sources,
+                src_build_dir,
+                &src_overlay,
+                &compile_gate,
+                Some(&build_log_mutex),
+            )
+            .await;
+            (result, sketch_started.elapsed())
+        };
+        let core_fut = async {
+            crate::parallel::compile_sources_parallel_shared(
                 &compiler,
                 &all_core_sources,
                 core_build_dir,
                 &user_overlay,
-                jobs,
+                &compile_gate,
                 Some(&build_log_mutex),
             )
-            .await?
+            .await
         };
+        // One live guard covers the region both phases now share; the sketch's
+        // own span is recorded separately below.
+        let ((sketch_result, sketch_elapsed), core_result) = {
+            let _g = perf.phase("compile-core-variant");
+            let (sketch, core) = tokio::join!(sketch_fut, core_fut);
+            (sketch, core)
+        };
+        let core_result = core_result?;
+        let sketch_result = sketch_result?;
+        perf.record("compile-sketch", sketch_elapsed);
         {
             let _g = perf.phase("core-cache-store");
             let outcome = core_cache.store(core_build_dir);
@@ -776,20 +814,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 ),
             }
         }
-
-        // Compile sketch sources in parallel
-        let sketch_result = {
-            let _g = perf.phase("compile-sketch");
-            crate::parallel::compile_sources_parallel(
-                &compiler,
-                &sources.sketch_sources,
-                src_build_dir,
-                &src_overlay,
-                jobs,
-                Some(&build_log_mutex),
-            )
-            .await?
-        };
 
         // Unwrap build log and flush collected warnings
         let mut build_log = build_log_mutex
