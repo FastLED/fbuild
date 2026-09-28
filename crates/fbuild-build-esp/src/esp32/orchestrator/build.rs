@@ -738,18 +738,25 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 ),
             }
         }
-        let core_result = {
-            let _g = perf.phase("compile-core-variant");
-            crate::parallel::compile_sources_parallel(
-                &compiler,
-                &all_core_sources,
-                core_build_dir,
-                &user_overlay,
-                jobs,
-                Some(&build_log_mutex),
-            )
-            .await?
-        };
+        // Core and sketch compile concurrently against one shared job gate
+        // (FastLED/fbuild#1537, cause 2); see `compile_phases`.
+        let (core_result, sketch_result) = super::compile_phases::compile_core_and_sketch(
+            &compiler,
+            &mut perf,
+            jobs,
+            super::compile_phases::CompileTarget {
+                sources: &all_core_sources,
+                build_dir: core_build_dir,
+                overlay: &user_overlay,
+            },
+            super::compile_phases::CompileTarget {
+                sources: &sources.sketch_sources,
+                build_dir: src_build_dir,
+                overlay: &src_overlay,
+            },
+            &build_log_mutex,
+        )
+        .await?;
         {
             let _g = perf.phase("core-cache-store");
             let outcome = core_cache.store(core_build_dir);
@@ -776,20 +783,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 ),
             }
         }
-
-        // Compile sketch sources in parallel
-        let sketch_result = {
-            let _g = perf.phase("compile-sketch");
-            crate::parallel::compile_sources_parallel(
-                &compiler,
-                &sources.sketch_sources,
-                src_build_dir,
-                &src_overlay,
-                jobs,
-                Some(&build_log_mutex),
-            )
-            .await?
-        };
 
         // Unwrap build log and flush collected warnings
         let mut build_log = build_log_mutex
