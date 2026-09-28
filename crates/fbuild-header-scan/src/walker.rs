@@ -59,6 +59,116 @@ pub struct WalkState {
     /// lifetime of this state. Each unique file is counted exactly once
     /// because subsequent walks hit `scan_cache` instead.
     files_read: usize,
+    resolver: IncludeResolver,
+}
+
+/// Memoized include resolution for one search-path list.
+///
+/// A name's search-path resolution does not depend on the including file, so
+/// it is computed once instead of `is_file`-probing every search path for every
+/// reference. That probing was two thirds of an incremental FastLED build's
+/// daemon CPU with ~400 ESP32 search paths (FastLED/fbuild#1539).
+#[derive(Debug, Default)]
+struct IncludeResolver {
+    search_paths: Vec<PathBuf>,
+    by_name: HashMap<String, Option<PathBuf>>,
+    canonical: HashMap<PathBuf, PathBuf>,
+    /// First path component -> indices of the search paths whose root holds
+    /// it, in search order. Built on the first miss; `Some(None)` means a root
+    /// could not be listed and every lookup probes each path instead.
+    roots: Option<Option<HashMap<String, Vec<usize>>>>,
+}
+
+/// Keys fold case so a case-insensitive filesystem's `Foo.h` still finds
+/// `foo.h`. That only widens the candidate set; each candidate is confirmed
+/// with `is_file` in search order, so the first match is the probe loop's.
+fn root_key(name: &str) -> String {
+    name.to_lowercase()
+}
+
+fn list_roots(search_paths: &[PathBuf]) -> Option<HashMap<String, Vec<usize>>> {
+    let mut roots: HashMap<String, Vec<usize>> = HashMap::new();
+    for (index, dir) in search_paths.iter().enumerate() {
+        let entries = match std::fs::read_dir(dir) {
+            Ok(entries) => entries,
+            // A missing search path holds nothing, exactly as probing it would.
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => continue,
+            Err(_) if !dir.is_dir() => continue,
+            Err(_) => return None,
+        };
+        for entry in entries {
+            let name = entry.ok()?.file_name().into_string().ok()?;
+            let owners = roots.entry(root_key(&name)).or_default();
+            if owners.last() != Some(&index) {
+                owners.push(index);
+            }
+        }
+    }
+    Some(roots)
+}
+
+impl IncludeResolver {
+    fn bind(&mut self, search_paths: &[PathBuf]) {
+        if self.search_paths != search_paths {
+            self.search_paths = search_paths.to_vec();
+            self.by_name.clear();
+            self.roots = None;
+        }
+    }
+
+    fn resolve(&mut self, inc: &IncludeRef, from: &Path) -> Option<PathBuf> {
+        if inc.kind == IncludeKind::Quoted {
+            if let Some(parent) = from.parent() {
+                let candidate = parent.join(&inc.path);
+                if candidate.is_file() {
+                    return Some(candidate);
+                }
+            }
+        }
+        if let Some(found) = self.by_name.get(&inc.path) {
+            return found.clone();
+        }
+        let found = self.search(&inc.path);
+        self.by_name.insert(inc.path.clone(), found.clone());
+        found
+    }
+
+    /// The first search path holding `name`. Only paths whose root lists the
+    /// name's first component can hold it, so those are the only ones probed.
+    fn search(&mut self, name: &str) -> Option<PathBuf> {
+        let plain = !name.contains('\\')
+            && !Path::new(name).is_absolute()
+            && name
+                .split('/')
+                .all(|part| !part.is_empty() && part != "." && part != "..");
+        let roots = self
+            .roots
+            .get_or_insert_with(|| list_roots(&self.search_paths));
+        match (plain, roots) {
+            (true, Some(roots)) => {
+                let first = name.split('/').next().unwrap_or(name);
+                let owners = roots.get(&root_key(first))?;
+                owners
+                    .iter()
+                    .map(|&index| self.search_paths[index].join(name))
+                    .find(|candidate| candidate.is_file())
+            }
+            _ => self
+                .search_paths
+                .iter()
+                .map(|sp| sp.join(name))
+                .find(|candidate| candidate.is_file()),
+        }
+    }
+
+    fn canon(&mut self, path: &Path) -> PathBuf {
+        if let Some(found) = self.canonical.get(path) {
+            return found.clone();
+        }
+        let resolved = canon(path);
+        self.canonical.insert(path.to_path_buf(), resolved.clone());
+        resolved
+    }
 }
 
 impl WalkState {
@@ -158,15 +268,38 @@ pub fn walk_with_state_active_known(
 /// *could* define — a conditional must not filter the answer. Uses its own
 /// [`WalkState`] so the active passes keep their own scan cache semantics.
 pub fn collect_defined_macro_names(seeds: &[PathBuf], search_paths: &[PathBuf]) -> HashSet<String> {
-    let mut state = WalkState::new();
-    let result = walk_with_state(seeds, search_paths, &mut state);
-    let mut names = HashSet::new();
-    for path in &result.reached {
-        if let Ok(src) = std::fs::read_to_string(path) {
-            names.extend(defined_macro_names(&src));
-        }
-    }
-    names
+    collect_defined_macro_names_with(seeds, search_paths, &mut WalkState::new())
+}
+
+/// [`collect_defined_macro_names`] reusing `state`'s include resolution.
+///
+/// Only the resolver is shared: the textual walk keeps its own scan cache and
+/// visited set, so the active passes that follow on `state` are unaffected.
+pub fn collect_defined_macro_names_with(
+    seeds: &[PathBuf],
+    search_paths: &[PathBuf],
+    state: &mut WalkState,
+) -> HashSet<String> {
+    let mut textual = WalkState {
+        resolver: std::mem::take(&mut state.resolver),
+        ..WalkState::default()
+    };
+    let result = walk_with_state(seeds, search_paths, &mut textual);
+    state.resolver = textual.resolver;
+    // Parallel, like the walk's own reads: thousands of files on FastLED.
+    result
+        .reached
+        .par_iter()
+        .filter_map(|path| std::fs::read_to_string(path).ok())
+        .map(|src| {
+            defined_macro_names(&src)
+                .into_iter()
+                .collect::<HashSet<_>>()
+        })
+        .reduce(HashSet::new, |mut all, names| {
+            all.extend(names);
+            all
+        })
 }
 
 fn walk_with_state_scanner<F>(
@@ -186,9 +319,10 @@ where
     let mut reached: BTreeSet<PathBuf> = BTreeSet::new();
     let mut unresolved: BTreeSet<String> = BTreeSet::new();
     let mut frontier: VecDeque<PathBuf> = VecDeque::new();
+    state.resolver.bind(search_paths);
 
     for seed in seeds {
-        let canon = canon(seed);
+        let canon = state.resolver.canon(seed);
         if state.visited.insert(canon.clone()) {
             frontier.push_back(canon.clone());
             reached.insert(canon);
@@ -228,9 +362,9 @@ where
                 continue;
             };
             for inc in &includes {
-                match resolve_include(inc, file, search_paths) {
+                match state.resolver.resolve(inc, file) {
                     Some(resolved) => {
-                        let canon = canon(&resolved);
+                        let canon = state.resolver.canon(&resolved);
                         if state.visited.insert(canon.clone()) {
                             reached.insert(canon.clone());
                             frontier.push_back(canon);
@@ -248,24 +382,6 @@ where
         reached: reached.into_iter().collect(),
         unresolved: unresolved.into_iter().collect(),
     }
-}
-
-fn resolve_include(inc: &IncludeRef, from: &Path, search_paths: &[PathBuf]) -> Option<PathBuf> {
-    if inc.kind == IncludeKind::Quoted {
-        if let Some(parent) = from.parent() {
-            let candidate = parent.join(&inc.path);
-            if candidate.is_file() {
-                return Some(candidate);
-            }
-        }
-    }
-    for sp in search_paths {
-        let candidate = sp.join(&inc.path);
-        if candidate.is_file() {
-            return Some(candidate);
-        }
-    }
-    None
 }
 
 fn canon(p: &Path) -> PathBuf {
@@ -427,5 +543,109 @@ mod tests {
         let r1 = walk(seeds, &[]);
         let r2 = walk(seeds, &[]);
         assert_eq!(r1, r2);
+    }
+
+    #[test]
+    fn w30_cached_search_result_never_overrides_a_sibling_quoted_include() {
+        let tmp = tempdir();
+        let inc = tmp.path().join("inc");
+        write(&inc.join("x.h"), "");
+        // a/main.cpp has its own sibling x.h; b/main.cpp does not.
+        let a_main = tmp.path().join("a/main.cpp");
+        let b_main = tmp.path().join("b/main.cpp");
+        write(&tmp.path().join("a/x.h"), "");
+        write(&a_main, "#include \"x.h\"\n");
+        write(&b_main, "#include \"x.h\"\n#include <x.h>\n");
+
+        let res = walk(&[b_main, a_main], std::slice::from_ref(&inc));
+
+        let canon = |p: PathBuf| std::fs::canonicalize(p).unwrap();
+        assert!(res.reached.contains(&canon(tmp.path().join("a/x.h"))));
+        assert!(res.reached.contains(&canon(inc.join("x.h"))));
+    }
+
+    #[test]
+    fn w31_reused_state_with_new_search_paths_resolves_afresh() {
+        let tmp = tempdir();
+        let first = tmp.path().join("first");
+        let second = tmp.path().join("second");
+        write(&second.join("only_second.h"), "");
+        let main = tmp.path().join("src/main.cpp");
+        write(&main, "#include <only_second.h>\n");
+        let seeds = std::slice::from_ref(&main);
+        let mut state = WalkState::new();
+
+        let res = walk_with_state(seeds, std::slice::from_ref(&first), &mut state);
+        assert_eq!(res.unresolved, ["only_second.h"]);
+
+        let mut fresh = WalkState {
+            resolver: std::mem::take(&mut state.resolver),
+            ..WalkState::default()
+        };
+        let res = walk_with_state(seeds, &[first, second.clone()], &mut fresh);
+        assert!(res.unresolved.is_empty());
+        assert!(
+            res.reached
+                .contains(&std::fs::canonicalize(second.join("only_second.h")).unwrap())
+        );
+    }
+
+    #[test]
+    fn w32_first_component_in_several_roots_keeps_search_order() {
+        let tmp = tempdir();
+        let (one, two, three) = (
+            tmp.path().join("one"),
+            tmp.path().join("two"),
+            tmp.path().join("three"),
+        );
+        std::fs::create_dir_all(one.join("a")).unwrap();
+        write(&two.join("a/x.h"), "");
+        write(&three.join("a/x.h"), "");
+        let main = tmp.path().join("src/main.cpp");
+        write(&main, "#include <a/x.h>\n");
+
+        let res = walk(std::slice::from_ref(&main), &[one, two.clone(), three]);
+
+        assert!(
+            res.reached
+                .contains(&std::fs::canonicalize(two.join("a/x.h")).unwrap())
+        );
+        assert!(res.unresolved.is_empty());
+    }
+
+    #[test]
+    fn w33_dot_dot_names_still_resolve() {
+        let tmp = tempdir();
+        let inc = tmp.path().join("inc");
+        std::fs::create_dir_all(inc.join("sub")).unwrap();
+        write(&inc.join("up.h"), "");
+        let main = tmp.path().join("src/main.cpp");
+        write(&main, "#include <sub/../up.h>\n");
+
+        let res = walk(std::slice::from_ref(&main), std::slice::from_ref(&inc));
+
+        assert!(
+            res.reached
+                .contains(&std::fs::canonicalize(inc.join("up.h")).unwrap())
+        );
+    }
+
+    #[test]
+    fn w34_missing_search_path_is_skipped() {
+        let tmp = tempdir();
+        let inc = tmp.path().join("inc");
+        write(&inc.join("x.h"), "");
+        let main = tmp.path().join("src/main.cpp");
+        write(&main, "#include <x.h>\n");
+
+        let res = walk(
+            std::slice::from_ref(&main),
+            &[tmp.path().join("absent"), inc.clone()],
+        );
+
+        assert!(
+            res.reached
+                .contains(&std::fs::canonicalize(inc.join("x.h")).unwrap())
+        );
     }
 }

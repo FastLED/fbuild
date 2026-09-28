@@ -100,6 +100,9 @@ pub async fn compile_sources_parallel_shared(
         objects.push(obj);
     }
 
+    // Long poles first; `objects` keeps source order, so link order is unchanged.
+    work.sort_by_key(|(source, _)| dispatch_rank(source));
+
     if work.is_empty() {
         return Ok(ParallelCompileResult {
             objects,
@@ -203,6 +206,24 @@ pub async fn compile_sources_parallel_shared(
     }
 
     Ok(ParallelCompileResult { objects, warnings })
+}
+
+/// Dispatch order for a translation unit; lower starts first.
+///
+/// C++ units are the long poles (every Arduino C++ TU parses `Arduino.h`), so
+/// starting them before C and assembly shortens the tail where cores idle
+/// behind one late compile: ~6% of the ESP32-S3 core compile at 4 cores
+/// (FastLED/fbuild#1537).
+fn dispatch_rank(source: &Path) -> u8 {
+    let ext = source
+        .extension()
+        .and_then(|e| e.to_str())
+        .map(str::to_ascii_lowercase);
+    match ext.as_deref() {
+        Some("c") => 1,
+        Some("s" | "sx" | "asm") => 2,
+        _ => 0,
+    }
 }
 
 #[cfg(test)]
@@ -415,5 +436,59 @@ mod tests {
             first_sketch_start < last_core_end,
             "the sketch phase must start while core compiles are still running"
         );
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn cpp_units_are_dispatched_before_c_and_assembly() {
+        let tmp = tempfile::tempdir().unwrap();
+        let names = ["a.c", "b.S", "c.cpp", "d.c", "e.cpp"];
+        let sources: Vec<PathBuf> = names
+            .iter()
+            .map(|name| {
+                let path = tmp.path().join(name);
+                std::fs::write(&path, "int x;\n").unwrap();
+                path
+            })
+            .collect();
+        let compiler = TracingCompiler {
+            gcc: PathBuf::from("/toolchain/bin/gcc"),
+            in_flight: Default::default(),
+            max_in_flight: Default::default(),
+            spans: Default::default(),
+        };
+        let result = compile_sources_parallel_shared(
+            &compiler,
+            &sources,
+            &tmp.path().join("obj"),
+            &LanguageExtraFlags::default(),
+            &Arc::new(Semaphore::new(1)),
+            None,
+        )
+        .await
+        .unwrap();
+
+        let mut spans = compiler.spans.lock().unwrap().clone();
+        spans.sort_by_key(|span| span.1);
+        let started: Vec<String> = spans
+            .iter()
+            .map(|span| span.0.file_name().unwrap().to_string_lossy().into_owned())
+            .collect();
+        assert_eq!(started, ["c.cpp", "e.cpp", "a.c", "d.c", "b.S"]);
+        let objects: Vec<String> = result
+            .objects
+            .iter()
+            .map(|o| o.file_name().unwrap().to_string_lossy().into_owned())
+            .collect();
+        let expected: Vec<String> = sources
+            .iter()
+            .map(|src| {
+                CompilerBase::object_path(src, &tmp.path().join("obj"))
+                    .file_name()
+                    .unwrap()
+                    .to_string_lossy()
+                    .into_owned()
+            })
+            .collect();
+        assert_eq!(objects, expected, "objects stay in source order");
     }
 }

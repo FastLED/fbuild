@@ -733,30 +733,36 @@ mod tests {
 
         let tmp = tempfile::TempDir::new().unwrap();
         let bin = tmp.path().join(esptool_bin_name());
-        std::fs::write(
+        write_script(
             &bin,
-            b"#!/bin/sh\n[ \"$#\" -eq 1 ] && [ \"$1\" = \"version\" ]\n",
-        )
-        .unwrap();
-        fbuild_core::platform::fs::set_executable(&bin).unwrap();
+            "#!/bin/sh\n[ \"$#\" -eq 1 ] && [ \"$1\" = \"version\" ]\n",
+        );
 
         verify_esptool_binary(&bin).await.unwrap();
     }
 
     /// A fake esptool that prints `esptool.py v4.5.1` and appends a line to
     /// `calls` on every run, so tests can count spawns.
+    /// Install an executable script without ever exec'ing a file that is
+    /// open for writing: a sibling test thread forking mid-write inherits
+    /// the write fd, and exec then fails with ETXTBSY.
+    fn write_script(path: &Path, body: &str) {
+        let staging = path.with_extension("staging");
+        std::fs::write(&staging, body).unwrap();
+        fbuild_core::platform::fs::set_executable(&staging).unwrap();
+        std::fs::rename(&staging, path).unwrap();
+    }
+
     fn counting_esptool(dir: &Path) -> (NormalizedPath, NormalizedPath) {
         let bin = NormalizedPath::new(dir.join(esptool_bin_name()));
         let calls = NormalizedPath::new(dir.join("calls"));
-        std::fs::write(
+        write_script(
             &bin,
-            format!(
+            &format!(
                 "#!/bin/sh\necho x >> '{}'\necho 'esptool.py v4.5.1'\n",
                 calls.display()
             ),
-        )
-        .unwrap();
-        fbuild_core::platform::fs::set_executable(&bin).unwrap();
+        );
         (bin, calls)
     }
 
@@ -798,7 +804,7 @@ mod tests {
 
         let mut script = std::fs::read_to_string(&bin).unwrap();
         script.push_str("# replaced\n");
-        std::fs::write(&bin, script).unwrap();
+        write_script(&bin, &script);
         verify_esptool_once(&bin, tmp.path(), None).await.unwrap();
 
         assert_eq!(spawn_count(&calls), 2);

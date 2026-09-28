@@ -84,6 +84,11 @@ pub fn symlink_dir(original: &Path, link: &Path) -> std::io::Result<()> {
     super::selected::fs::symlink_dir(original, link)
 }
 
+/// Create a file symlink using the host-native operation.
+pub fn symlink_file(original: &Path, link: &Path) -> std::io::Result<()> {
+    super::selected::fs::symlink_file(original, link)
+}
+
 /// Return whether a path is a symbolic link or Windows reparse point.
 pub fn is_link_or_reparse(path: &Path) -> std::io::Result<bool> {
     super::selected::fs::is_link_or_reparse(path)

@@ -57,6 +57,10 @@ pub(crate) fn symlink_dir(original: &Path, link: &Path) -> std::io::Result<()> {
     std::os::unix::fs::symlink(original, link)
 }
 
+pub(crate) fn symlink_file(original: &Path, link: &Path) -> std::io::Result<()> {
+    std::os::unix::fs::symlink(original, link)
+}
+
 pub(crate) fn is_link_or_reparse(path: &Path) -> std::io::Result<bool> {
     Ok(std::fs::symlink_metadata(path)?.file_type().is_symlink())
 }
