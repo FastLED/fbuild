@@ -1,7 +1,8 @@
 //! Library compilation helpers: `LibraryBuildEnv`, archiver selection,
 //! extra library roots, the "project-as-library" compile path, and
-//! `ensure_lib_deps` for downloading registry/remote `lib_deps` entries
-//! before the compiler is created.
+//! `resolve_lib_deps`, which downloads registry/remote `lib_deps` entries
+//! before the compiler is created and defers their compile to the build's
+//! shared job gate.
 
 use std::path::{Path, PathBuf};
 
@@ -206,12 +207,15 @@ pub async fn compile_extra_libraries(
 /// library archive was produced.
 ///
 /// Matches PlatformIO's project-as-library convention; see ISSUES.md Issue 1.
+/// Its compiles draw from `gate`, the build's shared job budget
+/// (FastLED/fbuild#1559).
 pub async fn compile_project_as_library(
     project_dir: &Path,
     src_dir: &Path,
     build_dir: &Path,
     env: &LibraryBuildEnv<'_>,
     existing_lib_names: &std::collections::HashSet<String>,
+    gate: &fbuild_packages::library::library_compiler::JobGate,
 ) -> Result<Option<PathBuf>> {
     // Guard 1: must be a library project (library.json or library.properties at root).
     if !is_project_a_library(project_dir) {
@@ -271,7 +275,7 @@ pub async fn compile_project_as_library(
     let project_libs_dir = build_dir.join("project_lib");
     std::fs::create_dir_all(&project_libs_dir)?;
 
-    match fbuild_packages::library::library_compiler::compile_library_with_jobs(
+    match fbuild_packages::library::library_compiler::compile_library_gated(
         &lib_name,
         &sources,
         env.include_dirs,
@@ -282,7 +286,7 @@ pub async fn compile_project_as_library(
         env.cpp_flags,
         &project_libs_dir,
         env.verbose,
-        env.jobs,
+        gate,
         env.compiler_cache,
         None,
         None,
@@ -305,90 +309,33 @@ pub async fn compile_project_as_library(
     }
 }
 
-/// Download and compile `lib_deps` entries from `platformio.ini`.
-///
-/// Called by build orchestrators **before** the compiler is created, so the
-/// returned include directories can be folded into the compiler's search path.
-/// The caller is responsible for:
-///
-/// 1. Adding the returned `include_dirs` to the compiler's include list.
-/// 2. Passing the returned `archives` to the linker (via
-///    `run_sequential_build_with_libs`' `extra_link_inputs` parameter).
-///
-/// `base_includes` is the set of include directories available before any
-/// `lib_deps` are downloaded (core, variant, sketch, toolchain sysroot).
-/// `libs_dir` is where downloaded libraries will be staged — callers typically
-/// use `<build_dir>/libs`.
-///
-/// When `lib_deps` is empty this returns `(vec![], vec![])` immediately with
-/// no I/O or network access.
-///
-/// FastLED/fbuild#1276: registry dependencies (`fastled/FastLED@^3.10.3`)
-/// were classified by `fbuild sync` but never downloaded by the build
-/// orchestrator, so the compile step couldn't find their headers.
-#[allow(clippy::too_many_arguments)]
-pub async fn ensure_lib_deps(
-    lib_deps: &[String],
-    lib_ignore: &[String],
-    gcc_path: &Path,
-    gxx_path: &Path,
-    ar_path: &Path,
-    c_flags: &[String],
-    cpp_flags: &[String],
-    base_includes: &[PathBuf],
-    project_dir: &Path,
-    libs_dir: &Path,
-    verbose: bool,
-    jobs: usize,
-    compiler_cache: Option<&Path>,
-) -> Result<(Vec<PathBuf>, Vec<PathBuf>)> {
-    if lib_deps.is_empty() {
-        return Ok((vec![], vec![]));
+/// `lib_deps` resolved and installed, compiled later on the build's shared
+/// job gate so libraries overlap the core, variant and sketch
+/// (FastLED/fbuild#1559). `Default` is "no lib_deps".
+#[derive(Default)]
+pub struct LibDeps {
+    plan: Option<fbuild_packages::library::library_manager::LibraryCompilePlan>,
+}
+
+impl LibDeps {
+    /// Compile every library on `gate`; archives come back in link order.
+    pub async fn compile(
+        self,
+        gate: &fbuild_packages::library::library_compiler::JobGate,
+    ) -> Result<Vec<PathBuf>> {
+        match self.plan {
+            Some(plan) => plan.compile(gate).await,
+            None => Ok(Vec::new()),
+        }
     }
-
-    tracing::info!(
-        "downloading {} lib_deps to {}",
-        lib_deps.len(),
-        libs_dir.display()
-    );
-
-    let lib_result = fbuild_packages::library::library_manager::ensure_libraries(
-        lib_deps,
-        lib_ignore,
-        gcc_path,
-        gxx_path,
-        ar_path,
-        c_flags,
-        cpp_flags,
-        base_includes,
-        project_dir,
-        libs_dir,
-        verbose,
-        jobs,
-        compiler_cache,
-    )
-    .await?;
-
-    // FastLED/fbuild#966: sort include dirs so `-I` flags are deterministic
-    // across checkouts (read_dir order varies by filesystem).
-    let mut lib_include_dirs = lib_result.include_dirs;
-    lib_include_dirs.sort();
-
-    tracing::info!(
-        "lib_deps: {} include dirs, {} archives",
-        lib_include_dirs.len(),
-        lib_result.archives.len()
-    );
-
-    Ok((lib_include_dirs, lib_result.archives))
 }
 
 /// Resolve `lib_deps` from platformio.ini: pick the LTO-aware archiver,
-/// download/compile libraries, and fold the returned include dirs into the
-/// caller's list.
+/// download the libraries, and fold their include dirs into the caller's list.
 ///
-/// Returns the compiled library archives for link-time. When `lib_deps` is
-/// empty this returns an empty vec immediately with no I/O or network access.
+/// Nothing is compiled here: the returned [`LibDeps`] is compiled by the build
+/// pipeline alongside everything else. When `lib_deps` is empty this returns
+/// immediately with no I/O or network access.
 ///
 /// This is the single choke-point that replaced a ~55-line copy-paste block
 /// duplicated across every build orchestrator (FastLED/fbuild#1292). Each
@@ -408,15 +355,19 @@ pub async fn resolve_lib_deps(
     cpp_flags: &[String],
     include_dirs: &mut Vec<PathBuf>,
     verbose: bool,
-    jobs: usize,
     compiler_cache: Option<&Path>,
-) -> Result<Vec<PathBuf>> {
+) -> Result<LibDeps> {
     if lib_deps.is_empty() {
-        return Ok(Vec::new());
+        return Ok(LibDeps::default());
     }
     let dep_lib_ar_path = pick_archiver(ar_path, gcc_ar_path, c_flags, cpp_flags);
     let libs_dir = build_dir.join("libs");
-    let (lib_include_dirs, archives) = ensure_lib_deps(
+    tracing::info!(
+        "downloading {} lib_deps to {}",
+        lib_deps.len(),
+        libs_dir.display()
+    );
+    let resolved = fbuild_packages::library::library_manager::resolve_libraries(
         lib_deps,
         lib_ignore,
         gcc_path,
@@ -428,13 +379,26 @@ pub async fn resolve_lib_deps(
         project_dir,
         &libs_dir,
         verbose,
-        jobs,
         compiler_cache,
     )
     .await?;
+    // FastLED/fbuild#966: sort include dirs so `-I` flags are deterministic
+    // across checkouts (read_dir order varies by filesystem).
+    let mut lib_include_dirs = resolved.include_dirs;
+    lib_include_dirs.sort();
+    tracing::info!("lib_deps: {} include dirs", lib_include_dirs.len());
     include_dirs.extend(lib_include_dirs);
-    Ok(archives)
+    Ok(LibDeps {
+        plan: Some(resolved.plan),
+    })
 }
+
+// See `library_shared_gate_tests.rs` (FastLED/fbuild#1559): proves
+// `LibDeps::compile` and `compile_sources_parallel_shared` share one job
+// budget when run concurrently against the same `JobGate`.
+#[cfg(test)]
+#[path = "library_shared_gate_tests.rs"]
+mod shared_gate_tests;
 
 #[cfg(test)]
 mod pick_archiver_tests {
@@ -565,6 +529,7 @@ mod project_as_library_tests {
             &project_dir.join("build"),
             &env,
             &HashSet::new(),
+            &fbuild_packages::library::library_compiler::job_gate(1),
         )
         .await;
         assert!(matches!(result, Ok(None)));
@@ -592,6 +557,7 @@ mod project_as_library_tests {
             &project_dir.join("build"),
             &env,
             &HashSet::new(),
+            &fbuild_packages::library::library_compiler::job_gate(1),
         )
         .await;
         assert!(matches!(result, Ok(None)));
@@ -620,6 +586,7 @@ mod project_as_library_tests {
             &project_dir.join("build"),
             &env,
             &HashSet::new(),
+            &fbuild_packages::library::library_compiler::job_gate(1),
         )
         .await;
         assert!(matches!(result, Ok(None)));
@@ -644,6 +611,7 @@ mod project_as_library_tests {
             &project_dir.join("build"),
             &env,
             &HashSet::new(),
+            &fbuild_packages::library::library_compiler::job_gate(1),
         )
         .await;
         assert!(matches!(result, Ok(None)));
@@ -673,6 +641,7 @@ mod project_as_library_tests {
             &project_dir.join("build"),
             &env,
             &HashSet::new(),
+            &fbuild_packages::library::library_compiler::job_gate(1),
         )
         .await;
         assert!(matches!(result, Ok(None)));
@@ -708,6 +677,7 @@ mod project_as_library_tests {
             &project_dir.join("build"),
             &env,
             &existing,
+            &fbuild_packages::library::library_compiler::job_gate(1),
         )
         .await;
         assert!(matches!(result, Ok(None)));
@@ -742,6 +712,7 @@ mod project_as_library_tests {
             &project_dir.join("build"),
             &env,
             &HashSet::new(),
+            &fbuild_packages::library::library_compiler::job_gate(1),
         )
         .await;
         // Must NOT be Ok(None) — that would mean a guard skipped compile.

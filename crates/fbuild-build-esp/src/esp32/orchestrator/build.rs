@@ -523,12 +523,14 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 jobs: crate::parallel::effective_jobs(params.jobs),
                 compiler_cache: compiler_cache.as_deref(),
             };
+            let lib_gate = fbuild_packages::library::library_compiler::job_gate(lib_env.jobs);
             if let Some(archive) = crate::pipeline::compile_project_as_library(
                 &params.project_dir,
                 &ctx.src_dir,
                 build_dir,
                 &lib_env,
                 &existing_lib_names,
+                &lib_gate,
             )
             .await?
             {
