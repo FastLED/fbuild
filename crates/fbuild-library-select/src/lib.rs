@@ -21,7 +21,7 @@ use std::collections::{BTreeMap, BTreeSet, HashMap};
 use std::path::{Path, PathBuf};
 
 use fbuild_header_scan::{
-    WalkState, active_defines_with_known, collect_defined_macro_names, walk_with_state,
+    WalkState, active_defines_with_known, collect_defined_macro_names_with, walk_with_state,
     walk_with_state_active_known,
 };
 use fbuild_packages::library::FrameworkLibrary;
@@ -160,14 +160,17 @@ pub fn resolve_with_stats_active_declared(
             }
         }
     }
-    let defined_somewhere = collect_defined_macro_names(seeds, &full_search_paths);
+    let mut state = WalkState::new();
+    let defined_somewhere = collect_defined_macro_names_with(seeds, &full_search_paths, &mut state);
     let effective_defines = seed_defines(seeds, defines, &defined_somewhere);
-    resolve_with_stats_impl_declared(
+    resolve_with_state(
         seeds,
         project_search_paths,
         libraries,
         Some(&effective_defines),
         declared,
+        state,
+        Some(defined_somewhere),
     )
 }
 
@@ -258,10 +261,31 @@ fn resolve_with_stats_impl_declared(
     defines: Option<&HashMap<String, String>>,
     declared: &[String],
 ) -> (Selection, ResolveStats) {
+    resolve_with_state(
+        seeds,
+        project_search_paths,
+        libraries,
+        defines,
+        declared,
+        WalkState::new(),
+        None,
+    )
+}
+
+/// The resolver proper. `defined_somewhere`, when the caller already walked
+/// the corpus for it with `state`, is reused instead of walked again.
+fn resolve_with_state(
+    seeds: &[PathBuf],
+    project_search_paths: &[PathBuf],
+    libraries: &[FrameworkLibrary],
+    defines: Option<&HashMap<String, String>>,
+    declared: &[String],
+    mut state: WalkState,
+    defined_somewhere: Option<std::collections::HashSet<String>>,
+) -> (Selection, ResolveStats) {
     let mut selected: BTreeSet<usize> = BTreeSet::new();
     let mut all_included: BTreeSet<PathBuf> = BTreeSet::new();
     let mut all_unresolved: BTreeSet<String> = BTreeSet::new();
-    let mut state = WalkState::new();
     let mut pass_count: usize = 0;
 
     let canon_lib_dirs: Vec<Vec<PathBuf>> = libraries
@@ -326,10 +350,10 @@ fn resolve_with_stats_impl_declared(
     //
     // Only computed when branch evaluation is on; the textual mode already
     // scans every arm.
-    let defined_somewhere = if defines.is_some() {
-        collect_defined_macro_names(seeds, &full_search_paths)
-    } else {
-        Default::default()
+    let defined_somewhere = match (defines, defined_somewhere) {
+        (Some(_), Some(known)) => known,
+        (Some(_), None) => collect_defined_macro_names_with(seeds, &full_search_paths, &mut state),
+        (None, _) => Default::default(),
     };
 
     // Pass 1: BFS from project seeds.
