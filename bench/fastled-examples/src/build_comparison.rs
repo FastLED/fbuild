@@ -992,7 +992,8 @@ fn record_package_metadata(
     board: Board,
 ) {
     if observed.is_empty() {
-        if current.is_empty() && warning.is_none() {
+        current.clear();
+        if warning.is_none() {
             *warning = Some(format!(
                 "{} build output omitted resolved package identities on {}",
                 kind.style().label,
@@ -1001,15 +1002,13 @@ fn record_package_metadata(
         }
         return;
     }
-    if warning
-        .as_deref()
-        .is_some_and(|message| message.contains("changed across cold trials"))
-    {
+    // Every timed cold trial must agree. Once any trial is missing or has a
+    // different identity, later observations cannot restore comparability.
+    if warning.is_some() {
         return;
     }
     if current.is_empty() {
         *current = observed;
-        *warning = None;
     } else if *current != observed {
         current.clear();
         *warning = Some(format!(

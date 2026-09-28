@@ -657,6 +657,37 @@ fn changed_package_identities_across_trials_become_unverified() {
 }
 
 #[test]
+fn missing_package_identity_in_any_cold_trial_stays_unverified() {
+    let complete = BTreeMap::from([
+        ("platform".into(), "6.13.0".into()),
+        ("framework".into(), "3.20017.241212+sha.dcc1105b".into()),
+        ("toolchain".into(), "8.4.0+2021r2-patch5".into()),
+    ]);
+    for observations in [
+        vec![BTreeMap::new(), complete.clone()],
+        vec![complete.clone(), BTreeMap::new()],
+    ] {
+        let mut packages = BTreeMap::new();
+        let mut warning = None;
+        for observed in observations {
+            record_package_metadata(
+                &mut packages,
+                &mut warning,
+                observed,
+                ToolKind::Fbuild,
+                BOARDS[1],
+            );
+        }
+        assert!(packages.is_empty());
+        assert!(
+            warning
+                .as_deref()
+                .is_some_and(|message| message.contains("omitted resolved package identities"))
+        );
+    }
+}
+
+#[test]
 fn unavailable_fbuild_package_versions_are_not_reported_as_a_mismatch() {
     let mut results = sample_results();
     for result in &mut results {
