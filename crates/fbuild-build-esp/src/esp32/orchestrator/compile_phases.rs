@@ -2,8 +2,9 @@
 //!
 //! The framework core and the sketch are independent source sets that link
 //! together, so nothing about one depends on the other having finished. They
-//! are compiled against a single shared job gate here rather than one after
-//! the other, which is what this module exists to hold (FastLED/fbuild#1537).
+//! are compiled against the build's single shared job gate here rather than
+//! one after the other, which is what this module exists to hold
+//! (FastLED/fbuild#1537, FastLED/fbuild#1559).
 
 use std::path::Path;
 use std::sync::{Arc, Mutex};
@@ -33,13 +34,14 @@ pub(super) struct CompileTarget<'a, S: AsRef<Path>> {
     pub overlay: &'a LanguageExtraFlags,
 }
 
-/// Compile the framework core sources and the sketch sources concurrently.
+/// Compile the framework core sources and the sketch sources concurrently,
+/// every translation unit drawing a permit from the caller's `gate`.
 ///
-/// Returns `(core, sketch)`. The sketch is submitted first and the gate has
-/// far more permits than the first wave needs, so its single translation unit
-/// starts alongside the core fan-out instead of being scheduled after all of
-/// it. Sharing one gate also keeps the region at `jobs` compilers rather than
-/// letting each phase hold its own full pool.
+/// Returns `(core, sketch)`. The sketch is submitted first, so its single
+/// translation unit starts alongside the core fan-out instead of being
+/// scheduled after all of it. The gate is the build's one job budget, shared
+/// with every other compile running at the same time (libraries included), so
+/// the whole region stays at the gate's permit count.
 ///
 /// One [`PerfTimer::phase`] guard covers the region both phases share, so
 /// `compile-core-variant` spans it; the sketch's own span is recorded
@@ -47,7 +49,7 @@ pub(super) struct CompileTarget<'a, S: AsRef<Path>> {
 pub(super) async fn compile_core_and_sketch<S, T>(
     compiler: &(dyn Compiler + Send + Sync),
     perf: &mut PerfTimer,
-    jobs: usize,
+    gate: &Arc<Semaphore>,
     core: CompileTarget<'_, S>,
     sketch: CompileTarget<'_, T>,
     build_log: &Mutex<BuildLog>,
@@ -56,7 +58,6 @@ where
     S: AsRef<Path> + Send + Sync,
     T: AsRef<Path> + Send + Sync,
 {
-    let gate = Arc::new(Semaphore::new(jobs.max(1)));
     let sketch_started = Instant::now();
 
     let sketch_fut = async {
@@ -70,7 +71,7 @@ where
             &paths,
             sketch.build_dir,
             sketch.overlay,
-            &gate,
+            gate,
             Some(build_log),
         )
         .await;
@@ -87,12 +88,14 @@ where
             &paths,
             core.build_dir,
             core.overlay,
-            &gate,
+            gate,
             Some(build_log),
         )
         .await
     };
 
+    // `join!`, not `try_join!`: `compile_sources_parallel_shared` extends its
+    // borrows to `'static` and is sound only when awaited to completion.
     let ((sketch_result, sketch_elapsed), core_result) = {
         let _region = perf.phase("compile-core-variant");
         tokio::join!(sketch_fut, core_fut)

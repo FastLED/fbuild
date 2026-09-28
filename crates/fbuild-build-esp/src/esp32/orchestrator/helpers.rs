@@ -317,6 +317,72 @@ pub(super) fn framework_macro_prefix_map(core_dir: &Path) -> Option<String> {
     ))
 }
 
+/// Download (or resolve) `lib_deps` and plan their compilation, without
+/// compiling: library selection needs only their sources, and the compile
+/// joins the build's shared job pool later (FastLED/fbuild#1559).
+///
+/// `include_dirs` is every bundled include root, since external libraries are
+/// planned before their framework dependencies are selected. User build_flags
+/// apply to library compilation, matching PlatformIO (e.g. `-std=gnu++2a`
+/// replaces the MCU config's `-std=gnu++2b`).
+#[allow(clippy::too_many_arguments)]
+pub(super) async fn resolve_lib_deps(
+    params: &crate::BuildParams,
+    lib_deps: &[String],
+    lib_ignore: &[String],
+    toolchain: &fbuild_packages::toolchain::Esp32Toolchain,
+    mcu_config: &super::super::mcu_config::Esp32McuConfig,
+    board: &fbuild_config::BoardConfig,
+    build_unflags: &[String],
+    eh_frame_policy: crate::eh_frame_policy::EhFramePolicy,
+    include_dirs: &[PathBuf],
+    user_overlay: &crate::flag_overlay::LanguageExtraFlags,
+    build_dir: &Path,
+    compiler_cache: Option<&Path>,
+) -> Result<fbuild_packages::library::library_manager::ResolvedLibraries> {
+    use crate::compiler::Compiler as _;
+    use crate::flag_overlay::apply_overlay_flags;
+    use fbuild_packages::Toolchain;
+
+    let mut defines = board.get_defines();
+    defines.extend(mcu_config.defines_map());
+    let temp_compiler = super::super::esp32_compiler::Esp32Compiler::with_temp_dir(
+        toolchain.get_gcc_path(),
+        toolchain.get_gxx_path(),
+        mcu_config.clone(),
+        &board.f_cpu,
+        defines,
+        include_dirs.to_vec(),
+        params.profile,
+        params.verbose,
+        build_dir.join("tmp"),
+    )
+    .with_build_unflags(build_unflags.to_vec())
+    .with_eh_frame_policy(eh_frame_policy);
+    let c_flags = apply_overlay_flags(&temp_compiler.c_flags(), user_overlay, "dummy.c");
+    let cpp_flags = apply_overlay_flags(&temp_compiler.cpp_flags(), user_overlay, "dummy.cpp");
+
+    // Use gcc-ar for LTO archives so the linker-plugin index is written.
+    let ar_path = toolchain.get_ar_path();
+    let gcc_ar_path = toolchain.get_gcc_ar_path();
+    let archiver = crate::pipeline::pick_archiver(&ar_path, &gcc_ar_path, &c_flags, &cpp_flags);
+    fbuild_packages::library::library_manager::resolve_libraries(
+        lib_deps,
+        lib_ignore,
+        &toolchain.get_gcc_path(),
+        &toolchain.get_gxx_path(),
+        archiver,
+        &c_flags,
+        &cpp_flags,
+        include_dirs,
+        &params.project_dir,
+        &build_dir.join("libs"),
+        params.verbose,
+        compiler_cache,
+    )
+    .await
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

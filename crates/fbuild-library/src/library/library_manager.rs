@@ -127,6 +127,17 @@ impl LibraryCompilePlan {
         self.libraries.is_empty()
     }
 
+    /// Names of the libraries that [`Self::compile`] turns into an archive
+    /// (`lib{name}.a`), in library order. A library without sources yields no
+    /// archive and is left out, so this is known before anything compiles.
+    pub fn archive_names(&self) -> Vec<String> {
+        self.libraries
+            .iter()
+            .filter(|lib| !lib.sources.is_empty())
+            .map(|lib| lib.name.clone())
+            .collect()
+    }
+
     /// Compile every library concurrently, each TU drawing a permit from
     /// `gate`. Archives come back in library order (the link order).
     ///
@@ -744,5 +755,33 @@ mod tests {
             libb_compiles, 1,
             "untouched LibB must not be recompiled on the second resolve+compile"
         );
+    }
+
+    /// FastLED/fbuild#1559: the ESP32 orchestrator skips a framework library
+    /// that a `lib_deps` archive already provides, before anything compiles.
+    /// Only libraries with sources yield an archive; names keep their case.
+    #[test]
+    fn test_archive_names_skip_libraries_without_sources() {
+        let planned = |name: &str, sources: Vec<PathBuf>| PlannedLibrary {
+            name: name.to_string(),
+            sources,
+            build_dir: PathBuf::from("build").join(name),
+        };
+        let plan = LibraryCompilePlan {
+            libraries: vec![
+                planned("FastLED", vec![PathBuf::from("a.cpp")]),
+                planned("Empty", Vec::new()),
+                planned("zlib", vec![PathBuf::from("z.c")]),
+            ],
+            all_include_dirs: Vec::new(),
+            gcc_path: PathBuf::from("gcc"),
+            gxx_path: PathBuf::from("g++"),
+            ar_path: PathBuf::from("ar"),
+            c_flags: Vec::new(),
+            cpp_flags: Vec::new(),
+            verbose: false,
+            compiler_cache: None,
+        };
+        assert_eq!(plan.archive_names(), vec!["FastLED", "zlib"]);
     }
 }
