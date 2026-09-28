@@ -442,3 +442,141 @@ fn test_split_defines_empty() {
 fn test_split_defines_single() {
     assert_eq!(split_defines("-DFOO=1"), vec!["-DFOO=1"]);
 }
+
+#[test]
+fn old_sdk_uses_pio_builder_include_list_over_tree_scan() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let root = tmp.path();
+    // A tree scan would find the decoy (a header dir under include/) and miss
+    // the deeply nested leaf that only the builder script names.
+    let decoy = root.join("tools/sdk/esp32s3/include/decoy/include");
+    std::fs::create_dir_all(&decoy).unwrap();
+    std::fs::write(decoy.join("decoy.h"), "\n").unwrap();
+
+    let leaf = root.join("tools/sdk/esp32s3/include/bt/common/api/include/api");
+    std::fs::create_dir_all(&leaf).unwrap();
+    std::fs::write(leaf.join("esp_bt.h"), "\n").unwrap();
+    let deep = root.join("tools/sdk/esp32s3/include/lwip/port/esp32/include");
+    std::fs::create_dir_all(&deep).unwrap();
+    std::fs::write(deep.join("lwipopts.h"), "\n").unwrap();
+
+    std::fs::create_dir_all(root.join("tools")).unwrap();
+    let mut script = String::from("env.Append(\n    CPPPATH=[\n");
+    for i in 0..25 {
+        let rel = format!("tools/sdk/esp32s3/include/comp{i}/include");
+        std::fs::create_dir_all(root.join(&rel)).unwrap();
+        std::fs::write(root.join(&rel).join("h.h"), "\n").unwrap();
+        script.push_str(&format!("        join(FRAMEWORK_DIR, \"tools\", \"sdk\", \"esp32s3\", \"include\", \"comp{i}\", \"include\"),\n"));
+    }
+    script.push_str("        join(FRAMEWORK_DIR, \"tools\", \"sdk\", \"esp32s3\", \"include\", \"bt\", \"common\", \"api\", \"include\", \"api\"),\n");
+    script.push_str("        join(FRAMEWORK_DIR, \"tools\", \"sdk\", \"esp32s3\", \"include\", \"lwip\", \"port\", \"esp32\", \"include\"),\n");
+    script.push_str("        join(FRAMEWORK_DIR, \"tools\", \"sdk\", \"esp32s3\", env.BoardConfig().get(\"build.flash_mode\"), \"include\"),\n");
+    script.push_str("        join(FRAMEWORK_DIR, \"cores\", env.BoardConfig().get(\"build.core\"))\n    ],\n)\n");
+    std::fs::write(root.join("tools/platformio-build-esp32s3.py"), script).unwrap();
+
+    let fw = Esp32Framework {
+        base: PackageBase::new(
+            "test",
+            "1.0",
+            "http://example.com",
+            "http://example.com",
+            None,
+            CacheSubdir::Platforms,
+            tmp.path(),
+        ),
+        install_dir: Some(tmp.path().to_path_buf()),
+    };
+
+    let dirs = fw.get_sdk_include_dirs("esp32s3", None);
+    assert!(
+        dirs.contains(&deep),
+        "deep leaf from builder script missing"
+    );
+    assert!(
+        dirs.contains(&leaf),
+        "nested leaf from builder script missing"
+    );
+    assert!(
+        !dirs.contains(&decoy),
+        "tree scan decoy leaked into the builder-script list"
+    );
+    // Order follows the script, not a sort: the script names `bt` before `lwip`.
+    assert!(dirs.iter().position(|d| d == &leaf) < dirs.iter().position(|d| d == &deep));
+}
+
+#[test]
+fn old_sdk_falls_back_to_tree_scan_when_builder_script_unparseable() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let root = tmp.path();
+    let include = root.join("tools/sdk/esp32s3/include/efuse/include");
+    std::fs::create_dir_all(&include).unwrap();
+    std::fs::write(include.join("esp_efuse.h"), "\n").unwrap();
+    std::fs::create_dir_all(root.join("tools")).unwrap();
+    // Truncated/substituted CPPPATH that yields too few entries to trust.
+    std::fs::write(
+        root.join("tools/platformio-build-esp32s3.py"),
+        "env.Append(\n    CPPPATH=[\n        join(FRAMEWORK_DIR, \"cores\")\n    ],\n)\n",
+    )
+    .unwrap();
+
+    let fw = Esp32Framework {
+        base: PackageBase::new(
+            "test",
+            "1.0",
+            "http://example.com",
+            "http://example.com",
+            None,
+            CacheSubdir::Platforms,
+            tmp.path(),
+        ),
+        install_dir: Some(tmp.path().to_path_buf()),
+    };
+
+    let dirs = fw.get_sdk_include_dirs("esp32s3", None);
+    assert!(dirs.contains(&include), "tree-scan fallback did not run");
+}
+
+#[test]
+fn old_sdk_rejects_builder_script_padded_with_duplicate_entries() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let root = tmp.path();
+    // A dir only the tree scan would find, used to prove the fallback ran.
+    let scanned = root.join("tools/sdk/esp32s3/include/efuse/include");
+    std::fs::create_dir_all(&scanned).unwrap();
+    std::fs::write(scanned.join("esp_efuse.h"), "\n").unwrap();
+
+    let dup = root.join("tools/sdk/esp32s3/include/only/include");
+    std::fs::create_dir_all(&dup).unwrap();
+    std::fs::write(dup.join("only.h"), "\n").unwrap();
+
+    std::fs::create_dir_all(root.join("tools")).unwrap();
+    // Same entry repeated past the minimum: distinct-path count is 1, so this
+    // must not be trusted even though the line count clears the threshold.
+    let mut script = String::from("env.Append(\n    CPPPATH=[\n");
+    for _ in 0..30 {
+        script.push_str(
+            "        join(FRAMEWORK_DIR, \"tools\", \"sdk\", \"esp32s3\", \"include\", \"only\", \"include\"),\n",
+        );
+    }
+    script.push_str("    ],\n)\n");
+    std::fs::write(root.join("tools/platformio-build-esp32s3.py"), script).unwrap();
+
+    let fw = Esp32Framework {
+        base: PackageBase::new(
+            "test",
+            "1.0",
+            "http://example.com",
+            "http://example.com",
+            None,
+            CacheSubdir::Platforms,
+            tmp.path(),
+        ),
+        install_dir: Some(tmp.path().to_path_buf()),
+    };
+
+    let dirs = fw.get_sdk_include_dirs("esp32s3", None);
+    assert!(
+        dirs.contains(&scanned),
+        "duplicate-padded script should have been rejected in favour of the tree scan"
+    );
+}

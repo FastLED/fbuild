@@ -2,11 +2,96 @@
 //! shipped with the ESP32 Arduino framework.
 
 use std::cmp::Ordering;
+use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 
 use super::Esp32Framework;
 use super::fs_utils::{collect_archive_files, scan_include_dirs_recursive};
 use super::parsing::{parse_include_flags, split_defines};
+
+/// A parsed builder script yielding fewer entries than this is treated as a
+/// failed parse. An upstream format change must degrade to the tree scan,
+/// never to a silently truncated include path.
+const MIN_PIO_CPPPATH_ENTRIES: usize = 20;
+
+/// Resolve a `join(FRAMEWORK_DIR, "tools", "sdk", ...)` call from the
+/// framework's PlatformIO builder script into a path relative to the
+/// framework root. Returns `None` when the call is anything other than plain
+/// string literals (e.g. one computed from `env.BoardConfig()`).
+fn pio_join_literals(line: &str) -> Option<PathBuf> {
+    let mut path = PathBuf::new();
+    let mut rest = line;
+    while let Some(start) = rest.find('"') {
+        let after = &rest[start + 1..];
+        let end = after.find('"')?;
+        path.push(&after[..end]);
+        rest = &after[end + 1..];
+    }
+    if path.as_os_str().is_empty() {
+        return None;
+    }
+    Some(path)
+}
+
+/// Read the include list out of the framework's own PlatformIO builder script
+/// (`tools/platformio-build-<mcu>.py`).
+///
+/// SDK layouts that predate `flags/includes` (arduino-esp32 2.x) have no
+/// machine-readable include list, but they do ship the SCons builder that
+/// PlatformIO uses for exactly this framework version, and its `CPPPATH`
+/// block is that list, in PlatformIO's order.
+///
+/// Reconstructing the list by scanning the tree instead is wrong in both
+/// directions: the depth cap misses leaves PlatformIO passes (e.g.
+/// `bt/common/api/include/api`, `lwip/port/esp32/include/arch`) while still
+/// emitting hundreds of dirs PlatformIO never passes. Every extra `-I` costs
+/// a failed path lookup on every unresolved `#include`, which measured ~41%
+/// per translation unit on ESP32-S3 (FastLED/fbuild#1537).
+///
+/// Returns `None` when the script is absent or does not parse, so the caller
+/// can fall back to the tree scan.
+fn parse_pio_cpppath(root: &Path, mcu: &str) -> Option<Vec<PathBuf>> {
+    let script = root
+        .join("tools")
+        .join(format!("platformio-build-{mcu}.py"));
+    let content = std::fs::read_to_string(&script).ok()?;
+
+    let mut dirs = Vec::new();
+    let mut in_block = false;
+    for line in content.lines() {
+        let trimmed = line.trim();
+        if !in_block {
+            if trimmed.starts_with("CPPPATH=[") || trimmed.starts_with("CPPPATH = [") {
+                in_block = true;
+            }
+            continue;
+        }
+        if trimmed.starts_with(']') {
+            break;
+        }
+        if !trimmed.contains("join(FRAMEWORK_DIR") || trimmed.contains("env.") {
+            continue;
+        }
+        if let Some(rel) = pio_join_literals(trimmed) {
+            let resolved = root.join(rel);
+            if resolved.exists() {
+                dirs.push(resolved);
+            }
+        }
+    }
+
+    // Dedupe before applying the threshold: the count that matters is distinct
+    // paths, so a script that repeats one entry enough times cannot pass the
+    // guard and then dedupe down to a truncated include path.
+    let mut seen = HashSet::new();
+    dirs.retain(|dir| seen.insert(dir.clone()));
+
+    if dirs.len() < MIN_PIO_CPPPATH_ENTRIES {
+        return None;
+    }
+
+    Some(dirs)
+}
 
 /// Get the SDK directory for a given MCU.
 ///
@@ -95,6 +180,20 @@ impl Esp32Framework {
 
                 return dirs;
             }
+        }
+
+        // Old-layout SDK (arduino-esp32 2.x) with no `flags/includes`: use the
+        // include list from the framework's own PlatformIO builder script.
+        if let Some(mut dirs) = parse_pio_cpppath(&root, mcu) {
+            // The flash/PSRAM variant entry is computed from board config in
+            // the script, so the caller supplies it (as it does above).
+            if let Some(variant_dir) = sdk_memory_variant_dir(&sdk_dir, memory_type) {
+                let v_include = variant_dir.join("include");
+                if v_include.exists() && !dirs.contains(&v_include) {
+                    dirs.push(v_include);
+                }
+            }
+            return dirs;
         }
 
         // Fallback: recursively scan include/ subdirectories.
