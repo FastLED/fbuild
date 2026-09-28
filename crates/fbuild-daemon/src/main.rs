@@ -74,6 +74,27 @@ async fn main() {
         }
     }
 
+    {
+        use fbuild_build::zccache_embedded::{
+            FBUILD_MAX_PARALLEL_COMPILES_ENV, ZCCACHE_MAX_PARALLEL_COMPILES_ENV,
+            compile_cap_env_value,
+        };
+        let cores = std::thread::available_parallelism().map_or(1, |n| n.get());
+        if let Some(cap) = compile_cap_env_value(
+            std::env::var(ZCCACHE_MAX_PARALLEL_COMPILES_ENV)
+                .ok()
+                .as_deref(),
+            std::env::var(FBUILD_MAX_PARALLEL_COMPILES_ENV)
+                .ok()
+                .as_deref(),
+            cores,
+        ) {
+            // SAFETY: daemon startup, before the embedded zccache service
+            // (the only reader) starts.
+            unsafe { std::env::set_var(ZCCACHE_MAX_PARALLEL_COMPILES_ENV, cap) };
+        }
+    }
+
     // Install the process-wide containment group as early as possible so
     // every subprocess the daemon spawns (compilers, linkers, esptool,
     // avrdude, qemu, simavr, node, npm, …) is born inside a Windows Job
