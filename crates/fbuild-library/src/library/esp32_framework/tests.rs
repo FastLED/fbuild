@@ -535,3 +535,48 @@ fn old_sdk_falls_back_to_tree_scan_when_builder_script_unparseable() {
     let dirs = fw.get_sdk_include_dirs("esp32s3", None);
     assert!(dirs.contains(&include), "tree-scan fallback did not run");
 }
+
+#[test]
+fn old_sdk_rejects_builder_script_padded_with_duplicate_entries() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let root = tmp.path();
+    // A dir only the tree scan would find, used to prove the fallback ran.
+    let scanned = root.join("tools/sdk/esp32s3/include/efuse/include");
+    std::fs::create_dir_all(&scanned).unwrap();
+    std::fs::write(scanned.join("esp_efuse.h"), "\n").unwrap();
+
+    let dup = root.join("tools/sdk/esp32s3/include/only/include");
+    std::fs::create_dir_all(&dup).unwrap();
+    std::fs::write(dup.join("only.h"), "\n").unwrap();
+
+    std::fs::create_dir_all(root.join("tools")).unwrap();
+    // Same entry repeated past the minimum: distinct-path count is 1, so this
+    // must not be trusted even though the line count clears the threshold.
+    let mut script = String::from("env.Append(\n    CPPPATH=[\n");
+    for _ in 0..30 {
+        script.push_str(
+            "        join(FRAMEWORK_DIR, \"tools\", \"sdk\", \"esp32s3\", \"include\", \"only\", \"include\"),\n",
+        );
+    }
+    script.push_str("    ],\n)\n");
+    std::fs::write(root.join("tools/platformio-build-esp32s3.py"), script).unwrap();
+
+    let fw = Esp32Framework {
+        base: PackageBase::new(
+            "test",
+            "1.0",
+            "http://example.com",
+            "http://example.com",
+            None,
+            CacheSubdir::Platforms,
+            tmp.path(),
+        ),
+        install_dir: Some(tmp.path().to_path_buf()),
+    };
+
+    let dirs = fw.get_sdk_include_dirs("esp32s3", None);
+    assert!(
+        dirs.contains(&scanned),
+        "duplicate-padded script should have been rejected in favour of the tree scan"
+    );
+}

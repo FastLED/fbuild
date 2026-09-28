@@ -80,12 +80,16 @@ fn parse_pio_cpppath(root: &Path, mcu: &str) -> Option<Vec<PathBuf>> {
         }
     }
 
+    // Dedupe before applying the threshold: the count that matters is distinct
+    // paths, so a script that repeats one entry enough times cannot pass the
+    // guard and then dedupe down to a truncated include path.
+    let mut seen = HashSet::new();
+    dirs.retain(|dir| seen.insert(dir.clone()));
+
     if dirs.len() < MIN_PIO_CPPPATH_ENTRIES {
         return None;
     }
 
-    let mut seen = HashSet::new();
-    dirs.retain(|dir| seen.insert(dir.clone()));
     Some(dirs)
 }
 
