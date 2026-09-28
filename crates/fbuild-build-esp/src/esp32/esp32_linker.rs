@@ -49,6 +49,12 @@ pub fn f_flash_to_esptool_freq(f_flash: Option<&str>, default_freq: &str) -> Str
     }
 }
 
+/// GNU ld matches the SDK linker scripts' section wildcards with `fnmatch`,
+/// which under a UTF-8 locale converts every pattern and name to wide
+/// characters: a third of an ESP32-S3 link. The C locale matches the same
+/// (ASCII) names and produces a byte-identical ELF (FastLED/fbuild#1537).
+pub(crate) const LINK_ENV: &[(&str, &str)] = &[("LC_ALL", "C")];
+
 /// Build the argv for an esptool `elf2image` invocation.
 ///
 /// When esptool was provisioned, the standalone binary is invoked directly;
@@ -486,10 +492,10 @@ impl Linker for Esp32Linker {
             )
             .await?;
             let rsp_args = [link_args[0].as_str(), &format!("@{}", rsp_path.display())];
-            run_command(&rsp_args, None, None, link_timeout).await?
+            run_command(&rsp_args, None, Some(LINK_ENV), link_timeout).await?
         } else {
             let args_ref: Vec<&str> = link_args.iter().map(|s| s.as_str()).collect();
-            run_command(&args_ref, None, None, link_timeout).await?
+            run_command(&args_ref, None, Some(LINK_ENV), link_timeout).await?
         };
 
         if !result.success() {
