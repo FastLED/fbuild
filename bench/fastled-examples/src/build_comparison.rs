@@ -3,6 +3,9 @@
 //! The harness measures the same Arduino Uno and ESP32-S3 Blink sketch with each real CLI,
 //! then renders the one-commit benchmark site's JSON, SVG, and HTML artifacts.
 
+#[path = "pio_phases.rs"]
+mod pio_phases;
+
 use fbuild_core::path::NormalizedPath;
 use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
@@ -153,9 +156,10 @@ struct ToolResult {
     speedup: f64,
     cold_trials_ms: Vec<f64>,
     warm_trials_ms: Vec<f64>,
-    /// Per-phase medians of fbuild's `avr-orchestrator` perf log (empty for other tools).
+    /// Per-phase cold medians: fbuild's perf log, or PlatformIO's `-v` output
+    /// split by `pio_phases` (empty for other tools).
     cold_phases_ms: BTreeMap<String, f64>,
-    /// Raw per-trial phase timings for each cold build (empty for other tools).
+    /// Raw per-trial phase timings for each cold build (fbuild and PlatformIO).
     cold_phase_trials: Vec<BTreeMap<String, f64>>,
     /// Timed fbuild builds that restarted the daemon (FastLED/fbuild#1476);
     /// each adds ~200 ms, so a non-zero count marks inflated fbuild timings.
@@ -372,7 +376,12 @@ fn measure_tool(
             }
             MeasurementStep::ColdBuild(trial) => {
                 let offset = perf_line_count(&perf_log);
-                let (elapsed, restarted, packages) = timed_build(
+                let TimedBuild {
+                    elapsed_ms: elapsed,
+                    restarted,
+                    packages,
+                    phases: pio_phases,
+                } = timed_build(
                     kind,
                     board,
                     options,
@@ -394,6 +403,9 @@ fn measure_tool(
                     );
                 }
                 cold_trials_ms.push(round_millis(elapsed));
+                if let Some(phases) = pio_phases {
+                    cold_phase_trials.push(phases);
+                }
                 if matches!(kind, ToolKind::Fbuild) {
                     let content = fs::read_to_string(&perf_log).unwrap_or_default();
                     if let Some(phases) = perf_phases_after(&content, offset, PERF_PHASE_LABELS) {
@@ -412,7 +424,11 @@ fn measure_tool(
                 }
             }
             MeasurementStep::WarmBuild(_) => {
-                let (elapsed, restarted, _) = timed_build(
+                let TimedBuild {
+                    elapsed_ms: elapsed,
+                    restarted,
+                    ..
+                } = timed_build(
                     kind,
                     board,
                     options,
@@ -938,7 +954,7 @@ fn timed_build(
     arduino_build_dir: &Path,
     log: &mut File,
     envs: &[(&str, OsString)],
-) -> AppResult<(f64, bool, BTreeMap<String, String>)> {
+) -> AppResult<TimedBuild> {
     let (program, args) = match kind {
         ToolKind::Arduino => (
             options.arduino_cli.as_os_str(),
@@ -959,6 +975,8 @@ fn timed_build(
                 &project_dir.to_string_lossy(),
                 "--environment",
                 board.environment,
+                // Prints each command as it starts: the phase breakdown's input.
+                "-v",
             ]),
         ),
         ToolKind::Fbuild => (
@@ -974,14 +992,93 @@ fn timed_build(
     };
 
     let started = Instant::now();
-    let output = run_logged_env(program, &args, repo_root, log, envs)?;
+    let (output, lines) = run_logged_env_stamped(program, &args, repo_root, log, envs)?;
     let elapsed_ms = started.elapsed().as_secs_f64() * 1000.0;
     let packages = match kind {
         ToolKind::PlatformIo => parse_platformio_packages(&output.stdout, board),
         ToolKind::Fbuild => parse_fbuild_build_packages(&output.stdout, board),
         ToolKind::Arduino => BTreeMap::new(),
     };
-    Ok((elapsed_ms, restarted_daemon(&output.stderr), packages))
+    let phases = match kind {
+        ToolKind::PlatformIo => pio_phases::phases(&lines, elapsed_ms),
+        _ => None,
+    };
+    Ok(TimedBuild {
+        elapsed_ms,
+        restarted: restarted_daemon(&output.stderr),
+        packages,
+        phases,
+    })
+}
+
+struct TimedBuild {
+    elapsed_ms: f64,
+    restarted: bool,
+    packages: BTreeMap<String, String>,
+    /// PlatformIO phase breakdown parsed from `-v` output (see `pio_phases`).
+    phases: Option<BTreeMap<String, f64>>,
+}
+
+/// [`run_logged_env`] that also stamps every stdout line with its arrival
+/// time (ms since spawn). `PYTHONUNBUFFERED` keeps SCons from batching
+/// output, so a stamp is when the command started, not when a buffer filled.
+fn run_logged_env_stamped(
+    program: &OsStr,
+    args: &[OsString],
+    cwd: &Path,
+    log: &mut File,
+    envs: &[(&str, OsString)],
+) -> AppResult<(Output, Vec<(f64, String)>)> {
+    use std::io::{BufRead, Read};
+    writeln!(log, "$ {}", display_command(program, args))?;
+    log.flush()?;
+    let started = Instant::now();
+    let mut child = Command::new(program)
+        .args(args)
+        .current_dir(cwd)
+        .env("CI", "true")
+        .env("PLATFORMIO_SETTING_ENABLE_TELEMETRY", "no")
+        .env("PYTHONUNBUFFERED", "1")
+        .envs(envs.iter().map(|(key, value)| (*key, value)))
+        .stdout(std::process::Stdio::piped())
+        .stderr(std::process::Stdio::piped())
+        .spawn()?;
+    let mut stderr_pipe = child.stderr.take().expect("piped stderr");
+    let stderr_reader = std::thread::spawn(move || {
+        let mut bytes = Vec::new();
+        let _ = stderr_pipe.read_to_end(&mut bytes);
+        bytes
+    });
+    let mut stdout = Vec::new();
+    let mut lines = Vec::new();
+    let mut reader = io::BufReader::new(child.stdout.take().expect("piped stdout"));
+    let mut line = Vec::new();
+    while reader.read_until(b'\n', &mut line)? > 0 {
+        let at = started.elapsed().as_secs_f64() * 1000.0;
+        stdout.extend_from_slice(&line);
+        lines.push((at, String::from_utf8_lossy(&line).trim_end().to_string()));
+        line.clear();
+    }
+    let status = child.wait()?;
+    let stderr = stderr_reader.join().unwrap_or_default();
+    log.write_all(&stdout)?;
+    log.write_all(&stderr)?;
+    log.flush()?;
+    if !status.success() {
+        return Err(io::Error::other(format!(
+            "command failed with {status}: {}; see benchmark-output/benchmark.log",
+            display_command(program, args)
+        ))
+        .into());
+    }
+    Ok((
+        Output {
+            status,
+            stdout,
+            stderr,
+        },
+        lines,
+    ))
 }
 
 fn record_package_metadata(
@@ -1764,17 +1861,18 @@ fn render_html(metadata: &Metadata, results: &[ToolResult]) -> String {
         .join("\n");
     let phase_rows = results
         .iter()
-        .filter(|result| result.tool == "fbuild")
+        .filter(|result| result.tool == "fbuild" || result.tool == "platformio")
         .flat_map(|result| {
             result
                 .cold_phases_ms
                 .iter()
-                .map(move |(phase, ms)| (&result.board_name, phase, ms))
+                .map(move |(phase, ms)| (result, phase, ms))
         })
-        .map(|(board, phase, ms)| {
+        .map(|(result, phase, ms)| {
             format!(
-                "<tr><td>{}</td><td>{}</td><td>{ms:.3} ms</td></tr>",
-                html_escape(board),
+                "<tr><td>{}</td><td>{}</td><td>{}</td><td>{ms:.3} ms</td></tr>",
+                html_escape(&result.board_name),
+                html_escape(&result.display_name),
                 html_escape(phase)
             )
         })
@@ -1784,10 +1882,10 @@ fn render_html(metadata: &Metadata, results: &[ToolResult]) -> String {
         String::new()
     } else {
         format!(
-            r#"<h2>fbuild cold phase breakdown</h2>
+            r#"<h2>Cold phase breakdown</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Board</th><th>Phase</th><th>Cold median</th></tr></thead>
+          <thead><tr><th>Board</th><th>Tool</th><th>Phase</th><th>Cold median</th></tr></thead>
           <tbody>{phase_rows}</tbody>
         </table>
       </div>
