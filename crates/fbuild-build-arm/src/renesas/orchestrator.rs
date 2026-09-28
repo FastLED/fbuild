@@ -260,7 +260,7 @@ impl BuildOrchestrator for RenesasOrchestrator {
             .config
             .get_lib_ignore(&params.env_name)
             .unwrap_or_default();
-        let lib_archives = if !lib_deps.is_empty() {
+        let lib_deps_plan = if !lib_deps.is_empty() {
             let temp_compiler = RenesasCompiler::new(
                 toolchain.get_gcc_path(),
                 toolchain.get_gxx_path(),
@@ -285,12 +285,11 @@ impl BuildOrchestrator for RenesasOrchestrator {
                 &crate::compiler::Compiler::cpp_flags(&temp_compiler),
                 &mut include_dirs,
                 params.verbose,
-                crate::parallel::effective_jobs(params.jobs),
                 compiler_cache.as_deref(),
             )
             .await?
         } else {
-            Vec::new()
+            pipeline::LibDeps::default()
         };
 
         let compiler = RenesasCompiler::new(
@@ -357,7 +356,8 @@ impl BuildOrchestrator for RenesasOrchestrator {
             ctx,
             params,
             &sources,
-            &lib_archives,
+            &[],
+            lib_deps_plan,
             Some(&lib_env),
             TargetArchitecture::Arm,
             "Renesas RA",

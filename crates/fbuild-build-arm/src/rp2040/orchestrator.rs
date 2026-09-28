@@ -407,7 +407,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             .unwrap_or_default();
         let external_lib_deps =
             fbuild_library_select::external_declared_deps(&lib_deps, &framework_libs);
-        let lib_archives = if !external_lib_deps.is_empty() {
+        let lib_deps_plan = if !external_lib_deps.is_empty() {
             let temp_compiler = ArmCompiler::new(
                 toolchain.get_gcc_path(),
                 toolchain.get_gxx_path(),
@@ -432,12 +432,11 @@ impl BuildOrchestrator for Rp2040Orchestrator {
                 &temp_compiler.cpp_flags(),
                 &mut include_dirs,
                 params.verbose,
-                crate::parallel::effective_jobs(params.jobs),
                 compiler_cache.as_deref(),
             )
             .await?
         } else {
-            Vec::new()
+            pipeline::LibDeps::default()
         };
 
         let compiler = ArmCompiler::new(
@@ -508,7 +507,6 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         let mut support_link_inputs =
             rp_support_objects(&framework_dir, &ctx.board.mcu, &board_props);
         support_link_inputs.push(boot2_object);
-        support_link_inputs.extend(lib_archives);
 
         // 9. Run shared sequential build pipeline
         let board_mcu = ctx.board.mcu.clone();
@@ -519,6 +517,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             params,
             &sources,
             &support_link_inputs,
+            lib_deps_plan,
             Some(&lib_env),
             TargetArchitecture::Arm,
             "RP2040",
