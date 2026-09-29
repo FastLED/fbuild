@@ -2,7 +2,16 @@ name: Build BlackPill F411CE
 
 # >>> RENDERED-ON-BEGIN (ci/render_workflows.py) -- do not edit by hand <<<
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      fbuild-run-id:
+        description: 'Run holding a prebuilt fbuild artifact (empty: compile here)'
+        type: string
+        default: ''
+      checkout_ref:
+        description: 'Commit to build (empty: the dispatched ref)'
+        type: string
+        default: ''
   workflow_call: {}
 
 concurrency:
@@ -14,7 +23,10 @@ jobs:
   build:
     uses: ./.github/workflows/template_build.yml
     with:
-      workflow-name: "BlackPill F411CE"
+      workflow-name: "STM32 BlackPill F411CE"
       test-dir: "tests/platform/blackpill_f411ce"
       env-name: "blackpill"
       firmware-ext: "hex"
+      checkout_ref: ${{ inputs.checkout_ref }}
+      fbuild-artifact: ${{ inputs.fbuild-run-id && 'fbuild-bin-linux-debug' || '' }}
+      fbuild-run-id: ${{ inputs.fbuild-run-id }}

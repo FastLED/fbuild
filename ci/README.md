@@ -15,6 +15,7 @@ Python scripts for CI, packaging, and development tooling. All invoked via `uv r
 - **`lint.py`** -- Workspace linting (rustfmt + clippy), supports single-file and auto-fix modes
 - **`platform_boundary_research.py`** -- Host-independent phase-1 inventory and cross-host drift check for FastLED/fbuild#1307
 - **`render_workflows.py`** -- Re-renders the `on:` and `concurrency:` blocks of `.github/workflows/build-*.yml` and the full `nightly-platforms.yml` from `board_families.json` + `ci_common_paths.txt`. CI invokes `--check` to enforce no drift. See [docs/DEVELOPMENT.md](../docs/DEVELOPMENT.md#ci-per-board-build-triggers) and FastLED/fbuild#835.
+- **`select_boards.py`** -- Picks which `build-<board>.yml` workflows `nightly-platforms.yml` dispatches: path-selected from a push diff, or `--all` for the nightly badge refresh. Tested by `test_select_boards.py`.
 - **`board_families.json`** -- SOT: per-board metadata (workflow / test_dir / env_name / family) plus the family → crate-path mapping consumed by `render_workflows.py`.
 - **`ci_common_paths.txt`** -- SOT: paths whose changes force-run *every* per-board build workflow.
 - **`test.py`** -- Workspace test runner with `--full` (stress + integration) and per-crate filtering

@@ -127,12 +127,27 @@ class FractionalWorkflowTests(unittest.TestCase):
         for cell in matrix:
             self.assertIn(cell, full_matrix)
 
-    def test_nightly_deduplicates_identical_builds_but_keeps_aliases(self):
-        boards = render_workflows.load_sot()["boards"]
+    def test_nightly_dispatches_board_workflows_as_their_own_runs(self):
+        # Badges track runs of each build-<board>.yml file, so the nightly /
+        # push-to-main path must dispatch them (not build in a matrix).
         nightly = self.load("nightly-platforms.yml")
-        matrix = nightly["jobs"]["build"]["strategy"]["matrix"]["include"]
-        self.assertEqual(len(render_workflows.execution_boards(boards)), len(matrix))
-        self.assertEqual({b["workflow"] for b in boards}, {alias for b in matrix for alias in b["workflow_aliases"]})
+        self.assertEqual({"plan", "fbuild_bin", "dispatch"}, set(nightly["jobs"]))
+        self.assertEqual(["main"], nightly[True]["push"]["branches"])
+        self.assertIn("schedule", nightly[True])
+        self.assertIn("select_boards.py", nightly["jobs"]["plan"]["steps"][2]["run"])
+        self.assertEqual("write", nightly["jobs"]["dispatch"]["permissions"]["actions"])
+        run = nightly["jobs"]["dispatch"]["steps"][0]["run"]
+        self.assertIn("gh workflow run", run)
+        self.assertIn('fbuild-run-id="$GITHUB_RUN_ID"', run)
+
+    def test_board_workflows_reuse_a_dispatched_fbuild_binary(self):
+        for board in render_workflows.load_sot()["boards"]:
+            with self.subTest(workflow=board["workflow"]):
+                wf = self.load(board["workflow"])
+                self.assertIn("fbuild-run-id", wf[True]["workflow_dispatch"]["inputs"])
+                with_ = wf["jobs"]["build"]["with"]
+                self.assertEqual("${{ inputs.fbuild-run-id }}", with_["fbuild-run-id"])
+                self.assertEqual(board["test_dir"], with_["test-dir"])
 
     def test_ordinary_minimal_and_opt_in_test_are_distinct(self):
         minimal = self.load("ci-minimal.yml")
