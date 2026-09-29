@@ -313,6 +313,7 @@ async fn test_gate_shared_across_two_libraries_caps_concurrency() {
         None,
         None,
         Some(backend_a),
+        Some(tmp.path()),
     );
     let fut_b = compile_library_gated(
         "libb",
@@ -329,6 +330,7 @@ async fn test_gate_shared_across_two_libraries_caps_concurrency() {
         None,
         None,
         Some(backend_b),
+        Some(tmp.path()),
     );
 
     let (res_a, res_b) = tokio::join!(fut_a, fut_b);
@@ -380,6 +382,7 @@ async fn test_dispatch_order_cpp_before_c_before_asm() {
         None,
         None,
         Some(backend_dyn),
+        Some(tmp.path()),
     )
     .await
     .unwrap()
@@ -423,6 +426,7 @@ async fn test_failure_stops_spawning_and_releases_permit() {
         None,
         None,
         Some(backend_dyn),
+        Some(tmp.path()),
     )
     .await;
 
@@ -473,6 +477,7 @@ async fn test_up_to_date_skips_recompile() {
         None,
         None,
         Some(backend_dyn1),
+        Some(tmp.path()),
     )
     .await
     .unwrap()
@@ -497,6 +502,7 @@ async fn test_up_to_date_skips_recompile() {
         None,
         None,
         Some(backend_dyn2),
+        Some(tmp.path()),
     )
     .await
     .unwrap()
@@ -507,6 +513,166 @@ async fn test_up_to_date_skips_recompile() {
         second_count, first_count,
         "second compile of an unchanged library should not call the backend again"
     );
+}
+
+/// FastLED/fbuild#1564: with recorded history showing `z_slow.cpp` is by far
+/// the longest TU, it must be dispatched first even though it sorts last in
+/// both source order and the alphabetic/extension fallback order. The
+/// history root is threaded explicitly (`compile_library_gated`'s last
+/// argument) rather than via `FBUILD_CACHE_DIR`, so this test stays hermetic
+/// under `cargo test`'s parallel test threads.
+#[tokio::test]
+async fn test_dispatch_order_uses_recorded_history() {
+    if fbuild_core::platform::host::is_windows() {
+        return;
+    }
+    let history_dir = tempfile::TempDir::new().unwrap();
+
+    let tmp = tempfile::TempDir::new().unwrap();
+    let ar_path = tmp.path().join("ar");
+    install_fake_ar(&ar_path);
+
+    let src_dir = tmp.path().join("src");
+    std::fs::create_dir_all(&src_dir).unwrap();
+    let sources = write_sources(&src_dir, &["a_fast.cpp", "b_fast.cpp", "z_slow.cpp"]);
+
+    let gcc = Path::new("/fake/gcc");
+    let gxx = Path::new("/fake/g++");
+    let signature = build_rebuild_signature(gxx, &[], &[]);
+    let z_slow = sources.iter().find(|s| s.ends_with("z_slow.cpp")).unwrap();
+    tu_history::record_in(
+        history_dir.path(),
+        z_slow,
+        &signature,
+        Duration::from_secs(20),
+    );
+
+    let gate = job_gate(1);
+    let backend = std::sync::Arc::new(FakeBackend::new());
+    let backend_dyn: std::sync::Arc<dyn LibCompileBackend> = backend.clone();
+    let out = tmp.path().join("out");
+
+    let archive = compile_library_gated(
+        "libx",
+        &sources,
+        &[],
+        gcc,
+        gxx,
+        &ar_path,
+        &[],
+        &[],
+        &out,
+        false,
+        &gate,
+        None,
+        None,
+        Some(backend_dyn),
+        Some(history_dir.path()),
+    )
+    .await
+    .unwrap()
+    .unwrap();
+    assert!(archive.exists());
+
+    let order = backend.start_order.lock().unwrap().clone();
+    assert_eq!(
+        order[0], "z_slow.cpp",
+        "longest recorded TU must start first, got {order:?}"
+    );
+
+    // A history record now exists for every compiled TU.
+    for source in &sources {
+        assert!(
+            tu_history::lookup_in(history_dir.path(), source, &signature).is_some(),
+            "expected a recorded duration for {source:?}"
+        );
+    }
+}
+
+/// FastLED/fbuild#1564 acceptance criterion: TU-duration history changes
+/// dispatch order only — it must never change what gets built. Compiling the
+/// same sources with no history and with a recorded history produces
+/// byte-identical `.cmdhash` files and the same object/archive contents.
+#[tokio::test]
+async fn history_has_no_effect_on_objects_or_signatures() {
+    if fbuild_core::platform::host::is_windows() {
+        return;
+    }
+    // Returns (archive exists, sorted `.cmdhash` contents, compile start order).
+    let run = |history_root: Option<tempfile::TempDir>| async move {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let ar_path = tmp.path().join("ar");
+        install_fake_ar(&ar_path);
+        let src_dir = tmp.path().join("src");
+        std::fs::create_dir_all(&src_dir).unwrap();
+        let sources = write_sources(&src_dir, &["a.cpp", "b.cpp", "c.c"]);
+
+        if let Some(dir) = &history_root {
+            // `c.c` would otherwise dispatch last (C after C++); a large
+            // recorded duration must move it to the front. If history
+            // secretly changed what gets built, this would also show up in
+            // the returned cmdhashes/archive below.
+            let c_source = sources.iter().find(|s| s.ends_with("c.c")).unwrap();
+            let signature = build_rebuild_signature(Path::new("/fake/gcc"), &[], &[]);
+            tu_history::record_in(dir.path(), c_source, &signature, Duration::from_secs(99));
+        }
+
+        let gate = job_gate(1);
+        let backend = std::sync::Arc::new(FakeBackend::new());
+        let backend_dyn: std::sync::Arc<dyn LibCompileBackend> = backend.clone();
+        let out = tmp.path().join("out");
+        let archive = compile_library_gated(
+            "libx",
+            &sources,
+            &[],
+            Path::new("/fake/gcc"),
+            Path::new("/fake/g++"),
+            &ar_path,
+            &[],
+            &[],
+            &out,
+            false,
+            &gate,
+            None,
+            None,
+            Some(backend_dyn),
+            history_root.as_ref().map(|d| d.path()),
+        )
+        .await
+        .unwrap()
+        .unwrap();
+        let obj_dir = out.join("obj");
+        // Object file *names* are hashed from their absolute source path
+        // (which differs between the two runs' TempDirs); compare the
+        // `.cmdhash` **contents** only, since that's what "no effect on
+        // signatures" actually means.
+        let mut cmdhashes: Vec<String> = std::fs::read_dir(&obj_dir)
+            .unwrap()
+            .filter_map(|e| e.ok())
+            .filter(|e| e.path().extension().is_some_and(|ext| ext == "cmdhash"))
+            .map(|e| std::fs::read_to_string(e.path()).unwrap())
+            .collect();
+        cmdhashes.sort();
+        let start_order = backend.start_order.lock().unwrap().clone();
+        (archive.exists(), cmdhashes, start_order)
+    };
+
+    let (no_history_built, no_history_cmdhashes, no_history_order) = run(None).await;
+    let (with_history_built, with_history_cmdhashes, with_history_order) =
+        run(Some(tempfile::TempDir::new().unwrap())).await;
+
+    // History changed *order* (proving the plumbing actually reordered work)...
+    assert_ne!(
+        no_history_order, with_history_order,
+        "seeding a recorded duration for c.c should have changed dispatch order"
+    );
+    assert_eq!(
+        with_history_order[0], "c.c",
+        "c.c's huge recorded duration must dispatch it first, got {with_history_order:?}"
+    );
+    // ...but never what got built.
+    assert_eq!(no_history_built, with_history_built);
+    assert_eq!(no_history_cmdhashes, with_history_cmdhashes);
 }
 
 #[test]
@@ -528,6 +694,7 @@ async fn backend_compiles_get_their_temp_dir_under_the_library_build_dir() {
         return;
     }
     let tmp = tempfile::TempDir::new().unwrap();
+    let history = tempfile::TempDir::new().unwrap();
     let project = tmp.path().join("project");
     let src_dir = project.join("lib").join("src");
     std::fs::create_dir_all(&src_dir).unwrap();
@@ -553,6 +720,7 @@ async fn backend_compiles_get_their_temp_dir_under_the_library_build_dir() {
         None,
         Some(project.clone()),
         Some(backend_dyn),
+        Some(history.path()),
     )
     .await;
 

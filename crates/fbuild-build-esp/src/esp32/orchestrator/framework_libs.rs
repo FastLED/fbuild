@@ -334,6 +334,7 @@ impl FwLibsPlan {
                     ctx.compiler_cache.as_deref(),
                     ctx.compile_cwd.clone(),
                     Some(ctx.backend.clone()),
+                    None,
                 )
                 .await
             }),

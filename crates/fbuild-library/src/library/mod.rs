@@ -30,6 +30,7 @@ pub mod samd_core;
 pub mod silabs_core;
 pub mod stm32_core;
 pub mod teensy_core;
+pub mod tu_history;
 
 pub use apollo3_core::Apollo3Cores;
 pub use arduino_core::ArduinoCore;

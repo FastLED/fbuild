@@ -163,6 +163,7 @@ impl LibraryCompilePlan {
                 plan.compiler_cache.as_deref(),
                 None,
                 None,
+                None,
             )
             .await
         }))

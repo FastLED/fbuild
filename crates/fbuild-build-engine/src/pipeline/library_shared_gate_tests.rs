@@ -250,6 +250,7 @@ async fn lib_deps_and_core_share_one_job_gate() {
                 &core_flags,
                 &gate,
                 None,
+                None,
             ),
             lib_deps.compile(&gate),
         );

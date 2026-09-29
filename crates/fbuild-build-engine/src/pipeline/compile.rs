@@ -33,6 +33,7 @@ pub async fn compile_sources(
         extra_flags,
         jobs,
         Some(build_log),
+        None,
     )
     .await?;
     if !result.warnings.is_empty() {
@@ -83,6 +84,7 @@ pub async fn compile_local_libraries(
             extra_flags,
             jobs,
             Some(build_log),
+            None,
         )
         .await
         .map_err(|e| {

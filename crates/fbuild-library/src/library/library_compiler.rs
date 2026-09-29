@@ -13,6 +13,8 @@ use fbuild_core::subprocess::run_command;
 use fbuild_core::{FbuildError, Result};
 use sha2::{Digest, Sha256};
 
+use super::tu_history;
+
 /// C++-only flags that must not be passed to gcc for .c files.
 const CXX_ONLY_PREFIXES: &[&str] = &["-std=gnu++", "-std=c++", "-fno-rtti", "-fuse-cxa-atexit"];
 
@@ -167,22 +169,9 @@ pub async fn compile_library_with_jobs(
         compiler_cache,
         compile_cwd,
         backend,
+        None,
     )
     .await
-}
-
-/// Dispatch order for a translation unit; lower starts first. C++ units are
-/// the long poles, so they start before C and assembly.
-fn dispatch_rank(source: &Path) -> u8 {
-    let ext = source
-        .extension()
-        .and_then(|e| e.to_str())
-        .map(str::to_ascii_lowercase);
-    match ext.as_deref() {
-        Some("c") => 1,
-        Some("s" | "sx" | "asm") => 2,
-        _ => 0,
-    }
 }
 
 /// [`compile_library_with_jobs`] drawing its permits from `gate`, so it can
@@ -207,7 +196,13 @@ pub async fn compile_library_gated(
     compiler_cache: Option<&Path>,
     compile_cwd: Option<PathBuf>,
     backend: Option<std::sync::Arc<dyn LibCompileBackend>>,
+    // `Some` overrides the TU-duration history root (tests only); `None`
+    // uses the real `fbuild_paths::get_cache_root()` (FastLED/fbuild#1564).
+    history_root: Option<&Path>,
 ) -> Result<Option<PathBuf>> {
+    let history_root_owned = history_root
+        .map(Path::to_path_buf)
+        .unwrap_or_else(fbuild_paths::get_cache_root);
     if source_files.is_empty() {
         tracing::debug!("library {} is header-only, skipping compile", name);
         return Ok(None);
@@ -253,7 +248,7 @@ pub async fn compile_library_gated(
         .iter()
         .map(|source| object_path(source, &obj_dir))
         .collect();
-    let stale_sources: Vec<PathBuf> = source_files
+    let stale_sources: Vec<(PathBuf, String)> = source_files
         .iter()
         .zip(all_objects.iter())
         .filter_map(|(source, obj)| {
@@ -266,7 +261,7 @@ pub async fn compile_library_gated(
                 &include_flags,
             );
             if object_needs_rebuild(source, obj, &signature).unwrap_or(true) {
-                Some(source.clone())
+                Some((source.clone(), signature))
             } else {
                 None
             }
@@ -287,7 +282,11 @@ pub async fn compile_library_gated(
     }
 
     let mut stale_sources = stale_sources;
-    stale_sources.sort_by_key(|source| dispatch_rank(source));
+    tu_history::dispatch_order_in(
+        &history_root_owned,
+        &mut stale_sources,
+        |(source, signature)| (NormalizedPath::new(source), signature.clone()),
+    );
     let total = stale_sources.len();
 
     let mut tasks = tokio::task::JoinSet::new();
@@ -304,9 +303,10 @@ pub async fn compile_library_gated(
     let compiler_cache_owned = compiler_cache.map(|p| p.to_path_buf());
     let compile_cwd_owned = compile_cwd.clone();
     let backend_owned = backend.clone();
+    let history_root_arc = std::sync::Arc::new(history_root_owned);
 
     let mut first_error: Option<String> = None;
-    for source in stale_sources {
+    for (source, signature) in stale_sources {
         if failed.load(std::sync::atomic::Ordering::Relaxed) {
             break;
         }
@@ -333,8 +333,10 @@ pub async fn compile_library_gated(
         let backend_t = backend_owned.clone();
         let counter = compiled_count.clone();
         let failed_t = failed.clone();
+        let history_root_t = history_root_arc.clone();
         tasks.spawn(async move {
             let _permit = permit;
+            let started = std::time::Instant::now();
             let result = compile_one_source(
                 &source,
                 &obj_dir_t,
@@ -352,6 +354,8 @@ pub async fn compile_library_gated(
             .await;
             if result.is_err() {
                 failed_t.store(true, std::sync::atomic::Ordering::Relaxed);
+            } else {
+                tu_history::record_in(&history_root_t, &source, &signature, started.elapsed());
             }
             result?;
             let count = counter.fetch_add(1, std::sync::atomic::Ordering::Relaxed) + 1;
