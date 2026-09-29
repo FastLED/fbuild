@@ -91,6 +91,10 @@ jobs:
           # `cache-payload-max-bytes` still defaults to 6 GiB.
           cache-payload-warn-bytes: 2GiB
           cache-key-suffix: fbuild-rust-debug
+          # Save only from the default branch; other refs restore main's.
+          # Branch sweeps re-saved ~79 x ~1GB entries and evicted main's
+          # Rust build cache (0% hit rate; zackees/ci.yml CACHE-003).
+          save-cache: ${{ github.ref == 'refs/heads/main' && 'true' || 'false' }}
 
       # Note: standalone `zccache-daemon` no longer runs separately.
       # As of soldr 1.12.11+ (soldr#977 / #980 L1) zccache is embedded
@@ -202,7 +206,8 @@ jobs:
           echo "working tree clean after quick + release builds"
 
       - name: Save fbuild toolchains
-        if: always()
+        # Default branch only -- see the setup-soldr save-cache note above.
+        if: always() && github.ref == 'refs/heads/main'
         timeout-minutes: 10
         uses: actions/cache/save@v5
         with:
@@ -210,7 +215,7 @@ jobs:
           key: fbuild-toolchain-${{ runner.os }}-${{ inputs.env-name }}-${{ hashFiles(format('{0}/platformio.ini', inputs.test-dir)) }}
 
       - name: Save platform build artifacts
-        if: always()
+        if: always() && github.ref == 'refs/heads/main'
         timeout-minutes: 10
         uses: actions/cache/save@v5
         with:

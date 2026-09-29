@@ -189,6 +189,7 @@ def render_fbuild_bin_job(needs: str, condition: str, ref: str) -> str:
         "          linker: platform-default\n"
         "          cache-payload-warn-bytes: 2GiB\n"
         "          cache-key-suffix: fbuild-rust-debug\n"
+        "          save-cache: ${{ github.ref == 'refs/heads/main' && 'true' || 'false' }}\n"
         "      - run: |\n"
         "          sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::Retries=3 update\n"
         "          sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::Retries=3 install -y libudev-dev pkg-config\n"
