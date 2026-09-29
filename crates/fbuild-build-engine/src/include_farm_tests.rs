@@ -220,3 +220,29 @@ fn replacement_puts_the_farm_first_then_kept_dirs() {
         )
     );
 }
+
+#[test]
+fn include_next_header_beside_a_quoted_includer_keeps_its_directory() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let block = block_dirs(&tmp, 3);
+    // d0/assert.h chains to the toolchain's; d1/esp_assert.h includes it
+    // quoted. In the merged farm root it would sit beside its includer, and
+    // GCC restarts `#include_next` for such a header (FastLED/fbuild#1566).
+    write(
+        block[0].as_path(),
+        "assert.h",
+        "#pragma once\n#include_next <assert.h>\n",
+    );
+    write(
+        block[1].as_path(),
+        "esp_assert.h",
+        "#include \"assert.h\"\n",
+    );
+    write(block[2].as_path(), "other.h", "");
+
+    let plan = plan_farm(&[], &block).unwrap();
+
+    assert_eq!(kept_indices(&plan), [0]);
+    let rels: Vec<&str> = plan.links.iter().map(|(rel, _)| rel.as_str()).collect();
+    assert_eq!(rels, ["esp_assert.h", "other.h"]);
+}

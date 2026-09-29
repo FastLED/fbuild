@@ -29,7 +29,7 @@ use fbuild_core::path::NormalizedPath;
 use serde::{Deserialize, Serialize};
 
 /// Bumped whenever the farm layout or its planning rules change.
-const FORMAT_VERSION: u32 = 1;
+const FORMAT_VERSION: u32 = 2;
 const MANIFEST: &str = "farm.json";
 
 /// A materialized farm plus the block directories that stay separate.
@@ -256,6 +256,20 @@ fn plan_farm(before: &[NormalizedPath], block: &[NormalizedPath]) -> io::Result<
             farmed[index] = false;
         }
     }
+    // `#include_next` continues after the directory a header was found in,
+    // but GCC restarts it when the header was found beside a quoted includer.
+    // In a merged farm directory that can bring the header back to itself
+    // (and `#pragma once` then drops the next one), so a directory holding any
+    // `#include_next` header keeps its own `-I` (FastLED/fbuild#1566).
+    for (index, rels) in files.iter().enumerate() {
+        if farmed[index]
+            && rels
+                .iter()
+                .any(|rel| uses_include_next(&block[index].join(rel)))
+        {
+            farmed[index] = false;
+        }
+    }
     // A path that is a file in one directory and a directory in another cannot
     // be merged; keep both directories out.
     for rel in owners.keys() {
@@ -432,6 +446,16 @@ fn in_merged_dir(root: &Node, rel: &str) -> bool {
         }
     }
     true
+}
+
+fn uses_include_next(file: &Path) -> bool {
+    std::fs::read(file).is_ok_and(|bytes| {
+        String::from_utf8_lossy(&bytes).lines().any(|line| {
+            line.trim_start()
+                .strip_prefix('#')
+                .is_some_and(|rest| rest.trim_start().starts_with("include_next"))
+        })
+    })
 }
 
 fn quoted_includes(file: &Path) -> Vec<String> {
