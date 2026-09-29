@@ -85,5 +85,25 @@ class MatrixTests(unittest.TestCase):
         self.assertEqual([], matrix_entries(self.boards, self.families, []))
 
 
+class RealSotTests(unittest.TestCase):
+    """The checked-in SOT, not the fixture above (FastLED/fbuild#1588)."""
+
+    def select(self, changed):
+        from render_workflows import load_common_paths, load_sot
+
+        sot = load_sot()
+        return select_workflows(sot["boards"], sot["families"], load_common_paths(), changed)
+
+    def test_include_farm_change_builds_every_esp32_variant(self):
+        selected = self.select(["crates/fbuild-build-engine/src/include_farm.rs"])
+        for variant in ("esp32dev", "esp32s2", "esp32s3", "esp32c3", "esp32c6", "esp32h2", "esp32p4"):
+            self.assertIn(f"build-{variant}.yml", selected)
+
+    def test_other_engine_change_builds_core_boards_only(self):
+        selected = self.select(["crates/fbuild-build-engine/src/compiler.rs"])
+        self.assertNotIn("build-esp32p4.yml", selected)
+        self.assertIn("build-esp32dev.yml", selected)
+
+
 if __name__ == "__main__":
     unittest.main()
