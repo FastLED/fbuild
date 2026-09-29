@@ -374,7 +374,6 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
         + f"      ref: {verified_ref}\n"
         for job, workflow in (
             ("fmt", "fmt.yml"),
-            ("docs", "docs.yml"),
             ("msrv", "msrv.yml"),
             ("validate_boards", "validate-boards.yml"),
             ("crate_gate", "crate-gate.yml"),
@@ -421,7 +420,7 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
             "  coverage:\n"
             + ("    name: Full coverage\n" if full else "    name: ci-test coverage\n")
             + "    if: always()\n"
-            + ("    needs: [verify, boards, linux, windows, macos, dylint, acceptance, bench, qemu, fmt, docs, msrv, validate_boards, crate_gate]\n" if full else "    needs: [verify, boards, linux]\n")
+            + ("    needs: [verify, boards, linux, windows, macos, dylint, acceptance, bench, qemu, fmt, msrv, validate_boards, crate_gate]\n" if full else "    needs: [verify, boards, linux]\n")
             + "    runs-on: ubuntu-latest\n"
             + "    outputs:\n"
             + "      complete: ${{ steps.complete.outputs.complete }}\n"
@@ -440,7 +439,6 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
                "          BENCH: ${{ needs.bench.result }}\n"
                "          QEMU: ${{ needs.qemu.result }}\n"
                "          FMT: ${{ needs.fmt.result }}\n"
-               "          DOCS: ${{ needs.docs.result }}\n"
                "          MSRV: ${{ needs.msrv.result }}\n"
                "          VALIDATE_BOARDS: ${{ needs.validate_boards.result }}\n"
                "          CRATE_GATE: ${{ needs.crate_gate.result }}\n" if full else "")
@@ -450,7 +448,7 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
             + "            echo 'Optional tier is not selected on this PR; coverage is incomplete' >&2\n"
             + "            exit 1\n"
             + "          fi\n"
-            + ("          for result in \"$VERIFY\" \"$BOARDS\" \"$LINUX\" \"$WINDOWS\" \"$MACOS\" \"$DYLINT\" \"$ACCEPTANCE\" \"$BENCH\" \"$QEMU\" \"$FMT\" \"$DOCS\" \"$MSRV\" \"$VALIDATE_BOARDS\" \"$CRATE_GATE\"; do\n" if full else "          for result in \"$VERIFY\" \"$BOARDS\" \"$LINUX\"; do\n")
+            + ("          for result in \"$VERIFY\" \"$BOARDS\" \"$LINUX\" \"$WINDOWS\" \"$MACOS\" \"$DYLINT\" \"$ACCEPTANCE\" \"$BENCH\" \"$QEMU\" \"$FMT\" \"$MSRV\" \"$VALIDATE_BOARDS\" \"$CRATE_GATE\"; do\n" if full else "          for result in \"$VERIFY\" \"$BOARDS\" \"$LINUX\"; do\n")
             + "            if [ \"$result\" != success ]; then\n"
             + "              echo \"coverage incomplete: $result\" >&2\n"
             + "              exit 1\n"

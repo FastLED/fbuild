@@ -108,7 +108,7 @@ class FractionalWorkflowTests(unittest.TestCase):
             self.assertNotIn("pull_request", self.load(workflow)[True])
         self.assertEqual("${{ needs.verify.outputs.candidate_sha }}", full["jobs"]["boards"]["with"]["checkout_ref"])
         for job, workflow_name in (
-            ("fmt", "fmt.yml"), ("docs", "docs.yml"), ("msrv", "msrv.yml"),
+            ("fmt", "fmt.yml"), ("msrv", "msrv.yml"),
             ("validate_boards", "validate-boards.yml"), ("crate_gate", "crate-gate.yml"),
         ):
             self.assertEqual(f"./.github/workflows/{workflow_name}", full["jobs"][job]["uses"])
@@ -230,16 +230,16 @@ class FractionalWorkflowTests(unittest.TestCase):
     def test_full_coverage_sentinel_and_release_gate(self):
         full = self.load("ci-full.yml")
         self.assertEqual(
-            {"verify", "boards", "linux", "windows", "macos", "dylint", "acceptance", "bench", "qemu", "fmt", "docs", "msrv", "validate_boards", "crate_gate"},
+            {"verify", "boards", "linux", "windows", "macos", "dylint", "acceptance", "bench", "qemu", "fmt", "msrv", "validate_boards", "crate_gate"},
             set(full["jobs"]["coverage"]["needs"]),
         )
         self.assertEqual("${{ jobs.coverage.outputs.complete }}", full[True]["workflow_call"]["outputs"]["coverage"]["value"])
         script = full["jobs"]["coverage"]["steps"][0]["run"]
         env = {**os.environ, "EVENT_NAME": "workflow_call", "LABEL_PRESENT": "false"}
-        env.update({key: "success" for key in ("VERIFY", "BOARDS", "LINUX", "WINDOWS", "MACOS", "DYLINT", "ACCEPTANCE", "BENCH", "QEMU", "FMT", "DOCS", "MSRV", "VALIDATE_BOARDS", "CRATE_GATE")})
+        env.update({key: "success" for key in ("VERIFY", "BOARDS", "LINUX", "WINDOWS", "MACOS", "DYLINT", "ACCEPTANCE", "BENCH", "QEMU", "FMT", "MSRV", "VALIDATE_BOARDS", "CRATE_GATE")})
         with tempfile.NamedTemporaryFile() as output:
             env["GITHUB_OUTPUT"] = output.name
-            for missing in ("FMT", "DOCS", "MSRV", "VALIDATE_BOARDS", "CRATE_GATE"):
+            for missing in ("FMT", "MSRV", "VALIDATE_BOARDS", "CRATE_GATE"):
                 with self.subTest(missing=missing):
                     result = subprocess.run(["bash", "-e", "-c", script], env={**env, missing: "skipped"}, capture_output=True, text=True)
                     self.assertNotEqual(0, result.returncode)

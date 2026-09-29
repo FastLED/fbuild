@@ -41,7 +41,7 @@ CI/CD workflows for the fbuild project, covering lint, test, documentation, and 
 
 - **`check-{ubuntu,windows}.yml`** -- Reusable Clippy + tests per platform (no macOS runner: macOS
   binaries are cross-built from Linux in the release matrix, see below)
-- **`fmt.yml`** -- Rustfmt check | **`docs.yml`** -- Doc build with `-D warnings`
+- **`fmt.yml`** -- Rustfmt check
 - **`msrv.yml`** -- MSRV 1.95.0 verification | **`validate-boards.yml`** -- Board JSON validation
 - **`platform-boundary-research.yml`** -- Windows/Linux reconciliation of the #1307 research inventory and RED fixture
 - **`loc-gate.yml`** -- Reject `.rs` files over 1000 LOC | **`lint-subprocess.yml`** -- Forbid direct subprocess spawns
