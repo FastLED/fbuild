@@ -473,15 +473,13 @@ async fn compile_one_source(
     // the in-process zccache service — cached, and project-directory-independent
     // via #985 — mirroring fbuild-build's compile_source. Without one, keep the
     // historical direct-subprocess path byte-identical.
-    let (success, stderr) = if let Some(backend) = backend {
+    let (exit_code, stderr) = if let Some(backend) = backend {
         let sanitized = fbuild_core::compiler_flags::prepare_flags_for_exec(all_flags);
-        // Scratch dir for the compiler's TMP/TEMP (fbuild-owned, off the
-        // system temp — mirrors compile_env_for_build usage on the sketch path).
-        let scratch = compile_cwd
-            .map(Path::to_path_buf)
-            .or_else(|| obj.parent().map(Path::to_path_buf))
-            .unwrap_or_else(|| PathBuf::from("."));
-        let mut env = fbuild_core::subprocess::compile_env_for_build(&scratch).unwrap_or_default();
+        // Scratch dir for the compiler's TMP/TEMP: the library's build dir,
+        // never the compile cwd, which is the project root for workspace-
+        // relative compiles (FastLED/fbuild#1568).
+        let scratch = obj_dir.parent().unwrap_or(obj_dir);
+        let mut env = fbuild_core::subprocess::compile_env_for_build(scratch).unwrap_or_default();
         if let Some(root) = compile_cwd {
             if root.is_dir() {
                 env.push((
@@ -498,7 +496,7 @@ async fn compile_one_source(
         // No @response-file: the embedded service manages long arg lists itself.
         let outcome = backend.compile(compiler, sanitized, cwd, env).await?;
         (
-            outcome.exit_code == 0,
+            outcome.exit_code,
             String::from_utf8_lossy(&outcome.stderr).into_owned(),
         )
     } else {
@@ -541,21 +539,35 @@ async fn compile_one_source(
             Some(fbuild_core::time::REAL_BUILD_TIMEOUT),
         )
         .await?;
-        (result.success(), result.stderr)
+        (result.exit_code, result.stderr)
     };
 
-    if !success {
-        return Err(FbuildError::BuildFailed(format!(
-            "failed to compile {} in library {}:\n{}",
-            source.display(),
-            lib_name,
-            stderr
+    if exit_code != 0 {
+        return Err(FbuildError::BuildFailed(compile_failure_message(
+            source, lib_name, exit_code, &stderr,
         )));
     }
 
     std::fs::write(command_hash_path(&obj), rebuild_signature)?;
 
     Ok(obj)
+}
+
+/// The error for a failed library TU. The exit status is always included: a
+/// compiler killed by a signal exits non-zero with no stderr, and without it
+/// the failure is undiagnosable (FastLED/fbuild#1569).
+fn compile_failure_message(source: &Path, lib_name: &str, exit_code: i32, stderr: &str) -> String {
+    let stderr = stderr.trim_end();
+    let detail = if stderr.is_empty() {
+        "(the compiler wrote nothing to stderr)"
+    } else {
+        stderr
+    };
+    format!(
+        "failed to compile {} in library {} (exit code {exit_code}):\n{detail}",
+        source.display(),
+        lib_name
+    )
 }
 
 fn object_needs_rebuild(source: &Path, object: &Path, signature: &str) -> Result<bool> {
