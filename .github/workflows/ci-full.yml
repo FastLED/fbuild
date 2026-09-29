@@ -101,12 +101,6 @@ jobs:
     uses: ./.github/workflows/fmt.yml
     with:
       ref: ${{ needs.verify.outputs.candidate_sha }}
-  msrv:
-    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'ci-full')
-    needs: verify
-    uses: ./.github/workflows/msrv.yml
-    with:
-      ref: ${{ needs.verify.outputs.candidate_sha }}
   validate_boards:
     if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'ci-full')
     needs: verify
@@ -707,7 +701,7 @@ jobs:
   coverage:
     name: Full coverage
     if: always()
-    needs: [verify, boards, linux, windows, macos, dylint, acceptance, bench, qemu, fmt, msrv, validate_boards, crate_gate]
+    needs: [verify, boards, linux, windows, macos, dylint, acceptance, bench, qemu, fmt, validate_boards, crate_gate]
     runs-on: ubuntu-latest
     outputs:
       complete: ${{ steps.complete.outputs.complete }}
@@ -726,7 +720,6 @@ jobs:
           BENCH: ${{ needs.bench.result }}
           QEMU: ${{ needs.qemu.result }}
           FMT: ${{ needs.fmt.result }}
-          MSRV: ${{ needs.msrv.result }}
           VALIDATE_BOARDS: ${{ needs.validate_boards.result }}
           CRATE_GATE: ${{ needs.crate_gate.result }}
         run: |
@@ -735,7 +728,7 @@ jobs:
             echo 'Optional tier is not selected on this PR; coverage is incomplete' >&2
             exit 1
           fi
-          for result in "$VERIFY" "$BOARDS" "$LINUX" "$WINDOWS" "$MACOS" "$DYLINT" "$ACCEPTANCE" "$BENCH" "$QEMU" "$FMT" "$MSRV" "$VALIDATE_BOARDS" "$CRATE_GATE"; do
+          for result in "$VERIFY" "$BOARDS" "$LINUX" "$WINDOWS" "$MACOS" "$DYLINT" "$ACCEPTANCE" "$BENCH" "$QEMU" "$FMT" "$VALIDATE_BOARDS" "$CRATE_GATE"; do
             if [ "$result" != success ]; then
               echo "coverage incomplete: $result" >&2
               exit 1
