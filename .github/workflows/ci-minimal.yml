@@ -19,6 +19,79 @@ jobs:
     uses: ./.github/workflows/check-ubuntu.yml
     with:
       ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+  board_plan:
+    name: Select boards for changed paths
+    if: github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'ci-test') && !contains(github.event.pull_request.labels.*.name, 'ci-full')
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.select.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@v3
+      - id: select
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          base=$(git merge-base "$BASE" HEAD || true)
+          matrix=$(cd ci && uv run --no-project python select_boards.py --matrix --base "$base" --head HEAD)
+          echo "selected: $matrix"
+          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
+  fbuild_bin:
+    name: Build fbuild (shared by board jobs)
+    if: needs.board_plan.outputs.matrix != '[]'
+    needs: board_plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CARGO_TERM_COLOR: always
+      RUSTFLAGS: "-D warnings"
+      SOLDR_TARGET_BLOCK_FREE_GB: "2"
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: zackees/setup-soldr@dfbe9627f6cb0226716b61625b99a58949162720
+        with:
+          cache-preset: foundation
+          prebuild-deps-flags: ""
+          prebuild-deps: none
+          linker: platform-default
+          cache-payload-warn-bytes: 2GiB
+          cache-key-suffix: fbuild-rust-debug
+          save-cache: ${{ github.ref == 'refs/heads/main' && 'true' || 'false' }}
+      - run: |
+          sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::Retries=3 update
+          sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::Retries=3 install -y libudev-dev pkg-config
+      - run: soldr cargo build -p fbuild-cli -p fbuild-daemon
+      - uses: actions/upload-artifact@v7
+        with:
+          name: fbuild-bin-linux-debug
+          path: |
+            target/debug/fbuild
+            target/debug/fbuild-daemon
+          if-no-files-found: error
+          retention-days: 1
+  pr_boards:
+    name: ${{ matrix.workflow_name }}
+    needs: [board_plan, fbuild_bin]
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.board_plan.outputs.matrix) }}
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: ${{ matrix.workflow_name }}
+      test-dir: ${{ matrix.test_dir }}
+      env-name: ${{ matrix.env_name }}
+      firmware-ext: ${{ matrix.firmware_ext }}
+      checkout_ref: ${{ github.event.pull_request.head.sha }}
+      fbuild-artifact: fbuild-bin-linux-debug
+      toolchain-cache: ${{ matrix.toolchain_cache }}
   test:
     if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'ci-test') && !contains(github.event.pull_request.labels.*.name, 'ci-full')
     uses: ./.github/workflows/ci-test.yml
@@ -32,7 +105,7 @@ jobs:
   selected-coverage:
     name: CI selected coverage
     if: always()
-    needs: [linux, test, full]
+    needs: [linux, test, full, pr_boards]
     runs-on: ubuntu-latest
     steps:
       - env:
@@ -42,6 +115,7 @@ jobs:
           FULL_SELECTED: ${{ contains(github.event.pull_request.labels.*.name, 'ci-full') }}
           FULL_RESULT: ${{ needs.full.result }}
           FULL_COVERAGE: ${{ needs.full.outputs.coverage }}
+          PR_BOARDS: ${{ needs.pr_boards.result }}
         run: |
           if [ "$FULL_SELECTED" = true ]; then
             test "$FULL_RESULT" = success
@@ -50,4 +124,6 @@ jobs:
             test "$TEST_RESULT" = success
           else
             test "$LINUX" = success
+            # Path-selected boards: skipped when the PR touches none.
+            case "$PR_BOARDS" in success|skipped) ;; *) exit 1 ;; esac
           fi

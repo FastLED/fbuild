@@ -12,7 +12,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from select_boards import path_matches, select_workflows  # noqa: E402
+from select_boards import matrix_entries, path_matches, select_workflows  # noqa: E402
 
 FAMILIES = {
     "avr": {"crate_paths": ["crates/fbuild-build-mcu/src/avr/**"]},
@@ -64,6 +64,25 @@ class SelectTests(unittest.TestCase):
 
     def test_unknown_diff_selects_everything(self):
         self.assertEqual(sorted(b["workflow"] for b in BOARDS), select(None))
+
+
+class MatrixTests(unittest.TestCase):
+    """PR runs call template_build.yml directly, so they need board records."""
+
+    boards = [
+        {**b, "workflow_name": b["workflow"], "env_name": "e", "firmware_ext": "hex"}
+        for b in BOARDS
+    ]
+    families = {**FAMILIES, "esp32": {**FAMILIES["esp32"], "toolchain_cache": True}}
+
+    def test_esp_change_yields_only_esp_records(self):
+        entries = matrix_entries(self.boards, self.families, ["build-esp32c3.yml"])
+        self.assertEqual(["build-esp32c3.yml"], [e["workflow"] for e in entries])
+        self.assertEqual("tests/platform/esp32c3", entries[0]["test_dir"])
+        self.assertTrue(entries[0]["toolchain_cache"])
+
+    def test_nothing_selected_is_empty(self):
+        self.assertEqual([], matrix_entries(self.boards, self.families, []))
 
 
 if __name__ == "__main__":

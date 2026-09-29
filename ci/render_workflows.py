@@ -244,6 +244,68 @@ def render_fbuild_bin_job(needs: str, condition: str, ref: str) -> str:
     )
 
 
+PR_DEFAULT_TIER = (
+    "github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'ci-test') "
+    "&& !contains(github.event.pull_request.labels.*.name, 'ci-full')"
+)
+
+
+def render_pr_boards() -> str:
+    """Path-selected board builds on the default PR tier.
+
+    Same selection as the push-to-main dispatcher (ci/select_boards.py): a PR
+    touching an ESP family path builds the ESP boards, shared crates build the
+    core boards, docs build nothing. The boards are called directly rather
+    than dispatched so they report as checks on the PR. `ci-full` still runs
+    every board.
+    """
+    head = "${{ github.event.pull_request.head.sha }}"
+    return (
+        "  board_plan:\n"
+        "    name: Select boards for changed paths\n"
+        f"    if: {PR_DEFAULT_TIER}\n"
+        "    runs-on: ubuntu-latest\n"
+        "    outputs:\n"
+        "      matrix: ${{ steps.select.outputs.matrix }}\n"
+        "    steps:\n"
+        "      - uses: actions/checkout@v6\n"
+        "        with:\n"
+        f"          ref: {head}\n"
+        "          fetch-depth: 0\n"
+        "          persist-credentials: false\n"
+        "      - uses: astral-sh/setup-uv@v3\n"
+        "      - id: select\n"
+        "        env:\n"
+        "          BASE: ${{ github.event.pull_request.base.sha }}\n"
+        "        run: |\n"
+        "          base=$(git merge-base \"$BASE\" HEAD || true)\n"
+        "          matrix=$(cd ci && uv run --no-project python select_boards.py --matrix --base \"$base\" --head HEAD)\n"
+        "          echo \"selected: $matrix\"\n"
+        "          echo \"matrix=$matrix\" >> \"$GITHUB_OUTPUT\"\n"
+        + render_fbuild_bin_job(
+            "board_plan",
+            "    if: needs.board_plan.outputs.matrix != '[]'\n",
+            head,
+        )
+        + "  pr_boards:\n"
+        "    name: ${{ matrix.workflow_name }}\n"
+        "    needs: [board_plan, fbuild_bin]\n"
+        "    strategy:\n"
+        "      fail-fast: false\n"
+        "      matrix:\n"
+        "        include: ${{ fromJSON(needs.board_plan.outputs.matrix) }}\n"
+        "    uses: ./.github/workflows/template_build.yml\n"
+        "    with:\n"
+        "      workflow-name: ${{ matrix.workflow_name }}\n"
+        "      test-dir: ${{ matrix.test_dir }}\n"
+        "      env-name: ${{ matrix.env_name }}\n"
+        "      firmware-ext: ${{ matrix.firmware_ext }}\n"
+        f"      checkout_ref: {head}\n"
+        f"      fbuild-artifact: {FBUILD_BIN_ARTIFACT}\n"
+        "      toolchain-cache: ${{ matrix.toolchain_cache }}\n"
+    )
+
+
 def render_ci(boards: list[dict], tier: str, families: dict) -> str:
     full = tier == "full"
     minimal = tier == "minimal"
@@ -454,6 +516,7 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
             + "          done\n"
             + "          echo 'complete=true' >> \"$GITHUB_OUTPUT\"\n"
         )
+        + (render_pr_boards() if minimal else "")
         + ("  test:\n"
            "    if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'ci-test') && !contains(github.event.pull_request.labels.*.name, 'ci-full')\n"
            "    uses: ./.github/workflows/ci-test.yml\n"
@@ -467,7 +530,7 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
            "  selected-coverage:\n"
            "    name: CI selected coverage\n"
            "    if: always()\n"
-           "    needs: [linux, test, full]\n"
+           "    needs: [linux, test, full, pr_boards]\n"
            "    runs-on: ubuntu-latest\n"
            "    steps:\n"
            "      - env:\n"
@@ -477,6 +540,7 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
            "          FULL_SELECTED: ${{ contains(github.event.pull_request.labels.*.name, 'ci-full') }}\n"
            "          FULL_RESULT: ${{ needs.full.result }}\n"
            "          FULL_COVERAGE: ${{ needs.full.outputs.coverage }}\n"
+           "          PR_BOARDS: ${{ needs.pr_boards.result }}\n"
            "        run: |\n"
            "          if [ \"$FULL_SELECTED\" = true ]; then\n"
            "            test \"$FULL_RESULT\" = success\n"
@@ -485,6 +549,8 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
            "            test \"$TEST_RESULT\" = success\n"
            "          else\n"
            "            test \"$LINUX\" = success\n"
+           "            # Path-selected boards: skipped when the PR touches none.\n"
+           "            case \"$PR_BOARDS\" in success|skipped) ;; *) exit 1 ;; esac\n"
            "          fi\n"
            if minimal else "")
     )
