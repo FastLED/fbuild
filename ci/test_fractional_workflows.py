@@ -164,7 +164,17 @@ class FractionalWorkflowTests(unittest.TestCase):
         fast = self.load("ci-test.yml")
         self.assertIn("push", minimal[True])
         self.assertIn("pull_request", minimal[True])
-        self.assertEqual({"linux", "test", "full", "selected-coverage"}, set(minimal["jobs"]))
+        self.assertEqual(
+            {"linux", "board_plan", "fbuild_bin", "pr_boards", "test", "full", "selected-coverage"},
+            set(minimal["jobs"]),
+        )
+        # Path-selected boards run only on the default PR tier.
+        plan_if = minimal["jobs"]["board_plan"]["if"]
+        self.assertIn("pull_request", plan_if)
+        self.assertIn("ci-test", plan_if)
+        self.assertIn("ci-full", plan_if)
+        self.assertIn("--matrix", minimal["jobs"]["board_plan"]["steps"][-1]["run"])
+        self.assertEqual("fbuild-bin-linux-debug", minimal["jobs"]["pr_boards"]["with"]["fbuild-artifact"])
         self.assertIn("github.event.pull_request.head.sha", minimal["jobs"]["linux"]["with"]["ref"])
         self.assertIn("ci-test", minimal["jobs"]["linux"]["if"])
         self.assertIn("ci-full", minimal["jobs"]["linux"]["if"])
@@ -208,10 +218,10 @@ class FractionalWorkflowTests(unittest.TestCase):
     def test_selected_coverage_requires_every_requested_tier(self):
         minimal = self.load("ci-minimal.yml")
         job = minimal["jobs"]["selected-coverage"]
-        self.assertEqual({"linux", "test", "full"}, set(job["needs"]))
+        self.assertEqual({"linux", "test", "full", "pr_boards"}, set(job["needs"]))
         self.assertIn("always()", job["if"])
         script = job["steps"][0]["run"]
-        base = {**os.environ, "LINUX": "success", "TEST_SELECTED": "false", "TEST_RESULT": "skipped", "FULL_SELECTED": "false", "FULL_RESULT": "skipped", "FULL_COVERAGE": ""}
+        base = {**os.environ, "LINUX": "success", "TEST_SELECTED": "false", "TEST_RESULT": "skipped", "FULL_SELECTED": "false", "FULL_RESULT": "skipped", "FULL_COVERAGE": "", "PR_BOARDS": "skipped"}
         cases = [
             ({}, 0),
             ({"TEST_SELECTED": "true", "TEST_RESULT": "skipped"}, 1),
@@ -221,6 +231,9 @@ class FractionalWorkflowTests(unittest.TestCase):
             ({"FULL_SELECTED": "true", "FULL_RESULT": "success", "FULL_COVERAGE": "true", "LINUX": "skipped"}, 0),
             ({"TEST_SELECTED": "true", "TEST_RESULT": "skipped", "FULL_SELECTED": "true", "FULL_RESULT": "success", "FULL_COVERAGE": "true", "LINUX": "skipped"}, 0),
             ({"LINUX": "failure"}, 1),
+            ({"PR_BOARDS": "success"}, 0),
+            ({"PR_BOARDS": "failure"}, 1),
+            ({"PR_BOARDS": "cancelled"}, 1),
         ]
         for overrides, expected in cases:
             with self.subTest(overrides=overrides):

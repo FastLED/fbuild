@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Pick which per-board build workflows a push to main should dispatch.
+"""Pick which per-board build workflows a push to main (or a PR) should run.
 
 A board is selected when a changed file matches one of its trigger paths
 (`render_workflows.render_paths_for_board`): its own test dir, its family's
@@ -20,7 +20,13 @@ import subprocess
 import sys
 from functools import lru_cache
 
-from render_workflows import load_common_paths, load_sot, render_paths_for_board
+from render_workflows import (
+    execution_boards,
+    load_common_paths,
+    load_sot,
+    render_paths_for_board,
+    toolchain_cache,
+)
 
 ZERO_SHA = "0" * 40
 
@@ -59,6 +65,26 @@ def select_workflows(boards, families, common_paths, changed):
     return sorted(selected)
 
 
+def matrix_entries(boards, families, workflows):
+    """template_build.yml matrix records for the selected `workflows`.
+
+    Pull requests call the board builds directly (so they report as PR
+    checks) instead of dispatching them; identical builds run once.
+    """
+    chosen = set(workflows)
+    return [
+        {
+            "workflow": b["workflow"],
+            "workflow_name": b["workflow_name"],
+            "test_dir": b["test_dir"],
+            "env_name": b["env_name"],
+            "firmware_ext": b["firmware_ext"],
+            "toolchain_cache": toolchain_cache(b, families),
+        }
+        for b in execution_boards([b for b in boards if b["workflow"] in chosen])
+    ]
+
+
 def changed_files(base: str, head: str):
     if not base or base == ZERO_SHA:
         return None
@@ -79,12 +105,16 @@ def main() -> int:
     ap.add_argument("--all", action="store_true", help="select every board (scheduled sweep)")
     ap.add_argument("--base", default="", help="diff base commit (push event `before`)")
     ap.add_argument("--head", default="HEAD", help="diff head commit")
+    ap.add_argument("--matrix", action="store_true", help="print template_build.yml matrix records")
     args = ap.parse_args()
 
     sot = load_sot()
     changed = None if args.all else changed_files(args.base, args.head)
     workflows = select_workflows(sot["boards"], sot["families"], load_common_paths(), changed)
-    print(json.dumps(workflows))
+    if args.matrix:
+        print(json.dumps(matrix_entries(sot["boards"], sot["families"], workflows)))
+    else:
+        print(json.dumps(workflows))
     return 0
 
 
