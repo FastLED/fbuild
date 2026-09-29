@@ -699,10 +699,7 @@ pub async fn compile_source(
     // compile needs (fbuild-owned `TMP`/`TEMP`, forwarded `PATH` +
     // Windows host vars) is composed by
     // [`fbuild_core::subprocess::compile_env_for_build`].
-    let build_scratch_root = compile_cwd
-        .clone()
-        .or_else(|| output.parent().map(Path::to_path_buf))
-        .unwrap_or_else(|| PathBuf::from("."));
+    let build_scratch_root = compile_scratch_root(compile_cwd.as_deref(), output);
     let mut compile_env =
         fbuild_core::subprocess::compile_env_for_build(&build_scratch_root).unwrap_or_default();
     // FastLED/fbuild#966: pin zccache's worktree_root to the project workspace
@@ -762,3 +759,16 @@ pub async fn compile_source(
 #[cfg(test)]
 #[path = "compiler_tests.rs"]
 mod tests;
+
+/// Scratch root for a TU's `TMPDIR`: the object's build directory. The
+/// compile cwd is the project root for workspace-relative compiles, so GCC's
+/// temp `.s` files would otherwise land in `<project>/.compile-tmp`.
+fn compile_scratch_root(compile_cwd: Option<&Path>, output: &Path) -> PathBuf {
+    let object_dir = output.parent().filter(|p| !p.as_os_str().is_empty());
+    match (object_dir, compile_cwd) {
+        (Some(dir), Some(cwd)) if dir.is_relative() => cwd.join(dir),
+        (Some(dir), _) => dir.to_path_buf(),
+        (None, Some(cwd)) => cwd.to_path_buf(),
+        (None, None) => PathBuf::from("."),
+    }
+}
