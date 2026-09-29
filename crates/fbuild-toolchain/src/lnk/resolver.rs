@@ -305,13 +305,53 @@ mod tests {
         assert!(resolved.lease.is_some());
     }
 
+    /// Serve a single `404` so a refetch fails immediately: 4xx is not
+    /// retried, whereas an unresolvable host is retried with the production
+    /// 1+2+4+8 s backoff (15 s of test time for no extra coverage).
+    ///
+    /// Returns the URL and the server thread, which yields `true` once a
+    /// request was accepted (proof the refetch reached the network). Accept
+    /// and socket I/O are bounded so joining cannot hang.
+    fn serve_one_404() -> (String, std::thread::JoinHandle<bool>) {
+        use std::time::{Duration, Instant};
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        listener.set_nonblocking(true).unwrap();
+        let port = listener.local_addr().unwrap().port();
+        let server = std::thread::spawn(move || {
+            let deadline = Instant::now() + Duration::from_secs(10);
+            let mut stream = loop {
+                match listener.accept() {
+                    Ok((stream, _)) => break stream,
+                    Err(e) if e.kind() == std::io::ErrorKind::WouldBlock => {
+                        if Instant::now() >= deadline {
+                            return false;
+                        }
+                        std::thread::sleep(Duration::from_millis(5));
+                    }
+                    Err(_) => return false,
+                }
+            };
+            let _ = stream.set_nonblocking(false);
+            let _ = stream.set_read_timeout(Some(Duration::from_secs(5)));
+            let _ = stream.set_write_timeout(Some(Duration::from_secs(5)));
+            let mut buf = [0u8; 1024];
+            let _ = std::io::Read::read(&mut stream, &mut buf);
+            let _ = stream.write_all(
+                b"HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\nConnection: close\r\n\r\n",
+            );
+            true
+        });
+        (format!("http://127.0.0.1:{port}/corrupt.bin"), server)
+    }
+
     /// Cache-hit but stored sha doesn't match content → resolve must fall
-    /// through to refetch (which then fails because we used a fake URL,
-    /// but the *behavior* we care about is that the bad cache was rejected).
+    /// through to refetch (which then fails with a 404, but the *behavior*
+    /// we care about is that the bad cache was rejected).
     #[test]
     fn resolve_rejects_corrupt_cache_entry() {
         let (_tmp, cache) = open_test_cache();
-        let url = "https://localhost.invalid/corrupt.bin";
+        let (url_owned, server) = serve_one_404();
+        let url = url_owned.as_str();
         let claimed_sha = sha256_of(b"good content"); // what .lnk says
         let archive_dir = cache.archive_dir(Kind::LnkBlobs, url, &claimed_sha);
         std::fs::create_dir_all(&archive_dir).unwrap();
@@ -337,9 +377,14 @@ mod tests {
             extract: super::super::ExtractMode::File,
         };
 
-        // Should attempt to refetch (and fail because URL is bogus).
-        // The interesting assertion: it didn't silently return the corrupt blob.
+        // Should refetch (and fail on the 404). The interesting assertions:
+        // it didn't silently return the corrupt blob, and it really went back
+        // to the network rather than failing some other way.
         let result = resolve(&lnk, &cache);
         assert!(result.is_err(), "expected refetch failure, got Ok");
+        assert!(
+            server.join().unwrap(),
+            "resolve should have refetched from the server"
+        );
     }
 }

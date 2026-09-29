@@ -15,7 +15,6 @@ OWNED_FILES = (
     "rust-toolchain.toml",
     "CLAUDE.md",
     "docs/DEVELOPMENT.md",
-    ".github/workflows/msrv.yml",
     ".github/workflows/fmt.yml",
     ".github/workflows/dylint.yml",
     ".github/workflows/template_native_build.yml",
@@ -53,11 +52,6 @@ PIN_PATTERNS = {
     ".clippy.toml": (r'^msrv\s*=\s*"{pin}"$',),
     "Cargo.toml": (r'^rust-version\s*=\s*"{pin}"$',),
     "rust-toolchain.toml": (r'^channel\s*=\s*"{pin}"$',),
-    ".github/workflows/msrv.yml": (
-        r"^name: Min Rust Version \({pin}\)$",
-        r"^\s+name: Min Rust Version \({pin}\)$",
-        r"^\s+toolchain: {pin}$",
-    ),
     ".github/workflows/dylint.yml": (r"^\s+toolchain: {pin}$",),
     ".github/workflows/platform-boundary-research.yml": (r"^\s+toolchain: {pin}$",),
     ".github/workflows/template_native_build.yml": (
@@ -65,7 +59,7 @@ PIN_PATTERNS = {
         r'TOOLCHAIN_DIR="\$RUSTUP_HOME/toolchains/{pin}-',
     ),
     ".github/workflows/fmt.yml": (r"pinned {pin}",),
-    ".github/workflows/README.md": (r"MSRV {pin} verification",),
+    ".github/workflows/README.md": (r"MSRV {pin} is the pinned toolchain",),
     "CLAUDE.md": (r"MSRV: {pin} .* Toolchain: {pin} pinned",),
     "docs/DEVELOPMENT.md": (
         r"MSRV: {pin}",

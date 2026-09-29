@@ -60,7 +60,9 @@
     "silabs": {
       "crate_paths": [
         "crates/fbuild-build-arm/src/silabs/**"
-      ]
+      ],
+      "toolchain_cache": true,
+      "_toolchain_cache_why": "Measured 2026-09-29: cold MGM240 build 569s, almost all a ~480MB silabs-core download at a few MB/s. Every other family builds faster cold than restoring+saving its ~1GB toolchain cache (50 boards: 1738s cold vs 2248s cached)."
     },
     "renesas": {
       "crate_paths": [

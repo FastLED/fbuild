@@ -135,11 +135,49 @@ def render_concurrency_block(board: dict) -> str:
 
 
 def render_on_block(board: dict, families: dict, common_paths: list[str]) -> str:
+    # Board workflows run as their own runs only when nightly-platforms.yml
+    # dispatches them (path-selected on push to main, all boards on the
+    # nightly schedule) -- that is what keeps each README badge current.
     return (
         "on:\n"
-        "  workflow_dispatch: {}\n"
+        "  workflow_dispatch:\n"
+        "    inputs:\n"
+        "      fbuild-run-id:\n"
+        "        description: 'Run holding a prebuilt fbuild artifact (empty: compile here)'\n"
+        "        type: string\n"
+        "        default: ''\n"
+        "      checkout_ref:\n"
+        "        description: 'Commit to build (empty: the dispatched ref)'\n"
+        "        type: string\n"
+        "        default: ''\n"
         "  workflow_call: {}\n"
     ) + render_concurrency_block(board)
+
+
+def toolchain_cache(board: dict, families: dict) -> bool:
+    """Whether a board restores/saves its ~1GB fbuild toolchain cache.
+
+    Opt-in per family, justified by a measurement recorded in the SOT: for
+    most families a cold download is faster than the cache round-trip.
+    """
+    return bool(families[board["family"]].get("toolchain_cache", False))
+
+
+def render_board_jobs(board: dict, families: dict) -> str:
+    return (
+        "jobs:\n"
+        "  build:\n"
+        "    uses: ./.github/workflows/template_build.yml\n"
+        "    with:\n"
+        f"      workflow-name: {json.dumps(board['workflow_name'])}\n"
+        f"      test-dir: {json.dumps(board['test_dir'])}\n"
+        f"      env-name: {json.dumps(board['env_name'])}\n"
+        f"      firmware-ext: {json.dumps(board['firmware_ext'])}\n"
+        "      checkout_ref: ${{ inputs.checkout_ref }}\n"
+        f"      fbuild-artifact: ${{{{ inputs.fbuild-run-id && '{FBUILD_BIN_ARTIFACT}' || '' }}}}\n"
+        "      fbuild-run-id: ${{ inputs.fbuild-run-id }}\n"
+        f"      toolchain-cache: {json.dumps(toolchain_cache(board, families))}\n"
+    )
 
 
 def execution_boards(boards: list[dict]) -> list[dict]:
@@ -154,7 +192,59 @@ def execution_boards(boards: list[dict]) -> list[dict]:
     return list(unique.values())
 
 
-def render_ci(boards: list[dict], tier: str) -> str:
+FBUILD_BIN_ARTIFACT = "fbuild-bin-linux-debug"
+
+
+def render_fbuild_bin_job(needs: str, condition: str, ref: str) -> str:
+    """One job that compiles fbuild once and uploads it for every board job.
+
+    zackees/ci.yml policy-rust "compile once, runners only execute": before
+    this, each of ~76 board jobs spent ~350s compiling the same
+    board-independent `fbuild-cli` + `fbuild-daemon` debug build. The
+    setup-soldr inputs mirror template_build.yml's standalone compile path so
+    both share one warm `fbuild-rust-debug` cache.
+    """
+    return (
+        "  fbuild_bin:\n"
+        "    name: Build fbuild (shared by board jobs)\n"
+        + condition
+        + f"    needs: {needs}\n"
+        "    runs-on: ubuntu-latest\n"
+        "    timeout-minutes: 30\n"
+        "    env:\n"
+        "      CARGO_TERM_COLOR: always\n"
+        "      RUSTFLAGS: \"-D warnings\"\n"
+        "      SOLDR_TARGET_BLOCK_FREE_GB: \"2\"\n"
+        "    steps:\n"
+        "      - uses: actions/checkout@v6\n"
+        "        with:\n"
+        f"          ref: {ref}\n"
+        "          persist-credentials: false\n"
+        "      - uses: zackees/setup-soldr@dfbe9627f6cb0226716b61625b99a58949162720\n"
+        "        with:\n"
+        "          cache-preset: foundation\n"
+        "          prebuild-deps-flags: \"\"\n"
+        "          prebuild-deps: none\n"
+        "          linker: platform-default\n"
+        "          cache-payload-warn-bytes: 2GiB\n"
+        "          cache-key-suffix: fbuild-rust-debug\n"
+        "          save-cache: ${{ github.ref == 'refs/heads/main' && 'true' || 'false' }}\n"
+        "      - run: |\n"
+        "          sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::Retries=3 update\n"
+        "          sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::Retries=3 install -y libudev-dev pkg-config\n"
+        "      - run: soldr cargo build -p fbuild-cli -p fbuild-daemon\n"
+        "      - uses: actions/upload-artifact@v7\n"
+        "        with:\n"
+        f"          name: {FBUILD_BIN_ARTIFACT}\n"
+        "          path: |\n"
+        "            target/debug/fbuild\n"
+        "            target/debug/fbuild-daemon\n"
+        "          if-no-files-found: error\n"
+        "          retention-days: 1\n"
+    )
+
+
+def render_ci(boards: list[dict], tier: str, families: dict) -> str:
     full = tier == "full"
     minimal = tier == "minimal"
     selected = execution_boards(boards if full else [b for b in boards if b.get("fractional", False)])
@@ -165,6 +255,7 @@ def render_ci(boards: list[dict], tier: str) -> str:
         f"            env_name: {json.dumps(b['env_name'])}\n"
         f"            firmware_ext: {json.dumps(b['firmware_ext'])}\n"
         f"            workflow_aliases: {json.dumps(b['workflow_aliases'])}\n"
+        f"            toolchain_cache: {json.dumps(toolchain_cache(b, families))}\n"
         for b in selected
     )
     if not selected:
@@ -283,8 +374,6 @@ def render_ci(boards: list[dict], tier: str) -> str:
         + f"      ref: {verified_ref}\n"
         for job, workflow in (
             ("fmt", "fmt.yml"),
-            ("docs", "docs.yml"),
-            ("msrv", "msrv.yml"),
             ("validate_boards", "validate-boards.yml"),
             ("crate_gate", "crate-gate.yml"),
         )
@@ -307,9 +396,10 @@ def render_ci(boards: list[dict], tier: str) -> str:
         + host
         + policy
         + ("" if minimal else
-           "  boards:\n"
+           render_fbuild_bin_job("verify", gate, verified_ref)
+           + "  boards:\n"
            + gate
-           + "    needs: verify\n"
+           + "    needs: [verify, fbuild_bin]\n"
            + "    name: ${{ matrix.workflow_name }}\n"
            + "    strategy:\n"
            + "      fail-fast: false\n"
@@ -322,12 +412,14 @@ def render_ci(boards: list[dict], tier: str) -> str:
            + "      test-dir: ${{ matrix.test_dir }}\n"
            + "      env-name: ${{ matrix.env_name }}\n"
            + "      firmware-ext: ${{ matrix.firmware_ext }}\n"
-           + f"      checkout_ref: {verified_ref}\n")
+           + f"      checkout_ref: {verified_ref}\n"
+           + f"      fbuild-artifact: {FBUILD_BIN_ARTIFACT}\n"
+           + "      toolchain-cache: ${{ matrix.toolchain_cache }}\n")
         + ("" if minimal else
             "  coverage:\n"
             + ("    name: Full coverage\n" if full else "    name: ci-test coverage\n")
             + "    if: always()\n"
-            + ("    needs: [verify, boards, linux, windows, macos, dylint, acceptance, bench, qemu, fmt, docs, msrv, validate_boards, crate_gate]\n" if full else "    needs: [verify, boards, linux]\n")
+            + ("    needs: [verify, boards, linux, windows, macos, dylint, acceptance, bench, qemu, fmt, validate_boards, crate_gate]\n" if full else "    needs: [verify, boards, linux]\n")
             + "    runs-on: ubuntu-latest\n"
             + "    outputs:\n"
             + "      complete: ${{ steps.complete.outputs.complete }}\n"
@@ -346,8 +438,6 @@ def render_ci(boards: list[dict], tier: str) -> str:
                "          BENCH: ${{ needs.bench.result }}\n"
                "          QEMU: ${{ needs.qemu.result }}\n"
                "          FMT: ${{ needs.fmt.result }}\n"
-               "          DOCS: ${{ needs.docs.result }}\n"
-               "          MSRV: ${{ needs.msrv.result }}\n"
                "          VALIDATE_BOARDS: ${{ needs.validate_boards.result }}\n"
                "          CRATE_GATE: ${{ needs.crate_gate.result }}\n" if full else "")
             + "        run: |\n"
@@ -356,7 +446,7 @@ def render_ci(boards: list[dict], tier: str) -> str:
             + "            echo 'Optional tier is not selected on this PR; coverage is incomplete' >&2\n"
             + "            exit 1\n"
             + "          fi\n"
-            + ("          for result in \"$VERIFY\" \"$BOARDS\" \"$LINUX\" \"$WINDOWS\" \"$MACOS\" \"$DYLINT\" \"$ACCEPTANCE\" \"$BENCH\" \"$QEMU\" \"$FMT\" \"$DOCS\" \"$MSRV\" \"$VALIDATE_BOARDS\" \"$CRATE_GATE\"; do\n" if full else "          for result in \"$VERIFY\" \"$BOARDS\" \"$LINUX\"; do\n")
+            + ("          for result in \"$VERIFY\" \"$BOARDS\" \"$LINUX\" \"$WINDOWS\" \"$MACOS\" \"$DYLINT\" \"$ACCEPTANCE\" \"$BENCH\" \"$QEMU\" \"$FMT\" \"$VALIDATE_BOARDS\" \"$CRATE_GATE\"; do\n" if full else "          for result in \"$VERIFY\" \"$BOARDS\" \"$LINUX\"; do\n")
             + "            if [ \"$result\" != success ]; then\n"
             + "              echo \"coverage incomplete: $result\" >&2\n"
             + "              exit 1\n"
@@ -442,61 +532,32 @@ def _job_id(workflow: str) -> str:
 
 
 def render_nightly(boards: list[dict]) -> str:
-    """Render .github/workflows/nightly-platforms.yml from the SOT.
+    """Render .github/workflows/nightly-platforms.yml: the board dispatcher.
 
-    Fan-out: ONE matrix job that calls `template_build.yml` directly, once
-    per board. A single guard job decides whether the sweep runs at all --
-    if no commits landed in the last 24h, the build job is skipped via
-    `if:`. workflow_dispatch exposes a `force` boolean to bypass the guard
-    for manual reruns.
+    README badges track runs of each `build-<board>.yml` *file*; a board
+    built from inside another workflow (a matrix over template_build.yml)
+    never moves its badge. So this workflow compiles fbuild once, then
+    `gh workflow run`s each selected board workflow as its own run, passing
+    this run's id so the board downloads the prebuilt binary instead of
+    compiling it (GITHUB_TOKEN-created `workflow_dispatch` runs are the one
+    event GitHub allows to start new runs).
 
-    This deliberately does NOT do the obvious thing of emitting one
-    `uses: ./.github/workflows/build-<board>.yml` job per board. GitHub caps
-    a single workflow file at **20 unique reusable workflows**, counting the
-    whole nested tree. Referencing all ~79 per-board workflows blew straight
-    past that cap, and the failure mode gives you nothing to debug: the run
-    is created, immediately reports "This run likely failed because of a
-    workflow file issue", and produces **zero jobs** and no logs. The YAML is
-    perfectly valid, so neither a linter nor `yaml.safe_load` flags it.
+    Selection (ci/select_boards.py):
+      - push to main: only boards whose trigger paths the push touched
+        (own test dir, family crate paths, own workflow file; shared paths
+        select the `core` boards only).
+      - schedule: every board, so every badge refreshes daily -- skipped
+        when no commits landed in 24h (nothing could have changed).
+      - workflow_dispatch: every board.
 
-    Calling the shared template with a matrix keeps the unique-reusable count
-    at 1 no matter how many boards the SOT grows to.
-
-    Matrix keys use underscores, not hyphens, on purpose: `matrix.test-dir`
-    parses as a subtraction in a GitHub expression, silently yielding an
-    empty value rather than an error. The hyphenated names are reintroduced
-    only in the `with:` block, where they are input keys rather than
-    expressions.
+    The dispatcher does not call the ~80 board workflows as reusable
+    workflows: GitHub caps a workflow file at 20 unique reusable workflows
+    and fails such a run with zero jobs and no logs.
     """
-    matrix_entries: list[str] = []
-    for b in execution_boards(boards):
-        matrix_entries.append(
-            f"          - workflow_name: {json.dumps(b['workflow_name'])}\n"
-            f"            test_dir: {json.dumps(b['test_dir'])}\n"
-            f"            env_name: {json.dumps(b['env_name'])}\n"
-            f"            firmware_ext: {json.dumps(b['firmware_ext'])}\n"
-            f"            workflow_aliases: {json.dumps(b['workflow_aliases'])}\n"
-        )
-    jobs_yaml = (
-        "  build:\n"
-        "    name: ${{ matrix.workflow_name }}\n"
-        "    needs: guard\n"
-        "    if: needs.guard.outputs.should_run == 'true'\n"
-        "    strategy:\n"
-        # One broken board must not cancel the other 78 -- the whole point of
-        # a nightly sweep is a complete picture of what is red.
-        "      fail-fast: false\n"
-        "      matrix:\n"
-        "        include:\n" + "".join(matrix_entries) + "    uses: ./.github/workflows/template_build.yml\n"
-        "    with:\n"
-        "      workflow-name: ${{ matrix.workflow_name }}\n"
-        "      test-dir: ${{ matrix.test_dir }}\n"
-        "      env-name: ${{ matrix.env_name }}\n"
-        "      firmware-ext: ${{ matrix.firmware_ext }}\n"
-    )
+    del boards  # selection reads the SOT at run time via ci/select_boards.py
     header = (
-        "# Daily safety-net sweep of every per-board build workflow.\n"
-        "# See FastLED/fbuild#835.\n"
+        "# Board dispatcher: path-selected on push to main, all boards nightly.\n"
+        "# See FastLED/fbuild#835 and ci/select_boards.py.\n"
         "#\n"
         "# This file is AUTOGENERATED from ci/board_families.json.\n"
         "# Edit the SOT and re-run `uv run python ci/render_workflows.py`.\n"
@@ -504,6 +565,8 @@ def render_nightly(boards: list[dict]) -> str:
         "name: Nightly Platforms\n"
         "\n"
         "on:\n"
+        "  push:\n"
+        "    branches: [main]\n"
         "  schedule:\n"
         "    # 11:00 UTC = 03:00 PST (winter) / 04:00 PDT (summer). GitHub cron\n"
         "    # has no timezone, so one of the two has to drift; 3am standard\n"
@@ -512,42 +575,73 @@ def render_nightly(boards: list[dict]) -> str:
         "  workflow_dispatch:\n"
         "    inputs:\n"
         "      force:\n"
-        "        description: 'Run all platform builds even without recent commits'\n"
+        "        description: 'Dispatch all platform builds even without recent commits'\n"
         "        type: boolean\n"
         "        default: false\n"
         "\n"
         "jobs:\n"
-        "  guard:\n"
-        "    name: Guard (skip on quiet days)\n"
+        "  plan:\n"
+        "    name: Select boards\n"
         "    runs-on: ubuntu-latest\n"
         "    outputs:\n"
-        "      should_run: ${{ steps.check.outputs.should_run }}\n"
+        "      workflows: ${{ steps.select.outputs.workflows }}\n"
         "    steps:\n"
         "      - uses: actions/checkout@v6\n"
         "        with:\n"
         "          fetch-depth: 0\n"
-        "      - id: check\n"
+        "      - uses: astral-sh/setup-uv@v3\n"
+        "      - id: select\n"
         "        env:\n"
-        "          FORCE: ${{ inputs.force }}\n"
+        "          EVENT: ${{ github.event_name }}\n"
+        "          BEFORE: ${{ github.event.before }}\n"
         "        run: |\n"
-        "          if [ \"$FORCE\" = \"true\" ]; then\n"
-        "            echo \"force=true -- running nightly sweep regardless of commit activity\"\n"
-        "            echo \"should_run=true\" >> \"$GITHUB_OUTPUT\"\n"
+        "          if [ \"$EVENT\" = push ]; then\n"
+        "            args=(--base \"$BEFORE\" --head \"$GITHUB_SHA\")\n"
+        "          elif [ \"$EVENT\" = schedule ] && [ -z \"$(git log --since='24 hours ago' --oneline HEAD)\" ]; then\n"
+        "            echo 'No commits in the last 24h -- nothing to dispatch'\n"
+        "            echo 'workflows=[]' >> \"$GITHUB_OUTPUT\"\n"
         "            exit 0\n"
-        "          fi\n"
-        "          # Scheduled runs check out the default branch's HEAD; on\n"
-        "          # workflow_dispatch from a feature branch this checks that\n"
-        "          # branch instead, which is the right behavior for manual runs.\n"
-        "          if [ -z \"$(git log --since='24 hours ago' --oneline HEAD)\" ]; then\n"
-        "            echo \"No commits in the last 24h -- skipping nightly platform sweep\"\n"
-        "            echo \"should_run=false\" >> \"$GITHUB_OUTPUT\"\n"
         "          else\n"
-        "            echo \"Recent commits found -- running full nightly sweep\"\n"
-        "            echo \"should_run=true\" >> \"$GITHUB_OUTPUT\"\n"
+        "            args=(--all)\n"
         "          fi\n"
+        "          workflows=$(cd ci && uv run --no-project python select_boards.py \"${args[@]}\")\n"
+        "          echo \"selected: $workflows\"\n"
+        "          echo \"workflows=$workflows\" >> \"$GITHUB_OUTPUT\"\n"
         "\n"
     )
-    return header + jobs_yaml
+    dispatch = (
+        "  dispatch:\n"
+        "    name: Dispatch board workflows\n"
+        "    needs: [plan, fbuild_bin]\n"
+        "    runs-on: ubuntu-latest\n"
+        "    permissions:\n"
+        "      actions: write\n"
+        "    steps:\n"
+        "      - env:\n"
+        "          GH_TOKEN: ${{ github.token }}\n"
+        "          GH_REPO: ${{ github.repository }}\n"
+        "          WORKFLOWS: ${{ needs.plan.outputs.workflows }}\n"
+        "        run: |\n"
+        # One failed dispatch (API blip, rate limit) must not strand every
+        # later board's badge: keep going, then fail once at the end.
+        "          failed=()\n"
+        "          for wf in $(echo \"$WORKFLOWS\" | jq -r '.[]'); do\n"
+        "            if gh workflow run \"$wf\" --ref \"$GITHUB_REF_NAME\" \\\n"
+        "              -f fbuild-run-id=\"$GITHUB_RUN_ID\" -f checkout_ref=\"$GITHUB_SHA\"; then\n"
+        "              echo \"dispatched $wf\"\n"
+        "            else\n"
+        "              echo \"::error::failed to dispatch $wf\"\n"
+        "              failed+=(\"$wf\")\n"
+        "            fi\n"
+        "          done\n"
+        "          if [ \"${#failed[@]}\" -gt 0 ]; then\n"
+        "            echo \"failed to dispatch: ${failed[*]}\" >&2\n"
+        "            exit 1\n"
+        "          fi\n"
+    )
+    return header + render_fbuild_bin_job(
+        "plan", "    if: needs.plan.outputs.workflows != '[]'\n", "${{ github.sha }}"
+    ) + dispatch
 
 
 def write_if_changed(path: Path, new_text: str, check: bool, drift: list[Path], updated: list[Path]) -> None:
@@ -601,12 +695,13 @@ def main() -> int:
         old = path.read_text(encoding="utf-8")
         new_on = render_on_block(board, families, common_paths)
         new = rewrite(old, new_on)
+        new = new[: new.index("\njobs:\n") + 1] + render_board_jobs(board, families)
         write_if_changed(path, new, args.check, drift, updated)
 
     write_if_changed(NIGHTLY_PATH, render_nightly(boards), args.check, drift, updated)
-    write_if_changed(MINIMAL_PATH, render_ci(boards, "minimal"), args.check, drift, updated)
-    write_if_changed(TEST_PATH, render_ci(boards, "test"), args.check, drift, updated)
-    write_if_changed(FULL_PATH, render_ci(boards, "full"), args.check, drift, updated)
+    write_if_changed(MINIMAL_PATH, render_ci(boards, "minimal", families), args.check, drift, updated)
+    write_if_changed(TEST_PATH, render_ci(boards, "test", families), args.check, drift, updated)
+    write_if_changed(FULL_PATH, render_ci(boards, "full", families), args.check, drift, updated)
 
     if args.check and drift:
         print("Drift detected -- the following workflows are out of sync with the SOT:", file=sys.stderr)

@@ -59,8 +59,10 @@ jobs:
           # runaway caches. Hard cap stays at the action default (6 GiB).
           cache-payload-warn-bytes: 2GiB
 
-      - name: Check
-        run: soldr cargo check --workspace --all-targets
+      # No separate `cargo check`: clippy type-checks the same
+      # `--workspace --all-targets` set, so a prior check only re-did that work.
+      # Measured locally (fresh target dir, warm zccache): check+clippy 194s
+      # vs clippy alone 106s.
       - name: Clippy
         run: soldr cargo clippy --workspace --all-targets -- -D warnings
       # Both guards are stdlib-only. `--no-project` skips building the fbuild

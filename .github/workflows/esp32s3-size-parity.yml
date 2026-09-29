@@ -51,4 +51,4 @@ jobs:
 
       - name: Compare ESP32-S3 Blink firmware size
         run: |
-          soldr cargo test -p fbuild-build --test esp32s3_size_parity -- --ignored --nocapture --test-threads=1
+          soldr cargo test -p fbuild-build --test it esp32s3_size_parity:: -- --ignored --nocapture --test-threads=1

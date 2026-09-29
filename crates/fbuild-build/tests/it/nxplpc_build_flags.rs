@@ -17,7 +17,7 @@
 //! fix is wired end-to-end.
 //!
 //! Run with:
-//! `soldr cargo test -p fbuild-build --test nxplpc_build_flags -- --ignored`
+//! `soldr cargo test -p fbuild-build --test it nxplpc_build_flags:: -- --ignored`
 //!
 //! Marked `#[ignore]` because it downloads the ARM GCC toolchain plus the
 //! vendored ArduinoCore-LPC8xx framework and performs a real firmware

@@ -194,7 +194,7 @@ mod tests {
             "crates/fbuild-cli/src/cli/port_scan.rs"
         ));
         assert!(!in_production_scope(
-            "crates/fbuild-daemon/tests/test_emu_endpoint.rs"
+            "crates/fbuild-daemon/tests/it/test_emu_endpoint.rs"
         ));
     }
 }

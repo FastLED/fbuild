@@ -58,9 +58,8 @@ jobs:
           version="$(soldr --version)"
           echo "$version"
           [[ "$version" == soldr\ * ]]
-      - name: Check
-        shell: bash
-        run: soldr cargo check --workspace --all-targets
+      # No separate `cargo check`: clippy type-checks the same
+      # `--workspace --all-targets` set (see check-ubuntu.yml for the timing).
       - name: Clippy
         shell: bash
         run: soldr cargo clippy --workspace --all-targets -- -D warnings

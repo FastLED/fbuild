@@ -2,7 +2,16 @@ name: Build CH32L103
 
 # >>> RENDERED-ON-BEGIN (ci/render_workflows.py) -- do not edit by hand <<<
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      fbuild-run-id:
+        description: 'Run holding a prebuilt fbuild artifact (empty: compile here)'
+        type: string
+        default: ''
+      checkout_ref:
+        description: 'Commit to build (empty: the dispatched ref)'
+        type: string
+        default: ''
   workflow_call: {}
 
 concurrency:
@@ -18,3 +27,7 @@ jobs:
       test-dir: "tests/platform/ch32l103"
       env-name: "ch32l103"
       firmware-ext: "bin"
+      checkout_ref: ${{ inputs.checkout_ref }}
+      fbuild-artifact: ${{ inputs.fbuild-run-id && 'fbuild-bin-linux-debug' || '' }}
+      fbuild-run-id: ${{ inputs.fbuild-run-id }}
+      toolchain-cache: false

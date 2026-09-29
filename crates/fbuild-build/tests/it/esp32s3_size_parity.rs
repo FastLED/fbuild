@@ -10,7 +10,7 @@
 //! both tools. `.github/workflows/esp32s3-size-parity.yml` runs it once a day:
 //!
 //! ```text
-//! soldr cargo test -p fbuild-build --test esp32s3_size_parity -- --ignored --nocapture
+//! soldr cargo test -p fbuild-build --test it esp32s3_size_parity:: -- --ignored --nocapture
 //! ```
 
 use std::fs;

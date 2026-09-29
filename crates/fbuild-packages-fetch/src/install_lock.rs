@@ -570,7 +570,9 @@ mod tests {
         let install_path = tmp.path().join("platform").join("2.0");
         std::fs::create_dir_all(install_path.parent().unwrap()).unwrap();
         let lock_dir = install_lock_dir(&install_path).unwrap();
-        std::fs::create_dir(&lock_dir).unwrap();
+        // A crashed owner's lock. A bare directory with no owner record
+        // would instead wait out the real 30 s MISSING_OWNER_GRACE.
+        plant_lock(&lock_dir, DEAD_PID, None);
 
         let guard = acquire_install_lock_at(
             &lock_dir,
