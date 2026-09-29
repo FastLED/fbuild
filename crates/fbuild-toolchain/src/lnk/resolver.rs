@@ -309,19 +309,14 @@ mod tests {
     /// retried, whereas an unresolvable host is retried with the production
     /// 1+2+4+8 s backoff (15 s of test time for no extra coverage).
     ///
-    /// Returns the URL, a receiver that fires once a request has been
-    /// accepted (proof the refetch reached the network), and the server
-    /// thread. Accept and socket I/O are bounded so joining cannot hang.
-    fn serve_one_404() -> (
-        String,
-        std::sync::mpsc::Receiver<()>,
-        std::thread::JoinHandle<()>,
-    ) {
+    /// Returns the URL and the server thread, which yields `true` once a
+    /// request was accepted (proof the refetch reached the network). Accept
+    /// and socket I/O are bounded so joining cannot hang.
+    fn serve_one_404() -> (String, std::thread::JoinHandle<bool>) {
         use std::time::{Duration, Instant};
         let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
         listener.set_nonblocking(true).unwrap();
         let port = listener.local_addr().unwrap().port();
-        let (accepted_tx, accepted_rx) = std::sync::mpsc::channel();
         let server = std::thread::spawn(move || {
             let deadline = Instant::now() + Duration::from_secs(10);
             let mut stream = loop {
@@ -329,14 +324,13 @@ mod tests {
                     Ok((stream, _)) => break stream,
                     Err(e) if e.kind() == std::io::ErrorKind::WouldBlock => {
                         if Instant::now() >= deadline {
-                            return;
+                            return false;
                         }
                         std::thread::sleep(Duration::from_millis(5));
                     }
-                    Err(_) => return,
+                    Err(_) => return false,
                 }
             };
-            let _ = accepted_tx.send(());
             let _ = stream.set_nonblocking(false);
             let _ = stream.set_read_timeout(Some(Duration::from_secs(5)));
             let _ = stream.set_write_timeout(Some(Duration::from_secs(5)));
@@ -345,12 +339,9 @@ mod tests {
             let _ = stream.write_all(
                 b"HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\nConnection: close\r\n\r\n",
             );
+            true
         });
-        (
-            format!("http://127.0.0.1:{port}/corrupt.bin"),
-            accepted_rx,
-            server,
-        )
+        (format!("http://127.0.0.1:{port}/corrupt.bin"), server)
     }
 
     /// Cache-hit but stored sha doesn't match content → resolve must fall
@@ -359,7 +350,7 @@ mod tests {
     #[test]
     fn resolve_rejects_corrupt_cache_entry() {
         let (_tmp, cache) = open_test_cache();
-        let (url_owned, accepted, server) = serve_one_404();
+        let (url_owned, server) = serve_one_404();
         let url = url_owned.as_str();
         let claimed_sha = sha256_of(b"good content"); // what .lnk says
         let archive_dir = cache.archive_dir(Kind::LnkBlobs, url, &claimed_sha);
@@ -391,9 +382,9 @@ mod tests {
         // to the network rather than failing some other way.
         let result = resolve(&lnk, &cache);
         assert!(result.is_err(), "expected refetch failure, got Ok");
-        accepted
-            .recv_timeout(std::time::Duration::from_secs(5))
-            .expect("resolve should have refetched from the server");
-        server.join().unwrap();
+        assert!(
+            server.join().unwrap(),
+            "resolve should have refetched from the server"
+        );
     }
 }
