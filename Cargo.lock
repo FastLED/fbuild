@@ -1333,6 +1333,7 @@ version = "2.5.29"
 dependencies = [
  "async-trait",
  "axum 0.7.9",
+ "blake3",
  "bzip2",
  "fbuild-config",
  "fbuild-core",

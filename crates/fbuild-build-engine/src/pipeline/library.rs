@@ -249,6 +249,7 @@ pub async fn compile_project_as_library(
         env.compiler_cache,
         None,
         None,
+        None,
     )
     .await
     {

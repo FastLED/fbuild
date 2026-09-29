@@ -73,6 +73,7 @@ where
             sketch.overlay,
             gate,
             Some(build_log),
+            None,
         )
         .await;
         (result, sketch_started.elapsed())
@@ -90,6 +91,7 @@ where
             core.overlay,
             gate,
             Some(build_log),
+            None,
         )
         .await
     };

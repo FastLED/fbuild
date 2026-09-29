@@ -66,6 +66,7 @@ pub async fn compile_sources_parallel(
         extra_flags,
         &Arc::new(Semaphore::new(permits)),
         build_log,
+        None,
     )
     .await
 }
@@ -82,9 +83,15 @@ pub async fn compile_sources_parallel_shared(
     extra_flags: &LanguageExtraFlags,
     semaphore: &Arc<Semaphore>,
     build_log: Option<&std::sync::Mutex<BuildLog>>,
+    // `Some` overrides the TU-duration history root (tests only); `None`
+    // uses the real `fbuild_paths::get_cache_root()` (FastLED/fbuild#1564).
+    history_root: Option<&Path>,
 ) -> Result<ParallelCompileResult> {
-    // Build work list: (source, object) pairs needing rebuild
-    let mut work: Vec<(PathBuf, PathBuf)> = Vec::new();
+    let history_root_owned = history_root
+        .map(Path::to_path_buf)
+        .unwrap_or_else(fbuild_paths::get_cache_root);
+    // Build work list: (source, object, signature) triples needing rebuild
+    let mut work: Vec<(PathBuf, PathBuf, String)> = Vec::new();
     let mut objects: Vec<PathBuf> = Vec::new();
 
     for source in sources {
@@ -95,13 +102,24 @@ pub async fn compile_sources_parallel_shared(
         // match this check (stage-2 seeding, FastLED/fbuild#1346).
         let signature = compiler.rebuild_signature(source, &source_flags, &obj);
         if CompilerBase::needs_rebuild_with_signature(source, &obj, Some(&signature)) {
-            work.push((source.clone(), obj.clone()));
+            work.push((source.clone(), obj.clone(), signature));
         }
         objects.push(obj);
     }
 
-    // Long poles first; `objects` keeps source order, so link order is unchanged.
-    work.sort_by_key(|(source, _)| dispatch_rank(source));
+    // Long poles first, using recorded compile durations where available
+    // (FastLED/fbuild#1564); `objects` keeps source order, so link order is
+    // unchanged.
+    fbuild_packages::library::tu_history::dispatch_order_in(
+        &history_root_owned,
+        &mut work,
+        |(source, _, signature)| {
+            (
+                fbuild_core::path::NormalizedPath::new(source),
+                signature.clone(),
+            )
+        },
+    );
 
     if work.is_empty() {
         return Ok(ParallelCompileResult {
@@ -140,15 +158,16 @@ pub async fn compile_sources_parallel_shared(
         unsafe { std::mem::transmute(build_log) };
 
     let failed = Arc::new(std::sync::atomic::AtomicBool::new(false));
-    for (source, obj) in work.into_iter() {
+    let history_root_arc = Arc::new(history_root_owned);
+    for (source, obj, signature) in work.into_iter() {
         if failed.load(std::sync::atomic::Ordering::Relaxed) {
             break;
         }
         // Take the permit here, in dispatch order: on a multi-thread runtime
         // spawned tasks first run in no particular order, so a permit taken
-        // inside the task would not honor `dispatch_rank`. A closed semaphore
-        // (shutdown) stops spawning; the drain below still awaits every task
-        // already spawned, which the `'static` borrows above rely on.
+        // inside the task would not honor the dispatch order. A closed
+        // semaphore (shutdown) stops spawning; the drain below still awaits
+        // every task already spawned, which the `'static` borrows above rely on.
         let permit = match semaphore.clone().acquire_owned().await {
             Ok(permit) => permit,
             Err(e) => {
@@ -162,12 +181,21 @@ pub async fn compile_sources_parallel_shared(
         }
         let counter = compiled_count.clone();
         let failed = failed.clone();
+        let history_root_t = history_root_arc.clone();
         tasks.spawn(async move {
             let _permit = permit;
+            let started = std::time::Instant::now();
             let source_flags = extra_flags_ptr.for_source(&source);
             let outcome = compiler_ptr.compile(&source, &obj, &source_flags).await;
             if !matches!(&outcome, Ok(result) if result.success) {
                 failed.store(true, std::sync::atomic::Ordering::Relaxed);
+            } else {
+                fbuild_packages::library::tu_history::record_in(
+                    &history_root_t,
+                    &source,
+                    &signature,
+                    started.elapsed(),
+                );
             }
             match outcome {
                 Ok(result) if result.success => {
@@ -224,24 +252,6 @@ pub async fn compile_sources_parallel_shared(
     }
 
     Ok(ParallelCompileResult { objects, warnings })
-}
-
-/// Dispatch order for a translation unit; lower starts first.
-///
-/// C++ units are the long poles (every Arduino C++ TU parses `Arduino.h`), so
-/// starting them before C and assembly shortens the tail where cores idle
-/// behind one late compile: ~6% of the ESP32-S3 core compile at 4 cores
-/// (FastLED/fbuild#1537).
-fn dispatch_rank(source: &Path) -> u8 {
-    let ext = source
-        .extension()
-        .and_then(|e| e.to_str())
-        .map(str::to_ascii_lowercase);
-    match ext.as_deref() {
-        Some("c") => 1,
-        Some("s" | "sx" | "asm") => 2,
-        _ => 0,
-    }
 }
 
 #[cfg(test)]
@@ -373,6 +383,7 @@ mod tests {
             &LanguageExtraFlags::default(),
             &slots,
             None,
+            Some(tmp.path()),
         )
         .await;
         assert!(result.is_err());
@@ -411,14 +422,23 @@ mod tests {
         let (core_build, sketch_build) = (tmp.path().join("core"), tmp.path().join("src"));
 
         let (a, b) = tokio::join!(
-            compile_sources_parallel_shared(&compiler, &core, &core_build, &flags, &slots, None),
+            compile_sources_parallel_shared(
+                &compiler,
+                &core,
+                &core_build,
+                &flags,
+                &slots,
+                None,
+                Some(tmp.path())
+            ),
             compile_sources_parallel_shared(
                 &compiler,
                 &sketch,
                 &sketch_build,
                 &flags,
                 &slots,
-                None
+                None,
+                Some(tmp.path())
             ),
         );
         assert_eq!(a.unwrap().objects.len(), 3);
@@ -481,6 +501,7 @@ mod tests {
             &LanguageExtraFlags::default(),
             &Arc::new(Semaphore::new(1)),
             None,
+            Some(tmp.path()),
         )
         .await
         .unwrap();
@@ -508,5 +529,81 @@ mod tests {
             })
             .collect();
         assert_eq!(objects, expected, "objects stay in source order");
+    }
+
+    /// FastLED/fbuild#1564: with recorded history showing `z_slow.cpp` far
+    /// outweighs the others, it must start first even though it sorts last
+    /// in source order. The history root is threaded explicitly
+    /// (`compile_sources_parallel_shared`'s last argument) rather than via
+    /// `FBUILD_CACHE_DIR`, so this test stays hermetic under `cargo test`'s
+    /// parallel test threads.
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn recorded_history_dispatches_the_longest_tu_first() {
+        let cache_dir = tempfile::tempdir().unwrap();
+
+        let tmp = tempfile::tempdir().unwrap();
+        let names = ["a_fast.cpp", "b_fast.cpp", "z_slow.cpp"];
+        let sources: Vec<PathBuf> = names
+            .iter()
+            .map(|name| {
+                let path = tmp.path().join(name);
+                std::fs::write(&path, "int x;\n").unwrap();
+                path
+            })
+            .collect();
+
+        let z_slow = sources.iter().find(|s| s.ends_with("z_slow.cpp")).unwrap();
+        // TracingCompiler::rebuild_signature is just the source path string.
+        let z_slow_signature = z_slow.to_string_lossy().into_owned();
+        fbuild_packages::library::tu_history::record_in(
+            cache_dir.path(),
+            z_slow,
+            &z_slow_signature,
+            std::time::Duration::from_secs(20),
+        );
+
+        let compiler = TracingCompiler {
+            gcc: PathBuf::from("/toolchain/bin/gcc"),
+            in_flight: Default::default(),
+            max_in_flight: Default::default(),
+            spans: Default::default(),
+        };
+        compile_sources_parallel_shared(
+            &compiler,
+            &sources,
+            &tmp.path().join("obj"),
+            &LanguageExtraFlags::default(),
+            &Arc::new(Semaphore::new(1)),
+            None,
+            Some(cache_dir.path()),
+        )
+        .await
+        .unwrap();
+
+        let mut spans = compiler.spans.lock().unwrap().clone();
+        spans.sort_by_key(|span| span.1);
+        let started: Vec<String> = spans
+            .iter()
+            .map(|span| span.0.file_name().unwrap().to_string_lossy().into_owned())
+            .collect();
+        assert_eq!(
+            started[0], "z_slow.cpp",
+            "the longest recorded TU must start first, got {started:?}"
+        );
+
+        // A history record now exists for every compiled TU (recorded after
+        // its own successful compile).
+        for source in &sources {
+            let signature = source.to_string_lossy().into_owned();
+            assert!(
+                fbuild_packages::library::tu_history::lookup_in(
+                    cache_dir.path(),
+                    source,
+                    &signature
+                )
+                .is_some(),
+                "expected a recorded duration for {source:?}"
+            );
+        }
     }
 }
