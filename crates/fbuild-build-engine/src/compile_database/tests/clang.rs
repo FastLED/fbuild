@@ -424,7 +424,7 @@ fn translate_for_clang_uses_only_the_entrys_own_toolchain_include_dirs() {
     // FastLED/fbuild#1538: an esp32s3 database must not carry the AVR (or any
     // other cached toolchain's) builtin include dirs.
     let cache = tempfile::tempdir_in(fbuild_paths::temp_subdir("compile-db-tests")).unwrap();
-    let mut include_of = |toolchain: &str, triple: &str, ver: &str| {
+    let include_of = |toolchain: &str, triple: &str, ver: &str| {
         let include = cache
             .path()
             .join(toolchain)
