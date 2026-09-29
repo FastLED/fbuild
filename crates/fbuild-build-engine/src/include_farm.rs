@@ -29,7 +29,7 @@ use fbuild_core::path::NormalizedPath;
 use serde::{Deserialize, Serialize};
 
 /// Bumped whenever the farm layout or its planning rules change.
-const FORMAT_VERSION: u32 = 2;
+const FORMAT_VERSION: u32 = 3;
 const MANIFEST: &str = "farm.json";
 
 /// A materialized farm plus the block directories that stay separate.
@@ -416,13 +416,19 @@ fn quoted_include_conflicts(
                 return false;
             }
             quoted_includes(&block[owner].join(rel)).iter().any(|name| {
-                // A miss beside the file falls through to the same `-I` chain
-                // both ways; the farm cannot change the chain's answer
-                // because farmed paths are unique.
+                // A miss beside the file falls through to the `-I` chain, which
+                // after farming searches the farm in place of the farmed dirs.
                 let chain = || chain_lookup(index, name);
-                let beside = format!("{parent}/{name}");
+                let farm_chain = || farm_chain_lookup(root, index, farmed, name);
+                // A top-level header has no parent; a leading `/` would make the
+                // include absolute and hide a `..` that climbs out of the farm.
+                let beside = if parent.is_empty() {
+                    name.clone()
+                } else {
+                    format!("{parent}/{name}")
+                };
                 let original = index.in_block(owner, &beside).or_else(chain);
-                let farm = beside_farm(root, index, &beside).or_else(chain);
+                let farm = beside_farm(root, index, &beside).or_else(farm_chain);
                 original != farm
             })
         });
@@ -479,6 +485,24 @@ fn chain_lookup(index: &Index<'_>, name: &str) -> Option<String> {
     (0..index.before.len())
         .find_map(|i| index.in_before(i, name))
         .or_else(|| (0..index.block.len()).find_map(|i| index.in_block(i, name)))
+}
+
+/// `name` looked up through the post-farm `-I` chain: `before`, the farm,
+/// then the block directories kept out of it.
+fn farm_chain_lookup(
+    root: &Node,
+    index: &Index<'_>,
+    farmed: &[bool],
+    name: &str,
+) -> Option<String> {
+    (0..index.before.len())
+        .find_map(|i| index.in_before(i, name))
+        .or_else(|| beside_farm(root, index, name))
+        .or_else(|| {
+            (0..index.block.len())
+                .filter(|&i| !farmed[i])
+                .find_map(|i| index.in_block(i, name))
+        })
 }
 
 /// `beside` (the including file's directory joined with the include name)
