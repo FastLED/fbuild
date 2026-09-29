@@ -27,5 +27,5 @@ pub use reset::reset;
 
 // `pub(crate)` re-exports for sibling handler modules
 // (`handlers::emulator` consumes these).
-pub(crate) use common::{OperationGuard, qemu_extra_build_flags};
+pub(crate) use common::{OperationGuard, qemu_extra_build_flags, resolve_request_project_dir};
 pub(crate) use monitor::{MonitorOutcome, MonitorState};

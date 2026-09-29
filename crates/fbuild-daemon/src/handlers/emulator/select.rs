@@ -146,7 +146,11 @@ pub async fn test_emu(
         .request_id
         .clone()
         .unwrap_or_else(|| uuid::Uuid::new_v4().to_string());
-    let project_dir = PathBuf::from(&req.project_dir);
+    // Resolve against the caller's cwd, not the daemon's (FastLED/fbuild#1415).
+    let project_dir = crate::handlers::operations::resolve_request_project_dir(
+        &req.project_dir,
+        req.caller_cwd.as_deref(),
+    );
 
     // Mark the daemon as busy for the full build + emulate lifecycle.
     // Without this guard the 30 s self-eviction loop sees an "empty"
@@ -157,7 +161,7 @@ pub async fn test_emu(
     let _op_guard = crate::handlers::operations::OperationGuard::new(
         &ctx,
         fbuild_core::DaemonState::Building,
-        Some(format!("test-emu {}", req.project_dir)),
+        Some(format!("test-emu {}", project_dir.display())),
     );
 
     if !project_dir.exists() {
@@ -165,7 +169,10 @@ pub async fn test_emu(
             StatusCode::BAD_REQUEST,
             Json(OperationResponse::fail(
                 request_id,
-                format!("project directory does not exist: {}", req.project_dir),
+                format!(
+                    "project directory does not exist: {}",
+                    project_dir.display()
+                ),
             )),
         );
     }
