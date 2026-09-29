@@ -217,53 +217,12 @@ pub async fn compile_project_as_library(
     existing_lib_names: &std::collections::HashSet<String>,
     gate: &fbuild_packages::library::library_compiler::JobGate,
 ) -> Result<Option<PathBuf>> {
-    // Guard 1: must be a library project (library.json or library.properties at root).
-    if !is_project_a_library(project_dir) {
+    let Some((lib_name, sources)) =
+        project_library_candidate(project_dir, src_dir, existing_lib_names, true)
+    else {
         return Ok(None);
-    }
-
-    // Guard 2: project must have a src/ dir.
+    };
     let project_src = project_dir.join("src");
-    if !project_src.is_dir() {
-        return Ok(None);
-    }
-
-    // Guard 3: must be building an example. If src_dir IS the project's own
-    // src/, we're doing a normal library self-build and the sketch scanner
-    // is already compiling these sources — don't double-compile.
-    // Also guard the BuildContext fallback where src_dir collapses to
-    // project_dir (would cause the scanner to recursively pick up library
-    // sources, leading to multiply-defined symbols).
-    if src_dir == project_src || src_dir == project_dir {
-        return Ok(None);
-    }
-
-    // Compute lib name from project dir basename.
-    let lib_name = project_dir
-        .file_name()
-        .and_then(|n| n.to_str())
-        .unwrap_or("project")
-        .to_lowercase();
-
-    // Guard 4: collision with a lib/<name>/ subdirectory — lib/ wins
-    // (matches PlatformIO behavior).
-    if existing_lib_names.contains(&lib_name) {
-        tracing::warn!(
-            "project-as-library '{}' collides with lib/{} — skipping project root",
-            lib_name,
-            lib_name
-        );
-        return Ok(None);
-    }
-
-    // Discover sources via the same helper used for installed libraries.
-    let lib_info =
-        fbuild_packages::library::library_info::InstalledLibrary::new(project_dir, &lib_name);
-    let sources = lib_info.get_source_files();
-    if sources.is_empty() {
-        tracing::info!("project-as-library '{}' is header-only", lib_name);
-        return Ok(None);
-    }
 
     tracing::info!(
         "compiling project-as-library: {} ({} sources from {})",
@@ -307,6 +266,79 @@ pub async fn compile_project_as_library(
             lib_name, e
         ))),
     }
+}
+
+/// Name of the archive [`compile_project_as_library`] produces
+/// (`lib{name}.a`), or `None` when it produces none. Known before anything
+/// compiles, so a build can plan around it (FastLED/fbuild#1559).
+pub fn project_library_name(
+    project_dir: &Path,
+    src_dir: &Path,
+    existing_lib_names: &std::collections::HashSet<String>,
+) -> Option<String> {
+    project_library_candidate(project_dir, src_dir, existing_lib_names, false).map(|(name, _)| name)
+}
+
+/// The project-as-library name and sources, when every guard passes and the
+/// library has sources. `log` reports the collision / header-only skips.
+fn project_library_candidate(
+    project_dir: &Path,
+    src_dir: &Path,
+    existing_lib_names: &std::collections::HashSet<String>,
+    log: bool,
+) -> Option<(String, Vec<PathBuf>)> {
+    // Guard 1: must be a library project (library.json or library.properties at root).
+    if !is_project_a_library(project_dir) {
+        return None;
+    }
+
+    // Guard 2: project must have a src/ dir.
+    let project_src = project_dir.join("src");
+    if !project_src.is_dir() {
+        return None;
+    }
+
+    // Guard 3: must be building an example. If src_dir IS the project's own
+    // src/, we're doing a normal library self-build and the sketch scanner
+    // is already compiling these sources — don't double-compile.
+    // Also guard the BuildContext fallback where src_dir collapses to
+    // project_dir (would cause the scanner to recursively pick up library
+    // sources, leading to multiply-defined symbols).
+    if src_dir == project_src || src_dir == project_dir {
+        return None;
+    }
+
+    // Compute lib name from project dir basename.
+    let lib_name = project_dir
+        .file_name()
+        .and_then(|n| n.to_str())
+        .unwrap_or("project")
+        .to_lowercase();
+
+    // Guard 4: collision with a lib/<name>/ subdirectory — lib/ wins
+    // (matches PlatformIO behavior).
+    if existing_lib_names.contains(&lib_name) {
+        if log {
+            tracing::warn!(
+                "project-as-library '{}' collides with lib/{} — skipping project root",
+                lib_name,
+                lib_name
+            );
+        }
+        return None;
+    }
+
+    // Discover sources via the same helper used for installed libraries.
+    let lib_info =
+        fbuild_packages::library::library_info::InstalledLibrary::new(project_dir, &lib_name);
+    let sources = lib_info.get_source_files();
+    if sources.is_empty() {
+        if log {
+            tracing::info!("project-as-library '{}' is header-only", lib_name);
+        }
+        return None;
+    }
+    Some((lib_name, sources))
 }
 
 /// `lib_deps` resolved and installed, compiled later on the build's shared
@@ -721,5 +753,47 @@ mod project_as_library_tests {
         if let Ok(None) = result {
             panic!("expected compile to be attempted, but a guard returned Ok(None)");
         }
+    }
+
+    /// FastLED/fbuild#1559: `project_library_name` predicts, before anything
+    /// compiles, exactly when `compile_project_as_library` yields an archive.
+    #[test]
+    fn test_project_library_name_matches_the_compile_guards() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let project_dir = tmp.path().join("FastLED");
+        let project_src = project_dir.join("src");
+        let example = project_dir.join("examples").join("Blink");
+        std::fs::create_dir_all(&project_src).unwrap();
+        std::fs::create_dir_all(&example).unwrap();
+        let none = HashSet::new();
+
+        // Not a library project yet.
+        std::fs::write(project_src.join("FastLED.cpp"), "").unwrap();
+        assert_eq!(project_library_name(&project_dir, &example, &none), None);
+
+        std::fs::write(project_dir.join("library.json"), "{}").unwrap();
+        assert_eq!(
+            project_library_name(&project_dir, &example, &none).as_deref(),
+            Some("fastled")
+        );
+        // A normal self-build, or a src dir collapsed to the project root.
+        assert_eq!(
+            project_library_name(&project_dir, &project_src, &none),
+            None
+        );
+        assert_eq!(
+            project_library_name(&project_dir, &project_dir, &none),
+            None
+        );
+        // lib/fastled wins.
+        let collision: HashSet<String> = ["fastled".to_string()].into();
+        assert_eq!(
+            project_library_name(&project_dir, &example, &collision),
+            None
+        );
+        // Header-only.
+        std::fs::remove_file(project_src.join("FastLED.cpp")).unwrap();
+        std::fs::write(project_src.join("FastLED.h"), "").unwrap();
+        assert_eq!(project_library_name(&project_dir, &example, &none), None);
     }
 }

@@ -1119,6 +1119,7 @@ dependencies = [
  "fbuild-test-support",
  "filetime",
  "flate2",
+ "futures",
  "object 0.36.7",
  "owo-colors",
  "regex",
