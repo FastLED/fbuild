@@ -17,12 +17,12 @@ Build succeeds → orchestrator now propagates `build_flags` to libraries.
 
 ## Driver
 
-The driver lives at `crates/fbuild-build/tests/nxplpc_build_flags.rs` and is
+The driver lives at `crates/fbuild-build/tests/it/nxplpc_build_flags.rs` and is
 marked `#[ignore]` because it downloads the ARM GCC toolchain plus the vendored
 ArduinoCore-LPC8xx and performs a real link. Invoke with:
 
 ```
-soldr cargo test -p fbuild-build --test nxplpc_build_flags -- --ignored
+soldr cargo test -p fbuild-build --test it nxplpc_build_flags:: -- --ignored
 ```
 
 See also: `tests/platform/lpc845/` (the pre-existing Blink fixture, no

@@ -95,7 +95,7 @@ since the raw-`.ino` entry carries the same flags the generated `.ino.cpp`
 entry would have carried.
 
 The harness lives at
-`crates/fbuild-build/tests/clangd_check_parity.rs` and is `#[ignore]`d
+`crates/fbuild-build/tests/it/clangd_check_parity.rs` and is `#[ignore]`d
 (needs a real AVR toolchain — commonly already cached from other AVR tests
 — and `clangd` on `PATH`, which fbuild does not manage/download itself; Zed
 manages its own clangd, so fbuild deliberately doesn't duplicate that).
@@ -109,7 +109,7 @@ To run it locally:
 2. Run the ignored test by name:
 
    ```bash
-   soldr cargo test -p fbuild-build --test clangd_check_parity -- --ignored --nocapture
+   soldr cargo test -p fbuild-build --test it clangd_check_parity:: -- --ignored --nocapture
    ```
 
 If `clangd` isn't found on `PATH`, the test prints a `SKIP:` message and

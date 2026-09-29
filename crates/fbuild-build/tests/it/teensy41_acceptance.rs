@@ -25,8 +25,8 @@
 //! and no scratch artifacts land in the repo.
 //!
 //! Run with:
-//! `soldr cargo test -p fbuild-build --release --test teensy41_acceptance \
-//!     -- --ignored teensy41_cold_library_selection_meets_205_ac6 --nocapture`
+//! `soldr cargo test -p fbuild-build --release --test it \
+//!     -- --ignored teensy41_acceptance::teensy41_cold_library_selection_meets_205_ac6 --nocapture`
 //!
 //! Marked `#[ignore]` because it downloads Teensyduino on the first run
 //! (cached after) — too heavy for default `cargo test`.

@@ -139,6 +139,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           ref: ${{ needs.verify.outputs.candidate_sha }}
+          persist-credentials: false
       - uses: zackees/setup-soldr@dfbe9627f6cb0226716b61625b99a58949162720
         with:
           cache-preset: foundation

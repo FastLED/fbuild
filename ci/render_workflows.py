@@ -219,6 +219,7 @@ def render_fbuild_bin_job(needs: str, condition: str, ref: str) -> str:
         "      - uses: actions/checkout@v6\n"
         "        with:\n"
         f"          ref: {ref}\n"
+        "          persist-credentials: false\n"
         "      - uses: zackees/setup-soldr@dfbe9627f6cb0226716b61625b99a58949162720\n"
         "        with:\n"
         "          cache-preset: foundation\n"
@@ -625,11 +626,22 @@ def render_nightly(boards: list[dict]) -> str:
         "          GH_REPO: ${{ github.repository }}\n"
         "          WORKFLOWS: ${{ needs.plan.outputs.workflows }}\n"
         "        run: |\n"
+        # One failed dispatch (API blip, rate limit) must not strand every
+        # later board's badge: keep going, then fail once at the end.
+        "          failed=()\n"
         "          for wf in $(echo \"$WORKFLOWS\" | jq -r '.[]'); do\n"
-        "            gh workflow run \"$wf\" --ref \"$GITHUB_REF_NAME\" \\\n"
-        "              -f fbuild-run-id=\"$GITHUB_RUN_ID\" -f checkout_ref=\"$GITHUB_SHA\"\n"
-        "            echo \"dispatched $wf\"\n"
+        "            if gh workflow run \"$wf\" --ref \"$GITHUB_REF_NAME\" \\\n"
+        "              -f fbuild-run-id=\"$GITHUB_RUN_ID\" -f checkout_ref=\"$GITHUB_SHA\"; then\n"
+        "              echo \"dispatched $wf\"\n"
+        "            else\n"
+        "              echo \"::error::failed to dispatch $wf\"\n"
+        "              failed+=(\"$wf\")\n"
+        "            fi\n"
         "          done\n"
+        "          if [ \"${#failed[@]}\" -gt 0 ]; then\n"
+        "            echo \"failed to dispatch: ${failed[*]}\" >&2\n"
+        "            exit 1\n"
+        "          fi\n"
     )
     return header + render_fbuild_bin_job(
         "plan", "    if: needs.plan.outputs.workflows != '[]'\n", "${{ github.sha }}"

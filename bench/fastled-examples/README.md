@@ -22,7 +22,7 @@ fresh `FileKvStore`:
 The framework library set is a synthetic Teensyduino-class stub built
 via `MiniFramework`. The bench measures resolver throughput, not the
 correctness of which libraries get selected — that is the acceptance-test
-layer (`crates/fbuild-build/tests/teensylc_acceptance.rs`).
+layer (`crates/fbuild-build/tests/it/teensylc_acceptance.rs`).
 
 ## Running
 
