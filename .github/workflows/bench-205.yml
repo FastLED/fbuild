@@ -45,7 +45,7 @@ jobs:
           ref: ${{ inputs.ref }}
       - uses: astral-sh/setup-uv@v3
       - name: Setup soldr
-        uses: zackees/setup-soldr@v0
+        uses: zackees/setup-soldr@aa75de0e55ed9751cdee04bf5200c46fe8d59851 # v0.9.84
         with:
           cache: true
           build-cache: true
@@ -87,7 +87,7 @@ jobs:
           ref: ${{ inputs.ref }}
       - uses: astral-sh/setup-uv@v3
       - name: Setup soldr
-        uses: zackees/setup-soldr@v0
+        uses: zackees/setup-soldr@aa75de0e55ed9751cdee04bf5200c46fe8d59851 # v0.9.84
         with:
           cache: true
           build-cache: true

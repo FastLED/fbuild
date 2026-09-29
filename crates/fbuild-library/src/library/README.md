@@ -9,7 +9,6 @@ Arduino library and framework dependency management: spec parsing, download, com
 - **`library_downloader.rs`** -- Downloads libraries from GitHub URLs or the PlatformIO registry
 - **`library_info.rs`** -- Scans installed libraries for include directories and source files
 - **`library_compiler.rs`** -- Compiles library C/C++ sources and archives into static `.a` files
-- **`tu_history.rs`** -- Per-TU compile duration history under the cache root, used to dispatch the longest translation units first (FastLED/fbuild#1564)
 - **`library_manager.rs`** -- Top-level orchestrator: spec parsing, download, discovery, compile, archive
 - **`registry.rs`** -- PlatformIO registry API client with semver version constraint resolution
 - **`arduino_core.rs`** -- Arduino AVR Core framework package (ArduinoCore-avr from GitHub)

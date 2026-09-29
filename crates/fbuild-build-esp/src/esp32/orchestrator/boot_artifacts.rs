@@ -24,12 +24,14 @@ pub(super) async fn prepare_boot_artifacts(
     flash_freq: &str,
     esptool_bin: Option<&Path>,
     caller_path: Option<&str>,
-) -> Result<std::time::Duration> {
+    perf: &mut crate::perf_log::PerfTimer,
+) -> Result<()> {
     // FastLED/fbuild#1219: bare-name tool spawns below (`esptool` fallback,
     // python interpreter) resolve against the CLI caller's PATH when it was
     // forwarded; `None` keeps the daemon's spawn-time env.
     let spawn_env: Option<Vec<(&str, &str)>> = caller_path.map(|p| vec![("PATH", p)]);
     let boot_artifacts_started = Instant::now();
+    perf.checkpoint("boot-artifacts-start");
     // SDK directory selector matching the chip's ROM revision (e.g. `esp32p4_es`
     // for ESP32-P4 eco0–eco2). The bootloader ELF must come from the same SDK
     // variant the app is linked against, or the ROM jumps into an illegal
@@ -147,12 +149,9 @@ pub(super) async fn prepare_boot_artifacts(
             // `python` doesn't exist on modern distros (ubuntu 24.04 ships
             // only `python3`); resolve the interpreter the same way the
             // extra_scripts runtime does.
-            let python = match managed_python(esptool_bin) {
-                Some(python) => vec![python.to_string_lossy().into_owned()],
-                None => crate::script_runtime::find_python_with_path(caller_path)
-                    .await
-                    .unwrap_or_else(|| vec!["python".to_string()]),
-            };
+            let python = crate::script_runtime::find_python_with_path(caller_path)
+                .await
+                .unwrap_or_else(|| vec!["python".to_string()]);
             let mut args: Vec<&str> = python.iter().map(|s| s.as_str()).collect();
             args.extend([
                 gen_tool_str.as_ref(),
@@ -193,20 +192,9 @@ pub(super) async fn prepare_boot_artifacts(
         std::fs::copy(&boot_app0_src, &boot_app0_dst)?;
         tracing::info!("copied boot_app0.bin");
     }
-    Ok(boot_artifacts_started.elapsed())
-}
-
-/// The interpreter inside the managed esptool's environment. fbuild installed
-/// and verified it, and `gen_esp32part.py` needs only the standard library, so
-/// it wins over PATH's `python`: a broken alias there (the Windows Store stub,
-/// a session-bound shim) silently left the build without `partitions.bin`,
-/// which kept the warm fast path from ever persisting (FastLED/fbuild#1542).
-fn managed_python(esptool_bin: Option<&Path>) -> Option<NormalizedPath> {
-    let dir = esptool_bin?.parent()?;
-    ["python3", "python", "python.exe"]
-        .into_iter()
-        .map(|name| NormalizedPath::new(dir.join(name)))
-        .find(|candidate| candidate.as_path().is_file())
+    perf.record("boot-artifacts", boot_artifacts_started.elapsed());
+    perf.checkpoint("boot-artifacts-finish");
+    Ok(())
 }
 
 /// Size of the app partition the firmware is flashed into, which is what an
@@ -302,25 +290,6 @@ fn resolve_partitions_csv(
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn managed_python_is_the_interpreter_beside_esptool() {
-        let tmp = tempfile::TempDir::new().unwrap();
-        let esptool = tmp.path().join("esptool.py");
-        std::fs::write(&esptool, "").unwrap();
-        assert_eq!(managed_python(Some(&esptool)), None);
-
-        std::fs::write(tmp.path().join("python3"), "").unwrap();
-        assert_eq!(
-            managed_python(Some(&esptool)),
-            Some(NormalizedPath::new(tmp.path().join("python3")))
-        );
-    }
-
-    #[test]
-    fn no_managed_esptool_means_no_managed_python() {
-        assert_eq!(managed_python(None), None);
-    }
 
     /// Arduino-ESP32's `default.csv`: two OTA slots, no factory.
     const DEFAULT_CSV: &str = "# Name,   Type, SubType, Offset,  Size, Flags

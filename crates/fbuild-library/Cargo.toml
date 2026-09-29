@@ -14,7 +14,6 @@ fbuild-core = { path = "../fbuild-core" }
 fbuild-paths = { path = "../fbuild-paths" }
 fbuild-config = { path = "../fbuild-config" }
 async-trait = { workspace = true }
-futures = { workspace = true }
 tokio = { workspace = true }
 reqwest = { workspace = true }
 serde = { workspace = true }
@@ -23,7 +22,6 @@ thiserror = { workspace = true }
 tracing = { workspace = true }
 tempfile = { workspace = true }
 sha2 = { workspace = true }
-blake3 = { workspace = true }
 flate2 = { workspace = true }
 tar = { workspace = true }
 zip = { workspace = true }

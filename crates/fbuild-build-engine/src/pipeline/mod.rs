@@ -21,8 +21,8 @@ pub use compile::{
 };
 pub use context::BuildContext;
 pub use library::{
-    LibDeps, LibraryBuildEnv, add_extra_library_include_dirs, compile_extra_libraries,
-    compile_project_as_library, discover_extra_library_roots, pick_archiver, project_library_name,
+    LibraryBuildEnv, add_extra_library_include_dirs, compile_extra_libraries,
+    compile_project_as_library, discover_extra_library_roots, ensure_lib_deps, pick_archiver,
     resolve_lib_deps,
 };
 pub use link::{assemble_build_result, handle_link_result};

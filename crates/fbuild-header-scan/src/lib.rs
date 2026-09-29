@@ -14,8 +14,8 @@ pub use scanner::{
     scan, scan_active, scan_active_with_known,
 };
 pub use walker::{
-    WalkResult, WalkState, collect_defined_macro_names, collect_defined_macro_names_with, walk,
-    walk_active, walk_with_state, walk_with_state_active, walk_with_state_active_known,
+    WalkResult, WalkState, collect_defined_macro_names, walk, walk_active, walk_with_state,
+    walk_with_state_active, walk_with_state_active_known,
 };
 
 /// Bumped whenever the scanner output shape changes. Mixed into cache keys so a

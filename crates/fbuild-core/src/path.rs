@@ -407,52 +407,12 @@ pub fn normalize_flags_for_compile_cwd(flags: &[String], cwd: &Path) -> Vec<Stri
     normalized
 }
 
-/// Upper bound on memoized `realpath` results. A build resolves a few hundred
-/// distinct flag paths; the cap only exists so the map cannot grow without
-/// bound in a long-lived daemon.
-const CANONICALIZE_MEMO_CAPACITY: usize = 8192;
-
-/// Memo for [`canonicalize_lexical`]'s successful `realpath` results.
-///
-/// Signature building normalizes every path-bearing flag of every source, so
-/// the *same* include directories are canonicalized once per translation unit.
-/// On ESP32-S3 that is 385 dirs x 46 sources x 2 (`path` + `cwd`) = ~35,000
-/// `realpath` syscalls per build, ~670 ms, on the hot path of every cold *and*
-/// warm build (FastLED/fbuild#1537).
-///
-/// Only full `path.canonicalize()` successes are memoized. The
-/// parent-plus-filename fallback is deliberately not: it is the branch that
-/// answers for paths that do not exist yet, so caching it would keep reporting
-/// a not-yet-created directory as missing for the rest of the process. A
-/// memoized hit is therefore always a path that existed and was resolved once.
-fn canonicalize_memo() -> &'static std::sync::RwLock<std::collections::HashMap<PathBuf, PathBuf>> {
-    static MEMO: std::sync::OnceLock<
-        std::sync::RwLock<std::collections::HashMap<PathBuf, PathBuf>>,
-    > = std::sync::OnceLock::new();
-    MEMO.get_or_init(|| std::sync::RwLock::new(std::collections::HashMap::new()))
-}
-
 /// Canonicalize an existing path (stripping the Windows `\\?\` prefix),
 /// falling back to canonicalizing the parent + rejoining the file name when
 /// the full path does not yet exist. Returns `None` if neither resolves.
 fn canonicalize_lexical(path: &Path) -> Option<PathBuf> {
-    if let Some(hit) = canonicalize_memo()
-        .read()
-        .unwrap_or_else(|e| e.into_inner())
-        .get(path)
-    {
-        return Some(hit.clone());
-    }
     if let Ok(canonical) = path.canonicalize() {
-        let resolved = strip_unc_prefix(&canonical);
-        let mut memo = canonicalize_memo()
-            .write()
-            .unwrap_or_else(|e| e.into_inner());
-        if memo.len() >= CANONICALIZE_MEMO_CAPACITY {
-            memo.clear();
-        }
-        memo.insert(path.to_path_buf(), resolved.clone());
-        return Some(resolved);
+        return Some(strip_unc_prefix(&canonical));
     }
     let parent = path.parent()?.canonicalize().ok()?;
     let joined = match path.file_name() {
@@ -872,33 +832,6 @@ mod tests {
             "compile arg must not contain backslashes: {arg}"
         );
         assert_eq!(arg, "src/sketch/main.cpp");
-    }
-
-    #[test]
-    fn canonicalize_lexical_memoizes_resolved_paths() {
-        let tmp = tempfile::TempDir::new().unwrap();
-        let dir = tmp.path().join("include");
-        std::fs::create_dir_all(&dir).unwrap();
-        let resolved = dir.canonicalize().unwrap();
-        assert_eq!(canonicalize_lexical(&dir), Some(resolved.clone()));
-        // A second call is served from the memo rather than a fresh realpath.
-        assert_eq!(canonicalize_lexical(&dir), Some(resolved));
-    }
-
-    #[test]
-    fn canonicalize_lexical_does_not_memoize_the_missing_parent_fallback() {
-        let tmp = tempfile::TempDir::new().unwrap();
-        let missing = tmp.path().join("later");
-        // First call takes the parent-plus-filename fallback.
-        let before = canonicalize_lexical(&missing).unwrap();
-        assert!(before.ends_with("later"));
-        std::fs::create_dir_all(&missing).unwrap();
-        // Once the directory exists the real path must win, so the fallback
-        // result cannot have been memoized.
-        assert_eq!(
-            canonicalize_lexical(&missing),
-            Some(missing.canonicalize().unwrap())
-        );
     }
 
     #[test]

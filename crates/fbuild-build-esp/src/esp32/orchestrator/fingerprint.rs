@@ -30,9 +30,6 @@ pub(super) struct Esp32FingerprintMetadata {
     pub max_flash: Option<u64>,
     pub max_ram: Option<u64>,
     pub eh_frame_policy: &'static str,
-    /// SDK `-D` flags reach every TU but come from the framework, not the
-    /// project config, so a change there must not replay a stale fast path.
-    pub sdk_defines: Vec<String>,
 }
 
 #[cfg(test)]
@@ -67,7 +64,6 @@ mod tests {
             eh_frame_policy: "preserve",
             toolchain_name: toolchain_name.into(),
             toolchain_version: toolchain_version.into(),
-            sdk_defines: vec!["-DESP_PLATFORM".into()],
         }
     }
 
@@ -83,16 +79,5 @@ mod tests {
             serde_json::to_vec(&metadata("toolchain-xtensa-esp32s3", "14.2.0")).unwrap();
         assert_ne!(original, different_name);
         assert_ne!(original, different_version);
-    }
-
-    #[test]
-    fn sdk_defines_change_fast_path_metadata() {
-        let original = metadata("toolchain-xtensa-esp32s3", "8.4.0+2021r2-patch5");
-        let mut without = metadata("toolchain-xtensa-esp32s3", "8.4.0+2021r2-patch5");
-        without.sdk_defines.clear();
-        assert_ne!(
-            serde_json::to_vec(&original).unwrap(),
-            serde_json::to_vec(&without).unwrap()
-        );
     }
 }

@@ -33,7 +33,7 @@ jobs:
         with:
           persist-credentials: false
       - uses: astral-sh/setup-uv@v3
-      - uses: zackees/setup-soldr@v0
+      - uses: zackees/setup-soldr@aa75de0e55ed9751cdee04bf5200c46fe8d59851 # v0.9.84
         with:
           cache: true
           toolchain: 1.95.0

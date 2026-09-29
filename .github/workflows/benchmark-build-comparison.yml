@@ -41,7 +41,7 @@ jobs:
       - uses: astral-sh/setup-uv@v3
 
       - name: Setup soldr
-        uses: zackees/setup-soldr@v0
+        uses: zackees/setup-soldr@aa75de0e55ed9751cdee04bf5200c46fe8d59851 # v0.9.84
         with:
           cache: true
           build-cache: true
@@ -151,11 +151,10 @@ jobs:
                    "- fbuild_overhead_ms: \(.fbuild_overhead_ms // "n/a")",
                    "- fbuild_vs_platformio_cold: \(.fbuild_vs_platformio_cold // "n/a")"' "${latest}"
             echo
-            echo "| board | tool | phase | cold ms |"
-            echo "|---|---|---|---:|"
-            jq -r '.results[]? | select(.tool == "fbuild" or .tool == "platformio")
-                   | . as $r | (.cold_phases_ms // {}) | to_entries[]?
-                   | "| \($r.board) | \($r.tool) | \(.key) | \(.value // "n/a") |"' "${latest}"
+            echo "| fbuild phase | cold ms |"
+            echo "|---|---:|"
+            jq -r '([.results[]? | select(.tool == "fbuild") | .cold_phases_ms // {}] | first // {})
+                   | to_entries[]? | "| \(.key) | \(.value // "n/a") |"' "${latest}"
           } >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Upload benchmark site snapshot

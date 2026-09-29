@@ -34,7 +34,7 @@ impl FrameworkLibraryCache {
     }
 
     #[cfg(test)]
-    pub(super) fn with_cache_root(
+    fn with_cache_root(
         project_dir: &Path,
         cache_root: &Path,
         profile: BuildProfile,

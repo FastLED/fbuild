@@ -17,10 +17,10 @@ use super::boot_artifacts::prepare_boot_artifacts;
 use super::cdc::warn_if_cdc_on_boot;
 use super::embed_stage::stage_embed_files;
 use super::fingerprint::Esp32FingerprintMetadata;
-use super::framework_libs::prepare_framework_libs;
+use super::framework_libs::compile_framework_builtin_libs;
 use super::helpers::{
-    SdkIncludeFarm, apply_effective_define_flags, compile_db_is_current, compile_include_dirs,
-    framework_macro_prefix_map, profile_label, reject_unsupported_sdkconfig_overlay,
+    apply_effective_define_flags, compile_db_is_current, framework_macro_prefix_map, profile_label,
+    reject_unsupported_sdkconfig_overlay,
 };
 use super::local_libs::compile_local_libraries;
 use super::packages::resolve_pioarduino_packages;
@@ -30,6 +30,7 @@ use crate::build_fingerprint::{
     expected_fast_path_artifacts, stable_hash_with_build_config,
 };
 use crate::compiler::Compiler as _;
+use crate::flag_overlay::apply_overlay_flags;
 use crate::linker::LinkerScripts;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 
@@ -123,6 +124,9 @@ impl BuildOrchestrator for Esp32Orchestrator {
             mcu_config.disable_lto();
         }
 
+        let mut user_flags = sdk_defines;
+        let user_build_flags = ctx.config.get_build_flags(&params.env_name)?;
+        user_flags.extend(user_build_flags.clone());
         let embed_files = ctx.config.get_embed_files(&params.env_name)?;
         let embed_txtfiles = ctx.config.get_embed_txtfiles(&params.env_name)?;
 
@@ -159,7 +163,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
                     crate::eh_frame_policy::EhFramePolicy::Strip => "strip",
                     crate::eh_frame_policy::EhFramePolicy::Preserve => "preserve",
                 },
-                sdk_defines,
             },
             &ctx,
         )?;
@@ -225,12 +228,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
 
         // FastLED/fbuild#800: the `zccache start` daemon-spawn was deleted.
         // The embedded service is part of fbuild-daemon's own lifecycle.
-        // Toolchain and framework install independently (FastLED/fbuild#1559).
-        let (toolchain_dir, framework_dir) = tokio::join!(
-            fbuild_packages::Package::ensure_installed(&toolchain),
-            fbuild_packages::Package::ensure_installed(&framework)
-        );
-        let toolchain_dir = toolchain_dir?;
+        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!(
             "ESP32 {} toolchain at {}",
             if mcu_config.is_riscv() {
@@ -241,7 +239,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             toolchain_dir.display()
         );
 
-        let framework_dir = framework_dir?;
+        let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("ESP32 framework at {}", framework_dir.display());
 
         let tc_label = format!("{}gcc", mcu_config.toolchain_prefix());
@@ -263,11 +261,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
             include_dirs.push(variant_dir.clone());
         }
         // Add SDK include paths (294+ paths from ESP-IDF)
-        let sdk_block_start = include_dirs.len();
         include_dirs
             .extend(framework.get_sdk_include_dirs(&sdk_variant, sdk_memory_type.as_deref()));
-        let sdk_farm =
-            SdkIncludeFarm::build(&include_dirs, sdk_block_start..include_dirs.len()).await;
 
         let builtin_libs_dir = framework.get_libraries_dir();
 
@@ -315,13 +310,13 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let lib_ignore = ctx.config.get_lib_ignore(&params.env_name)?;
 
         use fbuild_packages::Toolchain;
+        let mut library_archives = Vec::new();
 
         // Read user build_flags early â€” needed for both library and sketch compilation.
         // SDK defines (from flags/defines) are prepended so user flags can override them.
         let mut user_flags = sdk_defines.clone();
         // Before the user's build_flags, so their own prefix maps still win.
         user_flags.extend(framework_macro_prefix_map(&core_dir));
-        user_flags.extend(sdk_farm.as_ref().map(SdkIncludeFarm::macro_prefix_map));
         let mut user_build_flags = ctx.config.get_build_flags(&params.env_name)?;
         user_build_flags.extend(params.extra_build_flags.clone());
         user_flags.extend(user_build_flags.clone());
@@ -338,35 +333,67 @@ impl BuildOrchestrator for Esp32Orchestrator {
         );
         crate::warn_debug_build_flags(&user_build_flags);
 
-        // External libraries are planned before their framework dependencies
-        // are selected. Give their compilation all bundled include roots, then
-        // seed the later LDF pass with their source files to select only the
-        // archives that external code actually reaches. Nothing compiles here:
-        // the plan joins the build's one job pool below (FastLED/fbuild#1559).
+        // External libraries compile before their framework dependencies are
+        // selected. Give that compilation all bundled include roots, then seed
+        // the later LDF pass with its source files to select only the archives
+        // that external code actually reaches.
         let mut external_base_includes = include_dirs.clone();
         external_base_includes.extend(
             framework_libraries
                 .iter()
                 .flat_map(|library| library.include_dirs.iter().cloned()),
         );
-        let external_compile_includes =
-            compile_include_dirs(sdk_farm.as_ref(), &external_base_includes);
         let mut external_library_sources = Vec::new();
-        let mut lib_deps_plan = None;
 
         if !lib_deps.is_empty() {
-            let resolved = super::helpers::resolve_lib_deps(
-                params,
+            let libs_dir = build_dir.join("libs");
+
+            // Build compiler to get flags for library compilation
+            let mut defines = ctx.board.get_defines();
+            defines.extend(mcu_config.defines_map());
+
+            let temp_compiler = Esp32Compiler::with_temp_dir(
+                toolchain.get_gcc_path(),
+                toolchain.get_gxx_path(),
+                mcu_config.clone(),
+                &ctx.board.f_cpu,
+                defines.clone(),
+                external_base_includes.clone(),
+                params.profile,
+                params.verbose,
+                build_dir.join("tmp"),
+            )
+            .with_build_unflags(ctx.build_unflags.clone())
+            .with_eh_frame_policy(eh_frame_policy);
+            // Apply user build_flags to library compilation (matching PlatformIO behavior).
+            // User flags like -std=gnu++2a replace the MCU config's -std=gnu++2b.
+            let c_flags = apply_overlay_flags(&temp_compiler.c_flags(), &user_overlay, "dummy.c");
+            let cpp_flags =
+                apply_overlay_flags(&temp_compiler.cpp_flags(), &user_overlay, "dummy.cpp");
+
+            let jobs = crate::parallel::effective_jobs(params.jobs);
+            // Use gcc-ar for LTO archives so the linker-plugin index is written.
+            let dep_ar_path = toolchain.get_ar_path();
+            let dep_gcc_ar_path = toolchain.get_gcc_ar_path();
+            let dep_lib_ar_path = crate::pipeline::pick_archiver(
+                &dep_ar_path,
+                &dep_gcc_ar_path,
+                &c_flags,
+                &cpp_flags,
+            );
+            let lib_result = fbuild_packages::library::library_manager::ensure_libraries(
                 &lib_deps,
                 &lib_ignore,
-                &toolchain,
-                &mcu_config,
-                &ctx.board,
-                &ctx.build_unflags,
-                eh_frame_policy,
-                &external_compile_includes,
-                &user_overlay,
-                build_dir,
+                &toolchain.get_gcc_path(),
+                &toolchain.get_gxx_path(),
+                dep_lib_ar_path,
+                &c_flags,
+                &cpp_flags,
+                &external_base_includes,
+                &params.project_dir,
+                &libs_dir,
+                params.verbose,
+                jobs,
                 compiler_cache.as_deref(),
             )
             .await?;
@@ -378,16 +405,17 @@ impl BuildOrchestrator for Esp32Orchestrator {
             // `-I` flags and changes each TU's zccache context key, defeating
             // cross-project cache hits. Library includes are same-tier, so a
             // stable sort is safe for include resolution.
-            external_library_sources = resolved.source_files;
-            let mut lib_include_dirs = resolved.include_dirs;
+            external_library_sources = lib_result.source_files;
+            let mut lib_include_dirs = lib_result.include_dirs;
             lib_include_dirs.sort();
             include_dirs.extend(lib_include_dirs);
+            library_archives = lib_result.archives;
+
             tracing::info!(
-                "libraries: {} planned archives, {} include dirs",
-                resolved.plan.archive_names().len(),
+                "libraries: {} archives, {} new include dirs",
+                library_archives.len(),
                 include_dirs.len()
             );
-            lib_deps_plan = Some(resolved.plan);
         }
 
         // Unlike section GC, Arduino's Matter archive can retain global roots
@@ -427,9 +455,106 @@ impl BuildOrchestrator for Esp32Orchestrator {
             selected_framework_libraries.len()
         );
         include_dirs.extend(framework_selection.include_dirs);
-        let compile_includes = compile_include_dirs(sdk_farm.as_ref(), &include_dirs);
+
+        // 8.5b. Project-as-library compilation â€” shared with sequential pipeline.
+        // When the project root contains library.json or library.properties (e.g., FastLED),
+        // the project's own src/ directory is compiled as a library archive so that example
+        // sketches can link against it. Centralized in pipeline::compile_project_as_library
+        // so every orchestrator gets this behavior architecturally.
+        if !params.compiledb_only {
+            // Build temp compiler to get the actual c_flags/cpp_flags ESP32 uses for
+            // library compilation. SDK defines + user flags must be applied so the
+            // archive matches what sketch sources see.
+            let mut p_defines = ctx.board.get_defines();
+            p_defines.extend(mcu_config.defines_map());
+            let p_compiler = Esp32Compiler::with_temp_dir(
+                toolchain.get_gcc_path(),
+                toolchain.get_gxx_path(),
+                mcu_config.clone(),
+                &ctx.board.f_cpu,
+                p_defines,
+                include_dirs.clone(),
+                params.profile,
+                params.verbose,
+                build_dir.join("tmp"),
+            )
+            .with_build_unflags(ctx.build_unflags.clone())
+            .with_eh_frame_policy(eh_frame_policy);
+            let p_c_flags = apply_overlay_flags(&p_compiler.c_flags(), &src_overlay, "dummy.c");
+            let p_cpp_flags =
+                apply_overlay_flags(&p_compiler.cpp_flags(), &src_overlay, "dummy.cpp");
+
+            // Collect lib/* names so the helper can detect collisions with project-as-library.
+            let mut existing_lib_names = std::collections::HashSet::new();
+            let local_lib_dir = params.project_dir.join("lib");
+            if local_lib_dir.is_dir() {
+                if let Ok(entries) = std::fs::read_dir(&local_lib_dir) {
+                    for entry in entries.flatten() {
+                        let path = entry.path();
+                        if path.is_dir() {
+                            if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
+                                existing_lib_names.insert(name.to_lowercase());
+                            }
+                        }
+                    }
+                }
+            }
+
+            let gcc_path = toolchain.get_gcc_path();
+            let gxx_path = toolchain.get_gxx_path();
+            let ar_path = toolchain.get_ar_path();
+            let gcc_ar_path = toolchain.get_gcc_ar_path();
+            // Use gcc-ar for LTO archives so the linker-plugin index is written.
+            let lib_ar_path =
+                crate::pipeline::pick_archiver(&ar_path, &gcc_ar_path, &p_c_flags, &p_cpp_flags);
+            let lib_env = crate::pipeline::LibraryBuildEnv {
+                gcc_path: &gcc_path,
+                gxx_path: &gxx_path,
+                ar_path: lib_ar_path,
+                c_flags: &p_c_flags,
+                cpp_flags: &p_cpp_flags,
+                include_dirs: &include_dirs,
+                verbose: params.verbose,
+                jobs: crate::parallel::effective_jobs(params.jobs),
+                compiler_cache: compiler_cache.as_deref(),
+            };
+            if let Some(archive) = crate::pipeline::compile_project_as_library(
+                &params.project_dir,
+                &ctx.src_dir,
+                build_dir,
+                &lib_env,
+                &existing_lib_names,
+            )
+            .await?
+            {
+                library_archives.push(archive);
+            }
+        }
 
         tracing::info!("include paths: {} total", include_dirs.len());
+
+        // 8.6. Compile the active LDF-selected framework libraries.
+        // Skip when only generating compile_commands.json.
+        if !params.compiledb_only {
+            compile_framework_builtin_libs(
+                params,
+                &mut perf,
+                &framework,
+                &toolchain,
+                &mcu_config,
+                &ctx.board,
+                &ctx.build_unflags,
+                eh_frame_policy,
+                &include_dirs,
+                &user_overlay,
+                build_dir,
+                compiler_cache.as_deref(),
+                &selected_framework_libraries,
+                &mut library_archives,
+                &mut ctx.build_log,
+            )
+            .await?;
+        }
 
         // 9. Scan sources
         let sources = {
@@ -473,7 +598,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             mcu_config.clone(),
             &ctx.board.f_cpu,
             defines,
-            compile_includes.clone(),
+            include_dirs.clone(),
             params.profile,
             params.verbose,
             build_dir.join("tmp"),
@@ -534,50 +659,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 build_log: ctx.build_log,
             });
         }
-
-        // 8.5b. Project-as-library: when the project root carries library.json
-        // or library.properties (e.g. FastLED), its src/ is compiled as an
-        // archive that example sketches link against. Shared with the
-        // sequential pipeline via pipeline::compile_project_as_library.
-        let project_library = super::local_libs::ProjectLibrary::prepare(
-            params,
-            &toolchain,
-            &mcu_config,
-            &ctx.board,
-            &ctx.build_unflags,
-            eh_frame_policy,
-            &compile_includes,
-            &src_overlay,
-            build_dir,
-        );
-
-        // 8.6. The active LDF-selected framework libraries: cache hits now,
-        // compiles in the job pool. One a lib_deps or project library already
-        // provides is skipped.
-        let already_compiled = super::job_pool::already_compiled(
-            lib_deps_plan
-                .as_ref()
-                .map(|plan| plan.archive_names())
-                .unwrap_or_default(),
-            project_library.name(&params.project_dir, &ctx.src_dir),
-        );
-        let fw_libs = prepare_framework_libs(
-            params,
-            &mut perf,
-            &framework,
-            &toolchain,
-            &mcu_config,
-            &ctx.board,
-            &ctx.build_unflags,
-            eh_frame_policy,
-            &compile_includes,
-            &user_overlay,
-            build_dir,
-            compiler_cache.as_deref(),
-            &selected_framework_libraries,
-            &already_compiled,
-            &mut ctx.build_log,
-        )?;
 
         // Compile core + variant sources in parallel
         // `--clean` resets only the project build directory. Framework core
@@ -657,76 +738,18 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 ),
             }
         }
-        // Every compile of the build runs now, in one job pool: lib_deps,
-        // framework libraries, project-as-library, core + sketch and local
-        // lib/ libraries all draw from one gate (FastLED/fbuild#1559; see
-        // `job_pool`). Boot artifacts depend on nothing compiled, so they are
-        // staged alongside. Only the link waits.
-        let gate = fbuild_packages::library::library_compiler::job_gate(jobs);
-        let local_libraries = crate::framework_libs::select_local_libraries(
-            &params.project_dir,
-            &ctx.src_dir,
-            &declared_lib_deps,
-        );
-        let library_jobs = super::job_pool::LibraryJobs {
-            lib_deps: async {
-                match lib_deps_plan {
-                    Some(plan) => plan.compile(&gate).await,
-                    None => Ok(Vec::new()),
-                }
-            },
-            project_library: project_library.compile(
-                &params.project_dir,
-                &ctx.src_dir,
-                build_dir,
-                &toolchain,
-                &compile_includes,
-                params.verbose,
-                compiler_cache.as_deref(),
-                &gate,
-            ),
-            local_libs: compile_local_libraries(
-                &local_libraries,
-                build_dir,
+        let core_result = {
+            let _g = perf.phase("compile-core-variant");
+            crate::parallel::compile_sources_parallel(
                 &compiler,
-                &toolchain,
-                &compile_includes,
-                &src_overlay,
-                &gate,
-                params.verbose,
-                compiler_cache.as_deref(),
-            ),
-            boot_artifacts: prepare_boot_artifacts(
-                build_dir,
-                &params.project_dir,
-                &framework,
-                &ctx.board,
-                &mcu_config,
-                &flash_freq,
-                esptool_bin.as_ref().map(|path| path.as_path()),
-                params.caller_path.as_deref(),
-            ),
+                &all_core_sources,
+                core_build_dir,
+                &user_overlay,
+                jobs,
+                Some(&build_log_mutex),
+            )
+            .await?
         };
-        let pool = super::job_pool::run(
-            &mut perf,
-            &gate,
-            &compiler,
-            super::compile_phases::CompileTarget {
-                sources: &all_core_sources,
-                build_dir: core_build_dir,
-                overlay: &user_overlay,
-            },
-            super::compile_phases::CompileTarget {
-                sources: &sources.sketch_sources,
-                build_dir: src_build_dir,
-                overlay: &src_overlay,
-            },
-            &build_log_mutex,
-            &fw_libs,
-            library_jobs,
-        )
-        .await?;
-        let (core_result, sketch_result) = (pool.core, pool.sketch);
         {
             let _g = perf.phase("core-cache-store");
             let outcome = core_cache.store(core_build_dir);
@@ -754,6 +777,20 @@ impl BuildOrchestrator for Esp32Orchestrator {
             }
         }
 
+        // Compile sketch sources in parallel
+        let sketch_result = {
+            let _g = perf.phase("compile-sketch");
+            crate::parallel::compile_sources_parallel(
+                &compiler,
+                &sources.sketch_sources,
+                src_build_dir,
+                &src_overlay,
+                jobs,
+                Some(&build_log_mutex),
+            )
+            .await?
+        };
+
         // Unwrap build log and flush collected warnings
         let mut build_log = build_log_mutex
             .into_inner()
@@ -761,16 +798,33 @@ impl BuildOrchestrator for Esp32Orchestrator {
         for w in core_result.warnings.iter().chain(&sketch_result.warnings) {
             crate::build_output::collect_warnings(w, &mut build_log);
         }
-        let framework_archives = fw_libs.finish(pool.framework_libs, &mut perf, &mut build_log);
-        let library_archives = super::job_pool::link_order(
-            pool.lib_deps,
-            pool.project_library,
-            framework_archives,
-            pool.local_libs,
-        );
 
         let core_objects = core_result.objects;
         let mut sketch_objects = sketch_result.objects;
+
+        // Compile local libraries from the project's lib/ directory.
+        // PlatformIO discovers and compiles these automatically.
+        {
+            let _g = perf.phase("compile-local-libs");
+            let local_libraries = crate::framework_libs::select_local_libraries(
+                &params.project_dir,
+                &ctx.src_dir,
+                &declared_lib_deps,
+            );
+            compile_local_libraries(
+                &local_libraries,
+                build_dir,
+                &compiler,
+                &toolchain,
+                &include_dirs,
+                &src_overlay,
+                jobs,
+                params.verbose,
+                compiler_cache.as_deref(),
+                &mut library_archives,
+            )
+            .await?;
+        }
 
         // 11.5. Process embedded files (board_build.embed_files + embed_txtfiles)
         //
@@ -885,6 +939,20 @@ impl BuildOrchestrator for Esp32Orchestrator {
             )
             .await?
         };
+
+        // 14. Prepare boot artifacts for deployment / emulation
+        prepare_boot_artifacts(
+            build_dir,
+            &params.project_dir,
+            &framework,
+            &ctx.board,
+            &mcu_config,
+            &flash_freq,
+            esptool_bin.as_ref().map(|path| path.as_path()),
+            params.caller_path.as_deref(),
+            &mut perf,
+        )
+        .await?;
 
         // 15. Size reporting + result assembly
         let fingerprint_started = Instant::now();

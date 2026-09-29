@@ -13,8 +13,6 @@ use fbuild_core::subprocess::run_command;
 use fbuild_core::{FbuildError, Result};
 use sha2::{Digest, Sha256};
 
-use super::tu_history;
-
 /// C++-only flags that must not be passed to gcc for .c files.
 const CXX_ONLY_PREFIXES: &[&str] = &["-std=gnu++", "-std=c++", "-fno-rtti", "-fuse-cxa-atexit"];
 
@@ -116,19 +114,7 @@ pub async fn compile_library(
     .await
 }
 
-/// A build's shared compile job budget. Every compile phase that draws from
-/// the same gate runs in one pool, so a library's tail no longer idles cores
-/// that another library or the core could use (FastLED/fbuild#1559).
-pub type JobGate = std::sync::Arc<tokio::sync::Semaphore>;
-
-/// A fresh gate admitting `jobs` concurrent compiles (at least one).
-pub fn job_gate(jobs: usize) -> JobGate {
-    std::sync::Arc::new(tokio::sync::Semaphore::new(jobs.max(1)))
-}
-
 /// Compile all source files in a library with parallel jobs.
-///
-/// Uses a gate of its own; [`compile_library_gated`] shares one.
 #[allow(clippy::too_many_arguments)]
 pub async fn compile_library_with_jobs(
     name: &str,
@@ -154,55 +140,6 @@ pub async fn compile_library_with_jobs(
     // keeps the direct-subprocess path for every caller that hasn't opted in.
     backend: Option<std::sync::Arc<dyn LibCompileBackend>>,
 ) -> Result<Option<PathBuf>> {
-    compile_library_gated(
-        name,
-        source_files,
-        include_dirs,
-        gcc_path,
-        gxx_path,
-        ar_path,
-        c_flags,
-        cpp_flags,
-        output_dir,
-        verbose,
-        &job_gate(jobs),
-        compiler_cache,
-        compile_cwd,
-        backend,
-        None,
-    )
-    .await
-}
-
-/// [`compile_library_with_jobs`] drawing its permits from `gate`, so it can
-/// share one job budget with the rest of the build (FastLED/fbuild#1559).
-///
-/// Permits are taken in the spawn loop, in dispatch order: on a multi-thread
-/// runtime spawned tasks first run in no particular order. Spawning stops at
-/// the first failure; every spawned task is awaited before returning.
-#[allow(clippy::too_many_arguments)]
-pub async fn compile_library_gated(
-    name: &str,
-    source_files: &[PathBuf],
-    include_dirs: &[PathBuf],
-    gcc_path: &Path,
-    gxx_path: &Path,
-    ar_path: &Path,
-    c_flags: &[String],
-    cpp_flags: &[String],
-    output_dir: &Path,
-    verbose: bool,
-    gate: &JobGate,
-    compiler_cache: Option<&Path>,
-    compile_cwd: Option<PathBuf>,
-    backend: Option<std::sync::Arc<dyn LibCompileBackend>>,
-    // `Some` overrides the TU-duration history root (tests only); `None`
-    // uses the real `fbuild_paths::get_cache_root()` (FastLED/fbuild#1564).
-    history_root: Option<&Path>,
-) -> Result<Option<PathBuf>> {
-    let history_root_owned = history_root
-        .map(Path::to_path_buf)
-        .unwrap_or_else(fbuild_paths::get_cache_root);
     if source_files.is_empty() {
         tracing::debug!("library {} is header-only, skipping compile", name);
         return Ok(None);
@@ -248,7 +185,7 @@ pub async fn compile_library_gated(
         .iter()
         .map(|source| object_path(source, &obj_dir))
         .collect();
-    let stale_sources: Vec<(PathBuf, String)> = source_files
+    let stale_sources: Vec<PathBuf> = source_files
         .iter()
         .zip(all_objects.iter())
         .filter_map(|(source, obj)| {
@@ -261,7 +198,7 @@ pub async fn compile_library_gated(
                 &include_flags,
             );
             if object_needs_rebuild(source, obj, &signature).unwrap_or(true) {
-                Some((source.clone(), signature))
+                Some(source.clone())
             } else {
                 None
             }
@@ -281,17 +218,52 @@ pub async fn compile_library_gated(
         return Ok(Some(archive_path));
     }
 
-    let mut stale_sources = stale_sources;
-    tu_history::dispatch_order_in(
-        &history_root_owned,
-        &mut stale_sources,
-        |(source, signature)| (NormalizedPath::new(source), signature.clone()),
-    );
+    let jobs = jobs.max(1);
+
+    if jobs <= 1 || stale_sources.len() <= 1 {
+        // Sequential path
+        for source in &stale_sources {
+            compile_one_source(
+                source,
+                &obj_dir,
+                gcc_path,
+                gxx_path,
+                &c_safe_flags,
+                &cpp_flags,
+                &include_flags,
+                name,
+                verbose,
+                compiler_cache,
+                compile_cwd.as_deref(),
+                backend.as_ref(),
+            )
+            .await?;
+        }
+
+        tracing::info!(
+            "archiving library {}: {} objects -> {}",
+            name,
+            all_objects.len(),
+            archive_path.display()
+        );
+        archive_objects(ar_path, &all_objects, &archive_path).await?;
+        tracing::info!(
+            "compiled library {}: {} changed / {} total files -> {}",
+            name,
+            stale_sources.len(),
+            all_objects.len(),
+            archive_path.display()
+        );
+        return Ok(Some(archive_path));
+    }
+
+    // Parallel path — use a tokio Semaphore to bound concurrency.
     let total = stale_sources.len();
+    let thread_count = jobs.min(total);
+    let sem = std::sync::Arc::new(tokio::sync::Semaphore::new(thread_count));
 
     let mut tasks = tokio::task::JoinSet::new();
     let compiled_count = std::sync::Arc::new(std::sync::atomic::AtomicUsize::new(0));
-    let failed = std::sync::Arc::new(std::sync::atomic::AtomicBool::new(false));
 
     let obj_dir_owned = obj_dir.clone();
     let gcc_path_owned = gcc_path.to_path_buf();
@@ -303,24 +275,9 @@ pub async fn compile_library_gated(
     let compiler_cache_owned = compiler_cache.map(|p| p.to_path_buf());
     let compile_cwd_owned = compile_cwd.clone();
     let backend_owned = backend.clone();
-    let history_root_arc = std::sync::Arc::new(history_root_owned);
 
-    let mut first_error: Option<String> = None;
-    for (source, signature) in stale_sources {
-        if failed.load(std::sync::atomic::Ordering::Relaxed) {
-            break;
-        }
-        let permit = match gate.clone().acquire_owned().await {
-            Ok(permit) => permit,
-            Err(e) => {
-                first_error = Some(format!("semaphore closed: {e}"));
-                break;
-            }
-        };
-        // A compile may have failed while this loop waited for the permit.
-        if failed.load(std::sync::atomic::Ordering::Relaxed) {
-            break;
-        }
+    for source in stale_sources.clone() {
+        let sem = sem.clone();
         let obj_dir_t = obj_dir_owned.clone();
         let gcc_t = gcc_path_owned.clone();
         let gxx_t = gxx_path_owned.clone();
@@ -332,12 +289,13 @@ pub async fn compile_library_gated(
         let cwd_t = compile_cwd_owned.clone();
         let backend_t = backend_owned.clone();
         let counter = compiled_count.clone();
-        let failed_t = failed.clone();
-        let history_root_t = history_root_arc.clone();
         tasks.spawn(async move {
-            let _permit = permit;
-            let started = std::time::Instant::now();
-            let result = compile_one_source(
+            let _permit = sem
+                .acquire()
+                .await
+                .map_err(|e| FbuildError::BuildFailed(format!("semaphore closed: {e}")))?;
+            let cache_ref = cache_t.as_deref();
+            compile_one_source(
                 &source,
                 &obj_dir_t,
                 &gcc_t,
@@ -347,17 +305,11 @@ pub async fn compile_library_gated(
                 &inc_t,
                 &lib_name_t,
                 verbose,
-                cache_t.as_deref(),
+                cache_ref,
                 cwd_t.as_deref(),
                 backend_t.as_ref(),
             )
-            .await;
-            if result.is_err() {
-                failed_t.store(true, std::sync::atomic::Ordering::Relaxed);
-            } else {
-                tu_history::record_in(&history_root_t, &source, &signature, started.elapsed());
-            }
-            result?;
+            .await?;
             let count = counter.fetch_add(1, std::sync::atomic::Ordering::Relaxed) + 1;
             if count.is_multiple_of(20) || count == total {
                 tracing::info!("[{}/{}] compiled [{}]", count, total, lib_name_t);
@@ -366,6 +318,7 @@ pub async fn compile_library_gated(
         });
     }
 
+    let mut first_error: Option<String> = None;
     while let Some(joined) = tasks.join_next().await {
         match joined {
             Ok(Ok(())) => {}
@@ -389,6 +342,7 @@ pub async fn compile_library_gated(
     let mut all_objects = all_objects;
     all_objects.sort(); // deterministic archive
 
+    // Archive
     tracing::info!(
         "archiving library {}: {} objects -> {}",
         name,
@@ -398,10 +352,11 @@ pub async fn compile_library_gated(
     archive_objects(ar_path, &all_objects, &archive_path).await?;
 
     tracing::info!(
-        "compiled library {}: {} changed / {} total files -> {}",
+        "compiled library {}: {} changed / {} total files ({} threads) -> {}",
         name,
         total,
         all_objects.len(),
+        thread_count,
         archive_path.display()
     );
 
@@ -477,13 +432,15 @@ async fn compile_one_source(
     // the in-process zccache service — cached, and project-directory-independent
     // via #985 — mirroring fbuild-build's compile_source. Without one, keep the
     // historical direct-subprocess path byte-identical.
-    let (exit_code, stderr) = if let Some(backend) = backend {
+    let (success, stderr) = if let Some(backend) = backend {
         let sanitized = fbuild_core::compiler_flags::prepare_flags_for_exec(all_flags);
-        // Scratch dir for the compiler's TMP/TEMP: the library's build dir,
-        // never the compile cwd, which is the project root for workspace-
-        // relative compiles (FastLED/fbuild#1568).
-        let scratch = obj_dir.parent().unwrap_or(obj_dir);
-        let mut env = fbuild_core::subprocess::compile_env_for_build(scratch).unwrap_or_default();
+        // Scratch dir for the compiler's TMP/TEMP (fbuild-owned, off the
+        // system temp — mirrors compile_env_for_build usage on the sketch path).
+        let scratch = compile_cwd
+            .map(Path::to_path_buf)
+            .or_else(|| obj.parent().map(Path::to_path_buf))
+            .unwrap_or_else(|| PathBuf::from("."));
+        let mut env = fbuild_core::subprocess::compile_env_for_build(&scratch).unwrap_or_default();
         if let Some(root) = compile_cwd {
             if root.is_dir() {
                 env.push((
@@ -500,7 +457,7 @@ async fn compile_one_source(
         // No @response-file: the embedded service manages long arg lists itself.
         let outcome = backend.compile(compiler, sanitized, cwd, env).await?;
         (
-            outcome.exit_code,
+            outcome.exit_code == 0,
             String::from_utf8_lossy(&outcome.stderr).into_owned(),
         )
     } else {
@@ -543,35 +500,21 @@ async fn compile_one_source(
             Some(fbuild_core::time::REAL_BUILD_TIMEOUT),
         )
         .await?;
-        (result.exit_code, result.stderr)
+        (result.success(), result.stderr)
     };
 
-    if exit_code != 0 {
-        return Err(FbuildError::BuildFailed(compile_failure_message(
-            source, lib_name, exit_code, &stderr,
+    if !success {
+        return Err(FbuildError::BuildFailed(format!(
+            "failed to compile {} in library {}:\n{}",
+            source.display(),
+            lib_name,
+            stderr
         )));
     }
 
     std::fs::write(command_hash_path(&obj), rebuild_signature)?;
 
     Ok(obj)
-}
-
-/// The error for a failed library TU. The exit status is always included: a
-/// compiler killed by a signal exits non-zero with no stderr, and without it
-/// the failure is undiagnosable (FastLED/fbuild#1569).
-fn compile_failure_message(source: &Path, lib_name: &str, exit_code: i32, stderr: &str) -> String {
-    let stderr = stderr.trim_end();
-    let detail = if stderr.is_empty() {
-        "(the compiler wrote nothing to stderr)"
-    } else {
-        stderr
-    };
-    format!(
-        "failed to compile {} in library {} (exit code {exit_code}):\n{detail}",
-        source.display(),
-        lib_name
-    )
 }
 
 fn object_needs_rebuild(source: &Path, object: &Path, signature: &str) -> Result<bool> {
@@ -806,19 +749,174 @@ fn object_hash_key(source: &Path, obj_dir: &Path) -> String {
     fbuild_core::path::NormalizedPath::from(source).display_slash()
 }
 
-/// Test helper kept here: the sibling test file may not name `PathBuf`.
 #[cfg(test)]
-fn write_sources(dir: &Path, names: &[&str]) -> Vec<PathBuf> {
-    names
-        .iter()
-        .map(|n| {
-            let p = dir.join(n);
-            std::fs::write(&p, "// src").unwrap();
-            p
-        })
-        .collect()
-}
+mod tests {
+    use super::*;
+    use std::time::Duration;
 
-#[cfg(test)]
-#[path = "library_compiler_tests.rs"]
-mod tests;
+    fn test_signature() -> &'static str {
+        "test-signature"
+    }
+
+    #[test]
+    fn test_is_cxx_only_flag() {
+        assert!(is_cxx_only_flag("-std=gnu++2b"));
+        assert!(is_cxx_only_flag("-std=c++17"));
+        assert!(is_cxx_only_flag("-fno-rtti"));
+        assert!(is_cxx_only_flag("-fuse-cxa-atexit"));
+        assert!(!is_cxx_only_flag("-std=gnu17"));
+        assert!(!is_cxx_only_flag("-Os"));
+        assert!(!is_cxx_only_flag("-DFOO"));
+    }
+
+    #[test]
+    fn test_object_path_unique() {
+        let obj_dir = Path::new("/tmp/obj");
+        let p1 = object_path(Path::new("/src/a/main.cpp"), obj_dir);
+        let p2 = object_path(Path::new("/src/b/main.cpp"), obj_dir);
+        assert_ne!(
+            p1, p2,
+            "different source paths should produce different object paths"
+        );
+    }
+
+    #[test]
+    fn test_object_path_extension() {
+        let obj_dir = Path::new("/tmp/obj");
+        let p = object_path(Path::new("/src/main.cpp"), obj_dir);
+        assert_eq!(p.extension().unwrap(), "o");
+    }
+
+    #[tokio::test]
+    async fn test_build_include_flags_small() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let dirs = vec![PathBuf::from("/a"), PathBuf::from("/b")];
+        let flags = build_include_flags(&dirs, tmp.path()).await.unwrap();
+        assert_eq!(flags.len(), 2);
+        assert!(flags[0].starts_with("-I"));
+    }
+
+    #[test]
+    fn test_invocation_response_file_path_makes_relative_path_absolute() {
+        let relative = Path::new("build/tmp/test.rsp");
+        let absolute = invocation_response_file_path(relative).unwrap();
+        assert!(absolute.is_absolute());
+        assert!(absolute.ends_with(relative));
+    }
+
+    #[test]
+    fn test_invocation_response_file_path_preserves_absolute_path() {
+        let absolute_input = std::env::current_dir().unwrap().join("build/tmp/test.rsp");
+        let absolute = invocation_response_file_path(&absolute_input).unwrap();
+        assert_eq!(absolute, absolute_input);
+    }
+
+    #[test]
+    fn test_object_needs_rebuild_when_object_missing() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let source = tmp.path().join("src.cpp");
+        std::fs::write(&source, "int x;").unwrap();
+        let object = tmp.path().join("src.o");
+
+        assert!(object_needs_rebuild(&source, &object, test_signature()).unwrap());
+    }
+
+    #[test]
+    fn test_object_needs_rebuild_when_source_newer() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let source = tmp.path().join("src.cpp");
+        let object = tmp.path().join("src.o");
+        std::fs::write(&source, "int x;").unwrap();
+        std::thread::sleep(Duration::from_millis(20));
+        std::fs::write(&object, "obj").unwrap();
+        std::fs::write(command_hash_path(&object), test_signature()).unwrap();
+        std::thread::sleep(Duration::from_millis(20));
+        std::fs::write(&source, "int y;").unwrap();
+
+        assert!(object_needs_rebuild(&source, &object, test_signature()).unwrap());
+    }
+
+    #[test]
+    fn test_object_needs_rebuild_when_object_current() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let source = tmp.path().join("src.cpp");
+        let object = tmp.path().join("src.o");
+        std::fs::write(&source, "int x;").unwrap();
+        std::thread::sleep(Duration::from_millis(20));
+        std::fs::write(&object, "obj").unwrap();
+        std::fs::write(command_hash_path(&object), test_signature()).unwrap();
+
+        assert!(!object_needs_rebuild(&source, &object, test_signature()).unwrap());
+    }
+
+    #[test]
+    fn test_object_needs_rebuild_when_header_dep_is_newer() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let source = tmp.path().join("src.cpp");
+        let header = tmp.path().join("config.h");
+        let object = tmp.path().join("src.o");
+        let depfile = tmp.path().join("src.d");
+
+        std::fs::write(&source, "#include \"config.h\"\n").unwrap();
+        std::fs::write(&header, "#define X 1\n").unwrap();
+        std::thread::sleep(Duration::from_millis(20));
+        std::fs::write(&object, "obj").unwrap();
+        std::fs::write(
+            &depfile,
+            format!(
+                "{}: {} {}\n",
+                object.display(),
+                source.display(),
+                header.display()
+            ),
+        )
+        .unwrap();
+        std::fs::write(command_hash_path(&object), test_signature()).unwrap();
+        std::thread::sleep(Duration::from_millis(20));
+        std::fs::write(&header, "#define X 2\n").unwrap();
+
+        assert!(object_needs_rebuild(&source, &object, test_signature()).unwrap());
+    }
+
+    #[test]
+    fn test_object_needs_rebuild_when_command_hash_changes() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let source = tmp.path().join("src.cpp");
+        let object = tmp.path().join("src.o");
+
+        std::fs::write(&source, "int x;").unwrap();
+        std::thread::sleep(Duration::from_millis(20));
+        std::fs::write(&object, "obj").unwrap();
+        std::fs::write(command_hash_path(&object), "old-signature").unwrap();
+
+        assert!(object_needs_rebuild(&source, &object, test_signature()).unwrap());
+    }
+
+    #[test]
+    fn test_archive_is_up_to_date_when_archive_newer_than_all_objects() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let object_a = tmp.path().join("a.o");
+        let object_b = tmp.path().join("b.o");
+        let archive = tmp.path().join("libx.a");
+        std::fs::write(&object_a, "a").unwrap();
+        std::fs::write(&object_b, "b").unwrap();
+        std::thread::sleep(Duration::from_millis(20));
+        std::fs::write(&archive, "archive").unwrap();
+
+        assert!(archive_is_up_to_date(&archive, &[object_a, object_b]).unwrap());
+    }
+
+    #[test]
+    fn test_archive_is_not_up_to_date_when_object_newer() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let object = tmp.path().join("a.o");
+        let archive = tmp.path().join("libx.a");
+        std::fs::write(&object, "a").unwrap();
+        std::thread::sleep(Duration::from_millis(20));
+        std::fs::write(&archive, "archive").unwrap();
+        std::thread::sleep(Duration::from_millis(20));
+        std::fs::write(&object, "newer").unwrap();
+
+        assert!(!archive_is_up_to_date(&archive, &[object]).unwrap());
+    }
+}

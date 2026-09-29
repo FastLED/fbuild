@@ -406,7 +406,7 @@ impl BuildOrchestrator for Nrf52Orchestrator {
             .config
             .get_lib_ignore(&params.env_name)
             .unwrap_or_default();
-        let lib_deps_plan = if !lib_deps.is_empty() {
+        let lib_archives = if !lib_deps.is_empty() {
             let temp_compiler = Nrf52Compiler::new(
                 toolchain.get_gcc_path(),
                 toolchain.get_gxx_path(),
@@ -431,11 +431,12 @@ impl BuildOrchestrator for Nrf52Orchestrator {
                 &crate::compiler::Compiler::cpp_flags(&temp_compiler),
                 &mut include_dirs,
                 params.verbose,
+                crate::parallel::effective_jobs(params.jobs),
                 compiler_cache.as_deref(),
             )
             .await?
         } else {
-            pipeline::LibDeps::default()
+            Vec::new()
         };
 
         let compiler = Nrf52Compiler::new(
@@ -500,8 +501,7 @@ impl BuildOrchestrator for Nrf52Orchestrator {
             ctx,
             params,
             &sources,
-            &[],
-            lib_deps_plan,
+            &lib_archives,
             Some(&lib_env),
             TargetArchitecture::Arm,
             "NRF52",

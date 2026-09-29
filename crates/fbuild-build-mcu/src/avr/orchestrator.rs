@@ -259,7 +259,7 @@ impl BuildOrchestrator for AvrOrchestrator {
             .config
             .get_lib_ignore(&params.env_name)
             .unwrap_or_default();
-        let lib_deps_plan = if !lib_deps.is_empty() {
+        let lib_archives = if !lib_deps.is_empty() {
             // Build a temp compiler solely to get the c/cxx flags for library
             // compilation. The temp compiler is discarded — the *real* compiler
             // is created afterwards with the full include-dir set.
@@ -287,11 +287,12 @@ impl BuildOrchestrator for AvrOrchestrator {
                 &temp_compiler.cpp_flags(),
                 &mut include_dirs,
                 params.verbose,
+                crate::parallel::effective_jobs(params.jobs),
                 compiler_cache.as_deref(),
             )
             .await?
         } else {
-            pipeline::LibDeps::default()
+            Vec::new()
         };
 
         // 6b. Create compiler with the full include-dir set (core, variant,
@@ -356,8 +357,7 @@ impl BuildOrchestrator for AvrOrchestrator {
             ctx,
             params,
             &sources,
-            &[],
-            lib_deps_plan,
+            &lib_archives,
             Some(&lib_env),
             TargetArchitecture::Avr,
             "AVR",

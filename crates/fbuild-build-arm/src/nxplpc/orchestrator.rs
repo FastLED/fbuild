@@ -376,7 +376,7 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
             .config
             .get_lib_ignore(&params.env_name)
             .unwrap_or_default();
-        let lib_deps_plan = if !lib_deps.is_empty() {
+        let lib_archives = if !lib_deps.is_empty() {
             let temp_compiler = ArmCompiler::new(
                 toolchain.get_gcc_path(),
                 toolchain.get_gxx_path(),
@@ -401,11 +401,12 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
                 &crate::compiler::Compiler::cpp_flags(&temp_compiler),
                 &mut include_dirs,
                 params.verbose,
+                crate::parallel::effective_jobs(params.jobs),
                 None,
             )
             .await?
         } else {
-            pipeline::LibDeps::default()
+            Vec::new()
         };
 
         let compiler = ArmCompiler::new(
@@ -473,9 +474,10 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
             jobs: crate::parallel::effective_jobs(params.jobs),
             compiler_cache: None,
         };
-        let extra_link_inputs =
+        let mut extra_link_inputs =
             pipeline::compile_extra_libraries(&extra_library_roots, &ctx.build_dir, &lib_env)
                 .await?;
+        extra_link_inputs.extend(lib_archives);
 
         // 11. Run the shared sequential build pipeline.
         let result = pipeline::run_sequential_build_with_libs(
@@ -485,7 +487,6 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
             params,
             &sources,
             &extra_link_inputs,
-            lib_deps_plan,
             Some(&lib_env),
             TargetArchitecture::Arm,
             "NXPLPC",

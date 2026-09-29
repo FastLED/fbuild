@@ -1119,7 +1119,6 @@ dependencies = [
  "fbuild-test-support",
  "filetime",
  "flate2",
- "futures",
  "object 0.36.7",
  "owo-colors",
  "regex",
@@ -1333,14 +1332,12 @@ version = "2.5.29"
 dependencies = [
  "async-trait",
  "axum 0.7.9",
- "blake3",
  "bzip2",
  "fbuild-config",
  "fbuild-core",
  "fbuild-packages-fetch",
  "fbuild-paths",
  "flate2",
- "futures",
  "prost",
  "reqwest",
  "rusqlite",
@@ -2297,9 +2294,9 @@ dependencies = [
 
 [[package]]
 name = "kernal-api"
-version = "0.1.23"
+version = "0.1.22"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "54844116729c2a5c64d5b313d79f839323c044cc01867f7e2bf0f192ac9e6903"
+checksum = "b423567556c31193c3000b520ff23b82943de1d87c4515ab1428c742c0ce118a"
 dependencies = [
  "blake3",
  "crash-handler",
@@ -5089,7 +5086,7 @@ dependencies = [
 [[package]]
 name = "zccache"
 version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
+source = "git+https://github.com/zackees/zccache?rev=3f9d4e66fe3675cd48060bca03b62b1f5a8112eb#3f9d4e66fe3675cd48060bca03b62b1f5a8112eb"
 dependencies = [
  "arc-swap",
  "bincode",
@@ -5130,7 +5127,7 @@ dependencies = [
 [[package]]
 name = "zccache-artifact"
 version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
+source = "git+https://github.com/zackees/zccache?rev=3f9d4e66fe3675cd48060bca03b62b1f5a8112eb#3f9d4e66fe3675cd48060bca03b62b1f5a8112eb"
 dependencies = [
  "bincode",
  "dashmap",
@@ -5149,7 +5146,7 @@ dependencies = [
 [[package]]
 name = "zccache-audit"
 version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
+source = "git+https://github.com/zackees/zccache?rev=3f9d4e66fe3675cd48060bca03b62b1f5a8112eb#3f9d4e66fe3675cd48060bca03b62b1f5a8112eb"
 dependencies = [
  "serde",
  "serde_json",
@@ -5159,7 +5156,7 @@ dependencies = [
 [[package]]
 name = "zccache-compile-trace"
 version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
+source = "git+https://github.com/zackees/zccache?rev=3f9d4e66fe3675cd48060bca03b62b1f5a8112eb#3f9d4e66fe3675cd48060bca03b62b1f5a8112eb"
 dependencies = [
  "zccache-audit",
 ]
@@ -5167,7 +5164,7 @@ dependencies = [
 [[package]]
 name = "zccache-compiler"
 version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
+source = "git+https://github.com/zackees/zccache?rev=3f9d4e66fe3675cd48060bca03b62b1f5a8112eb#3f9d4e66fe3675cd48060bca03b62b1f5a8112eb"
 dependencies = [
  "clang",
  "kernal-api",
@@ -5181,7 +5178,7 @@ dependencies = [
 [[package]]
 name = "zccache-core"
 version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
+source = "git+https://github.com/zackees/zccache?rev=3f9d4e66fe3675cd48060bca03b62b1f5a8112eb#3f9d4e66fe3675cd48060bca03b62b1f5a8112eb"
 dependencies = [
  "kernal-api",
  "serde",
@@ -5193,7 +5190,7 @@ dependencies = [
 [[package]]
 name = "zccache-daemon-core"
 version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
+source = "git+https://github.com/zackees/zccache?rev=3f9d4e66fe3675cd48060bca03b62b1f5a8112eb#3f9d4e66fe3675cd48060bca03b62b1f5a8112eb"
 dependencies = [
  "arc-swap",
  "bincode",
@@ -5206,7 +5203,6 @@ dependencies = [
  "regex",
  "serde",
  "serde_json",
- "sha2",
  "tempfile",
  "thiserror 2.0.20",
  "tokio",
@@ -5229,7 +5225,7 @@ dependencies = [
 [[package]]
 name = "zccache-depgraph"
 version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
+source = "git+https://github.com/zackees/zccache?rev=3f9d4e66fe3675cd48060bca03b62b1f5a8112eb#3f9d4e66fe3675cd48060bca03b62b1f5a8112eb"
 dependencies = [
  "bincode",
  "dashmap",
@@ -5249,7 +5245,7 @@ dependencies = [
 [[package]]
 name = "zccache-fingerprint"
 version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
+source = "git+https://github.com/zackees/zccache?rev=3f9d4e66fe3675cd48060bca03b62b1f5a8112eb#3f9d4e66fe3675cd48060bca03b62b1f5a8112eb"
 dependencies = [
  "kernal-api",
  "rayon",
@@ -5264,7 +5260,7 @@ dependencies = [
 [[package]]
 name = "zccache-fscache"
 version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
+source = "git+https://github.com/zackees/zccache?rev=3f9d4e66fe3675cd48060bca03b62b1f5a8112eb#3f9d4e66fe3675cd48060bca03b62b1f5a8112eb"
 dependencies = [
  "bincode",
  "dashmap",
@@ -5279,7 +5275,7 @@ dependencies = [
 [[package]]
 name = "zccache-hash"
 version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
+source = "git+https://github.com/zackees/zccache?rev=3f9d4e66fe3675cd48060bca03b62b1f5a8112eb#3f9d4e66fe3675cd48060bca03b62b1f5a8112eb"
 dependencies = [
  "kernal-api",
  "serde",
@@ -5288,7 +5284,7 @@ dependencies = [
 [[package]]
 name = "zccache-ipc"
 version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
+source = "git+https://github.com/zackees/zccache?rev=3f9d4e66fe3675cd48060bca03b62b1f5a8112eb#3f9d4e66fe3675cd48060bca03b62b1f5a8112eb"
 dependencies = [
  "bytes",
  "dashmap",
@@ -5306,7 +5302,7 @@ dependencies = [
 [[package]]
 name = "zccache-protocol"
 version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
+source = "git+https://github.com/zackees/zccache?rev=3f9d4e66fe3675cd48060bca03b62b1f5a8112eb#3f9d4e66fe3675cd48060bca03b62b1f5a8112eb"
 dependencies = [
  "bytes",
  "kernal-api",
@@ -5322,7 +5318,7 @@ dependencies = [
 [[package]]
 name = "zccache-watcher"
 version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
+source = "git+https://github.com/zackees/zccache?rev=3f9d4e66fe3675cd48060bca03b62b1f5a8112eb#3f9d4e66fe3675cd48060bca03b62b1f5a8112eb"
 dependencies = [
  "kernal-api",
  "rayon",

@@ -25,14 +25,12 @@
 mod boot_artifacts;
 mod build;
 mod cdc;
-mod compile_phases;
 mod embed;
 mod embed_stage;
 mod fingerprint;
 mod framework_library_cache;
 mod framework_libs;
 mod helpers;
-mod job_pool;
 mod local_libs;
 mod packages;
 

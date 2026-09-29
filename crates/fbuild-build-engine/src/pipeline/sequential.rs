@@ -1,7 +1,7 @@
 //! The sequential compile → link → result pipeline used by AVR, Teensy,
 //! RP2040, STM32, ESP8266, CH32V, NRF52, SAM, Renesas, and Apollo3.
 
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 use std::time::Instant;
 
 use fbuild_core::Result;
@@ -39,7 +39,6 @@ pub async fn run_sequential_build_with_libs(
     params: &BuildParams,
     sources: &SourceCollection,
     extra_link_inputs: &[PathBuf],
-    lib_deps: super::library::LibDeps,
     lib_env: Option<&LibraryBuildEnv<'_>>,
     arch: TargetArchitecture,
     platform_label: &str,
@@ -268,56 +267,19 @@ pub async fn run_sequential_build_with_libs(
         &build_log_mutex,
     ));
 
-    // `lib_deps` and the project-as-library archive compile in the same pool
-    // (FastLED/fbuild#1559): nothing but the link needs their archives.
-    let lib_deps_compile = timed(lib_deps.compile(&compile_slots));
-    let existing_lib_names = local_lib_dir_names(&params.project_dir);
-    let project_as_lib = timed(async {
-        match lib_env {
-            Some(env) => {
-                compile_project_as_library(
-                    &params.project_dir,
-                    &ctx.src_dir,
-                    &ctx.build_dir,
-                    env,
-                    &existing_lib_names,
-                    &compile_slots,
-                )
-                .await
-            }
-            None => Ok(None),
-        }
-    });
-
     let (
         ((mut core_objects, core_time), (variant_objects, variant_time), store_time),
         (sketch_objects, sketch_time),
         (library_objects, library_time),
-        (lib_deps_archives, lib_deps_time),
-        (project_as_lib_archive, project_as_lib_time),
     ) = {
-        let (framework, sketch, libraries, lib_deps_compile, project_as_lib) = tokio::join!(
-            framework,
-            sketch,
-            libraries,
-            lib_deps_compile,
-            project_as_lib
-        );
-        (
-            framework?,
-            sketch?,
-            libraries?,
-            lib_deps_compile?,
-            project_as_lib?,
-        )
+        let (framework, sketch, libraries) = tokio::join!(framework, sketch, libraries);
+        (framework?, sketch?, libraries?)
     };
     perf.record("compile-core", core_time);
     perf.record("compile-variant", variant_time);
     perf.record("core-cache-store", store_time);
     perf.record("compile-sketch", sketch_time);
     perf.record("compile-local-libs", library_time);
-    perf.record("compile-lib-deps", lib_deps_time);
-    perf.record("project-as-lib", project_as_lib_time);
     core_objects.extend(variant_objects);
 
     // Unwrap the build log Mutex back into the context for the remaining
@@ -325,6 +287,40 @@ pub async fn run_sequential_build_with_libs(
     ctx.build_log = build_log_mutex
         .into_inner()
         .unwrap_or_else(|e| e.into_inner());
+
+    // Project-as-library: compile project root's src/ as an archive when
+    // building an example sketch from a library project (e.g. FastLED examples).
+    // Only runs when caller provided a LibraryBuildEnv with toolchain paths.
+    let project_as_lib_archive: Option<PathBuf> = {
+        let _g = perf.phase("project-as-lib");
+        if let Some(env) = lib_env {
+            // Collect existing lib/* names so the helper can detect collisions.
+            let mut existing_lib_names = std::collections::HashSet::new();
+            let local_lib_dir = params.project_dir.join("lib");
+            if local_lib_dir.is_dir() {
+                if let Ok(entries) = std::fs::read_dir(&local_lib_dir) {
+                    for entry in entries.flatten() {
+                        let path = entry.path();
+                        if path.is_dir() {
+                            if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
+                                existing_lib_names.insert(name.to_lowercase());
+                            }
+                        }
+                    }
+                }
+            }
+            compile_project_as_library(
+                &params.project_dir,
+                &ctx.src_dir,
+                &ctx.build_dir,
+                env,
+                &existing_lib_names,
+            )
+            .await?
+        } else {
+            None
+        }
+    };
 
     // Generate compile_commands.json
     let compile_database_path = {
@@ -352,7 +348,6 @@ pub async fn run_sequential_build_with_libs(
     crate::build_output::log_linking(&mut ctx.build_log, "Linking firmware.elf");
     core_objects.extend(library_objects);
     core_objects.extend(extra_link_inputs.iter().cloned());
-    core_objects.extend(lib_deps_archives);
     if let Some(archive) = project_as_lib_archive {
         // GCC accepts .a in the same positional slot as .o files.
         core_objects.push(archive);
@@ -438,21 +433,4 @@ async fn timed<T>(
     let started = std::time::Instant::now();
     let value = future.await?;
     Ok((value, started.elapsed()))
-}
-
-/// Lower-cased names of the project's `lib/*` directories; the
-/// project-as-library archive yields to a `lib/` entry of the same name.
-fn local_lib_dir_names(project_dir: &Path) -> std::collections::HashSet<String> {
-    let mut names = std::collections::HashSet::new();
-    if let Ok(entries) = std::fs::read_dir(project_dir.join("lib")) {
-        for entry in entries.flatten() {
-            let path = entry.path();
-            if path.is_dir() {
-                if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
-                    names.insert(name.to_lowercase());
-                }
-            }
-        }
-    }
-    names
 }

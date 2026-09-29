@@ -33,7 +33,6 @@ pub async fn compile_sources(
         extra_flags,
         jobs,
         Some(build_log),
-        None,
     )
     .await?;
     if !result.warnings.is_empty() {
@@ -84,7 +83,6 @@ pub async fn compile_local_libraries(
             extra_flags,
             jobs,
             Some(build_log),
-            None,
         )
         .await
         .map_err(|e| {
@@ -262,39 +260,5 @@ mod tests {
         // The raw database stays in the build dir; the project root keeps
         // only the IDE database.
         assert!(!project.join(CompileDatabase::RAW_FILE_NAME).exists());
-    }
-
-    /// FastLED/fbuild#1559: the per-build toolchain version line must not
-    /// spawn the compiler on every build; the probe is memoized per path.
-    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
-    async fn log_toolchain_version_probes_the_compiler_once() {
-        // The fake compiler is a POSIX shell script.
-        if fbuild_core::platform::host::is_windows() {
-            return;
-        }
-        let tmp = tempfile::tempdir().unwrap();
-        let probes = tmp.path().join("probes.log");
-        let gcc = tmp.path().join("xtensa-gcc");
-        let staging = tmp.path().join("xtensa-gcc.staging");
-        std::fs::write(
-            &staging,
-            format!(
-                "#!/bin/sh\necho \"$*\" >> '{}'\necho 14.2.0\n",
-                probes.display()
-            ),
-        )
-        .unwrap();
-        fbuild_core::platform::fs::set_executable(&staging).unwrap();
-        std::fs::rename(&staging, &gcc).unwrap();
-
-        let mut log = BuildLog::new();
-        log_toolchain_version(&gcc, "xtensa-gcc", &mut log).await;
-        log_toolchain_version(&gcc, "xtensa-gcc", &mut log).await;
-
-        let lines = log.into_lines();
-        assert_eq!(lines.len(), 2, "{lines:?}");
-        assert!(lines.iter().all(|l| l == "Toolchain: xtensa-gcc 14.2.0"));
-        let spawned = std::fs::read_to_string(&probes).unwrap().lines().count();
-        assert_eq!(spawned, 1, "second build respawned the compiler");
     }
 }

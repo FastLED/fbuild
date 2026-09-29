@@ -90,36 +90,6 @@ pub struct EmbeddedCompileOutcome {
     pub cached: bool,
 }
 
-/// zccache's process-wide cap on concurrently running compilers. It is read
-/// once, when the embedded service starts.
-pub const ZCCACHE_MAX_PARALLEL_COMPILES_ENV: &str = "ZCCACHE_MAX_PARALLEL_COMPILES";
-
-/// fbuild's spelling of that cap. `FBUILD_*` variables survive the scrubbed
-/// environment the CLI spawns the daemon with; `ZCCACHE_*` ones do not.
-pub const FBUILD_MAX_PARALLEL_COMPILES_ENV: &str = "FBUILD_MAX_PARALLEL_COMPILES";
-
-/// Value to export as [`ZCCACHE_MAX_PARALLEL_COMPILES_ENV`] before the
-/// embedded service starts, or `None` to leave an explicit value alone.
-///
-/// Unset, zccache caps compiles at `cores - 1` unless it sees a CI marker,
-/// and the daemon's scrubbed environment never carries one — so every build,
-/// CI included, left a core idle (3 of 4 on a GitHub runner). The cap is the
-/// one global governor across concurrent builds; it defaults to every core
-/// because zccache already runs compiles at low priority on interactive hosts.
-pub fn compile_cap_env_value(
-    zccache_value: Option<&str>,
-    fbuild_value: Option<&str>,
-    cores: usize,
-) -> Option<String> {
-    if zccache_value.is_some() {
-        return None;
-    }
-    let requested = fbuild_value
-        .map(str::trim)
-        .filter(|value| value.eq_ignore_ascii_case("unlimited") || value.parse::<usize>().is_ok());
-    Some(requested.map_or_else(|| cores.max(1).to_string(), str::to_string))
-}
-
 impl FbuildZccacheService {
     /// Start the embedded service on the caller's tokio runtime.
     ///
@@ -419,52 +389,4 @@ fn synthetic_audit_id() -> String {
         let _ = write!(hex, "{byte:02x}");
     }
     hex
-}
-
-#[cfg(test)]
-mod compile_cap_tests {
-    use super::compile_cap_env_value;
-
-    #[test]
-    fn defaults_to_every_core() {
-        assert_eq!(compile_cap_env_value(None, None, 4).as_deref(), Some("4"));
-    }
-
-    #[test]
-    fn never_exports_zero_cores() {
-        assert_eq!(compile_cap_env_value(None, None, 0).as_deref(), Some("1"));
-    }
-
-    #[test]
-    fn explicit_zccache_value_is_left_alone() {
-        assert_eq!(compile_cap_env_value(Some("2"), Some("6"), 4), None);
-    }
-
-    #[test]
-    fn fbuild_override_wins_over_the_default() {
-        assert_eq!(
-            compile_cap_env_value(None, Some(" 6 "), 4).as_deref(),
-            Some("6")
-        );
-        assert_eq!(
-            compile_cap_env_value(None, Some("Unlimited"), 4).as_deref(),
-            Some("Unlimited")
-        );
-        assert_eq!(
-            compile_cap_env_value(None, Some("0"), 4).as_deref(),
-            Some("0")
-        );
-    }
-
-    #[test]
-    fn invalid_fbuild_override_falls_back_to_every_core() {
-        assert_eq!(
-            compile_cap_env_value(None, Some("lots"), 4).as_deref(),
-            Some("4")
-        );
-        assert_eq!(
-            compile_cap_env_value(None, Some(""), 4).as_deref(),
-            Some("4")
-        );
-    }
 }

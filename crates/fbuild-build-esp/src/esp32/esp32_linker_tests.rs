@@ -399,36 +399,3 @@ fn test_esp32h2_flash_freq_not_64m() {
     let freq = f_flash_to_esptool_freq(Some("64000000L"), config.default_flash_freq());
     assert_eq!(freq, "48m");
 }
-
-/// The link runs under the C locale; see [`super::LINK_ENV`].
-#[tokio::test]
-async fn link_runs_the_linker_under_the_c_locale() {
-    if fbuild_core::platform::host::is_windows() {
-        return;
-    }
-    let tmp = tempfile::TempDir::new().unwrap();
-    let recorded = tmp.path().join("lc_all");
-    let fake_gcc = tmp.path().join("fake-gcc");
-    // Staged and renamed into place: exec'ing a file another thread's fork
-    // may still hold open for writing fails with ETXTBSY.
-    let staging = tmp.path().join("fake-gcc.staging");
-    std::fs::write(
-        &staging,
-        format!(
-            "#!/bin/sh\nprintf '%s' \"$LC_ALL\" > '{}'\n",
-            recorded.display()
-        ),
-    )
-    .unwrap();
-    fbuild_core::platform::fs::set_executable(&staging).unwrap();
-    std::fs::rename(&staging, &fake_gcc).unwrap();
-    let mut linker = test_linker("esp32s3");
-    linker.gcc_path = fake_gcc;
-
-    linker
-        .link(&[], &[], &tmp.path().join("out"), &LinkExtraArgs::default())
-        .await
-        .unwrap();
-
-    assert_eq!(std::fs::read_to_string(&recorded).unwrap(), "C");
-}
