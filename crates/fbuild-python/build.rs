@@ -10,7 +10,7 @@ fn main() {
     // targets; the production cdylib and other builds are untouched.
     let unix = std::env::var("CARGO_CFG_TARGET_FAMILY").is_ok_and(|f| f == "unix");
     if unix {
-        if let Some(lib_dir) = pyo3_build_config::get().lib_dir.as_deref() {
+        if let Some(lib_dir) = pyo3_build_config::get().lib_dir() {
             println!("cargo:rustc-link-arg-tests=-Wl,-rpath,{lib_dir}");
         }
     }
