@@ -34,6 +34,15 @@ on:
           runners only execute"): the per-board compile was ~350s of a ~550s
           job, repeated across ~76 boards. Empty keeps the standalone
           compile path for direct `build-<board>.yml` dispatches.
+      toolchain-cache:
+        required: false
+        type: boolean
+        default: false
+        description: >-
+          Restore/save the ~1GB ~/.fbuild/prod/cache toolchain cache. Off by
+          default: for most boards a cold download is faster than the cache
+          round-trip. Opted in per family in ci/board_families.json with the
+          measurement that justifies it.
       fbuild-run-id:
         required: false
         type: string
@@ -114,14 +123,16 @@ jobs:
       # ipc shutdown path. See FastLED/fbuild#855.
 
       - name: Restore fbuild toolchains
+        if: inputs.toolchain-cache
         timeout-minutes: 10
         uses: actions/cache/restore@v5
         with:
           path: ~/.fbuild/prod/cache
           key: fbuild-toolchain-${{ runner.os }}-${{ inputs.env-name }}-${{ hashFiles(format('{0}/platformio.ini', inputs.test-dir)) }}
+          # No cross-board fallback: another board's ~1GB cache is mostly
+          # the wrong toolchain.
           restore-keys: |
             fbuild-toolchain-${{ runner.os }}-${{ inputs.env-name }}-
-            fbuild-toolchain-${{ runner.os }}-
 
       - name: Restore platform build artifacts
         timeout-minutes: 10
@@ -218,7 +229,7 @@ jobs:
 
       - name: Save fbuild toolchains
         # Default branch only -- see the setup-soldr save-cache note above.
-        if: always() && github.ref == 'refs/heads/main'
+        if: always() && inputs.toolchain-cache && github.ref == 'refs/heads/main'
         timeout-minutes: 10
         uses: actions/cache/save@v5
         with:

@@ -174,456 +174,532 @@ jobs:
             env_name: "apollo3_red"
             firmware_ext: "bin"
             workflow_aliases: ["build-apollo3_red.yml"]
+            toolchain_cache: false
           - workflow: "build-apollo3_thing_explorable.yml"
             workflow_name: "Apollo3 Thing Explorable"
             test_dir: "tests/platform/apollo3_thing_explorable"
             env_name: "apollo3_thing_explorable"
             firmware_ext: "bin"
             workflow_aliases: ["build-apollo3_thing_explorable.yml"]
+            toolchain_cache: false
           - workflow: "build-atmega8.yml"
             workflow_name: "ATmega8"
             test_dir: "tests/platform/atmega8"
             env_name: "atmega8"
             firmware_ext: "hex"
             workflow_aliases: ["build-atmega8.yml"]
+            toolchain_cache: false
           - workflow: "build-atmega8a.yml"
             workflow_name: "ATmega8A"
             test_dir: "tests/platform/atmega8a"
             env_name: "atmega8a"
             firmware_ext: "hex"
             workflow_aliases: ["build-atmega8a.yml"]
+            toolchain_cache: false
           - workflow: "build-attiny1604.yml"
             workflow_name: "ATtiny1604"
             test_dir: "tests/platform/attiny1604"
             env_name: "attiny1604"
             firmware_ext: "hex"
             workflow_aliases: ["build-attiny1604.yml"]
+            toolchain_cache: false
           - workflow: "build-attiny1616.yml"
             workflow_name: "ATtiny1616"
             test_dir: "tests/platform/attiny1616"
             env_name: "attiny1616"
             firmware_ext: "hex"
             workflow_aliases: ["build-attiny1616.yml"]
+            toolchain_cache: false
           - workflow: "build-attiny4313.yml"
             workflow_name: "ATtiny4313"
             test_dir: "tests/platform/attiny4313"
             env_name: "attiny4313"
             firmware_ext: "hex"
             workflow_aliases: ["build-attiny4313.yml"]
+            toolchain_cache: false
           - workflow: "build-attiny85.yml"
             workflow_name: "ATtiny85"
             test_dir: "tests/platform/attiny85"
             env_name: "attiny85"
             firmware_ext: "hex"
             workflow_aliases: ["build-attiny85.yml"]
+            toolchain_cache: false
           - workflow: "build-attiny88.yml"
             workflow_name: "ATtiny88"
             test_dir: "tests/platform/attiny88"
             env_name: "attiny88"
             firmware_ext: "hex"
             workflow_aliases: ["build-attiny88.yml"]
+            toolchain_cache: false
           - workflow: "build-blackpill.yml"
             workflow_name: "STM32 BlackPill F411CE"
             test_dir: "tests/platform/blackpill_f411ce"
             env_name: "blackpill"
             firmware_ext: "hex"
             workflow_aliases: ["build-blackpill.yml"]
+            toolchain_cache: false
           - workflow: "build-bluepill.yml"
             workflow_name: "STM32 BluePill F103C8"
             test_dir: "tests/platform/bluepill_f103c8"
             env_name: "bluepill"
             firmware_ext: "hex"
             workflow_aliases: ["build-bluepill.yml"]
+            toolchain_cache: false
           - workflow: "build-ch32l103.yml"
             workflow_name: "CH32L103"
             test_dir: "tests/platform/ch32l103"
             env_name: "ch32l103"
             firmware_ext: "bin"
             workflow_aliases: ["build-ch32l103.yml"]
+            toolchain_cache: false
           - workflow: "build-ch32v003.yml"
             workflow_name: "CH32V003"
             test_dir: "tests/platform/ch32v003"
             env_name: "ch32v003"
             firmware_ext: "bin"
             workflow_aliases: ["build-ch32v003.yml"]
+            toolchain_cache: false
           - workflow: "build-ch32v006.yml"
             workflow_name: "CH32V006"
             test_dir: "tests/platform/ch32v006"
             env_name: "ch32v006"
             firmware_ext: "bin"
             workflow_aliases: ["build-ch32v006.yml"]
+            toolchain_cache: false
           - workflow: "build-ch32v103.yml"
             workflow_name: "CH32V103"
             test_dir: "tests/platform/ch32v103"
             env_name: "ch32v103"
             firmware_ext: "bin"
             workflow_aliases: ["build-ch32v103.yml"]
+            toolchain_cache: false
           - workflow: "build-ch32v203.yml"
             workflow_name: "CH32V203"
             test_dir: "tests/platform/ch32v203"
             env_name: "ch32v203"
             firmware_ext: "bin"
             workflow_aliases: ["build-ch32v203.yml"]
+            toolchain_cache: false
           - workflow: "build-ch32v208.yml"
             workflow_name: "CH32V208"
             test_dir: "tests/platform/ch32v208"
             env_name: "ch32v208"
             firmware_ext: "bin"
             workflow_aliases: ["build-ch32v208.yml"]
+            toolchain_cache: false
           - workflow: "build-ch32v303.yml"
             workflow_name: "CH32V303"
             test_dir: "tests/platform/ch32v303"
             env_name: "ch32v303"
             firmware_ext: "bin"
             workflow_aliases: ["build-ch32v303.yml"]
+            toolchain_cache: false
           - workflow: "build-ch32v307.yml"
             workflow_name: "CH32V307"
             test_dir: "tests/platform/ch32v307"
             env_name: "ch32v307"
             firmware_ext: "bin"
             workflow_aliases: ["build-ch32v307.yml"]
+            toolchain_cache: false
           - workflow: "build-ch32x035.yml"
             workflow_name: "CH32X035"
             test_dir: "tests/platform/ch32x035"
             env_name: "ch32x035"
             firmware_ext: "bin"
             workflow_aliases: ["build-ch32x035.yml"]
+            toolchain_cache: false
           - workflow: "build-clearcore.yml"
             workflow_name: "Teknic ClearCore (SAME53)"
             test_dir: "tests/platform/clearcore"
             env_name: "clearcore"
             firmware_ext: "bin"
             workflow_aliases: ["build-clearcore.yml"]
+            toolchain_cache: false
           - workflow: "build-due.yml"
             workflow_name: "Arduino Due"
             test_dir: "tests/platform/due"
             env_name: "due"
             firmware_ext: "bin"
             workflow_aliases: ["build-due.yml"]
+            toolchain_cache: false
           - workflow: "build-esp32c2.yml"
             workflow_name: "ESP32-C2"
             test_dir: "tests/platform/esp32c2"
             env_name: "esp32c2"
             firmware_ext: "bin"
             workflow_aliases: ["build-esp32c2.yml"]
+            toolchain_cache: false
           - workflow: "build-esp32c3.yml"
             workflow_name: "ESP32-C3"
             test_dir: "tests/platform/esp32c3"
             env_name: "esp32c3"
             firmware_ext: "bin"
             workflow_aliases: ["build-esp32c3.yml"]
+            toolchain_cache: false
           - workflow: "build-esp32c5.yml"
             workflow_name: "ESP32-C5"
             test_dir: "tests/platform/esp32c5"
             env_name: "esp32c5"
             firmware_ext: "bin"
             workflow_aliases: ["build-esp32c5.yml"]
+            toolchain_cache: false
           - workflow: "build-esp32c6.yml"
             workflow_name: "ESP32-C6"
             test_dir: "tests/platform/esp32c6"
             env_name: "esp32c6"
             firmware_ext: "bin"
             workflow_aliases: ["build-esp32c6.yml"]
+            toolchain_cache: false
           - workflow: "build-esp32dev.yml"
             workflow_name: "ESP32 Dev"
             test_dir: "tests/platform/esp32dev"
             env_name: "esp32dev"
             firmware_ext: "bin"
             workflow_aliases: ["build-esp32dev.yml"]
+            toolchain_cache: false
           - workflow: "build-esp32h2.yml"
             workflow_name: "ESP32-H2"
             test_dir: "tests/platform/esp32h2"
             env_name: "esp32h2"
             firmware_ext: "bin"
             workflow_aliases: ["build-esp32h2.yml"]
+            toolchain_cache: false
           - workflow: "build-esp32p4.yml"
             workflow_name: "ESP32-P4"
             test_dir: "tests/platform/esp32p4"
             env_name: "esp32p4"
             firmware_ext: "bin"
             workflow_aliases: ["build-esp32p4.yml"]
+            toolchain_cache: false
           - workflow: "build-esp32s2.yml"
             workflow_name: "ESP32-S2"
             test_dir: "tests/platform/esp32s2"
             env_name: "esp32s2"
             firmware_ext: "bin"
             workflow_aliases: ["build-esp32s2.yml"]
+            toolchain_cache: false
           - workflow: "build-esp32s3.yml"
             workflow_name: "ESP32-S3"
             test_dir: "tests/platform/esp32s3"
             env_name: "esp32s3"
             firmware_ext: "bin"
             workflow_aliases: ["build-esp32s3.yml"]
+            toolchain_cache: false
           - workflow: "build-esp8266.yml"
             workflow_name: "ESP8266"
             test_dir: "tests/platform/esp8266"
             env_name: "esp8266"
             firmware_ext: "bin"
             workflow_aliases: ["build-esp8266.yml"]
+            toolchain_cache: false
           - workflow: "build-giga-r1.yml"
             workflow_name: "Arduino GIGA R1 M7"
             test_dir: "tests/platform/giga_r1_m7"
             env_name: "giga_r1"
             firmware_ext: "bin"
             workflow_aliases: ["build-giga-r1.yml"]
+            toolchain_cache: false
           - workflow: "build-leonardo.yml"
             workflow_name: "Arduino Leonardo"
             test_dir: "tests/platform/leonardo"
             env_name: "leonardo"
             firmware_ext: "hex"
             workflow_aliases: ["build-leonardo.yml"]
+            toolchain_cache: false
           - workflow: "build-lpc804.yml"
             workflow_name: "NXP LPCXpresso804"
             test_dir: "tests/platform/lpc804"
             env_name: "lpc804"
             firmware_ext: "bin"
             workflow_aliases: ["build-lpc804.yml"]
+            toolchain_cache: false
           - workflow: "build-lpc845.yml"
             workflow_name: "NXP LPC845"
             test_dir: "tests/platform/lpc845"
             env_name: "lpc845"
             firmware_ext: "bin"
             workflow_aliases: ["build-lpc845.yml"]
+            toolchain_cache: false
           - workflow: "build-lpc845brk.yml"
             workflow_name: "NXP LPC845-BRK"
             test_dir: "tests/platform/lpc845brk"
             env_name: "lpc845brk"
             firmware_ext: "bin"
             workflow_aliases: ["build-lpc845brk.yml"]
+            toolchain_cache: false
           - workflow: "build-lpcxpresso804.yml"
             workflow_name: "NXP LPCXpresso804"
             test_dir: "tests/platform/lpcxpresso804"
             env_name: "lpcxpresso804"
             firmware_ext: "bin"
             workflow_aliases: ["build-lpcxpresso804.yml"]
+            toolchain_cache: false
           - workflow: "build-lpcxpresso845max.yml"
             workflow_name: "NXP LPCXpresso845-MAX"
             test_dir: "tests/platform/lpcxpresso845max"
             env_name: "lpcxpresso845max"
             firmware_ext: "bin"
             workflow_aliases: ["build-lpcxpresso845max.yml"]
+            toolchain_cache: false
           - workflow: "build-matrix_portal_m4.yml"
             workflow_name: "Adafruit Matrix Portal M4"
             test_dir: "tests/platform/matrix_portal_m4"
             env_name: "matrix_portal_m4"
             firmware_ext: "bin"
             workflow_aliases: ["build-matrix_portal_m4.yml"]
+            toolchain_cache: false
           - workflow: "build-mgm240.yml"
             workflow_name: "Silicon Labs MGM240"
             test_dir: "tests/platform/mgm240"
             env_name: "mgm240"
             firmware_ext: "bin"
             workflow_aliases: ["build-mgm240.yml"]
+            toolchain_cache: true
           - workflow: "build-nano-every.yml"
             workflow_name: "Arduino Nano Every"
             test_dir: "tests/platform/nano_every"
             env_name: "nano_every"
             firmware_ext: "hex"
             workflow_aliases: ["build-nano-every.yml", "build-nano_every.yml"]
+            toolchain_cache: false
           - workflow: "build-nice_nano_nrf52840.yml"
             workflow_name: "Nice!Nano nRF52840"
             test_dir: "tests/platform/nice_nano_nrf52840"
             env_name: "nice_nano_nrf52840"
             firmware_ext: "hex"
             workflow_aliases: ["build-nice_nano_nrf52840.yml"]
+            toolchain_cache: false
           - workflow: "build-nrf52840-sense.yml"
             workflow_name: "Adafruit Feather nRF52840 Sense"
             test_dir: "tests/platform/adafruit_feather_nrf52840_sense"
             env_name: "nrf52840_sense"
             firmware_ext: "hex"
             workflow_aliases: ["build-nrf52840-sense.yml"]
+            toolchain_cache: false
           - workflow: "build-nrf52840_dk.yml"
             workflow_name: "Nordic nRF52840-DK"
             test_dir: "tests/platform/nrf52840_dk"
             env_name: "nrf52840_dk"
             firmware_ext: "hex"
             workflow_aliases: ["build-nrf52840_dk.yml"]
+            toolchain_cache: false
           - workflow: "build-nrfmicro_nrf52840.yml"
             workflow_name: "nrfmicro nRF52840"
             test_dir: "tests/platform/nrfmicro_nrf52840"
             env_name: "nrfmicro_nrf52840"
             firmware_ext: "hex"
             workflow_aliases: ["build-nrfmicro_nrf52840.yml"]
+            toolchain_cache: false
           - workflow: "build-nucleo-f429zi.yml"
             workflow_name: "ST Nucleo F429ZI"
             test_dir: "tests/platform/nucleo_f429zi"
             env_name: "nucleo_f429zi"
             firmware_ext: "hex"
             workflow_aliases: ["build-nucleo-f429zi.yml", "build-nucleo_f429zi.yml"]
+            toolchain_cache: false
           - workflow: "build-nucleo-f439zi.yml"
             workflow_name: "ST Nucleo F439ZI"
             test_dir: "tests/platform/nucleo_f439zi"
             env_name: "nucleo_f439zi"
             firmware_ext: "hex"
             workflow_aliases: ["build-nucleo-f439zi.yml", "build-nucleo_f439zi.yml"]
+            toolchain_cache: false
           - workflow: "build-qtpy_m0.yml"
             workflow_name: "Adafruit QT Py M0"
             test_dir: "tests/platform/qtpy_m0"
             env_name: "qtpy_m0"
             firmware_ext: "bin"
             workflow_aliases: ["build-qtpy_m0.yml"]
+            toolchain_cache: false
           - workflow: "build-rp2040.yml"
             workflow_name: "RP2040"
             test_dir: "tests/platform/rp2040"
             env_name: "rp2040"
             firmware_ext: "bin"
             workflow_aliases: ["build-rp2040.yml"]
+            toolchain_cache: false
           - workflow: "build-rp2350.yml"
             workflow_name: "RP2350"
             test_dir: "tests/platform/rp2350"
             env_name: "rp2350"
             firmware_ext: "bin"
             workflow_aliases: ["build-rp2350.yml"]
+            toolchain_cache: false
           - workflow: "build-rpipico.yml"
             workflow_name: "Raspberry Pi Pico"
             test_dir: "tests/platform/rpipico"
             env_name: "rpipico"
             firmware_ext: "bin"
             workflow_aliases: ["build-rpipico.yml"]
+            toolchain_cache: false
           - workflow: "build-rpipico2.yml"
             workflow_name: "Raspberry Pi Pico 2"
             test_dir: "tests/platform/rpipico2"
             env_name: "rpipico2"
             firmware_ext: "bin"
             workflow_aliases: ["build-rpipico2.yml"]
+            toolchain_cache: false
           - workflow: "build-sam3x8e_due.yml"
             workflow_name: "Atmel SAM3X8E (Due)"
             test_dir: "tests/platform/sam3x8e_due"
             env_name: "sam3x8e_due"
             firmware_ext: "bin"
             workflow_aliases: ["build-sam3x8e_due.yml"]
+            toolchain_cache: false
           - workflow: "build-samd21.yml"
             workflow_name: "Atmel SAMD21"
             test_dir: "tests/platform/samd21"
             env_name: "samd21"
             firmware_ext: "bin"
             workflow_aliases: ["build-samd21.yml"]
+            toolchain_cache: false
           - workflow: "build-samd21_zero.yml"
             workflow_name: "Arduino Zero (SAMD21)"
             test_dir: "tests/platform/samd21_zero"
             env_name: "samd21_zero"
             firmware_ext: "bin"
             workflow_aliases: ["build-samd21_zero.yml"]
+            toolchain_cache: false
           - workflow: "build-samd51j.yml"
             workflow_name: "Atmel SAMD51J"
             test_dir: "tests/platform/samd51j"
             env_name: "samd51j"
             firmware_ext: "bin"
             workflow_aliases: ["build-samd51j.yml"]
+            toolchain_cache: false
           - workflow: "build-samd51p.yml"
             workflow_name: "Atmel SAMD51P"
             test_dir: "tests/platform/samd51p"
             env_name: "samd51p"
             firmware_ext: "bin"
             workflow_aliases: ["build-samd51p.yml"]
+            toolchain_cache: false
           - workflow: "build-stm32f103c8.yml"
             workflow_name: "STM32F103C8"
             test_dir: "tests/platform/stm32f103c8"
             env_name: "stm32f103c8"
             firmware_ext: "hex"
             workflow_aliases: ["build-stm32f103c8.yml"]
+            toolchain_cache: false
           - workflow: "build-stm32f103cb.yml"
             workflow_name: "STM32F103CB"
             test_dir: "tests/platform/stm32f103cb"
             env_name: "stm32f103cb"
             firmware_ext: "hex"
             workflow_aliases: ["build-stm32f103cb.yml"]
+            toolchain_cache: false
           - workflow: "build-stm32f103tb.yml"
             workflow_name: "STM32F103TB"
             test_dir: "tests/platform/stm32f103tb"
             env_name: "stm32f103tb"
             firmware_ext: "hex"
             workflow_aliases: ["build-stm32f103tb.yml"]
+            toolchain_cache: false
           - workflow: "build-stm32f411ce.yml"
             workflow_name: "STM32F411CE"
             test_dir: "tests/platform/stm32f411ce"
             env_name: "stm32f411ce"
             firmware_ext: "hex"
             workflow_aliases: ["build-stm32f411ce.yml"]
+            toolchain_cache: false
           - workflow: "build-stm32h747xi.yml"
             workflow_name: "STM32H747XI"
             test_dir: "tests/platform/stm32h747xi"
             env_name: "stm32h747xi"
             firmware_ext: "bin"
             workflow_aliases: ["build-stm32h747xi.yml"]
+            toolchain_cache: false
           - workflow: "build-supermini_nrf52840.yml"
             workflow_name: "SuperMini nRF52840"
             test_dir: "tests/platform/supermini_nrf52840"
             env_name: "supermini_nrf52840"
             firmware_ext: "hex"
             workflow_aliases: ["build-supermini_nrf52840.yml"]
+            toolchain_cache: false
           - workflow: "build-teensy30.yml"
             workflow_name: "Teensy 3.0"
             test_dir: "tests/platform/teensy30"
             env_name: "teensy30"
             firmware_ext: "hex"
             workflow_aliases: ["build-teensy30.yml"]
+            toolchain_cache: false
           - workflow: "build-teensy31.yml"
             workflow_name: "Teensy 3.1"
             test_dir: "tests/platform/teensy31"
             env_name: "teensy31"
             firmware_ext: "hex"
             workflow_aliases: ["build-teensy31.yml"]
+            toolchain_cache: false
           - workflow: "build-teensy32.yml"
             workflow_name: "Teensy 3.2"
             test_dir: "tests/platform/teensy32"
             env_name: "teensy32"
             firmware_ext: "hex"
             workflow_aliases: ["build-teensy32.yml"]
+            toolchain_cache: false
           - workflow: "build-teensy35.yml"
             workflow_name: "Teensy 3.5"
             test_dir: "tests/platform/teensy35"
             env_name: "teensy35"
             firmware_ext: "hex"
             workflow_aliases: ["build-teensy35.yml"]
+            toolchain_cache: false
           - workflow: "build-teensy36.yml"
             workflow_name: "Teensy 3.6"
             test_dir: "tests/platform/teensy36"
             env_name: "teensy36"
             firmware_ext: "hex"
             workflow_aliases: ["build-teensy36.yml"]
+            toolchain_cache: false
           - workflow: "build-teensy40.yml"
             workflow_name: "Teensy 4.0"
             test_dir: "tests/platform/teensy40"
             env_name: "teensy40"
             firmware_ext: "hex"
             workflow_aliases: ["build-teensy40.yml"]
+            toolchain_cache: false
           - workflow: "build-teensy41.yml"
             workflow_name: "Teensy 4.1"
             test_dir: "tests/platform/teensy41"
             env_name: "teensy41"
             firmware_ext: "hex"
             workflow_aliases: ["build-teensy41.yml"]
+            toolchain_cache: false
           - workflow: "build-teensylc.yml"
             workflow_name: "Teensy LC"
             test_dir: "tests/platform/teensylc"
             env_name: "teensylc"
             firmware_ext: "hex"
             workflow_aliases: ["build-teensylc.yml"]
+            toolchain_cache: false
           - workflow: "build-thingplusmatter.yml"
             workflow_name: "SparkFun Thing Plus Matter"
             test_dir: "tests/platform/sparkfun_thingplusmatter"
             env_name: "thingplusmatter"
             firmware_ext: "bin"
             workflow_aliases: ["build-thingplusmatter.yml"]
+            toolchain_cache: false
           - workflow: "build-tinystm.yml"
             workflow_name: "HY TinySTM103TB"
             test_dir: "tests/platform/hy_tinystm103tb"
             env_name: "tinystm"
             firmware_ext: "hex"
             workflow_aliases: ["build-tinystm.yml"]
+            toolchain_cache: false
           - workflow: "build-uno-r4-wifi.yml"
             workflow_name: "Arduino Uno R4 WiFi"
             test_dir: "tests/platform/uno_r4_wifi"
             env_name: "uno_r4_wifi"
             firmware_ext: "bin"
             workflow_aliases: ["build-uno-r4-wifi.yml", "build-uno_r4_wifi.yml"]
+            toolchain_cache: false
           - workflow: "build-uno.yml"
             workflow_name: "Arduino Uno"
             test_dir: "tests/platform/uno"
             env_name: "uno"
             firmware_ext: "hex"
             workflow_aliases: ["build-uno.yml"]
+            toolchain_cache: false
     uses: ./.github/workflows/template_build.yml
     with:
       workflow-name: ${{ matrix.workflow_name }}
@@ -632,6 +708,7 @@ jobs:
       firmware-ext: ${{ matrix.firmware_ext }}
       checkout_ref: ${{ needs.verify.outputs.candidate_sha }}
       fbuild-artifact: fbuild-bin-linux-debug
+      toolchain-cache: ${{ matrix.toolchain_cache }}
   coverage:
     name: Full coverage
     if: always()

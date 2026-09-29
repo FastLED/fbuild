@@ -154,7 +154,16 @@ def render_on_block(board: dict, families: dict, common_paths: list[str]) -> str
     ) + render_concurrency_block(board)
 
 
-def render_board_jobs(board: dict) -> str:
+def toolchain_cache(board: dict, families: dict) -> bool:
+    """Whether a board restores/saves its ~1GB fbuild toolchain cache.
+
+    Opt-in per family, justified by a measurement recorded in the SOT: for
+    most families a cold download is faster than the cache round-trip.
+    """
+    return bool(families[board["family"]].get("toolchain_cache", False))
+
+
+def render_board_jobs(board: dict, families: dict) -> str:
     return (
         "jobs:\n"
         "  build:\n"
@@ -167,6 +176,7 @@ def render_board_jobs(board: dict) -> str:
         "      checkout_ref: ${{ inputs.checkout_ref }}\n"
         f"      fbuild-artifact: ${{{{ inputs.fbuild-run-id && '{FBUILD_BIN_ARTIFACT}' || '' }}}}\n"
         "      fbuild-run-id: ${{ inputs.fbuild-run-id }}\n"
+        f"      toolchain-cache: {json.dumps(toolchain_cache(board, families))}\n"
     )
 
 
@@ -233,7 +243,7 @@ def render_fbuild_bin_job(needs: str, condition: str, ref: str) -> str:
     )
 
 
-def render_ci(boards: list[dict], tier: str) -> str:
+def render_ci(boards: list[dict], tier: str, families: dict) -> str:
     full = tier == "full"
     minimal = tier == "minimal"
     selected = execution_boards(boards if full else [b for b in boards if b.get("fractional", False)])
@@ -244,6 +254,7 @@ def render_ci(boards: list[dict], tier: str) -> str:
         f"            env_name: {json.dumps(b['env_name'])}\n"
         f"            firmware_ext: {json.dumps(b['firmware_ext'])}\n"
         f"            workflow_aliases: {json.dumps(b['workflow_aliases'])}\n"
+        f"            toolchain_cache: {json.dumps(toolchain_cache(b, families))}\n"
         for b in selected
     )
     if not selected:
@@ -403,7 +414,8 @@ def render_ci(boards: list[dict], tier: str) -> str:
            + "      env-name: ${{ matrix.env_name }}\n"
            + "      firmware-ext: ${{ matrix.firmware_ext }}\n"
            + f"      checkout_ref: {verified_ref}\n"
-           + f"      fbuild-artifact: {FBUILD_BIN_ARTIFACT}\n")
+           + f"      fbuild-artifact: {FBUILD_BIN_ARTIFACT}\n"
+           + "      toolchain-cache: ${{ matrix.toolchain_cache }}\n")
         + ("" if minimal else
             "  coverage:\n"
             + ("    name: Full coverage\n" if full else "    name: ci-test coverage\n")
@@ -675,13 +687,13 @@ def main() -> int:
         old = path.read_text(encoding="utf-8")
         new_on = render_on_block(board, families, common_paths)
         new = rewrite(old, new_on)
-        new = new[: new.index("\njobs:\n") + 1] + render_board_jobs(board)
+        new = new[: new.index("\njobs:\n") + 1] + render_board_jobs(board, families)
         write_if_changed(path, new, args.check, drift, updated)
 
     write_if_changed(NIGHTLY_PATH, render_nightly(boards), args.check, drift, updated)
-    write_if_changed(MINIMAL_PATH, render_ci(boards, "minimal"), args.check, drift, updated)
-    write_if_changed(TEST_PATH, render_ci(boards, "test"), args.check, drift, updated)
-    write_if_changed(FULL_PATH, render_ci(boards, "full"), args.check, drift, updated)
+    write_if_changed(MINIMAL_PATH, render_ci(boards, "minimal", families), args.check, drift, updated)
+    write_if_changed(TEST_PATH, render_ci(boards, "test", families), args.check, drift, updated)
+    write_if_changed(FULL_PATH, render_ci(boards, "full", families), args.check, drift, updated)
 
     if args.check and drift:
         print("Drift detected -- the following workflows are out of sync with the SOT:", file=sys.stderr)

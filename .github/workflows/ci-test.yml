@@ -104,6 +104,7 @@ jobs:
             env_name: "uno"
             firmware_ext: "hex"
             workflow_aliases: ["build-uno.yml"]
+            toolchain_cache: false
     uses: ./.github/workflows/template_build.yml
     with:
       workflow-name: ${{ matrix.workflow_name }}
@@ -112,6 +113,7 @@ jobs:
       firmware-ext: ${{ matrix.firmware_ext }}
       checkout_ref: ${{ needs.verify.outputs.candidate_sha }}
       fbuild-artifact: fbuild-bin-linux-debug
+      toolchain-cache: ${{ matrix.toolchain_cache }}
   coverage:
     name: ci-test coverage
     if: always()

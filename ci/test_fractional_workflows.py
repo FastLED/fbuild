@@ -148,6 +148,16 @@ class FractionalWorkflowTests(unittest.TestCase):
                 with_ = wf["jobs"]["build"]["with"]
                 self.assertEqual("${{ inputs.fbuild-run-id }}", with_["fbuild-run-id"])
                 self.assertEqual(board["test_dir"], with_["test-dir"])
+                self.assertEqual(
+                    render_workflows.toolchain_cache(board, render_workflows.load_sot()["families"]),
+                    with_["toolchain-cache"],
+                )
+
+    def test_toolchain_cache_is_opt_in_with_a_recorded_measurement(self):
+        for name, family in render_workflows.load_sot()["families"].items():
+            with self.subTest(family=name):
+                if family.get("toolchain_cache"):
+                    self.assertIn("_toolchain_cache_why", family)
 
     def test_ordinary_minimal_and_opt_in_test_are_distinct(self):
         minimal = self.load("ci-minimal.yml")

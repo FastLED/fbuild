@@ -30,3 +30,4 @@ jobs:
       checkout_ref: ${{ inputs.checkout_ref }}
       fbuild-artifact: ${{ inputs.fbuild-run-id && 'fbuild-bin-linux-debug' || '' }}
       fbuild-run-id: ${{ inputs.fbuild-run-id }}
+      toolchain-cache: true
