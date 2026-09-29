@@ -68,6 +68,7 @@ pub(super) async fn compile_local_libraries(
                     compiler_cache,
                     None,
                     None,
+                    None,
                 )
                 .await;
                 (library.name.as_str(), result)

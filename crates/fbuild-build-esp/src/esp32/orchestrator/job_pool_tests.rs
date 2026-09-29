@@ -151,6 +151,7 @@ async fn run_pool(jobs: usize) -> (usize, Vec<String>) {
                 None,
                 None,
                 Some(lib_backend),
+                None,
             )
             .await?;
             Ok(archive.into_iter().collect())
