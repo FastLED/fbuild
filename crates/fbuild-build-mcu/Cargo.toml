@@ -34,7 +34,7 @@ tar = { workspace = true }
 zip = { workspace = true }
 tree-sitter = { workspace = true }
 tree-sitter-cpp = { workspace = true }
-zccache = { git = "https://github.com/zackees/zccache", rev = "9bc8b4dc98335538094b7e5c08a5c519a5046408" }
+zccache = { git = "https://github.com/zackees/zccache", rev = "b385a7bfb308c2d1456613622ad361eb66d31cdd" }
 
 [dev-dependencies]
 filetime = { workspace = true }
