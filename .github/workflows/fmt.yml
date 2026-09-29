@@ -37,6 +37,7 @@ jobs:
         id: setup-soldr
         uses: zackees/setup-soldr@v0
         with:
+          cache-key-suffix: fmt-fmt
           cache: true
           build-cache: true
           target-cache: false
