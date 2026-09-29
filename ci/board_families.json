@@ -8,7 +8,8 @@
     },
     "esp32": {
       "crate_paths": [
-        "crates/fbuild-build-esp/src/esp32/**"
+        "crates/fbuild-build-esp/src/esp32/**",
+        "crates/fbuild-build-engine/src/include_farm*.rs"
       ]
     },
     "esp8266": {

@@ -219,6 +219,13 @@ pub(super) fn compile_db_is_current(build_dir: &Path, project_dir: &Path) -> boo
     crate::compile_database::CompileDatabase::expected_output_path(build_dir, project_dir).exists()
 }
 
+/// `FBUILD_INCLUDE_FARM=0` keeps the plain SDK `-I` list: an escape hatch if
+/// the farm ever resolves a header differently, and the baseline the
+/// real-SDK parity test compares against (FastLED/fbuild#1588).
+pub(super) fn farm_enabled() -> bool {
+    std::env::var("FBUILD_INCLUDE_FARM").map_or(true, |v| v.trim() != "0")
+}
+
 /// The SDK `-I` block collapsed into a header farm for compiler argv
 /// (FastLED/fbuild#1537). Library selection keeps the original list.
 pub(super) struct SdkIncludeFarm {
@@ -230,7 +237,7 @@ pub(super) struct SdkIncludeFarm {
 impl SdkIncludeFarm {
     /// Farm `dirs[range]`, the SDK block; `None` (plain `-I`) on any failure.
     pub(super) async fn build(dirs: &[PathBuf], range: std::ops::Range<usize>) -> Option<Self> {
-        if fbuild_core::platform::host::is_windows() || range.is_empty() {
+        if fbuild_core::platform::host::is_windows() || range.is_empty() || !farm_enabled() {
             return None;
         }
         let before: Vec<_> = dirs[..range.start]

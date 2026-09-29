@@ -19,7 +19,11 @@
 //!   its directory out of the farm.
 //!
 //! Anything unexpected yields no farm; callers then keep the original list.
-//! Callers skip farms on Windows, where symlinks usually need elevated rights.
+//! Callers skip farms on Windows, where symlinks usually need elevated rights,
+//! and when `FBUILD_INCLUDE_FARM=0`. The text-level checks above cannot see
+//! macro includes; the real-SDK parity test in
+//! `fbuild-build/tests/it/esp32_include_farm_parity.rs` compares GCC's own
+//! depfiles with and without the farm (FastLED/fbuild#1588).
 
 use std::collections::{BTreeMap, HashMap};
 use std::io;
@@ -29,7 +33,7 @@ use fbuild_core::path::NormalizedPath;
 use serde::{Deserialize, Serialize};
 
 /// Bumped whenever the farm layout or its planning rules change.
-const FORMAT_VERSION: u32 = 3;
+const FORMAT_VERSION: u32 = 4;
 const MANIFEST: &str = "farm.json";
 
 /// A materialized farm plus the block directories that stay separate.
@@ -409,6 +413,14 @@ fn quoted_include_conflicts(
             continue;
         }
         let conflicting = rels.iter().any(|rel| {
+            // `<../x.h>` resolves through the -I chain, where a `..` from the
+            // farm root climbs out of the farm instead of to a sibling dir.
+            let file = block[owner].join(rel);
+            if angle_includes_climbing(&file).iter().any(|name| {
+                chain_lookup(index, name) != farm_chain_lookup(root, index, farmed, name)
+            }) {
+                return true;
+            }
             let parent = rel.rsplit_once('/').map_or("", |(p, _)| p);
             // Inside a symlinked subtree, lookups resolve physically in the
             // owning directory, exactly as before.
@@ -462,6 +474,24 @@ fn uses_include_next(file: &Path) -> bool {
                 .is_some_and(|rest| rest.trim_start().starts_with("include_next"))
         })
     })
+}
+
+/// `#include <...>` names containing a `..` component.
+fn angle_includes_climbing(file: &Path) -> Vec<String> {
+    let Ok(bytes) = std::fs::read(file) else {
+        return Vec::new();
+    };
+    let text = String::from_utf8_lossy(&bytes);
+    text.lines()
+        .filter_map(|line| {
+            let rest = line.trim_start().strip_prefix('#')?.trim_start();
+            let rest = rest.strip_prefix("include")?.trim_start();
+            let (name, _) = rest.strip_prefix('<')?.split_once('>')?;
+            name.split('/')
+                .any(|part| part == "..")
+                .then(|| name.to_string())
+        })
+        .collect()
 }
 
 fn quoted_includes(file: &Path) -> Vec<String> {
