@@ -1,5 +1,6 @@
 //! Clang flag translation and IWYU preparation.
 
+use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
 use super::types::{CompileDatabase, CompileEntry, TargetArchitecture};
@@ -74,10 +75,10 @@ pub fn translate_flags_for_clang(args: &[String], arch: TargetArchitecture) -> V
     result
 }
 
-/// Deterministic, deduplicated `-isystem <dir>` args for the GCC toolchain's
-/// builtin include directories (`stdbool.h`, `stddef.h`, `stdarg.h`, etc. —
-/// implicit GCC search paths that never appear in `compile_commands.json`
-/// because GCC adds them automatically).
+/// Deterministic, deduplicated `-isystem <dir>` args for the builtin include
+/// directories of the GCC toolchain that owns `compiler` (`stdbool.h`,
+/// `stddef.h`, `stdarg.h`, etc. — implicit GCC search paths that never appear
+/// in `compile_commands.json` because GCC adds them automatically).
 ///
 /// clangd has no such implicit search path, so without these baked in as
 /// `-isystem` it can't find those headers. Previously the only fix was a
@@ -88,9 +89,16 @@ pub fn translate_flags_for_clang(args: &[String], arch: TargetArchitecture) -> V
 /// Baking the dirs in directly is robust on every platform and doesn't
 /// require clangd to shell out to anything.
 ///
-/// Empty (no-op) when no toolchain is cached yet — never fails a build.
-fn builtin_isystem_args() -> Vec<String> {
-    isystem_args_from_dirs(fbuild_packages::toolchain::clang::find_gcc_builtin_include_dirs())
+/// Scoped to the entry's own compiler, never the whole toolchain cache: those
+/// headers are architecture-specific and another target's copy must not win
+/// (FastLED/fbuild#1538). Empty (no-op) when the compiler has no toolchain
+/// root — never fails a build.
+fn builtin_isystem_args(compiler: &str) -> Vec<String> {
+    isystem_args_from_dirs(
+        fbuild_packages::toolchain::clang::gcc_builtin_include_dirs_for_compiler(Path::new(
+            compiler,
+        )),
+    )
 }
 
 /// Sort + dedup a list of include dirs and flatten it into `-isystem <dir>`
@@ -112,15 +120,21 @@ pub(super) fn isystem_args_from_dirs(mut dirs: Vec<PathBuf>) -> Vec<String> {
 impl CompileDatabase {
     /// Create a new compile database with GCC flags translated to clang
     /// equivalents, with the toolchain's GCC builtin include dirs baked in
-    /// as `-isystem` (see `builtin_isystem_args`, private to this module).
+    /// as `-isystem`, taken from each entry's own compiler (see `builtin_isystem_args`).
     pub fn translate_for_clang(&self, arch: TargetArchitecture) -> CompileDatabase {
-        let builtin_includes = builtin_isystem_args();
+        // Entries of one env share a compiler; probe each distinct one once.
+        let mut builtin_includes: HashMap<&str, Vec<String>> = HashMap::new();
         let entries = self
             .entries
             .iter()
             .map(|entry| {
                 let mut arguments = translate_flags_for_clang(&entry.arguments, arch);
-                arguments.extend(builtin_includes.iter().cloned());
+                if let Some(compiler) = entry.arguments.first() {
+                    let includes = builtin_includes
+                        .entry(compiler.as_str())
+                        .or_insert_with(|| builtin_isystem_args(compiler));
+                    arguments.extend(includes.iter().cloned());
+                }
                 CompileEntry {
                     arguments,
                     directory: entry.directory.clone(),

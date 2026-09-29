@@ -419,6 +419,55 @@ fn test_translate_does_not_modify_original() {
     assert_eq!(db.entries[0].arguments[0], "/usr/bin/gcc");
 }
 
+#[test]
+fn translate_for_clang_uses_only_the_entrys_own_toolchain_include_dirs() {
+    // FastLED/fbuild#1538: an esp32s3 database must not carry the AVR (or any
+    // other cached toolchain's) builtin include dirs.
+    let cache = tempfile::tempdir_in(fbuild_paths::temp_subdir("compile-db-tests")).unwrap();
+    let mut include_of = |toolchain: &str, triple: &str, ver: &str| {
+        let include = cache
+            .path()
+            .join(toolchain)
+            .join("lib/gcc")
+            .join(triple)
+            .join(ver)
+            .join("include");
+        std::fs::create_dir_all(&include).unwrap();
+        std::fs::write(include.join("stdbool.h"), "").unwrap();
+        include.to_string_lossy().to_string()
+    };
+    let esp_include = include_of("esp", "xtensa-esp32s3-elf", "8.4.0");
+    let avr_include = include_of("avr", "avr", "7.3.0");
+
+    let mut db = CompileDatabase::new();
+    db.add_entry(CompileEntry {
+        arguments: vec![
+            cache
+                .path()
+                .join("esp/bin/xtensa-esp32s3-elf-g++")
+                .to_string_lossy()
+                .to_string(),
+            "-c".to_string(),
+            "app.cpp".to_string(),
+        ],
+        directory: "/project".to_string(),
+        file: "app.cpp".to_string(),
+        output: None,
+    });
+
+    let translated = db.translate_for_clang(TargetArchitecture::Xtensa);
+    let args = &translated.entries[0].arguments;
+    assert!(
+        args.windows(2)
+            .any(|w| w[0] == "-isystem" && w[1] == esp_include),
+        "own toolchain include dir missing: {args:?}"
+    );
+    assert!(
+        !args.contains(&avr_include),
+        "another toolchain's include dir leaked in: {args:?}"
+    );
+}
+
 // =========================================================================
 // IWYU preparation tests
 // =========================================================================
