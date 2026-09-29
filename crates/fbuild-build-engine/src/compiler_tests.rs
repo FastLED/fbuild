@@ -800,13 +800,17 @@ fn test_build_rebuild_signature_strips_build_unflags() {
 #[test]
 fn compile_scratch_root_is_the_object_dir_not_the_project() {
     let project = Path::new("/proj");
+    let rel_obj_dir = Path::new(fbuild_paths::FBUILD_DIR_NAME)
+        .join(fbuild_paths::BUILD_DIR_NAME)
+        .join("o");
+    let abs_obj_dir = project.join(&rel_obj_dir);
     assert_eq!(
-        compile_scratch_root(Some(project), Path::new("/proj/.fbuild/build/o/a.o")),
-        PathBuf::from("/proj/.fbuild/build/o")
+        compile_scratch_root(Some(project), &abs_obj_dir.join("a.o")),
+        abs_obj_dir
     );
     assert_eq!(
-        compile_scratch_root(Some(project), Path::new(".fbuild/build/o/a.o")),
-        PathBuf::from("/proj/.fbuild/build/o")
+        compile_scratch_root(Some(project), &rel_obj_dir.join("a.o")),
+        abs_obj_dir
     );
     assert_eq!(
         compile_scratch_root(Some(project), Path::new("a.o")),
