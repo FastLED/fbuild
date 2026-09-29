@@ -2,7 +2,16 @@ name: Build SAMD51P
 
 # >>> RENDERED-ON-BEGIN (ci/render_workflows.py) -- do not edit by hand <<<
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      fbuild-run-id:
+        description: 'Run holding a prebuilt fbuild artifact (empty: compile here)'
+        type: string
+        default: ''
+      checkout_ref:
+        description: 'Commit to build (empty: the dispatched ref)'
+        type: string
+        default: ''
   workflow_call: {}
 
 concurrency:
@@ -14,7 +23,11 @@ jobs:
   build:
     uses: ./.github/workflows/template_build.yml
     with:
-      workflow-name: "SAMD51P"
+      workflow-name: "Atmel SAMD51P"
       test-dir: "tests/platform/samd51p"
       env-name: "samd51p"
       firmware-ext: "bin"
+      checkout_ref: ${{ inputs.checkout_ref }}
+      fbuild-artifact: ${{ inputs.fbuild-run-id && 'fbuild-bin-linux-debug' || '' }}
+      fbuild-run-id: ${{ inputs.fbuild-run-id }}
+      toolchain-cache: false

@@ -92,16 +92,16 @@ crates/fbuild-build-arm/src/teensy/teensy_linker.rs
 crates/fbuild-build-engine/src/zccache.rs
 crates/fbuild-build-engine/src/zccache_embedded.rs
 crates/fbuild-build/tests/avr_build.rs
-crates/fbuild-build/tests/cache_survives_tar_extract.rs
-crates/fbuild-build/tests/compile_many_stage2_perf.rs
-crates/fbuild-build/tests/compile_many_two_stage.rs
-crates/fbuild-build/tests/esp32_build.rs
-crates/fbuild-build/tests/flag_escaping_lint.rs
-crates/fbuild-build/tests/nxplpc_build_flags.rs
-crates/fbuild-build/tests/nxplpc_core_compile_commands.rs
-crates/fbuild-build/tests/stm32_acceptance.rs
-crates/fbuild-build/tests/teensy_build.rs
-crates/fbuild-build/tests/teensylc_acceptance.rs
+crates/fbuild-build/tests/it/cache_survives_tar_extract.rs
+crates/fbuild-build/tests/it/compile_many_stage2_perf.rs
+crates/fbuild-build/tests/it/compile_many_two_stage.rs
+crates/fbuild-build/tests/it/esp32_build.rs
+crates/fbuild-build/tests/it/flag_escaping_lint.rs
+crates/fbuild-build/tests/it/nxplpc_build_flags.rs
+crates/fbuild-build/tests/it/nxplpc_core_compile_commands.rs
+crates/fbuild-build/tests/it/stm32_acceptance.rs
+crates/fbuild-build/tests/it/teensy_build.rs
+crates/fbuild-build/tests/it/teensylc_acceptance.rs
 crates/fbuild-cli/src/cli/bloat_lookup.rs
 crates/fbuild-cli/src/cli/clang_tools.rs
 crates/fbuild-cli/src/cli/compile_many.rs
@@ -248,4 +248,4 @@ crates/fbuild-cli/src/cli/usb_recovery.rs
 # installed toolchains", so neither CI nor a normal `bash test` run can
 # validate such a change — allowlisted rather than migrated blind.
 # Revisit together with FastLED/fbuild#1076's parity work.
-crates/fbuild-build/tests/clangd_check_parity.rs
+crates/fbuild-build/tests/it/clangd_check_parity.rs

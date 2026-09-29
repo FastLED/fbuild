@@ -108,7 +108,7 @@ class FractionalWorkflowTests(unittest.TestCase):
             self.assertNotIn("pull_request", self.load(workflow)[True])
         self.assertEqual("${{ needs.verify.outputs.candidate_sha }}", full["jobs"]["boards"]["with"]["checkout_ref"])
         for job, workflow_name in (
-            ("fmt", "fmt.yml"), ("docs", "docs.yml"), ("msrv", "msrv.yml"),
+            ("fmt", "fmt.yml"), 
             ("validate_boards", "validate-boards.yml"), ("crate_gate", "crate-gate.yml"),
         ):
             self.assertEqual(f"./.github/workflows/{workflow_name}", full["jobs"][job]["uses"])
@@ -127,19 +127,54 @@ class FractionalWorkflowTests(unittest.TestCase):
         for cell in matrix:
             self.assertIn(cell, full_matrix)
 
-    def test_nightly_deduplicates_identical_builds_but_keeps_aliases(self):
-        boards = render_workflows.load_sot()["boards"]
+    def test_nightly_dispatches_board_workflows_as_their_own_runs(self):
+        # Badges track runs of each build-<board>.yml file, so the nightly /
+        # push-to-main path must dispatch them (not build in a matrix).
         nightly = self.load("nightly-platforms.yml")
-        matrix = nightly["jobs"]["build"]["strategy"]["matrix"]["include"]
-        self.assertEqual(len(render_workflows.execution_boards(boards)), len(matrix))
-        self.assertEqual({b["workflow"] for b in boards}, {alias for b in matrix for alias in b["workflow_aliases"]})
+        self.assertEqual({"plan", "fbuild_bin", "dispatch"}, set(nightly["jobs"]))
+        self.assertEqual(["main"], nightly[True]["push"]["branches"])
+        self.assertIn("schedule", nightly[True])
+        self.assertIn("select_boards.py", nightly["jobs"]["plan"]["steps"][2]["run"])
+        self.assertEqual("write", nightly["jobs"]["dispatch"]["permissions"]["actions"])
+        run = nightly["jobs"]["dispatch"]["steps"][0]["run"]
+        self.assertIn("gh workflow run", run)
+        self.assertIn('fbuild-run-id="$GITHUB_RUN_ID"', run)
+
+    def test_board_workflows_reuse_a_dispatched_fbuild_binary(self):
+        for board in render_workflows.load_sot()["boards"]:
+            with self.subTest(workflow=board["workflow"]):
+                wf = self.load(board["workflow"])
+                self.assertIn("fbuild-run-id", wf[True]["workflow_dispatch"]["inputs"])
+                with_ = wf["jobs"]["build"]["with"]
+                self.assertEqual("${{ inputs.fbuild-run-id }}", with_["fbuild-run-id"])
+                self.assertEqual(board["test_dir"], with_["test-dir"])
+                self.assertEqual(
+                    render_workflows.toolchain_cache(board, render_workflows.load_sot()["families"]),
+                    with_["toolchain-cache"],
+                )
+
+    def test_toolchain_cache_is_opt_in_with_a_recorded_measurement(self):
+        for name, family in render_workflows.load_sot()["families"].items():
+            with self.subTest(family=name):
+                if family.get("toolchain_cache"):
+                    self.assertIn("_toolchain_cache_why", family)
 
     def test_ordinary_minimal_and_opt_in_test_are_distinct(self):
         minimal = self.load("ci-minimal.yml")
         fast = self.load("ci-test.yml")
         self.assertIn("push", minimal[True])
         self.assertIn("pull_request", minimal[True])
-        self.assertEqual({"linux", "test", "full", "selected-coverage"}, set(minimal["jobs"]))
+        self.assertEqual(
+            {"linux", "board_plan", "fbuild_bin", "pr_boards", "test", "full", "selected-coverage"},
+            set(minimal["jobs"]),
+        )
+        # Path-selected boards run only on the default PR tier.
+        plan_if = minimal["jobs"]["board_plan"]["if"]
+        self.assertIn("pull_request", plan_if)
+        self.assertIn("ci-test", plan_if)
+        self.assertIn("ci-full", plan_if)
+        self.assertIn("--matrix", minimal["jobs"]["board_plan"]["steps"][-1]["run"])
+        self.assertEqual("fbuild-bin-linux-debug", minimal["jobs"]["pr_boards"]["with"]["fbuild-artifact"])
         self.assertIn("github.event.pull_request.head.sha", minimal["jobs"]["linux"]["with"]["ref"])
         self.assertIn("ci-test", minimal["jobs"]["linux"]["if"])
         self.assertIn("ci-full", minimal["jobs"]["linux"]["if"])
@@ -172,16 +207,21 @@ class FractionalWorkflowTests(unittest.TestCase):
                 self.assertIn("always()", workflow["jobs"]["coverage"]["if"])
                 self.assertIn("complete=false", workflow["jobs"]["coverage"]["steps"][0]["run"])
                 self.assertNotIn("invalidate", workflow["jobs"])
-                self.assertEqual("verify", workflow["jobs"]["boards"]["needs"])
+                self.assertEqual(["verify", "fbuild_bin"], workflow["jobs"]["boards"]["needs"])
+                self.assertEqual("fbuild-bin-linux-debug", workflow["jobs"]["boards"]["with"]["fbuild-artifact"])
+                self.assertEqual(
+                    "${{ needs.verify.outputs.candidate_sha }}",
+                    workflow["jobs"]["fbuild_bin"]["steps"][0]["with"]["ref"],
+                )
                 self.assertEqual("${{ needs.verify.outputs.candidate_sha }}", workflow["jobs"]["boards"]["with"]["checkout_ref"])
 
     def test_selected_coverage_requires_every_requested_tier(self):
         minimal = self.load("ci-minimal.yml")
         job = minimal["jobs"]["selected-coverage"]
-        self.assertEqual({"linux", "test", "full"}, set(job["needs"]))
+        self.assertEqual({"linux", "test", "full", "pr_boards"}, set(job["needs"]))
         self.assertIn("always()", job["if"])
         script = job["steps"][0]["run"]
-        base = {**os.environ, "LINUX": "success", "TEST_SELECTED": "false", "TEST_RESULT": "skipped", "FULL_SELECTED": "false", "FULL_RESULT": "skipped", "FULL_COVERAGE": ""}
+        base = {**os.environ, "LINUX": "success", "TEST_SELECTED": "false", "TEST_RESULT": "skipped", "FULL_SELECTED": "false", "FULL_RESULT": "skipped", "FULL_COVERAGE": "", "PR_BOARDS": "skipped"}
         cases = [
             ({}, 0),
             ({"TEST_SELECTED": "true", "TEST_RESULT": "skipped"}, 1),
@@ -191,6 +231,9 @@ class FractionalWorkflowTests(unittest.TestCase):
             ({"FULL_SELECTED": "true", "FULL_RESULT": "success", "FULL_COVERAGE": "true", "LINUX": "skipped"}, 0),
             ({"TEST_SELECTED": "true", "TEST_RESULT": "skipped", "FULL_SELECTED": "true", "FULL_RESULT": "success", "FULL_COVERAGE": "true", "LINUX": "skipped"}, 0),
             ({"LINUX": "failure"}, 1),
+            ({"PR_BOARDS": "success"}, 0),
+            ({"PR_BOARDS": "failure"}, 1),
+            ({"PR_BOARDS": "cancelled"}, 1),
         ]
         for overrides, expected in cases:
             with self.subTest(overrides=overrides):
@@ -200,16 +243,16 @@ class FractionalWorkflowTests(unittest.TestCase):
     def test_full_coverage_sentinel_and_release_gate(self):
         full = self.load("ci-full.yml")
         self.assertEqual(
-            {"verify", "boards", "linux", "windows", "macos", "dylint", "acceptance", "bench", "qemu", "fmt", "docs", "msrv", "validate_boards", "crate_gate"},
+            {"verify", "boards", "linux", "windows", "macos", "dylint", "acceptance", "bench", "qemu", "fmt", "validate_boards", "crate_gate"},
             set(full["jobs"]["coverage"]["needs"]),
         )
         self.assertEqual("${{ jobs.coverage.outputs.complete }}", full[True]["workflow_call"]["outputs"]["coverage"]["value"])
         script = full["jobs"]["coverage"]["steps"][0]["run"]
         env = {**os.environ, "EVENT_NAME": "workflow_call", "LABEL_PRESENT": "false"}
-        env.update({key: "success" for key in ("VERIFY", "BOARDS", "LINUX", "WINDOWS", "MACOS", "DYLINT", "ACCEPTANCE", "BENCH", "QEMU", "FMT", "DOCS", "MSRV", "VALIDATE_BOARDS", "CRATE_GATE")})
+        env.update({key: "success" for key in ("VERIFY", "BOARDS", "LINUX", "WINDOWS", "MACOS", "DYLINT", "ACCEPTANCE", "BENCH", "QEMU", "FMT", "VALIDATE_BOARDS", "CRATE_GATE")})
         with tempfile.NamedTemporaryFile() as output:
             env["GITHUB_OUTPUT"] = output.name
-            for missing in ("FMT", "DOCS", "MSRV", "VALIDATE_BOARDS", "CRATE_GATE"):
+            for missing in ("FMT", "VALIDATE_BOARDS", "CRATE_GATE"):
                 with self.subTest(missing=missing):
                     result = subprocess.run(["bash", "-e", "-c", script], env={**env, missing: "skipped"}, capture_output=True, text=True)
                     self.assertNotEqual(0, result.returncode)

@@ -107,6 +107,20 @@ jobs:
           # (issue #400). Raise the soft warn threshold; hard cap stays
           # at the action default (6 GiB).
           cache-payload-warn-bytes: 2GiB
+      # setup-soldr's cargo-registry cache restores extracted crate sources
+      # without non-source `.tar` payloads, so `dylint_internal`'s
+      # `include_bytes!("template.tar")` fails whenever the lint libraries
+      # rebuild (any change under dylints/). Drop such incomplete extractions
+      # so cargo re-unpacks them from the `.crate` archive (or re-downloads).
+      - name: Repair registry sources missing packaged files
+        run: |
+          for src in "$HOME"/.cargo/registry/src/*/dylint_internal-*; do
+            [ -d "$src" ] || continue
+            if [ ! -f "$src/template.tar" ]; then
+              echo "::warning::re-extracting $(basename "$src"): template.tar missing from restored registry cache"
+              rm -rf "$src"
+            fi
+          done
       - name: Prepare prebuilt Dylint tools and driver
         timeout-minutes: 10
         run: |

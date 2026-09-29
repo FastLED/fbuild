@@ -22,7 +22,7 @@
 //! on `swap_ino_entries_for_raw` for why the generated entry is removed,
 //! not duplicated).
 //!
-//! Run locally: `soldr cargo test -p fbuild-build --test clangd_check_parity -- --ignored --nocapture`
+//! Run locally: `soldr cargo test -p fbuild-build --test it clangd_check_parity:: -- --ignored --nocapture`
 //! (see docs/DEVELOPMENT.md → "clangd --check parity harness").
 
 use std::path::{Path, PathBuf};

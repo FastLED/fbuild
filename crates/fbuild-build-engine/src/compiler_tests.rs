@@ -796,3 +796,20 @@ fn test_build_rebuild_signature_strips_build_unflags() {
         "pre_flags must survive unflag filtering (#970)"
     );
 }
+
+#[test]
+fn compile_scratch_root_is_the_object_dir_not_the_project() {
+    let project = Path::new("/proj");
+    assert_eq!(
+        compile_scratch_root(Some(project), Path::new("/proj/.fbuild/build/o/a.o")),
+        PathBuf::from("/proj/.fbuild/build/o")
+    );
+    assert_eq!(
+        compile_scratch_root(Some(project), Path::new(".fbuild/build/o/a.o")),
+        PathBuf::from("/proj/.fbuild/build/o")
+    );
+    assert_eq!(
+        compile_scratch_root(Some(project), Path::new("a.o")),
+        PathBuf::from("/proj")
+    );
+}

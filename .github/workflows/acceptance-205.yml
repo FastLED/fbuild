@@ -73,4 +73,4 @@ jobs:
 
       - name: Run ${{ matrix.gate }} acceptance gate
         run: |
-          soldr cargo test -p fbuild-build --test ${{ matrix.test_bin }} -- --ignored --exact ${{ matrix.test_fn }} --nocapture --test-threads=1
+          soldr cargo test -p fbuild-build --test it -- --ignored --exact ${{ matrix.test_bin }}::${{ matrix.test_fn }} --nocapture --test-threads=1

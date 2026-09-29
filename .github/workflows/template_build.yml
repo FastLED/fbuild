@@ -23,6 +23,35 @@ on:
         required: false
         type: string
         default: ""
+      fbuild-artifact:
+        required: false
+        type: string
+        default: ""
+        description: >-
+          Name of an uploaded artifact holding prebuilt `fbuild` +
+          `fbuild-daemon` debug binaries. When set, this job downloads them
+          instead of compiling fbuild itself (zackees/ci.yml "compile once,
+          runners only execute"): the per-board compile was ~350s of a ~550s
+          job, repeated across ~76 boards. Empty keeps the standalone
+          compile path for direct `build-<board>.yml` dispatches.
+      toolchain-cache:
+        required: false
+        type: boolean
+        default: false
+        description: >-
+          Restore/save the ~1GB ~/.fbuild/prod/cache toolchain cache. Off by
+          default: for most boards a cold download is faster than the cache
+          round-trip. Opted in per family in ci/board_families.json with the
+          measurement that justifies it.
+      fbuild-run-id:
+        required: false
+        type: string
+        default: ""
+        description: >-
+          Workflow run that uploaded `fbuild-artifact`. Empty means this run.
+          Set when nightly-platforms.yml dispatches `build-<board>.yml` as
+          its own run (so the board's README badge updates) while still
+          reusing the dispatcher's single fbuild compile.
 
 env:
   CARGO_TERM_COLOR: always
@@ -47,6 +76,7 @@ jobs:
 
       - name: Setup soldr
         id: setup-soldr
+        if: inputs.fbuild-artifact == ''
         # Canary exact setup-soldr main SHA before v0 promotion.
         uses: zackees/setup-soldr@dfbe9627f6cb0226716b61625b99a58949162720
         with:
@@ -79,6 +109,10 @@ jobs:
           # `cache-payload-max-bytes` still defaults to 6 GiB.
           cache-payload-warn-bytes: 2GiB
           cache-key-suffix: fbuild-rust-debug
+          # Save only from the default branch; other refs restore main's.
+          # Branch sweeps re-saved ~79 x ~1GB entries and evicted main's
+          # Rust build cache (0% hit rate; zackees/ci.yml CACHE-003).
+          save-cache: ${{ github.ref == 'refs/heads/main' && 'true' || 'false' }}
 
       # Note: standalone `zccache-daemon` no longer runs separately.
       # As of soldr 1.12.11+ (soldr#977 / #980 L1) zccache is embedded
@@ -89,14 +123,16 @@ jobs:
       # ipc shutdown path. See FastLED/fbuild#855.
 
       - name: Restore fbuild toolchains
+        if: inputs.toolchain-cache
         timeout-minutes: 10
         uses: actions/cache/restore@v5
         with:
           path: ~/.fbuild/prod/cache
           key: fbuild-toolchain-${{ runner.os }}-${{ inputs.env-name }}-${{ hashFiles(format('{0}/platformio.ini', inputs.test-dir)) }}
+          # No cross-board fallback: another board's ~1GB cache is mostly
+          # the wrong toolchain.
           restore-keys: |
             fbuild-toolchain-${{ runner.os }}-${{ inputs.env-name }}-
-            fbuild-toolchain-${{ runner.os }}-
 
       - name: Restore platform build artifacts
         timeout-minutes: 10
@@ -108,6 +144,9 @@ jobs:
             fbuild-build-${{ runner.os }}-${{ inputs.env-name }}-
 
       - name: Install Linux dependencies
+        # Build-time only (libudev headers for the Rust compile); the runtime
+        # libudev1 ships with the hosted image.
+        if: inputs.fbuild-artifact == ''
         timeout-minutes: 5
         run: |
           sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::Retries=3 update
@@ -124,8 +163,23 @@ jobs:
           esptool version
 
       - name: Build fbuild binaries
+        if: inputs.fbuild-artifact == ''
         run: |
           soldr cargo build -p fbuild-cli -p fbuild-daemon
+
+      - name: Download prebuilt fbuild binaries
+        if: inputs.fbuild-artifact != ''
+        uses: actions/download-artifact@v8
+        with:
+          name: ${{ inputs.fbuild-artifact }}
+          path: target/debug
+          run-id: ${{ inputs.fbuild-run-id || github.run_id }}
+          github-token: ${{ github.token }}
+
+      - name: Restore executable bits on prebuilt binaries
+        if: inputs.fbuild-artifact != ''
+        # upload-artifact does not preserve file modes.
+        run: chmod +x target/debug/fbuild target/debug/fbuild-daemon
 
       - name: Add fbuild to PATH
         run: echo "${{ github.workspace }}/target/debug" >> $GITHUB_PATH
@@ -174,7 +228,8 @@ jobs:
           echo "working tree clean after quick + release builds"
 
       - name: Save fbuild toolchains
-        if: always()
+        # Default branch only -- see the setup-soldr save-cache note above.
+        if: always() && inputs.toolchain-cache && github.ref == 'refs/heads/main'
         timeout-minutes: 10
         uses: actions/cache/save@v5
         with:
@@ -182,7 +237,7 @@ jobs:
           key: fbuild-toolchain-${{ runner.os }}-${{ inputs.env-name }}-${{ hashFiles(format('{0}/platformio.ini', inputs.test-dir)) }}
 
       - name: Save platform build artifacts
-        if: always()
+        if: always() && github.ref == 'refs/heads/main'
         timeout-minutes: 10
         uses: actions/cache/save@v5
         with:

@@ -20,7 +20,7 @@
 //! the first run (cached afterward). Run with:
 //!
 //! ```bash
-//! soldr cargo test -p fbuild-build --test compile_many_stage2_perf \
+//! soldr cargo test -p fbuild-build --test it compile_many_stage2_perf:: \
 //!   -- --ignored
 //! ```
 
