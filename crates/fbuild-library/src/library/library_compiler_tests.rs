@@ -508,3 +508,60 @@ async fn test_up_to_date_skips_recompile() {
         "second compile of an unchanged library should not call the backend again"
     );
 }
+
+#[test]
+fn failure_message_always_carries_the_exit_status() {
+    let silent = compile_failure_message(Path::new("/src/a.cpp"), "fastled", 137, "");
+    assert!(silent.contains("exit code 137"), "{silent}");
+    assert!(silent.contains("wrote nothing to stderr"), "{silent}");
+    let noisy =
+        compile_failure_message(Path::new("/src/a.cpp"), "fastled", 1, "a.cpp:1: error: x\n");
+    assert!(
+        noisy.contains("exit code 1") && noisy.ends_with("a.cpp:1: error: x"),
+        "{noisy}"
+    );
+}
+
+#[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+async fn backend_compiles_get_their_temp_dir_under_the_library_build_dir() {
+    if fbuild_core::platform::host::is_windows() {
+        return;
+    }
+    let tmp = tempfile::TempDir::new().unwrap();
+    let project = tmp.path().join("project");
+    let src_dir = project.join("lib").join("src");
+    std::fs::create_dir_all(&src_dir).unwrap();
+    let sources = write_sources(&src_dir, &["a.cpp"]);
+    let out = project.join("build").join("fw_libs");
+    let ar = tmp.path().join("ar");
+    install_fake_ar(&ar);
+    let backend = std::sync::Arc::new(FakeBackend::new());
+    let backend_dyn: std::sync::Arc<dyn LibCompileBackend> = backend.clone();
+
+    let _ = compile_library_gated(
+        "lib",
+        &sources,
+        &[],
+        Path::new("gcc"),
+        Path::new("g++"),
+        &ar,
+        &[],
+        &[],
+        &out,
+        false,
+        &job_gate(1),
+        None,
+        Some(project.clone()),
+        Some(backend_dyn),
+    )
+    .await;
+
+    assert!(
+        !project.join(".compile-tmp").exists(),
+        "no temp dir in the project root"
+    );
+    assert!(
+        out.join(".compile-tmp").is_dir(),
+        "temp dir under the library build dir"
+    );
+}
