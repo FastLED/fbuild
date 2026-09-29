@@ -246,3 +246,24 @@ fn include_next_header_beside_a_quoted_includer_keeps_its_directory() {
     let rels: Vec<&str> = plan.links.iter().map(|(rel, _)| rel.as_str()).collect();
     assert_eq!(rels, ["esp_assert.h", "other.h"]);
 }
+
+#[test]
+fn top_level_header_climbing_out_of_its_dir_keeps_its_directory() {
+    // IDF's bt/include/esp32/include/esp_bt.h does
+    // `#include "../../../controller/esp32/esp_bredr_cfg.h"`. Linked into the
+    // farm root, the `..` climbs out of the farm instead.
+    let tmp = tempfile::TempDir::new().unwrap();
+    let bt = NormalizedPath::new(tmp.path().join("bt/include/esp32/include"));
+    write(
+        bt.as_path(),
+        "esp_bt.h",
+        "#include \"../../../controller/esp32/esp_bredr_cfg.h\"\n",
+    );
+    write(tmp.path(), "bt/controller/esp32/esp_bredr_cfg.h", "");
+    let other = NormalizedPath::new(tmp.path().join("other"));
+    write(other.as_path(), "other.h", "");
+
+    let plan = plan_farm(&[], &[bt, other]).unwrap();
+
+    assert_eq!(kept_indices(&plan), [0]);
+}
