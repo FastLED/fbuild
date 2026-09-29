@@ -55,9 +55,43 @@ jobs:
     uses: ./.github/workflows/check-ubuntu.yml
     with:
       ref: ${{ needs.verify.outputs.candidate_sha }}
-  boards:
+  fbuild_bin:
+    name: Build fbuild (shared by board jobs)
     if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'ci-test')
     needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CARGO_TERM_COLOR: always
+      RUSTFLAGS: "-D warnings"
+      SOLDR_TARGET_BLOCK_FREE_GB: "2"
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.verify.outputs.candidate_sha }}
+      - uses: zackees/setup-soldr@dfbe9627f6cb0226716b61625b99a58949162720
+        with:
+          cache-preset: foundation
+          prebuild-deps-flags: ""
+          prebuild-deps: none
+          linker: platform-default
+          cache-payload-warn-bytes: 2GiB
+          cache-key-suffix: fbuild-rust-debug
+      - run: |
+          sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::Retries=3 update
+          sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::Retries=3 install -y libudev-dev pkg-config
+      - run: soldr cargo build -p fbuild-cli -p fbuild-daemon
+      - uses: actions/upload-artifact@v7
+        with:
+          name: fbuild-bin-linux-debug
+          path: |
+            target/debug/fbuild
+            target/debug/fbuild-daemon
+          if-no-files-found: error
+          retention-days: 1
+  boards:
+    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'ci-test')
+    needs: [verify, fbuild_bin]
     name: ${{ matrix.workflow_name }}
     strategy:
       fail-fast: false
@@ -76,6 +110,7 @@ jobs:
       env-name: ${{ matrix.env_name }}
       firmware-ext: ${{ matrix.firmware_ext }}
       checkout_ref: ${{ needs.verify.outputs.candidate_sha }}
+      fbuild-artifact: fbuild-bin-linux-debug
   coverage:
     name: ci-test coverage
     if: always()

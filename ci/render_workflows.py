@@ -154,6 +154,56 @@ def execution_boards(boards: list[dict]) -> list[dict]:
     return list(unique.values())
 
 
+FBUILD_BIN_ARTIFACT = "fbuild-bin-linux-debug"
+
+
+def render_fbuild_bin_job(needs: str, condition: str, ref: str) -> str:
+    """One job that compiles fbuild once and uploads it for every board job.
+
+    zackees/ci.yml policy-rust "compile once, runners only execute": before
+    this, each of ~76 board jobs spent ~350s compiling the same
+    board-independent `fbuild-cli` + `fbuild-daemon` debug build. The
+    setup-soldr inputs mirror template_build.yml's standalone compile path so
+    both share one warm `fbuild-rust-debug` cache.
+    """
+    return (
+        "  fbuild_bin:\n"
+        "    name: Build fbuild (shared by board jobs)\n"
+        + condition
+        + f"    needs: {needs}\n"
+        "    runs-on: ubuntu-latest\n"
+        "    timeout-minutes: 30\n"
+        "    env:\n"
+        "      CARGO_TERM_COLOR: always\n"
+        "      RUSTFLAGS: \"-D warnings\"\n"
+        "      SOLDR_TARGET_BLOCK_FREE_GB: \"2\"\n"
+        "    steps:\n"
+        "      - uses: actions/checkout@v6\n"
+        "        with:\n"
+        f"          ref: {ref}\n"
+        "      - uses: zackees/setup-soldr@dfbe9627f6cb0226716b61625b99a58949162720\n"
+        "        with:\n"
+        "          cache-preset: foundation\n"
+        "          prebuild-deps-flags: \"\"\n"
+        "          prebuild-deps: none\n"
+        "          linker: platform-default\n"
+        "          cache-payload-warn-bytes: 2GiB\n"
+        "          cache-key-suffix: fbuild-rust-debug\n"
+        "      - run: |\n"
+        "          sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::Retries=3 update\n"
+        "          sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::Retries=3 install -y libudev-dev pkg-config\n"
+        "      - run: soldr cargo build -p fbuild-cli -p fbuild-daemon\n"
+        "      - uses: actions/upload-artifact@v7\n"
+        "        with:\n"
+        f"          name: {FBUILD_BIN_ARTIFACT}\n"
+        "          path: |\n"
+        "            target/debug/fbuild\n"
+        "            target/debug/fbuild-daemon\n"
+        "          if-no-files-found: error\n"
+        "          retention-days: 1\n"
+    )
+
+
 def render_ci(boards: list[dict], tier: str) -> str:
     full = tier == "full"
     minimal = tier == "minimal"
@@ -307,9 +357,10 @@ def render_ci(boards: list[dict], tier: str) -> str:
         + host
         + policy
         + ("" if minimal else
-           "  boards:\n"
+           render_fbuild_bin_job("verify", gate, verified_ref)
+           + "  boards:\n"
            + gate
-           + "    needs: verify\n"
+           + "    needs: [verify, fbuild_bin]\n"
            + "    name: ${{ matrix.workflow_name }}\n"
            + "    strategy:\n"
            + "      fail-fast: false\n"
@@ -322,7 +373,8 @@ def render_ci(boards: list[dict], tier: str) -> str:
            + "      test-dir: ${{ matrix.test_dir }}\n"
            + "      env-name: ${{ matrix.env_name }}\n"
            + "      firmware-ext: ${{ matrix.firmware_ext }}\n"
-           + f"      checkout_ref: {verified_ref}\n")
+           + f"      checkout_ref: {verified_ref}\n"
+           + f"      fbuild-artifact: {FBUILD_BIN_ARTIFACT}\n")
         + ("" if minimal else
             "  coverage:\n"
             + ("    name: Full coverage\n" if full else "    name: ci-test coverage\n")
@@ -478,9 +530,10 @@ def render_nightly(boards: list[dict]) -> str:
             f"            workflow_aliases: {json.dumps(b['workflow_aliases'])}\n"
         )
     jobs_yaml = (
-        "  build:\n"
+        render_fbuild_bin_job("guard", "    if: needs.guard.outputs.should_run == 'true'\n", "${{ github.sha }}")
+        + "  build:\n"
         "    name: ${{ matrix.workflow_name }}\n"
-        "    needs: guard\n"
+        "    needs: [guard, fbuild_bin]\n"
         "    if: needs.guard.outputs.should_run == 'true'\n"
         "    strategy:\n"
         # One broken board must not cancel the other 78 -- the whole point of
@@ -493,6 +546,7 @@ def render_nightly(boards: list[dict]) -> str:
         "      test-dir: ${{ matrix.test_dir }}\n"
         "      env-name: ${{ matrix.env_name }}\n"
         "      firmware-ext: ${{ matrix.firmware_ext }}\n"
+        f"      fbuild-artifact: {FBUILD_BIN_ARTIFACT}\n"
     )
     header = (
         "# Daily safety-net sweep of every per-board build workflow.\n"

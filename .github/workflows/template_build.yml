@@ -23,6 +23,17 @@ on:
         required: false
         type: string
         default: ""
+      fbuild-artifact:
+        required: false
+        type: string
+        default: ""
+        description: >-
+          Name of an uploaded artifact holding prebuilt `fbuild` +
+          `fbuild-daemon` debug binaries. When set, this job downloads them
+          instead of compiling fbuild itself (zackees/ci.yml "compile once,
+          runners only execute"): the per-board compile was ~350s of a ~550s
+          job, repeated across ~76 boards. Empty keeps the standalone
+          compile path for direct `build-<board>.yml` dispatches.
 
 env:
   CARGO_TERM_COLOR: always
@@ -47,6 +58,7 @@ jobs:
 
       - name: Setup soldr
         id: setup-soldr
+        if: inputs.fbuild-artifact == ''
         # Canary exact setup-soldr main SHA before v0 promotion.
         uses: zackees/setup-soldr@dfbe9627f6cb0226716b61625b99a58949162720
         with:
@@ -108,6 +120,9 @@ jobs:
             fbuild-build-${{ runner.os }}-${{ inputs.env-name }}-
 
       - name: Install Linux dependencies
+        # Build-time only (libudev headers for the Rust compile); the runtime
+        # libudev1 ships with the hosted image.
+        if: inputs.fbuild-artifact == ''
         timeout-minutes: 5
         run: |
           sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::Retries=3 update
@@ -124,8 +139,21 @@ jobs:
           esptool version
 
       - name: Build fbuild binaries
+        if: inputs.fbuild-artifact == ''
         run: |
           soldr cargo build -p fbuild-cli -p fbuild-daemon
+
+      - name: Download prebuilt fbuild binaries
+        if: inputs.fbuild-artifact != ''
+        uses: actions/download-artifact@v8
+        with:
+          name: ${{ inputs.fbuild-artifact }}
+          path: target/debug
+
+      - name: Restore executable bits on prebuilt binaries
+        if: inputs.fbuild-artifact != ''
+        # upload-artifact does not preserve file modes.
+        run: chmod +x target/debug/fbuild target/debug/fbuild-daemon
 
       - name: Add fbuild to PATH
         run: echo "${{ github.workspace }}/target/debug" >> $GITHUB_PATH

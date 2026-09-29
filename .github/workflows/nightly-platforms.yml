@@ -49,9 +49,43 @@ jobs:
             echo "should_run=true" >> "$GITHUB_OUTPUT"
           fi
 
+  fbuild_bin:
+    name: Build fbuild (shared by board jobs)
+    if: needs.guard.outputs.should_run == 'true'
+    needs: guard
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CARGO_TERM_COLOR: always
+      RUSTFLAGS: "-D warnings"
+      SOLDR_TARGET_BLOCK_FREE_GB: "2"
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.sha }}
+      - uses: zackees/setup-soldr@dfbe9627f6cb0226716b61625b99a58949162720
+        with:
+          cache-preset: foundation
+          prebuild-deps-flags: ""
+          prebuild-deps: none
+          linker: platform-default
+          cache-payload-warn-bytes: 2GiB
+          cache-key-suffix: fbuild-rust-debug
+      - run: |
+          sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::Retries=3 update
+          sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::Retries=3 install -y libudev-dev pkg-config
+      - run: soldr cargo build -p fbuild-cli -p fbuild-daemon
+      - uses: actions/upload-artifact@v7
+        with:
+          name: fbuild-bin-linux-debug
+          path: |
+            target/debug/fbuild
+            target/debug/fbuild-daemon
+          if-no-files-found: error
+          retention-days: 1
   build:
     name: ${{ matrix.workflow_name }}
-    needs: guard
+    needs: [guard, fbuild_bin]
     if: needs.guard.outputs.should_run == 'true'
     strategy:
       fail-fast: false
@@ -443,3 +477,4 @@ jobs:
       test-dir: ${{ matrix.test_dir }}
       env-name: ${{ matrix.env_name }}
       firmware-ext: ${{ matrix.firmware_ext }}
+      fbuild-artifact: fbuild-bin-linux-debug

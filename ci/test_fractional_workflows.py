@@ -172,7 +172,12 @@ class FractionalWorkflowTests(unittest.TestCase):
                 self.assertIn("always()", workflow["jobs"]["coverage"]["if"])
                 self.assertIn("complete=false", workflow["jobs"]["coverage"]["steps"][0]["run"])
                 self.assertNotIn("invalidate", workflow["jobs"])
-                self.assertEqual("verify", workflow["jobs"]["boards"]["needs"])
+                self.assertEqual(["verify", "fbuild_bin"], workflow["jobs"]["boards"]["needs"])
+                self.assertEqual("fbuild-bin-linux-debug", workflow["jobs"]["boards"]["with"]["fbuild-artifact"])
+                self.assertEqual(
+                    "${{ needs.verify.outputs.candidate_sha }}",
+                    workflow["jobs"]["fbuild_bin"]["steps"][0]["with"]["ref"],
+                )
                 self.assertEqual("${{ needs.verify.outputs.candidate_sha }}", workflow["jobs"]["boards"]["with"]["checkout_ref"])
 
     def test_selected_coverage_requires_every_requested_tier(self):
