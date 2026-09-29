@@ -6,7 +6,7 @@
 //! only runs on explicit demand:
 //!
 //!     soldr cargo test -p fbuild-library-select \
-//!         --test teensy41_ldf_diag -- --ignored --nocapture
+//!         --test it teensy41_ldf_diag:: -- --ignored --nocapture
 //!
 //! Requires:
 //!   * Cached Teensyduino framework at:
