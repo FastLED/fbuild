@@ -4,9 +4,10 @@
     "arduino": {
       "name": "arduino-avr-core",
       "github": "arduino/ArduinoCore-avr",
-      "version": "1.8.6",
+      "url": "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-avr/5.4.0/framework-arduino-avr-5.4.0.tar.gz",
+      "version": "5.4.0",
       "tag_prefix": "",
-      "checksum": "49241fd5e504482b94954b5843c7d69ce38ebc1ab47ad3b677e8bb77e0cb8fe6",
+      "checksum": "bf85bcca114bad389fec51fecbf9b66821a233b366bd3f85cdb1cdcba6a28659",
       "validation_path": "cores/arduino/main.cpp"
     },
     "tiny": {

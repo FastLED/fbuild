@@ -8,6 +8,7 @@ PlatformIO-compatible test projects for each supported hardware platform. Each s
 |-----------|-----|--------------|-----------|
 | `apollo3_red/` | Apollo3 Blue | ARM Cortex-M4F | Arduino |
 | `apollo3_thing_explorable/` | Apollo3 Blue | ARM Cortex-M4F | Arduino |
+| `atmega1284/` | ATmega1284P | AVR | Arduino |
 | `atmega8a/` | ATmega8A | AVR | Arduino |
 | `ATtiny1604/` | ATtiny1604 | MegaAVR | Arduino |
 | `ATtiny1616/` | ATtiny1616 | MegaAVR | Arduino |
