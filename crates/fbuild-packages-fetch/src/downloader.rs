@@ -352,10 +352,14 @@ pub async fn download_file(url: &str, dest_dir: &Path) -> Result<PathBuf> {
 /// attempts. A non-2xx HTTP status is treated as a hard failure
 /// (only server-side 5xx is retried).
 async fn get_with_retry(url: &str) -> Result<Vec<u8>> {
-    get_with_retry_using(http::client(), url).await
+    get_with_retry_timed(http::client(), url, RetryTiming::PRODUCTION).await
 }
 
-async fn get_with_retry_using(client: &reqwest::Client, url: &str) -> Result<Vec<u8>> {
+async fn get_with_retry_timed(
+    client: &reqwest::Client,
+    url: &str,
+    timing: RetryTiming,
+) -> Result<Vec<u8>> {
     let mut attempt: u32 = 0;
     loop {
         attempt += 1;
@@ -370,7 +374,7 @@ async fn get_with_retry_using(client: &reqwest::Client, url: &str) -> Result<Vec
         match result {
             Ok(bytes) => return Ok(bytes),
             Err(error) if error.is_retryable() && attempt < MAX_ATTEMPTS => {
-                wait_before_retry(url, attempt, &error, RetryTiming::PRODUCTION).await;
+                wait_before_retry(url, attempt, &error, timing).await;
             }
             Err(error) => return Err(error.into_fbuild_error(url)),
         }

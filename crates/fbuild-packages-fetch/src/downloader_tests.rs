@@ -192,7 +192,7 @@ async fn get_with_retry_retries_on_5xx() {
     let request_count = std::sync::Arc::new(AtomicUsize::new(0));
     let port = run_flaky_server(responses.clone(), request_count.clone()).await;
     let url = format!("http://127.0.0.1:{port}/file");
-    let bytes = get_with_retry_using(&test_client(), &url)
+    let bytes = get_with_retry_timed(&test_client(), &url, FAST_RETRY_TIMING)
         .await
         .expect("retry should succeed");
     assert_eq!(bytes, b"hello");
@@ -211,7 +211,7 @@ async fn get_with_retry_does_not_retry_on_4xx() {
     let request_count = std::sync::Arc::new(AtomicUsize::new(0));
     let port = run_flaky_server(responses.clone(), request_count.clone()).await;
     let url = format!("http://127.0.0.1:{port}/missing");
-    let err = get_with_retry_using(&test_client(), &url)
+    let err = get_with_retry_timed(&test_client(), &url, FAST_RETRY_TIMING)
         .await
         .expect_err("should error");
     assert!(
@@ -236,7 +236,7 @@ async fn get_with_retry_gives_up_after_max_attempts() {
     let request_count = std::sync::Arc::new(AtomicUsize::new(0));
     let port = run_flaky_server(responses.clone(), request_count.clone()).await;
     let url = format!("http://127.0.0.1:{port}/file");
-    let err = get_with_retry_using(&test_client(), &url)
+    let err = get_with_retry_timed(&test_client(), &url, FAST_RETRY_TIMING)
         .await
         .expect_err("should give up");
     // Last attempt was a 503; that's what gets surfaced.
@@ -261,7 +261,7 @@ async fn get_with_retry_retries_truncated_bodies_until_attempt_five() {
     let port = run_flaky_server(responses, request_count.clone()).await;
     let url = format!("http://127.0.0.1:{port}/file");
 
-    let bytes = get_with_retry_using(&test_client(), &url)
+    let bytes = get_with_retry_timed(&test_client(), &url, FAST_RETRY_TIMING)
         .await
         .expect("the fifth complete response should succeed");
 
@@ -283,7 +283,7 @@ async fn get_with_retry_stops_after_five_truncated_bodies() {
     let port = run_flaky_server(responses, request_count.clone()).await;
     let url = format!("http://127.0.0.1:{port}/file");
 
-    let _err = get_with_retry_using(&test_client(), &url)
+    let _err = get_with_retry_timed(&test_client(), &url, FAST_RETRY_TIMING)
         .await
         .expect_err("the fifth truncated response should exhaust retries");
 
@@ -310,9 +310,15 @@ async fn streaming_download_retries_truncated_bodies_until_attempt_five() {
     let temp = tempfile::TempDir::new().unwrap();
     let mut progress = |_progress: &DownloadProgress| {};
 
-    download_file_with_progress_using(&test_client(), &url, temp.path(), &mut progress)
-        .await
-        .expect("the fifth complete response should succeed");
+    download_file_with_progress_timed(
+        &test_client(),
+        &url,
+        temp.path(),
+        &mut progress,
+        FAST_RETRY_TIMING,
+    )
+    .await
+    .expect("the fifth complete response should succeed");
 
     assert_eq!(std::fs::read(temp.path().join("file")).unwrap(), b"hello");
     assert_eq!(request_count.load(Ordering::SeqCst), 5);
@@ -334,9 +340,15 @@ async fn streaming_download_stops_after_five_stalled_attempts_without_output() {
     let temp = tempfile::TempDir::new().unwrap();
     let mut progress = |_progress: &DownloadProgress| {};
 
-    let _err = download_file_with_progress_using(&test_client(), &url, temp.path(), &mut progress)
-        .await
-        .expect_err("the fifth truncated response should exhaust retries");
+    let _err = download_file_with_progress_timed(
+        &test_client(),
+        &url,
+        temp.path(),
+        &mut progress,
+        FAST_RETRY_TIMING,
+    )
+    .await
+    .expect_err("the fifth truncated response should exhaust retries");
 
     // Six, not five, and the extra one is the point of
     // FastLED/fbuild#1370: the budget is now five attempts that make *no
@@ -448,9 +460,15 @@ async fn streaming_download_resumes_from_the_byte_offset_after_a_drop() {
     let mut seen: Vec<u64> = Vec::new();
     let mut progress = |p: &DownloadProgress| seen.push(p.downloaded);
 
-    download_file_with_progress_using(&test_client(), &url, temp.path(), &mut progress)
-        .await
-        .expect("a ranged retry should finish the download");
+    download_file_with_progress_timed(
+        &test_client(),
+        &url,
+        temp.path(),
+        &mut progress,
+        FAST_RETRY_TIMING,
+    )
+    .await
+    .expect("a ranged retry should finish the download");
 
     assert_eq!(
         std::fs::read(temp.path().join("file")).unwrap(),
@@ -496,9 +514,15 @@ async fn streaming_download_gives_up_when_the_server_ignores_range() {
     let temp = tempfile::TempDir::new().unwrap();
     let mut progress = |_p: &DownloadProgress| {};
 
-    let error = download_file_with_progress_using(&test_client(), &url, temp.path(), &mut progress)
-        .await
-        .expect_err("a server that never sends the tail must fail, not hang");
+    let error = download_file_with_progress_timed(
+        &test_client(),
+        &url,
+        temp.path(),
+        &mut progress,
+        FAST_RETRY_TIMING,
+    )
+    .await
+    .expect_err("a server that never sends the tail must fail, not hang");
 
     let message = error.to_string();
     assert!(
@@ -688,9 +712,15 @@ async fn streaming_download_treats_416_as_complete_without_appending_its_body() 
     let temp = tempfile::TempDir::new().unwrap();
     let mut progress = |_p: &DownloadProgress| {};
 
-    download_file_with_progress_using(&test_client(), &url, temp.path(), &mut progress)
-        .await
-        .expect("a complete first response should succeed");
+    download_file_with_progress_timed(
+        &test_client(),
+        &url,
+        temp.path(),
+        &mut progress,
+        FAST_RETRY_TIMING,
+    )
+    .await
+    .expect("a complete first response should succeed");
 
     let written = std::fs::read(temp.path().join("file")).unwrap();
     assert_eq!(

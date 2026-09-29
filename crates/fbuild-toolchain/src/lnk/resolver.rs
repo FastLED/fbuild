@@ -305,13 +305,32 @@ mod tests {
         assert!(resolved.lease.is_some());
     }
 
+    /// Serve a single `404` so a refetch fails immediately: 4xx is not
+    /// retried, whereas an unresolvable host is retried with the production
+    /// 1+2+4+8 s backoff (15 s of test time for no extra coverage).
+    fn serve_one_404() -> String {
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        let port = listener.local_addr().unwrap().port();
+        std::thread::spawn(move || {
+            if let Ok((mut stream, _)) = listener.accept() {
+                let mut buf = [0u8; 1024];
+                let _ = std::io::Read::read(&mut stream, &mut buf);
+                let _ = stream.write_all(
+                    b"HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\nConnection: close\r\n\r\n",
+                );
+            }
+        });
+        format!("http://127.0.0.1:{port}/corrupt.bin")
+    }
+
     /// Cache-hit but stored sha doesn't match content → resolve must fall
-    /// through to refetch (which then fails because we used a fake URL,
-    /// but the *behavior* we care about is that the bad cache was rejected).
+    /// through to refetch (which then fails with a 404, but the *behavior*
+    /// we care about is that the bad cache was rejected).
     #[test]
     fn resolve_rejects_corrupt_cache_entry() {
         let (_tmp, cache) = open_test_cache();
-        let url = "https://localhost.invalid/corrupt.bin";
+        let url_owned = serve_one_404();
+        let url = url_owned.as_str();
         let claimed_sha = sha256_of(b"good content"); // what .lnk says
         let archive_dir = cache.archive_dir(Kind::LnkBlobs, url, &claimed_sha);
         std::fs::create_dir_all(&archive_dir).unwrap();
