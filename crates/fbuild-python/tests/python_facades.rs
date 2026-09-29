@@ -396,11 +396,15 @@ mod extended;
 /// the interpreter it embeds, found through its own RUNPATH rather than a
 /// user-exported `LD_LIBRARY_PATH`. A build against one Python and a loader
 /// path for another would otherwise go unnoticed until the wrong library won.
-#[cfg(target_os = "linux")]
 #[test]
 #[ignore = "embedded CPython; run with --ignored (FastLED/fbuild#1487)"]
 fn loaded_libpython_comes_from_the_embedded_interpreters_libdir() {
     use pyo3::types::PyAnyMethods;
+    // Only Linux exposes the loaded-library list this way; elsewhere there is
+    // nothing to check. (Runtime guard, not `cfg`: platform-boundary policy.)
+    if !std::path::Path::new("/proc/self/maps").exists() {
+        return;
+    }
     init_python();
     let libdir = pyo3::Python::attach(|py| {
         py.import("sysconfig")
