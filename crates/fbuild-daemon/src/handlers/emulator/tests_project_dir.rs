@@ -20,7 +20,7 @@ fn request(project_dir: &str, caller_cwd: &std::path::Path) -> TestEmuRequest {
 async fn relative_project_dir_resolves_against_caller_cwd() {
     let (shutdown_tx, _rx) = tokio::sync::watch::channel(false);
     let ctx = Arc::new(DaemonContext::new(0, shutdown_tx, "test".to_string()));
-    let caller = tempfile::TempDir::new().unwrap();
+    let caller = tempfile::tempdir_in(fbuild_paths::temp_subdir("daemon-tests")).unwrap();
     // A platform no runner knows: reaching this error proves the handler read
     // the caller's platformio.ini rather than the daemon cwd's (which has none).
     std::fs::write(
@@ -43,7 +43,7 @@ async fn relative_project_dir_resolves_against_caller_cwd() {
 async fn missing_relative_project_dir_reports_the_resolved_path() {
     let (shutdown_tx, _rx) = tokio::sync::watch::channel(false);
     let ctx = Arc::new(DaemonContext::new(0, shutdown_tx, "test".to_string()));
-    let caller = tempfile::TempDir::new().unwrap();
+    let caller = tempfile::tempdir_in(fbuild_paths::temp_subdir("daemon-tests")).unwrap();
 
     let (_, Json(resp)) = test_emu(State(ctx), Json(request("nope", caller.path()))).await;
 
