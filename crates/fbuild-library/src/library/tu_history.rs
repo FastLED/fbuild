@@ -131,8 +131,8 @@ pub fn lookup_in(
 /// - its recorded duration, if `lookup` finds one;
 /// - otherwise, a rank-based default: the median (upper median, for an
 ///   even-sized sample) of *this batch's* recorded C++ durations (if any are
-///   known), else [`DEFAULT_CPP_ESTIMATE_MS`] for a C++ source, half that for
-///   C, and [`DEFAULT_ASM_ESTIMATE_MS`] for assembly.
+///   known), else `DEFAULT_CPP_ESTIMATE_MS` (1 s) for a C++ source, half that for
+///   C, and `DEFAULT_ASM_ESTIMATE_MS` (10 ms) for assembly.
 ///
 /// Sorting is by estimated cost **descending**. Ties break known-before-estimated
 /// (a recorded duration always outranks a guess that happens to match it),
