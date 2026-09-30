@@ -82,13 +82,16 @@ pub fn resolve_port_arg(port: Option<String>) -> fbuild_core::Result<Option<Stri
     resolve_serial(serial, &ports).map(Some)
 }
 
-/// Whether `port` is a Unix device node (`/dev/...`) that does not exist.
+/// Whether `port` is a Unix device node (`/dev/...`) confirmed not to exist.
+///
+/// Uses [`Path::try_exists`], so an inaccessible parent or a symlink loop is
+/// *not* reported as a vanished device; that real error is left for the caller.
 ///
 /// Such a node was assigned by enumeration order and has since disappeared or
 /// moved; opening it can only fail. Other names (`COM17`, pty paths that do
 /// exist) are not judged here.
 pub fn device_node_is_missing(port: &str) -> bool {
-    port.starts_with("/dev/") && !std::path::Path::new(port).exists()
+    port.starts_with("/dev/") && matches!(std::path::Path::new(port).try_exists(), Ok(false))
 }
 
 /// The error for a requested node that no longer exists, in place of the

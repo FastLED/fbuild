@@ -133,6 +133,43 @@ async fn streaming_download_falls_back_to_a_mirror_when_the_primary_is_down() {
     );
 }
 
+/// A mirror template with a query string must not leak into the file name:
+/// the archive has to land under the primary's name, where the caller looks.
+#[tokio::test]
+async fn streaming_mirror_with_a_query_string_keeps_the_primary_file_name() {
+    let _guard = network_test_guard().await;
+    let down = "HTTP/1.1 503 Service Unavailable\r\nContent-Length: 0\r\nConnection: close\r\n\r\n";
+    let primary = run_constant_server(down, std::sync::Arc::new(AtomicUsize::new(0))).await;
+    let mirror = run_constant_server(
+        complete_response(),
+        std::sync::Arc::new(AtomicUsize::new(0)),
+    )
+    .await;
+    let urls = candidate_urls(
+        &format!("http://127.0.0.1:{primary}/pkg.bin"),
+        &[format!("http://127.0.0.1:{mirror}/{{filename}}?raw=1")],
+    );
+    assert!(urls[1].ends_with("/pkg.bin?raw=1"), "{urls:?}");
+    let temp = tempfile::TempDir::new().unwrap();
+    let mut progress = |_p: &DownloadProgress| {};
+
+    download_from_candidates(
+        &test_client(),
+        &urls,
+        temp.path(),
+        &mut progress,
+        FAST_RETRY_TIMING,
+    )
+    .await
+    .expect("the mirror should serve the file");
+
+    assert_eq!(
+        std::fs::read(temp.path().join("pkg.bin")).unwrap(),
+        b"hello"
+    );
+    assert!(!temp.path().join("pkg.bin?raw=1").exists());
+}
+
 /// The primary being fine must never touch a mirror, and when everything is
 /// down the error is the primary's, with the mirrors named.
 #[tokio::test]

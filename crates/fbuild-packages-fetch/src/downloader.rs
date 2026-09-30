@@ -449,76 +449,6 @@ async fn get_with_retry(url: &str) -> Result<Vec<u8>> {
     get_from_candidates(http::client(), &urls, RetryTiming::from_env()).await
 }
 
-/// Mirror bases from `FBUILD_DOWNLOAD_MIRRORS` (comma or whitespace
-/// separated). Each entry is either a base URL, to which the file name is
-/// appended, or a template containing `{filename}`.
-fn configured_mirrors() -> Vec<String> {
-    std::env::var("FBUILD_DOWNLOAD_MIRRORS")
-        .map(|v| {
-            v.split(|c: char| c == ',' || c.is_whitespace())
-                .filter(|m| !m.is_empty())
-                .map(str::to_string)
-                .collect()
-        })
-        .unwrap_or_default()
-}
-
-/// `url` first, then the same file on each mirror, in order.
-fn candidate_urls(url: &str, mirrors: &[String]) -> Vec<String> {
-    let filename = url.rsplit('/').next().unwrap_or("download");
-    let mut urls = vec![url.to_string()];
-    for mirror in mirrors {
-        urls.push(if mirror.contains("{filename}") {
-            mirror.replace("{filename}", filename)
-        } else {
-            format!("{}/{}", mirror.trim_end_matches('/'), filename)
-        });
-    }
-    urls
-}
-
-/// The error to report when every candidate failed: the primary URL's own
-/// failure, plus a note that mirrors were tried.
-fn all_candidates_failed(primary: FbuildError, tried: &[String]) -> FbuildError {
-    if tried.len() <= 1 {
-        return primary;
-    }
-    FbuildError::PackageError(format!(
-        "{primary}; also tried {} mirror(s): {}",
-        tried.len() - 1,
-        tried[1..].join(", ")
-    ))
-}
-
-/// Try each candidate URL in turn with the full retry policy; the first
-/// success wins. A vendor outage that outlasts the primary's budget falls
-/// through to the mirrors (FastLED/fbuild#1463).
-async fn get_from_candidates(
-    client: &reqwest::Client,
-    urls: &[String],
-    timing: RetryTiming,
-) -> Result<Vec<u8>> {
-    let mut first_error = None;
-    for url in urls {
-        match get_with_retry_timed(client, url, timing).await {
-            Ok(bytes) => {
-                if first_error.is_some() {
-                    tracing::warn!("primary download failed; served from mirror {url}");
-                }
-                return Ok(bytes);
-            }
-            Err(error) => {
-                tracing::warn!("download from {url} failed: {error}");
-                first_error.get_or_insert(error);
-            }
-        }
-    }
-    Err(all_candidates_failed(
-        first_error.expect("at least one candidate URL"),
-        urls,
-    ))
-}
-
 async fn get_with_retry_timed(
     client: &reqwest::Client,
     url: &str,
@@ -587,36 +517,6 @@ async fn download_file_with_progress_using(
     .await
 }
 
-/// Streaming counterpart of [`get_from_candidates`]. Every candidate lands in
-/// the same `<filename>` because [`candidate_urls`] keeps the file name.
-async fn download_from_candidates(
-    client: &reqwest::Client,
-    urls: &[String],
-    dest_dir: &Path,
-    on_progress: &mut (dyn FnMut(&DownloadProgress) + Send),
-    timing: RetryTiming,
-) -> Result<()> {
-    let mut first_error = None;
-    for url in urls {
-        match download_file_with_progress_timed(client, url, dest_dir, on_progress, timing).await {
-            Ok(()) => {
-                if first_error.is_some() {
-                    tracing::warn!("primary download failed; served from mirror {url}");
-                }
-                return Ok(());
-            }
-            Err(error) => {
-                tracing::warn!("download from {url} failed: {error}");
-                first_error.get_or_insert(error);
-            }
-        }
-    }
-    Err(all_candidates_failed(
-        first_error.expect("at least one candidate URL"),
-        urls,
-    ))
-}
-
 /// Absolute ceiling on attempts, whatever progress is being made.
 ///
 /// The stall budget alone is not a bound: a server that drops the connection
@@ -647,6 +547,21 @@ async fn download_file_with_progress_timed(
     timing: RetryTiming,
 ) -> Result<()> {
     let filename = url.rsplit('/').next().unwrap_or("download").to_string();
+    download_file_with_progress_named(client, url, &filename, dest_dir, on_progress, timing).await
+}
+
+/// [`download_file_with_progress_timed`] writing to `dest_dir/<filename>`
+/// instead of a name taken from `url`. A mirror URL may carry a query string
+/// (`…/pkg.bin?raw=1`); the file must still land under the primary's name.
+async fn download_file_with_progress_named(
+    client: &reqwest::Client,
+    url: &str,
+    filename: &str,
+    dest_dir: &Path,
+    on_progress: &mut (dyn FnMut(&DownloadProgress) + Send),
+    timing: RetryTiming,
+) -> Result<()> {
+    let filename = filename.to_string();
     let dest_path = dest_dir.join(&filename);
     let part_path = dest_dir.join(format!("{filename}.part"));
 
@@ -977,6 +892,10 @@ pub async fn verify_checksum_async(path: &Path, expected: &str) -> Result<()> {
 #[cfg(test)]
 #[path = "downloader_mirror_tests.rs"]
 mod mirror_tests;
+#[path = "downloader_mirrors.rs"]
+mod mirrors;
+use mirrors::{candidate_urls, configured_mirrors, download_from_candidates, get_from_candidates};
+
 #[cfg(test)]
 #[path = "downloader_tests.rs"]
 mod tests;
