@@ -135,8 +135,8 @@ async fn active_preemption_error(ctx: &DaemonContext, port: &str) -> Option<Stri
 /// Timeout text for a stalled `open_port`. When another process (often the
 /// daemon itself) visibly holds the port, report contention instead of a
 /// driver wedge (FastLED/fbuild#1429).
-fn open_port_timeout_message(port: &str, deadline: &str) -> String {
-    match fbuild_serial::port_holders::describe_port_holders(port) {
+async fn open_port_timeout_message(port: &str, deadline: &str) -> String {
+    match fbuild_serial::port_holders::describe_port_holders(port).await {
         Some(holder) => format!(
             "open_port({port}) exceeded {deadline}; {holder} (EBUSY contention, not a driver wedge)"
         ),
@@ -155,10 +155,7 @@ where
     match tokio::time::timeout(timeout, open_future).await {
         Ok(Ok(())) => Ok(()),
         Ok(Err(e)) => Err(format!("failed to open port: {}", e)),
-        Err(_) => Err(open_port_timeout_message(
-            port,
-            &format_timeout_for_error(timeout),
-        )),
+        Err(_) => Err(open_port_timeout_message(port, &format_timeout_for_error(timeout)).await),
     }
 }
 

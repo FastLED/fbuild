@@ -282,7 +282,7 @@ pub async fn monitor(
                 StatusCode::GATEWAY_TIMEOUT,
                 Json(OperationResponse::fail(
                     request_id,
-                    match fbuild_serial::port_holders::describe_port_holders(&port) {
+                    match fbuild_serial::port_holders::describe_port_holders(&port).await {
                         Some(holder) => format!(
                             "open_port({}) exceeded {}s — {} (EBUSY contention, not a driver wedge)",
                             port, SERIAL_OPEN_PORT_TIMEOUT_SECS, holder

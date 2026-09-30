@@ -7,7 +7,9 @@
 //! On hosts without `/proc` the scan finds nothing and callers fall back to
 //! the generic message.
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
+
+use fbuild_core::path::{NormalizedPath, canonicalize_existing};
 
 /// A process that has the port's device node open.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -17,19 +19,16 @@ pub struct PortHolder {
 }
 
 /// Pure matcher: `procs` yields `(pid, name, fd link targets)`; returns the
-/// processes with an fd pointing at `port` (or its canonical path).
+/// processes with an fd pointing at `port` or at its resolved `canonical`
+/// path.
 pub fn match_port_holders(
-    procs: impl IntoIterator<Item = (u32, String, Vec<PathBuf>)>,
-    port: &str,
+    procs: impl IntoIterator<Item = (u32, String, Vec<NormalizedPath>)>,
+    port: &NormalizedPath,
+    canonical: &NormalizedPath,
 ) -> Vec<PortHolder> {
-    let target = std::fs::canonicalize(port).unwrap_or_else(|_| PathBuf::from(port));
     let mut holders: Vec<PortHolder> = procs
         .into_iter()
-        .filter(|(_, _, links)| {
-            links
-                .iter()
-                .any(|link| *link == target || link == Path::new(port))
-        })
+        .filter(|(_, _, links)| links.iter().any(|link| link == canonical || link == port))
         .map(|(pid, name, _)| PortHolder { pid, name })
         .collect();
     holders.sort_by_key(|h| h.pid);
@@ -37,7 +36,7 @@ pub fn match_port_holders(
 }
 
 /// Read a `/proc`-shaped tree rooted at `proc_root` into `(pid, comm, fds)`.
-fn read_proc_tree(proc_root: &Path) -> Vec<(u32, String, Vec<PathBuf>)> {
+fn read_proc_tree(proc_root: &Path) -> Vec<(u32, String, Vec<NormalizedPath>)> {
     let Ok(entries) = std::fs::read_dir(proc_root) else {
         return Vec::new();
     };
@@ -49,6 +48,7 @@ fn read_proc_tree(proc_root: &Path) -> Vec<(u32, String, Vec<PathBuf>)> {
             let links = fds
                 .flatten()
                 .filter_map(|fd| std::fs::read_link(fd.path()).ok())
+                .map(NormalizedPath::from)
                 .collect();
             let name = std::fs::read_to_string(entry.path().join("comm"))
                 .map(|s| s.trim().to_string())
@@ -59,19 +59,23 @@ fn read_proc_tree(proc_root: &Path) -> Vec<(u32, String, Vec<PathBuf>)> {
 }
 
 /// Scan a `/proc`-shaped tree for processes holding `port` open.
-pub fn find_port_holders_in(proc_root: &Path, port: &str) -> Vec<PortHolder> {
-    match_port_holders(read_proc_tree(proc_root), port)
+pub async fn find_port_holders_in(proc_root: &Path, port: &str) -> Vec<PortHolder> {
+    let port_path = NormalizedPath::new(port);
+    let canonical = canonicalize_existing(port)
+        .await
+        .unwrap_or_else(|_| port_path.clone());
+    match_port_holders(read_proc_tree(proc_root), &port_path, &canonical)
 }
 
 /// Processes currently holding `port` open (Linux `/proc`; empty elsewhere).
-pub fn find_port_holders(port: &str) -> Vec<PortHolder> {
-    find_port_holders_in(Path::new("/proc"), port)
+pub async fn find_port_holders(port: &str) -> Vec<PortHolder> {
+    find_port_holders_in(Path::new("/proc"), port).await
 }
 
 /// Human-readable contention hint, e.g. `port held by fbuild-daemon (pid 42)`.
 /// `None` when no holder is visible.
-pub fn describe_port_holders(port: &str) -> Option<String> {
-    let holders = find_port_holders(port);
+pub async fn describe_port_holders(port: &str) -> Option<String> {
+    let holders = find_port_holders(port).await;
     if holders.is_empty() {
         return None;
     }
@@ -90,15 +94,23 @@ mod tests {
     #[test]
     fn matches_only_processes_with_an_fd_on_the_port() {
         let procs = vec![
-            (10, "other".to_string(), vec![PathBuf::from("/dev/null")]),
+            (
+                10,
+                "other".to_string(),
+                vec![NormalizedPath::new("/dev/null")],
+            ),
             (
                 42,
                 "fbuild-daemon".to_string(),
-                vec![PathBuf::from("/dev/ttyFAKE")],
+                vec![NormalizedPath::new("/dev/ttyFAKE")],
             ),
         ];
         assert_eq!(
-            match_port_holders(procs, "/dev/ttyFAKE"),
+            match_port_holders(
+                procs,
+                &NormalizedPath::new("/dev/ttyFAKE"),
+                &NormalizedPath::new("/dev/ttyFAKE")
+            ),
             vec![PortHolder {
                 pid: 42,
                 name: "fbuild-daemon".to_string()
@@ -106,9 +118,13 @@ mod tests {
         );
     }
 
-    #[test]
-    fn missing_proc_root_yields_no_holders() {
+    #[tokio::test]
+    async fn missing_proc_root_yields_no_holders() {
         let dir = tempfile::TempDir::new().unwrap();
-        assert!(find_port_holders_in(&dir.path().join("nope"), "/dev/ttyX").is_empty());
+        assert!(
+            find_port_holders_in(&dir.path().join("nope"), "/dev/ttyX")
+                .await
+                .is_empty()
+        );
     }
 }
