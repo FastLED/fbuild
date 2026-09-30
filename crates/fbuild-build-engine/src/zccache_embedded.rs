@@ -120,6 +120,56 @@ pub fn compile_cap_env_value(
     Some(requested.map_or_else(|| cores.max(1).to_string(), str::to_string))
 }
 
+/// zccache's own spelling of the cache-hit delivery override.
+pub const ZCCACHE_MODE_ENV: &str = "ZCCACHE_MODE";
+
+/// Delivery mode to set on the embedded service, or `None` to leave zccache's
+/// default alone (FastLED/fbuild#1565).
+///
+/// zccache 1.15.0 makes `AUTO` reflink-else-copy and never hardlink, which
+/// turns every warm hit on ext4/NTFS into a full copy. fbuild owns every build
+/// of the directories it caches into, so it can pick the fastest tier the
+/// volume supports itself. An explicit `ZCCACHE_MODE` is always respected.
+pub fn materialization_mode_for(
+    explicit: Option<&str>,
+    reflink_ok: bool,
+    hardlink_ok: bool,
+) -> Option<zccache::embedded::MaterializationMode> {
+    use zccache::embedded::MaterializationMode;
+    if explicit.is_some_and(|value| !value.trim().is_empty()) {
+        return None;
+    }
+    Some(if reflink_ok {
+        MaterializationMode::Reflink
+    } else if hardlink_ok {
+        MaterializationMode::Link
+    } else {
+        MaterializationMode::Copy
+    })
+}
+
+/// Probe once whether `dir`'s volume supports reflinks and hardlinks.
+fn probe_delivery_tiers(dir: &Path) -> (bool, bool) {
+    let probe = dir.join(format!(".delivery-probe-{}", std::process::id()));
+    let (src, reflinked, linked) = (
+        probe.with_extension("src"),
+        probe.with_extension("reflink"),
+        probe.with_extension("link"),
+    );
+    let result = if std::fs::write(&src, b"probe").is_ok() {
+        (
+            reflink_copy::reflink(&src, &reflinked).is_ok(),
+            std::fs::hard_link(&src, &linked).is_ok(),
+        )
+    } else {
+        (false, false)
+    };
+    for path in [&src, &reflinked, &linked] {
+        let _ = std::fs::remove_file(path);
+    }
+    result
+}
+
 impl FbuildZccacheService {
     /// Start the embedded service on the caller's tokio runtime.
     ///
@@ -195,6 +245,15 @@ impl FbuildZccacheService {
         let svc = ZccacheService::start(cfg)
             .await
             .map_err(|e| EmbeddedServiceError::Start(e.to_string()))?;
+        let (reflink_ok, hardlink_ok) = probe_delivery_tiers(&cache_root);
+        if let Some(mode) = materialization_mode_for(
+            std::env::var(ZCCACHE_MODE_ENV).ok().as_deref(),
+            reflink_ok,
+            hardlink_ok,
+        ) {
+            tracing::info!(%mode, reflink_ok, hardlink_ok, "zccache: explicit hit-delivery mode");
+            svc.set_materialization_mode(Some(mode));
+        }
         Ok(Self {
             inner: Arc::new(svc),
             identity,
@@ -466,5 +525,38 @@ mod compile_cap_tests {
             compile_cap_env_value(None, Some(""), 4).as_deref(),
             Some("4")
         );
+    }
+}
+
+#[cfg(test)]
+mod materialization_mode_tests {
+    use super::materialization_mode_for;
+    use zccache::embedded::MaterializationMode::{Copy, Link, Reflink};
+
+    #[test]
+    fn each_probe_verdict_picks_its_tier() {
+        assert_eq!(materialization_mode_for(None, true, true), Some(Reflink));
+        assert_eq!(materialization_mode_for(None, false, true), Some(Link));
+        assert_eq!(materialization_mode_for(None, false, false), Some(Copy));
+    }
+
+    #[test]
+    fn explicit_mode_is_left_alone() {
+        assert_eq!(materialization_mode_for(Some("COPY"), true, true), None);
+    }
+
+    #[test]
+    fn blank_explicit_mode_counts_as_unset() {
+        assert_eq!(
+            materialization_mode_for(Some("  "), false, true),
+            Some(Link)
+        );
+    }
+
+    #[test]
+    fn probe_leaves_no_files_behind() {
+        let dir = tempfile::TempDir::new().unwrap();
+        let _ = super::probe_delivery_tiers(dir.path());
+        assert_eq!(std::fs::read_dir(dir.path()).unwrap().count(), 0);
     }
 }
