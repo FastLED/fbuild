@@ -1144,22 +1144,22 @@ fn parse_fbuild_build_packages(stdout: &[u8], board: Board) -> BTreeMap<String, 
             }
         } else if board.key == "uno" {
             if let Some((_, resolved)) = line.split_once("AVR resolved:") {
-                for (key, package) in [
-                    ("toolchain", "toolchain-atmelavr"),
-                    ("framework", "framework-"),
-                ] {
-                    let field = if key == "toolchain" {
-                        resolved.split(';').next().unwrap_or("")
-                    } else {
-                        resolved.split(';').nth(1).unwrap_or("")
+                // Entries look like `name@version (url); name@version (url)`,
+                // with fbuild's own names (`avr-gcc`, `arduino-avr-core`).
+                for entry in resolved.split(';') {
+                    let Some((name, rest)) = entry.trim().split_once('@') else {
+                        continue;
                     };
-                    if let Some(value) = field.split_once(package).map(|(_, value)| value) {
-                        if let Some((_, version)) = value.split_once('@') {
-                            let version = version.split_whitespace().next().unwrap_or("");
-                            if !version.is_empty() {
-                                packages.insert(key.to_string(), version.to_string());
-                            }
-                        }
+                    let version = rest.split_whitespace().next().unwrap_or("");
+                    let key = if name == "avr-gcc" || name.starts_with("toolchain-atmelavr") {
+                        "toolchain"
+                    } else if name == "arduino-avr-core" || name.starts_with("framework-") {
+                        "framework"
+                    } else {
+                        continue;
+                    };
+                    if !version.is_empty() {
+                        packages.insert(key.to_string(), version.trim_end_matches(',').to_string());
                     }
                 }
             }

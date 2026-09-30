@@ -132,11 +132,6 @@ jobs:
       # library formatting check below needs rustfmt on that exact nightly.
       - name: Install rustfmt for the Dylint toolchain
         run: soldr rustup component add --toolchain nightly-2026-05-28 rustfmt
-      - name: Install cross-target nightly standard libraries
-        if: ${{ inputs.ref != '' || github.event_name == 'workflow_dispatch' }}
-        run: |
-          soldr rustup target add --toolchain nightly-2026-05-28 \
-            x86_64-pc-windows-msvc x86_64-apple-darwin
       - name: Check Dylint library formatting
         run: |
           while IFS= read -r manifest; do
