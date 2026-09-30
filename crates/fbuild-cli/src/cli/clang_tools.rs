@@ -105,19 +105,10 @@ pub async fn run_iwyu(
         return Ok(());
     }
 
-    // Step 4: Find GCC toolchain builtin include dirs
-    let gcc_includes = fbuild_packages::toolchain::clang::find_gcc_builtin_include_dirs();
-    if !gcc_includes.is_empty() {
-        output::progress(format!(
-            "Found {} GCC builtin include dir(s)",
-            gcc_includes.len()
-        ));
-        if verbose {
-            for inc in &gcc_includes {
-                output::debug(format!("  {}", inc.display()));
-            }
-        }
-    }
+    // Step 4: GCC toolchain builtin include dirs are already in each entry's
+    // `-isystem` list: `translate_for_clang` bakes in the dirs of that entry's
+    // own compiler (FastLED/fbuild#1538). Scanning the whole toolchain cache
+    // here would re-add other architectures' headers.
 
     // Step 5: Preprocess compile_commands.json for IWYU
     // Transform entries directly as JSON: remove --target=, dedup -D, convert -I to -isystem
@@ -131,8 +122,7 @@ pub async fn run_iwyu(
         .map(|entry| {
             let mut new_entry = entry.clone();
             if let Some(args) = entry.get("arguments").and_then(|a| a.as_array()) {
-                let mut new_args: Vec<serde_json::Value> =
-                    Vec::with_capacity(args.len() + gcc_includes.len() * 2);
+                let mut new_args: Vec<serde_json::Value> = Vec::with_capacity(args.len());
                 let mut seen_defines = std::collections::HashSet::new();
 
                 for arg_val in args {
@@ -193,12 +183,6 @@ pub async fn run_iwyu(
                     }
 
                     new_args.push(arg_val.clone());
-                }
-
-                // Append GCC toolchain builtin include dirs as -isystem
-                for inc in &gcc_includes {
-                    new_args.push(serde_json::Value::String("-isystem".into()));
-                    new_args.push(serde_json::Value::String(inc.to_string_lossy().to_string()));
                 }
 
                 new_entry["arguments"] = serde_json::Value::Array(new_args);

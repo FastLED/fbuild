@@ -279,29 +279,32 @@ pub fn find_binary_in_dir(dir: &Path, name: &str) -> Option<PathBuf> {
     None
 }
 
-/// Search the fbuild toolchain cache for GCC builtin include directories.
+/// How deep to look below one toolchain root. `<root>/lib/gcc/...` is depth 0;
+/// AVR's Arduino package nests it one level down (`<root>/avr/lib/gcc/...`).
+const COMPILER_ROOT_MAX_DEPTH: u32 = 2;
+
+/// GCC builtin include directories belonging to the toolchain that owns
+/// `compiler` (`<root>/bin/<triple>-g++` -> `<root>/**/lib/gcc/<triple>/<ver>/include`).
 ///
 /// GCC has implicit include paths (e.g. `lib/gcc/xtensa-esp-elf/14.2.0/include/`)
-/// that contain `stdbool.h`, `stddef.h`, `stdarg.h`, etc. These are not listed
-/// in compile_commands.json because GCC adds them automatically. IWYU (which is
-/// clang-based) needs them added explicitly as `-isystem` paths.
-///
-/// Returns all matching `include/` directories found under the toolchain cache.
-pub fn find_gcc_builtin_include_dirs() -> Vec<PathBuf> {
-    let cache_root = fbuild_paths::get_cache_root();
-    let toolchains_dir = cache_root.join("toolchains");
-
-    if !toolchains_dir.exists() {
+/// holding `stdbool.h`, `stddef.h`, `stdarg.h`, ... that GCC adds automatically
+/// and clang-based tools (clangd, IWYU) need as explicit `-isystem`. This never
+/// looks at other cached toolchains, so a clangd database for one target cannot
+/// pick up another architecture's freestanding headers (FastLED/fbuild#1538). Empty when the
+/// compiler path has no toolchain root (e.g. a bare `gcc` from `PATH`).
+pub fn gcc_builtin_include_dirs_for_compiler(compiler: &Path) -> Vec<PathBuf> {
+    let Some(root) = compiler.parent().and_then(Path::parent) else {
         return Vec::new();
-    }
-
-    let mut result = Vec::new();
-    find_gcc_includes_recursive(&toolchains_dir, 0, &mut result);
-    result
+    };
+    let mut dirs = Vec::new();
+    find_gcc_includes_recursive(root, 0, COMPILER_ROOT_MAX_DEPTH, &mut dirs);
+    dirs.sort();
+    dirs.dedup();
+    dirs
 }
 
 /// Walk up to `max_depth` levels looking for `lib/gcc/*/include/stdbool.h`.
-fn find_gcc_includes_recursive(dir: &Path, depth: u32, out: &mut Vec<PathBuf>) {
+fn find_gcc_includes_recursive(dir: &Path, depth: u32, max_depth: u32, out: &mut Vec<PathBuf>) {
     // Check for lib/gcc/ at current level
     let lib_gcc = dir.join("lib").join("gcc");
     if lib_gcc.is_dir() {
@@ -325,12 +328,12 @@ fn find_gcc_includes_recursive(dir: &Path, depth: u32, out: &mut Vec<PathBuf>) {
     }
 
     // Recurse into subdirectories (max 6 levels to avoid going too deep)
-    if depth < 6 {
+    if depth < max_depth {
         if let Ok(entries) = std::fs::read_dir(dir) {
             for entry in entries.filter_map(|e| e.ok()) {
                 let p = entry.path();
                 if p.is_dir() {
-                    find_gcc_includes_recursive(&p, depth + 1, out);
+                    find_gcc_includes_recursive(&p, depth + 1, max_depth, out);
                 }
             }
         }
@@ -433,6 +436,41 @@ mod tests {
         assert!(find_binary_in_dir(dir.path(), "clang-tidy").is_none());
     }
 
+    /// Lay down `<root>/<rel>/lib/gcc/<triple>/<ver>/include/stdbool.h`.
+    fn fake_gcc_toolchain(root: &Path, rel: &str, triple: &str, ver: &str) -> PathBuf {
+        let include = root
+            .join(rel)
+            .join("lib/gcc")
+            .join(triple)
+            .join(ver)
+            .join("include");
+        std::fs::create_dir_all(&include).unwrap();
+        std::fs::write(include.join("stdbool.h"), "").unwrap();
+        include
+    }
+
+    #[test]
+    fn builtin_include_dirs_for_compiler_ignore_other_cached_toolchains() {
+        // FastLED/fbuild#1538: the esp32s3 database carried AVR/ARM/lx106 dirs.
+        let cache = tempfile::tempdir_in(fbuild_paths::temp_subdir("toolchain-tests")).unwrap();
+        let esp = fake_gcc_toolchain(&cache.path().join("esp"), "", "xtensa-esp32s3-elf", "8.4.0");
+        let avr = fake_gcc_toolchain(&cache.path().join("avr-pkg"), "avr", "avr", "7.3.0");
+        let arm = fake_gcc_toolchain(&cache.path().join("arm"), "", "arm-none-eabi", "9.2.1");
+
+        let esp_gxx = cache.path().join("esp/bin/xtensa-esp32s3-elf-g++");
+        assert_eq!(gcc_builtin_include_dirs_for_compiler(&esp_gxx), vec![esp]);
+        // AVR nests lib/gcc one level below the toolchain root.
+        let avr_gxx = cache.path().join("avr-pkg/bin/avr-g++");
+        assert_eq!(gcc_builtin_include_dirs_for_compiler(&avr_gxx), vec![avr]);
+        let arm_gxx = cache.path().join("arm/bin/arm-none-eabi-g++");
+        assert_eq!(gcc_builtin_include_dirs_for_compiler(&arm_gxx), vec![arm]);
+    }
+
+    #[test]
+    fn builtin_include_dirs_for_compiler_without_a_root_is_empty() {
+        assert!(gcc_builtin_include_dirs_for_compiler(Path::new("g++")).is_empty());
+    }
+
     #[test]
     fn test_find_gcc_includes_recursive_found() {
         let dir = tempfile::tempdir().unwrap();
@@ -448,7 +486,7 @@ mod tests {
         std::fs::write(include_dir.join("stdbool.h"), b"// stub").unwrap();
 
         let mut result = Vec::new();
-        find_gcc_includes_recursive(dir.path(), 0, &mut result);
+        find_gcc_includes_recursive(dir.path(), 0, COMPILER_ROOT_MAX_DEPTH, &mut result);
         assert_eq!(result.len(), 1);
         assert_eq!(result[0], include_dir);
     }
@@ -457,7 +495,7 @@ mod tests {
     fn test_find_gcc_includes_recursive_empty() {
         let dir = tempfile::tempdir().unwrap();
         let mut result = Vec::new();
-        find_gcc_includes_recursive(dir.path(), 0, &mut result);
+        find_gcc_includes_recursive(dir.path(), 0, COMPILER_ROOT_MAX_DEPTH, &mut result);
         assert!(result.is_empty());
     }
 
@@ -474,7 +512,7 @@ mod tests {
         std::fs::create_dir_all(&include_dir).unwrap();
         // No stdbool.h → not found
         let mut result = Vec::new();
-        find_gcc_includes_recursive(dir.path(), 0, &mut result);
+        find_gcc_includes_recursive(dir.path(), 0, COMPILER_ROOT_MAX_DEPTH, &mut result);
         assert!(result.is_empty());
     }
 }
