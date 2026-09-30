@@ -169,9 +169,20 @@ class FractionalWorkflowTests(unittest.TestCase):
         self.assertIn("push", minimal[True])
         self.assertIn("pull_request", minimal[True])
         self.assertEqual(
-            {"linux", "board_plan", "fbuild_bin", "pr_boards", "test", "full", "selected-coverage"},
+            {"linux", "board_plan", "fbuild_bin", "pr_boards", "reuse_decision", "test", "full", "selected-coverage"},
             set(minimal["jobs"]),
         )
+        # GEN-021 shadow decision (zackees/ci.yml#162): main pushes only, never
+        # consumed by another job, and unable to fail the run.
+        reuse = minimal["jobs"]["reuse_decision"]
+        self.assertIn("github.event_name == 'push'", reuse["if"])
+        self.assertTrue(reuse.get("continue-on-error"))
+        self.assertTrue(all(step.get("continue-on-error") for step in reuse["steps"]))
+        # A stall must end as a tolerated step timeout, never a job cancellation.
+        step_budget = sum(step["timeout-minutes"] for step in reuse["steps"])
+        self.assertLess(step_budget, reuse["timeout-minutes"])
+        self.assertIn("--mode shadow", reuse["steps"][-1]["run"])
+        self.assertFalse(any("reuse_decision" in str(job.get("needs", "")) for job in minimal["jobs"].values()))
         # Path-selected boards run only on the default PR tier.
         plan_if = minimal["jobs"]["board_plan"]["if"]
         self.assertIn("pull_request", plan_if)

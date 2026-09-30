@@ -92,6 +92,40 @@ jobs:
       checkout_ref: ${{ github.event.pull_request.head.sha }}
       fbuild-artifact: fbuild-bin-linux-debug
       toolchain-cache: ${{ matrix.toolchain_cache }}
+  reuse_decision:
+    name: Verified reuse decision (shadow)
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    continue-on-error: true
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@v6
+        continue-on-error: true
+        timeout-minutes: 1
+        with:
+          repository: zackees/ci.yml
+          ref: b93b8c4a20ce3cd476c75a278ad01a31bde2438b
+          path: .ci-lint
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@v3
+        continue-on-error: true
+        timeout-minutes: 1
+      - name: Reuse decision (GEN-021, shadow)
+        continue-on-error: true
+        timeout-minutes: 2
+        working-directory: .ci-lint
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: >-
+          uv run --no-project python -m ci_lint reuse-check
+          --workflow ci-minimal.yml --mode shadow
+          --required-job "linux / Check (ubuntu-latest)"
+          --required-job "linux / Python facade tests (ubuntu-latest)"
+          --required-job "CI selected coverage"
   test:
     if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'ci-test') && !contains(github.event.pull_request.labels.*.name, 'ci-full')
     uses: ./.github/workflows/ci-test.yml

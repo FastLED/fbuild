@@ -306,6 +306,68 @@ def render_pr_boards() -> str:
     )
 
 
+# zackees/ci.yml commit that provides `ci-lint reuse-check` (stdlib-only).
+CI_LINT_SHA = "b93b8c4a20ce3cd476c75a278ad01a31bde2438b"
+# Job names green on both the default PR tier and main pushes (zackees/ci.yml#162).
+REUSE_REQUIRED_JOBS = (
+    "linux / Check (ubuntu-latest)",
+    "linux / Python facade tests (ubuntu-latest)",
+    "CI selected coverage",
+)
+REUSE_JOB_TIMEOUT = 5
+# Per-step minutes: checkout, setup-uv, reuse-check. Sum stays below the job cap.
+REUSE_STEP_TIMEOUTS = (1, 1, 2)
+
+
+def render_reuse_decision() -> str:
+    """GEN-021 verified-reuse decision on main pushes, SHADOW mode only.
+
+    Records in the job summary whether this push's tree is identical to a PR
+    head whose ci-minimal run passed every REUSE_REQUIRED_JOBS job
+    (zackees/ci.yml#162). `--mode shadow` always reports reuse=false, nothing
+    `needs:` this job, and the job and every step are continue-on-error, so it
+    can neither skip a job nor fail the run. REUSE_STEP_TIMEOUTS sum below
+    REUSE_JOB_TIMEOUT, so a stall
+    ends as a (tolerated) step timeout rather than a job cancellation.
+    """
+    required = "".join(f"          --required-job \"{job}\"\n" for job in REUSE_REQUIRED_JOBS)
+    checkout_t, uv_t, check_t = REUSE_STEP_TIMEOUTS
+    return (
+        "  reuse_decision:\n"
+        "    name: Verified reuse decision (shadow)\n"
+        "    if: github.event_name == 'push' && github.ref == 'refs/heads/main'\n"
+        "    runs-on: ubuntu-latest\n"
+        f"    timeout-minutes: {REUSE_JOB_TIMEOUT}\n"
+        "    continue-on-error: true\n"
+        "    permissions:\n"
+        "      contents: read\n"
+        "      actions: read\n"
+        "      pull-requests: read\n"
+        "    steps:\n"
+        "      - uses: actions/checkout@v6\n"
+        "        continue-on-error: true\n"
+        f"        timeout-minutes: {checkout_t}\n"
+        "        with:\n"
+        "          repository: zackees/ci.yml\n"
+        f"          ref: {CI_LINT_SHA}\n"
+        "          path: .ci-lint\n"
+        "          persist-credentials: false\n"
+        "      - uses: astral-sh/setup-uv@v3\n"
+        "        continue-on-error: true\n"
+        f"        timeout-minutes: {uv_t}\n"
+        "      - name: Reuse decision (GEN-021, shadow)\n"
+        "        continue-on-error: true\n"
+        f"        timeout-minutes: {check_t}\n"
+        "        working-directory: .ci-lint\n"
+        "        env:\n"
+        "          GITHUB_TOKEN: ${{ github.token }}\n"
+        "        run: >-\n"
+        "          uv run --no-project python -m ci_lint reuse-check\n"
+        "          --workflow ci-minimal.yml --mode shadow\n"
+        + required
+    )
+
+
 def render_ci(boards: list[dict], tier: str, families: dict) -> str:
     full = tier == "full"
     minimal = tier == "minimal"
@@ -516,7 +578,7 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
             + "          done\n"
             + "          echo 'complete=true' >> \"$GITHUB_OUTPUT\"\n"
         )
-        + (render_pr_boards() if minimal else "")
+        + (render_pr_boards() + render_reuse_decision() if minimal else "")
         + ("  test:\n"
            "    if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'ci-test') && !contains(github.event.pull_request.labels.*.name, 'ci-full')\n"
            "    uses: ./.github/workflows/ci-test.yml\n"
