@@ -335,6 +335,25 @@ mod tests {
         assert!(entry.github.contains("ArduinoCore-avr"));
     }
 
+    /// `core = arduino` must use PlatformIO's repacked `framework-arduino-avr`
+    /// (not upstream ArduinoCore-avr), which ships the extra variants that
+    /// PlatformIO board JSONs reference (e.g. `microduino_plus` for the
+    /// Microduino Core+ 1284p16m/1284p8m/644pa8m/644pa16m boards).
+    #[test]
+    fn arduino_core_uses_platformio_framework_arduino_avr() {
+        let entry = lookup_entry("arduino").unwrap();
+        assert_eq!(entry.version, "5.4.0");
+        assert_eq!(
+            framework_url(&entry),
+            "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-avr/5.4.0/framework-arduino-avr-5.4.0.tar.gz"
+        );
+        assert_eq!(
+            entry.checksum.as_deref(),
+            Some("bf85bcca114bad389fec51fecbf9b66821a233b366bd3f85cdb1cdcba6a28659")
+        );
+        assert_eq!(entry.validation_path, "cores/arduino/main.cpp");
+    }
+
     #[test]
     fn test_tiny_entry() {
         let entry = lookup_entry("tiny").unwrap();

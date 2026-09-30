@@ -631,6 +631,8 @@ mod tests {
     fn avr_board_cores_select_their_platformio_package_names() {
         for (board_id, expected_name) in [
             ("uno", "framework-arduino-avr"),
+            ("1284p16m", "framework-arduino-avr"),
+            ("644pa16m", "framework-arduino-avr"),
             ("attiny44", "framework-arduino-avr-attiny"),
             ("ATmega8", "framework-arduino-avr-minicore"),
             ("nano_every", "framework-arduino-megaavr"),
