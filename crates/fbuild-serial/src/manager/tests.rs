@@ -866,3 +866,63 @@ async fn concurrent_deploy_preemption_rejects_second_request_and_preserves_first
     manager.complete_deploy_preemption("COM1", "COM1").await;
     assert!(!manager.is_preempted("COM1").await);
 }
+
+/// FastLED/fbuild#1429: a session whose reader thread has exited must not be
+/// reused (it still holds the OS fd); `open_port` closes it first.
+#[tokio::test]
+async fn open_port_closes_session_whose_reader_exited() {
+    let mgr = SharedSerialManager::new();
+    let port = "COM_DEAD_READER";
+    let reader = tokio::spawn(async {});
+    while !reader.is_finished() {
+        tokio::task::yield_now().await;
+    }
+    let mut session = super::SerialSession::new(port.to_string(), 115200);
+    session.is_open = true;
+    session.reader_handle = Some(reader);
+    mgr.sessions.insert(port.to_string(), session);
+    assert!(mgr.session_reader_exited(port));
+
+    // The reopen itself cannot succeed (no such port); only the teardown of
+    // the stale session is under test, so bound the retry loop.
+    let _ = tokio::time::timeout(
+        std::time::Duration::from_millis(200),
+        mgr.open_port(port, 115200, "client", None, None),
+    )
+    .await;
+    assert!(
+        !mgr.sessions.contains_key(port),
+        "stale session must be removed instead of reused"
+    );
+}
+
+/// Reopening a stale aliased session must target the physical endpoint and
+/// keep the logical alias (deploy renumber recovery, #1429 review).
+#[tokio::test]
+async fn stale_session_cleanup_keeps_logical_alias_to_physical_port() {
+    let mgr = SharedSerialManager::new();
+    let (original, recovered) = ("COM_ORIGINAL", "COM_RECOVERED");
+    let reader = tokio::spawn(async {});
+    while !reader.is_finished() {
+        tokio::task::yield_now().await;
+    }
+    let mut session = super::SerialSession::new(recovered.to_string(), 115200);
+    session.is_open = true;
+    session.reader_handle = Some(reader);
+    mgr.sessions.insert(recovered.to_string(), session);
+    mgr.port_aliases
+        .insert(original.to_string(), recovered.to_string());
+
+    let _ = tokio::time::timeout(
+        std::time::Duration::from_millis(200),
+        mgr.open_port(original, 115200, "client", None, None),
+    )
+    .await;
+
+    assert!(!mgr.sessions.contains_key(recovered));
+    assert_eq!(
+        mgr.port_aliases.get(original).map(|a| a.clone()),
+        Some(recovered.to_string()),
+        "logical alias must still resolve to the physical port"
+    );
+}

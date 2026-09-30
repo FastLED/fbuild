@@ -116,6 +116,30 @@ impl SharedSerialManager {
         client_metadata: Option<SerialClientMetadata>,
     ) -> fbuild_core::Result<()> {
         let session_key = self.resolve_port_key(port);
+        let mut port = port;
+        // A reader that hit a read error (native-USB chips re-enumerate on
+        // DTR/RTS resets) exits but leaves the session "open" with the OS fd
+        // still held, so later opens reuse a dead session and other openers
+        // get EBUSY (FastLED/fbuild#1429). Tear it down and reopen.
+        if self.session_reader_exited(&session_key) {
+            tracing::warn!(
+                port,
+                "serial reader exited but session still open; closing stale session before reopening"
+            );
+            // Logical names (e.g. the pre-renumber deploy port) alias the
+            // physical session. Keep them, and reopen the physical endpoint
+            // rather than a logical name that may no longer exist.
+            let aliases: Vec<String> = self
+                .port_aliases
+                .iter()
+                .filter_map(|entry| (entry.value() == &session_key).then(|| entry.key().clone()))
+                .collect();
+            self.close_port(port, client_id).await?;
+            for alias in aliases {
+                self.port_aliases.insert(alias, session_key.clone());
+            }
+            port = session_key.as_str();
+        }
         // Existing-session reuse is serialized with deploy/reset acquisition
         // for the same reason as new-session publication below: an attach
         // must not become visible after a preemption event was emitted.
@@ -1299,6 +1323,18 @@ impl SharedSerialManager {
                 }
             }
             tracing::info!(port = event_port, "background reader stopped");
+        })
+    }
+
+    /// True when `session_key` has an open session whose background reader
+    /// has already finished.
+    fn session_reader_exited(&self, session_key: &str) -> bool {
+        self.sessions.get(session_key).is_some_and(|session| {
+            session.is_open
+                && session
+                    .reader_handle
+                    .as_ref()
+                    .is_some_and(|reader| reader.is_finished())
         })
     }
 

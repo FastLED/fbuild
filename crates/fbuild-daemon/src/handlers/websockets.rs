@@ -92,16 +92,12 @@ impl Drop for PendingAttachGuard {
 /// left on the shared manager: detach reader, release writer, and close
 /// the port if there are no remaining clients. Idempotent — safe to call
 /// on a partially-set-up session. See FastLED/fbuild#51.
-async fn cleanup_ws_serial_session(
-    ctx: &Arc<DaemonContext>,
-    port: &str,
-    client_id: &str,
-    writer_acquired: bool,
-) {
+async fn cleanup_ws_serial_session(ctx: &Arc<DaemonContext>, port: &str, client_id: &str) {
     ctx.serial_manager.detach_reader(port, client_id);
-    if writer_acquired {
-        ctx.serial_manager.release_writer(port, client_id);
-    }
+    // Unconditional: the recovery loop re-acquires the writer without
+    // recording it, and `release_writer` only clears a writer this client
+    // holds. A leaked writer blocks the idle close of the port (#1429).
+    ctx.serial_manager.release_writer(port, client_id);
     if !ctx.serial_manager.has_clients(port) {
         ctx.serial_manager
             .close_port_after_grace_if_idle(port, client_id, Duration::from_secs(2));
@@ -136,6 +132,18 @@ async fn active_preemption_error(ctx: &DaemonContext, port: &str) -> Option<Stri
     ctx.serial_manager.preemption_holder(port).await
 }
 
+/// Timeout text for a stalled `open_port`. When another process (often the
+/// daemon itself) visibly holds the port, report contention instead of a
+/// driver wedge (FastLED/fbuild#1429).
+async fn open_port_timeout_message(port: &str, deadline: &str) -> String {
+    match fbuild_serial::port_holders::describe_port_holders(port).await {
+        Some(holder) => {
+            format!("open_port({port}) exceeded {deadline}; {holder} (timeout cause unknown)")
+        }
+        None => format!("open_port({port}) exceeded {deadline}; serial driver may be wedged"),
+    }
+}
+
 async fn await_ws_serial_open_port<F>(
     port: &str,
     open_future: F,
@@ -147,11 +155,7 @@ where
     match tokio::time::timeout(timeout, open_future).await {
         Ok(Ok(())) => Ok(()),
         Ok(Err(e)) => Err(format!("failed to open port: {}", e)),
-        Err(_) => Err(format!(
-            "open_port({}) exceeded {}; serial driver may be wedged",
-            port,
-            format_timeout_for_error(timeout)
-        )),
+        Err(_) => Err(open_port_timeout_message(port, &format_timeout_for_error(timeout)).await),
     }
 }
 
@@ -280,7 +284,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
             let _ = socket
                 .send(Message::Text(serialize_or_fallback(&err_msg)))
                 .await;
-            cleanup_ws_serial_session(&ctx, &port, &client_id, writer_acquired).await;
+            cleanup_ws_serial_session(&ctx, &port, &client_id).await;
             return;
         }
     };
@@ -296,7 +300,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
         .await
         .is_err()
     {
-        cleanup_ws_serial_session(&ctx, &port, &client_id, writer_acquired).await;
+        cleanup_ws_serial_session(&ctx, &port, &client_id).await;
         return;
     }
     drop(attach_guard);
@@ -835,7 +839,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
     // reader keeps the OS file handle open, blocking other tools (e.g.
     // `pyserial.Serial(...)` from the same Python process) with
     // "Access is denied" until the daemon itself shuts down.
-    cleanup_ws_serial_session(&ctx, &port, &client_id, writer_acquired).await;
+    cleanup_ws_serial_session(&ctx, &port, &client_id).await;
 }
 
 // ---------------------------------------------------------------------------
