@@ -42,6 +42,8 @@ pub fn resolve_serial(serial: &str, ports: &[DetectedPort]) -> fbuild_core::Resu
         [] => {
             let mut attached: Vec<String> = ports
                 .iter()
+                // A historical (phantom) record is not an attached device.
+                .filter(|port| port.health.is_present() != Some(false))
                 .filter_map(|port| {
                     usb_serial(port).map(|s| format!("{} ({})", s, port.info.port_name))
                 })
@@ -150,6 +152,21 @@ mod tests {
         assert!(err.contains("BBBB"), "{err}");
         assert!(err.contains("AAAA (/dev/ttyACM0)"), "{err}");
         assert!(err.contains("refusing to fall back"), "{err}");
+    }
+
+    #[test]
+    fn attached_list_omits_phantom_records() {
+        let phantom = PortHealth::Phantom {
+            problem_code: None,
+            status: None,
+        };
+        let ports = [
+            usb("COM9", Some("GHOST"), phantom),
+            usb("COM3", Some("LIVE"), PortHealth::Unknown),
+        ];
+        let err = resolve_serial("NOPE", &ports).unwrap_err().to_string();
+        assert!(err.contains("LIVE (COM3)"), "{err}");
+        assert!(!err.contains("GHOST"), "phantom listed as attached: {err}");
     }
 
     #[test]
