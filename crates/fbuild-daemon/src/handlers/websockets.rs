@@ -92,16 +92,12 @@ impl Drop for PendingAttachGuard {
 /// left on the shared manager: detach reader, release writer, and close
 /// the port if there are no remaining clients. Idempotent — safe to call
 /// on a partially-set-up session. See FastLED/fbuild#51.
-async fn cleanup_ws_serial_session(
-    ctx: &Arc<DaemonContext>,
-    port: &str,
-    client_id: &str,
-    writer_acquired: bool,
-) {
+async fn cleanup_ws_serial_session(ctx: &Arc<DaemonContext>, port: &str, client_id: &str) {
     ctx.serial_manager.detach_reader(port, client_id);
-    if writer_acquired {
-        ctx.serial_manager.release_writer(port, client_id);
-    }
+    // Unconditional: the recovery loop re-acquires the writer without
+    // recording it, and `release_writer` only clears a writer this client
+    // holds. A leaked writer blocks the idle close of the port (#1429).
+    ctx.serial_manager.release_writer(port, client_id);
     if !ctx.serial_manager.has_clients(port) {
         ctx.serial_manager
             .close_port_after_grace_if_idle(port, client_id, Duration::from_secs(2));
@@ -291,7 +287,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
             let _ = socket
                 .send(Message::Text(serialize_or_fallback(&err_msg)))
                 .await;
-            cleanup_ws_serial_session(&ctx, &port, &client_id, writer_acquired).await;
+            cleanup_ws_serial_session(&ctx, &port, &client_id).await;
             return;
         }
     };
@@ -307,7 +303,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
         .await
         .is_err()
     {
-        cleanup_ws_serial_session(&ctx, &port, &client_id, writer_acquired).await;
+        cleanup_ws_serial_session(&ctx, &port, &client_id).await;
         return;
     }
     drop(attach_guard);
@@ -846,7 +842,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
     // reader keeps the OS file handle open, blocking other tools (e.g.
     // `pyserial.Serial(...)` from the same Python process) with
     // "Access is denied" until the daemon itself shuts down.
-    cleanup_ws_serial_session(&ctx, &port, &client_id, writer_acquired).await;
+    cleanup_ws_serial_session(&ctx, &port, &client_id).await;
 }
 
 // ---------------------------------------------------------------------------
