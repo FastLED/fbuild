@@ -137,9 +137,9 @@ async fn active_preemption_error(ctx: &DaemonContext, port: &str) -> Option<Stri
 /// driver wedge (FastLED/fbuild#1429).
 async fn open_port_timeout_message(port: &str, deadline: &str) -> String {
     match fbuild_serial::port_holders::describe_port_holders(port).await {
-        Some(holder) => format!(
-            "open_port({port}) exceeded {deadline}; {holder} (EBUSY contention, not a driver wedge)"
-        ),
+        Some(holder) => {
+            format!("open_port({port}) exceeded {deadline}; {holder} (timeout cause unknown)")
+        }
         None => format!("open_port({port}) exceeded {deadline}; serial driver may be wedged"),
     }
 }

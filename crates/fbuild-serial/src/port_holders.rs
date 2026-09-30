@@ -58,18 +58,31 @@ fn read_proc_tree(proc_root: &Path) -> Vec<(u32, String, Vec<NormalizedPath>)> {
         .collect()
 }
 
-/// Scan a `/proc`-shaped tree for processes holding `port` open.
-pub async fn find_port_holders_in(proc_root: &Path, port: &str) -> Vec<PortHolder> {
+/// Longest the diagnostic may delay an error response.
+const SCAN_BUDGET: std::time::Duration = std::time::Duration::from_millis(500);
+
+/// Scan a `/proc`-shaped tree for processes holding `port` open. The scan
+/// walks every process's fd table, so it runs on the blocking pool with a
+/// bounded wait; `None` means the scan did not finish in time.
+pub async fn find_port_holders_in(
+    proc_root: &NormalizedPath,
+    port: &str,
+) -> Option<Vec<PortHolder>> {
     let port_path = NormalizedPath::new(port);
     let canonical = canonicalize_existing(port)
         .await
         .unwrap_or_else(|_| port_path.clone());
-    match_port_holders(read_proc_tree(proc_root), &port_path, &canonical)
+    let root = proc_root.clone();
+    let scan = tokio::task::spawn_blocking(move || read_proc_tree(root.as_path()));
+    let procs = tokio::time::timeout(SCAN_BUDGET, scan).await.ok()?.ok()?;
+    Some(match_port_holders(procs, &port_path, &canonical))
 }
 
 /// Processes currently holding `port` open (Linux `/proc`; empty elsewhere).
 pub async fn find_port_holders(port: &str) -> Vec<PortHolder> {
-    find_port_holders_in(Path::new("/proc"), port).await
+    find_port_holders_in(&NormalizedPath::new("/proc"), port)
+        .await
+        .unwrap_or_default()
 }
 
 /// Human-readable contention hint, e.g. `port held by fbuild-daemon (pid 42)`.
@@ -121,10 +134,10 @@ mod tests {
     #[tokio::test]
     async fn missing_proc_root_yields_no_holders() {
         let dir = tempfile::TempDir::new().unwrap();
-        assert!(
-            find_port_holders_in(&dir.path().join("nope"), "/dev/ttyX")
-                .await
-                .is_empty()
+        let missing = NormalizedPath::new(dir.path().join("nope"));
+        assert_eq!(
+            find_port_holders_in(&missing, "/dev/ttyX").await,
+            Some(Vec::new())
         );
     }
 }

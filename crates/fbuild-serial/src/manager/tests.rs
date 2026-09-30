@@ -895,3 +895,34 @@ async fn open_port_closes_session_whose_reader_exited() {
         "stale session must be removed instead of reused"
     );
 }
+
+/// Reopening a stale aliased session must target the physical endpoint and
+/// keep the logical alias (deploy renumber recovery, #1429 review).
+#[tokio::test]
+async fn stale_session_cleanup_keeps_logical_alias_to_physical_port() {
+    let mgr = SharedSerialManager::new();
+    let (original, recovered) = ("COM_ORIGINAL", "COM_RECOVERED");
+    let reader = tokio::spawn(async {});
+    while !reader.is_finished() {
+        tokio::task::yield_now().await;
+    }
+    let mut session = super::SerialSession::new(recovered.to_string(), 115200);
+    session.is_open = true;
+    session.reader_handle = Some(reader);
+    mgr.sessions.insert(recovered.to_string(), session);
+    mgr.port_aliases
+        .insert(original.to_string(), recovered.to_string());
+
+    let _ = tokio::time::timeout(
+        std::time::Duration::from_millis(200),
+        mgr.open_port(original, 115200, "client", None, None),
+    )
+    .await;
+
+    assert!(!mgr.sessions.contains_key(recovered));
+    assert_eq!(
+        mgr.port_aliases.get(original).map(|a| a.clone()),
+        Some(recovered.to_string()),
+        "logical alias must still resolve to the physical port"
+    );
+}

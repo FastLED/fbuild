@@ -284,7 +284,7 @@ pub async fn monitor(
                     request_id,
                     match fbuild_serial::port_holders::describe_port_holders(&port).await {
                         Some(holder) => format!(
-                            "open_port({}) exceeded {}s — {} (EBUSY contention, not a driver wedge)",
+                            "open_port({}) exceeded {}s — {} (timeout cause unknown)",
                             port, SERIAL_OPEN_PORT_TIMEOUT_SECS, holder
                         ),
                         None => format!(
