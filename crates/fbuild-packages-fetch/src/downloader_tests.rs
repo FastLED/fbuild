@@ -10,7 +10,7 @@ use tempfile::NamedTempFile;
 
 static NETWORK_TEST_LOCK: tokio::sync::Mutex<()> = tokio::sync::Mutex::const_new(());
 
-async fn network_test_guard() -> tokio::sync::MutexGuard<'static, ()> {
+pub(super) async fn network_test_guard() -> tokio::sync::MutexGuard<'static, ()> {
     NETWORK_TEST_LOCK.lock().await
 }
 
@@ -21,7 +21,7 @@ fn named_temp_file() -> NamedTempFile {
     .unwrap()
 }
 
-fn test_client() -> reqwest::Client {
+pub(super) fn test_client() -> reqwest::Client {
     fbuild_core::http::client_with_timeout(Duration::from_secs(300))
 }
 
@@ -63,7 +63,7 @@ fn test_verify_checksum_invalid() {
 /// connection. The caller pre-queues a Vec of responses, one per
 /// attempt; the server pops the next one as each connection
 /// comes in. Keeps the deps to tokio (already required).
-async fn run_flaky_server(
+pub(super) async fn run_flaky_server(
     responses: std::sync::Arc<std::sync::Mutex<Vec<&'static str>>>,
     request_count: std::sync::Arc<AtomicUsize>,
 ) -> u16 {
@@ -158,7 +158,7 @@ fn truncated_response() -> &'static str {
     "HTTP/1.1 200 OK\r\nContent-Length: 10\r\nConnection: close\r\n\r\nshort"
 }
 
-fn complete_response() -> &'static str {
+pub(super) fn complete_response() -> &'static str {
     "HTTP/1.1 200 OK\r\nContent-Length: 5\r\nConnection: close\r\n\r\nhello"
 }
 
@@ -654,7 +654,7 @@ async fn streaming_download_gives_up_when_the_server_ignores_range() {
     // One attempt makes progress (0 -> 10), then every later attempt
     // re-sends the same prefix, so the no-progress budget ends it.
     assert!(
-        request_count.load(Ordering::SeqCst) >= MAX_STALLED_ATTEMPTS as usize,
+        request_count.load(Ordering::SeqCst) >= FAST_RETRY_TIMING.max_attempts as usize,
         "should have spent the no-progress budget"
     );
 }
@@ -666,8 +666,10 @@ async fn streaming_download_gives_up_when_the_server_ignores_range() {
 /// comes from the OS reactor, so the clock could jump past a connection
 /// that was about to reach `accept()` — leaving `request_count` short of
 /// 5. Real durations remove the race entirely (FastLED/fbuild#1222).
-const FAST_RETRY_TIMING: RetryTiming = RetryTiming {
+pub(super) const FAST_RETRY_TIMING: RetryTiming = RetryTiming {
     chunk_read_timeout: Duration::from_millis(150),
+    max_attempts: 5,
+    max_wait: Duration::from_secs(1),
     backoffs: &[
         Duration::from_millis(10),
         Duration::from_millis(10),

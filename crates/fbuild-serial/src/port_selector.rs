@@ -82,6 +82,48 @@ pub fn resolve_port_arg(port: Option<String>) -> fbuild_core::Result<Option<Stri
     resolve_serial(serial, &ports).map(Some)
 }
 
+/// Whether `port` is a Unix device node (`/dev/...`) confirmed not to exist.
+///
+/// Uses [`Path::try_exists`], so an inaccessible parent or a symlink loop is
+/// *not* reported as a vanished device; that real error is left for the caller.
+///
+/// Such a node was assigned by enumeration order and has since disappeared or
+/// moved; opening it can only fail. Other names (`COM17`, pty paths that do
+/// exist) are not judged here.
+pub fn device_node_is_missing(port: &str) -> bool {
+    port.starts_with("/dev/") && matches!(std::path::Path::new(port).try_exists(), Ok(false))
+}
+
+/// The error for a requested node that no longer exists, in place of the
+/// tools' generic "port is busy or doesn't exist" (which reads as a wedged
+/// board when nothing is wedged): it names the missing node, lists the USB
+/// serial devices attached right now, and points at `ser=` selection
+/// (FastLED/fbuild#1428).
+pub fn missing_node_message(port: &str, ports: &[DetectedPort]) -> String {
+    let mut attached: Vec<String> = ports
+        .iter()
+        .filter(|p| p.health.is_present() != Some(false))
+        .map(|p| match &p.info.port_type {
+            serialport::SerialPortType::UsbPort(usb) => match &usb.serial_number {
+                Some(serial) => format!("{} (ser={serial})", p.info.port_name),
+                None => p.info.port_name.clone(),
+            },
+            _ => p.info.port_name.clone(),
+        })
+        .collect();
+    attached.sort();
+    let attached = if attached.is_empty() {
+        "none".to_string()
+    } else {
+        attached.join(", ")
+    };
+    format!(
+        "serial port {port} no longer exists; the device probably re-enumerated under \
+         another name (it is not necessarily wedged). Attached serial ports: {attached}. \
+         Select by USB serial with `-p ser=<serial>` to survive renumbering."
+    )
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -167,6 +209,31 @@ mod tests {
         let err = resolve_serial("NOPE", &ports).unwrap_err().to_string();
         assert!(err.contains("LIVE (COM3)"), "{err}");
         assert!(!err.contains("GHOST"), "phantom listed as attached: {err}");
+    }
+
+    #[test]
+    fn missing_node_message_names_the_node_and_the_serials_to_use_instead() {
+        let ports = [usb("/dev/ttyACM1", Some("8C:BF"), PortHealth::Unknown)];
+        let msg = missing_node_message("/dev/ttyACM2", &ports);
+        assert!(msg.contains("/dev/ttyACM2 no longer exists"), "{msg}");
+        assert!(msg.contains("/dev/ttyACM1 (ser=8C:BF)"), "{msg}");
+        assert!(msg.contains("-p ser="), "{msg}");
+        assert!(
+            !msg.contains("busy"),
+            "must not repeat the misleading wording: {msg}"
+        );
+        assert!(missing_node_message("/dev/ttyACM2", &[]).contains("none"));
+    }
+
+    #[test]
+    fn only_absent_dev_nodes_are_reported_missing() {
+        assert!(device_node_is_missing(
+            "/dev/ttyACM_definitely_not_here_1428"
+        ));
+        assert!(
+            !device_node_is_missing("COM17"),
+            "Windows names are not judged"
+        );
     }
 
     #[test]

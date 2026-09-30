@@ -30,6 +30,9 @@ const RETRY_BACKOFFS: &[Duration] = &[
 /// an install indefinitely.
 const MAX_RETRY_AFTER: Duration = Duration::from_secs(120);
 
+/// Default ceiling on a single scheduled wait (the longest schedule entry).
+const DEFAULT_MAX_WAIT: Duration = Duration::from_secs(60);
+
 /// Per-chunk deadline for streaming downloads. A stall fails the current
 /// attempt and is retried under the same budget as other transient failures.
 const CHUNK_READ_TIMEOUT: Duration = Duration::from_secs(60);
@@ -47,18 +50,63 @@ const CHUNK_READ_TIMEOUT: Duration = Duration::from_secs(60);
 struct RetryTiming {
     chunk_read_timeout: Duration,
     backoffs: &'static [Duration],
+    /// Attempts before giving up. When streaming this is the budget of
+    /// consecutive attempts that make *no progress*, not of attempts overall:
+    /// a 282 MB download over a link that dies near 90 MB needs several
+    /// attempts to finish, and an attempt that advances the part file resets
+    /// the count (FastLED/fbuild#1370).
+    max_attempts: u32,
+    /// Ceiling on any single scheduled wait.
+    max_wait: Duration,
 }
 
 impl RetryTiming {
     const PRODUCTION: Self = Self {
         chunk_read_timeout: CHUNK_READ_TIMEOUT,
         backoffs: RETRY_BACKOFFS,
+        max_attempts: MAX_ATTEMPTS,
+        max_wait: DEFAULT_MAX_WAIT,
     };
 
-    fn backoff(&self, attempt: u32) -> Duration {
-        debug_assert!((1..MAX_ATTEMPTS).contains(&attempt));
-        self.backoffs[(attempt - 1) as usize]
+    /// [`Self::PRODUCTION`] with the operator overrides applied:
+    /// `FBUILD_DOWNLOAD_MAX_ATTEMPTS` (1-20) and `FBUILD_DOWNLOAD_MAX_WAIT`
+    /// (seconds per wait). Unset or unparsable values keep the defaults.
+    fn from_env() -> Self {
+        Self::PRODUCTION.with_overrides(
+            std::env::var("FBUILD_DOWNLOAD_MAX_ATTEMPTS")
+                .ok()
+                .as_deref(),
+            std::env::var("FBUILD_DOWNLOAD_MAX_WAIT").ok().as_deref(),
+        )
     }
+
+    fn with_overrides(mut self, attempts: Option<&str>, max_wait: Option<&str>) -> Self {
+        if let Some(n) = attempts.and_then(|v| v.trim().parse::<u32>().ok()) {
+            self.max_attempts = n.clamp(1, 20);
+        }
+        if let Some(secs) = max_wait.and_then(|v| v.trim().parse::<u64>().ok()) {
+            self.max_wait = Duration::from_secs(secs);
+        }
+        self
+    }
+
+    /// Wait after failed `attempt` (1-based). Attempts past the end of the
+    /// schedule repeat its last entry; every wait respects `max_wait`.
+    fn backoff(&self, attempt: u32) -> Duration {
+        let idx = (attempt.saturating_sub(1) as usize).min(self.backoffs.len() - 1);
+        self.backoffs[idx].min(self.max_wait)
+    }
+}
+
+/// Equal jitter: a uniformly random delay in `[delay/2, delay]`, so clients
+/// that failed together do not all come back together.
+fn jittered(delay: Duration) -> Duration {
+    use std::hash::{BuildHasher, Hasher};
+    let unit = std::collections::hash_map::RandomState::new()
+        .build_hasher()
+        .finish() as f64
+        / u64::MAX as f64;
+    delay.mul_f64(0.5 + 0.5 * unit)
 }
 
 /// Classify a `reqwest::Error` as worth retrying — anything that
@@ -315,14 +363,14 @@ async fn wait_before_retry(
     // never wait less than the schedule nor more than the cap.
     let delay = match error.retry_after() {
         Some(asked) => timing.backoff(attempt).max(asked.min(MAX_RETRY_AFTER)),
-        None => timing.backoff(attempt),
+        None => jittered(timing.backoff(attempt)),
     };
     tracing::warn!(
         "download {}: {} on attempt {}/{}, retrying after {:?}",
         url,
         error,
         attempt,
-        MAX_ATTEMPTS,
+        timing.max_attempts,
         delay
     );
     tokio::time::sleep(delay).await;
@@ -397,7 +445,8 @@ pub async fn download_file(url: &str, dest_dir: &Path) -> Result<PathBuf> {
 /// attempts (a server's `Retry-After` may lengthen a wait). A non-2xx HTTP
 /// status is a hard failure unless it is 5xx, 429 or 408.
 async fn get_with_retry(url: &str) -> Result<Vec<u8>> {
-    get_with_retry_timed(http::client(), url, RetryTiming::PRODUCTION).await
+    let urls = candidate_urls(url, &configured_mirrors());
+    get_from_candidates(http::client(), &urls, RetryTiming::from_env()).await
 }
 
 async fn get_with_retry_timed(
@@ -419,7 +468,7 @@ async fn get_with_retry_timed(
         };
         match result {
             Ok(bytes) => return Ok(bytes),
-            Err(error) if error.is_retryable() && attempt < MAX_ATTEMPTS => {
+            Err(error) if error.is_retryable() && attempt < timing.max_attempts => {
                 wait_before_retry(url, attempt, &error, timing).await;
             }
             Err(error) => {
@@ -457,21 +506,16 @@ async fn download_file_with_progress_using(
     dest_dir: &Path,
     on_progress: &mut (dyn FnMut(&DownloadProgress) + Send),
 ) -> Result<()> {
-    download_file_with_progress_timed(client, url, dest_dir, on_progress, RetryTiming::PRODUCTION)
-        .await
+    let urls = candidate_urls(url, &configured_mirrors());
+    download_from_candidates(
+        client,
+        &urls,
+        dest_dir,
+        on_progress,
+        RetryTiming::from_env(),
+    )
+    .await
 }
-
-/// How many attempts in a row may make zero progress before giving up.
-///
-/// The retry budget is spent on *stalls*, not on attempts. A 282 MB download
-/// on a connection that dies around 90 MB needs four attempts to finish, and
-/// counting those against a fixed total would fail a download that was
-/// converging fine — which is exactly the shape of FastLED/fbuild#1370, where
-/// five restarts moved ~450 MB for zero net progress and could never
-/// terminate. An attempt that advances the file resets this counter, so a
-/// download that keeps making headway keeps going, and one that is genuinely
-/// stuck still stops promptly.
-const MAX_STALLED_ATTEMPTS: u32 = 5;
 
 /// Absolute ceiling on attempts, whatever progress is being made.
 ///
@@ -487,6 +531,7 @@ const MAX_STALLED_ATTEMPTS: u32 = 5;
 /// leaves an order of magnitude of headroom.
 const MAX_TOTAL_ATTEMPTS: u32 = 40;
 
+#[cfg(test)]
 /// [`download_file_with_progress_using`] with the retry durations injected.
 /// See [`RetryTiming`] for why tests need this instead of paused Tokio time.
 ///
@@ -503,6 +548,21 @@ async fn download_file_with_progress_timed(
     timing: RetryTiming,
 ) -> Result<()> {
     let filename = url.rsplit('/').next().unwrap_or("download").to_string();
+    download_file_with_progress_named(client, url, &filename, dest_dir, on_progress, timing).await
+}
+
+/// [`download_file_with_progress_timed`] writing to `dest_dir/<filename>`
+/// instead of a name taken from `url`. A mirror URL may carry a query string
+/// (`…/pkg.bin?raw=1`); the file must still land under the primary's name.
+async fn download_file_with_progress_named(
+    client: &reqwest::Client,
+    url: &str,
+    filename: &str,
+    dest_dir: &Path,
+    on_progress: &mut (dyn FnMut(&DownloadProgress) + Send),
+    timing: RetryTiming,
+) -> Result<()> {
+    let filename = filename.to_string();
     let dest_path = dest_dir.join(&filename);
     let part_path = dest_dir.join(format!("{filename}.part"));
 
@@ -556,7 +616,7 @@ async fn download_file_with_progress_timed(
                     stalled += 1;
                 }
 
-                let exhausted = if stalled >= MAX_STALLED_ATTEMPTS {
+                let exhausted = if stalled >= timing.max_attempts {
                     Some(format!("{stalled} consecutive attempts made no progress"))
                 } else if attempt >= MAX_TOTAL_ATTEMPTS {
                     Some(format!(
@@ -829,6 +889,13 @@ pub async fn verify_checksum_async(path: &Path, expected: &str) -> Result<()> {
 
     Ok(())
 }
+
+#[cfg(test)]
+#[path = "downloader_mirror_tests.rs"]
+mod mirror_tests;
+#[path = "downloader_mirrors.rs"]
+mod mirrors;
+use mirrors::{candidate_urls, configured_mirrors, download_from_candidates, get_from_candidates};
 
 #[cfg(test)]
 #[path = "downloader_tests.rs"]
