@@ -1087,6 +1087,7 @@ dependencies = [
  "flate2",
  "object 0.36.7",
  "owo-colors",
+ "reflink-copy",
  "regex",
  "reqwest",
  "serde",

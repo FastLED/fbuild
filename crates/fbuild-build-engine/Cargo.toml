@@ -10,6 +10,7 @@ license.workspace = true
 publish = false
 
 [dependencies]
+reflink-copy = "0.1"
 fbuild-core = { path = "../fbuild-core" }
 fbuild-config = { path = "../fbuild-config" }
 fbuild-paths = { path = "../fbuild-paths" }
