@@ -80,6 +80,8 @@ jobs:
     # tests need libpython at link and run time, so they're `#[ignore]`d
     # out of the default `soldr cargo test --workspace` sweep above and run
     # here instead, under a pinned interpreter, with `--ignored`.
+    # No LD_LIBRARY_PATH export: crates/fbuild-python/build.rs bakes the
+    # PYO3_PYTHON libdir into the test binaries' RUNPATH (#1487).
     name: Python facade tests (ubuntu-latest)
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -113,7 +115,5 @@ jobs:
           echo "PYO3_PYTHON=$PYO3_PYTHON" >> "$GITHUB_ENV"
           PYTHONHOME="$("$PYO3_PYTHON" -c 'import sys; print(sys.prefix)')"
           echo "PYTHONHOME=$PYTHONHOME" >> "$GITHUB_ENV"
-          LIBDIR="$("$PYO3_PYTHON" -c 'import sysconfig; print(sysconfig.get_config_var("LIBDIR"))')"
-          echo "LD_LIBRARY_PATH=$LIBDIR:$LD_LIBRARY_PATH" >> "$GITHUB_ENV"
       - name: Test (python facades, --ignored)
         run: soldr cargo test -p fbuild-python --test python_facades -- --ignored
