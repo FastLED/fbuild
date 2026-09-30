@@ -55,16 +55,15 @@ fn choose_deploy_port_with_profile_lookup(
     if platform == Platform::RaspberryPi {
         let expected_generation = rp_generation_for(board);
         let board_profile = rp_board_profile_id(board_id, board).and_then(profile_lookup);
-        let mismatched = board_profile
-            .is_some()
-            .then(|| {
-                rp_generation_mates(
-                    &devices,
-                    expected_generation,
-                    fbuild_core::usb::profiles::profiles_for,
-                )
-            })
-            .unwrap_or_default();
+        let mismatched = if board_profile.is_some() {
+            rp_generation_mates(
+                &devices,
+                expected_generation,
+                fbuild_core::usb::profiles::profiles_for,
+            )
+        } else {
+            Vec::new()
+        };
         let (matches, unhealthy) =
             partition_rp_candidates_for_board(devices, board_profile.as_ref(), expected_generation);
         let no_exact_match = matches.is_empty();
