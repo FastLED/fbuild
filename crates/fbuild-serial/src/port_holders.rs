@@ -16,38 +16,51 @@ pub struct PortHolder {
     pub name: String,
 }
 
-/// Scan a `/proc`-shaped tree rooted at `proc_root` for processes holding
-/// `port` open. Split out so tests can use a synthetic tree.
-pub fn find_port_holders_in(proc_root: &Path, port: &str) -> Vec<PortHolder> {
+/// Pure matcher: `procs` yields `(pid, name, fd link targets)`; returns the
+/// processes with an fd pointing at `port` (or its canonical path).
+pub fn match_port_holders(
+    procs: impl IntoIterator<Item = (u32, String, Vec<PathBuf>)>,
+    port: &str,
+) -> Vec<PortHolder> {
     let target = std::fs::canonicalize(port).unwrap_or_else(|_| PathBuf::from(port));
-    let mut holders = Vec::new();
+    let mut holders: Vec<PortHolder> = procs
+        .into_iter()
+        .filter(|(_, _, links)| {
+            links
+                .iter()
+                .any(|link| *link == target || link == Path::new(port))
+        })
+        .map(|(pid, name, _)| PortHolder { pid, name })
+        .collect();
+    holders.sort_by_key(|h| h.pid);
+    holders
+}
+
+/// Read a `/proc`-shaped tree rooted at `proc_root` into `(pid, comm, fds)`.
+fn read_proc_tree(proc_root: &Path) -> Vec<(u32, String, Vec<PathBuf>)> {
     let Ok(entries) = std::fs::read_dir(proc_root) else {
-        return holders;
+        return Vec::new();
     };
-    for entry in entries.flatten() {
-        let Some(pid) = entry
-            .file_name()
-            .to_str()
-            .and_then(|s| s.parse::<u32>().ok())
-        else {
-            continue;
-        };
-        let Ok(fds) = std::fs::read_dir(entry.path().join("fd")) else {
-            continue;
-        };
-        let holds = fds
-            .flatten()
-            .filter_map(|fd| std::fs::read_link(fd.path()).ok())
-            .any(|link| link == target || link == Path::new(port));
-        if holds {
+    entries
+        .flatten()
+        .filter_map(|entry| {
+            let pid = entry.file_name().to_str()?.parse::<u32>().ok()?;
+            let fds = std::fs::read_dir(entry.path().join("fd")).ok()?;
+            let links = fds
+                .flatten()
+                .filter_map(|fd| std::fs::read_link(fd.path()).ok())
+                .collect();
             let name = std::fs::read_to_string(entry.path().join("comm"))
                 .map(|s| s.trim().to_string())
                 .unwrap_or_else(|_| "unknown".to_string());
-            holders.push(PortHolder { pid, name });
-        }
-    }
-    holders.sort_by_key(|h| h.pid);
-    holders
+            Some((pid, name, links))
+        })
+        .collect()
+}
+
+/// Scan a `/proc`-shaped tree for processes holding `port` open.
+pub fn find_port_holders_in(proc_root: &Path, port: &str) -> Vec<PortHolder> {
+    match_port_holders(read_proc_tree(proc_root), port)
 }
 
 /// Processes currently holding `port` open (Linux `/proc`; empty elsewhere).
@@ -74,31 +87,18 @@ pub fn describe_port_holders(port: &str) -> Option<String> {
 mod tests {
     use super::*;
 
-    #[cfg(unix)]
     #[test]
-    fn finds_holder_in_synthetic_proc_tree() {
-        let dir = tempfile::TempDir::new().unwrap();
-        let node = dir.path().join("ttyFAKE");
-        std::fs::write(&node, b"").unwrap();
-        let node = std::fs::canonicalize(&node).unwrap();
-
-        let proc_root = dir.path().join("proc");
-        for (pid, comm, holds) in [(10, "other", false), (42, "fbuild-daemon", true)] {
-            let fd_dir = proc_root.join(pid.to_string()).join("fd");
-            std::fs::create_dir_all(&fd_dir).unwrap();
-            std::fs::write(
-                proc_root.join(pid.to_string()).join("comm"),
-                format!("{comm}\n"),
-            )
-            .unwrap();
-            if holds {
-                std::os::unix::fs::symlink(&node, fd_dir.join("3")).unwrap();
-            }
-        }
-
-        let holders = find_port_holders_in(&proc_root, node.to_str().unwrap());
+    fn matches_only_processes_with_an_fd_on_the_port() {
+        let procs = vec![
+            (10, "other".to_string(), vec![PathBuf::from("/dev/null")]),
+            (
+                42,
+                "fbuild-daemon".to_string(),
+                vec![PathBuf::from("/dev/ttyFAKE")],
+            ),
+        ];
         assert_eq!(
-            holders,
+            match_port_holders(procs, "/dev/ttyFAKE"),
             vec![PortHolder {
                 pid: 42,
                 name: "fbuild-daemon".to_string()
