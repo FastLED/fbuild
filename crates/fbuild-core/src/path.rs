@@ -879,7 +879,7 @@ mod tests {
         let tmp = tempfile::TempDir::new().unwrap();
         let dir = tmp.path().join("include");
         std::fs::create_dir_all(&dir).unwrap();
-        let resolved = dir.canonicalize().unwrap();
+        let resolved = strip_unc_prefix(&dir.canonicalize().unwrap());
         assert_eq!(canonicalize_lexical(&dir), Some(resolved.clone()));
         // A second call is served from the memo rather than a fresh realpath.
         assert_eq!(canonicalize_lexical(&dir), Some(resolved));
@@ -897,7 +897,7 @@ mod tests {
         // result cannot have been memoized.
         assert_eq!(
             canonicalize_lexical(&missing),
-            Some(missing.canonicalize().unwrap())
+            Some(strip_unc_prefix(&missing.canonicalize().unwrap()))
         );
     }
 
