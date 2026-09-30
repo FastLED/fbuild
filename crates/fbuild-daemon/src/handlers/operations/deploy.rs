@@ -439,6 +439,27 @@ pub async fn deploy(
         }
     };
 
+    // A node path that has vanished (the device re-enumerated) can only fail
+    // to open; say so instead of letting the flasher report "busy or doesn't
+    // exist", which reads as a wedged board (FastLED/fbuild#1428).
+    if let Some(port) = requested_port
+        .as_deref()
+        .filter(|p| fbuild_serial::port_selector::device_node_is_missing(p))
+    {
+        let ports = tokio::task::spawn_blocking(fbuild_serial::ports::available_ports)
+            .await
+            .ok()
+            .and_then(|r| r.ok())
+            .unwrap_or_default();
+        return (
+            StatusCode::BAD_REQUEST,
+            Json(OperationResponse::fail(
+                request_id,
+                fbuild_serial::port_selector::missing_node_message(port, &ports),
+            )),
+        );
+    }
+
     let deploy_port_choice = if requested_port.is_none() {
         ctx.refresh_devices_and_broadcast_serial_moves().await;
         choose_deploy_port(
