@@ -116,6 +116,17 @@ impl SharedSerialManager {
         client_metadata: Option<SerialClientMetadata>,
     ) -> fbuild_core::Result<()> {
         let session_key = self.resolve_port_key(port);
+        // A reader that hit a read error (native-USB chips re-enumerate on
+        // DTR/RTS resets) exits but leaves the session "open" with the OS fd
+        // still held, so later opens reuse a dead session and other openers
+        // get EBUSY (FastLED/fbuild#1429). Tear it down and reopen.
+        if self.session_reader_exited(&session_key) {
+            tracing::warn!(
+                port,
+                "serial reader exited but session still open; closing stale session before reopening"
+            );
+            self.close_port(port, client_id).await?;
+        }
         // Existing-session reuse is serialized with deploy/reset acquisition
         // for the same reason as new-session publication below: an attach
         // must not become visible after a preemption event was emitted.
@@ -1299,6 +1310,18 @@ impl SharedSerialManager {
                 }
             }
             tracing::info!(port = event_port, "background reader stopped");
+        })
+    }
+
+    /// True when `session_key` has an open session whose background reader
+    /// has already finished.
+    fn session_reader_exited(&self, session_key: &str) -> bool {
+        self.sessions.get(session_key).is_some_and(|session| {
+            session.is_open
+                && session
+                    .reader_handle
+                    .as_ref()
+                    .is_some_and(|reader| reader.is_finished())
         })
     }
 
