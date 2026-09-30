@@ -163,17 +163,131 @@ fn complete_response() -> &'static str {
 }
 
 #[test]
-fn retry_policy_is_five_attempts_with_exponential_backoff() {
+fn retry_policy_is_five_attempts_with_a_two_minute_budget() {
     assert_eq!(MAX_ATTEMPTS, 5);
     assert_eq!(
         RETRY_BACKOFFS,
         &[
-            Duration::from_secs(1),
-            Duration::from_secs(2),
-            Duration::from_secs(4),
-            Duration::from_secs(8),
+            Duration::from_secs(5),
+            Duration::from_secs(15),
+            Duration::from_secs(30),
+            Duration::from_secs(60),
         ]
     );
+    // FastLED/fbuild#1463: ~15 s lost a fetch to a vendor host that was down
+    // for a minute. The schedule must outlast that, but stay bounded.
+    let total: Duration = RETRY_BACKOFFS.iter().sum();
+    assert!(
+        total >= Duration::from_secs(90),
+        "budget too short: {total:?}"
+    );
+    assert!(
+        total <= Duration::from_secs(300),
+        "budget unbounded: {total:?}"
+    );
+    assert_eq!(RETRY_BACKOFFS.len() as u32, MAX_ATTEMPTS - 1);
+}
+
+#[test]
+fn retry_after_understands_delta_seconds_only() {
+    let mut headers = reqwest::header::HeaderMap::new();
+    assert_eq!(retry_after(&headers), None);
+    headers.insert(reqwest::header::RETRY_AFTER, "7".parse().unwrap());
+    assert_eq!(retry_after(&headers), Some(Duration::from_secs(7)));
+    headers.insert(
+        reqwest::header::RETRY_AFTER,
+        "Wed, 21 Oct 2026 07:28:00 GMT".parse().unwrap(),
+    );
+    assert_eq!(retry_after(&headers), None);
+}
+
+#[test]
+fn only_transient_statuses_are_retryable() {
+    use reqwest::StatusCode as S;
+    for retry in [
+        S::INTERNAL_SERVER_ERROR,
+        S::SERVICE_UNAVAILABLE,
+        S::TOO_MANY_REQUESTS,
+        S::REQUEST_TIMEOUT,
+    ] {
+        assert!(is_retryable_status(retry), "{retry}");
+    }
+    for fail_fast in [S::BAD_REQUEST, S::FORBIDDEN, S::NOT_FOUND, S::GONE] {
+        assert!(!is_retryable_status(fail_fast), "{fail_fast}");
+    }
+}
+
+/// 429 and 408 ask the client to come back; they are retried like a 5xx.
+#[tokio::test]
+async fn get_with_retry_retries_429_and_408() {
+    let _guard = network_test_guard().await;
+    let responses = std::sync::Arc::new(std::sync::Mutex::new(vec![
+        "HTTP/1.1 429 Too Many Requests\r\nRetry-After: 0\r\nContent-Length: 0\r\nConnection: close\r\n\r\n",
+        "HTTP/1.1 408 Request Timeout\r\nContent-Length: 0\r\nConnection: close\r\n\r\n",
+        complete_response(),
+    ]));
+    let request_count = std::sync::Arc::new(AtomicUsize::new(0));
+    let port = run_flaky_server(responses, request_count.clone()).await;
+    let url = format!("http://127.0.0.1:{port}/file");
+    let bytes = get_with_retry_timed(&test_client(), &url, FAST_RETRY_TIMING)
+        .await
+        .expect("429 then 408 then 200 should succeed");
+    assert_eq!(bytes, b"hello");
+    assert_eq!(request_count.load(Ordering::SeqCst), 3);
+}
+
+/// A server-supplied `Retry-After` lengthens the wait beyond our (here 10 ms)
+/// schedule.
+#[tokio::test]
+async fn get_with_retry_honours_retry_after() {
+    let _guard = network_test_guard().await;
+    let responses = std::sync::Arc::new(std::sync::Mutex::new(vec![
+        "HTTP/1.1 503 Service Unavailable\r\nRetry-After: 1\r\nContent-Length: 0\r\nConnection: close\r\n\r\n",
+        complete_response(),
+    ]));
+    let request_count = std::sync::Arc::new(AtomicUsize::new(0));
+    let port = run_flaky_server(responses, request_count.clone()).await;
+    let url = format!("http://127.0.0.1:{port}/file");
+    let started = Instant::now();
+    let bytes = get_with_retry_timed(&test_client(), &url, FAST_RETRY_TIMING)
+        .await
+        .expect("should succeed after the Retry-After wait");
+    assert_eq!(bytes, b"hello");
+    assert!(
+        started.elapsed() >= Duration::from_secs(1),
+        "retried after {:?}, before the server's Retry-After",
+        started.elapsed()
+    );
+}
+
+/// The caller must be able to tell "retried N times" from "never retried".
+#[tokio::test]
+async fn get_with_retry_error_reports_attempts_and_elapsed_time() {
+    let _guard = network_test_guard().await;
+    let gone = "HTTP/1.1 503 Service Unavailable\r\nContent-Length: 0\r\nConnection: close\r\n\r\n";
+    let responses = std::sync::Arc::new(std::sync::Mutex::new(vec![gone; 5]));
+    let request_count = std::sync::Arc::new(AtomicUsize::new(0));
+    let port = run_flaky_server(responses, request_count.clone()).await;
+    let url = format!("http://127.0.0.1:{port}/file");
+    let err = get_with_retry_timed(&test_client(), &url, FAST_RETRY_TIMING)
+        .await
+        .expect_err("should give up")
+        .to_string();
+    assert!(err.contains("after 5 attempts over"), "{err}");
+
+    let responses = std::sync::Arc::new(std::sync::Mutex::new(vec![
+        "HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\nConnection: close\r\n\r\n",
+    ]));
+    let port = run_flaky_server(responses, std::sync::Arc::new(AtomicUsize::new(0))).await;
+    let err = get_with_retry_timed(
+        &test_client(),
+        &format!("http://127.0.0.1:{port}/x"),
+        FAST_RETRY_TIMING,
+    )
+    .await
+    .expect_err("404 fails fast")
+    .to_string();
+    assert!(err.contains("after 1 attempt over"), "{err}");
 }
 
 /// #205 nightly STM32 acceptance gate started flaking on

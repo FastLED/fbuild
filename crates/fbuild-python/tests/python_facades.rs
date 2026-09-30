@@ -391,3 +391,43 @@ fn run_snippet(py: pyo3::Python<'_>, code: &str) {
 mod cases;
 #[path = "python_facades/extended.rs"]
 mod extended;
+
+/// FastLED/fbuild#1487: the test binary must load the `libpython` belonging to
+/// the interpreter it embeds, found through its own RUNPATH rather than a
+/// user-exported `LD_LIBRARY_PATH`. A build against one Python and a loader
+/// path for another would otherwise go unnoticed until the wrong library won.
+#[test]
+#[ignore = "embedded CPython; run with --ignored (FastLED/fbuild#1487)"]
+fn loaded_libpython_comes_from_the_embedded_interpreters_libdir() {
+    use pyo3::types::PyAnyMethods;
+    // Only Linux exposes the loaded-library list this way; elsewhere there is
+    // nothing to check. (Runtime guard, not `cfg`: platform-boundary policy.)
+    if !std::path::Path::new("/proc/self/maps").exists() {
+        return;
+    }
+    init_python();
+    let libdir = pyo3::Python::attach(|py| {
+        py.import("sysconfig")
+            .unwrap()
+            .call_method1("get_config_var", ("LIBDIR",))
+            .unwrap()
+            .extract::<String>()
+            .unwrap()
+    });
+    let libdir = std::fs::canonicalize(&libdir).unwrap();
+    let maps = std::fs::read_to_string("/proc/self/maps").unwrap();
+    let loaded: Vec<_> = maps
+        .lines()
+        .filter_map(|l| l.split_whitespace().nth(5))
+        .filter(|p| p.contains("libpython"))
+        .filter_map(|p| std::fs::canonicalize(p).ok())
+        .collect();
+    assert!(
+        !loaded.is_empty(),
+        "no libpython mapped into the test process"
+    );
+    assert!(
+        loaded.iter().all(|p| p.starts_with(&libdir)),
+        "libpython loaded from {loaded:?}, expected under the embedded interpreter's LIBDIR {libdir:?}"
+    );
+}
