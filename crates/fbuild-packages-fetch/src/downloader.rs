@@ -531,6 +531,7 @@ async fn download_file_with_progress_using(
 /// leaves an order of magnitude of headroom.
 const MAX_TOTAL_ATTEMPTS: u32 = 40;
 
+#[cfg(test)]
 /// [`download_file_with_progress_using`] with the retry durations injected.
 /// See [`RetryTiming`] for why tests need this instead of paused Tokio time.
 ///
