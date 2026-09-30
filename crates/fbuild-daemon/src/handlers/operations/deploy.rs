@@ -1107,6 +1107,8 @@ pub async fn deploy(
             r.message,
         ),
         Ok(r) => {
+            let mut failure_stderr = Some(r.stderr);
+            append_warning_to_stderr(&mut failure_stderr, deploy_port_warning);
             return (
                 StatusCode::INTERNAL_SERVER_ERROR,
                 Json(OperationResponse {
@@ -1119,13 +1121,14 @@ pub async fn deploy(
                     output_dir: reported_output_dir.clone(),
                     launch_url: None,
                     stdout: Some(r.stdout),
-                    stderr: Some(r.stderr),
+                    stderr: failure_stderr,
                 }),
             );
         }
         Err(e) => {
             let mut response = deploy_error_response(request_id, &e);
             response.usb_recovery = usb_recovery_request;
+            append_warning_to_stderr(&mut response.stderr, deploy_port_warning);
             return (StatusCode::INTERNAL_SERVER_ERROR, Json(response));
         }
     };
