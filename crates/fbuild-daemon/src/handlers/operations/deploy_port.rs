@@ -55,9 +55,28 @@ fn choose_deploy_port_with_profile_lookup(
     if platform == Platform::RaspberryPi {
         let expected_generation = rp_generation_for(board);
         let board_profile = rp_board_profile_id(board_id, board).and_then(profile_lookup);
+        let mismatched = board_profile
+            .is_some()
+            .then(|| {
+                rp_generation_mates(
+                    &devices,
+                    expected_generation,
+                    fbuild_core::usb::profiles::profiles_for,
+                )
+            })
+            .unwrap_or_default();
         let (matches, unhealthy) =
             partition_rp_candidates_for_board(devices, board_profile.as_ref(), expected_generation);
-        return rp_deploy_choice(matches, unhealthy);
+        let no_exact_match = matches.is_empty();
+        let mut choice = rp_deploy_choice(matches, unhealthy);
+        if no_exact_match && !mismatched.is_empty() {
+            let note = identity_mismatch_note(board_id, &mismatched);
+            choice.warning = Some(match choice.warning.take() {
+                Some(existing) => format!("{existing}; {note}"),
+                None => note,
+            });
+        }
+        return choice;
     }
 
     let mut candidates: Vec<_> = devices
@@ -113,6 +132,34 @@ fn choose_deploy_port_with_profile_lookup(
             warning: Some(format!("no serial ports found for {platform:?}")),
         }
     }
+}
+
+/// Healthy connected RP-generation CDC ports whose observed identity is not
+/// the requested board's. They are never auto-selected (W and non-W stay
+/// distinct), but naming them turns a bare "no port" into an actionable
+/// diagnosis (FastLED/fbuild#1430).
+fn rp_generation_mates(
+    devices: &[DeviceState],
+    expected: RpGeneration,
+    profiles_of: impl Fn(u16, u16) -> Vec<fbuild_core::usb::profiles::UsbTransportProfile>,
+) -> Vec<String> {
+    devices
+        .iter()
+        .filter(|device| device.is_connected && !device.port_health.is_known_unhealthy())
+        .filter_map(|device| {
+            let (vid, pid) = device.vid.zip(device.pid)?;
+            rp_profiles_match_generation(&profiles_of(vid, pid), expected)
+                .then(|| format!("{} ({vid:04x}:{pid:04x})", device.port))
+        })
+        .collect()
+}
+
+fn identity_mismatch_note(board_id: Option<&str>, mates: &[String]) -> String {
+    format!(
+        "connected RP-series CDC port(s) {} are running firmware whose USB identity does not match {}'s runtime identity; a running image's identity reflects the last firmware flashed, not the board, so fbuild will not auto-select it — pass -p/--port <port> to deploy anyway",
+        mates.join(", "),
+        board_id.unwrap_or("the target environment"),
+    )
 }
 
 fn rp_board_profile_id<'a>(
@@ -561,6 +608,30 @@ mod tests {
             );
             assert!(wrong_variant.is_empty(), "{board_id}");
         }
+    }
+
+    #[test]
+    fn identity_mismatch_names_the_attached_port_and_the_remedy() {
+        let pico = runtime_profile(Some("raspberrypi"), Some("rp2350"), false);
+        let mates = rp_generation_mates(
+            &[
+                device("/dev/ttyACM0", Some(0x2E8A), Some(0x000F)),
+                device("/dev/ttyACM2", Some(0x303A), Some(0x1001)),
+            ],
+            RpGeneration::Rp2350,
+            |vid, _| {
+                if vid == 0x2E8A {
+                    vec![pico.clone()]
+                } else {
+                    Vec::new()
+                }
+            },
+        );
+        assert_eq!(mates, vec!["/dev/ttyACM0 (2e8a:000f)".to_string()]);
+        let note = identity_mismatch_note(Some("rpipico2w"), &mates);
+        assert!(note.contains("/dev/ttyACM0"), "{note}");
+        assert!(note.contains("rpipico2w"), "{note}");
+        assert!(note.contains("-p/--port"), "{note}");
     }
 
     #[test]
