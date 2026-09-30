@@ -38,6 +38,7 @@ pub mod esp_reset;
 pub mod manager;
 pub mod messages;
 pub mod port_class;
+pub mod port_holders;
 pub mod port_selector;
 pub mod ports;
 pub mod preemption;

@@ -282,10 +282,16 @@ pub async fn monitor(
                 StatusCode::GATEWAY_TIMEOUT,
                 Json(OperationResponse::fail(
                     request_id,
-                    format!(
-                        "open_port({}) exceeded {}s — serial driver may be wedged",
-                        port, SERIAL_OPEN_PORT_TIMEOUT_SECS
-                    ),
+                    match fbuild_serial::port_holders::describe_port_holders(&port) {
+                        Some(holder) => format!(
+                            "open_port({}) exceeded {}s — {} (EBUSY contention, not a driver wedge)",
+                            port, SERIAL_OPEN_PORT_TIMEOUT_SECS, holder
+                        ),
+                        None => format!(
+                            "open_port({}) exceeded {}s — serial driver may be wedged",
+                            port, SERIAL_OPEN_PORT_TIMEOUT_SECS
+                        ),
+                    },
                 )),
             );
         }
