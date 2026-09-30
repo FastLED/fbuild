@@ -97,6 +97,7 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    continue-on-error: true
     permissions:
       contents: read
       actions: read
@@ -104,6 +105,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         continue-on-error: true
+        timeout-minutes: 1
         with:
           repository: zackees/ci.yml
           ref: b93b8c4a20ce3cd476c75a278ad01a31bde2438b
@@ -111,8 +113,10 @@ jobs:
           persist-credentials: false
       - uses: astral-sh/setup-uv@v3
         continue-on-error: true
+        timeout-minutes: 1
       - name: Reuse decision (GEN-021, shadow)
         continue-on-error: true
+        timeout-minutes: 2
         working-directory: .ci-lint
         env:
           GITHUB_TOKEN: ${{ github.token }}
