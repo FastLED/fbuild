@@ -68,8 +68,12 @@ class FractionalWorkflowTests(unittest.TestCase):
         ):
             self.assertIn(triple, lint_run)
         self.assertIn("inputs.ref != ''", next(step for step in lint_job["steps"] if step.get("name") == "Run dylint over workspace")["env"]["FULL_TARGETS"])
-        target_install = next(step for step in lint_job["steps"] if step.get("name") == "Install cross-target nightly standard libraries")
-        self.assertIn("inputs.ref != ''", target_install["if"])
+        # Soldr provisions the cross-target rust-std itself (zackees/soldr#3426);
+        # the temporary explicit `rustup target add` bridge must stay gone (#1527).
+        self.assertNotIn(
+            "rustup target add",
+            "\n".join(step.get("run", "") for step in lint_job["steps"]),
+        )
         setup = next(step for step in lint_job["steps"] if step.get("uses", "").startswith("zackees/setup-soldr@"))
         self.assertIs(setup["with"]["dylint-output-cache"], False)
         restore = next(step for step in lint_job["steps"] if step.get("name") == "Restore compiled Dylint libraries")
