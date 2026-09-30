@@ -23,6 +23,8 @@ mod tests_outcome;
 #[cfg(test)]
 mod tests_process;
 #[cfg(test)]
+mod tests_project_dir;
+#[cfg(test)]
 mod tests_select_runner;
 
 // --- Public API re-exports (preserve `handlers::emulator::*` paths) ---
