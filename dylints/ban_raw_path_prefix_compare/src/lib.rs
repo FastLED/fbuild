@@ -222,7 +222,7 @@ mod tests {
     #[test]
     fn in_production_scope_rejects_non_src() {
         assert!(!in_production_scope(
-            "crates/fbuild-cli/tests/lib_select.rs"
+            "crates/fbuild-cli/tests/it/lib_select.rs"
         ));
         assert!(!in_production_scope(
             "dylints/ban_raw_path_prefix_compare/src/lib.rs"

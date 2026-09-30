@@ -8,7 +8,7 @@
 //! header files.
 //!
 //! Run one variant with:
-//! `soldr cargo test -p fbuild-build --test it -- --ignored --exact
+//! `soldr cargo test -p fbuild-build --test env_isolated -- --ignored --exact
 //!  esp32_include_farm_parity::farm_parity_esp32dev --nocapture --test-threads=1`
 
 use std::collections::{BTreeMap, BTreeSet};
@@ -20,9 +20,6 @@ use fbuild_core::BuildProfile;
 use fbuild_core::path::NormalizedPath;
 
 const REAL_BUILD_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(900);
-
-/// `FBUILD_INCLUDE_FARM` is process-wide; serialize the builds that flip it.
-static FARM_ENV: tokio::sync::Mutex<()> = tokio::sync::Mutex::const_new(());
 
 async fn install_test_compile_backend() {
     static INSTALL: tokio::sync::OnceCell<()> = tokio::sync::OnceCell::const_new();
@@ -83,7 +80,7 @@ async fn build(project_dir: &Path, env_name: &str, farm: bool) -> NormalizedPath
         bloat_analysis: false,
         caller_path: None,
     };
-    // Process-wide; FARM_ENV keeps the other parity tests out meanwhile.
+    // Process-wide; the caller holds crate::ENV_LOCK.
     std::env::set_var("FBUILD_INCLUDE_FARM", if farm { "1" } else { "0" });
     let result = tokio::time::timeout(
         REAL_BUILD_TIMEOUT,
@@ -192,7 +189,7 @@ fn mentions_farm(build_dir: &Path) -> bool {
 
 async fn assert_farm_parity(fixture: &str, env_name: &str) {
     install_test_compile_backend().await;
-    let _guard = FARM_ENV.lock().await;
+    let _env = crate::ENV_LOCK.lock().await;
     let fixtures = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../tests/platform");
     let tmp = tempfile::TempDir::new().unwrap();
     let project_dir = tmp.path().join(fixture);

@@ -62,6 +62,25 @@ class SelectTests(unittest.TestCase):
     def test_own_workflow_file_selects_board(self):
         self.assertEqual(["build-esp32c3.yml"], select([".github/workflows/build-esp32c3.yml"]))
 
+    def test_test_only_changes_select_nothing(self):
+        # FastLED/fbuild#1577: moving or editing tests must not fan out to
+        # platform builds; the Linux test job already runs them.
+        self.assertEqual(
+            [],
+            select([
+                "crates/fbuild-core/tests/it/main.rs",
+                "crates/fbuild-build/tests/env_isolated/avr_build.rs",
+                "crates/fbuild-build-mcu/src/avr/orchestrator_tests.rs",
+                "ci/test_select_boards.py",
+            ]),
+        )
+
+    def test_test_change_alongside_source_still_selects(self):
+        self.assertEqual(
+            ["build-attiny85.yml", "build-uno.yml"],
+            select(["crates/fbuild-core/tests/it/main.rs", "crates/fbuild-build-mcu/src/avr/mod.rs"]),
+        )
+
     def test_unknown_diff_selects_everything(self):
         self.assertEqual(sorted(b["workflow"] for b in BOARDS), select(None))
 

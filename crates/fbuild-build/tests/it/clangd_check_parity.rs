@@ -36,7 +36,7 @@ use fbuild_core::BuildProfile;
 /// indexing). Generous — cold AVR toolchain/core downloads can take a few
 /// minutes; a warm cache (the common case once #1194-era CI has run once)
 /// finishes in seconds. Mirrors the pattern in
-/// `crates/fbuild-build/tests/avr_build.rs` (FastLED/fbuild#806).
+/// `crates/fbuild-build/tests/env_isolated/avr_build.rs` (FastLED/fbuild#806).
 const HARNESS_TIMEOUT: Duration = Duration::from_secs(600);
 
 /// Diagnostic substrings that are known-benign and must never fail the
@@ -126,7 +126,7 @@ fn unexpected_error_diagnostics(output: &str) -> Vec<&str> {
 }
 
 /// Generate the IDE-flavored `compile_commands.json` for `tests/platform/uno`
-/// via the same in-process orchestrator path `avr_build.rs` uses (no daemon,
+/// via the same in-process orchestrator path `env_isolated/avr_build.rs` uses (no daemon,
 /// no CLI subprocess — `compiledb_only: true` skips actual compilation and
 /// linking, so this is the "lighter path" mentioned in FastLED/fbuild#1076:
 /// generate the DB without paying for a full AVR link).
