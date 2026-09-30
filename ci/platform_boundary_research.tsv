@@ -73,7 +73,7 @@ crates/fbuild-core/src/platform/windows/usb_pnp.rs	39	native_path	windows_sys::	
 crates/fbuild-core/src/platform/windows/usb_pnp.rs	40	native_path	windows_sys::	process	host_mechanic
 crates/fbuild-core/tests/it/platformio_package_resolution.rs	5	attr_cfg	#[cfg(windows)]	host	host_mechanic
 crates/fbuild-core/tests/it/platformio_package_resolution.rs	107	attr_cfg	#[cfg(windows)]	host	host_mechanic
-crates/fbuild-daemon/Cargo.toml	68	native_dependency	libc	process	host_mechanic
+crates/fbuild-daemon/Cargo.toml	74	native_dependency	libc	process	host_mechanic
 crates/fbuild-daemon/src/handlers/emulator/tests_npm_cache.rs	146	attr_cfg	#[cfg(windows)]	host_executable	host_artifact_policy
 crates/fbuild-daemon/src/handlers/emulator/tests_process.rs	9	attr_cfg	#[cfg(windows)]	host_executable	host_artifact_policy
 crates/fbuild-daemon/src/handlers/emulator/tests_process.rs	21	attr_cfg	#[cfg(not(windows))]	host_executable	host_artifact_policy
@@ -96,6 +96,7 @@ crates/fbuild-daemon/src/handlers/websockets_tests.rs	340	native_path	libc::	pro
 crates/fbuild-daemon/src/handlers/websockets_tests.rs	342	native_path	libc::	process	host_mechanic
 crates/fbuild-daemon/src/handlers/websockets_tests.rs	345	native_path	libc::	process	host_mechanic
 crates/fbuild-daemon/src/handlers/websockets_tests.rs	348	native_path	libc::	process	host_mechanic
+crates/fbuild-packages/tests/it/qemu_linux_runtime.rs	18	attr_cfg	#![cfg(target_os=)]	host	host_mechanic
 crates/fbuild-paths/src/dev_daemon_namespace.rs	91	native_path	std::env::current_exe	host_executable	host_mechanic
 crates/fbuild-paths/src/executable_hash.rs	6	attr_cfg	#[cfg(unix)]	host	host_mechanic
 crates/fbuild-paths/src/executable_hash.rs	9	attr_cfg	#[cfg(unix)]	host	host_mechanic
@@ -104,7 +105,7 @@ crates/fbuild-paths/src/executable_hash.rs	66	attr_cfg	#[cfg(not(unix))]	host	ho
 crates/fbuild-paths/src/executable_hash.rs	71	attr_cfg	#[cfg(unix)]	host	host_mechanic
 crates/fbuild-paths/src/executable_hash.rs	76	attr_cfg	#[cfg(unix)]	host	host_mechanic
 crates/fbuild-paths/src/executable_hash.rs	85	attr_cfg	#[cfg(all(test,unix))]	host	host_mechanic
-crates/fbuild-python/tests/python_facades.rs	317	native_path	std::env::current_exe	host_executable	host_mechanic
+crates/fbuild-python/tests/python_facades/main.rs	317	native_path	std::env::current_exe	host_executable	host_mechanic
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	528	attr_cfg	#[cfg(windows)]	host_executable	host_mechanic
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	534	attr_cfg	#[cfg(windows)]	host_executable	host_mechanic
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	565	attr_cfg	#[cfg(not(windows))]	host_executable	host_mechanic
@@ -114,4 +115,3 @@ crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	755	attr_cfg	#[cfg(windows)]	h
 crates/fbuild-toolchain/src/toolchain/esp_qemu_runtime.rs	253	attr_cfg	#[cfg_attr(not(target_os=),allow(dead_code))]	host_executable	host_artifact_policy
 crates/fbuild-toolchain/src/toolchain/esp_qemu_runtime.rs	295	attr_cfg	#[cfg(not(target_os=))]	host_executable	host_artifact_policy
 crates/fbuild-toolchain/src/toolchain/esp_qemu_runtime.rs	301	attr_cfg	#[cfg(target_os=)]	host_executable	host_artifact_policy
-crates/fbuild-toolchain/tests/qemu_linux_runtime.rs	18	attr_cfg	#![cfg(target_os=)]	host_executable	host_artifact_policy

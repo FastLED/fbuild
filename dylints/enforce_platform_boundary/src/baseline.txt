@@ -23,6 +23,7 @@ crates/fbuild-daemon/src/handlers/websockets_tests.rs	native_import	libc	6
 crates/fbuild-daemon/src/handlers/websockets_tests.rs	native_import	libc	7
 crates/fbuild-daemon/src/handlers/websockets_tests.rs	native_import	libc	8
 crates/fbuild-daemon/src/handlers/websockets_tests.rs	native_import	libc	9
+crates/fbuild-packages/tests/it/qemu_linux_runtime.rs	attr_cfg	target_os	0
 crates/fbuild-paths/src/dev_daemon_namespace.rs	native_import	std::env::current_exe	0
 crates/fbuild-paths/src/executable_hash.rs	attr_cfg	unix	0
 crates/fbuild-paths/src/executable_hash.rs	attr_cfg	unix	1
@@ -31,7 +32,7 @@ crates/fbuild-paths/src/executable_hash.rs	attr_cfg	unix	3
 crates/fbuild-paths/src/executable_hash.rs	attr_cfg	unix	4
 crates/fbuild-paths/src/executable_hash.rs	attr_cfg	unix	5
 crates/fbuild-paths/src/executable_hash.rs	attr_cfg	unix	6
-crates/fbuild-python/tests/python_facades.rs	native_import	std::env::current_exe	0
+crates/fbuild-python/tests/python_facades/main.rs	native_import	std::env::current_exe	0
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	attr_cfg	windows	0
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	attr_cfg	windows	1
 crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	attr_cfg	windows	2
@@ -41,4 +42,3 @@ crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	attr_cfg	windows	5
 crates/fbuild-toolchain/src/toolchain/esp_qemu_runtime.rs	attr_cfg	target_os	0
 crates/fbuild-toolchain/src/toolchain/esp_qemu_runtime.rs	attr_cfg	target_os	1
 crates/fbuild-toolchain/src/toolchain/esp_qemu_runtime.rs	attr_cfg	target_os	2
-crates/fbuild-packages/tests/it/qemu_linux_runtime.rs	attr_cfg	target_os	0
