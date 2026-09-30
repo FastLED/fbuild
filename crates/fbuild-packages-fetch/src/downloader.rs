@@ -975,5 +975,8 @@ pub async fn verify_checksum_async(path: &Path, expected: &str) -> Result<()> {
 }
 
 #[cfg(test)]
+#[path = "downloader_mirror_tests.rs"]
+mod mirror_tests;
+#[cfg(test)]
 #[path = "downloader_tests.rs"]
 mod tests;
