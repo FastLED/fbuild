@@ -168,6 +168,9 @@ pub async fn run_deploy(
     output_dir: Option<String>,
     usb_recovery_policy: fbuild_core::usb::UsbRecoveryPolicy,
 ) -> fbuild_core::Result<()> {
+    // A `--port ser=<USB serial>` selector is forwarded as-is: the daemon
+    // resolves it right before the port is opened, after the (possibly long)
+    // build, so a device that re-enumerates meanwhile is still found (#1428).
     daemon_client::ensure_daemon_running().await?;
     let client = DaemonClient::new();
     daemon_client::warn_if_daemon_identity_mismatch(&client, &project_dir).await;
@@ -595,6 +598,7 @@ pub async fn run_monitor(
     expect: Option<String>,
     no_timestamp: bool,
 ) -> fbuild_core::Result<()> {
+    let port = fbuild_serial::port_selector::resolve_port_arg(port)?;
     daemon_client::ensure_daemon_running().await?;
     let client = DaemonClient::new();
     daemon_client::warn_if_daemon_identity_mismatch(&client, &project_dir).await;

@@ -411,7 +411,35 @@ pub async fn deploy(
         .await;
     }
 
-    let deploy_port_choice = if req.port.is_none() {
+    // `--port ser=<USB serial>` becomes the node carrying that serial *now*,
+    // after the build and immediately before the port is acquired (#1428).
+    let requested_port = {
+        let port = req.port.clone();
+        match tokio::task::spawn_blocking(move || {
+            fbuild_serial::port_selector::resolve_port_arg(port)
+        })
+        .await
+        {
+            Ok(Ok(port)) => port,
+            Ok(Err(e)) => {
+                return (
+                    StatusCode::BAD_REQUEST,
+                    Json(OperationResponse::fail(request_id, e.to_string())),
+                );
+            }
+            Err(e) => {
+                return (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    Json(OperationResponse::fail(
+                        request_id,
+                        format!("port resolution task panicked: {e}"),
+                    )),
+                );
+            }
+        }
+    };
+
+    let deploy_port_choice = if requested_port.is_none() {
         ctx.refresh_devices_and_broadcast_serial_moves().await;
         choose_deploy_port(
             None,
@@ -422,7 +450,7 @@ pub async fn deploy(
         )
     } else {
         choose_deploy_port(
-            req.port.clone(),
+            requested_port.clone(),
             platform,
             Some(&board_id),
             board.as_ref(),

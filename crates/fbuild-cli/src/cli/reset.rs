@@ -8,6 +8,7 @@ pub fn run_reset(
     port: Option<String>,
     verbose: bool,
 ) -> fbuild_core::Result<()> {
+    let port = fbuild_serial::port_selector::resolve_port_arg(port)?;
     let project_path = std::path::Path::new(&project_dir);
     let ini_path = project_path.join("platformio.ini");
 

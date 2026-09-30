@@ -282,6 +282,8 @@ pub enum Commands {
         project_dir: Option<String>,
         #[arg(short = 'e', long)]
         environment: Option<String>,
+        /// Serial port: a node path (COM5, /dev/ttyUSB0) or `ser=<USB serial>`
+        /// to pick the device carrying that USB serial at use time (see `fbuild port scan`).
         #[arg(short = 'p', long)]
         port: Option<String>,
         /// CH32V deploy protocol: `wlink` (default) or factory USB-ISP `isp`
@@ -372,6 +374,8 @@ pub enum Commands {
         project_dir: Option<String>,
         #[arg(short = 'e', long)]
         environment: Option<String>,
+        /// Serial port: a node path (COM5, /dev/ttyUSB0) or `ser=<USB serial>`
+        /// to pick the device carrying that USB serial at use time (see `fbuild port scan`).
         #[arg(short = 'p', long)]
         port: Option<String>,
         #[arg(short = 'b', long = "baud", alias = "baud-rate")]
@@ -400,7 +404,8 @@ pub enum Commands {
         /// Target environment
         #[arg(short = 'e', long)]
         environment: Option<String>,
-        /// Serial port (e.g., COM5, /dev/ttyUSB0)
+        /// Serial port: a node path (COM5, /dev/ttyUSB0) or `ser=<USB serial>`
+        /// to pick the device carrying that USB serial at use time (see `fbuild port scan`).
         #[arg(short = 'p', long)]
         port: Option<String>,
         /// Verbose output
