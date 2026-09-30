@@ -846,10 +846,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
         all_archives.extend(library_archives);
 
         let linker = Esp32Linker::new(
-            toolchain.get_gcc_path(),
-            toolchain.get_ar_path(),
-            toolchain.get_objcopy_path(),
-            toolchain.get_size_path(),
+            toolchain.get_gcc_path().into(),
+            toolchain.get_ar_path().into(),
+            toolchain.get_objcopy_path().into(),
+            toolchain.get_size_path().into(),
             mcu_config.clone(),
             sdk_ld_flags,
             sdk_lib_flags,
@@ -859,7 +859,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &flash_freq,
             ctx.board.max_flash,
             ctx.board.max_ram,
-            esptool_bin.clone().map(|path| path.into_path_buf()),
+            esptool_bin.clone(),
             params.verbose,
         )
         .with_caller_path(params.caller_path.clone())

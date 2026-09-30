@@ -10,6 +10,7 @@
 
 use std::path::{Path, PathBuf};
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::subprocess::run_command;
 use fbuild_core::{BuildProfile, Result, SizeInfo};
 
@@ -146,11 +147,11 @@ pub(crate) fn esptool_spawn_failure_message(esptool_bin: Option<&Path>, error: &
 
 /// ESP32-specific linker using RISC-V or Xtensa GCC as the link driver.
 pub struct Esp32Linker {
-    gcc_path: PathBuf,
-    ar_path: PathBuf,
+    gcc_path: NormalizedPath,
+    ar_path: NormalizedPath,
     #[allow(dead_code)] // Used later for esptool elf2image
-    objcopy_path: PathBuf,
-    size_path: PathBuf,
+    objcopy_path: NormalizedPath,
+    size_path: NormalizedPath,
     /// MCU config (used for profile-specific flags as fallback).
     mcu_config: Esp32McuConfig,
     /// SDK linker flags from `flags/ld_flags` (undefined symbols, wrap directives, etc.).
@@ -169,7 +170,7 @@ pub struct Esp32Linker {
     max_ram: Option<u64>,
     /// Path to the provisioned standalone esptool binary, if available. `None`
     /// falls back to an `esptool` on PATH. See FastLED/fbuild#954.
-    esptool_bin: Option<PathBuf>,
+    esptool_bin: Option<NormalizedPath>,
     verbose: bool,
     /// The CLI caller's PATH, so the bare-`esptool` fallback resolves
     /// against the caller's environment instead of the daemon's
@@ -183,10 +184,10 @@ pub struct Esp32Linker {
 impl Esp32Linker {
     #[allow(clippy::too_many_arguments)]
     pub fn new(
-        gcc_path: PathBuf,
-        ar_path: PathBuf,
-        objcopy_path: PathBuf,
-        size_path: PathBuf,
+        gcc_path: NormalizedPath,
+        ar_path: NormalizedPath,
+        objcopy_path: NormalizedPath,
+        size_path: NormalizedPath,
         mcu_config: Esp32McuConfig,
         sdk_ld_flags: Vec<String>,
         sdk_lib_flags: Vec<String>,
@@ -196,7 +197,7 @@ impl Esp32Linker {
         flash_freq: &str,
         max_flash: Option<u64>,
         max_ram: Option<u64>,
-        esptool_bin: Option<PathBuf>,
+        esptool_bin: Option<NormalizedPath>,
         verbose: bool,
     ) -> Self {
         let flash_mode = flash_mode.unwrap_or_else(|| mcu_config.default_flash_mode().to_string());
@@ -574,19 +575,19 @@ impl Linker for Esp32Linker {
     }
 
     fn size_tool_path(&self) -> &Path {
-        &self.size_path
+        self.size_path.as_path()
     }
 
     fn ar_tool_path(&self) -> Option<&Path> {
-        Some(&self.ar_path)
+        Some(self.ar_path.as_path())
     }
 
     fn objcopy_tool_path(&self) -> Option<&Path> {
-        Some(&self.objcopy_path)
+        Some(self.objcopy_path.as_path())
     }
 
     fn link_driver_path(&self) -> Option<&Path> {
-        Some(&self.gcc_path)
+        Some(self.gcc_path.as_path())
     }
 
     async fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {

@@ -5,10 +5,10 @@ fn test_linker(mcu: &str) -> Esp32Linker {
     let config = get_mcu_config(mcu).unwrap();
     let prefix = config.toolchain_prefix();
     Esp32Linker::new(
-        PathBuf::from(format!("/usr/bin/{}gcc", prefix)),
-        PathBuf::from(format!("/usr/bin/{}ar", prefix)),
-        PathBuf::from(format!("/usr/bin/{}objcopy", prefix)),
-        PathBuf::from(format!("/usr/bin/{}size", prefix)),
+        NormalizedPath::new(format!("/usr/bin/{}gcc", prefix)),
+        NormalizedPath::new(format!("/usr/bin/{}ar", prefix)),
+        NormalizedPath::new(format!("/usr/bin/{}objcopy", prefix)),
+        NormalizedPath::new(format!("/usr/bin/{}size", prefix)),
         config,
         vec![
             "-nostartfiles".to_string(),
@@ -70,7 +70,10 @@ fn pinned_esptool_v4_uses_underscore_elf2image_options() {
     assert!(v5.iter().any(|arg| arg == "--flash-mode"));
 }
 
-fn test_linker_with(esptool_bin: Option<PathBuf>, caller_path: Option<String>) -> Esp32Linker {
+fn test_linker_with(
+    esptool_bin: Option<NormalizedPath>,
+    caller_path: Option<String>,
+) -> Esp32Linker {
     let mut linker = test_linker("esp32c6");
     linker.esptool_bin = esptool_bin;
     linker.caller_path = caller_path;
@@ -121,7 +124,7 @@ fn absolute_esptool_bin_reuse_ignores_caller_path() {
     let elf = tmp.path().join("firmware.elf");
     std::fs::write(&elf, b"elf").unwrap();
 
-    let esptool = PathBuf::from("C:\\tools\\esptool.exe");
+    let esptool = NormalizedPath::new("C:\\tools\\esptool.exe");
     let linker_a = test_linker_with(Some(esptool.clone()), Some("C:\\venv-a".to_string()));
     let flash_size = linker_a.flash_size();
 
@@ -145,10 +148,10 @@ fn test_flash_size_uses_board_max_flash_for_elf2image_and_cache() {
     let config = get_mcu_config("esp32c6").unwrap();
     let prefix = config.toolchain_prefix();
     let linker = Esp32Linker::new(
-        PathBuf::from(format!("/usr/bin/{}gcc", prefix)),
-        PathBuf::from(format!("/usr/bin/{}ar", prefix)),
-        PathBuf::from(format!("/usr/bin/{}objcopy", prefix)),
-        PathBuf::from(format!("/usr/bin/{}size", prefix)),
+        NormalizedPath::new(format!("/usr/bin/{}gcc", prefix)),
+        NormalizedPath::new(format!("/usr/bin/{}ar", prefix)),
+        NormalizedPath::new(format!("/usr/bin/{}objcopy", prefix)),
+        NormalizedPath::new(format!("/usr/bin/{}size", prefix)),
         config,
         vec![],
         vec![],
@@ -182,7 +185,7 @@ fn test_esp32_link_command_emits_linker_map_next_to_elf() {
     let args = linker.build_link_args(
         &[],
         &[],
-        &PathBuf::from("/build/firmware.elf"),
+        Path::new("/build/firmware.elf"),
         &LinkExtraArgs::default(),
     );
     assert!(
@@ -239,10 +242,10 @@ fn test_linker_flags_fallback_to_config() {
     let prefix = config.toolchain_prefix();
     // Empty sdk_ld_flags → falls back to MCU config
     let linker = Esp32Linker::new(
-        PathBuf::from(format!("/usr/bin/{}gcc", prefix)),
-        PathBuf::from(format!("/usr/bin/{}ar", prefix)),
-        PathBuf::from(format!("/usr/bin/{}objcopy", prefix)),
-        PathBuf::from(format!("/usr/bin/{}size", prefix)),
+        NormalizedPath::new(format!("/usr/bin/{}gcc", prefix)),
+        NormalizedPath::new(format!("/usr/bin/{}ar", prefix)),
+        NormalizedPath::new(format!("/usr/bin/{}objcopy", prefix)),
+        NormalizedPath::new(format!("/usr/bin/{}size", prefix)),
         config,
         vec![],
         vec!["-lfreertos".to_string()],
@@ -283,10 +286,10 @@ fn test_xtensa_linker_flags() {
     let config = get_mcu_config("esp32").unwrap();
     let prefix = config.toolchain_prefix();
     let linker = Esp32Linker::new(
-        PathBuf::from(format!("/usr/bin/{}gcc", prefix)),
-        PathBuf::from(format!("/usr/bin/{}ar", prefix)),
-        PathBuf::from(format!("/usr/bin/{}objcopy", prefix)),
-        PathBuf::from(format!("/usr/bin/{}size", prefix)),
+        NormalizedPath::new(format!("/usr/bin/{}gcc", prefix)),
+        NormalizedPath::new(format!("/usr/bin/{}ar", prefix)),
+        NormalizedPath::new(format!("/usr/bin/{}objcopy", prefix)),
+        NormalizedPath::new(format!("/usr/bin/{}size", prefix)),
         config,
         vec!["-mlongcalls".to_string()],
         vec![],
@@ -423,7 +426,7 @@ async fn link_runs_the_linker_under_the_c_locale() {
     fbuild_core::platform::fs::set_executable(&staging).unwrap();
     std::fs::rename(&staging, &fake_gcc).unwrap();
     let mut linker = test_linker("esp32s3");
-    linker.gcc_path = fake_gcc;
+    linker.gcc_path = fake_gcc.into();
 
     linker
         .link(&[], &[], &tmp.path().join("out"), &LinkExtraArgs::default())
