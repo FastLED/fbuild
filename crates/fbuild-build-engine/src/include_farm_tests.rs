@@ -267,3 +267,19 @@ fn top_level_header_climbing_out_of_its_dir_keeps_its_directory() {
 
     assert_eq!(kept_indices(&plan), [0]);
 }
+
+#[test]
+fn angle_include_climbing_out_of_its_dir_keeps_its_directory() {
+    // `<../x.h>` resolves through the -I chain: from the original dir it
+    // climbs to a sibling, from the farm root it would climb out of the farm.
+    let tmp = tempfile::TempDir::new().unwrap();
+    let inc = NormalizedPath::new(tmp.path().join("comp/include"));
+    write(inc.as_path(), "api.h", "#include <../private/impl.h>\n");
+    write(tmp.path(), "comp/private/impl.h", "");
+    let other = NormalizedPath::new(tmp.path().join("other"));
+    write(other.as_path(), "other.h", "");
+
+    let plan = plan_farm(&[], &[inc, other]).unwrap();
+
+    assert_eq!(kept_indices(&plan), [0]);
+}

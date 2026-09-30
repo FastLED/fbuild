@@ -49,6 +49,34 @@ jobs:
           - gate: teensy41 cold resolver
             test_bin: teensy41_acceptance
             test_fn: teensy41_cold_library_selection_meets_205_ac6
+          # FastLED/fbuild#1588: GCC resolves the same headers with and without the include farm.
+          - gate: esp32dev include-farm parity
+            test_bin: esp32_include_farm_parity
+            test_fn: farm_parity_esp32dev
+          - gate: esp32s2 include-farm parity
+            test_bin: esp32_include_farm_parity
+            test_fn: farm_parity_esp32s2
+          - gate: esp32s3 include-farm parity
+            test_bin: esp32_include_farm_parity
+            test_fn: farm_parity_esp32s3
+          - gate: esp32c2 include-farm parity
+            test_bin: esp32_include_farm_parity
+            test_fn: farm_parity_esp32c2
+          - gate: esp32c3 include-farm parity
+            test_bin: esp32_include_farm_parity
+            test_fn: farm_parity_esp32c3
+          - gate: esp32c5 include-farm parity
+            test_bin: esp32_include_farm_parity
+            test_fn: farm_parity_esp32c5
+          - gate: esp32c6 include-farm parity
+            test_bin: esp32_include_farm_parity
+            test_fn: farm_parity_esp32c6
+          - gate: esp32h2 include-farm parity
+            test_bin: esp32_include_farm_parity
+            test_fn: farm_parity_esp32h2
+          - gate: esp32p4 include-farm parity
+            test_bin: esp32_include_farm_parity
+            test_fn: farm_parity_esp32p4
     steps:
       - uses: actions/checkout@v6
         with:
