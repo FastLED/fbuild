@@ -16,13 +16,19 @@ use crate::http;
 /// The retry boundary covers both request setup and response-body transfer.
 const MAX_ATTEMPTS: u32 = 5;
 
-/// Exponential sleeps after failed attempts 1 through 4.
+/// Sleeps after failed attempts 1 through 4: about 110 s in total, so a vendor
+/// host or CDN edge that is down for a minute or two no longer outlasts the
+/// whole budget (FastLED/fbuild#1463: a 15 s budget lost a ClearCore fetch).
 const RETRY_BACKOFFS: &[Duration] = &[
-    Duration::from_secs(1),
-    Duration::from_secs(2),
-    Duration::from_secs(4),
-    Duration::from_secs(8),
+    Duration::from_secs(5),
+    Duration::from_secs(15),
+    Duration::from_secs(30),
+    Duration::from_secs(60),
 ];
+
+/// Upper bound on a server-requested `Retry-After`, so one header cannot park
+/// an install indefinitely.
+const MAX_RETRY_AFTER: Duration = Duration::from_secs(120);
 
 /// Per-chunk deadline for streaming downloads. A stall fails the current
 /// attempt and is retried under the same budget as other transient failures.
@@ -74,7 +80,8 @@ fn is_transient(err: &reqwest::Error) -> bool {
 #[derive(Debug)]
 enum DownloadAttemptError {
     Request(reqwest::Error),
-    HttpStatus(reqwest::StatusCode),
+    /// A non-2xx answer, with the server's `Retry-After` when it sent one.
+    HttpStatus(reqwest::StatusCode, Option<Duration>),
     Body(reqwest::Error),
     BodyStalled {
         filename: String,
@@ -92,11 +99,33 @@ enum DownloadAttemptError {
     },
 }
 
+/// 5xx is transient by definition; 429 and 408 explicitly ask for a retry.
+/// Every other 4xx is deterministic and fails fast.
+fn is_retryable_status(status: reqwest::StatusCode) -> bool {
+    status.is_server_error()
+        || status == reqwest::StatusCode::TOO_MANY_REQUESTS
+        || status == reqwest::StatusCode::REQUEST_TIMEOUT
+}
+
+/// `Retry-After` as a delay. Only the delta-seconds form is understood; an
+/// HTTP-date (or garbage) is ignored and the normal backoff applies.
+fn retry_after(headers: &reqwest::header::HeaderMap) -> Option<Duration> {
+    let secs = headers
+        .get(reqwest::header::RETRY_AFTER)?
+        .to_str()
+        .ok()?
+        .trim()
+        .parse::<u64>()
+        .ok()?;
+    Some(Duration::from_secs(secs))
+}
+
 impl DownloadAttemptError {
     fn is_retryable(&self) -> bool {
         match self {
             Self::Request(error) | Self::Body(error) => is_transient(error),
-            Self::HttpStatus(status) => status.is_server_error(),
+            // 5xx, plus the two 4xx answers that mean "try again later".
+            Self::HttpStatus(status, _) => is_retryable_status(*status),
             Self::BodyStalled { .. } => true,
             // A truncated body is the failure this retry loop exists for.
             Self::BodyTruncated { .. } => true,
@@ -106,12 +135,20 @@ impl DownloadAttemptError {
         }
     }
 
+    /// The server's own `Retry-After`, when this failure carried one.
+    fn retry_after(&self) -> Option<Duration> {
+        match self {
+            Self::HttpStatus(_, after) => *after,
+            _ => None,
+        }
+    }
+
     fn into_fbuild_error(self, url: &str) -> FbuildError {
         match self {
             Self::Request(error) => {
                 FbuildError::PackageError(format!("failed to download {}: {}", url, error))
             }
-            Self::HttpStatus(status) => {
+            Self::HttpStatus(status, _) => {
                 FbuildError::PackageError(format!("download failed for {}: HTTP {}", url, status))
             }
             Self::Body(error) => {
@@ -138,7 +175,7 @@ impl Display for DownloadAttemptError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
             Self::Request(error) => write!(f, "request error: {error}"),
-            Self::HttpStatus(status) => write!(f, "HTTP {status}"),
+            Self::HttpStatus(status, _) => write!(f, "HTTP {status}"),
             Self::Body(error) => write!(f, "response body error: {error}"),
             Self::BodyStalled { filename } => write!(
                 f,
@@ -216,7 +253,10 @@ async fn open_attempt_from(
         });
     }
     if !status.is_success() {
-        return Err(DownloadAttemptError::HttpStatus(status));
+        return Err(DownloadAttemptError::HttpStatus(
+            status,
+            retry_after(response.headers()),
+        ));
     }
 
     if status == reqwest::StatusCode::PARTIAL_CONTENT {
@@ -271,7 +311,12 @@ async fn wait_before_retry(
     error: &DownloadAttemptError,
     timing: RetryTiming,
 ) {
-    let delay = timing.backoff(attempt);
+    // A server that says how long to wait knows better than our schedule, but
+    // never wait less than the schedule nor more than the cap.
+    let delay = match error.retry_after() {
+        Some(asked) => timing.backoff(attempt).max(asked.min(MAX_RETRY_AFTER)),
+        None => timing.backoff(attempt),
+    };
     tracing::warn!(
         "download {}: {} on attempt {}/{}, retrying after {:?}",
         url,
@@ -349,8 +394,8 @@ pub async fn download_file(url: &str, dest_dir: &Path) -> Result<PathBuf> {
 
 /// GET `url` and return the body bytes, retrying transient failures
 /// up to [`MAX_ATTEMPTS`] times with [`RETRY_BACKOFFS`] between
-/// attempts. A non-2xx HTTP status is treated as a hard failure
-/// (only server-side 5xx is retried).
+/// attempts (a server's `Retry-After` may lengthen a wait). A non-2xx HTTP
+/// status is a hard failure unless it is 5xx, 429 or 408.
 async fn get_with_retry(url: &str) -> Result<Vec<u8>> {
     get_with_retry_timed(http::client(), url, RetryTiming::PRODUCTION).await
 }
@@ -360,6 +405,7 @@ async fn get_with_retry_timed(
     url: &str,
     timing: RetryTiming,
 ) -> Result<Vec<u8>> {
+    let started = Instant::now();
     let mut attempt: u32 = 0;
     loop {
         attempt += 1;
@@ -376,7 +422,17 @@ async fn get_with_retry_timed(
             Err(error) if error.is_retryable() && attempt < MAX_ATTEMPTS => {
                 wait_before_retry(url, attempt, &error, timing).await;
             }
-            Err(error) => return Err(error.into_fbuild_error(url)),
+            Err(error) => {
+                // The retries are otherwise invisible to the caller; say how
+                // many happened and how long they took, so CI output can tell
+                // "retried 5x" from "never retried" (FastLED/fbuild#1463).
+                let message = error.into_fbuild_error(url).to_string();
+                return Err(FbuildError::PackageError(format!(
+                    "{message} (after {attempt} attempt{} over {:.1}s)",
+                    if attempt == 1 { "" } else { "s" },
+                    started.elapsed().as_secs_f64()
+                )));
+            }
         }
     }
 }

@@ -615,6 +615,18 @@ fn fbuild_avr_build_log_reports_selected_package_versions() {
 }
 
 #[test]
+fn fbuild_avr_build_log_parses_real_resolved_package_names() {
+    // Verbatim from Arduino Uno benchmark run 36381617967 (FastLED/fbuild#1536).
+    let packages = parse_fbuild_build_packages(
+        b"   1.61 AVR resolved: avr-gcc@1.70300.191015 (https://dl.registry.platformio.org/download/platformio/tool/toolchain-atmelavr/1.70300.191015/toolchain-atmelavr-linux_x86_64-1.70300.191015.tar.gz); arduino-avr-core@5.2.0 (https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-avr/5.2.0/framework-arduino-avr-5.2.0.tar.gz)\n",
+        BOARDS[0],
+    );
+    assert_eq!(packages["toolchain"], "1.70300.191015");
+    assert_eq!(packages["framework"], "5.2.0");
+    assert!(package_metadata_is_complete("uno", &packages));
+}
+
+#[test]
 fn changed_package_identities_across_trials_become_unverified() {
     let mut packages = BTreeMap::new();
     let mut warning = None;
