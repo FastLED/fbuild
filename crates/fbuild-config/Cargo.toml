@@ -12,6 +12,8 @@ publish = false
 [[bin]]
 name = "enrich_boards"
 path = "src/bin/enrich_boards.rs"
+# No #[test] in the tool; skip its empty harness (FastLED/fbuild#1577).
+test = false
 
 [dependencies]
 fbuild-core = { path = "../fbuild-core" }

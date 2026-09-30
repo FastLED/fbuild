@@ -39,3 +39,8 @@ jobs:
         # which requires `soldr` (absent in this job) and fails the gate for an
         # unrelated reason. The script declares its own inline metadata.
         run: uv run --script ci/check_workspace_crates.py
+
+      - name: Check integration tests stay in their 8 category binaries
+        # FastLED/fbuild#1577: a new top-level crates/*/tests/*.rs is a new
+        # test binary that re-links the whole dependency graph.
+        run: uv run --script ci/check_test_layout.py

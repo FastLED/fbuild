@@ -22,7 +22,7 @@
 //! Callers skip farms on Windows, where symlinks usually need elevated rights,
 //! and when `FBUILD_INCLUDE_FARM=0`. The text-level checks above cannot see
 //! macro includes; the real-SDK parity test in
-//! `fbuild-build/tests/it/esp32_include_farm_parity.rs` compares GCC's own
+//! `fbuild-build/tests/env_isolated/esp32_include_farm_parity.rs` compares GCC's own
 //! depfiles with and without the farm (FastLED/fbuild#1588).
 
 use std::collections::{BTreeMap, HashMap};

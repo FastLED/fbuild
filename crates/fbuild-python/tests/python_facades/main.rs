@@ -387,10 +387,9 @@ fn run_snippet(py: pyo3::Python<'_>, code: &str) {
         });
 }
 
-#[path = "python_facades/cases.rs"]
 mod cases;
-#[path = "python_facades/extended.rs"]
 mod extended;
+mod pyo3_policy;
 
 /// FastLED/fbuild#1487: the test binary must load the `libpython` belonging to
 /// the interpreter it embeds, found through its own RUNPATH rather than a

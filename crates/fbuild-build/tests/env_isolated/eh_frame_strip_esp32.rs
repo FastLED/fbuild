@@ -6,7 +6,7 @@
 //! of MB on first run) and is not headless-CI-friendly. Run with:
 //!
 //! ```
-//! soldr cargo test -p fbuild-build --test eh_frame_strip_esp32 -- --ignored
+//! soldr cargo test -p fbuild-build --test env_isolated -- --ignored eh_frame_strip_esp32::
 //! ```
 //!
 //! The orchestrator invocation pattern mirrors
@@ -114,6 +114,7 @@ void loop() {
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads ESP32 toolchain (~hundreds of MB)"]
 async fn eh_frame_strip_drops_firmware_at_least_150kb() {
+    let _env = crate::ENV_LOCK.lock().await;
     install_test_compile_backend().await;
     // Use two separate tempdirs so .fbuild/build/... paths don't collide.
     let preserve_tmp = tempfile::TempDir::new().unwrap();

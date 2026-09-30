@@ -3,7 +3,7 @@
 //! Downloads avr-gcc + Arduino core (cached after first run), compiles a
 //! minimal blink sketch, and validates the output firmware.hex.
 //!
-//! Run with: `soldr cargo test -p fbuild-build --test avr_build -- --ignored`
+//! Run with: `soldr cargo test -p fbuild-build --test env_isolated -- --ignored avr_build::`
 //!
 //! ## Timeout cap (FastLED/fbuild#806, MEDIUM)
 //!
@@ -71,6 +71,7 @@ async fn install_test_compile_backend() {
 /// Verify stem/hash cache path format produces readable, unique paths.
 #[test]
 fn cache_paths_stem_hash() {
+    let _env = crate::ENV_LOCK.blocking_lock();
     use fbuild_packages::cache::{hash_url, url_stem};
 
     // Toolchain: stem from base URL
@@ -107,6 +108,7 @@ fn cache_paths_stem_hash() {
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads AVR toolchain + Arduino-AVR core; requires ~/dev/fbuild/tests/uno_minimal"]
 async fn build_uno_minimal() {
+    let _env = crate::ENV_LOCK.lock().await;
     let project_dir = home_dir().join("dev/fbuild/tests/uno_minimal");
 
     if !project_dir.exists() {
@@ -212,6 +214,7 @@ async fn build_uno_minimal() {
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads AVR toolchain; requires Python fbuild reference output at ~/dev/fbuild/tests/uno_minimal"]
 async fn compare_with_python_output() {
+    let _env = crate::ENV_LOCK.lock().await;
     let project_dir = home_dir().join("dev/fbuild/tests/uno_minimal");
 
     let python_hex = project_dir.join(format!(
@@ -298,6 +301,7 @@ async fn compare_with_python_output() {
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads AVR toolchain + Arduino-AVR core"]
 async fn build_self_contained_blink() {
+    let _env = crate::ENV_LOCK.lock().await;
     install_test_compile_backend().await;
     let tmp = tempfile::TempDir::new().unwrap();
     let project_dir = tmp.path();
@@ -511,6 +515,7 @@ impl Drop for EnvVarGuard {
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads AVR toolchain + Arduino-AVR core; exercises tar-extract cache path"]
 async fn cache_survives_tar_extract_uno() {
+    let _env = crate::ENV_LOCK.lock().await;
     install_test_compile_backend().await;
     let tmp_a = tempfile::TempDir::new().unwrap();
     let proj_a = tmp_a.path().join("proj");

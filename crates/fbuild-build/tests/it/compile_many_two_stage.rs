@@ -4,7 +4,7 @@
 //! These tests inject a mock [`SketchBuilder`] so we exercise the
 //! orchestration layer (stage counts, parallelism, output-path
 //! uniqueness, input ordering) without dragging in a real toolchain.
-//! Real-toolchain coverage lives in `avr_build.rs` etc. and is
+//! Real-toolchain coverage lives in `../env_isolated/avr_build.rs` etc. and is
 //! `#[ignore]`-gated to keep `uv run test` fast.
 
 use std::collections::HashSet;

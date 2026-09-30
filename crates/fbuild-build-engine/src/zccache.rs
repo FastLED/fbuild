@@ -86,3 +86,10 @@ pub fn mark_fingerprint_success(watch: &FingerprintWatch) -> Result<()> {
         ))
     })
 }
+
+/// The compile daemon's IPC endpoint for the current environment, including
+/// the `ZCCACHE_DAEMON_NAMESPACE` stamp (FastLED/fbuild#1285). Two checkouts
+/// with different stamps must get different endpoints.
+pub fn daemon_endpoint() -> String {
+    ::zccache::ipc::default_endpoint()
+}

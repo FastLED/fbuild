@@ -72,5 +72,5 @@ jobs:
 
       - name: QEMU runtime provisioning test
         run: |
-          soldr cargo test -p fbuild-toolchain --test qemu_linux_runtime -- \
+          soldr cargo test -p fbuild-packages --test it -- qemu_linux_runtime:: \
             --ignored --nocapture

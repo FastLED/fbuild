@@ -10,6 +10,8 @@ publish = false
 [[bin]]
 name = "bench-fastled-examples"
 path = "src/main.rs"
+# No #[test] in this bin; skip its empty harness (FastLED/fbuild#1577).
+test = false
 
 [[bin]]
 name = "bench-build-comparison"

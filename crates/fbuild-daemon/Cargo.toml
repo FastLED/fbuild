@@ -13,6 +13,12 @@ publish = false
 name = "fbuild-daemon"
 path = "src/main.rs"
 
+[[bin]]
+name = "containment_harness"
+path = "src/bin/containment_harness.rs"
+# No #[test] in the harness; skip its empty test binary (FastLED/fbuild#1577).
+test = false
+
 [lib]
 name = "fbuild_daemon"
 path = "src/lib.rs"
