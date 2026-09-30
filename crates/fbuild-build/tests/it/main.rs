@@ -7,7 +7,6 @@ mod clangd_check_parity;
 mod compile_many_stage2_perf;
 mod compile_many_two_stage;
 mod esp32_build;
-mod esp32_include_farm_parity;
 mod esp32s3_size_parity;
 mod flag_escaping_lint;
 mod lite_scons_acceptance;

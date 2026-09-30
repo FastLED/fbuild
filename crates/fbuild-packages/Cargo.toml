@@ -9,6 +9,12 @@ license.workspace = true
 # this member exists purely for internal compile parallelism. FastLED/fbuild#1008.
 publish = false
 
+# The lib has no unit tests (its tests live in tests/it), so don't build and
+# link an empty harness. FastLED/fbuild#1577; ci/check_test_layout.py fails if
+# a #[test] is added to src/ while this is set.
+[lib]
+test = false
+
 [dependencies]
 # FastLED/fbuild#1008 Phase B — this crate is now a thin facade re-exporting
 # the fetch primitives + the parallel library / toolchain crates.

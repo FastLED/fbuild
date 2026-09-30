@@ -41,4 +41,4 @@ crates/fbuild-toolchain/src/toolchain/esp_qemu.rs	attr_cfg	windows	5
 crates/fbuild-toolchain/src/toolchain/esp_qemu_runtime.rs	attr_cfg	target_os	0
 crates/fbuild-toolchain/src/toolchain/esp_qemu_runtime.rs	attr_cfg	target_os	1
 crates/fbuild-toolchain/src/toolchain/esp_qemu_runtime.rs	attr_cfg	target_os	2
-crates/fbuild-toolchain/tests/qemu_linux_runtime.rs	attr_cfg	target_os	0
+crates/fbuild-packages/tests/it/qemu_linux_runtime.rs	attr_cfg	target_os	0

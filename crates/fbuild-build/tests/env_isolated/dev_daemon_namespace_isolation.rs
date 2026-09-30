@@ -11,31 +11,32 @@
 //! export was inert until fbuild repinned zccache. It is not; it has been
 //! live since the stamp landed.
 //!
-//! This test is the place that can tell. It lives in `fbuild-build-engine`
-//! because that is the crate depending on both sides. A zccache repin that
+//! This test is the place that can tell. It reaches zccache through
+//! `fbuild_build_engine::zccache::daemon_endpoint`, the crate depending on
+//! both sides. A zccache repin that
 //! silently dropped endpoint namespacing would take the `displace-stale` war
 //! from zackees/soldr#2352 with it, and nothing else in the tree would
 //! notice.
 
 use fbuild_paths::dev_daemon_namespace::ZCCACHE_DAEMON_NAMESPACE_ENV;
 
-/// One test, not three: the variable is process-global, so parallel cases
-/// would race each other's `set_var`.
+/// One test, not three: the variable is process-global.
 #[test]
 fn the_exported_stamp_changes_the_zccache_daemon_endpoint() {
-    // SAFETY: this test binary contains one test, so no peer thread can
-    // observe the process-wide environment change.
+    let _env = crate::ENV_LOCK.blocking_lock();
+    // SAFETY: every test in this binary holds crate::ENV_LOCK, so no peer
+    // test observes the process-wide environment change.
     unsafe { std::env::remove_var(ZCCACHE_DAEMON_NAMESPACE_ENV) };
-    let bare = zccache::ipc::default_endpoint();
+    let bare = fbuild_build_engine::zccache::daemon_endpoint();
 
     unsafe { std::env::set_var(ZCCACHE_DAEMON_NAMESPACE_ENV, "2.5.0-aaaaaaaaaaaaaaaa") };
-    let first = zccache::ipc::default_endpoint();
+    let first = fbuild_build_engine::zccache::daemon_endpoint();
 
     unsafe { std::env::set_var(ZCCACHE_DAEMON_NAMESPACE_ENV, "2.5.0-bbbbbbbbbbbbbbbb") };
-    let second = zccache::ipc::default_endpoint();
+    let second = fbuild_build_engine::zccache::daemon_endpoint();
 
     unsafe { std::env::remove_var(ZCCACHE_DAEMON_NAMESPACE_ENV) };
-    let bare_again = zccache::ipc::default_endpoint();
+    let bare_again = fbuild_build_engine::zccache::daemon_endpoint();
 
     // The property that matters: two checkouts with different stamps do not
     // meet on one pipe. Without this, each displaces the other as

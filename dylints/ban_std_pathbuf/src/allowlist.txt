@@ -91,7 +91,7 @@ crates/fbuild-build-arm/src/teensy/teensy_compiler.rs
 crates/fbuild-build-arm/src/teensy/teensy_linker.rs
 crates/fbuild-build-engine/src/zccache.rs
 crates/fbuild-build-engine/src/zccache_embedded.rs
-crates/fbuild-build/tests/avr_build.rs
+crates/fbuild-build/tests/env_isolated/avr_build.rs
 crates/fbuild-build/tests/it/cache_survives_tar_extract.rs
 crates/fbuild-build/tests/it/compile_many_stage2_perf.rs
 crates/fbuild-build/tests/it/compile_many_two_stage.rs

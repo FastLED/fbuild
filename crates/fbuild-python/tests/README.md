@@ -2,8 +2,10 @@
 
 Repository-level contract tests for the `fbuild-python` PyO3 extension.
 
-- `pyo3_policy.rs` keeps the PyO3 dependency family and cross-build workflow policy in sync.
-- `python_facades.rs` — embedded-CPython integration tests for `SerialMonitor` /
+One test binary, `python_facades/` (FastLED/fbuild#1577):
+
+- `python_facades/pyo3_policy.rs` keeps the PyO3 dependency family and cross-build workflow policy in sync (runs in the normal test sweep).
+- `python_facades/main.rs`, `cases.rs`, `extended.rs` — embedded-CPython integration tests for `SerialMonitor` /
   `AsyncSerialMonitor` (FastLED/fbuild#1485 §5.2, "AT-P" tests). Needs
   `libpython` at link and run time (the `pyo3` `auto-initialize`
   dev-dependency feature), so every test is `#[ignore]`d and run separately

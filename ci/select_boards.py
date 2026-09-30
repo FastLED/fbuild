@@ -53,10 +53,24 @@ def path_matches(pattern: str, path: str) -> bool:
     return _compile(pattern).match(path) is not None
 
 
+# Test-only paths never select boards (FastLED/fbuild#1577): the Linux test
+# job runs them, and a test refactor must not fan out to every platform.
+TEST_ONLY_PATTERNS = (
+    "crates/*/tests/**",
+    "crates/**/*_tests.rs",
+    "ci/test_*.py",
+)
+
+
+def is_test_only(path: str) -> bool:
+    return any(path_matches(p, path) for p in TEST_ONLY_PATTERNS)
+
+
 def select_workflows(boards, families, common_paths, changed):
     """Workflows to run for `changed` files; `None` means the diff is unknown."""
     if changed is None:
         return sorted(b["workflow"] for b in boards)
+    changed = [f for f in changed if not is_test_only(f)]
     selected = []
     for board in boards:
         patterns = render_paths_for_board(board, families, common_paths)
