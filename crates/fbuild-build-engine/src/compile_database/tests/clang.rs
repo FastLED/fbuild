@@ -428,7 +428,8 @@ fn translate_for_clang_uses_only_the_entrys_own_toolchain_include_dirs() {
         let include = cache
             .path()
             .join(toolchain)
-            .join("lib/gcc")
+            .join("lib")
+            .join("gcc")
             .join(triple)
             .join(ver)
             .join("include");
