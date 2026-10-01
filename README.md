@@ -7,7 +7,7 @@ serial monitor for embedded development. It reads the same `platformio.ini`
 files already used by PlatformIO sketches, but uses a Rust-native, data-driven
 build pipeline.
 
-[![Check Ubuntu](https://github.com/fastled/fbuild/actions/workflows/check-ubuntu.yml/badge.svg?branch=main)](https://github.com/fastled/fbuild/actions/workflows/check-ubuntu.yml)
+[![Check Ubuntu](https://github.com/fastled/fbuild/actions/workflows/check-ubuntu.yml/badge.svg?branch=main&event=push)](https://github.com/fastled/fbuild/actions/workflows/check-ubuntu.yml)
 [![Check Windows](https://github.com/fastled/fbuild/actions/workflows/check-windows.yml/badge.svg?branch=main)](https://github.com/fastled/fbuild/actions/workflows/check-windows.yml)
 [![Formatting](https://github.com/fastled/fbuild/actions/workflows/fmt.yml/badge.svg?branch=main)](https://github.com/fastled/fbuild/actions/workflows/fmt.yml)
 [![Documentation](https://github.com/fastled/fbuild/actions/workflows/docs.yml/badge.svg?branch=main)](https://github.com/fastled/fbuild/actions/workflows/docs.yml)
