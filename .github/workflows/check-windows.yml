@@ -37,6 +37,7 @@ jobs:
         id: setup-soldr
         uses: zackees/setup-soldr@67ed4018aca013f8388050ac9bc264244f9b742c
         with:
+          cache-key-suffix: check-windows-check
           cache: true
           build-cache: true
           target-cache: true

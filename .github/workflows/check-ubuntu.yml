@@ -63,6 +63,11 @@ jobs:
           # the steady-state size so the action only flags genuinely
           # runaway caches. Hard cap stays at the action default (6 GiB).
           cache-payload-warn-bytes: 2GiB
+          # Distinct from python-facade-tests below. With one shared key the
+          # job that finishes first owns the immutable entry: the facade job's
+          # 166MB fbuild-python-only cache won over this job's 479MB save, and
+          # PRs restored it at a 28-32% hit rate.
+          cache-key-suffix: check-ubuntu
 
       # No separate `cargo check`: clippy type-checks the same
       # `--workspace --all-targets` set, so a prior check only re-did that work.
@@ -114,6 +119,7 @@ jobs:
           target-cache: true
           prebuild-deps: none
           linker: platform-default
+          cache-key-suffix: python-facades
       - name: Run embedded-CPython facade tests
         run: |
           uv python install 3.10
