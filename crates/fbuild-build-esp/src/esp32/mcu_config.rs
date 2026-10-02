@@ -85,45 +85,6 @@ pub struct LegacyGcc8Recipe {
 }
 
 impl Esp32McuConfig {
-    /// Drop GCC 14 recipe flags when the platform selects an older toolchain.
-    /// The SDKs paired with pre-GCC 14 toolchains (pioarduino 51.x/53.x,
-    /// Arduino 3.0/3.1) do not define `__dso_handle` for
-    /// `-fuse-cxa-atexit`-generated references, on Xtensa and RISC-V alike.
-    /// The per-MCU GCC 12 Xtensa compiler also rejects the atomics switch.
-    pub fn adapt_to_toolchain(&mut self, package_name: &str, package_version: &str) {
-        let gcc_major = package_version
-            .split('.')
-            .next()
-            .and_then(|major| major.parse::<u32>().ok());
-        if gcc_major.is_some_and(|major| major < 14) {
-            self.compiler_flags
-                .cxx
-                .retain(|flag| flag != "-fuse-cxa-atexit");
-        }
-        if package_name.starts_with("toolchain-xtensa-esp32") {
-            self.compiler_flags
-                .common
-                .retain(|flag| flag != "-mdisable-hardware-atomics");
-            if package_version.starts_with("8.") {
-                if let Some(recipe) = &self.legacy_gcc8 {
-                    self.linker_flags = recipe.linker_flags.clone();
-                    self.linker_scripts = recipe.linker_scripts.clone();
-                }
-                for flag in &mut self.compiler_flags.c {
-                    if flag == "-std=gnu17" {
-                        *flag = "-std=gnu99".into();
-                    }
-                }
-                for flag in &mut self.compiler_flags.cxx {
-                    if flag == "-std=gnu++2b" {
-                        *flag = "-std=gnu++11".into();
-                    }
-                }
-                self.disable_lto();
-            }
-        }
-    }
-
     /// Whether this MCU uses RISC-V architecture.
     pub fn is_riscv(&self) -> bool {
         self.architecture.starts_with("riscv")
@@ -231,21 +192,6 @@ impl Esp32McuConfig {
             .iter()
             .map(|(old, new)| format!("-D{}={}", old, new))
             .collect()
-    }
-
-    /// Remove LTO-related flags from all profiles.
-    ///
-    /// Called when the SDK specifies `-fno-lto` in its linker flags, meaning
-    /// objects must not be compiled with LTO.
-    pub fn disable_lto(&mut self) {
-        for profile in self.profiles.values_mut() {
-            profile
-                .compile_flags
-                .retain(|f| !f.contains("lto") && f != "-fuse-linker-plugin");
-            profile
-                .link_flags
-                .retain(|f| !f.contains("lto") && f != "-fuse-linker-plugin");
-        }
     }
 }
 
@@ -798,83 +744,5 @@ mod tests {
                 config.name
             );
         }
-    }
-
-    #[test]
-    fn per_mcu_xtensa_toolchain_uses_gcc12_compatible_flags() {
-        let mut legacy = get_mcu_config("esp32s3").unwrap();
-        let mut unified = legacy.clone();
-        legacy.adapt_to_toolchain("toolchain-xtensa-esp32s3", "12.2.0+20230208");
-        unified.adapt_to_toolchain("toolchain-xtensa-esp-elf", "14.2.0");
-
-        assert!(
-            !legacy
-                .compiler_flags
-                .common
-                .iter()
-                .any(|flag| flag == "-mdisable-hardware-atomics")
-        );
-        assert!(
-            !legacy
-                .compiler_flags
-                .cxx
-                .iter()
-                .any(|flag| flag == "-fuse-cxa-atexit")
-        );
-        assert!(
-            unified
-                .compiler_flags
-                .common
-                .iter()
-                .any(|flag| flag == "-mdisable-hardware-atomics")
-        );
-        assert!(
-            unified
-                .compiler_flags
-                .cxx
-                .iter()
-                .any(|flag| flag == "-fuse-cxa-atexit")
-        );
-    }
-
-    #[test]
-    fn pre_gcc14_unified_toolchain_drops_cxa_atexit() {
-        // pioarduino 53.x: unified registry toolchains at GCC 13.2 on both
-        // architectures, with an SDK that lacks `__dso_handle`.
-        for (mcu, package) in [
-            ("esp32", "toolchain-xtensa-esp-elf"),
-            ("esp32c3", "toolchain-riscv32-esp"),
-        ] {
-            let mut config = get_mcu_config(mcu).unwrap();
-            config.adapt_to_toolchain(package, "13.2.0+20240530");
-            assert!(
-                !config
-                    .compiler_flags
-                    .cxx
-                    .iter()
-                    .any(|f| f == "-fuse-cxa-atexit"),
-                "{mcu} kept -fuse-cxa-atexit on GCC 13"
-            );
-        }
-    }
-
-    #[test]
-    fn platformio_gcc8_uses_supported_cpp_standard() {
-        let mut config = get_mcu_config("esp32s3").unwrap();
-        config.adapt_to_toolchain("toolchain-xtensa-esp32s3", "8.4.0+2021r2-patch5");
-        assert!(config.compiler_flags.c.contains(&"-std=gnu99".into()));
-        assert!(config.compiler_flags.cxx.contains(&"-std=gnu++11".into()));
-        assert!(!config.compiler_flags.cxx.contains(&"-std=gnu++2b".into()));
-        assert!(config.linker_flags.contains(&"-fno-lto".into()));
-        assert!(
-            !config
-                .linker_flags
-                .contains(&"-Wl,--no-warn-rwx-segments".into())
-        );
-        assert!(
-            config
-                .linker_scripts
-                .contains(&"esp32s3.rom.newlib-time.ld".into())
-        );
     }
 }

@@ -277,12 +277,10 @@ fn primary_toolchain_name(is_riscv: bool) -> &'static str {
     }
 }
 
-fn selected_toolchain_name(mcu_config: &Esp32McuConfig, unified: bool) -> String {
-    if !unified && !mcu_config.is_riscv() {
-        format!("toolchain-xtensa-{}", mcu_config.mcu)
-    } else {
-        primary_toolchain_name(mcu_config.is_riscv()).to_string()
-    }
+/// The MCU's own toolchain package. Each Xtensa MCU has one; RISC-V MCUs
+/// share the unified package and have none.
+fn per_mcu_toolchain_name(mcu_config: &Esp32McuConfig) -> Option<String> {
+    (!mcu_config.is_riscv()).then(|| format!("toolchain-xtensa-{}", mcu_config.mcu))
 }
 
 /// The toolchain package the platform actually declares.
@@ -301,8 +299,9 @@ fn platform_toolchain_name(
 }
 
 fn toolchain_name_for(mcu_config: &Esp32McuConfig, declares: impl Fn(&str) -> bool) -> String {
-    let per_mcu = selected_toolchain_name(mcu_config, false);
-    selected_toolchain_name(mcu_config, !declares(&per_mcu))
+    per_mcu_toolchain_name(mcu_config)
+        .filter(|name| declares(name))
+        .unwrap_or_else(|| primary_toolchain_name(mcu_config.is_riscv()).to_string())
 }
 
 async fn resolve_and_create_toolchain(
@@ -790,14 +789,18 @@ mod registry_toolchain_tests {
     fn legacy_esp32s3_manifest_selects_its_per_mcu_toolchain() {
         let mcu = get_mcu_config("esp32s3").unwrap();
         assert_eq!(
-            selected_toolchain_name(&mcu, false),
-            "toolchain-xtensa-esp32s3"
+            per_mcu_toolchain_name(&mcu).as_deref(),
+            Some("toolchain-xtensa-esp32s3")
         );
         assert_eq!(
-            selected_toolchain_name(&mcu, true),
+            primary_toolchain_name(mcu.is_riscv()),
             "toolchain-xtensa-esp-elf"
         );
         assert_eq!(mcu.toolchain_prefix(), "xtensa-esp32s3-elf-");
+        assert_eq!(
+            per_mcu_toolchain_name(&get_mcu_config("esp32c3").unwrap()),
+            None
+        );
     }
 
     #[test]

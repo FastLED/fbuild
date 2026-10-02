@@ -2,6 +2,7 @@
 
 pub mod esp32_compiler;
 pub mod esp32_linker;
+pub mod fixups;
 pub mod mcu_config;
 pub mod orchestrator;
 pub(crate) mod size_report;
