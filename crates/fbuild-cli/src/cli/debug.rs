@@ -465,6 +465,8 @@ pub async fn run_debug(
     no_flash: bool,
     port: Option<String>,
 ) -> Result<()> {
+    // Linux: make attached boards openable without root (FastLED/fbuild#1621).
+    super::udev_install::ensure_device_access();
     let project_path = NormalizedPath::from(project_dir.as_str());
     let target = resolve_debug_target(&project_path, environment.as_deref())?;
 

@@ -168,6 +168,8 @@ pub async fn run_deploy(
     output_dir: Option<String>,
     usb_recovery_policy: fbuild_core::usb::UsbRecoveryPolicy,
 ) -> fbuild_core::Result<()> {
+    // Linux: make attached boards openable without root (FastLED/fbuild#1621).
+    super::udev_install::ensure_device_access();
     // A `--port ser=<USB serial>` selector is forwarded as-is: the daemon
     // resolves it right before the port is opened, after the (possibly long)
     // build, so a device that re-enumerates meanwhile is still found (#1428).
@@ -598,6 +600,8 @@ pub async fn run_monitor(
     expect: Option<String>,
     no_timestamp: bool,
 ) -> fbuild_core::Result<()> {
+    // Linux: make attached boards openable without root (FastLED/fbuild#1621).
+    super::udev_install::ensure_device_access();
     let port = fbuild_serial::port_selector::resolve_port_arg(port)?;
     daemon_client::ensure_daemon_running().await?;
     let client = DaemonClient::new();
