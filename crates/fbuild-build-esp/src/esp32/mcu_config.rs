@@ -85,18 +85,25 @@ pub struct LegacyGcc8Recipe {
 }
 
 impl Esp32McuConfig {
-    /// Drop GCC 14 recipe flags when the platform selects an older per-MCU
-    /// Xtensa toolchain. The GCC 12 compiler rejects the atomics switch, and
-    /// its matching Arduino 3.0 SDK does not define `__dso_handle` for
-    /// `-fuse-cxa-atexit`-generated references.
+    /// Drop GCC 14 recipe flags when the platform selects an older toolchain.
+    /// The SDKs paired with pre-GCC 14 toolchains (pioarduino 51.x/53.x,
+    /// Arduino 3.0/3.1) do not define `__dso_handle` for
+    /// `-fuse-cxa-atexit`-generated references, on Xtensa and RISC-V alike.
+    /// The per-MCU GCC 12 Xtensa compiler also rejects the atomics switch.
     pub fn adapt_to_toolchain(&mut self, package_name: &str, package_version: &str) {
+        let gcc_major = package_version
+            .split('.')
+            .next()
+            .and_then(|major| major.parse::<u32>().ok());
+        if gcc_major.is_some_and(|major| major < 14) {
+            self.compiler_flags
+                .cxx
+                .retain(|flag| flag != "-fuse-cxa-atexit");
+        }
         if package_name.starts_with("toolchain-xtensa-esp32") {
             self.compiler_flags
                 .common
                 .retain(|flag| flag != "-mdisable-hardware-atomics");
-            self.compiler_flags
-                .cxx
-                .retain(|flag| flag != "-fuse-cxa-atexit");
             if package_version.starts_with("8.") {
                 if let Some(recipe) = &self.legacy_gcc8 {
                     self.linker_flags = recipe.linker_flags.clone();
@@ -828,6 +835,27 @@ mod tests {
                 .iter()
                 .any(|flag| flag == "-fuse-cxa-atexit")
         );
+    }
+
+    #[test]
+    fn pre_gcc14_unified_toolchain_drops_cxa_atexit() {
+        // pioarduino 53.x: unified registry toolchains at GCC 13.2 on both
+        // architectures, with an SDK that lacks `__dso_handle`.
+        for (mcu, package) in [
+            ("esp32", "toolchain-xtensa-esp-elf"),
+            ("esp32c3", "toolchain-riscv32-esp"),
+        ] {
+            let mut config = get_mcu_config(mcu).unwrap();
+            config.adapt_to_toolchain(package, "13.2.0+20240530");
+            assert!(
+                !config
+                    .compiler_flags
+                    .cxx
+                    .iter()
+                    .any(|f| f == "-fuse-cxa-atexit"),
+                "{mcu} kept -fuse-cxa-atexit on GCC 13"
+            );
+        }
     }
 
     #[test]
