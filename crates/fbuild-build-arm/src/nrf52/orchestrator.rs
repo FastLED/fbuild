@@ -125,24 +125,44 @@ fn nrf52_packages_from_resolved(
     (toolchain, cores, cmsis)
 }
 
-fn align_nrf52_flags_with_registry_toolchain(
-    config: &mut super::mcu_config::Nrf52McuConfig,
+/// Adapt the recipe to the registry toolchain the platform resolved.
+///
+/// platform-nordicnrf52's Adafruit builder uses GCC 7.2 without LTO.
+/// fbuild's default GCC 15 release recipe enables LTO, but that profile
+/// fails in GCC 7's assembler with `offset out of range` at link time.
+fn for_registry_toolchain(
+    config: super::mcu_config::Nrf52McuConfig,
     toolchain_version: &str,
-) {
-    // platform-nordicnrf52's Adafruit builder uses GCC 7.2 without LTO.
-    // fbuild's default GCC 15 release recipe enables LTO, but that profile
-    // fails in GCC 7's assembler with `offset out of range` at link time.
-    if !toolchain_version.starts_with("1.70201.") {
-        return;
+) -> super::mcu_config::Nrf52McuConfig {
+    if is_gcc7_registry_toolchain(toolchain_version) {
+        without_release_lto(config)
+    } else {
+        config
     }
-    if let Some(release) = config.profiles.get_mut("release") {
-        release
-            .compile_flags
-            .retain(|flag| flag != "-flto" && flag != "-fno-fat-lto-objects");
-        release
-            .link_flags
-            .retain(|flag| flag != "-flto" && flag != "-fuse-linker-plugin");
+}
+
+fn is_gcc7_registry_toolchain(toolchain_version: &str) -> bool {
+    toolchain_version.starts_with("1.70201.")
+}
+
+fn without_release_lto(
+    mut config: super::mcu_config::Nrf52McuConfig,
+) -> super::mcu_config::Nrf52McuConfig {
+    if let Some(release) = config.profiles.remove("release") {
+        let release = crate::compiler::ProfileFlags {
+            compile_flags: without_flags(release.compile_flags, &["-flto", "-fno-fat-lto-objects"]),
+            link_flags: without_flags(release.link_flags, &["-flto", "-fuse-linker-plugin"]),
+        };
+        config.profiles.insert("release".to_string(), release);
     }
+    config
+}
+
+fn without_flags(flags: Vec<String>, unwanted: &[&str]) -> Vec<String> {
+    flags
+        .into_iter()
+        .filter(|flag| !unwanted.contains(&flag.as_str()))
+        .collect()
 }
 
 #[async_trait::async_trait]
@@ -326,9 +346,8 @@ impl BuildOrchestrator for Nrf52Orchestrator {
 
         // 6. Build include dirs + compiler
         let mcu_lower = ctx.board.mcu.to_lowercase();
-        let mut mcu_config = super::mcu_config::get_nrf52_config_for_mcu(&mcu_lower)?;
-        align_nrf52_flags_with_registry_toolchain(
-            &mut mcu_config,
+        let mcu_config = for_registry_toolchain(
+            super::mcu_config::get_nrf52_config_for_mcu(&mcu_lower)?,
             &fbuild_packages::Package::get_info(&toolchain).version,
         );
         let mut defines = ctx.board.get_defines();
@@ -590,8 +609,10 @@ mod tests {
 
     #[test]
     fn gcc7_registry_stack_omits_default_lto_flags() {
-        let mut config = crate::nrf52::mcu_config::get_nrf52_config_for_mcu("nrf52840").unwrap();
-        align_nrf52_flags_with_registry_toolchain(&mut config, "1.70201.0");
+        let config = for_registry_toolchain(
+            crate::nrf52::mcu_config::get_nrf52_config_for_mcu("nrf52840").unwrap(),
+            "1.70201.0",
+        );
         let release = config.profiles.get("release").unwrap();
         assert!(
             !release
@@ -601,8 +622,25 @@ mod tests {
         );
         assert!(!release.link_flags.iter().any(|flag| flag.contains("lto")));
 
-        let mut default = crate::nrf52::mcu_config::get_nrf52_config_for_mcu("nrf52840").unwrap();
-        align_nrf52_flags_with_registry_toolchain(&mut default, "15.2.Rel1");
+        let base = crate::nrf52::mcu_config::get_nrf52_config_for_mcu("nrf52840").unwrap();
+        let default = for_registry_toolchain(base.clone(), "15.2.Rel1");
+        assert_eq!(
+            default.profiles["release"].compile_flags,
+            base.profiles["release"].compile_flags
+        );
+        assert_eq!(
+            config.profiles.len(),
+            base.profiles.len(),
+            "GCC 7 fixup must only rewrite the release profile"
+        );
+        assert_eq!(
+            config.profiles["release"].compile_flags.len(),
+            base.profiles["release"]
+                .compile_flags
+                .iter()
+                .filter(|flag| *flag != "-flto" && *flag != "-fno-fat-lto-objects")
+                .count()
+        );
         assert!(
             default.profiles["release"]
                 .compile_flags
