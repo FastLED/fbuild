@@ -298,12 +298,22 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         // Arduino-Pico ships framework libraries (WiFi, SPI, Wire, ...) under
         // `libraries/`. Mirror PlatformIO's LDF so their headers are visible
         // and only the sources required by the project are compiled.
-        let framework_libs = framework.get_framework_libraries();
         let framework_info = fbuild_packages::Package::get_info(&framework);
         let declared_deps = ctx
             .config
             .get_lib_deps(&params.env_name)
             .unwrap_or_default();
+        // Bluetooth-only libraries cannot compile unless the menu or the
+        // user's build_flags enable ENABLE_CLASSIC; see `bluetooth_libs`.
+        let framework_libs = {
+            let mut bluetooth_defines = defines.clone();
+            apply_define_flags(&ctx.user_flags, &mut bluetooth_defines);
+            super::bluetooth_libs::exclude_bluetooth_libraries_when_disabled(
+                framework.get_framework_libraries(),
+                &bluetooth_defines,
+                &declared_deps,
+            )
+        };
         warn_if_lib_ldf_mode_unsupported(
             ctx.config
                 .get_lib_ldf_mode(&params.env_name)

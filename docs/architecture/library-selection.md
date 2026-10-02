@@ -143,6 +143,18 @@ Two separate comparisons with PlatformIO, since it is easy to conflate them:
 The `#if 0` hint works under `chain` only as a side effect of it evaluating
 nothing. `chain+` does not honor it. fbuild honors it deliberately.
 
+The undecidable row over-selects, which is harmless for a library that
+compiles in any configuration. It is fatal for one the framework itself
+declares unbuildable here. Arduino-Pico marks its Bluetooth libraries
+(`BTstackLib`, `SerialBT`, `BLE`, ...) with `#include <_needsbt.h>`, which
+`static_assert`s `ENABLE_CLASSIC`. FastLED's RP2350W BLE transport includes
+`<BTstackLib.h>` behind `#if FL_BLE_AVAILABLE`, a header-derived guard, and
+once #1473 seeded FastLED's unity TUs a plain Pico 2 build selected
+`BTstackLib` and failed. The RP2040 orchestrator therefore drops those
+libraries from the candidates unless `ENABLE_CLASSIC` is set by the
+`ipbtstack` menu or `build_flags`; a `lib_deps` entry still selects one
+(`crates/fbuild-build-arm/src/rp2040/bluetooth_libs.rs`).
+
 ## Why two-pass (not fixed-point)
 
 PlatformIO `chain` mode runs BFS from project sources, then ONE
