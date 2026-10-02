@@ -248,20 +248,7 @@ impl SharedSerialManager {
                 let (dtr, rts) = family_for_open
                     .map(|f| f.idle_dtr_rts())
                     .unwrap_or((true, true));
-                match serial.write_data_terminal_ready(dtr) {
-                    Ok(()) => tracing::debug!(
-                        family = ?family_for_open,
-                        "manager: open-time DTR={dtr} asserted"
-                    ),
-                    Err(e) => tracing::warn!("failed to set DTR={dtr}: {}", e),
-                }
-                match serial.write_request_to_send(rts) {
-                    Ok(()) => tracing::debug!(
-                        family = ?family_for_open,
-                        "manager: open-time RTS={rts} asserted"
-                    ),
-                    Err(e) => tracing::warn!("failed to set RTS={rts}: {}", e),
-                }
+                crate::esp_reset::apply_idle_control_lines(serial.as_mut(), dtr, rts);
                 Ok(serial)
             })
             .await;
@@ -1214,20 +1201,7 @@ impl SharedSerialManager {
                 let mut serial = serialport::new(&port_for_open, baud_rate)
                     .timeout(SERIAL_READ_TIMEOUT)
                     .open()?;
-                match serial.write_data_terminal_ready(dtr) {
-                    Ok(()) => tracing::debug!(
-                        family = ?family_for_open,
-                        "manager: open-time DTR={dtr} asserted"
-                    ),
-                    Err(e) => tracing::warn!("failed to set DTR: {}", e),
-                }
-                match serial.write_request_to_send(rts) {
-                    Ok(()) => tracing::debug!(
-                        family = ?family_for_open,
-                        "manager: open-time RTS={rts} asserted"
-                    ),
-                    Err(e) => tracing::warn!("failed to set RTS: {}", e),
-                }
+                crate::esp_reset::apply_idle_control_lines(serial.as_mut(), dtr, rts);
                 Ok(serial)
             })
             .await;
