@@ -25,6 +25,7 @@ use crate::compile_database::TargetArchitecture;
 use crate::pipeline;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 
+use super::board_props::for_board_props;
 use super::esp8266_compiler::Esp8266Compiler;
 use super::esp8266_linker::Esp8266Linker;
 use super::mcu_config::get_esp8266_config;
@@ -254,8 +255,7 @@ impl BuildOrchestrator for Esp8266Orchestrator {
         let variant_dir = framework.get_variant_dir(&ctx.board.variant);
 
         // 5. Load MCU config
-        let mut mcu_config = get_esp8266_config()?;
-        apply_esp8266_board_props(&board_props, &mut mcu_config);
+        let mcu_config = for_board_props(get_esp8266_config()?, &board_props);
 
         // Compute flash_freq early for the fast-path fingerprint (also used by
         // the linker constructor below).
@@ -586,68 +586,6 @@ fn apply_define_flags_from_props(
                         defines.insert(def.to_string(), "1".to_string());
                     }
                 }
-            }
-        }
-    }
-}
-
-fn apply_esp8266_board_props(
-    board_props: &Option<HashMap<String, String>>,
-    mcu_config: &mut super::mcu_config::Esp8266McuConfig,
-) {
-    let Some(props) = board_props.as_ref() else {
-        return;
-    };
-
-    if let Some(sdk_name) = props.get("sdk") {
-        mcu_config
-            .defines
-            .retain(|entry| !matches!(entry, crate::esp32::mcu_config::DefineEntry::KeyValue(name, _) if name.starts_with("NONOSDK")));
-        mcu_config
-            .defines
-            .push(crate::esp32::mcu_config::DefineEntry::KeyValue(
-                sdk_name.clone(),
-                "1".to_string(),
-            ));
-    }
-
-    for key in ["flash_flags", "lwip_flags", "mmuflags", "vtable_flags"] {
-        if let Some(flags) = props.get(key) {
-            for token in fbuild_core::shell_split::split(flags) {
-                if let Some(def) = token.strip_prefix("-D") {
-                    let (name, value) = def
-                        .split_once('=')
-                        .map(|(name, value)| (name.to_string(), value.to_string()))
-                        .unwrap_or_else(|| (def.to_string(), "1".to_string()));
-                    mcu_config.defines.retain(|entry| match entry {
-                        crate::esp32::mcu_config::DefineEntry::Simple(existing) => {
-                            existing != &name
-                        }
-                        crate::esp32::mcu_config::DefineEntry::KeyValue(existing, _) => {
-                            existing != &name
-                        }
-                    });
-                    mcu_config
-                        .defines
-                        .push(crate::esp32::mcu_config::DefineEntry::KeyValue(name, value));
-                }
-            }
-        }
-    }
-
-    if let Some(lwip_lib) = props.get("lwip_lib") {
-        for lib in &mut mcu_config.linker_libs {
-            if lib.starts_with("-llwip") {
-                *lib = lwip_lib.clone();
-                break;
-            }
-        }
-    }
-    if let Some(stdcpp_lib) = props.get("stdcpp_lib") {
-        for lib in &mut mcu_config.linker_libs {
-            if lib == "-lstdc++" || lib == "-lstdc++-exc" {
-                *lib = stdcpp_lib.clone();
-                break;
             }
         }
     }
