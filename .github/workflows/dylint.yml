@@ -73,7 +73,7 @@ jobs:
           uv run --no-project python ci/check_fbuild_path_baseline.py --base FETCH_HEAD
       - name: Validate platform-boundary ledgers
         run: uv run --no-project python ci/enforce_platform_boundary.py --print-totals
-      - uses: zackees/setup-soldr@v0
+      - uses: zackees/setup-soldr@3b3a7160b8ab4e0e1c22db756d476816d97c8edd
         with:
           # ci-tests applies the prescribed bounded resource contract for the
           # workspace validation domain. Dylint deliberately remains on its

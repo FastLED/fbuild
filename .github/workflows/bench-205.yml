@@ -45,7 +45,7 @@ jobs:
           ref: ${{ inputs.ref }}
       - uses: astral-sh/setup-uv@v3
       - name: Setup soldr
-        uses: zackees/setup-soldr@v0
+        uses: zackees/setup-soldr@3b3a7160b8ab4e0e1c22db756d476816d97c8edd
         with:
           cache-key-suffix: bench-205-${{ matrix.bench }}
           cache: true
@@ -88,7 +88,7 @@ jobs:
           ref: ${{ inputs.ref }}
       - uses: astral-sh/setup-uv@v3
       - name: Setup soldr
-        uses: zackees/setup-soldr@v0
+        uses: zackees/setup-soldr@3b3a7160b8ab4e0e1c22db756d476816d97c8edd
         with:
           cache-key-suffix: bench-205-fastled-examples
           cache: true
