@@ -149,11 +149,14 @@ pub fn elevated_argv(
     legacy: &Path,
     udevadm: &Path,
 ) -> Vec<String> {
+    // `display_slash` is identity on Unix, where this argv is executed; it
+    // keeps the rendering host-independent so the argv tests hold on Windows
+    // too, where `NormalizedPath` would otherwise print `\usr\bin\pkexec`.
     let mut argv: Vec<String> = match elevation {
         Elevation::Direct => vec![],
-        Elevation::Pkexec(p) => vec![p.display().to_string()],
-        Elevation::Sudo(s) => vec![s.display().to_string()],
-        Elevation::SudoAskpass { sudo, .. } => vec![sudo.display().to_string(), "-A".into()],
+        Elevation::Pkexec(p) => vec![p.display_slash()],
+        Elevation::Sudo(s) => vec![s.display_slash()],
+        Elevation::SudoAskpass { sudo, .. } => vec![sudo.display_slash(), "-A".into()],
     };
     argv.extend(
         [helper, dest, rules, legacy, udevadm]
