@@ -77,6 +77,25 @@ impl<T: serialport::SerialPort + ?Sized> DtrRtsControl for T {
     }
 }
 
+/// Drive a freshly opened port to its idle `(dtr, rts)` state.
+///
+/// The OS asserts DTR=1, RTS=1 on open. RTS is written first: clearing
+/// DTR first would pass through `(DTR=0, RTS=1)`, which the ESP
+/// USB-Serial-JTAG reads as "hold the chip in reset" and releases into a
+/// reboot (on the ESP32-P4 a full USB re-enumeration). Going via
+/// `(DTR=1, RTS=0)` only sets the boot strap (FastLED/fbuild#1617).
+/// Failures are logged and ignored — some adapters reject control-line
+/// writes but the port is still usable.
+pub fn apply_idle_control_lines<P: DtrRtsControl + ?Sized>(port: &mut P, dtr: bool, rts: bool) {
+    if let Err(e) = port.write_request_to_send(rts) {
+        tracing::warn!("failed to set RTS={rts}: {e}");
+    }
+    if let Err(e) = port.write_data_terminal_ready(dtr) {
+        tracing::warn!("failed to set DTR={dtr}: {e}");
+    }
+    tracing::debug!("open-time idle lines applied: RTS={rts} then DTR={dtr}");
+}
+
 /// Hold time for the RTS=high (EN=low) pulse, in milliseconds.
 ///
 /// Matches `esptool`'s classic-hardware `hard_reset` timing: long enough to
@@ -248,6 +267,23 @@ mod tests {
             self.events.push(("RTS", level));
             Ok(())
         }
+    }
+
+    #[test]
+    fn idle_lines_clear_rts_before_dtr() {
+        let mut port = RecordedPort::default();
+        apply_idle_control_lines(&mut port, false, false);
+        assert_eq!(port.events, vec![("RTS", false), ("DTR", false)]);
+    }
+
+    #[test]
+    fn idle_lines_still_set_dtr_when_rts_write_fails() {
+        let mut port = RecordedPort {
+            fail_on: Some("rts"),
+            ..RecordedPort::default()
+        };
+        apply_idle_control_lines(&mut port, true, true);
+        assert_eq!(port.events, vec![("DTR", true)]);
     }
 
     #[test]
