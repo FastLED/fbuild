@@ -4,8 +4,8 @@ fn desktop() -> HostEnv {
     HostEnv {
         has_display: true,
         stdin_is_tty: true,
-        pkexec: Some(PathBuf::from("/usr/bin/pkexec")),
-        sudo: Some(PathBuf::from("/usr/bin/sudo")),
+        pkexec: Some(NormalizedPath::from("/usr/bin/pkexec")),
+        sudo: Some(NormalizedPath::from("/usr/bin/sudo")),
         ..HostEnv::default()
     }
 }
@@ -23,7 +23,7 @@ fn root_runs_directly() {
 fn desktop_prefers_the_polkit_dialog() {
     assert_eq!(
         choose_elevation(&desktop()),
-        Some(Elevation::Pkexec(PathBuf::from("/usr/bin/pkexec")))
+        Some(Elevation::Pkexec(NormalizedPath::from("/usr/bin/pkexec")))
     );
 }
 
@@ -36,7 +36,7 @@ fn terminal_without_polkit_uses_sudo() {
     };
     assert_eq!(
         choose_elevation(&env),
-        Some(Elevation::Sudo(PathBuf::from("/usr/bin/sudo")))
+        Some(Elevation::Sudo(NormalizedPath::from("/usr/bin/sudo")))
     );
 }
 
@@ -45,14 +45,14 @@ fn display_without_tty_or_polkit_uses_sudo_askpass() {
     let env = HostEnv {
         pkexec: None,
         stdin_is_tty: false,
-        askpass: Some(PathBuf::from("/usr/bin/ssh-askpass")),
+        askpass: Some(NormalizedPath::from("/usr/bin/ssh-askpass")),
         ..desktop()
     };
     assert_eq!(
         choose_elevation(&env),
         Some(Elevation::SudoAskpass {
-            sudo: PathBuf::from("/usr/bin/sudo"),
-            askpass: PathBuf::from("/usr/bin/ssh-askpass"),
+            sudo: NormalizedPath::from("/usr/bin/sudo"),
+            askpass: NormalizedPath::from("/usr/bin/ssh-askpass"),
         })
     );
 }
@@ -60,7 +60,7 @@ fn display_without_tty_or_polkit_uses_sudo_askpass() {
 #[test]
 fn nothing_to_prompt_with_yields_none() {
     let env = HostEnv {
-        sudo: Some(PathBuf::from("/usr/bin/sudo")),
+        sudo: Some(NormalizedPath::from("/usr/bin/sudo")),
         ..HostEnv::default()
     };
     assert_eq!(choose_elevation(&env), None);
@@ -102,7 +102,7 @@ fn nixos_installs_to_run_because_etc_is_a_store_symlink() {
 #[test]
 fn pkexec_runs_the_named_helper_with_the_destination_first() {
     let argv = elevated_argv(
-        &Elevation::Pkexec(PathBuf::from("/usr/bin/pkexec")),
+        &Elevation::Pkexec(NormalizedPath::from("/usr/bin/pkexec")),
         Path::new("/tmp/fbuild-udev-x/fbuild-install-usb-rules"),
         Path::new("/run/udev/rules.d/70-fbuild.rules"),
         Path::new("/tmp/fbuild-udev-x/70-fbuild.rules"),
@@ -131,8 +131,8 @@ fn sudo_askpass_adds_dash_a() {
     let p = Path::new("/p");
     let argv = elevated_argv(
         &Elevation::SudoAskpass {
-            sudo: PathBuf::from("/usr/bin/sudo"),
-            askpass: PathBuf::from("/usr/bin/ssh-askpass"),
+            sudo: NormalizedPath::from("/usr/bin/sudo"),
+            askpass: NormalizedPath::from("/usr/bin/ssh-askpass"),
         },
         Path::new("/h"),
         p,

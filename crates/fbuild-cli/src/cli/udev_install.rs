@@ -7,7 +7,9 @@
 //! [`HostEnv`] so they are testable without root; [`install`] is the only
 //! part that touches the host.
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
+
+use fbuild_core::path::NormalizedPath;
 
 use fbuild_core::{FbuildError, Result};
 
@@ -34,17 +36,17 @@ pub struct HostEnv {
     pub ci: bool,
     pub no_elevate: bool,
     pub nixos: bool,
-    pub pkexec: Option<PathBuf>,
-    pub sudo: Option<PathBuf>,
+    pub pkexec: Option<NormalizedPath>,
+    pub sudo: Option<NormalizedPath>,
     /// `SUDO_ASKPASS`, or a GUI askpass helper found on PATH.
-    pub askpass: Option<PathBuf>,
+    pub askpass: Option<NormalizedPath>,
 }
 
 impl HostEnv {
     pub fn probe() -> Self {
         let var = |k: &str| std::env::var_os(k).is_some_and(|v| !v.is_empty());
         let askpass = std::env::var_os("SUDO_ASKPASS")
-            .map(PathBuf::from)
+            .map(NormalizedPath::new)
             .or_else(|| {
                 ["ssh-askpass", "ksshaskpass", "lxqt-openssh-askpass"]
                     .iter()
@@ -71,11 +73,14 @@ pub enum Elevation {
     Direct,
     /// polkit: the desktop agent shows a dialog, or pkexec's text agent asks
     /// on the tty when no GUI agent is running.
-    Pkexec(PathBuf),
+    Pkexec(NormalizedPath),
     /// `sudo` prompting on the terminal.
-    Sudo(PathBuf),
+    Sudo(NormalizedPath),
     /// `sudo -A` with a GUI askpass helper, for desktops without polkit.
-    SudoAskpass { sudo: PathBuf, askpass: PathBuf },
+    SudoAskpass {
+        sudo: NormalizedPath,
+        askpass: NormalizedPath,
+    },
 }
 
 /// Pick the first elevation method this host can actually prompt with.
@@ -287,7 +292,7 @@ pub fn install(rules: &str, env: &HostEnv) -> Result<InstallOutcome> {
     // Private scratch dir: the helper and rules live there only for this call.
     let scratch = tempfile::Builder::new()
         .prefix("fbuild-udev-")
-        .tempdir()
+        .tempdir_in(fbuild_paths::temp_subdir("udev-install"))
         .map_err(|e| FbuildError::Other(format!("creating temp dir: {e}")))?;
     let helper = scratch.path().join(HELPER_NAME);
     let rules_tmp = scratch.path().join(UDEV_RULES_FILENAME);
@@ -329,10 +334,11 @@ pub fn install(rules: &str, env: &HostEnv) -> Result<InstallOutcome> {
     Ok(InstallOutcome::Installed)
 }
 
+/// Write `body` and mark it executable. It lives in the 0700 scratch dir, so
+/// only this user (and root) can reach it whatever its own mode.
 fn write_executable(path: &Path, body: &str) -> Result<()> {
-    use std::os::unix::fs::PermissionsExt;
     std::fs::write(path, body)
-        .and_then(|()| std::fs::set_permissions(path, std::fs::Permissions::from_mode(0o700)))
+        .and_then(|()| fbuild_core::platform::fs::set_executable(path))
         .map_err(|e| FbuildError::Other(format!("writing {}: {e}", path.display())))
 }
 
@@ -363,7 +369,7 @@ pub fn nixos_snippet(rules: &str) -> String {
 /// that this user cannot open read-write. Opening a usbfs node does not
 /// claim or reset the device (libusb does the same to enumerate), unlike
 /// opening a tty, which can toggle DTR.
-pub fn inaccessible_registry_devices(vids: &[u16]) -> Vec<PathBuf> {
+pub fn inaccessible_registry_devices(vids: &[u16]) -> Vec<NormalizedPath> {
     let Ok(entries) = std::fs::read_dir("/sys/bus/usb/devices") else {
         return Vec::new();
     };
@@ -378,7 +384,7 @@ pub fn inaccessible_registry_devices(vids: &[u16]) -> Vec<PathBuf> {
             }
             let bus: u32 = read(&d, "busnum")?.trim().parse().ok()?;
             let dev: u32 = read(&d, "devnum")?.trim().parse().ok()?;
-            let node = PathBuf::from(format!("/dev/bus/usb/{bus:03}/{dev:03}"));
+            let node = NormalizedPath::from(format!("/dev/bus/usb/{bus:03}/{dev:03}"));
             let ok = std::fs::OpenOptions::new()
                 .read(true)
                 .write(true)
@@ -393,7 +399,7 @@ pub fn inaccessible_registry_devices(vids: &[u16]) -> Vec<PathBuf> {
 /// and the rules are missing or stale, install them (raising the root
 /// prompt) when allowed, otherwise say how. Never fails the caller.
 pub fn ensure_device_access() {
-    if !cfg!(target_os = "linux") {
+    if !fbuild_core::platform::host::is_linux() {
         return;
     }
     super::port_scan::populate_online_overlay();
@@ -444,11 +450,12 @@ pub fn report_installed(rules: &str, env: &HostEnv) {
     }
 }
 
-fn which(name: &str) -> Option<PathBuf> {
+fn which(name: &str) -> Option<NormalizedPath> {
     std::env::var_os("PATH").and_then(|paths| {
         std::env::split_paths(&paths)
             .map(|d| d.join(name))
             .find(|p| p.is_file())
+            .map(NormalizedPath::from)
     })
 }
 
