@@ -139,17 +139,18 @@ pub async fn resolve_deploy_esptool(
     project_dir: &Path,
     env_config: Option<&HashMap<String, String>>,
 ) -> Result<Option<NormalizedPath>> {
-    let resolved = match fbuild_packages::library::esptool_path_override()? {
-        Some(path) => Some(path),
-        None => {
-            let Some(platform) = pioarduino_platform(project_dir, env_config, true).await? else {
-                return Ok(None);
-            };
-            fbuild_packages::Package::ensure_installed(&platform).await?;
-            resolve_esptool(&platform, project_dir).await?
-        }
+    // An explicit override is the user's choice and is used as-is, whatever
+    // its file name (v5 still ships `esptool.py` entry points).
+    if let Some(path) = fbuild_packages::library::esptool_path_override()? {
+        return Ok(Some(path));
+    }
+    let Some(platform) = pioarduino_platform(project_dir, env_config, true).await? else {
+        return Ok(None);
     };
-    Ok(resolved.filter(|path| {
+    fbuild_packages::Package::ensure_installed(&platform).await?;
+    // The file-name check only applies to the package fbuild provisioned,
+    // where `esptool.py` means the v4 source package.
+    Ok(resolve_esptool(&platform, project_dir).await?.filter(|path| {
         let usable = speaks_v5_cli(path);
         if !usable {
             tracing::info!(
