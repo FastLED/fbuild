@@ -447,37 +447,33 @@ impl Esp32Deployer {
         // + per-region MD5). On a wedged USB-CDC stack the call could
         // spin for minutes. A 30s outer cap matches the esptool
         // subprocess path's timeout and is the documented "fast skip"
-        // budget. On timeout the blocking task is detached (the
-        // `Flasher` drops, closing the serial port) and the caller can
-        // fall back to a full flash via the esptool path.
+        // budget. The blocking thread cannot be cancelled, so on timeout
+        // `run_port_bound` waits for it to release the port before the
+        // caller falls back to esptool (FastLED/fbuild#1614).
         let chip = self.chip.clone();
         let port_str = port.to_string();
         let before_reset = self.before_reset.clone();
         let after_reset = self.after_reset.clone();
-        let join_handle = tokio::task::spawn_blocking(move || {
-            crate::esp32_native::try_verify_deployment_native(
-                &chip,
-                &port_str,
-                baud,
-                &before_reset,
-                &after_reset,
-                &regions,
-                boot_off,
-                parts_off,
-                fw_off,
-            )
-        });
-        match tokio::time::timeout(std::time::Duration::from_secs(30), join_handle).await {
-            Ok(Ok(result)) => result,
-            Ok(Err(e)) => Err(fbuild_core::FbuildError::DeployFailed(format!(
-                "native verify: blocking task panicked: {}",
-                e
-            ))),
-            Err(_) => Err(fbuild_core::FbuildError::DeployFailed(format!(
-                "native verify timed out after 30s on {}",
-                port
-            ))),
-        }
+        crate::esp32_native::run_port_bound(
+            "native verify",
+            port,
+            std::time::Duration::from_secs(30),
+            crate::esp32_native::PORT_RELEASE_GRACE,
+            move || {
+                crate::esp32_native::try_verify_deployment_native(
+                    &chip,
+                    &port_str,
+                    baud,
+                    &before_reset,
+                    &after_reset,
+                    &regions,
+                    boot_off,
+                    parts_off,
+                    fw_off,
+                )
+            },
+        )
+        .await
     }
 
     /// Native `write-flash` via the [`espflash`] crate (issue #66).
@@ -529,35 +525,31 @@ impl Esp32Deployer {
         // stub flasher mid-write this hangs the daemon's `/api/deploy`
         // handler indefinitely. 180s comfortably covers a worst-case
         // full-image write (~2.4 MB at 460800 baud + erase) while
-        // bounding the wedge surface; on timeout the blocking task is
-        // detached (the `Flasher` drops, closing the port) and we
-        // surface a clear error so the caller can retry / fall back.
+        // bounding the wedge surface; on timeout `run_port_bound` waits
+        // for the uncancellable thread to release the port before we
+        // surface the error (FastLED/fbuild#1614).
         let chip = self.chip.clone();
         let port_str = port.to_string();
         let before_reset = self.before_reset.clone();
         let after_reset = self.after_reset.clone();
-        let join_handle = tokio::task::spawn_blocking(move || {
-            crate::esp32_native::try_write_deployment_native(
-                &chip,
-                &port_str,
-                baud,
-                &before_reset,
-                &after_reset,
-                &regions,
-                /* selective */ false,
-            )
-        });
-        match tokio::time::timeout(std::time::Duration::from_secs(180), join_handle).await {
-            Ok(Ok(result)) => result,
-            Ok(Err(e)) => Err(fbuild_core::FbuildError::DeployFailed(format!(
-                "native write: blocking task panicked: {}",
-                e
-            ))),
-            Err(_) => Err(fbuild_core::FbuildError::DeployFailed(format!(
-                "native write timed out after 180s on {}",
-                port
-            ))),
-        }
+        crate::esp32_native::run_port_bound(
+            "native write",
+            port,
+            std::time::Duration::from_secs(180),
+            crate::esp32_native::PORT_RELEASE_GRACE,
+            move || {
+                crate::esp32_native::try_write_deployment_native(
+                    &chip,
+                    &port_str,
+                    baud,
+                    &before_reset,
+                    &after_reset,
+                    &regions,
+                    /* selective */ false,
+                )
+            },
+        )
+        .await
     }
 
     /// Native `write-flash` for a caller-chosen subset of regions
@@ -607,28 +599,24 @@ impl Esp32Deployer {
         let port_str = port.to_string();
         let before_reset = self.before_reset.clone();
         let after_reset = self.after_reset.clone();
-        let join_handle = tokio::task::spawn_blocking(move || {
-            crate::esp32_native::try_write_deployment_native(
-                &chip,
-                &port_str,
-                baud,
-                &before_reset,
-                &after_reset,
-                &write_regions,
-                /* selective */ true,
-            )
-        });
-        match tokio::time::timeout(std::time::Duration::from_secs(180), join_handle).await {
-            Ok(Ok(result)) => result,
-            Ok(Err(e)) => Err(fbuild_core::FbuildError::DeployFailed(format!(
-                "native write (selective): blocking task panicked: {}",
-                e
-            ))),
-            Err(_) => Err(fbuild_core::FbuildError::DeployFailed(format!(
-                "native write (selective) timed out after 180s on {}",
-                port
-            ))),
-        }
+        crate::esp32_native::run_port_bound(
+            "native write (selective)",
+            port,
+            std::time::Duration::from_secs(180),
+            crate::esp32_native::PORT_RELEASE_GRACE,
+            move || {
+                crate::esp32_native::try_write_deployment_native(
+                    &chip,
+                    &port_str,
+                    baud,
+                    &before_reset,
+                    &after_reset,
+                    &write_regions,
+                    /* selective */ true,
+                )
+            },
+        )
+        .await
     }
 
     #[cfg(feature = "espflash-native")]

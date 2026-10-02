@@ -54,12 +54,14 @@
 //! `collect_selected_write_regions`) is re-exported from this `mod.rs`
 //! so external callers see the same paths as before.
 
+mod blocking;
 mod progress;
 mod transport;
 mod types;
 mod verify;
 mod write;
 
+pub(crate) use blocking::{PORT_RELEASE_GRACE, run_port_bound};
 pub use types::{NativeVerifyRegion, NativeWriteRegion};
 pub use verify::{collect_standard_regions, try_verify_deployment_native};
 pub use write::{
