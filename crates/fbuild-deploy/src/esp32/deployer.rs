@@ -1,7 +1,9 @@
 //! `Esp32Deployer` core: construction, args, verify and write paths, and
 //! the [`Deployer`] trait implementation.
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
+
+use fbuild_core::path::NormalizedPath;
 
 use fbuild_core::Result;
 use fbuild_core::subprocess::run_command;
@@ -74,7 +76,7 @@ pub struct Esp32Deployer {
     /// The esptool the build resolved (`FBUILD_ESPTOOL_PATH` or the
     /// provisioned `tool-esptoolpy` package). `None` falls back to a bare
     /// `esptool` PATH lookup (FastLED/fbuild#1616).
-    pub(super) esptool_path: Option<PathBuf>,
+    pub(super) esptool_path: Option<NormalizedPath>,
 }
 
 #[cfg(feature = "espflash-native")]
@@ -249,7 +251,7 @@ impl Esp32Deployer {
     /// Use the esptool the build resolved instead of a bare `esptool`
     /// PATH lookup (FastLED/fbuild#1616). `None` keeps the PATH lookup.
     #[must_use]
-    pub fn with_esptool_path(mut self, esptool_path: Option<PathBuf>) -> Self {
+    pub fn with_esptool_path(mut self, esptool_path: Option<NormalizedPath>) -> Self {
         self.esptool_path = esptool_path;
         self
     }

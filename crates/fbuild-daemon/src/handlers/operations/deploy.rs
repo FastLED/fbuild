@@ -1451,11 +1451,11 @@ fn deployer_caller_path(req: &DeployRequest) -> Option<String> {
 async fn resolve_deploy_esptool(
     project_dir: &std::path::Path,
     env_config: &std::collections::HashMap<String, String>,
-) -> Option<PathBuf> {
+) -> Option<fbuild_core::path::NormalizedPath> {
     match fbuild_build::esp32::orchestrator::resolve_deploy_esptool(project_dir, Some(env_config))
         .await
     {
-        Ok(path) => path.map(fbuild_core::path::NormalizedPath::into_path_buf),
+        Ok(path) => path,
         Err(e) => {
             tracing::warn!("could not resolve the build's esptool ({e}); using `esptool` on PATH");
             None

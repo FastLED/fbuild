@@ -91,7 +91,9 @@ fn with_esptool_path_is_argv0_for_verify_and_write() {
         "esp32c6", "460800", "0x0", "0x8000", "0x10000", &params, false,
     )
     .with_caller_path(Some("/opt/tools/bin".to_string()))
-    .with_esptool_path(Some(esptool.clone()));
+    .with_esptool_path(Some(fbuild_core::path::NormalizedPath::from(
+        esptool.clone(),
+    )));
 
     let expected = esptool.to_string_lossy().to_string();
     let verify = deployer.build_verify_flash_args(&fw, "COM13");
