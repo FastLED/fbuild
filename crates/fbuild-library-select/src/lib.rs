@@ -188,7 +188,7 @@ pub fn resolve_with_stats_active_declared(
 /// Entries that are URLs or local paths (`https://…`, `file://…`, `./vendor`)
 /// name something that has to be *fetched*, not a framework library that is
 /// already on disk, so they never match and are left to the installer path.
-fn declared_dep_name(entry: &str) -> Option<String> {
+pub fn declared_dep_name(entry: &str) -> Option<String> {
     let entry = entry.trim();
     if entry.is_empty() || entry.contains("://") || entry.starts_with('.') || entry.starts_with('/')
     {
