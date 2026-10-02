@@ -96,40 +96,65 @@ pub fn normalize_march(march: &str) -> String {
     normalized
 }
 
-/// Apply board ISA and ABI values to compiler and linker flags.
-pub fn apply_board_isa(config: &mut Ch32vMcuConfig, march: Option<&str>, mabi: Option<&str>) {
-    apply_board_isa_for_toolchain(config, march, mabi, "riscv-none-elf");
+/// The recipe with the board's ISA and ABI applied to compiler and linker
+/// flags, for the xPack `riscv-none-elf` compiler.
+pub fn with_board_isa(
+    config: Ch32vMcuConfig,
+    march: Option<&str>,
+    mabi: Option<&str>,
+) -> Ch32vMcuConfig {
+    with_board_isa_for_toolchain(config, march, mabi, "riscv-none-elf")
+}
+
+/// The recipe with the board's ISA and ABI applied to compiler and linker
+/// flags, spelled for the compiler with `executable_prefix`.
+pub fn with_board_isa_for_toolchain(
+    config: Ch32vMcuConfig,
+    march: Option<&str>,
+    mabi: Option<&str>,
+    executable_prefix: &str,
+) -> Ch32vMcuConfig {
+    let config = match march {
+        Some(march) => with_flag_value(
+            config,
+            "-march=",
+            &march_for_toolchain(march, executable_prefix),
+        ),
+        None => config,
+    };
+    match mabi {
+        Some(mabi) => with_flag_value(config, "-mabi=", mabi),
+        None => config,
+    }
 }
 
 /// Preserve WCH's vendor ISA extensions for its own compiler; only the xPack
 /// compiler requires the stripped/modernized `zicsr` spelling.
-pub fn apply_board_isa_for_toolchain(
-    config: &mut Ch32vMcuConfig,
-    march: Option<&str>,
-    mabi: Option<&str>,
-    executable_prefix: &str,
-) {
-    fn replace(flags: &mut [String], prefix: &str, value: &str) {
-        for flag in flags {
-            if flag.starts_with(prefix) {
-                *flag = format!("{prefix}{value}");
-            }
-        }
+fn march_for_toolchain(march: &str, executable_prefix: &str) -> String {
+    if executable_prefix == "riscv-none-elf" {
+        normalize_march(march)
+    } else {
+        march.to_ascii_lowercase()
     }
+}
 
-    if let Some(march) = march {
-        let normalized = if executable_prefix == "riscv-none-elf" {
-            normalize_march(march)
-        } else {
-            march.to_ascii_lowercase()
-        };
-        replace(&mut config.compiler_flags.common, "-march=", &normalized);
-        replace(&mut config.linker_flags, "-march=", &normalized);
-    }
-    if let Some(mabi) = mabi {
-        replace(&mut config.compiler_flags.common, "-mabi=", mabi);
-        replace(&mut config.linker_flags, "-mabi=", mabi);
-    }
+/// Set the value of every `prefix`-led compiler and linker flag.
+fn with_flag_value(mut config: Ch32vMcuConfig, prefix: &str, value: &str) -> Ch32vMcuConfig {
+    let set = |flags: Vec<String>| -> Vec<String> {
+        flags
+            .into_iter()
+            .map(|flag| {
+                if flag.starts_with(prefix) {
+                    format!("{prefix}{value}")
+                } else {
+                    flag
+                }
+            })
+            .collect()
+    };
+    config.compiler_flags.common = set(config.compiler_flags.common);
+    config.linker_flags = set(config.linker_flags);
+    config
 }
 
 #[cfg(test)]
@@ -146,9 +171,8 @@ mod tests {
 
     #[test]
     fn platformio_gcc8_preserves_wch_vendor_isa() {
-        let mut config = get_ch32v_config_for_mcu("ch32v003").unwrap();
-        apply_board_isa_for_toolchain(
-            &mut config,
+        let config = with_board_isa_for_toolchain(
+            get_ch32v_config_for_mcu("ch32v003").unwrap(),
             Some("rv32ecxw"),
             Some("ilp32e"),
             "riscv-none-embed",
@@ -169,9 +193,12 @@ mod tests {
     }
 
     #[test]
-    fn test_apply_board_isa_updates_compiler_and_linker() {
-        let mut config = get_ch32v_config_for_mcu("ch32v003").unwrap();
-        apply_board_isa(&mut config, Some("rv32imacxw"), Some("ilp32"));
+    fn test_with_board_isa_updates_compiler_and_linker() {
+        let config = with_board_isa(
+            get_ch32v_config_for_mcu("ch32v003").unwrap(),
+            Some("rv32imacxw"),
+            Some("ilp32"),
+        );
         assert!(
             config
                 .compiler_flags
@@ -193,10 +220,9 @@ mod tests {
     }
 
     #[test]
-    fn test_apply_board_isa_none_is_noop() {
-        let mut config = get_ch32v_config_for_mcu("ch32v003").unwrap();
-        let before = config.clone();
-        apply_board_isa(&mut config, None, None);
+    fn test_with_board_isa_none_is_noop() {
+        let before = get_ch32v_config_for_mcu("ch32v003").unwrap();
+        let config = with_board_isa(before.clone(), None, None);
         assert_eq!(config.compiler_flags.common, before.compiler_flags.common);
         assert_eq!(config.linker_flags, before.linker_flags);
     }

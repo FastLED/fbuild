@@ -270,7 +270,7 @@ impl Compiler for Ch32vCompiler {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::ch32v::mcu_config::{apply_board_isa, get_ch32v_config_for_mcu};
+    use crate::ch32v::mcu_config::{get_ch32v_config_for_mcu, with_board_isa};
 
     fn test_compiler() -> Ch32vCompiler {
         let mut defines = HashMap::new();
@@ -302,8 +302,11 @@ mod tests {
 
     #[test]
     fn test_common_flags_use_board_isa() {
-        let mut config = get_ch32v_config_for_mcu("ch32v203").unwrap();
-        apply_board_isa(&mut config, Some("rv32imacxw"), Some("ilp32"));
+        let config = with_board_isa(
+            get_ch32v_config_for_mcu("ch32v203").unwrap(),
+            Some("rv32imacxw"),
+            Some("ilp32"),
+        );
         let mut compiler = test_compiler();
         compiler.mcu_config = config;
         let flags = compiler.c_flags();
