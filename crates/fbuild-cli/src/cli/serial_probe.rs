@@ -232,12 +232,14 @@ fn read_port(port_name: &str, baud: u32, seconds: f64, send: Option<&str>) -> Re
         .timeout(Duration::from_millis(100))
         .open()
         .map_err(|e| FbuildError::SerialError(format!("open `{port_name}` @ {baud}: {e}")))?;
-    handle
-        .write_data_terminal_ready(dtr)
-        .map_err(|e| FbuildError::SerialError(format!("set DTR={dtr} on `{port_name}`: {e}")))?;
+    // RTS before DTR: clearing DTR first passes through (DTR=0, RTS=1),
+    // which resets ESP USB-Serial-JTAG chips (FastLED/fbuild#1617).
     handle
         .write_request_to_send(rts)
         .map_err(|e| FbuildError::SerialError(format!("set RTS={rts} on `{port_name}`: {e}")))?;
+    handle
+        .write_data_terminal_ready(dtr)
+        .map_err(|e| FbuildError::SerialError(format!("set DTR={dtr} on `{port_name}`: {e}")))?;
 
     output::progress(format!(
         "probe read: port={port_name} baud={baud} family={family:?} \
