@@ -125,6 +125,53 @@ pub(super) async fn resolve_pioarduino_packages(
     Ok((toolchain, framework, esptool_py, platform_info))
 }
 
+/// Resolve the esptool executable a deploy should spawn: the same one the
+/// build uses (`FBUILD_ESPTOOL_PATH` first, then the provisioned
+/// `tool-esptoolpy` package from the env's `platform.json`), so deploy works
+/// from a shell with no esptool on PATH and runs the build's esptool version
+/// (FastLED/fbuild#1616).
+///
+/// `Ok(None)` means no usable resolved esptool; the deployer then falls back
+/// to a bare `esptool` PATH lookup. That includes the v4 `esptool.py` source
+/// package older pioarduino pins provision: the deployer speaks v5's
+/// hyphenated CLI (`write-flash`, `default-reset`), which v4 rejects.
+pub async fn resolve_deploy_esptool(
+    project_dir: &Path,
+    env_config: Option<&HashMap<String, String>>,
+) -> Result<Option<NormalizedPath>> {
+    // An explicit override is the user's choice and is used as-is, whatever
+    // its file name (v5 still ships `esptool.py` entry points).
+    if let Some(path) = fbuild_packages::library::esptool_path_override()? {
+        return Ok(Some(path));
+    }
+    let Some(platform) = pioarduino_platform(project_dir, env_config, true).await? else {
+        return Ok(None);
+    };
+    fbuild_packages::Package::ensure_installed(&platform).await?;
+    // The file-name check only applies to the package fbuild provisioned,
+    // where `esptool.py` means the v4 source package.
+    Ok(resolve_esptool(&platform, project_dir).await?.filter(|path| {
+        let usable = speaks_v5_cli(path);
+        if !usable {
+            tracing::info!(
+                "resolved esptool {} is the v4 source package; deploy uses an `esptool` on PATH",
+                path.display()
+            );
+        }
+        usable
+    }))
+}
+
+/// Whether `esptool` speaks the v5 hyphenated CLI the deployer emits. The v4
+/// source package installs an `esptool.py` entry point (the same signal
+/// `esp32_linker` uses to pick underscore flags for `elf2image`).
+pub(super) fn speaks_v5_cli(esptool: &Path) -> bool {
+    !esptool
+        .file_name()
+        .and_then(|name| name.to_str())
+        .is_some_and(|name| name.starts_with("esptool.py"))
+}
+
 /// Provision what [`resolve_pioarduino_packages`] installs — platform,
 /// MCU-primary toolchain, framework, SDK libs and esptool — one report row
 /// each, for `fbuild install` (FastLED/fbuild#1433). Check and dry-run modes

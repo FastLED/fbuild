@@ -3,6 +3,8 @@
 
 use std::path::Path;
 
+use fbuild_core::path::NormalizedPath;
+
 use fbuild_core::Result;
 use fbuild_core::subprocess::run_command;
 
@@ -65,11 +67,16 @@ pub struct Esp32Deployer {
     /// Feature-gated — see `use_native_verify`.
     #[cfg(feature = "espflash-native")]
     pub(super) use_native_write: bool,
-    /// The requesting CLI's PATH. `esptool` is spawned as a bare name
-    /// (see [`Esp32Deployer::find_esptool`]), so without this it would
-    /// resolve against the long-lived daemon's boot-time PATH
+    /// The requesting CLI's PATH. Without a resolved `esptool_path`,
+    /// `esptool` is spawned as a bare name (see
+    /// [`Esp32Deployer::find_esptool`]), so without this it would resolve
+    /// against the long-lived daemon's boot-time PATH
     /// (FastLED/fbuild#1234). `None` keeps legacy daemon-env behavior.
     pub(super) caller_path: Option<String>,
+    /// The esptool the build resolved (`FBUILD_ESPTOOL_PATH` or the
+    /// provisioned `tool-esptoolpy` package). `None` falls back to a bare
+    /// `esptool` PATH lookup (FastLED/fbuild#1616).
+    pub(super) esptool_path: Option<NormalizedPath>,
 }
 
 #[cfg(feature = "espflash-native")]
@@ -152,6 +159,7 @@ impl Esp32Deployer {
             #[cfg(feature = "espflash-native")]
             use_native_write: false,
             caller_path: None,
+            esptool_path: None,
         }
     }
 
@@ -240,11 +248,21 @@ impl Esp32Deployer {
         self
     }
 
-    /// Find the esptool executable.
-    ///
-    /// Uses standalone `esptool` command (available when esptool is pip-installed).
-    pub(super) fn find_esptool() -> Vec<String> {
-        vec!["esptool".to_string()]
+    /// Use the esptool the build resolved instead of a bare `esptool`
+    /// PATH lookup (FastLED/fbuild#1616). `None` keeps the PATH lookup.
+    #[must_use]
+    pub fn with_esptool_path(mut self, esptool_path: Option<NormalizedPath>) -> Self {
+        self.esptool_path = esptool_path;
+        self
+    }
+
+    /// The esptool program: the resolved path when one was supplied,
+    /// otherwise the bare `esptool` command found on PATH.
+    pub(super) fn find_esptool(&self) -> Vec<String> {
+        match &self.esptool_path {
+            Some(path) => vec![path.to_string_lossy().into_owned()],
+            None => vec!["esptool".to_string()],
+        }
     }
 
     /// Build the `esptool verify-flash` command line that this deployer
@@ -262,7 +280,7 @@ impl Esp32Deployer {
         let bootloader_path = build_dir.join("bootloader.bin");
         let partitions_path = build_dir.join("partitions.bin");
 
-        let mut args = Self::find_esptool();
+        let mut args = self.find_esptool();
         args.extend([
             "--chip".to_string(),
             self.chip.clone(),
@@ -654,7 +672,7 @@ impl Esp32Deployer {
         let bootloader_path = build_dir.join("bootloader.bin");
         let partitions_path = build_dir.join("partitions.bin");
 
-        let mut args = Self::find_esptool();
+        let mut args = self.find_esptool();
         args.extend([
             "--chip".to_string(),
             self.chip.clone(),

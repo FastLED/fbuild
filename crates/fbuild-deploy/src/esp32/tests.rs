@@ -65,13 +65,68 @@ fn with_caller_path_stores_the_requesting_cli_path() {
 
     // The esptool program is a bare name, so the deploy-time spawn gets
     // the [("PATH", ...)] overlay from the stored caller PATH.
-    let esptool = Esp32Deployer::find_esptool();
+    let esptool = deployer.find_esptool();
     assert_eq!(
         fbuild_core::subprocess::bare_name_path_overlay(
             &esptool[0],
             deployer.caller_path.as_deref()
         ),
         Some(vec![("PATH", "/opt/tools/bin")])
+    );
+}
+
+/// FastLED/fbuild#1616: a resolved esptool path (the one the build
+/// provisioned, or `FBUILD_ESPTOOL_PATH`) becomes argv[0] of both the
+/// verify-flash and write-flash invocations, and an absolute path does not
+/// get the caller-PATH overlay meant for bare names.
+#[test]
+fn with_esptool_path_is_argv0_for_verify_and_write() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let fw = tmp.path().join("firmware.bin");
+    std::fs::write(&fw, b"FIRM").unwrap();
+    let esptool = tmp.path().join("tools").join("esptool");
+
+    let params = test_esptool_params();
+    let deployer = Esp32Deployer::new(
+        "esp32c6", "460800", "0x0", "0x8000", "0x10000", &params, false,
+    )
+    .with_caller_path(Some("/opt/tools/bin".to_string()))
+    .with_esptool_path(Some(fbuild_core::path::NormalizedPath::from(
+        esptool.clone(),
+    )));
+
+    let expected = esptool.to_string_lossy().to_string();
+    let verify = deployer.build_verify_flash_args(&fw, "COM13");
+    assert_eq!(verify[0], expected);
+    assert!(verify.contains(&"verify-flash".to_string()));
+    let write = deployer.build_write_flash_args(&fw, "COM13", None);
+    assert_eq!(write[0], expected);
+    assert!(write.contains(&"write-flash".to_string()));
+
+    assert_eq!(
+        fbuild_core::subprocess::bare_name_path_overlay(&write[0], deployer.caller_path.as_deref()),
+        None
+    );
+}
+
+/// FastLED/fbuild#1616: with no resolved path the deployer keeps the bare
+/// `esptool` PATH lookup (and so the #1234 caller-PATH overlay).
+#[test]
+fn without_esptool_path_falls_back_to_bare_esptool() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let fw = tmp.path().join("firmware.bin");
+    std::fs::write(&fw, b"FIRM").unwrap();
+
+    let params = test_esptool_params();
+    let deployer = Esp32Deployer::new(
+        "esp32c6", "460800", "0x0", "0x8000", "0x10000", &params, false,
+    )
+    .with_esptool_path(None);
+
+    assert_eq!(deployer.build_verify_flash_args(&fw, "COM13")[0], "esptool");
+    assert_eq!(
+        deployer.build_write_flash_args(&fw, "COM13", None)[0],
+        "esptool"
     );
 }
 
