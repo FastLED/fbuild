@@ -289,10 +289,9 @@ impl BuildOrchestrator for Ch32vOrchestrator {
         );
 
         // 7. Build include dirs + compiler
-        let mut mcu_config = super::mcu_config::get_ch32v_config_for_mcu(&series)?;
         let toolchain_prefix = toolchain.executable_prefix();
-        super::mcu_config::apply_board_isa_for_toolchain(
-            &mut mcu_config,
+        let mcu_config = super::mcu_config::with_board_isa_for_toolchain(
+            super::mcu_config::get_ch32v_config_for_mcu(&series)?,
             selected_march,
             selected_mabi,
             &toolchain_prefix,

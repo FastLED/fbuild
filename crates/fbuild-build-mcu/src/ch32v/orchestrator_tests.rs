@@ -38,9 +38,8 @@ fn explicit_board_isa_and_abi_override_selected_platform_defaults() {
         preferred_board_value(None, "board_build.march", Some("rv32ecxw"), Some("rv32ec")),
         Some("rv32ecxw")
     );
-    let mut config = crate::ch32v::mcu_config::get_ch32v_config_for_mcu("ch32v003").unwrap();
-    crate::ch32v::mcu_config::apply_board_isa_for_toolchain(
-        &mut config,
+    let config = crate::ch32v::mcu_config::with_board_isa_for_toolchain(
+        crate::ch32v::mcu_config::get_ch32v_config_for_mcu("ch32v003").unwrap(),
         preferred_board_value(
             Some(&env),
             "board_build.march",
