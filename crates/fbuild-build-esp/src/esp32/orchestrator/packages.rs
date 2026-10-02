@@ -285,19 +285,24 @@ fn selected_toolchain_name(mcu_config: &Esp32McuConfig, unified: bool) -> String
     }
 }
 
-/// The toolchain package the platform actually declares. pioarduino 53.x/54.x
-/// name the unified `toolchain-xtensa-esp-elf` by a registry version
-/// (`platformio/toolchain-xtensa-esp-elf@14.2.0+20241119`) rather than a
-/// metadata URL, so "no metadata URL" does not imply a per-MCU package; only
-/// releases that omit the unified entry (51.x) use `toolchain-xtensa-<mcu>`.
+/// The toolchain package the platform actually declares.
+///
+/// A declared per-MCU package wins: pioarduino 51.x declares only those, and
+/// the official PlatformIO `espressif32` 6.x/7.x declares both per-MCU GCC 8
+/// toolchains and a unified one, but its Arduino builds use the per-MCU
+/// package. pioarduino 53.x/54.x declare only the unified
+/// `toolchain-xtensa-esp-elf`, by a registry version rather than a metadata
+/// URL, so "no metadata URL" does not imply a per-MCU package.
 fn platform_toolchain_name(
     platform: &fbuild_packages::library::Esp32Platform,
     mcu_config: &Esp32McuConfig,
 ) -> String {
-    let declares_unified = platform
-        .get_package_url(primary_toolchain_name(mcu_config.is_riscv()))
-        .is_ok();
-    selected_toolchain_name(mcu_config, declares_unified)
+    toolchain_name_for(mcu_config, |name| platform.get_package_url(name).is_ok())
+}
+
+fn toolchain_name_for(mcu_config: &Esp32McuConfig, declares: impl Fn(&str) -> bool) -> String {
+    let per_mcu = selected_toolchain_name(mcu_config, false);
+    selected_toolchain_name(mcu_config, !declares(&per_mcu))
 }
 
 async fn resolve_and_create_toolchain(
@@ -793,6 +798,27 @@ mod registry_toolchain_tests {
             "toolchain-xtensa-esp-elf"
         );
         assert_eq!(mcu.toolchain_prefix(), "xtensa-esp32s3-elf-");
+    }
+
+    #[test]
+    fn declared_per_mcu_toolchain_wins_over_unified() {
+        let s3 = get_mcu_config("esp32s3").unwrap();
+        let c3 = get_mcu_config("esp32c3").unwrap();
+        // official espressif32 6.x/7.x: both declared, Arduino uses per-MCU.
+        let both = |n: &str| n == "toolchain-xtensa-esp32s3" || n == "toolchain-xtensa-esp-elf";
+        assert_eq!(toolchain_name_for(&s3, both), "toolchain-xtensa-esp32s3");
+        // pioarduino 51.x: per-MCU only.
+        assert_eq!(
+            toolchain_name_for(&s3, |n| n == "toolchain-xtensa-esp32s3"),
+            "toolchain-xtensa-esp32s3"
+        );
+        // pioarduino 53.x/54.x: unified only, by registry version.
+        assert_eq!(
+            toolchain_name_for(&s3, |n| n == "toolchain-xtensa-esp-elf"),
+            "toolchain-xtensa-esp-elf"
+        );
+        // RISC-V always uses the shared package.
+        assert_eq!(toolchain_name_for(&c3, both), "toolchain-riscv32-esp");
     }
 
     #[test]
