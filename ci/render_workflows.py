@@ -220,7 +220,7 @@ def render_fbuild_bin_job(needs: str, condition: str, ref: str) -> str:
         "        with:\n"
         f"          ref: {ref}\n"
         "          persist-credentials: false\n"
-        "      - uses: zackees/setup-soldr@3b3a7160b8ab4e0e1c22db756d476816d97c8edd\n"
+        "      - uses: zackees/setup-soldr@66c33b01e682c4dbe3869c2adffd9d55f16a7d67\n"
         "        with:\n"
         "          cache-preset: foundation\n"
         "          prebuild-deps-flags: \"\"\n"
