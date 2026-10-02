@@ -285,6 +285,21 @@ fn selected_toolchain_name(mcu_config: &Esp32McuConfig, unified: bool) -> String
     }
 }
 
+/// The toolchain package the platform actually declares. pioarduino 53.x/54.x
+/// name the unified `toolchain-xtensa-esp-elf` by a registry version
+/// (`platformio/toolchain-xtensa-esp-elf@14.2.0+20241119`) rather than a
+/// metadata URL, so "no metadata URL" does not imply a per-MCU package; only
+/// releases that omit the unified entry (51.x) use `toolchain-xtensa-<mcu>`.
+fn platform_toolchain_name(
+    platform: &fbuild_packages::library::Esp32Platform,
+    mcu_config: &Esp32McuConfig,
+) -> String {
+    let declares_unified = platform
+        .get_package_url(primary_toolchain_name(mcu_config.is_riscv()))
+        .is_ok();
+    selected_toolchain_name(mcu_config, declares_unified)
+}
+
 async fn resolve_and_create_toolchain(
     platform: &fbuild_packages::library::Esp32Platform,
     project_dir: &Path,
@@ -294,7 +309,7 @@ async fn resolve_and_create_toolchain(
     let prefix = mcu_config.toolchain_prefix();
 
     if !platform.has_unified_toolchain(is_riscv) {
-        let name = selected_toolchain_name(mcu_config, false);
+        let name = platform_toolchain_name(platform, mcu_config);
         let requirement = platform.get_package_requirement(&name)?;
         let registry = requirement.spec.registry().ok_or_else(|| {
             fbuild_core::FbuildError::PackageError(format!(
@@ -398,7 +413,7 @@ async fn provision_toolchain(
     mode: ProvisionMode,
 ) -> ProvisionedPackage {
     let is_riscv = mcu_config.is_riscv();
-    let name = selected_toolchain_name(mcu_config, platform.has_unified_toolchain(is_riscv));
+    let name = platform_toolchain_name(platform, mcu_config);
     let toolchain = if mode.fetches() {
         resolve_and_create_toolchain(platform, project_dir, mcu_config)
             .await
@@ -459,7 +474,7 @@ fn cached_toolchain(
     let is_riscv = mcu_config.is_riscv();
     let prefix = mcu_config.toolchain_prefix();
     if !platform.has_unified_toolchain(is_riscv) {
-        let name = selected_toolchain_name(mcu_config, false);
+        let name = platform_toolchain_name(platform, mcu_config);
         let requirement = platform.get_package_requirement(&name)?;
         let registry = requirement.spec.registry().ok_or_else(|| {
             fbuild_core::FbuildError::PackageError(format!(
