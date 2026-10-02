@@ -1,5 +1,9 @@
 use std::os::unix::process::ExitStatusExt;
 
+#[cfg(test)]
+#[path = "process_tests.rs"]
+mod tests;
+
 use crate::path::NormalizedPath;
 use crate::platform::process::{DetachedEnvironment, Termination};
 
