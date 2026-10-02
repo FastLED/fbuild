@@ -11,6 +11,7 @@ use fbuild_packages::Framework;
 
 use super::super::esp32_compiler::Esp32Compiler;
 use super::super::esp32_linker::Esp32Linker;
+use super::super::fixups;
 use super::super::mcu_config::get_mcu_config;
 use super::Esp32Orchestrator;
 use super::boot_artifacts::prepare_boot_artifacts;
@@ -69,7 +70,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         );
 
         // 3. Load MCU config from embedded JSON
-        let mut mcu_config = get_mcu_config(&ctx.board.mcu)?;
+        let mcu_config = get_mcu_config(&ctx.board.mcu)?;
 
         tracing::info!(
             "ESP32 build: {} ({}, {})",
@@ -102,7 +103,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 &framework,
                 &ctx.board.mcu,
             ));
-        mcu_config.adapt_to_toolchain(&toolchain_info.name, &toolchain_info.version);
+        let mcu_config = fixups::for_toolchain(mcu_config, &toolchain_info);
         let _toolchain_cache_dir = fbuild_packages::Package::get_info(&toolchain).install_path;
         let _framework_cache_dir = fbuild_packages::Package::get_info(&framework).install_path;
         // Aliases for build dirs (already set up by BuildContext::new())
@@ -119,9 +120,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let sdk_ld_flags = framework.get_sdk_ld_flags(&sdk_variant);
         let sdk_defines = framework.get_sdk_defines(&sdk_variant);
 
-        if sdk_ld_flags.iter().any(|f| f == "-fno-lto") {
-            mcu_config.disable_lto();
-        }
+        let mcu_config = fixups::for_sdk_ld_flags(mcu_config, &sdk_ld_flags);
 
         let embed_files = ctx.config.get_embed_files(&params.env_name)?;
         let embed_txtfiles = ctx.config.get_embed_txtfiles(&params.env_name)?;
@@ -294,9 +293,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
 
         // If SDK specifies -fno-lto, disable LTO in MCU config profiles to avoid
         // compiling objects with LTO that the linker can't handle.
-        if sdk_ld_flags.iter().any(|f| f == "-fno-lto") {
-            mcu_config.disable_lto();
-        }
+        let mcu_config = fixups::for_sdk_ld_flags(mcu_config, &sdk_ld_flags);
 
         // 8.5. Library dependencies
         //

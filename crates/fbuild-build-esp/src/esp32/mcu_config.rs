@@ -85,38 +85,6 @@ pub struct LegacyGcc8Recipe {
 }
 
 impl Esp32McuConfig {
-    /// Drop GCC 14 recipe flags when the platform selects an older per-MCU
-    /// Xtensa toolchain. The GCC 12 compiler rejects the atomics switch, and
-    /// its matching Arduino 3.0 SDK does not define `__dso_handle` for
-    /// `-fuse-cxa-atexit`-generated references.
-    pub fn adapt_to_toolchain(&mut self, package_name: &str, package_version: &str) {
-        if package_name.starts_with("toolchain-xtensa-esp32") {
-            self.compiler_flags
-                .common
-                .retain(|flag| flag != "-mdisable-hardware-atomics");
-            self.compiler_flags
-                .cxx
-                .retain(|flag| flag != "-fuse-cxa-atexit");
-            if package_version.starts_with("8.") {
-                if let Some(recipe) = &self.legacy_gcc8 {
-                    self.linker_flags = recipe.linker_flags.clone();
-                    self.linker_scripts = recipe.linker_scripts.clone();
-                }
-                for flag in &mut self.compiler_flags.c {
-                    if flag == "-std=gnu17" {
-                        *flag = "-std=gnu99".into();
-                    }
-                }
-                for flag in &mut self.compiler_flags.cxx {
-                    if flag == "-std=gnu++2b" {
-                        *flag = "-std=gnu++11".into();
-                    }
-                }
-                self.disable_lto();
-            }
-        }
-    }
-
     /// Whether this MCU uses RISC-V architecture.
     pub fn is_riscv(&self) -> bool {
         self.architecture.starts_with("riscv")
@@ -224,21 +192,6 @@ impl Esp32McuConfig {
             .iter()
             .map(|(old, new)| format!("-D{}={}", old, new))
             .collect()
-    }
-
-    /// Remove LTO-related flags from all profiles.
-    ///
-    /// Called when the SDK specifies `-fno-lto` in its linker flags, meaning
-    /// objects must not be compiled with LTO.
-    pub fn disable_lto(&mut self) {
-        for profile in self.profiles.values_mut() {
-            profile
-                .compile_flags
-                .retain(|f| !f.contains("lto") && f != "-fuse-linker-plugin");
-            profile
-                .link_flags
-                .retain(|f| !f.contains("lto") && f != "-fuse-linker-plugin");
-        }
     }
 }
 
@@ -791,62 +744,5 @@ mod tests {
                 config.name
             );
         }
-    }
-
-    #[test]
-    fn per_mcu_xtensa_toolchain_uses_gcc12_compatible_flags() {
-        let mut legacy = get_mcu_config("esp32s3").unwrap();
-        let mut unified = legacy.clone();
-        legacy.adapt_to_toolchain("toolchain-xtensa-esp32s3", "12.2.0+20230208");
-        unified.adapt_to_toolchain("toolchain-xtensa-esp-elf", "14.2.0");
-
-        assert!(
-            !legacy
-                .compiler_flags
-                .common
-                .iter()
-                .any(|flag| flag == "-mdisable-hardware-atomics")
-        );
-        assert!(
-            !legacy
-                .compiler_flags
-                .cxx
-                .iter()
-                .any(|flag| flag == "-fuse-cxa-atexit")
-        );
-        assert!(
-            unified
-                .compiler_flags
-                .common
-                .iter()
-                .any(|flag| flag == "-mdisable-hardware-atomics")
-        );
-        assert!(
-            unified
-                .compiler_flags
-                .cxx
-                .iter()
-                .any(|flag| flag == "-fuse-cxa-atexit")
-        );
-    }
-
-    #[test]
-    fn platformio_gcc8_uses_supported_cpp_standard() {
-        let mut config = get_mcu_config("esp32s3").unwrap();
-        config.adapt_to_toolchain("toolchain-xtensa-esp32s3", "8.4.0+2021r2-patch5");
-        assert!(config.compiler_flags.c.contains(&"-std=gnu99".into()));
-        assert!(config.compiler_flags.cxx.contains(&"-std=gnu++11".into()));
-        assert!(!config.compiler_flags.cxx.contains(&"-std=gnu++2b".into()));
-        assert!(config.linker_flags.contains(&"-fno-lto".into()));
-        assert!(
-            !config
-                .linker_flags
-                .contains(&"-Wl,--no-warn-rwx-segments".into())
-        );
-        assert!(
-            config
-                .linker_scripts
-                .contains(&"esp32s3.rom.newlib-time.ld".into())
-        );
     }
 }

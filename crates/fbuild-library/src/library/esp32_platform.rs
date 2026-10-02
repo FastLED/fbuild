@@ -480,6 +480,32 @@ mod tests {
         assert_eq!(registry.requirement.as_deref(), Some("12.2.0+20230208"));
     }
 
+    /// The published pioarduino 53.x/54.x `platform.json` names the unified
+    /// toolchain by a PlatformIO registry version, not a metadata URL. It is
+    /// not "unified" in the metadata sense, yet it has no per-MCU entry: the
+    /// unified name is the registry package to resolve.
+    #[test]
+    fn published_54_03_20_names_unified_toolchain_by_registry_version() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        write_platform_json(
+            tmp.path(),
+            r#"{"packages":{
+                "toolchain-xtensa-esp-elf":{"type":"toolchain","optional":true,"owner":"platformio","version":"14.2.0+20241119"},
+                "toolchain-riscv32-esp":{"type":"toolchain","optional":true,"owner":"platformio","version":"14.2.0+20241119"}
+            }}"#,
+        );
+        let p = platform_with_install_dir(tmp.path());
+        assert!(!p.has_unified_toolchain(false));
+        assert!(p.get_package_url("toolchain-xtensa-esp32s3").is_err());
+        let requirement = p
+            .get_package_requirement("toolchain-xtensa-esp-elf")
+            .unwrap();
+        let registry = requirement.spec.registry().unwrap();
+        assert_eq!(registry.owner.as_deref(), Some("platformio"));
+        assert_eq!(registry.name, "toolchain-xtensa-esp-elf");
+        assert_eq!(registry.requirement.as_deref(), Some("14.2.0+20241119"));
+    }
+
     #[test]
     fn explicit_framework_registry_pin_overrides_manifest_without_changing_toolchain() {
         let tmp = tempfile::TempDir::new().unwrap();
