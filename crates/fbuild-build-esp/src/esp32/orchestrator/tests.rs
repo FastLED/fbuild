@@ -301,3 +301,22 @@ fn effective_define_flags_match_compiler_overlay_order() {
     );
     assert!(!defines.contains_key("VALUE"));
 }
+
+/// FastLED/fbuild#1616: deploy reuses the build's esptool only when it speaks
+/// the v5 hyphenated CLI the deployer emits; the v4 `esptool.py` source
+/// package falls back to an `esptool` on PATH.
+#[test]
+fn deploy_esptool_requires_v5_cli() {
+    use super::packages::speaks_v5_cli;
+    use std::path::Path;
+    assert!(speaks_v5_cli(Path::new(
+        "/cache/tasmota-esptool/5.1.0/esptool-linux-amd64/esptool"
+    )));
+    assert!(speaks_v5_cli(Path::new("C:/cache/esptool/esptool.exe")));
+    assert!(!speaks_v5_cli(Path::new(
+        "/cache/tool-esptoolpy/fbuild-tools/esptool/bin/esptool.py"
+    )));
+    assert!(!speaks_v5_cli(Path::new(
+        "C:/cache/fbuild-tools/esptool/Scripts/esptool.py.exe"
+    )));
+}

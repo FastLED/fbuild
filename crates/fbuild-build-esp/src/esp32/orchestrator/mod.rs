@@ -36,6 +36,7 @@ mod job_pool;
 mod local_libs;
 mod packages;
 
+pub use packages::resolve_deploy_esptool;
 pub(crate) use packages::{downloadable_lib_deps, provision_esp32};
 
 #[cfg(test)]

@@ -611,8 +611,13 @@ pub async fn deploy(
                     &esptool_params,
                     false,
                 )
-                // esptool is spawned as a bare name; resolve it against
-                // the requesting CLI's PATH, not the daemon's (#1234).
+                // Spawn the esptool the build resolved (FBUILD_ESPTOOL_PATH,
+                // then the provisioned package), not whatever `esptool` is on
+                // PATH (#1616).
+                .with_esptool_path(resolve_deploy_esptool(&deploy_project, env_config).await)
+                // Without a resolved esptool it is spawned as a bare name;
+                // resolve that against the requesting CLI's PATH, not the
+                // daemon's (#1234).
                 .with_caller_path(deploy_caller_path.clone());
                 let deployer = if let Some(baud) = baud_override {
                     deployer.with_baud_rate(&baud.to_string())
@@ -1438,6 +1443,24 @@ fn resolve_recovery_port(
 /// teensy_loader_cli, lpc21isp).
 fn deployer_caller_path(req: &DeployRequest) -> Option<String> {
     req.caller_path.clone()
+}
+
+/// The esptool the build resolved for this env (FastLED/fbuild#1616), or
+/// `None` to keep the bare `esptool` PATH lookup. A resolution failure is
+/// logged rather than failing the deploy: an `esptool` on PATH still works.
+async fn resolve_deploy_esptool(
+    project_dir: &std::path::Path,
+    env_config: &std::collections::HashMap<String, String>,
+) -> Option<PathBuf> {
+    match fbuild_build::esp32::orchestrator::resolve_deploy_esptool(project_dir, Some(env_config))
+        .await
+    {
+        Ok(path) => path.map(fbuild_core::path::NormalizedPath::into_path_buf),
+        Err(e) => {
+            tracing::warn!("could not resolve the build's esptool ({e}); using `esptool` on PATH");
+            None
+        }
+    }
 }
 
 fn deploy_error_response(
