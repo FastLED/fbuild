@@ -94,8 +94,10 @@ pub(crate) fn spawn_tokio_on_owner_thread(
     spawn: SpawnFn,
 ) -> std::io::Result<tokio::process::Child> {
     let Ok(runtime) = tokio::runtime::Handle::try_current() else {
-        // No runtime to reap the child: Tokio's own spawn reports that.
-        return spawn(command);
+        // Tokio's own spawn panics here: there is no runtime to reap the child.
+        return Err(std::io::Error::other(
+            "spawn_tokio_contained requires a Tokio runtime to reap the child",
+        ));
     };
     let reply = Arc::new(ReplySlot::default());
     let job = Job {
