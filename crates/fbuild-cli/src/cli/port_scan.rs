@@ -72,19 +72,19 @@ pub enum PortAction {
         #[arg(long, conflicts_with_all = ["port", "fix", "dry_run"])]
         hub: Option<String>,
     },
-    /// Print udev rules granting serial access for every vendor in the
-    /// FastLED/boards registry (FastLED/fbuild#1424).
-    ///
-    /// Prints rather than installs. On NixOS `/etc` is generated from
-    /// declarative config, so a written file there is out-of-band and liable
-    /// to be clobbered -- those users need the content for
-    /// `services.udev.extraRules`, not a mutation. Everywhere else, redirect
-    /// it yourself so the privileged write stays explicit.
+    /// Print udev rules granting serial, raw-USB and hidraw access for every
+    /// vendor in the FastLED/boards registry (FastLED/fbuild#1424), or
+    /// install them with `--install` (FastLED/fbuild#1621).
     Udev {
         /// Group to grant access to. Defaults to `plugdev`, which unlike
         /// `dialout` does not also confer modem/PPP access.
         #[arg(long)]
         group: Option<String>,
+        /// Install the rules (asks for root with the desktop's polkit dialog,
+        /// or sudo on a terminal). On NixOS they go to /run/udev/rules.d and
+        /// the permanent `services.udev.extraRules` form is printed.
+        #[arg(long, conflicts_with = "group")]
+        install: bool,
     },
 }
 
@@ -108,20 +108,25 @@ pub fn run_port(action: PortAction) -> Result<()> {
                 super::port_doctor::run(port.as_deref(), hub.as_deref(), json)
             }
         }
-        PortAction::Udev { group } => run_udev(group.as_deref()),
+        PortAction::Udev { install: true, .. } => super::udev_install::run_install(),
+        PortAction::Udev { group, .. } => run_udev(group.as_deref()),
     }
 }
 
 /// Emit udev rules derived from the ingested registry.
 fn run_udev(group: Option<&str>) -> Result<()> {
-    use super::udev::{DEFAULT_UDEV_GROUP, UDEV_RULES_FILENAME, render_udev_rules};
+    use super::udev::{UDEV_RULES_FILENAME, render_udev_rules};
 
     // Refresh first, exactly as `scan` does: rules generated from a stale or
     // absent overlay would silently omit vendors the user has plugged in.
     populate_online_overlay();
 
     let vids = fbuild_core::usb::online_vendor_vids();
-    let group = group.unwrap_or(DEFAULT_UDEV_GROUP);
+    // An explicit --group is honored; the default only where it exists.
+    let group = match group {
+        Some(g) => Some(g),
+        None => super::udev::host_default_group(),
+    };
     match render_udev_rules(&vids, group) {
         Some(rules) => {
             print!("{rules}");
@@ -214,7 +219,7 @@ fn format_usb_problem_warning(devices: &[fbuild_serial::ports::UsbProblemDevice]
 /// Best-effort: any I/O / network / parse failure is swallowed and the
 /// resolver degrades to deterministic unknown labels. The cache is kept fresh
 /// on a 7-day cadence — older copies are refetched.
-fn populate_online_overlay() {
+pub(crate) fn populate_online_overlay() {
     populate_online_overlay_from_urls(
         fbuild_core::usb::USB_VIDS_PROTO_ZSTD_URL,
         fbuild_core::usb::USB_VID_JSON_URL,

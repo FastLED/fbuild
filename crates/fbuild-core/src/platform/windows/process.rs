@@ -153,6 +153,15 @@ pub(crate) fn launch_elevated(
     Ok(super::super::process::ElevationOutcome::Completed(exit_code))
 }
 
+/// Owner-death here is not tied to the forking thread, so contained children
+/// fork on the caller's thread as before (FastLED/fbuild#1628 is Linux-only).
+pub(crate) fn spawn_tokio_on_owner_thread(
+    command: &mut tokio::process::Command,
+    spawn: fn(&mut tokio::process::Command) -> std::io::Result<tokio::process::Child>,
+) -> std::io::Result<tokio::process::Child> {
+    spawn(command)
+}
+
 pub(crate) fn after_tokio_spawn(child: &tokio::process::Child) -> std::io::Result<()> {
     let Some(raw) = child.raw_handle() else {
         return Ok(());
