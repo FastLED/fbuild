@@ -11,6 +11,36 @@ from ci import render_workflows
 
 
 class FractionalWorkflowTests(unittest.TestCase):
+    def test_ubuntu_build_cache_writers_receive_final_job_status(self):
+        jobs = self.load("check-ubuntu.yml")["jobs"]
+        for job_id in ("check", "python-facade-tests"):
+            steps = [step for step in jobs[job_id]["steps"] if "zackees/setup-soldr@" in step.get("uses", "")]
+            self.assertEqual(1, len(steps))
+            self.assertEqual("${{ job.status }}", steps[0]["with"].get("job-status"))
+            self.assertEqual(
+                "${{ job.status == 'failure' && steps.tests.outputs.assertion_failure_only == 'true' }}",
+                steps[0]["with"].get("save-on-failure"),
+            )
+        setup = next(step for step in jobs["check"]["steps"] if "zackees/setup-soldr@" in step.get("uses", ""))
+        self.assertEqual("check-ubuntu-py312-v1", setup["with"]["cache-key-suffix"])
+
+    def test_local_gate_keeps_required_ubuntu_commands_and_shadow_verification(self):
+        minimal = self.load("ci-minimal.yml")["jobs"]
+        verifier = minimal["verify"]
+        self.assertTrue(any("local-gate verify" in step.get("run", "") for step in verifier["steps"]))
+        for job_id in ("linux", "board_plan", "test", "full", "reuse_decision"):
+            self.assertIn("verify", minimal[job_id]["needs"])
+        jobs = self.load("check-ubuntu.yml")["jobs"]
+        for job_id, command in (
+            ("check", "soldr cargo clippy --workspace --all-targets -- -D warnings"),
+            ("check", "soldr cargo test --workspace"),
+            ("python-facade-tests", "soldr cargo test -p fbuild-python --test python_facades -- --ignored"),
+        ):
+            steps = [step for step in jobs[job_id]["steps"] if step.get("run") == command or step.get("run") == "uv run --no-project python ci/test_cache_status.py -- " + command]
+            self.assertEqual(1, len(steps))
+            self.assertNotIn("if", steps[0])
+            self.assertFalse(steps[0].get("continue-on-error", False))
+
     def load(self, name):
         # PyYAML treats `on` as a YAML 1.1 boolean; inspect its True key.
         return yaml.safe_load((render_workflows.WORKFLOWS_DIR / name).read_text())
@@ -169,7 +199,7 @@ class FractionalWorkflowTests(unittest.TestCase):
         self.assertIn("push", minimal[True])
         self.assertIn("pull_request", minimal[True])
         self.assertEqual(
-            {"linux", "board_plan", "fbuild_bin", "pr_boards", "reuse_decision", "test", "full", "selected-coverage"},
+            {"verify", "linux", "board_plan", "fbuild_bin", "pr_boards", "reuse_decision", "test", "full", "selected-coverage"},
             set(minimal["jobs"]),
         )
         # GEN-021 shadow decision (zackees/ci.yml#162): main pushes only, never
