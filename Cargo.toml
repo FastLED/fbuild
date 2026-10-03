@@ -207,7 +207,7 @@ owo-colors = "4"
 # collides (`rust-lld: error: duplicate symbol:
 # rp_native_process_start_public`, …). Keep this pin in lockstep with
 # zccache's resolved `running-process` when repinning zccache.
-running-process = { version = "=4.10.16", default-features = false, features = ["client-async"] }
+running-process = { version = "=4.10.16", default-features = false, features = ["client-async", "ape-loader"] }
 
 # One pin for every crate that links zccache (build, build-engine, build-arm,
 # build-esp, build-mcu). It lives here rather than repeated per manifest

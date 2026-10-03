@@ -1,7 +1,6 @@
 use super::host::{HostArch, HostOs};
 use crate::path::NormalizedPath;
 
-pub(super) mod ape;
 pub(super) mod device;
 pub(super) mod fs;
 pub(super) mod host;
