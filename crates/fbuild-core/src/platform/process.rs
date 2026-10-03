@@ -146,6 +146,20 @@ pub fn spawn_detached(
 pub fn spawn_tokio_contained(
     command: &mut tokio::process::Command,
 ) -> std::io::Result<tokio::process::Child> {
+    if CONTAINMENT.get().is_some() {
+        // Where owner-death is tied to the forking thread, the host forks
+        // contained children on a thread that lives for the process (#1628).
+        return super::selected::process::spawn_tokio_on_owner_thread(
+            command,
+            spawn_tokio_contained_here,
+        );
+    }
+    spawn_tokio_contained_here(command)
+}
+
+fn spawn_tokio_contained_here(
+    command: &mut tokio::process::Command,
+) -> std::io::Result<tokio::process::Child> {
     if let Some(group) = CONTAINMENT.get() {
         if let Some(value) = group.originator_value() {
             command.env(running_process::ORIGINATOR_ENV_VAR, value);
