@@ -174,14 +174,17 @@ impl RiscvToolchain {
 
     fn get_gcc_multilib_dir(&self, march: &str, mabi: &str) -> Option<PathBuf> {
         // allow-direct-spawn: short synchronous GCC capability probe (-print-multi-directory).
-        let output = fbuild_core::platform::process::command(self.get_gcc_path())
-            .args([
-                format!("-march={march}"),
-                format!("-mabi={mabi}"),
-                "-print-multi-directory".into(),
-            ])
-            .output()
-            .ok()?;
+        let mut probe = fbuild_core::platform::process::command(self.get_gcc_path());
+        probe.args([
+            format!("-march={march}"),
+            format!("-mabi={mabi}"),
+            "-print-multi-directory".into(),
+        ]);
+        // Short probe: hold the shared fork lock for the whole run.
+        let output = {
+            let _fork = fbuild_core::platform::process::shared_fork_guard();
+            probe.output().ok()?
+        };
         if !output.status.success() {
             return None;
         }

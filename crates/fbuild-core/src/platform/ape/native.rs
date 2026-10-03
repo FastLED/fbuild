@@ -77,6 +77,18 @@ pub fn native_executable_for(
         return None;
     }
     let mut shim = String::from("#!/bin/sh\n");
+    // The image's identity goes into the shim bytes (and so its cache path):
+    // zccache fingerprints a compiler by its path, mtime and size, so a shim
+    // that stayed byte-identical across an in-place compiler upgrade would let
+    // zccache reuse the old compiler's cache entries.
+    let mtime = key
+        .2
+        .and_then(|t| t.duration_since(std::time::UNIX_EPOCH).ok())
+        .map_or(0, |d| d.as_nanos());
+    shim.push_str(&format!(
+        "# fbuild-ape-image: len={} mtime={mtime}\n",
+        key.1
+    ));
     if let Some(dir) = &launch.ape_path_dir {
         shim.push_str(&format!(
             "PATH={}\"${{PATH:+:$PATH}}\"; export PATH\n",
@@ -136,7 +148,11 @@ mod tests {
         );
         assert!(!is_ape_file(&shim), "the shim itself is a plain script");
         let text = std::fs::read_to_string(&shim).unwrap();
-        assert!(text.starts_with("#!/bin/sh\nPATH="), "{text}");
+        assert!(
+            text.starts_with("#!/bin/sh\n# fbuild-ape-image: len="),
+            "{text}"
+        );
+        assert!(text.contains("\nPATH="), "{text}");
         // Spawned directly — no fbuild loader routing involved.
         let out = crate::subprocess::run_command_blocking_retrying_exec_busy(
             &[shim.to_str().unwrap(), "via", "shim"],
@@ -161,6 +177,31 @@ mod tests {
             ),
             Some(shim)
         );
+    }
+
+    /// An in-place compiler upgrade must change the shim zccache sees, or
+    /// zccache's path/mtime/size fingerprint would reuse the old compiler.
+    #[test]
+    fn upgrading_the_image_in_place_changes_the_shim() {
+        if host::current().is_windows() {
+            return;
+        }
+        let cache = tempfile::tempdir().unwrap();
+        let dir = tempfile::tempdir().unwrap();
+        let image = dir.path().join("x86_64-linux-cosmo-gcc");
+        std::fs::copy(hello(), &image).unwrap();
+        let dirs = [NormalizedPath::new(cache.path())];
+        let before = native_executable_for(host::current(), &image, &dirs, None, None).unwrap();
+        let mut grown = std::fs::read(hello()).unwrap();
+        grown.extend_from_slice(b"\0upgrade");
+        std::fs::write(&image, grown).unwrap();
+        let after = native_executable_for(host::current(), &image, &dirs, None, None).unwrap();
+        assert_ne!(before, after);
+        assert_ne!(
+            std::fs::read(&before).unwrap(),
+            std::fs::read(&after).unwrap()
+        );
+        assert_eq!(before.file_name(), after.file_name());
     }
 
     #[test]

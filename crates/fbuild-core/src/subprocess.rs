@@ -242,10 +242,7 @@ async fn run_command_inner(
     if args.is_empty() {
         return Err(FbuildError::Other("empty command".to_string()));
     }
-    let mut cmd = build_command(
-        args, cwd, env, /*capture=*/ true, /*stdin_piped=*/ false,
-    )?;
-    let child = process::spawn_tokio_contained(&mut cmd).map_err(|e| spawn_err(args, e))?;
+    let child = spawn_retrying_ape_busy(args, cwd, env, true, false).await?;
     wait_and_capture(child, args, timeout).await
 }
 
@@ -287,10 +284,7 @@ async fn run_command_with_stdin_inner(
     if args.is_empty() {
         return Err(FbuildError::Other("empty command".to_string()));
     }
-    let mut cmd = build_command(
-        args, cwd, env, /*capture=*/ true, /*stdin_piped=*/ true,
-    )?;
-    let mut child = process::spawn_tokio_contained(&mut cmd).map_err(|e| spawn_err(args, e))?;
+    let mut child = spawn_retrying_ape_busy(args, cwd, env, true, true).await?;
 
     // Take the stdin handle and concurrently write the payload while
     // tokio drains stdout/stderr in the background. Dropping `stdin`
@@ -374,10 +368,7 @@ async fn run_command_passthrough_inner(
     if args.is_empty() {
         return Err(FbuildError::Other("empty command".to_string()));
     }
-    let mut cmd = build_command(
-        args, cwd, env, /*capture=*/ false, /*stdin_piped=*/ false,
-    )?;
-    let mut child = process::spawn_tokio_contained(&mut cmd).map_err(|e| spawn_err(args, e))?;
+    let mut child = spawn_retrying_ape_busy(args, cwd, env, false, false).await?;
     let status = match wait_with_timeout(&mut child, timeout).await? {
         Some(status) => status,
         None => {
@@ -596,6 +587,39 @@ async fn wait_with_timeout(
 
 fn exit_code_from(status: std::process::ExitStatus) -> i32 {
     process::exit_code(status)
+}
+
+/// Attempts for an APE launch whose freshly installed loader is momentarily
+/// busy. fbuild's own spawns hold the fork lock, but spawners it doesn't
+/// control (zccache via kernal-api) can fork while a loader is being written;
+/// that child holds the writable descriptor until its own exec, microseconds.
+const APE_EXEC_BUSY_ATTEMPTS: u32 = 8;
+
+/// Build and spawn `args`, retrying `ETXTBSY` only for APE launches (whose
+/// loader fbuild may have just written). Every other error returns at once.
+async fn spawn_retrying_ape_busy(
+    args: &[&str],
+    cwd: Option<&Path>,
+    env: Option<&[(&str, &str)]>,
+    capture: bool,
+    stdin_piped: bool,
+) -> Result<Child> {
+    let mut attempt = 1;
+    loop {
+        let mut cmd = build_command(args, cwd, env, capture, stdin_piped)?;
+        match process::spawn_tokio_contained(&mut cmd) {
+            Ok(child) => return Ok(child),
+            Err(error)
+                if is_exec_busy(&error)
+                    && attempt < APE_EXEC_BUSY_ATTEMPTS
+                    && process::ape_launch(args[0], cwd, env).is_some() =>
+            {
+                tokio::time::sleep(EXEC_BUSY_BACKOFF * attempt).await;
+                attempt += 1;
+            }
+            Err(error) => return Err(spawn_err(args, error)),
+        }
+    }
 }
 
 fn build_command(

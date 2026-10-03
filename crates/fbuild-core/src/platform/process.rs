@@ -113,7 +113,11 @@ pub fn containment_is_initialized() -> bool {
 /// descriptor is open, so no child can inherit it.
 static FORK_LOCK: RwLock<()> = RwLock::new(());
 
-fn fork_guard() -> RwLockReadGuard<'static, ()> {
+/// Hold across a fork→exec that bypasses this module's spawn helpers (the
+/// few allowlisted direct `Command` spawns), so the child can't inherit a
+/// loader that [`exclusive_fork_guard`] is writing. Release it before
+/// waiting on the child.
+pub fn shared_fork_guard() -> RwLockReadGuard<'static, ()> {
     FORK_LOCK.read().unwrap_or_else(|e| e.into_inner())
 }
 
@@ -182,7 +186,7 @@ pub fn spawn_contained(
         ..running_process::SpawnStdio::default()
     };
     let inner = {
-        let _fork = fork_guard();
+        let _fork = shared_fork_guard();
         match CONTAINMENT.get() {
             Some(group) => group.spawn(command, stdio)?,
             None => running_process::spawn(command, stdio)?,
@@ -209,7 +213,7 @@ pub fn spawn_detached(
     stderr: Option<&File>,
     environment: DetachedEnvironment,
 ) -> std::io::Result<u32> {
-    let _fork = fork_guard();
+    let _fork = shared_fork_guard();
     super::selected::process::spawn_detached(command, stderr, environment)
 }
 
@@ -225,7 +229,7 @@ pub fn spawn_tokio_contained(
         super::selected::process::configure_tokio_owner_death(command)?;
     }
     let child = {
-        let _fork = fork_guard();
+        let _fork = shared_fork_guard();
         running_process::spawn_tokio(command, running_process::TokioSpawnOptions::default())?
     };
     if CONTAINMENT.get().is_some() {

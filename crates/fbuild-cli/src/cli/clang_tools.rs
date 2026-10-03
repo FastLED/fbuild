@@ -298,8 +298,21 @@ pub async fn run_iwyu(
             cmd.arg(&file);
             // FastLED/fbuild#810: cap each IWYU invocation at 120s so a wedged
             // subprocess can't hang the whole fan-out forever.
-            let output =
-                match tokio::time::timeout(std::time::Duration::from_secs(120), cmd.output()).await
+            // Fork under the shared fork lock (released before the await), with
+            // the stdio `output()` would set.
+            cmd.stdin(std::process::Stdio::null())
+                .stdout(std::process::Stdio::piped())
+                .stderr(std::process::Stdio::piped());
+            let child = {
+                let _fork = fbuild_core::platform::process::shared_fork_guard();
+                cmd.spawn()
+            };
+            let output = match child {
+                Ok(child) => match tokio::time::timeout(
+                    std::time::Duration::from_secs(120),
+                    child.wait_with_output(),
+                )
+                .await
                 {
                     Ok(res) => res,
                     Err(_) => {
@@ -310,7 +323,9 @@ pub async fn run_iwyu(
                             src_path,
                         );
                     }
-                };
+                },
+                Err(e) => Err(e),
+            };
 
             match output {
                 Ok(out) => {
@@ -584,15 +599,30 @@ pub async fn run_clang_tool(
             }
             // FastLED/fbuild#810: cap each clang-tidy invocation at 120s so a
             // wedged subprocess can't hang the whole fan-out forever.
-            let output =
-                match tokio::time::timeout(std::time::Duration::from_secs(120), cmd.output()).await
+            // Fork under the shared fork lock (released before the await), with
+            // the stdio `output()` would set.
+            cmd.stdin(std::process::Stdio::null())
+                .stdout(std::process::Stdio::piped())
+                .stderr(std::process::Stdio::piped());
+            let child = {
+                let _fork = fbuild_core::platform::process::shared_fork_guard();
+                cmd.spawn()
+            };
+            let output = match child {
+                Ok(child) => match tokio::time::timeout(
+                    std::time::Duration::from_secs(120),
+                    child.wait_with_output(),
+                )
+                .await
                 {
                     Ok(res) => res,
                     Err(_) => Err(std::io::Error::new(
                         std::io::ErrorKind::TimedOut,
                         "clang-tidy timed out after 120s",
                     )),
-                };
+                },
+                Err(e) => Err(e),
+            };
             (file, output)
         });
         handles.push(handle);

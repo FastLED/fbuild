@@ -540,10 +540,17 @@ pub async fn run_debug(
     // interactively in the user's terminal exactly as if they'd typed the
     // command themselves.
     // allow-direct-spawn: interactive gdb must inherit the user's terminal stdio; the capturing subprocess helpers would break the session.
-    let status = fbuild_core::platform::process::command(&gdb_path)
-        .args(&argv)
-        .status()
-        .map_err(|e| FbuildError::Other(format!("failed to launch {}: {e}", gdb_path.display())))?;
+    let mut gdb = fbuild_core::platform::process::command(&gdb_path);
+    gdb.args(&argv);
+    let launch_err = |e: std::io::Error| {
+        FbuildError::Other(format!("failed to launch {}: {e}", gdb_path.display()))
+    };
+    // Fork under the shared fork lock; release it before the interactive wait.
+    let mut child = {
+        let _fork = fbuild_core::platform::process::shared_fork_guard();
+        gdb.spawn().map_err(launch_err)?
+    };
+    let status = child.wait().map_err(launch_err)?;
 
     if !status.success() {
         return Err(FbuildError::CommandFailed {
