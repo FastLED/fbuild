@@ -63,8 +63,10 @@ mod tests {
     use super::*;
     use std::ffi::OsString;
 
-    fn write_ape(path: &Path) {
-        std::fs::write(path, b"MZqFpD='\n#!/bin/sh\n").unwrap();
+    async fn write_ape(path: &Path) {
+        fbuild_core::fs::write(path, b"MZqFpD='\n#!/bin/sh\n")
+            .await
+            .unwrap();
     }
 
     fn join(dirs: &[&Path]) -> OsString {
@@ -74,12 +76,12 @@ mod tests {
     /// CodeRabbit on FastLED/fbuild#1633: a `teensy_loader_cli.com` APE that
     /// exists only on the requesting CLI's PATH must be found even though the
     /// daemon's own PATH does not contain it.
-    #[test]
-    fn caller_path_ape_is_found_when_daemon_path_lacks_it() {
+    #[tokio::test]
+    async fn caller_path_ape_is_found_when_daemon_path_lacks_it() {
         let caller = tempfile::TempDir::new().unwrap();
         let daemon = tempfile::TempDir::new().unwrap();
         let tool = caller.path().join("teensy_loader_cli.com");
-        write_ape(&tool);
+        write_ape(&tool).await;
 
         let found = find_teensy_loader_cli_in(
             Some(&join(&[caller.path()])),
@@ -89,13 +91,13 @@ mod tests {
         assert_eq!(found, Some(NormalizedPath::from(tool)));
     }
 
-    #[test]
-    fn caller_path_wins_over_daemon_path() {
+    #[tokio::test]
+    async fn caller_path_wins_over_daemon_path() {
         let caller = tempfile::TempDir::new().unwrap();
         let daemon = tempfile::TempDir::new().unwrap();
         let caller_tool = caller.path().join("teensy_loader_cli.com");
-        write_ape(&caller_tool);
-        write_ape(&daemon.path().join("teensy_loader_cli.com"));
+        write_ape(&caller_tool).await;
+        write_ape(&daemon.path().join("teensy_loader_cli.com")).await;
 
         let found = find_teensy_loader_cli_in(
             Some(&join(&[caller.path()])),
@@ -105,13 +107,13 @@ mod tests {
         assert_eq!(found, Some(NormalizedPath::from(caller_tool)));
     }
 
-    #[test]
-    fn falls_back_to_daemon_path_then_platformio() {
+    #[tokio::test]
+    async fn falls_back_to_daemon_path_then_platformio() {
         let caller = tempfile::TempDir::new().unwrap();
         let daemon = tempfile::TempDir::new().unwrap();
         let home = tempfile::TempDir::new().unwrap();
         let daemon_tool = daemon.path().join("teensy_loader_cli.com");
-        write_ape(&daemon_tool);
+        write_ape(&daemon_tool).await;
 
         let found = find_teensy_loader_cli_in(
             Some(&join(&[caller.path()])),
@@ -121,9 +123,9 @@ mod tests {
         assert_eq!(found, Some(NormalizedPath::from(daemon_tool)));
 
         let pio_dir = home.path().join(".platformio/packages/tool-teensy");
-        std::fs::create_dir_all(&pio_dir).unwrap();
+        fbuild_core::fs::create_dir_all(&pio_dir).await.unwrap();
         let pio_tool = pio_dir.join("teensy_loader_cli.com");
-        write_ape(&pio_tool);
+        write_ape(&pio_tool).await;
         let found =
             find_teensy_loader_cli_in(Some(&join(&[caller.path()])), None, Some(home.path()));
         assert_eq!(found, Some(NormalizedPath::from(pio_tool)));
