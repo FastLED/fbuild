@@ -50,6 +50,7 @@ class RunProof:
     workflow: str
     job: str
     mode: str
+    event: str
     state: str
     conclusion: str
     exit_code: int
@@ -100,6 +101,7 @@ class RunProof:
                     "workflow",
                     "job",
                     "mode",
+                    "event",
                     "state",
                     "conclusion",
                 )
@@ -120,6 +122,7 @@ def verify_run(proof: RunProof, workspace: Path, sha: str) -> None:
         or proof.workflow != WORKFLOW
         or proof.job != "linux"
         or proof.mode != "minimal"
+        or proof.event != "workflow_dispatch"
     ):
         raise ValueError("run does not prove this clean minimal Linux source")
     if (
@@ -218,8 +221,8 @@ def main() -> None:
             WORKFLOW,
             "--job",
             "linux",
-            "--trigger",
-            "pr",
+            "--event",
+            "workflow_dispatch",
             "--mode",
             "minimal",
             "--sha",

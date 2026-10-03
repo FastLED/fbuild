@@ -4,7 +4,10 @@ Python scripts for CI, packaging, and development tooling. All invoked via `uv r
 
 `local_gate.py` runs both required Ubuntu jobs through bosn's pinned act2
 engine and checks clean source identity, native Linux x64 execution and both
-job verdicts. `local-gate.toml` starts in shadow mode; board builds, extended/full
+job verdicts. Install bosn 0.1.11 or newer for the stock runner tools.
+`local-gate.toml` enforces PR attestations. The local gate uses the existing
+workflow-dispatch event to run these same jobs before stamping the tree;
+PR verification is confined to PR events. Board builds, extended/full
 mode and other native hosts retain their remote coverage. The migration is
 tracked in [#1635](https://github.com/FastLED/fbuild/issues/1635).
 

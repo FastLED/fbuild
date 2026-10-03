@@ -4,6 +4,7 @@ import unittest
 import os
 import subprocess
 import tempfile
+import tomllib
 
 import yaml
 
@@ -11,6 +12,13 @@ from ci import render_workflows
 
 
 class FractionalWorkflowTests(unittest.TestCase):
+    def test_pr_verifier_enforces_attestation_without_gating_dispatch(self):
+        config = tomllib.loads((render_workflows.WORKFLOWS_DIR.parents[1] / "local-gate.toml").read_text())
+        self.assertEqual("enforce", config["gate"]["mode"])
+        steps = self.load("ci-minimal.yml")["jobs"]["verify"]["steps"]
+        verifier = next(step for step in steps if "local-gate verify" in step.get("run", ""))
+        self.assertEqual("github.event_name == 'pull_request'", verifier.get("if"))
+
     def test_ubuntu_build_cache_writers_receive_final_job_status(self):
         jobs = self.load("check-ubuntu.yml")["jobs"]
         for job_id in ("check", "python-facade-tests"):

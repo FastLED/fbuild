@@ -1,9 +1,9 @@
-# Run from a clean committed tree before pushing. Linux-only shadow rollout;
+# Run from a clean committed tree before pushing. Linux-only enforced PR gate;
 # board, extended/full and other native-host coverage remains remote.
 [gate]
 run = ["uv", "run", "--no-project", "--python", "3.12", "python", "ci/local_gate.py"]
 verify = "ci-minimal.yml:verify"
-mode = "shadow"
+mode = "enforce"
 
 [gate.lanes.linux-minimal]
 run = ["uv", "run", "--no-project", "--python", "3.12", "python", "ci/local_gate.py"]
