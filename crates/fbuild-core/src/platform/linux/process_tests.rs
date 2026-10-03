@@ -22,6 +22,7 @@ fn contained_child_outlives_the_thread_that_spawned_it() {
     // blocking-pool thread does while its compiler is still running.
     let mut child = std::thread::spawn(move || {
         let _entered = handle.enter();
+        // allow-direct-spawn: containment regression test spawns through the contained path under test.
         let mut command = tokio::process::Command::new("sleep");
         command.arg("1");
         spawn_tokio_contained(&mut command).expect("child spawns")

@@ -4,6 +4,7 @@ pub(super) mod device;
 pub(super) mod fs;
 pub(super) mod host;
 pub(super) mod ipc;
+mod owner_thread;
 pub(super) mod process;
 pub(super) mod usb_pnp;
 

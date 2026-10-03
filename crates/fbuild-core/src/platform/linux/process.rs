@@ -7,6 +7,8 @@ mod tests;
 use crate::path::NormalizedPath;
 use crate::platform::process::{DetachedEnvironment, Termination};
 
+pub(crate) use super::owner_thread::spawn_tokio_on_owner_thread;
+
 pub(crate) fn register_daemon_shutdown_handler(
     _shutdown_tx: tokio::sync::watch::Sender<bool>,
 ) -> std::io::Result<()> {
