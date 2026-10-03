@@ -298,9 +298,14 @@ impl FbuildZccacheService {
         cwd: PathBuf,
         env: Vec<(String, String)>,
     ) -> Result<EmbeddedCompileOutcome, EmbeddedServiceError> {
+        // zccache spawns the compiler itself, so an APE (cosmocc) compiler
+        // can't be routed through fbuild's loader; hand it a host-native
+        // stand-in with the same file name instead.
+        let compiler = fbuild_core::platform::ape::native_executable(compiler)
+            .unwrap_or_else(|| compiler.to_path_buf());
         let req = ZccacheCompileRequest {
             audit: default_audit_context(),
-            compiler: compiler.to_path_buf().into(),
+            compiler: compiler.into(),
             args,
             cwd: cwd.into(),
             env,

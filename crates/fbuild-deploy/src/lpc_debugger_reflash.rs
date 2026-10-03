@@ -105,12 +105,7 @@ fn find_dfu_util_with_override(env_override: Option<std::ffi::OsString>) -> Opti
         }
     }
     let tools = managed_tools_dir()?;
-    let exe = fbuild_core::platform::executable::native_name("dfu-util");
-    let candidate = tools.join(exe);
-    if candidate.is_file() {
-        return Some(candidate);
-    }
-    None
+    fbuild_core::platform::executable::find_tool_in(&tools, "dfu-util").map(NormalizedPath::from)
 }
 
 /// Resolve the CMSIS-DAP hex to flash. Precedence:

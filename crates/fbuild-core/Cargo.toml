@@ -18,6 +18,9 @@ sha2 = { workspace = true }
 semver = { workspace = true }
 # Runtime decompression for the downloaded FastLED/boards cache.
 zstd = { workspace = true }
+# Inflates the gzip'd loader embedded in APE (cosmocc) images so
+# `platform::ape` can run them without a host APE loader.
+flate2 = { workspace = true }
 prost = { workspace = true }
 # Cross-platform containment and detached-spawn implementation delegated by
 # `platform::process`. Its source and revision intentionally match zccache's

@@ -14,10 +14,8 @@ pub fn strip_cache_wrapper(args: &[String]) -> Vec<String> {
     // `Path::file_stem` only splits on the platform's native separator, so
     // `C:\...\sccache.exe` is treated as one component on Linux/macOS.
     let filename = args[0].rsplit(['/', '\\']).next().unwrap_or(&args[0]);
-    let stem = filename
-        .strip_suffix(".exe")
-        .or_else(|| filename.strip_suffix(".EXE"))
-        .unwrap_or(filename)
+    let stem = fbuild_core::platform::executable::split_tool_suffix(filename)
+        .0
         .to_lowercase();
 
     if stem == "sccache" || stem == "ccache" || stem == "zccache" {

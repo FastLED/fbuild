@@ -81,7 +81,6 @@
 //!    `-ex "set serial baud <baud>" -ex "target remote <port>" <elf>`.
 
 use std::path::Path;
-use std::process::Command;
 
 use fbuild_build::build_info::{find_build_info_near, load_build_info};
 use fbuild_build::symbol_analyzer::discover_elf_in_project;
@@ -246,27 +245,26 @@ pub(crate) fn gdb_candidate_names(toolchain_prefix: &str) -> Vec<String> {
     names
 }
 
+#[cfg(test)]
 fn exe_name(name: &str) -> String {
     fbuild_core::platform::executable::native_name(name)
 }
 
 /// Search a list of directories (in order) for the first existing
-/// candidate binary name. Pure function of its inputs — I/O-free beyond
-/// `Path::exists`, so tests can point it at a `tempdir` fixture instead of
-/// the real `PATH`/toolchain cache.
+/// candidate binary (native spelling, or a `.com`/`.exe` APE; see
+/// `find_tool_in`). Pure function of its inputs — file I/O only, so tests
+/// can point it at a `tempdir` fixture instead of the real
+/// `PATH`/toolchain cache.
 pub(crate) fn find_gdb_in_dirs(
     dirs: &[NormalizedPath],
     candidate_names: &[String],
 ) -> Option<NormalizedPath> {
-    for dir in dirs {
-        for name in candidate_names {
-            let candidate = dir.join(exe_name(name));
-            if candidate.exists() {
-                return Some(candidate);
-            }
-        }
-    }
-    None
+    dirs.iter().find_map(|dir| {
+        candidate_names
+            .iter()
+            .find_map(|name| fbuild_core::platform::executable::find_tool_in(dir, name))
+            .map(NormalizedPath::from)
+    })
 }
 
 fn path_dirs() -> Vec<NormalizedPath> {
@@ -543,7 +541,7 @@ pub async fn run_debug(
     // interactively in the user's terminal exactly as if they'd typed the
     // command themselves.
     // allow-direct-spawn: interactive gdb must inherit the user's terminal stdio; the capturing subprocess helpers would break the session.
-    let status = Command::new(&gdb_path)
+    let status = fbuild_core::platform::process::command(&gdb_path)
         .args(&argv)
         .status()
         .map_err(|e| FbuildError::Other(format!("failed to launch {}: {e}", gdb_path.display())))?;

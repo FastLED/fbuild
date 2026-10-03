@@ -520,6 +520,8 @@ struct RegistryVersion {
 
 #[derive(Deserialize)]
 struct RegistryFile {
+    /// Host selector; a missing or `null` field means universal, like `"*"`.
+    #[serde(default)]
     system: serde_json::Value,
     download_url: String,
     checksum: Option<RegistryChecksum>,
@@ -559,6 +561,7 @@ fn file_matches(file: &RegistryFile, system: &str) -> Option<u8> {
     match &file.system {
         serde_json::Value::String(s) if s == system => Some(2),
         serde_json::Value::String(s) if s == "*" => Some(1),
+        serde_json::Value::Null => Some(1),
         serde_json::Value::Array(systems) if systems.iter().any(|s| s.as_str() == Some(system)) => {
             Some(2)
         }

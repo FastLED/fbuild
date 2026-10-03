@@ -34,6 +34,43 @@ pub fn extract(archive_path: &Path, dest_dir: &Path) -> Result<()> {
     }
 }
 
+/// Give every APE (Actually Portable Executable) host tool under `root` an
+/// exec bit, returning how many files were inspected and found to be APE.
+///
+/// Zip archives built without Unix attributes (DOS-attribute or no-attribute
+/// entries) extract with mode 0644, so a package shipping one `tool.com` APE
+/// for every host would be unrunnable on Linux/macOS. Only regular files whose
+/// first bytes carry an APE magic are touched (an 8-byte read each), symlinks
+/// are never followed, and the call is a no-op on Windows.
+pub fn mark_ape_executables(root: &Path) -> Result<usize> {
+    let mut marked = 0;
+    let mut pending = vec![root.to_path_buf()];
+    while let Some(dir) = pending.pop() {
+        let entries = std::fs::read_dir(&dir).map_err(|e| {
+            FbuildError::PackageError(format!("failed to read {}: {}", dir.display(), e))
+        })?;
+        for entry in entries {
+            let entry = entry?;
+            // `DirEntry::file_type` does not follow symlinks.
+            let file_type = entry.file_type()?;
+            let path = entry.path();
+            if file_type.is_dir() {
+                pending.push(path);
+            } else if file_type.is_file() && fbuild_core::platform::ape::is_ape_file(&path) {
+                fbuild_core::platform::fs::ensure_executable(&path).map_err(|e| {
+                    FbuildError::PackageError(format!(
+                        "failed to mark APE {} executable: {}",
+                        path.display(),
+                        e
+                    ))
+                })?;
+                marked += 1;
+            }
+        }
+    }
+    Ok(marked)
+}
+
 /// Extract a `.zip` archive. Public so callers (e.g. lnk materializer)
 /// can dispatch without depending on the source file's extension.
 pub fn extract_zip_public(archive_path: &Path, dest_dir: &Path) -> Result<()> {
@@ -125,6 +162,9 @@ fn extract_zip(archive_path: &Path, dest_dir: &Path) -> Result<()> {
             e
         ))
     })?;
+    // Zip entries without Unix attributes extract without the exec bit; every
+    // zip caller (not just staged package installs) needs APE tools runnable.
+    mark_ape_executables(dest_dir)?;
     Ok(())
 }
 
@@ -232,6 +272,48 @@ mod tests {
         assert!(extracted.exists(), "extracted file should exist");
         let bytes = std::fs::read(&extracted).unwrap();
         assert_eq!(bytes, b"hello from tar.xz");
+    }
+
+    #[test]
+    fn mark_ape_executables_marks_only_apes_and_does_not_follow_symlinks() {
+        use fbuild_core::platform::fs::is_executable;
+
+        let tmp = tempfile::TempDir::new().unwrap();
+        let archive = tmp.path().join("tools.zip");
+        make_zip(&archive, "bin/tool.com", b"MZqFpD='\n");
+        let dest = tmp.path().join("out");
+        std::fs::create_dir_all(&dest).unwrap();
+        extract(&archive, &dest).unwrap();
+        std::fs::write(dest.join("bin/notes.txt"), b"plain").unwrap();
+        let notes_before = std::fs::metadata(dest.join("bin/notes.txt"))
+            .unwrap()
+            .permissions();
+
+        // An APE outside the tree, reachable only through a symlink.
+        let outside = tmp.path().join("outside.com");
+        std::fs::write(&outside, b"MZqFpD='\n").unwrap();
+        let outside_before = std::fs::metadata(&outside).unwrap().permissions();
+        let linked =
+            fbuild_core::platform::fs::symlink_file(&outside, &dest.join("bin/link.com")).is_ok();
+
+        let marked = mark_ape_executables(&dest).unwrap();
+        assert_eq!(marked, 1, "only the in-tree regular APE is marked");
+        assert!(is_executable(
+            &std::fs::metadata(dest.join("bin/tool.com")).unwrap()
+        ));
+        assert_eq!(
+            std::fs::metadata(dest.join("bin/notes.txt"))
+                .unwrap()
+                .permissions(),
+            notes_before
+        );
+        if linked {
+            assert_eq!(
+                std::fs::metadata(&outside).unwrap().permissions(),
+                outside_before,
+                "symlink targets outside the tree must not be modified"
+            );
+        }
     }
 
     #[test]

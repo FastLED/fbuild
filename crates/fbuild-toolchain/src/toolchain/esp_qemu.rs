@@ -71,6 +71,14 @@ impl EspQemuArch {
         }
     }
 
+    /// Executable stem, resolved via `find_tool_in` (native or APE spelling).
+    fn stem(self) -> &'static str {
+        match self {
+            Self::Xtensa => "qemu-system-xtensa",
+            Self::Riscv32 => "qemu-system-riscv32",
+        }
+    }
+
     fn binary_name(self) -> &'static str {
         match self {
             Self::Xtensa => fbuild_core::platform::executable::name(
@@ -127,7 +135,7 @@ impl EspQemu {
             hydrate_windows_runtime(&path)?;
             validate_windows_runtime(&path)?;
             path
-        } else if let Some(path) = find_on_path(self.arch.binary_name()) {
+        } else if let Some(path) = find_on_path(self.arch.stem()) {
             hydrate_windows_runtime(&path)?;
             validate_windows_runtime(&path)?;
             path
@@ -406,14 +414,14 @@ fn validate_qemu_path(path: PathBuf, source: &str) -> Result<PathBuf> {
 }
 
 fn find_qemu_binary(root: &Path, arch: EspQemuArch) -> Result<PathBuf> {
+    use fbuild_core::platform::executable::find_tool_in;
     let file_name = arch.binary_name();
-    let direct = root.join(file_name);
-    if direct.is_file() {
+    let stem = arch.stem();
+    if let Some(direct) = find_tool_in(root, stem) {
         return Ok(direct);
     }
 
-    let in_bin = root.join("bin").join(file_name);
-    if in_bin.is_file() {
+    if let Some(in_bin) = find_tool_in(&root.join("bin"), stem) {
         return Ok(in_bin);
     }
 
@@ -424,13 +432,11 @@ fn find_qemu_binary(root: &Path, arch: EspQemuArch) -> Result<PathBuf> {
                 continue;
             }
 
-            let nested_direct = path.join(file_name);
-            if nested_direct.is_file() {
+            if let Some(nested_direct) = find_tool_in(&path, stem) {
                 return Ok(nested_direct);
             }
 
-            let nested_bin = path.join("bin").join(file_name);
-            if nested_bin.is_file() {
+            if let Some(nested_bin) = find_tool_in(&path.join("bin"), stem) {
                 return Ok(nested_bin);
             }
         }
@@ -461,15 +467,9 @@ fn qemu_root(install_dir: &Path, arch: EspQemuArch) -> Result<PathBuf> {
     }
 }
 
-fn find_on_path(binary: &str) -> Option<PathBuf> {
+fn find_on_path(stem: &str) -> Option<PathBuf> {
     let path_var = std::env::var_os("PATH")?;
-    for dir in std::env::split_paths(&path_var) {
-        let candidate = dir.join(binary);
-        if candidate.is_file() {
-            return Some(candidate);
-        }
-    }
-    None
+    fbuild_core::platform::executable::find_tool_on_paths(std::env::split_paths(&path_var), stem)
 }
 
 fn find_existing_idf_qemu(arch: EspQemuArch) -> Option<PathBuf> {

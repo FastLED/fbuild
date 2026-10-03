@@ -183,16 +183,21 @@ fn parse_tools_json(path: &Path, toolchain_name: &str) -> Result<ResolvedToolcha
         // Use the first version entry
         let version = &versions[0];
 
-        let platform_info = version.get(platform).ok_or_else(|| {
-            let available: Vec<&str> = version
-                .as_object()
-                .map(|m| m.keys().map(|k| k.as_str()).collect())
-                .unwrap_or_default();
-            FbuildError::PackageError(format!(
-                "platform '{}' not found for {}. Available: {:?}",
-                platform, toolchain_name, available
-            ))
-        })?;
+        // ESP-IDF marks host-independent tools (scripts, APE builds) with the
+        // `any` platform key; use it when the host has no dedicated entry.
+        let platform_info = version
+            .get(platform)
+            .or_else(|| version.get("any"))
+            .ok_or_else(|| {
+                let available: Vec<&str> = version
+                    .as_object()
+                    .map(|m| m.keys().map(|k| k.as_str()).collect())
+                    .unwrap_or_default();
+                FbuildError::PackageError(format!(
+                    "platform '{}' not found for {}. Available: {:?}",
+                    platform, toolchain_name, available
+                ))
+            })?;
 
         let url = platform_info
             .get("url")
@@ -279,6 +284,38 @@ mod tests {
 
         let result = parse_tools_json(&tools_json, "nonexistent");
         assert!(result.is_err());
+    }
+
+    #[test]
+    fn test_parse_tools_json_falls_back_to_any_platform() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let tools_json = tmp.path().join("tools.json");
+        std::fs::write(
+            &tools_json,
+            r#"{"tools": [{"name": "tc", "versions": [{
+                "other-platform": {"url": "https://example.com/other.zip"},
+                "any": {"url": "https://example.com/any.zip", "sha256": "beef"}
+            }]}]}"#,
+        )
+        .unwrap();
+        let result = parse_tools_json(&tools_json, "tc").unwrap();
+        assert_eq!(result.url, "https://example.com/any.zip");
+        assert_eq!(result.sha256.as_deref(), Some("beef"));
+
+        // The host's own entry still wins over `any`.
+        std::fs::write(
+            &tools_json,
+            format!(
+                r#"{{"tools": [{{"name": "tc", "versions": [{{
+                    "any": {{"url": "https://example.com/any.zip"}},
+                    "{}": {{"url": "https://example.com/host.zip"}}
+                }}]}}]}}"#,
+                detect_platform()
+            ),
+        )
+        .unwrap();
+        let result = parse_tools_json(&tools_json, "tc").unwrap();
+        assert_eq!(result.url, "https://example.com/host.zip");
     }
 
     #[test]

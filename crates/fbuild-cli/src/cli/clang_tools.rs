@@ -287,7 +287,7 @@ pub async fn run_iwyu(
             // Cache miss — run IWYU. Parallel async fan-out inside the CLI binary
             // (no daemon containment group in this process).
             // allow-direct-spawn: parallel async fan-out in CLI; no containment group here.
-            let mut cmd = tokio::process::Command::new(tool.as_ref());
+            let mut cmd = fbuild_core::platform::process::tokio_command(tool.as_ref());
             cmd.arg("-p").arg(p_dir.as_ref());
             cmd.arg("-Xiwyu").arg("--no_comments");
             cmd.arg("-Xiwyu").arg("--quoted_includes_first");
@@ -573,7 +573,7 @@ pub async fn run_clang_tool(
                 .await
                 .expect("fbuild-cli: clang-tool semaphore is never closed before all tasks finish");
             // allow-direct-spawn: parallel async fan-out (clang-tidy) in CLI binary.
-            let mut cmd = tokio::process::Command::new(tool.as_ref());
+            let mut cmd = fbuild_core::platform::process::tokio_command(tool.as_ref());
             cmd.arg("-p").arg(pd.as_ref());
             for arg in &extra {
                 cmd.arg(arg);

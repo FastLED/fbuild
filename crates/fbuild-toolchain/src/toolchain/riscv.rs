@@ -6,7 +6,6 @@
 //! riscv-none-elf-size.
 
 use std::path::{Path, PathBuf};
-use std::process::Command;
 
 use crate::{CacheSubdir, PackageBase, PackageInfo, Toolchain};
 
@@ -175,7 +174,7 @@ impl RiscvToolchain {
 
     fn get_gcc_multilib_dir(&self, march: &str, mabi: &str) -> Option<PathBuf> {
         // allow-direct-spawn: short synchronous GCC capability probe (-print-multi-directory).
-        let output = Command::new(self.get_gcc_path())
+        let output = fbuild_core::platform::process::command(self.get_gcc_path())
             .args([
                 format!("-march={march}"),
                 format!("-mabi={mabi}"),
@@ -261,9 +260,11 @@ impl crate::Package for RiscvToolchain {
         if self.executable_prefix == "auto" {
             return detect_tool_prefix(&root.join("bin")).is_some();
         }
-        root.join("bin")
-            .join(tool_name(&format!("{}-gcc", self.executable_prefix)))
-            .exists()
+        tool_binary(
+            &root.join("bin"),
+            &format!("{}-gcc", self.executable_prefix),
+        )
+        .exists()
     }
 
     fn get_info(&self) -> PackageInfo {
@@ -403,34 +404,34 @@ fn find_bin_root(install_dir: &Path) -> PathBuf {
     install_dir.to_path_buf()
 }
 
-/// Get the tool binary name with .exe extension on Windows.
-fn tool_name(name: &str) -> String {
-    fbuild_core::platform::executable::native_name(name)
-}
-
-/// Get the full path to a tool binary.
+/// Get the full path to a tool binary (native spelling, or a `.com`/`.exe` APE).
 fn tool_binary(bin_dir: &Path, name: &str) -> PathBuf {
-    bin_dir.join(tool_name(name))
+    fbuild_core::platform::executable::resolve_tool_in(bin_dir, name)
 }
 
 /// Find one complete RISC-V compiler suite in an extracted PlatformIO
 /// package. A package with multiple suites is ambiguous and must not be
 /// selected by directory iteration order.
 fn detect_tool_prefix(bin_dir: &Path) -> Option<String> {
-    let gcc_suffix = tool_name("-gcc");
-    let mut candidates = std::fs::read_dir(bin_dir)
+    use fbuild_core::platform::executable::{find_tool_in, split_tool_suffix};
+
+    // A suite may spell gcc natively or as an APE (`.com`/`.exe`); dedupe so
+    // two spellings of one suite do not look like two suites.
+    let prefixes = std::fs::read_dir(bin_dir)
         .ok()?
         .filter_map(Result::ok)
         .filter_map(|entry| {
             let name = entry.file_name().to_string_lossy().into_owned();
-            let prefix = name.strip_suffix(&gcc_suffix)?;
-            if !prefix.starts_with("riscv") || !entry.path().is_file() {
-                return None;
-            }
-            ["g++", "ar", "objcopy", "size"]
+            let prefix = split_tool_suffix(&name).0.strip_suffix("-gcc")?;
+            prefix.starts_with("riscv").then(|| prefix.to_string())
+        })
+        .collect::<std::collections::BTreeSet<_>>();
+    let mut candidates = prefixes
+        .into_iter()
+        .filter(|prefix| {
+            ["gcc", "g++", "ar", "objcopy", "size"]
                 .iter()
-                .all(|suffix| tool_binary(bin_dir, &format!("{prefix}-{suffix}")).is_file())
-                .then(|| prefix.to_string())
+                .all(|suffix| find_tool_in(bin_dir, &format!("{prefix}-{suffix}")).is_some())
         })
         .collect::<Vec<_>>();
     if candidates.len() == 1 {
@@ -454,15 +455,6 @@ mod tests {
     }
 
     #[test]
-    fn test_tool_name_platform() {
-        let name = tool_name("riscv-none-elf-gcc");
-        assert_eq!(
-            name,
-            fbuild_core::platform::executable::native_name("riscv-none-elf-gcc")
-        );
-    }
-
-    #[test]
     fn ch32v_platform_toolchain_uses_wch_executable_prefix() {
         let tmp = tempfile::TempDir::new().unwrap();
         let override_package = fbuild_config::PackageOverride::new(
@@ -473,11 +465,15 @@ mod tests {
             RiscvToolchain::with_platform_override(tmp.path(), override_package, "riscv-wch-elf");
         assert_eq!(
             toolchain.get_gcc_path().file_name().unwrap(),
-            std::ffi::OsStr::new(&tool_name("riscv-wch-elf-gcc"))
+            std::ffi::OsStr::new(&fbuild_core::platform::executable::native_name(
+                "riscv-wch-elf-gcc"
+            ))
         );
         assert_eq!(
             toolchain.get_ar_path().file_name().unwrap(),
-            std::ffi::OsStr::new(&tool_name("riscv-wch-elf-ar"))
+            std::ffi::OsStr::new(&fbuild_core::platform::executable::native_name(
+                "riscv-wch-elf-ar"
+            ))
         );
         assert!(toolchain.get_info().url.contains("toolchain-riscv-linux"));
     }

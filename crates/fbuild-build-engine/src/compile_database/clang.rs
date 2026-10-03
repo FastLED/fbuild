@@ -55,7 +55,10 @@ pub fn translate_flags_for_clang(args: &[String], arch: TargetArchitecture) -> V
     let compiler_path = fbuild_core::path::NormalizedPath::from(args[0].as_str())
         .display_slash()
         .to_lowercase();
-    let clang_name = if compiler_path.ends_with("g++") || compiler_path.ends_with("g++.exe") {
+    let clang_name = if compiler_path.ends_with("g++")
+        || compiler_path.ends_with("g++.exe")
+        || compiler_path.ends_with("g++.com")
+    {
         "clang++"
     } else {
         "clang"

@@ -708,6 +708,15 @@ mod tests {
     }
 
     #[test]
+    fn derive_gcc_tool_path_preserves_ape_com_suffix() {
+        let size = PathBuf::from("/toolchain/bin/xtensa-esp32s3-elf-size.com");
+        assert_eq!(
+            derive_gcc_tool_path(&size, "nm"),
+            PathBuf::from("/toolchain/bin").join("xtensa-esp32s3-elf-nm.com")
+        );
+    }
+
+    #[test]
     fn derive_gcc_tool_path_bare_size_falls_back_to_bare_target() {
         // PATH-resolved `size` with no prefix.
         let size = PathBuf::from("/usr/bin/size");

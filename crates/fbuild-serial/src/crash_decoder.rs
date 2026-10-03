@@ -380,25 +380,26 @@ impl CrashDecoder {
 /// The toolchain prefix is everything before `gcc` in the binary name:
 /// - `riscv32-esp-elf-gcc` → `riscv32-esp-elf-addr2line`
 /// - `xtensa-esp32s3-elf-gcc` → `xtensa-esp32s3-elf-addr2line`
+///
+/// The compiler's executable suffix (`.exe`, or `.com` for a cosmocc APE) is
+/// stripped for matching and tried first on the derived tool, so an APE
+/// toolchain's `xtensa-esp32s3-elf-gcc.com` maps to
+/// `xtensa-esp32s3-elf-addr2line.com`. Otherwise the usual native/APE
+/// candidates are probed (see `find_tool_in`).
 pub fn derive_addr2line_path(cc_path: &Path) -> Option<PathBuf> {
+    use fbuild_core::platform::executable::{find_tool_in, split_tool_suffix};
+
     let name = cc_path.file_name()?.to_string_lossy();
+    let (stem, suffix) = split_tool_suffix(&name);
+    let prefix = stem.strip_suffix("gcc")?; // e.g. "riscv32-esp-elf-"
+    let bin_dir = cc_path.parent()?;
+    let tool_stem = format!("{prefix}addr2line");
 
-    // Strip .exe suffix for matching
-    let stem = name.replace(".exe", "");
-    if !stem.ends_with("gcc") {
-        return None;
+    let same_suffix = bin_dir.join(format!("{tool_stem}{suffix}"));
+    if same_suffix.is_file() {
+        return Some(same_suffix);
     }
-
-    let prefix = &stem[..stem.len() - 3]; // e.g. "riscv32-esp-elf-"
-    let addr2line_name =
-        fbuild_core::platform::executable::native_name(&format!("{prefix}addr2line"));
-    let addr2line = cc_path.parent()?.join(addr2line_name);
-
-    if addr2line.exists() {
-        Some(addr2line)
-    } else {
-        None
-    }
+    find_tool_in(bin_dir, &tool_stem)
 }
 
 #[cfg(test)]
@@ -633,6 +634,26 @@ mod tests {
 
         let not_gcc = PathBuf::from("/tmp/xtensa-esp-elf-clang");
         assert!(derive_addr2line_path(&not_gcc).is_none());
+    }
+
+    #[test]
+    fn derive_addr2line_keeps_the_com_suffix_of_an_ape_compiler() {
+        let dir = tempfile::tempdir().unwrap();
+        let gcc = dir.path().join("xtensa-esp32s3-elf-gcc.com");
+        let addr2line = dir.path().join("xtensa-esp32s3-elf-addr2line.com");
+        std::fs::write(&gcc, b"MZqFpD='\n").unwrap();
+        assert!(derive_addr2line_path(&gcc).is_none());
+        std::fs::write(&addr2line, b"MZqFpD='\n").unwrap();
+        assert_eq!(derive_addr2line_path(&gcc), Some(addr2line));
+    }
+
+    #[test]
+    fn derive_addr2line_from_exe_compiler_keeps_exe() {
+        let dir = tempfile::tempdir().unwrap();
+        let gcc = dir.path().join("riscv32-esp-elf-gcc.exe");
+        let addr2line = dir.path().join("riscv32-esp-elf-addr2line.exe");
+        std::fs::write(&addr2line, b"MZ").unwrap();
+        assert_eq!(derive_addr2line_path(&gcc), Some(addr2line));
     }
 
     // --- Regex pattern tests ---

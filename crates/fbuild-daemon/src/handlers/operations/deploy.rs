@@ -21,24 +21,21 @@ use super::common::{native_verify_enabled, native_write_enabled};
 /// Resolve a usable `teensy_loader_cli` binary for the Teensy deploy arm.
 ///
 /// Search order:
-///   1. `$PATH` (`teensy_loader_cli` on Unix, `teensy_loader_cli.exe` on Win)
-///   2. `~/.platformio/packages/tool-teensy/teensy_loader_cli{.exe}` — the
+///   1. `$PATH` (`teensy_loader_cli` on Unix, `teensy_loader_cli.exe` on Win,
+///      or a `.com`/`.exe` APE on any host)
+///   2. `~/.platformio/packages/tool-teensy/teensy_loader_cli{.exe,.com}` — the
 ///      well-known path PlatformIO installs it at on every PIO-using machine.
 ///
 /// Returns `None` if neither is found; the TeensyDeployer's default will then
 /// try a bare `teensy_loader_cli` invocation, which will surface
 /// `command not found` to the user — clearer than a silent abort here.
 fn find_teensy_loader_cli() -> Option<PathBuf> {
-    let exe_name =
-        fbuild_core::platform::executable::name("teensy_loader_cli", "teensy_loader_cli.exe");
+    use fbuild_core::platform::executable::{find_tool_in, find_tool_on_paths};
+    const STEM: &str = "teensy_loader_cli";
 
-    if let Ok(path_env) = std::env::var("PATH") {
-        let sep = fbuild_core::platform::host::path_list_separator();
-        for dir in path_env.split(sep) {
-            let candidate = PathBuf::from(dir).join(exe_name);
-            if candidate.is_file() {
-                return Some(candidate);
-            }
+    if let Some(path_env) = std::env::var_os("PATH") {
+        if let Some(found) = find_tool_on_paths(std::env::split_paths(&path_env), STEM) {
+            return Some(found);
         }
     }
 
@@ -50,18 +47,11 @@ fn find_teensy_loader_cli() -> Option<PathBuf> {
     } else {
         std::env::var("HOME").ok()
     };
-    if let Some(home) = pio_root {
-        let pio_candidate = PathBuf::from(home)
-            .join(".platformio")
-            .join("packages")
-            .join("tool-teensy")
-            .join(exe_name);
-        if pio_candidate.is_file() {
-            return Some(pio_candidate);
-        }
-    }
-
-    None
+    let pio_tool_dir = PathBuf::from(pio_root?)
+        .join(".platformio")
+        .join("packages")
+        .join("tool-teensy");
+    find_tool_in(&pio_tool_dir, STEM)
 }
 
 /// POST /api/deploy

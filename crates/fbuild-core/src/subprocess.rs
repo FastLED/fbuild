@@ -605,7 +605,38 @@ fn build_command(
     capture: bool,
     stdin_piped: bool,
 ) -> Result<TokioCommand> {
-    let mut cmd = TokioCommand::new(args[0]);
+    // APE (cosmocc) images can't be exec'd directly on hosts without an APE
+    // binfmt handler (e.g. NixOS); route them through a loader.
+    let launch = process::ape_launch(args[0], cwd, env);
+    let mut cmd = match &launch {
+        Some(launch) => {
+            let mut cmd = TokioCommand::new(&launch.loader);
+            cmd.arg(&launch.image);
+            cmd
+        }
+        None => TokioCommand::new(args[0]),
+    };
+    // Expose fbuild's loader as `ape` on the child's PATH so APE programs the
+    // tool spawns itself (gcc -> cc1) resolve a loader too.
+    let ape_path = launch.as_ref().and_then(|launch| {
+        let inherited = env
+            .and_then(|vars| vars.iter().rev().find(|(k, _)| *k == "PATH"))
+            .map(|(_, v)| std::ffi::OsString::from(*v))
+            .or_else(|| std::env::var_os("PATH"));
+        launch.child_path(inherited.as_deref())?.into_string().ok()
+    });
+    let overlay: Option<Vec<(&str, &str)>> = match (&ape_path, env) {
+        (Some(path), env) => Some(
+            env.unwrap_or_default()
+                .iter()
+                .copied()
+                .filter(|(k, _)| *k != "PATH")
+                .chain([("PATH", path.as_str())])
+                .collect(),
+        ),
+        (None, env) => env.map(<[_]>::to_vec),
+    };
+    let env = overlay.as_deref();
     if args.len() > 1 {
         cmd.args(&args[1..]);
     }

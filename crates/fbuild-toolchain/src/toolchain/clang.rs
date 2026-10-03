@@ -106,8 +106,7 @@ impl ClangComponent {
     /// Calls `ensure_installed()` internally.
     pub async fn get_binary(&self, name: &str) -> fbuild_core::Result<PathBuf> {
         let install_dir = self.ensure_installed().await?;
-        let binary_name = fbuild_core::platform::executable::native_name(name);
-        find_binary_in_dir(&install_dir, &binary_name).ok_or_else(|| {
+        find_binary_in_dir(&install_dir, name).ok_or_else(|| {
             fbuild_core::FbuildError::Other(format!(
                 "'{}' not found in {} installation at {}",
                 name,
@@ -240,8 +239,7 @@ impl ClangComponent {
 
     fn validate(kind: ClangComponentKind, dir: &Path) -> fbuild_core::Result<()> {
         for name in kind.required_binaries() {
-            let binary_name = fbuild_core::platform::executable::native_name(name);
-            if find_binary_in_dir(dir, &binary_name).is_none() {
+            if find_binary_in_dir(dir, name).is_none() {
                 return Err(fbuild_core::FbuildError::PackageError(format!(
                     "'{}' not found in extracted {} archive",
                     name,
@@ -253,15 +251,16 @@ impl ClangComponent {
     }
 }
 
-/// Recursively search for a binary by name in a directory.
-/// Checks `dir/bin/name`, then `dir/*/bin/name` (one level of nesting).
-pub fn find_binary_in_dir(dir: &Path, name: &str) -> Option<PathBuf> {
+/// Search for a tool by stem in a directory: the host-native spelling or a
+/// `.com`/`.exe` APE (see [`fbuild_core::platform::executable::find_tool_in`]).
+/// Checks `dir/bin/<stem>`, then `dir/*/bin/<stem>` (one level of nesting).
+pub fn find_binary_in_dir(dir: &Path, stem: &str) -> Option<PathBuf> {
+    use fbuild_core::platform::executable::find_tool_in;
     if !dir.exists() {
         return None;
     }
-    // Direct: dir/bin/name
-    let direct = dir.join("bin").join(name);
-    if direct.exists() {
+    // Direct: dir/bin/<stem>
+    if let Some(direct) = find_tool_in(&dir.join("bin"), stem) {
         return Some(direct);
     }
     // One level nested: dir/subdir/bin/name (archives often have a top-level folder)
@@ -269,8 +268,7 @@ pub fn find_binary_in_dir(dir: &Path, name: &str) -> Option<PathBuf> {
         for entry in entries.filter_map(|e| e.ok()) {
             let p = entry.path();
             if p.is_dir() {
-                let candidate = p.join("bin").join(name);
-                if candidate.exists() {
+                if let Some(candidate) = find_tool_in(&p.join("bin"), stem) {
                     return Some(candidate);
                 }
             }
@@ -427,7 +425,26 @@ mod tests {
         std::fs::create_dir_all(&nested).unwrap();
         let name = fbuild_core::platform::executable::native_name("clang-tidy");
         std::fs::write(nested.join(&name), b"fake").unwrap();
-        assert!(find_binary_in_dir(dir.path(), &name).is_some());
+        assert!(find_binary_in_dir(dir.path(), "clang-tidy").is_some());
+    }
+
+    #[test]
+    fn test_find_binary_accepts_ape_com_but_not_foreign_native_binary() {
+        let dir = tempfile::tempdir().unwrap();
+        let bin = dir.path().join("llvm").join("bin");
+        std::fs::create_dir_all(&bin).unwrap();
+        let foreign = if fbuild_core::platform::host::current().is_windows() {
+            "clang-tidy"
+        } else {
+            "clang-tidy.exe"
+        };
+        std::fs::write(bin.join(foreign), b"not an APE").unwrap();
+        assert!(find_binary_in_dir(dir.path(), "clang-tidy").is_none());
+        std::fs::write(bin.join("clang-tidy.com"), b"MZqFpD='\n").unwrap();
+        assert_eq!(
+            find_binary_in_dir(dir.path(), "clang-tidy"),
+            Some(bin.join("clang-tidy.com"))
+        );
     }
 
     #[test]

@@ -286,11 +286,84 @@ points:
 - URL-based package and library management, including GitHub `lib_deps`
 - Build, deploy, serial monitor, and emulator test workflows from one CLI
 - Cross-platform support on Windows, macOS, and Linux
+- Host tools as Rust-built APE native executables: one binary per tool that
+  runs everywhere fbuild does, even on NixOS
+  ([details](#host-tools-ape-native-executables))
 - Transparent architecture with Rust workspace internals documented under
   [`docs/architecture/`](docs/architecture/README.md)
 
 See [`docs/WHY.md`](docs/WHY.md) for the full rationale, benefits, and
 performance notes.
+
+## Host Tools: APE Native Executables
+
+The tools fbuild runs on the host for each platform are moving to FastLED-built
+Rust executables shipped in a single format: the cosmocc
+[Actually Portable Executable](https://justine.lol/ape.html) (APE). That covers
+upload/flash utilities, deployers and image/format helpers that would otherwise
+come as Python scripts, per-OS vendor binaries, or packages that behave
+differently on each host. Each tool is built once and runs as a native
+executable on every host fbuild supports: Linux, macOS and Windows, x86_64 and
+aarch64. There is one artifact per tool instead of one per OS and CPU, and one
+behavior to test instead of a matrix.
+
+The goal per platform is to replace its third-party host tools with Rust tools
+whose bugs FastLED fixes once and then ships as APE, so the fix reaches every
+host at the same time.
+
+**Reference platform: NXP LPC8xx.** Its flasher is FastLED's fork of the Rust
+[`probe-rs`](https://probe.rs). The fork carries the fixes that make the
+LPC845-BRK's LPC-Link2 CMSIS-DAP firmware work: spec-default fallbacks when
+the firmware doesn't answer `DAP_Info`, an explicit `DAP_Connect(Swd)` with
+retry, and a CMSIS-DAP v1 HID transport over `nusb` (FastLED/fbuild#935,
+FastLED/fbuild#936). The source is on the `tools` branch of
+[`FastLED/framework-arduino-lpc8xx`](https://github.com/FastLED/framework-arduino-lpc8xx),
+and `fastled-release-cross.yml` cross-builds it today as **six** per-host
+release assets: Windows, Linux and macOS, each on x86_64 and aarch64. fbuild
+pins and checksums all six in `crates/fbuild-deploy/src/probe_rs.rs`. The APE
+target is one asset, built and pinned once, that runs on all of those hosts.
+
+**Next: WCH CH32V.** Its flashers, [`wlink`](https://github.com/ch32-rs/wlink)
+(WCH-LinkE) and [`wchisp`](https://github.com/ch32-rs/wchisp) (USB ISP), are
+already Rust. fbuild pins them per host in
+`crates/fbuild-deploy/src/wlink.rs` and `wchisp.rs`, and `wlink` has assets for
+only three hosts. Every other host needs `FBUILD_WLINK_PATH`. An APE build
+removes that gap.
+
+### Guaranteed launch, nothing to install
+
+An APE tool launches anywhere fbuild does. Nothing has to be installed on the
+host: no `ape` loader, no `binfmt_misc` registration, no shell support. That
+guarantee is needed because most Unix hosts can't exec an APE file directly.
+`posix_spawn` returns `ENOEXEC` ("Exec format error") unless an APE handler is
+registered, and some distros, NixOS among them, ship none. Every fbuild spawn
+detects the APE magic (`MZqFpD='`, `jartsr='`, `APEDBG='`) and runs the tool
+through a loader:
+
+| Host | How an APE tool runs |
+|---|---|
+| Windows | Natively; an APE file is a valid PE. |
+| Linux | fbuild extracts the loader embedded in the tool itself, checks it is a 64-bit ELF for the host CPU, and caches it in an owner-only, exec-capable directory. If no such directory exists (read-only `HOME`, `noexec` `/tmp`), it runs the loader from a sealed in-memory file instead. The tool's environment needs no `PATH`, `sh`, coreutils, `HOME` or `TMPDIR`. |
+| macOS | Best effort: an installed `ape`, otherwise the tool's own `/bin/sh` prologue, which may compile its loader with `cc`. |
+
+Loader precedence is `FBUILD_APE_LOADER` (explicit override), then the loader
+embedded in the tool (Linux), then `ape` on `PATH`, `/usr/bin/ape` and
+`/usr/local/bin/ape`, then `/bin/sh`. Set `FBUILD_APE_CACHE_DIR` to choose
+where extracted loaders are cached. Parallel builds and deploys are safe: fbuild
+holds a fork lock while it writes a loader, so a concurrent first spawn can't
+fail with `ETXTBSY` ("Text file busy").
+
+### Adding an APE tool
+
+Build the Rust tool with cosmocc so the output is an APE, provision it like any
+other package, and spawn it through `fbuild_core::subprocess::run_command*`, or
+build the command with `fbuild_core::platform::process::command` /
+`tokio_command` instead of `Command::new`. The tool then works like any other
+executable, with no per-host special casing. A hello-world fixture and its build
+script live in
+[`crates/fbuild-core/data/ape-hello/`](crates/fbuild-core/data/ape-hello/README.md).
+Implementation notes are in
+[`crates/fbuild-core/src/platform/README.md`](crates/fbuild-core/src/platform/README.md).
 
 ## CLI Usage
 

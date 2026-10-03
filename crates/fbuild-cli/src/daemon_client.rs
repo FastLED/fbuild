@@ -1254,7 +1254,7 @@ async fn spawn_daemon_process() -> fbuild_core::Result<u32> {
     // name (and thus PATH) when no sibling is found.
     let daemon_exe = daemon_executable_hint();
     // allow-direct-spawn: daemon must outlive the CLI; see INTENTIONALLY DETACHED comment below.
-    let mut cmd = std::process::Command::new(&daemon_exe);
+    let mut cmd = fbuild_core::platform::process::command(&daemon_exe);
     let baseline = running_process::environment::user_baseline_environment().map_err(|error| {
         fbuild_core::FbuildError::DaemonError(format!(
             "failed to construct daemon user environment: {error}"

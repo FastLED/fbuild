@@ -513,7 +513,8 @@ fn host_platform_tag() -> Result<&'static str> {
     })
 }
 
-/// Executable name for the current platform.
+/// Native executable name for the current platform (test fixtures).
+#[cfg(test)]
 fn esptool_bin_name() -> &'static str {
     fbuild_core::platform::executable::name("esptool", "esptool.exe")
 }
@@ -523,8 +524,7 @@ fn esptool_bin_name() -> &'static str {
 /// `esptool-<platform>/esptool`).
 fn find_esptool_binary(root: &Path) -> Option<NormalizedPath> {
     fn search(dir: &Path, depth: usize) -> Option<NormalizedPath> {
-        let candidate = dir.join(esptool_bin_name());
-        if candidate.is_file() {
+        if let Some(candidate) = fbuild_core::platform::executable::find_tool_in(dir, "esptool") {
             return Some(NormalizedPath::from(candidate));
         }
         if depth == 0 {
@@ -705,6 +705,16 @@ mod tests {
         std::fs::write(inner.join(esptool_bin_name()), b"bin").unwrap();
         let found = find_esptool_binary(tmp.path()).unwrap();
         assert_eq!(found.as_path(), inner.join(esptool_bin_name()));
+    }
+
+    #[test]
+    fn find_binary_accepts_a_nested_ape_com() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let inner = tmp.path().join("esptool-any");
+        std::fs::create_dir_all(&inner).unwrap();
+        std::fs::write(inner.join("esptool.com"), b"MZqFpD='\n").unwrap();
+        let found = find_esptool_binary(tmp.path()).unwrap();
+        assert_eq!(found.as_path(), inner.join("esptool.com"));
     }
 
     #[test]

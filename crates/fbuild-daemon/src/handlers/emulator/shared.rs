@@ -233,7 +233,7 @@ pub(crate) async fn run_qemu_process(
     options: RunQemuOptions<'_>,
 ) -> fbuild_core::Result<QemuRunResult> {
     // allow-direct-spawn: tokio streaming QEMU emulator; blocking NativeProcess unsuitable.
-    let mut cmd = tokio::process::Command::new(qemu_path);
+    let mut cmd = fbuild_core::platform::process::tokio_command(qemu_path);
     cmd.args(args)
         .stdin(Stdio::null())
         .stdout(Stdio::piped())
