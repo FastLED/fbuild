@@ -22,7 +22,7 @@ crates/fbuild-core/src/platform/linux/ipc.rs	2	native_path	interprocess::local_s
 crates/fbuild-core/src/platform/linux/ipc.rs	3	native_path	interprocess::os::unix	ipc	host_mechanic
 crates/fbuild-core/src/platform/linux/ipc.rs	4	native_path	socket2::	ipc	host_mechanic
 crates/fbuild-core/src/platform/linux/ipc.rs	66	native_path	std::os::unix::fs::PermissionsExt	ipc	host_mechanic
-crates/fbuild-core/src/platform/linux/mod.rs	13	compile_host_fact	std::env::consts::ARCH	host	host_mechanic
+crates/fbuild-core/src/platform/linux/mod.rs	14	compile_host_fact	std::env::consts::ARCH	host	host_mechanic
 crates/fbuild-core/src/platform/linux/process.rs	1	native_path	std::os::unix::process::ExitStatusExt	process	host_mechanic
 crates/fbuild-core/src/platform/macos/fs.rs	2	native_path	std::os::unix::fs::PermissionsExt	fs	host_mechanic
 crates/fbuild-core/src/platform/macos/fs.rs	13	native_path	std::os::unix::fs::MetadataExt	fs	host_mechanic

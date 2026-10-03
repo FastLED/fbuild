@@ -9,40 +9,77 @@
 //! Forking here instead makes the signal mean what containment intends -- the
 //! daemon process died -- because this thread lives as long as the process.
 
-use std::sync::OnceLock;
-use std::sync::mpsc::{Sender, channel};
+use std::sync::{Arc, Condvar, Mutex, OnceLock, PoisonError};
+
+use crate::channel::{UnboundedSender, unbounded};
 
 type SpawnFn = fn(&mut tokio::process::Command) -> std::io::Result<tokio::process::Child>;
 type Reply = (
     tokio::process::Command,
     std::io::Result<tokio::process::Child>,
 );
+
+/// Where the owner thread leaves one spawn's result. The caller waits on it
+/// synchronously -- `spawn_tokio_contained` is a sync fn that already forks
+/// inline, and a fork is microseconds -- so this is a condvar rendezvous
+/// rather than an async channel, whose blocking receive panics on a runtime
+/// thread.
+#[derive(Default)]
+struct ReplySlot {
+    value: Mutex<Option<Reply>>,
+    ready: Condvar,
+}
+
+impl ReplySlot {
+    fn fill(&self, reply: Reply) {
+        *self.value.lock().unwrap_or_else(PoisonError::into_inner) = Some(reply);
+        self.ready.notify_one();
+    }
+
+    fn take(&self) -> Reply {
+        let mut value = self.value.lock().unwrap_or_else(PoisonError::into_inner);
+        loop {
+            if let Some(reply) = value.take() {
+                return reply;
+            }
+            value = self
+                .ready
+                .wait(value)
+                .unwrap_or_else(PoisonError::into_inner);
+        }
+    }
+}
+
 struct Job {
     command: tokio::process::Command,
     runtime: tokio::runtime::Handle,
     spawn: SpawnFn,
-    reply: Sender<Reply>,
+    reply: Arc<ReplySlot>,
 }
 
-static JOBS: OnceLock<Sender<Job>> = OnceLock::new();
+static JOBS: OnceLock<UnboundedSender<Job>> = OnceLock::new();
 
-fn jobs() -> std::io::Result<&'static Sender<Job>> {
+fn jobs() -> std::io::Result<&'static UnboundedSender<Job>> {
     if let Some(jobs) = JOBS.get() {
         return Ok(jobs);
     }
-    let (sender, receiver) = channel::<Job>();
+    let (sender, mut receiver) = unbounded::<Job>();
     std::thread::Builder::new()
         .name("fbuild-child-owner".to_string())
         .spawn(move || {
             // Never returns while the process lives: `JOBS` holds a sender.
-            while let Ok(mut job) = receiver.recv() {
-                let _entered = job.runtime.enter();
-                // A panicking spawn fails its own caller, not every later one.
-                let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-                    (job.spawn)(&mut job.command)
-                }))
-                .unwrap_or_else(|_| Err(std::io::Error::other("child spawn panicked")));
-                let _ = job.reply.send((job.command, result));
+            // The receive happens outside any runtime context; each spawn
+            // enters the caller's runtime only for its own duration.
+            while let Some(mut job) = receiver.blocking_recv() {
+                let result = {
+                    let _entered = job.runtime.enter();
+                    // A panicking spawn fails its own caller, not every later one.
+                    std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                        (job.spawn)(&mut job.command)
+                    }))
+                    .unwrap_or_else(|_| Err(std::io::Error::other("child spawn panicked")))
+                };
+                job.reply.fill((job.command, result));
             }
         })?;
     // A racing initializer may win; its thread serves every later spawn and
@@ -60,20 +97,20 @@ pub(crate) fn spawn_tokio_on_owner_thread(
         // No runtime to reap the child: Tokio's own spawn reports that.
         return spawn(command);
     };
-    let (reply, response) = channel();
+    let reply = Arc::new(ReplySlot::default());
     let job = Job {
         // allow-direct-spawn: inert placeholder held while the real command is on the owner thread; never spawned
         command: std::mem::replace(command, tokio::process::Command::new("")),
         runtime,
         spawn,
-        reply,
+        reply: Arc::clone(&reply),
     };
-    jobs()?
-        .send(job)
-        .map_err(|_| std::io::Error::other("child owner thread is gone"))?;
-    let (returned, result) = response
-        .recv()
-        .map_err(|_| std::io::Error::other("child owner thread is gone"))?;
+    if let Err(unsent) = jobs()?.send(job) {
+        // The owner thread is gone; hand the command back untouched.
+        *command = unsent.0.command;
+        return Err(std::io::Error::other("child owner thread is gone"));
+    }
+    let (returned, result) = reply.take();
     *command = returned;
     result
 }
