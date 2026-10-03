@@ -42,7 +42,7 @@ jobs:
       - uses: astral-sh/setup-uv@v3
       - name: Setup soldr
         id: setup-soldr
-        uses: zackees/setup-soldr@67ed4018aca013f8388050ac9bc264244f9b742c
+        uses: zackees/setup-soldr@d17a58eb2cea17a89af0824fb7c6b24ee68f5083 # setup-soldr#565 exact-main promotion canary
         with:
           # Own build-cache store (setup-soldr#237): with no suffix this job
           # shared one Cargo.lock-keyed entry with ~10 other workflows, and
@@ -108,7 +108,7 @@ jobs:
         with:
           python-version: "3.10"
       - name: Setup soldr
-        uses: zackees/setup-soldr@67ed4018aca013f8388050ac9bc264244f9b742c
+        uses: zackees/setup-soldr@d17a58eb2cea17a89af0824fb7c6b24ee68f5083 # setup-soldr#565 exact-main promotion canary
         with:
           cache-key-suffix: python-facades
           cache: true
