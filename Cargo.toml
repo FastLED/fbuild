@@ -156,7 +156,7 @@ mimalloc-pprof = "0.9"
 # something the shipped daemon links. The version MUST equal the
 # `running-process` rev pinned above, for the same `rp_*_public`
 # symbol-duplication reason documented there.
-running-process-probe-daemon = "=4.10.14"
+running-process-probe-daemon = "=4.10.16"
 object = { version = "0.36", default-features = false, features = ["read", "std", "elf", "write"] }
 rusqlite = { version = "0.32", features = ["bundled"] }
 shell-words = "1"
@@ -196,13 +196,13 @@ owo-colors = "4"
 # loopback-HTTP path (see crates/fbuild-daemon/src/broker).
 #
 # Source must match zccache's `running-process` pin exactly (same source and
-# version, not just the same semver; zccache takes =4.10.14 from crates.io). `running-process` exports unmangled `rp_*_public` C
+# version, not just the same semver; zccache takes =4.10.16 from crates.io). `running-process` exports unmangled `rp_*_public` C
 # symbols; Cargo treats a registry package and a git package as two distinct
 # packages, so a registry pin here plus zccache's git pin puts BOTH copies in
 # the link and every one of those symbols collides (`rust-lld: error:
 # duplicate symbol: rp_native_process_start_public`, …). Keep this pin in
 # lockstep with zccache's resolved `running-process` when repinning zccache.
-running-process = { version = "=4.10.14", default-features = false, features = ["client-async"] }
+running-process = { version = "=4.10.16", default-features = false, features = ["client-async", "ape-loader"] }
 
 [profile.dev]
 debug = "line-tables-only"

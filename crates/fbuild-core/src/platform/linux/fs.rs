@@ -45,34 +45,6 @@ pub(crate) fn set_executable(path: &Path) -> std::io::Result<()> {
     std::fs::set_permissions(path, permissions)
 }
 
-pub(crate) fn ensure_private_dir(dir: &Path) -> bool {
-    use std::os::unix::fs::{DirBuilderExt, MetadataExt};
-    let _ = std::fs::DirBuilder::new()
-        .recursive(true)
-        .mode(0o700)
-        .create(dir);
-    // SAFETY: geteuid has no preconditions and cannot fail.
-    let uid = unsafe { libc::geteuid() };
-    std::fs::symlink_metadata(dir).is_ok_and(|meta| {
-        meta.file_type().is_dir() && meta.uid() == uid && meta.mode() & 0o022 == 0
-    })
-}
-
-pub(crate) fn mount_allows_exec(dir: &Path) -> bool {
-    use std::os::unix::ffi::OsStrExt;
-    let Ok(path) = std::ffi::CString::new(dir.as_os_str().as_bytes()) else {
-        return false;
-    };
-    let mut stats = std::mem::MaybeUninit::<libc::statvfs>::uninit();
-    // SAFETY: `path` is NUL-terminated and `stats` points to writable storage.
-    if unsafe { libc::statvfs(path.as_ptr(), stats.as_mut_ptr()) } != 0 {
-        return false;
-    }
-    // SAFETY: successful statvfs initialized the complete output structure.
-    let stats = unsafe { stats.assume_init() };
-    stats.f_flag & libc::ST_NOEXEC == 0
-}
-
 pub(crate) fn is_executable(metadata: &std::fs::Metadata) -> bool {
     metadata.permissions().mode() & 0o111 != 0
 }
@@ -162,6 +134,25 @@ fn byte_count(blocks: u128, fragment_size: u128) -> u64 {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn relative_executable_preserves_symlink_parent_traversal() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = crate::path::NormalizedPath::new(tmp.path());
+        let tools = root.join("tools");
+        std::fs::create_dir_all(tools.join("bin")).unwrap();
+        std::os::unix::fs::symlink(tools.join("bin"), root.join("link")).unwrap();
+        std::os::unix::fs::symlink("/bin/echo", tools.join("echo")).unwrap();
+        let out = crate::subprocess::run_command_blocking(
+            &["./link/../echo", "symlink traversal"],
+            Some(tmp.path()),
+            None,
+            Some(std::time::Duration::from_secs(10)),
+        )
+        .unwrap();
+        assert!(out.success(), "{}", out.stderr);
+        assert_eq!(out.stdout, "symlink traversal\n");
+    }
 
     #[test]
     fn executable_permission_preserves_private_read_access() {
