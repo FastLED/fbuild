@@ -262,6 +262,7 @@ def render_pr_boards() -> str:
     head = "${{ github.event.pull_request.head.sha }}"
     return (
         "  board_plan:\n"
+        "    needs: verify\n"
         "    name: Select boards for changed paths\n"
         f"    if: {PR_DEFAULT_TIER}\n"
         "    runs-on: ubuntu-latest\n"
@@ -334,6 +335,7 @@ def render_reuse_decision() -> str:
     checkout_t, uv_t, check_t = REUSE_STEP_TIMEOUTS
     return (
         "  reuse_decision:\n"
+        "    needs: verify\n"
         "    name: Verified reuse decision (shadow)\n"
         "    if: github.event_name == 'push' && github.ref == 'refs/heads/main'\n"
         "    runs-on: ubuntu-latest\n"
@@ -366,6 +368,29 @@ def render_reuse_decision() -> str:
         "          --workflow ci-minimal.yml --mode shadow\n"
         + required
     )
+
+
+def render_local_gate_verify() -> str:
+    """Enforce PR attestations; dispatch can run the source before it is attested."""
+    return """  verify:
+    name: Verify local gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@v3
+      - name: Verify source-bound local proof
+        if: github.event_name == 'pull_request'
+        run: >-
+          uvx --from git+https://github.com/zackees/ci.yml@9e44971219cd870a2263fa694debc94f57722405
+          ci-lint local-gate verify --repo .
+"""
 
 
 def render_ci(boards: list[dict], tier: str, families: dict) -> str:
@@ -448,7 +473,7 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
         + "            exit 1\n"
         + "          fi\n"
         + "          echo \"candidate_sha=$actual\" >> \"$GITHUB_OUTPUT\"\n"
-        if not minimal else ""
+        if not minimal else render_local_gate_verify()
     )
     host = (
         "  windows:\n"
@@ -513,7 +538,7 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
         + verify
         + "  linux:\n"
         + ("    if: github.event_name != 'pull_request' || (!contains(github.event.pull_request.labels.*.name, 'ci-test') && !contains(github.event.pull_request.labels.*.name, 'ci-full'))\n" if minimal else gate)
-        + ("" if minimal else "    needs: verify\n")
+        + "    needs: verify\n"
         + "    uses: ./.github/workflows/check-ubuntu.yml\n"
         + "    with:\n"
         + ("      ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}\n" if minimal else f"      ref: {verified_ref}\n")
@@ -580,11 +605,13 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
         )
         + (render_pr_boards() + render_reuse_decision() if minimal else "")
         + ("  test:\n"
+           "    needs: verify\n"
            "    if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'ci-test') && !contains(github.event.pull_request.labels.*.name, 'ci-full')\n"
            "    uses: ./.github/workflows/ci-test.yml\n"
            "    with:\n"
            "      candidate_sha: ${{ github.event.pull_request.head.sha }}\n"
            "  full:\n"
+           "    needs: verify\n"
            "    if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'ci-full')\n"
            "    uses: ./.github/workflows/ci-full.yml\n"
            "    with:\n"
