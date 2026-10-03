@@ -40,6 +40,18 @@ jobs:
           [[ "$CANDIDATE_SHA" =~ ^[0-9a-f]{40}$ ]]
           test "$(git rev-parse HEAD)" = "$CANDIDATE_SHA"
       - uses: astral-sh/setup-uv@v3
+        with:
+          python-version: "3.12"
+      # Workspace tests also link the embedded-Python test target, even
+      # when its tests are ignored. Use the same managed interpreter on
+      # hosted runners and locally instead of relying on host dev packages.
+      - name: Select workspace test interpreter
+        run: |
+          uv python install 3.12
+          PYO3_PYTHON="$(uv python find --managed-python 3.12)"
+          echo "PYO3_PYTHON=$PYO3_PYTHON" >> "$GITHUB_ENV"
+          PYTHONHOME="$("$PYO3_PYTHON" -c 'import sys; print(sys.prefix)')"
+          echo "PYTHONHOME=$PYTHONHOME" >> "$GITHUB_ENV"
       - name: Setup soldr
         id: setup-soldr
         uses: zackees/setup-soldr@d17a58eb2cea17a89af0824fb7c6b24ee68f5083 # setup-soldr#565 exact-main promotion canary
