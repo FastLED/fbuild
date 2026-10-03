@@ -1,8 +1,9 @@
 //! Neutral process, containment, and exit-interpretation APIs.
 
+use std::ffi::OsStr;
 use std::fs::File;
 use std::process::{ChildStderr, ChildStdin, ChildStdout, Command, ExitStatus};
-use std::sync::OnceLock;
+use std::sync::{OnceLock, RwLock, RwLockReadGuard, RwLockWriteGuard};
 use std::time::{Duration, Instant};
 
 use crate::path::NormalizedPath;
@@ -102,6 +103,77 @@ pub fn containment_is_initialized() -> bool {
     CONTAINMENT.get().is_some()
 }
 
+/// Process-wide fork lock, as Go's `syscall.ForkLock`.
+///
+/// A file this process writes and then executes fails with `ETXTBSY` if a
+/// sibling thread forks while the writable descriptor is open: the forked
+/// child holds it until its own `exec`. Every spawn helper here holds the
+/// lock shared across fork→exec (`spawn` returns only after the child has
+/// exec'd); writers of to-be-executed files hold it exclusively while their
+/// descriptor is open, so no child can inherit it.
+static FORK_LOCK: RwLock<()> = RwLock::new(());
+
+/// Hold across a fork→exec that bypasses this module's spawn helpers (the
+/// few allowlisted direct `Command` spawns), so the child can't inherit a
+/// loader that [`exclusive_fork_guard`] is writing. Release it before
+/// waiting on the child.
+pub fn shared_fork_guard() -> RwLockReadGuard<'static, ()> {
+    FORK_LOCK.read().unwrap_or_else(|e| e.into_inner())
+}
+
+/// Hold while a file that will be executed is open for writing.
+pub fn exclusive_fork_guard() -> RwLockWriteGuard<'static, ()> {
+    FORK_LOCK.write().unwrap_or_else(|e| e.into_inner())
+}
+
+/// Construct a [`Command`] for `program`, routing an APE (cosmocc) image
+/// through a loader on hosts that cannot exec APE natively (see
+/// [`super::ape`]). Use in place of `Command::new` for any external tool.
+///
+/// A relative `program` path is resolved against the parent's working
+/// directory; pass an absolute path when the child's `current_dir` differs.
+pub fn command(program: impl AsRef<OsStr>) -> Command {
+    match super::ape::plan_launch(program.as_ref(), None, None) {
+        Some(launch) => {
+            // allow-direct-spawn: construction only; callers execute via spawn_contained/spawn_tokio_contained/spawn_detached.
+            let mut command = Command::new(&launch.loader);
+            command.arg(&launch.image);
+            if let Some(path) = launch.child_path(std::env::var_os("PATH").as_deref()) {
+                command.env("PATH", path);
+            }
+            command
+        }
+        // allow-direct-spawn: construction only; callers execute via spawn_contained/spawn_tokio_contained/spawn_detached.
+        None => Command::new(program),
+    }
+}
+
+/// Tokio counterpart of [`command`].
+pub fn tokio_command(program: impl AsRef<OsStr>) -> tokio::process::Command {
+    match super::ape::plan_launch(program.as_ref(), None, None) {
+        Some(launch) => {
+            // allow-direct-spawn: construction only; callers execute via spawn_contained/spawn_tokio_contained/spawn_detached.
+            let mut command = tokio::process::Command::new(&launch.loader);
+            command.arg(&launch.image);
+            if let Some(path) = launch.child_path(std::env::var_os("PATH").as_deref()) {
+                command.env("PATH", path);
+            }
+            command
+        }
+        // allow-direct-spawn: construction only; callers execute via spawn_contained/spawn_tokio_contained/spawn_detached.
+        None => tokio::process::Command::new(program),
+    }
+}
+
+/// APE launch plan for a `run_command`-style spawn with its child cwd and env overlay.
+pub(crate) fn ape_launch(
+    program: &str,
+    cwd: Option<&std::path::Path>,
+    overlay: Option<&[(&str, &str)]>,
+) -> Option<super::ape::ApeLaunch> {
+    super::ape::plan_launch(OsStr::new(program), cwd, overlay)
+}
+
 /// Spawn a synchronous child using running-process's contained process tree.
 pub fn spawn_contained(
     command: &mut Command,
@@ -113,9 +185,12 @@ pub fn spawn_contained(
         stderr: into_running_stdio(stdio.stderr),
         ..running_process::SpawnStdio::default()
     };
-    let inner = match CONTAINMENT.get() {
-        Some(group) => group.spawn(command, stdio)?,
-        None => running_process::spawn(command, stdio)?,
+    let inner = {
+        let _fork = shared_fork_guard();
+        match CONTAINMENT.get() {
+            Some(group) => group.spawn(command, stdio)?,
+            None => running_process::spawn(command, stdio)?,
+        }
     };
     Ok(ContainedChild { inner })
 }
@@ -138,6 +213,7 @@ pub fn spawn_detached(
     stderr: Option<&File>,
     environment: DetachedEnvironment,
 ) -> std::io::Result<u32> {
+    let _fork = shared_fork_guard();
     super::selected::process::spawn_detached(command, stderr, environment)
 }
 
@@ -166,8 +242,10 @@ fn spawn_tokio_contained_here(
         }
         super::selected::process::configure_tokio_owner_death(command)?;
     }
-    let child =
-        running_process::spawn_tokio(command, running_process::TokioSpawnOptions::default())?;
+    let child = {
+        let _fork = shared_fork_guard();
+        running_process::spawn_tokio(command, running_process::TokioSpawnOptions::default())?
+    };
     if CONTAINMENT.get().is_some() {
         super::selected::process::after_tokio_spawn(&child)?;
     }

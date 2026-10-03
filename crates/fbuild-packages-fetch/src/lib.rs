@@ -15,6 +15,7 @@ pub mod platformio_registry;
 pub mod platformio_repository;
 pub mod submodules;
 
+mod ape_perms;
 mod install_lock;
 
 pub use cache::Cache;
@@ -363,7 +364,7 @@ impl PackageBase {
     {
         let install_path = self.install_path();
 
-        if install_path.exists() {
+        if install_path.exists() && ape_perms::is_repaired(&install_path) {
             // An existing-install hit is a use: refresh the DiskCache LRU so
             // background GC doesn't treat this package as the oldest unused
             // entry and delete it mid-build (FastLED/fbuild#1341).
@@ -382,6 +383,7 @@ impl PackageBase {
         let _install_lock =
             install_lock::acquire_for_install(&install_path, &self.name, &self.version).await?;
         if install_path.exists() {
+            ape_perms::repair_once(&install_path);
             self.touch_disk_cache();
             return Ok(install_path);
         }
@@ -457,6 +459,10 @@ impl PackageBase {
         // #1400), after filling or excusing what the package's plan covers.
         submodules::prepare_submodules(&self.name, &self.url, &staging_path, &self.submodules)
             .await?;
+
+        // Zip entries without Unix attributes extract as 0644; restore the
+        // exec bit on APE host tools so one `tool.com` runs on every host.
+        ape_perms::mark_fresh(&staging_path)?;
 
         // Validate
         validate(&staging_path)?;
@@ -541,10 +547,13 @@ fn clear_package_touch_cache_for_tests() {
 }
 
 #[cfg(test)]
+mod ape_install_tests;
+
+#[cfg(test)]
 mod toolchain_gcc_ar_tests {
     use super::*;
 
-    async fn serve_once(body: Vec<u8>) -> String {
+    pub(super) async fn serve_once(body: Vec<u8>) -> String {
         use tokio::io::{AsyncReadExt, AsyncWriteExt};
         use tokio::net::TcpListener;
 

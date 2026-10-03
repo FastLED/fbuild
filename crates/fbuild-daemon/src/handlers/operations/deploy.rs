@@ -6,6 +6,7 @@ use super::common::{
     resolve_client_path, resolve_request_project_dir, trust_device_hash_enabled,
 };
 use super::deploy_port::{append_warning_to_stderr, choose_deploy_port};
+use super::deploy_teensy::find_teensy_loader_cli;
 use super::monitor::{MonitorOutcome, run_monitor_loop};
 use crate::context::DaemonContext;
 use crate::models::{DeployRequest, OperationResponse};
@@ -17,52 +18,6 @@ use std::sync::Arc;
 
 #[cfg(feature = "espflash-native")]
 use super::common::{native_verify_enabled, native_write_enabled};
-
-/// Resolve a usable `teensy_loader_cli` binary for the Teensy deploy arm.
-///
-/// Search order:
-///   1. `$PATH` (`teensy_loader_cli` on Unix, `teensy_loader_cli.exe` on Win)
-///   2. `~/.platformio/packages/tool-teensy/teensy_loader_cli{.exe}` — the
-///      well-known path PlatformIO installs it at on every PIO-using machine.
-///
-/// Returns `None` if neither is found; the TeensyDeployer's default will then
-/// try a bare `teensy_loader_cli` invocation, which will surface
-/// `command not found` to the user — clearer than a silent abort here.
-fn find_teensy_loader_cli() -> Option<PathBuf> {
-    let exe_name =
-        fbuild_core::platform::executable::name("teensy_loader_cli", "teensy_loader_cli.exe");
-
-    if let Ok(path_env) = std::env::var("PATH") {
-        let sep = fbuild_core::platform::host::path_list_separator();
-        for dir in path_env.split(sep) {
-            let candidate = PathBuf::from(dir).join(exe_name);
-            if candidate.is_file() {
-                return Some(candidate);
-            }
-        }
-    }
-
-    // PlatformIO drops the binary here on every platform. Reusing it means a
-    // user who already has PIO working doesn't need to install anything else
-    // to deploy via fbuild.
-    let pio_root = if fbuild_core::platform::host::is_windows() {
-        std::env::var("USERPROFILE").ok()
-    } else {
-        std::env::var("HOME").ok()
-    };
-    if let Some(home) = pio_root {
-        let pio_candidate = PathBuf::from(home)
-            .join(".platformio")
-            .join("packages")
-            .join("tool-teensy")
-            .join(exe_name);
-        if pio_candidate.is_file() {
-            return Some(pio_candidate);
-        }
-    }
-
-    None
-}
 
 /// POST /api/deploy
 pub async fn deploy(
@@ -849,7 +804,8 @@ pub async fn deploy(
                     Some(deploy_project.as_path()),
                 );
                 let loader_params = fbuild_deploy::teensy::TeensyLoaderParams::default();
-                let loader_path = find_teensy_loader_cli();
+                let loader_path = find_teensy_loader_cli(deploy_caller_path.as_deref())
+                    .map(fbuild_core::path::NormalizedPath::into_path_buf);
                 let deployer = fbuild_deploy::teensy::TeensyDeployer::new(
                     &board_config.board.to_uppercase(),
                     &loader_params,

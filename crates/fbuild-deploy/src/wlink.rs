@@ -101,9 +101,11 @@ fn extract_wlink(archive: &Path, staging: &Path, dest: &Path) -> Result<()> {
         tar.unpack(&extract_dir)
             .map_err(|e| FbuildError::PackageError(format!("extract wlink archive: {e}")))?;
     }
-    let binary_name = fbuild_core::platform::executable::native_name("wlink");
-    let binary = find_file(&extract_dir, &binary_name)
-        .ok_or_else(|| FbuildError::PackageError(format!("wlink archive lacks {binary_name}")))?;
+    let binary = fbuild_core::platform::executable::find_tool_in_tree(&extract_dir, "wlink")
+        .ok_or_else(|| {
+            let binary_name = fbuild_core::platform::executable::native_name("wlink");
+            FbuildError::PackageError(format!("wlink archive lacks {binary_name}"))
+        })?;
     if let Some(parent) = dest.parent() {
         std::fs::create_dir_all(parent)
             .map_err(|e| FbuildError::PackageError(format!("create wlink install dir: {e}")))?;
@@ -113,21 +115,6 @@ fn extract_wlink(archive: &Path, staging: &Path, dest: &Path) -> Result<()> {
     fbuild_core::platform::fs::set_executable(dest)
         .map_err(|e| FbuildError::PackageError(format!("make wlink executable: {e}")))?;
     Ok(())
-}
-
-fn find_file(root: &Path, name: &str) -> Option<PathBuf> {
-    for entry in std::fs::read_dir(root).ok()?.flatten() {
-        let path = entry.path();
-        if path.is_file() && path.file_name().and_then(|n| n.to_str()) == Some(name) {
-            return Some(path);
-        }
-        if path.is_dir() {
-            if let Some(found) = find_file(&path, name) {
-                return Some(found);
-            }
-        }
-    }
-    None
 }
 
 #[derive(Debug, Clone)]

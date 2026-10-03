@@ -380,25 +380,31 @@ impl CrashDecoder {
 /// The toolchain prefix is everything before `gcc` in the binary name:
 /// - `riscv32-esp-elf-gcc` → `riscv32-esp-elf-addr2line`
 /// - `xtensa-esp32s3-elf-gcc` → `xtensa-esp32s3-elf-addr2line`
+///
+/// The compiler's executable suffix (`.exe`, or `.com` for a cosmocc APE) is
+/// stripped for matching and tried first on the derived tool, so an APE
+/// toolchain's `xtensa-esp32s3-elf-gcc.com` maps to
+/// `xtensa-esp32s3-elf-addr2line.com`. That sibling obeys `find_tool_in`'s
+/// acceptance rule: a non-native spelling counts only if it is an APE, so a
+/// Windows-only `addr2line.exe` never shadows a runnable `addr2line.com` on
+/// Unix. Otherwise the usual native/APE candidates are probed.
 pub fn derive_addr2line_path(cc_path: &Path) -> Option<PathBuf> {
+    use fbuild_core::platform::ape::is_ape_file;
+    use fbuild_core::platform::executable::{find_tool_in, native_name, split_tool_suffix};
+
     let name = cc_path.file_name()?.to_string_lossy();
+    let (stem, suffix) = split_tool_suffix(&name);
+    let prefix = stem.strip_suffix("gcc")?; // e.g. "riscv32-esp-elf-"
+    let bin_dir = cc_path.parent()?;
+    let tool_stem = format!("{prefix}addr2line");
 
-    // Strip .exe suffix for matching
-    let stem = name.replace(".exe", "");
-    if !stem.ends_with("gcc") {
-        return None;
+    let same_name = format!("{tool_stem}{suffix}");
+    let same_suffix = bin_dir.join(&same_name);
+    if same_suffix.is_file() && (same_name == native_name(&tool_stem) || is_ape_file(&same_suffix))
+    {
+        return Some(same_suffix);
     }
-
-    let prefix = &stem[..stem.len() - 3]; // e.g. "riscv32-esp-elf-"
-    let addr2line_name =
-        fbuild_core::platform::executable::native_name(&format!("{prefix}addr2line"));
-    let addr2line = cc_path.parent()?.join(addr2line_name);
-
-    if addr2line.exists() {
-        Some(addr2line)
-    } else {
-        None
-    }
+    find_tool_in(bin_dir, &tool_stem).map(fbuild_core::path::NormalizedPath::into_path_buf)
 }
 
 #[cfg(test)]
@@ -633,6 +639,47 @@ mod tests {
 
         let not_gcc = PathBuf::from("/tmp/xtensa-esp-elf-clang");
         assert!(derive_addr2line_path(&not_gcc).is_none());
+    }
+
+    #[test]
+    fn derive_addr2line_keeps_the_com_suffix_of_an_ape_compiler() {
+        let dir = tempfile::tempdir().unwrap();
+        let gcc = dir.path().join("xtensa-esp32s3-elf-gcc.com");
+        let addr2line = dir.path().join("xtensa-esp32s3-elf-addr2line.com");
+        std::fs::write(&gcc, b"MZqFpD='\n").unwrap();
+        assert!(derive_addr2line_path(&gcc).is_none());
+        std::fs::write(&addr2line, b"MZqFpD='\n").unwrap();
+        assert_eq!(derive_addr2line_path(&gcc), Some(addr2line));
+    }
+
+    #[test]
+    fn derive_addr2line_from_exe_compiler_keeps_exe() {
+        // An APE `.exe` runs on every host, so the compiler's suffix is kept.
+        let dir = tempfile::tempdir().unwrap();
+        let gcc = dir.path().join("riscv32-esp-elf-gcc.exe");
+        let addr2line = dir.path().join("riscv32-esp-elf-addr2line.exe");
+        std::fs::write(&addr2line, b"MZqFpD='\n").unwrap();
+        assert_eq!(derive_addr2line_path(&gcc), Some(addr2line));
+    }
+
+    /// CodeRabbit on FastLED/fbuild#1633: the compiler's own non-native
+    /// suffix is accepted only for an APE. A Windows-only PE `addr2line.exe`
+    /// next to an APE `addr2line.com` must lose to the runnable `.com` on
+    /// Unix (on Windows the native `.exe` legitimately wins).
+    #[test]
+    fn derive_addr2line_skips_non_ape_foreign_suffix() {
+        let dir = tempfile::tempdir().unwrap();
+        let gcc = dir.path().join("riscv32-esp-elf-gcc.exe");
+        let pe = dir.path().join("riscv32-esp-elf-addr2line.exe");
+        let ape = dir.path().join("riscv32-esp-elf-addr2line.com");
+        std::fs::write(&pe, b"MZ\x90\x00").unwrap();
+        std::fs::write(&ape, b"MZqFpD='\n").unwrap();
+        let expected = if fbuild_core::platform::host::is_windows() {
+            pe
+        } else {
+            ape
+        };
+        assert_eq!(derive_addr2line_path(&gcc), Some(expected));
     }
 
     // --- Regex pattern tests ---

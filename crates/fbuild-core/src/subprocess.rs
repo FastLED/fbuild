@@ -242,10 +242,7 @@ async fn run_command_inner(
     if args.is_empty() {
         return Err(FbuildError::Other("empty command".to_string()));
     }
-    let mut cmd = build_command(
-        args, cwd, env, /*capture=*/ true, /*stdin_piped=*/ false,
-    )?;
-    let child = process::spawn_tokio_contained(&mut cmd).map_err(|e| spawn_err(args, e))?;
+    let child = spawn_retrying_ape_busy(args, cwd, env, true, false).await?;
     wait_and_capture(child, args, timeout).await
 }
 
@@ -287,10 +284,7 @@ async fn run_command_with_stdin_inner(
     if args.is_empty() {
         return Err(FbuildError::Other("empty command".to_string()));
     }
-    let mut cmd = build_command(
-        args, cwd, env, /*capture=*/ true, /*stdin_piped=*/ true,
-    )?;
-    let mut child = process::spawn_tokio_contained(&mut cmd).map_err(|e| spawn_err(args, e))?;
+    let mut child = spawn_retrying_ape_busy(args, cwd, env, true, true).await?;
 
     // Take the stdin handle and concurrently write the payload while
     // tokio drains stdout/stderr in the background. Dropping `stdin`
@@ -374,10 +368,7 @@ async fn run_command_passthrough_inner(
     if args.is_empty() {
         return Err(FbuildError::Other("empty command".to_string()));
     }
-    let mut cmd = build_command(
-        args, cwd, env, /*capture=*/ false, /*stdin_piped=*/ false,
-    )?;
-    let mut child = process::spawn_tokio_contained(&mut cmd).map_err(|e| spawn_err(args, e))?;
+    let mut child = spawn_retrying_ape_busy(args, cwd, env, false, false).await?;
     let status = match wait_with_timeout(&mut child, timeout).await? {
         Some(status) => status,
         None => {
@@ -598,6 +589,39 @@ fn exit_code_from(status: std::process::ExitStatus) -> i32 {
     process::exit_code(status)
 }
 
+/// Attempts for an APE launch whose freshly installed loader is momentarily
+/// busy. fbuild's own spawns hold the fork lock, but spawners it doesn't
+/// control (zccache via kernal-api) can fork while a loader is being written;
+/// that child holds the writable descriptor until its own exec, microseconds.
+const APE_EXEC_BUSY_ATTEMPTS: u32 = 8;
+
+/// Build and spawn `args`, retrying `ETXTBSY` only for APE launches (whose
+/// loader fbuild may have just written). Every other error returns at once.
+async fn spawn_retrying_ape_busy(
+    args: &[&str],
+    cwd: Option<&Path>,
+    env: Option<&[(&str, &str)]>,
+    capture: bool,
+    stdin_piped: bool,
+) -> Result<Child> {
+    let mut attempt = 1;
+    loop {
+        let mut cmd = build_command(args, cwd, env, capture, stdin_piped)?;
+        match process::spawn_tokio_contained(&mut cmd) {
+            Ok(child) => return Ok(child),
+            Err(error)
+                if is_exec_busy(&error)
+                    && attempt < APE_EXEC_BUSY_ATTEMPTS
+                    && process::ape_launch(args[0], cwd, env).is_some() =>
+            {
+                tokio::time::sleep(EXEC_BUSY_BACKOFF * attempt).await;
+                attempt += 1;
+            }
+            Err(error) => return Err(spawn_err(args, error)),
+        }
+    }
+}
+
 fn build_command(
     args: &[&str],
     cwd: Option<&Path>,
@@ -605,7 +629,38 @@ fn build_command(
     capture: bool,
     stdin_piped: bool,
 ) -> Result<TokioCommand> {
-    let mut cmd = TokioCommand::new(args[0]);
+    // APE (cosmocc) images can't be exec'd directly on hosts without an APE
+    // binfmt handler (e.g. NixOS); route them through a loader.
+    let launch = process::ape_launch(args[0], cwd, env);
+    let mut cmd = match &launch {
+        Some(launch) => {
+            let mut cmd = TokioCommand::new(&launch.loader);
+            cmd.arg(&launch.image);
+            cmd
+        }
+        None => TokioCommand::new(args[0]),
+    };
+    // Expose fbuild's loader as `ape` on the child's PATH so APE programs the
+    // tool spawns itself (gcc -> cc1) resolve a loader too.
+    let ape_path = launch.as_ref().and_then(|launch| {
+        let inherited = env
+            .and_then(|vars| vars.iter().rev().find(|(k, _)| *k == "PATH"))
+            .map(|(_, v)| std::ffi::OsString::from(*v))
+            .or_else(|| std::env::var_os("PATH"));
+        launch.child_path(inherited.as_deref())?.into_string().ok()
+    });
+    let overlay: Option<Vec<(&str, &str)>> = match (&ape_path, env) {
+        (Some(path), env) => Some(
+            env.unwrap_or_default()
+                .iter()
+                .copied()
+                .filter(|(k, _)| *k != "PATH")
+                .chain([("PATH", path.as_str())])
+                .collect(),
+        ),
+        (None, env) => env.map(<[_]>::to_vec),
+    };
+    let env = overlay.as_deref();
     if args.len() > 1 {
         cmd.args(&args[1..]);
     }

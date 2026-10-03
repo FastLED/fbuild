@@ -8,3 +8,4 @@ mod platformio_avr_resolution;
 mod platformio_ch32v_resolution;
 mod platformio_esp8266_resolution;
 mod platformio_package_resolution;
+mod platformio_registry_system;

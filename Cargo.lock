@@ -1226,6 +1226,7 @@ name = "fbuild-core"
 version = "2.5.33"
 dependencies = [
  "async-trait",
+ "flate2",
  "fs2",
  "interprocess",
  "libc",

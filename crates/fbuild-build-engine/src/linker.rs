@@ -932,4 +932,11 @@ mod tests {
         let nm = LinkerBase::nm_path_from_size_path(&size);
         assert_eq!(nm, PathBuf::from("C:/toolchain/bin/arm-none-eabi-nm.exe"));
     }
+
+    #[test]
+    fn test_nm_path_from_size_path_with_ape_com() {
+        let size = PathBuf::from("/toolchain/bin/arm-none-eabi-size.com");
+        let nm = LinkerBase::nm_path_from_size_path(&size);
+        assert_eq!(nm, PathBuf::from("/toolchain/bin/arm-none-eabi-nm.com"));
+    }
 }

@@ -74,6 +74,23 @@ pub fn set_executable(path: &Path) -> std::io::Result<()> {
     super::selected::fs::set_executable(path)
 }
 
+/// Return whether metadata carries execute permission where the host represents it.
+pub fn is_executable(metadata: &std::fs::Metadata) -> bool {
+    super::selected::fs::is_executable(metadata)
+}
+
+/// Create `dir` (owner-only where the host has permissions) if needed and
+/// report whether it is a real directory that only the current user can
+/// modify — safe to hold files fbuild will later execute.
+pub fn ensure_private_dir(dir: &Path) -> bool {
+    super::selected::fs::ensure_private_dir(dir)
+}
+
+/// Whether files under `dir` may be executed (false on `noexec` mounts).
+pub fn mount_allows_exec(dir: &Path) -> bool {
+    super::selected::fs::mount_allows_exec(dir)
+}
+
 /// Ensure an extracted tool is executable without changing an already-runnable file.
 pub fn ensure_executable(path: &Path) -> std::io::Result<()> {
     super::selected::fs::ensure_executable(path)

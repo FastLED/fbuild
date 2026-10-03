@@ -56,7 +56,7 @@ pub(crate) async fn run_avr8js_headless(
     }
 
     // allow-direct-spawn: tokio streaming emulator; blocking NativeProcess unsuitable.
-    let mut cmd = tokio::process::Command::new(node_path);
+    let mut cmd = fbuild_core::platform::process::tokio_command(node_path);
     cmd.arg(script_path)
         .arg("--hex")
         .arg(hex_path)

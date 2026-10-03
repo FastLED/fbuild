@@ -52,6 +52,19 @@ pub(crate) fn set_executable(_path: &Path) -> std::io::Result<()> {
     Ok(())
 }
 
+pub(crate) fn ensure_private_dir(dir: &Path) -> bool {
+    std::fs::create_dir_all(dir).is_ok()
+        && std::fs::symlink_metadata(dir).is_ok_and(|meta| meta.file_type().is_dir())
+}
+
+pub(crate) fn mount_allows_exec(_dir: &Path) -> bool {
+    true
+}
+
+pub(crate) fn is_executable(_metadata: &std::fs::Metadata) -> bool {
+    true
+}
+
 pub(crate) fn ensure_executable(_path: &Path) -> std::io::Result<()> {
     Ok(())
 }
