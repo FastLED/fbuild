@@ -131,6 +131,7 @@ pub fn exclusive_fork_guard() -> RwLockWriteGuard<'static, ()> {
 pub fn command(program: impl AsRef<OsStr>) -> Command {
     match super::ape::plan_launch(program.as_ref(), None, None) {
         Some(launch) => {
+            // allow-direct-spawn: construction only; callers execute via spawn_contained/spawn_tokio_contained/spawn_detached.
             let mut command = Command::new(&launch.loader);
             command.arg(&launch.image);
             if let Some(path) = launch.child_path(std::env::var_os("PATH").as_deref()) {
@@ -138,6 +139,7 @@ pub fn command(program: impl AsRef<OsStr>) -> Command {
             }
             command
         }
+        // allow-direct-spawn: construction only; callers execute via spawn_contained/spawn_tokio_contained/spawn_detached.
         None => Command::new(program),
     }
 }
@@ -146,6 +148,7 @@ pub fn command(program: impl AsRef<OsStr>) -> Command {
 pub fn tokio_command(program: impl AsRef<OsStr>) -> tokio::process::Command {
     match super::ape::plan_launch(program.as_ref(), None, None) {
         Some(launch) => {
+            // allow-direct-spawn: construction only; callers execute via spawn_contained/spawn_tokio_contained/spawn_detached.
             let mut command = tokio::process::Command::new(&launch.loader);
             command.arg(&launch.image);
             if let Some(path) = launch.child_path(std::env::var_os("PATH").as_deref()) {
@@ -153,6 +156,7 @@ pub fn tokio_command(program: impl AsRef<OsStr>) -> tokio::process::Command {
             }
             command
         }
+        // allow-direct-spawn: construction only; callers execute via spawn_contained/spawn_tokio_contained/spawn_detached.
         None => tokio::process::Command::new(program),
     }
 }

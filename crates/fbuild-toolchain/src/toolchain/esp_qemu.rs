@@ -135,7 +135,7 @@ impl EspQemu {
             hydrate_windows_runtime(&path)?;
             validate_windows_runtime(&path)?;
             path
-        } else if let Some(path) = find_on_path(self.arch.stem()) {
+        } else if let Some(path) = find_tool_on_path(self.arch.stem()) {
             hydrate_windows_runtime(&path)?;
             validate_windows_runtime(&path)?;
             path
@@ -467,9 +467,19 @@ fn qemu_root(install_dir: &Path, arch: EspQemuArch) -> Result<PathBuf> {
     }
 }
 
-fn find_on_path(stem: &str) -> Option<PathBuf> {
+/// A host tool on PATH by stem, in any spelling `find_tool_on_paths` accepts
+/// (native, or `.exe`/`.com`/extensionless APE).
+fn find_tool_on_path(stem: &str) -> Option<PathBuf> {
     let path_var = std::env::var_os("PATH")?;
     fbuild_core::platform::executable::find_tool_on_paths(std::env::split_paths(&path_var), stem)
+}
+
+/// An exact file name on PATH (e.g. a DLL — never a tool-name expansion).
+fn find_on_path(file_name: &str) -> Option<PathBuf> {
+    let path_var = std::env::var_os("PATH")?;
+    std::env::split_paths(&path_var)
+        .map(|dir| dir.join(file_name))
+        .find(|candidate| candidate.is_file())
 }
 
 fn find_existing_idf_qemu(arch: EspQemuArch) -> Option<PathBuf> {
