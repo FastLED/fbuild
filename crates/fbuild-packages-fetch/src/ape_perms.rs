@@ -11,7 +11,7 @@ use std::path::Path;
 
 /// Marker written into an install dir once its APE tools are known executable.
 /// Bump the suffix to force one more scan of every existing install.
-const APE_PERMS_MARKER: &str = ".fbuild-ape-perms-v1";
+const APE_PERMS_MARKER: &str = ".ape_perms_v1";
 
 /// Whether `installed_dir` has already been scanned for APE exec bits.
 pub(crate) fn is_repaired(installed_dir: &Path) -> bool {
