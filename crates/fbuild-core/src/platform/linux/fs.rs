@@ -136,6 +136,25 @@ mod tests {
     use super::*;
 
     #[test]
+    fn relative_executable_preserves_symlink_parent_traversal() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = crate::path::NormalizedPath::new(tmp.path());
+        let tools = root.join("tools");
+        std::fs::create_dir_all(tools.join("bin")).unwrap();
+        std::os::unix::fs::symlink(tools.join("bin"), root.join("link")).unwrap();
+        std::os::unix::fs::symlink("/bin/echo", tools.join("echo")).unwrap();
+        let out = crate::subprocess::run_command_blocking(
+            &["./link/../echo", "symlink traversal"],
+            Some(tmp.path()),
+            None,
+            Some(std::time::Duration::from_secs(10)),
+        )
+        .unwrap();
+        assert!(out.success(), "{}", out.stderr);
+        assert_eq!(out.stdout, "symlink traversal\n");
+    }
+
+    #[test]
     fn executable_permission_preserves_private_read_access() {
         let temp = tempfile::NamedTempFile::new().unwrap();
         std::fs::set_permissions(temp.path(), std::fs::Permissions::from_mode(0o600)).unwrap();
