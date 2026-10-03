@@ -1,18 +1,16 @@
-# `platform::ape` — APE (cosmocc) host-tool support
+# `platform::ape` — fbuild APE loader adapter
 
-Runs Actually Portable Executable tools on every host fbuild supports without
-any host APE support installed.
+`mod.rs` delegates detection and launch planning to the published
+`running_process::ape` implementation. That implementation owns extraction,
+validation, private atomic installation, nested APE launches, and the fork lock.
 
-- `mod.rs` — APE detection, launch planning (`<loader> <image> <args>`), and
-  per-host loader extraction: Linux ELF loader, macOS x86_64 Mach-O loader,
-  macOS arm64 loader compiled from the image's `ape-m1.c`.
-- `prologue.rs` — parses the image's shell prologue (per-CPU loader blobs,
-  the macOS x86_64 header-patched blob, the Apple Silicon loader source).
-- `install.rs` — owner-only, exec-capable, atomic, content-addressed installs
-  under the fork lock (no `ETXTBSY`).
-- `native.rs` — a `/bin/sh` shim on every Unix host for spawners fbuild
-  doesn't control (zccache): same file name, the image's identity baked in,
-  `ape` first on PATH, `exec <loader> <original image>`.
+The adapter preserves `FBUILD_APE_LOADER`, `FBUILD_APE_CACHE_DIR`, `FBCACHE_DIR`,
+`FBUILD_CACHE_DIR` and the cache root registered by fbuild's CLI and daemon.
+Embedded zccache receives the equivalent canonical environment overrides;
+its kernal-api dependency plans compiler launches directly with the original
+compiler image, without a generated shim.
 
-Host specifics (cache dirs, Linux `memfd` fallback) live in
-`../{linux,macos,windows}/ape.rs`.
+Tests here cover fbuild's settings, real contained/subprocess launches, and
+48 concurrent first launches. Loader format and host-specific tests live in
+running-process's concrete platform trees. The real compiler cold-miss/warm-hit
+regression lives in `fbuild-build/tests/it/ape_toolchain.rs`.

@@ -1,6 +1,5 @@
 use super::host::{HostArch, HostOs};
 
-pub(super) mod ape;
 pub(super) mod device;
 pub(super) mod fs;
 pub(super) mod host;

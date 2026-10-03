@@ -35,19 +35,12 @@ self-extracting prologue). Windows runs APE natively. Every
 `subprocess::run_command*` spawn applies this; direct spawns build their command
 with `process::command` / `process::tokio_command` instead of `Command::new`.
 
-The embedded loader is located from the prologue's `dd skip=N count=M | gzip -dc`
-line for the host CPU, inflated in-process, validated (64-bit ELF or Mach-O for
-that CPU), and installed content-addressed into the first owner-only (0700, not
-group/world-writable, not a symlink), exec-capable directory among
-`FBUILD_APE_CACHE_DIR`, fbuild's cache root (registered by the daemon and CLI via
-`ape::set_default_cache_root`), `$XDG_CACHE_HOME`/`~/.cache` `fbuild/ape` (macOS:
-`~/Library/Caches/fbuild/ape`) and `$XDG_RUNTIME_DIR/fbuild/ape`; on Linux, failing
-all of those, it lives in a sealed `memfd` exec'd via `/proc/self/fd/N`. The child
-needs no PATH, `sh`, coreutils, `gzip`, `HOME` or `TMPDIR`, and the loader is put
-first on its PATH as `ape` so APE programs it spawns itself resolve too. Installs
-are atomic (temp file + `rename`), tampered or truncated copies are rewritten,
-and the writes hold `process::exclusive_fork_guard` — a Go-style fork lock every
-spawn helper (and the few allowlisted direct spawns, via
-`process::shared_fork_guard`) holds shared across fork→exec — so no concurrently
-forked child can inherit the writable descriptor. Spawners fbuild doesn't
-control (zccache) can still race it, so APE launches retry `ETXTBSY` briefly.
+APE extraction, validation and installation are owned by `running-process`,
+including the shared fork lock and transient `ETXTBSY` retry. fbuild's adapter
+preserves `FBUILD_APE_LOADER` and selects loader storage from
+`FBUILD_APE_CACHE_DIR`, `FBCACHE_DIR/ape`, `FBUILD_CACHE_DIR/ape`, the cache root
+registered by the CLI/daemon, then the shared loader's host defaults. Embedded
+zccache receives the corresponding canonical settings and launches the original
+compiler directly through kernal-api 0.1.26; no fbuild native-path shim is needed.
+
+See [`ape/README.md`](ape/README.md) for adapter and test locations.

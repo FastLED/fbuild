@@ -5,7 +5,7 @@
 //! cosmocc's gcc, cc1, as and ld are all APE images, and gcc spawns cc1/as
 //! itself, so this exercises nested APE spawns too. Both paths give the
 //! compiler a hostile environment (no usable PATH/TMPDIR/HOME; zccache passes
-//! an empty env), so only fbuild's own loader support can make it work.
+//! an empty env), so the shared running-process loader must make it work through both paths.
 //!
 //! Opt-in: point `FBUILD_TEST_COSMOCC` at an unpacked
 //! <https://cosmo.zip/pub/cosmocc/cosmocc.zip> (the directory holding `bin/`).
