@@ -58,6 +58,10 @@ async fn staged_install_marks_ape_tools_executable() {
         .await
         .expect("staged install should succeed");
 
+    assert!(
+        ape_perms::is_repaired(&installed),
+        "a fresh install records its APE scan so it is never repaired again"
+    );
     let ape = std::fs::metadata(installed.join("pkg/bin/tool.com")).unwrap();
     assert!(fbuild_core::platform::fs::is_executable(&ape));
     let txt = std::fs::metadata(installed.join("pkg/bin/readme.txt")).unwrap();

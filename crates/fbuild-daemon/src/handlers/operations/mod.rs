@@ -9,6 +9,7 @@ mod build;
 mod common;
 mod deploy;
 mod deploy_port;
+mod deploy_teensy;
 mod install_deps;
 mod monitor;
 mod recovery_request;
