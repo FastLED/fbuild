@@ -22,6 +22,8 @@ fn main() {
 }
 
 fn async_main_entry() {
+    // APE (cosmocc) host tools: keep extracted loaders under fbuild's own cache.
+    fbuild_core::platform::ape::set_default_cache_root(fbuild_paths::get_cache_root().join("ape"));
     // FastLED/fbuild#1285: derive the dev daemon-identity stamp once, at the
     // top level, and export the value so every child — including the spawned
     // daemon — inherits it instead of re-hashing per invocation. Official

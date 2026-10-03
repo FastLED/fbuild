@@ -263,7 +263,6 @@ pub(crate) fn find_gdb_in_dirs(
         candidate_names
             .iter()
             .find_map(|name| fbuild_core::platform::executable::find_tool_in(dir, name))
-            .map(NormalizedPath::from)
     })
 }
 

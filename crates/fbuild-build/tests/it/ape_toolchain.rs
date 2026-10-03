@@ -10,12 +10,13 @@
 //! Opt-in: point `FBUILD_TEST_COSMOCC` at an unpacked
 //! <https://cosmo.zip/pub/cosmocc/cosmocc.zip> (the directory holding `bin/`).
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 use fbuild_build::zccache_embedded::FbuildZccacheService;
+use fbuild_core::path::NormalizedPath;
 use zccache::embedded::ShutdownMode;
 
-fn cosmo_gcc() -> PathBuf {
+fn cosmo_gcc() -> NormalizedPath {
     let root = std::env::var_os("FBUILD_TEST_COSMOCC").expect("FBUILD_TEST_COSMOCC");
     let arch = fbuild_core::platform::host::arch_name();
     let gcc = Path::new(&root)
@@ -26,7 +27,7 @@ fn cosmo_gcc() -> PathBuf {
         "{} must be an APE image",
         gcc.display()
     );
-    gcc
+    NormalizedPath::from(gcc)
 }
 
 /// A packaged-toolchain layout of the APE gcc. Raw cosmocc gcc has no
@@ -35,7 +36,7 @@ fn cosmo_gcc() -> PathBuf {
 /// package ships its gcc configured, so mirror that: a tree of symlinks into
 /// the unpacked cosmocc with the gcc APE image copied in and a GCC `specs` file
 /// adding the toolchain's include root.
-fn packaged_cosmo_gcc(into: &Path) -> PathBuf {
+fn packaged_cosmo_gcc(into: &Path) -> NormalizedPath {
     let src = cosmo_gcc();
     let root = src.parent().unwrap().parent().unwrap();
     let triple = format!("{}-linux-cosmo", fbuild_core::platform::host::arch_name());
@@ -68,7 +69,7 @@ fn packaged_cosmo_gcc(into: &Path) -> PathBuf {
         format!("*cpp:\n+ -isystem {}\n\n", root.join("include").display()),
     )
     .unwrap();
-    gcc
+    NormalizedPath::from(gcc)
 }
 
 fn link(original: &Path, link: &Path) -> std::io::Result<()> {
@@ -79,10 +80,10 @@ fn link(original: &Path, link: &Path) -> std::io::Result<()> {
     }
 }
 
-fn source(dir: &Path) -> PathBuf {
+fn source(dir: &Path) -> NormalizedPath {
     let src = dir.join("add.c");
     std::fs::write(&src, "int add(int a, int b) { return a + b; }\n").unwrap();
-    src
+    NormalizedPath::from(src)
 }
 
 fn compile_args(src: &Path, obj: &Path) -> Vec<String> {

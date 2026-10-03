@@ -525,7 +525,7 @@ fn esptool_bin_name() -> &'static str {
 fn find_esptool_binary(root: &Path) -> Option<NormalizedPath> {
     fn search(dir: &Path, depth: usize) -> Option<NormalizedPath> {
         if let Some(candidate) = fbuild_core::platform::executable::find_tool_in(dir, "esptool") {
-            return Some(NormalizedPath::from(candidate));
+            return Some(candidate);
         }
         if depth == 0 {
             return None;

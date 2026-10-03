@@ -7,7 +7,9 @@
 
 use std::fs::OpenOptions;
 use std::io::Write;
-use std::path::{Path, PathBuf};
+use std::path::Path;
+
+use crate::path::NormalizedPath;
 use std::sync::atomic::{AtomicU64, Ordering};
 
 use super::super::{fs, process};
@@ -16,11 +18,11 @@ use super::super::{fs, process};
 /// candidate `dir`, reusing an identical existing file. `None` when no
 /// candidate is usable.
 pub(crate) fn install(
-    dirs: &[PathBuf],
+    dirs: &[NormalizedPath],
     subdir: Option<&str>,
     name: &str,
     bytes: &[u8],
-) -> Option<PathBuf> {
+) -> Option<NormalizedPath> {
     dirs.iter().find_map(|dir| {
         let dir = match subdir {
             Some(sub) => {
@@ -40,14 +42,16 @@ fn usable_dir(dir: &Path) -> bool {
     fs::ensure_private_dir(dir) && fs::mount_allows_exec(dir)
 }
 
-pub(crate) fn install_in(dir: &Path, bytes: &[u8], name: &str) -> Option<PathBuf> {
+pub(crate) fn install_in(dir: &Path, bytes: &[u8], name: &str) -> Option<NormalizedPath> {
     if !usable_dir(dir) {
         return None;
     }
-    let target = dir.join(name);
+    let target = NormalizedPath::new(dir.join(name));
     if is_installed(&target, bytes) {
         return Some(target);
     }
+    // Unique per process and attempt inside an owner-only directory, so a
+    // plain create+truncate can't collide with another writer.
     static SEQ: AtomicU64 = AtomicU64::new(0);
     let tmp = dir.join(format!(
         ".{name}.{}.{}",
@@ -60,7 +64,8 @@ pub(crate) fn install_in(dir: &Path, bytes: &[u8], name: &str) -> Option<PathBuf
         let _fork = process::exclusive_fork_guard();
         OpenOptions::new()
             .write(true)
-            .create_new(true)
+            .create(true)
+            .truncate(true)
             .open(&tmp)
             .and_then(|mut file| {
                 file.write_all(bytes)?;

@@ -261,7 +261,7 @@ pub fn find_binary_in_dir(dir: &Path, stem: &str) -> Option<PathBuf> {
     }
     // Direct: dir/bin/<stem>
     if let Some(direct) = find_tool_in(&dir.join("bin"), stem) {
-        return Some(direct);
+        return Some(direct.into_path_buf());
     }
     // One level nested: dir/subdir/bin/name (archives often have a top-level folder)
     if let Ok(entries) = std::fs::read_dir(dir) {
@@ -269,7 +269,7 @@ pub fn find_binary_in_dir(dir: &Path, stem: &str) -> Option<PathBuf> {
             let p = entry.path();
             if p.is_dir() {
                 if let Some(candidate) = find_tool_in(&p.join("bin"), stem) {
-                    return Some(candidate);
+                    return Some(candidate.into_path_buf());
                 }
             }
         }

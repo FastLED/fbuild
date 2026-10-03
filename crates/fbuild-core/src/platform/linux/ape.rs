@@ -9,12 +9,12 @@ use std::fs::File;
 use std::io::Write;
 use std::os::fd::{AsRawFd, FromRawFd};
 use std::os::unix::fs::PermissionsExt;
-use std::path::PathBuf;
+use crate::path::NormalizedPath;
 use std::sync::Mutex;
 
 /// Default candidate directories, most durable first.
-pub(crate) fn default_loader_dirs() -> Vec<PathBuf> {
-    let env_dir = |key: &str| std::env::var_os(key).filter(|v| !v.is_empty()).map(PathBuf::from);
+pub(crate) fn default_loader_dirs() -> Vec<NormalizedPath> {
+    let env_dir = |key: &str| std::env::var_os(key).filter(|v| !v.is_empty()).map(NormalizedPath::new);
     let mut dirs = Vec::new();
     if let Some(cache) = env_dir("XDG_CACHE_HOME").or_else(|| env_dir("HOME").map(|h| h.join(".cache"))) {
         dirs.push(cache.join("fbuild").join("ape"));
@@ -22,22 +22,28 @@ pub(crate) fn default_loader_dirs() -> Vec<PathBuf> {
     if let Some(runtime) = env_dir("XDG_RUNTIME_DIR") {
         dirs.push(runtime.join("fbuild").join("ape"));
     }
-    // SAFETY: geteuid has no preconditions and cannot fail.
-    let uid = unsafe { libc::geteuid() };
-    dirs.push(std::env::temp_dir().join(format!("fbuild-ape-{uid}")));
     dirs
+}
+
+/// Whether `path` is one of this process's anonymous (memfd) executables.
+/// Exact identity, not a prefix test: only paths handed out here qualify.
+pub(crate) fn is_anonymous(path: &std::path::Path) -> bool {
+    let guard = MEMFDS.lock().unwrap_or_else(|e| e.into_inner());
+    guard
+        .as_ref()
+        .is_some_and(|fds| fds.values().any(|file| fd_path(file).as_path() == path))
 }
 
 /// Last-resort executable with no filesystem home: a sealed memfd exec'd via
 /// `/proc/self/fd/N`. Valid only for direct children of this process.
-pub(crate) fn anonymous_executable(bytes: &[u8], name: &str) -> Option<PathBuf> {
+pub(crate) fn anonymous_executable(bytes: &[u8], name: &str) -> Option<NormalizedPath> {
     memfd_loader(bytes, name)
 }
 
 /// Sealed memfds kept open for the process lifetime, keyed by loader name.
 static MEMFDS: Mutex<Option<HashMap<String, File>>> = Mutex::new(None);
 
-fn memfd_loader(bytes: &[u8], name: &str) -> Option<PathBuf> {
+fn memfd_loader(bytes: &[u8], name: &str) -> Option<NormalizedPath> {
     let mut guard = MEMFDS.lock().unwrap_or_else(|e| e.into_inner());
     let fds = guard.get_or_insert_with(HashMap::new);
     if let Some(file) = fds.get(name) {
@@ -83,8 +89,8 @@ fn create_sealed_memfd(bytes: &[u8], name: &str) -> Option<File> {
     Some(file)
 }
 
-fn fd_path(file: &File) -> PathBuf {
-    PathBuf::from(format!("/proc/self/fd/{}", file.as_raw_fd()))
+fn fd_path(file: &File) -> NormalizedPath {
+    NormalizedPath::from(format!("/proc/self/fd/{}", file.as_raw_fd()))
 }
 
 #[cfg(test)]
@@ -95,8 +101,8 @@ mod tests {
     use std::fs::OpenOptions;
     use std::path::Path;
 
-    fn hello() -> PathBuf {
-        Path::new(env!("CARGO_MANIFEST_DIR")).join("data/ape-hello/hello.com")
+    fn hello() -> NormalizedPath {
+        NormalizedPath::new(Path::new(env!("CARGO_MANIFEST_DIR")).join("data/ape-hello/hello.com"))
     }
 
     fn host_loader() -> Vec<u8> {
@@ -121,7 +127,7 @@ mod tests {
     #[test]
     fn memfd_loader_runs_real_image() {
         let loader = memfd_loader(&host_loader(), "ape-loader-test-memfd").expect("memfd");
-        assert!(loader.starts_with("/proc/self/fd"));
+        assert!(is_anonymous(&loader));
         let out = run(&loader, &["memfd"]);
         assert!(out.success(), "stderr: {}", out.stderr);
         assert_eq!(out.stdout, "hello world memfd\n");
@@ -139,10 +145,14 @@ mod tests {
         let shared = root.path().join("shared");
         std::fs::create_dir(&shared).unwrap();
         std::fs::set_permissions(&shared, std::fs::Permissions::from_mode(0o777)).unwrap();
-        let dirs = [readonly.join("cache"), shared.clone(), PathBuf::from("/proc/fbuild-nope")];
+        let dirs = [
+            NormalizedPath::new(readonly.join("cache")),
+            NormalizedPath::new(&shared),
+            NormalizedPath::from("/proc/fbuild-nope"),
+        ];
         let loader =
             crate::platform::ape::materialize(&host_loader(), "ape-loader-test-fallback", &dirs).unwrap();
-        assert!(loader.starts_with("/proc/self/fd"), "got {}", loader.display());
+        assert!(is_anonymous(&loader), "got {}", loader.display());
         assert!(std::fs::read_dir(&shared).unwrap().next().is_none(), "nothing planted in shared dir");
         let out = run(&loader, &["fallback"]);
         assert_eq!(out.stdout, "hello world fallback\n", "stderr: {}", out.stderr);

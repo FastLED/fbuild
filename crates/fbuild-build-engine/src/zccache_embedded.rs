@@ -302,6 +302,7 @@ impl FbuildZccacheService {
         // can't be routed through fbuild's loader; hand it a host-native
         // stand-in with the same file name instead.
         let compiler = fbuild_core::platform::ape::native_executable(compiler)
+            .map(fbuild_core::path::NormalizedPath::into_path_buf)
             .unwrap_or_else(|| compiler.to_path_buf());
         let req = ZccacheCompileRequest {
             audit: default_audit_context(),

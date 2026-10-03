@@ -64,6 +64,7 @@ pub fn find_lpc21isp() -> Option<PathBuf> {
     }
 
     fbuild_core::platform::executable::find_tool_in(&fbuild_paths::try_get_tools_dir()?, "lpc21isp")
+        .map(fbuild_core::path::NormalizedPath::into_path_buf)
 }
 
 /// Build the "install lpc21isp" hint that surfaces on the failing

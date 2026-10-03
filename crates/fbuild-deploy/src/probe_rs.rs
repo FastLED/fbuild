@@ -150,7 +150,6 @@ pub fn find_probe_rs() -> Option<NormalizedPath> {
     }
 
     fbuild_core::platform::executable::find_tool_in(&managed_probe_rs_dir()?, "probe-rs")
-        .map(NormalizedPath::from)
 }
 
 /// Resolve and, if needed, install the pinned FastLED/probe-rs binary.
@@ -289,15 +288,13 @@ fn probe_rs_temp_install_path(dest_path: &Path) -> NormalizedPath {
 }
 
 fn find_extracted_probe_rs_binary(root: &Path) -> Result<NormalizedPath> {
-    fbuild_core::platform::executable::find_tool_in_tree(root, "probe-rs")
-        .map(NormalizedPath::from)
-        .ok_or_else(|| {
-            let exe = fbuild_core::platform::executable::native_name("probe-rs");
-            FbuildError::PackageError(format!(
-                "probe-rs binary `{exe}` not found after extracting {}",
-                root.display()
-            ))
-        })
+    fbuild_core::platform::executable::find_tool_in_tree(root, "probe-rs").ok_or_else(|| {
+        let exe = fbuild_core::platform::executable::native_name("probe-rs");
+        FbuildError::PackageError(format!(
+            "probe-rs binary `{exe}` not found after extracting {}",
+            root.display()
+        ))
+    })
 }
 
 /// Map an fbuild `BoardConfig` to the `--chip` name probe-rs expects.

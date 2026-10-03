@@ -35,7 +35,7 @@ fn find_teensy_loader_cli() -> Option<PathBuf> {
 
     if let Some(path_env) = std::env::var_os("PATH") {
         if let Some(found) = find_tool_on_paths(std::env::split_paths(&path_env), STEM) {
-            return Some(found);
+            return Some(found.into_path_buf());
         }
     }
 
@@ -51,7 +51,7 @@ fn find_teensy_loader_cli() -> Option<PathBuf> {
         .join(".platformio")
         .join("packages")
         .join("tool-teensy");
-    find_tool_in(&pio_tool_dir, STEM)
+    find_tool_in(&pio_tool_dir, STEM).map(fbuild_core::path::NormalizedPath::into_path_buf)
 }
 
 /// POST /api/deploy

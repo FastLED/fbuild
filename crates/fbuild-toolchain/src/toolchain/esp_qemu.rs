@@ -418,11 +418,11 @@ fn find_qemu_binary(root: &Path, arch: EspQemuArch) -> Result<PathBuf> {
     let file_name = arch.binary_name();
     let stem = arch.stem();
     if let Some(direct) = find_tool_in(root, stem) {
-        return Ok(direct);
+        return Ok(direct.into_path_buf());
     }
 
     if let Some(in_bin) = find_tool_in(&root.join("bin"), stem) {
-        return Ok(in_bin);
+        return Ok(in_bin.into_path_buf());
     }
 
     if let Ok(entries) = std::fs::read_dir(root) {
@@ -433,11 +433,11 @@ fn find_qemu_binary(root: &Path, arch: EspQemuArch) -> Result<PathBuf> {
             }
 
             if let Some(nested_direct) = find_tool_in(&path, stem) {
-                return Ok(nested_direct);
+                return Ok(nested_direct.into_path_buf());
             }
 
             if let Some(nested_bin) = find_tool_in(&path.join("bin"), stem) {
-                return Ok(nested_bin);
+                return Ok(nested_bin.into_path_buf());
             }
         }
     }
@@ -472,6 +472,7 @@ fn qemu_root(install_dir: &Path, arch: EspQemuArch) -> Result<PathBuf> {
 fn find_tool_on_path(stem: &str) -> Option<PathBuf> {
     let path_var = std::env::var_os("PATH")?;
     fbuild_core::platform::executable::find_tool_on_paths(std::env::split_paths(&path_var), stem)
+        .map(fbuild_core::path::NormalizedPath::into_path_buf)
 }
 
 /// An exact file name on PATH (e.g. a DLL — never a tool-name expansion).

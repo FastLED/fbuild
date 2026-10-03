@@ -31,7 +31,9 @@
 use std::collections::HashMap;
 use std::ffi::{OsStr, OsString};
 use std::io::Read;
-use std::path::{Path, PathBuf};
+use std::path::Path;
+
+use crate::path::NormalizedPath;
 use std::sync::Mutex;
 use std::time::SystemTime;
 
@@ -88,13 +90,13 @@ pub fn is_ape_file(path: &Path) -> bool {
 /// followed by the caller's original arguments.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct ApeLaunch {
-    pub loader: PathBuf,
-    pub image: PathBuf,
+    pub loader: NormalizedPath,
+    pub image: NormalizedPath,
     /// A private directory holding this loader as `ape`. Spawners prepend it
     /// to the child's `PATH` so APE programs the tool itself spawns (gcc →
     /// `cc1`) find a loader via the prologue's `type ape` — without it those
     /// nested spawns need `sh` + coreutils + a writable temp dir.
-    pub ape_path_dir: Option<PathBuf>,
+    pub ape_path_dir: Option<NormalizedPath>,
 }
 
 impl ApeLaunch {
@@ -104,7 +106,8 @@ impl ApeLaunch {
         let dir = self.ape_path_dir.as_ref()?;
         let rest = inherited.filter(|p| !p.is_empty());
         std::env::join_paths(
-            std::iter::once(dir.clone()).chain(rest.into_iter().flat_map(std::env::split_paths)),
+            std::iter::once(dir.as_path().to_path_buf())
+                .chain(rest.into_iter().flat_map(std::env::split_paths)),
         )
         .ok()
     }
@@ -135,11 +138,7 @@ pub fn plan_launch(
     };
     let path_var = overlay_var("PATH");
     let loader_override = overlay_var(LOADER_ENV);
-    let mut cache_dirs: Vec<PathBuf> = overlay_var(CACHE_DIR_ENV)
-        .map(PathBuf::from)
-        .into_iter()
-        .collect();
-    cache_dirs.extend(super::selected::ape::default_loader_dirs());
+    let cache_dirs = cache_dirs(overlay_var(CACHE_DIR_ENV));
     plan_launch_for(
         host,
         program,
@@ -150,6 +149,28 @@ pub fn plan_launch(
     )
 }
 
+static DEFAULT_CACHE_ROOT: std::sync::OnceLock<NormalizedPath> = std::sync::OnceLock::new();
+
+/// Register fbuild's own cache directory for APE-derived executables
+/// (loaders, `ape` PATH entries, shims). Binaries call this at startup with a
+/// directory under `fbuild_paths::get_cache_root()`, which `fbuild-core` can't
+/// depend on. The first registration wins.
+pub fn set_default_cache_root(dir: impl AsRef<Path>) {
+    let _ = DEFAULT_CACHE_ROOT.set(NormalizedPath::new(dir));
+}
+
+/// Candidate cache directories, most preferred first: the explicit
+/// [`CACHE_DIR_ENV`] value, the registered fbuild cache root, then host
+/// defaults (XDG/`~/.cache`, runtime dir; `~/Library/Caches` on macOS).
+fn cache_dirs(explicit: Option<OsString>) -> Vec<NormalizedPath> {
+    explicit
+        .map(NormalizedPath::new)
+        .into_iter()
+        .chain(DEFAULT_CACHE_ROOT.get().cloned())
+        .chain(super::selected::ape::default_loader_dirs())
+        .collect()
+}
+
 /// [`plan_launch`] with every host input explicit, for deterministic tests.
 /// `cache_dirs` are the candidate directories for an extracted loader.
 pub fn plan_launch_for(
@@ -158,7 +179,7 @@ pub fn plan_launch_for(
     cwd: Option<&Path>,
     path_var: Option<&OsStr>,
     loader_override: Option<&OsStr>,
-    cache_dirs: &[PathBuf],
+    cache_dirs: &[NormalizedPath],
 ) -> Option<ApeLaunch> {
     if host.is_windows() {
         return None;
@@ -188,39 +209,41 @@ fn resolve_program(
     program: &OsStr,
     cwd: Option<&Path>,
     path_var: Option<&OsStr>,
-) -> Option<PathBuf> {
+) -> Option<NormalizedPath> {
     let path = Path::new(program);
     if path.components().count() > 1 || path.is_absolute() {
         let resolved = match cwd {
             Some(dir) if path.is_relative() => dir.join(path),
             _ => path.to_path_buf(),
         };
-        return std::path::absolute(resolved).ok();
+        return std::path::absolute(resolved).ok().map(NormalizedPath::new);
     }
     find_executable_on_path(program, path_var)
 }
 
-fn resolve_explicit_loader(explicit: &OsStr, path_var: Option<&OsStr>) -> Option<PathBuf> {
+fn resolve_explicit_loader(explicit: &OsStr, path_var: Option<&OsStr>) -> Option<NormalizedPath> {
     let explicit = Path::new(explicit);
     if explicit.components().count() > 1 || explicit.is_absolute() {
-        return Some(explicit.to_path_buf());
+        return Some(NormalizedPath::new(explicit));
     }
     find_executable_on_path(explicit.as_os_str(), path_var)
 }
 
-fn resolve_host_loader(path_var: Option<&OsStr>) -> Option<PathBuf> {
+fn resolve_host_loader(path_var: Option<&OsStr>) -> Option<NormalizedPath> {
     find_executable_on_path(OsStr::new("ape"), path_var)
-        .or_else(|| first_executable(WELL_KNOWN_LOADERS.iter().map(PathBuf::from)))
-        .or_else(|| first_executable([PathBuf::from("/bin/sh")]))
+        .or_else(|| first_executable(WELL_KNOWN_LOADERS.iter().map(NormalizedPath::new)))
+        .or_else(|| first_executable([NormalizedPath::from("/bin/sh")]))
         .or_else(|| find_executable_on_path(OsStr::new("sh"), path_var))
 }
 
-fn find_executable_on_path(name: &OsStr, path_var: Option<&OsStr>) -> Option<PathBuf> {
+fn find_executable_on_path(name: &OsStr, path_var: Option<&OsStr>) -> Option<NormalizedPath> {
     let dirs = std::env::split_paths(path_var?).filter(|dir| !dir.as_os_str().is_empty());
-    first_executable(dirs.map(|dir| dir.join(name)))
+    first_executable(dirs.map(|dir| NormalizedPath::new(dir.join(name))))
 }
 
-fn first_executable(candidates: impl IntoIterator<Item = PathBuf>) -> Option<PathBuf> {
+fn first_executable(
+    candidates: impl IntoIterator<Item = NormalizedPath>,
+) -> Option<NormalizedPath> {
     candidates
         .into_iter()
         .find(|candidate| is_executable_file(candidate))
@@ -233,12 +256,18 @@ fn is_executable_file(path: &Path) -> bool {
 /// Identity of an image (and where its derived files may live) for the
 /// memos: a rebuilt image at the same path changes length or mtime and is
 /// re-derived.
-type ImageKey = (PathBuf, u64, Option<SystemTime>, HostPlatform, Vec<PathBuf>);
+type ImageKey = (
+    NormalizedPath,
+    u64,
+    Option<SystemTime>,
+    HostPlatform,
+    Vec<NormalizedPath>,
+);
 
-fn image_key(image: &Path, host: HostPlatform, dirs: &[PathBuf]) -> Option<ImageKey> {
+fn image_key(image: &Path, host: HostPlatform, dirs: &[NormalizedPath]) -> Option<ImageKey> {
     let meta = std::fs::metadata(image).ok()?;
     Some((
-        image.to_path_buf(),
+        NormalizedPath::new(image),
         meta.len(),
         meta.modified().ok(),
         host,
@@ -247,21 +276,21 @@ fn image_key(image: &Path, host: HostPlatform, dirs: &[PathBuf]) -> Option<Image
 }
 
 /// Memo of derived executables (loaders, native copies) per image.
-struct Memo(Mutex<Option<HashMap<ImageKey, PathBuf>>>);
+struct Memo(Mutex<Option<HashMap<ImageKey, NormalizedPath>>>);
 
 impl Memo {
     const fn new() -> Self {
         Self(Mutex::new(None))
     }
 
-    fn get(&self, key: &ImageKey) -> Option<PathBuf> {
+    fn get(&self, key: &ImageKey) -> Option<NormalizedPath> {
         let guard = self.0.lock().unwrap_or_else(|e| e.into_inner());
         let hit = guard.as_ref()?.get(key)?.clone();
         // A cache cleaner may have removed it since; re-derive then.
         hit.exists().then_some(hit)
     }
 
-    fn put(&self, key: ImageKey, path: PathBuf) {
+    fn put(&self, key: ImageKey, path: NormalizedPath) {
         let mut guard = self.0.lock().unwrap_or_else(|e| e.into_inner());
         guard.get_or_insert_with(HashMap::new).insert(key, path);
     }
@@ -273,7 +302,11 @@ static LOADER_MEMO: Memo = Memo::new();
 /// usable `cache_dirs` entry (or, on Linux, a sealed memfd). `None` when the
 /// image carries no valid loader for the host or nothing could be
 /// materialized.
-fn embedded_loader(image: &Path, host: HostPlatform, cache_dirs: &[PathBuf]) -> Option<PathBuf> {
+fn embedded_loader(
+    image: &Path,
+    host: HostPlatform,
+    cache_dirs: &[NormalizedPath],
+) -> Option<NormalizedPath> {
     let key = image_key(image, host, cache_dirs)?;
     if let Some(hit) = LOADER_MEMO.get(&key) {
         return Some(hit);
@@ -304,12 +337,13 @@ fn embedded_loader(image: &Path, host: HostPlatform, cache_dirs: &[PathBuf]) -> 
 
 /// A private directory containing `loader` under the name `ape`, for
 /// [`ApeLaunch::ape_path_dir`]. Shells are never exposed as `ape`.
-fn ape_path_dir(loader: &Path, cache_dirs: &[PathBuf]) -> Option<PathBuf> {
-    if loader.file_name().is_some_and(|n| n == "sh") {
+fn ape_path_dir(loader: &Path, cache_dirs: &[NormalizedPath]) -> Option<NormalizedPath> {
+    if loader.file_name().is_some_and(|n| n == "sh") || super::selected::ape::is_anonymous(loader) {
         return None;
     }
-    if loader.file_name().is_some_and(|n| n == "ape") && !loader.starts_with("/proc/self") {
-        return loader.parent().map(Path::to_path_buf);
+    if loader.file_name().is_some_and(|n| n == "ape") && !super::selected::ape::is_anonymous(loader)
+    {
+        return loader.parent().map(NormalizedPath::new);
     }
     let bytes = std::fs::read(loader).ok()?;
     if bytes.len() as u64 > MAX_LOADER_BYTES {
@@ -318,12 +352,16 @@ fn ape_path_dir(loader: &Path, cache_dirs: &[PathBuf]) -> Option<PathBuf> {
     let sub = format!("bin-{}", short_hash(&bytes));
     install::install(cache_dirs, Some(&sub), "ape", &bytes)?
         .parent()
-        .map(Path::to_path_buf)
+        .map(NormalizedPath::new)
 }
 
 /// Install `bytes` as an executable named `name` in the first usable cache
 /// dir, else as a host anonymous executable (Linux memfd).
-pub(crate) fn materialize(bytes: &[u8], name: &str, dirs: &[PathBuf]) -> Option<PathBuf> {
+pub(crate) fn materialize(
+    bytes: &[u8],
+    name: &str,
+    dirs: &[NormalizedPath],
+) -> Option<NormalizedPath> {
     install::install(dirs, None, name, bytes)
         .or_else(|| super::selected::ape::anonymous_executable(bytes, name))
 }
@@ -436,7 +474,7 @@ pub fn extract_macos_aarch64_loader_source(image: &Path) -> Option<Vec<u8>> {
 /// Compile the image's `ape-m1.c` with the host C compiler (Xcode Command
 /// Line Tools) into a content-addressed cache entry, as the prologue would,
 /// but without depending on `sh`, `dd`, `gzip` or `$TMPDIR`.
-fn compile_macos_aarch64_loader(image: &Path, dirs: &[PathBuf]) -> Option<PathBuf> {
+fn compile_macos_aarch64_loader(image: &Path, dirs: &[NormalizedPath]) -> Option<NormalizedPath> {
     let src = extract_macos_aarch64_loader_source(image)?;
     let name = format!("ape-loader-macos-aarch64-{}", short_hash(&src));
     let dir = dirs
@@ -463,8 +501,8 @@ fn compile_macos_aarch64_loader(image: &Path, dirs: &[PathBuf]) -> Option<PathBu
     let src_path = dir.join(format!(".{name}.{tag}.c"));
     let out_path = dir.join(format!(".{name}.{tag}"));
     std::fs::write(&src_path, &src).ok()?;
-    let cc =
-        first_executable([PathBuf::from("/usr/bin/cc")]).unwrap_or_else(|| PathBuf::from("cc"));
+    let cc = first_executable([NormalizedPath::from("/usr/bin/cc")])
+        .unwrap_or_else(|| NormalizedPath::from("cc"));
     let compiled = crate::subprocess::run_command_blocking(
         &[
             cc.to_str()?,
@@ -524,11 +562,11 @@ mod tests {
     /// assignment, exactly like a real cosmocc image's prologue.
     const FAKE_APE: &str = "MZqFpD='\n'\necho fake-ape \"$@\"\n";
 
-    fn write_exe(dir: &Path, name: &str, body: &str) -> PathBuf {
+    fn write_exe(dir: &Path, name: &str, body: &str) -> NormalizedPath {
         let path = dir.join(name);
         std::fs::write(&path, body).unwrap();
         crate::platform::fs::set_executable(&path).unwrap();
-        path
+        NormalizedPath::new(path)
     }
 
     #[test]
@@ -585,7 +623,7 @@ mod tests {
             &[],
         )
         .expect("APE must be planned");
-        assert_eq!(plan.loader, PathBuf::from("/opt/cosmo/ape"));
+        assert_eq!(plan.loader, NormalizedPath::from("/opt/cosmo/ape"));
         assert_eq!(plan.image, ape);
     }
 
@@ -669,8 +707,8 @@ mod tests {
     }
 
     /// The checked-in cosmocc hello-world (`data/ape-hello`).
-    fn hello_fixture() -> PathBuf {
-        Path::new(env!("CARGO_MANIFEST_DIR")).join("data/ape-hello/hello.com")
+    fn hello_fixture() -> NormalizedPath {
+        NormalizedPath::new(Path::new(env!("CARGO_MANIFEST_DIR")).join("data/ape-hello/hello.com"))
     }
 
     #[test]
@@ -723,10 +761,10 @@ mod tests {
         assert_eq!(stdout, "hello world std\n");
     }
 
-    fn copy_fixture(dir: &Path, name: &str) -> PathBuf {
+    fn copy_fixture(dir: &Path, name: &str) -> NormalizedPath {
         let path = dir.join(name);
         std::fs::copy(hello_fixture(), &path).unwrap();
-        path
+        NormalizedPath::new(path)
     }
 
     /// Hostile/corrupt images never panic and never yield a loader.
@@ -859,6 +897,7 @@ mod tests {
         let link = dir.path().join("link-to-hello");
         crate::platform::fs::symlink_file(&image, &link).unwrap();
         let cache = tempfile::tempdir().unwrap();
+        let link = NormalizedPath::new(link);
         for program in [&image, &link] {
             let out = run_hostile(
                 program.to_str().unwrap(),

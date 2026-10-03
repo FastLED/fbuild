@@ -105,7 +105,7 @@ fn find_dfu_util_with_override(env_override: Option<std::ffi::OsString>) -> Opti
         }
     }
     let tools = managed_tools_dir()?;
-    fbuild_core::platform::executable::find_tool_in(&tools, "dfu-util").map(NormalizedPath::from)
+    fbuild_core::platform::executable::find_tool_in(&tools, "dfu-util")
 }
 
 /// Resolve the CMSIS-DAP hex to flash. Precedence:

@@ -15,7 +15,9 @@
 //! Shims live in content-addressed subdirectories of the APE cache
 //! (`shim-<hash>/<name>`).
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
+
+use crate::path::NormalizedPath;
 
 use super::super::host::{self, HostPlatform};
 use super::{
@@ -28,14 +30,13 @@ static NATIVE_MEMO: Memo = Memo::new();
 /// `program` is an APE image on a host that can't exec it natively. `None`
 /// for non-APE programs, on Windows (APE runs natively), or when nothing
 /// could be materialized — callers then use `program` unchanged.
-pub fn native_executable(program: &Path) -> Option<PathBuf> {
+pub fn native_executable(program: &Path) -> Option<NormalizedPath> {
     let host = host::current();
     if host.is_windows() || !is_ape_file(program) {
         return None;
     }
     let env = |key: &str| std::env::var_os(key).filter(|v| !v.is_empty());
-    let mut dirs: Vec<PathBuf> = env(CACHE_DIR_ENV).map(PathBuf::from).into_iter().collect();
-    dirs.extend(super::super::selected::ape::default_loader_dirs());
+    let dirs = super::cache_dirs(env(CACHE_DIR_ENV));
     native_executable_for(
         host,
         program,
@@ -49,10 +50,10 @@ pub fn native_executable(program: &Path) -> Option<PathBuf> {
 pub fn native_executable_for(
     host: HostPlatform,
     program: &Path,
-    dirs: &[PathBuf],
+    dirs: &[NormalizedPath],
     loader_override: Option<&std::ffi::OsStr>,
     path_var: Option<&std::ffi::OsStr>,
-) -> Option<PathBuf> {
+) -> Option<NormalizedPath> {
     if host.is_windows() || !is_ape_file(program) {
         return None;
     }
@@ -72,7 +73,7 @@ pub fn native_executable_for(
     )?;
     // A memfd path is only valid in this process's direct children; the
     // shim's exec runs one level further down.
-    if launch.loader.starts_with("/proc/self") {
+    if super::super::selected::ape::is_anonymous(&launch.loader) {
         return None;
     }
     let mut shim = String::from("#!/bin/sh\n");
@@ -107,8 +108,8 @@ mod tests {
     const LINUX_X64: HostPlatform = HostPlatform::new(HostOs::Linux, HostArch::X86_64);
     const WINDOWS: HostPlatform = HostPlatform::new(HostOs::Windows, HostArch::X86_64);
 
-    fn hello() -> PathBuf {
-        Path::new(env!("CARGO_MANIFEST_DIR")).join("data/ape-hello/hello.com")
+    fn hello() -> NormalizedPath {
+        NormalizedPath::new(Path::new(env!("CARGO_MANIFEST_DIR")).join("data/ape-hello/hello.com"))
     }
 
     #[test]
@@ -123,13 +124,16 @@ mod tests {
         let shim = native_executable_for(
             host::current(),
             &image,
-            &[cache.path().to_path_buf()],
+            &[NormalizedPath::new(cache.path())],
             None,
             None,
         )
         .expect("shim");
         assert_eq!(shim.file_name(), image.file_name());
-        assert!(shim.starts_with(cache.path()));
+        assert!(
+            shim.relative_to(&NormalizedPath::from(cache.path()))
+                .is_some()
+        );
         assert!(!is_ape_file(&shim), "the shim itself is a plain script");
         let text = std::fs::read_to_string(&shim).unwrap();
         assert!(text.starts_with("#!/bin/sh\nPATH="), "{text}");
@@ -151,7 +155,7 @@ mod tests {
             native_executable_for(
                 host::current(),
                 &image,
-                &[cache.path().to_path_buf()],
+                &[NormalizedPath::new(cache.path())],
                 None,
                 None
             ),
@@ -163,13 +167,25 @@ mod tests {
     fn windows_non_ape_and_unusable_cache_yield_none() {
         let dir = tempfile::tempdir().unwrap();
         assert_eq!(
-            native_executable_for(WINDOWS, &hello(), &[dir.path().to_path_buf()], None, None),
+            native_executable_for(
+                WINDOWS,
+                &hello(),
+                &[NormalizedPath::new(dir.path())],
+                None,
+                None
+            ),
             None
         );
         let script = dir.path().join("tool");
         std::fs::write(&script, "#!/bin/sh\n").unwrap();
         assert_eq!(
-            native_executable_for(LINUX_X64, &script, &[dir.path().to_path_buf()], None, None),
+            native_executable_for(
+                LINUX_X64,
+                &script,
+                &[NormalizedPath::new(dir.path())],
+                None,
+                None
+            ),
             None
         );
         let file_parent = dir.path().join("f");
@@ -178,7 +194,7 @@ mod tests {
             native_executable_for(
                 LINUX_X64,
                 &hello(),
-                &[file_parent.join("cache")],
+                &[NormalizedPath::new(file_parent.join("cache"))],
                 None,
                 None
             ),

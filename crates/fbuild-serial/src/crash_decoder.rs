@@ -399,7 +399,7 @@ pub fn derive_addr2line_path(cc_path: &Path) -> Option<PathBuf> {
     if same_suffix.is_file() {
         return Some(same_suffix);
     }
-    find_tool_in(bin_dir, &tool_stem)
+    find_tool_in(bin_dir, &tool_stem).map(fbuild_core::path::NormalizedPath::into_path_buf)
 }
 
 #[cfg(test)]

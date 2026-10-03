@@ -68,6 +68,7 @@ impl Rp2040Picotool {
 
     pub fn executable(&self) -> PathBuf {
         fbuild_core::platform::executable::resolve_tool_in(&self.resolved_dir(), PICOTOOL)
+            .into_path_buf()
     }
 
     fn validate(install_dir: &Path) -> fbuild_core::Result<()> {

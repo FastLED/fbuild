@@ -165,7 +165,7 @@ fn find_bin_root(install_dir: &Path) -> PathBuf {
 
 /// Get the full path to a tool binary (native spelling, or a `.com`/`.exe` APE).
 fn tool_binary(bin_dir: &Path, name: &str) -> PathBuf {
-    fbuild_core::platform::executable::resolve_tool_in(bin_dir, name)
+    fbuild_core::platform::executable::resolve_tool_in(bin_dir, name).into_path_buf()
 }
 
 #[cfg(test)]

@@ -226,7 +226,7 @@ fn find_nm_on_path() -> Result<PathBuf> {
     if let Some(found) =
         fbuild_core::platform::executable::find_tool_on_paths(std::env::split_paths(&path), "nm")
     {
-        return Ok(found);
+        return Ok(found.into_path_buf());
     }
     Err(FbuildError::BuildFailed(format!(
         "{exe_name} not found on PATH; pass --nm to point at a cross toolchain nm"
