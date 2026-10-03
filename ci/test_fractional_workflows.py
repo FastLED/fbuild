@@ -17,6 +17,10 @@ class FractionalWorkflowTests(unittest.TestCase):
             steps = [step for step in jobs[job_id]["steps"] if "zackees/setup-soldr@" in step.get("uses", "")]
             self.assertEqual(1, len(steps))
             self.assertEqual("${{ job.status }}", steps[0]["with"].get("job-status"))
+            self.assertEqual(
+                "${{ job.status == 'failure' && steps.tests.outputs.assertion_failure_only == 'true' }}",
+                steps[0]["with"].get("save-on-failure"),
+            )
         setup = next(step for step in jobs["check"]["steps"] if "zackees/setup-soldr@" in step.get("uses", ""))
         self.assertEqual("check-ubuntu-py312-v1", setup["with"]["cache-key-suffix"])
 
@@ -32,7 +36,7 @@ class FractionalWorkflowTests(unittest.TestCase):
             ("check", "soldr cargo test --workspace"),
             ("python-facade-tests", "soldr cargo test -p fbuild-python --test python_facades -- --ignored"),
         ):
-            steps = [step for step in jobs[job_id]["steps"] if step.get("run") == command]
+            steps = [step for step in jobs[job_id]["steps"] if step.get("run") == command or step.get("run") == "uv run --no-project python ci/test_cache_status.py -- " + command]
             self.assertEqual(1, len(steps))
             self.assertNotIn("if", steps[0])
             self.assertFalse(steps[0].get("continue-on-error", False))

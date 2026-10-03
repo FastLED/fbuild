@@ -67,6 +67,7 @@ jobs:
           # Start a generation for the explicitly managed Python 3.12 ABI.
           cache-key-suffix: check-ubuntu-py312-v1
           job-status: ${{ job.status }}
+          save-on-failure: ${{ job.status == 'failure' && steps.tests.outputs.assertion_failure_only == 'true' }}
           cache: true
           build-cache: true
           target-cache: true
@@ -96,7 +97,8 @@ jobs:
       - name: Guard production USB VID/PID catalogue literals
         run: uv run --no-project python ci/check_usb_vidpid_literals.py
       - name: Test
-        run: soldr cargo test --workspace
+        id: tests
+        run: uv run --no-project python ci/test_cache_status.py -- soldr cargo test --workspace
 
   python-facade-tests:
     # FastLED/fbuild#1485 §5.2/§6: the embedded-CPython AT-P integration
@@ -128,6 +130,7 @@ jobs:
         with:
           cache-key-suffix: python-facades
           job-status: ${{ job.status }}
+          save-on-failure: ${{ job.status == 'failure' && steps.tests.outputs.assertion_failure_only == 'true' }}
           cache: true
           build-cache: true
           target-cache: true
@@ -141,4 +144,5 @@ jobs:
           PYTHONHOME="$("$PYO3_PYTHON" -c 'import sys; print(sys.prefix)')"
           echo "PYTHONHOME=$PYTHONHOME" >> "$GITHUB_ENV"
       - name: Test (python facades, --ignored)
-        run: soldr cargo test -p fbuild-python --test python_facades -- --ignored
+        id: tests
+        run: uv run --no-project python ci/test_cache_status.py -- soldr cargo test -p fbuild-python --test python_facades -- --ignored

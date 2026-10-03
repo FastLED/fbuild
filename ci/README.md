@@ -34,3 +34,5 @@ tracked in [#1635](https://github.com/FastLED/fbuild/issues/1635).
 
 - **`dev-tools/`** -- Pip-installable package that provides soldr and repo-local development helper scripts
 - **`hooks/`** -- Claude Code hook scripts (tool guard, lint, readme guard, session lifecycle)
+
+- **`test_cache_status.py`** streams the unchanged Cargo test selection with JSON compiler evidence; only a completed assertion failure enables setup-soldr failure saves. Compiler errors, incomplete logs and cancellation remain blocked.

@@ -180,6 +180,7 @@ def main() -> None:
             "unittest",
             "ci.test_local_gate",
             "ci.test_fractional_workflows",
+            "ci.test_test_cache_status",
         ],
         cwd=ROOT,
         check=True,
