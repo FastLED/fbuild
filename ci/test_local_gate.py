@@ -20,6 +20,7 @@ class RunProofTests(unittest.TestCase):
             ".github/workflows/ci-minimal.yml",
             "linux",
             "minimal",
+            "workflow_dispatch",
             "done",
             "success",
             0,
@@ -45,6 +46,7 @@ class RunProofTests(unittest.TestCase):
             "workflow": self.proof.workflow,
             "job": "linux",
             "mode": "minimal",
+            "event": "workflow_dispatch",
             "state": "done",
             "conclusion": "success",
             "exit_code": 0,
@@ -107,3 +109,7 @@ class RunProofTests(unittest.TestCase):
         for candidate in candidates:
             with self.subTest(candidate=candidate), self.assertRaises(ValueError):
                 verify_run(candidate, self.root, self.sha)
+
+    def test_wrong_event_does_not_prove_dispatch_gate(self) -> None:
+        with self.assertRaises(ValueError):
+            verify_run(replace(self.proof, event="pull_request"), self.root, self.sha)

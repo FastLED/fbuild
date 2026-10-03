@@ -371,9 +371,9 @@ def render_reuse_decision() -> str:
 
 
 def render_local_gate_verify() -> str:
-    """A shadow source-bound check before any PR work; no remote skipping."""
+    """Enforce PR attestations; dispatch can run the source before it is attested."""
     return """  verify:
-    name: Verify local gate (shadow)
+    name: Verify local gate
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
@@ -386,6 +386,7 @@ def render_local_gate_verify() -> str:
           persist-credentials: false
       - uses: astral-sh/setup-uv@v3
       - name: Verify source-bound local proof
+        if: github.event_name == 'pull_request'
         run: >-
           uvx --from git+https://github.com/zackees/ci.yml@9e44971219cd870a2263fa694debc94f57722405
           ci-lint local-gate verify --repo .
