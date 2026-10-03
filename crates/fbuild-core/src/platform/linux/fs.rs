@@ -45,34 +45,6 @@ pub(crate) fn set_executable(path: &Path) -> std::io::Result<()> {
     std::fs::set_permissions(path, permissions)
 }
 
-pub(crate) fn ensure_private_dir(dir: &Path) -> bool {
-    use std::os::unix::fs::{DirBuilderExt, MetadataExt};
-    let _ = std::fs::DirBuilder::new()
-        .recursive(true)
-        .mode(0o700)
-        .create(dir);
-    // SAFETY: geteuid has no preconditions and cannot fail.
-    let uid = unsafe { libc::geteuid() };
-    std::fs::symlink_metadata(dir).is_ok_and(|meta| {
-        meta.file_type().is_dir() && meta.uid() == uid && meta.mode() & 0o022 == 0
-    })
-}
-
-pub(crate) fn mount_allows_exec(dir: &Path) -> bool {
-    use std::os::unix::ffi::OsStrExt;
-    let Ok(path) = std::ffi::CString::new(dir.as_os_str().as_bytes()) else {
-        return false;
-    };
-    let mut stats = std::mem::MaybeUninit::<libc::statvfs>::uninit();
-    // SAFETY: `path` is NUL-terminated and `stats` points to writable storage.
-    if unsafe { libc::statvfs(path.as_ptr(), stats.as_mut_ptr()) } != 0 {
-        return false;
-    }
-    // SAFETY: successful statvfs initialized the complete output structure.
-    let stats = unsafe { stats.assume_init() };
-    stats.f_flag & libc::ST_NOEXEC == 0
-}
-
 pub(crate) fn is_executable(metadata: &std::fs::Metadata) -> bool {
     metadata.permissions().mode() & 0o111 != 0
 }
