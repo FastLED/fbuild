@@ -11,6 +11,15 @@ from ci import render_workflows
 
 
 class FractionalWorkflowTests(unittest.TestCase):
+    def test_ubuntu_build_cache_writers_receive_final_job_status(self):
+        jobs = self.load("check-ubuntu.yml")["jobs"]
+        for job_id in ("check", "python-facade-tests"):
+            steps = [step for step in jobs[job_id]["steps"] if "zackees/setup-soldr@" in step.get("uses", "")]
+            self.assertEqual(1, len(steps))
+            self.assertEqual("${{ job.status }}", steps[0]["with"].get("job-status"))
+        setup = next(step for step in jobs["check"]["steps"] if "zackees/setup-soldr@" in step.get("uses", ""))
+        self.assertEqual("check-ubuntu-py312-v1", setup["with"]["cache-key-suffix"])
+
     def test_local_gate_keeps_required_ubuntu_commands_and_shadow_verification(self):
         minimal = self.load("ci-minimal.yml")["jobs"]
         verifier = minimal["verify"]

@@ -62,7 +62,11 @@ jobs:
           # never re-saves -- so every run recompiled ~240 crates. Distinct
           # from python-facade-tests below, whose 166MB cache otherwise won
           # the shared entry over this job's 479MB save.
-          cache-key-suffix: check-ubuntu
+          # The old generation was seeded by a failed local workspace job
+          # before job-status was wired. An exact hit never re-saves it.
+          # Start a generation for the explicitly managed Python 3.12 ABI.
+          cache-key-suffix: check-ubuntu-py312-v1
+          job-status: ${{ job.status }}
           cache: true
           build-cache: true
           target-cache: true
@@ -123,6 +127,7 @@ jobs:
         uses: zackees/setup-soldr@d17a58eb2cea17a89af0824fb7c6b24ee68f5083 # setup-soldr#565 exact-main promotion canary
         with:
           cache-key-suffix: python-facades
+          job-status: ${{ job.status }}
           cache: true
           build-cache: true
           target-cache: true
