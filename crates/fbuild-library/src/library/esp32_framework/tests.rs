@@ -418,6 +418,35 @@ fn old_sdk_libraries_use_selected_variant_before_common_archives() {
 }
 
 #[test]
+fn old_sdk_radio_archives_are_linked_from_ld_directory() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let sdk = tmp.path().join("tools").join("sdk").join("esp32");
+    let common = sdk.join("lib");
+    let ld = sdk.join("ld");
+    std::fs::create_dir_all(&common).unwrap();
+    std::fs::create_dir_all(&ld).unwrap();
+    std::fs::write(common.join("libesp_phy.a"), "").unwrap();
+    std::fs::write(ld.join("libphy.a"), "").unwrap();
+    std::fs::write(ld.join("librtc.a"), "").unwrap();
+    let fw = Esp32Framework {
+        base: PackageBase::new(
+            "test",
+            "1.0",
+            "http://example.com",
+            "http://example.com",
+            None,
+            CacheSubdir::Platforms,
+            tmp.path(),
+        ),
+        install_dir: Some(tmp.path().to_path_buf()),
+    };
+    let flags = fw.get_sdk_lib_flags("esp32", None);
+    assert!(flags.contains(&format!("-L{}", ld.display())));
+    assert!(flags.contains(&"-lphy".to_string()));
+    assert!(flags.contains(&"-lrtc".to_string()));
+}
+
+#[test]
 fn test_split_defines_preserves_escaped_quotes() {
     let content =
         r#"-DFOO=1 -DMBEDTLS_CONFIG_FILE=\"mbedtls/esp_config.h\" -DBAR -DIDF_VER=\"v5.5.2\""#;
