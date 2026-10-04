@@ -333,12 +333,10 @@ fn per_mcu_toolchain_name(mcu_config: &Esp32McuConfig) -> Option<String> {
 
 /// The toolchain package the platform actually declares.
 ///
-/// A declared per-MCU package wins: pioarduino 51.x declares only those, and
-/// the official PlatformIO `espressif32` 6.x/7.x declares both per-MCU GCC 8
-/// toolchains and a unified one, but its Arduino builds use the per-MCU
-/// package. pioarduino 53.x/54.x declare only the unified
-/// `toolchain-xtensa-esp-elf`, by a registry version rather than a metadata
-/// URL, so "no metadata URL" does not imply a per-MCU package.
+/// Prefer a declared per-MCU package for pioarduino 51.x and official 6.x/7.x.
+/// Official 1.11.2 calls ESP32's package `toolchain-xtensa32`. Pioarduino
+/// 53.x/54.x declare only a unified registry package, so a missing metadata
+/// URL does not imply a per-MCU package.
 fn platform_toolchain_name(
     platform: &fbuild_packages::library::Esp32Platform,
     mcu_config: &Esp32McuConfig,
@@ -349,6 +347,10 @@ fn platform_toolchain_name(
 fn toolchain_name_for(mcu_config: &Esp32McuConfig, declares: impl Fn(&str) -> bool) -> String {
     per_mcu_toolchain_name(mcu_config)
         .filter(|name| declares(name))
+        .or_else(|| {
+            (mcu_config.mcu == "esp32" && declares("toolchain-xtensa32"))
+                .then(|| "toolchain-xtensa32".to_string())
+        })
         .unwrap_or_else(|| primary_toolchain_name(mcu_config.is_riscv()).to_string())
 }
 
@@ -986,3 +988,7 @@ mod registry_toolchain_tests {
         }
     }
 }
+
+#[cfg(test)]
+#[path = "packages_legacy_tests.rs"]
+mod legacy_tests;

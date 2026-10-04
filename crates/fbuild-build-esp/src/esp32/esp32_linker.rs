@@ -179,6 +179,7 @@ pub struct Esp32Linker {
     /// The app partition's size, which is what the image must fit. `None`
     /// falls back to `max_flash` (FastLED/fbuild#1409).
     app_size_limit: Option<u64>,
+    print_memory_usage: bool,
 }
 
 impl Esp32Linker {
@@ -219,6 +220,7 @@ impl Esp32Linker {
             verbose,
             caller_path: None,
             app_size_limit: None,
+            print_memory_usage: true,
         }
     }
 
@@ -227,6 +229,11 @@ impl Esp32Linker {
     /// `--flash-size`, so it cannot carry this limit.
     pub fn with_app_size_limit(mut self, limit: Option<u64>) -> Self {
         self.app_size_limit = limit;
+        self
+    }
+
+    pub fn with_memory_usage_reporting(mut self, enabled: bool) -> Self {
+        self.print_memory_usage = enabled;
         self
     }
 
@@ -418,7 +425,9 @@ impl Esp32Linker {
         link_args.extend(self.linker_scripts.to_args());
 
         // Memory usage reporting
-        link_args.push("-Wl,--print-memory-usage".to_string());
+        if self.print_memory_usage {
+            link_args.push("-Wl,--print-memory-usage".to_string());
+        }
 
         // Output
         link_args.extend(["-o".to_string(), elf_path.to_string_lossy().to_string()]);

@@ -27,14 +27,21 @@ type Rule = fn(Esp32McuConfig) -> Esp32McuConfig;
 /// - Per-MCU Xtensa GCC 8 (official `espressif32` 6.x/7.x) needs its own
 ///   linker recipe, older language standards, and no LTO.
 pub fn for_toolchain(config: Esp32McuConfig, toolchain: &PackageInfo) -> Esp32McuConfig {
-    let per_mcu_xtensa = is_per_mcu_xtensa(&toolchain.name);
+    let legacy_xtensa32 = toolchain.name == "toolchain-xtensa32";
+    let per_mcu_xtensa = is_per_mcu_xtensa(&toolchain.name) || legacy_xtensa32;
     let config = apply_if(is_before_gcc14(&toolchain.version), config, drop_cxa_atexit);
     let config = apply_if(per_mcu_xtensa, config, drop_hardware_atomics);
-    apply_if(
-        per_mcu_xtensa && is_gcc8(&toolchain.version),
+    let config = apply_if(
+        (per_mcu_xtensa && is_gcc8(&toolchain.version)) || legacy_xtensa32,
         config,
         legacy_gcc8,
-    )
+    );
+    apply_if(legacy_xtensa32, config, legacy_gcc5)
+}
+
+/// GCC 5 in the official legacy ESP32 package predates `-fmacro-prefix-map`.
+pub fn supports_macro_prefix_map(toolchain: &PackageInfo) -> bool {
+    toolchain.name != "toolchain-xtensa32"
 }
 
 /// Drop LTO when the SDK links with `-fno-lto`: objects compiled with LTO
@@ -80,6 +87,40 @@ fn drop_hardware_atomics(mut config: Esp32McuConfig) -> Esp32McuConfig {
 
 fn legacy_gcc8(config: Esp32McuConfig) -> Esp32McuConfig {
     without_lto(gcc8_language_standards(gcc8_linker_recipe(config)))
+}
+
+fn legacy_gcc5(mut config: Esp32McuConfig) -> Esp32McuConfig {
+    config.compiler_flags.cxx = replaced(config.compiler_flags.cxx, "-std=gnu++11", "-std=gnu++1z");
+    config.linker_flags = [
+        "-nostdlib",
+        "-Wl,-static",
+        "-u",
+        "call_user_start_cpu0",
+        "-Wl,--undefined=uxTopUsedPriority",
+        "-Wl,--gc-sections",
+        "-Wl,-EL",
+        "-u",
+        "ld_include_panic_highint_hdl",
+        "-u",
+        "__cxa_guard_dummy",
+        "-u",
+        "__cxx_fatal_exception",
+    ]
+    .into_iter()
+    .map(str::to_string)
+    .collect();
+    config.linker_scripts = [
+        "esp32_out.ld",
+        "esp32.common.ld",
+        "esp32.rom.ld",
+        "esp32.peripherals.ld",
+        "esp32.rom.libgcc.ld",
+        "esp32.rom.spiram_incompatible_fns.ld",
+    ]
+    .into_iter()
+    .map(str::to_string)
+    .collect();
+    config
 }
 
 /// Swap in the MCU's `legacy_gcc8` linker flags and scripts, if it has them.
@@ -236,6 +277,22 @@ mod tests {
         assert!(!has(&config.linker_flags, "-Wl,--no-warn-rwx-segments"));
         assert!(has(&config.linker_scripts, "esp32s3.rom.newlib-time.ld"));
         assert!(!has_lto(&config));
+    }
+
+    #[test]
+    fn platformio_legacy_xtensa32_uses_supported_flags() {
+        let package = toolchain("toolchain-xtensa32", "2.50200.97");
+        let config = for_toolchain(get_mcu_config("esp32").unwrap(), &package);
+        assert!(!has(
+            &config.compiler_flags.common,
+            "-mdisable-hardware-atomics"
+        ));
+        assert!(has(&config.compiler_flags.cxx, "-std=gnu++1z"));
+        assert!(!has(&config.compiler_flags.cxx, "-std=gnu++2b"));
+        assert!(!has_lto(&config));
+        assert!(!supports_macro_prefix_map(&package));
+        assert!(has(&config.linker_flags, "call_user_start_cpu0"));
+        assert!(!has(&config.linker_flags, "-Wl,--no-warn-rwx-segments"));
     }
 
     #[test]

@@ -196,6 +196,20 @@ fn test_esp32_link_command_emits_linker_map_next_to_elf() {
 }
 
 #[test]
+fn legacy_xtensa_linker_omits_unsupported_memory_report() {
+    let args = test_linker("esp32")
+        .with_memory_usage_reporting(false)
+        .build_link_args(
+            &[],
+            &[],
+            Path::new("/build/firmware.elf"),
+            &LinkExtraArgs::default(),
+        );
+    assert!(!args.iter().any(|arg| arg == "-Wl,--print-memory-usage"));
+    assert!(args.iter().any(|arg| arg == "-Wl,-Map=/build/firmware.map"));
+}
+
+#[test]
 fn legacy_esp32s3_link_includes_cpp_runtime_once() {
     let mut linker = test_linker("esp32s3");
     linker.sdk_lib_flags.clear();
