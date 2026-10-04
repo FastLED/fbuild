@@ -16,7 +16,18 @@ from pathlib import Path
 JsonValue = str | int | float | bool | None | list["JsonValue"] | dict[str, "JsonValue"]
 ROOT = Path(__file__).resolve().parent.parent
 WORKFLOW = ".github/workflows/ci-minimal.yml"
-REQUIRED_JOBS = frozenset({"check", "python-facade-tests"})
+REQUIRED_JOBS = frozenset({"verify", "check", "python-facade-tests"})
+
+
+@dataclass(frozen=True)
+class RunSelection:
+    workflow: str
+    job: str | None
+    event: str
+    required_jobs: frozenset[str]
+
+
+UBUNTU_SELECTION = RunSelection(WORKFLOW, "linux", "workflow_dispatch", REQUIRED_JOBS)
 
 
 def wire_string(raw: dict[str, JsonValue], key: str) -> str:
@@ -48,7 +59,7 @@ class RunProof:
     engine: str
     act_version: str
     workflow: str
-    job: str
+    job: str | None
     mode: str
     event: str
     state: str
@@ -89,22 +100,20 @@ class RunProof:
                         )
                     )
                 )
+        selected_job = raw.get("job")
+        if "job" not in raw or (
+            selected_job is not None and not isinstance(selected_job, str)
+        ):
+            raise ValueError("bosn record lacks a valid job selection")
         return cls(
             Path(wire_string(raw, "workspace")).resolve(),
             wire_string(raw, "sha"),
             raw["dirty"],
+            *(wire_string(raw, key) for key in ("engine", "act_version", "workflow")),
+            selected_job,
             *(
                 wire_string(raw, key)
-                for key in (
-                    "engine",
-                    "act_version",
-                    "workflow",
-                    "job",
-                    "mode",
-                    "event",
-                    "state",
-                    "conclusion",
-                )
+                for key in ("mode", "event", "state", "conclusion")
             ),
             wire_count(raw, "exit_code"),
             *(wire_count(counts, key) for key in ("total", "completed", "failed")),
@@ -112,30 +121,35 @@ class RunProof:
         )
 
 
-def verify_run(proof: RunProof, workspace: Path, sha: str) -> None:
+def verify_run(
+    proof: RunProof,
+    workspace: Path,
+    sha: str,
+    selection: RunSelection = UBUNTU_SELECTION,
+) -> None:
     if (
         proof.workspace != workspace.resolve()
         or proof.sha != sha
         or proof.dirty is not None
         or proof.engine != "act"
         or "-act2." not in proof.act_version
-        or proof.workflow != WORKFLOW
-        or proof.job != "linux"
+        or proof.workflow != selection.workflow
+        or proof.job != selection.job
         or proof.mode != "minimal"
-        or proof.event != "workflow_dispatch"
+        or proof.event != selection.event
     ):
         raise ValueError("run does not prove this clean minimal Linux source")
     if (
         proof.state != "done"
         or proof.conclusion != "success"
         or proof.exit_code != 0
-        or proof.total < 2
+        or proof.total != len(selection.required_jobs)
         or proof.completed != proof.total
         or proof.failed != 0
         or len(proof.jobs) != proof.total
     ):
         raise ValueError("selected jobs did not all complete successfully")
-    for job_id in REQUIRED_JOBS:
+    for job_id in selection.required_jobs:
         matching = [job for job in proof.jobs if job.job_id == job_id]
         if (
             len(matching) != 1
@@ -182,6 +196,7 @@ def main() -> None:
             "-m",
             "unittest",
             "ci.test_local_gate",
+            "ci.test_local_dylint_gate",
             "ci.test_fractional_workflows",
             "ci.test_test_cache_status",
         ],
@@ -240,12 +255,18 @@ def main() -> None:
         ROOT,
         sha,
     )
+    from ci.local_dylint_gate import run_dylint
+
+    run_dylint(ROOT, sha)
     if (
         output(["git", "rev-parse", "HEAD"]).strip() != sha
         or output(["git", "status", "--porcelain", "--untracked-files=normal"]).strip()
     ):
         raise ValueError("worktree changed while the local gate ran")
-    print(f"Passed both required Ubuntu jobs: {sha}", flush=True)
+    print(
+        f"Passed both required Ubuntu jobs and the ordinary-PR Dylint workflow: {sha}",
+        flush=True,
+    )
 
 
 if __name__ == "__main__":
