@@ -27,7 +27,7 @@ async fn serial_ws_replies_follow_request_order() {
     assert_eq!(rc, 0, "openpty failed: {}", std::io::Error::last_os_error());
     let _master = unsafe { OwnedFd::from_raw_fd(master_fd) };
     let slave = unsafe { OwnedFd::from_raw_fd(slave_fd) };
-    let mut name = [0i8; 256];
+    let mut name = [0 as std::ffi::c_char; 256];
     let rc = unsafe { libc::ttyname_r(slave.as_raw_fd(), name.as_mut_ptr(), name.len()) };
     assert_eq!(rc, 0, "ttyname_r failed: {rc}");
     let port = unsafe { CStr::from_ptr(name.as_ptr()) }
@@ -166,7 +166,7 @@ async fn serial_ws_preemption_reconnects_after_deploy_impl(renumber: bool, fail_
     );
     let master = unsafe { OwnedFd::from_raw_fd(master_fd) };
     let slave = unsafe { OwnedFd::from_raw_fd(slave_fd) };
-    let mut name = [0i8; 256];
+    let mut name = [0 as std::ffi::c_char; 256];
     assert_eq!(
         unsafe { libc::ttyname_r(slave.as_raw_fd(), name.as_mut_ptr(), name.len()) },
         0
@@ -194,7 +194,7 @@ async fn serial_ws_preemption_reconnects_after_deploy_impl(renumber: bool, fail_
         );
         recovered_master = Some(unsafe { OwnedFd::from_raw_fd(new_master_fd) });
         let new_slave = unsafe { OwnedFd::from_raw_fd(new_slave_fd) };
-        let mut new_name = [0i8; 256];
+        let mut new_name = [0 as std::ffi::c_char; 256];
         assert_eq!(
             unsafe {
                 libc::ttyname_r(new_slave.as_raw_fd(), new_name.as_mut_ptr(), new_name.len())
