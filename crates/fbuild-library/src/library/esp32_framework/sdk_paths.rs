@@ -123,7 +123,14 @@ fn sdk_memory_variant_dir(sdk_dir: &Path, requested: Option<&str>) -> Option<Pat
         }
     }
 
-    for variant in &["qio_opi", "dio_opi", "opi_opi", "qio_qspi", "dio_qspi"] {
+    for variant in &[
+        "qio_opi",
+        "dio_opi",
+        "opi_opi",
+        "qio_qspi",
+        "dio_qspi",
+        "qspi_qspi",
+    ] {
         let candidate = sdk_dir.join(variant);
         if candidate.exists() {
             return Some(candidate);

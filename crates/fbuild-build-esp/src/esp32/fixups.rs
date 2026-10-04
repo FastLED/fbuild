@@ -86,7 +86,10 @@ fn drop_hardware_atomics(mut config: Esp32McuConfig) -> Esp32McuConfig {
 }
 
 fn legacy_gcc8(config: Esp32McuConfig) -> Esp32McuConfig {
-    without_lto(gcc8_language_standards(gcc8_linker_recipe(config)))
+    let mut config = gcc8_linker_recipe(config);
+    config.linker_flags = without(config.linker_flags, "-Wl,--no-warn-rwx-segments");
+    config.linker_flags = without(config.linker_flags, "-Wl,--wrap=log_printf");
+    without_lto(gcc8_language_standards(config))
 }
 
 fn legacy_gcc5(mut config: Esp32McuConfig) -> Esp32McuConfig {
@@ -275,8 +278,18 @@ mod tests {
         assert!(!has(&config.compiler_flags.cxx, "-std=gnu++2b"));
         assert!(has(&config.linker_flags, "-fno-lto"));
         assert!(!has(&config.linker_flags, "-Wl,--no-warn-rwx-segments"));
+        assert!(!has(&config.linker_flags, "-Wl,--wrap=log_printf"));
         assert!(has(&config.linker_scripts, "esp32s3.rom.newlib-time.ld"));
         assert!(!has_lto(&config));
+    }
+
+    #[test]
+    fn platformio_esp32_gcc8_omits_unsupported_linker_option() {
+        let config = for_toolchain(
+            get_mcu_config("esp32").unwrap(),
+            &toolchain("toolchain-xtensa-esp32", "8.4.0+2021r2-patch3"),
+        );
+        assert!(!has(&config.linker_flags, "-Wl,--no-warn-rwx-segments"));
     }
 
     #[test]

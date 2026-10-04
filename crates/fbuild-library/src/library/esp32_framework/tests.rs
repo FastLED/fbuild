@@ -537,6 +537,38 @@ fn old_sdk_falls_back_to_tree_scan_when_builder_script_unparseable() {
 }
 
 #[test]
+fn idf44_sdk_includes_qspi_qspi_sdkconfig() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let sdk_config = tmp
+        .path()
+        .join("tools/sdk/esp32/qspi_qspi/include/sdkconfig.h");
+    std::fs::create_dir_all(sdk_config.parent().unwrap()).unwrap();
+    std::fs::write(&sdk_config, "\n").unwrap();
+    let sdk_include = tmp.path().join("tools/sdk/esp32/include/freertos/include");
+    std::fs::create_dir_all(&sdk_include).unwrap();
+    std::fs::write(sdk_include.join("FreeRTOS.h"), "\n").unwrap();
+
+    let fw = Esp32Framework {
+        base: PackageBase::new(
+            "test",
+            "1.0",
+            "http://example.com",
+            "http://example.com",
+            None,
+            CacheSubdir::Platforms,
+            tmp.path(),
+        ),
+        install_dir: Some(tmp.path().to_path_buf()),
+    };
+
+    let dirs = fw.get_sdk_include_dirs("esp32", None);
+    assert!(
+        dirs.contains(&sdk_config.parent().unwrap().to_path_buf()),
+        "ESP-IDF 4.4 SDK configuration include directory missing"
+    );
+}
+
+#[test]
 fn old_sdk_rejects_builder_script_padded_with_duplicate_entries() {
     let tmp = tempfile::TempDir::new().unwrap();
     let root = tmp.path();
