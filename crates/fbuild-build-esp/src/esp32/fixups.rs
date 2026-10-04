@@ -20,16 +20,20 @@ type Rule = fn(Esp32McuConfig) -> Esp32McuConfig;
 
 /// Adapt the recipe to the selected toolchain package.
 ///
-/// - GCC < 14: the paired SDKs (pioarduino 51.x/53.x, Arduino 3.0/3.1) do not
-///   define `__dso_handle` for `-fuse-cxa-atexit`-generated references, on
-///   Xtensa and RISC-V alike.
+/// - GCC < 14, and ESP32-C2/H2 with GCC 14: the paired SDKs do not define
+///   `__dso_handle` for `-fuse-cxa-atexit`-generated references.
 /// - Per-MCU Xtensa packages (GCC 8 and 12) reject the atomics switch.
 /// - Per-MCU Xtensa GCC 8 (official `espressif32` 6.x/7.x) needs its own
 ///   linker recipe, older language standards, and no LTO.
 pub fn for_toolchain(config: Esp32McuConfig, toolchain: &PackageInfo) -> Esp32McuConfig {
     let legacy_xtensa32 = toolchain.name == "toolchain-xtensa32";
     let per_mcu_xtensa = is_per_mcu_xtensa(&toolchain.name) || legacy_xtensa32;
-    let config = apply_if(is_before_gcc14(&toolchain.version), config, drop_cxa_atexit);
+    let lacks_dso_handle = matches!(config.mcu.as_str(), "esp32c2" | "esp32h2");
+    let config = apply_if(
+        is_before_gcc14(&toolchain.version) || lacks_dso_handle,
+        config,
+        drop_cxa_atexit,
+    );
     let config = apply_if(per_mcu_xtensa, config, drop_hardware_atomics);
     let config = apply_if(
         (per_mcu_xtensa && is_gcc8(&toolchain.version)) || legacy_xtensa32,
@@ -251,6 +255,20 @@ mod tests {
             assert!(
                 !has(&config.compiler_flags.cxx, "-fuse-cxa-atexit"),
                 "{mcu} kept -fuse-cxa-atexit on GCC 13"
+            );
+        }
+    }
+
+    #[test]
+    fn esp32c2_h2_sdk_drops_cxa_atexit_on_gcc14() {
+        for mcu in ["esp32c2", "esp32h2"] {
+            let config = for_toolchain(
+                get_mcu_config(mcu).unwrap(),
+                &toolchain("toolchain-riscv32-esp", "14.2.0+20241119"),
+            );
+            assert!(
+                !has(&config.compiler_flags.cxx, "-fuse-cxa-atexit"),
+                "{mcu} kept -fuse-cxa-atexit without __dso_handle"
             );
         }
     }
