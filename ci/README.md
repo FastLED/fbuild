@@ -2,9 +2,10 @@
 
 Python scripts for CI, packaging, and development tooling. All invoked via `uv run`.
 
-`local_gate.py` runs both required Ubuntu jobs through bosn's pinned act2
-engine, then replays the entire existing `dylint.yml` workflow with the ordinary
-unlabelled PR event. It checks clean source identity, native Linux x64 execution,
+`local_gate.py` has separate `--lane linux-minimal` and `--lane dylint` entrypoints.
+The first runs both required Ubuntu jobs through bosn's pinned act2 engine;
+the second replays the entire existing `dylint.yml` workflow with the ordinary
+unlabelled PR event. The default runs both. It checks clean source identity, native Linux x64 execution,
 all three Dylint job verdicts and the completed policy, library and workspace
 steps. The wrapper uses released bosn 0.1.13 for the stock runner tools.
 `local-gate.toml` enforces PR attestations. The local gate uses the existing
@@ -14,8 +15,11 @@ a substitute for the ordinary PR selection. Library UI fixtures retain their
 existing source-change condition. Shared replay coverage binds every Ubuntu action and command to its literal
 execution name, including the verifier prerequisite. Its event decision executes
 on dispatch; the attestation check remains required on PRs. The original Ubuntu
-terminal report is forwarded unchanged to the pinned shared checker; Dylint
-retains its additional private command checks and still runs before stamping. Board builds, extended/full
+and Dylint terminal reports are each forwarded unchanged to the pinned shared
+checker. Every concrete job, prerequisite, action and validation command is
+declared. The matching exact-hit guarded library cache save may be skipped;
+validation steps still need executed-success evidence. Dylint retains its
+additional private command checks, and both lanes must pass before stamping. Board builds, extended/full
 mode and other native hosts retain their remote coverage. The migration is
 tracked in [#1635](https://github.com/FastLED/fbuild/issues/1635), with Dylint
 parity and complete cold/warm measurements in [#1643](https://github.com/FastLED/fbuild/issues/1643).

@@ -26,13 +26,23 @@ class SharedReplayTests(unittest.TestCase):
         assert config is not None
         self.assertEqual(check_replay_static(config, ROOT), [])
         self.assertEqual(
-            {job.source_job for job in config.jobs},
+            {job.source_job for job in config.jobs if "linux-minimal" in job.lanes},
             {
                 "ci-minimal.yml:verify",
                 "check-ubuntu.yml:check",
                 "check-ubuntu.yml:python-facade-tests",
             },
         )
+
+    def test_dylint_lane_declares_the_whole_pr_workflow(self):
+        raw = tomllib.loads((ROOT / "local-gate.toml").read_text())
+        selections = raw["gate"]["replay"]["selections"]
+        selected = [item for item in selections if item["lane"] == "dylint"]
+        self.assertEqual(len(selected), 1)
+        self.assertEqual(selected[0]["workflow"], "dylint.yml")
+        self.assertTrue(selected[0]["all-jobs"])
+        self.assertNotIn("job", selected[0])
+        self.assertEqual(selected[0]["event"], "pull_request")
 
 
 if __name__ == "__main__":
