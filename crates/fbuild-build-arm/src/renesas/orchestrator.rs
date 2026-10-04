@@ -121,11 +121,11 @@ fn renesas_packages_from_resolved(
 
 #[async_trait::async_trait]
 impl BuildOrchestrator for RenesasOrchestrator {
-    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
     fn platform(&self) -> Platform {
         Platform::RenesasRa
     }
 
+    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
     async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
         let compiler_cache: Option<std::path::PathBuf> = None;

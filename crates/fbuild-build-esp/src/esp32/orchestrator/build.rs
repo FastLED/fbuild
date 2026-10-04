@@ -36,11 +36,11 @@ use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 
 #[async_trait::async_trait]
 impl BuildOrchestrator for Esp32Orchestrator {
-    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
     fn platform(&self) -> Platform {
         Platform::Espressif32
     }
 
+    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
     async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let config = fbuild_config::PlatformIOConfig::from_path_with_overrides(
             &params.project_dir.join("platformio.ini"),

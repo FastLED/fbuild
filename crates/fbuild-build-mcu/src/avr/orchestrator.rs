@@ -69,11 +69,11 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
 
 #[async_trait::async_trait]
 impl BuildOrchestrator for AvrOrchestrator {
-    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
     fn platform(&self) -> Platform {
         Platform::AtmelAvr
     }
 
+    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
     async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
         // Env-gated per-phase timer (FBUILD_PERF_LOG=1); zero-overhead when unset.

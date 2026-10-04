@@ -167,11 +167,11 @@ fn without_flags(flags: Vec<String>, unwanted: &[&str]) -> Vec<String> {
 
 #[async_trait::async_trait]
 impl BuildOrchestrator for Nrf52Orchestrator {
-    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
     fn platform(&self) -> Platform {
         Platform::NordicNrf52
     }
 
+    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
     async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
         let compiler_cache: Option<std::path::PathBuf> = None;
