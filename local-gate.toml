@@ -6,7 +6,7 @@ verify = "ci-minimal.yml:verify"
 mode = "enforce"
 
 [gate.lanes.linux-minimal]
-run = ["uv", "run", "--no-project", "--python", "3.12", "python", "-m", "ci.local_gate"]
+run = ["uv", "run", "--no-project", "--python", "3.12", "python", "-m", "ci.local_gate", "--lane", "linux-minimal"]
 tools = ["bosn", "uv"]
 
 # Shared proof binds every concrete Ubuntu job and its verifier prerequisite.
@@ -37,4 +37,34 @@ lanes = ["linux-minimal"]
 lane = "linux-minimal"
 job = "linux"
 event = "workflow_dispatch"
+inputs = {}
+
+[gate.lanes.dylint]
+run = ["uv", "run", "--no-project", "--python", "3.12", "python", "-m", "ci.local_gate", "--lane", "dylint"]
+tools = ["bosn", "uv"]
+
+[[gate.replay.jobs]]
+source-job = "dylint.yml:dylint"
+key = "Dylint/Dylint Full (Linux builder, all OS targets)"
+steps = ["Checkout source", "Set up uv", "Validate Dylint allowlist paths", "Enforce shrink-only .fbuild allowlist", "Validate platform-boundary ledgers", "Setup soldr", "Repair registry sources missing packaged files", "Prepare prebuilt Dylint tools and driver", "Install rustfmt for the Dylint toolchain", "Check Dylint library formatting", "Restore compiled Dylint libraries", "Test Dylint libraries", "Reuse cached Dylint library tree", "Run dylint over workspace", "Save compiled Dylint libraries"]
+lanes = ["dylint"]
+cache-save-steps = ["Save compiled Dylint libraries"]
+
+[[gate.replay.jobs]]
+source-job = "dylint.yml:gate"
+key = "Dylint/Dylint"
+steps = ["Require successful Dylint jobs"]
+lanes = ["dylint"]
+
+[[gate.replay.jobs]]
+source-job = "dylint.yml:policy"
+key = "Dylint/Dylint policy"
+steps = ["Checkout source", "Set up uv", "Validate Dylint policy files"]
+lanes = ["dylint"]
+
+[[gate.replay.selections]]
+lane = "dylint"
+workflow = "dylint.yml"
+all-jobs = true
+event = "pull_request"
 inputs = {}

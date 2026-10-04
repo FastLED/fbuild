@@ -1,10 +1,16 @@
 # Both reusable Ubuntu jobs must pass. This does not prove boards, full mode,
-# Windows/macOS execution or cross-target Dylint coverage.
+# Windows/macOS execution or cross-target Dylint coverage. Ordinary-PR Dylint is a separate native lane.
 version: 1
 gates:
   general/all/ubuntu-ci-guards: {lane: linux-minimal, fidelity: native}
   rust/x86_64-unknown-linux-gnu/workspace-clippy: {lane: linux-minimal, fidelity: native}
   rust/x86_64-unknown-linux-gnu/workspace-test: {lane: linux-minimal, fidelity: native}
   rust/x86_64-unknown-linux-gnu/python-facade-test: {lane: linux-minimal, fidelity: native}
+  general/all/dylint-policy: {lane: dylint, fidelity: native}
+  rust/x86_64-unknown-linux-gnu/dylint-library-check: {lane: dylint, fidelity: native}
+  rust/x86_64-unknown-linux-gnu/workspace-dylint: {lane: dylint, fidelity: native}
 jobs:
   ci-minimal.yml:linux: [general/all/ubuntu-ci-guards, rust/x86_64-unknown-linux-gnu/workspace-clippy, rust/x86_64-unknown-linux-gnu/workspace-test, rust/x86_64-unknown-linux-gnu/python-facade-test]
+  dylint.yml:policy: [general/all/dylint-policy]
+  dylint.yml:dylint: [rust/x86_64-unknown-linux-gnu/dylint-library-check, rust/x86_64-unknown-linux-gnu/workspace-dylint]
+  dylint.yml:gate: [general/all/dylint-policy, rust/x86_64-unknown-linux-gnu/dylint-library-check, rust/x86_64-unknown-linux-gnu/workspace-dylint]
