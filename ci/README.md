@@ -3,13 +3,19 @@
 Python scripts for CI, packaging, and development tooling. All invoked via `uv run`.
 
 `local_gate.py` runs both required Ubuntu jobs through bosn's pinned act2
-engine and checks clean source identity, native Linux x64 execution and both
-job verdicts. Install bosn 0.1.11 or newer for the stock runner tools.
+engine, then replays the entire existing `dylint.yml` workflow with the ordinary
+unlabelled PR event. It checks clean source identity, native Linux x64 execution,
+all three Dylint job verdicts and the completed policy, library and workspace
+steps. Install bosn 0.1.11 or newer for the stock runner tools.
 `local-gate.toml` enforces PR attestations. The local gate uses the existing
-workflow-dispatch event to run these same jobs before stamping the tree;
+workflow-dispatch event for the Ubuntu pair and PR/minimal for Dylint before
+stamping the tree. Dispatch Dylint adds cross-target work, so it is not used as
+a substitute for the ordinary PR selection. Library UI fixtures retain their
+existing source-change condition. Neither workflow is modified or filtered;
 PR verification is confined to PR events. Board builds, extended/full
 mode and other native hosts retain their remote coverage. The migration is
-tracked in [#1635](https://github.com/FastLED/fbuild/issues/1635).
+tracked in [#1635](https://github.com/FastLED/fbuild/issues/1635), with Dylint
+parity and complete cold/warm measurements in [#1643](https://github.com/FastLED/fbuild/issues/1643).
 
 ## Contents
 
