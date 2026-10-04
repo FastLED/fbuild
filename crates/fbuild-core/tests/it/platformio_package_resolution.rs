@@ -506,6 +506,7 @@ fn nordicnrf52_11_adafruit_resolves_platform_and_host_packages_offline() {
 }
 
 #[test]
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 fn atmelsam_9_due_resolves_published_sam_stack_offline() {
     let platform = parse_package_spec("platformio/atmelsam@9.0.0").unwrap();
     let platform_url = "https://dl.registry.platformio.org/download/platformio/platform/atmelsam/9.0.0/atmelsam-9.0.0.tar.gz";

@@ -165,6 +165,7 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
         Platform::NxpLpc
     }
 
+    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
     async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
 

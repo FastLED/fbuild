@@ -32,6 +32,11 @@ use super::link::{assemble_build_result, handle_link_result};
 /// with the rest of the build. See [`compile_project_as_library`] and
 /// ISSUES.md Issue 1.
 #[allow(clippy::too_many_arguments)]
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    reason = "baseline, zackees/ci.yml#229"
+)]
 pub async fn run_sequential_build_with_libs(
     compiler: &(dyn Compiler + Send + Sync),
     linker: &(dyn crate::linker::Linker + Send + Sync),

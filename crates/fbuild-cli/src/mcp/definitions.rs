@@ -4,6 +4,7 @@ use super::types::{
     PromptArgument, PromptDefinition, ResourceDefinition, ToolAnnotations, ToolDefinition,
 };
 
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub(super) fn tool_definitions() -> Vec<ToolDefinition> {
     vec![
         ToolDefinition {

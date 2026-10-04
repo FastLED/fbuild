@@ -119,6 +119,8 @@ async fn resolve_registry_overrides_with_client(
     .ok_or_else(|| package_error("PlatformIO registry payload unavailable"))
 }
 
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 async fn resolve_registry_overrides_with_client_fetch(
     project_dir: &Path,
     env_config: &HashMap<String, String>,

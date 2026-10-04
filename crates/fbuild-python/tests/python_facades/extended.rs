@@ -167,6 +167,7 @@ finally:
 /// exists to prevent, per the #1484 validation note).
 #[test]
 #[ignore = "embeds CPython; run by the python-facade CI job"]
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 fn at_p12_in_process_asyncio_peer() {
     init_python();
     let _env_guard = DAEMON_PORT_ENV_LOCK

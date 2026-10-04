@@ -108,6 +108,7 @@ async fn run_qemu_process_surfaces_crash_decoder_output() {
 
 #[tokio::test]
 #[ignore = "requires QEMU + ESP32-S3 firmware fixture"]
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 async fn run_real_esp32s3_fixture_in_qemu() {
     use fbuild_build::{BuildOrchestrator, BuildParams};
     use fbuild_core::BuildProfile;

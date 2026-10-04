@@ -419,6 +419,7 @@ pub fn dispatch_box(
 
 #[async_trait::async_trait]
 impl Deployer for LpcDeployer {
+    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
     async fn deploy(
         &self,
         _project_dir: &Path,

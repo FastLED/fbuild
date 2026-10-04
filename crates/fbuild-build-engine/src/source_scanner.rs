@@ -1232,6 +1232,7 @@ fn strip_default_arguments(signature: &str, params_start: usize, params_end: usi
     output
 }
 
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 fn strip_defaults_from_params(params: &str) -> String {
     let mut output = String::new();
     let mut skip_default = false;

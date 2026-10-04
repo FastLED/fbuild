@@ -290,6 +290,7 @@ async fn build_teensy41_fixture() {
 /// Build a Teensy 3.0 fixture where a project-local lib/FastLED shadows the bundled framework.
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads Teensyduino + arm-gcc; requires local FastLED checkout"]
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 async fn build_teensy30_fixture_prefers_local_fastled() {
     let manifest_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     let fixture_dir = manifest_dir

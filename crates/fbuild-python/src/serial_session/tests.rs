@@ -41,7 +41,11 @@ struct DaemonKnobs {
     suppress_echo_on_nth_write: Option<usize>,
     attach_reject_message: Option<&'static str>,
 }
-
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    reason = "baseline, zackees/ci.yml#229"
+)]
 async fn fake_daemon(listener: TcpListener, knobs: DaemonKnobs) {
     let (stream, _) = listener.accept().await.unwrap();
     stream.set_nodelay(true).unwrap();

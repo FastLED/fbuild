@@ -164,6 +164,7 @@ fn wait_for_health(port: u16, budget: Duration) -> bool {
 
 #[test]
 #[ignore = "spawns real fbuild + fbuild-daemon binaries (#1228)"]
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 fn client_recovers_after_daemon_is_killed_uncleanly() {
     let Some(home) = real_home() else {
         eprintln!("skip: no home directory resolvable");

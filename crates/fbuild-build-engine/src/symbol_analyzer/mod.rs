@@ -307,6 +307,11 @@ pub struct AnalyzeConfig<'a> {
 
 /// Run nm + c++filt + map-file parse and return the fully-attributed
 /// per-symbol map.
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    reason = "baseline, zackees/ci.yml#229"
+)]
 pub async fn analyze_elf(cfg: AnalyzeConfig<'_>) -> Result<FineGrainedSymbolMap> {
     use fbuild_core::subprocess::run_command;
 

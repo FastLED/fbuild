@@ -325,7 +325,7 @@ def write_reference(platform: str, board: str, data: dict) -> None:
     print(f"  Wrote {out_path.relative_to(REPO_ROOT)}")
 
 
-def main() -> int:
+def main() -> int:  # noqa: C901
     args = sys.argv[1:]
     boards: list[tuple[str, str]] = []  # (platform, board) pairs
     platforms_filter: list[str] = []

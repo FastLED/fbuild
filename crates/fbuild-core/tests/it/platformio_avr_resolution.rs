@@ -6,6 +6,7 @@ use fbuild_core::platformio_package::{
 };
 
 #[test]
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 fn avr_and_megaavr_board_packages_resolve_exact_payloads_offline() {
     // Published registry metadata and platform manifests, captured 2026-09-27.
     // These generic-path tests deliberately do not dispatch on Platform.

@@ -297,6 +297,7 @@ impl BackrefGraph {
     /// Same as [`Self::build`] but reuses a pre-built index — useful when
     /// emitting graphs for every top-N symbol (the per-symbol index
     /// rebuild would be O(N²)).
+    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
     pub fn build_with_index(
         map: &FineGrainedSymbolMap,
         index: &TuIndex<'_>,

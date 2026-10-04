@@ -562,6 +562,11 @@ pub fn build_cpp_flags(common_flags: Vec<String>, config: &dyn McuConfig) -> Vec
 ///   and `extra_flags` (ESP32 uses this for include flags deferred
 ///   from `common_flags`).
 #[allow(clippy::too_many_arguments)]
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    reason = "baseline, zackees/ci.yml#229"
+)]
 pub async fn compile_source(
     compiler: &Path,
     source: &Path,

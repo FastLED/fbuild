@@ -53,6 +53,7 @@ struct DaemonKnobs {
     fail_first_write: bool,
 }
 
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 async fn handle_ws(stream: tokio::net::TcpStream, knobs: DaemonKnobs) {
     let ws = match tokio_tungstenite::accept_async(stream).await {
         Ok(ws) => ws,

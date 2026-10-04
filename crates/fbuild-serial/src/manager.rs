@@ -107,6 +107,11 @@ impl SharedSerialManager {
     /// Daemon callers usually pass `None`; that path now infers native
     /// ESP USB CDC from the OS-reported VID/PID before applying the
     /// `(true, true)` unknown-port fallback.
+    #[expect(
+        clippy::cognitive_complexity,
+        clippy::too_many_lines,
+        reason = "baseline, zackees/ci.yml#229"
+    )]
     pub async fn open_port(
         &self,
         port: &str,

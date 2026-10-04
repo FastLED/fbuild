@@ -33,6 +33,7 @@ pub struct DeployAvr8jsRequest {
     pub verbose: bool,
 }
 
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub async fn deploy_avr8js(
     ctx: Arc<DaemonContext>,
     req: DeployAvr8jsRequest,

@@ -13,6 +13,11 @@ use fbuild_core::Result;
 /// - `embed_files`: embedded as-is (binary)
 /// - `embed_txtfiles`: a null-terminated copy is created first, then embedded
 #[allow(clippy::too_many_arguments)]
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    reason = "baseline, zackees/ci.yml#229"
+)]
 pub(super) async fn process_embed_files(
     embed_files: &[String],
     embed_txtfiles: &[String],

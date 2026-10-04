@@ -28,6 +28,7 @@ pub(super) fn is_arduino_mbed_stm32_variant(variant: &str) -> bool {
     )
 }
 
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub(super) async fn build_arduino_mbed_stm32(
     params: &BuildParams,
     ctx: pipeline::BuildContext,

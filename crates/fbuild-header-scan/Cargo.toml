@@ -21,3 +21,6 @@ tempfile = { workspace = true }
 [[bench]]
 name = "scan_throughput"
 harness = false
+
+[lints]
+workspace = true
