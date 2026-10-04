@@ -321,11 +321,19 @@ impl Esp32Framework {
         if lib_dir.exists() {
             flags.push(format!("-L{}", lib_dir.display()));
         }
+        // Arduino-ESP32 2.x keeps radio archives such as libphy.a and
+        // librtc.a beside its linker scripts. WiFi users need these archives
+        // even though the ordinary SDK libraries live under lib/.
+        let ld_dir = sdk_dir.join("ld");
+        if ld_dir.exists() {
+            flags.push(format!("-L{}", ld_dir.display()));
+        }
         let mut libraries = variant_dir
             .as_ref()
             .map(|dir| collect_archive_files(dir))
             .unwrap_or_default();
         libraries.extend(collect_archive_files(&lib_dir));
+        libraries.extend(collect_archive_files(&ld_dir));
         let mut names = std::collections::BTreeSet::new();
         for lib in libraries {
             if let Some(stem) = lib.file_stem() {
