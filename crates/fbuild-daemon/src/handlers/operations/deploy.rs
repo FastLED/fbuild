@@ -65,6 +65,11 @@ fn find_teensy_loader_cli() -> Option<PathBuf> {
 }
 
 /// POST /api/deploy
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    reason = "baseline, zackees/ci.yml#229"
+)]
 pub async fn deploy(
     State(ctx): State<Arc<DaemonContext>>,
     Json(req): Json<DeployRequest>,

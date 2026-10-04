@@ -353,6 +353,7 @@ pub fn resolve_framework_library_sources_cached(
 /// hit/miss without the public API surfacing that bit. The hit flag is
 /// `false` whenever the cache backend errored and we fell back to the
 /// uncached resolver.
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 pub(crate) fn resolve_framework_library_sources_cached_with_hit(
     libraries: &[FrameworkLibrary],
     project_dir: &Path,

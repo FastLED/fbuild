@@ -256,6 +256,11 @@ pub(super) fn get_board_defaults_with_project_dir(
 /// `build.f_cpu`, `upload.maximum_ram_size`, `upload.maximum_size`. Where
 /// a top-level field is missing we fall back to the PIO-style nested
 /// location so both shapes work uniformly.
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    reason = "baseline, zackees/ci.yml#229"
+)]
 fn flatten_board_entry(entry: &serde_json::Value, board_id: &str) -> HashMap<String, String> {
     let mut d = HashMap::new();
     let build = entry.get("build").and_then(|v| v.as_object());

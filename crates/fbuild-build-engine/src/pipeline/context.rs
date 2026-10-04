@@ -102,6 +102,7 @@ impl BuildContext {
     /// Orchestrators that want per-phase visibility (see [`crate::perf_log`])
     /// pass in a shared timer. Callers that don't care get zero overhead by
     /// passing `None`.
+    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
     pub async fn new_with_perf(
         params: &BuildParams,
         mut perf: Option<&mut crate::perf_log::PerfTimer>,

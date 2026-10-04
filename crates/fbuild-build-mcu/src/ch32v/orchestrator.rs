@@ -66,6 +66,7 @@ fn board_fingerprint_fields(
 
 #[async_trait::async_trait]
 impl BuildOrchestrator for Ch32vOrchestrator {
+    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
     fn platform(&self) -> Platform {
         Platform::Ch32v
     }

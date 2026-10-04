@@ -227,6 +227,11 @@ pub(crate) async fn spawn_line_reader(
     let _ = tx.send(ProcessEvent::StreamClosed);
 }
 
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    reason = "baseline, zackees/ci.yml#229"
+)]
 pub(crate) async fn run_qemu_process(
     qemu_path: &Path,
     args: &[String],

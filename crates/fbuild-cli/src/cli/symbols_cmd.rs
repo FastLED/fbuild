@@ -29,6 +29,7 @@ use crate::output;
 use super::graph_cmd::parse_graph_config;
 
 #[allow(clippy::too_many_arguments)]
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub async fn run_symbols(
     input: String,
     map: Option<String>,

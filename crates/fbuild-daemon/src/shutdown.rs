@@ -50,6 +50,7 @@ pub async fn refuse_new_operations_when_shutting_down(
 
 /// Prepare a controlled SIGTERM exit: refuse new operations, give in-flight
 /// ones [`SHUTDOWN_DRAIN_BUDGET`], then persist before the binary exits.
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 pub async fn drain_and_persist_on_terminate(ctx: Arc<DaemonContext>) {
     let in_flight = ctx.begin_shutdown();
     tracing::info!(
@@ -72,6 +73,7 @@ pub async fn drain_and_persist_on_terminate(ctx: Arc<DaemonContext>) {
 
 /// Remove this daemon's pid/port/claim/status records and flush the embedded
 /// zccache backend. Every clean exit runs this before `process::exit`.
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 pub async fn persist_and_clean_up() {
     let _ = fbuild_core::fs::remove_file(&fbuild_paths::get_daemon_pid_file()).await;
     let _ = fbuild_core::fs::remove_file(&fbuild_paths::get_daemon_port_file()).await;

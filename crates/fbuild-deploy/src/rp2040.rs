@@ -1123,6 +1123,7 @@ fn is_device_disappearance_error(error: &std::io::Error) -> bool {
     )
 }
 
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 fn validate_uf2(bytes: &[u8], expected_family: u32) -> Result<Uf2Target> {
     if bytes.is_empty() || !bytes.len().is_multiple_of(UF2_BLOCK_SIZE) {
         return Err(FbuildError::DeployFailed(format!(
@@ -1805,6 +1806,7 @@ async fn run_mass_storage_transfer(
 
 #[async_trait::async_trait]
 impl Deployer for Rp2040Deployer {
+    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
     async fn deploy(
         &self,
         project_dir: &Path,

@@ -29,6 +29,7 @@ use std::collections::BTreeSet;
 /// Records without a canonical instance ID or a Config-Manager-proved parent
 /// are skipped: the helper would fail closed on them anyway, and a typed
 /// request must never be composed from guesses.
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub(super) fn compose_rp2040_recovery_request(
     devices: &[DeviceState],
     problem_devices: &[UsbProblemDevice],

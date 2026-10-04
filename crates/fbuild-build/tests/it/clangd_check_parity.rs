@@ -136,6 +136,7 @@ fn unexpected_error_diagnostics(output: &str) -> Vec<&str> {
 /// normal `fbuild build -t compiledb` against this project already does.
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "requires installed toolchains and clangd on PATH (#1076 parity harness)"]
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 async fn clangd_check_parity_uno() {
     let project_dir = uno_project_dir();
 

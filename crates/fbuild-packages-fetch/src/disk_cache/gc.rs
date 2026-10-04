@@ -46,6 +46,7 @@ impl std::fmt::Display for GcReport {
 }
 
 /// Run a full GC pass against the index and on-disk state.
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 pub fn run_gc(index: &CacheIndex, budget: &CacheBudget) -> rusqlite::Result<GcReport> {
     let leases_reaped = index.reap_dead_leases()?;
     let mut report = GcReport {

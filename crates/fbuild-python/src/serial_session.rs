@@ -912,6 +912,7 @@ impl Drop for SerialSession {
 }
 
 /// The sole reader task: owns `read` for the lifetime of the session.
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 async fn reader_task(inner: Arc<Inner>, mut read: WsSource, auto_reconnect: bool) {
     struct DeathGuard(Arc<Inner>);
     impl Drop for DeathGuard {

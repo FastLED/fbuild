@@ -13,6 +13,7 @@ use std::sync::Arc;
 ///
 /// Install toolchain, framework, and library dependencies without building.
 /// Matches the Python daemon's `/api/install-deps` endpoint contract.
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub async fn install_deps(
     State(ctx): State<Arc<DaemonContext>>,
     Json(req): Json<InstallDepsRequest>,

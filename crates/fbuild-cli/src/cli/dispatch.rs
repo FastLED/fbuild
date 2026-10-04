@@ -39,6 +39,11 @@ use super::symbols_cmd::run_symbols;
 use super::sync_cmd::run_sync_cmd;
 use super::usb_recovery::run_hidden_helper;
 
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    reason = "baseline, zackees/ci.yml#229"
+)]
 pub async fn async_main() {
     let cli = Cli::parse_from(rewrite_args());
 

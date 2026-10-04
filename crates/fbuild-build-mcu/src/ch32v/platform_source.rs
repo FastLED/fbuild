@@ -29,6 +29,7 @@ pub(crate) struct SelectedBoardBuild {
 /// Resolve an explicitly selected CH32V platform source before constructing
 /// any native packages. Unpinned `platform = ch32v` keeps the legacy native
 /// defaults; a nonexistent registry pin never reaches that fallback.
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub(crate) async fn resolve_source_packages(
     project_dir: &Path,
     env: &HashMap<String, String>,

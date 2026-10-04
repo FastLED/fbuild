@@ -127,6 +127,7 @@ fn teensy_packages_from_resolved(
 
 #[async_trait::async_trait]
 impl BuildOrchestrator for TeensyOrchestrator {
+    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
     fn platform(&self) -> Platform {
         Platform::Teensy
     }

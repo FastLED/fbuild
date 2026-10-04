@@ -457,6 +457,7 @@ async fn at19_chaos_soak() {
         std::panic::resume_unwind(e);
     }
 }
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 
 async fn run_at19_chaos_soak(seed: u64) {
     with_watchdog(Duration::from_secs(90), async {

@@ -99,6 +99,7 @@ impl MonitorState {
         self.expect_found
     }
 
+    #[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
     pub(crate) fn process_line(&mut self, line: &str) -> Option<MonitorOutcome> {
         if self.show_timestamp {
             let total_secs = self.start.elapsed().as_secs_f64();
@@ -247,6 +248,7 @@ const MONITOR_DEFAULT_HARD_DEADLINE_SECS: f64 = 300.0;
 const SERIAL_OPEN_PORT_TIMEOUT_SECS: u64 = 30;
 
 /// POST /api/monitor
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub async fn monitor(
     State(ctx): State<Arc<DaemonContext>>,
     Json(req): Json<MonitorRequest>,

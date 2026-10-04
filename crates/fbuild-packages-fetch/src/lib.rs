@@ -357,6 +357,7 @@ impl PackageBase {
     /// 3. Extract to staging dir (.tmp suffix)
     /// 4. Validate (caller provides validation fn)
     /// 5. Rename staging to final path (atomic commit)
+    #[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
     pub async fn staged_install<F>(&self, validate: F) -> fbuild_core::Result<PathBuf>
     where
         F: FnOnce(&Path) -> fbuild_core::Result<()> + Send,

@@ -206,6 +206,7 @@ fn main() {
     }
 }
 
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 fn run() -> AppResult<()> {
     let options = parse_options()?;
     let repo_root = env::current_dir()?;
@@ -320,6 +321,7 @@ fn run() -> AppResult<()> {
 }
 
 #[allow(clippy::too_many_arguments)]
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 fn measure_tool(
     kind: ToolKind,
     version: &str,
@@ -1705,6 +1707,7 @@ fn write_history(
     Ok(())
 }
 
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 fn render_svg(metadata: &Metadata, results: &[ToolResult]) -> String {
     let width = 960.0;
     let height = 700.0;
@@ -1831,6 +1834,7 @@ fn svg_floor_line(metadata: &Metadata, results: &[ToolResult]) -> Option<String>
     (!parts.is_empty()).then(|| parts.join(" | "))
 }
 
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 fn render_html(metadata: &Metadata, results: &[ToolResult]) -> String {
     let comparison_note = BOARDS
         .iter()

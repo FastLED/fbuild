@@ -181,6 +181,11 @@ pub async fn compile_library_with_jobs(
 /// runtime spawned tasks first run in no particular order. Spawning stops at
 /// the first failure; every spawned task is awaited before returning.
 #[allow(clippy::too_many_arguments)]
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    reason = "baseline, zackees/ci.yml#229"
+)]
 pub async fn compile_library_gated(
     name: &str,
     source_files: &[PathBuf],
