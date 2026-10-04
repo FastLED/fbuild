@@ -136,6 +136,7 @@ pub const HARD_RESET_PULSE_MS: u64 = 100;
 /// classic-reset sequence. The `esp_` prefix makes the family-scope
 /// explicit so a future contributor adding an LPC- or FTDI-CDC-board
 /// flow does not accidentally call it.
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 pub fn esp_hard_reset_blocking<P: DtrRtsControl + ?Sized>(port: &mut P) -> serialport::Result<()> {
     tracing::debug!("esp_reset: DTR=low (BOOT high → boot from flash)");
     port.write_data_terminal_ready(false)?;

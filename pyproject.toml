@@ -95,3 +95,10 @@ include-package-data = true
 # wrapper). See #746.
 [tool.setuptools.package-data]
 fbuild = ["_native.pyd", "_native.so"]
+
+[tool.ruff.lint]
+select = ["C901", "RUF100"]
+external = ["D401", "E402", "F401"]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10

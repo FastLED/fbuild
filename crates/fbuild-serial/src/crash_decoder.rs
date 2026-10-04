@@ -324,6 +324,7 @@ impl CrashDecoder {
     }
 
     /// Run addr2line on the extracted addresses.
+    #[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
     async fn run_addr2line(
         addr2line_path: &Path,
         elf_path: &Path,

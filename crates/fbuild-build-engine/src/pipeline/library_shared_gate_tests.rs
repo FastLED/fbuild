@@ -180,6 +180,7 @@ fn max_concurrency(intervals: &[(u128, u128)]) -> usize {
 }
 
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 async fn lib_deps_and_core_share_one_job_gate() {
     if fbuild_core::platform::host::is_windows() {
         return;

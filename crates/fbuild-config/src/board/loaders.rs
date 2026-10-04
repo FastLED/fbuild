@@ -284,6 +284,7 @@ impl BoardConfig {
     ///
     /// Pass `None` for `project_dir` to disable the fallback (equivalent
     /// to [`Self::from_board_id`]).
+    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
     pub fn from_board_id_in_project(
         board_id: &str,
         overrides: &HashMap<String, String>,

@@ -156,6 +156,7 @@ impl Esp32Framework {
     }
 
     /// Ensure the SDK libs are downloaded and extracted into the framework's `tools/` dir.
+    #[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
     pub async fn ensure_libs(&self, libs_url: &str, mcu: &str) -> fbuild_core::Result<()> {
         let root = self.resolved_dir();
         let tools_dir = root.join("tools");
@@ -225,6 +226,7 @@ impl Esp32Framework {
     /// skeleton package rather than the main `framework-arduinoespressif32-libs`.
     /// This merges the skeleton into the existing `tools/` directory without
     /// clobbering other MCU subdirs.
+    #[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
     pub async fn ensure_mcu_libs(&self, libs_url: &str, mcu: &str) -> fbuild_core::Result<()> {
         let root = self.resolved_dir();
         let tools_dir = root.join("tools");

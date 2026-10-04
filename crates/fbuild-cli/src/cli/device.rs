@@ -7,6 +7,11 @@ use crate::output;
 
 use super::args::DeviceAction;
 
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    reason = "baseline, zackees/ci.yml#229"
+)]
 pub async fn run_device(action: DeviceAction) -> fbuild_core::Result<()> {
     daemon_client::ensure_daemon_running().await?;
     let client = DaemonClient::new();

@@ -320,6 +320,7 @@ fn markdown_report_with_graphs_embeds_dot_blocks_for_top_symbols() {
 /// side-by-side, so an AI optimisation pass can tell whether
 /// to chase a fat callee or a popular hub.
 #[test]
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 fn markdown_report_emits_dual_ranked_callees_subtable() {
     use fbuild_core::symbol_analysis::{
         FineGrainedSymbol, FineGrainedSymbolMap, GraphConfig, SectionBytes, SymbolReference,

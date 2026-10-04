@@ -6,6 +6,7 @@ use super::*;
 /// change that reorders `write_ack` and `in_waiting` frames.
 #[cfg(target_os = "linux")]
 #[tokio::test]
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 async fn serial_ws_replies_follow_request_order() {
     use std::ffi::CStr;
     use std::os::fd::{AsRawFd, FromRawFd, OwnedFd};
@@ -143,6 +144,11 @@ async fn serial_ws_preemption_without_recovered_port_closes_monitor() {
 }
 
 #[cfg(target_os = "linux")]
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    reason = "baseline, zackees/ci.yml#229"
+)]
 async fn serial_ws_preemption_reconnects_after_deploy_impl(renumber: bool, fail_recovery: bool) {
     use std::ffi::CStr;
     use std::os::fd::{AsRawFd, FromRawFd, OwnedFd};

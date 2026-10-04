@@ -39,6 +39,7 @@ struct Args {
 }
 
 #[tokio::main]
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 async fn main() {
     // FastLED/fbuild#1361 — first statement in the process, ahead of argument
     // parsing, containment setup, the broadcast hub, and the tracing
@@ -664,6 +665,7 @@ async fn main() {
 /// `fbuild_core::usb::populate_online_cache_from_paths` helper (its fetch
 /// step does its own parent-dir `create_dir_all`), so we don't touch
 /// `std::fs` from the daemon crate here.
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 fn populate_usb_overlay_best_effort() {
     let dir = fbuild_paths::get_cache_root().join("usb");
     let proto_path = dir.join("usb-vids.proto.zstd");

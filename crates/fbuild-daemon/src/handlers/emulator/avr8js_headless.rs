@@ -27,6 +27,11 @@ pub(crate) struct RunAvr8jsHeadlessOptions<'a> {
     pub verbose: bool,
 }
 
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    reason = "baseline, zackees/ci.yml#229"
+)]
 pub(crate) async fn run_avr8js_headless(
     node_path: &Path,
     script_path: &Path,

@@ -259,6 +259,7 @@ use platform::{
 /// cache directory already exists is skipped without touching the network,
 /// so the steady-state cost on a warm cache is zero. Each resolution miss
 /// is logged at warn level but never fails the caller. See fbuild#401.
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 fn provision_helper_toolchains(
     platform: &fbuild_packages::library::Esp32Platform,
     project_dir: &Path,
@@ -353,6 +354,7 @@ fn toolchain_name_for(mcu_config: &Esp32McuConfig, declares: impl Fn(&str) -> bo
         .unwrap_or_else(|| primary_toolchain_name(mcu_config.is_riscv()).to_string())
 }
 
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 async fn resolve_and_create_toolchain(
     platform: &fbuild_packages::library::Esp32Platform,
     project_dir: &Path,

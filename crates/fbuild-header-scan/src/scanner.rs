@@ -49,6 +49,7 @@ enum State {
 }
 
 /// Extract every `#include` directive from `src`. Pure function; no I/O.
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub fn scan(src: &str) -> Vec<IncludeRef> {
     let bytes = src.as_bytes();
     let mut out = Vec::new();
@@ -320,6 +321,7 @@ fn self_include_guard(src: &str) -> Option<String> {
     }
 }
 
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 fn active_source(
     src: &str,
     macros: &mut HashMap<String, String>,

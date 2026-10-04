@@ -39,3 +39,5 @@ tracked in [#1635](https://github.com/FastLED/fbuild/issues/1635).
 - **`hooks/`** -- Claude Code hook scripts (tool guard, lint, readme guard, session lifecycle)
 
 - **`test_cache_status.py`** streams the unchanged Cargo test selection with JSON compiler evidence; only a completed assertion failure enables setup-soldr failure saves. Compiler errors, incomplete logs and cancellation remain blocked.
+
+- **`check_python_complexity.py`** -- Runs configured C901/RUF100 checks on every tracked Python file, including scripts excluded from normal discovery (FastLED/fbuild#1639).

@@ -16,6 +16,7 @@ use super::build::{normalize_path, run_build};
 /// 4. Writes a modified compile_commands.json to a temp dir
 /// 5. Runs IWYU per-source-file with `-p <temp_dir>`
 /// 6. Filters output to only show suggestions for files under `src/`
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub async fn run_iwyu(
     project_dir: String,
     environment: Option<String>,
@@ -478,6 +479,7 @@ pub fn filter_iwyu_output(output: &str, src_dir: &std::path::Path) -> String {
 /// 2. Generate compile_commands.json via fbuild daemon (build -t compiledb)
 /// 3. Run tool on each source file in parallel (ncpus * 2)
 #[allow(clippy::too_many_arguments)]
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub async fn run_clang_tool(
     kind: fbuild_packages::toolchain::ClangComponentKind,
     binary_name: &str,

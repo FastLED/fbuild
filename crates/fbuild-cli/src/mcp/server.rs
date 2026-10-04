@@ -9,6 +9,7 @@ use crate::daemon_client::DaemonClient;
 use serde_json::Value;
 use std::io::{self, BufRead, Write};
 
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub async fn run_mcp_server() -> i32 {
     let client = DaemonClient::new();
 

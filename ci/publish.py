@@ -112,7 +112,7 @@ def record_hash(data: bytes) -> str:
 # Wheel build
 # ---------------------------------------------------------------------------
 
-def build_wheel(
+def build_wheel(  # noqa: C901
     name: str,
     version: str,
     summary: str,

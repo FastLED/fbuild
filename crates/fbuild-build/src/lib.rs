@@ -70,6 +70,7 @@ pub fn get_orchestrator(platform: Platform) -> Result<Box<dyn BuildOrchestrator>
 /// downloads — platform packages, toolchains, framework, tools and `lib_deps`
 /// — without compiling. The engine behind `fbuild install` and the daemon's
 /// `POST /api/install-deps` (FastLED/fbuild#1433).
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub async fn provision_env(
     project_dir: &Path,
     env_name: &str,

@@ -81,6 +81,7 @@ pub(crate) fn check_qemu_flash_mode(board: &fbuild_config::BoardConfig) -> fbuil
     Ok(())
 }
 
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub async fn deploy_qemu(
     _ctx: Arc<DaemonContext>,
     req: DeployQemuRequest,
