@@ -288,7 +288,9 @@ impl Esptool {
 }
 
 fn validate_source_esptool(dir: &Path) -> Result<()> {
-    if dir.join("pyproject.toml").is_file() && dir.join("esptool.py").is_file() {
+    if (dir.join("pyproject.toml").is_file() || dir.join("setup.py").is_file())
+        && dir.join("esptool.py").is_file()
+    {
         Ok(())
     } else {
         Err(FbuildError::PackageError(format!(
@@ -971,5 +973,18 @@ mod tests {
             source_tools_dir(tmp.path()).join("esptool/bin/esptool.py")
         );
         assert!(validate_source_esptool(tmp.path()).is_err());
+    }
+
+    #[test]
+    fn legacy_platformio_esptool_setup_py_archive_is_valid() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        std::fs::write(
+            tmp.path().join("setup.py"),
+            "from setuptools import setup\nsetup()\n",
+        )
+        .unwrap();
+        std::fs::write(tmp.path().join("esptool.py"), "print('esptool')\n").unwrap();
+
+        validate_source_esptool(tmp.path()).unwrap();
     }
 }

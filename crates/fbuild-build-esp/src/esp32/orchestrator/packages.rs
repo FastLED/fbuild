@@ -337,7 +337,8 @@ fn per_mcu_toolchain_name(mcu_config: &Esp32McuConfig) -> Option<String> {
 /// toolchains and a unified one, but its Arduino builds use the per-MCU
 /// package. pioarduino 53.x/54.x declare only the unified
 /// `toolchain-xtensa-esp-elf`, by a registry version rather than a metadata
-/// URL, so "no metadata URL" does not imply a per-MCU package.
+/// URL, so "no metadata URL" does not imply a per-MCU package. The older
+/// official espressif32 1.11.2 platform uses `toolchain-xtensa32` for ESP32.
 fn platform_toolchain_name(
     platform: &fbuild_packages::library::Esp32Platform,
     mcu_config: &Esp32McuConfig,
@@ -348,6 +349,10 @@ fn platform_toolchain_name(
 fn toolchain_name_for(mcu_config: &Esp32McuConfig, declares: impl Fn(&str) -> bool) -> String {
     per_mcu_toolchain_name(mcu_config)
         .filter(|name| declares(name))
+        .or_else(|| {
+            (mcu_config.mcu == "esp32" && declares("toolchain-xtensa32"))
+                .then(|| "toolchain-xtensa32".to_string())
+        })
         .unwrap_or_else(|| primary_toolchain_name(mcu_config.is_riscv()).to_string())
 }
 
@@ -869,6 +874,21 @@ mod registry_toolchain_tests {
         );
         // RISC-V always uses the shared package.
         assert_eq!(toolchain_name_for(&c3, both), "toolchain-riscv32-esp");
+    }
+
+    #[test]
+    fn legacy_espressif32_1_11_2_uses_xtensa32() {
+        let esp32 = get_mcu_config("esp32").unwrap();
+        // The official espressif32@1.11.2 platform manifest for IDF 3.3
+        // declares this registry package instead of a per-MCU or unified one.
+        let manifest = serde_json::json!({
+            "packages": {
+                "toolchain-xtensa32": {"type": "toolchain", "version": "~2.50200.0"}
+            }
+        });
+        let declares = |name: &str| manifest["packages"].get(name).is_some();
+
+        assert_eq!(toolchain_name_for(&esp32, declares), "toolchain-xtensa32");
     }
 
     #[test]

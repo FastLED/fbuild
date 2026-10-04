@@ -317,8 +317,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // SDK defines (from flags/defines) are prepended so user flags can override them.
         let mut user_flags = sdk_defines.clone();
         // Before the user's build_flags, so their own prefix maps still win.
-        user_flags.extend(framework_macro_prefix_map(&core_dir));
-        user_flags.extend(sdk_farm.as_ref().map(SdkIncludeFarm::macro_prefix_map));
+        if fixups::supports_macro_prefix_map(&toolchain_info) {
+            user_flags.extend(framework_macro_prefix_map(&core_dir));
+            user_flags.extend(sdk_farm.as_ref().map(SdkIncludeFarm::macro_prefix_map));
+        }
         let mut user_build_flags = ctx.config.get_build_flags(&params.env_name)?;
         user_build_flags.extend(params.extra_build_flags.clone());
         user_flags.extend(user_build_flags.clone());
@@ -860,6 +862,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             params.verbose,
         )
         .with_caller_path(params.caller_path.clone())
+        .with_memory_usage_reporting(toolchain_info.name != "toolchain-xtensa32")
         .with_app_size_limit(super::boot_artifacts::app_partition_limit(
             &params.project_dir,
             &framework,
