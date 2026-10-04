@@ -92,6 +92,8 @@ jobs:
       # Both guards are stdlib-only. `--no-project` skips building the fbuild
       # package, whose soldr build backend is pinned older than the broker
       # setup-soldr started, and the mismatched daemon refused every compile.
+      - name: Check tracked Python complexity ratchet
+        run: uv run --no-project python ci/check_python_complexity.py
       - name: Lint subprocess spawns
         run: uv run --no-project python ci/find_direct_subprocess.py --fail
       - name: Guard production USB VID/PID catalogue literals

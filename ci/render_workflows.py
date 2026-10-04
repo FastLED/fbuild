@@ -813,7 +813,7 @@ def write_if_changed(path: Path, new_text: str, check: bool, drift: list[Path], 
         updated.append(path)
 
 
-def main() -> int:
+def main() -> int:  # noqa: C901
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--check", action="store_true", help="exit 1 if committed workflows drift from the SOT")
     args = ap.parse_args()

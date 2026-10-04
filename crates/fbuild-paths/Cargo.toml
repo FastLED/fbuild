@@ -20,3 +20,6 @@ serde_json = { workspace = true }
 # stays visible without gating progress (FastLED/fbuild#1222).
 tracing = { workspace = true }
 tempfile = { workspace = true }
+
+[lints]
+workspace = true

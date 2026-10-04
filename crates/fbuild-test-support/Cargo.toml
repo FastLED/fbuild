@@ -24,3 +24,6 @@ fbuild-packages = { path = "../fbuild-packages" }
 fbuild-paths = { path = "../fbuild-paths" }
 fbuild-header-scan = { path = "../fbuild-header-scan" }
 fbuild-library-select = { path = "../fbuild-library-select" }
+
+[lints]
+workspace = true

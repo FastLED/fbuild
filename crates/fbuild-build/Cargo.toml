@@ -65,3 +65,6 @@ filetime = { workspace = true }
 fbuild-test-support = { path = "../fbuild-test-support" }
 async-trait = { workspace = true }
 tokio = { workspace = true, features = ["macros", "rt-multi-thread", "sync"] }
+
+[lints]
+workspace = true

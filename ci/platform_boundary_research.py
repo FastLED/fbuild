@@ -99,7 +99,7 @@ class Finding:
         )
 
 
-def code_only(text: str) -> str:
+def code_only(text: str) -> str:  # noqa: C901
     """Blank Rust comments and string contents while preserving offsets/newlines."""
     out = list(text)
     index = 0
@@ -209,7 +209,7 @@ def enclosing_function(text: str, offset: int) -> str:
     return ""
 
 
-def classify(path: str, kind: str, normalized: str = "", context: str = "") -> tuple[str, str]:
+def classify(path: str, kind: str, normalized: str = "", context: str = "") -> tuple[str, str]:  # noqa: C901
     """Assign the phase-1 owner class; phase 2 validates this per occurrence."""
     if path.startswith("crates/fbuild-core/src/platform/") and path.endswith("/ipc.rs"):
         return "ipc", "host_mechanic"
