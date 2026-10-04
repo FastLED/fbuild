@@ -16,7 +16,7 @@ from pathlib import Path
 JsonValue = str | int | float | bool | None | list["JsonValue"] | dict[str, "JsonValue"]
 ROOT = Path(__file__).resolve().parent.parent
 WORKFLOW = ".github/workflows/ci-minimal.yml"
-REQUIRED_JOBS = frozenset({"check", "python-facade-tests"})
+REQUIRED_JOBS = frozenset({"verify", "check", "python-facade-tests"})
 
 
 @dataclass(frozen=True)
