@@ -46,7 +46,6 @@ struct DaemonKnobs {
     clippy::too_many_lines,
     reason = "baseline, zackees/ci.yml#229"
 )]
-
 async fn fake_daemon(listener: TcpListener, knobs: DaemonKnobs) {
     let (stream, _) = listener.accept().await.unwrap();
     stream.set_nodelay(true).unwrap();

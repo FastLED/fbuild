@@ -69,7 +69,6 @@ fn install_lock_dir(install_path: &Path) -> Result<PathBuf> {
     Ok(parent.join(format!(".{file_name}.install.lock")))
 }
 #[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
-
 async fn acquire_install_lock_at(
     lock_dir: &Path,
     package_name: &str,
