@@ -7,6 +7,7 @@ the other native hosts retain their remote validation.
 from __future__ import annotations
 
 import json
+import os
 import platform
 import subprocess
 import tempfile
@@ -163,6 +164,15 @@ def verify_run(
         raise ValueError("selected job evidence includes a non-successful job")
 
 
+def bosn_command(*arguments: str) -> list[str]:
+    """Use the released runner and an optional session-owned daemon root."""
+    argv = ["uvx", "--from", "bosn==0.1.13", "bosn", *arguments]
+    state = os.environ.get("BOSN_GATE_STATE_DIR")
+    if state:
+        argv.extend(["--state-dir", str(Path(state).resolve())])
+    return argv
+
+
 def output(argv: list[str]) -> str:
     with tempfile.TemporaryFile(mode="w+", encoding="utf-8") as stream:
         subprocess.run(argv, cwd=ROOT, stdout=stream, check=True)
@@ -192,9 +202,12 @@ def main() -> None:
             "--no-project",
             "--with",
             "pyyaml==6.0.2",
+            "--with",
+            "ci-lint @ git+https://github.com/zackees/ci.yml@1047fa448f90ea1c9c2abc66441c6b399e58bc29",
             "python",
             "-m",
             "unittest",
+            "ci.test_shared_replay",
             "ci.test_local_gate",
             "ci.test_local_dylint_gate",
             "ci.test_fractional_workflows",
@@ -226,8 +239,7 @@ def main() -> None:
         raise ValueError("Linux x64 tests require a native Linux x64 host and daemon")
     sha = output(["git", "rev-parse", "HEAD"]).strip()
     submitted = document(
-        [
-            "bosn",
+        bosn_command(
             "ci",
             "run",
             "--workspace",
@@ -245,16 +257,19 @@ def main() -> None:
             "--timeout-secs",
             "7200",
             "--json",
-        ]
+        )
     )
     run_id = wire_string(submitted, "run")
     print(f"bosn local gate run: {run_id}", flush=True)
-    subprocess.run(["bosn", "ci", "wait", run_id], cwd=ROOT, check=True)
-    verify_run(
-        RunProof.from_json(document(["bosn", "ci", "show", run_id, "--json"])),
-        ROOT,
-        sha,
-    )
+    subprocess.run(bosn_command("ci", "wait", run_id), cwd=ROOT, check=True)
+    report = output(bosn_command("ci", "show", run_id, "--json"))
+    raw: JsonValue = json.loads(report)
+    if not isinstance(raw, dict):
+        raise ValueError("bosn returned a non-object terminal report")
+    verify_run(RunProof.from_json(raw), ROOT, sha)
+    report_path = os.environ.get("CI_LINT_GATE_REPLAY_REPORT")
+    if report_path:
+        Path(report_path).write_text(report, encoding="utf-8")
     from ci.local_dylint_gate import run_dylint
 
     run_dylint(ROOT, sha)
