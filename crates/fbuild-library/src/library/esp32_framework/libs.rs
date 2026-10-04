@@ -118,6 +118,29 @@ fn merge_skeleton_mcu_entries(
 }
 
 fn patch_mcu_compatibility(mcu_dir: &Path, mcu: &str) -> fbuild_core::Result<()> {
+    if matches!(mcu, "esp32c2" | "esp32h2") {
+        // The packaged esp_bt.h uses ../../../../controller/<mcu>/esp_bt_cfg.h,
+        // which resolves to include/controller/. The package places the
+        // actual header under include/bt/controller/ instead.
+        let source = mcu_dir
+            .join("include")
+            .join("bt")
+            .join("controller")
+            .join(mcu)
+            .join("esp_bt_cfg.h");
+        let expected = mcu_dir
+            .join("include")
+            .join("controller")
+            .join(mcu)
+            .join("esp_bt_cfg.h");
+        if source.exists() && !expected.exists() {
+            if let Some(parent) = expected.parent() {
+                std::fs::create_dir_all(parent)?;
+            }
+            std::fs::copy(source, expected)?;
+        }
+    }
+
     if mcu != "esp32c2" {
         return Ok(());
     }
@@ -165,6 +188,7 @@ impl Esp32Framework {
         // (esp32-arduino-libs/) layouts.
         for mcu_dir in mcu_sdk_dir_candidates(&tools_dir, mcu) {
             if mcu_sdk_complete(&mcu_dir) {
+                patch_mcu_compatibility(&mcu_dir, mcu)?;
                 return Ok(());
             }
         }
@@ -215,6 +239,13 @@ impl Esp32Framework {
         let _ = std::fs::remove_file(&archive_path);
 
         merge_sdk_archive_entries(temp_dir.path(), &tools_dir)?;
+
+        for mcu_dir in mcu_sdk_dir_candidates(&tools_dir, mcu) {
+            if mcu_sdk_complete(&mcu_dir) {
+                patch_mcu_compatibility(&mcu_dir, mcu)?;
+                break;
+            }
+        }
 
         tracing::info!("ESP32 SDK libs installed");
         Ok(())
@@ -411,6 +442,45 @@ mod tests {
                 .join("touch_sensor_legacy_types.h")
                 .exists()
         );
+    }
+
+    fn assert_bluetooth_controller_header_compatible(mcu: &str) {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let mcu_dir = tmp.path().join(mcu);
+        let source = mcu_dir
+            .join("include")
+            .join("bt")
+            .join("controller")
+            .join(mcu)
+            .join("esp_bt_cfg.h");
+        let expected = mcu_dir
+            .join("include")
+            .join("controller")
+            .join(mcu)
+            .join("esp_bt_cfg.h");
+        write(&source, "// packaged Bluetooth controller config\n");
+
+        patch_mcu_compatibility(&mcu_dir, mcu).unwrap();
+
+        assert_eq!(
+            std::fs::read_to_string(&expected).unwrap(),
+            "// packaged Bluetooth controller config\n"
+        );
+        patch_mcu_compatibility(&mcu_dir, mcu).unwrap();
+        assert_eq!(
+            std::fs::read_to_string(&expected).unwrap(),
+            std::fs::read_to_string(&source).unwrap()
+        );
+    }
+
+    #[test]
+    fn esp32c2_packaged_bluetooth_header_resolves_relative_include() {
+        assert_bluetooth_controller_header_compatible("esp32c2");
+    }
+
+    #[test]
+    fn esp32h2_packaged_bluetooth_header_resolves_relative_include() {
+        assert_bluetooth_controller_header_compatible("esp32h2");
     }
 
     #[test]
