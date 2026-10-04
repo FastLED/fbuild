@@ -1,4 +1,4 @@
-"""Run both required Ubuntu jobs through bosn's pinned act2 engine.
+"""Replay the selected Ubuntu or ordinary-PR Dylint workflow through act2.
 
 This proof covers native Linux x64 only. Board builds, extended/full mode and
 the other native hosts retain their remote validation.
@@ -6,6 +6,7 @@ the other native hosts retain their remote validation.
 
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import platform
@@ -187,7 +188,45 @@ def document(argv: list[str]) -> dict[str, JsonValue]:
     return raw
 
 
+def run_ubuntu(sha: str) -> None:
+    submitted = document(
+        bosn_command(
+            "ci",
+            "run",
+            "--workspace",
+            str(ROOT),
+            "--workflow",
+            WORKFLOW,
+            "--job",
+            "linux",
+            "--event",
+            "workflow_dispatch",
+            "--mode",
+            "minimal",
+            "--sha",
+            sha,
+            "--timeout-secs",
+            "7200",
+            "--json",
+        )
+    )
+    run_id = wire_string(submitted, "run")
+    print(f"bosn local gate run: {run_id}", flush=True)
+    subprocess.run(bosn_command("ci", "wait", run_id), cwd=ROOT, check=True)
+    report = output(bosn_command("ci", "show", run_id, "--json"))
+    raw: JsonValue = json.loads(report)
+    if not isinstance(raw, dict):
+        raise ValueError("bosn returned a non-object terminal report")
+    verify_run(RunProof.from_json(raw), ROOT, sha)
+    report_path = os.environ.get("CI_LINT_GATE_REPLAY_REPORT")
+    if report_path:
+        Path(report_path).write_text(report, encoding="utf-8")
+
+
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--lane", choices=("linux-minimal", "dylint"))
+    lane = parser.parse_args().lane
     if (
         output(["git", "symbolic-ref", "refs/remotes/origin/HEAD"]).strip()
         != "refs/remotes/origin/main"
@@ -203,7 +242,7 @@ def main() -> None:
             "--with",
             "pyyaml==6.0.2",
             "--with",
-            "ci-lint @ git+https://github.com/zackees/ci.yml@1047fa448f90ea1c9c2abc66441c6b399e58bc29",
+            "ci-lint @ git+https://github.com/zackees/ci.yml@653196986fcc5d7469d74e8d4836b547729ee8e3",
             "python",
             "-m",
             "unittest",
@@ -238,48 +277,19 @@ def main() -> None:
     ):
         raise ValueError("Linux x64 tests require a native Linux x64 host and daemon")
     sha = output(["git", "rev-parse", "HEAD"]).strip()
-    submitted = document(
-        bosn_command(
-            "ci",
-            "run",
-            "--workspace",
-            str(ROOT),
-            "--workflow",
-            WORKFLOW,
-            "--job",
-            "linux",
-            "--event",
-            "workflow_dispatch",
-            "--mode",
-            "minimal",
-            "--sha",
-            sha,
-            "--timeout-secs",
-            "7200",
-            "--json",
-        )
-    )
-    run_id = wire_string(submitted, "run")
-    print(f"bosn local gate run: {run_id}", flush=True)
-    subprocess.run(bosn_command("ci", "wait", run_id), cwd=ROOT, check=True)
-    report = output(bosn_command("ci", "show", run_id, "--json"))
-    raw: JsonValue = json.loads(report)
-    if not isinstance(raw, dict):
-        raise ValueError("bosn returned a non-object terminal report")
-    verify_run(RunProof.from_json(raw), ROOT, sha)
-    report_path = os.environ.get("CI_LINT_GATE_REPLAY_REPORT")
-    if report_path:
-        Path(report_path).write_text(report, encoding="utf-8")
+    if lane in (None, "linux-minimal"):
+        run_ubuntu(sha)
     from ci.local_dylint_gate import run_dylint
 
-    run_dylint(ROOT, sha)
+    if lane in (None, "dylint"):
+        run_dylint(ROOT, sha)
     if (
         output(["git", "rev-parse", "HEAD"]).strip() != sha
         or output(["git", "status", "--porcelain", "--untracked-files=normal"]).strip()
     ):
         raise ValueError("worktree changed while the local gate ran")
     print(
-        f"Passed both required Ubuntu jobs and the ordinary-PR Dylint workflow: {sha}",
+        f"Passed the selected native Linux workflow coverage: {sha}",
         flush=True,
     )
 

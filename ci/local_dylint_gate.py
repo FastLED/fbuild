@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+import os
 import subprocess
 from dataclasses import dataclass
 from pathlib import Path
@@ -12,6 +14,7 @@ from ci.local_gate import (
     RunSelection,
     bosn_command,
     document,
+    output,
     verify_run,
     wire_string,
 )
@@ -133,6 +136,11 @@ def run_dylint(workspace: Path, sha: str) -> None:
     run_id = wire_string(submitted, "run")
     print(f"bosn ordinary-PR Dylint run: {run_id}", flush=True)
     subprocess.run(bosn_command("ci", "wait", run_id), cwd=workspace, check=True)
-    verify_dylint(
-        document(bosn_command("ci", "show", run_id, "--json")), workspace, sha
-    )
+    report = output(bosn_command("ci", "show", run_id, "--json"))
+    raw: JsonValue = json.loads(report)
+    if not isinstance(raw, dict):
+        raise ValueError("bosn returned a non-object Dylint report")
+    verify_dylint(raw, workspace, sha)
+    report_path = os.environ.get("CI_LINT_GATE_REPLAY_REPORT")
+    if report_path:
+        Path(report_path).write_text(report, encoding="utf-8")
