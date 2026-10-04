@@ -28,7 +28,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout source
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           ref: ${{ inputs.ref }}
@@ -39,7 +40,8 @@ jobs:
         run: |
           [[ "$CANDIDATE_SHA" =~ ^[0-9a-f]{40}$ ]]
           test "$(git rev-parse HEAD)" = "$CANDIDATE_SHA"
-      - uses: astral-sh/setup-uv@v3
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v3
         with:
           python-version: "3.12"
       # Workspace tests also link the embedded-Python test target, even
@@ -113,7 +115,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout source
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           ref: ${{ inputs.ref }}
@@ -124,7 +127,8 @@ jobs:
         run: |
           [[ "$CANDIDATE_SHA" =~ ^[0-9a-f]{40}$ ]]
           test "$(git rev-parse HEAD)" = "$CANDIDATE_SHA"
-      - uses: astral-sh/setup-uv@v3
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v3
         with:
           python-version: "3.10"
       - name: Setup soldr

@@ -8,3 +8,33 @@ mode = "enforce"
 [gate.lanes.linux-minimal]
 run = ["uv", "run", "--no-project", "--python", "3.12", "python", "-m", "ci.local_gate"]
 tools = ["bosn", "uv"]
+
+# Shared proof binds every concrete Ubuntu job and its verifier prerequisite.
+[gate.replay]
+repository = "FastLED/fbuild"
+workflow = "ci-minimal.yml"
+mode = "minimal"
+
+[[gate.replay.jobs]]
+source-job = "check-ubuntu.yml:check"
+key = "linux/Check Ubuntu/Check (ubuntu-latest)"
+steps = ["Checkout source", "Verify candidate SHA", "Set up uv", "Select workspace test interpreter", "Setup soldr", "Clippy", "Check tracked Python complexity ratchet", "Lint subprocess spawns", "Guard production USB VID/PID catalogue literals", "Test"]
+lanes = ["linux-minimal"]
+
+[[gate.replay.jobs]]
+source-job = "check-ubuntu.yml:python-facade-tests"
+key = "linux/Check Ubuntu/Python facade tests (ubuntu-latest)"
+steps = ["Checkout source", "Verify candidate SHA", "Set up uv", "Setup soldr", "Run embedded-CPython facade tests", "Test (python facades, --ignored)"]
+lanes = ["linux-minimal"]
+
+[[gate.replay.jobs]]
+source-job = "ci-minimal.yml:verify"
+key = "ci-minimal/Verify local gate"
+steps = ["Checkout source", "Set up uv", "Verify source-bound local proof"]
+lanes = ["linux-minimal"]
+
+[[gate.replay.selections]]
+lane = "linux-minimal"
+job = "linux"
+event = "workflow_dispatch"
+inputs = {}

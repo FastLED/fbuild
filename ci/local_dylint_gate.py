@@ -10,6 +10,7 @@ from ci.local_gate import (
     JsonValue,
     RunProof,
     RunSelection,
+    bosn_command,
     document,
     verify_run,
     wire_string,
@@ -111,8 +112,7 @@ def verify_dylint(raw: dict[str, JsonValue], workspace: Path, sha: str) -> None:
 
 def run_dylint(workspace: Path, sha: str) -> None:
     submitted = document(
-        [
-            "bosn",
+        bosn_command(
             "ci",
             "run",
             "--workspace",
@@ -128,9 +128,11 @@ def run_dylint(workspace: Path, sha: str) -> None:
             "--timeout-secs",
             "7200",
             "--json",
-        ]
+        )
     )
     run_id = wire_string(submitted, "run")
     print(f"bosn ordinary-PR Dylint run: {run_id}", flush=True)
-    subprocess.run(["bosn", "ci", "wait", run_id], cwd=workspace, check=True)
-    verify_dylint(document(["bosn", "ci", "show", run_id, "--json"]), workspace, sha)
+    subprocess.run(bosn_command("ci", "wait", run_id), cwd=workspace, check=True)
+    verify_dylint(
+        document(bosn_command("ci", "show", run_id, "--json")), workspace, sha
+    )

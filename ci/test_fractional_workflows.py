@@ -17,7 +17,19 @@ class FractionalWorkflowTests(unittest.TestCase):
         self.assertEqual("enforce", config["gate"]["mode"])
         steps = self.load("ci-minimal.yml")["jobs"]["verify"]["steps"]
         verifier = next(step for step in steps if "local-gate verify" in step.get("run", ""))
-        self.assertEqual("github.event_name == 'pull_request'", verifier.get("if"))
+        self.assertNotIn("if", verifier)
+        self.assertEqual("${{ github.event_name }}", verifier["env"]["GATE_EVENT"])
+        # Run the generated shell decision itself. A refused attestation must
+        # fail a PR; dispatch must execute the decision without requiring one.
+        script = "uvx() { return 7; }\n" + verifier["run"]
+        for event, expected in (("pull_request", 7), ("workflow_dispatch", 0)):
+            with self.subTest(event=event), tempfile.TemporaryFile() as stream:
+                result = subprocess.run(
+                    ["bash", "-e", "-c", script],
+                    env={**os.environ, "GATE_EVENT": event},
+                    stdout=stream, stderr=stream,
+                )
+                self.assertEqual(expected, result.returncode)
 
     def test_ubuntu_build_cache_writers_receive_final_job_status(self):
         jobs = self.load("check-ubuntu.yml")["jobs"]
