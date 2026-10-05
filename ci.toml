@@ -24,6 +24,13 @@ linter  = "zackees/ci.yml@92106df315bd28de24ef1808c893c91a5859122d"
 [platforms]
 linux-x64     = { target = "x86_64-unknown-linux-musl",  runs-on = "ubuntu-24.04",     group = "linux" }
 linux-arm64   = { target = "aarch64-unknown-linux-musl", runs-on = "ubuntu-24.04-arm", group = "linux" }
+# CT-006 requires [platforms].*.target to equal Cargo.toml's
+# [workspace.metadata.soldr].targets exactly. Soldr builds BOTH a musl and a
+# gnu target per Linux arch, so declaring only musl understated the compile
+# family's cardinality by two. See the note on `compile` below: the extra
+# platforms are what push it over the cap.
+linux-x64-gnu = { target = "x86_64-unknown-linux-gnu",  runs-on = "ubuntu-24.04",     group = "linux" }
+linux-arm64-gnu = { target = "aarch64-unknown-linux-gnu", runs-on = "ubuntu-24.04-arm", group = "linux" }
 windows-x64   = { target = "x86_64-pc-windows-msvc",    runs-on = "windows-2025",     group = "windows" }
 windows-arm64 = { target = "aarch64-pc-windows-msvc",   runs-on = "windows-11-arm",   group = "windows" }
 macos-arm64   = { target = "aarch64-apple-darwin",      runs-on = "macos-15",         group = "macos" }
@@ -91,8 +98,21 @@ pr       = { mode = "none", families = [], max-per-pr = "0MB", budget = "0MB", t
 # reports CACHE-004 `needs_review` for this family. That is left in place
 # deliberately: the byte proof holds (7518 MB live <= 7800 MB declared) and
 # the shortfall is a real modelling gap, not something to paper over. Widening
-# it needs a `per` axis for job shape, which schema 3 does not have yet.
-compile  = { via = "setup-soldr:build-cache",    max = "1300MB", lockfile = true, per = "platform", min = "1MB", evict = "lru" }
+# it needs a `per` axis for job shape -- which schema 3 DOES have, as
+# `shapes` (zackees/ci.yml#334, added for running-process's ~1.25 GiB shapes).
+#
+# `per = "platform"` was the wrong model and CT-006 exposed it. Soldr declares
+# FOUR Linux targets (musl + gnu, per Cargo.toml's
+# [workspace.metadata.soldr].targets), so the real cardinality is 8, and
+# 1300 MB x 8 = 10.4 GB -- over the cap. But no live entry corresponds to a
+# gnu target at all: the 19 entries are 19 distinct WRITER SHAPES, and only
+# one names a target triple (`native-aarch64-unknown-linux-musl`, 453 MB).
+# Multiplying one ceiling by the platform count modelled writer shapes as
+# platforms and papered over the gap.
+#
+# `shapes` is the measured truth -- one ceiling per writer shape, sized from
+# the live listing so the janitor's LRU budget stays at or above real bytes.
+compile  = { via = "setup-soldr:build-cache",    max = "1300MB", lockfile = true, per = "platform", min = "1MB", evict = "lru", shapes = { "check-windows-check" = { max = "1000MB" }, "check-ubuntu-py312" = { max = "820MB" }, "fbuild-rust-debug" = { max = "650MB" }, "check-macos-test" = { max = "620MB" }, "native-aarch64-unknown-linux-musl" = { max = "460MB" }, "native-aarch64-apple-darwin" = { max = "400MB" }, "benchmark-build-comparison" = { max = "350MB" }, "dylint-unified" = { max = "340MB" }, "acceptance-205" = { max = "340MB" }, "esp32s3-size-parity" = { max = "245MB" }, "bench-205-resolve" = { max = "230MB" }, "qemu-linux-runtime" = { max = "220MB" }, "python-facades" = { max = "200MB" }, "bench-205-scan-throughput" = { max = "180MB" } } }
 # Cargo registry: 2 live entries, 480 MB total, largest 294 MB. Lockfile-keyed.
 registry = { via = "setup-soldr:cargo-registry", max = "500MB",  lockfile = true, per = "none", min = "1MB", evict = "lru" }
 # Dylint tool/driver/foundation: 1 live entry, 589 MB.
