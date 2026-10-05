@@ -1,0 +1,153 @@
+# ci.toml — FastLED/fbuild's CI contract. Checked and planned by ci-lint
+# (zackees/ci.yml). Nothing here generates YAML: it bounds what the YAML may
+# do and decides what each run selects.
+#
+# This file is CACHE-ONLY policy. fbuild already runs 90+ workflows of its
+# own shape (one per board, plus acceptance/bench/qemu lanes); those are not
+# rewritten here. What this declares is the ceiling on the repository's
+# Actions cache, which as of 2026-10-05 sat at 8.73 GiB of GitHub's 10 GiB
+# cap across 43 entries -- 87% -- with no declared bound at all, so nothing
+# could tell the janitor what to keep and what to trim.
+#
+# Sizing rule used throughout: every `max` is at or above the largest entry
+# MEASURED live in this repository, and every `max x cardinality` product is
+# at or above the family's measured live total. Over-stating costs headroom;
+# under-stating makes `ci-lint cache janitor` delete live caches.
+schema  = 3
+profile = "fbuild-cache-policy"
+linter  = "zackees/ci.yml@92106df315bd28de24ef1808c893c91a5859122d"
+
+# ── Platforms ────────────────────────────────────────────────────────────────
+# The runner labels and target triples fbuild's own release/build workflows
+# actually use. `ubuntu-latest` / `windows-latest` are the pinned aliases for
+# the fleet-pinned `ubuntu-24.04` / `windows-2025` labels; see the PR body.
+[platforms]
+linux-x64     = { target = "x86_64-unknown-linux-musl",  runs-on = "ubuntu-24.04",     group = "linux" }
+linux-arm64   = { target = "aarch64-unknown-linux-musl", runs-on = "ubuntu-24.04-arm", group = "linux" }
+windows-x64   = { target = "x86_64-pc-windows-msvc",    runs-on = "windows-2025",     group = "windows" }
+windows-arm64 = { target = "aarch64-pc-windows-msvc",   runs-on = "windows-11-arm",   group = "windows" }
+macos-arm64   = { target = "aarch64-apple-darwin",      runs-on = "macos-15",         group = "macos" }
+macos-x64     = { target = "x86_64-apple-darwin",       runs-on = "macos-15-intel",   group = "macos" }
+
+# ── Suites ───────────────────────────────────────────────────────────────────
+# fbuild's real entry points under ci/. Each id generates [ci-test-<id>] and
+# [no-test-<id>].
+[suites]
+unit        = { run = "uv run ci/test.py",        required = true }
+lint        = { run = "uv run ci/lint.py",        required = true }
+dylint      = { run = "uv run ci/run_dylint.py" }
+board-build = { run = "uv run ci/trampoline.py" }
+
+# ── Flows ────────────────────────────────────────────────────────────────────
+[flow.pr]                                   # every PR push; tags compose on top
+platforms = ["linux-x64"]
+suites    = ["unit", "lint"]
+dylint    = "all-platforms"
+budget    = { critical-path = "30m" }
+
+[flow.main]
+extends   = "pr"
+cache     = "write"
+# CACHE-004: without pre-prune the worst case carries the lockfile-change peak
+# on top of steady state. See the arithmetic in the PR body.
+pre-prune = true
+
+[flow.release]
+platforms = "all"
+suites    = "all"
+publish   = "pypi"
+
+# ── Tags that are not derived ────────────────────────────────────────────────
+[tags]
+ci-full   = { add = { platforms = "all", suites = ["board-build"] } }
+ci-native = { add = { platforms = ["linux-x64", "linux-arm64"] } }
+
+# ── Caches ───────────────────────────────────────────────────────────────────
+# Measured 2026-10-05 (read-only GET, 43 entries, 8.73 GiB = 87% of the 10 GiB
+# cap). Per-family live totals and maxima are in the PR body; every number
+# below is at or above its measurement.
+[cache]
+budget   = "9.5GB"                 # 9728 MB. Measured steady state 8941 MB.
+write-on = ["main", "release"]     # base layers: default branch only
+never    = ["linked-tests", "nextest-archives", "wheels", "incremental", "target-dir", "perf-results"]
+retired  = ["cook-delta-v2"]
+# fbuild's PR pushes add no cache entries of their own: the composite action's
+# `save` input is the switch for that, and PR runs restore only.
+pr       = { mode = "none", families = [], max-per-pr = "0MB", budget = "0MB", trim = "on-close" }
+
+[cache.family]
+# setup-soldr's build cache. THE dominant family: 19 live entries, 7883 MB
+# (7.34 GiB) -- 16 linux-x64 job shapes (largest 808 MB), 2 macos (614 MB),
+# 1 windows (986 MB). 7518 MB of that is on refs/heads/main.
+#
+# `max` x cardinality(per) is the janitor's LRU budget, and it must be at or
+# above the family's measured live bytes or `ci-lint cache janitor` deletes a
+# live cache: 1300 MB x 6 platforms = 7800 MB >= 7518 MB measured.
+#
+# The 19 live entries are 19 distinct WRITER SHAPES (acceptance-205-*,
+# bench-205-*, python-facades, qemu-linux-runtime, native-*, dylint-unified,
+# fbuild-rust-debug, check-ubuntu-py312), only 6 of which are platforms. So the
+# entry-COUNT model (6 x 2 = 12) is narrower than reality and the live audit
+# reports CACHE-004 `needs_review` for this family. That is left in place
+# deliberately: the byte proof holds (7518 MB live <= 7800 MB declared) and
+# the shortfall is a real modelling gap, not something to paper over. Widening
+# it needs a `per` axis for job shape, which schema 3 does not have yet.
+compile  = { via = "setup-soldr:build-cache",    max = "1300MB", lockfile = true, per = "platform", min = "1MB", evict = "lru" }
+# Cargo registry: 2 live entries, 480 MB total, largest 294 MB. Lockfile-keyed.
+registry = { via = "setup-soldr:cargo-registry", max = "500MB",  lockfile = true, per = "none", min = "1MB", evict = "lru" }
+# Dylint tool/driver/foundation: 1 live entry, 589 MB.
+dylint   = { via = "setup-soldr:dylint",         max = "600MB",  lockfile = true, per = "none", min = "1MB", evict = "lru" }
+# Solo toolchain: 2 live entries (v0.9.27, v0.9.29), 343 MB total. Retired in
+# the reference template, but LIVE here -- declared, not retired.
+solo     = { via = "setup-soldr:solo-toolchain", max = "350MB",  lockfile = true, per = "none", min = "1MB", evict = "lru" }
+mini     = { via = "setup-soldr:soldr-mini",     max = "50MB",   lockfile = true, per = "none", min = "1MB" }
+
+# setup-soldr's thin target cache (setup-soldr-targetcache-thin-v2-*) is NOT
+# declared here: ci-lint has no `via` value for that prefix. It is 18 live
+# entries totalling 3.7 KB -- four orders of magnitude below the noise floor,
+# so it costs no budget and would misrepresent the family table if faked.
+
+# Nearest-ancestor promotion is NOT available. `[cache.promote] mode = "off"`.
+[cache.promote]
+mode = "off"
+
+# ── Local (bosn -> act) ──────────────────────────────────────────────────────
+# No `[local.gate.*]` keys: fbuild ships no local-gate.toml and no declared
+# local gate, and an incomplete `[local.gate]` would make `ci-lint local-gate`
+# demand one. `ci_lint.gate_isolation` still applies -- fbuild's own suite is
+# self-hosted tooling and must not run on a developer host.
+[local]
+runner = "bosn"
+lanes  = ["unit", "lint"]
+cache  = "off"
+
+# ── Allow ────────────────────────────────────────────────────────────────────
+[allow.workflows]
+"ci-minimal.yml" = ["unit", "lint"]
+"ci-full.yml"    = ["unit", "lint", "dylint", "board-build"]
+"ci-test.yml"    = ["unit", "lint", "dylint", "board-build"]
+
+[allow]
+actions           = []
+tools             = []
+secrets           = []
+platform-selector = "python3 ci/select_boards.py"
+platform-code     = ["ci/select_boards.py"]
+
+[allow.setup-soldr]
+only-in = ".github/actions/setup"
+
+[allow.cache-actions]
+# The composite action .github/actions/setup/action.yml is fbuild's one
+# sanctioned raw actions/cache* location (it owns the fbuild install,
+# packages, and build-payload caches).
+only-in = ".github/actions/setup"
+
+[allow.permissions]
+"release-auto.yml" = ["contents", "id-token"]
+
+# ── Publish ──────────────────────────────────────────────────────────────────
+[publish.pypi]
+auth        = "oidc"
+environment = "pypi"
+mode        = "rehearsal"
