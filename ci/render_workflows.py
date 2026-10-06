@@ -379,9 +379,11 @@ def render_local_gate_verify() -> str:
     ahead of this run's first setup-soldr save with no job-graph change:
     same run, earlier `needs:` link. The step is gated off on pull_request
     events (PRs save nothing the waiver covers), but the job itself always
-    runs, so the `needs:` link never sees a skip. Timeout raised 5 -> 8
-    minutes for the prune's cache-API deletes. The ci-lint checkout ref must
-    equal ci.toml's `linter` pin (CT-004).
+    runs, so the `needs:` link never sees a skip. The step also requires a
+    non-empty `github.token`: act2/bosn replays inject no secrets, so the
+    prune must not fail a replay (on GitHub the token is always present).
+    Timeout raised 5 -> 8 minutes for the prune's cache-API deletes. The
+    ci-lint checkout ref must equal ci.toml's `linter` pin (CT-004).
     """
     return """  verify:
     name: Verify local gate
@@ -422,7 +424,7 @@ def render_local_gate_verify() -> str:
         id: lockfile
         run: python3 ci/lockfile_changed.py
       - name: Pre-prune superseded lockfile-keyed caches (CACHE-034)
-        if: github.event_name != 'pull_request' && steps.lockfile.outputs.changed == 'true'
+        if: github.event_name != 'pull_request' && steps.lockfile.outputs.changed == 'true' && github.token != ''
         env:
           GITHUB_TOKEN: ${{ github.token }}
           PYTHONPATH: .ci-lint
@@ -824,7 +826,7 @@ def render_nightly(boards: list[dict]) -> str:
         "        id: lockfile\n"
         "        run: python3 ci/lockfile_changed.py\n"
         "      - name: Pre-prune superseded lockfile-keyed caches (CACHE-034)\n"
-        "        if: github.event_name != 'pull_request' && steps.lockfile.outputs.changed == 'true'\n"
+        "        if: github.event_name != 'pull_request' && steps.lockfile.outputs.changed == 'true' && github.token != ''\n"
         "        env:\n"
         "          GITHUB_TOKEN: ${{ github.token }}\n"
         "          PYTHONPATH: .ci-lint\n"

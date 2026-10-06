@@ -100,7 +100,7 @@ jobs:
         id: lockfile
         run: python3 ci/lockfile_changed.py
       - name: Pre-prune superseded lockfile-keyed caches (CACHE-034)
-        if: github.ref == 'refs/heads/main' && steps.lockfile.outputs.changed == 'true'
+        if: github.ref == 'refs/heads/main' && steps.lockfile.outputs.changed == 'true' && github.token != ''
         env:
           GITHUB_TOKEN: ${{ github.token }}
           PYTHONPATH: .ci-lint
