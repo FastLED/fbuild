@@ -148,7 +148,11 @@ cache  = "off"
 "ci-test.yml"    = ["unit", "lint", "dylint", "board-build"]
 
 [allow]
-actions           = []
+# actions/checkout is the one action new outside the sanctioned wrappers:
+# the CACHE-034 pre-prune jobs check out this repository AND zackees/ci.yml
+# (into .ci-lint) so they can run `python3 -m ci_lint cache preprune`
+# (SEC-004 requires 40-hex pins; those jobs pin it).
+actions           = ["actions/checkout"]
 tools             = []
 secrets           = []
 platform-selector = "python3 ci/select_boards.py"
@@ -165,6 +169,13 @@ only-in = ".github/actions/setup"
 
 [allow.permissions]
 "release-auto.yml" = ["contents", "id-token"]
+# CACHE-034 (zackees/ci.yml#352/#354/#360): the jobs that run
+# `ci-lint cache preprune` ahead of their run's first setup-soldr cache
+# save hold `actions: write` so they can delete superseded lockfile-keyed
+# entries. Job ids by workflow: verify (ci-minimal.yml), plan
+# (nightly-platforms.yml), dylint (dylint.yml), benchmark
+# (benchmark-build-comparison.yml), fmt (fmt.yml), build (template_build.yml).
+"actions: write" = ["verify", "plan", "dylint", "benchmark", "fmt", "build"]
 
 # ── Publish ──────────────────────────────────────────────────────────────────
 [publish.pypi]

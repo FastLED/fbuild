@@ -29,10 +29,38 @@ jobs:
     name: Formatting
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    # CACHE-034 (zackees/ci.yml#352/#354/#360): this job runs the pre-prune
+    # ahead of its own setup-soldr save; `actions: write` is what the cache
+    # deletions need (allow-listed in ci.toml's [allow.permissions]).
+    permissions:
+      contents: read
+      actions: write
     steps:
       - uses: actions/checkout@v6
         with:
           ref: ${{ inputs.ref }}
+          # HEAD^ must exist for ci/lockfile_changed.py (CACHE-034).
+          fetch-depth: 2
+      # CACHE-034 (zackees/ci.yml#352/#354/#360): honour [flow.main]'s
+      # `pre-prune = true` waiver. The prune runs in this job, ahead of the
+      # setup-soldr save below -- within the same run means same job or an
+      # earlier `needs:` link, and GitHub Actions has no cross-workflow
+      # barrier. The ci-lint checkout matches ci.toml's `linter` pin (CT-004).
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: zackees/ci.yml
+          ref: 92106df315bd28de24ef1808c893c91a5859122d
+          path: .ci-lint
+          persist-credentials: false
+      - name: Detect lockfile change vs parent commit
+        id: lockfile
+        run: python3 ci/lockfile_changed.py
+      - name: Pre-prune superseded lockfile-keyed caches (CACHE-034)
+        if: github.event_name != 'pull_request' && steps.lockfile.outputs.changed == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PYTHONPATH: .ci-lint
+        run: python3 -m ci_lint cache preprune --repo . --lockfile-changed --max-deletes 50
       - name: Setup soldr
         id: setup-soldr
         uses: zackees/setup-soldr@v0

@@ -17,9 +17,10 @@ jobs:
   verify:
     name: Verify local gate
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     permissions:
       contents: read
+      actions: write
     steps:
       - name: Checkout source
         uses: actions/checkout@v6
@@ -38,6 +39,24 @@ jobs:
           else
             echo "Local proof verification is required on pull requests"
           fi
+      # CACHE-034 (zackees/ci.yml#352/#354/#360): honour [flow.main]'s
+      # `pre-prune = true` waiver ahead of the check-ubuntu saves below this
+      # job in the needs: chain (actions: write allow-listed in ci.toml).
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: zackees/ci.yml
+          ref: 92106df315bd28de24ef1808c893c91a5859122d
+          path: .ci-lint
+          persist-credentials: false
+      - name: Detect lockfile change vs parent commit
+        id: lockfile
+        run: python3 ci/lockfile_changed.py
+      - name: Pre-prune superseded lockfile-keyed caches (CACHE-034)
+        if: github.event_name != 'pull_request' && steps.lockfile.outputs.changed == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PYTHONPATH: .ci-lint
+        run: python3 -m ci_lint cache preprune --repo . --lockfile-changed --max-deletes 50
   linux:
     if: github.event_name != 'pull_request' || (!contains(github.event.pull_request.labels.*.name, 'ci-test') && !contains(github.event.pull_request.labels.*.name, 'ci-full'))
     needs: verify
