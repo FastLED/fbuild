@@ -57,9 +57,12 @@ jobs:
         id: lockfile
         run: python3 ci/lockfile_changed.py
       - name: Pre-prune superseded lockfile-keyed caches (CACHE-034)
-        if: github.event_name != 'pull_request' && steps.lockfile.outputs.changed == 'true' && github.token != ''
+        if: github.event_name != 'pull_request' && steps.lockfile.outputs.changed == 'true'
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          # act2/bosn replays inject no token: the fallback keeps the
+          # step runnable there (401 -> ci-lint warning, exit 0); GitHub
+          # runs always resolve github.token.
+          GITHUB_TOKEN: ${{ github.token || 'replay-no-token' }}
           PYTHONPATH: .ci-lint
         run: python3 -m ci_lint cache preprune --repo . --lockfile-changed --max-deletes 50
       - name: Setup soldr
