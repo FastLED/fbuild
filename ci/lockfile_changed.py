@@ -15,7 +15,12 @@ that simply does not exist in this repository never matches, so the extra
 entries are harmless.
 
 Prints `lockfile-changed: <bool>` and, when GITHUB_OUTPUT is set, writes
-`changed=true|false` for the workflow step's `steps.lockfile.outputs.changed`.
+`changed=true|false` for the workflow step's `steps.lockfile.outputs.changed`,
+plus `args=--lockfile-changed` (or an empty value) so a caller can keep the
+pre-prune step unconditionally executable -- the gate replay proof
+(local-gate.toml's gate.replay) requires every declared step to show an
+executed-and-successful section, so a step gated on `changed == 'true'`
+would be skipped (and unprovable) on a clean-diff replay.
 Exits 0 even when the diff cannot be computed: a shallow/first commit or any
 other git error is treated conservatively as "changed" so the pre-prune
 forecast runs rather than silently skipping it.
@@ -58,6 +63,7 @@ def main() -> int:
     if gh_out:
         with open(gh_out, "a", encoding="utf-8") as fh:
             fh.write(f"changed={'true' if changed else 'false'}\n")
+            fh.write(f"args={'--lockfile-changed' if changed else ''}\n")
     return 0
 
 

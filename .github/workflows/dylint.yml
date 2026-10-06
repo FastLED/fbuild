@@ -102,17 +102,24 @@ jobs:
         id: lockfile
         run: python3 ci/lockfile_changed.py
       - name: Pre-prune superseded lockfile-keyed caches (CACHE-034)
-        # No event gate: dylint.yml's own gate replay is a pull_request
-        # selection, and dylint saves caches on PRs too (save-cache: true),
-        # so pruning here matches what this job actually writes.
-        if: steps.lockfile.outputs.changed == 'true'
+        # No `if:` gate: the gate replay proof (local-gate.toml's
+        # gate.replay) requires every declared step to show an executed and
+        # successful section, and this workflow's replay is a clean-diff
+        # pull_request selection where `changed == 'true'` is false. The
+        # lockfile step's `args` output carries `--lockfile-changed` only
+        # when a watched file actually changed (or detection failed
+        # conservatively), so the forecast still counts the peak exactly
+        # when it should; an unflagged run is forecast-only and never
+        # deletes (steady total stays under budget). dylint saves caches on
+        # PRs too (save-cache: true), so pruning here matches what this
+        # job writes.
         env:
           # act2/bosn replays inject no token: the fallback keeps the step
           # runnable there (401 -> ci-lint warning, exit 0); GitHub runs
           # always resolve github.token.
           GITHUB_TOKEN: ${{ github.token || 'replay-no-token' }}
           PYTHONPATH: .ci-lint
-        run: python3 -m ci_lint cache preprune --repo . --lockfile-changed --max-deletes 50
+        run: python3 -m ci_lint cache preprune --repo . ${{ steps.lockfile.outputs.args }} --max-deletes 50
       - name: Setup soldr
         uses: zackees/setup-soldr@v0
         with:
