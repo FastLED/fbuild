@@ -46,7 +46,8 @@ jobs:
       # setup-soldr save below -- within the same run means same job or an
       # earlier `needs:` link, and GitHub Actions has no cross-workflow
       # barrier. The ci-lint checkout matches ci.toml's `linter` pin (CT-004).
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Check out ci-lint
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           repository: zackees/ci.yml
           ref: 92106df315bd28de24ef1808c893c91a5859122d
