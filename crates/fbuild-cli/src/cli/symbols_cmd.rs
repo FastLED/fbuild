@@ -64,7 +64,8 @@ pub async fn run_symbols(
         nm.as_deref(),
         cppfilt.as_deref(),
         build_info.as_deref(),
-    )?;
+    )
+    .await?;
     let nm_path = tool_paths.nm;
     let cppfilt_path = tool_paths.cppfilt;
     if !nm_path.exists() {
@@ -255,7 +256,7 @@ impl ToolPaths {
     /// documented in the module header. `build_info_arg` is the
     /// explicit `--build-info` path; when absent, walk up from
     /// `elf_path`.
-    fn resolve(
+    async fn resolve(
         elf_path: &Path,
         nm: Option<&str>,
         cppfilt: Option<&str>,
@@ -268,7 +269,7 @@ impl ToolPaths {
         };
         let (bi_nm, bi_cppfilt, bi_objdump) = match build_info_path {
             Some(path) => {
-                let info = read_tool_metadata(&path, elf_path)?;
+                let info = read_tool_metadata(&path, elf_path).await?;
                 if nm.is_none() && info.tool("nm", &info.nm_path).is_none() {
                     return Err(metadata_error(
                         &path,
@@ -364,13 +365,13 @@ fn derive_sibling_tool(nm_path: &Path, target: &str) -> Option<PathBuf> {
 /// the objdump used to populate per-symbol forward refs
 /// (`references_to`). Callers that don't care about forward graphs
 /// can discard the third field.
-pub fn resolve_tool_paths_public(
+pub async fn resolve_tool_paths_public(
     elf_path: &Path,
     nm: Option<&str>,
     cppfilt: Option<&str>,
     build_info_arg: Option<&str>,
 ) -> Result<(PathBuf, Option<PathBuf>, Option<PathBuf>)> {
-    let resolved = ToolPaths::resolve(elf_path, nm, cppfilt, build_info_arg)?;
+    let resolved = ToolPaths::resolve(elf_path, nm, cppfilt, build_info_arg).await?;
     if !resolved.nm.exists() {
         return Err(FbuildError::BuildFailed(format!(
             "nm not found at {}\n\
@@ -424,40 +425,49 @@ fn metadata_error(path: &Path, reason: impl std::fmt::Display) -> FbuildError {
     ))
 }
 
-fn read_tool_metadata(path: &Path, elf: &Path) -> Result<SymbolToolMetadata> {
-    let bytes = std::fs::read(path).map_err(|e| metadata_error(path, e))?;
+async fn read_tool_metadata(path: &Path, elf: &Path) -> Result<SymbolToolMetadata> {
+    let bytes = fbuild_core::fs::read(path)
+        .await
+        .map_err(|e| metadata_error(path, e))?;
     let mut envs: BTreeMap<String, SymbolToolMetadata> =
         serde_json::from_slice(&bytes).map_err(|e| metadata_error(path, e))?;
     if envs.is_empty() {
         return Err(metadata_error(path, "no environments"));
     }
-    let matches: Vec<String> = envs
-        .iter()
-        .filter(|(_, info)| {
-            !info.prog_path.is_empty()
-                && (Path::new(&info.prog_path) == elf || {
-                    let candidate = if Path::new(&info.prog_path).is_absolute() {
-                        PathBuf::from(&info.prog_path)
-                    } else {
-                        path.parent()
-                            .unwrap_or(Path::new("."))
-                            .join(&info.prog_path)
-                    };
-                    std::fs::canonicalize(candidate)
-                        .ok()
-                        .zip(std::fs::canonicalize(elf).ok())
-                        .is_some_and(|(a, b)| a == b)
-                })
-        })
-        .map(|(name, _)| name.clone())
-        .collect();
+    let mut matches = Vec::new();
+    let canonical_elf = fbuild_core::path::canonicalize_existing(elf).await.ok();
+    for (name, info) in &envs {
+        if info.prog_path.is_empty() {
+            continue;
+        }
+        let program = Path::new(&info.prog_path);
+        let candidate = if program.is_absolute() {
+            program.to_path_buf()
+        } else {
+            path.parent().unwrap_or(Path::new(".")).join(program)
+        };
+        let same_lexical_path = fbuild_core::path::NormalizedPath::new(program)
+            == fbuild_core::path::NormalizedPath::new(elf);
+        let same_existing_path = match &canonical_elf {
+            Some(elf_identity) => fbuild_core::path::canonicalize_existing(candidate)
+                .await
+                .ok()
+                .is_some_and(|identity| &identity == elf_identity),
+            None => false,
+        };
+        if same_lexical_path || same_existing_path {
+            matches.push(name.clone());
+        }
+    }
     let selected = match matches.as_slice() {
         [name] => name.clone(),
         [] => match elf_environment(elf).filter(|name| envs.contains_key(*name)) {
             Some(name) => name.to_string(),
-            None if envs.len() == 1 && elf_environment(elf).is_none() => {
-                envs.keys().next().unwrap().clone()
-            }
+            None if envs.len() == 1 && elf_environment(elf).is_none() => envs
+                .keys()
+                .next()
+                .cloned()
+                .ok_or_else(|| metadata_error(path, "no environments"))?,
             None => {
                 return Err(metadata_error(
                     path,
@@ -467,21 +477,22 @@ fn read_tool_metadata(path: &Path, elf: &Path) -> Result<SymbolToolMetadata> {
         },
         _ => return Err(metadata_error(path, "multiple environments match the ELF")),
     };
-    Ok(envs.remove(&selected).unwrap())
+    envs.remove(&selected)
+        .ok_or_else(|| metadata_error(path, "selected environment is missing"))
 }
 
 fn discover_tool_metadata(elf: &Path) -> Result<Option<PathBuf>> {
     let mut cursor = elf.parent();
     while let Some(dir) = cursor {
-        let generic = dir.join("build_info.json");
-        if generic.is_file() {
-            return Ok(Some(generic));
-        }
         if let Some(env) = elf_environment(elf) {
             let matching = dir.join(format!("build_info_{env}.json"));
             if matching.is_file() {
                 return Ok(Some(matching));
             }
+        }
+        let generic = dir.join("build_info.json");
+        if generic.is_file() {
+            return Ok(Some(generic));
         }
         let mut candidates = Vec::new();
         if let Ok(entries) = std::fs::read_dir(dir) {
@@ -545,8 +556,8 @@ mod tests {
 
     /// #428: when `build_info.json` lives near the ELF and carries
     /// `nm_path`, the symbols CLI must pick it up automatically.
-    #[test]
-    fn resolve_reads_nm_from_build_info_auto_discovery() {
+    #[tokio::test(flavor = "multi_thread")]
+    async fn resolve_reads_nm_from_build_info_auto_discovery() {
         let tmp = tempfile::TempDir::new().unwrap();
         let project = tmp.path();
         let build_dir = fbuild_paths::get_project_fbuild_dir(project)
@@ -563,13 +574,13 @@ mod tests {
         let info = dummy_build_info(&nm_file.to_string_lossy(), "");
         emit_build_info(project, "uno", &info).unwrap();
 
-        let tools = ToolPaths::resolve(&elf, None, None, None).unwrap();
+        let tools = ToolPaths::resolve(&elf, None, None, None).await.unwrap();
         assert_eq!(tools.nm, nm_file);
     }
 
     /// Explicit `--nm` overrides whatever build_info.json says.
-    #[test]
-    fn resolve_explicit_nm_wins_over_build_info() {
+    #[tokio::test(flavor = "multi_thread")]
+    async fn resolve_explicit_nm_wins_over_build_info() {
         let tmp = tempfile::TempDir::new().unwrap();
         let project = tmp.path();
         let elf = project.join("firmware.elf");
@@ -585,14 +596,16 @@ mod tests {
         let cli_nm = project.join("from-cli");
         std::fs::write(&cli_nm, b"x").unwrap();
 
-        let tools = ToolPaths::resolve(&elf, Some(cli_nm.to_str().unwrap()), None, None).unwrap();
+        let tools = ToolPaths::resolve(&elf, Some(cli_nm.to_str().unwrap()), None, None)
+            .await
+            .unwrap();
         assert_eq!(tools.nm, cli_nm);
     }
 
     /// `--build-info <path>` is honoured even when the ELF isn't under
     /// the project containing build_info.json.
-    #[test]
-    fn resolve_explicit_build_info_path_is_honoured() {
+    #[tokio::test(flavor = "multi_thread")]
+    async fn resolve_explicit_build_info_path_is_honoured() {
         let tmp = tempfile::TempDir::new().unwrap();
         let elf = tmp.path().join("firmware.elf");
         std::fs::write(&elf, b"\x7fELF").unwrap();
@@ -605,11 +618,13 @@ mod tests {
         emit_build_info(&bi_dir, "uno", &info).unwrap();
 
         let bi_path = bi_dir.join("build_info.json");
-        let tools = ToolPaths::resolve(&elf, None, None, Some(bi_path.to_str().unwrap())).unwrap();
+        let tools = ToolPaths::resolve(&elf, None, None, Some(bi_path.to_str().unwrap()))
+            .await
+            .unwrap();
         assert_eq!(tools.nm, nm_file);
     }
-    #[test]
-    fn resolve_partial_aliases_and_matching_environment() {
+    #[tokio::test]
+    async fn resolve_partial_aliases_and_matching_environment() {
         let tmp = tempfile::TempDir::new().unwrap();
         let elf = tmp.path().join(".pio/build/uno/firmware.elf");
         let metadata = tmp.path().join("build_info.json");
@@ -617,30 +632,42 @@ mod tests {
             "uno": {"aliases": {"nm": "/target/avr-nm", "c++filt": "/target/avr-c++filt", "objdump": "/target/avr-objdump"}},
             "esp": {"aliases": {"nm": "/target/xtensa-nm"}}
         })).unwrap()).unwrap();
-        let tools = ToolPaths::resolve(&elf, None, None, Some(metadata.to_str().unwrap())).unwrap();
+        let tools = ToolPaths::resolve(&elf, None, None, Some(metadata.to_str().unwrap()))
+            .await
+            .unwrap();
         assert_eq!(tools.nm, PathBuf::from("/target/avr-nm"));
         assert_eq!(tools.objdump, Some(PathBuf::from("/target/avr-objdump")));
         assert_eq!(tools.cppfilt, Some(PathBuf::from("/target/avr-c++filt")));
         std::fs::write(&metadata, br#"{"esp":{"aliases":{"nm":"xtensa-nm"}}}"#).unwrap();
-        assert!(ToolPaths::resolve(&elf, None, None, Some(metadata.to_str().unwrap())).is_err());
+        assert!(
+            ToolPaths::resolve(&elf, None, None, Some(metadata.to_str().unwrap()))
+                .await
+                .is_err()
+        );
     }
 
-    #[test]
-    fn resolve_nested_release_metadata_environment() {
+    #[tokio::test]
+    async fn resolve_nested_release_metadata_environment() {
         let tmp = tempfile::TempDir::new().unwrap();
-        let elf = tmp.path().join(".fbuild/build/uno/release/firmware.elf");
+        let elf = tmp
+            .path()
+            .join(fbuild_paths::FBUILD_DIR_NAME)
+            .join(fbuild_paths::BUILD_DIR_NAME)
+            .join("uno/release/firmware.elf");
         let metadata = tmp.path().join("build_info.json");
         std::fs::write(
             &metadata,
             br#"{"esp":{"aliases":{"nm":"xtensa-nm"}},"uno":{"aliases":{"nm":"avr-nm"}}}"#,
         )
         .unwrap();
-        let tools = ToolPaths::resolve(&elf, None, None, Some(metadata.to_str().unwrap())).unwrap();
+        let tools = ToolPaths::resolve(&elf, None, None, Some(metadata.to_str().unwrap()))
+            .await
+            .unwrap();
         assert_eq!(tools.nm, PathBuf::from("avr-nm"));
     }
 
-    #[test]
-    fn resolve_metadata_selects_matching_program_path() {
+    #[tokio::test]
+    async fn resolve_metadata_selects_matching_program_path() {
         let tmp = tempfile::TempDir::new().unwrap();
         let elf = tmp.path().join("firmware.elf");
         let metadata = tmp.path().join("build_info.json");
@@ -653,7 +680,9 @@ mod tests {
             .unwrap(),
         )
         .unwrap();
-        let tools = ToolPaths::resolve(&elf, None, None, Some(metadata.to_str().unwrap())).unwrap();
+        let tools = ToolPaths::resolve(&elf, None, None, Some(metadata.to_str().unwrap()))
+            .await
+            .unwrap();
         assert_eq!(tools.nm, PathBuf::from("avr-nm"));
         std::fs::write(
             &metadata,
@@ -664,11 +693,39 @@ mod tests {
             .unwrap(),
         )
         .unwrap();
-        assert!(ToolPaths::resolve(&elf, None, None, Some(metadata.to_str().unwrap())).is_err());
+        assert!(
+            ToolPaths::resolve(&elf, None, None, Some(metadata.to_str().unwrap()))
+                .await
+                .is_err()
+        );
     }
 
-    #[test]
-    fn resolve_rejects_ambiguous_or_invalid_explicit_metadata() {
+    #[cfg(unix)]
+    #[tokio::test]
+    async fn resolve_metadata_matches_symlink_program_path() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let elf = tmp.path().join("firmware.elf");
+        std::fs::write(&elf, b"fixture").unwrap();
+        let alias = tmp.path().join("firmware-alias.elf");
+        std::os::unix::fs::symlink(&elf, &alias).unwrap();
+        let metadata = tmp.path().join("build_info.json");
+        std::fs::write(
+            &metadata,
+            serde_json::to_vec(&serde_json::json!({
+                "uno": {"prog_path": alias, "aliases": {"nm": "avr-nm"}},
+                "esp": {"prog_path": "other.elf", "aliases": {"nm": "xtensa-nm"}}
+            }))
+            .unwrap(),
+        )
+        .unwrap();
+        let tools = ToolPaths::resolve(&elf, None, None, Some(metadata.to_str().unwrap()))
+            .await
+            .unwrap();
+        assert_eq!(tools.nm, PathBuf::from("avr-nm"));
+    }
+
+    #[tokio::test]
+    async fn resolve_rejects_ambiguous_or_invalid_explicit_metadata() {
         let tmp = tempfile::TempDir::new().unwrap();
         let elf = tmp.path().join("firmware.elf");
         let metadata = tmp.path().join("build_info.json");
@@ -677,15 +734,27 @@ mod tests {
             br#"{"uno":{"aliases":{"nm":"avr-nm"}},"esp":{"aliases":{"nm":"xtensa-nm"}}}"#,
         )
         .unwrap();
-        assert!(ToolPaths::resolve(&elf, None, None, Some(metadata.to_str().unwrap())).is_err());
+        assert!(
+            ToolPaths::resolve(&elf, None, None, Some(metadata.to_str().unwrap()))
+                .await
+                .is_err()
+        );
         std::fs::write(&metadata, b"invalid json").unwrap();
-        assert!(ToolPaths::resolve(&elf, None, None, Some(metadata.to_str().unwrap())).is_err());
+        assert!(
+            ToolPaths::resolve(&elf, None, None, Some(metadata.to_str().unwrap()))
+                .await
+                .is_err()
+        );
         std::fs::write(&metadata, br#"{"uno":{"aliases":{}}}"#).unwrap();
-        assert!(ToolPaths::resolve(&elf, None, None, Some(metadata.to_str().unwrap())).is_err());
+        assert!(
+            ToolPaths::resolve(&elf, None, None, Some(metadata.to_str().unwrap()))
+                .await
+                .is_err()
+        );
     }
 
-    #[test]
-    fn resolve_explicit_nm_selects_its_sibling_tools() {
+    #[tokio::test]
+    async fn resolve_explicit_nm_selects_its_sibling_tools() {
         let tmp = tempfile::TempDir::new().unwrap();
         let elf = tmp.path().join("firmware.elf");
         let metadata = tmp.path().join("build_info.json");
@@ -702,12 +771,13 @@ mod tests {
             None,
             Some(metadata.to_str().unwrap()),
         )
+        .await
         .unwrap();
         assert_eq!(tools.objdump, Some(objdump));
         assert_eq!(tools.cppfilt, Some(cppfilt));
     }
-    #[test]
-    fn resolve_auto_discovery_selects_matching_env_file() {
+    #[tokio::test]
+    async fn resolve_auto_discovery_selects_matching_env_file() {
         let tmp = tempfile::TempDir::new().unwrap();
         let elf = tmp.path().join(".pio/build/uno/firmware.elf");
         std::fs::create_dir_all(elf.parent().unwrap()).unwrap();
@@ -717,11 +787,16 @@ mod tests {
         )
         .unwrap();
         std::fs::write(
+            tmp.path().join("build_info.json"),
+            br#"{"esp":{"aliases":{"nm":"wrong-generic-nm"}}}"#,
+        )
+        .unwrap();
+        std::fs::write(
             tmp.path().join("build_info_uno.json"),
             br#"{"uno":{"aliases":{"nm":"avr-nm"}}}"#,
         )
         .unwrap();
-        let tools = ToolPaths::resolve(&elf, None, None, None).unwrap();
+        let tools = ToolPaths::resolve(&elf, None, None, None).await.unwrap();
         assert_eq!(tools.nm, PathBuf::from("avr-nm"));
     }
 }

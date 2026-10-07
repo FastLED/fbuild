@@ -30,12 +30,14 @@ fn references_from_bytes(bytes: &[u8]) -> Result<Vec<StaticDataReference>> {
             "static references require ELF".into(),
         ));
     }
-    if !matches!(
-        file.kind(),
-        object::ObjectKind::Executable | object::ObjectKind::Dynamic
-    ) {
+    if file.kind() == object::ObjectKind::Dynamic {
         return Err(FbuildError::BuildFailed(
-            "Static references require a final executable/shared ELF, not a relocatable object."
+            "Static references for ET_DYN/PIE/shared ELF require dynamic relocations, which are not supported.".into(),
+        ));
+    }
+    if file.kind() != object::ObjectKind::Executable {
+        return Err(FbuildError::BuildFailed(
+            "Static references require a final ET_EXEC executable ELF, not a relocatable object."
                 .into(),
         ));
     }
@@ -258,6 +260,14 @@ mod tests {
     }
 
     #[test]
+    fn dynamic_vtable_bytes_require_relocation_support() {
+        let mut bytes = fixture(Architecture::X86_64, Endianness::Little, 8);
+        bytes[16..18].copy_from_slice(&[3, 0]);
+        let error = references_from_bytes(&bytes).unwrap_err().to_string();
+        assert!(error.contains("dynamic relocations"));
+    }
+
+    #[test]
     fn malformed_elf_is_not_silently_reported_as_an_empty_graph() {
         assert!(references_from_bytes(b"not an ELF").is_err());
     }
@@ -310,6 +320,68 @@ mod linked_tests {
 mod integration_tests {
     use super::*;
     use fbuild_core::symbol_analysis::{AnalysisStatus, ReferenceKind};
+
+    #[tokio::test]
+    #[ignore = "requires native C++ compiler c++, nm, c++filt and objdump"]
+    async fn dynamic_pie_reports_static_analysis_error_instead_of_verified_edges() {
+        let dir = tempfile::tempdir().unwrap();
+        let source = dir.path().join("pie.cpp");
+        let binary = dir.path().join("pie.elf");
+        std::fs::write(&source, "struct A { virtual int value(); }; int A::value() { return 42; } A instance; int main() { return instance.value(); }").unwrap();
+        let output = fbuild_core::subprocess::run_command_blocking(
+            &[
+                "c++",
+                "-fPIE",
+                "-pie",
+                "-fno-rtti",
+                "-o",
+                binary.to_str().unwrap(),
+                source.to_str().unwrap(),
+            ],
+            Some(dir.path()),
+            None,
+            Some(std::time::Duration::from_secs(30)),
+        )
+        .unwrap();
+        assert!(output.success(), "{}", output.stderr);
+        let bytes = std::fs::read(&binary).unwrap();
+        let elf = object::File::parse(bytes.as_slice()).unwrap();
+        assert_eq!(elf.kind(), object::ObjectKind::Dynamic);
+        assert!(elf.dynamic_relocations().is_some());
+        let report = super::super::analyze_elf(super::super::AnalyzeConfig {
+            elf_path: &binary,
+            map_path: None,
+            nm_path: Path::new("nm"),
+            cppfilt_path: Some(Path::new("c++filt")),
+            objdump_path: Some(Path::new("objdump")),
+        })
+        .await
+        .unwrap();
+        assert_eq!(
+            report.reference_analysis.disassembly.status,
+            AnalysisStatus::Analyzed
+        );
+        assert_eq!(
+            report.reference_analysis.static_data.status,
+            AnalysisStatus::Error
+        );
+        assert!(
+            report
+                .reference_analysis
+                .static_data
+                .reason
+                .as_deref()
+                .unwrap()
+                .contains("dynamic relocations")
+        );
+        assert!(
+            !report
+                .reference_analysis
+                .edges
+                .iter()
+                .any(|edge| edge.kind == ReferenceKind::StaticData)
+        );
+    }
 
     #[tokio::test]
     #[ignore = "requires native C++ compiler c++, nm, c++filt and objdump"]

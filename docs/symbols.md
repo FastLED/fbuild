@@ -72,8 +72,9 @@ reads the toolchain paths from there. No `--nm` needed.
 ## Metadata selection and PATH fallback
 
 Multi-environment metadata selects the environment whose `prog_path` matches
-this ELF, or the ELF's `build/<env>/` directory. Automatic discovery prefers
-`build_info.json`, then the matching `build_info_<env>.json`. Ambiguous
+this ELF, or the ELF's `build/<env>/` directory (including nested build profiles).
+Automatic discovery prefers the matching `build_info_<env>.json`, then
+`build_info.json`. Ambiguous
 metadata files or environments and malformed metadata are explicit errors;
 fbuild does not silently substitute host tools.
 
@@ -221,6 +222,8 @@ Allocated `V`/`v` weak objects are included and classified using their ELF
 sections. AVR's two-byte word-addressed function pointers and ARM's Thumb bit
 are handled explicitly. Relative vtables and function-descriptor ABIs are not
 reconstructed. Arbitrary integers in data are not guessed to be pointers.
+Static extraction reports an error for position-independent/shared ELFs until
+their dynamic relocations are supported, rather than claiming an empty analysis.
 
 `roots` records confirmed ELF entry points, including unsized entries omitted
 from the byte tables. `unresolved` retains external/ROM/local targets with their
