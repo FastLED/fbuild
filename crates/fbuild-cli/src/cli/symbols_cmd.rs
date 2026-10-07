@@ -700,14 +700,21 @@ mod tests {
         );
     }
 
-    #[cfg(unix)]
     #[tokio::test]
     async fn resolve_metadata_matches_symlink_program_path() {
         let tmp = tempfile::TempDir::new().unwrap();
         let elf = tmp.path().join("firmware.elf");
         std::fs::write(&elf, b"fixture").unwrap();
         let alias = tmp.path().join("firmware-alias.elf");
-        std::os::unix::fs::symlink(&elf, &alias).unwrap();
+        if let Err(error) = fbuild_core::platform::fs::symlink_file(&elf, &alias) {
+            if fbuild_core::platform::host::is_windows()
+                && error.kind() == std::io::ErrorKind::PermissionDenied
+            {
+                // Hosts without symlink privileges cannot construct this fixture.
+                return;
+            }
+            panic!("create file symlink: {error}");
+        }
         let metadata = tmp.path().join("build_info.json");
         std::fs::write(
             &metadata,
