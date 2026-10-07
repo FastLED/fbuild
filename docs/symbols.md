@@ -35,7 +35,7 @@ downstream tools. These are looked up in this order:
 1. **`--nm <path>` / `--cppfilt <path>` flags** (highest precedence;
    the user's explicit override always wins).
 2. **`--build-info <path>`** — load `nm_path` / `cppfilt_path` from
-   that file.
+   that file, accepting native fields or partial PlatformIO `aliases`.
 3. **Auto-discovery** — walk up from the ELF's directory looking for
    `build_info.json` or `build_info_<env>.json`. Both fbuild and
    PlatformIO write one next to `platformio.ini`.
@@ -69,16 +69,21 @@ block) next to `platformio.ini`. `fbuild symbols .pio/build/esp32s3/firmware.elf
 walks up from `.pio/build/esp32s3/` to the project root, finds it, and
 reads the toolchain paths from there. No `--nm` needed.
 
-## When auto-discovery falls back to PATH
+## Metadata selection and PATH fallback
 
-- The ELF isn't under a project that contains a `build_info.json`
-  (e.g. you copied just the ELF into `/tmp`).
-- The `build_info.json` is older than the schema this fbuild expects
-  (`nm_path` field missing).
+Multi-environment metadata selects the environment whose `prog_path` matches
+this ELF, or the ELF's `build/<env>/` directory. Automatic discovery prefers
+`build_info.json`, then the matching `build_info_<env>.json`. Ambiguous
+metadata files or environments and malformed metadata are explicit errors;
+fbuild does not silently substitute host tools.
 
-In both cases the analyzer falls back to bare `nm` on `PATH`, which
-works only for host ELFs. For cross-toolchain ELFs, pass `--nm` or
-`--build-info` explicitly.
+An explicit `--nm` also selects its sibling `c++filt` and `objdump`, rather
+than mixing that toolchain with tools from build metadata. `--cppfilt` still
+has highest precedence.
+
+When no metadata exists, the analyzer falls back to bare `nm` on `PATH`,
+which works only for host ELFs. For a copied cross-toolchain ELF, pass
+`--nm` or `--build-info` explicitly.
 
 ## Schema: the `aliases` block
 
@@ -193,3 +198,47 @@ sanctioned answer is "use `fbuild bloat .` and skip the awk".
   `referenced_by` cref back-references on every row.
 - PR [#424] / PR [#427] — the fine-grained analyzer and map-derived
   rodata attribution this CLI drives.
+
+## Final-image reference evidence (schema 1)
+
+Reports include `reference_analysis` alongside the legacy name lists. Each
+analysis pass (`disassembly`, `static_data`, `object_references`) records
+`analyzed`, `unavailable`, or `error`, its tool when applicable, and a reason.
+An analyzed pass means the supported extraction ran; it does not claim a
+complete runtime call graph.
+
+Edges identify each endpoint by `(name, address, source)` so a function and its
+map-derived literal/string pools cannot be confused. Edge kinds are:
+
+- `disassembly`: an address-qualified symbol annotation in the final ELF's
+  disassembly, which may be a code or data reference, not necessarily a call.
+- `static_data`: an absolute function pointer in an allocated Itanium vtable;
+  `offset` is the pointer slot's byte offset from the owning vtable.
+- `fragment_owner`: ownership recorded by the compiler's map input-section
+  name. This is attribution evidence, not proof of a runtime access.
+
+Allocated `V`/`v` weak objects are included and classified using their ELF
+sections. AVR's two-byte word-addressed function pointers and ARM's Thumb bit
+are handled explicitly. Relative vtables and function-descriptor ABIs are not
+reconstructed. Arbitrary integers in data are not guessed to be pointers.
+
+`roots` records confirmed ELF entry points, including unsized entries omitted
+from the byte tables. `unresolved` retains external/ROM/local targets with their
+addresses; `unexplained` retains positive-size rows without a recorded incoming
+edge, object reference, or confirmed root. Empty lists do not prove unused code:
+indirect dispatch, generic callback tables, `KEEP` directives and additional
+platform linker roots may remain unexplained. `limitations` states that scope
+in the transport so consumers can show it alongside the graph.
+
+Tool discovery accepts the diagnostic paths in native build metadata and the
+partial per-environment `aliases` metadata used by external builders. It
+selects the ELF's matching environment and rejects ambiguous or invalid
+metadata instead of silently substituting host tools. Explicit `--nm` selects
+its sibling tools before metadata from a different toolchain.
+
+Graphviz graphs and per-row sidecars consume the same typed identities and
+edge kinds. Static pointers and fragment ownership are labeled separately from
+instruction references. Sidecars root at the exact selected row, so data pools
+sharing a function's name remain distinct. For ambiguous local names, the CLI
+accepts `--symbol 'name@0xADDRESS'`; it rejects an ambiguous name instead of
+choosing an arbitrary function.

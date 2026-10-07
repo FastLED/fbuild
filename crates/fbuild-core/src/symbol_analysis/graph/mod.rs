@@ -37,6 +37,7 @@ use std::collections::{BTreeMap, BTreeSet, VecDeque};
 
 use super::{FineGrainedSymbolMap, SymbolReference};
 
+mod typed;
 mod walker;
 pub use walker::{CalleeRanked, CallerRanked, rank_callees_dual, rank_callers_dual};
 use walker::{
@@ -151,6 +152,8 @@ pub enum NodeKind {
     /// `size_hint` is the sum of symbol sizes attributed to this TU
     /// in the report, used both for fan-out ranking and node sizing.
     TranslationUnit { size_hint: Option<u64> },
+    /// An address-qualified reference endpoint; does not imply a runtime call.
+    ReferenceSymbol { size: u64 },
     /// A callee — a symbol the root (or one of its callees) calls.
     /// Distinct from `TranslationUnit` because forward edges are
     /// per-symbol, not per-TU. `size` is the callee's own flash
@@ -192,6 +195,10 @@ pub enum EdgeDirection {
     #[default]
     Backward,
     Forward,
+    InstructionReference,
+    StaticPointer,
+    FragmentOwner,
+    ObjectReference,
 }
 
 /// Directed edge. For `Backward` edges `from` referenced `to`; for
@@ -237,6 +244,9 @@ pub struct BackrefGraph {
 pub struct TuIndex<'a> {
     /// `(archive, object) -> Vec<&FineGrainedSymbol>`. `archive: None`
     /// keeps bare-object TUs separate (`main.cpp.o` has no archive).
+    by_identity: BTreeMap<super::SymbolIdentity, &'a super::FineGrainedSymbol>,
+    incoming: BTreeMap<super::SymbolIdentity, Vec<&'a super::ReferenceEdge>>,
+    outgoing: BTreeMap<super::SymbolIdentity, Vec<&'a super::ReferenceEdge>>,
     by_tu: BTreeMap<(Option<String>, String), Vec<&'a super::FineGrainedSymbol>>,
 }
 
@@ -253,7 +263,33 @@ impl<'a> TuIndex<'a> {
                 .or_default()
                 .push(s);
         }
-        Self { by_tu }
+        let by_identity = map
+            .symbols
+            .iter()
+            .map(|s| (super::SymbolIdentity::from(s), s))
+            .collect();
+        let mut incoming = BTreeMap::<_, Vec<_>>::new();
+        let mut outgoing = BTreeMap::<_, Vec<_>>::new();
+        for edge in &map.reference_analysis.edges {
+            incoming.entry(edge.target.clone()).or_default().push(edge);
+            outgoing.entry(edge.source.clone()).or_default().push(edge);
+        }
+        Self {
+            by_tu,
+            by_identity,
+            incoming,
+            outgoing,
+        }
+    }
+
+    pub fn symbol(&self, identity: &super::SymbolIdentity) -> Option<&'a super::FineGrainedSymbol> {
+        self.by_identity.get(identity).copied()
+    }
+    pub fn incoming(&self, identity: &super::SymbolIdentity) -> &[&'a super::ReferenceEdge] {
+        self.incoming.get(identity).map_or(&[], Vec::as_slice)
+    }
+    pub fn outgoing(&self, identity: &super::SymbolIdentity) -> &[&'a super::ReferenceEdge] {
+        self.outgoing.get(identity).map_or(&[], Vec::as_slice)
     }
 
     /// All symbols defined in a TU.
@@ -294,6 +330,20 @@ impl BackrefGraph {
         Self::build_with_index(map, &index, target_mangled, config)
     }
 
+    /// Build from the exact selected row, preserving fragment/address identity.
+    pub fn build_for_symbol_with_index(
+        map: &FineGrainedSymbolMap,
+        index: &TuIndex<'_>,
+        root: &super::FineGrainedSymbol,
+        config: &GraphConfig,
+    ) -> Self {
+        if typed::available(map) {
+            typed::build(index, root, config)
+        } else {
+            Self::build_with_index(map, index, &root.mangled, config)
+        }
+    }
+
     /// Same as [`Self::build`] but reuses a pre-built index — useful when
     /// emitting graphs for every top-N symbol (the per-symbol index
     /// rebuild would be O(N²)).
@@ -308,7 +358,13 @@ impl BackrefGraph {
         let root = map
             .symbols
             .iter()
-            .find(|s| s.mangled == target_mangled || s.demangled == target_mangled);
+            .filter(|s| s.mangled == target_mangled || s.demangled == target_mangled)
+            .min_by_key(|s| s.source != "nm");
+        if typed::available(map) {
+            if let Some(root) = root {
+                return typed::build(index, root, config);
+            }
+        }
         let Some(root) = root else {
             // Unknown symbol: emit a single isolated node so the
             // caller still gets a renderable .dot, not a parse error.
@@ -633,6 +689,21 @@ impl BackrefGraph {
                 EdgeDirection::Backward => {
                     out.push_str(&format!("  \"{}\" -> \"{}\";\n", e.from, e.to));
                 }
+                EdgeDirection::InstructionReference
+                | EdgeDirection::StaticPointer
+                | EdgeDirection::FragmentOwner
+                | EdgeDirection::ObjectReference => {
+                    let label = match e.direction {
+                        EdgeDirection::InstructionReference => "instruction reference",
+                        EdgeDirection::StaticPointer => "static pointer",
+                        EdgeDirection::ObjectReference => "object reference",
+                        _ => "fragment owner",
+                    };
+                    out.push_str(&format!(
+                        "  \"{}\" -> \"{}\" [label=\"{label}\"];\n",
+                        e.from, e.to
+                    ));
+                }
                 EdgeDirection::Forward => {
                     out.push_str(&format!(
                         "  \"{}\" -> \"{}\" [style=dashed, color=\"#0066cc\", fontcolor=\"#0066cc\", label=\"calls\"];\n",
@@ -677,6 +748,7 @@ fn node_width(n: &GraphNode) -> Option<f64> {
         } => *b,
         NodeKind::Callee { size, .. } => *size,
         NodeKind::Caller { size, .. } => *size,
+        NodeKind::ReferenceSymbol { size } => *size,
         _ => return None,
     };
     if bytes == 0 {

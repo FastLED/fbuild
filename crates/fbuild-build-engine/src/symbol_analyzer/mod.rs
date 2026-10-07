@@ -20,7 +20,9 @@ use fbuild_core::symbol_analysis::{
 };
 use fbuild_core::{FbuildError, Result};
 
+pub mod elf_references;
 pub mod markdown;
+mod reference_analysis;
 
 #[cfg(test)]
 mod tests;
@@ -454,32 +456,50 @@ pub async fn analyze_elf(cfg: AnalyzeConfig<'_>) -> Result<FineGrainedSymbolMap>
         ),
     }
 
-    // #471: per-symbol forward edges from `objdump -d`. When the
-    // analyzer was wired with an objdump path (typically from
-    // build_info.json::objdump_path), run it once on the linked ELF
-    // and pull `<callee>` annotations out of the disassembly. The
-    // resulting per-symbol callee map populates each row's
-    // `references_to` field, which the bidirectional graph + the
-    // dual-ranked callees sub-table consume. Failures are non-fatal
-    // — we'd rather ship a report without forward edges than fail
-    // the whole symbol-analysis post-link step.
+    use fbuild_core::symbol_analysis::{AnalysisPass, AnalysisStatus};
+    map.reference_analysis.object_references = match &map_text {
+        Some((_, Ok(text))) if text.contains("Cross Reference Table") => AnalysisPass {
+            status: AnalysisStatus::Analyzed,
+            tool: None,
+            reason: None,
+        },
+        Some((_, Ok(_))) => AnalysisPass {
+            reason: Some("Linker map has no Cross Reference Table.".into()),
+            ..Default::default()
+        },
+        Some((_, Err(e))) => AnalysisPass {
+            status: AnalysisStatus::Error,
+            reason: Some(e.to_string()),
+            ..Default::default()
+        },
+        None => AnalysisPass {
+            reason: Some("No linker map supplied.".into()),
+            ..Default::default()
+        },
+    };
+    let arm = match reference_analysis::probe_elf(&mut map, cfg.elf_path) {
+        Ok(arm) => arm,
+        Err(e) => {
+            map.reference_analysis.limitations.push(e.to_string());
+            false
+        }
+    };
+    map.reference_analysis.disassembly.tool =
+        cfg.objdump_path.map(|p| p.to_string_lossy().into_owned());
     if let Some(objdump_path) = cfg.objdump_path {
-        match run_objdump_and_attribute(objdump_path, cfg.elf_path, &mut map).await {
-            Ok(edge_count) => {
-                tracing::info!(
-                    "objdump: extracted {edge_count} forward edges from {}",
-                    cfg.elf_path.display()
-                );
-            }
+        match run_objdump_and_attribute(objdump_path, cfg.elf_path, &mut map, arm).await {
+            Ok(_) => map.reference_analysis.disassembly.status = AnalysisStatus::Analyzed,
             Err(e) => {
-                tracing::warn!(
-                    "objdump forward-edge extraction failed for {} ({e}); \
-                     references_to will be empty",
-                    cfg.elf_path.display()
-                );
+                map.reference_analysis.disassembly.status = AnalysisStatus::Error;
+                map.reference_analysis.disassembly.reason = Some(e.to_string());
+                tracing::warn!("objdump reference extraction failed: {e}");
             }
         }
+    } else {
+        map.reference_analysis.disassembly.reason = Some("No objdump tool available.".into());
     }
+    reference_analysis::static_edges(&mut map, cfg.elf_path, arm);
+    reference_analysis::finalize(&mut map);
 
     Ok(map)
 }
@@ -492,9 +512,9 @@ async fn run_objdump_and_attribute(
     objdump_path: &Path,
     elf_path: &Path,
     map: &mut FineGrainedSymbolMap,
+    arm: bool,
 ) -> Result<usize> {
     use fbuild_core::subprocess::run_command;
-    use fbuild_core::symbol_analysis::callgraph::{invert, parse_disasm};
 
     let objdump_s = objdump_path.to_string_lossy().to_string();
     let elf_s = elf_path.to_string_lossy().to_string();
@@ -515,31 +535,24 @@ async fn run_objdump_and_attribute(
         )));
     }
 
-    let edges = parse_disasm(&result.stdout);
-    // #478: invert once so both per-symbol directions come from the
-    // same disassembly pass. `called_by[X]` = every symbol whose
-    // forward edge list contains X — the per-symbol-precision view
-    // that complements the TU-level `referenced_by` (cref-derived).
-    let backward = invert(&edges);
-    let mut total = 0usize;
-    for sym in &mut map.symbols {
-        if let Some(callees) = edges.get(&sym.mangled) {
-            sym.references_to = callees.clone();
-            total += callees.len();
-        } else if let Some(callees) = edges.get(&sym.demangled) {
-            // Some toolchains demangle in-place when emitting the
-            // disassembly, so the function header uses the demangled
-            // name. Match against either.
-            sym.references_to = callees.clone();
-            total += callees.len();
-        }
-        if let Some(callers) = backward.get(&sym.mangled) {
-            sym.called_by = callers.clone();
-        } else if let Some(callers) = backward.get(&sym.demangled) {
-            sym.called_by = callers.clone();
-        }
+    if map
+        .symbols
+        .iter()
+        .any(|s| matches!(s.sym_type, 'T' | 't' | 'W' | 'w'))
+        && !result
+            .stdout
+            .lines()
+            .any(|line| line.contains(" <") && line.ends_with(">:"))
+    {
+        return Err(FbuildError::BuildFailed(
+            "objdump emitted no function headers for a report containing executable symbols".into(),
+        ));
     }
-    Ok(total)
+    Ok(reference_analysis::attribute_disassembly(
+        map,
+        &result.stdout,
+        arm,
+    ))
 }
 
 /// Format a fine-grained per-symbol map as a human-readable text report

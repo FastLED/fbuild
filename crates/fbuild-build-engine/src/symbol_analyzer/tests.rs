@@ -101,6 +101,7 @@ fn discover_elf_returns_none_when_nothing_found() {
 fn format_markdown_report_emits_tables() {
     use fbuild_core::symbol_analysis::{FineGrainedSymbol, FineGrainedSymbolMap, SectionBytes};
     let map = FineGrainedSymbolMap {
+        reference_analysis: Default::default(),
         elf_path: "fw.elf".into(),
         map_path: Some("fw.map".into()),
         total_flash: 100,
@@ -158,6 +159,7 @@ fn format_markdown_report_escapes_pipes_in_symbol_names() {
     use fbuild_core::symbol_analysis::{FineGrainedSymbol, FineGrainedSymbolMap, SectionBytes};
     // operator|| is a real C++ name shape that demangles with pipes.
     let map = FineGrainedSymbolMap {
+        reference_analysis: Default::default(),
         elf_path: "fw.elf".into(),
         map_path: None,
         total_flash: 10,
@@ -193,6 +195,7 @@ fn format_markdown_report_renders_referenced_by_column() {
         FineGrainedSymbol, FineGrainedSymbolMap, SectionBytes, SymbolReference,
     };
     let map = FineGrainedSymbolMap {
+        reference_analysis: Default::default(),
         elf_path: "fw.elf".into(),
         map_path: None,
         total_flash: 11309,
@@ -259,6 +262,7 @@ fn markdown_report_with_graphs_embeds_dot_blocks_for_top_symbols() {
         FineGrainedSymbol, FineGrainedSymbolMap, GraphConfig, SectionBytes, SymbolReference,
     };
     let map = FineGrainedSymbolMap {
+        reference_analysis: Default::default(),
         elf_path: "fw.elf".into(),
         map_path: None,
         total_flash: 11_309,
@@ -302,7 +306,7 @@ fn markdown_report_with_graphs_embeds_dot_blocks_for_top_symbols() {
     );
     assert!(
         md.contains("<details>")
-            && md.contains("<summary>Bidirectional graph (callers ← root → callees,"),
+            && md.contains("<summary>Bidirectional reference graph (incoming ← root → outgoing,"),
         "missing details summary in:\n{md}"
     );
     assert!(
@@ -404,6 +408,7 @@ fn markdown_report_emits_dual_ranked_callees_subtable() {
     let mut all = vec![root];
     all.extend(callees);
     let map = FineGrainedSymbolMap {
+        reference_analysis: Default::default(),
         elf_path: "test.elf".into(),
         map_path: None,
         total_flash: 12_860,
@@ -447,6 +452,7 @@ fn markdown_report_emits_dual_ranked_callees_subtable() {
 fn markdown_report_legacy_path_skips_graph_blocks() {
     use fbuild_core::symbol_analysis::{FineGrainedSymbol, FineGrainedSymbolMap, SectionBytes};
     let map = FineGrainedSymbolMap {
+        reference_analysis: Default::default(),
         elf_path: "fw.elf".into(),
         map_path: None,
         total_flash: 10,
@@ -481,6 +487,7 @@ fn sidecar_dot_files_written_for_symbols_above_min_bytes() {
     };
     let tmp = tempfile::tempdir().unwrap();
     let map = FineGrainedSymbolMap {
+        reference_analysis: Default::default(),
         elf_path: "fw.elf".into(),
         map_path: None,
         total_flash: 1_200,
@@ -553,6 +560,7 @@ fn sidecar_disabled_writes_nothing() {
     };
     let tmp = tempfile::tempdir().unwrap();
     let map = FineGrainedSymbolMap {
+        reference_analysis: Default::default(),
         elf_path: "fw.elf".into(),
         map_path: None,
         total_flash: 1_000,
@@ -594,6 +602,7 @@ fn sidecar_disabled_writes_nothing() {
 fn format_markdown_report_referenced_by_empty_renders_dash() {
     use fbuild_core::symbol_analysis::{FineGrainedSymbol, FineGrainedSymbolMap, SectionBytes};
     let map = FineGrainedSymbolMap {
+        reference_analysis: Default::default(),
         elf_path: "fw.elf".into(),
         map_path: None,
         total_flash: 10,

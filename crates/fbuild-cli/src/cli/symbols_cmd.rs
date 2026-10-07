@@ -8,7 +8,7 @@
 //! Toolchain resolution (see #428):
 //!   1. `--nm` / `--cppfilt` CLI flags (user wins).
 //!   2. `--build-info <path>` if provided — `nm_path` / `cppfilt_path`
-//!      read from that file.
+//!      or PlatformIO aliases read from that file.
 //!   3. Auto-discovery: walk up from the ELF directory looking for
 //!      `build_info.json` or `build_info_<env>.json`.
 //!   4. PATH-based lookup of `nm`, with `c++filt` derived by stem.
@@ -16,13 +16,15 @@
 
 use std::path::{Path, PathBuf};
 
-use fbuild_build::build_info::{find_build_info_near, load_build_info};
+use std::collections::BTreeMap;
+
 use fbuild_build::symbol_analyzer::{
     AnalyzeConfig, MarkdownGraphOptions, SidecarOptions, analyze_elf, default_map_path,
     derive_cppfilt_path, discover_elf_in_project, format_markdown_report,
     format_markdown_report_with_graphs, format_text_report, write_sidecar_dot_files,
 };
 use fbuild_core::{FbuildError, Result};
+use serde::Deserialize;
 
 use crate::output;
 
@@ -243,8 +245,8 @@ struct ToolPaths {
     /// (`objdump_path`) or by deriving it from the nm path using the
     /// GCC cross-tool naming convention. `None` when neither path
     /// can be found — the analyzer falls back to an empty
-    /// `references_to` (forward graphs are unavailable; backref
-    /// graphs are unaffected).
+    /// `references_to` (instruction references are unavailable; map
+    /// object references are unaffected).
     objdump: Option<PathBuf>,
 }
 
@@ -259,32 +261,30 @@ impl ToolPaths {
         cppfilt: Option<&str>,
         build_info_arg: Option<&str>,
     ) -> Result<Self> {
-        // Try the build_info source (explicit flag wins over auto-discovery).
-        let build_info_path = build_info_arg
-            .map(PathBuf::from)
-            .or_else(|| elf_path.parent().and_then(find_build_info_near));
-
+        let build_info_path = match build_info_arg {
+            Some(path) => Some(PathBuf::from(path)),
+            None if nm.is_some() => None,
+            None => discover_tool_metadata(elf_path)?,
+        };
         let (bi_nm, bi_cppfilt, bi_objdump) = match build_info_path {
-            Some(path) => match load_build_info(&path) {
-                Ok((_env, info)) => {
-                    tracing::info!("symbols: read toolchain paths from {}", path.display());
-                    (
-                        option_path(&info.nm_path),
-                        option_path(&info.cppfilt_path),
-                        option_path(&info.objdump_path),
-                    )
+            Some(path) => {
+                let info = read_tool_metadata(&path, elf_path)?;
+                if nm.is_none() && info.tool("nm", &info.nm_path).is_none() {
+                    return Err(metadata_error(
+                        &path,
+                        "selected environment has no nm_path or aliases.nm; pass --nm",
+                    ));
                 }
-                Err(e) => {
-                    tracing::warn!(
-                        "symbols: ignoring {}: {} (falling back to PATH)",
-                        path.display(),
-                        e
-                    );
-                    (None, None, None)
-                }
-            },
+                tracing::info!("symbols: read toolchain paths from {}", path.display());
+                (
+                    info.tool("nm", &info.nm_path),
+                    info.tool("c++filt", &info.cppfilt_path),
+                    info.tool("objdump", &info.objdump_path),
+                )
+            }
             None => (None, None, None),
         };
+        let explicit_nm = nm.is_some();
 
         let nm = match nm {
             Some(p) => PathBuf::from(p),
@@ -296,7 +296,7 @@ impl ToolPaths {
 
         let cppfilt = match cppfilt {
             Some(p) => Some(PathBuf::from(p)),
-            None => bi_cppfilt.or_else(|| {
+            None => (if explicit_nm { None } else { bi_cppfilt }).or_else(|| {
                 let derived = derive_cppfilt_path(&nm);
                 if derived.exists() {
                     Some(derived)
@@ -311,7 +311,11 @@ impl ToolPaths {
         // Same prefix-replacement strategy `derive_cppfilt_path`
         // uses; inlined here to keep symbol_analyzer's public surface
         // minimal — objdump derivation isn't useful outside this CLI.
-        let objdump = bi_objdump.or_else(|| derive_sibling_tool(&nm, "objdump"));
+        let objdump = if explicit_nm {
+            derive_sibling_tool(&nm, "objdump")
+        } else {
+            bi_objdump.or_else(|| derive_sibling_tool(&nm, "objdump"))
+        };
 
         Ok(Self {
             nm,
@@ -377,16 +381,137 @@ pub fn resolve_tool_paths_public(
     Ok((resolved.nm, resolved.cppfilt, resolved.objdump))
 }
 
-/// Treat an empty BuildInfo path field (the schema's "missing"
-/// sentinel) as `None`. `BuildInfo`'s `*_path` fields became
-/// `NormalizedPath` in #437 Phase 2, so emptiness is checked on the
-/// underlying `OsStr` rather than on a `String`.
-fn option_path(p: &fbuild_core::path::NormalizedPath) -> Option<PathBuf> {
-    if p.as_path().as_os_str().is_empty() {
-        None
-    } else {
-        Some(p.as_path().to_path_buf())
+/// Project only the tool metadata: PlatformIO aliases do not carry all native
+/// BuildInfo fields, and requiring compiler/build flags silently lost graphs.
+#[derive(Default, Deserialize)]
+struct SymbolToolMetadata {
+    #[serde(default)]
+    prog_path: String,
+    #[serde(default)]
+    nm_path: String,
+    #[serde(default)]
+    cppfilt_path: String,
+    #[serde(default)]
+    objdump_path: String,
+    #[serde(default)]
+    aliases: BTreeMap<String, String>,
+}
+
+impl SymbolToolMetadata {
+    fn tool(&self, alias: &str, direct: &str) -> Option<PathBuf> {
+        let value = if direct.is_empty() {
+            self.aliases.get(alias).map(String::as_str)?
+        } else {
+            direct
+        };
+        (!value.is_empty()).then(|| PathBuf::from(value))
     }
+}
+
+fn elf_environment(elf: &Path) -> Option<&str> {
+    // Build profiles may add release/debug beneath the environment directory.
+    elf.parent()?.ancestors().find_map(|directory| {
+        (directory.parent()?.file_name()? == "build")
+            .then(|| directory.file_name()?.to_str())
+            .flatten()
+    })
+}
+
+fn metadata_error(path: &Path, reason: impl std::fmt::Display) -> FbuildError {
+    FbuildError::BuildFailed(format!(
+        "symbols: invalid tool metadata {}: {reason}",
+        path.display()
+    ))
+}
+
+fn read_tool_metadata(path: &Path, elf: &Path) -> Result<SymbolToolMetadata> {
+    let bytes = std::fs::read(path).map_err(|e| metadata_error(path, e))?;
+    let mut envs: BTreeMap<String, SymbolToolMetadata> =
+        serde_json::from_slice(&bytes).map_err(|e| metadata_error(path, e))?;
+    if envs.is_empty() {
+        return Err(metadata_error(path, "no environments"));
+    }
+    let matches: Vec<String> = envs
+        .iter()
+        .filter(|(_, info)| {
+            !info.prog_path.is_empty()
+                && (Path::new(&info.prog_path) == elf || {
+                    let candidate = if Path::new(&info.prog_path).is_absolute() {
+                        PathBuf::from(&info.prog_path)
+                    } else {
+                        path.parent()
+                            .unwrap_or(Path::new("."))
+                            .join(&info.prog_path)
+                    };
+                    std::fs::canonicalize(candidate)
+                        .ok()
+                        .zip(std::fs::canonicalize(elf).ok())
+                        .is_some_and(|(a, b)| a == b)
+                })
+        })
+        .map(|(name, _)| name.clone())
+        .collect();
+    let selected = match matches.as_slice() {
+        [name] => name.clone(),
+        [] => match elf_environment(elf).filter(|name| envs.contains_key(*name)) {
+            Some(name) => name.to_string(),
+            None if envs.len() == 1 && elf_environment(elf).is_none() => {
+                envs.keys().next().unwrap().clone()
+            }
+            None => {
+                return Err(metadata_error(
+                    path,
+                    "no unambiguous environment matches the ELF; use matching prog_path or build/<env>/firmware.elf",
+                ));
+            }
+        },
+        _ => return Err(metadata_error(path, "multiple environments match the ELF")),
+    };
+    Ok(envs.remove(&selected).unwrap())
+}
+
+fn discover_tool_metadata(elf: &Path) -> Result<Option<PathBuf>> {
+    let mut cursor = elf.parent();
+    while let Some(dir) = cursor {
+        let generic = dir.join("build_info.json");
+        if generic.is_file() {
+            return Ok(Some(generic));
+        }
+        if let Some(env) = elf_environment(elf) {
+            let matching = dir.join(format!("build_info_{env}.json"));
+            if matching.is_file() {
+                return Ok(Some(matching));
+            }
+        }
+        let mut candidates = Vec::new();
+        if let Ok(entries) = std::fs::read_dir(dir) {
+            for entry in entries.flatten() {
+                let path = entry.path();
+                if path.is_file()
+                    && path
+                        .file_name()
+                        .and_then(|n| n.to_str())
+                        .is_some_and(|name| {
+                            name.starts_with("build_info_") && name.ends_with(".json")
+                        })
+                {
+                    candidates.push(path);
+                }
+            }
+        }
+        match candidates.len() {
+            0 => {}
+            1 => return Ok(candidates.pop()),
+            _ => {
+                return Err(metadata_error(
+                    dir,
+                    "ambiguous build_info_<env>.json files; pass --build-info",
+                ));
+            }
+        }
+        cursor = dir.parent();
+    }
+    Ok(None)
 }
 
 #[cfg(test)]
@@ -482,5 +607,121 @@ mod tests {
         let bi_path = bi_dir.join("build_info.json");
         let tools = ToolPaths::resolve(&elf, None, None, Some(bi_path.to_str().unwrap())).unwrap();
         assert_eq!(tools.nm, nm_file);
+    }
+    #[test]
+    fn resolve_partial_aliases_and_matching_environment() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let elf = tmp.path().join(".pio/build/uno/firmware.elf");
+        let metadata = tmp.path().join("build_info.json");
+        std::fs::write(&metadata, serde_json::to_vec(&serde_json::json!({
+            "uno": {"aliases": {"nm": "/target/avr-nm", "c++filt": "/target/avr-c++filt", "objdump": "/target/avr-objdump"}},
+            "esp": {"aliases": {"nm": "/target/xtensa-nm"}}
+        })).unwrap()).unwrap();
+        let tools = ToolPaths::resolve(&elf, None, None, Some(metadata.to_str().unwrap())).unwrap();
+        assert_eq!(tools.nm, PathBuf::from("/target/avr-nm"));
+        assert_eq!(tools.objdump, Some(PathBuf::from("/target/avr-objdump")));
+        assert_eq!(tools.cppfilt, Some(PathBuf::from("/target/avr-c++filt")));
+        std::fs::write(&metadata, br#"{"esp":{"aliases":{"nm":"xtensa-nm"}}}"#).unwrap();
+        assert!(ToolPaths::resolve(&elf, None, None, Some(metadata.to_str().unwrap())).is_err());
+    }
+
+    #[test]
+    fn resolve_nested_release_metadata_environment() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let elf = tmp.path().join(".fbuild/build/uno/release/firmware.elf");
+        let metadata = tmp.path().join("build_info.json");
+        std::fs::write(
+            &metadata,
+            br#"{"esp":{"aliases":{"nm":"xtensa-nm"}},"uno":{"aliases":{"nm":"avr-nm"}}}"#,
+        )
+        .unwrap();
+        let tools = ToolPaths::resolve(&elf, None, None, Some(metadata.to_str().unwrap())).unwrap();
+        assert_eq!(tools.nm, PathBuf::from("avr-nm"));
+    }
+
+    #[test]
+    fn resolve_metadata_selects_matching_program_path() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let elf = tmp.path().join("firmware.elf");
+        let metadata = tmp.path().join("build_info.json");
+        std::fs::write(
+            &metadata,
+            serde_json::to_vec(&serde_json::json!({
+                "uno": {"prog_path": elf, "aliases": {"nm": "avr-nm"}},
+                "esp": {"prog_path": "other.elf", "aliases": {"nm": "xtensa-nm"}}
+            }))
+            .unwrap(),
+        )
+        .unwrap();
+        let tools = ToolPaths::resolve(&elf, None, None, Some(metadata.to_str().unwrap())).unwrap();
+        assert_eq!(tools.nm, PathBuf::from("avr-nm"));
+        std::fs::write(
+            &metadata,
+            serde_json::to_vec(&serde_json::json!({
+                "uno": {"prog_path": elf, "aliases": {"nm": "avr-nm"}},
+                "esp": {"prog_path": elf, "aliases": {"nm": "xtensa-nm"}}
+            }))
+            .unwrap(),
+        )
+        .unwrap();
+        assert!(ToolPaths::resolve(&elf, None, None, Some(metadata.to_str().unwrap())).is_err());
+    }
+
+    #[test]
+    fn resolve_rejects_ambiguous_or_invalid_explicit_metadata() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let elf = tmp.path().join("firmware.elf");
+        let metadata = tmp.path().join("build_info.json");
+        std::fs::write(
+            &metadata,
+            br#"{"uno":{"aliases":{"nm":"avr-nm"}},"esp":{"aliases":{"nm":"xtensa-nm"}}}"#,
+        )
+        .unwrap();
+        assert!(ToolPaths::resolve(&elf, None, None, Some(metadata.to_str().unwrap())).is_err());
+        std::fs::write(&metadata, b"invalid json").unwrap();
+        assert!(ToolPaths::resolve(&elf, None, None, Some(metadata.to_str().unwrap())).is_err());
+        std::fs::write(&metadata, br#"{"uno":{"aliases":{}}}"#).unwrap();
+        assert!(ToolPaths::resolve(&elf, None, None, Some(metadata.to_str().unwrap())).is_err());
+    }
+
+    #[test]
+    fn resolve_explicit_nm_selects_its_sibling_tools() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let elf = tmp.path().join("firmware.elf");
+        let metadata = tmp.path().join("build_info.json");
+        std::fs::write(&metadata, br#"{"uno":{"aliases":{"nm":"wrong-nm","objdump":"wrong-objdump","c++filt":"wrong-c++filt"}}}"#).unwrap();
+        let nm = tmp.path().join("avr-nm");
+        let objdump = tmp.path().join("avr-objdump");
+        let cppfilt = tmp.path().join("avr-c++filt");
+        for path in [&nm, &objdump, &cppfilt] {
+            std::fs::write(path, b"x").unwrap();
+        }
+        let tools = ToolPaths::resolve(
+            &elf,
+            Some(nm.to_str().unwrap()),
+            None,
+            Some(metadata.to_str().unwrap()),
+        )
+        .unwrap();
+        assert_eq!(tools.objdump, Some(objdump));
+        assert_eq!(tools.cppfilt, Some(cppfilt));
+    }
+    #[test]
+    fn resolve_auto_discovery_selects_matching_env_file() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let elf = tmp.path().join(".pio/build/uno/firmware.elf");
+        std::fs::create_dir_all(elf.parent().unwrap()).unwrap();
+        std::fs::write(
+            tmp.path().join("build_info_esp.json"),
+            br#"{"esp":{"aliases":{"nm":"wrong-nm"}}}"#,
+        )
+        .unwrap();
+        std::fs::write(
+            tmp.path().join("build_info_uno.json"),
+            br#"{"uno":{"aliases":{"nm":"avr-nm"}}}"#,
+        )
+        .unwrap();
+        let tools = ToolPaths::resolve(&elf, None, None, None).unwrap();
+        assert_eq!(tools.nm, PathBuf::from("avr-nm"));
     }
 }
