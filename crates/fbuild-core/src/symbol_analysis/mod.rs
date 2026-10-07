@@ -23,6 +23,8 @@ pub mod callgraph;
 pub mod cref;
 pub mod graph;
 pub mod markers;
+pub mod references;
+pub use references::*;
 
 use std::collections::BTreeMap;
 
@@ -131,6 +133,9 @@ pub struct SectionBytes {
 /// The complete per-symbol view of a single binary.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct FineGrainedSymbolMap {
+    /// Versioned, address-qualified final-image reference evidence (#1661).
+    #[serde(default)]
+    pub reference_analysis: ReferenceAnalysis,
     pub elf_path: String,
     pub map_path: Option<String>,
     pub total_flash: u64,
@@ -611,6 +616,7 @@ pub fn region_from_output_section(name: &str) -> Option<MemoryRegion> {
 pub fn classify_region(sym_type: char) -> Option<MemoryRegion> {
     match sym_type {
         'T' | 't' | 'R' | 'r' | 'W' | 'w' => Some(MemoryRegion::Flash),
+        'V' | 'v' => Some(MemoryRegion::Flash),
         'D' | 'd' | 'B' | 'b' => Some(MemoryRegion::Ram),
         _ => None,
     }
@@ -770,14 +776,21 @@ pub fn build_fine_grained_map_with_synth(
     let mut total_flash = 0u64;
     let mut total_ram = 0u64;
     for ((addr, size, sym_type, mangled), demangled) in nm_rows.into_iter().zip(demangled) {
-        let Some(region) = classify_region(sym_type) else {
+        let attribution = index.lookup(addr);
+        let region = if matches!(sym_type, 'V' | 'v') {
+            attribution
+                .and_then(|r| region_from_output_section(&r.output_section))
+                .or_else(|| classify_region(sym_type))
+        } else {
+            classify_region(sym_type)
+        };
+        let Some(region) = region else {
             continue;
         };
         match region {
             MemoryRegion::Flash => total_flash += size,
             MemoryRegion::Ram => total_ram += size,
         }
-        let attribution = index.lookup(addr);
         let referenced_by = cref.get(&mangled).cloned().unwrap_or_default();
         symbols.push(FineGrainedSymbol {
             mangled,
@@ -841,6 +854,7 @@ pub fn build_fine_grained_map_with_synth(
         });
     }
     FineGrainedSymbolMap {
+        reference_analysis: ReferenceAnalysis::default(),
         elf_path,
         map_path,
         total_flash,

@@ -57,7 +57,8 @@ pub async fn run_bloat_graph(
         nm.as_deref(),
         cppfilt.as_deref(),
         build_info.as_deref(),
-    )?;
+    )
+    .await?;
 
     let map_path_owned = map
         .map(PathBuf::from)
@@ -79,7 +80,13 @@ pub async fn run_bloat_graph(
         &collapse_archive,
         &exclude_archive,
     )?;
-    let graph = BackrefGraph::build(&report, &symbol, &graph_config);
+    let selected = select_symbol(&report.symbols, &symbol)?;
+    let graph = if let Some(root) = selected {
+        let index = fbuild_core::symbol_analysis::TuIndex::build(&report);
+        BackrefGraph::build_for_symbol_with_index(&report, &index, root, &graph_config)
+    } else {
+        BackrefGraph::build(&report, &symbol, &graph_config)
+    };
     let dot = graph.to_dot();
 
     match output {
@@ -100,6 +107,42 @@ pub async fn run_bloat_graph(
         }
     }
     Ok(())
+}
+
+fn select_symbol<'a>(
+    symbols: &'a [fbuild_core::symbol_analysis::FineGrainedSymbol],
+    symbol: &str,
+) -> Result<Option<&'a fbuild_core::symbol_analysis::FineGrainedSymbol>> {
+    let (query, address) = symbol
+        .rsplit_once("@0x")
+        .and_then(|(name, addr)| {
+            u64::from_str_radix(addr, 16)
+                .ok()
+                .map(|addr| (name, Some(addr)))
+        })
+        .unwrap_or((symbol, None));
+    let mut matches: Vec<_> = symbols
+        .iter()
+        .filter(|s| {
+            (s.mangled == query || s.demangled == query) && address.is_none_or(|a| s.address == a)
+        })
+        .collect();
+    if address.is_none() && matches.iter().any(|s| s.source == "nm") {
+        matches.retain(|s| s.source == "nm");
+    }
+    matches.sort_by_key(|s| (s.address, s.source.as_str(), s.mangled.as_str()));
+    matches.dedup_by_key(|s| (s.address, s.source.as_str(), s.mangled.as_str()));
+    if matches.len() > 1 {
+        return Err(FbuildError::BuildFailed(format!(
+            "Ambiguous symbol {query}; select name@0xADDRESS. Matches: {}",
+            matches
+                .iter()
+                .map(|s| format!("0x{:x} ({})", s.address, s.source))
+                .collect::<Vec<_>>()
+                .join(", ")
+        )));
+    }
+    Ok(matches.first().copied())
 }
 
 /// Parse the user-facing flag strings into a fully-populated
@@ -187,5 +230,62 @@ mod tests {
     fn fan_out_zero_clamps_to_one() {
         let c = parse_graph_config("adaptive", 0, 4, "", "").unwrap();
         assert_eq!(c.fan_out, 1);
+    }
+}
+
+#[cfg(test)]
+mod identity_tests {
+    use super::select_symbol;
+    use fbuild_core::MemoryRegion;
+    use fbuild_core::symbol_analysis::FineGrainedSymbol;
+    fn fixture(address: u64, source: &str) -> FineGrainedSymbol {
+        FineGrainedSymbol {
+            mangled: "function".into(),
+            demangled: "function()".into(),
+            address,
+            size: 8,
+            sym_type: 'T',
+            region: MemoryRegion::Flash,
+            archive: None,
+            object: Some("main.o".into()),
+            output_section: None,
+            source: source.into(),
+            referenced_by: vec![],
+            references_to: vec![],
+            called_by: vec![],
+        }
+    }
+    #[test]
+    fn exact_selector_keeps_fragment_identity_and_rejects_ambiguous_functions() {
+        let symbols = vec![fixture(100, "map"), fixture(200, "nm")];
+        assert_eq!(
+            select_symbol(&symbols, "function")
+                .unwrap()
+                .unwrap()
+                .address,
+            200
+        );
+        assert_eq!(
+            select_symbol(&symbols, "function@0x64")
+                .unwrap()
+                .unwrap()
+                .source,
+            "map"
+        );
+        assert!(select_symbol(&symbols, "missing").unwrap().is_none());
+        let symbols = vec![fixture(200, "nm"), fixture(300, "nm")];
+        assert!(
+            select_symbol(&symbols, "function")
+                .unwrap_err()
+                .to_string()
+                .contains("Ambiguous symbol")
+        );
+        assert_eq!(
+            select_symbol(&symbols, "function()@0x12c")
+                .unwrap()
+                .unwrap()
+                .address,
+            300
+        );
     }
 }

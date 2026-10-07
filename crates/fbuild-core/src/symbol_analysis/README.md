@@ -20,3 +20,8 @@ Intentionally has no ELF-parsing dep; ELF I/O lives in `fbuild_build::symbol_ana
 - `cref.rs` — `Cross Reference Table` parser.
 - `graph.rs` — back-reference graph walker + `.dot` renderer.
 - `tests.rs` — unit tests.
+
+`references.rs` defines the versioned, address-qualified evidence contract:
+analysis availability, typed disassembly/static-pointer/fragment-owner edges,
+confirmed entry roots, unresolved targets and unexplained retention. Empty
+reference lists are never a guarantee of unused code.

@@ -6,7 +6,7 @@ use crate::symbol_analysis::{
     FineGrainedSymbol, FineGrainedSymbolMap, SectionBytes, SymbolReference,
 };
 
-fn sym(
+pub(super) fn sym(
     mangled: &str,
     demangled: &str,
     size: u64,
@@ -31,15 +31,16 @@ fn sym(
     }
 }
 
-fn refr(archive: Option<&str>, object: &str) -> SymbolReference {
+pub(super) fn refr(archive: Option<&str>, object: &str) -> SymbolReference {
     SymbolReference {
         archive: archive.map(|s| s.to_string()),
         object: object.to_string(),
     }
 }
 
-fn map(symbols: Vec<FineGrainedSymbol>) -> FineGrainedSymbolMap {
+pub(super) fn map(symbols: Vec<FineGrainedSymbol>) -> FineGrainedSymbolMap {
     FineGrainedSymbolMap {
+        reference_analysis: Default::default(),
         elf_path: "test.elf".to_string(),
         map_path: None,
         total_flash: symbols.iter().map(|s| s.size).sum(),
@@ -837,4 +838,121 @@ fn rank_callers_dual_sorts_each_axis_independently() {
     assert_eq!(by_breadth[0].demangled, "small_broad");
     // `tiny` was in neither bucket, so it counts as "other".
     assert_eq!(other, 1);
+}
+
+#[test]
+fn typed_graph_prefers_real_symbol_and_shows_static_owner() {
+    use crate::symbol_analysis::{AnalysisStatus, ReferenceEdge, ReferenceKind};
+    let mut fragment = sym("method", "method", 33_611, None, "method.o", vec![]);
+    fragment.address = 0x300;
+    fragment.source = "map-derived".into();
+    let mut method = sym("method", "method", 619, None, "method.o", vec![]);
+    method.address = 0x100;
+    let mut vtable = sym("_ZTVTest", "vtable", 76, None, "method.o", vec![]);
+    vtable.address = 0x200;
+    let mut report = map(vec![fragment, method, vtable]);
+    report.reference_analysis.static_data.status = AnalysisStatus::Analyzed;
+    report.reference_analysis.edges.push(ReferenceEdge {
+        source: (&report.symbols[2]).into(),
+        target: (&report.symbols[1]).into(),
+        kind: ReferenceKind::StaticData,
+        offset: Some(72),
+    });
+    let graph = BackrefGraph::build(&report, "method", &GraphConfig::default());
+    assert!(matches!(
+        graph.nodes[0].kind,
+        NodeKind::RootSymbol { size: 619, .. }
+    ));
+    assert!(graph.to_dot().contains("static pointer"));
+    assert!(graph.nodes.iter().any(|n| n.label.contains("vtable")));
+}
+
+#[test]
+fn typed_graph_exact_roots_and_controls_preserve_identity() {
+    use crate::symbol_analysis::{AnalysisStatus, ReferenceEdge, ReferenceKind};
+    let mut root = sym("method", "method", 619, Some("app.a"), "method.o", vec![]);
+    root.address = 0x100;
+    let mut first = sym(
+        "same_name",
+        "same_name",
+        76,
+        Some("other.a"),
+        "first.o",
+        vec![],
+    );
+    first.address = 0x200;
+    let mut second = sym(
+        "same_name",
+        "same_name",
+        24,
+        Some("other.a"),
+        "second.o",
+        vec![],
+    );
+    second.address = 0x300;
+    let mut fragment = sym("method", "method", 33611, Some("app.a"), "method.o", vec![]);
+    fragment.address = 0x400;
+    fragment.source = "map-derived".into();
+    let mut report = map(vec![root, first, second, fragment]);
+    report.reference_analysis.static_data.status = AnalysisStatus::Analyzed;
+    for (source, target) in [(1, 0), (2, 1)] {
+        report.reference_analysis.edges.push(ReferenceEdge {
+            source: (&report.symbols[source]).into(),
+            target: (&report.symbols[target]).into(),
+            kind: ReferenceKind::StaticData,
+            offset: Some(8),
+        });
+    }
+    let index = TuIndex::build(&report);
+    let config = GraphConfig {
+        depth: GraphDepth::Fixed(2),
+        collapse_archives: vec![],
+        ..Default::default()
+    };
+    let graph =
+        BackrefGraph::build_for_symbol_with_index(&report, &index, &report.symbols[0], &config);
+    assert_eq!(graph.nodes.len(), 3);
+    assert_ne!(graph.nodes[1].id, graph.nodes[2].id);
+    let exact =
+        BackrefGraph::build_for_symbol_with_index(&report, &index, &report.symbols[3], &config);
+    assert!(matches!(
+        exact.nodes[0].kind,
+        NodeKind::RootSymbol { size: 33611, .. }
+    ));
+    let adaptive = GraphConfig {
+        depth: GraphDepth::Adaptive,
+        ..config.clone()
+    };
+    assert_eq!(
+        BackrefGraph::build_for_symbol_with_index(&report, &index, &report.symbols[0], &adaptive)
+            .nodes
+            .len(),
+        2
+    );
+    let excluded = GraphConfig {
+        exclude_archives: vec!["other.a".into()],
+        ..config.clone()
+    };
+    assert_eq!(
+        BackrefGraph::build_for_symbol_with_index(&report, &index, &report.symbols[0], &excluded)
+            .nodes
+            .len(),
+        1
+    );
+    let collapsed = GraphConfig {
+        collapse_archives: vec!["other.a".into()],
+        ..config.clone()
+    };
+    let graph =
+        BackrefGraph::build_for_symbol_with_index(&report, &index, &report.symbols[0], &collapsed);
+    assert!(matches!(graph.nodes[1].kind, NodeKind::Collapsed { .. }));
+    let capped = GraphConfig {
+        fan_out: 0,
+        ..config
+    };
+    assert!(
+        BackrefGraph::build_for_symbol_with_index(&report, &index, &report.symbols[0], &capped)
+            .to_dot()
+            .contains("more references")
+    );
 }

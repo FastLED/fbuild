@@ -18,3 +18,9 @@ gate:
   `SidecarOptions`, `write_sidecar_dot_files`, plus the internal
   graph-section helpers.
 - `tests.rs` — the unit tests for everything in the module.
+
+`elf_references.rs` reads absolute method pointers from allocated Itanium
+vtables, including AVR word addresses and ARM Thumb pointers.
+`reference_analysis.rs` attributes disassembly by address and name, classifies
+weak objects from their ELF sections, and records confirmed entry roots and
+unexplained retention without guessing linker `KEEP` rules.
