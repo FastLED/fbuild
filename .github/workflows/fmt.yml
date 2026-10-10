@@ -35,7 +35,7 @@ jobs:
           ref: ${{ inputs.ref }}
       - name: Setup soldr
         id: setup-soldr
-        uses: zackees/setup-soldr@v0
+        uses: zackees/setup-soldr@b05310a40eacfc257b3bcaa1f5f4c887739403e8
         with:
           cache-key-suffix: fmt-fmt
           cache: true
