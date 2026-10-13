@@ -417,9 +417,23 @@ fn ensure_sidecar(path: &Path) -> Result<()> {
             }
         }
         Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
-            std::fs::create_dir(path).map_err(|error| {
-                fallback_error(&format!("create sidecar {}", path.display()), &error)
-            })?;
+            if let Err(error) = std::fs::create_dir(path) {
+                if error.kind() != std::io::ErrorKind::AlreadyExists {
+                    return Err(fallback_error(
+                        &format!("create sidecar {}", path.display()),
+                        &error,
+                    ));
+                }
+            }
+            // A concurrent initializer may have created it after our lookup.
+            // Recheck the winner before allowing the writability probe.
+            let metadata = std::fs::symlink_metadata(path)?;
+            if fs::is_link_or_reparse(path)? || !metadata.is_dir() {
+                return Err(FbuildError::ConfigError(format!(
+                    "Windows short-path fallback sidecar {} must be a real directory, not a link or file. Choose another short FBUILD_CACHE_DIR or run fbuild --fix-win.",
+                    path.display()
+                )));
+            }
         }
         Err(error) => {
             return Err(fallback_error(
@@ -545,6 +559,9 @@ fn validate_marker(
 }
 
 fn write_marker(path: &Path, marker: &SelectionMarker) -> Result<()> {
+    if let Some(existing) = read_marker(path)? {
+        return validate_marker(path, &existing, &marker.cache_root, &marker.scratch_root);
+    }
     let parent = path
         .parent()
         .ok_or_else(|| FbuildError::ConfigError("cache selection marker has no parent".into()))?;
@@ -568,13 +585,21 @@ fn write_marker(path: &Path, marker: &SelectionMarker) -> Result<()> {
         .map_err(|error| {
             fallback_error(&format!("write cache selection {}", path.display()), &error)
         })?;
-    fs::replace_file(pending.path(), path).map_err(|error| {
-        fallback_error(
-            &format!("replace cache selection {}", path.display()),
-            &error,
-        )
-    })?;
-    Ok(())
+    match pending.persist_noclobber(path) {
+        Ok(_) => Ok(()),
+        Err(error) => {
+            // Another process may have installed the same complete selection
+            // since our initial read. Validate its winner without replacing it.
+            if let Some(existing) = read_marker(path)? {
+                validate_marker(path, &existing, &marker.cache_root, &marker.scratch_root)
+            } else {
+                Err(fallback_error(
+                    &format!("install cache selection {}", path.display()),
+                    &error.error,
+                ))
+            }
+        }
+    }
 }
 
 #[cfg(test)]

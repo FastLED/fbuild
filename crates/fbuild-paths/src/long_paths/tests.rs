@@ -244,13 +244,72 @@ fn explicit_cache_is_normalized_before_shortness_is_checked() {
 }
 
 #[test]
-fn repeated_fallback_initialization_atomically_replaces_marker() {
+fn repeated_fallback_initialization_preserves_valid_marker() {
     let temp = tempdir();
     let first = resolve(inputs(&temp, Observation::Disabled)).unwrap();
+    let marker_path = first.fbuild_root.join(MARKER_FILE);
+    let mut saved: serde_json::Value =
+        serde_json::from_slice(&std::fs::read(&marker_path).unwrap()).unwrap();
+    saved["preserve_extra_field"] = serde_json::json!(true);
+    let bytes = serde_json::to_vec(&saved).unwrap();
+    std::fs::write(&marker_path, &bytes).unwrap();
     let second = resolve(inputs(&temp, Observation::Disabled)).unwrap();
     assert_eq!(first.cache_root, second.cache_root);
+    assert_eq!(std::fs::read(&marker_path).unwrap(), bytes);
     let enabled = resolve(inputs(&temp, Observation::Enabled)).unwrap();
     assert_eq!(first.cache_root, enabled.cache_root);
+}
+
+#[test]
+fn concurrent_first_fallback_initialization_retains_one_valid_selection() {
+    let temp = tempdir();
+    let barrier = std::sync::Barrier::new(4);
+    let roots = std::thread::scope(|scope| {
+        let contenders: Vec<_> = (0..4)
+            .map(|_| {
+                scope.spawn(|| {
+                    barrier.wait();
+                    resolve(inputs(&temp, Observation::Disabled))
+                        .unwrap()
+                        .cache_root
+                })
+            })
+            .collect();
+        contenders
+            .into_iter()
+            .map(|contender| contender.join().unwrap())
+            .collect::<Vec<_>>()
+    });
+    assert!(roots.iter().all(|root| root == &roots[0]));
+    let retained = resolve(inputs(&temp, Observation::Enabled)).unwrap();
+    assert_eq!(retained.cache_root, roots[0]);
+}
+
+#[test]
+fn concurrent_short_explicit_cache_initialization_shares_real_sidecars() {
+    let temp = tempdir();
+    for index in 0..8 {
+        let selected = temp.path().join(format!("e{index}"));
+        let barrier = std::sync::Barrier::new(4);
+        std::thread::scope(|scope| {
+            let contenders: Vec<_> = (0..4)
+                .map(|_| {
+                    scope.spawn(|| {
+                        let mut input = inputs(&temp, Observation::Disabled);
+                        input.cache_override = Some(selected.clone());
+                        barrier.wait();
+                        resolve(input).unwrap()
+                    })
+                })
+                .collect();
+            for contender in contenders {
+                let resolution = contender.join().unwrap();
+                assert_eq!(resolution.cache_root, selected);
+                assert!(resolution.scratch_root.is_dir());
+                assert!(resolution.short_build_root.unwrap().is_dir());
+            }
+        });
+    }
 }
 
 #[test]
