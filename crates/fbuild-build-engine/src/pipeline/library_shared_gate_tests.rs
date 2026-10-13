@@ -19,12 +19,13 @@ use crate::parallel::compile_sources_parallel_shared;
 use std::path::Path;
 
 /// Fake in-process "core" compiler: records a (label, phase, ns) event to
-/// the shared log for every compile, sleeping long enough that at least
-/// one lib_deps archive compile is guaranteed to overlap it.
+/// the shared log for every compile, retaining its gate permit until the
+/// library phase finishes, regardless of subprocess startup latency.
 struct FakeCoreCompiler {
     gcc: NormalizedPath,
     log: Arc<std::sync::Mutex<Vec<(String, String, u128)>>>,
-    sleep_ms: u64,
+    started: Arc<tokio::sync::Notify>,
+    libraries_done: Arc<tokio::sync::Notify>,
 }
 
 fn now_ns() -> u128 {
@@ -48,7 +49,13 @@ impl Compiler for FakeCoreCompiler {
             .lock()
             .unwrap()
             .push(("core".to_string(), "start".to_string(), now_ns()));
-        tokio::time::sleep(std::time::Duration::from_millis(self.sleep_ms)).await;
+        self.started.notify_one();
+        tokio::time::timeout(
+            std::time::Duration::from_secs(30),
+            self.libraries_done.notified(),
+        )
+        .await
+        .expect("library phase must finish while core retains one shared gate permit");
         self.log
             .lock()
             .unwrap()
@@ -227,14 +234,13 @@ async fn lib_deps_and_core_share_one_job_gate() {
 
         let core_log: Arc<std::sync::Mutex<Vec<(String, String, u128)>>> =
             Arc::new(std::sync::Mutex::new(Vec::new()));
+        let core_started = Arc::new(tokio::sync::Notify::new());
+        let libraries_done = Arc::new(tokio::sync::Notify::new());
         let core_compiler = FakeCoreCompiler {
             gcc: NormalizedPath::new(&gcc),
             log: core_log.clone(),
-            // Long enough that the two ~0.1s library compiles (which
-            // must serialize behind each other once the gate's second
-            // slot is claimed by this core compile) are guaranteed to
-            // land inside this compile's [start, end) window.
-            sleep_ms: 300,
+            started: core_started.clone(),
+            libraries_done: libraries_done.clone(),
         };
         let core_source = project.join("core.cpp");
         std::fs::write(&core_source, "int g();\n").unwrap();
@@ -253,7 +259,15 @@ async fn lib_deps_and_core_share_one_job_gate() {
                 None,
                 None,
             ),
-            lib_deps.compile(&gate),
+            async {
+                core_started.notified().await;
+                // Exercise startup slower than the old 300 ms core sleep.
+                // Correctness depends on completion signaling, not this delay.
+                tokio::time::sleep(std::time::Duration::from_millis(400)).await;
+                let result = lib_deps.compile(&gate).await;
+                libraries_done.notify_one();
+                result
+            },
         );
 
         let core_result = core_result.unwrap();
@@ -317,7 +331,7 @@ async fn lib_deps_and_core_share_one_job_gate() {
 
         // The two lib compiles must not run concurrently with each
         // other AND the core compile at once (only one gate, size 2:
-        // core takes one slot for its whole 300ms, so the two lib
+        // core takes one slot until both libraries finish, so the two lib
         // compiles must themselves serialize behind the gate's other
         // slot).
         assert!(
