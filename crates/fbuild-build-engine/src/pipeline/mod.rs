@@ -27,4 +27,6 @@ pub use library::{
 };
 pub use link::{assemble_build_result, handle_link_result};
 pub use project_discovery::{discover_project_includes, is_platform_project, is_project_a_library};
-pub use sequential::run_sequential_build_with_libs;
+pub use sequential::{
+    run_sequential_build_with_libs, run_sequential_build_with_optional_framework_libs,
+};

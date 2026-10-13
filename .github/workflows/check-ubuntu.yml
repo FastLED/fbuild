@@ -103,6 +103,10 @@ jobs:
       - name: Test
         id: tests
         run: uv run --no-project python ci/test_cache_status.py -- soldr cargo test --workspace
+      - name: Test optional SDK library linkage with native GCC LTO
+        run: |
+          soldr cargo test -p fbuild-build-engine --lib optional_framework_archive_preserves_only_referenced_initializers -- --ignored
+          soldr cargo test -p fbuild-build-arm --lib optional_library_rescans_earlier_dependency_archive -- --ignored
 
   python-facade-tests:
     # FastLED/fbuild#1485 §5.2/§6: the embedded-CPython AT-P integration

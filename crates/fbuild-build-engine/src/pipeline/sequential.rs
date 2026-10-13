@@ -32,12 +32,48 @@ use super::link::{assemble_build_result, handle_link_result};
 /// with the rest of the build. See [`compile_project_as_library`] and
 /// ISSUES.md Issue 1.
 #[allow(clippy::too_many_arguments)]
+pub async fn run_sequential_build_with_libs(
+    compiler: &(dyn Compiler + Send + Sync),
+    linker: &(dyn crate::linker::Linker + Send + Sync),
+    ctx: BuildContext,
+    params: &BuildParams,
+    sources: &SourceCollection,
+    extra_link_inputs: &[PathBuf],
+    lib_deps: super::library::LibDeps,
+    lib_env: Option<&LibraryBuildEnv<'_>>,
+    arch: TargetArchitecture,
+    platform_label: &str,
+    start: Instant,
+) -> Result<BuildResult> {
+    run_sequential_build_with_optional_framework_libs(
+        compiler,
+        linker,
+        ctx,
+        params,
+        sources,
+        extra_link_inputs,
+        lib_deps,
+        lib_env,
+        None,
+        arch,
+        platform_label,
+        start,
+    )
+    .await
+}
+
+/// With `Some`, archive selected local and framework library objects together
+/// so unused local code cannot extract SDK startup constructors. With `None`,
+/// retain the legacy direct-object linkage. The framework source slice must be
+/// a subset of the core/variant sources; `Some(&[])` still archives local libs.
+/// The library environment supplies the platform's LTO-aware archiver.
+#[allow(clippy::too_many_arguments)]
 #[expect(
     clippy::cognitive_complexity,
     clippy::too_many_lines,
     reason = "baseline, zackees/ci.yml#229"
 )]
-pub async fn run_sequential_build_with_libs(
+pub async fn run_sequential_build_with_optional_framework_libs(
     compiler: &(dyn Compiler + Send + Sync),
     linker: &(dyn crate::linker::Linker + Send + Sync),
     mut ctx: BuildContext,
@@ -46,6 +82,7 @@ pub async fn run_sequential_build_with_libs(
     extra_link_inputs: &[PathBuf],
     lib_deps: super::library::LibDeps,
     lib_env: Option<&LibraryBuildEnv<'_>>,
+    optional_framework_sources: Option<&[PathBuf]>,
     arch: TargetArchitecture,
     platform_label: &str,
     start: Instant,
@@ -254,7 +291,7 @@ pub async fn run_sequential_build_with_libs(
         &build_log_mutex,
     ));
 
-    // Compile local libraries (lib/* — loose objects, LTO-safe; per-lib parallel)
+    // Compile local libraries normally; opted-in platforms archive them below.
     let declared_lib_deps = ctx
         .config
         .get_lib_deps(&params.env_name)
@@ -355,6 +392,13 @@ pub async fn run_sequential_build_with_libs(
 
     // Link
     crate::build_output::log_linking(&mut ctx.build_log, "Linking firmware.elf");
+    let optional_objects: Option<Vec<PathBuf>> = optional_framework_sources.map(|sources| {
+        sources
+            .iter()
+            .map(|source| crate::compiler::CompilerBase::object_path(source, &ctx.core_build_dir))
+            .chain(library_objects.iter().cloned())
+            .collect()
+    });
     core_objects.extend(library_objects);
     core_objects.extend(extra_link_inputs.iter().cloned());
     core_objects.extend(lib_deps_archives);
@@ -362,10 +406,25 @@ pub async fn run_sequential_build_with_libs(
         // GCC accepts .a in the same positional slot as .o files.
         core_objects.push(archive);
     }
+    if let Some(optional_objects) = optional_objects.filter(|objects| !objects.is_empty()) {
+        let env = lib_env.ok_or_else(|| {
+            fbuild_core::FbuildError::BuildFailed(
+                "optional framework libraries require an LTO-aware library build environment"
+                    .into(),
+            )
+        })?;
+        core_objects = archive_optional_library_objects(
+            core_objects,
+            &optional_objects,
+            &ctx.build_dir,
+            env.ar_path,
+        )
+        .await?;
+    }
     let link_result = {
         // FastLED/fbuild#1465: `link` covers `Linker::link_all` end to end
-        // (link + objcopy + size). No separate archive step exists: core
-        // objects are passed to the linker directly for LTO compatibility.
+        // (link + objcopy + size). Mandatory core objects remain direct;
+        // the optional library archive has already been prepared above.
         let _g = perf.phase("link");
         crate::linker::Linker::link_all(
             linker,
@@ -436,6 +495,38 @@ pub async fn run_sequential_build_with_libs(
     ))
 }
 
+/// Preserve mandatory core startup objects, and place local and SDK objects in
+/// one archive after every consumer. GNU archive extraction resolves dependencies
+/// among its members without imposing the scanner's library discovery order.
+async fn archive_optional_library_objects(
+    inputs: Vec<PathBuf>,
+    optional_objects: &[PathBuf],
+    build_dir: &Path,
+    ar_path: &Path,
+) -> Result<Vec<PathBuf>> {
+    let optional: std::collections::HashSet<&PathBuf> = optional_objects.iter().collect();
+    let (objects, mut inputs): (Vec<_>, Vec<_>) = inputs
+        .into_iter()
+        .partition(|input| optional.contains(input));
+    if objects.len() != optional.len() {
+        return Err(fbuild_core::FbuildError::BuildFailed(
+            "optional library object missing from compiled link inputs".into(),
+        ));
+    }
+    if !objects.is_empty() {
+        let archive = build_dir.join("libOptionalLibraries.a");
+        crate::linker::LinkerBase::archive_if_stale(
+            ar_path,
+            &objects,
+            &archive,
+            "optional library archiver",
+        )
+        .await?;
+        inputs.push(archive);
+    }
+    Ok(inputs)
+}
+
 /// Await `future`, returning its value with the wall time it took.
 async fn timed<T>(
     future: impl std::future::Future<Output = Result<T>>,
@@ -460,4 +551,115 @@ fn local_lib_dir_names(project_dir: &Path) -> std::collections::HashSet<String> 
         }
     }
     names
+}
+
+#[cfg(test)]
+mod optional_framework_tests {
+    use super::*;
+    use crate::compiler::CompilerBase;
+    use fbuild_core::subprocess::run_command;
+
+    async fn run(args: &[String]) -> String {
+        let args: Vec<&str> = args.iter().map(String::as_str).collect();
+        let result = run_command(&args, None, None, Some(std::time::Duration::from_secs(30)))
+            .await
+            .unwrap();
+        assert!(result.success(), "{args:?}: {}", result.stderr);
+        result.stdout
+    }
+
+    async fn gcc_archiver(cc: &str) -> PathBuf {
+        // Compiler wrappers need not expose gcc-ar on PATH. Ask GCC for its
+        // actual frontend, then use the companion archiver in that toolchain.
+        let frontend = run(&[cc.into(), "-print-prog-name=cc1".into()]).await;
+        let frontend = Path::new(frontend.trim());
+        if frontend.is_absolute() {
+            let name = fbuild_core::platform::executable::native_name("gcc-ar");
+            for ancestor in frontend.ancestors().skip(1) {
+                let candidate = ancestor.join("bin").join(&name);
+                if candidate.is_file() {
+                    return candidate;
+                }
+            }
+        }
+        let reported = run(&[cc.into(), "-print-prog-name=gcc-ar".into()]).await;
+        PathBuf::from(reported.trim())
+    }
+
+    #[tokio::test]
+    #[ignore = "requires native GCC and matching gcc-ar; explicitly run in Check Ubuntu CI"]
+    async fn optional_framework_archive_preserves_only_referenced_initializers() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        let cc = std::env::var("FBUILD_TEST_CC").unwrap_or_else(|_| "gcc".into());
+        let ar = gcc_archiver(&cc).await;
+        let core = root.join("core.c");
+        let optional = root.join("optional.c");
+        let dependency = root.join("dependency.c");
+        let local_used = root.join("local_used.c");
+        let local_sd = root.join("local_sd.c");
+        let local_callback = root.join("local_callback.c");
+        std::fs::write(
+            &core,
+            "int state; __attribute__((constructor)) void core_init(void) { state |= 1; }",
+        )
+        .unwrap();
+        std::fs::write(&optional, "extern int state; extern int dependency(void); extern int local_callback(void); __attribute__((constructor)) void optional_init(void) { state |= 2; } int optional(void) { return dependency() + local_callback() - 13; }").unwrap();
+        std::fs::write(&dependency, "int dependency(void) { return 7; }").unwrap();
+        std::fs::write(&local_used, "int local_value(void) { return 11; }").unwrap();
+        std::fs::write(
+            &local_sd,
+            "extern int optional(void); int local_sd(void) { return optional(); }",
+        )
+        .unwrap();
+        std::fs::write(&local_callback, "int local_callback(void) { return 13; }").unwrap();
+        let sources = [
+            &core,
+            &optional,
+            &dependency,
+            &local_used,
+            &local_sd,
+            &local_callback,
+        ];
+        let mut objects = Vec::new();
+        for source in sources {
+            let object = CompilerBase::object_path(source, root);
+            run(&[
+                cc.clone(),
+                "-flto".into(),
+                "-c".into(),
+                source.display().to_string(),
+                "-o".into(),
+                object.display().to_string(),
+            ])
+            .await;
+            objects.push(object);
+        }
+        let optional_objects: Vec<_> = [optional, dependency, local_used, local_sd, local_callback]
+            .iter()
+            .map(|source| CompilerBase::object_path(source, root))
+            .collect();
+        let inputs = archive_optional_library_objects(objects, &optional_objects, root, &ar)
+            .await
+            .unwrap();
+        for (name, body) in [
+            (
+                "unused",
+                "extern int state; extern int local_value(void); int main(void) { return state != 1 || local_value() != 11; }",
+            ),
+            (
+                "used",
+                "extern int state; extern int local_value(void); extern int local_sd(void); int main(void) { return state != 3 || local_value() != 11 || local_sd() != 7; }",
+            ),
+        ] {
+            let main = root.join(format!("{name}.c"));
+            let exe = root.join(format!("{name}{}", std::env::consts::EXE_SUFFIX));
+            std::fs::write(&main, body).unwrap();
+            let mut args = vec![cc.clone(), "-flto".into(), main.display().to_string()];
+            args.extend(inputs.iter().map(|path| path.display().to_string()));
+            args.extend(["-o".into(), exe.display().to_string()]);
+            run(&args).await;
+            run(&[exe.display().to_string()]).await;
+        }
+    }
 }

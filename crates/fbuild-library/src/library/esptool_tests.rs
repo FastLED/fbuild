@@ -339,12 +339,69 @@ fn download_url_matches_the_url_ensure_installed_uses() {
     );
 
     assert_eq!(esptool.version(), "5.3.0");
-    if let Some(tag) = tasmota_platform_tag() {
+    if fbuild_core::platform::host::is_windows() {
+        assert_eq!(
+            esptool.download_url().unwrap(),
+            "https://github.com/pioarduino/esptool/releases/download/v5.3.0/esptool.zip"
+        );
+    } else if let Some(tag) = tasmota_platform_tag() {
         assert_eq!(
             esptool.download_url().unwrap(),
             Esptool::release_url("5.3.0", tag)
         );
     }
+}
+
+#[test]
+fn windows_registry_esptool_uses_published_source_archives() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    // The real 5.1.0 registry tools.json publishes this any-host source URL;
+    // its upstream release has no esptool-windows-amd64.zip asset.
+    for version in ["5.1.0", "5.3.0"] {
+        let metadata = format!(
+            "https://github.com/pioarduino/registry/releases/download/0.0.1/esptoolpy-v{version}.zip"
+        );
+        let source = format!(
+            "https://github.com/pioarduino/esptool/releases/download/v{version}/esptool.zip"
+        );
+        let windows = Esptool::from_metadata_url_for_host(tmp.path(), &metadata, true);
+        assert_eq!(windows.version(), version);
+        assert_eq!(windows.download_url().unwrap(), source);
+        assert_eq!(windows.source_url.as_deref(), Some(source.as_str()));
+        assert_eq!(windows.expected_runtime_version.as_deref(), Some(version));
+
+        let unix = Esptool::from_metadata_url_for_host(tmp.path(), &metadata, false);
+        assert!(unix.source_url.is_none());
+        assert_eq!(unix.version(), version);
+    }
+}
+
+#[test]
+fn windows_source_selection_preserves_direct_and_platformio_archives() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let source = "https://github.com/pioarduino/esptool/releases/download/v4.7.5/esptool.zip";
+    for windows in [false, true] {
+        let esptool = Esptool::from_metadata_url_for_host(tmp.path(), source, windows);
+        assert_eq!(esptool.download_url().unwrap(), source);
+        assert_eq!(esptool.expected_runtime_version.as_deref(), Some("4.7.5"));
+    }
+    let payload = fbuild_core::platformio_package::ResolvedPayload {
+        owner: "platformio".into(),
+        kind: fbuild_core::platformio_package::PackageKind::Tool,
+        name: "tool-esptoolpy".into(),
+        version: "1.30300.0".into(),
+        system: "all".into(),
+        url: "https://dl.registry.platformio.org/download/platformio/tool/tool-esptoolpy/1.30300.0/tool-esptoolpy-1.30300.0.tar.gz".into(),
+        sha256: "published-registry-digest".into(),
+    };
+    let legacy = Esptool::from_registry_payload(tmp.path(), &payload);
+    assert_eq!(legacy.download_url().unwrap(), payload.url);
+    assert_eq!(legacy.version(), "1.30300.0");
+    assert_eq!(
+        legacy.source_checksum.as_deref(),
+        Some(payload.sha256.as_str())
+    );
+    assert!(legacy.expected_runtime_version.is_none());
 }
 
 #[test]

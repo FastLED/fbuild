@@ -8,7 +8,7 @@
 //! provisions esptool as a managed package instead, so no user `pip install`
 //! is required.
 //!
-//! Modern metadata URLs use the **PyInstaller standalone binary** from
+//! Modern metadata URLs on Unix use the **PyInstaller standalone binary** from
 //! [`tasmota/esptool`](https://github.com/tasmota/esptool). Older pioarduino
 //! releases instead pin a source-only `pioarduino/esptool` archive; those are
 //! installed at the exact URL in a private `uv tool` environment so their
@@ -20,7 +20,9 @@
 //!    (`.../download/0.0.1/esptoolpy-v5.3.0.zip` → `5.3.0`) and
 //!    version-in-release-tag (`.../download/v4.8.5/esptool.zip` → `4.8.5`).
 //!    See `extract_esptool_version`.
-//! 2. The host `(OS, ARCH)` maps to a tasmota platform tag
+//! 2. Windows registry metadata selects the published pioarduino source archive
+//!    at the same version: some releases (including 5.1.0) have no Windows binary.
+//!    Other hosts map `(OS, ARCH)` to a tasmota platform tag
 //!    (`linux-amd64`, `macos-arm64`, `windows-amd64`, …). An unsupported host
 //!    yields an error, and the caller falls back to an `esptool` on PATH.
 //! 3. `https://github.com/tasmota/esptool/releases/download/v{version}/esptool-{platform}.zip`
@@ -85,17 +87,42 @@ pub struct Esptool {
 impl Esptool {
     /// Create from the `platform.json`-derived `tool-esptoolpy` URL
     /// (`Esp32Platform::get_package_url("tool-esptoolpy")`). Only the version
-    /// embedded in the URL is used — from the filename, or from the release
-    /// tag when the filename is generic.
+    /// embedded in registry URLs is used — from the filename. Direct source
+    /// archive URLs are retained, with the version taken from the release tag.
     pub fn from_metadata_url(project_dir: &Path, metadata_url: &str) -> Self {
+        Self::from_metadata_url_for_host(
+            project_dir,
+            metadata_url,
+            fbuild_core::platform::host::is_windows(),
+        )
+    }
+
+    fn from_metadata_url_for_host(project_dir: &Path, metadata_url: &str, windows: bool) -> Self {
+        let version = extract_esptool_version(metadata_url);
+        let source_url = if metadata_url
+            .starts_with("https://github.com/pioarduino/esptool/releases/download/")
+        {
+            Some(metadata_url.to_string())
+        } else if windows
+            && metadata_url.starts_with("https://github.com/pioarduino/registry/releases/download/")
+            && version != "unknown"
+            && metadata_url.ends_with(&format!("/esptoolpy-v{version}.zip"))
+        {
+            // This is the any-host source URL published in the registry's
+            // tools.json, not a renamed binary asset. Keep the SDK's version;
+            // ensure_source_installed verifies the resulting uv launcher.
+            Some(format!(
+                "https://github.com/pioarduino/esptool/releases/download/v{version}/esptool.zip"
+            ))
+        } else {
+            None
+        };
         Self {
             project_dir: NormalizedPath::from(project_dir),
-            version: extract_esptool_version(metadata_url),
-            source_url: metadata_url
-                .starts_with("https://github.com/pioarduino/esptool/releases/download/")
-                .then(|| metadata_url.to_string()),
+            version: version.clone(),
+            source_url,
             source_checksum: None,
-            expected_runtime_version: Some(extract_esptool_version(metadata_url)),
+            expected_runtime_version: Some(version),
         }
     }
 
