@@ -1,9 +1,64 @@
 use std::fs::OpenOptions;
 use std::os::unix::fs::PermissionsExt;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
-use crate::platform::fs::{ErrorClass, VolumeFacts};
 use crate::path::NormalizedPath;
+use crate::platform::fs::{ErrorClass, LongPathSupport, VolumeFacts};
+
+pub(crate) fn long_path_support() -> std::io::Result<LongPathSupport> {
+    Ok(LongPathSupport::NotApplicable)
+}
+
+pub(crate) fn enable_long_paths() -> std::io::Result<()> {
+    Err(std::io::Error::new(
+        std::io::ErrorKind::Unsupported,
+        "Windows long-path repair is unavailable on this host",
+    ))
+}
+
+pub(crate) fn legacy_path_units(path: &Path) -> usize {
+    path.as_os_str().as_encoded_bytes().len()
+}
+
+pub(crate) fn short_cache_base() -> std::io::Result<PathBuf> {
+    Err(std::io::Error::new(
+        std::io::ErrorKind::Unsupported,
+        "Windows short-cache drive selection is unavailable on this host",
+    ))
+}
+
+pub(crate) fn ensure_private_directory(path: &Path) -> std::io::Result<()> {
+    use std::os::unix::fs::{DirBuilderExt, MetadataExt, OpenOptionsExt};
+
+    match std::fs::symlink_metadata(path) {
+        Ok(metadata) if !metadata.is_dir() || metadata.file_type().is_symlink() => {
+            return Err(std::io::Error::new(
+                std::io::ErrorKind::PermissionDenied,
+                "private directory must not be a symlink or file",
+            ));
+        }
+        Ok(_) => {}
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
+            std::fs::DirBuilder::new()
+                .recursive(true)
+                .mode(0o700)
+                .create(path)?;
+        }
+        Err(error) => return Err(error),
+    }
+    let directory = OpenOptions::new()
+        .read(true)
+        .custom_flags(libc::O_NOFOLLOW | libc::O_DIRECTORY)
+        .open(path)?;
+    // SAFETY: geteuid has no pointer arguments or preconditions.
+    if directory.metadata()?.uid() != unsafe { libc::geteuid() } {
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::PermissionDenied,
+            "private directory belongs to another user",
+        ));
+    }
+    directory.set_permissions(std::fs::Permissions::from_mode(0o700))
+}
 
 pub(crate) fn file_identity(path: &Path) -> std::io::Result<same_file::Handle> {
     same_file::Handle::from_path(path)
@@ -95,9 +150,7 @@ pub(crate) fn classify_error(error: &std::io::Error) -> ErrorClass {
     }
 }
 
-pub(crate) fn cancel_blocking_io(
-    _worker: &std::thread::JoinHandle<()>,
-) -> std::io::Result<bool> {
+pub(crate) fn cancel_blocking_io(_worker: &std::thread::JoinHandle<()>) -> std::io::Result<bool> {
     Ok(false)
 }
 
@@ -124,7 +177,9 @@ fn volume_facts_from_statvfs(path: &Path) -> std::io::Result<VolumeFacts> {
 }
 
 fn byte_count(blocks: u128, fragment_size: u128) -> u64 {
-    blocks.saturating_mul(fragment_size).min(u128::from(u64::MAX)) as u64
+    blocks
+        .saturating_mul(fragment_size)
+        .min(u128::from(u64::MAX)) as u64
 }
 
 #[cfg(test)]
@@ -136,6 +191,9 @@ mod tests {
         let temp = tempfile::NamedTempFile::new().unwrap();
         std::fs::set_permissions(temp.path(), std::fs::Permissions::from_mode(0o600)).unwrap();
         set_executable(temp.path()).unwrap();
-        assert_eq!(std::fs::metadata(temp.path()).unwrap().permissions().mode() & 0o777, 0o700);
+        assert_eq!(
+            std::fs::metadata(temp.path()).unwrap().permissions().mode() & 0o777,
+            0o700
+        );
     }
 }

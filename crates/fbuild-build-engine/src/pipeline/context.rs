@@ -109,6 +109,9 @@ impl BuildContext {
     ) -> Result<Self> {
         let project_dir = &params.project_dir;
         let env_name = &params.env_name;
+        fbuild_paths::long_paths::validate_legacy_path(project_dir)?;
+        fbuild_paths::long_paths::validate_legacy_path(&params.build_dir)?;
+        fbuild_paths::long_paths::prepare_build_directory(&params.build_dir)?;
 
         // 1. Parse platformio.ini, attaching any forwarded `PLATFORMIO_*` env
         // var overrides from the CLI caller (the daemon does not inherit

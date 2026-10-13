@@ -148,6 +148,7 @@ mod tests {
             dependency_install: None,
             client_count: 0,
             cache_identity: Some(identity.label_value()),
+            long_path_support: None,
             cache_schema_version: Some(fbuild_paths::running_process::CACHE_SCHEMA_VERSION),
             spawner_cwd: spawner_cwd.map(str::to_string),
             source_mtime: None,

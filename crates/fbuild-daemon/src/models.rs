@@ -297,6 +297,10 @@ pub struct DaemonInfoResponse {
     pub cache_identity: String,
     pub cache_schema_version: u32,
     pub daemon_dir: String,
+    /// Windows policy captured at daemon startup. Optional for compatibility
+    /// with clients and daemons that predate the long-path preflight.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub long_path_support: Option<fbuild_paths::long_paths::Observation>,
     pub source_mtime: f64,
     pub spawner_cwd: String,
     /// MCP (Model Context Protocol) server URL.
@@ -966,6 +970,7 @@ mod tests {
             spawner_cwd: "/home/user/project".into(),
             mcp_url: "http://127.0.0.1:8765/mcp".into(),
             watch_set_cache: None,
+            long_path_support: None,
         };
         let json = serde_json::to_string(&resp).unwrap();
         assert!(json.contains("\"started_at\""));
@@ -1010,6 +1015,7 @@ mod tests {
             spawner_cwd: "unknown".into(),
             mcp_url: "http://127.0.0.1:8765/mcp".into(),
             watch_set_cache: None,
+            long_path_support: None,
         };
         let json = serde_json::to_string(&resp).unwrap();
         assert!(!json.contains("current_operation"));
@@ -1046,6 +1052,7 @@ mod tests {
             spawner_cwd: "unknown".into(),
             mcp_url: "http://127.0.0.1:8765/mcp".into(),
             watch_set_cache: None,
+            long_path_support: None,
         };
         let json = serde_json::to_string(&resp).unwrap();
         assert!(json.contains("\"current_operation\""));

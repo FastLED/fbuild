@@ -6,3 +6,4 @@ mod ci_command;
 mod daemon_crash_recovery;
 mod lib_select;
 mod test_emu_exit_code;
+mod windows_long_paths;

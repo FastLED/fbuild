@@ -67,3 +67,59 @@ jobs:
       - name: Test
         shell: bash
         run: soldr cargo test --workspace
+
+      - name: Windows long-path repair and fallback smoke
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $registry = 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem'
+          $original = Get-ItemPropertyValue -Path $registry -Name LongPathsEnabled -ErrorAction SilentlyContinue
+          $metadata = soldr cargo metadata --format-version 1 --no-deps | ConvertFrom-Json
+          if ($LASTEXITCODE -ne 0) { throw 'cargo metadata failed' }
+          $cli = Join-Path $metadata.target_directory 'debug\fbuild.exe'
+          $daemon = Join-Path $metadata.target_directory 'debug\fbuild-daemon.exe'
+          foreach ($binary in @($cli, $daemon)) {
+            $image = [Text.Encoding]::UTF8.GetString([IO.File]::ReadAllBytes($binary))
+            if ($image -notmatch 'longPathAware[^>]*>true</' -or $image -notmatch 'level="asInvoker"') {
+              throw "Missing Windows manifest in $binary"
+            }
+          }
+          try {
+            # This disposable hosted runner is already elevated. Exercise the
+            # fixed helper without requiring an interactive UAC desktop.
+            New-ItemProperty -Path $registry -Name LongPathsEnabled -PropertyType DWord -Value 0 -Force | Out-Null
+            & $cli --__fix-win-helper
+            if ($LASTEXITCODE -ne 0) { throw 'long-path helper failed' }
+            if ((Get-ItemPropertyValue -Path $registry -Name LongPathsEnabled) -ne 1) {
+              throw 'long-path helper did not verify its change'
+            }
+            & $cli --fix-win --no-update-check
+            if ($LASTEXITCODE -ne 0) { throw 'already-enabled repair failed' }
+            $env:FBUILD_DEV_MODE = '0'
+            $env:RUNNING_PROCESS_DISABLE = '1'
+            & $cli build tests/platform/uno --dry-run --no-update-check
+            if ($LASTEXITCODE -ne 0) { throw 'enabled daemon startup failed' }
+            $before = Get-Content (Join-Path $env:USERPROFILE '.fbuild\prod\daemon\root-owner.json') -Raw | ConvertFrom-Json
+            New-ItemProperty -Path $registry -Name LongPathsEnabled -PropertyType DWord -Value 0 -Force | Out-Null
+            $env:CI = 'true'
+            $output = & $cli install tests/platform/esp32dev --check --json --no-update-check 2> long-path-warning.txt
+            $code = $LASTEXITCODE
+            if ($code -notin @(0, 2)) { throw "fallback package check failed: $code" }
+            $output | ConvertFrom-Json | Out-Null
+            $warning = Get-Content long-path-warning.txt -Raw
+            if ($warning -notmatch 'WARNING:' -or $warning -notmatch 'fix-win' -or $warning.Contains([char]27)) {
+              throw 'fallback warning is missing or contains ANSI in redirected stderr'
+            }
+            & $cli build tests/platform/uno --dry-run --no-update-check
+            if ($LASTEXITCODE -ne 0) { throw 'disabled-policy daemon handoff failed' }
+            $after = Get-Content (Join-Path $env:USERPROFILE '.fbuild\prod\daemon\root-owner.json') -Raw | ConvertFrom-Json
+            if ($before.pid -eq $after.pid) { throw 'daemon was reused after the registry changed' }
+            & $cli daemon stop --no-update-check
+            if ($LASTEXITCODE -ne 0) { throw 'smoke daemon did not stop' }
+          } finally {
+            if ($null -eq $original) {
+              Remove-ItemProperty -Path $registry -Name LongPathsEnabled -ErrorAction SilentlyContinue
+            } else {
+              New-ItemProperty -Path $registry -Name LongPathsEnabled -PropertyType DWord -Value $original -Force | Out-Null
+            }
+          }

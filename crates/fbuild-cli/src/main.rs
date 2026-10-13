@@ -27,7 +27,12 @@ fn async_main_entry() {
     // daemon — inherits it instead of re-hashing per invocation. Official
     // (non-dev) invocations export nothing. A hash failure is reported and
     // otherwise ignored: dev builds must keep working.
-    match fbuild_paths::dev_daemon_namespace::namespace_to_export() {
+    let repair_only = std::env::args().any(|arg| arg == "--fix-win" || arg == "--__fix-win-helper");
+    match if repair_only {
+        Ok(None)
+    } else {
+        fbuild_paths::dev_daemon_namespace::namespace_to_export()
+    } {
         Ok(Some(namespace)) => unsafe {
             // SAFETY: single-threaded startup — before the tokio runtime or
             // any environment reader exists.
