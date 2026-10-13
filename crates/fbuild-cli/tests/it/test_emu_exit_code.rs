@@ -111,9 +111,7 @@ fn spawn_mock_daemon(stop: Arc<AtomicBool>, cache_root: &std::path::Path) -> u16
     let identity = fbuild_paths::running_process::DaemonCacheIdentity {
         mode: "prod",
         cache_root: cache_root.to_path_buf(),
-        cache_root_key: fbuild_core::path::NormalizedPath::new(cache_root)
-            .key()
-            .to_string(),
+        cache_root_key: fbuild_core::path::NormalizedPath::new(cache_root).display_slash(),
         cache_dir_source: "FBUILD_CACHE_DIR",
         trust_domain: fbuild_paths::running_process::LOCAL_TRUST_DOMAIN,
     };
@@ -123,6 +121,7 @@ fn spawn_mock_daemon(stop: Arc<AtomicBool>, cache_root: &std::path::Path) -> u16
         "daemon_state": "idle", "current_operation": null, "client_count": 0,
         "spawner_cwd": null, "source_mtime": 0.0,
         "cache_identity": identity.label_value(),
+        "cache_schema_version": fbuild_paths::running_process::CACHE_SCHEMA_VERSION,
         "long_path_support": fbuild_paths::long_paths::probe(),
     })
     .to_string();
