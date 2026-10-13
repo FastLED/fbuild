@@ -268,6 +268,7 @@ pub async fn prepare(cli: &Cli) -> Result<Option<i32>> {
 async fn relaunch_command() -> Result<i32> {
     tokio::task::spawn_blocking(|| {
         let executable = fbuild_core::platform::executable::current_image()?;
+        // allow-direct-spawn: command construction only; spawn_contained owns execution and inherited terminal streams.
         let mut command = std::process::Command::new(executable.as_path());
         command.args(std::env::args_os().skip(1));
         let mut child = process::spawn_contained(
