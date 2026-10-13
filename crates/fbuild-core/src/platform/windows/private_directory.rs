@@ -1,7 +1,9 @@
 //! Native ownership and protected permissions for automatic cache directories.
 
 use std::os::windows::ffi::OsStrExt;
-use std::path::{Path, PathBuf};
+use std::path::Path;
+
+use crate::path::NormalizedPath;
 
 struct NativeHandle(windows_sys::Win32::Foundation::HANDLE);
 
@@ -137,7 +139,7 @@ fn private_directory_security() -> std::io::Result<PrivateDirectorySecurity> {
     })
 }
 
-fn private_directory_components(path: &Path) -> std::io::Result<Vec<PathBuf>> {
+fn private_directory_components(path: &Path) -> std::io::Result<Vec<NormalizedPath>> {
     use std::path::{Component, Prefix};
 
     let invalid = || {
@@ -159,13 +161,13 @@ fn private_directory_components(path: &Path) -> std::io::Result<Vec<PathBuf>> {
     if !matches!(components.next(), Some(Component::RootDir)) {
         return Err(invalid());
     }
-    let mut current = PathBuf::from(format!("{}:\\", char::from(drive)));
+    let mut current = NormalizedPath::new(format!("{}:\\", char::from(drive)));
     let mut paths = vec![current.clone()];
     for component in components {
         let Component::Normal(name) = component else {
             return Err(invalid());
         };
-        current.push(name);
+        current = current.join(Path::new(name));
         paths.push(current.clone());
     }
     if paths.len() < 2 {
@@ -370,7 +372,9 @@ pub(crate) fn ensure_private_directory(path: &Path) -> std::io::Result<()> {
                 if error.raw_os_error() == Some(ERROR_SHARING_VIOLATION as i32)
                     && std::time::Instant::now() < deadline =>
             {
-                std::thread::sleep(std::time::Duration::from_millis(20));
+                // SAFETY: this native delay has no preconditions. This
+                // blocking capability runs on a dedicated blocking worker.
+                unsafe { windows_sys::Win32::System::Threading::Sleep(20) };
             }
             result => return result,
         }
@@ -431,28 +435,37 @@ mod tests {
     use super::*;
 
     /// Default Windows TempDir ownership can be TokenOwner (a group) rather
-    /// than TokenUser. Use its random filename, then create our directory with
-    /// explicit current-user ownership through the API under test.
+    /// than TokenUser. Create a uniquely named direct drive child with explicit
+    /// current-user ownership through the API under test.
     struct PrivateFixture {
-        path: PathBuf,
-        _name: tempfile::NamedTempFile,
+        path: NormalizedPath,
     }
 
     impl PrivateFixture {
         fn new() -> Self {
-            let name = tempfile::Builder::new()
-                .prefix("fb-private-")
-                .tempfile()
-                .unwrap();
-            let path = short_cache_base()
+            use sha2::Digest;
+            use std::sync::atomic::{AtomicU64, Ordering};
+
+            static NEXT_FIXTURE: AtomicU64 = AtomicU64::new(0);
+            let counter = NEXT_FIXTURE.fetch_add(1, Ordering::Relaxed);
+            let timestamp = std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
                 .unwrap()
-                .join(name.path().file_name().unwrap());
+                .as_nanos();
+            let nonce = format!("{}-{timestamp}-{counter}", std::process::id());
+            let digest = sha2::Sha256::digest(nonce.as_bytes());
+            let suffix = digest[..6]
+                .iter()
+                .map(|byte| format!("{byte:02x}"))
+                .collect::<String>();
+            let path = NormalizedPath::new(short_cache_base().unwrap())
+                .join(format!("fb-private-{suffix}"));
             ensure_private_directory(&path).unwrap();
-            Self { path, _name: name }
+            Self { path }
         }
 
         fn path(&self) -> &Path {
-            &self.path
+            self.path.as_path()
         }
     }
 

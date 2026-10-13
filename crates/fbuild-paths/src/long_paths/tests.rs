@@ -1,12 +1,12 @@
 use super::*;
 
 struct Fixture {
-    path: PathBuf,
+    path: NormalizedPath,
     temp: Option<tempfile::TempDir>,
 }
 
 impl Fixture {
-    fn path(&self) -> &Path {
+    fn path(&self) -> &NormalizedPath {
         &self.path
     }
 }
@@ -21,7 +21,7 @@ impl Drop for Fixture {
 
 fn tempdir() -> Fixture {
     if fbuild_core::platform::host::is_windows() {
-        let base = fbuild_core::platform::fs::short_cache_base().unwrap();
+        let base = NormalizedPath::new(fbuild_core::platform::fs::short_cache_base().unwrap());
         static NEXT: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
         let nonce = format!(
             "{}|{}|{}",
@@ -40,7 +40,7 @@ fn tempdir() -> Fixture {
     } else {
         let temp = tempfile::Builder::new().prefix("p").tempdir().unwrap();
         Fixture {
-            path: temp.path().to_path_buf(),
+            path: NormalizedPath::new(temp.path()),
             temp: Some(temp),
         }
     }
@@ -48,7 +48,7 @@ fn tempdir() -> Fixture {
 
 fn inputs(temp: &Fixture, observation: Observation) -> Inputs {
     let home = temp.path().join("home");
-    let short_base = temp.path().to_path_buf();
+    let short_base = temp.path().clone();
     Inputs {
         fbuild_root: home.join(crate::FBUILD_DIR_NAME).join("prod"),
         home,
@@ -58,6 +58,23 @@ fn inputs(temp: &Fixture, observation: Observation) -> Inputs {
         dev_mode: false,
         observation,
     }
+}
+
+#[test]
+fn both_path_override_knobs_accept_current_directory_spellings() {
+    let expected = NormalizedPath::new(std::env::current_dir().unwrap());
+    for knob in ["FBUILD_CACHE_DIR", "FBUILD_BUILD_DIR"] {
+        for value in [".", "child/.."] {
+            let selected = override_from_value(Some(std::ffi::OsString::from(value))).unwrap();
+            assert_eq!(selected, Some(expected.clone()), "{knob}={value}");
+        }
+    }
+}
+
+#[test]
+fn path_override_parser_rejects_actual_empty_value_and_preserves_absence() {
+    assert!(override_from_value(Some(std::ffi::OsString::new())).is_err());
+    assert_eq!(override_from_value(None).unwrap(), None);
 }
 
 #[test]
@@ -73,6 +90,19 @@ fn disabled_policy_creates_short_writable_cache_and_scratch() {
     assert!(advisory.contains("disabled"));
     assert!(advisory.contains("fbuild --fix-win"));
     assert!(advisory.contains(&resolution.cache_root.display().to_string()));
+}
+
+#[test]
+fn forwarding_a_selected_fallback_build_root_preserves_its_identity() {
+    let temp = tempdir();
+    let mut input = inputs(&temp, Observation::Disabled);
+    let padding = 50 - fs::legacy_path_units(temp.path()) - 1;
+    input.cache_override = Some(temp.path().join("c".repeat(padding)));
+    let resolution = resolve(input).unwrap();
+    let project = temp.path().join("project");
+    let requested = project.join("deep-component".repeat(12)).join("build");
+    let selected = resolution.resolve_build_root(&project, &requested);
+    assert_eq!(resolution.resolve_build_root(&project, &selected), selected);
 }
 
 #[test]

@@ -60,7 +60,7 @@ pub fn get_fbuild_root() -> PathBuf {
 /// had each hand-rolled this path to keep that property (FastLED/fbuild#1349).
 pub fn try_get_fbuild_root() -> Option<PathBuf> {
     if let Some(resolution) = long_paths::current_resolution() {
-        return Some(resolution.fbuild_root.clone());
+        return Some(resolution.fbuild_root.clone().into_path_buf());
     }
     let mode = if is_dev_mode() { "dev" } else { "prod" };
     Some(dirs_next()?.join(FBUILD_DIR_NAME).join(mode))
@@ -103,7 +103,7 @@ pub fn tools_dir_label() -> String {
 /// Used for cross-mode daemon discovery.
 pub fn get_other_fbuild_root() -> PathBuf {
     let home = long_paths::current_resolution()
-        .map(|resolution| resolution.home.clone())
+        .map(|resolution| resolution.home.clone().into_path_buf())
         .or_else(dirs_next)
         .expect("could not determine home directory");
     let mode = if is_dev_mode() { "prod" } else { "dev" };
@@ -201,7 +201,7 @@ pub fn get_daemon_status_file() -> PathBuf {
 /// including a Windows short-path fallback when required.
 pub fn get_cache_root() -> PathBuf {
     if let Some(resolution) = long_paths::current_resolution() {
-        return resolution.cache_root.clone();
+        return resolution.cache_root.clone().into_path_buf();
     }
     if let Ok(dir) = std::env::var("FBUILD_CACHE_DIR") {
         return PathBuf::from(dir);
@@ -223,7 +223,7 @@ pub fn get_cache_root() -> PathBuf {
 /// [`temp_subdir`] for the create-on-use pattern.
 pub fn dev_or_prod_temp_root() -> PathBuf {
     if let Some(resolution) = long_paths::current_resolution() {
-        return resolution.scratch_root.clone();
+        return resolution.scratch_root.clone().into_path_buf();
     }
     get_fbuild_root().join("tmp")
 }
@@ -259,8 +259,11 @@ pub fn get_project_build_root(project_dir: &Path) -> PathBuf {
         let requested = resolution
             .build_override
             .clone()
+            .map(|root| root.into_path_buf())
             .unwrap_or_else(|| get_project_fbuild_dir(project_dir).join(BUILD_DIR_NAME));
-        return resolution.resolve_build_root(project_dir, &requested);
+        return resolution
+            .resolve_build_root(project_dir, &requested)
+            .into_path_buf();
     }
     if let Ok(dir) = std::env::var("FBUILD_BUILD_DIR") {
         return PathBuf::from(dir);
@@ -348,7 +351,7 @@ impl BuildLayout {
     /// Resolve the env-rooted build directory.
     pub fn resolve(&self) -> PathBuf {
         let root = if let Some(ref r) = self.override_root {
-            long_paths::resolve_build_root(&self.project_dir, r)
+            long_paths::resolve_build_root(&self.project_dir, r).into_path_buf()
         } else {
             get_project_build_root(&self.project_dir)
         };
@@ -545,6 +548,11 @@ fn dirs_next() -> Option<PathBuf> {
     } else {
         std::env::var("HOME").ok().map(PathBuf::from)
     }
+}
+
+/// Normalize the legacy home-directory boundary for new path resolvers.
+pub(crate) fn normalized_home() -> Option<fbuild_core::path::NormalizedPath> {
+    dirs_next().map(fbuild_core::path::NormalizedPath::new)
 }
 
 #[cfg(test)]
