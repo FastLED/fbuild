@@ -591,6 +591,9 @@ pub async fn compile_source(
     let output_buf = absolute_from_cwd(output);
     let source = source_buf.as_path();
     let output = output_buf.as_path();
+    for path in [compiler, source, output] {
+        fbuild_paths::long_paths::validate_legacy_path(path)?;
+    }
 
     if let Some(parent) = output.parent() {
         std::fs::create_dir_all(parent)?;

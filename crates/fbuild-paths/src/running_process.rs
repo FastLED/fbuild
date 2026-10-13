@@ -134,11 +134,15 @@ pub struct DaemonCacheIdentity {
 impl DaemonCacheIdentity {
     pub fn discover() -> Self {
         let cache_root = crate::get_cache_root();
-        Self::from_resolved(
+        let mut identity = Self::from_resolved(
             cache_root,
             crate::is_dev_mode(),
             std::env::var_os(FBUILD_CACHE_DIR_ENV).is_some(),
-        )
+        );
+        if let Some(resolution) = crate::long_paths::current_resolution() {
+            identity.cache_dir_source = resolution.cache_dir_source;
+        }
+        identity
     }
 
     fn from_resolved(cache_root: PathBuf, dev_mode: bool, cache_dir_overridden: bool) -> Self {
@@ -217,7 +221,9 @@ impl CacheRoots {
     /// this crate's path resolution.
     pub fn discover(runtime_dir: impl Into<PathBuf>) -> Self {
         let cache = crate::get_cache_root();
-        Self::from_resolved(runtime_dir.into(), cache, crate::get_fbuild_root())
+        let mut roots = Self::from_resolved(runtime_dir.into(), cache, crate::get_fbuild_root());
+        roots.temp = crate::dev_or_prod_temp_root();
+        roots
     }
 
     fn from_resolved(runtime_dir: PathBuf, cache: PathBuf, fbuild_root: PathBuf) -> Self {

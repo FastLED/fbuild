@@ -74,6 +74,7 @@ fn daemon_info_for_cache_identity(
         dependency_install: None,
         client_count: 0,
         cache_identity,
+        long_path_support: None,
         cache_schema_version,
         spawner_cwd: None,
         source_mtime: None,

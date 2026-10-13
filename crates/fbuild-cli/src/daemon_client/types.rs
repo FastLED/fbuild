@@ -4,6 +4,9 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize)]
 pub struct BuildRequest {
+    /// Selected by this invocation so a persistent daemon cannot reuse an old override.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub build_dir_override: Option<String>,
     pub project_dir: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub environment: Option<String>,
@@ -78,6 +81,8 @@ pub struct InstallDepsRequest {
 
 #[derive(Clone, Debug, Serialize)]
 pub struct DeployRequest {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub build_dir_override: Option<String>,
     pub project_dir: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub environment: Option<String>,
@@ -154,6 +159,8 @@ fn is_default_usb_recovery_policy(policy: &fbuild_core::usb::UsbRecoveryPolicy) 
 
 #[derive(Debug, Serialize)]
 pub struct TestEmuRequest {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub build_dir_override: Option<String>,
     pub project_dir: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub environment: Option<String>,
@@ -239,6 +246,9 @@ pub struct DaemonInfoResponse {
     #[serde(default)]
     pub client_count: usize,
     pub cache_identity: Option<String>,
+    /// Registry observation captured before this daemon initialized caches.
+    #[serde(default)]
+    pub long_path_support: Option<fbuild_paths::long_paths::Observation>,
     #[serde(default)]
     pub cache_schema_version: Option<u32>,
     #[serde(default)]

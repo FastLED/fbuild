@@ -37,6 +37,7 @@ pub async fn run_clean(
     let client = DaemonClient::new();
     daemon_client::warn_if_daemon_identity_mismatch(&client, &project_dir).await;
     let req = BuildRequest {
+        build_dir_override: daemon_client::capture_build_root(&project_dir),
         project_dir,
         environment,
         clean_build: true,

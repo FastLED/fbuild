@@ -18,6 +18,21 @@ destination opening, atomic replacement, and blocked-I/O retirement. Cache
 sizing, archive traversal, authorization, locking, diagnostics, and retry policy
 remain with their product owners.
 
+Windows long-path registry mechanics also live behind `fs`: `long_path_support`
+reads the system policy, `enable_long_paths` writes and verifies only that
+policy, `legacy_path_units` measures native path units, and `short_cache_base`
+supplies a local drive candidate without creating it. Interactive repair,
+UAC authorization, short-cache selection, warnings, and daemon restarts belong
+to callers. Non-Windows hosts report `NotApplicable`; repair and short-cache
+base selection report `Unsupported`.
+
+`ensure_private_directory` establishes the automatic short-cache hierarchy.
+On Windows it verifies current-user ownership, rejects reparse points, creates
+directories with protected user-only permissions, and holds ancestor handles
+while traversing. The volume root is validated without changing its ACL.
+Callers retain layout policy and must not use this operation to claim foreign
+or explicitly configured cache directories.
+
 `ipc` owns fbuild local-endpoint bind/connect/accept and peer facts, owner-only
 Unix endpoint creation, TCP listener socket policy, and endpoint readiness
 probing. Broker framing/routing, daemon retry/yield policy, and HTTP/protobuf

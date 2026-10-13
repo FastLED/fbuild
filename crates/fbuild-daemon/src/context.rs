@@ -203,6 +203,12 @@ pub struct DaemonContext {
     pub status_manager: StatusManager,
     /// Shutdown signal sender.
     pub shutdown_tx: tokio::sync::watch::Sender<bool>,
+    /// Registry observation used to select this process's fixed path roots.
+    /// A changed support state requires a fresh process, never a mid-build
+    /// change to cache or scratch directories.
+    pub long_path_support: Option<fbuild_paths::long_paths::Observation>,
+    /// Plain advisory captured with the startup resolution for HTTP clients.
+    pub long_path_advisory: Option<String>,
     /// Modification time of the daemon binary at startup (for stale detection).
     pub source_mtime: f64,
     /// Path of the daemon binary at startup (FastLED/fbuild#1476 diagnostics).
@@ -290,6 +296,9 @@ impl DaemonContext {
                 now_unix,
             ),
             shutdown_tx,
+            long_path_support: fbuild_paths::long_paths::current_resolution()
+                .map(|resolution| resolution.observation.clone()),
+            long_path_advisory: fbuild_paths::long_paths::advisory(),
             source_mtime,
             source_exe,
             source_hash: OnceLock::new(),

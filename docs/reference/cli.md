@@ -19,6 +19,12 @@ Global options:
 | `--platformio` | Use PlatformIO compatibility mode where supported. |
 | `--shrink[=<mode>]` | Flash-size reduction mode: `auto`, `off`, `safe`, `aggressive`, or `printf`. |
 | `--no-shrink` | Disable all shrink optimizations. |
+| `--fix-win` | Enable Windows long paths with UAC approval, then exit without building. |
+
+Windows ESP32 commands offer a `[y/N]` repair prompt in an interactive terminal.
+CI and redirected input use a short-path fallback with a warning. See
+[Windows long paths](../getting-started/README.md#windows-long-paths) for cache
+overrides, restart behavior, and remaining tool limits.
 
 ## Core Workflows
 
