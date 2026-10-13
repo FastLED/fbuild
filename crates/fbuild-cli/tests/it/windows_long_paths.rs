@@ -36,6 +36,6 @@ fn fix_win_on_non_windows_exits_without_building_or_prompting() {
     assert!(!output.status.success());
     let diagnostic = String::from_utf8_lossy(&output.stderr);
     assert!(diagnostic.contains("Windows"), "wrong error: {diagnostic}");
-    assert!(!root.path().join(".fbuild").exists());
+    assert!(!root.path().join(fbuild_paths::FBUILD_DIR_NAME).exists());
     assert!(output.stdout.is_empty(), "repair emitted build output");
 }
