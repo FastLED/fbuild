@@ -118,3 +118,52 @@ jobs:
             throw "Warm check did not reuse the verified source launcher"
           }
           # The hosted runner discards RUNNER_TEMP after the job.
+
+      # Pioarduino 55.03.35 pins esptool 5.1.0, whose release has no
+      # Windows standalone binary. Verify the real source-package route.
+      - name: Install and recheck ESP32-C6 source tools
+        id: modern-esptool
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $probe = Join-Path $env:RUNNER_TEMP ("fbuild-modern-esptool-" + [guid]::NewGuid())
+          New-Item -ItemType Directory -Path $probe | Out-Null
+          $env:FBUILD_CACHE_DIR = Join-Path $probe "cache"
+          [Environment]::SetEnvironmentVariable("FBUILD_ESPTOOL_PATH", $null, "Process")
+          @"
+          [env:esp32c6-idf5]
+          platform = https://github.com/pioarduino/platform-espressif32/releases/download/55.03.35/platform-espressif32.zip
+          board = esp32-c6-devkitc-1
+          framework = arduino
+          "@ | Set-Content -LiteralPath (Join-Path $probe "platformio.ini") -Encoding utf8
+
+          $coldJson = & soldr cargo run -p fbuild-cli --bin fbuild -- install "$probe" -e esp32c6-idf5 --json
+          if ($LASTEXITCODE -ne 0) { throw "Cold ESP32-C6 install failed ($LASTEXITCODE)" }
+          $coldJson | Write-Output
+          $cold = ($coldJson -join "`n") | ConvertFrom-Json
+          $coldTools = @($cold.environments.packages | Where-Object name -eq "tool-esptoolpy")
+          if ($coldTools.Count -ne 1) { throw "Expected exactly one esptool package" }
+          $coldTool = $coldTools[0]
+          if ($coldTool.version -ne "5.1.0" -or $coldTool.status -ne "fetched" -or
+              $coldTool.url -ne "https://github.com/pioarduino/esptool/releases/download/v5.1.0/esptool.zip") {
+            throw "Expected a cold install of the pinned esptool 5.1.0 source archive"
+          }
+          if (-not (Test-Path -LiteralPath $coldTool.install_path -PathType Leaf)) {
+            throw "Installed esptool launcher is missing"
+          }
+          if ($coldTool.install_path -notmatch '[\\/]\.fbuild-tools[\\/]esptool[\\/]Scripts[\\/]esptool\.exe$') {
+            throw "Expected the real uv-managed Windows esptool launcher"
+          }
+
+          $warmJson = & soldr cargo run -p fbuild-cli --bin fbuild -- install "$probe" -e esp32c6-idf5 --check --json
+          if ($LASTEXITCODE -ne 0) { throw "Warm ESP32-C6 check failed ($LASTEXITCODE)" }
+          $warmJson | Write-Output
+          $warm = ($warmJson -join "`n") | ConvertFrom-Json
+          $warmTools = @($warm.environments.packages | Where-Object name -eq "tool-esptoolpy")
+          if ($warmTools.Count -ne 1) { throw "Expected exactly one cached esptool package" }
+          $warmTool = $warmTools[0]
+          if ($warmTool.version -ne "5.1.0" -or $warmTool.status -ne "present" -or
+              $warmTool.url -ne $coldTool.url -or $warmTool.install_path -ne $coldTool.install_path) {
+            throw "Warm check did not reuse the verified source launcher"
+          }
+          # The hosted runner discards RUNNER_TEMP after the job.

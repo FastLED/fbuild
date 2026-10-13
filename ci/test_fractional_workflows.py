@@ -13,6 +13,31 @@ from ci import render_workflows
 
 
 class FractionalWorkflowTests(unittest.TestCase):
+    def test_windows_checks_real_modern_esptool_source_install(self):
+        job = self.load("check-windows.yml")["jobs"]["check"]
+        smoke = next(step for step in job["steps"] if step.get("id") == "modern-esptool")
+        self.assertEqual("windows-latest", job["runs-on"])
+        self.assertEqual("pwsh", smoke["shell"])
+        self.assertNotIn("if", smoke)
+        self.assertFalse(smoke.get("continue-on-error", False))
+        script = smoke["run"]
+        for contract in (
+            "$env:RUNNER_TEMP", "[guid]::NewGuid()", "$env:FBUILD_CACHE_DIR",
+            'SetEnvironmentVariable("FBUILD_ESPTOOL_PATH", $null, "Process")',
+            "https://github.com/pioarduino/platform-espressif32/releases/download/55.03.35/platform-espressif32.zip",
+            "board = esp32-c6-devkitc-1", "framework = arduino",
+            "soldr cargo run -p fbuild-cli --bin fbuild -- install",
+            "--check --json", "$LASTEXITCODE -ne 0", "ConvertFrom-Json",
+            'name -eq "tool-esptoolpy"', 'version -ne "5.1.0"',
+            'status -ne "fetched"', 'status -ne "present"',
+            "https://github.com/pioarduino/esptool/releases/download/v5.1.0/esptool.zip",
+            'Test-Path -LiteralPath $coldTool.install_path -PathType Leaf',
+            '$warmTool.install_path -ne $coldTool.install_path',
+        ):
+            self.assertIn(contract, script)
+        self.assertEqual(2, script.count("soldr cargo run -p fbuild-cli --bin fbuild -- install"))
+        self.assertEqual(2, script.count("$LASTEXITCODE -ne 0"))
+
     def test_macos_lipo_places_input_before_variadic_architectures(self):
         job = self.load("release-auto.yml")["jobs"]["macos-release-smoke"]
         script = next(step["run"] for step in job["steps"] if "lipo " in step.get("run", ""))

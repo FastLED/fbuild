@@ -205,7 +205,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             &Rp2040FingerprintMetadata {
                 version: BUILD_FINGERPRINT_VERSION,
                 platform_define_policy: "platform-sdfatdefaults-v1",
-                framework_library_linkage: "archive",
+                framework_library_linkage: "local-and-framework-archive-v2",
                 env_name: params.env_name.clone(),
                 profile: profile_label(params.profile).to_string(),
                 board_name: ctx.board.name.clone(),
@@ -537,7 +537,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             &support_link_inputs,
             lib_deps_plan,
             Some(&lib_env),
-            &framework_library_sources,
+            Some(&framework_library_sources),
             TargetArchitecture::Arm,
             "RP2040",
             start,
@@ -1059,15 +1059,23 @@ mod tests {
 
     #[test]
     fn platform_default_policy_invalidates_legacy_firmware_cache() {
-        assert_policy_invalidates_legacy_firmware_cache("platform_define_policy");
+        assert_policy_invalidates_legacy_firmware_cache("platform_define_policy", None);
     }
 
     #[test]
     fn framework_archive_policy_invalidates_legacy_firmware_cache() {
-        assert_policy_invalidates_legacy_firmware_cache("framework_library_linkage");
+        assert_policy_invalidates_legacy_firmware_cache("framework_library_linkage", None);
     }
 
-    fn assert_policy_invalidates_legacy_firmware_cache(policy: &str) {
+    #[test]
+    fn local_archive_policy_invalidates_sdk_only_firmware_cache() {
+        assert_policy_invalidates_legacy_firmware_cache(
+            "framework_library_linkage",
+            Some("archive"),
+        );
+    }
+
+    fn assert_policy_invalidates_legacy_firmware_cache(policy: &str, previous_value: Option<&str>) {
         use crate::build_fingerprint::{
             PersistedBuildFingerprint, fast_path_check, hash_watch_set_stamps, save_json,
             stable_hash_json,
@@ -1076,7 +1084,7 @@ mod tests {
         let metadata = Rp2040FingerprintMetadata {
             version: BUILD_FINGERPRINT_VERSION,
             platform_define_policy: "platform-sdfatdefaults-v1",
-            framework_library_linkage: "archive",
+            framework_library_linkage: "local-and-framework-archive-v2",
             env_name: "pico".into(),
             profile: "release".into(),
             board_name: "Pico".into(),
@@ -1097,6 +1105,12 @@ mod tests {
         let mut legacy = current.clone();
         // Successful builds before the policy change did not encode this field.
         legacy.as_object_mut().unwrap().remove(policy);
+        if let Some(value) = previous_value {
+            legacy
+                .as_object_mut()
+                .unwrap()
+                .insert(policy.into(), value.into());
+        }
         let current_hash = stable_hash_json(&current).unwrap();
         let legacy_hash = stable_hash_json(&legacy).unwrap();
         let tmp = tempfile::tempdir().unwrap();

@@ -188,7 +188,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
                     crate::eh_frame_policy::EhFramePolicy::Strip => "strip",
                     crate::eh_frame_policy::EhFramePolicy::Preserve => "preserve",
                 },
-                framework_library_linkage: "archive",
+                framework_library_linkage: "local-and-framework-archive-v2",
             },
             &ctx,
         )?;
@@ -426,7 +426,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
             &[],
             lib_deps_plan,
             Some(&lib_env),
-            &framework_library_sources,
+            Some(&framework_library_sources),
             TargetArchitecture::Arm,
             "Teensy",
             start,

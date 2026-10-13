@@ -54,7 +54,7 @@ pub async fn run_sequential_build_with_libs(
         extra_link_inputs,
         lib_deps,
         lib_env,
-        &[],
+        None,
         arch,
         platform_label,
         start,
@@ -62,9 +62,10 @@ pub async fn run_sequential_build_with_libs(
     .await
 }
 
-/// Compile all sources normally, but archive optional framework library objects
-/// so unreferenced library constructors cannot become firmware startup roots.
-/// `optional_framework_sources` must be a subset of the core/variant sources.
+/// With `Some`, archive selected local and framework library objects together
+/// so unused local code cannot extract SDK startup constructors. With `None`,
+/// retain the legacy direct-object linkage. The framework source slice must be
+/// a subset of the core/variant sources; `Some(&[])` still archives local libs.
 /// The library environment supplies the platform's LTO-aware archiver.
 #[allow(clippy::too_many_arguments)]
 #[expect(
@@ -81,7 +82,7 @@ pub async fn run_sequential_build_with_optional_framework_libs(
     extra_link_inputs: &[PathBuf],
     lib_deps: super::library::LibDeps,
     lib_env: Option<&LibraryBuildEnv<'_>>,
-    optional_framework_sources: &[PathBuf],
+    optional_framework_sources: Option<&[PathBuf]>,
     arch: TargetArchitecture,
     platform_label: &str,
     start: Instant,
@@ -290,7 +291,7 @@ pub async fn run_sequential_build_with_optional_framework_libs(
         &build_log_mutex,
     ));
 
-    // Compile local libraries (lib/* — loose objects, LTO-safe; per-lib parallel)
+    // Compile local libraries normally; opted-in platforms archive them below.
     let declared_lib_deps = ctx
         .config
         .get_lib_deps(&params.env_name)
@@ -391,6 +392,13 @@ pub async fn run_sequential_build_with_optional_framework_libs(
 
     // Link
     crate::build_output::log_linking(&mut ctx.build_log, "Linking firmware.elf");
+    let optional_objects: Option<Vec<PathBuf>> = optional_framework_sources.map(|sources| {
+        sources
+            .iter()
+            .map(|source| crate::compiler::CompilerBase::object_path(source, &ctx.core_build_dir))
+            .chain(library_objects.iter().cloned())
+            .collect()
+    });
     core_objects.extend(library_objects);
     core_objects.extend(extra_link_inputs.iter().cloned());
     core_objects.extend(lib_deps_archives);
@@ -398,17 +406,16 @@ pub async fn run_sequential_build_with_optional_framework_libs(
         // GCC accepts .a in the same positional slot as .o files.
         core_objects.push(archive);
     }
-    if !optional_framework_sources.is_empty() {
+    if let Some(optional_objects) = optional_objects.filter(|objects| !objects.is_empty()) {
         let env = lib_env.ok_or_else(|| {
             fbuild_core::FbuildError::BuildFailed(
                 "optional framework libraries require an LTO-aware library build environment"
                     .into(),
             )
         })?;
-        core_objects = archive_optional_framework_objects(
+        core_objects = archive_optional_library_objects(
             core_objects,
-            optional_framework_sources,
-            &ctx.core_build_dir,
+            &optional_objects,
             &ctx.build_dir,
             env.ar_path,
         )
@@ -417,7 +424,7 @@ pub async fn run_sequential_build_with_optional_framework_libs(
     let link_result = {
         // FastLED/fbuild#1465: `link` covers `Linker::link_all` end to end
         // (link + objcopy + size). Mandatory core objects remain direct;
-        // the optional framework archive has already been prepared above.
+        // the optional library archive has already been prepared above.
         let _g = perf.phase("link");
         crate::linker::Linker::link_all(
             linker,
@@ -488,35 +495,31 @@ pub async fn run_sequential_build_with_optional_framework_libs(
     ))
 }
 
-/// Preserve mandatory core startup objects, and place optional SDK objects in
+/// Preserve mandatory core startup objects, and place local and SDK objects in
 /// one archive after every consumer. GNU archive extraction resolves dependencies
 /// among its members without imposing the scanner's library discovery order.
-async fn archive_optional_framework_objects(
+async fn archive_optional_library_objects(
     inputs: Vec<PathBuf>,
-    optional_sources: &[PathBuf],
-    core_build_dir: &Path,
+    optional_objects: &[PathBuf],
     build_dir: &Path,
     ar_path: &Path,
 ) -> Result<Vec<PathBuf>> {
-    let optional: std::collections::HashSet<PathBuf> = optional_sources
-        .iter()
-        .map(|source| crate::compiler::CompilerBase::object_path(source, core_build_dir))
-        .collect();
+    let optional: std::collections::HashSet<&PathBuf> = optional_objects.iter().collect();
     let (objects, mut inputs): (Vec<_>, Vec<_>) = inputs
         .into_iter()
         .partition(|input| optional.contains(input));
     if objects.len() != optional.len() {
         return Err(fbuild_core::FbuildError::BuildFailed(
-            "optional framework library object missing from compiled link inputs".into(),
+            "optional library object missing from compiled link inputs".into(),
         ));
     }
     if !objects.is_empty() {
-        let archive = build_dir.join("libFrameworkLibraries.a");
+        let archive = build_dir.join("libOptionalLibraries.a");
         crate::linker::LinkerBase::archive_if_stale(
             ar_path,
             &objects,
             &archive,
-            "framework library archiver",
+            "optional library archiver",
         )
         .await?;
         inputs.push(archive);
@@ -593,14 +596,31 @@ mod optional_framework_tests {
         let core = root.join("core.c");
         let optional = root.join("optional.c");
         let dependency = root.join("dependency.c");
+        let local_used = root.join("local_used.c");
+        let local_sd = root.join("local_sd.c");
+        let local_callback = root.join("local_callback.c");
         std::fs::write(
             &core,
             "int state; __attribute__((constructor)) void core_init(void) { state |= 1; }",
         )
         .unwrap();
-        std::fs::write(&optional, "extern int state; extern int dependency(void); __attribute__((constructor)) void optional_init(void) { state |= 2; } int optional(void) { return dependency(); }").unwrap();
+        std::fs::write(&optional, "extern int state; extern int dependency(void); extern int local_callback(void); __attribute__((constructor)) void optional_init(void) { state |= 2; } int optional(void) { return dependency() + local_callback() - 13; }").unwrap();
         std::fs::write(&dependency, "int dependency(void) { return 7; }").unwrap();
-        let sources = [&core, &optional, &dependency];
+        std::fs::write(&local_used, "int local_value(void) { return 11; }").unwrap();
+        std::fs::write(
+            &local_sd,
+            "extern int optional(void); int local_sd(void) { return optional(); }",
+        )
+        .unwrap();
+        std::fs::write(&local_callback, "int local_callback(void) { return 13; }").unwrap();
+        let sources = [
+            &core,
+            &optional,
+            &dependency,
+            &local_used,
+            &local_sd,
+            &local_callback,
+        ];
         let mut objects = Vec::new();
         for source in sources {
             let object = CompilerBase::object_path(source, root);
@@ -615,18 +635,21 @@ mod optional_framework_tests {
             .await;
             objects.push(object);
         }
-        let inputs =
-            archive_optional_framework_objects(objects, &[optional, dependency], root, root, &ar)
-                .await
-                .unwrap();
+        let optional_objects: Vec<_> = [optional, dependency, local_used, local_sd, local_callback]
+            .iter()
+            .map(|source| CompilerBase::object_path(source, root))
+            .collect();
+        let inputs = archive_optional_library_objects(objects, &optional_objects, root, &ar)
+            .await
+            .unwrap();
         for (name, body) in [
             (
                 "unused",
-                "extern int state; int main(void) { return state != 1; }",
+                "extern int state; extern int local_value(void); int main(void) { return state != 1 || local_value() != 11; }",
             ),
             (
                 "used",
-                "extern int state; extern int optional(void); int main(void) { return state != 3 || optional() != 7; }",
+                "extern int state; extern int local_value(void); extern int local_sd(void); int main(void) { return state != 3 || local_value() != 11 || local_sd() != 7; }",
             ),
         ] {
             let main = root.join(format!("{name}.c"));
