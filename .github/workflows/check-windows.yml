@@ -174,10 +174,26 @@ jobs:
           $ErrorActionPreference = 'Stop'
           $registry = 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem'
           $original = Get-ItemPropertyValue -Path $registry -Name LongPathsEnabled -ErrorAction SilentlyContinue
-          $metadata = soldr cargo metadata --format-version 1 --no-deps | ConvertFrom-Json
-          if ($LASTEXITCODE -ne 0) { throw 'cargo metadata failed' }
-          $cli = Join-Path $metadata.target_directory 'debug\fbuild.exe'
-          $daemon = Join-Path $metadata.target_directory 'debug\fbuild-daemon.exe'
+          $buildOutput = @(& soldr cargo build -p fbuild-cli -p fbuild-daemon --bins --message-format=json)
+          if ($LASTEXITCODE -ne 0) {
+            $buildOutput | Write-Output
+            throw 'could not build the Windows smoke binaries'
+          }
+          $binPaths = @{}
+          foreach ($line in $buildOutput) {
+            if (-not $line.StartsWith('{')) { continue }
+            $artifact = $line | ConvertFrom-Json
+            if ($artifact.reason -eq 'compiler-artifact' -and ($artifact.target.kind -contains 'bin') -and $artifact.executable) {
+              $binPaths[$artifact.target.name] = $artifact.executable
+            }
+          }
+          foreach ($name in @('fbuild', 'fbuild-daemon')) {
+            if (-not $binPaths.ContainsKey($name) -or -not (Test-Path -LiteralPath $binPaths[$name] -PathType Leaf)) {
+              throw "missing Windows smoke executable: $name"
+            }
+          }
+          $cli = $binPaths['fbuild']
+          $daemon = $binPaths['fbuild-daemon']
           foreach ($binary in @($cli, $daemon)) {
             $image = [Text.Encoding]::UTF8.GetString([IO.File]::ReadAllBytes($binary))
             if ($image -notmatch 'longPathAware[^>]*>true</' -or $image -notmatch 'level="asInvoker"') {
