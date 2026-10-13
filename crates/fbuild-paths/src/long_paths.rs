@@ -4,8 +4,9 @@
 //! never changes the environment or emits output; each caller delivers the
 //! advisory through its own terminal or HTTP output channel.
 
+use std::ffi::OsString;
 use std::io::Write;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::sync::{Mutex, OnceLock};
 
 use fbuild_core::path::NormalizedPath;
@@ -56,14 +57,14 @@ impl Observation {
 #[derive(Debug, Clone, Serialize)]
 pub struct Resolution {
     pub observation: Observation,
-    pub home: PathBuf,
-    pub fbuild_root: PathBuf,
+    pub home: NormalizedPath,
+    pub fbuild_root: NormalizedPath,
     pub dev_mode: bool,
-    pub requested_cache_root: PathBuf,
-    pub cache_root: PathBuf,
-    pub scratch_root: PathBuf,
-    pub short_build_root: Option<PathBuf>,
-    pub build_override: Option<PathBuf>,
+    pub requested_cache_root: NormalizedPath,
+    pub cache_root: NormalizedPath,
+    pub scratch_root: NormalizedPath,
+    pub short_build_root: Option<NormalizedPath>,
+    pub build_override: Option<NormalizedPath>,
     pub cache_dir_source: &'static str,
 }
 
@@ -103,12 +104,15 @@ impl Resolution {
     /// Redirect a deep build root to a directory keyed by the normalized
     /// project and requested output root.
     /// The `.fbuild/build` suffix preserves the compiler workspace convention.
-    pub fn resolve_build_root(&self, project_dir: &Path, requested_root: &Path) -> PathBuf {
+    pub fn resolve_build_root(&self, project_dir: &Path, requested_root: &Path) -> NormalizedPath {
         let Some(base) = &self.short_build_root else {
-            return requested_root.to_path_buf();
+            return NormalizedPath::new(requested_root);
         };
-        let requested =
-            absolute_normalized(requested_root).unwrap_or_else(|_| requested_root.to_path_buf());
+        let requested = absolute_normalized(requested_root)
+            .unwrap_or_else(|_| NormalizedPath::new(requested_root));
+        if is_within(&requested, base) {
+            return requested;
+        }
         if fs::legacy_path_units(&requested) < MAX_SHORT_ROOT_UNITS {
             return requested;
         }
@@ -117,7 +121,7 @@ impl Resolution {
             .ok()
             .and_then(|path| absolute_normalized(&path).ok())
             .or_else(|| absolute_normalized(project_dir).ok())
-            .unwrap_or_else(|| project_dir.to_path_buf());
+            .unwrap_or_else(|| NormalizedPath::new(project_dir));
         base.join(build_root_hash(&project, &requested))
             .join(crate::FBUILD_DIR_NAME)
             .join(crate::BUILD_DIR_NAME)
@@ -151,13 +155,7 @@ impl Resolution {
             return Ok(());
         };
         let absolute = absolute_normalized(path)?;
-        let candidate = NormalizedPath::new(&absolute);
-        let base = NormalizedPath::new(base);
-        let selected = candidate
-            .key()
-            .strip_prefix(base.key())
-            .is_some_and(|tail| tail.is_empty() || tail.starts_with('/'));
-        if selected {
+        if is_within(&absolute, base) {
             // Verify each selected ancestor before creating its children.
             // This also prevents portable fixture helpers from recursively
             // creating through a linked ancestor before the final check.
@@ -202,7 +200,7 @@ pub fn initialize() -> Result<&'static Resolution> {
         return Ok(resolution);
     }
     let observation = probe();
-    let home = crate::dirs_next()
+    let home = crate::normalized_home()
         .ok_or_else(|| FbuildError::ConfigError("could not determine home directory".into()))?;
     let home = absolute_normalized(&home)?;
     let dev_mode = std::env::var("FBUILD_DEV_MODE").is_ok_and(|value| value == "1");
@@ -214,8 +212,8 @@ pub fn initialize() -> Result<&'static Resolution> {
         short_base: fbuild_root.clone(),
         home,
         fbuild_root,
-        cache_override: std::env::var_os("FBUILD_CACHE_DIR").map(PathBuf::from),
-        build_override: std::env::var_os("FBUILD_BUILD_DIR").map(PathBuf::from),
+        cache_override: override_from_value(std::env::var_os("FBUILD_CACHE_DIR"))?,
+        build_override: override_from_value(std::env::var_os("FBUILD_BUILD_DIR"))?,
         dev_mode,
         observation,
     };
@@ -250,20 +248,20 @@ pub fn prepare_build_directory(path: &Path) -> Result<()> {
 }
 
 /// Resolve a potentially deep build root using the initialized snapshot.
-pub fn resolve_build_root(project_dir: &Path, requested_root: &Path) -> PathBuf {
+pub fn resolve_build_root(project_dir: &Path, requested_root: &Path) -> NormalizedPath {
     current_resolution().map_or_else(
-        || requested_root.to_path_buf(),
+        || NormalizedPath::new(requested_root),
         |resolution| resolution.resolve_build_root(project_dir, requested_root),
     )
 }
 
 struct Inputs {
-    home: PathBuf,
-    fbuild_root: PathBuf,
+    home: NormalizedPath,
+    fbuild_root: NormalizedPath,
     #[cfg(test)]
-    short_base: PathBuf,
-    cache_override: Option<PathBuf>,
-    build_override: Option<PathBuf>,
+    short_base: NormalizedPath,
+    cache_override: Option<NormalizedPath>,
+    build_override: Option<NormalizedPath>,
     dev_mode: bool,
     observation: Observation,
 }
@@ -271,8 +269,8 @@ struct Inputs {
 #[derive(Debug, Serialize, Deserialize)]
 struct SelectionMarker {
     schema: u32,
-    cache_root: PathBuf,
-    scratch_root: PathBuf,
+    cache_root: NormalizedPath,
+    scratch_root: NormalizedPath,
 }
 
 #[cfg(test)]
@@ -283,13 +281,13 @@ fn resolve(input: Inputs) -> Result<Resolution> {
 
 fn resolve_with_short_base<F>(input: Inputs, short_base: F) -> Result<Resolution>
 where
-    F: FnOnce() -> std::io::Result<PathBuf>,
+    F: FnOnce() -> std::io::Result<NormalizedPath>,
 {
     let requested = input
         .cache_override
         .as_ref()
         .unwrap_or(&input.fbuild_root.join("cache"))
-        .to_path_buf();
+        .clone();
     let requested_cache_root = absolute_normalized(&requested)?;
     let build_override = input
         .build_override
@@ -365,16 +363,16 @@ where
 }
 
 struct ShortRoots {
-    user: PathBuf,
-    mode: PathBuf,
-    cache: PathBuf,
-    scratch: PathBuf,
-    builds: PathBuf,
+    user: NormalizedPath,
+    mode: NormalizedPath,
+    cache: NormalizedPath,
+    scratch: NormalizedPath,
+    builds: NormalizedPath,
 }
 
 fn automatic_roots<F>(input: &Inputs, short_base: F) -> Result<ShortRoots>
 where
-    F: FnOnce() -> std::io::Result<PathBuf>,
+    F: FnOnce() -> std::io::Result<NormalizedPath>,
 {
     let base = short_base().map_err(|error| fallback_error("resolve the short root", &error))?;
     let user = absolute_normalized(&base)?.join(format!("fb-{}", path_hash(&input.home)));
@@ -436,14 +434,30 @@ fn ensure_sidecar(path: &Path) -> Result<()> {
     ensure_writable(path)
 }
 
-fn absolute_normalized(path: &Path) -> Result<PathBuf> {
+fn absolute_normalized(path: &Path) -> Result<NormalizedPath> {
     if path.as_os_str().is_empty() {
         return Err(FbuildError::ConfigError(
             "fbuild path overrides must not be empty".into(),
         ));
     }
     let absolute = std::path::absolute(path)?;
-    Ok(NormalizedPath::new(fs::strip_extended_prefix(&absolute)).into_path_buf())
+    Ok(NormalizedPath::new(fs::strip_extended_prefix(&absolute)))
+}
+
+/// Resolve raw override spellings before normalization can collapse `.` or
+/// `child/..` into an empty relative path. Actual empty values remain errors.
+fn override_from_value(value: Option<OsString>) -> Result<Option<NormalizedPath>> {
+    value
+        .as_deref()
+        .map(|raw| absolute_normalized(Path::new(raw)))
+        .transpose()
+}
+
+/// Lexical, component-bounded membership never follows an untrusted link.
+fn is_within(path: &NormalizedPath, root: &NormalizedPath) -> bool {
+    path.key()
+        .strip_prefix(root.key())
+        .is_some_and(|tail| tail.is_empty() || tail.starts_with('/'))
 }
 
 fn path_hash(path: &Path) -> String {

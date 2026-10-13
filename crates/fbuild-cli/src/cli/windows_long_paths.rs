@@ -121,11 +121,13 @@ fn is_esp32_operation(cli: &Cli) -> bool {
     };
     let install = matches!(&cli.command, Some(Commands::Install { .. }));
     let config_path = if install {
-        Path::new(project).join("platformio.ini")
+        fbuild_core::path::NormalizedPath::new(Path::new(project).join("platformio.ini"))
     } else {
         std::env::var_os("PLATFORMIO_PROJECT_CONFIG")
-            .map(std::path::PathBuf::from)
-            .unwrap_or_else(|| Path::new(project).join("platformio.ini"))
+            .map(fbuild_core::path::NormalizedPath::new)
+            .unwrap_or_else(|| {
+                fbuild_core::path::NormalizedPath::new(Path::new(project).join("platformio.ini"))
+            })
     };
     let Ok(config) = fbuild_config::PlatformIOConfig::from_path_with_overrides(
         &config_path,
