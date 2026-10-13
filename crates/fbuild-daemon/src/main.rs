@@ -55,6 +55,14 @@ async fn main() {
         unsafe { std::env::set_var("FBUILD_DEV_MODE", "1") };
     }
 
+    // Resolve Windows fallback roots before cache identity, ownership locks,
+    // endpoint selection, or package managers read any paths. The daemon
+    // never prompts or elevates; interactive repair belongs to the CLI.
+    if let Err(error) = fbuild_paths::long_paths::initialize() {
+        eprintln!("fatal: could not initialize Windows long-path policy: {error}");
+        std::process::exit(1);
+    }
+
     // FastLED/fbuild#1285: adopt the dev daemon-identity stamp the spawning
     // CLI exported, or derive one from this binary's content — once per
     // daemon, inherited by every build child. Official (non-dev) runs export
@@ -275,6 +283,10 @@ async fn main() {
         .route_layer(axum::middleware::from_fn_with_state(
             context.clone(),
             fbuild_daemon::shutdown::refuse_new_operations_when_shutting_down,
+        ))
+        .route_layer(axum::middleware::from_fn_with_state(
+            context.clone(),
+            fbuild_daemon::long_paths::operation_policy,
         ));
 
     let app = Router::new()

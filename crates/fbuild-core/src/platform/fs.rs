@@ -36,6 +36,57 @@ pub enum ErrorClass {
     Other,
 }
 
+/// Current host policy for ordinary Windows paths longer than `MAX_PATH`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum LongPathSupport {
+    /// This host does not use the Windows long-path registry policy.
+    NotApplicable,
+    Enabled,
+    Disabled,
+}
+
+/// Read the current long-path policy without changing system settings.
+///
+/// Missing Windows values are disabled; malformed values and read failures
+/// remain errors so callers can explain why the policy could not be checked.
+pub fn long_path_support() -> std::io::Result<LongPathSupport> {
+    super::selected::fs::long_path_support()
+}
+
+/// Enable and verify the Windows long-path registry policy.
+///
+/// The caller owns authorization, elevation, and restarting processes that
+/// cached the previous policy. Other hosts return `Unsupported`.
+pub fn enable_long_paths() -> std::io::Result<()> {
+    super::selected::fs::enable_long_paths()
+}
+
+/// Measure native path units, excluding a trailing NUL terminator.
+///
+/// Windows counts UTF-16 code units; Unix hosts count native pathname bytes.
+#[must_use]
+pub fn legacy_path_units(path: &Path) -> usize {
+    super::selected::fs::legacy_path_units(path)
+}
+
+/// Return a short absolute local-drive root without creating directories.
+///
+/// User isolation, directory creation, permissions, and cache policy belong
+/// to callers. Other hosts return `Unsupported`.
+pub fn short_cache_base() -> std::io::Result<NormalizedPath> {
+    super::selected::fs::short_cache_base()
+}
+
+/// Establish an automatic cache directory owned and writable only by this user.
+///
+/// Windows requires a direct local-drive child or its descendants, rejects
+/// reparse points, verifies ownership before changing permissions, and protects
+/// every non-root ancestor. The drive root itself is never changed. Callers
+/// must not pass arbitrary configured roots under other users' directories.
+pub fn ensure_private_directory(path: &Path) -> std::io::Result<()> {
+    super::selected::fs::ensure_private_directory(path)
+}
+
 /// Open a path identity that compares by underlying filesystem object.
 pub fn file_identity(path: &Path) -> std::io::Result<FileIdentity> {
     super::selected::fs::file_identity(path).map(FileIdentity)
@@ -162,6 +213,68 @@ pub fn cancel_blocking_io(worker: &std::thread::JoinHandle<()>) -> std::io::Resu
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn private_directory_creation_is_repeatable_and_preserves_existing_files() {
+        if crate::platform::host::is_windows() {
+            return; // Native Windows fixture uses a direct drive child.
+        }
+        let temp = tempfile::tempdir().unwrap();
+        let private = temp.path().join("private");
+        ensure_private_directory(&private).unwrap();
+        ensure_private_directory(&private).unwrap();
+        assert!(private.is_dir());
+        let file = temp.path().join("file");
+        std::fs::write(&file, b"untouched").unwrap();
+        assert!(ensure_private_directory(&file).is_err());
+        assert_eq!(std::fs::read(file).unwrap(), b"untouched");
+    }
+
+    #[test]
+    fn private_directory_rejects_symlinks_without_modifying_the_target() {
+        if crate::platform::host::is_windows() {
+            return; // Windows symlink creation requires external privileges.
+        }
+        let temp = tempfile::tempdir().unwrap();
+        let target = temp.path().join("target");
+        std::fs::create_dir(&target).unwrap();
+        std::fs::write(target.join("sentinel"), b"untouched").unwrap();
+        let link = temp.path().join("link");
+        symlink_dir(&target, &link).unwrap();
+        assert!(ensure_private_directory(&link).is_err());
+        assert_eq!(
+            std::fs::read(target.join("sentinel")).unwrap(),
+            b"untouched"
+        );
+    }
+
+    #[test]
+    fn long_path_policy_is_not_applicable_on_non_windows_hosts() {
+        if crate::platform::host::is_windows() {
+            return;
+        }
+        assert_eq!(long_path_support().unwrap(), LongPathSupport::NotApplicable);
+        assert_eq!(
+            enable_long_paths().unwrap_err().kind(),
+            std::io::ErrorKind::Unsupported
+        );
+        assert_eq!(
+            short_cache_base().unwrap_err().kind(),
+            std::io::ErrorKind::Unsupported
+        );
+    }
+
+    #[test]
+    fn legacy_path_units_measure_native_units_without_nul_terminator() {
+        let path = Path::new("a/😀/é");
+        let expected = if crate::platform::host::is_windows() {
+            6
+        } else {
+            9
+        };
+        assert_eq!(legacy_path_units(path), expected);
+        assert_eq!(legacy_path_units(Path::new("")), 0);
+    }
 
     #[test]
     fn selected_path_rules_match_the_current_host() {

@@ -101,16 +101,33 @@ fn write_response(stream: &mut TcpStream, status_line: &str, body: &str) {
 ///   try to restart the "stale" daemon.
 /// - POST /api/test-emu — 500 + structured OperationResponse JSON.
 /// - POST /api/deploy — 500 + an actionable structured deploy failure.
-fn spawn_mock_daemon(stop: Arc<AtomicBool>) -> u16 {
+fn spawn_mock_daemon(stop: Arc<AtomicBool>, cache_root: &std::path::Path) -> u16 {
     let listener = TcpListener::bind("127.0.0.1:0").expect("bind ephemeral");
     listener
         .set_nonblocking(true)
         .expect("set listener nonblocking");
     let port = listener.local_addr().expect("local_addr").port();
 
+    let identity = fbuild_paths::running_process::DaemonCacheIdentity {
+        mode: "prod",
+        cache_root: cache_root.to_path_buf(),
+        cache_root_key: fbuild_core::path::NormalizedPath::new(cache_root).display_slash(),
+        cache_dir_source: "FBUILD_CACHE_DIR",
+        trust_domain: fbuild_paths::running_process::LOCAL_TRUST_DOMAIN,
+    };
+    let info_body = serde_json::json!({
+        "status": "healthy", "uptime_seconds": 1.0, "version": "test",
+        "pid": 1, "port": port, "dev_mode": false, "operation_in_progress": false,
+        "daemon_state": "idle", "current_operation": null, "client_count": 0,
+        "spawner_cwd": null, "source_mtime": 0.0,
+        "cache_identity": identity.label_value(),
+        "cache_schema_version": fbuild_paths::running_process::CACHE_SCHEMA_VERSION,
+        "long_path_support": fbuild_paths::long_paths::probe(),
+    })
+    .to_string();
+
     std::thread::spawn(move || {
         let healthy_body = "{\"status\":\"healthy\",\"uptime_seconds\":1.0,\"version\":\"test\",\"pid\":1,\"source_mtime\":0.0}";
-        let info_body = "{\"status\":\"healthy\",\"uptime_seconds\":1.0,\"version\":\"test\",\"pid\":1,\"port\":0,\"dev_mode\":true,\"operation_in_progress\":false,\"daemon_state\":\"idle\",\"current_operation\":null,\"client_count\":0,\"spawner_cwd\":null,\"source_mtime\":0.0}";
         let fail_body = "{\"success\":false,\"request_id\":\"mock-1\",\"message\":\"mock daemon: simulated test-emu failure\",\"exit_code\":0,\"output_file\":null,\"output_dir\":null,\"launch_url\":null,\"stdout\":null,\"stderr\":null}";
         let deploy_fail_body = "{\"success\":false,\"request_id\":\"mock-2\",\"message\":\"deploy failed\",\"exit_code\":1,\"output_file\":null,\"output_dir\":null,\"launch_url\":null,\"stdout\":null,\"stderr\":\"RP2040 UF2 transfer failed with Windows error 121\"}";
 
@@ -125,7 +142,7 @@ fn spawn_mock_daemon(stop: Arc<AtomicBool>) -> u16 {
                     if request_line.starts_with("GET /health") {
                         write_response(&mut stream, "HTTP/1.1 200 OK", healthy_body);
                     } else if request_line.starts_with("GET /api/daemon/info") {
-                        write_response(&mut stream, "HTTP/1.1 200 OK", info_body);
+                        write_response(&mut stream, "HTTP/1.1 200 OK", &info_body);
                     } else if request_line.starts_with("POST /api/test-emu") {
                         // Return 500 with structured body + exit_code=0 to
                         // stress-test the CLI's fallback: it must still
@@ -167,10 +184,22 @@ fn make_test_project() -> tempfile::TempDir {
     dir
 }
 
+fn make_test_cache() -> tempfile::TempDir {
+    if fbuild_core::platform::host::is_windows() {
+        tempfile::Builder::new()
+            .prefix("fc-")
+            .tempdir_in(fbuild_core::platform::fs::short_cache_base().unwrap())
+            .unwrap()
+    } else {
+        tempfile::tempdir().unwrap()
+    }
+}
+
 #[test]
 fn deploy_output_survives_nonzero_exit() {
     let stop = Arc::new(AtomicBool::new(false));
-    let port = spawn_mock_daemon(Arc::clone(&stop));
+    let cache = make_test_cache();
+    let port = spawn_mock_daemon(Arc::clone(&stop), cache.path());
 
     let project = make_test_project();
     let bin = std::env::var("CARGO_BIN_EXE_fbuild").expect("fbuild binary path");
@@ -185,7 +214,9 @@ fn deploy_output_survives_nonzero_exit() {
         "--skip-build",
     ])
     .env("FBUILD_DAEMON_PORT", port.to_string())
-    .env_remove("FBUILD_DEV_MODE")
+    .env("FBUILD_DEV_MODE", "0")
+    .env("FBUILD_CACHE_DIR", cache.path())
+    .env("RUNNING_PROCESS_DISABLE", "1")
     .stdin(Stdio::null())
     .stdout(Stdio::piped())
     .stderr(Stdio::piped());
@@ -212,14 +243,14 @@ fn deploy_output_survives_nonzero_exit() {
 #[test]
 fn test_emu_exits_non_zero_when_daemon_returns_failure() {
     let stop = Arc::new(AtomicBool::new(false));
-    let port = spawn_mock_daemon(Arc::clone(&stop));
+    let cache = make_test_cache();
+    let port = spawn_mock_daemon(Arc::clone(&stop), cache.path());
 
     let project = make_test_project();
     let bin = std::env::var("CARGO_BIN_EXE_fbuild").expect("fbuild binary path");
 
-    // Drive the CLI at the mock daemon. We clear FBUILD_DEV_MODE so the
-    // CLI sticks to prod-mode path assumptions, and pin
-    // FBUILD_DAEMON_PORT so the client calls 127.0.0.1:<port>.
+    // Pin the CLI to this fixture's prod cache and HTTP endpoint, bypassing
+    // broker adoption so the failure is supplied by this test server.
     // allow-direct-spawn: integration test driver that invokes the compiled fbuild binary.
     let mut cmd = Command::new(bin);
     cmd.args([
@@ -233,7 +264,9 @@ fn test_emu_exits_non_zero_when_daemon_returns_failure() {
         "1",
     ])
     .env("FBUILD_DAEMON_PORT", port.to_string())
-    .env_remove("FBUILD_DEV_MODE")
+    .env("FBUILD_DEV_MODE", "0")
+    .env("FBUILD_CACHE_DIR", cache.path())
+    .env("RUNNING_PROCESS_DISABLE", "1")
     .stdin(Stdio::null())
     .stdout(Stdio::piped())
     .stderr(Stdio::piped());

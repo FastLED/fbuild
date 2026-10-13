@@ -52,6 +52,7 @@ pub mod udev_install;
     reason = "USB recovery integration belongs exclusively to #1147"
 )]
 pub mod usb_recovery;
+pub mod windows_long_paths;
 
 #[cfg(test)]
 mod tests;

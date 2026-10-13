@@ -10,5 +10,13 @@ fn main() {
     let target = std::env::var("TARGET").unwrap_or_default();
     if target.contains("pc-windows-msvc") {
         println!("cargo:rustc-link-arg-bin=fbuild=/STACK:8388608");
+        let manifest = std::path::Path::new(&std::env::var("CARGO_MANIFEST_DIR").unwrap())
+            .join("../fbuild-core/src/platform/windows/long-paths.manifest");
+        println!("cargo:rerun-if-changed={}", manifest.display());
+        println!("cargo:rustc-link-arg-bin=fbuild=/MANIFEST:EMBED");
+        println!(
+            "cargo:rustc-link-arg-bin=fbuild=/MANIFESTINPUT:{}",
+            manifest.display()
+        );
     }
 }

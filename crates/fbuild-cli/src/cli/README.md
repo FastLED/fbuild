@@ -26,4 +26,5 @@ here and is dispatched from `cli::async_main`.
 - **`reset.rs`** -- `run_reset`
 - **`lnk.rs`** -- `run_lnk` (pull / check / add)
 - **`install.rs`** -- `run_install`: in-process `fbuild install` over `fbuild_build::provision_env`, text / JSON rendering, `--check` exit codes (FastLED/fbuild#1433)
+- **`windows_long_paths.rs`** -- Windows preflight, explicit UAC repair, fresh command restart, and graceful daemon handoff (#1673)
 - **`tests.rs`** -- unit tests for argument normalization and `fbuild ci` parsing
