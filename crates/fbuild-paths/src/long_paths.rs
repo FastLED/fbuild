@@ -218,10 +218,7 @@ pub fn initialize() -> Result<&'static Resolution> {
         observation,
     };
     let resolution = resolve_with_short_base(inputs, fs::short_cache_base)?;
-    let _ = RESOLUTION.set(resolution);
-    RESOLUTION
-        .get()
-        .ok_or_else(|| FbuildError::Other("long-path resolution was not initialized".into()))
+    Ok(RESOLUTION.get_or_init(|| resolution))
 }
 
 /// Inspect the startup snapshot without triggering policy reads or filesystem work.

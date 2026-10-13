@@ -458,7 +458,8 @@ mod tests {
                 .iter()
                 .map(|byte| format!("{byte:02x}"))
                 .collect::<String>();
-            let path = NormalizedPath::new(short_cache_base().unwrap())
+            let path = short_cache_base()
+                .unwrap()
                 .join(format!("fb-private-{suffix}"));
             ensure_private_directory(&path).unwrap();
             Self { path }

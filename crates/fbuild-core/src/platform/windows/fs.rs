@@ -2,7 +2,7 @@ use std::fs::OpenOptions;
 use std::os::windows::ffi::OsStrExt;
 use std::os::windows::fs::{MetadataExt, OpenOptionsExt};
 use std::os::windows::io::AsRawHandle;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 use crate::path::NormalizedPath;
 use crate::platform::fs::{ErrorClass, LongPathSupport, VolumeFacts, VolumeKind};
@@ -152,7 +152,7 @@ pub(crate) fn legacy_path_units(path: &Path) -> usize {
     path.as_os_str().encode_wide().count()
 }
 
-pub(crate) fn short_cache_base() -> std::io::Result<PathBuf> {
+pub(crate) fn short_cache_base() -> std::io::Result<NormalizedPath> {
     use windows_sys::Win32::Storage::FileSystem::GetDriveTypeW;
 
     let drive = std::env::var_os("SystemDrive").ok_or_else(|| {
@@ -179,7 +179,7 @@ pub(crate) fn short_cache_base() -> std::io::Result<PathBuf> {
     Ok(base)
 }
 
-fn short_cache_base_from_drive(drive: &std::ffi::OsStr) -> std::io::Result<PathBuf> {
+fn short_cache_base_from_drive(drive: &std::ffi::OsStr) -> std::io::Result<NormalizedPath> {
     let value = drive.to_str().ok_or_else(|| {
         std::io::Error::new(
             std::io::ErrorKind::InvalidInput,
@@ -196,7 +196,7 @@ fn short_cache_base_from_drive(drive: &std::ffi::OsStr) -> std::io::Result<PathB
             "SystemDrive must be a local drive root such as C:",
         ));
     }
-    Ok(PathBuf::from(format!(
+    Ok(NormalizedPath::new(format!(
         "{}:\\",
         char::from(bytes[0].to_ascii_uppercase())
     )))
@@ -478,11 +478,11 @@ mod tests {
 
         assert_eq!(
             short_cache_base_from_drive(OsStr::new("C:")).unwrap(),
-            Path::new(r"C:\")
+            NormalizedPath::new(r"C:\")
         );
         assert_eq!(
             short_cache_base_from_drive(OsStr::new(r"D:\")).unwrap(),
-            Path::new(r"D:\")
+            NormalizedPath::new(r"D:\")
         );
         for drive in ["", "C", r"C:\nested", r"\\server\share", "1:", "C:relative"] {
             assert_eq!(

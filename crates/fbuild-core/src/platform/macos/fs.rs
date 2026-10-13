@@ -1,6 +1,6 @@
 use std::fs::OpenOptions;
 use std::os::unix::fs::PermissionsExt;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 use crate::path::NormalizedPath;
 use crate::platform::fs::{ErrorClass, LongPathSupport, VolumeFacts};
@@ -20,7 +20,7 @@ pub(crate) fn legacy_path_units(path: &Path) -> usize {
     path.as_os_str().as_encoded_bytes().len()
 }
 
-pub(crate) fn short_cache_base() -> std::io::Result<PathBuf> {
+pub(crate) fn short_cache_base() -> std::io::Result<NormalizedPath> {
     Err(std::io::Error::new(
         std::io::ErrorKind::Unsupported,
         "Windows short-cache drive selection is unavailable on this host",
