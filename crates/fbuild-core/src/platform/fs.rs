@@ -74,7 +74,7 @@ pub fn legacy_path_units(path: &Path) -> usize {
 /// User isolation, directory creation, permissions, and cache policy belong
 /// to callers. Other hosts return `Unsupported`.
 pub fn short_cache_base() -> std::io::Result<NormalizedPath> {
-    super::selected::fs::short_cache_base().map(NormalizedPath::new)
+    super::selected::fs::short_cache_base()
 }
 
 /// Establish an automatic cache directory owned and writable only by this user.
