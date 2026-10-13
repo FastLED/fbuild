@@ -67,3 +67,54 @@ jobs:
       - name: Test
         shell: bash
         run: soldr cargo test --workspace
+
+      - name: Setup uv for legacy source package install
+        uses: astral-sh/setup-uv@v3
+
+      # Exercise the real uv-created Windows launcher, beyond the unit fixture.
+      # Cold public install runs fbuild's internal esptool version verification.
+      - name: Install and recheck legacy ESP32 source tools
+        id: legacy-esptool
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $probe = Join-Path $env:RUNNER_TEMP ("fbuild-legacy-esptool-" + [guid]::NewGuid())
+          New-Item -ItemType Directory -Path $probe | Out-Null
+          $env:FBUILD_CACHE_DIR = Join-Path $probe "cache"
+          [Environment]::SetEnvironmentVariable("FBUILD_ESPTOOL_PATH", $null, "Process")
+          @"
+          [env:esp32-idf4]
+          platform = espressif32@4.4.0
+          board = esp32dev
+          framework = arduino
+          "@ | Set-Content -LiteralPath (Join-Path $probe "platformio.ini") -Encoding utf8
+
+          $coldJson = & soldr cargo run -p fbuild-cli --bin fbuild -- install "$probe" -e esp32-idf4 --json
+          if ($LASTEXITCODE -ne 0) { throw "Cold legacy ESP32 install failed ($LASTEXITCODE)" }
+          $coldJson | Write-Output
+          $cold = ($coldJson -join "`n") | ConvertFrom-Json
+          $coldTools = @($cold.environments.packages | Where-Object name -eq "tool-esptoolpy")
+          if ($coldTools.Count -ne 1) { throw "Expected exactly one esptool package" }
+          $coldTool = $coldTools[0]
+          if ($coldTool.version -ne "1.30300.0" -or $coldTool.status -ne "fetched") {
+            throw "Expected a cold install of esptool 3.3 source package 1.30300.0"
+          }
+          if (-not (Test-Path -LiteralPath $coldTool.install_path -PathType Leaf)) {
+            throw "Installed esptool launcher is missing"
+          }
+          if ($coldTool.install_path -notmatch '[\\/]\.fbuild-tools[\\/]esptool[\\/]Scripts[\\/]esptool\.exe$') {
+            throw "Expected the real uv-managed Windows esptool launcher"
+          }
+
+          $warmJson = & soldr cargo run -p fbuild-cli --bin fbuild -- install "$probe" -e esp32-idf4 --check --json
+          if ($LASTEXITCODE -ne 0) { throw "Warm legacy ESP32 check failed ($LASTEXITCODE)" }
+          $warmJson | Write-Output
+          $warm = ($warmJson -join "`n") | ConvertFrom-Json
+          $warmTools = @($warm.environments.packages | Where-Object name -eq "tool-esptoolpy")
+          if ($warmTools.Count -ne 1) { throw "Expected exactly one cached esptool package" }
+          $warmTool = $warmTools[0]
+          if ($warmTool.version -ne "1.30300.0" -or $warmTool.status -ne "present" -or
+              $warmTool.install_path -ne $coldTool.install_path) {
+            throw "Warm check did not reuse the verified source launcher"
+          }
+          # The hosted runner discards RUNNER_TEMP after the job.
