@@ -499,6 +499,57 @@ fn has_include_is_undecidable_and_its_argument_is_consumed() {
     assert_eq!(paths, vec!["SPI.h"], "{paths:?}");
 }
 
+#[test]
+fn continued_sd_guard_keeps_real_backend_include() {
+    let known: HashSet<String> = ["FL_HAS_INCLUDE".to_string()].into();
+    let refs = scan_active_with_known(
+        r"#if !defined(FL_IS_TEENSY) && FL_HAS_INCLUDE(<SD.h>) && \
+    (FL_HAS_INCLUDE(<FS.h>) || FL_HAS_INCLUDE(<fs.h>)) && FL_HAS_INCLUDE(<SPI.h>)
+         #include <SD.h>
+         #endif
+",
+        &HashMap::new(),
+        &known,
+    );
+    assert_eq!(
+        refs.len(),
+        1,
+        "a continued condition must be evaluated as one directive"
+    );
+    assert_eq!(refs[0].path, "SD.h");
+    assert_eq!(
+        refs[0].span.line, 3,
+        "physical source location is preserved"
+    );
+}
+
+#[test]
+fn textual_and_active_scans_agree_on_spliced_include_spans() {
+    for (source, line, col) in [
+        ("#inc\\\nlude <SPI.h>\n", 1, 1),
+        ("\\\n  #include <SPI.h>\n", 2, 3),
+    ] {
+        for source in [source.to_string(), source.replace('\n', "\r\n")] {
+            for refs in [scan(&source), scan_active(&source, &HashMap::new())] {
+                assert_eq!(refs.len(), 1, "spliced include in {source:?}");
+                assert_eq!(refs[0].path, "SPI.h");
+                assert_eq!(refs[0].span, Span { line, col });
+            }
+        }
+    }
+}
+
+#[test]
+fn continued_conditions_preserve_physical_spans_and_dead_branches() {
+    let source = "#if 1 && \\\n1\n#include <SPI.h>\n#endif\n#if defined(DISABLED_OPT_IN) && \\\n1\n#include <unused.h>\n#endif\n";
+    for source in [source.to_string(), source.replace('\n', "\r\n")] {
+        let refs = scan_active(&source, &HashMap::new());
+        assert_eq!(refs.len(), 1);
+        assert_eq!(refs[0].path, "SPI.h");
+        assert_eq!(refs[0].span.line, 3);
+    }
+}
+
 /// A decidably-false operand settles `&&`, even when the other half cannot be
 /// decided.
 ///

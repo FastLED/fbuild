@@ -49,8 +49,83 @@ enum State {
 }
 
 /// Extract every `#include` directive from `src`. Pure function; no I/O.
-#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub fn scan(src: &str) -> Vec<IncludeRef> {
+    let source = LogicalSource::new(src);
+    source.restore_spans(scan_logical(&source.text))
+}
+
+/// C/C++ phase-two line splicing, shared by textual and active scans so
+/// dependency-cache validation observes the same includes as the resolver.
+struct LogicalSource<'a> {
+    text: std::borrow::Cow<'a, str>,
+    original: &'a str,
+    // (logical byte offset, cumulative removed bytes), in source order.
+    removed: Vec<(usize, usize)>,
+}
+
+impl<'a> LogicalSource<'a> {
+    fn new(original: &'a str) -> Self {
+        if !original.contains("\\\n") && !original.contains("\\\r\n") {
+            return Self {
+                text: std::borrow::Cow::Borrowed(original),
+                original,
+                removed: Vec::new(),
+            };
+        }
+        let mut text = String::with_capacity(original.len());
+        let mut removed = Vec::new();
+        let mut cursor = 0;
+        for (offset, _) in original.match_indices('\\') {
+            let suffix = &original[offset..];
+            let width = if suffix.starts_with("\\\r\n") {
+                3
+            } else if suffix.starts_with("\\\n") {
+                2
+            } else {
+                continue;
+            };
+            text.push_str(&original[cursor..offset]);
+            cursor = offset + width;
+            removed.push((text.len(), cursor - text.len()));
+        }
+        text.push_str(&original[cursor..]);
+        Self {
+            text: text.into(),
+            original,
+            removed,
+        }
+    }
+
+    fn restore_spans(&self, mut refs: Vec<IncludeRef>) -> Vec<IncludeRef> {
+        if self.removed.is_empty() {
+            return refs;
+        }
+        let starts = |text: &str| -> Vec<usize> {
+            std::iter::once(0)
+                .chain(text.match_indices('\n').map(|(offset, _)| offset + 1))
+                .collect()
+        };
+        let logical_lines = starts(&self.text);
+        let original_lines = starts(self.original);
+        for reference in &mut refs {
+            let logical =
+                logical_lines[reference.span.line as usize - 1] + reference.span.col as usize - 1;
+            let run = self
+                .removed
+                .partition_point(|(offset, _)| *offset <= logical);
+            let original = logical + if run == 0 { 0 } else { self.removed[run - 1].1 };
+            let line = original_lines.partition_point(|offset| *offset <= original) - 1;
+            reference.span = Span {
+                line: (line + 1) as u32,
+                col: (original - original_lines[line] + 1) as u32,
+            };
+        }
+        refs
+    }
+}
+
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
+fn scan_logical(src: &str) -> Vec<IncludeRef> {
     let bytes = src.as_bytes();
     let mut out = Vec::new();
     let mut state = State::Code;
@@ -209,8 +284,13 @@ pub fn scan_active_with_known(
     defines: &HashMap<String, String>,
     defined_somewhere: &HashSet<String>,
 ) -> Vec<IncludeRef> {
+    let source = LogicalSource::new(src);
     let mut macros = defines.clone();
-    scan(&active_source(src, &mut macros, defined_somewhere))
+    source.restore_spans(scan_logical(&active_source(
+        &source.text,
+        &mut macros,
+        defined_somewhere,
+    )))
 }
 
 /// Every macro name this source `#define`s, in any branch.
@@ -218,8 +298,9 @@ pub fn scan_active_with_known(
 /// Deliberately textual: the point is to know what the corpus *could* define,
 /// so conditionals must not filter it.
 pub fn defined_macro_names(src: &str) -> Vec<String> {
+    let source = LogicalSource::new(src);
     let mut names = Vec::new();
-    for line in src.lines() {
+    for line in source.text.lines() {
         let Some(directive) = line.trim_start().strip_prefix('#').map(str::trim_start) else {
             continue;
         };
@@ -251,8 +332,9 @@ pub fn active_defines_with_known(
     defines: &HashMap<String, String>,
     defined_somewhere: &HashSet<String>,
 ) -> HashMap<String, String> {
+    let source = LogicalSource::new(src);
     let mut macros = defines.clone();
-    let _ = active_source(src, &mut macros, defined_somewhere);
+    let _ = active_source(&source.text, &mut macros, defined_somewhere);
     macros
 }
 

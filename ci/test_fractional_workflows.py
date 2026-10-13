@@ -2,6 +2,7 @@
 
 import unittest
 import os
+import shlex
 import subprocess
 import tempfile
 import tomllib
@@ -12,6 +13,57 @@ from ci import render_workflows
 
 
 class FractionalWorkflowTests(unittest.TestCase):
+    def test_macos_lipo_places_input_before_variadic_architectures(self):
+        job = self.load("release-auto.yml")["jobs"]["macos-release-smoke"]
+        script = next(step["run"] for step in job["steps"] if "lipo " in step.get("run", ""))
+        commands = [shlex.split(line) for line in script.splitlines() if line.strip().startswith("lipo ")]
+        self.assertEqual(2, len(commands))
+        self.assertEqual({"$extension", ".wheel-smoke/bin/fbuild"}, {command[1] for command in commands})
+        for command in commands:
+            # Apple's -verify_arch consumes every remaining argument as an
+            # architecture; putting the input last makes its path an arch.
+            self.assertEqual(["-verify_arch", "$EXPECTED_ARCH"], command[2:])
+
+    def test_windows_checks_real_legacy_esptool_install(self):
+        job = self.load("check-windows.yml")["jobs"]["check"]
+        self.assertEqual("windows-latest", job["runs-on"])
+        steps = job["steps"]
+        smoke = next(step for step in steps if step.get("id") == "legacy-esptool")
+        self.assertEqual("pwsh", smoke["shell"])
+        self.assertNotIn("if", smoke)
+        self.assertFalse(smoke.get("continue-on-error", False))
+        self.assertTrue(any("astral-sh/setup-uv@" in step.get("uses", "") for step in steps[:steps.index(smoke)]))
+        script = smoke["run"]
+        for contract in (
+            "$env:RUNNER_TEMP", "[guid]::NewGuid()", "$env:FBUILD_CACHE_DIR",
+            'SetEnvironmentVariable("FBUILD_ESPTOOL_PATH", $null, "Process")',
+            "platform = espressif32@4.4.0", "board = esp32dev", "framework = arduino",
+            "soldr cargo run -p fbuild-cli --bin fbuild -- install",
+            "--check --json", "$LASTEXITCODE -ne 0", "ConvertFrom-Json",
+            'name -eq "tool-esptoolpy"', 'version -ne "1.30300.0"',
+            'status -ne "fetched"', 'status -ne "present"',
+            'Test-Path -LiteralPath $coldTool.install_path -PathType Leaf',
+            '$warmTool.install_path -ne $coldTool.install_path',
+        ):
+            self.assertIn(contract, script)
+        self.assertEqual(2, script.count("soldr cargo run -p fbuild-cli --bin fbuild -- install"))
+        self.assertNotIn("continue-on-error", script)
+        self.assertNotRegex(script, r"(?im)^\s*&?\s*esptool(?:\.py|\.exe)?\s")
+
+    def test_macos_wheels_use_matching_native_artifacts(self):
+        from ci import publish
+
+        cases = (
+            ("x86_64-apple-darwin", "macosx_10_12_x86_64"),
+            ("aarch64-apple-darwin", "macosx_11_0_arm64"),
+        )
+        for target, tag in cases:
+            with self.subTest(target=target):
+                artifact = f"binaries-{target}"
+                self.assertIn(artifact, publish.ARTIFACT_MAP)
+                subdir = publish.ARTIFACT_MAP[artifact]
+                self.assertEqual([tag], publish.PLATFORMS[subdir])
+
     def test_pr_verifier_enforces_attestation_without_gating_dispatch(self):
         config = tomllib.loads((render_workflows.WORKFLOWS_DIR.parents[1] / "local-gate.toml").read_text())
         self.assertEqual("enforce", config["gate"]["mode"])
