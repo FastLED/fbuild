@@ -81,7 +81,7 @@ fn path_override_parser_rejects_actual_empty_value_and_preserves_absence() {
 fn disabled_policy_creates_short_writable_cache_and_scratch() {
     let temp = tempdir();
     let resolution = resolve(inputs(&temp, Observation::Disabled)).unwrap();
-    assert!(resolution.cache_root.starts_with(temp.path()));
+    assert!(resolution.cache_root.relative_to(temp.path()).is_some());
     assert!(resolution.cache_root.is_dir());
     assert!(resolution.scratch_root.is_dir());
     assert_ne!(resolution.cache_root, resolution.requested_cache_root);
@@ -115,7 +115,7 @@ fn short_explicit_cache_is_preserved_and_still_warns() {
     assert_eq!(resolution.cache_root, selected);
     assert_eq!(resolution.cache_dir_source, "FBUILD_CACHE_DIR");
     assert!(resolution.advisory().is_some());
-    assert!(resolution.scratch_root.starts_with(&selected));
+    assert!(resolution.scratch_root.relative_to(&selected).is_some());
 }
 
 #[test]
@@ -170,8 +170,14 @@ fn short_explicit_cache_works_when_automatic_base_is_unavailable() {
     input.cache_override = Some(selected.clone());
     let resolution = resolve(input).unwrap();
     assert_eq!(resolution.cache_root, selected);
-    assert!(resolution.scratch_root.starts_with(&selected));
-    assert!(resolution.short_build_root.unwrap().starts_with(&selected));
+    assert!(resolution.scratch_root.relative_to(&selected).is_some());
+    assert!(
+        resolution
+            .short_build_root
+            .unwrap()
+            .relative_to(&selected)
+            .is_some()
+    );
 }
 
 #[test]
@@ -281,7 +287,11 @@ fn deep_build_outputs_are_keyed_by_normalized_project() {
     let deep = first.join("deep".repeat(35));
     let first_root = resolution.resolve_build_root(&first, &deep);
     let second_root = resolution.resolve_build_root(&second, &deep);
-    assert!(first_root.starts_with(resolution.short_build_root.as_ref().unwrap()));
+    assert!(
+        first_root
+            .relative_to(resolution.short_build_root.as_ref().unwrap())
+            .is_some()
+    );
     assert_ne!(first_root, second_root);
     assert_eq!(
         first_root,
@@ -348,7 +358,7 @@ fn private_build_preparation_rejects_linked_project_ancestor() {
     let base = resolution.short_build_root.as_ref().unwrap();
     let project_root = base.join(
         build
-            .strip_prefix(base)
+            .relative_to(base)
             .unwrap()
             .components()
             .next()
