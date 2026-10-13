@@ -102,9 +102,9 @@ jobs:
             $before = Get-Content (Join-Path $env:USERPROFILE '.fbuild\prod\daemon\root-owner.json') -Raw | ConvertFrom-Json
             New-ItemProperty -Path $registry -Name LongPathsEnabled -PropertyType DWord -Value 0 -Force | Out-Null
             $env:CI = 'true'
-            $output = & $cli install tests/platform/esp32dev --check --json --no-update-check 2> long-path-warning.txt
+            $output = & $cli install tests/platform/esp32dev --dry-run --json --no-update-check 2> long-path-warning.txt
             $code = $LASTEXITCODE
-            if ($code -notin @(0, 2)) { throw "fallback package check failed: $code" }
+            if ($code -ne 0) { throw "fallback package preview failed: $code" }
             $output | ConvertFrom-Json | Out-Null
             $warning = Get-Content long-path-warning.txt -Raw
             if ($warning -notmatch 'WARNING:' -or $warning -notmatch 'fix-win' -or $warning.Contains([char]27)) {
