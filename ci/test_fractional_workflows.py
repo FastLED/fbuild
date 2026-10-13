@@ -2,6 +2,7 @@
 
 import unittest
 import os
+import shlex
 import subprocess
 import tempfile
 import tomllib
@@ -12,6 +13,17 @@ from ci import render_workflows
 
 
 class FractionalWorkflowTests(unittest.TestCase):
+    def test_macos_lipo_places_input_before_variadic_architectures(self):
+        job = self.load("release-auto.yml")["jobs"]["macos-release-smoke"]
+        script = next(step["run"] for step in job["steps"] if "lipo " in step.get("run", ""))
+        commands = [shlex.split(line) for line in script.splitlines() if line.strip().startswith("lipo ")]
+        self.assertEqual(2, len(commands))
+        self.assertEqual({"$extension", ".wheel-smoke/bin/fbuild"}, {command[1] for command in commands})
+        for command in commands:
+            # Apple's -verify_arch consumes every remaining argument as an
+            # architecture; putting the input last makes its path an arch.
+            self.assertEqual(["-verify_arch", "$EXPECTED_ARCH"], command[2:])
+
     def test_windows_checks_real_legacy_esptool_install(self):
         job = self.load("check-windows.yml")["jobs"]["check"]
         self.assertEqual("windows-latest", job["runs-on"])

@@ -317,8 +317,8 @@ jobs:
         run: |
           set -euo pipefail
           extension="$(uv run --no-project --python .wheel-smoke/bin/python python -c 'import fbuild._native; print(fbuild._native.__file__)')"
-          lipo -verify_arch "$EXPECTED_ARCH" "$extension"
-          lipo -verify_arch "$EXPECTED_ARCH" .wheel-smoke/bin/fbuild
+          lipo "$extension" -verify_arch "$EXPECTED_ARCH"
+          lipo .wheel-smoke/bin/fbuild -verify_arch "$EXPECTED_ARCH"
           .wheel-smoke/bin/fbuild --version
           uv run --no-project --python .wheel-smoke/bin/python python -c 'import fbuild; print(fbuild.__version__)'
 
