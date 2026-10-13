@@ -43,6 +43,7 @@ struct Rp2040FingerprintMetadata {
     version: u32,
     // Invalidate firmware produced before SDK platform.txt defaults were applied.
     platform_define_policy: &'static str,
+    framework_library_linkage: &'static str,
     env_name: String,
     profile: String,
     board_name: String,
@@ -204,6 +205,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             &Rp2040FingerprintMetadata {
                 version: BUILD_FINGERPRINT_VERSION,
                 platform_define_policy: "platform-sdfatdefaults-v1",
+                framework_library_linkage: "archive",
                 env_name: params.env_name.clone(),
                 profile: profile_label(params.profile).to_string(),
                 board_name: ctx.board.name.clone(),
@@ -355,7 +357,9 @@ impl BuildOrchestrator for Rp2040Orchestrator {
                 "RP2040 framework library sources added: {}",
                 framework_library_sources.len()
             );
-            sources.core_sources.extend(framework_library_sources);
+            sources
+                .core_sources
+                .extend(framework_library_sources.iter().cloned());
         }
         // Use the resolved core_dir/variant_dir instead of board.get_include_paths():
         // RP2040 board metadata reports `core = earlephilhower`, while the actual
@@ -524,7 +528,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
 
         // 9. Run shared sequential build pipeline
         let board_mcu = ctx.board.mcu.clone();
-        let mut build_result = pipeline::run_sequential_build_with_libs(
+        let mut build_result = pipeline::run_sequential_build_with_optional_framework_libs(
             &compiler,
             &linker,
             ctx,
@@ -533,6 +537,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             &support_link_inputs,
             lib_deps_plan,
             Some(&lib_env),
+            &framework_library_sources,
             TargetArchitecture::Arm,
             "RP2040",
             start,
@@ -1054,6 +1059,15 @@ mod tests {
 
     #[test]
     fn platform_default_policy_invalidates_legacy_firmware_cache() {
+        assert_policy_invalidates_legacy_firmware_cache("platform_define_policy");
+    }
+
+    #[test]
+    fn framework_archive_policy_invalidates_legacy_firmware_cache() {
+        assert_policy_invalidates_legacy_firmware_cache("framework_library_linkage");
+    }
+
+    fn assert_policy_invalidates_legacy_firmware_cache(policy: &str) {
         use crate::build_fingerprint::{
             PersistedBuildFingerprint, fast_path_check, hash_watch_set_stamps, save_json,
             stable_hash_json,
@@ -1062,6 +1076,7 @@ mod tests {
         let metadata = Rp2040FingerprintMetadata {
             version: BUILD_FINGERPRINT_VERSION,
             platform_define_policy: "platform-sdfatdefaults-v1",
+            framework_library_linkage: "archive",
             env_name: "pico".into(),
             profile: "release".into(),
             board_name: "Pico".into(),
@@ -1080,11 +1095,8 @@ mod tests {
         };
         let current = serde_json::to_value(&metadata).unwrap();
         let mut legacy = current.clone();
-        // Successful builds before the SDK-default fix did not encode this policy.
-        legacy
-            .as_object_mut()
-            .unwrap()
-            .remove("platform_define_policy");
+        // Successful builds before the policy change did not encode this field.
+        legacy.as_object_mut().unwrap().remove(policy);
         let current_hash = stable_hash_json(&current).unwrap();
         let legacy_hash = stable_hash_json(&legacy).unwrap();
         let tmp = tempfile::tempdir().unwrap();
@@ -1111,13 +1123,13 @@ mod tests {
         };
         assert!(
             fast_path_check(&contract, &inputs).unwrap().is_none(),
-            "firmware built without SDK platform defaults must be rebuilt"
+            "firmware built without current {policy} must be rebuilt"
         );
         persisted.metadata_hash = current_hash.clone();
         save_json(contract.fingerprint_path(), &persisted).unwrap();
         assert!(
             fast_path_check(&contract, &inputs).unwrap().is_some(),
-            "unchanged firmware built with the current defaults remains reusable"
+            "unchanged firmware built with current {policy} remains reusable"
         );
     }
 
