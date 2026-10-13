@@ -3,7 +3,7 @@
 Library code consumed by the **Autonomous Release** GitHub Action
 (`.github/workflows/release-auto.yml`). The action downloads
 per-platform native binaries (Linux x86_64, Linux aarch64,
-macOS aarch64, Windows x86_64) into ``dist/_tmp/binaries-<target>``,
+macOS x86_64, macOS aarch64, Windows x86_64) into ``dist/_tmp/binaries-<target>``,
 then calls into this module to:
 
 1. Re-stage each artifact into ``dist/<platform_subdir>/`` (the
@@ -50,16 +50,16 @@ PYTHON_SHIMS_DIR = ROOT / "python"
 # GitHub artifact name -> dist/ subdir
 #
 # Not every release-matrix lane maps to a wheel: the
-# x86_64-apple-darwin and aarch64-pc-windows-msvc artifacts ship via
-# the GitHub release archives only (Intel Macs install the ARM wheel
-# via the dual macosx tag below; ARM Windows uses the win_amd64 wheel
-# via emulation).
+# aarch64-pc-windows-msvc artifact ships via the GitHub release archives
+# only (ARM Windows uses the win_amd64 wheel via emulation).
+# Each macOS wheel contains the matching native extension and CLI binaries.
 ARTIFACT_MAP: dict[str, str] = {
     "binaries-x86_64-unknown-linux-musl": "linux-x86_64",
     "binaries-aarch64-unknown-linux-musl": "linux-aarch64",
     # Restored alongside the release-auto.yml macOS matrix entries once
     # Built with the repository-wide published soldr v0.8.8 pin.
     "binaries-aarch64-apple-darwin": "macos-aarch64",
+    "binaries-x86_64-apple-darwin": "macos-x86_64",
     "binaries-x86_64-pc-windows-msvc": "windows-x86_64",
 }
 
@@ -67,7 +67,8 @@ ARTIFACT_MAP: dict[str, str] = {
 PLATFORMS: dict[str, list[str]] = {
     "linux-x86_64": ["manylinux_2_17_x86_64", "manylinux2014_x86_64"],
     "linux-aarch64": ["manylinux_2_17_aarch64", "manylinux2014_aarch64"],
-    "macos-aarch64": ["macosx_11_0_arm64", "macosx_10_12_x86_64"],
+    "macos-aarch64": ["macosx_11_0_arm64"],
+    "macos-x86_64": ["macosx_10_12_x86_64"],
     "windows-x86_64": ["win_amd64"],
 }
 

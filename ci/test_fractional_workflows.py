@@ -12,6 +12,20 @@ from ci import render_workflows
 
 
 class FractionalWorkflowTests(unittest.TestCase):
+    def test_macos_wheels_use_matching_native_artifacts(self):
+        from ci import publish
+
+        cases = (
+            ("x86_64-apple-darwin", "macosx_10_12_x86_64"),
+            ("aarch64-apple-darwin", "macosx_11_0_arm64"),
+        )
+        for target, tag in cases:
+            with self.subTest(target=target):
+                artifact = f"binaries-{target}"
+                self.assertIn(artifact, publish.ARTIFACT_MAP)
+                subdir = publish.ARTIFACT_MAP[artifact]
+                self.assertEqual([tag], publish.PLATFORMS[subdir])
+
     def test_pr_verifier_enforces_attestation_without_gating_dispatch(self):
         config = tomllib.loads((render_workflows.WORKFLOWS_DIR.parents[1] / "local-gate.toml").read_text())
         self.assertEqual("enforce", config["gate"]["mode"])

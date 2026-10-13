@@ -315,7 +315,8 @@ fn source_esptool_path(dir: &Path) -> NormalizedPath {
 fn source_esptool_path_for_host(dir: &Path, windows: bool) -> NormalizedPath {
     let tools_dir = source_tools_dir(dir);
     if windows {
-        tools_dir.join("esptool/Scripts/esptool.py.exe")
+        // uv removes the .py suffix when generating Windows console launchers.
+        tools_dir.join("esptool/Scripts/esptool.exe")
     } else {
         tools_dir.join("esptool/bin/esptool.py")
     }
@@ -966,13 +967,28 @@ mod tests {
         assert_eq!(esptool.download_url().unwrap(), url);
         assert_eq!(
             source_esptool_path_for_host(tmp.path(), true),
-            source_tools_dir(tmp.path()).join("esptool/Scripts/esptool.py.exe")
+            source_tools_dir(tmp.path()).join("esptool/Scripts/esptool.exe")
         );
         assert_eq!(
             source_esptool_path_for_host(tmp.path(), false),
             source_tools_dir(tmp.path()).join("esptool/bin/esptool.py")
         );
         assert!(validate_source_esptool(tmp.path()).is_err());
+    }
+
+    #[test]
+    fn windows_source_esptool_resolves_uv_console_launcher() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let scripts = source_tools_dir(tmp.path()).join("esptool/Scripts");
+        std::fs::create_dir_all(&scripts).unwrap();
+        // uv strips the .py suffix from the console-script name before
+        // appending .exe on Windows. Model the installed filesystem layout.
+        let launcher = scripts.join("esptool.exe");
+        std::fs::write(&launcher, b"installed console launcher").unwrap();
+
+        let resolved = source_esptool_path_for_host(tmp.path(), true);
+        assert!(resolved.is_file(), "missing managed launcher: {resolved}");
+        assert_eq!(resolved, launcher);
     }
 
     #[test]

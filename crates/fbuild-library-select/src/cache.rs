@@ -1,15 +1,17 @@
 //! zccache K/V memoization for the [`crate::resolve`] function.
 //!
 //! The resolver is a pure function of (project sources, search paths, library
-//! set, toolchain triple, framework version, scanner/LDF semantics). Computing
-//! it costs ~tens of ms cold; restoring from a cache hit is sub-ms. On a warm
-//! CI build this should round-trip through a small fbuild-owned file cache
-//! instead of re-walking the framework `libraries/` tree.
+//! set, toolchain triple, framework version, scanner/LDF semantics). Reusing
+//! results still requires validating the input include graph on a warm build.
+//! The cached selection avoids repeating active-branch evaluation and library
+//! reconciliation after that validation.
 //!
 //! ## Cache key (Q9 from #205)
 //!
 //! `blake3(` of the following, concatenated with framing tags:
 //!   - sorted seed-path + content-hash pairs,
+//!   - textual include closure of project and framework sources, with byte hashes,
+//!   - ordered library descriptors, including include roots and source attribution,
 //!   - sorted (lib_name, canonical_header_hash) pairs,
 //!   - the ordered search-path list (verbatim — order is observable),
 //!   - toolchain_triple,
@@ -35,7 +37,7 @@ use crate::{Selection, canon};
 
 /// Bump when the scanner's lexical grammar changes in a way that could change
 /// which `#include` directives it emits for the same source.
-pub const SCANNER_VERSION: u32 = 3;
+pub const SCANNER_VERSION: u32 = 4;
 
 /// Bump when the resolver's 2-pass LDF semantics change (seed expansion,
 /// attribution, convergence rule, etc.).
@@ -278,6 +280,8 @@ pub fn cache_key(
         h.update(content);
     }
 
+    hash_include_graph(&mut h, seeds, search_paths, libraries);
+
     // Search paths: ORDER MATTERS (PIO resolves earlier paths first), so we
     // hash them in the order supplied — do not sort.
     h.update(b"search_paths:");
@@ -291,8 +295,8 @@ pub fn cache_key(
     // Libraries: sorted by name. Content hash of the canonical header
     // (`<lib>/<src>/<name>.h` or first include_dir hit) catches the common
     // case of a lib's API header changing without bumping the framework
-    // version. We deliberately do NOT hash every source file — Teensyduino
-    // alone is ~500 files and PIO LDF doesn't either.
+    // version. The include graph above also fingerprints implementation
+    // sources and their transitive headers.
     let mut lib_pairs: Vec<(String, [u8; 32])> = libraries
         .iter()
         .map(|lib| (lib.name.clone(), canonical_header_hash(lib)))
@@ -307,6 +311,56 @@ pub fn cache_key(
     }
 
     CacheKey::from_hash(h.finalize())
+}
+
+/// Include dependencies can live in a project header or in a selected
+/// library's implementation, rather than in a seed or canonical public header.
+/// Scan every conditional arm and every candidate library source: selection
+/// itself must not decide which of its inputs participate in validation.
+/// Resolving afresh also detects newly available/shadowing literal includes.
+fn hash_include_graph(
+    hash: &mut blake3::Hasher,
+    seeds: &[PathBuf],
+    search_paths: &[PathBuf],
+    libraries: &[FrameworkLibrary],
+) {
+    let mut all_seeds = seeds.to_vec();
+    let mut all_paths = search_paths.to_vec();
+    hash.update(b"library_layout:");
+    hash.update(&(libraries.len() as u64).to_le_bytes());
+    for library in libraries {
+        // Both first-match include resolution and path-prefix attribution are
+        // observable even when the complete reachable file set is unchanged.
+        hash.update(&(library.name.len() as u64).to_le_bytes());
+        hash.update(library.name.as_bytes());
+        for paths in [
+            std::slice::from_ref(&library.dir),
+            library.include_dirs.as_slice(),
+            library.source_files.as_slice(),
+        ] {
+            hash.update(&(paths.len() as u64).to_le_bytes());
+            for path in paths {
+                let name = path.to_string_lossy();
+                hash.update(&(name.len() as u64).to_le_bytes());
+                hash.update(name.as_bytes());
+            }
+        }
+        all_seeds.extend(library.source_files.iter().cloned());
+        for directory in &library.include_dirs {
+            if !all_paths.contains(directory) {
+                all_paths.push(directory.clone());
+            }
+        }
+    }
+    let graph = fbuild_header_scan::walk(&all_seeds, &all_paths);
+    hash.update(b"include_graph:");
+    for path in graph.reached {
+        let name = path.to_string_lossy();
+        hash.update(&(name.len() as u64).to_le_bytes());
+        hash.update(name.as_bytes());
+        let contents = std::fs::read(&path).unwrap_or_default();
+        hash.update(blake3::hash(&contents).as_bytes());
+    }
 }
 
 fn canonical_header_hash(lib: &FrameworkLibrary) -> [u8; 32] {
@@ -457,6 +511,92 @@ mod tests {
     }
 
     #[test]
+    fn project_header_edit_reselects_required_library() {
+        let (tmp, seeds, search_paths, libs) = build_simple_project();
+        let header = search_paths[0].join("backend.hpp");
+        write(&seeds[0], "#include \"backend.hpp\"\n");
+        write(&header, "// optional backend unavailable\n");
+        let kv = FileKvStore::open(tmp.path().join("kv")).unwrap();
+        let inputs = fixture_inputs(tmp.path());
+        let before = resolve_cached(&seeds, &search_paths, &libs, &inputs, &kv).unwrap();
+        assert!(before.selection.required_libraries.is_empty());
+        write(&header, "#include <SPI.h>\n");
+        let after = resolve_cached(&seeds, &search_paths, &libs, &inputs, &kv).unwrap();
+        assert!(
+            !after.from_cache,
+            "editing a reached header invalidates selection"
+        );
+        assert_eq!(after.selection.required_libraries, vec!["SPI".to_string()]);
+    }
+
+    #[test]
+    fn newly_available_project_header_reselects_required_library() {
+        let (tmp, seeds, search_paths, libs) = build_simple_project();
+        write(
+            &seeds[0],
+            "#if __has_include(\"optional.hpp\")\n#include \"optional.hpp\"\n#endif\n",
+        );
+        let kv = FileKvStore::open(tmp.path().join("kv")).unwrap();
+        let inputs = fixture_inputs(tmp.path());
+        let before = resolve_cached(&seeds, &search_paths, &libs, &inputs, &kv).unwrap();
+        assert!(before.selection.required_libraries.is_empty());
+        write(&search_paths[0].join("optional.hpp"), "#include <SPI.h>\n");
+        let after = resolve_cached(&seeds, &search_paths, &libs, &inputs, &kv).unwrap();
+        assert!(
+            !after.from_cache,
+            "a previously missing header must invalidate selection"
+        );
+        assert_eq!(after.selection.required_libraries, vec!["SPI".to_string()]);
+    }
+
+    #[test]
+    fn continued_include_header_edit_reselects_required_library() {
+        let (tmp, seeds, search_paths, libs) = build_simple_project();
+        write(&seeds[0], "#include \\\n\"backend.hpp\"\n");
+        let header = search_paths[0].join("backend.hpp");
+        write(&header, "// optional backend unavailable\n");
+        let kv = FileKvStore::open(tmp.path().join("kv")).unwrap();
+        let inputs = fixture_inputs(tmp.path());
+        let before = resolve_cached(&seeds, &search_paths, &libs, &inputs, &kv).unwrap();
+        assert!(before.selection.required_libraries.is_empty());
+        write(&header, "#include <SPI.h>\n");
+        let after = resolve_cached(&seeds, &search_paths, &libs, &inputs, &kv).unwrap();
+        assert!(
+            !after.from_cache,
+            "continued includes participate in cache identity"
+        );
+        assert_eq!(after.selection.required_libraries, vec!["SPI".to_string()]);
+    }
+
+    #[test]
+    fn reordered_framework_roots_reselect_shadowed_header() {
+        let (tmp, seeds, search_paths, mut libs) = build_simple_project();
+        write(&seeds[0], "#include <choice.h>\n");
+        write(&libs[0].include_dirs[0].join("choice.h"), "// SPI choice\n");
+        write(&libs[0].source_files[0], "#include \"choice.h\"\n");
+        let mut other = lib(tmp.path(), "Other");
+        write(&other.include_dirs[0].join("choice.h"), "// Other choice\n");
+        let source = other.include_dirs[0].join("Other.cpp");
+        write(&source, "#include \"choice.h\"\n");
+        other.source_files.push(source);
+        libs.push(other);
+        let kv = FileKvStore::open(tmp.path().join("kv")).unwrap();
+        let inputs = fixture_inputs(tmp.path());
+        let before = resolve_cached(&seeds, &search_paths, &libs, &inputs, &kv).unwrap();
+        assert_eq!(before.selection.required_libraries, vec!["SPI".to_string()]);
+        libs.reverse();
+        let after = resolve_cached(&seeds, &search_paths, &libs, &inputs, &kv).unwrap();
+        assert!(
+            !after.from_cache,
+            "framework include order participates in cache identity"
+        );
+        assert_eq!(
+            after.selection.required_libraries,
+            vec!["Other".to_string()]
+        );
+    }
+
+    #[test]
     fn c01_cache_miss_then_hit() {
         let (tmp, seeds, search_paths, libs) = build_simple_project();
         let kv = FileKvStore::open(tmp.path().join("kv")).unwrap();
@@ -587,7 +727,7 @@ mod tests {
     }
 
     #[test]
-    fn c05_library_input_order_does_not_affect_key() {
+    fn c05_library_input_order_is_part_of_include_resolution() {
         let tmp = tempdir();
         let project_src = tmp.path().join("project").join("src");
         write(&project_src.join("main.cpp"), "#include <SPI.h>\n");
@@ -609,10 +749,10 @@ mod tests {
 
         let k1 = cache_key(&seeds, &search_paths, &[spi.clone(), wire.clone()], &inputs);
         let k2 = cache_key(&seeds, &search_paths, &[wire, spi], &inputs);
-        assert_eq!(
+        assert_ne!(
             k1.as_bytes(),
             k2.as_bytes(),
-            "library input order must be normalized"
+            "candidate order determines effective include precedence"
         );
     }
 
