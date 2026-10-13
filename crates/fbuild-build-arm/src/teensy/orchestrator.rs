@@ -53,6 +53,7 @@ struct TeensyFingerprintMetadata {
     max_flash: Option<u64>,
     max_ram: Option<u64>,
     eh_frame_policy: &'static str,
+    framework_library_linkage: &'static str,
 }
 
 fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
@@ -187,6 +188,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
                     crate::eh_frame_policy::EhFramePolicy::Strip => "strip",
                     crate::eh_frame_policy::EhFramePolicy::Preserve => "preserve",
                 },
+                framework_library_linkage: "archive",
             },
             &ctx,
         )?;
@@ -290,7 +292,9 @@ impl BuildOrchestrator for TeensyOrchestrator {
                 "Teensy framework library sources added: {}",
                 framework_library_sources.len()
             );
-            sources.core_sources.extend(framework_library_sources);
+            sources
+                .core_sources
+                .extend(framework_library_sources.iter().cloned());
         }
 
         tracing::info!(
@@ -413,7 +417,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
         };
 
         // 9. Run shared sequential build pipeline
-        let build_result = pipeline::run_sequential_build_with_libs(
+        let build_result = pipeline::run_sequential_build_with_optional_framework_libs(
             &compiler,
             &linker,
             ctx,
@@ -422,6 +426,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
             &[],
             lib_deps_plan,
             Some(&lib_env),
+            &framework_library_sources,
             TargetArchitecture::Arm,
             "Teensy",
             start,
