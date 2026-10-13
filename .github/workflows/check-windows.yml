@@ -213,12 +213,12 @@ jobs:
             if ($LASTEXITCODE -ne 0) { throw 'already-enabled repair failed' }
             $env:FBUILD_DEV_MODE = '0'
             $env:RUNNING_PROCESS_DISABLE = '1'
-            & $cli build tests/platform/uno --dry-run --no-update-check
+            & $cli --no-update-check build tests/platform/uno --dry-run
             if ($LASTEXITCODE -ne 0) { throw 'enabled daemon startup failed' }
             $before = Get-Content (Join-Path $env:USERPROFILE '.fbuild\prod\daemon\root-owner.json') -Raw | ConvertFrom-Json
             New-ItemProperty -Path $registry -Name LongPathsEnabled -PropertyType DWord -Value 0 -Force | Out-Null
             $env:CI = 'true'
-            $output = & $cli install tests/platform/esp32dev --dry-run --json --no-update-check 2> long-path-warning.txt
+            $output = & $cli --no-update-check install tests/platform/esp32dev --dry-run --json 2> long-path-warning.txt
             $code = $LASTEXITCODE
             if ($code -ne 0) { throw "fallback package preview failed: $code" }
             $output | ConvertFrom-Json | Out-Null
@@ -226,11 +226,11 @@ jobs:
             if ($warning -notmatch 'WARNING:' -or $warning -notmatch 'fix-win' -or $warning.Contains([char]27)) {
               throw 'fallback warning is missing or contains ANSI in redirected stderr'
             }
-            & $cli build tests/platform/uno --dry-run --no-update-check
+            & $cli --no-update-check build tests/platform/uno --dry-run
             if ($LASTEXITCODE -ne 0) { throw 'disabled-policy daemon handoff failed' }
             $after = Get-Content (Join-Path $env:USERPROFILE '.fbuild\prod\daemon\root-owner.json') -Raw | ConvertFrom-Json
             if ($before.pid -eq $after.pid) { throw 'daemon was reused after the registry changed' }
-            & $cli daemon stop --no-update-check
+            & $cli --no-update-check daemon stop
             if ($LASTEXITCODE -ne 0) { throw 'smoke daemon did not stop' }
           } finally {
             if ($null -eq $original) {
