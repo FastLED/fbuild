@@ -478,7 +478,8 @@ drain = time.monotonic() + 10.0
 while _live_session_count() != 0 and time.monotonic() < drain:
     gc.collect()
     time.sleep(0.05)
-baseline = _live_session_count()
+assert _live_session_count() == 0, "previous sessions did not drain"
+baseline = 0
 
 mon = SerialMonitor(port="TEST_PORT", baud_rate=115200)
 mon.__enter__()
@@ -525,7 +526,8 @@ async def main():
     while _live_session_count() != 0 and time.monotonic() < drain:
         gc.collect()
         await asyncio.sleep(0.05)
-    baseline = _live_session_count()
+    assert _live_session_count() == 0, "previous sessions did not drain"
+    baseline = 0
     mon = AsyncSerialMonitor(port="TEST_PORT", baud_rate=115200)
     await mon.__aenter__()
     assert _live_session_count() == baseline + 1
