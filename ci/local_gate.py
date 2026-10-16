@@ -166,8 +166,22 @@ def verify_run(
 
 
 def bosn_command(*arguments: str) -> list[str]:
-    """Use the released runner and an optional session-owned daemon root."""
-    argv = ["uvx", "--from", "bosn==0.1.13", "bosn", *arguments]
+    """Use the latest released runner and an optional session-owned daemon root.
+
+    A floor, not an exact pin: the shared bosn daemon refuses clients from a
+    different release, so an exact pin breaks the gate as soon as any other
+    session starts a newer daemon. `--refresh-package` keeps uvx from reusing
+    a stale cached resolution.
+    """
+    argv = [
+        "uvx",
+        "--refresh-package",
+        "bosn",
+        "--from",
+        "bosn>=0.1.22",
+        "bosn",
+        *arguments,
+    ]
     state = os.environ.get("BOSN_GATE_STATE_DIR")
     if state:
         argv.extend(["--state-dir", str(Path(state).resolve())])
