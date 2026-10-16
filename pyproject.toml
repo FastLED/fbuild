@@ -47,6 +47,16 @@ cache-keys = [
     { file = "crates/**/Cargo.toml" },
 ]
 
+# In-tree backend (ci/build_backend.py): no build requirements, so pip's
+# isolated build env is empty, and the wheel is written in one stored pass.
+# It calls the globally installed `soldr cargo` executable. Local/source
+# installs use the fast dev profile by default; set FBUILD_BUILD_RELEASE=1 for
+# an optimized source build.
+[build-system]
+requires = []
+build-backend = "build_backend"
+backend-path = ["ci"]
+
 [tool.ruff.lint]
 select = ["C901", "RUF100"]
 external = ["D401", "E402", "F401"]
