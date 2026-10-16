@@ -224,3 +224,9 @@ debug = false
 [workspace.lints.clippy]
 cognitive_complexity = "warn"
 too_many_lines = "warn"
+# Async hazards: a sync guard held across `.await` can deadlock the runtime
+# or block a worker thread. Type list lives in clippy.toml.
+await_holding_lock = "deny"
+await_holding_refcell_ref = "deny"
+await_holding_invalid_type = "deny"
+large_futures = "warn"
