@@ -106,6 +106,36 @@ pub struct AvrFramework {
     needs_arduino_api: bool,
 }
 
+/// Check that a staged framework archive contains the core's required path.
+fn validate_framework_layout(
+    install_dir: &Path,
+    core_name: &str,
+    validation_path: &str,
+) -> fbuild_core::Result<()> {
+    let root = find_framework_root(install_dir);
+    if !validation_path.is_empty() && !root.join(validation_path).exists() {
+        return Err(fbuild_core::FbuildError::PackageError(format!(
+            "AVR framework '{}' missing required path: {} (in {})",
+            core_name,
+            validation_path,
+            root.display()
+        )));
+    }
+    Ok(())
+}
+
+/// Core directory inside a PlatformIO registry repack, when it differs from
+/// the upstream GitHub layout recorded in `avr_frameworks.json`.
+fn platformio_repacked_core_dir<'a>(core_name: &'a str, url: &str) -> Option<&'a str> {
+    let package = match core_name {
+        "MiniCore" => "framework-arduino-avr-minicore",
+        "dtiny" => "framework-arduino-avr-digistump",
+        _ => return None,
+    };
+    url.contains(&format!("/tool/{package}/"))
+        .then_some(core_name)
+}
+
 impl AvrFramework {
     /// Create a framework manager for the given board core name.
     ///
@@ -149,22 +179,18 @@ impl AvrFramework {
     ) -> fbuild_core::Result<Self> {
         let entry = lookup_entry(core_name)?;
         let url = framework_url(&entry);
-        // PlatformIO repacks MiniCore with `cores/MiniCore`, while its
-        // upstream GitHub tag uses `cores/MCUdude_corefiles`. Preserve the
+        // PlatformIO repacks some cores under `cores/<board build.core>`
+        // while their upstream GitHub archives use a different directory:
+        // MiniCore ships `cores/MCUdude_corefiles` upstream, and Digistump's
+        // `framework-arduino-avr-digistump` ships `cores/dtiny` where the
+        // GitHub layout is `cores/tiny` (FastLED/fbuild#1679). Preserve the
         // GitHub/URL-override layout unless the resolved payload is the
         // PlatformIO package archive.
-        let platformio_minicore =
-            core_name == "MiniCore" && ovr.url.contains("/tool/framework-arduino-avr-minicore/");
-        let validation_path = if platformio_minicore {
-            "cores/MiniCore/Arduino.h".to_string()
-        } else {
-            entry.validation_path
-        };
-        let core_dir_override = if platformio_minicore {
-            Some("MiniCore".to_string())
-        } else {
-            entry.core_dir
-        };
+        let (validation_path, core_dir_override) =
+            match platformio_repacked_core_dir(core_name, &ovr.url) {
+                Some(dir) => (format!("cores/{dir}/Arduino.h"), Some(dir.to_string())),
+                None => (entry.validation_path, entry.core_dir),
+            };
 
         Ok(Self {
             base: PackageBase::new(
@@ -220,19 +246,7 @@ impl crate::Package for AvrFramework {
         let validation_path = self.validation_path.clone();
         let core_name = self.core_name.clone();
         let validate_fn = move |install_dir: &Path| {
-            let root = find_framework_root(install_dir);
-            if !validation_path.is_empty() {
-                let required = root.join(&validation_path);
-                if !required.exists() {
-                    return Err(fbuild_core::FbuildError::PackageError(format!(
-                        "AVR framework '{}' missing required path: {} (in {})",
-                        core_name,
-                        validation_path,
-                        root.display()
-                    )));
-                }
-            }
-            Ok(())
+            validate_framework_layout(install_dir, &core_name, &validation_path)
         };
 
         let install_path = self.base.staged_install(validate_fn).await?;
@@ -528,5 +542,56 @@ mod tests {
         let entry = lookup_entry("dxcore").unwrap();
         assert_eq!(entry.validation_path, "cores/dxcore/Arduino.h");
         assert!(entry.checksum.is_some());
+    }
+
+    /// FastLED/fbuild#1679: the PlatformIO digistump repack ships
+    /// `cores/dtiny`, `cores/pro`, `cores/tiny88` and no `cores/tiny`.
+    #[test]
+    fn platformio_digistump_validates_dtiny_core_directory() {
+        let project = tempfile::tempdir().unwrap();
+        let staged = tempfile::tempdir().unwrap();
+        for core in ["dtiny", "pro", "tiny88"] {
+            let dir = staged.path().join("cores").join(core);
+            std::fs::create_dir_all(&dir).unwrap();
+            std::fs::write(dir.join("Arduino.h"), "").unwrap();
+        }
+        std::fs::create_dir_all(staged.path().join("variants/digispark")).unwrap();
+
+        let framework = AvrFramework::for_core_with_override(
+            "dtiny",
+            project.path(),
+            fbuild_config::PackageOverride {
+                url: "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-avr-digistump/1.7.2/framework-arduino-avr-digistump-1.7.2.tar.gz".to_string(),
+                version: "1.7.2".to_string(),
+                checksum: None,
+            },
+        )
+        .unwrap();
+        assert_eq!(framework.validation_path, "cores/dtiny/Arduino.h");
+        assert!(framework.get_core_dir("dtiny").ends_with("cores/dtiny"));
+        validate_framework_layout(staged.path(), "dtiny", &framework.validation_path).unwrap();
+
+        // The pre-fix (GitHub-layout) path reproduces the reported failure.
+        let github = AvrFramework::for_core("dtiny", project.path()).unwrap();
+        let err = validate_framework_layout(staged.path(), "dtiny", &github.validation_path)
+            .unwrap_err()
+            .to_string();
+        assert!(
+            err.contains("missing required path: cores/tiny/Arduino.h"),
+            "{err}"
+        );
+
+        // `pro` keeps the same directory name in both layouts.
+        let pro = AvrFramework::for_core_with_override(
+            "pro",
+            project.path(),
+            fbuild_config::PackageOverride {
+                url: "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-avr-digistump/1.7.2/framework-arduino-avr-digistump-1.7.2.tar.gz".to_string(),
+                version: "1.7.2".to_string(),
+                checksum: None,
+            },
+        )
+        .unwrap();
+        validate_framework_layout(staged.path(), "pro", &pro.validation_path).unwrap();
     }
 }
