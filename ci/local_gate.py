@@ -167,7 +167,7 @@ def verify_run(
 
 def bosn_command(*arguments: str) -> list[str]:
     """Use the released runner and an optional session-owned daemon root."""
-    argv = ["uvx", "--from", "bosn==0.1.13", "bosn", *arguments]
+    argv = ["uvx", "--refresh-package", "bosn", "--from", "bosn", "bosn", *arguments]
     state = os.environ.get("BOSN_GATE_STATE_DIR")
     if state:
         argv.extend(["--state-dir", str(Path(state).resolve())])
