@@ -472,6 +472,12 @@ import faulthandler, gc, time
 faulthandler.dump_traceback_later(30, exit=True)
 from _native import SerialMonitor, _live_session_count
 
+# Sessions from the previous test may still be tearing down; a baseline
+# taken mid-teardown drops before the assert below and fails spuriously.
+drain = time.monotonic() + 10.0
+while _live_session_count() != 0 and time.monotonic() < drain:
+    gc.collect()
+    time.sleep(0.05)
 baseline = _live_session_count()
 
 mon = SerialMonitor(port="TEST_PORT", baud_rate=115200)
@@ -514,6 +520,11 @@ faulthandler.dump_traceback_later(30, exit=True)
 from _native import AsyncSerialMonitor, _live_session_count
 
 async def main():
+    # See the sync half: let the previous test's sessions finish dropping.
+    drain = time.monotonic() + 10.0
+    while _live_session_count() != 0 and time.monotonic() < drain:
+        gc.collect()
+        await asyncio.sleep(0.05)
     baseline = _live_session_count()
     mon = AsyncSerialMonitor(port="TEST_PORT", baud_rate=115200)
     await mon.__aenter__()
