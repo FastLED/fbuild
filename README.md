@@ -343,14 +343,14 @@ through a loader:
 | Host | How an APE tool runs |
 |---|---|
 | Windows | Natively; an APE file is a valid PE. |
-| Linux | fbuild extracts the loader embedded in the tool itself, checks it is a 64-bit ELF for the host CPU, and caches it in an owner-only, exec-capable directory. If no such directory exists (read-only `HOME`, `noexec` `/tmp`), it runs the loader from a sealed in-memory file instead. The tool's environment needs no `PATH`, `sh`, coreutils, `HOME` or `TMPDIR`. |
-| macOS | x86_64: fbuild extracts the tool's embedded loader and turns it into a Mach-O (the prologue's header move). Apple Silicon: fbuild compiles the tool's embedded `ape-m1.c` once with `/usr/bin/cc` (Xcode Command Line Tools). Both are cached like on Linux. |
+| Linux | The shared running-process implementation extracts the loader embedded in the tool itself, checks it is a 64-bit ELF for the host CPU, and caches it in an owner-only, exec-capable directory. If no such directory exists (read-only `HOME`, `noexec` `/tmp`), it runs the loader from a sealed in-memory file instead. The tool's environment needs no `PATH`, `sh`, coreutils, `HOME` or `TMPDIR`. |
+| macOS | x86_64: the shared loader extracts the tool's embedded loader and turns it into a Mach-O (the prologue's header move). Apple Silicon: the shared loader compiles the tool's embedded `ape-m1.c` once with `/usr/bin/cc` (Xcode Command Line Tools). Both are cached like on Linux. |
 
 Loader precedence is `FBUILD_APE_LOADER` (explicit override), then the loader
 embedded in the tool, then `ape` on `PATH`, `/usr/bin/ape` and
 `/usr/local/bin/ape`, then `/bin/sh`. Set `FBUILD_APE_CACHE_DIR` to choose
-where extracted loaders are cached. Parallel builds and deploys are safe: fbuild
-holds a fork lock while it writes a loader, so a concurrent first spawn can't
+where extracted loaders are cached. Parallel builds and deploys are safe: running-process
+holds a shared fork lock while it writes a loader, so a concurrent first spawn can't
 fail with `ETXTBSY` ("Text file busy").
 
 ### Adding an APE tool

@@ -629,6 +629,23 @@ fn build_command(
     capture: bool,
     stdin_piped: bool,
 ) -> Result<TokioCommand> {
+    // Explicit relative paths are relative to the requested child cwd.
+    // Resolve them before spawning: Windows otherwise uses the parent's cwd,
+    // while Unix applies the child's cwd during exec. Bare names retain PATH
+    // lookup, and absolute paths retain their original spelling.
+    let program = Path::new(args[0]);
+    let mut components = program.components();
+    let bare = matches!(
+        (components.next(), components.next()),
+        (Some(std::path::Component::Normal(_)), None)
+    );
+    let resolved = match cwd {
+        // Preserve `..` components: the OS must resolve symlinks before them.
+        Some(dir) if !program.is_absolute() && !bare => {
+            Some(std::env::current_dir()?.join(dir).join(program))
+        }
+        _ => None,
+    };
     // APE (cosmocc) images can't be exec'd directly on hosts without an APE
     // binfmt handler (e.g. NixOS); route them through a loader.
     let launch = process::ape_launch(args[0], cwd, env);
@@ -638,7 +655,7 @@ fn build_command(
             cmd.arg(&launch.image);
             cmd
         }
-        None => TokioCommand::new(args[0]),
+        None => TokioCommand::new(resolved.as_ref().map_or(program, |path| path.as_path())),
     };
     // Expose fbuild's loader as `ape` on the child's PATH so APE programs the
     // tool spawns itself (gcc -> cc1) resolve a loader too.
@@ -781,6 +798,25 @@ fn compute_env(program: &str, overlay: Option<&[(&str, &str)]>) -> Option<Vec<(S
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn explicit_program_paths_use_child_cwd_without_changing_path_lookup() {
+        let tmp = tempfile::tempdir().unwrap();
+        let relative = build_command(
+            &["./missing-tool", "arg"],
+            Some(tmp.path()),
+            None,
+            true,
+            false,
+        )
+        .unwrap();
+        assert_eq!(
+            relative.as_std().get_program(),
+            tmp.path().join("./missing-tool").as_os_str()
+        );
+        let bare = build_command(&["missing-tool"], Some(tmp.path()), None, true, false).unwrap();
+        assert_eq!(bare.as_std().get_program(), "missing-tool");
+    }
 
     /// `is_exec_busy` must key on the OS condition, not on a message.
     ///
