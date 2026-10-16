@@ -620,5 +620,11 @@ setup(
         "build_scripts": BuildBinaryScripts,
     },
     distclass=BinaryDistribution,
+    # Local source installs wrap ~240 MB of dev-profile binaries; deflating
+    # them at zlib's default level costs ~12 s of a warm `pip install .`
+    # (plus ~3 s inflating on install) even when cargo is skipped entirely.
+    # The wheel is a throwaway local artifact, so store it uncompressed.
+    # Release wheels are assembled by ci/publish.py and stay deflated.
+    options={"bdist_wheel": {"compression": "stored"}},
     scripts=[str(STAGED_BINARY_PATH), str(STAGED_DAEMON_PATH)],
 )
