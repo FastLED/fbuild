@@ -127,7 +127,7 @@ tree-sitter = "0.26.9"
 tree-sitter-cpp = "0.23.4"
 flate2 = "1"
 tar = "0.4"
-zip = { version = "2", default-features = false, features = ["deflate"] }
+zip = { version = "9.0.3", default-features = false, features = ["deflate"] }
 xz2 = "0.1"
 bzip2 = "0.5"
 zstd = "0.13"
