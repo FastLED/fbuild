@@ -9,6 +9,11 @@
 # copy in.
 /ci/bin/
 
+# ci-lint runtime checkout: CI jobs check out zackees/ci.yml here to run
+# `python3 -m ci_lint ...` (created at run time, never committed; must stay
+# ignored for template_build's stray-working-tree assertion)
+/.ci-lint/
+
 # IDE
 .idea/
 .vscode/

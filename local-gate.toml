@@ -30,7 +30,10 @@ lanes = ["linux-minimal"]
 [[gate.replay.jobs]]
 source-job = "ci-minimal.yml:verify"
 key = "ci-minimal/Verify local gate"
-steps = ["Checkout source", "Set up uv", "Verify source-bound local proof"]
+# "Check out ci-lint" .. "Pre-prune ..." are the CACHE-034 pre-prune steps
+# (zackees/ci.yml#352/#354/#360); the prune step is event-gated off on
+# pull_request and lockfile-gated thereafter, so an ordinary replay skips it.
+steps = ["Checkout source", "Set up uv", "Verify source-bound local proof", "Check out ci-lint", "Detect lockfile change vs parent commit", "Pre-prune superseded lockfile-keyed caches (CACHE-034)"]
 lanes = ["linux-minimal"]
 
 [[gate.replay.selections]]
@@ -46,7 +49,7 @@ tools = ["bosn", "uv"]
 [[gate.replay.jobs]]
 source-job = "dylint.yml:dylint"
 key = "Dylint/Dylint Full (Linux builder, all OS targets)"
-steps = ["Checkout source", "Set up uv", "Validate Dylint allowlist paths", "Enforce shrink-only .fbuild allowlist", "Validate platform-boundary ledgers", "Setup soldr", "Repair registry sources missing packaged files", "Prepare prebuilt Dylint tools and driver", "Install rustfmt for the Dylint toolchain", "Check Dylint library formatting", "Restore compiled Dylint libraries", "Test Dylint libraries", "Reuse cached Dylint library tree", "Run dylint over workspace", "Save compiled Dylint libraries"]
+steps = ["Checkout source", "Set up uv", "Validate Dylint allowlist paths", "Enforce shrink-only .fbuild allowlist", "Validate platform-boundary ledgers", "Check out ci-lint", "Detect lockfile change vs parent commit", "Pre-prune superseded lockfile-keyed caches (CACHE-034)", "Setup soldr", "Repair registry sources missing packaged files", "Prepare prebuilt Dylint tools and driver", "Install rustfmt for the Dylint toolchain", "Check Dylint library formatting", "Restore compiled Dylint libraries", "Test Dylint libraries", "Reuse cached Dylint library tree", "Run dylint over workspace", "Save compiled Dylint libraries"]
 lanes = ["dylint"]
 cache-save-steps = ["Save compiled Dylint libraries"]
 
