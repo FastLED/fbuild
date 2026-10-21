@@ -24,6 +24,8 @@ class SetupActionCacheTests(unittest.TestCase):
         self.assertEqual("${{ steps.fbuild-install-cache.outputs.cache-primary-key }}", save["with"]["key"])
         install = next(i for i, s in enumerate(steps) if s.get("name") == "Install fbuild")
         self.assertGreater(steps.index(save), install)
+        activate = next(i for i, s in enumerate(steps) if s.get("name") == "Activate fbuild from install dir")
+        self.assertGreater(steps.index(save), activate)
 
 
 if __name__ == "__main__":
