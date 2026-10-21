@@ -234,7 +234,9 @@ fn soldr_is_a_global_tool_not_a_python_dependency() {
     let manifest = fs::read_to_string(root.join("pyproject.toml")).unwrap();
     let lockfile = fs::read_to_string(root.join("uv.lock")).unwrap();
 
-    assert!(manifest.contains("build-backend = \"setuptools.build_meta\""));
+    // #1685 restored the in-tree backend after removing setuptools packaging.
+    assert!(manifest.contains("build-backend = \"build_backend\""));
+    assert!(manifest.contains("backend-path = [\"ci\"]"));
     assert!(
         !manifest.lines().any(|line| {
             let line = line.trim();
