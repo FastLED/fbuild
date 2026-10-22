@@ -113,8 +113,11 @@ fn number(value: &str) -> Option<u64> {
 fn region_capacities(reader: impl BufRead) -> BTreeMap<String, u64> {
     let mut capacities = BTreeMap::new();
     let mut in_table = false;
-    for line in reader.lines() {
+    // GNU maps can contain object paths encoded in the Windows ANSI codepage.
+    // Read byte lines so those paths cannot hide the ASCII memory table.
+    for line in reader.split(b'\n') {
         let Ok(line) = line else { break };
+        let line = String::from_utf8_lossy(&line);
         if line.trim() == "Memory Configuration" {
             in_table = true;
             continue;
@@ -148,6 +151,20 @@ mod tests {
         assert_eq!(capacities.get("dram0_0_seg"), Some(&124928));
         assert_eq!(capacities.get("FLASH"), Some(&256));
         assert_eq!(capacities.len(), 2);
+    }
+
+    #[test]
+    fn non_utf8_object_paths_do_not_hide_region_capacities() {
+        let tmp = tempfile::tempdir().unwrap();
+        let map = tmp.path().join("firmware.map");
+        std::fs::write(&map, b"Discarded input sections\r\nC:\\caf\xe9\\library.o\r\nMemory Configuration\r\nName Origin Length Attributes\r\nRAM 0x20000000 0x100 xrw\r\n\r\n").unwrap();
+        let text = enrich(
+            FbuildError::BuildFailed("region `RAM' overflowed by 1 bytes".into()),
+            Some(&map),
+        )
+        .to_string();
+        assert!(text.contains("region 256 bytes"), "{text}");
+        assert!(text.contains("requires 257 bytes (100.4%)"), "{text}");
     }
 
     #[test]
