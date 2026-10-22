@@ -156,8 +156,12 @@ mod tests {
     use super::*;
     use std::sync::{Arc, Mutex};
 
+    // These two API tests replace the same process-wide subscriber.
+    static SUBSCRIBER_TEST_LOCK: Mutex<()> = Mutex::new(());
+
     #[test]
     fn subscriber_receives_published_status() {
+        let _subscriber_guard = SUBSCRIBER_TEST_LOCK.lock().unwrap();
         let seen = Arc::new(Mutex::new(Vec::new()));
         let seen_for_callback = Arc::clone(&seen);
         set_install_status_subscriber(move |status| {
@@ -182,6 +186,7 @@ mod tests {
 
     #[test]
     fn panicking_subscriber_does_not_unwind_into_publisher() {
+        let _subscriber_guard = SUBSCRIBER_TEST_LOCK.lock().unwrap();
         // Regression for #807: a buggy subscriber must not be able to
         // kill the toolchain installer's hot path.
         set_install_status_subscriber(|_status| {
