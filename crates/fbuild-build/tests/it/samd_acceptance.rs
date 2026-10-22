@@ -2,6 +2,7 @@
 
 use fbuild_build::{BuildOrchestrator, BuildParams, compile_backend};
 use fbuild_core::BuildProfile;
+use fbuild_packages::Package;
 
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "#1672: downloads ARM GCC, SAMD core, CMSIS and published USB profiles"]
@@ -27,6 +28,24 @@ async fn samd_sketch_architecture_and_interrupt_override() {
         eprintln!("Building {board} with its firmware linkage regression");
         let tmp = tempfile::tempdir().unwrap();
         let project = tmp.path();
+        let flags = if board == "clearcore" {
+            let toolchain = fbuild_packages::toolchain::ArmGcc8Toolchain::new(project);
+            let root = toolchain.ensure_installed().await.unwrap();
+            let header = root.join("arm-none-eabi/include/c++/9.2.1/arm-none-eabi/thumb/v7e-m+fp/hard/bits/os_defines.h");
+            eprintln!(
+                "ClearCore installed standard header {}: {:?}",
+                header.display(),
+                std::fs::metadata(&header)
+            );
+            assert!(
+                std::fs::read(&header).is_ok(),
+                "ClearCore GCC9 must install its published multilib headers: {}",
+                header.display()
+            );
+            "-v"
+        } else {
+            flags
+        };
         std::fs::write(
             project.join("platformio.ini"),
             format!("[env:samd]\nplatform = atmelsam\nboard = {board}\nframework = arduino\nbuild_flags = {flags}\n"),

@@ -61,6 +61,16 @@ jobs:
           [[ "$version" == soldr\ * ]]
       # No separate `cargo check`: clippy type-checks the same
       # `--workspace --all-targets` set (see check-ubuntu.yml for the timing).
+      - name: Setup uv for legacy source package install
+        uses: astral-sh/setup-uv@v3
+
+      - name: Test SAMD architecture and interrupt override
+        shell: bash
+        env:
+          FBUILD_DEV_MODE: "1"
+        run: |
+          soldr cargo test -p fbuild-build --test it samd_acceptance:: -- --ignored --nocapture
+
       - name: Clippy
         shell: bash
         run: soldr cargo clippy --workspace --all-targets -- -D warnings
@@ -73,16 +83,6 @@ jobs:
           FBUILD_TEST_CC: C:/Program Files/LLVM/bin/clang.exe
           FBUILD_TEST_AR: C:/Program Files/LLVM/bin/llvm-ar.exe
         run: soldr cargo test -p fbuild-library large_archive_handles_windows_command_limit_and_quoted_paths -- --ignored --nocapture
-
-      - name: Setup uv for legacy source package install
-        uses: astral-sh/setup-uv@v3
-
-      - name: Test SAMD architecture and interrupt override
-        shell: bash
-        env:
-          FBUILD_DEV_MODE: "1"
-        run: |
-          soldr cargo test -p fbuild-build --test it samd_acceptance:: -- --ignored --nocapture
 
       - name: Build UNO R4 with supported default core
         shell: bash
