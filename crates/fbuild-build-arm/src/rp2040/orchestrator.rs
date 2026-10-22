@@ -12,6 +12,7 @@
 //! 9. Link (with linker script from variant dir)
 //! 10. Convert to binary + report size
 
+use super::board_props::{apply_rp_board_props, resolve_variant};
 use std::collections::{BTreeMap, HashMap};
 use std::path::{Path, PathBuf};
 use std::time::Instant;
@@ -208,6 +209,8 @@ impl BuildOrchestrator for Rp2040Orchestrator {
                 &board_menu_overrides,
             )
         });
+        ctx.board.variant =
+            resolve_variant(&ctx.board.variant, &board_props, &board_menu_overrides);
         let build_dir = ctx.build_dir.clone();
         let metadata_hash = stable_hash_with_build_config(
             &Rp2040FingerprintMetadata {
@@ -700,47 +703,6 @@ fn add_define_file(define_file: &Path, defines: &mut HashMap<String, String>) {
         .flat_map(fbuild_core::shell_split::split)
         .collect::<Vec<_>>();
     apply_define_flags(&flags, defines);
-}
-
-fn apply_rp_board_props(
-    board_props: &Option<HashMap<String, String>>,
-    framework_dir: &Path,
-    defines: &mut HashMap<String, String>,
-) {
-    let Some(props) = board_props.as_ref() else {
-        return;
-    };
-    for key in [
-        "usbpwr",
-        "usbstack_flags",
-        "variantdefines",
-        "led",
-        "libpicowdefs",
-        "wificc",
-        "sdfatdefines",
-    ] {
-        if let Some(flags) = props.get(key) {
-            let expanded =
-                flags.replace("{runtime.platform.path}", &framework_dir.to_string_lossy());
-            let tokens = fbuild_core::shell_split::split(&expanded);
-            apply_define_flags(&tokens, defines);
-        }
-    }
-    if let Some(value) = props.get("usb_manufacturer") {
-        defines.insert("USB_MANUFACTURER".to_string(), value.clone());
-    }
-    if let Some(value) = props.get("usb_product") {
-        defines.insert("USB_PRODUCT".to_string(), value.clone());
-    }
-    for (property, define) in [
-        ("flash_total", "PICO_FLASH_SIZE_BYTES"),
-        ("fs_start", "FS_START"),
-        ("fs_end", "FS_END"),
-    ] {
-        if let Some(value) = props.get(property) {
-            defines.insert(define.to_string(), value.clone());
-        }
-    }
 }
 
 /// Apply Arduino-Pico's framework compiler definitions, with selected board

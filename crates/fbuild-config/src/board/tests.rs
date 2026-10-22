@@ -284,7 +284,7 @@ fn test_get_defines_with_extra_flags() {
 #[test]
 fn pico_spaced_board_define_does_not_create_an_empty_macro() {
     let board = BoardConfig::from_board_id("pico", &HashMap::new()).unwrap();
-    assert_eq!(board.variant, "rpipico");
+    assert_eq!(board.variant, "RASPBERRY_PI_PICO");
     let defines = board.get_defines();
     assert_eq!(
         defines.get("ARDUINO_RASPBERRY_PI_PICO").map(String::as_str),
