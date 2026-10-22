@@ -16,6 +16,7 @@ concurrency:
 jobs:
   verify:
     name: Verify local gate
+    continue-on-error: true
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
@@ -34,18 +35,18 @@ jobs:
           GATE_EVENT: ${{ github.event_name }}
         run: |
           if [ "$GATE_EVENT" = "pull_request" ]; then
-            uvx --from git+https://github.com/zackees/ci.yml@6711e4e418cf9b11de31e30e710b0bb1d9291e5b ci-lint local-gate verify --repo .
+            if ! uvx --from git+https://github.com/zackees/ci.yml@6711e4e418cf9b11de31e30e710b0bb1d9291e5b ci-lint local-gate verify --repo .; then
+              echo "::warning::Optional local proof could not be verified; hosted CI provides validation."
+            fi
           else
-            echo "Local proof verification is required on pull requests"
+            echo "Local proof is advisory; hosted CI provides validation"
           fi
   linux:
     if: github.event_name != 'pull_request' || (!contains(github.event.pull_request.labels.*.name, 'ci-test') && !contains(github.event.pull_request.labels.*.name, 'ci-full'))
-    needs: verify
     uses: ./.github/workflows/check-ubuntu.yml
     with:
       ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
   board_plan:
-    needs: verify
     name: Select boards for changed paths
     if: github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'ci-test') && !contains(github.event.pull_request.labels.*.name, 'ci-full')
     runs-on: ubuntu-latest
@@ -119,7 +120,6 @@ jobs:
       fbuild-artifact: fbuild-bin-linux-debug
       toolchain-cache: ${{ matrix.toolchain_cache }}
   reuse_decision:
-    needs: verify
     name: Verified reuse decision (shadow)
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
@@ -154,13 +154,11 @@ jobs:
           --required-job "linux / Python facade tests (ubuntu-latest)"
           --required-job "CI selected coverage"
   test:
-    needs: verify
     if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'ci-test') && !contains(github.event.pull_request.labels.*.name, 'ci-full')
     uses: ./.github/workflows/ci-test.yml
     with:
       candidate_sha: ${{ github.event.pull_request.head.sha }}
   full:
-    needs: verify
     if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'ci-full')
     uses: ./.github/workflows/ci-full.yml
     with:

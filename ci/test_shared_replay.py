@@ -28,7 +28,6 @@ class SharedReplayTests(unittest.TestCase):
         self.assertEqual(
             {job.source_job for job in config.jobs if "linux-minimal" in job.lanes},
             {
-                "ci-minimal.yml:verify",
                 "check-ubuntu.yml:check",
                 "check-ubuntu.yml:python-facade-tests",
             },
