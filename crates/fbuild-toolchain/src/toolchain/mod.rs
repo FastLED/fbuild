@@ -9,6 +9,7 @@ pub mod esp32_metadata;
 pub mod esp8266;
 pub mod esp_qemu;
 pub mod esp_qemu_runtime;
+pub mod gcc;
 pub mod riscv;
 pub mod rp2040_picotool;
 pub mod rp2040_pqt;
