@@ -1,7 +1,17 @@
 reviews:
-  request_changes_workflow: true
+  # GATE-012 (policy-general.md "Remote-only checks never gate a PR"):
+  # CodeRabbit runs on GitHub's servers and cannot run under the local gate,
+  # so it must never be able to block a merge. Its findings stay useful as
+  # PR comments -- only the gating is disabled. This was a live violation:
+  # CodeRabbit's CHANGES_REQUESTED review held PR #1652 at BLOCKED with every
+  # one of its 20 checks green.
+  auto_review:
+    enabled: false
+  commit_status: false
+  fail_commit_status: false
+  request_changes_workflow: false
   pre_merge_checks:
-    enabled: true
+    enabled: false
   path_instructions:
     # FastLED/fbuild#838 — mock-vs-integration test review.
     # Dylint can't tell a "mock" from a normal #[cfg(test)] struct, so the

@@ -371,13 +371,28 @@ def render_reuse_decision() -> str:
 
 
 def render_local_gate_verify() -> str:
-    """Enforce PR attestations; dispatch can run the source before it is attested."""
+    """Enforce PR attestations; dispatch can run the source before it is attested.
+
+    Also carries the CACHE-034 pre-prune (zackees/ci.yml#352/#354/#360).
+    `linux` (the check-ubuntu call, whose two jobs save caches on main
+    pushes) already `needs: verify`, so appending the prune here orders it
+    ahead of this run's first setup-soldr save with no job-graph change:
+    same run, earlier `needs:` link. The step is gated off on pull_request
+    events (PRs save nothing the waiver covers), but the job itself always
+    runs, so the `needs:` link never sees a skip. The step's GITHUB_TOKEN
+    carries a `github.token || 'replay-no-token'` fallback because act2/bosn
+    replays inject no secrets: the fake token 401s and ci-lint reports a
+    warning (exit 0), and GitHub runs always resolve the real token.
+    Timeout raised 5 -> 8 minutes for the prune's cache-API deletes. The
+    ci-lint checkout ref must equal ci.toml's `linter` pin (CT-004).
+    """
     return """  verify:
     name: Verify local gate
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     permissions:
       contents: read
+      actions: write
     steps:
       - name: Checkout source
         uses: actions/checkout@v6
@@ -396,6 +411,28 @@ def render_local_gate_verify() -> str:
           else
             echo "Local proof verification is required on pull requests"
           fi
+      # CACHE-034 (zackees/ci.yml#352/#354/#360): honour [flow.main]'s
+      # `pre-prune = true` waiver ahead of the check-ubuntu saves below this
+      # job in the needs: chain (actions: write allow-listed in ci.toml).
+      - name: Check out ci-lint
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: zackees/ci.yml
+          ref: 92106df315bd28de24ef1808c893c91a5859122d
+          path: .ci-lint
+          persist-credentials: false
+      - name: Detect lockfile change vs parent commit
+        id: lockfile
+        run: python3 ci/lockfile_changed.py
+      - name: Pre-prune superseded lockfile-keyed caches (CACHE-034)
+        if: github.event_name != 'pull_request' && steps.lockfile.outputs.changed == 'true'
+        env:
+          # act2/bosn replays inject no token: the fallback keeps the step
+          # runnable there (it 401s and ci-lint reports a warning, exit 0)
+          # while real GitHub runs always resolve github.token.
+          GITHUB_TOKEN: ${{ github.token || 'replay-no-token' }}
+          PYTHONPATH: .ci-lint
+        run: python3 -m ci_lint cache preprune --repo . --lockfile-changed --max-deletes 50
 """
 
 
@@ -746,6 +783,13 @@ def render_nightly(boards: list[dict]) -> str:
         "    runs-on: ubuntu-latest\n"
         "    outputs:\n"
         "      workflows: ${{ steps.select.outputs.workflows }}\n"
+        # CACHE-034 (zackees/ci.yml#352/#354/#360): plan is fbuild_bin's
+        # `needs:` link, so the pre-prune appended below runs before this
+        # run's first setup-soldr save; `actions: write` is what the cache
+        # deletions need (allow-listed in ci.toml's [allow.permissions]).
+        "    permissions:\n"
+        "      contents: read\n"
+        "      actions: write\n"
         "    steps:\n"
         "      - uses: actions/checkout@v6\n"
         "        with:\n"
@@ -768,6 +812,32 @@ def render_nightly(boards: list[dict]) -> str:
         "          workflows=$(cd ci && uv run --no-project python select_boards.py \"${args[@]}\")\n"
         "          echo \"selected: $workflows\"\n"
         "          echo \"workflows=$workflows\" >> \"$GITHUB_OUTPUT\"\n"
+        # CACHE-034 (zackees/ci.yml#352/#354/#360): honour [flow.main]'s
+        # `pre-prune = true` waiver. plan's checkout is fetch-depth: 0, so
+        # HEAD^ exists for ci/lockfile_changed.py; the ci-lint checkout ref
+        # must equal ci.toml's `linter` pin (CT-004). fbuild_bin needs this
+        # job, so the prune lands ahead of the run's first setup-soldr save
+        # (same run, earlier `needs:` link). This workflow never runs on
+        # pull_request, so the non-PR gate is belt-and-braces only.
+        "      - name: Check out ci-lint\n"
+        "        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6\n"
+        "        with:\n"
+        "          repository: zackees/ci.yml\n"
+        "          ref: 92106df315bd28de24ef1808c893c91a5859122d\n"
+        "          path: .ci-lint\n"
+        "          persist-credentials: false\n"
+        "      - name: Detect lockfile change vs parent commit\n"
+        "        id: lockfile\n"
+        "        run: python3 ci/lockfile_changed.py\n"
+        "      - name: Pre-prune superseded lockfile-keyed caches (CACHE-034)\n"
+        "        if: github.event_name != 'pull_request' && steps.lockfile.outputs.changed == 'true'\n"
+        "        env:\n"
+        "          # act2/bosn replays inject no token: the fallback keeps the step\n"
+        "          # runnable there (401 -> ci-lint warning, exit 0); GitHub runs\n"
+        "          # always resolve github.token.\n"
+        "          GITHUB_TOKEN: ${{ github.token || 'replay-no-token' }}\n"
+        "          PYTHONPATH: .ci-lint\n"
+        "        run: python3 -m ci_lint cache preprune --repo . --lockfile-changed --max-deletes 50\n"
         "\n"
     )
     dispatch = (
