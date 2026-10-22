@@ -549,3 +549,37 @@ asyncio.run(main())
     });
     assert_daemon_saw_teardown(&daemon);
 }
+
+/// Each fixture snippet must release its own globals before the next test.
+#[test]
+#[ignore = "embeds CPython; run by the python-facade CI job"]
+fn snippets_release_previous_monitor_globals() {
+    init_python();
+    let (_port, _daemon) = start_daemon_and_set_env(DaemonKnobs::default());
+    pyo3::Python::attach(|py| {
+        run_snippet(
+            py,
+            r#"
+import faulthandler
+faulthandler.dump_traceback_later(30, exit=True)
+from _native import SerialMonitor
+_previous_snippet_monitor = SerialMonitor(port="TEST_PORT", baud_rate=115200)
+_previous_snippet_monitor.__enter__()
+"#,
+        );
+        run_snippet(
+            py,
+            r#"
+import faulthandler, gc, time
+faulthandler.dump_traceback_later(30, exit=True)
+from _native import _live_session_count
+assert '_previous_snippet_monitor' not in globals(), "previous snippet retained its monitor"
+deadline = time.monotonic() + 5.0
+while _live_session_count() and time.monotonic() < deadline:
+    gc.collect()
+    time.sleep(0.05)
+assert _live_session_count() == 0, "previous snippet retained a live session"
+"#,
+        );
+    });
+}
