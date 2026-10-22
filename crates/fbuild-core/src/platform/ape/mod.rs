@@ -120,12 +120,26 @@ pub fn add_environment_overrides(env: &mut Vec<(String, String)>, compiler: &Pat
 
 fn add_environment_overrides_with_options(
     env: &mut Vec<(String, String)>,
-    _compiler: &Path,
-    _cwd: &Path,
+    compiler: &Path,
+    cwd: &Path,
     options: running_process::ape::ApeOptions,
 ) {
+    // Resolve against the complete fbuild fallback chain before translating
+    // it to the shared loader's single-directory environment contract. Reuse
+    // the installed `ape` entry when available, so nested tools inherit the
+    // same usable directory even when the preferred cache is unusable.
+    let resolved = running_process::ape::plan_launch(compiler.as_os_str(), Some(cwd), &options);
+    let loader = resolved
+        .map(|launch| {
+            launch
+                .ape_path_dir
+                .map(|dir| dir.join("ape"))
+                .unwrap_or(launch.loader)
+                .into_os_string()
+        })
+        .or(options.loader);
     let settings = [
-        (running_process::ape::LOADER_ENV, options.loader),
+        (running_process::ape::LOADER_ENV, loader),
         (
             running_process::ape::CACHE_DIR_ENV,
             options
