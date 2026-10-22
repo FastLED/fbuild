@@ -12,6 +12,7 @@ mod flag_escaping_lint;
 mod lite_scons_acceptance;
 mod nxplpc_build_flags;
 mod nxplpc_core_compile_commands;
+mod samd_acceptance;
 mod stm32_acceptance;
 mod teensy30_acceptance;
 mod teensy41_acceptance;
