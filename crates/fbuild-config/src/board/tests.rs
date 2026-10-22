@@ -282,6 +282,21 @@ fn test_get_defines_with_extra_flags() {
 }
 
 #[test]
+fn pico_spaced_board_define_does_not_create_an_empty_macro() {
+    let board = BoardConfig::from_board_id("pico", &HashMap::new()).unwrap();
+    assert_eq!(board.variant, "RASPBERRY_PI_PICO");
+    let defines = board.get_defines();
+    assert_eq!(
+        defines.get("ARDUINO_RASPBERRY_PI_PICO").map(String::as_str),
+        Some("1")
+    );
+    assert!(
+        !defines.contains_key(""),
+        "a bare -D corrupts boot2 assembly"
+    );
+}
+
+#[test]
 fn test_get_include_paths() {
     let config = BoardConfig::from_board_id("uno", &HashMap::new()).unwrap();
     let paths = config.get_include_paths(Path::new("/framework"));

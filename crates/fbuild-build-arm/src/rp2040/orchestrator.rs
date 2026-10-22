@@ -12,6 +12,7 @@
 //! 9. Link (with linker script from variant dir)
 //! 10. Convert to binary + report size
 
+use super::board_props::{apply_rp_board_props, resolve_variant, rp_board_defines};
 use std::collections::{BTreeMap, HashMap};
 use std::path::{Path, PathBuf};
 use std::time::Instant;
@@ -35,6 +36,8 @@ use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 
 use super::uf2::convert_elf_to_uf2;
 
+const RP_DEFINE_POLICY: &str = "platform-sdfatdefaults-board-defines-v2";
+
 /// RP2040 platform build orchestrator.
 pub struct Rp2040Orchestrator;
 
@@ -55,6 +58,7 @@ struct Rp2040FingerprintMetadata {
     board_extra_flags: Option<String>,
     board_upload_protocol: Option<String>,
     board_menu_overrides: BTreeMap<String, String>,
+    board_defines: BTreeMap<String, String>,
     platform: String,
     max_flash: Option<u64>,
     max_ram: Option<u64>,
@@ -199,12 +203,21 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             &framework.get_boards_txt(),
             &board_id,
             &board_menu_overrides,
-        );
+        )
+        .or_else(|| {
+            crate::arduino_props::load_board_props_with_menu_overrides(
+                &framework.get_boards_txt(),
+                ctx.board.registry_board_id(),
+                &board_menu_overrides,
+            )
+        });
+        ctx.board.variant =
+            resolve_variant(&ctx.board.variant, &board_props, &board_menu_overrides);
         let build_dir = ctx.build_dir.clone();
         let metadata_hash = stable_hash_with_build_config(
             &Rp2040FingerprintMetadata {
                 version: BUILD_FINGERPRINT_VERSION,
-                platform_define_policy: "platform-sdfatdefaults-v1",
+                platform_define_policy: RP_DEFINE_POLICY,
                 framework_library_linkage: "local-and-framework-archive-v2",
                 env_name: params.env_name.clone(),
                 profile: profile_label(params.profile).to_string(),
@@ -217,6 +230,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
                 board_extra_flags: ctx.board.extra_flags.clone(),
                 board_upload_protocol: ctx.board.upload_protocol.clone(),
                 board_menu_overrides: board_menu_overrides.into_iter().collect(),
+                board_defines: ctx.board.get_defines().into_iter().collect(),
                 platform: "raspberrypi".to_string(),
                 max_flash: ctx.board.max_flash,
                 max_ram: ctx.board.max_ram,
@@ -292,8 +306,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         // 6. Build include dirs + compiler
         let mcu_config =
             super::mcu_config::get_rp2040_config_for_mcu(&ctx.board.mcu.to_lowercase())?;
-        let mut defines = ctx.board.get_defines();
-        defines.extend(mcu_config.defines_map());
+        let mut defines = rp_board_defines(&ctx.board, &mcu_config);
         if let Some(max_flash) = ctx.board.max_flash {
             defines.insert("PICO_FLASH_SIZE_BYTES".to_string(), max_flash.to_string());
         }
@@ -693,49 +706,6 @@ fn add_define_file(define_file: &Path, defines: &mut HashMap<String, String>) {
     apply_define_flags(&flags, defines);
 }
 
-fn apply_rp_board_props(
-    board_props: &Option<HashMap<String, String>>,
-    framework_dir: &Path,
-    defines: &mut HashMap<String, String>,
-) {
-    let Some(props) = board_props.as_ref() else {
-        return;
-    };
-    for key in [
-        "usbvid",
-        "usbpid",
-        "usbpwr",
-        "usbstack_flags",
-        "variantdefines",
-        "led",
-        "libpicowdefs",
-        "wificc",
-        "sdfatdefines",
-    ] {
-        if let Some(flags) = props.get(key) {
-            let expanded =
-                flags.replace("{runtime.platform.path}", &framework_dir.to_string_lossy());
-            let tokens = fbuild_core::shell_split::split(&expanded);
-            apply_define_flags(&tokens, defines);
-        }
-    }
-    if let Some(value) = props.get("usb_manufacturer") {
-        defines.insert("USB_MANUFACTURER".to_string(), value.clone());
-    }
-    if let Some(value) = props.get("usb_product") {
-        defines.insert("USB_PRODUCT".to_string(), value.clone());
-    }
-    for (property, define) in [
-        ("flash_total", "PICO_FLASH_SIZE_BYTES"),
-        ("fs_start", "FS_START"),
-        ("fs_end", "FS_END"),
-    ] {
-        if let Some(value) = props.get(property) {
-            defines.insert(define.to_string(), value.clone());
-        }
-    }
-}
-
 /// Apply Arduino-Pico's framework compiler definitions, with selected board
 /// properties overriding platform defaults. SdFat's public-copy setting lives
 /// in platform.txt, not boards.txt, and is required to compile bundled SDFS.
@@ -800,15 +770,7 @@ fn add_rp_board_includes(
 }
 
 fn apply_define_flags(flags: &[String], defines: &mut HashMap<String, String>) {
-    for flag in flags {
-        if let Some(def) = flag.strip_prefix("-D") {
-            if let Some((key, val)) = def.split_once('=') {
-                defines.insert(key.to_string(), val.trim().to_string());
-            } else {
-                defines.insert(def.trim().to_string(), "1".to_string());
-            }
-        }
-    }
+    defines.extend(fbuild_core::compiler_flags::parse_define_flags(flags));
 }
 
 fn rp_family(mcu: &str) -> &'static str {
@@ -1063,6 +1025,14 @@ mod tests {
     }
 
     #[test]
+    fn board_define_precedence_invalidates_previous_firmware_cache() {
+        assert_policy_invalidates_legacy_firmware_cache(
+            "platform_define_policy",
+            Some("platform-sdfatdefaults-v1"),
+        );
+    }
+
+    #[test]
     fn framework_archive_policy_invalidates_legacy_firmware_cache() {
         assert_policy_invalidates_legacy_firmware_cache("framework_library_linkage", None);
     }
@@ -1083,7 +1053,7 @@ mod tests {
 
         let metadata = Rp2040FingerprintMetadata {
             version: BUILD_FINGERPRINT_VERSION,
-            platform_define_policy: "platform-sdfatdefaults-v1",
+            platform_define_policy: RP_DEFINE_POLICY,
             framework_library_linkage: "local-and-framework-archive-v2",
             env_name: "pico".into(),
             profile: "release".into(),
@@ -1096,6 +1066,7 @@ mod tests {
             board_extra_flags: None,
             board_upload_protocol: None,
             board_menu_overrides: BTreeMap::new(),
+            board_defines: BTreeMap::new(),
             platform: "raspberrypi".into(),
             max_flash: None,
             max_ram: None,
@@ -1339,8 +1310,7 @@ mod tests {
                 board_id,
             );
             let mcu = super::super::mcu_config::get_rp2040_config_for_mcu(&board.mcu).unwrap();
-            let mut defines = board.get_defines();
-            defines.extend(mcu.defines_map());
+            let mut defines = rp_board_defines(&board, &mcu);
             add_rp_manifest_defines(&framework, &board.mcu, &mut defines);
             apply_rp_board_props(&props, &framework, &mut defines);
             apply_rp_platform_defines(&framework, &props, &mut defines).unwrap();

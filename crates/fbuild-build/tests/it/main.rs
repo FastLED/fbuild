@@ -13,6 +13,7 @@ mod lite_scons_acceptance;
 mod nxplpc_build_flags;
 mod nxplpc_core_compile_commands;
 mod renesas_acceptance;
+mod rp2040_acceptance;
 mod samd_acceptance;
 mod stm32_acceptance;
 mod teensy30_acceptance;

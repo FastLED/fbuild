@@ -297,18 +297,9 @@ impl BoardConfig {
 
         // Extra flags
         if let Some(ref flags) = self.extra_flags {
-            for flag in fbuild_core::shell_split::split(flags) {
-                if let Some(define) = flag.strip_prefix("-D") {
-                    if let Some(eq_pos) = define.find('=') {
-                        defines.insert(
-                            define[..eq_pos].to_string(),
-                            define[eq_pos + 1..].to_string(),
-                        );
-                    } else {
-                        defines.insert(define.to_string(), "1".to_string());
-                    }
-                }
-            }
+            defines.extend(fbuild_core::compiler_flags::parse_define_flags(
+                &fbuild_core::shell_split::split(flags),
+            ));
         }
 
         defines
