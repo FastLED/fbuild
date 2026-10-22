@@ -67,6 +67,12 @@ jobs:
       - name: Test
         shell: bash
         run: soldr cargo test --workspace
+      - name: Test SAMD architecture and interrupt override
+        shell: bash
+        env:
+          FBUILD_DEV_MODE: "1"
+        run: |
+          soldr cargo test -p fbuild-build --test it samd_acceptance:: -- --ignored --nocapture
 
       - name: Setup uv for legacy source package install
         uses: astral-sh/setup-uv@v3
