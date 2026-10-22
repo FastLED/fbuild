@@ -242,7 +242,8 @@ impl BuildOrchestrator for RenesasOrchestrator {
         // Use resolved core_dir/variant_dir instead of get_include_paths() which
         // doesn't account for core_dir overrides.
         let mut include_dirs = vec![core_dir.clone(), variant_dir.clone()];
-        // Renesas core has headers in subdirectories (tinyusb/, usb/, cm_backtrace/)
+        // Renesas core has headers in subdirectories (tinyusb/, usb/, cm_backtrace/).
+        // Keep api/ qualified so String.h cannot shadow the C library's string.h.
         discover_header_subdirs(&core_dir, &mut include_dirs);
         // Arduino API deprecated compatibility headers
         let api_deprecated = core_dir.join("api").join("deprecated");
@@ -412,7 +413,11 @@ fn discover_header_subdirs(dir: &Path, include_dirs: &mut Vec<PathBuf>) {
                 let has_headers = children
                     .flatten()
                     .any(|e| e.path().extension().is_some_and(|ext| ext == "h"));
-                if has_headers {
+                // Arduino includes API headers as api/Foo.h, or relative to
+                // another API header. Adding -Iapi makes <string.h> resolve to
+                // api/String.h on case-insensitive Windows filesystems (#1671).
+                // Still recurse to discover the deprecated compatibility dirs.
+                if has_headers && path != dir.join("api") {
                     include_dirs.push(path.clone());
                 }
             }
@@ -488,6 +493,23 @@ mod tests {
             "empty/ should NOT be in includes: {:?}",
             includes
         );
+    }
+
+    #[test]
+    fn api_headers_do_not_shadow_standard_c_headers() {
+        let tmp = tempfile::tempdir().unwrap();
+        let core = tmp.path().join("cores/arduino");
+        let api = core.join("api");
+        std::fs::create_dir_all(api.join("deprecated")).unwrap();
+        std::fs::write(api.join("String.h"), "").unwrap();
+        std::fs::write(api.join("deprecated/WString.h"), "").unwrap();
+        let mut includes = Vec::new();
+        discover_header_subdirs(&core, &mut includes);
+        assert!(
+            !includes.contains(&api),
+            "-Iapi makes <string.h> resolve to Arduino String.h on Windows"
+        );
+        assert!(includes.contains(&api.join("deprecated")));
     }
 
     #[test]
