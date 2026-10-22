@@ -1,15 +1,15 @@
-# Run from a clean committed tree before pushing. Linux-only enforced PR gate;
+# Optional local proof from a clean committed tree. Hosted CI is authoritative;
 # board, extended/full and other native-host coverage remains remote.
 [gate]
 run = ["uv", "run", "--no-project", "--python", "3.12", "python", "-m", "ci.local_gate"]
 verify = "ci-minimal.yml:verify"
-mode = "enforce"
+mode = "shadow"
 
 [gate.lanes.linux-minimal]
 run = ["uv", "run", "--no-project", "--python", "3.12", "python", "-m", "ci.local_gate", "--lane", "linux-minimal"]
 tools = ["bosn", "uv"]
 
-# Shared proof binds every concrete Ubuntu job and its verifier prerequisite.
+# Shared proof binds both concrete Ubuntu jobs. The advisory verifier is independent.
 [gate.replay]
 qualified = true
 repository = "FastLED/fbuild"
@@ -26,12 +26,6 @@ lanes = ["linux-minimal"]
 source-job = "check-ubuntu.yml:python-facade-tests"
 key = "linux/Check Ubuntu/Python facade tests (ubuntu-latest)"
 steps = ["Checkout source", "Verify candidate SHA", "Set up uv", "Setup soldr", "Run embedded-CPython facade tests", "Test (python facades, --ignored)"]
-lanes = ["linux-minimal"]
-
-[[gate.replay.jobs]]
-source-job = "ci-minimal.yml:verify"
-key = "ci-minimal/Verify local gate"
-steps = ["Checkout source", "Set up uv", "Verify source-bound local proof"]
 lanes = ["linux-minimal"]
 
 [[gate.replay.selections]]

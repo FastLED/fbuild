@@ -89,17 +89,17 @@ class FractionalWorkflowTests(unittest.TestCase):
                 subdir = publish.ARTIFACT_MAP[artifact]
                 self.assertEqual([tag], publish.PLATFORMS[subdir])
 
-    def test_pr_verifier_enforces_attestation_without_gating_dispatch(self):
+    def test_pr_verifier_is_advisory_without_gating_dispatch(self):
         config = tomllib.loads((render_workflows.WORKFLOWS_DIR.parents[1] / "local-gate.toml").read_text())
-        self.assertEqual("enforce", config["gate"]["mode"])
+        self.assertEqual("shadow", config["gate"]["mode"])
         steps = self.load("ci-minimal.yml")["jobs"]["verify"]["steps"]
         verifier = next(step for step in steps if "local-gate verify" in step.get("run", ""))
         self.assertNotIn("if", verifier)
         self.assertEqual("${{ github.event_name }}", verifier["env"]["GATE_EVENT"])
         # Run the generated shell decision itself. A refused attestation must
-        # fail a PR; dispatch must execute the decision without requiring one.
+        # report a warning on a PR; dispatch does not require one.
         script = "uvx() { return 7; }\n" + verifier["run"]
-        for event, expected in (("pull_request", 7), ("workflow_dispatch", 0)):
+        for event, expected in (("pull_request", 0), ("workflow_dispatch", 0)):
             with self.subTest(event=event), tempfile.TemporaryFile() as stream:
                 result = subprocess.run(
                     ["bash", "-e", "-c", script],
@@ -124,9 +124,10 @@ class FractionalWorkflowTests(unittest.TestCase):
     def test_local_gate_keeps_required_ubuntu_commands_and_shadow_verification(self):
         minimal = self.load("ci-minimal.yml")["jobs"]
         verifier = minimal["verify"]
+        self.assertTrue(verifier.get("continue-on-error"))
         self.assertTrue(any("local-gate verify" in step.get("run", "") for step in verifier["steps"]))
         for job_id in ("linux", "board_plan", "test", "full", "reuse_decision"):
-            self.assertIn("verify", minimal[job_id]["needs"])
+            self.assertNotIn("verify", minimal[job_id].get("needs", []))
         jobs = self.load("check-ubuntu.yml")["jobs"]
         for job_id, command in (
             ("check", "soldr cargo clippy --workspace --all-targets -- -D warnings"),
