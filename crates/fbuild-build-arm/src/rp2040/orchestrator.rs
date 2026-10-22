@@ -12,7 +12,7 @@
 //! 9. Link (with linker script from variant dir)
 //! 10. Convert to binary + report size
 
-use super::board_props::{apply_rp_board_props, resolve_variant};
+use super::board_props::{apply_rp_board_props, resolve_variant, rp_board_defines};
 use std::collections::{BTreeMap, HashMap};
 use std::path::{Path, PathBuf};
 use std::time::Instant;
@@ -35,6 +35,8 @@ use crate::pipeline;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 
 use super::uf2::convert_elf_to_uf2;
+
+const RP_DEFINE_POLICY: &str = "platform-sdfatdefaults-board-defines-v2";
 
 /// RP2040 platform build orchestrator.
 pub struct Rp2040Orchestrator;
@@ -215,7 +217,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         let metadata_hash = stable_hash_with_build_config(
             &Rp2040FingerprintMetadata {
                 version: BUILD_FINGERPRINT_VERSION,
-                platform_define_policy: "platform-sdfatdefaults-v1",
+                platform_define_policy: RP_DEFINE_POLICY,
                 framework_library_linkage: "local-and-framework-archive-v2",
                 env_name: params.env_name.clone(),
                 profile: profile_label(params.profile).to_string(),
@@ -304,8 +306,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         // 6. Build include dirs + compiler
         let mcu_config =
             super::mcu_config::get_rp2040_config_for_mcu(&ctx.board.mcu.to_lowercase())?;
-        let mut defines = ctx.board.get_defines();
-        defines.extend(mcu_config.defines_map());
+        let mut defines = rp_board_defines(&ctx.board, &mcu_config);
         if let Some(max_flash) = ctx.board.max_flash {
             defines.insert("PICO_FLASH_SIZE_BYTES".to_string(), max_flash.to_string());
         }
@@ -1024,6 +1025,14 @@ mod tests {
     }
 
     #[test]
+    fn board_define_precedence_invalidates_previous_firmware_cache() {
+        assert_policy_invalidates_legacy_firmware_cache(
+            "platform_define_policy",
+            Some("platform-sdfatdefaults-v1"),
+        );
+    }
+
+    #[test]
     fn framework_archive_policy_invalidates_legacy_firmware_cache() {
         assert_policy_invalidates_legacy_firmware_cache("framework_library_linkage", None);
     }
@@ -1044,7 +1053,7 @@ mod tests {
 
         let metadata = Rp2040FingerprintMetadata {
             version: BUILD_FINGERPRINT_VERSION,
-            platform_define_policy: "platform-sdfatdefaults-v1",
+            platform_define_policy: RP_DEFINE_POLICY,
             framework_library_linkage: "local-and-framework-archive-v2",
             env_name: "pico".into(),
             profile: "release".into(),
@@ -1301,8 +1310,7 @@ mod tests {
                 board_id,
             );
             let mcu = super::super::mcu_config::get_rp2040_config_for_mcu(&board.mcu).unwrap();
-            let mut defines = board.get_defines();
-            defines.extend(mcu.defines_map());
+            let mut defines = rp_board_defines(&board, &mcu);
             add_rp_manifest_defines(&framework, &board.mcu, &mut defines);
             apply_rp_board_props(&props, &framework, &mut defines);
             apply_rp_platform_defines(&framework, &props, &mut defines).unwrap();

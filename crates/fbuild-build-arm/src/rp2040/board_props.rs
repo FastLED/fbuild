@@ -3,6 +3,17 @@
 use std::collections::HashMap;
 use std::path::Path;
 
+pub(super) fn rp_board_defines(
+    board: &fbuild_config::BoardConfig,
+    mcu: &crate::generic_arm::ArmMcuConfig,
+) -> HashMap<String, String> {
+    // MCU values are defaults; board/project flags are more specific. In
+    // particular, USB identity aliases must not replace explicit USBD_* flags.
+    let mut defines = mcu.defines_map();
+    defines.extend(board.get_defines());
+    defines
+}
+
 /// User variant overrides take precedence over framework metadata. The board
 /// manifest may describe another core (e.g. Mbed), so use the selected Arduino
 /// framework's variant when it is available.
@@ -65,6 +76,35 @@ pub(super) fn apply_rp_board_props(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn explicit_usb_aliases_override_rp_mcu_defaults() {
+        for id in ["pico", "rpipico2"] {
+            let overrides = HashMap::from([(
+                "extra_flags".to_owned(),
+                "-DUSBD_VID=TEST_VENDOR -DUSBD_PID=TEST_PRODUCT".to_owned(),
+            )]);
+            let board = fbuild_config::BoardConfig::from_board_id(id, &overrides).unwrap();
+            let mcu =
+                super::super::mcu_config::get_rp2040_config_for_mcu(&board.mcu.to_lowercase())
+                    .unwrap();
+            let defines = rp_board_defines(&board, &mcu);
+            assert_eq!(
+                defines.get("USBD_VID").map(String::as_str),
+                Some("TEST_VENDOR"),
+                "{id}"
+            );
+            assert_eq!(
+                defines.get("USBD_PID").map(String::as_str),
+                Some("TEST_PRODUCT"),
+                "{id}"
+            );
+            let defaults = fbuild_config::BoardConfig::from_board_id(id, &HashMap::new()).unwrap();
+            let defines = rp_board_defines(&defaults, &mcu);
+            assert_eq!(defines.get("USBD_VID").map(String::as_str), Some("USB_VID"));
+            assert_eq!(defines.get("USBD_PID").map(String::as_str), Some("USB_PID"));
+        }
+    }
 
     #[test]
     fn resolves_framework_variant_and_preserves_explicit_overrides() {
