@@ -1,7 +1,7 @@
 //! GNU-compatible static archives with bounded command lines (#1656).
 
 use std::io::Write;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::time::Duration;
 
 use crate::{FbuildError, Result, subprocess::run_command};
@@ -15,7 +15,7 @@ struct Invocation {
     _response: Option<tempfile::NamedTempFile>,
 }
 
-fn invocation(ar: &Path, objects: &[PathBuf], output: &Path) -> Result<Invocation> {
+fn invocation(ar: &Path, objects: &[impl AsRef<Path>], output: &Path) -> Result<Invocation> {
     let mut args = vec![
         ar.to_string_lossy().into_owned(),
         "rcs".into(),
@@ -23,7 +23,7 @@ fn invocation(ar: &Path, objects: &[PathBuf], output: &Path) -> Result<Invocatio
     ];
     let paths: Vec<_> = objects
         .iter()
-        .map(|object| object.to_string_lossy().into_owned())
+        .map(|object| object.as_ref().to_string_lossy().into_owned())
         .collect();
     // Account conservatively for Windows argument quoting and escaping.
     let length: usize = args
@@ -49,7 +49,7 @@ fn invocation(ar: &Path, objects: &[PathBuf], output: &Path) -> Result<Invocatio
             // Unlike compiler -D flags, these are literal filenames. Preserve
             // apostrophes, quotes, whitespace and Unix backslashes exactly.
             let path = if crate::platform::host::is_windows() {
-                path.replace('\\', "/")
+                crate::path::NormalizedPath::from(path).display_slash()
             } else {
                 path
             };
@@ -74,7 +74,7 @@ fn invocation(ar: &Path, objects: &[PathBuf], output: &Path) -> Result<Invocatio
 /// and diagnostic label. Response files are removed on every exit path.
 pub async fn create(
     ar: &Path,
-    objects: &[PathBuf],
+    objects: &[impl AsRef<Path>],
     output: &Path,
     label: &str,
     timeout: Duration,
