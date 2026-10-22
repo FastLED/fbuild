@@ -1,4 +1,5 @@
 use super::*;
+use std::time::Duration;
 
 #[tokio::test]
 #[ignore = "#1656: requires a real native C compiler and GNU-compatible archiver"]
@@ -21,10 +22,22 @@ async fn large_archive_handles_windows_command_limit_and_quoted_paths() {
     .await
     .unwrap();
     assert!(compile.success(), "{}", compile.stderr);
-    let object_dir = root.join(format!("archive fixture's objects {}", "x".repeat(80)));
-    std::fs::create_dir(&object_dir).unwrap();
+    let mut object_dir = root.join(format!("archive fixture's objects {}", "x".repeat(80)));
+    if fbuild_core::platform::host::current().is_linux() {
+        for _ in 0..13 {
+            object_dir.push("x".repeat(240));
+        }
+    }
+    std::fs::create_dir_all(&object_dir).unwrap();
     let mut objects = Vec::new();
-    for index in 0..525 {
+    // Match LVGL on Windows. Long Linux paths exceed ARG_MAX without an
+    // artificially large member count that would slow down the archiver.
+    let count = if fbuild_core::platform::host::current().is_linux() {
+        700
+    } else {
+        525
+    };
+    for index in 0..count {
         let object = object_dir.join(format!("member_{index:04}.o"));
         std::fs::copy(root.join("seed.o"), &object).unwrap();
         objects.push(object);
@@ -37,9 +50,11 @@ async fn large_archive_handles_windows_command_limit_and_quoted_paths() {
             > 70_000
     );
     let output = root.join("archive fixture's library.a");
-    archive_objects(Path::new(&ar), &objects, &output)
-        .await
-        .unwrap();
+    if let Err(error) = archive_objects(Path::new(&ar), &objects, &output).await {
+        let text = error.to_string();
+        let start = text.floor_char_boundary(text.len().saturating_sub(400));
+        panic!("archive failed: {}", &text[start..]);
+    }
     let list = run_command(
         &[&ar, "t", output.to_str().unwrap()],
         Some(root),
@@ -49,13 +64,10 @@ async fn large_archive_handles_windows_command_limit_and_quoted_paths() {
     .await
     .unwrap();
     assert!(list.success(), "{}", list.stderr);
-    assert_eq!(list.stdout.lines().count(), 525);
-    for index in 0..525 {
-        assert!(
-            list.stdout
-                .lines()
-                .any(|line| line.trim() == format!("member_{index:04}.o"))
-        );
+    assert_eq!(list.stdout.lines().count(), count);
+    let names: std::collections::BTreeSet<_> = list.stdout.lines().map(str::trim).collect();
+    for index in 0..count {
+        assert!(names.contains(format!("member_{index:04}.o").as_str()));
     }
     objects.pop();
     archive_objects(Path::new(&ar), &objects, &output)
@@ -72,11 +84,20 @@ async fn large_archive_handles_windows_command_limit_and_quoted_paths() {
     assert!(list.success(), "{}", list.stderr);
     assert_eq!(
         list.stdout.lines().count(),
-        524,
+        count - 1,
         "stale members must be removed"
     );
+    assert!(
+        std::fs::read_dir(root).unwrap().all(|entry| {
+            entry
+                .unwrap()
+                .path()
+                .extension()
+                .is_none_or(|ext| ext != "rsp")
+        }),
+        "successful archiving must not leave response files behind"
+    );
 }
-use std::time::Duration;
 
 fn test_signature() -> &'static str {
     "test-signature"

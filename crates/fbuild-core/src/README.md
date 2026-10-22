@@ -2,6 +2,8 @@
 
 ## Modules
 
+- **`archive.rs`** -- Shared GNU archiver invocation with temporary response files for large or Windows object lists (#1656)
+
 - **`lib.rs`** -- Crate root; defines `FbuildError`, `Result`, `BuildProfile`, `Platform`, `OperationType`, `DaemonState`, `SizeInfo`; re-exports `BuildLog`
 - **`build_log.rs`** -- `BuildLog` struct that accumulates output lines and optionally streams them through an `mpsc::Sender`
 - **`daemon_health.rs`** -- Daemon `/health` readiness states (`healthy` / `starting` / unreachable), `ReadinessDeadline` that stretches while the daemon reports `starting`, and `wait_until_healthy()` shared by the CLI and PyO3 clients (FastLED/fbuild#1480)

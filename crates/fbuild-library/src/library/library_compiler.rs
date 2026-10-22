@@ -727,43 +727,15 @@ async fn build_include_flags(include_dirs: &[PathBuf], _temp_dir: &Path) -> Resu
 
 /// Create a static archive from object files.
 async fn archive_objects(ar_path: &Path, objects: &[PathBuf], output: &Path) -> Result<()> {
-    if output.exists() {
-        std::fs::remove_file(output)?;
-    }
-
-    let mut args: Vec<String> = vec![
-        ar_path.to_string_lossy().to_string(),
-        "rcs".to_string(),
-        output.to_string_lossy().to_string(),
-    ];
-
-    for obj in objects {
-        args.push(obj.to_string_lossy().to_string());
-    }
-
-    let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-    // FastLED/fbuild#844: explicit 60 s cap. `ar rcs` over a large
-    // FastLED object set (hundreds of .o files) finishes in <10 s on
-    // every host fbuild supports; anything past a minute is a disk /
-    // filesystem fault rather than legitimately slow work, so we cap
-    // tightly to surface those failures fast instead of waiting out
-    // the 15 min default.
-    let result = run_command(
-        &args_ref,
-        None,
-        None,
-        Some(std::time::Duration::from_secs(60)),
+    // Preserve the library archiver's 60s watchdog (#844).
+    fbuild_core::archive::create(
+        ar_path,
+        objects,
+        output,
+        "ar",
+        std::time::Duration::from_secs(60),
     )
-    .await?;
-
-    if !result.success() {
-        return Err(FbuildError::BuildFailed(format!(
-            "ar failed: {}",
-            result.stderr
-        )));
-    }
-
-    Ok(())
+    .await
 }
 
 /// Compute the object file path for a source file.
