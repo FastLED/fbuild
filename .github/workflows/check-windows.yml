@@ -67,6 +67,9 @@ jobs:
       - name: Test
         shell: bash
         run: soldr cargo test --workspace
+      - name: Setup uv for legacy source package install
+        uses: astral-sh/setup-uv@v3
+
       - name: Test SAMD architecture and interrupt override
         shell: bash
         env:
@@ -88,8 +91,11 @@ jobs:
         run: |
           soldr cargo test -p fbuild-build --test it rp2040_acceptance:: -- --ignored --nocapture
 
-      - name: Setup uv for legacy source package install
-        uses: astral-sh/setup-uv@v3
+      - name: Test ESP32-S3 linker overflow summary
+        shell: bash
+        env:
+          FBUILD_DEV_MODE: "1"
+        run: soldr cargo test -p fbuild-build --test it link_overflow::esp32s3_dram_overflow_still_fails_with_region_summary -- --ignored --nocapture
 
       # Exercise the real uv-created Windows launcher, beyond the unit fixture.
       # Cold public install runs fbuild's internal esptool version verification.

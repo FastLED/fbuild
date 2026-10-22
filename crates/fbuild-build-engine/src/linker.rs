@@ -276,9 +276,14 @@ pub trait Linker: Send + Sync {
 
         // Pass core objects directly to linker (not archived) for LTO compatibility.
         // With LTO + archives, the linker can't see symbols across TUs properly.
+        let map_path = output_dir.join("firmware.map");
+        let fresh_map = crate::link_overflow::prepare_map(&map_path);
         let elf_path = self
             .link(sketch_objects, core_objects, output_dir, extra)
-            .await?;
+            .await
+            .map_err(|error| {
+                crate::link_overflow::enrich(error, fresh_map.then_some(map_path.as_path()))
+            })?;
 
         // Convert and size. Both only read the ELF, so they run together
         // instead of back to back on the critical path (FastLED/fbuild#1468).
