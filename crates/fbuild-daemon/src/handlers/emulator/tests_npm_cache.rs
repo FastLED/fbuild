@@ -41,7 +41,7 @@ async fn node_discovery_returns_native_executable() {
     .await
     .unwrap();
     assert!(output.success());
-    assert_eq!(node, std::path::PathBuf::from(output.stdout.trim()));
+    assert_eq!(node.as_path(), std::path::Path::new(output.stdout.trim()));
 }
 
 #[tokio::test]
