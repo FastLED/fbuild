@@ -116,6 +116,14 @@ pub struct Cli {
     /// (`CI=true`) is auto-suppressed. See FastLED/fbuild#626.
     #[arg(long = "no-update-check")]
     pub no_update_check: bool,
+
+    /// Enable Windows long paths with administrator approval (UAC)
+    #[arg(long, global = true)]
+    pub fix_win: bool,
+
+    /// Fixed, one-shot registry repair helper; never starts a daemon.
+    #[arg(long = "__fix-win-helper", hide = true, conflicts_with = "fix_win")]
+    pub fix_win_helper: bool,
 }
 
 #[derive(Subcommand)]
