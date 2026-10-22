@@ -88,7 +88,9 @@ void loop() { result++; }
     for source in ["String.cpp", "IPAddress.cpp"] {
         assert!(
             commands.iter().any(|command| {
-                let file = command["file"].as_str().unwrap_or("").replace('\\', "/");
+                let file =
+                    fbuild_core::path::NormalizedPath::from(command["file"].as_str().unwrap_or(""))
+                        .display_slash();
                 file.ends_with(&format!("/{source}")) && file.contains("renesas_uno-1.6.0/")
             }),
             "{source} must compile from the default 1.6.0 core"
