@@ -9,6 +9,9 @@ use std::sync::OnceLock;
 
 use crate::path::NormalizedPath;
 
+/// Whether this host requires a loader to execute APE images.
+pub use running_process::ape::NEEDS_LOADER;
+
 /// fbuild override for the shared APE loader.
 pub const LOADER_ENV: &str = "FBUILD_APE_LOADER";
 /// fbuild override for extracted loader storage.
