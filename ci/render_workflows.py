@@ -383,7 +383,7 @@ def render_local_gate_verify() -> str:
         uses: actions/checkout@v6
         with:
           ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
-          fetch-depth: 2
+          fetch-depth: 0
           persist-credentials: false
       - name: Set up uv
         uses: astral-sh/setup-uv@v3
