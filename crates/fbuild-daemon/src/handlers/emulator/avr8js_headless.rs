@@ -121,7 +121,7 @@ pub(crate) async fn run_avr8js_headless(
     loop {
         if monitor.timed_out() {
             final_outcome = Some(monitor.timeout_outcome());
-            fbuild_core::platform::process::kill_tokio_tree(&child).await?;
+            let _ = child.kill().await;
             break;
         }
 
@@ -147,7 +147,7 @@ pub(crate) async fn run_avr8js_headless(
 
                         if let Some(outcome) = monitor.process_line(&line.line) {
                             final_outcome = Some(outcome);
-                            fbuild_core::platform::process::kill_tokio_tree(&child).await?;
+                            let _ = child.kill().await;
                             break;
                         }
                     }
@@ -164,7 +164,7 @@ pub(crate) async fn run_avr8js_headless(
                     }
                     Err(_) => {
                         final_outcome = Some(monitor.timeout_outcome());
-                        fbuild_core::platform::process::kill_tokio_tree(&child).await?;
+                        let _ = child.kill().await;
                         break;
                     }
                 }
