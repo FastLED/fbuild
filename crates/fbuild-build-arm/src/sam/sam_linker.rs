@@ -110,7 +110,9 @@ impl Linker for SamLinker {
             args.push(obj.to_string_lossy().to_string());
         }
 
-        // Core objects passed directly (not archived) for LTO compatibility
+        // Rescan archives so dependencies between core and library members
+        // resolve without forcing unreferenced interrupt handlers into the ELF.
+        args.push("-Wl,--start-group".into());
         for archive in archives {
             args.push(archive.to_string_lossy().to_string());
         }
@@ -133,6 +135,7 @@ impl Linker for SamLinker {
         // Linker libraries from config
         args.extend(self.mcu_config.linker_libs.iter().cloned());
         args.extend(extra.libs.iter().cloned());
+        args.push("-Wl,--end-group".into());
 
         if self.verbose {
             tracing::debug!(target: "fbuild_build::linker::sam", "link: {}", args.join(" "));

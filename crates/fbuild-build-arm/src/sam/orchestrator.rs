@@ -108,6 +108,8 @@ struct SamFingerprintMetadata {
     board_pid: Option<String>,
     board_usb_product: Option<String>,
     board_usb_manufacturer: Option<String>,
+    board_defines: std::collections::BTreeMap<String, String>,
+    archive_core: bool,
     platform: String,
     max_flash: Option<u64>,
     max_ram: Option<u64>,
@@ -317,6 +319,7 @@ impl BuildOrchestrator for SamOrchestrator {
             &ctx.board,
         )
         .await?;
+        let archive_core = matches!(&core, SamCore::Samd { .. });
         let toolchain_dir = toolchain.ensure_installed().await?;
         tracing::info!("arm-none-eabi toolchain at {}", toolchain_dir.display());
 
@@ -376,6 +379,8 @@ impl BuildOrchestrator for SamOrchestrator {
                 board_pid: ctx.board.pid.clone(),
                 board_usb_product: ctx.board.usb_product.clone(),
                 board_usb_manufacturer: ctx.board.usb_manufacturer.clone(),
+                board_defines: ctx.board.get_defines().into_iter().collect(),
+                archive_core,
                 platform: "atmelsam".to_string(),
                 max_flash: ctx.board.max_flash,
                 max_ram: ctx.board.max_ram,
@@ -562,8 +567,13 @@ impl BuildOrchestrator for SamOrchestrator {
         let gcc_ar_path = toolchain.get_gcc_ar_path();
         let c_flags = crate::compiler::Compiler::c_flags(&compiler);
         let cpp_flags = crate::compiler::Compiler::cpp_flags(&compiler);
-        // Use gcc-ar for LTO archives so the linker-plugin index is written.
-        let lib_ar_path = pipeline::pick_archiver(&ar_path, &gcc_ar_path, &c_flags, &cpp_flags);
+        // User overlays can enable LTO after compiler defaults are assembled.
+        // Always index SAMD core archives with GCC's plugin-aware archiver.
+        let lib_ar_path = if archive_core {
+            &gcc_ar_path
+        } else {
+            pipeline::pick_archiver(&ar_path, &gcc_ar_path, &c_flags, &cpp_flags)
+        };
         let lib_env = pipeline::LibraryBuildEnv {
             gcc_path: &gcc_path,
             gxx_path: &gxx_path,
@@ -577,7 +587,10 @@ impl BuildOrchestrator for SamOrchestrator {
         };
 
         // 9. Run shared sequential build pipeline
-        let build_result = pipeline::run_sequential_build_with_libs(
+        // Preserve Arduino core.a extraction semantics: an unreferenced
+        // WInterrupts.o must not conflict with a sketch/library EIC handler.
+        // The shared pipeline uses the LTO-aware archiver selected above.
+        let build_result = pipeline::run_sequential_build_with_optional_framework_libs(
             &compiler,
             &linker,
             ctx,
@@ -586,6 +599,7 @@ impl BuildOrchestrator for SamOrchestrator {
             &[],
             lib_deps_plan,
             Some(&lib_env),
+            archive_core.then_some(sources.core_sources.as_slice()),
             TargetArchitecture::Arm,
             "SAM",
             start,

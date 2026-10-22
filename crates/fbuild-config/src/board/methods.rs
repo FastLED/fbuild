@@ -336,13 +336,30 @@ impl BoardConfig {
             Some(fbuild_core::Platform::RenesasRa) => "RENESAS".to_string(),
             Some(fbuild_core::Platform::SiliconLabs) => "SILABS".to_string(),
             Some(fbuild_core::Platform::Ststm32) => "STM32".to_string(),
-            Some(fbuild_core::Platform::AtmelSam) => "SAM".to_string(),
+            Some(fbuild_core::Platform::AtmelSam) => sam_architecture(&self.mcu),
             Some(fbuild_core::Platform::Teensy) => "TEENSY".to_string(),
             Some(fbuild_core::Platform::Ch32v) => "CH32V".to_string(),
             Some(fbuild_core::Platform::Apollo3) => "APOLLO3".to_string(),
             Some(fbuild_core::Platform::Wasm) | None => String::new(),
         }
     }
+}
+
+/// Arduino's SAM platform contains both classic SAM and SAM D/E cores.
+/// Longest-prefix matching keeps family selection in the embedded data.
+fn sam_architecture(mcu: &str) -> String {
+    static ARCHITECTURES: std::sync::OnceLock<HashMap<String, String>> = std::sync::OnceLock::new();
+    let architectures = ARCHITECTURES.get_or_init(|| {
+        serde_json::from_str(include_str!("../../assets/sam_architectures.json"))
+            .expect("valid embedded SAM architecture mapping")
+    });
+    let mcu = mcu.to_ascii_lowercase();
+    architectures
+        .iter()
+        .filter(|(prefix, _)| mcu.starts_with(prefix.as_str()))
+        .max_by_key(|(prefix, _)| prefix.len())
+        .map(|(_, architecture)| architecture.clone())
+        .unwrap_or_default()
 }
 
 fn extra_flags_contain_define(extra_flags: &str, define: &str) -> bool {
