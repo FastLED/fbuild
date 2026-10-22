@@ -112,9 +112,18 @@ pub fn plan_launch(
 
 /// Translate fbuild's APE settings for a compiler spawned by embedded zccache.
 /// The compiler path and argv remain unchanged; kernal-api plans the launch.
-pub fn add_environment_overrides(env: &mut Vec<(String, String)>) {
+pub fn add_environment_overrides(env: &mut Vec<(String, String)>, compiler: &Path, cwd: &Path) {
     let overlay: Vec<_> = env.iter().map(|(k, v)| (k.as_str(), v.as_str())).collect();
     let options = options(Some(&overlay));
+    add_environment_overrides_with_options(env, compiler, cwd, options);
+}
+
+fn add_environment_overrides_with_options(
+    env: &mut Vec<(String, String)>,
+    _compiler: &Path,
+    _cwd: &Path,
+    options: running_process::ape::ApeOptions,
+) {
     let settings = [
         (running_process::ape::LOADER_ENV, options.loader),
         (
@@ -203,7 +212,7 @@ mod tests {
             (LOADER_ENV.to_string(), "chosen-loader".to_string()),
             (CACHE_DIR_ENV.to_string(), "chosen-cache".to_string()),
         ];
-        add_environment_overrides(&mut env);
+        add_environment_overrides(&mut env, &fixture(), Path::new("."));
         assert!(env.contains(&(
             running_process::ape::LOADER_ENV.to_string(),
             "chosen-loader".to_string()
@@ -212,6 +221,52 @@ mod tests {
             running_process::ape::CACHE_DIR_ENV.to_string(),
             "chosen-cache".to_string()
         )));
+    }
+
+    #[test]
+    fn embedded_compiler_preserves_registered_cache_fallback() {
+        if !running_process::ape::NEEDS_LOADER {
+            return;
+        }
+        let tmp = tempfile::tempdir().unwrap();
+        let blocked = tmp.path().join("not-a-directory");
+        std::fs::write(&blocked, b"unusable cache").unwrap();
+        let registered = tmp.path().join("registered-cache");
+        let mut env = vec![
+            (
+                CACHE_DIR_ENV.to_string(),
+                blocked.to_str().unwrap().to_string(),
+            ),
+            ("PATH".to_string(), "/nonexistent".to_string()),
+        ];
+        let overlay: Vec<_> = env.iter().map(|(k, v)| (k.as_str(), v.as_str())).collect();
+        let mut options = options_with_cache(Some(&overlay), Some(&registered));
+        options.loader = None;
+        add_environment_overrides_with_options(&mut env, &fixture(), tmp.path(), options);
+        let reconstructed = running_process::ape::ApeOptions::with_overrides(
+            false,
+            env.iter()
+                .map(|(k, v)| (OsStr::new(k), Some(OsStr::new(v)))),
+        );
+        let launch = running_process::ape::plan_launch(
+            fixture().as_os_str(),
+            Some(tmp.path()),
+            &reconstructed,
+        )
+        .expect("embedded compiler must have a usable loader");
+        assert!(
+            launch.loader.starts_with(&registered),
+            "loader lost registered fallback: {:?}",
+            launch.loader
+        );
+        assert!(
+            launch
+                .ape_path_dir
+                .as_ref()
+                .is_some_and(|path| path.starts_with(&registered)),
+            "nested compiler tools lost registered fallback: {:?}",
+            launch.ape_path_dir
+        );
     }
 
     #[test]
