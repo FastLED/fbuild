@@ -109,6 +109,8 @@ jobs:
           soldr cargo test -p fbuild-build-arm --lib optional_library_rescans_earlier_dependency_archive -- --ignored
       - name: Test GNU linker overflow summaries
         run: soldr cargo test -p fbuild-build --test it link_overflow::failed_link_reports_each_actual_region_capacity -- --ignored --nocapture
+      - name: Test large library archive
+        run: soldr cargo test -p fbuild-library large_archive_handles_windows_command_limit_and_quoted_paths -- --ignored --nocapture
 
   python-facade-tests:
     # FastLED/fbuild#1485 §5.2/§6: the embedded-CPython AT-P integration

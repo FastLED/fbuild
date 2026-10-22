@@ -1,10 +1,10 @@
 path	line	kind	normalized	capability	classification
-crates/fbuild-core/Cargo.toml	48	native_dependency	interprocess	ipc	host_mechanic
-crates/fbuild-core/Cargo.toml	49	native_dependency	socket2	ipc	host_mechanic
-crates/fbuild-core/Cargo.toml	55	target_dependency_table	[target.'cfg(unix)'.dependencies]	fs	host_mechanic
-crates/fbuild-core/Cargo.toml	57	native_dependency	libc	fs	host_mechanic
-crates/fbuild-core/Cargo.toml	59	target_dependency_table	[target.'cfg(windows)'.dependencies]	fs	host_mechanic
-crates/fbuild-core/Cargo.toml	67	native_dependency	windows-sys	fs	host_mechanic
+crates/fbuild-core/Cargo.toml	49	native_dependency	interprocess	ipc	host_mechanic
+crates/fbuild-core/Cargo.toml	50	native_dependency	socket2	ipc	host_mechanic
+crates/fbuild-core/Cargo.toml	56	target_dependency_table	[target.'cfg(unix)'.dependencies]	fs	host_mechanic
+crates/fbuild-core/Cargo.toml	58	native_dependency	libc	fs	host_mechanic
+crates/fbuild-core/Cargo.toml	60	target_dependency_table	[target.'cfg(windows)'.dependencies]	fs	host_mechanic
+crates/fbuild-core/Cargo.toml	68	native_dependency	windows-sys	fs	host_mechanic
 crates/fbuild-core/src/platform/executable.rs	56	native_path	std::env::current_exe	host_executable	host_mechanic
 crates/fbuild-core/src/platform/linux/device.rs	33	native_path	std::os::unix::fs::OpenOptionsExt	fs	host_mechanic
 crates/fbuild-core/src/platform/linux/device.rs	41	native_path	libc::	process	host_mechanic

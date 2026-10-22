@@ -19,7 +19,7 @@ mode = "minimal"
 [[gate.replay.jobs]]
 source-job = "check-ubuntu.yml:check"
 key = "linux/Check Ubuntu/Check (ubuntu-latest)"
-steps = ["Checkout source", "Verify candidate SHA", "Set up uv", "Select workspace test interpreter", "Setup soldr", "Clippy", "Check tracked Python complexity ratchet", "Lint subprocess spawns", "Guard production USB VID/PID catalogue literals", "Test", "Test optional SDK library linkage with native GCC LTO", "Test GNU linker overflow summaries"]
+steps = ["Checkout source", "Verify candidate SHA", "Set up uv", "Select workspace test interpreter", "Setup soldr", "Clippy", "Check tracked Python complexity ratchet", "Lint subprocess spawns", "Guard production USB VID/PID catalogue literals", "Test", "Test optional SDK library linkage with native GCC LTO", "Test GNU linker overflow summaries", "Test large library archive"]
 lanes = ["linux-minimal"]
 
 [[gate.replay.jobs]]
