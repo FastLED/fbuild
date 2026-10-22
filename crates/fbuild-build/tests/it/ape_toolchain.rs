@@ -142,6 +142,10 @@ async fn ape_gcc_compiles_through_embedded_zccache_and_hits_cache() {
     let toolchain = tmp.path().join("toolchain");
     std::fs::create_dir(&toolchain).unwrap();
     let gcc = packaged_cosmo_gcc(&toolchain);
+    let registered_loader_cache = tmp.path().join("registered-ape-cache");
+    fbuild_core::platform::ape::set_default_cache_root(&registered_loader_cache);
+    let blocked_loader_cache = tmp.path().join("not-a-directory");
+    std::fs::write(&blocked_loader_cache, b"unusable preferred loader cache").unwrap();
     let svc = FbuildZccacheService::start_in(tmp.path().join("zccache"))
         .await
         .expect("zccache starts");
@@ -155,6 +159,10 @@ async fn ape_gcc_compiles_through_embedded_zccache_and_hits_cache() {
     // coreutils for the APE prologue's own fallback to lean on.
     env.retain(|(k, _)| k != "PATH");
     env.push(("PATH".to_string(), "/nonexistent".to_string()));
+    env.push((
+        fbuild_core::platform::ape::CACHE_DIR_ENV.to_string(),
+        blocked_loader_cache.display().to_string(),
+    ));
     env.push((
         "ZCCACHE_WORKTREE_ROOT".to_string(),
         work.display().to_string(),
@@ -177,6 +185,23 @@ async fn ape_gcc_compiles_through_embedded_zccache_and_hits_cache() {
             round == 1,
             "round {round}: cold miss, then warm hit"
         );
+        // Native APE hosts need no loader. On hosts needing one, the actual
+        // embedded compile must have materialized it in the registered cache.
+        if fbuild_core::platform::ape::NEEDS_LOADER {
+            let has_executable_loader = std::fs::read_dir(&registered_loader_cache)
+                .expect("registered loader cache")
+                .filter_map(Result::ok)
+                .filter_map(|entry| std::fs::metadata(entry.path().join("ape")).ok())
+                .any(|metadata| {
+                    metadata.is_file()
+                        && metadata.len() > 0
+                        && fbuild_core::platform::fs::is_executable(&metadata)
+                });
+            assert!(
+                has_executable_loader,
+                "embedded compiler bypassed the registered loader-cache fallback"
+            );
+        }
         svc.flush().await.expect("flush into the cache");
     }
     svc.shutdown(ShutdownMode::Graceful).await.unwrap();
