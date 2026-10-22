@@ -174,6 +174,19 @@ fn spawn_tokio_contained_here(
     Ok(child)
 }
 
+/// Stop a Tokio child and its descendants without waiting for pipe EOF.
+///
+/// Launchers such as nodejs-wheel start another process that inherits their
+/// output pipes. Kill the tree while the launcher still exists, before its
+/// descendants are reparented and can no longer be found from its PID. The
+/// caller remains responsible for waiting for the child and draining output.
+pub async fn kill_tokio_tree(child: &tokio::process::Child) -> std::io::Result<()> {
+    if let Some(pid) = child.id() {
+        running_process::process_tree::kill_tree_async(pid, Duration::ZERO).await?;
+    }
+    Ok(())
+}
+
 pub fn pid_is_alive(pid: u32) -> bool {
     pid != 0 && super::selected::process::pid_is_alive(pid)
 }
