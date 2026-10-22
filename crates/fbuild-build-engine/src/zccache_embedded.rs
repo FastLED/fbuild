@@ -298,7 +298,7 @@ impl FbuildZccacheService {
         cwd: PathBuf,
         mut env: Vec<(String, String)>,
     ) -> Result<EmbeddedCompileOutcome, EmbeddedServiceError> {
-        fbuild_core::platform::ape::add_environment_overrides(&mut env);
+        fbuild_core::platform::ape::add_environment_overrides(&mut env, compiler, &cwd);
         let req = ZccacheCompileRequest {
             audit: default_audit_context(),
             compiler: compiler.into(),
