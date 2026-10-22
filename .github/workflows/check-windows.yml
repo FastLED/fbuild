@@ -88,6 +88,12 @@ jobs:
         run: |
           soldr cargo test -p fbuild-build --test it rp2040_acceptance:: -- --ignored --nocapture
 
+      - name: Test ESP32-S3 linker overflow summary
+        shell: bash
+        env:
+          FBUILD_DEV_MODE: "1"
+        run: soldr cargo test -p fbuild-build --test it link_overflow::esp32s3_dram_overflow_still_fails_with_region_summary -- --ignored --nocapture
+
       - name: Setup uv for legacy source package install
         uses: astral-sh/setup-uv@v3
 

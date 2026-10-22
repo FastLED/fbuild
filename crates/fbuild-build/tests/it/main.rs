@@ -9,6 +9,7 @@ mod compile_many_two_stage;
 mod esp32_build;
 mod esp32s3_size_parity;
 mod flag_escaping_lint;
+mod link_overflow;
 mod lite_scons_acceptance;
 mod nxplpc_build_flags;
 mod nxplpc_core_compile_commands;
