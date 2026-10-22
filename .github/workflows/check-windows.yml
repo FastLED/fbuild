@@ -74,6 +74,13 @@ jobs:
         run: |
           soldr cargo test -p fbuild-build --test it samd_acceptance:: -- --ignored --nocapture
 
+      - name: Build UNO R4 with supported default core
+        shell: bash
+        env:
+          FBUILD_DEV_MODE: "1"
+        run: |
+          soldr cargo test -p fbuild-build --test it renesas_acceptance:: -- --ignored --nocapture
+
       - name: Setup uv for legacy source package install
         uses: astral-sh/setup-uv@v3
 

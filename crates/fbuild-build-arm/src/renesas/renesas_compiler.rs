@@ -36,8 +36,9 @@ pub struct RenesasCompiler {
     /// path get the four upstream FSP C-bug-class diagnostics demoted from
     /// errors to warnings -- those classes (`return-mismatch`,
     /// `implicit-function-declaration`, `int-conversion`,
-    /// `incompatible-pointer-types`) are pre-existing in the pinned 1.2.2
-    /// release and cannot be fixed from here. FastLED + user sketch sources
+    /// `incompatible-pointer-types`) occur in upstream vendor C code. Even
+    /// 1.6.0 needs return-mismatch demotion for TinyUSB's dcd_rusb2.c with GCC 15.
+    /// FastLED + user sketch sources
     /// stay under the stricter default `-Werror=` posture so those same bug
     /// classes still fail the build when introduced in user code. See
     /// FastLED/fbuild#404.
@@ -139,7 +140,7 @@ impl RenesasCompiler {
 /// Flags appended when compiling third-party Renesas FSP / ArduinoCore-renesas
 /// C sources.
 ///
-/// The pinned ArduinoCore-renesas 1.2.2 release ships FSP C code that GCC
+/// ArduinoCore-renesas releases ship FSP/TinyUSB C code that GCC
 /// rejects under the default `-Werror=` posture for four specific bug-class
 /// diagnostics. We can't fix the upstream code from here, so we demote those
 /// four -- and only those four -- back to warnings for vendor sources. The

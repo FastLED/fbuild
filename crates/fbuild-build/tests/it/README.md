@@ -9,3 +9,7 @@ file is a separate binary that re-links the crate's whole dependency graph
 `samd_acceptance` builds real SAMD21 and SAMD51 firmware with a sketch-provided
 interrupt handler (including an LTO build), plus ClearCore vendor syscall linkage. Run it explicitly with
 `soldr cargo test -p fbuild-build --test it samd_acceptance:: -- --ignored`.
+
+`renesas_acceptance` builds UNO R4 firmware using `String` and `IPAddress`
+and verifies that the supported default core supplied both source files.
+Run with `soldr cargo test -p fbuild-build --test it renesas_acceptance:: -- --ignored`.
