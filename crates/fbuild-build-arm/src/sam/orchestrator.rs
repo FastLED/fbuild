@@ -110,6 +110,7 @@ struct SamFingerprintMetadata {
     board_usb_manufacturer: Option<String>,
     board_defines: std::collections::BTreeMap<String, String>,
     archive_core: bool,
+    canonical_cxx_includes: bool,
     platform: String,
     max_flash: Option<u64>,
     max_ram: Option<u64>,
@@ -381,6 +382,7 @@ impl BuildOrchestrator for SamOrchestrator {
                 board_usb_manufacturer: ctx.board.usb_manufacturer.clone(),
                 board_defines: ctx.board.get_defines().into_iter().collect(),
                 archive_core,
+                canonical_cxx_includes: clearcore,
                 platform: "atmelsam".to_string(),
                 max_flash: ctx.board.max_flash,
                 max_ram: ctx.board.max_ram,
@@ -491,47 +493,7 @@ impl BuildOrchestrator for SamOrchestrator {
         // Platform system includes (CMSIS, libsam, etc.)
         include_dirs.extend(system_includes);
 
-        // 6a. Download `lib_deps` from the registry / remote URLs before
-        // creating the compiler, so the downloaded library include directories
-        // are available during compilation (FastLED/fbuild#1276).
-        let lib_deps = ctx.config.get_lib_deps(&params.env_name)?;
-        let lib_ignore = ctx
-            .config
-            .get_lib_ignore(&params.env_name)
-            .unwrap_or_default();
-        let lib_deps_plan = if !lib_deps.is_empty() {
-            let temp_compiler = SamCompiler::new(
-                toolchain.get_gcc_path(),
-                toolchain.get_gxx_path(),
-                &ctx.board.mcu,
-                &ctx.board.f_cpu,
-                defines.clone(),
-                include_dirs.clone(),
-                mcu_config.clone(),
-                params.profile,
-                params.verbose,
-            );
-            pipeline::resolve_lib_deps(
-                &lib_deps,
-                &lib_ignore,
-                &params.project_dir,
-                build_dir,
-                &toolchain.get_gcc_path(),
-                &toolchain.get_gxx_path(),
-                &toolchain.get_ar_path(),
-                &toolchain.get_gcc_ar_path(),
-                &crate::compiler::Compiler::c_flags(&temp_compiler),
-                &crate::compiler::Compiler::cpp_flags(&temp_compiler),
-                &mut include_dirs,
-                params.verbose,
-                compiler_cache.as_deref(),
-            )
-            .await?
-        } else {
-            pipeline::LibDeps::default()
-        };
-
-        let compiler = SamCompiler::new(
+        let mut compiler = SamCompiler::new(
             toolchain.get_gcc_path(),
             toolchain.get_gxx_path(),
             &ctx.board.mcu,
@@ -543,6 +505,45 @@ impl BuildOrchestrator for SamOrchestrator {
             params.verbose,
         )
         .with_build_unflags(ctx.build_unflags.clone());
+
+        if clearcore {
+            let (overlay, _) = ctx.compile_overlays();
+            let extra: Vec<_> = overlay.common.into_iter().chain(overlay.cxx).collect();
+            compiler
+                .resolve_cxx_system_includes(&extra, &params.project_dir)
+                .await?;
+        }
+
+        // 6a. Download `lib_deps` from the registry / remote URLs before
+        // finalizing compiler includes, so downloaded library headers
+        // are available during compilation (FastLED/fbuild#1276).
+        let lib_deps = ctx.config.get_lib_deps(&params.env_name)?;
+        let lib_ignore = ctx
+            .config
+            .get_lib_ignore(&params.env_name)
+            .unwrap_or_default();
+        let lib_deps_plan = if !lib_deps.is_empty() {
+            pipeline::resolve_lib_deps(
+                &lib_deps,
+                &lib_ignore,
+                &params.project_dir,
+                build_dir,
+                &toolchain.get_gcc_path(),
+                &toolchain.get_gxx_path(),
+                &toolchain.get_ar_path(),
+                &toolchain.get_gcc_ar_path(),
+                &crate::compiler::Compiler::c_flags(&compiler),
+                &crate::compiler::Compiler::cpp_flags(&compiler),
+                &mut include_dirs,
+                params.verbose,
+                compiler_cache.as_deref(),
+            )
+            .await?
+        } else {
+            pipeline::LibDeps::default()
+        };
+
+        compiler.base.include_dirs = include_dirs.clone();
 
         // 7. Create linker (resolve linker script from framework variant)
         let mut linker = SamLinker::new(
