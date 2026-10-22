@@ -554,6 +554,7 @@ async fn download_file_with_progress_timed(
 /// [`download_file_with_progress_timed`] writing to `dest_dir/<filename>`
 /// instead of a name taken from `url`. A mirror URL may carry a query string
 /// (`…/pkg.bin?raw=1`); the file must still land under the primary's name.
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 async fn download_file_with_progress_named(
     client: &reqwest::Client,
     url: &str,

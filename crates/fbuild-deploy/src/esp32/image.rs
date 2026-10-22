@@ -24,6 +24,16 @@ pub(super) fn patch_qemu_esp32s3_adc_calibration(
     elf_path: &Path,
     firmware_offset: u64,
 ) -> Result<()> {
+    // The ADC calibration constructor is only linked when the firmware pulls
+    // in libesp_adc (e.g. it reads an analog pin). Without it there is no boot
+    // calibration for QEMU to hang on, so there is nothing to patch.
+    if !elf_has_symbol(elf_path, QEMU_ADC_CALIBRATION_SYMBOL)? {
+        tracing::info!(
+            "{} not linked; ESP32-S3 QEMU image needs no ADC calibration patch",
+            QEMU_ADC_CALIBRATION_SYMBOL
+        );
+        return Ok(());
+    }
     let symbol_addr = resolve_local_elf_symbol_address(elf_path, QEMU_ADC_CALIBRATION_SYMBOL)?;
     let patch_addr = symbol_addr
         .checked_add(QEMU_ADC_CALIBRATION_PATCH_OFFSET)
@@ -50,6 +60,20 @@ pub(super) fn patch_qemu_esp32s3_adc_calibration(
     flash_image.write_all(&firmware_bytes)?;
     tracing::info!("patched ESP32-S3 QEMU image to skip adc_hw_calibration at 0x{patch_addr:08x}");
     Ok(())
+}
+
+pub(super) fn elf_has_symbol(elf_path: &Path, symbol_name: &str) -> Result<bool> {
+    let bytes = std::fs::read(elf_path)?;
+    let object = object::File::parse(bytes.as_slice()).map_err(|e| {
+        fbuild_core::FbuildError::DeployFailed(format!(
+            "failed to parse ELF {}: {}",
+            elf_path.display(),
+            e
+        ))
+    })?;
+    Ok(object
+        .symbols()
+        .any(|symbol| symbol.name().ok() == Some(symbol_name)))
 }
 
 fn resolve_local_elf_symbol_address(elf_path: &Path, symbol_name: &str) -> Result<u32> {

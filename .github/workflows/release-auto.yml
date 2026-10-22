@@ -268,7 +268,7 @@ jobs:
       candidate_sha: ${{ needs.prepare.outputs.release_ref }}
 
   macos-release-smoke:
-    name: Smoke release binary (${{ matrix.target }})
+    name: Smoke release wheel (${{ matrix.target }})
     needs: [prepare, build]
     if: needs.prepare.outputs.should_build == 'true'
     runs-on: ${{ matrix.runner }}
@@ -278,18 +278,49 @@ jobs:
         include:
           - target: x86_64-apple-darwin
             runner: macos-15-intel
+            arch: x86_64
           - target: aarch64-apple-darwin
             runner: macos-15
+            arch: arm64
     steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.prepare.outputs.release_ref }}
+      - uses: astral-sh/setup-uv@v6
       - uses: actions/download-artifact@v8
         with:
           name: binaries-${{ matrix.target }}
-          path: dist
-      - name: Execute Linux-built macOS release binary
+          path: dist/native-smoke
+      - name: Assemble and install matching release wheel
         shell: bash
+        env:
+          RELEASE_TARGET: ${{ matrix.target }}
         run: |
-          chmod +x dist/fbuild
-          dist/fbuild --version
+          set -euo pipefail
+          uv run --no-project --python 3.12 python - <<'PY'
+          import os
+          import shutil
+          import ci.publish as publish
+
+          subdir = publish.ARTIFACT_MAP[f"binaries-{os.environ['RELEASE_TARGET']}"]
+          shutil.copytree(publish.DIST_DIR / "native-smoke", publish.DIST_DIR / subdir)
+          wheel = publish.build_wheel(*publish.read_project_meta(), subdir, publish.PLATFORMS[subdir])
+          if wheel is None:
+              raise SystemExit("Native artifacts did not produce a wheel")
+          PY
+          uv venv --python 3.12 .wheel-smoke
+          uv pip install --python .wheel-smoke/bin/python dist/wheels/*.whl
+      - name: Verify installed extension and CLI architectures and execute them
+        shell: bash
+        env:
+          EXPECTED_ARCH: ${{ matrix.arch }}
+        run: |
+          set -euo pipefail
+          extension="$(uv run --no-project --python .wheel-smoke/bin/python python -c 'import fbuild._native; print(fbuild._native.__file__)')"
+          lipo "$extension" -verify_arch "$EXPECTED_ARCH"
+          lipo .wheel-smoke/bin/fbuild -verify_arch "$EXPECTED_ARCH"
+          .wheel-smoke/bin/fbuild --version
+          uv run --no-project --python .wheel-smoke/bin/python python -c 'import fbuild; print(fbuild.__version__)'
 
   publish:
     name: Publish GitHub release

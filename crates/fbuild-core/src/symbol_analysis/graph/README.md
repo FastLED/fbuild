@@ -17,3 +17,9 @@ while preserving the public API previously exposed as
   keep the original import path.
 - **`tests.rs`** — `#[cfg(test)]` suite covering the full walker +
   serialization path; only loaded by `mod.rs` under `#[cfg(test)]`.
+
+`typed.rs` traverses versioned final-image edges using full symbol identities.
+The report index is reused for adjacency and endpoint lookups. Typed graphs
+label instruction, static-pointer and fragment-owner evidence distinctly and
+honor direction, depth, archive filtering/collapse and fan-out controls. Legacy
+reports retain their historical walker.

@@ -1,10 +1,70 @@
 # Run from a clean committed tree before pushing. Linux-only enforced PR gate;
 # board, extended/full and other native-host coverage remains remote.
 [gate]
-run = ["uv", "run", "--no-project", "--python", "3.12", "python", "ci/local_gate.py"]
+run = ["uv", "run", "--no-project", "--python", "3.12", "python", "-m", "ci.local_gate"]
 verify = "ci-minimal.yml:verify"
 mode = "enforce"
 
 [gate.lanes.linux-minimal]
-run = ["uv", "run", "--no-project", "--python", "3.12", "python", "ci/local_gate.py"]
+run = ["uv", "run", "--no-project", "--python", "3.12", "python", "-m", "ci.local_gate", "--lane", "linux-minimal"]
 tools = ["bosn", "uv"]
+
+# Shared proof binds every concrete Ubuntu job and its verifier prerequisite.
+[gate.replay]
+repository = "FastLED/fbuild"
+workflow = "ci-minimal.yml"
+mode = "minimal"
+
+[[gate.replay.jobs]]
+source-job = "check-ubuntu.yml:check"
+key = "linux/Check Ubuntu/Check (ubuntu-latest)"
+steps = ["Checkout source", "Verify candidate SHA", "Set up uv", "Select workspace test interpreter", "Setup soldr", "Clippy", "Check tracked Python complexity ratchet", "Lint subprocess spawns", "Guard production USB VID/PID catalogue literals", "Test", "Test optional SDK library linkage with native GCC LTO"]
+lanes = ["linux-minimal"]
+
+[[gate.replay.jobs]]
+source-job = "check-ubuntu.yml:python-facade-tests"
+key = "linux/Check Ubuntu/Python facade tests (ubuntu-latest)"
+steps = ["Checkout source", "Verify candidate SHA", "Set up uv", "Setup soldr", "Run embedded-CPython facade tests", "Test (python facades, --ignored)"]
+lanes = ["linux-minimal"]
+
+[[gate.replay.jobs]]
+source-job = "ci-minimal.yml:verify"
+key = "ci-minimal/Verify local gate"
+steps = ["Checkout source", "Set up uv", "Verify source-bound local proof"]
+lanes = ["linux-minimal"]
+
+[[gate.replay.selections]]
+lane = "linux-minimal"
+job = "linux"
+event = "workflow_dispatch"
+inputs = {}
+
+[gate.lanes.dylint]
+run = ["uv", "run", "--no-project", "--python", "3.12", "python", "-m", "ci.local_gate", "--lane", "dylint"]
+tools = ["bosn", "uv"]
+
+[[gate.replay.jobs]]
+source-job = "dylint.yml:dylint"
+key = "Dylint/Dylint Full (Linux builder, all OS targets)"
+steps = ["Checkout source", "Set up uv", "Validate Dylint allowlist paths", "Enforce shrink-only .fbuild allowlist", "Validate platform-boundary ledgers", "Setup soldr", "Repair registry sources missing packaged files", "Prepare prebuilt Dylint tools and driver", "Install rustfmt for the Dylint toolchain", "Check Dylint library formatting", "Restore compiled Dylint libraries", "Test Dylint libraries", "Reuse cached Dylint library tree", "Run dylint over workspace", "Save compiled Dylint libraries"]
+lanes = ["dylint"]
+cache-save-steps = ["Save compiled Dylint libraries"]
+
+[[gate.replay.jobs]]
+source-job = "dylint.yml:gate"
+key = "Dylint/Dylint"
+steps = ["Require successful Dylint jobs"]
+lanes = ["dylint"]
+
+[[gate.replay.jobs]]
+source-job = "dylint.yml:policy"
+key = "Dylint/Dylint policy"
+steps = ["Checkout source", "Set up uv", "Validate Dylint policy files"]
+lanes = ["dylint"]
+
+[[gate.replay.selections]]
+lane = "dylint"
+workflow = "dylint.yml"
+all-jobs = true
+event = "pull_request"
+inputs = {}

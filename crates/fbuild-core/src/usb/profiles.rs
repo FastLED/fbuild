@@ -298,6 +298,7 @@ fn validate_meta(meta: &PublishedMeta) -> Result<(), String> {
     Ok(())
 }
 
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 fn validate_and_index(artifact: PublishedArtifact) -> Result<InstalledProfiles, String> {
     if artifact.schema_version != USB_PROFILES_SCHEMA_VERSION {
         return Err(format!(

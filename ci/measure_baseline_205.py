@@ -307,7 +307,7 @@ def find_artifacts(project: Path, env: str) -> tuple[Optional[Path], Optional[Pa
 
 
 # ── Markdown rendering ───────────────────────────────────────────────────────
-def render_markdown(results: List[TargetResult], git_sha: str, branch: str, cargo_version: str) -> str:
+def render_markdown(results: List[TargetResult], git_sha: str, branch: str, cargo_version: str) -> str:  # noqa: C901
     iso = _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     size_tool_used = next((r.size_tool for r in results if r.size_tool), "unavailable")
     lines: List[str] = []

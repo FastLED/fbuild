@@ -190,6 +190,7 @@ pub fn install_online_cache(path: &Path) {
 
 /// Same as [`install_online_cache`], but reports whether an overlay was
 /// successfully parsed and installed.
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 pub fn try_install_online_cache(path: &Path) -> bool {
     let raw = match std::fs::read_to_string(path) {
         Ok(s) => s,

@@ -321,6 +321,7 @@ impl DeviceManager {
             .unwrap_or_else(|e| e.into_inner()) = Some(Instant::now());
     }
 
+    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
     fn refresh_from_discovered(&self, discovered: Vec<DiscoveredDevice>) {
         let mut devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
         let now = Self::now_unix();

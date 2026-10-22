@@ -77,6 +77,7 @@ pub(crate) enum Avr8jsCachePrep {
 
 /// Inspect `cache_dir`, wipe corrupt/partial installs, and return what was
 /// done. Does NOT run `npm install`.
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 pub(crate) fn prepare_avr8js_cache_for_install(
     cache_dir: &Path,
     force_refresh: bool,

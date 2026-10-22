@@ -4,6 +4,7 @@ use super::util::uuid_v4;
 use crate::daemon_client::DaemonClient;
 use serde_json::Value;
 
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub(super) async fn execute_tool(
     client: &DaemonClient,
     name: &str,

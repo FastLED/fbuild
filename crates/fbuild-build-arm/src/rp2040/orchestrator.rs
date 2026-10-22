@@ -41,6 +41,9 @@ pub struct Rp2040Orchestrator;
 #[derive(Debug, Serialize)]
 struct Rp2040FingerprintMetadata {
     version: u32,
+    // Invalidate firmware produced before SDK platform.txt defaults were applied.
+    platform_define_policy: &'static str,
+    framework_library_linkage: &'static str,
     env_name: String,
     profile: String,
     board_name: String,
@@ -146,6 +149,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         Platform::RaspberryPi
     }
 
+    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
     async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
         let compiler_cache: Option<std::path::PathBuf> = None;
@@ -200,6 +204,8 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         let metadata_hash = stable_hash_with_build_config(
             &Rp2040FingerprintMetadata {
                 version: BUILD_FINGERPRINT_VERSION,
+                platform_define_policy: "platform-sdfatdefaults-v1",
+                framework_library_linkage: "local-and-framework-archive-v2",
                 env_name: params.env_name.clone(),
                 profile: profile_label(params.profile).to_string(),
                 board_name: ctx.board.name.clone(),
@@ -293,7 +299,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         }
         add_rp_manifest_defines(&framework_dir, &ctx.board.mcu, &mut defines);
         apply_rp_board_props(&board_props, &framework_dir, &mut defines);
-        apply_rp_platform_net_defines(&framework_dir, &board_props, &mut defines)?;
+        apply_rp_platform_defines(&framework_dir, &board_props, &mut defines)?;
 
         // Arduino-Pico ships framework libraries (WiFi, SPI, Wire, ...) under
         // `libraries/`. Mirror PlatformIO's LDF so their headers are visible
@@ -351,7 +357,9 @@ impl BuildOrchestrator for Rp2040Orchestrator {
                 "RP2040 framework library sources added: {}",
                 framework_library_sources.len()
             );
-            sources.core_sources.extend(framework_library_sources);
+            sources
+                .core_sources
+                .extend(framework_library_sources.iter().cloned());
         }
         // Use the resolved core_dir/variant_dir instead of board.get_include_paths():
         // RP2040 board metadata reports `core = earlephilhower`, while the actual
@@ -520,7 +528,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
 
         // 9. Run shared sequential build pipeline
         let board_mcu = ctx.board.mcu.clone();
-        let mut build_result = pipeline::run_sequential_build_with_libs(
+        let mut build_result = pipeline::run_sequential_build_with_optional_framework_libs(
             &compiler,
             &linker,
             ctx,
@@ -529,6 +537,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             &support_link_inputs,
             lib_deps_plan,
             Some(&lib_env),
+            Some(&framework_library_sources),
             TargetArchitecture::Arm,
             "RP2040",
             start,
@@ -727,22 +736,33 @@ fn apply_rp_board_props(
     }
 }
 
-/// Apply Arduino-Pico's network compiler definitions after expanding values
-/// selected by the board's menu properties. These flags are declared by the
-/// framework rather than owned by an individual board, so they must be read
-/// from its platform metadata instead of being duplicated here.
-fn apply_rp_platform_net_defines(
+/// Apply Arduino-Pico's framework compiler definitions, with selected board
+/// properties overriding platform defaults. SdFat's public-copy setting lives
+/// in platform.txt, not boards.txt, and is required to compile bundled SDFS.
+fn apply_rp_platform_defines(
     framework_dir: &Path,
     board_props: &Option<HashMap<String, String>>,
     defines: &mut HashMap<String, String>,
 ) -> Result<()> {
     let platform_txt = framework_dir.join("platform.txt");
     let content = std::fs::read_to_string(platform_txt)?;
-    let Some(flags) = content.lines().find_map(|line| {
-        line.trim()
-            .strip_prefix("compiler.netdefines=")
-            .map(str::trim)
-    }) else {
+    let property = |name: &str| {
+        content.lines().find_map(|line| {
+            let (key, value) = line.trim().split_once('=')?;
+            (key.trim() == name).then(|| value.trim())
+        })
+    };
+    let sdfat_flags = board_props
+        .as_ref()
+        .and_then(|props| props.get("sdfatdefines"))
+        .map(String::as_str)
+        .or_else(|| property("build.sdfatdefines"));
+    if let Some(flags) = sdfat_flags {
+        let expanded = flags.replace("{runtime.platform.path}", &framework_dir.to_string_lossy());
+        apply_define_flags(&fbuild_core::shell_split::split(&expanded), defines);
+    }
+
+    let Some(flags) = property("compiler.netdefines") else {
         return Ok(());
     };
 
@@ -1038,6 +1058,96 @@ mod tests {
     use std::collections::HashMap;
 
     #[test]
+    fn platform_default_policy_invalidates_legacy_firmware_cache() {
+        assert_policy_invalidates_legacy_firmware_cache("platform_define_policy", None);
+    }
+
+    #[test]
+    fn framework_archive_policy_invalidates_legacy_firmware_cache() {
+        assert_policy_invalidates_legacy_firmware_cache("framework_library_linkage", None);
+    }
+
+    #[test]
+    fn local_archive_policy_invalidates_sdk_only_firmware_cache() {
+        assert_policy_invalidates_legacy_firmware_cache(
+            "framework_library_linkage",
+            Some("archive"),
+        );
+    }
+
+    fn assert_policy_invalidates_legacy_firmware_cache(policy: &str, previous_value: Option<&str>) {
+        use crate::build_fingerprint::{
+            PersistedBuildFingerprint, fast_path_check, hash_watch_set_stamps, save_json,
+            stable_hash_json,
+        };
+
+        let metadata = Rp2040FingerprintMetadata {
+            version: BUILD_FINGERPRINT_VERSION,
+            platform_define_policy: "platform-sdfatdefaults-v1",
+            framework_library_linkage: "local-and-framework-archive-v2",
+            env_name: "pico".into(),
+            profile: "release".into(),
+            board_name: "Pico".into(),
+            board_mcu: "rp2040".into(),
+            board_define: "ARDUINO_RASPBERRY_PI_PICO".into(),
+            board_core: "rp2040".into(),
+            board_variant: "rpipico".into(),
+            board_f_cpu: "133000000L".into(),
+            board_extra_flags: None,
+            board_upload_protocol: None,
+            board_menu_overrides: BTreeMap::new(),
+            platform: "raspberrypi".into(),
+            max_flash: None,
+            max_ram: None,
+            eh_frame_policy: "strip",
+        };
+        let current = serde_json::to_value(&metadata).unwrap();
+        let mut legacy = current.clone();
+        // Successful builds before the policy change did not encode this field.
+        legacy.as_object_mut().unwrap().remove(policy);
+        if let Some(value) = previous_value {
+            legacy
+                .as_object_mut()
+                .unwrap()
+                .insert(policy.into(), value.into());
+        }
+        let current_hash = stable_hash_json(&current).unwrap();
+        let legacy_hash = stable_hash_json(&legacy).unwrap();
+        let tmp = tempfile::tempdir().unwrap();
+        let source_dir = tmp.path().join("src");
+        std::fs::create_dir(&source_dir).unwrap();
+        std::fs::write(source_dir.join("main.cpp"), "void setup() {}\n").unwrap();
+        let firmware = tmp.path().join("firmware.elf");
+        std::fs::write(&firmware, "previous successful firmware").unwrap();
+        let mut contract = FastPathContract::new(tmp.path());
+        contract.add_watch_root("project", &source_dir);
+        contract.add_required_artifacts([firmware]);
+        let mut persisted = PersistedBuildFingerprint {
+            version: BUILD_FINGERPRINT_VERSION,
+            metadata_hash: legacy_hash,
+            file_set_hash: Some(hash_watch_set_stamps(contract.watches()).unwrap()),
+            size_info: None,
+        };
+        save_json(contract.fingerprint_path(), &persisted).unwrap();
+        let inputs = FastPathCheckInputs {
+            metadata_hash: &current_hash,
+            extra_artifact_ok: None,
+            watch_set_cache: None,
+            compiler_cache: None,
+        };
+        assert!(
+            fast_path_check(&contract, &inputs).unwrap().is_none(),
+            "firmware built without current {policy} must be rebuilt"
+        );
+        persisted.metadata_hash = current_hash.clone();
+        save_json(contract.fingerprint_path(), &persisted).unwrap();
+        assert!(
+            fast_path_check(&contract, &inputs).unwrap().is_some(),
+            "unchanged firmware built with current {policy} remains reusable"
+        );
+    }
+
+    #[test]
     fn rp2040_consumes_resolved_framework_toolchain_and_picotool() {
         let tmp = tempfile::tempdir().unwrap();
         let overrides = HashMap::from([
@@ -1186,6 +1296,127 @@ mod tests {
     }
 
     #[test]
+    fn test_rp_platform_sdfat_defaults_without_network_flags() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        std::fs::write(
+            tmp.path().join("platform.txt"),
+            "build.sdfatdefines=-DFILE_COPY_CONSTRUCTOR_SELECT=FILE_COPY_CONSTRUCTOR_PUBLIC -DUSE_UTF8_LONG_NAMES=1 -DDISABLE_FS_H_WARNING=1\n",
+        )
+        .unwrap();
+        let mut defines = HashMap::new();
+        apply_rp_platform_defines(tmp.path(), &None, &mut defines).unwrap();
+        assert_eq!(
+            defines
+                .get("FILE_COPY_CONSTRUCTOR_SELECT")
+                .map(String::as_str),
+            Some("FILE_COPY_CONSTRUCTOR_PUBLIC")
+        );
+        assert_eq!(
+            defines.get("USE_UTF8_LONG_NAMES").map(String::as_str),
+            Some("1")
+        );
+        assert_eq!(
+            defines.get("DISABLE_FS_H_WARNING").map(String::as_str),
+            Some("1")
+        );
+    }
+
+    #[tokio::test]
+    #[ignore = "requires Arduino-Pico SDK and GCC in FBUILD_TEST_PICO_FRAMEWORK and FBUILD_TEST_PICO_CXX"]
+    async fn test_rp_platform_sdfat_compiles_real_sdk_sdfs() {
+        let framework = fbuild_core::path::NormalizedPath::from(
+            std::env::var("FBUILD_TEST_PICO_FRAMEWORK").unwrap(),
+        )
+        .into_path_buf();
+        let cxx =
+            fbuild_core::path::NormalizedPath::from(std::env::var("FBUILD_TEST_PICO_CXX").unwrap())
+                .into_path_buf();
+        for board_id in ["rpipico", "rpipico2"] {
+            let board =
+                fbuild_config::BoardConfig::from_board_id(board_id, &HashMap::new()).unwrap();
+            let props = crate::arduino_props::load_board_props_with_default_menus(
+                &framework.join("boards.txt"),
+                board_id,
+            );
+            let mcu = super::super::mcu_config::get_rp2040_config_for_mcu(&board.mcu).unwrap();
+            let mut defines = board.get_defines();
+            defines.extend(mcu.defines_map());
+            add_rp_manifest_defines(&framework, &board.mcu, &mut defines);
+            apply_rp_board_props(&props, &framework, &mut defines);
+            apply_rp_platform_defines(&framework, &props, &mut defines).unwrap();
+            let mut includes = vec![
+                framework.join("cores/rp2040"),
+                framework.join("variants").join(&board.variant),
+                framework.join("include"),
+            ];
+            add_rp_manifest_includes(&framework, &board.mcu, &mut includes);
+            add_rp_family_includes(&framework.join("include"), &board.mcu, &mut includes);
+            add_rp_board_includes(&props, &framework, &mut includes);
+            for library in ["SDFS", "SdFat", "SPI"] {
+                includes.push(framework.join("libraries").join(library).join("src"));
+            }
+            let compiler = ArmCompiler::new(
+                cxx.clone(),
+                cxx.clone(),
+                &board.mcu,
+                &board.f_cpu,
+                defines,
+                includes,
+                mcu,
+                fbuild_core::BuildProfile::Quick,
+                false,
+            );
+            let mut command = vec![cxx.to_string_lossy().into_owned()];
+            command.extend(
+                compiler
+                    .cpp_flags()
+                    .into_iter()
+                    .filter(|flag| flag != "-MMD"),
+            );
+            command.push("-fsyntax-only".into());
+            command.push(
+                framework
+                    .join("libraries/SDFS/src/SDFS.cpp")
+                    .to_string_lossy()
+                    .into_owned(),
+            );
+            let args: Vec<&str> = command.iter().map(String::as_str).collect();
+            let output = fbuild_core::subprocess::run_command(
+                &args,
+                None,
+                None,
+                Some(std::time::Duration::from_secs(60)),
+            )
+            .await
+            .unwrap();
+            assert!(output.success(), "{board_id}: {}", output.stderr);
+        }
+    }
+
+    #[test]
+    fn test_rp_platform_sdfat_board_override_replaces_default_flags() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        std::fs::write(
+            tmp.path().join("platform.txt"),
+            "build.sdfatdefines=-DFILE_COPY_CONSTRUCTOR_SELECT=FILE_COPY_CONSTRUCTOR_PUBLIC -DUSE_UTF8_LONG_NAMES=1\n",
+        )
+        .unwrap();
+        let board_props = Some(HashMap::from([(
+            "sdfatdefines".to_string(),
+            "-DFILE_COPY_CONSTRUCTOR_SELECT=FILE_COPY_CONSTRUCTOR_PRIVATE".to_string(),
+        )]));
+        let mut defines = HashMap::new();
+        apply_rp_platform_defines(tmp.path(), &board_props, &mut defines).unwrap();
+        assert_eq!(
+            defines
+                .get("FILE_COPY_CONSTRUCTOR_SELECT")
+                .map(String::as_str),
+            Some("FILE_COPY_CONSTRUCTOR_PRIVATE")
+        );
+        assert!(!defines.contains_key("USE_UTF8_LONG_NAMES"));
+    }
+
+    #[test]
     fn test_apply_rp_platform_net_defines_expands_board_wifi_flags() {
         let tmp = tempfile::TempDir::new().unwrap();
         std::fs::write(
@@ -1199,7 +1430,7 @@ mod tests {
         )]));
         let mut defines = HashMap::new();
 
-        apply_rp_platform_net_defines(tmp.path(), &board_props, &mut defines).unwrap();
+        apply_rp_platform_defines(tmp.path(), &board_props, &mut defines).unwrap();
 
         assert_eq!(defines.get("LWIP_IPV6").map(String::as_str), Some("0"));
         assert_eq!(defines.get("LWIP_IPV4").map(String::as_str), Some("1"));

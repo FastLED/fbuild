@@ -507,6 +507,7 @@ fn retain_loaded_symbols_drops_boundary_markers() {
         sample_symbol(0x00026100, u64::MAX, MemoryRegion::Flash, "overflow"),
     ];
     let mut map = FineGrainedSymbolMap {
+        reference_analysis: Default::default(),
         elf_path: "fixture.elf".into(),
         map_path: None,
         total_flash: 0,
@@ -689,6 +690,7 @@ fn retain_loaded_symbols_no_op_when_regions_empty() {
     // Defensive: if the caller couldn't probe PT_LOAD (corrupt ELF,
     // non-ELF input), leave the map untouched rather than empty it.
     let mut map = FineGrainedSymbolMap {
+        reference_analysis: Default::default(),
         elf_path: "fixture.elf".into(),
         map_path: None,
         total_flash: 0x40,
@@ -717,6 +719,7 @@ fn find_symbol_dispatches_correctly() {
     let mut other = sample_symbol(0x3000, 25, MemoryRegion::Flash, "ns::other()");
     other.mangled = "_ZN2ns5otherEv".to_string();
     let map = FineGrainedSymbolMap {
+        reference_analysis: Default::default(),
         elf_path: "x.elf".into(),
         map_path: None,
         total_flash: 175,
@@ -893,4 +896,25 @@ fn strip_unsized_symbols_drops_nm_synthesised_sizes() {
     let zero_sized: std::collections::BTreeSet<(u64, String)> =
         [(0x40374000u64, "_WindowOverflow4".to_string())].into();
     assert_eq!(strip_unsized_symbols(host, &zero_sized), cross);
+}
+
+#[test]
+fn weak_objects_are_included_and_use_section_region() {
+    let rows = vec![
+        (0x1000, 24, 'V', "_ZTVTest".into()),
+        (0x2000, 8, 'v', "weak_ram".into()),
+    ];
+    let ranges = parse_linker_map(
+        "Linker script and memory map\n.rodata 0x1000 0x18\n .rodata._ZTVTest 0x1000 0x18 test.o\n.data 0x2000 0x8\n .data.weak_ram 0x2000 0x8 test.o\n",
+    );
+    let map = build_fine_grained_map(
+        "test.elf".into(),
+        None,
+        rows,
+        vec!["vtable".into(), "weak_ram".into()],
+        ranges,
+    );
+    assert_eq!(map.symbols.len(), 2);
+    assert_eq!(map.symbols[0].region, MemoryRegion::Flash);
+    assert_eq!(map.symbols[1].region, MemoryRegion::Ram);
 }

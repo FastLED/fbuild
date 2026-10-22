@@ -90,6 +90,7 @@ impl FlashRunOutcome {
 /// after a baud-134 trigger; every subsequent retry uses the smaller
 /// `subsequent_attempt_timeout` since by then HalfKay has either already been
 /// observed or the device is wedged in a way another retry won't fix.
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 pub async fn run_with_retry(
     cfg: &FlashConfig,
     retries: u32,

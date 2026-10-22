@@ -967,6 +967,7 @@ enum DaemonProbe {
 
 /// Probe the running daemon; shut it down if this CLI's sibling binary
 /// supersedes it.
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 async fn probe_running_daemon(
     client: &DaemonClient,
     sibling: &restart_diag::SiblingDaemon,
@@ -1032,6 +1033,7 @@ async fn probe_running_daemon(
 
 /// Spawn the daemon (or adopt one a concurrent caller started). Returns the
 /// pid this call spawned, or `None` when it adopted an existing daemon.
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 async fn start_daemon(client: &DaemonClient) -> fbuild_core::Result<Option<u32>> {
     tracing::info!("daemon not running, starting...");
 

@@ -76,6 +76,7 @@ pub async fn compile_sources_parallel(
 /// libraries) can run at the same time without exceeding one job budget
 /// (FastLED/fbuild#1468). The semaphore is FIFO, so sources submitted
 /// earlier start first.
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub async fn compile_sources_parallel_shared(
     compiler: &(dyn Compiler + Send + Sync),
     sources: &[PathBuf],

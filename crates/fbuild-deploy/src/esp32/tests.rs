@@ -895,3 +895,50 @@ async fn try_verify_deployment_real_esp32h2() {
 async fn try_verify_deployment_real_esp32p4() {
     run_verify_deployment_test("esp32p4", "0x2000", "ESP32P4_PORT", "ESP32P4_FIRMWARE").await;
 }
+
+fn write_test_elf(dir: &Path, with_adc_symbol: bool) -> std::path::PathBuf {
+    use object::write::{Object, Symbol, SymbolSection};
+    use object::{Architecture, BinaryFormat, Endianness, SymbolFlags, SymbolKind, SymbolScope};
+    let mut obj = Object::new(BinaryFormat::Elf, Architecture::Xtensa, Endianness::Little);
+    let name: &[u8] = if with_adc_symbol {
+        b"adc_hw_calibration"
+    } else {
+        b"app_main"
+    };
+    obj.add_symbol(Symbol {
+        name: name.to_vec(),
+        value: 0x4200_0000,
+        size: 4,
+        kind: SymbolKind::Text,
+        scope: SymbolScope::Linkage,
+        weak: false,
+        section: SymbolSection::Absolute,
+        flags: SymbolFlags::None,
+    });
+    let path = dir.join(if with_adc_symbol {
+        "with.elf"
+    } else {
+        "without.elf"
+    });
+    std::fs::write(&path, obj.write().unwrap()).unwrap();
+    path
+}
+
+#[test]
+fn qemu_adc_patch_is_skipped_when_calibration_not_linked() {
+    // Firmware that never links libesp_adc has no adc_hw_calibration
+    // constructor, so there is nothing for QEMU to hang on and nothing to
+    // patch: the deploy must succeed and leave the image untouched.
+    let dir = tempfile::tempdir().unwrap();
+    let elf = write_test_elf(dir.path(), false);
+    let firmware = dir.path().join("firmware.bin");
+    let flash = dir.path().join("flash.bin");
+    std::fs::write(&firmware, [0u8; 16]).unwrap();
+    std::fs::write(&flash, [0xFFu8; 64]).unwrap();
+    super::image::patch_qemu_esp32s3_adc_calibration(&flash, &firmware, &elf, 0).unwrap();
+    assert_eq!(std::fs::read(&flash).unwrap(), vec![0xFFu8; 64]);
+    assert!(
+        super::image::elf_has_symbol(&write_test_elf(dir.path(), true), "adc_hw_calibration")
+            .unwrap()
+    );
+}

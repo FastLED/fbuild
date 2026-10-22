@@ -1,19 +1,17 @@
 """Local source-install build driver for fbuild.
 
-`pip install ~/dev/fbuild` (or any `pip install .` from the repo root) goes
-through this file via setuptools' PEP 517 backend. Plain Python package
-discovery would ship no working `fbuild` command because the actual CLI is a Rust
-crate (`fbuild-cli`) that lives in the cargo workspace under `crates/`.
+`pip install ~/dev/fbuild` (or any `pip install .` / `uv sync` from the repo
+root) goes through this in-tree PEP 517 / PEP 660 backend (`[build-system]` in
+pyproject.toml, `backend-path = ["ci"]`). Plain Python package discovery would
+ship no working `fbuild` command because the actual CLI is a Rust crate
+(`fbuild-cli`) that lives in the cargo workspace under `crates/`.
 
 This file wires the install path through `soldr cargo build -p fbuild-cli`
-(or `--release` when requested), copies the resulting binary to `ci/bin/fbuild[.exe]`, and
-hands that path to setuptools as a raw wheel script (the `scripts=`
-argument to `setup()` below). Pip drops raw scripts straight into the
-venv's `Scripts/` (Windows) or `bin/` (POSIX) directory as-is — `.exe`
-files are NOT wrapped, so `fbuild` on PATH is the literal cargo-built
-binary with no Python shim in front of it (see #746 for why the previous
-`[project.scripts] fbuild = "ci.bin_launcher:main"` approach broke stdout
-ordering on Windows).
+(or `--release` when requested), stages the resulting binaries in
+`ci/bin/`, and writes them into the wheel's `.data/scripts/`. Pip drops raw
+scripts straight into the venv's `Scripts/` (Windows) or `bin/` (POSIX)
+directory as-is, so `fbuild` on PATH is the literal cargo-built binary with
+no Python shim in front of it (see #746).
 
 This is the LOCAL DEV install path. The RELEASE path lives entirely in
 the Autonomous Release GitHub Action (`.github/workflows/release-auto.yml`):
@@ -31,7 +29,7 @@ Why soldr (and not bare cargo)?
   invocations are incremental + dep-cached. There is no standalone
   `zccache.exe` involved; the wrapper chain is entirely in-soldr.
 
-Why not `setuptools-rust` or `maturin`? Both are reasonable but heavier:
+Why not setuptools, `setuptools-rust` or `maturin`? Both are reasonable but heavier:
 they introduce another tool with its own toolchain assumptions, while
 soldr is already the canonical build driver across this repo's dev,
 trampoline, and CI paths (see `ci/trampoline.py`). Keeping the single
@@ -65,7 +63,15 @@ how `cargo install` and most Rust packaging tools find their binaries.
 
 from __future__ import annotations
 
+import base64
+import csv
+import hashlib
+import io
 import json
+import re
+import stat
+import sysconfig
+import zipfile
 import os
 import shutil
 import subprocess
@@ -73,20 +79,7 @@ import sys
 from pathlib import Path
 from typing import Optional
 
-# Import setuptools FIRST so its distutils shim is installed before we
-# pull `distutils.command.build_scripts` off the shim. Importing the
-# distutils module without setuptools loaded first either misses the
-# shim or (depending on Python/setuptools version) yields the stdlib
-# distutils, which is deprecated and gone in Python 3.12+.
-from setuptools import setup
-from setuptools.command.build_py import build_py
-from setuptools.dist import Distribution
-from distutils.command.build_scripts import (  # type: ignore[import-untyped]
-    build_scripts,
-)
-
-
-REPO_ROOT = Path(__file__).resolve().parent
+REPO_ROOT = Path(__file__).resolve().parent.parent
 TARGET_BINARY_NAME = "fbuild.exe" if sys.platform == "win32" else "fbuild"
 TARGET_DAEMON_NAME = (
     "fbuild-daemon.exe" if sys.platform == "win32" else "fbuild-daemon"
@@ -107,19 +100,28 @@ else:
     STAGED_NATIVE_EXT_NAME = "_native.so"
 STAGED_NATIVE_EXT_PATH = PYTHON_EXT_DIR / STAGED_NATIVE_EXT_NAME
 
-# Pin cargo's target directory to a stable absolute path so PEP 517
-# isolated builds (pip copies the source tree to a temp dir, so
-# `<cwd>/target/` lives in that temp dir and is discarded after the
-# build) reuse cargo's incremental fingerprint cache across invocations.
-# Without this, every isolated `pip install .` runs cargo cold — 25-30s
-# wall-clock per invocation.
+# Pin cargo's target directory to a persistent path keyed by this repo's
+# root. The build never runs cargo in a temp copy of the tree (which would
+# start cold every time); instead every checkout gets its own stable,
+# warm target dir under ~/.fbuild, and two checkouts never thrash each
+# other's fingerprints.
 #
 # We deliberately do NOT share `<repo>/target/` with the dev CLI: the
 # dev CLI often runs `cargo check` or different `--features`/`--profile`
 # combos, and sharing the target dir means each `pip install` invalidates
-# whatever the dev CLI just compiled (and vice versa). A separate
-# wheel-build target dir gives both paths a stable, hot cache.
-WHEEL_BUILD_TARGET_DIR = Path.home() / ".fbuild" / "cargo-target" / "wheel-build"
+# whatever the dev CLI just compiled (and vice versa).
+def _wheel_build_target_dir(repo_root: Path) -> Path:
+    digest = hashlib.sha256(str(repo_root).encode("utf-8")).hexdigest()[:12]
+    return (
+        Path.home()
+        / ".fbuild"
+        / "cargo-target"
+        / "wheel-build"
+        / f"{repo_root.name}-{digest}"
+    )
+
+
+WHEEL_BUILD_TARGET_DIR = _wheel_build_target_dir(REPO_ROOT)
 os.environ.setdefault("CARGO_TARGET_DIR", str(WHEEL_BUILD_TARGET_DIR))
 
 
@@ -500,125 +502,195 @@ def _build_fbuild_binaries() -> tuple[Path, Path]:
     return binary_path, daemon_path
 
 
-class BuildWithCargo(build_py):
-    """Run `soldr cargo build --release -p fbuild-cli` before packaging."""
-
-    def run(self) -> None:  # noqa: D401 — setuptools API name
-        # Fast path: if BOTH staged artifacts (the CLI binary AND the PyO3
-        # extension — FastLED/fbuild#829) are newer than every cargo input,
-        # skip the cargo invocation entirely. Even cargo's "Fresh" pass walks
-        # the workspace and takes wall-clock seconds; this short-circuits it.
-        # Triggered when uv/pip reinstall fbuild without any actual source
-        # change (e.g. version bump, lockfile churn, --reinstall-package).
-        if (
-            _staged_binary_is_up_to_date()
-            and _staged_daemon_is_up_to_date()
-            and _staged_native_ext_is_up_to_date()
-        ):
-            sys.stderr.write(
-                f"  staged artifacts up-to-date "
-                f"({STAGED_BINARY_PATH.name}, {STAGED_DAEMON_PATH.name}, "
-                f"{STAGED_NATIVE_EXT_PATH.name}); "
-                f"skipping cargo\n"
-            )
-            super().run()
-            return
-
-        _require_soldr()
-        binary_path, daemon_path = _build_fbuild_binaries()
-        STAGED_BIN_DIR.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(binary_path, STAGED_BINARY_PATH)
-        sys.stderr.write(f"  staged binary -> {STAGED_BINARY_PATH}\n")
-        shutil.copy2(daemon_path, STAGED_DAEMON_PATH)
-        sys.stderr.write(f"  staged daemon -> {STAGED_DAEMON_PATH}\n")
-
-        # FastLED/fbuild#829: also build + stage the PyO3 extension so
-        # `from fbuild import ...` works after an editable / source install.
-        # Previously this was a separate manual step; users hit
-        # `ModuleNotFoundError: No module named 'fbuild._native'` the first
-        # time anything tried to import the Python API.
-        cdylib_path = _build_fbuild_python()
-        PYTHON_EXT_DIR.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(cdylib_path, STAGED_NATIVE_EXT_PATH)
+def _stage_artifacts() -> None:
+    """Build (or reuse) the CLI, daemon, and PyO3 extension in their staging paths."""
+    # Fast path: when every staged artifact is newer than every cargo input,
+    # skip cargo entirely. Even cargo's "Fresh" pass walks the workspace and
+    # takes wall-clock seconds.
+    if (
+        _staged_binary_is_up_to_date()
+        and _staged_daemon_is_up_to_date()
+        and _staged_native_ext_is_up_to_date()
+    ):
         sys.stderr.write(
-            f"  staged native extension -> {STAGED_NATIVE_EXT_PATH}\n"
+            f"  staged artifacts up-to-date "
+            f"({STAGED_BINARY_PATH.name}, {STAGED_DAEMON_PATH.name}, "
+            f"{STAGED_NATIVE_EXT_PATH.name}); skipping cargo\n"
         )
+        return
 
-        super().run()
-
-
-class BinaryDistribution(Distribution):
-    """Force a platform-tagged wheel because we ship a native binary."""
-
-    def has_ext_modules(self) -> bool:  # noqa: D401 — setuptools API name
-        return True
-
-
-class BuildBinaryScripts(build_scripts):
-    """Byte-copy variant of `build_scripts` for raw native binaries.
-
-    Stock `build_scripts.copy_scripts` calls `tokenize.open(script)` on
-    each entry to detect a coding cookie and patch a shebang for source
-    scripts. That's right for `.py` files but wrong for a Rust-built
-    `.exe` / ELF binary — `tokenize.open` raises `SyntaxError: invalid or
-    missing encoding declaration` on the very first read. We override
-    `copy_scripts` to do a plain byte-level `shutil.copy2`, preserving
-    the executable bit on POSIX (cargo already sets it). The file lands
-    in `<name>-<version>.data/scripts/` in the wheel; pip then copies it
-    straight into the install's `Scripts/` (Windows) or `bin/` (POSIX)
-    directory verbatim — no shebang, no Python wrapper. See #746.
-    """
-
-    def copy_scripts(self):  # noqa: D401 — distutils API name
-        self.mkpath(self.build_dir)
-        outfiles: list[str] = []
-        updated_files: list[str] = []
-        for script in self.scripts:
-            outfile = os.path.join(self.build_dir, os.path.basename(script))
-            # `dep_util.newer` returns True if `script` is newer than
-            # `outfile`, mirroring stock build_scripts' "update or skip"
-            # behavior — avoids spurious rebuilds breaking caching.
-            try:
-                from distutils import dep_util  # type: ignore[import-untyped]
-
-                up_to_date = (
-                    os.path.exists(outfile) and not dep_util.newer(script, outfile)
-                )
-            except ImportError:
-                # Python 3.12+ removed distutils.dep_util; fall back to
-                # an mtime compare.
-                up_to_date = os.path.exists(outfile) and (
-                    os.path.getmtime(script) <= os.path.getmtime(outfile)
-                )
-            if up_to_date and not self.force:
-                outfiles.append(outfile)
-                continue
-            shutil.copy2(script, outfile)
-            outfiles.append(outfile)
-            updated_files.append(outfile)
-        return outfiles, updated_files
+    _require_soldr()
+    binary_path, daemon_path = _build_fbuild_binaries()
+    STAGED_BIN_DIR.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(binary_path, STAGED_BINARY_PATH)
+    shutil.copy2(daemon_path, STAGED_DAEMON_PATH)
+    # FastLED/fbuild#829: the PyO3 extension is staged alongside so
+    # `from fbuild import ...` works after a source/editable install.
+    cdylib_path = _build_fbuild_python()
+    PYTHON_EXT_DIR.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(cdylib_path, STAGED_NATIVE_EXT_PATH)
+    sys.stderr.write(f"  staged {STAGED_BIN_DIR} and {STAGED_NATIVE_EXT_PATH}\n")
 
 
-# `scripts=` is the legacy setuptools mechanism for shipping raw files
-# (no shebang/no entry-point wrapping) into the install's Scripts/bin
-# directory. Files land in `<name>-<version>.data/scripts/` inside the
-# wheel; `pip install` then copies them straight into the venv as-is —
-# on Windows pip does NOT generate a Python wrapper for `.exe` files
-# (only for shebang-style script text). This is the same mechanism
-# maturin's "bin" mode and cargo-dist use to ship native binaries via
-# PyPI without a Python shim. See #746.
+# ---------------------------------------------------------------------------
+# PEP 517 / PEP 660 backend
 #
-# Stock `build_scripts` parses each script as Python source to find a
-# coding cookie / shebang — we override with `BuildBinaryScripts` to do
-# a plain byte-copy instead. `STAGED_BINARY_PATH` doesn't exist until
-# `BuildWithCargo` runs, which happens during the `build_py` phase.
-# Setuptools' build pipeline runs `build_py` before `build_scripts`, so
-# by the time `build_scripts` reads this list, the file is on disk.
-setup(
-    cmdclass={
-        "build_py": BuildWithCargo,
-        "build_scripts": BuildBinaryScripts,
-    },
-    distclass=BinaryDistribution,
-    scripts=[str(STAGED_BINARY_PATH), str(STAGED_DAEMON_PATH)],
-)
+# A local install used to go through setuptools: pip created an isolated
+# build env and installed setuptools into it, ran three setup.py
+# subprocesses, copied ~240 MB of binaries into build/ and again into
+# build/bdist.*, then zipped them. On a warm tree (cargo skipped) that was
+# ~10 s of pure packaging overhead. This backend has no build requirements
+# and writes the wheel in one pass, uncompressed: it is a throwaway local
+# artifact. Release wheels are assembled by ci/publish.py and stay deflated.
+# ---------------------------------------------------------------------------
+
+_NAME = "fbuild"
+
+
+def _project_field(key: str) -> str:
+    """Read one top-level string field of `[project]` from pyproject.toml."""
+    text = (REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8")
+    section = text.split("[project]", 1)[1].split("\n[", 1)[0]
+    match = re.search(rf'^{key}\s*=\s*"([^"]*)"', section, re.MULTILINE)
+    if match is None:
+        raise RuntimeError(f"pyproject.toml [project] has no string `{key}`")
+    return match.group(1)
+
+
+def _version() -> str:
+    return _project_field("version")
+
+
+def _metadata() -> bytes:
+    readme = (REPO_ROOT / _project_field("readme")).read_text(encoding="utf-8")
+    return (
+        "Metadata-Version: 2.1\n"
+        f"Name: {_NAME}\n"
+        f"Version: {_version()}\n"
+        f"Summary: {_project_field('description')}\n"
+        f"License: {_project_field('license')}\n"
+        f"Requires-Python: {_project_field('requires-python')}\n"
+        "Description-Content-Type: text/markdown\n"
+        f"\n{readme}"
+    ).encode("utf-8")
+
+
+def _wheel_tag() -> str:
+    interp = f"cp{sys.version_info.major}{sys.version_info.minor}"
+    platform = sysconfig.get_platform().replace("-", "_").replace(".", "_")
+    return f"{interp}-{interp}-{platform}"
+
+
+def _dist_info() -> str:
+    return f"{_NAME}-{_version()}.dist-info"
+
+
+def _wheel_file() -> bytes:
+    return (
+        "Wheel-Version: 1.0\n"
+        "Generator: fbuild-build-backend\n"
+        "Root-Is-Purelib: false\n"
+        f"Tag: {_wheel_tag()}\n"
+    ).encode("utf-8")
+
+
+class _WheelWriter:
+    """Stored (uncompressed) wheel writer that tracks RECORD rows."""
+
+    _EXEC_ATTR = (stat.S_IFREG | 0o755) << 16
+    _FILE_ATTR = (stat.S_IFREG | 0o644) << 16
+
+    def __init__(self, path: Path) -> None:
+        self._zip = zipfile.ZipFile(path, "w", zipfile.ZIP_STORED)
+        self._records: list[tuple[str, str, str]] = []
+
+    def _info(self, arcname: str, executable: bool) -> zipfile.ZipInfo:
+        info = zipfile.ZipInfo(arcname, date_time=(1980, 1, 1, 0, 0, 0))
+        # Unix mode bits only count when create_system == 3 (see #129).
+        info.create_system = 3
+        info.external_attr = self._EXEC_ATTR if executable else self._FILE_ATTR
+        return info
+
+    def add_bytes(self, arcname: str, data: bytes, executable: bool = False) -> None:
+        self._zip.writestr(self._info(arcname, executable), data)
+        digest = base64.urlsafe_b64encode(hashlib.sha256(data).digest()).rstrip(b"=")
+        self._records.append((arcname, f"sha256={digest.decode()}", str(len(data))))
+
+    def add_file(self, arcname: str, path: Path, executable: bool = False) -> None:
+        """Stream a (possibly ~100 MB) file in, hashing as it is copied."""
+        sha = hashlib.sha256()
+        size = 0
+        with path.open("rb") as src, self._zip.open(
+            self._info(arcname, executable), "w", force_zip64=True
+        ) as dst:
+            for chunk in iter(lambda: src.read(1 << 20), b""):
+                sha.update(chunk)
+                dst.write(chunk)
+                size += len(chunk)
+        digest = base64.urlsafe_b64encode(sha.digest()).rstrip(b"=").decode()
+        self._records.append((arcname, f"sha256={digest}", str(size)))
+
+    def close(self, dist_info: str) -> None:
+        buf = io.StringIO()
+        writer = csv.writer(buf, lineterminator="\n")
+        writer.writerows(self._records)
+        writer.writerow((f"{dist_info}/RECORD", "", ""))
+        self._zip.writestr(self._info(f"{dist_info}/RECORD", False), buf.getvalue())
+        self._zip.close()
+
+
+def _write_wheel(wheel_directory: str, add_payload) -> str:
+    _stage_artifacts()
+    name = f"{_NAME}-{_version()}-{_wheel_tag()}.whl"
+    writer = _WheelWriter(Path(wheel_directory) / name)
+    # Raw native binaries go to .data/scripts/: pip copies them into bin/
+    # (Scripts/ on Windows) verbatim, with no Python wrapper (#746).
+    data = f"{_NAME}-{_version()}.data/scripts"
+    writer.add_file(f"{data}/{TARGET_BINARY_NAME}", STAGED_BINARY_PATH, True)
+    writer.add_file(f"{data}/{TARGET_DAEMON_NAME}", STAGED_DAEMON_PATH, True)
+    add_payload(writer)
+    dist_info = _dist_info()
+    writer.add_bytes(f"{dist_info}/METADATA", _metadata())
+    writer.add_bytes(f"{dist_info}/WHEEL", _wheel_file())
+    writer.close(dist_info)
+    return name
+
+
+def _add_package(writer: _WheelWriter) -> None:
+    package_root = PYTHON_EXT_DIR.parent
+    for path in sorted(PYTHON_EXT_DIR.rglob("*.py")):
+        if "__pycache__" not in path.parts:
+            writer.add_file(path.relative_to(package_root).as_posix(), path)
+    writer.add_file(f"{_NAME}/{STAGED_NATIVE_EXT_NAME}", STAGED_NATIVE_EXT_PATH, True)
+
+
+def _add_editable_pth(writer: _WheelWriter) -> None:
+    # A plain .pth onto python/, which every static analyzer resolves.
+    writer.add_bytes(f"__editable__.{_NAME}.pth", f"{PYTHON_EXT_DIR.parent}\n".encode())
+
+
+def get_requires_for_build_wheel(config_settings=None) -> list[str]:
+    return []
+
+
+def get_requires_for_build_editable(config_settings=None) -> list[str]:
+    return []
+
+
+def prepare_metadata_for_build_wheel(metadata_directory, config_settings=None) -> str:
+    dist_info = Path(metadata_directory) / _dist_info()
+    dist_info.mkdir(parents=True, exist_ok=True)
+    (dist_info / "METADATA").write_bytes(_metadata())
+    (dist_info / "WHEEL").write_bytes(_wheel_file())
+    return dist_info.name
+
+
+prepare_metadata_for_build_editable = prepare_metadata_for_build_wheel
+
+
+def build_wheel(wheel_directory, config_settings=None, metadata_directory=None) -> str:
+    return _write_wheel(wheel_directory, _add_package)
+
+
+def build_editable(wheel_directory, config_settings=None, metadata_directory=None) -> str:
+    return _write_wheel(wheel_directory, _add_editable_pth)

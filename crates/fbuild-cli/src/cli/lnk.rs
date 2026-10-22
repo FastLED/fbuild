@@ -8,6 +8,7 @@ use crate::output;
 
 use super::args::LnkAction;
 
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub async fn run_lnk(
     action: LnkAction,
     top_level_project_dir: &Option<String>,

@@ -20,6 +20,11 @@ use std::sync::Arc;
 use super::common::{native_verify_enabled, native_write_enabled};
 
 /// POST /api/deploy
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    reason = "baseline, zackees/ci.yml#229"
+)]
 pub async fn deploy(
     State(ctx): State<Arc<DaemonContext>>,
     Json(req): Json<DeployRequest>,

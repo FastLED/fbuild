@@ -1,6 +1,6 @@
 [project]
 name = "fbuild"
-version = "2.5.33"
+version = "2.5.42"
 description = "PlatformIO-compatible embedded build tool (Rust implementation)"
 readme = "README.md"
 license = "AGPL-3.0-only"
@@ -14,40 +14,28 @@ requires-python = ">=3.10"
 dependencies = []
 
 # `fbuild` on PATH is the native cargo-built binary itself, shipped as a
-# raw wheel script (setuptools' `scripts=` mechanism in setup.py). No
+# raw wheel script (`.data/scripts/` in ci/build_backend.py). No
 # Python wrapper sits in front of it — `cmd → fbuild → stdout`. See
-# setup.py and #746 for why we don't use `[project.scripts]` (PEP 621
+# ci/build_backend.py and #746 for why we don't use `[project.scripts]` (PEP 621
 # only supports Python entry points, which on Windows go through an
 # `os.execv` emulation that races the next shell prompt ahead of stdout).
 
 [dependency-groups]
-# setuptools is in dev (not project deps) because fbuild uses
-# no-build-isolation: the build runs in the project venv, so setuptools
-# must already be installed when uv tries to (re)build the wheel.
-# default-groups below makes uv install dev (and hence setuptools)
-# before attempting to build, breaking the chicken-and-egg. `soldr` is a
-# globally installed executable, not a project-venv dependency.
-dev = ["fbuild-dev-tools", "setuptools>=64"]
+# `soldr` is a globally installed executable, not a project-venv dependency.
+dev = ["fbuild-dev-tools"]
 
 [tool.uv.sources]
 fbuild-dev-tools = { path = "ci/dev-tools", editable = true }
 
-# Skip PEP 517 build isolation for fbuild. Default isolation copies the
-# source tree to a temp dir before invoking setup.py, which (a) breaks
-# setup.py's mtime-skip cache because the staged binary in `ci/bin/`
-# isn't visible from the temp copy, and (b) makes cargo's incremental
-# fingerprint cache useless because cwd changes between invocations.
-# `extra-build-dependencies` is currently a uv preview feature; it
-# triggers an "experimental and may change without warning" notice on
-# every invocation, but it works and injects setuptools just for the
-# build (no chicken-and-egg with dev dep install order, no runtime
-# taint). Suppress the warning by exporting `UV_PREVIEW=1` if desired.
+# Skip PEP 517 build isolation for fbuild: the in-tree backend has no
+# build requirements, so an isolated env would only add overhead. The
+# backend always runs against this checkout (staged artifacts in `ci/bin/`
+# and a per-repo persistent CARGO_TARGET_DIR under ~/.fbuild).
 [tool.uv]
 no-build-isolation-package = ["fbuild"]
 default-groups = ["dev"]
-# `no-build-isolation-package` uses the project environment for fbuild's
-# setup.py. The setuptools backend calls setup.py, which invokes the globally
-# installed `soldr` executable for Rust builds.
+# The backend invokes the globally installed `soldr` executable for Rust
+# builds.
 # Tell uv to re-sync the editable install when these change. Without
 # this, `uv run` after a .rs edit silently uses a stale _native.pyd
 # because uv's default cache-keys only watch pyproject.toml.
@@ -59,39 +47,19 @@ cache-keys = [
     { file = "crates/**/Cargo.toml" },
 ]
 
-[tool.uv.extra-build-dependencies]
-fbuild = ["setuptools>=64"]
-
-[build-system]
-requires = ["setuptools>=64"]
-build-backend = "setuptools.build_meta"
-
-# setup.py calls the globally installed `soldr cargo` executable. Local/source
+# In-tree backend (ci/build_backend.py): no build requirements, so pip's
+# isolated build env is empty, and the wheel is written in one stored pass.
+# It calls the globally installed `soldr cargo` executable. Local/source
 # installs use the fast dev profile by default; set FBUILD_BUILD_RELEASE=1 for
 # an optimized source build.
+[build-system]
+requires = []
+build-backend = "build_backend"
+backend-path = ["ci"]
 
-[tool.setuptools]
-packages = ["fbuild", "fbuild.api"]
-include-package-data = true
+[tool.ruff.lint]
+select = ["C901", "RUF100"]
+external = ["D401", "E402", "F401"]
 
-# Tell setuptools the package root is `python/` — `python/fbuild/`,
-# `python/fbuild/api/`, and any future submodule are discovered relative
-# to it. The previous per-package map (`fbuild = "python/fbuild"`,
-# `"fbuild.api" = "python/fbuild/api"`) worked for the wheel build but
-# confused setuptools' editable install: it emitted a PEP 660 meta-path
-# finder whose MAPPING only registered the top-level `fbuild` package,
-# so static analyzers (ty, pyright, mypy) saw `Cannot resolve imported
-# module 'fbuild.api'` in downstream consumers even though runtime
-# imports worked via the finder's PathFinder fallback. With this
-# src-layout mapping, setuptools instead emits a plain `.pth` pointing
-# at `python/`, which every static analyzer handles.
-[tool.setuptools.package-dir]
-"" = "python"
-
-# Ship `_native.pyd`/.so that `python/fbuild/__init__.py` imports from.
-# The cargo-built `fbuild[.exe]` CLI binary is NOT package data — it is
-# declared as a raw wheel script via setup.py's `scripts=` argument so
-# pip drops it straight into Scripts/bin as a native exe (no Python
-# wrapper). See #746.
-[tool.setuptools.package-data]
-fbuild = ["_native.pyd", "_native.so"]
+[tool.ruff.lint.mccabe]
+max-complexity = 10

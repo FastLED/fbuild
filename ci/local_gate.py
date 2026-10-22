@@ -1,4 +1,4 @@
-"""Run both required Ubuntu jobs through bosn's pinned act2 engine.
+"""Replay the selected Ubuntu or ordinary-PR Dylint workflow through act2.
 
 This proof covers native Linux x64 only. Board builds, extended/full mode and
 the other native hosts retain their remote validation.
@@ -6,7 +6,9 @@ the other native hosts retain their remote validation.
 
 from __future__ import annotations
 
+import argparse
 import json
+import os
 import platform
 import subprocess
 import tempfile
@@ -16,7 +18,18 @@ from pathlib import Path
 JsonValue = str | int | float | bool | None | list["JsonValue"] | dict[str, "JsonValue"]
 ROOT = Path(__file__).resolve().parent.parent
 WORKFLOW = ".github/workflows/ci-minimal.yml"
-REQUIRED_JOBS = frozenset({"check", "python-facade-tests"})
+REQUIRED_JOBS = frozenset({"verify", "check", "python-facade-tests"})
+
+
+@dataclass(frozen=True)
+class RunSelection:
+    workflow: str
+    job: str | None
+    event: str
+    required_jobs: frozenset[str]
+
+
+UBUNTU_SELECTION = RunSelection(WORKFLOW, "linux", "workflow_dispatch", REQUIRED_JOBS)
 
 
 def wire_string(raw: dict[str, JsonValue], key: str) -> str:
@@ -48,7 +61,7 @@ class RunProof:
     engine: str
     act_version: str
     workflow: str
-    job: str
+    job: str | None
     mode: str
     event: str
     state: str
@@ -89,22 +102,20 @@ class RunProof:
                         )
                     )
                 )
+        selected_job = raw.get("job")
+        if "job" not in raw or (
+            selected_job is not None and not isinstance(selected_job, str)
+        ):
+            raise ValueError("bosn record lacks a valid job selection")
         return cls(
             Path(wire_string(raw, "workspace")).resolve(),
             wire_string(raw, "sha"),
             raw["dirty"],
+            *(wire_string(raw, key) for key in ("engine", "act_version", "workflow")),
+            selected_job,
             *(
                 wire_string(raw, key)
-                for key in (
-                    "engine",
-                    "act_version",
-                    "workflow",
-                    "job",
-                    "mode",
-                    "event",
-                    "state",
-                    "conclusion",
-                )
+                for key in ("mode", "event", "state", "conclusion")
             ),
             wire_count(raw, "exit_code"),
             *(wire_count(counts, key) for key in ("total", "completed", "failed")),
@@ -112,30 +123,35 @@ class RunProof:
         )
 
 
-def verify_run(proof: RunProof, workspace: Path, sha: str) -> None:
+def verify_run(
+    proof: RunProof,
+    workspace: Path,
+    sha: str,
+    selection: RunSelection = UBUNTU_SELECTION,
+) -> None:
     if (
         proof.workspace != workspace.resolve()
         or proof.sha != sha
         or proof.dirty is not None
         or proof.engine != "act"
         or "-act2." not in proof.act_version
-        or proof.workflow != WORKFLOW
-        or proof.job != "linux"
+        or proof.workflow != selection.workflow
+        or proof.job != selection.job
         or proof.mode != "minimal"
-        or proof.event != "workflow_dispatch"
+        or proof.event != selection.event
     ):
         raise ValueError("run does not prove this clean minimal Linux source")
     if (
         proof.state != "done"
         or proof.conclusion != "success"
         or proof.exit_code != 0
-        or proof.total < 2
+        or proof.total != len(selection.required_jobs)
         or proof.completed != proof.total
         or proof.failed != 0
         or len(proof.jobs) != proof.total
     ):
         raise ValueError("selected jobs did not all complete successfully")
-    for job_id in REQUIRED_JOBS:
+    for job_id in selection.required_jobs:
         matching = [job for job in proof.jobs if job.job_id == job_id]
         if (
             len(matching) != 1
@@ -147,6 +163,29 @@ def verify_run(proof: RunProof, workspace: Path, sha: str) -> None:
         job.status != "completed" or job.conclusion != "success" for job in proof.jobs
     ):
         raise ValueError("selected job evidence includes a non-successful job")
+
+
+def bosn_command(*arguments: str) -> list[str]:
+    """Use the latest released runner and an optional session-owned daemon root.
+
+    A floor, not an exact pin: the shared bosn daemon refuses clients from a
+    different release, so an exact pin breaks the gate as soon as any other
+    session starts a newer daemon. `--refresh-package` keeps uvx from reusing
+    a stale cached resolution.
+    """
+    argv = [
+        "uvx",
+        "--refresh-package",
+        "bosn",
+        "--from",
+        "bosn>=0.1.22",
+        "bosn",
+        *arguments,
+    ]
+    state = os.environ.get("BOSN_GATE_STATE_DIR")
+    if state:
+        argv.extend(["--state-dir", str(Path(state).resolve())])
+    return argv
 
 
 def output(argv: list[str]) -> str:
@@ -163,7 +202,45 @@ def document(argv: list[str]) -> dict[str, JsonValue]:
     return raw
 
 
+def run_ubuntu(sha: str) -> None:
+    submitted = document(
+        bosn_command(
+            "ci",
+            "run",
+            "--workspace",
+            str(ROOT),
+            "--workflow",
+            WORKFLOW,
+            "--job",
+            "linux",
+            "--event",
+            "workflow_dispatch",
+            "--mode",
+            "minimal",
+            "--sha",
+            sha,
+            "--timeout-secs",
+            "7200",
+            "--json",
+        )
+    )
+    run_id = wire_string(submitted, "run")
+    print(f"bosn local gate run: {run_id}", flush=True)
+    subprocess.run(bosn_command("ci", "wait", run_id), cwd=ROOT, check=True)
+    report = output(bosn_command("ci", "show", run_id, "--json"))
+    raw: JsonValue = json.loads(report)
+    if not isinstance(raw, dict):
+        raise ValueError("bosn returned a non-object terminal report")
+    verify_run(RunProof.from_json(raw), ROOT, sha)
+    report_path = os.environ.get("CI_LINT_GATE_REPLAY_REPORT")
+    if report_path:
+        Path(report_path).write_text(report, encoding="utf-8")
+
+
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--lane", choices=("linux-minimal", "dylint"))
+    lane = parser.parse_args().lane
     if (
         output(["git", "symbolic-ref", "refs/remotes/origin/HEAD"]).strip()
         != "refs/remotes/origin/main"
@@ -178,10 +255,14 @@ def main() -> None:
             "--no-project",
             "--with",
             "pyyaml==6.0.2",
+            "--with",
+            "ci-lint @ git+https://github.com/zackees/ci.yml@653196986fcc5d7469d74e8d4836b547729ee8e3",
             "python",
             "-m",
             "unittest",
+            "ci.test_shared_replay",
             "ci.test_local_gate",
+            "ci.test_local_dylint_gate",
             "ci.test_fractional_workflows",
             "ci.test_test_cache_status",
         ],
@@ -210,42 +291,21 @@ def main() -> None:
     ):
         raise ValueError("Linux x64 tests require a native Linux x64 host and daemon")
     sha = output(["git", "rev-parse", "HEAD"]).strip()
-    submitted = document(
-        [
-            "bosn",
-            "ci",
-            "run",
-            "--workspace",
-            str(ROOT),
-            "--workflow",
-            WORKFLOW,
-            "--job",
-            "linux",
-            "--event",
-            "workflow_dispatch",
-            "--mode",
-            "minimal",
-            "--sha",
-            sha,
-            "--timeout-secs",
-            "7200",
-            "--json",
-        ]
-    )
-    run_id = wire_string(submitted, "run")
-    print(f"bosn local gate run: {run_id}", flush=True)
-    subprocess.run(["bosn", "ci", "wait", run_id], cwd=ROOT, check=True)
-    verify_run(
-        RunProof.from_json(document(["bosn", "ci", "show", run_id, "--json"])),
-        ROOT,
-        sha,
-    )
+    if lane in (None, "linux-minimal"):
+        run_ubuntu(sha)
+    from ci.local_dylint_gate import run_dylint
+
+    if lane in (None, "dylint"):
+        run_dylint(ROOT, sha)
     if (
         output(["git", "rev-parse", "HEAD"]).strip() != sha
         or output(["git", "status", "--porcelain", "--untracked-files=normal"]).strip()
     ):
         raise ValueError("worktree changed while the local gate ran")
-    print(f"Passed both required Ubuntu jobs: {sha}", flush=True)
+    print(
+        f"Passed the selected native Linux workflow coverage: {sha}",
+        flush=True,
+    )
 
 
 if __name__ == "__main__":

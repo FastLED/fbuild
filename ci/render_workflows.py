@@ -379,17 +379,23 @@ def render_local_gate_verify() -> str:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout source
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 2
           persist-credentials: false
-      - uses: astral-sh/setup-uv@v3
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v3
       - name: Verify source-bound local proof
-        if: github.event_name == 'pull_request'
-        run: >-
-          uvx --from git+https://github.com/zackees/ci.yml@9e44971219cd870a2263fa694debc94f57722405
-          ci-lint local-gate verify --repo .
+        env:
+          GATE_EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$GATE_EVENT" = "pull_request" ]; then
+            uvx --from git+https://github.com/zackees/ci.yml@653196986fcc5d7469d74e8d4836b547729ee8e3 ci-lint local-gate verify --repo .
+          else
+            echo "Local proof verification is required on pull requests"
+          fi
 """
 
 
@@ -813,7 +819,7 @@ def write_if_changed(path: Path, new_text: str, check: bool, drift: list[Path], 
         updated.append(path)
 
 
-def main() -> int:
+def main() -> int:  # noqa: C901
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--check", action="store_true", help="exit 1 if committed workflows drift from the SOT")
     args = ap.parse_args()

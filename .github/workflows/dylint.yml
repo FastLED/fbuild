@@ -42,10 +42,12 @@ jobs:
     name: Dylint policy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout source
+        uses: actions/checkout@v6
         with:
           ref: ${{ inputs.ref }}
-      - uses: astral-sh/setup-uv@v3
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v3
       - name: Validate Dylint policy files
         run: |
           uv run --no-project python ci/check_dylint_allowlists.py
@@ -59,10 +61,12 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout source
+        uses: actions/checkout@v6
         with:
           ref: ${{ inputs.ref }}
-      - uses: astral-sh/setup-uv@v3
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v3
       - name: Validate Dylint allowlist paths
         run: uv run --no-project python ci/check_dylint_allowlists.py
       - name: Enforce shrink-only .fbuild allowlist
@@ -73,7 +77,8 @@ jobs:
           uv run --no-project python ci/check_fbuild_path_baseline.py --base FETCH_HEAD
       - name: Validate platform-boundary ledgers
         run: uv run --no-project python ci/enforce_platform_boundary.py --print-totals
-      - uses: zackees/setup-soldr@v0
+      - name: Setup soldr
+        uses: zackees/setup-soldr@v0
         with:
           # ci-tests applies the prescribed bounded resource contract for the
           # workspace validation domain. Dylint deliberately remains on its
@@ -257,7 +262,8 @@ jobs:
     needs: [policy, dylint]
     runs-on: ubuntu-latest
     steps:
-      - env:
+      - name: Require successful Dylint jobs
+        env:
           POLICY: ${{ needs.policy.result }}
           FULL_DYLINT: ${{ needs.dylint.result }}
         run: |

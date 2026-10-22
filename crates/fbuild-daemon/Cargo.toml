@@ -77,3 +77,6 @@ tokio-tungstenite = { workspace = true }
 # against a router mounted on an ephemeral loopback port, matching the
 # client-side path that fails in issue #130.
 reqwest = { workspace = true }
+
+[lints]
+workspace = true

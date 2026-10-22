@@ -418,6 +418,35 @@ fn old_sdk_libraries_use_selected_variant_before_common_archives() {
 }
 
 #[test]
+fn old_sdk_radio_archives_are_linked_from_ld_directory() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let sdk = tmp.path().join("tools").join("sdk").join("esp32");
+    let common = sdk.join("lib");
+    let ld = sdk.join("ld");
+    std::fs::create_dir_all(&common).unwrap();
+    std::fs::create_dir_all(&ld).unwrap();
+    std::fs::write(common.join("libesp_phy.a"), "").unwrap();
+    std::fs::write(ld.join("libphy.a"), "").unwrap();
+    std::fs::write(ld.join("librtc.a"), "").unwrap();
+    let fw = Esp32Framework {
+        base: PackageBase::new(
+            "test",
+            "1.0",
+            "http://example.com",
+            "http://example.com",
+            None,
+            CacheSubdir::Platforms,
+            tmp.path(),
+        ),
+        install_dir: Some(tmp.path().to_path_buf()),
+    };
+    let flags = fw.get_sdk_lib_flags("esp32", None);
+    assert!(flags.contains(&format!("-L{}", ld.display())));
+    assert!(flags.contains(&"-lphy".to_string()));
+    assert!(flags.contains(&"-lrtc".to_string()));
+}
+
+#[test]
 fn test_split_defines_preserves_escaped_quotes() {
     let content =
         r#"-DFOO=1 -DMBEDTLS_CONFIG_FILE=\"mbedtls/esp_config.h\" -DBAR -DIDF_VER=\"v5.5.2\""#;
@@ -534,6 +563,38 @@ fn old_sdk_falls_back_to_tree_scan_when_builder_script_unparseable() {
 
     let dirs = fw.get_sdk_include_dirs("esp32s3", None);
     assert!(dirs.contains(&include), "tree-scan fallback did not run");
+}
+
+#[test]
+fn idf44_sdk_includes_qspi_qspi_sdkconfig() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let sdk_config = tmp
+        .path()
+        .join("tools/sdk/esp32/qspi_qspi/include/sdkconfig.h");
+    std::fs::create_dir_all(sdk_config.parent().unwrap()).unwrap();
+    std::fs::write(&sdk_config, "\n").unwrap();
+    let sdk_include = tmp.path().join("tools/sdk/esp32/include/freertos/include");
+    std::fs::create_dir_all(&sdk_include).unwrap();
+    std::fs::write(sdk_include.join("FreeRTOS.h"), "\n").unwrap();
+
+    let fw = Esp32Framework {
+        base: PackageBase::new(
+            "test",
+            "1.0",
+            "http://example.com",
+            "http://example.com",
+            None,
+            CacheSubdir::Platforms,
+            tmp.path(),
+        ),
+        install_dir: Some(tmp.path().to_path_buf()),
+    };
+
+    let dirs = fw.get_sdk_include_dirs("esp32", None);
+    assert!(
+        dirs.contains(&sdk_config.parent().unwrap().to_path_buf()),
+        "ESP-IDF 4.4 SDK configuration include directory missing"
+    );
 }
 
 #[test]

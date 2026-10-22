@@ -100,7 +100,7 @@ def test_only_path(path: str) -> bool:
     )
 
 
-def _code_braces(
+def _code_braces(  # noqa: C901
     line: str, in_block_comment: bool, raw_hashes: int | None
 ) -> tuple[int, bool, int | None]:
     """Count braces outside strings/comments on one Rust line."""

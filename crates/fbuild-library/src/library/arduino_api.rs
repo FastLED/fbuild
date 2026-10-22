@@ -60,6 +60,7 @@ const ARDUINO_API_URL: &str =
 ///
 /// # Arguments
 /// * `core_dir` - The framework's `cores/arduino/` directory (or equivalent)
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 pub async fn ensure_arduino_api(core_dir: &Path) -> Result<()> {
     let api_marker = core_dir.join("api").join("ArduinoAPI.h");
     if api_marker.exists() {

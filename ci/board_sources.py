@@ -152,7 +152,7 @@ def fetch_all_arduino() -> list[SourceReport]:
 # ---------------------------------------------------------------------------
 
 
-def fetch_zephyr_boards() -> SourceReport:
+def fetch_zephyr_boards() -> SourceReport:  # noqa: C901
     """Fetch board names from Zephyr's GitHub repo (boards/ directory listing)."""
     report = SourceReport(source_id="zephyr")
     print("  Fetching zephyr boards...", file=sys.stderr, flush=True)
@@ -339,7 +339,7 @@ def print_source_report(report: SourceReport) -> None:
         print(" ".join(parts))
 
 
-def main() -> int:
+def main() -> int:  # noqa: C901
     args = sys.argv[1:]
 
     if not args or "--help" in args or "-h" in args:

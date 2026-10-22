@@ -51,9 +51,14 @@ fn pio_join_literals(line: &str) -> Option<PathBuf> {
 /// Returns `None` when the script is absent or does not parse, so the caller
 /// can fall back to the tree scan.
 fn parse_pio_cpppath(root: &Path, mcu: &str) -> Option<Vec<PathBuf>> {
-    let script = root
+    let per_mcu_script = root
         .join("tools")
         .join(format!("platformio-build-{mcu}.py"));
+    let script = if per_mcu_script.exists() {
+        per_mcu_script
+    } else {
+        root.join("tools").join("platformio-build.py")
+    };
     let content = std::fs::read_to_string(&script).ok()?;
 
     let mut dirs = Vec::new();
@@ -103,7 +108,11 @@ pub(super) fn sdk_mcu_dir(fw: &Esp32Framework, mcu: &str) -> PathBuf {
     if new_path.exists() {
         return new_path;
     }
-    root.join("tools").join("sdk").join(mcu)
+    let flat_path = root.join("tools").join("sdk");
+    if flat_path.join("include").exists() {
+        return flat_path;
+    }
+    flat_path.join(mcu)
 }
 
 fn sdk_memory_variant_dir(sdk_dir: &Path, requested: Option<&str>) -> Option<PathBuf> {
@@ -114,7 +123,14 @@ fn sdk_memory_variant_dir(sdk_dir: &Path, requested: Option<&str>) -> Option<Pat
         }
     }
 
-    for variant in &["qio_opi", "dio_opi", "opi_opi", "qio_qspi", "dio_qspi"] {
+    for variant in &[
+        "qio_opi",
+        "dio_opi",
+        "opi_opi",
+        "qio_qspi",
+        "dio_qspi",
+        "qspi_qspi",
+    ] {
         let candidate = sdk_dir.join(variant);
         if candidate.exists() {
             return Some(candidate);
@@ -305,11 +321,19 @@ impl Esp32Framework {
         if lib_dir.exists() {
             flags.push(format!("-L{}", lib_dir.display()));
         }
+        // Arduino-ESP32 2.x keeps radio archives such as libphy.a and
+        // librtc.a beside its linker scripts. WiFi users need these archives
+        // even though the ordinary SDK libraries live under lib/.
+        let ld_dir = sdk_dir.join("ld");
+        if ld_dir.exists() {
+            flags.push(format!("-L{}", ld_dir.display()));
+        }
         let mut libraries = variant_dir
             .as_ref()
             .map(|dir| collect_archive_files(dir))
             .unwrap_or_default();
         libraries.extend(collect_archive_files(&lib_dir));
+        libraries.extend(collect_archive_files(&ld_dir));
         let mut names = std::collections::BTreeSet::new();
         for lib in libraries {
             if let Some(stem) = lib.file_stem() {
@@ -380,5 +404,30 @@ impl Esp32Framework {
 
         // Fallback: no scripts
         flags
+    }
+}
+
+#[cfg(test)]
+mod legacy_sdk_tests {
+    use super::*;
+
+    #[test]
+    fn platformio_1_11_2_builder_supplies_flat_sdk_includes() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let root = tmp.path();
+        let mut script = String::from("CPPPATH=[\n");
+        for i in 0..20 {
+            let dir = root.join(format!("tools/sdk/include/component{i}"));
+            std::fs::create_dir_all(&dir).unwrap();
+            script.push_str(&format!(
+                "join(FRAMEWORK_DIR, \"tools\", \"sdk\", \"include\", \"component{i}\"),\n"
+            ));
+        }
+        script.push_str("]\n");
+        std::fs::write(root.join("tools/platformio-build.py"), script).unwrap();
+
+        let dirs = parse_pio_cpppath(root, "esp32").unwrap();
+        assert_eq!(dirs.len(), 20);
+        assert_eq!(dirs[0], root.join("tools/sdk/include/component0"));
     }
 }

@@ -225,7 +225,7 @@ def parse_dylint_baseline(path: Path = DYLINT_BASELINE) -> collections.Counter[t
     return rows
 
 
-def scanner_dylint_counts(rows: list[LedgerRow]) -> collections.Counter[tuple[str, str, str]]:
+def scanner_dylint_counts(rows: list[LedgerRow]) -> collections.Counter[tuple[str, str, str]]:  # noqa: C901
     """Project the whole-tree ledger onto the Dylint's syntax categories."""
     counts: collections.Counter[tuple[str, str, str]] = collections.Counter()
     for row in rows:

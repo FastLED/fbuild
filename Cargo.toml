@@ -93,7 +93,7 @@ targets = [
 ]
 
 [workspace.package]
-version = "2.5.33"
+version = "2.5.42"
 edition = "2021"
 rust-version = "1.95.0"
 license = "AGPL-3.0-only"
@@ -127,7 +127,7 @@ tree-sitter = "0.26.9"
 tree-sitter-cpp = "0.23.4"
 flate2 = "1"
 tar = "0.4"
-zip = { version = "2", default-features = false, features = ["deflate"] }
+zip = { version = "9.0.3", default-features = false, features = ["deflate"] }
 xz2 = "0.1"
 bzip2 = "0.5"
 zstd = "0.13"
@@ -220,3 +220,7 @@ debug = "line-tables-only"
 [profile.dev.package."*"]
 opt-level = 3
 debug = false
+
+[workspace.lints.clippy]
+cognitive_complexity = "warn"
+too_many_lines = "warn"

@@ -159,6 +159,11 @@ where
     }
 }
 
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    reason = "baseline, zackees/ci.yml#229"
+)]
 async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
     // Mark this attach as pending so the self-eviction loop won't shut the
     // daemon down while we're waiting for `open_port` to finish (USB
@@ -877,6 +882,7 @@ fn build_status_snapshot(ctx: &DaemonContext) -> String {
     ctx.status_snapshot_json()
 }
 
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 async fn handle_status_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
     tracing::info!("Status WebSocket connected");
 
@@ -950,6 +956,7 @@ pub async fn ws_logs(
     ws.on_upgrade(move |socket| handle_logs_ws(socket, ctx))
 }
 
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 async fn handle_logs_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
     tracing::info!("Logs WebSocket connected");
 

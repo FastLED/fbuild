@@ -15,6 +15,11 @@ use super::super::mcu_config::Esp32McuConfig;
 /// resolves nowhere is a hard error (FastLED/fbuild#955) — silently flashing
 /// a different partition table is worse than failing.
 #[allow(clippy::too_many_arguments)]
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    reason = "baseline, zackees/ci.yml#229"
+)]
 pub(super) async fn prepare_boot_artifacts(
     build_dir: &Path,
     project_dir: &Path,

@@ -47,6 +47,11 @@ use super::types::NativeWriteRegion;
 /// [`DeploymentResult`], and let the caller decide whether to retry via
 /// esptool. Partial writes are never silently swallowed.
 #[allow(clippy::too_many_arguments)]
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    reason = "baseline, zackees/ci.yml#229"
+)]
 pub fn try_write_deployment_native(
     chip_name: &str,
     port: &str,

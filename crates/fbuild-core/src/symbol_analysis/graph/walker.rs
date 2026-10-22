@@ -108,6 +108,7 @@ pub(super) fn push_edge_dedup(edges: &mut Vec<GraphEdge>, candidate: GraphEdge) 
 /// most-shared view is surfaced via [`rank_callees_dual`] for the
 /// markdown sub-table — both axes coexist; the graph picks one.
 #[allow(clippy::too_many_arguments)]
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub(super) fn walk_forward(
     map: &FineGrainedSymbolMap,
     config: &GraphConfig,
@@ -300,6 +301,7 @@ fn format_caller_label(demangled: &str, size: u64, callees_count: usize) -> Stri
 /// `max_depth` policy as `walk_forward`; same overflow super-node
 /// rendering.
 #[allow(clippy::too_many_arguments)]
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub(super) fn walk_backward_per_symbol(
     map: &FineGrainedSymbolMap,
     config: &GraphConfig,

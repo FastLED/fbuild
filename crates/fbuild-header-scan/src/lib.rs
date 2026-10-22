@@ -20,4 +20,4 @@ pub use walker::{
 
 /// Bumped whenever the scanner output shape changes. Mixed into cache keys so a
 /// scanner change invalidates memoized library-selection results.
-pub const SCANNER_VERSION: u32 = 1;
+pub const SCANNER_VERSION: u32 = 2;

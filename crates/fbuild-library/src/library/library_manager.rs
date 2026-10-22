@@ -361,6 +361,7 @@ pub async fn download_libraries(
 /// `lib_dir/library.json` and `lib_dir/src/library.json`) for a `dependencies`
 /// array. Downloads any new dependencies and adds them to the installed list.
 /// Processes recursively until no new dependencies are found.
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 async fn resolve_transitive_deps(
     installed: &mut Vec<InstalledLibrary>,
     downloaded_names: &mut std::collections::HashSet<String>,

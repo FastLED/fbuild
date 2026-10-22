@@ -243,7 +243,7 @@ def load_config_offsets(path: Path) -> tuple[str, dict[str, str]]:
     return mcu, offsets
 
 
-def main() -> int:
+def main() -> int:  # noqa: C901
     args = sys.argv[1:]
     boards_txt_arg: str | None = None
     download_version: str | None = None

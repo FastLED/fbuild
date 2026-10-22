@@ -9,6 +9,11 @@ use super::args::DaemonAction;
 use super::purge::format_size;
 use super::show::run_show;
 
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    reason = "baseline, zackees/ci.yml#229"
+)]
 pub async fn run_daemon(action: DaemonAction) -> fbuild_core::Result<()> {
     let client = DaemonClient::new();
     match action {
@@ -130,6 +135,7 @@ pub async fn run_daemon(action: DaemonAction) -> fbuild_core::Result<()> {
     Ok(())
 }
 
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 fn run_daemon_running_process(json: bool) -> fbuild_core::Result<()> {
     use fbuild_paths::running_process as rp;
 

@@ -274,6 +274,11 @@ fn resolve_with_stats_impl_declared(
 
 /// The resolver proper. `defined_somewhere`, when the caller already walked
 /// the corpus for it with `state`, is reused instead of walked again.
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    reason = "baseline, zackees/ci.yml#229"
+)]
 fn resolve_with_state(
     seeds: &[PathBuf],
     project_search_paths: &[PathBuf],

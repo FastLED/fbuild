@@ -98,6 +98,9 @@ impl TeensyLinker {
             args.push(obj.to_string_lossy().to_string());
         }
 
+        // Rescan ordinary archives: a local/SDK member can reference an earlier
+        // lib_deps/project archive. This does not retain unreferenced members.
+        args.push("-Wl,--start-group".into());
         // Core objects passed directly (not archived) for LTO compatibility
         for archive in archives {
             args.push(archive.to_string_lossy().to_string());
@@ -115,6 +118,7 @@ impl TeensyLinker {
             args.push(format!("-l{}", lib));
         }
         args.extend(extra.libs.iter().cloned());
+        args.push("-Wl,--end-group".into());
 
         args
     }
@@ -265,6 +269,93 @@ impl Linker for TeensyLinker {
 mod tests {
     use super::*;
     use crate::teensy::mcu_config::get_teensy_config;
+
+    async fn run_native(args: &[String]) {
+        let borrowed: Vec<_> = args.iter().map(String::as_str).collect();
+        let result = run_command(
+            &borrowed,
+            None,
+            None,
+            Some(std::time::Duration::from_secs(30)),
+        )
+        .await
+        .unwrap();
+        assert!(result.success(), "{args:?}: {}", result.stderr);
+    }
+
+    #[tokio::test]
+    #[ignore = "requires native GCC and GNU ar; explicitly run in Check Ubuntu CI"]
+    async fn optional_library_rescans_earlier_dependency_archive() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        let fixtures = [
+            (
+                "main",
+                "int state; extern int optional(void); int main(void) { return state != 0 || optional() != 7; }",
+            ),
+            (
+                "optional",
+                "extern int dependency(void); int optional(void) { return dependency(); }",
+            ),
+            ("dependency", "int dependency(void) { return 7; }"),
+            (
+                "unused",
+                "extern int state; __attribute__((constructor)) void unused(void) { state = 1; }",
+            ),
+        ];
+        let mut objects = Vec::new();
+        for (name, body) in fixtures {
+            let source = root.join(format!("{name}.c"));
+            let object = root.join(format!("{name}.o"));
+            std::fs::write(&source, body).unwrap();
+            run_native(&[
+                "gcc".into(),
+                "-ffunction-sections".into(),
+                "-c".into(),
+                source.display().to_string(),
+                "-o".into(),
+                object.display().to_string(),
+            ])
+            .await;
+            objects.push(object);
+        }
+        let earlier = root.join("libDeps.a");
+        let optional = root.join("libOptional.a");
+        crate::linker::LinkerBase::archive(Path::new("ar"), &objects[2..], &earlier, "ar")
+            .await
+            .unwrap();
+        crate::linker::LinkerBase::archive(Path::new("ar"), &objects[1..2], &optional, "ar")
+            .await
+            .unwrap();
+        // Use the actual Teensy command builder with only its target-specific
+        // flags removed so the host GNU linker can execute this fixture.
+        let mut config = get_teensy_config().unwrap();
+        config.linker_flags = vec!["-Wl,--gc-sections".into()];
+        config.linker_libs.clear();
+        config.profiles.clear();
+        let linker = TeensyLinker::new(
+            "gcc".into(),
+            "ar".into(),
+            PathBuf::new(),
+            PathBuf::new(),
+            LinkerScripts::new(),
+            config,
+            BuildProfile::Release,
+            None,
+            None,
+            None,
+            false,
+        );
+        let executable = root.join("firmware");
+        run_native(&linker.build_link_args(
+            &objects[..1],
+            &[earlier, optional],
+            &executable,
+            &LinkExtraArgs::default(),
+        ))
+        .await;
+        run_native(&[executable.display().to_string()]).await;
+    }
 
     /// The link must not run in the daemon's inherited cwd: collect2 /
     /// lto-wrapper write scratch files relative to it, which put a stray

@@ -97,6 +97,7 @@ pub struct CompileManyArgs {
     pub pio_env: std::collections::HashMap<String, String>,
 }
 
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub async fn run_compile_many(args: CompileManyArgs) -> fbuild_core::Result<()> {
     use fbuild_build::compile_many::{CompileManyRequest, Stage, compile_many};
 

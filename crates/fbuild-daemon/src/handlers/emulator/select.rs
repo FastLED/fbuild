@@ -19,6 +19,7 @@ use std::sync::Arc;
 ///
 /// Returns `Err` with `EmulatorOutcome::Unsupported` information if no runner
 /// matches.
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub fn select_runner(
     project_dir: &Path,
     env_name: &str,
@@ -138,6 +139,7 @@ pub fn select_runner(
 }
 
 /// POST /api/test-emu handler — build firmware then run it in an emulator.
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub async fn test_emu(
     State(ctx): State<Arc<DaemonContext>>,
     Json(req): Json<crate::models::TestEmuRequest>,
