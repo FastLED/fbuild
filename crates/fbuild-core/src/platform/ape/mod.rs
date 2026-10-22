@@ -271,16 +271,16 @@ mod tests {
             &reconstructed,
         )
         .expect("embedded compiler must have a usable loader");
+        let registered_prefix = format!("{}/", crate::path::normalize_for_key(&registered));
         assert!(
-            launch.loader.starts_with(&registered),
+            crate::path::normalize_for_key(&launch.loader).starts_with(&registered_prefix),
             "loader lost registered fallback: {:?}",
             launch.loader
         );
         assert!(
-            launch
-                .ape_path_dir
-                .as_ref()
-                .is_some_and(|path| path.starts_with(&registered)),
+            launch.ape_path_dir.as_ref().is_some_and(|path| {
+                crate::path::normalize_for_key(path).starts_with(&registered_prefix)
+            }),
             "nested compiler tools lost registered fallback: {:?}",
             launch.ape_path_dir
         );
