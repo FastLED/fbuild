@@ -1,4 +1,81 @@
 use super::*;
+
+#[tokio::test]
+#[ignore = "#1656: requires a real native C compiler and GNU-compatible archiver"]
+async fn large_archive_handles_windows_command_limit_and_quoted_paths() {
+    let tmp = tempfile::tempdir().unwrap();
+    let root = tmp.path();
+    let cc = std::env::var("FBUILD_TEST_CC").unwrap_or_else(|_| "gcc".into());
+    let ar = std::env::var("FBUILD_TEST_AR").unwrap_or_else(|_| "ar".into());
+    std::fs::write(
+        root.join("seed.c"),
+        "int archive_fixture(void) { return 1; }",
+    )
+    .unwrap();
+    let compile = run_command(
+        &[&cc, "-c", "seed.c", "-o", "seed.o"],
+        Some(root),
+        None,
+        None,
+    )
+    .await
+    .unwrap();
+    assert!(compile.success(), "{}", compile.stderr);
+    let object_dir = root.join(format!("archive fixture's objects {}", "x".repeat(80)));
+    std::fs::create_dir(&object_dir).unwrap();
+    let mut objects = Vec::new();
+    for index in 0..525 {
+        let object = object_dir.join(format!("member_{index:04}.o"));
+        std::fs::copy(root.join("seed.o"), &object).unwrap();
+        objects.push(object);
+    }
+    assert!(
+        objects
+            .iter()
+            .map(|path| path.to_string_lossy().len() + 1)
+            .sum::<usize>()
+            > 70_000
+    );
+    let output = root.join("archive fixture's library.a");
+    archive_objects(Path::new(&ar), &objects, &output)
+        .await
+        .unwrap();
+    let list = run_command(
+        &[&ar, "t", output.to_str().unwrap()],
+        Some(root),
+        None,
+        None,
+    )
+    .await
+    .unwrap();
+    assert!(list.success(), "{}", list.stderr);
+    assert_eq!(list.stdout.lines().count(), 525);
+    for index in 0..525 {
+        assert!(
+            list.stdout
+                .lines()
+                .any(|line| line.trim() == format!("member_{index:04}.o"))
+        );
+    }
+    objects.pop();
+    archive_objects(Path::new(&ar), &objects, &output)
+        .await
+        .unwrap();
+    let list = run_command(
+        &[&ar, "t", output.to_str().unwrap()],
+        Some(root),
+        None,
+        None,
+    )
+    .await
+    .unwrap();
+    assert!(list.success(), "{}", list.stderr);
+    assert_eq!(
+        list.stdout.lines().count(),
+        524,
+        "stale members must be removed"
+    );
+}
 use std::time::Duration;
 
 fn test_signature() -> &'static str {

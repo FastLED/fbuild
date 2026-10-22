@@ -67,6 +67,13 @@ jobs:
       - name: Test
         shell: bash
         run: soldr cargo test --workspace
+      - name: Test large library archive
+        shell: bash
+        env:
+          FBUILD_TEST_CC: C:/Program Files/LLVM/bin/clang.exe
+          FBUILD_TEST_AR: C:/Program Files/LLVM/bin/llvm-ar.exe
+        run: soldr cargo test -p fbuild-library large_archive_handles_windows_command_limit_and_quoted_paths -- --ignored --nocapture
+
       - name: Setup uv for legacy source package install
         uses: astral-sh/setup-uv@v3
 
