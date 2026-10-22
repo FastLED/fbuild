@@ -122,8 +122,9 @@ runs:
         fi
 
     - name: Restore fbuild install cache
+      if: ${{ inputs.cache == 'true' }}
       id: fbuild-install-cache
-      uses: actions/cache@v5
+      uses: actions/cache/restore@v5
       with:
         # Cache the entire isolated --target install directory. The fbuild
         # wheel has zero PyPI deps (verified on PyPI), so caching this dir
@@ -208,6 +209,13 @@ runs:
         )
         echo "fbuild-hash=${FBUILD_HASH}" >> "$GITHUB_OUTPUT"
         echo "Resolved fbuild content hash: ${FBUILD_HASH}"
+
+    - name: Save fbuild install cache
+      if: ${{ inputs.cache == 'true' && inputs.save == 'true' && steps.fbuild-install-cache.outputs.cache-hit != 'true' }}
+      uses: actions/cache/save@v5
+      with:
+        path: ${{ steps.resolve-paths.outputs.install-dir }}
+        key: ${{ steps.fbuild-install-cache.outputs.cache-primary-key }}
 
     # ── Combined mode (default): one FBUILD_CACHE_DIR entry per key ─────────
 

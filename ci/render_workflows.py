@@ -383,7 +383,7 @@ def render_local_gate_verify() -> str:
         uses: actions/checkout@v6
         with:
           ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
-          fetch-depth: 2
+          fetch-depth: 0
           persist-credentials: false
       - name: Set up uv
         uses: astral-sh/setup-uv@v3
@@ -392,7 +392,7 @@ def render_local_gate_verify() -> str:
           GATE_EVENT: ${{ github.event_name }}
         run: |
           if [ "$GATE_EVENT" = "pull_request" ]; then
-            uvx --from git+https://github.com/zackees/ci.yml@653196986fcc5d7469d74e8d4836b547729ee8e3 ci-lint local-gate verify --repo .
+            uvx --from git+https://github.com/zackees/ci.yml@6711e4e418cf9b11de31e30e710b0bb1d9291e5b ci-lint local-gate verify --repo .
           else
             echo "Local proof verification is required on pull requests"
           fi

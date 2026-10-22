@@ -11,6 +11,7 @@ tools = ["bosn", "uv"]
 
 # Shared proof binds every concrete Ubuntu job and its verifier prerequisite.
 [gate.replay]
+qualified = true
 repository = "FastLED/fbuild"
 workflow = "ci-minimal.yml"
 mode = "minimal"
