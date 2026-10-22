@@ -46,6 +46,9 @@ struct RenesasFingerprintMetadata {
     board_extra_flags: Option<String>,
     board_upload_protocol: Option<String>,
     board_upload_speed: Option<String>,
+    framework_version: String,
+    framework_url: String,
+    framework_checksum: Option<String>,
     platform: String,
     max_flash: Option<u64>,
     max_ram: Option<u64>,
@@ -157,6 +160,7 @@ impl BuildOrchestrator for RenesasOrchestrator {
         let core_dir = framework.get_core_dir(&ctx.board.core);
         let variant_dir = framework.get_variant_dir(&ctx.board.variant);
         let build_dir = &ctx.build_dir;
+        let framework_info = fbuild_packages::Package::get_info(&framework);
         let metadata_hash = stable_hash_with_build_config(
             &RenesasFingerprintMetadata {
                 version: BUILD_FINGERPRINT_VERSION,
@@ -171,6 +175,9 @@ impl BuildOrchestrator for RenesasOrchestrator {
                 board_extra_flags: ctx.board.extra_flags.clone(),
                 board_upload_protocol: ctx.board.upload_protocol.clone(),
                 board_upload_speed: ctx.board.upload_speed.clone(),
+                framework_version: framework_info.version,
+                framework_url: framework_info.url,
+                framework_checksum: framework_info.checksum,
                 platform: "renesas-ra".to_string(),
                 max_flash: ctx.board.max_flash,
                 max_ram: ctx.board.max_ram,
