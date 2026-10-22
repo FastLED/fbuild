@@ -25,7 +25,9 @@ async fn pico_default_build_assembles_boot2_and_preserves_string_defines() {
     )
     .unwrap();
     std::fs::create_dir(project.join("src")).unwrap();
-    std::fs::write(project.join("src/main.cpp"), r#"
+    std::fs::write(
+        project.join("src/main.cpp"),
+        r#"
 #include <Arduino.h>
 #include <string_view>
 constexpr char manufacturer[] = USB_MANUFACTURER;
@@ -34,7 +36,9 @@ static_assert(std::string_view(manufacturer) == "Raspberry Pi" &&
               std::string_view(product) == "Pico", "Pico USB strings survive compiler arguments");
 void setup() { pinMode(LED_BUILTIN, OUTPUT); }
 void loop() { digitalWrite(LED_BUILTIN, HIGH); }
-"#).unwrap();
+"#,
+    )
+    .unwrap();
     let build_dir = project
         .join(fbuild_paths::FBUILD_DIR_NAME)
         .join(fbuild_paths::BUILD_DIR_NAME)
