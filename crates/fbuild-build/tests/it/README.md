@@ -13,3 +13,7 @@ interrupt handler (including an LTO build), plus ClearCore vendor syscall linkag
 `renesas_acceptance` builds UNO R4 firmware using `String` and `IPAddress`
 and verifies that the supported default core supplied both source files.
 Run with `soldr cargo test -p fbuild-build --test it renesas_acceptance:: -- --ignored`.
+
+`rp2040_acceptance` builds a real default `pico` project, including boot2
+assembly and USB string definitions. Run it with
+`soldr cargo test -p fbuild-build --test it rp2040_acceptance:: -- --ignored`.

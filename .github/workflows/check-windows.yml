@@ -81,6 +81,13 @@ jobs:
         run: |
           soldr cargo test -p fbuild-build --test it renesas_acceptance:: -- --ignored --nocapture
 
+      - name: Build Pico boot2 and default firmware
+        shell: bash
+        env:
+          FBUILD_DEV_MODE: "1"
+        run: |
+          soldr cargo test -p fbuild-build --test it rp2040_acceptance:: -- --ignored --nocapture
+
       - name: Setup uv for legacy source package install
         uses: astral-sh/setup-uv@v3
 

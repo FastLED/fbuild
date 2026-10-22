@@ -55,6 +55,7 @@ struct Rp2040FingerprintMetadata {
     board_extra_flags: Option<String>,
     board_upload_protocol: Option<String>,
     board_menu_overrides: BTreeMap<String, String>,
+    board_defines: BTreeMap<String, String>,
     platform: String,
     max_flash: Option<u64>,
     max_ram: Option<u64>,
@@ -199,7 +200,14 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             &framework.get_boards_txt(),
             &board_id,
             &board_menu_overrides,
-        );
+        )
+        .or_else(|| {
+            crate::arduino_props::load_board_props_with_menu_overrides(
+                &framework.get_boards_txt(),
+                ctx.board.registry_board_id(),
+                &board_menu_overrides,
+            )
+        });
         let build_dir = ctx.build_dir.clone();
         let metadata_hash = stable_hash_with_build_config(
             &Rp2040FingerprintMetadata {
@@ -217,6 +225,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
                 board_extra_flags: ctx.board.extra_flags.clone(),
                 board_upload_protocol: ctx.board.upload_protocol.clone(),
                 board_menu_overrides: board_menu_overrides.into_iter().collect(),
+                board_defines: ctx.board.get_defines().into_iter().collect(),
                 platform: "raspberrypi".to_string(),
                 max_flash: ctx.board.max_flash,
                 max_ram: ctx.board.max_ram,
@@ -702,8 +711,6 @@ fn apply_rp_board_props(
         return;
     };
     for key in [
-        "usbvid",
-        "usbpid",
         "usbpwr",
         "usbstack_flags",
         "variantdefines",
@@ -800,15 +807,7 @@ fn add_rp_board_includes(
 }
 
 fn apply_define_flags(flags: &[String], defines: &mut HashMap<String, String>) {
-    for flag in flags {
-        if let Some(def) = flag.strip_prefix("-D") {
-            if let Some((key, val)) = def.split_once('=') {
-                defines.insert(key.to_string(), val.trim().to_string());
-            } else {
-                defines.insert(def.trim().to_string(), "1".to_string());
-            }
-        }
-    }
+    defines.extend(fbuild_core::compiler_flags::parse_define_flags(flags));
 }
 
 fn rp_family(mcu: &str) -> &'static str {
@@ -1096,6 +1095,7 @@ mod tests {
             board_extra_flags: None,
             board_upload_protocol: None,
             board_menu_overrides: BTreeMap::new(),
+            board_defines: BTreeMap::new(),
             platform: "raspberrypi".into(),
             max_flash: None,
             max_ram: None,
