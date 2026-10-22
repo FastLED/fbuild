@@ -22,8 +22,9 @@ async fn samd_sketch_architecture_and_interrupt_override() {
     for (board, flags) in [
         ("adafruit_feather_m0", ""),
         ("adafruit_feather_m4", "-flto"),
+        ("clearcore", ""),
     ] {
-        eprintln!("Building {board} with a sketch-provided EIC handler");
+        eprintln!("Building {board} with its firmware linkage regression");
         let tmp = tempfile::tempdir().unwrap();
         let project = tmp.path();
         std::fs::write(
@@ -32,8 +33,12 @@ async fn samd_sketch_architecture_and_interrupt_override() {
         )
         .unwrap();
         std::fs::create_dir(project.join("src")).unwrap();
-        std::fs::write(
-            project.join("src/main.cpp"),
+        let source = if board == "clearcore" {
+            include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/../../tests/platform/clearcore/src/main.ino"
+            ))
+        } else {
             r#"
 #include <Arduino.h>
 #if !defined(ARDUINO_ARCH_SAMD) || defined(ARDUINO_ARCH_SAM)
@@ -42,9 +47,9 @@ async fn samd_sketch_architecture_and_interrupt_override() {
 extern "C" void EIC_Handler(void) {}
 void setup() { pinMode(LED_BUILTIN, OUTPUT); }
 void loop() { digitalWrite(LED_BUILTIN, HIGH); }
-"#,
-        )
-        .unwrap();
+"#
+        };
+        std::fs::write(project.join("src/main.cpp"), source).unwrap();
         let params = BuildParams {
             project_dir: project.to_path_buf(),
             env_name: "samd".into(),

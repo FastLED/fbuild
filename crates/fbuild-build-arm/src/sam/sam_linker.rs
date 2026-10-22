@@ -25,6 +25,7 @@ pub struct SamLinker {
     verbose: bool,
     extra_lib_dirs: Vec<PathBuf>,
     extra_libs: Vec<String>,
+    group_archives: bool,
 }
 
 impl SamLinker {
@@ -54,7 +55,14 @@ impl SamLinker {
             verbose,
             extra_lib_dirs: Vec::new(),
             extra_libs: Vec::new(),
+            group_archives: false,
         }
+    }
+
+    /// Rescan archived cores and libraries only for cores built as archives.
+    pub fn with_archive_group(mut self, enabled: bool) -> Self {
+        self.group_archives = enabled;
+        self
     }
 
     /// Add extra library search directories (passed as `-L` to linker).
@@ -112,7 +120,9 @@ impl Linker for SamLinker {
 
         // Rescan archives so dependencies between core and library members
         // resolve without forcing unreferenced interrupt handlers into the ELF.
-        args.push("-Wl,--start-group".into());
+        if self.group_archives {
+            args.push("-Wl,--start-group".into());
+        }
         for archive in archives {
             args.push(archive.to_string_lossy().to_string());
         }
@@ -135,7 +145,9 @@ impl Linker for SamLinker {
         // Linker libraries from config
         args.extend(self.mcu_config.linker_libs.iter().cloned());
         args.extend(extra.libs.iter().cloned());
-        args.push("-Wl,--end-group".into());
+        if self.group_archives {
+            args.push("-Wl,--end-group".into());
+        }
 
         if self.verbose {
             tracing::debug!(target: "fbuild_build::linker::sam", "link: {}", args.join(" "));

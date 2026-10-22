@@ -557,6 +557,7 @@ impl BuildOrchestrator for SamOrchestrator {
             ctx.board.max_ram,
             params.verbose,
         );
+        linker = linker.with_archive_group(archive_core);
         linker.add_lib_dirs(library_dirs);
         linker.add_libs(libraries);
 
