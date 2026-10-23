@@ -256,6 +256,23 @@ impl Esp32Deployer {
         self
     }
 
+    /// Resolve the port esptool should flash. An ESP32-S2/S3 running a
+    /// TinyUSB CDC app (`ARDUINO_USB_MODE=0`) ignores esptool's DTR/RTS
+    /// reset, so it is touched at 1200 bps and the ROM download-mode
+    /// port it re-enumerates as is returned. Every other port is
+    /// returned unchanged. Errors when the device does not reappear.
+    pub async fn enter_download_mode(&self, port: &str) -> Result<String> {
+        let chip = self.chip.clone();
+        let port = port.to_string();
+        tokio::task::spawn_blocking(move || {
+            super::native_usb::enter_download_mode_blocking(&chip, &port)
+        })
+        .await
+        .map_err(|e| {
+            fbuild_core::FbuildError::DeployFailed(format!("download-mode entry task failed: {e}"))
+        })?
+    }
+
     /// The esptool program: the resolved path when one was supplied,
     /// otherwise the bare `esptool` command found on PATH.
     pub(super) fn find_esptool(&self) -> Vec<String> {
