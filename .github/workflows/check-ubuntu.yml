@@ -56,7 +56,7 @@ jobs:
           echo "PYTHONHOME=$PYTHONHOME" >> "$GITHUB_ENV"
       - name: Setup soldr
         id: setup-soldr
-        uses: zackees/setup-soldr@d17a58eb2cea17a89af0824fb7c6b24ee68f5083 # setup-soldr#565 exact-main promotion canary
+        uses: zackees/setup-soldr@6bf04d4196ee26fe9d51550187013a7f32955e20 # setup-soldr#582 exact-main promotion canary
         with:
           # Own build-cache store (setup-soldr#237): with no suffix this job
           # shared one Cargo.lock-keyed entry with ~10 other workflows, and
@@ -140,7 +140,7 @@ jobs:
         with:
           python-version: "3.10"
       - name: Setup soldr
-        uses: zackees/setup-soldr@d17a58eb2cea17a89af0824fb7c6b24ee68f5083 # setup-soldr#565 exact-main promotion canary
+        uses: zackees/setup-soldr@6bf04d4196ee26fe9d51550187013a7f32955e20 # setup-soldr#582 exact-main promotion canary
         with:
           cache-key-suffix: python-facades
           job-status: ${{ job.status }}
