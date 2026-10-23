@@ -507,7 +507,7 @@ pub async fn deploy(
     // Deploy
     let deploy_env = env_name.clone();
     let deploy_project = project_dir.clone();
-    let deploy_port = deploy_port_str.clone();
+    let mut deploy_port = deploy_port_str.clone();
     let deploy_fw = firmware_path.clone();
     let baud_override = req.baud_rate;
     let no_probe_rs = req.no_probe_rs;
@@ -638,6 +638,13 @@ pub async fn deploy(
                 let deployer = deployer
                     .with_native_verify(native_verify_enabled())
                     .with_native_write(native_write_enabled());
+
+                // ESP32-S2/S3 TinyUSB CDC apps need a 1200-bps touch to
+                // reach ROM download mode, and may re-enumerate at a new
+                // path; every later step (verify, write) uses the result.
+                if let Some(port) = deploy_port.as_deref() {
+                    deploy_port = Some(deployer.enter_download_mode(port).await?);
+                }
 
                 // Compute a deterministic SHA-256 over the three
                 // regions we'd otherwise verify-flash. Used twice

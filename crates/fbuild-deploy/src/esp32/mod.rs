@@ -16,6 +16,7 @@
 //! * `qemu`     — QEMU flash-image assembly and argv builders.
 //! * `image`    — ESP image header constants, byte patching, checksum
 //!   and SHA-256 trailer repair, and raw binary I/O helpers.
+//! * `native_usb` — 1200-bps bootloader entry for S2/S3 TinyUSB CDC apps.
 //! * `parse`    — Hex offset / flash-size string parsers shared across
 //!   the submodules.
 //!
@@ -24,6 +25,7 @@
 
 mod deployer;
 mod image;
+mod native_usb;
 mod parse;
 mod qemu;
 #[cfg(test)]
