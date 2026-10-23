@@ -639,13 +639,6 @@ pub async fn deploy(
                     .with_native_verify(native_verify_enabled())
                     .with_native_write(native_write_enabled());
 
-                // ESP32-S2/S3 TinyUSB CDC apps need a 1200-bps touch to
-                // reach ROM download mode, and may re-enumerate at a new
-                // path; every later step (verify, write) uses the result.
-                if let Some(port) = deploy_port.as_deref() {
-                    deploy_port = Some(deployer.enter_download_mode(port).await?);
-                }
-
                 // Compute a deterministic SHA-256 over the three
                 // regions we'd otherwise verify-flash. Used twice
                 // below: once to consult the daemon's trusted-hash
@@ -723,6 +716,14 @@ pub async fn deploy(
                 // Falls through to the normal flash path silently on
                 // mismatch or transport error so we never break a deploy
                 // that the verify call didn't understand.
+                // ESP32-S2/S3 TinyUSB CDC apps need a 1200-bps touch to
+                // reach ROM download mode, and may re-enumerate at a new
+                // path; verify and write use the result. The trusted-hash
+                // cache stays keyed to the requested (runtime) port.
+                let trust_port = deploy_port.clone();
+                if let Some(port) = deploy_port.as_deref() {
+                    deploy_port = Some(deployer.enter_download_mode(port).await?);
+                }
                 let mut selective_regions: Option<Vec<fbuild_deploy::esp32::FlashRegion>> = None;
                 if let Some(port) = deploy_port.as_deref() {
                     match deployer.try_verify_deployment(&deploy_fw, port).await {
@@ -786,17 +787,17 @@ pub async fn deploy(
                     // Record/invalidate the trusted hash based on
                     // the selective-flash outcome so the next warm
                     // redeploy can short-circuit via trust-skip.
-                    if let Some(hash) = image_hash {
+                    if let (Some(hash), Some(trust_port)) = (image_hash, trust_port.as_deref()) {
                         match &result {
                             Ok(r) if r.success => {
                                 ctx_for_deploy
                                     .device_manager
-                                    .set_trusted_firmware_hash(port, hash);
+                                    .set_trusted_firmware_hash(trust_port, hash);
                             }
                             _ => {
                                 ctx_for_deploy
                                     .device_manager
-                                    .clear_trusted_firmware_hash(port);
+                                    .clear_trusted_firmware_hash(trust_port);
                             }
                         }
                     }
@@ -817,7 +818,7 @@ pub async fn deploy(
                 // Stored here so the common tail after the `match`
                 // can reach it without re-threading every arm.
                 // (AVR / other arms leave it `None` → no-op.)
-                trusted_hash_update = image_hash.zip(deploy_port.as_deref().map(str::to_string));
+                trusted_hash_update = image_hash.zip(trust_port);
 
                 Box::new(deployer)
             }
