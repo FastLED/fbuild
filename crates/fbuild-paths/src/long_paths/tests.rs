@@ -38,7 +38,17 @@ fn tempdir() -> Fixture {
         fs::ensure_private_directory(&path).unwrap();
         Fixture { path, temp: None }
     } else {
-        let temp = tempfile::Builder::new().prefix("p").tempdir().unwrap();
+        // macOS's per-user TMPDIR (/var/folders/...) exceeds the short-root
+        // budget; /private/tmp is short and, unlike /tmp, not a symlink.
+        let base = if cfg!(target_os = "macos") {
+            std::path::PathBuf::from("/private/tmp")
+        } else {
+            std::env::temp_dir()
+        };
+        let temp = tempfile::Builder::new()
+            .prefix("p")
+            .tempdir_in(base)
+            .unwrap();
         Fixture {
             path: NormalizedPath::new(temp.path()),
             temp: Some(temp),
