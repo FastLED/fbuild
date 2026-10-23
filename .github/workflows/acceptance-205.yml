@@ -92,7 +92,7 @@ jobs:
           ref: ${{ inputs.ref }}
       - uses: astral-sh/setup-uv@v3
       - name: Setup soldr
-        uses: zackees/setup-soldr@v0
+        uses: zackees/setup-soldr@e81caae1d2ef1d9cf4cab44eb4a1e05f4bc341a6
         with:
           cache-key-suffix: acceptance-205-${{ matrix.test_bin }}
           cache: true
