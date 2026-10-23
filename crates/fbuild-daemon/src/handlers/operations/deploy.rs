@@ -556,6 +556,10 @@ pub async fn deploy(
         // returns to record or invalidate the daemon's trusted-hash
         // cache. Other platforms leave it `None`.
         let mut trusted_hash_update: Option<([u8; 32], String)> = None;
+        // Set by the Espressif32 arm when a TinyUSB bootloader touch moved
+        // flashing to a different ROM port: the app comes back on the
+        // requested runtime port, so report that one for monitoring.
+        let mut runtime_port_override: Option<String> = None;
         let deployer: Box<dyn fbuild_deploy::Deployer> = match platform {
             fbuild_core::Platform::Espressif32 => {
                 let board_config = fbuild_config::BoardConfig::from_board_id_or_default(
@@ -722,7 +726,11 @@ pub async fn deploy(
                 // cache stays keyed to the requested (runtime) port.
                 let trust_port = deploy_port.clone();
                 if let Some(port) = deploy_port.as_deref() {
-                    deploy_port = Some(deployer.enter_download_mode(port).await?);
+                    let resolved = deployer.enter_download_mode(port).await?;
+                    if resolved != port {
+                        runtime_port_override = Some(port.to_string());
+                    }
+                    deploy_port = Some(resolved);
                 }
                 let mut selective_regions: Option<Vec<fbuild_deploy::esp32::FlashRegion>> = None;
                 if let Some(port) = deploy_port.as_deref() {
@@ -803,7 +811,10 @@ pub async fn deploy(
                     }
                     // Selective flash did write to flash — return the
                     // deployer so post-deploy recovery runs.
-                    return result.map(|r| {
+                    return result.map(|mut r| {
+                        if let Some(runtime) = runtime_port_override {
+                            r.port = Some(runtime);
+                        }
                         let boxed: Box<dyn fbuild_deploy::Deployer> = Box::new(deployer);
                         (Some(boxed), r)
                     });
@@ -950,7 +961,12 @@ pub async fn deploy(
         }
         // Return the deployer so the async caller can invoke
         // `post_deploy_recovery` after `clear_preemption().await` (#605).
-        result.map(|r| (Some(deployer), r))
+        result.map(|mut r| {
+            if let Some(runtime) = runtime_port_override {
+                r.port = Some(runtime);
+            }
+            (Some(deployer), r)
+        })
     };
     let deploy_result: fbuild_core::Result<(
         Option<Box<dyn fbuild_deploy::Deployer>>,
