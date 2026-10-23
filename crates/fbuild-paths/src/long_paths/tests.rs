@@ -41,9 +41,9 @@ fn tempdir() -> Fixture {
         // macOS's per-user TMPDIR (/var/folders/...) exceeds the short-root
         // budget; /private/tmp is short and, unlike /tmp, not a symlink.
         let base = if fbuild_core::platform::host::is_macos() {
-            std::path::PathBuf::from("/private/tmp")
+            NormalizedPath::new("/private/tmp")
         } else {
-            std::env::temp_dir()
+            NormalizedPath::new(std::env::temp_dir())
         };
         let temp = tempfile::Builder::new()
             .prefix("p")
