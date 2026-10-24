@@ -231,6 +231,43 @@ async fn verify_once_rejects_the_wrong_version_every_time() {
     assert_eq!(spawn_count(&calls), 3, "a new expected version re-verifies");
 }
 
+/// A uv tool venv restored onto a runner whose interpreter path differs keeps
+/// `bin/esptool.py` but its `bin/python` symlink dangles (FastLED/fbuild#1655).
+#[tokio::test]
+async fn verify_once_rejects_a_stamped_venv_with_a_dangling_interpreter() {
+    if fbuild_core::platform::host::is_windows() {
+        return;
+    }
+    let tmp = tempfile::TempDir::new().unwrap();
+    let venv = tmp.path().join("tools/esptool");
+    let bin_dir = venv.join("bin");
+    std::fs::create_dir_all(&bin_dir).unwrap();
+    std::fs::write(venv.join("pyvenv.cfg"), "home = /usr/bin\n").unwrap();
+    let (stub, calls) = counting_esptool(tmp.path());
+    let bin = bin_dir.join("esptool.py");
+    std::fs::copy(&stub, &bin).unwrap();
+    let python = bin_dir.join("python");
+    std::fs::write(&python, "").unwrap();
+    busy_retry!(verify_esptool_once(&bin, tmp.path(), None)).unwrap();
+    assert_eq!(spawn_count(&calls), 1);
+
+    std::fs::remove_file(&python).unwrap();
+    fbuild_core::platform::fs::symlink_file(&tmp.path().join("gone/python3.10"), &python).unwrap();
+    let error = verify_esptool_once(&bin, tmp.path(), None)
+        .await
+        .unwrap_err()
+        .to_string();
+    assert!(error.contains("does not resolve"), "{error}");
+}
+
+#[test]
+fn missing_venv_interpreter_ignores_binaries_outside_a_venv() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let bin = tmp.path().join("esptool");
+    std::fs::write(&bin, "").unwrap();
+    assert_eq!(missing_venv_interpreter(&bin), None);
+}
+
 /// `FBUILD_ESPTOOL_PATH` is process-global; serialize the tests that touch
 /// it so a parallel run can't observe another test's value.
 static ESPTOOL_ENV_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
