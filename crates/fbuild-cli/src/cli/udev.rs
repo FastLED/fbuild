@@ -18,7 +18,7 @@
 //! This module only *renders* text. Installing is deliberately left to the
 //! caller: on NixOS `/etc` is generated from declarative config, so a written
 //! file there is both out-of-band and liable to be clobbered. What those users
-//! need is the content for `services.udev.extraRules`, not a mutation.
+//! need is the content for a `services.udev.packages` entry, not a mutation.
 
 /// Group granted access by generated rules. `plugdev` is the conventional
 /// choice for pluggable non-storage hardware and, unlike `dialout`, does not
@@ -110,8 +110,12 @@ pub fn render_udev_rules(vids: &[u16], group: Option<&str>) -> Option<String> {
         ));
     }
     out.push_str("#\n");
-    out.push_str("# On NixOS, paste the rules below into services.udev.extraRules instead;\n");
-    out.push_str("# /etc there is generated and a hand-written file will not persist.\n");
+    out.push_str("# On NixOS, ship the rules below as a services.udev.packages entry\n");
+    out.push_str(&format!(
+        "# (pkgs.writeTextDir \"lib/udev/rules.d/{UDEV_RULES_FILENAME}\" ...) instead;\n"
+    ));
+    out.push_str("# /etc there is generated, and services.udev.extraRules lands in\n");
+    out.push_str("# 99-local.rules, too late for uaccess.\n");
     out.push('\n');
 
     for vid in sorted {

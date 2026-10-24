@@ -359,13 +359,18 @@ pub fn run_install() -> Result<()> {
 }
 
 /// NixOS: the `/run` install is lost at reboot; this is the permanent form.
+/// It is a udev package rather than `services.udev.extraRules` because NixOS
+/// writes `extraRules` to `99-local.rules`, after `73-seat-late.rules`, so
+/// `uaccess` would never be applied (FastLED/fbuild#1654).
 pub fn nixos_snippet(rules: &str) -> String {
     let body: String = rules
         .lines()
         .filter(|l| l.starts_with("SUBSYSTEM=="))
-        .map(|l| format!("    {l}\n"))
+        .map(|l| format!("      {l}\n"))
         .collect();
-    format!("services.udev.extraRules = ''\n{body}'';\n")
+    format!(
+        "services.udev.packages = [\n  (pkgs.writeTextDir \"lib/udev/rules.d/{UDEV_RULES_FILENAME}\" ''\n{body}  '')\n];\n"
+    )
 }
 
 /// `/dev/bus/usb/BBB/DDD` nodes of attached devices from registry vendors
