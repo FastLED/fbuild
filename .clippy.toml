@@ -1,1 +1,17 @@
 msrv = "1.95.0"
+
+# Types that must never be held across an `.await` point
+# (enforced by clippy::await_holding_invalid_type, see Cargo.toml).
+await-holding-invalid-types = [
+    { path = "std::sync::MutexGuard", reason = "std mutex guard blocks the async worker; drop before .await or use tokio::sync::Mutex" },
+    { path = "std::sync::RwLockReadGuard", reason = "std rwlock guard blocks the async worker; drop before .await" },
+    { path = "std::sync::RwLockWriteGuard", reason = "std rwlock guard blocks the async worker; drop before .await" },
+    { path = "std::cell::Ref", reason = "RefCell borrow across .await panics on re-entrant borrow" },
+    { path = "std::cell::RefMut", reason = "RefCell borrow across .await panics on re-entrant borrow" },
+]
+
+# clippy::large_futures (warn, so fatal under -D warnings). The default 16 KiB
+# flags every build-orchestrator pipeline future (17-25 KiB of composed
+# state); 32 KiB still catches real mistakes such as a 64 KiB stack buffer
+# held across `.await`.
+future-size-threshold = 32768
