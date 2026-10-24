@@ -791,7 +791,9 @@ async fn bind_listener_with_retry(addr: &str) -> tokio::net::TcpListener {
                 }
                 tracing::warn!(
                     attempt,
-                    "bind to {} failed ({}); no listener present (stale state), retrying in 500ms",
+                    "bind to {} failed ({}); no listener present, so the port is held by \
+                     stale TIME_WAIT state or by another socket (e.g. an outgoing \
+                     connection's ephemeral port; FastLED/fbuild#1700), retrying in 500ms",
                     addr,
                     e
                 );
@@ -805,7 +807,9 @@ async fn bind_listener_with_retry(addr: &str) -> tokio::net::TcpListener {
     }
 
     eprintln!(
-        "failed to bind to {} after 3 attempts: {}",
+        "failed to bind to {} after 3 attempts: {}; nothing is listening there, so \
+         another socket (often an outgoing connection's ephemeral port) holds it; \
+         set FBUILD_DAEMON_PORT to use a different port (FastLED/fbuild#1700)",
         addr,
         last_err
             .map(|e| e.to_string())
