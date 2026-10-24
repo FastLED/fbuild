@@ -120,7 +120,7 @@ block fails CI with a copy-paste fix.
 
 ### Bumping soldr
 
-All `zackees/setup-soldr@v0` steps pin the installed soldr binary version.
+All `zackees/setup-soldr@66f483477ab2eb2b2a35d56bad1c5d2833247f6c` steps pin the installed soldr binary version.
 The full board template temporarily pins the setup action itself to merged
 commit `f63d8987580fd50667d95b19130e82d9691ddd75` as a downstream canary
 for setup-soldr#517 before the floating `v0` reference moves.
