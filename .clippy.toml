@@ -9,3 +9,9 @@ await-holding-invalid-types = [
     { path = "std::cell::Ref", reason = "RefCell borrow across .await panics on re-entrant borrow" },
     { path = "std::cell::RefMut", reason = "RefCell borrow across .await panics on re-entrant borrow" },
 ]
+
+# clippy::large_futures (warn, so fatal under -D warnings). The default 16 KiB
+# flags every build-orchestrator pipeline future (17-25 KiB of composed
+# state); 32 KiB still catches real mistakes such as a 64 KiB stack buffer
+# held across `.await`.
+future-size-threshold = 32768
