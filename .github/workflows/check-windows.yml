@@ -28,7 +28,7 @@ jobs:
     runs-on: windows-latest
     # Cold Windows workspace tests exceeded the old 30-minute cap in the
     # setup-soldr 0.9.25 full-coverage canary.
-    timeout-minutes: 45
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v6
         with:
