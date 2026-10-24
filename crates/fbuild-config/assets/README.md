@@ -2,6 +2,10 @@
 
 Embedded data files for fbuild-config.
 
+`sam_architectures.json` maps MCU prefixes to Arduino architecture names for
+the `atmelsam` platform. Longest prefix wins; the empty prefix is the classic
+SAM fallback. SAM D/E families use `ARDUINO_ARCH_SAMD` (FastLED/fbuild#1672).
+
 ## boards/
 
 Board database (1636 boards) from PlatformIO registry and vendor sources.

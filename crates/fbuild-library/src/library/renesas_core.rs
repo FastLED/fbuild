@@ -9,11 +9,14 @@ use std::path::{Path, PathBuf};
 
 use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 
-const RENESAS_CORE_VERSION: &str = "1.2.2";
+const RENESAS_CORE_VERSION: &str = "1.6.0";
 /// Arduino Board Manager archive — includes all submodules resolved.
 /// GitHub archive URLs exclude submodules (tinyusb, fsp, ArduinoCore-API are symlinks).
 const RENESAS_CORE_URL: &str =
-    "https://downloads.arduino.cc/cores/staging/ArduinoCore-renesas_uno-1.2.2.tar.bz2";
+    "https://downloads.arduino.cc/cores/staging/ArduinoCore-renesas_uno-1.6.0.tar.bz2";
+/// SHA-256 published in Arduino's package_index.json for renesas_uno 1.6.0.
+const RENESAS_CORE_SHA256: &str =
+    "71aa5d81f9455dbc2e8977b594963494e41466a8ed439a841b9d029b4aa31c8b";
 
 /// Arduino Renesas core framework manager.
 pub struct RenesasCores {
@@ -29,7 +32,7 @@ impl RenesasCores {
                 RENESAS_CORE_VERSION,
                 RENESAS_CORE_URL,
                 RENESAS_CORE_URL,
-                None,
+                Some(RENESAS_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
             ),
@@ -48,7 +51,7 @@ impl RenesasCores {
                 RENESAS_CORE_VERSION,
                 RENESAS_CORE_URL,
                 RENESAS_CORE_URL,
-                None,
+                Some(RENESAS_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
             )
@@ -65,7 +68,7 @@ impl RenesasCores {
                 RENESAS_CORE_VERSION,
                 RENESAS_CORE_URL,
                 RENESAS_CORE_URL,
-                None,
+                Some(RENESAS_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
                 cache_root,
@@ -276,6 +279,34 @@ fn collect_sources(dir: &Path) -> Vec<PathBuf> {
 mod tests {
     use super::*;
     use crate::Package;
+
+    #[test]
+    fn default_core_matches_supported_renesas_uno_release() {
+        let tmp = tempfile::tempdir().unwrap();
+        let info = RenesasCores::new(tmp.path()).get_info();
+        assert_eq!(info.version, "1.6.0");
+        assert_eq!(
+            info.url,
+            "https://downloads.arduino.cc/cores/staging/ArduinoCore-renesas_uno-1.6.0.tar.bz2"
+        );
+        assert_eq!(
+            info.checksum.as_deref(),
+            Some("71aa5d81f9455dbc2e8977b594963494e41466a8ed439a841b9d029b4aa31c8b")
+        );
+    }
+
+    #[test]
+    fn explicit_core_override_replaces_the_default_checksum() {
+        let tmp = tempfile::tempdir().unwrap();
+        let core = RenesasCores::with_override(
+            tmp.path(),
+            fbuild_config::PackageOverride::new("https://example.test/custom.tar.bz2", "custom"),
+        );
+        let info = core.get_info();
+        assert_eq!(info.version, "custom");
+        assert_eq!(info.url, "https://example.test/custom.tar.bz2");
+        assert_eq!(info.checksum, None);
+    }
 
     #[test]
     fn test_renesas_cores_not_installed() {

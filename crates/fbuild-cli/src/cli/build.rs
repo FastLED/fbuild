@@ -97,6 +97,7 @@ pub async fn run_build(
     }
     let (caller_pid, caller_cwd) = daemon_client::caller_info();
     let req = BuildRequest {
+        build_dir_override: daemon_client::capture_build_root(&project_dir),
         project_dir: project_dir.clone(),
         environment,
         clean_build: clean || clean_all,
@@ -114,9 +115,7 @@ pub async fn run_build(
         symbol_analysis: symbol_analysis.is_some(),
         symbol_analysis_path: symbol_analysis.filter(|s| !s.is_empty()),
         no_timestamp,
-        src_dir: std::env::var("PLATFORMIO_SRC_DIR")
-            .ok()
-            .filter(|s| !s.is_empty()),
+        src_dir: daemon_client::capture_src_dir(),
         caller_path: std::env::var("PATH").ok(),
         output_dir,
         pio_env: daemon_client::capture_pio_env(),

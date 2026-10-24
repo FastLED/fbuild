@@ -47,6 +47,21 @@ use super::usb_recovery::run_hidden_helper;
 pub async fn async_main() {
     let cli = Cli::parse_from(rewrite_args());
 
+    if cli.fix_win_helper {
+        if let Err(error) = super::windows_long_paths::run_helper() {
+            output::diagnostic(error);
+            std::process::exit(1);
+        }
+        return;
+    }
+    if cli.fix_win {
+        if let Err(error) = super::windows_long_paths::run_fix_win().await {
+            output::diagnostic(error);
+            std::process::exit(1);
+        }
+        return;
+    }
+
     // This must remain before tracing, environment capture, update checks, or
     // any daemon client call. The elevated helper is a one-shot PnP process,
     // never an alternate daemon host. FastLED/fbuild#1148.
@@ -61,6 +76,15 @@ pub async fn async_main() {
     tracing_subscriber::fmt()
         .with_env_filter(tracing_subscriber::EnvFilter::from_default_env())
         .init();
+
+    match super::windows_long_paths::prepare(&cli).await {
+        Ok(Some(code)) => std::process::exit(code),
+        Ok(None) => {}
+        Err(error) => {
+            output::diagnostic(error);
+            std::process::exit(1);
+        }
+    }
 
     // Scan caller's environment for `PLATFORMIO_*` vars and warn about any
     // that fbuild does not act on, so users aren't bitten by silent

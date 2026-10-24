@@ -155,6 +155,15 @@ libraries from the candidates unless `ENABLE_CLASSIC` is set by the
 `ipbtstack` menu or `build_flags`; a `lib_deps` entry still selects one
 (`crates/fbuild-build-arm/src/rp2040/bluetooth_libs.rs`).
 
+The same applies to Arduino-Pico's bundled `Adafruit_TinyUSB_Arduino`, whose
+API header `#error`s unless `USE_TINYUSB` (the TinyUSB USB-stack menu) is
+defined. The core's `SPI`, `SD` and `LittleFS` sources include it behind
+`#ifdef USE_TINYUSB`, and a FastLED 3.10.8 Pico build in `lib/` selected it
+through them and failed (FastLED/fbuild#1719). A library with an `#error` under a `!defined(USE_TINYUSB)`
+guard is dropped from the candidates unless `USE_TINYUSB` is defined; a
+`lib_deps` entry still selects it
+(`crates/fbuild-build-arm/src/rp2040/tinyusb_libs.rs`).
+
 ## Why two-pass (not fixed-point)
 
 PlatformIO `chain` mode runs BFS from project sources, then ONE

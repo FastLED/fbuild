@@ -82,7 +82,7 @@ pub enum PortAction {
         group: Option<String>,
         /// Install the rules (asks for root with the desktop's polkit dialog,
         /// or sudo on a terminal). On NixOS they go to /run/udev/rules.d and
-        /// the permanent `services.udev.extraRules` form is printed.
+        /// the permanent `services.udev.packages` form is printed.
         #[arg(long, conflicts_with = "group")]
         install: bool,
     },

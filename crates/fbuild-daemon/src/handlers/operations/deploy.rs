@@ -507,7 +507,7 @@ pub async fn deploy(
     // Deploy
     let deploy_env = env_name.clone();
     let deploy_project = project_dir.clone();
-    let deploy_port = deploy_port_str.clone();
+    let mut deploy_port = deploy_port_str.clone();
     let deploy_fw = firmware_path.clone();
     let baud_override = req.baud_rate;
     let no_probe_rs = req.no_probe_rs;
@@ -556,6 +556,10 @@ pub async fn deploy(
         // returns to record or invalidate the daemon's trusted-hash
         // cache. Other platforms leave it `None`.
         let mut trusted_hash_update: Option<([u8; 32], String)> = None;
+        // Set by the Espressif32 arm when a TinyUSB bootloader touch moved
+        // flashing to a different ROM port: the app comes back on the
+        // requested runtime port, so report that one for monitoring.
+        let mut runtime_port_override: Option<String> = None;
         let deployer: Box<dyn fbuild_deploy::Deployer> = match platform {
             fbuild_core::Platform::Espressif32 => {
                 let board_config = fbuild_config::BoardConfig::from_board_id_or_default(
@@ -716,6 +720,18 @@ pub async fn deploy(
                 // Falls through to the normal flash path silently on
                 // mismatch or transport error so we never break a deploy
                 // that the verify call didn't understand.
+                // ESP32-S2/S3 TinyUSB CDC apps need a 1200-bps touch to
+                // reach ROM download mode, and may re-enumerate at a new
+                // path; verify and write use the result. The trusted-hash
+                // cache stays keyed to the requested (runtime) port.
+                let trust_port = deploy_port.clone();
+                if let Some(port) = deploy_port.as_deref() {
+                    let resolved = deployer.enter_download_mode(port).await?;
+                    if resolved != port {
+                        runtime_port_override = Some(port.to_string());
+                    }
+                    deploy_port = Some(resolved);
+                }
                 let mut selective_regions: Option<Vec<fbuild_deploy::esp32::FlashRegion>> = None;
                 if let Some(port) = deploy_port.as_deref() {
                     match deployer.try_verify_deployment(&deploy_fw, port).await {
@@ -779,23 +795,26 @@ pub async fn deploy(
                     // Record/invalidate the trusted hash based on
                     // the selective-flash outcome so the next warm
                     // redeploy can short-circuit via trust-skip.
-                    if let Some(hash) = image_hash {
+                    if let (Some(hash), Some(trust_port)) = (image_hash, trust_port.as_deref()) {
                         match &result {
                             Ok(r) if r.success => {
                                 ctx_for_deploy
                                     .device_manager
-                                    .set_trusted_firmware_hash(port, hash);
+                                    .set_trusted_firmware_hash(trust_port, hash);
                             }
                             _ => {
                                 ctx_for_deploy
                                     .device_manager
-                                    .clear_trusted_firmware_hash(port);
+                                    .clear_trusted_firmware_hash(trust_port);
                             }
                         }
                     }
                     // Selective flash did write to flash — return the
                     // deployer so post-deploy recovery runs.
-                    return result.map(|r| {
+                    return result.map(|mut r| {
+                        if let Some(runtime) = runtime_port_override {
+                            r.port = Some(runtime);
+                        }
                         let boxed: Box<dyn fbuild_deploy::Deployer> = Box::new(deployer);
                         (Some(boxed), r)
                     });
@@ -810,7 +829,7 @@ pub async fn deploy(
                 // Stored here so the common tail after the `match`
                 // can reach it without re-threading every arm.
                 // (AVR / other arms leave it `None` → no-op.)
-                trusted_hash_update = image_hash.zip(deploy_port.as_deref().map(str::to_string));
+                trusted_hash_update = image_hash.zip(trust_port);
 
                 Box::new(deployer)
             }
@@ -942,7 +961,12 @@ pub async fn deploy(
         }
         // Return the deployer so the async caller can invoke
         // `post_deploy_recovery` after `clear_preemption().await` (#605).
-        result.map(|r| (Some(deployer), r))
+        result.map(|mut r| {
+            if let Some(runtime) = runtime_port_override {
+                r.port = Some(runtime);
+            }
+            (Some(deployer), r)
+        })
     };
     let deploy_result: fbuild_core::Result<(
         Option<Box<dyn fbuild_deploy::Deployer>>,

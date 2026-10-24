@@ -35,6 +35,27 @@ fn test_from_board_id_uno() {
 }
 
 #[test]
+fn sam_architecture_defines_match_the_mcu_family() {
+    for (mcu, expected, absent) in [
+        ("samd21g18a", "ARDUINO_ARCH_SAMD", "ARDUINO_ARCH_SAM"),
+        ("samd51j19a", "ARDUINO_ARCH_SAMD", "ARDUINO_ARCH_SAM"),
+        ("same53n19a", "ARDUINO_ARCH_SAMD", "ARDUINO_ARCH_SAM"),
+        ("SAMD21G18A", "ARDUINO_ARCH_SAMD", "ARDUINO_ARCH_SAM"),
+        ("at91sam3x8e", "ARDUINO_ARCH_SAM", "ARDUINO_ARCH_SAMD"),
+    ] {
+        let mut board = BoardConfig::from_board_id("due", &HashMap::new()).unwrap();
+        board.mcu = mcu.into();
+        let defines = board.get_defines();
+        assert_eq!(
+            defines.get(expected).map(String::as_str),
+            Some("1"),
+            "{mcu}"
+        );
+        assert!(!defines.contains_key(absent), "{mcu}: {defines:?}");
+    }
+}
+
+#[test]
 fn test_from_board_id_arduino_uno_q() {
     let config = BoardConfig::from_board_id("arduino_uno_q", &HashMap::new()).unwrap();
     assert_eq!(config.name, "Arduino UNO Q");
@@ -258,6 +279,21 @@ fn test_get_defines_with_extra_flags() {
     let defines = config.get_defines();
     assert_eq!(defines.get("CUSTOM_FLAG"), Some(&"1".to_string()));
     assert_eq!(defines.get("VALUE"), Some(&"42".to_string()));
+}
+
+#[test]
+fn pico_spaced_board_define_does_not_create_an_empty_macro() {
+    let board = BoardConfig::from_board_id("pico", &HashMap::new()).unwrap();
+    assert_eq!(board.variant, "RASPBERRY_PI_PICO");
+    let defines = board.get_defines();
+    assert_eq!(
+        defines.get("ARDUINO_RASPBERRY_PI_PICO").map(String::as_str),
+        Some("1")
+    );
+    assert!(
+        !defines.contains_key(""),
+        "a bare -D corrupts boot2 assembly"
+    );
 }
 
 #[test]

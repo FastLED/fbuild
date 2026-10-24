@@ -43,6 +43,9 @@ crates/fbuild-deploy/src/lpc.rs
 # RP2040 bootloader reset/mount handling opens the board's raw serial endpoint
 # during the deploy state transition; migrate with the remaining native paths.
 crates/fbuild-deploy/src/rp2040.rs
+# ESP32-S2/S3 TinyUSB 1200-bps bootloader touch is a one-shot raw open during
+# the deploy state transition (same shape as the RP2040 touch above).
+crates/fbuild-deploy/src/esp32/native_usb.rs
 
 # LPC SWD path: read-only VID/PID enumeration to decide whether probe-rs can run; no serial handle is opened.
 crates/fbuild-deploy/src/probe_rs.rs

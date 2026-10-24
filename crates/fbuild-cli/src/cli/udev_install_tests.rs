@@ -184,6 +184,6 @@ fn nixos_snippet_wraps_only_the_rules() {
     let s = nixos_snippet("# header\nSUBSYSTEM==\"usb\", X\n");
     assert_eq!(
         s,
-        "services.udev.extraRules = ''\n    SUBSYSTEM==\"usb\", X\n'';\n"
+        "services.udev.packages = [\n  (pkgs.writeTextDir \"lib/udev/rules.d/70-fbuild.rules\" ''\n      SUBSYSTEM==\"usb\", X\n  '')\n];\n"
     );
 }

@@ -73,13 +73,22 @@ pub fn caller_info() -> (Option<u32>, Option<String>) {
     (pid, cwd)
 }
 
-/// Snapshot all `PLATFORMIO_*` env vars from the current process environment.
-///
-/// This is the only place in the codebase where `std::env::vars()` is consulted
-/// for `PLATFORMIO_*` keys (other than `fbuild-paths` startup fallbacks). The
-/// returned map is forwarded to the daemon over HTTP via `BuildRequest.pio_env`
-/// / `DeployRequest.pio_env`, since the daemon process does not inherit caller
-/// env vars.
+/// Capture this caller's selected build root for the request, including fallback.
+pub fn capture_build_root(project_dir: &str) -> Option<String> {
+    Some(
+        fbuild_paths::get_project_build_root(std::path::Path::new(project_dir))
+            .to_string_lossy()
+            .into_owned(),
+    )
+}
+
+pub fn capture_src_dir() -> Option<String> {
+    std::env::var("PLATFORMIO_SRC_DIR")
+        .ok()
+        .filter(|dir| !dir.is_empty())
+}
+
+/// Snapshot caller `PLATFORMIO_*` variables for the daemon request.
 pub fn capture_pio_env() -> BTreeMap<String, String> {
     std::env::vars()
         .filter(|(k, _)| k.starts_with("PLATFORMIO_"))
@@ -432,7 +441,11 @@ impl DaemonClient {
                     match event.event_type.as_str() {
                         "log" => {
                             if let Some(msg) = event.message {
-                                println!("{}", msg);
+                                if msg.starts_with("WARNING:") {
+                                    crate::output::visible_warning(msg);
+                                } else {
+                                    println!("{}", msg);
+                                }
                             }
                         }
                         "status" => {
@@ -527,6 +540,28 @@ impl DaemonClient {
                 "shutdown failed with {status}: {body}"
             )));
         }
+        Ok(())
+    }
+
+    /// Close admission and drain existing HTTP operations; never force-kill.
+    pub async fn shutdown_gracefully(&self) -> fbuild_core::Result<()> {
+        self.client
+            .post(format!("{}/api/daemon/shutdown?force=true", self.base_url))
+            .headers(shutdown_caller_headers())
+            .timeout(std::time::Duration::from_secs(10))
+            .send()
+            .await
+            .map_err(|error| {
+                fbuild_core::FbuildError::DaemonError(format!(
+                    "daemon drain request failed: {error}"
+                ))
+            })?
+            .error_for_status()
+            .map_err(|error| {
+                fbuild_core::FbuildError::DaemonError(format!(
+                    "daemon refused graceful drain: {error}"
+                ))
+            })?;
         Ok(())
     }
 
@@ -831,10 +866,50 @@ async fn same_running_image(
 /// If the daemon binary has been updated since the running daemon started,
 /// gracefully restart it (stale source detection, matching Python behavior).
 pub async fn ensure_daemon_running() -> fbuild_core::Result<()> {
-    if try_acquire_broker_daemon().await? {
-        return Ok(());
+    if fbuild_core::platform::host::is_windows()
+        && fbuild_paths::long_paths::current_resolution().is_none()
+    {
+        tokio::task::spawn_blocking(fbuild_paths::long_paths::initialize)
+            .await
+            .map_err(|error| {
+                fbuild_core::FbuildError::Other(format!("path selection worker failed: {error}"))
+            })??;
     }
-    ensure_direct_daemon_running().await
+    for attempt in 0..3 {
+        crate::cli::windows_long_paths::reconcile_daemon_owner().await?;
+        if !try_acquire_broker_daemon().await? {
+            ensure_direct_daemon_running().await?;
+        }
+        if !fbuild_core::platform::host::is_windows() {
+            return Ok(());
+        }
+        let info = DaemonClient::new().daemon_info().await?;
+        let current = fbuild_paths::long_paths::probe();
+        if let Some(resolution) = fbuild_paths::long_paths::current_resolution() {
+            if resolution.observation.status_key() != current.status_key() {
+                return Err(fbuild_core::FbuildError::DaemonError(
+                    "Windows long-path setting changed during this command. Rerun it to select paths in a fresh process.".into(),
+                ));
+            }
+        }
+        if daemon_cache_identity_error(&info).is_none()
+            && !crate::cli::windows_long_paths::setting_changed(
+                info.long_path_support.as_ref(),
+                &current,
+            )
+        {
+            return Ok(());
+        }
+        if attempt < 2 {
+            crate::output::visible_warning(
+                "Another invocation changed Windows path settings while the daemon started. Renegotiating before submitting work.",
+            );
+        }
+    }
+    Err(fbuild_core::FbuildError::DaemonError(
+        "Windows path settings are changing repeatedly. Retry when the other invocation finishes."
+            .into(),
+    ))
 }
 
 async fn try_acquire_broker_daemon() -> fbuild_core::Result<bool> {
@@ -941,6 +1016,12 @@ async fn ensure_direct_daemon_running() -> fbuild_core::Result<()> {
     }
 
     let sibling = restart_diag::SiblingDaemon::discover();
+    if fbuild_core::platform::host::is_windows() && client.health().await {
+        let info = client.daemon_info().await?;
+        if let Some(error) = daemon_cache_identity_error(&info) {
+            return Err(fbuild_core::FbuildError::DaemonError(error));
+        }
+    }
     let restarted = match probe_running_daemon(&client, &sibling).await {
         DaemonProbe::Keep => return Ok(()),
         DaemonProbe::Restarted => true,

@@ -297,18 +297,9 @@ impl BoardConfig {
 
         // Extra flags
         if let Some(ref flags) = self.extra_flags {
-            for flag in fbuild_core::shell_split::split(flags) {
-                if let Some(define) = flag.strip_prefix("-D") {
-                    if let Some(eq_pos) = define.find('=') {
-                        defines.insert(
-                            define[..eq_pos].to_string(),
-                            define[eq_pos + 1..].to_string(),
-                        );
-                    } else {
-                        defines.insert(define.to_string(), "1".to_string());
-                    }
-                }
-            }
+            defines.extend(fbuild_core::compiler_flags::parse_define_flags(
+                &fbuild_core::shell_split::split(flags),
+            ));
         }
 
         defines
@@ -336,13 +327,30 @@ impl BoardConfig {
             Some(fbuild_core::Platform::RenesasRa) => "RENESAS".to_string(),
             Some(fbuild_core::Platform::SiliconLabs) => "SILABS".to_string(),
             Some(fbuild_core::Platform::Ststm32) => "STM32".to_string(),
-            Some(fbuild_core::Platform::AtmelSam) => "SAM".to_string(),
+            Some(fbuild_core::Platform::AtmelSam) => sam_architecture(&self.mcu),
             Some(fbuild_core::Platform::Teensy) => "TEENSY".to_string(),
             Some(fbuild_core::Platform::Ch32v) => "CH32V".to_string(),
             Some(fbuild_core::Platform::Apollo3) => "APOLLO3".to_string(),
             Some(fbuild_core::Platform::Wasm) | None => String::new(),
         }
     }
+}
+
+/// Arduino's SAM platform contains both classic SAM and SAM D/E cores.
+/// Longest-prefix matching keeps family selection in the embedded data.
+fn sam_architecture(mcu: &str) -> String {
+    static ARCHITECTURES: std::sync::OnceLock<HashMap<String, String>> = std::sync::OnceLock::new();
+    let architectures = ARCHITECTURES.get_or_init(|| {
+        serde_json::from_str(include_str!("../../assets/sam_architectures.json"))
+            .expect("valid embedded SAM architecture mapping")
+    });
+    let mcu = mcu.to_ascii_lowercase();
+    architectures
+        .iter()
+        .filter(|(prefix, _)| mcu.starts_with(prefix.as_str()))
+        .max_by_key(|(prefix, _)| prefix.len())
+        .map(|(_, architecture)| architecture.clone())
+        .unwrap_or_default()
 }
 
 fn extra_flags_contain_define(extra_flags: &str, define: &str) -> bool {

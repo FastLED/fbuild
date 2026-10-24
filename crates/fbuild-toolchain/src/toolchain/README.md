@@ -12,3 +12,5 @@ Platform-specific toolchain management: download, cache, and provide tool paths 
 - **`esp32_metadata.rs`** -- Resolves ESP32 toolchain URLs from `tools.json` metadata packages
 - **`esp8266.rs`** -- ESP8266 Xtensa LX106 GCC from esp-quick-toolchain releases
 - **`clang.rs`** -- LLVM/Clang toolchain components (clang, clang-tidy, include-what-you-use)
+
+- **`gcc.rs`** -- Queries the selected GCC C++ multilib and canonicalizes system-header search paths for relocated Windows toolchains (#1701).

@@ -285,32 +285,51 @@ impl Esptool {
         let install_path = base.staged_install(validate_source_esptool).await?;
         validate_source_esptool(&install_path)?;
         let binary = source_esptool_path(&install_path);
-        if !binary.is_file() {
-            let tool_dir = source_tools_dir(&install_path);
-            let bin_dir = source_bin_dir(&install_path);
-            let tool_dir_arg = tool_dir.to_string_lossy();
-            let bin_dir_arg = bin_dir.to_string_lossy();
-            let source_arg = install_path.to_string_lossy();
-            let env = [
-                ("UV_TOOL_DIR", tool_dir_arg.as_ref()),
-                ("UV_TOOL_BIN_DIR", bin_dir_arg.as_ref()),
-            ];
-            run_uv(
-                &["uv", "tool", "install", "--python", "3.10", &source_arg],
-                Some(&env),
+        let tool_dir = source_tools_dir(&install_path);
+        let bin_dir = source_bin_dir(&install_path);
+        // A cache restored onto a runner with a different interpreter path
+        // keeps the venv but leaves its `bin/python` dangling; reinstall once
+        // instead of failing the build at elf2image (FastLED/fbuild#1655).
+        for attempt in 0..2 {
+            if !binary.is_file() {
+                let tool_dir_arg = tool_dir.to_string_lossy();
+                let bin_dir_arg = bin_dir.to_string_lossy();
+                let source_arg = install_path.to_string_lossy();
+                let env = [
+                    ("UV_TOOL_DIR", tool_dir_arg.as_ref()),
+                    ("UV_TOOL_BIN_DIR", bin_dir_arg.as_ref()),
+                ];
+                run_uv(
+                    &["uv", "tool", "install", "--python", "3.10", &source_arg],
+                    Some(&env),
+                )
+                .await?;
+            }
+            match verify_esptool_once(
+                &binary,
+                &install_path,
+                self.expected_runtime_version.as_deref(),
             )
-            .await?;
+            .await
+            {
+                Ok(()) => return Ok(binary),
+                Err(error) if attempt == 0 => {
+                    tracing::warn!(
+                        path = %tool_dir.display(),
+                        %error,
+                        "reinstalling unusable cached esptool environment"
+                    );
+                    remove_cached_install(&tool_dir)?;
+                    remove_cached_install(&bin_dir)?;
+                }
+                Err(error) => {
+                    return Err(FbuildError::PackageError(format!(
+                        "pinned esptool archive {url}: {error}"
+                    )));
+                }
+            }
         }
-        verify_esptool_once(
-            &binary,
-            &install_path,
-            self.expected_runtime_version.as_deref(),
-        )
-        .await
-        .map_err(|error| {
-            FbuildError::PackageError(format!("pinned esptool archive {url}: {error}"))
-        })?;
-        Ok(binary)
+        unreachable!("the second attempt always returns")
     }
 }
 
@@ -433,6 +452,15 @@ async fn verify_esptool_once(
     expected_version: Option<&str>,
 ) -> Result<()> {
     let stamp_path = install.join(VERIFIED_STAMP);
+    // The stamp only covers the launcher script, not the venv interpreter it
+    // execs, so check that separately without spawning anything.
+    if let Some(python) = missing_venv_interpreter(bin) {
+        return Err(FbuildError::PackageError(format!(
+            "cached esptool launcher {} needs venv interpreter {}, which does not resolve",
+            bin.display(),
+            python.display()
+        )));
+    }
     let stamp = verified_stamp(bin, expected_version);
     if stamp.is_some() && std::fs::read_to_string(&stamp_path).ok() == stamp {
         return Ok(());
@@ -453,6 +481,24 @@ async fn verify_esptool_once(
         }
     }
     Ok(())
+}
+
+/// The interpreter of the venv `bin` lives in, when that venv's interpreter
+/// is absent or a dangling symlink. `None` for a binary outside a venv
+/// (the standalone tasmota build) or a healthy one.
+fn missing_venv_interpreter(bin: &Path) -> Option<NormalizedPath> {
+    let bin_dir = bin.parent()?;
+    if !bin_dir.parent()?.join("pyvenv.cfg").is_file() {
+        return None;
+    }
+    let python = bin_dir.join(fbuild_core::platform::executable::name(
+        "python",
+        "python.exe",
+    ));
+    // `metadata` follows symlinks, so a dangling launcher fails here.
+    std::fs::metadata(&python)
+        .is_err()
+        .then(|| NormalizedPath::new(python))
 }
 
 fn verified_stamp(bin: &Path, expected_version: Option<&str>) -> Option<String> {

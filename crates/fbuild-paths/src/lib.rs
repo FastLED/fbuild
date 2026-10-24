@@ -10,6 +10,7 @@ use fbuild_core::BuildProfile;
 pub mod daemon_ownership;
 pub mod dev_daemon_namespace;
 pub mod executable_hash;
+pub mod long_paths;
 pub mod running_process;
 
 /// The project-local and home-local fbuild directory segment: `.fbuild`.
@@ -35,6 +36,9 @@ pub const BUILD_DIR_NAME: &str = "build";
 
 /// Check if running in development mode.
 pub fn is_dev_mode() -> bool {
+    if let Some(resolution) = long_paths::current_resolution() {
+        return resolution.dev_mode;
+    }
     std::env::var("FBUILD_DEV_MODE")
         .map(|v| v == "1")
         .unwrap_or(false)
@@ -55,6 +59,9 @@ pub fn get_fbuild_root() -> PathBuf {
 /// so a home-less environment is a diagnosable failure and not a crash; they
 /// had each hand-rolled this path to keep that property (FastLED/fbuild#1349).
 pub fn try_get_fbuild_root() -> Option<PathBuf> {
+    if let Some(resolution) = long_paths::current_resolution() {
+        return Some(resolution.fbuild_root.clone().into_path_buf());
+    }
     let mode = if is_dev_mode() { "dev" } else { "prod" };
     Some(dirs_next()?.join(FBUILD_DIR_NAME).join(mode))
 }
@@ -95,7 +102,10 @@ pub fn tools_dir_label() -> String {
 /// If current mode is dev, returns prod root, and vice versa.
 /// Used for cross-mode daemon discovery.
 pub fn get_other_fbuild_root() -> PathBuf {
-    let home = dirs_next().expect("could not determine home directory");
+    let home = long_paths::current_resolution()
+        .map(|resolution| resolution.home.clone().into_path_buf())
+        .or_else(dirs_next)
+        .expect("could not determine home directory");
     let mode = if is_dev_mode() { "prod" } else { "dev" };
     home.join(FBUILD_DIR_NAME).join(mode)
 }
@@ -186,7 +196,13 @@ pub fn get_daemon_status_file() -> PathBuf {
 }
 
 /// Global cache root (or `FBUILD_CACHE_DIR` override).
+///
+/// After [`long_paths::initialize`], returns the fixed effective selection,
+/// including a Windows short-path fallback when required.
 pub fn get_cache_root() -> PathBuf {
+    if let Some(resolution) = long_paths::current_resolution() {
+        return resolution.cache_root.clone().into_path_buf();
+    }
     if let Ok(dir) = std::env::var("FBUILD_CACHE_DIR") {
         return PathBuf::from(dir);
     }
@@ -195,7 +211,8 @@ pub fn get_cache_root() -> PathBuf {
 
 /// Root directory for short-lived working / scratch dirs.
 ///
-/// FastLED/fbuild#844 ("Bridge pair 10"). Returns `~/.fbuild/{dev|prod}/tmp`.
+/// FastLED/fbuild#844 ("Bridge pair 10"). Defaults to `~/.fbuild/{dev|prod}/tmp`;
+/// an initialized Windows fallback uses its short extraction scratch root.
 /// This is the rooted alternative to `std::env::temp_dir()` and
 /// `tempfile::tempdir()`; per-platform package extractors, framework
 /// hydration, linker scratch dirs, etc. all live under this root so
@@ -205,6 +222,9 @@ pub fn get_cache_root() -> PathBuf {
 /// Note: this does NOT create the directory — pair with
 /// [`temp_subdir`] for the create-on-use pattern.
 pub fn dev_or_prod_temp_root() -> PathBuf {
+    if let Some(resolution) = long_paths::current_resolution() {
+        return resolution.scratch_root.clone().into_path_buf();
+    }
     get_fbuild_root().join("tmp")
 }
 
@@ -231,7 +251,20 @@ pub fn get_project_fbuild_dir(project_dir: &Path) -> PathBuf {
 /// 1. `FBUILD_BUILD_DIR` environment variable (explicit override, useful for
 ///    Windows where long project paths can exceed the 260 character limit)
 /// 2. Default: `<project_dir>/.fbuild/build/`
+///
+/// An initialized Windows fallback redirects deep roots to a directory keyed
+/// by the normalized project and requested root under its short build root.
 pub fn get_project_build_root(project_dir: &Path) -> PathBuf {
+    if let Some(resolution) = long_paths::current_resolution() {
+        let requested = resolution
+            .build_override
+            .clone()
+            .map(|root| root.into_path_buf())
+            .unwrap_or_else(|| get_project_fbuild_dir(project_dir).join(BUILD_DIR_NAME));
+        return resolution
+            .resolve_build_root(project_dir, &requested)
+            .into_path_buf();
+    }
     if let Ok(dir) = std::env::var("FBUILD_BUILD_DIR") {
         return PathBuf::from(dir);
     }
@@ -254,6 +287,9 @@ pub fn get_project_build_root(project_dir: &Path) -> PathBuf {
 /// 2. `FBUILD_BUILD_DIR` env var (process-wide override, primarily for
 ///    Windows long-path workarounds).
 /// 3. `<project_dir>/.fbuild/build` (the default).
+///
+/// When the Windows fallback is active, the selected root is shortened if
+/// needed before appending the environment/profile segments.
 ///
 /// The `<env>/<profile>` segments are appended on top of whichever
 /// root was selected, *unless* `flatten_env` is true or the
@@ -315,11 +351,9 @@ impl BuildLayout {
     /// Resolve the env-rooted build directory.
     pub fn resolve(&self) -> PathBuf {
         let root = if let Some(ref r) = self.override_root {
-            r.clone()
-        } else if let Ok(dir) = std::env::var("FBUILD_BUILD_DIR") {
-            PathBuf::from(dir)
+            long_paths::resolve_build_root(&self.project_dir, r).into_path_buf()
         } else {
-            get_project_fbuild_dir(&self.project_dir).join(BUILD_DIR_NAME)
+            get_project_build_root(&self.project_dir)
         };
 
         let collapse_env = self.flatten_env || self.project_basename_matches_env();
@@ -514,6 +548,11 @@ fn dirs_next() -> Option<PathBuf> {
     } else {
         std::env::var("HOME").ok().map(PathBuf::from)
     }
+}
+
+/// Normalize the legacy home-directory boundary for new path resolvers.
+pub(crate) fn normalized_home() -> Option<fbuild_core::path::NormalizedPath> {
+    dirs_next().map(fbuild_core::path::NormalizedPath::new)
 }
 
 #[cfg(test)]

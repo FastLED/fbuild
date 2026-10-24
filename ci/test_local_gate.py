@@ -24,13 +24,12 @@ class RunProofTests(unittest.TestCase):
             "done",
             "success",
             0,
-            3,
-            3,
+            2,
+            2,
             0,
             (
                 JobProof("check", "completed", "success"),
                 JobProof("python-facade-tests", "completed", "success"),
-                JobProof("verify", "completed", "success"),
             ),
         )
 
@@ -51,7 +50,7 @@ class RunProofTests(unittest.TestCase):
             "state": "done",
             "conclusion": "success",
             "exit_code": 0,
-            "jobs": {"total": 3, "completed": 3, "failed": 0},
+            "jobs": {"total": 2, "completed": 2, "failed": 0},
             "tree": {
                 "malformed_lines": 0,
                 "groups": [
@@ -85,13 +84,13 @@ class RunProofTests(unittest.TestCase):
                 replace(self.proof, jobs=self.proof.jobs[:1]), self.root, self.sha
             )
 
-    def test_missing_verifier_dependency_cannot_prove_the_selected_graph(self) -> None:
-        # --job linux also selects its ci-minimal.yml verify prerequisite.
+    def test_advisory_verifier_is_not_part_of_linux_proof(self) -> None:
+        verify_run(self.proof, self.root, self.sha)
         with self.assertRaises(ValueError):
             verify_run(
-                replace(self.proof, total=2, completed=2, jobs=self.proof.jobs[:2]),
-                self.root,
-                self.sha,
+                replace(self.proof, total=3, completed=3,
+                        jobs=(*self.proof.jobs, JobProof("verify", "completed", "success"))),
+                self.root, self.sha,
             )
 
     def test_failed_or_skipped_python_suite_fails(self) -> None:
@@ -100,7 +99,6 @@ class RunProofTests(unittest.TestCase):
                 jobs = (
                     self.proof.jobs[0],
                     replace(self.proof.jobs[1], conclusion=verdict),
-                    self.proof.jobs[2],
                 )
                 verify_run(replace(self.proof, jobs=jobs), self.root, self.sha)
 
@@ -110,7 +108,7 @@ class RunProofTests(unittest.TestCase):
             replace(self.proof, sha="b" * 40),
             replace(self.proof, dirty=True),
             replace(self.proof, state="running"),
-            replace(self.proof, completed=2),
+            replace(self.proof, completed=1),
             replace(self.proof, failed=1),
             replace(self.proof, exit_code=1),
             replace(self.proof, act_version="0.2.89"),

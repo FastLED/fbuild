@@ -55,6 +55,14 @@ async fn main() {
         unsafe { std::env::set_var("FBUILD_DEV_MODE", "1") };
     }
 
+    // Resolve Windows fallback roots before cache identity, ownership locks,
+    // endpoint selection, or package managers read any paths. The daemon
+    // never prompts or elevates; interactive repair belongs to the CLI.
+    if let Err(error) = fbuild_paths::long_paths::initialize() {
+        eprintln!("fatal: could not initialize Windows long-path policy: {error}");
+        std::process::exit(1);
+    }
+
     // FastLED/fbuild#1285: adopt the dev daemon-identity stamp the spawning
     // CLI exported, or derive one from this binary's content — once per
     // daemon, inherited by every build child. Official (non-dev) runs export
@@ -275,6 +283,10 @@ async fn main() {
         .route_layer(axum::middleware::from_fn_with_state(
             context.clone(),
             fbuild_daemon::shutdown::refuse_new_operations_when_shutting_down,
+        ))
+        .route_layer(axum::middleware::from_fn_with_state(
+            context.clone(),
+            fbuild_daemon::long_paths::operation_policy,
         ));
 
     let app = Router::new()
@@ -779,7 +791,9 @@ async fn bind_listener_with_retry(addr: &str) -> tokio::net::TcpListener {
                 }
                 tracing::warn!(
                     attempt,
-                    "bind to {} failed ({}); no listener present (stale state), retrying in 500ms",
+                    "bind to {} failed ({}); no listener present, so the port is held by \
+                     stale TIME_WAIT state or by another socket (e.g. an outgoing \
+                     connection's ephemeral port; FastLED/fbuild#1700), retrying in 500ms",
                     addr,
                     e
                 );
@@ -793,7 +807,9 @@ async fn bind_listener_with_retry(addr: &str) -> tokio::net::TcpListener {
     }
 
     eprintln!(
-        "failed to bind to {} after 3 attempts: {}",
+        "failed to bind to {} after 3 attempts: {}; nothing is listening there, so \
+         another socket (often an outgoing connection's ephemeral port) holds it; \
+         set FBUILD_DAEMON_PORT to use a different port (FastLED/fbuild#1700)",
         addr,
         last_err
             .map(|e| e.to_string())

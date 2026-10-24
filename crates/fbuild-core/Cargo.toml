@@ -10,6 +10,7 @@ license.workspace = true
 publish = false
 
 [dependencies]
+tempfile = { workspace = true }
 thiserror = { workspace = true }
 tracing = { workspace = true }
 serde = { workspace = true }
@@ -70,6 +71,7 @@ windows-sys = { version = "0.52", features = [
     "Win32_Devices_Usb",
     "Win32_Foundation",
     "Win32_Security",
+    "Win32_Security_Authorization",
     "Win32_Storage_FileSystem",
     "Win32_System_IO",
     "Win32_System_Registry",
@@ -81,7 +83,6 @@ windows-sys = { version = "0.52", features = [
 widestring = { workspace = true }
 
 [dev-dependencies]
-tempfile = { workspace = true }
 # Test-only embedded USB-vendor fixture extraction. Production never links it.
 tar = { workspace = true }
 # FastLED/fbuild#1361: the on-CPU sampler, its frame symbolizer, and the
