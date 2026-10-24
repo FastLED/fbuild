@@ -38,6 +38,12 @@ pub const LEGACY_UDEV_RULES_FILENAME: &str = "99-fbuild.rules";
 /// raw USB device (probe-rs, picotool, DFU) and HID loaders.
 pub const RULE_SUBSYSTEMS: [&str; 3] = ["tty", "usb", "hidraw"];
 
+/// Subsystems ModemManager probes. Tagging them `ID_MM_DEVICE_IGNORE` keeps
+/// it from sending AT commands to a board that just re-enumerated after a
+/// flash; the tag must be set before `80-mm-candidate.rules`
+/// (FastLED/fbuild#1653).
+pub const MM_IGNORE_SUBSYSTEMS: [&str; 2] = ["tty", "usb"];
+
 /// `group` if it exists in `group_file` (normally `/etc/group`), else None.
 ///
 /// Distros differ: Debian/Ubuntu ship `plugdev`, while NixOS, Arch and Fedora
@@ -128,9 +134,14 @@ pub fn render_udev_rules(vids: &[u16], group: Option<&str>) -> Option<String> {
             .map(|g| format!("GROUP=\"{g}\", "))
             .unwrap_or_default();
         for subsystem in RULE_SUBSYSTEMS {
+            let mm_field = if MM_IGNORE_SUBSYSTEMS.contains(&subsystem) {
+                ", ENV{ID_MM_DEVICE_IGNORE}=\"1\""
+            } else {
+                ""
+            };
             out.push_str(&format!(
                 "SUBSYSTEM==\"{subsystem}\", ATTRS{{idVendor}}==\"{vid:04x}\", \
-                 MODE=\"0660\", {group_field}TAG+=\"uaccess\"\n"
+                 MODE=\"0660\", {group_field}TAG+=\"uaccess\"{mm_field}\n"
             ));
         }
     }
@@ -282,6 +293,25 @@ mod tests {
         assert!(
             prio < 73,
             "{UDEV_RULES_FILENAME} sorts after 73-seat-late.rules"
+        );
+    }
+
+    /// ModemManager probes fresh CDC/USB devices with AT commands; tagged
+    /// devices are skipped. The tag must land before 80-mm-candidate.rules.
+    #[test]
+    fn tags_tty_and_usb_for_modemmanager_ignore() {
+        let out = render_udev_rules(&[0x16c0], None).unwrap();
+        for line in out.lines().filter(|l| l.starts_with("SUBSYSTEM==")) {
+            let tagged = line.contains(r#"ENV{ID_MM_DEVICE_IGNORE}="1""#);
+            let probed = MM_IGNORE_SUBSYSTEMS
+                .iter()
+                .any(|s| line.starts_with(&format!(r#"SUBSYSTEM=="{s}""#)));
+            assert_eq!(tagged, probed, "{line}");
+        }
+        let prio: u32 = UDEV_RULES_FILENAME[..2].parse().unwrap();
+        assert!(
+            prio < 80,
+            "{UDEV_RULES_FILENAME} sorts after 80-mm-candidate"
         );
     }
 }
