@@ -36,7 +36,7 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
-      - uses: zackees/setup-soldr@v0
+      - uses: zackees/setup-soldr@6ad4abd5b42cedef0b9710127fb450d3f2b2e301
         with:
           cache-key-suffix: check-macos-test
           cache: true

@@ -65,7 +65,7 @@ jobs:
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
-      - uses: zackees/setup-soldr@dfbe9627f6cb0226716b61625b99a58949162720
+      - uses: zackees/setup-soldr@6ad4abd5b42cedef0b9710127fb450d3f2b2e301
         with:
           cache-preset: foundation
           prebuild-deps-flags: ""
