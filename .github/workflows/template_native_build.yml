@@ -97,7 +97,7 @@ jobs:
       - name: Setup soldr
         id: setup-soldr
         timeout-minutes: 10
-        uses: zackees/setup-soldr@v0
+        uses: zackees/setup-soldr@357474d9c9c89497d4fdcf90b48a8189ef2ed036
         with:
           cache: true
           build-cache: true
