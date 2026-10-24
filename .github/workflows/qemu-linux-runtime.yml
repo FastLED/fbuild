@@ -62,7 +62,7 @@ jobs:
       - uses: astral-sh/setup-uv@v3
 
       - name: Setup soldr
-        uses: zackees/setup-soldr@v0
+        uses: zackees/setup-soldr@88040d6ee3baf4241823e27f1fb8f57e642a67ca
         with:
           cache-key-suffix: qemu-linux-runtime-qemu_runtime
           cache: true
