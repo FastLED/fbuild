@@ -1,9 +1,10 @@
-﻿//! RP2040/RP2350 platform build support (Raspberry Pi Pico, etc.)
+//! RP2040/RP2350 platform build support (Raspberry Pi Pico, etc.)
 
 mod bluetooth_libs;
 mod board_props;
 pub mod mcu_config;
 pub mod orchestrator;
+mod tinyusb_libs;
 mod uf2;
 
 pub use orchestrator::Rp2040Orchestrator;

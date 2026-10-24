@@ -322,14 +322,20 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             .config
             .get_lib_deps(&params.env_name)
             .unwrap_or_default();
-        // Bluetooth-only libraries cannot compile unless the menu or the
-        // user's build_flags enable ENABLE_CLASSIC; see `bluetooth_libs`.
+        // Bluetooth- and TinyUSB-only libraries cannot compile unless the
+        // menu or the user's build_flags enable ENABLE_CLASSIC / USE_TINYUSB;
+        // see `bluetooth_libs` and `tinyusb_libs`.
         let framework_libs = {
-            let mut bluetooth_defines = defines.clone();
-            apply_define_flags(&ctx.user_flags, &mut bluetooth_defines);
-            super::bluetooth_libs::exclude_bluetooth_libraries_when_disabled(
+            let mut effective_defines = defines.clone();
+            apply_define_flags(&ctx.user_flags, &mut effective_defines);
+            let libs = super::bluetooth_libs::exclude_bluetooth_libraries_when_disabled(
                 framework.get_framework_libraries(),
-                &bluetooth_defines,
+                &effective_defines,
+                &declared_deps,
+            );
+            super::tinyusb_libs::exclude_tinyusb_libraries_when_disabled(
+                libs,
+                &effective_defines,
                 &declared_deps,
             )
         };
