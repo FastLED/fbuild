@@ -212,6 +212,13 @@ pub trait Linker: Send + Sync {
         None
     }
 
+    /// Platform-owned link inputs the generic digest can't see, such as a
+    /// generated linker script's recipe. A change relinks a reused ELF
+    /// (FastLED/fbuild#1736).
+    fn link_fingerprint(&self) -> String {
+        String::new()
+    }
+
     /// Whether static RAM over the board's maximum fails the build.
     ///
     /// Default `false`: like PlatformIO, RAM overflow is a warning, because the
@@ -237,11 +244,11 @@ pub trait Linker: Send + Sync {
         symbol_analysis: bool,
     ) -> Result<LinkResult> {
         let candidate_elf = output_dir.join("firmware.elf");
+        let all_objects: Vec<&PathBuf> = sketch_objects.iter().chain(core_objects).collect();
+        let digest = crate::link_digest::link_digest(&all_objects, extra, &self.link_fingerprint());
         if candidate_elf.exists() {
-            let can_skip = elf_is_up_to_date(
-                &candidate_elf,
-                sketch_objects.iter().chain(core_objects.iter()),
-            );
+            let can_skip = crate::link_digest::digest_matches(&candidate_elf, &digest)
+                && elf_is_up_to_date(&candidate_elf, all_objects.iter().copied());
             if can_skip {
                 tracing::info!("link: firmware.elf is up-to-date, skipping relink");
                 let firmware_path = self.convert_firmware(&candidate_elf, output_dir).await?;
@@ -284,6 +291,7 @@ pub trait Linker: Send + Sync {
             .map_err(|error| {
                 crate::link_overflow::enrich(error, fresh_map.then_some(map_path.as_path()))
             })?;
+        crate::link_digest::record_digest(&elf_path, &digest);
 
         // Convert and size. Both only read the ELF, so they run together
         // instead of back to back on the critical path (FastLED/fbuild#1468).

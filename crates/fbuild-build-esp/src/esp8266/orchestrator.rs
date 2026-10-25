@@ -510,7 +510,6 @@ impl BuildOrchestrator for Esp8266Orchestrator {
             params.verbose,
         )
         .with_eboot_elf(framework.get_eboot_elf());
-        super::esp8266_linker::invalidate_stale_elf(&ctx.build_dir)?;
 
         // 8. Build LibraryBuildEnv for project-as-library compilation
         let gcc_path = toolchain.get_gcc_path();
