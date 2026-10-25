@@ -947,7 +947,9 @@ async fn try_acquire_broker_daemon() -> fbuild_core::Result<bool> {
 
             let client = DaemonClient::new();
             if client
-                .wait_until_healthy(std::time::Duration::from_secs(startup_log::readiness_timeout_secs()))
+                .wait_until_healthy(std::time::Duration::from_secs(
+                    startup_log::readiness_timeout_secs(),
+                ))
                 .await?
             {
                 let info = client.daemon_info().await?;
@@ -1012,7 +1014,9 @@ async fn ensure_direct_daemon_running() -> fbuild_core::Result<()> {
         fbuild_core::daemon_health::DaemonHealth::Starting { .. }
     ) {
         client
-            .wait_until_healthy(std::time::Duration::from_secs(startup_log::readiness_timeout_secs()))
+            .wait_until_healthy(std::time::Duration::from_secs(
+                startup_log::readiness_timeout_secs(),
+            ))
             .await?;
     }
 
@@ -1196,7 +1200,9 @@ async fn start_daemon(client: &DaemonClient) -> fbuild_core::Result<Option<u32>>
         // of embedded zccache bring-up in #1462) is waited on instead of being
         // respawned and then reported as failed.
         if client
-            .wait_until_healthy(std::time::Duration::from_secs(startup_log::readiness_timeout_secs()))
+            .wait_until_healthy(std::time::Duration::from_secs(
+                startup_log::readiness_timeout_secs(),
+            ))
             .await?
         {
             tracing::info!("daemon started successfully (spawned pid {spawned_pid})");
@@ -1257,7 +1263,6 @@ fn wedged_daemon_note(live_daemon_pid: Option<u32>) -> String {
          `fbuild daemon kill-all`."
     )
 }
-
 
 /// How long a daemon may report `starting` before the CLI says on stderr what
 /// it is waiting for.

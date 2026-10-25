@@ -98,7 +98,9 @@ fn strip_ansi(line: &str) -> String {
 /// overrides both.
 pub(super) fn readiness_timeout_secs() -> u64 {
     readiness_timeout_from(
-        std::env::var("FBUILD_DAEMON_READINESS_TIMEOUT_SECS").ok().as_deref(),
+        std::env::var("FBUILD_DAEMON_READINESS_TIMEOUT_SECS")
+            .ok()
+            .as_deref(),
         std::env::var_os("CI").is_some(),
     )
 }
