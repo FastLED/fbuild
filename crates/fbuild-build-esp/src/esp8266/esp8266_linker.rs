@@ -1,12 +1,12 @@
 //! ESP8266 linker implementation.
 //!
-//! Links ESP8266 object files into `firmware.elf`, converts to `firmware.bin`
-//! using esptool (with objcopy fallback), and reports size.
+//! Links ESP8266 object files into `firmware.elf`, converts it to the
+//! eboot + sketch `firmware.bin` ([`super::elf2bin`]), and reports size.
 //!
 //! Key differences from AVR:
 //! - SDK precompiled libraries from `tools/sdk/lib/`
 //! - Linker script from the board JSON `ldscript` field, resolved in `tools/sdk/ld/`
-//! - Firmware conversion via `esptool --chip esp8266 elf2image`
+//! - Firmware image built in-process like the core's `tools/elf2bin.py`
 
 use std::path::{Path, PathBuf};
 
@@ -37,10 +37,8 @@ pub struct Esp8266Linker {
     max_flash: Option<u64>,
     max_ram: Option<u64>,
     verbose: bool,
-    /// The CLI caller's PATH, so the bare-`esptool` spawn resolves against
-    /// the caller's environment instead of the daemon's spawn-time PATH
-    /// (FastLED/fbuild#1219). `None` = daemon env.
-    caller_path: Option<String>,
+    /// Arduino's `eboot.elf`, written ahead of the sketch at flash 0x0.
+    eboot_elf: PathBuf,
 }
 
 impl Esp8266Linker {
@@ -80,15 +78,13 @@ impl Esp8266Linker {
             max_flash,
             max_ram,
             verbose,
-            caller_path: None,
+            eboot_elf: PathBuf::new(),
         }
     }
 
-    /// Builder: forward the CLI caller's PATH to the esptool `elf2image`
-    /// spawn so the bare-name invocation resolves against the caller's
-    /// environment (FastLED/fbuild#1219).
-    pub fn with_caller_path(mut self, caller_path: Option<String>) -> Self {
-        self.caller_path = caller_path;
+    /// Builder: the framework's `bootloaders/eboot/eboot.elf`.
+    pub fn with_eboot_elf(mut self, eboot_elf: PathBuf) -> Self {
+        self.eboot_elf = eboot_elf;
         self
     }
 }
@@ -146,8 +142,51 @@ impl Esp8266Linker {
                 result.stderr
             )));
         }
+        let script = std::fs::read_to_string(&output_ld)?;
+        std::fs::write(&output_ld, hashed_object_patterns(&script))?;
         tracing::info!("generated local.eagle.app.v6.common.ld");
         Ok(())
+    }
+}
+
+/// Rewrite literal object names in `EXCLUDE_FILE (...)` lists to match the
+/// hashed names fbuild emits (`umm_malloc.cpp` → `umm_malloc_335c.cpp.o`, see
+/// `CompilerBase::object_path`).
+///
+/// The core script keeps `umm_malloc.cpp.o` out of flash with
+/// `EXCLUDE_FILE (umm_malloc.cpp.o)` because `umm_init` runs before the flash
+/// cache is mapped. A literal name never matches the hashed object, so
+/// `umm_init` landed in irom and the board looped on `Fatal exception (0)`.
+fn hashed_object_patterns(script: &str) -> String {
+    const OPEN: &str = "EXCLUDE_FILE (";
+    let mut out = String::with_capacity(script.len());
+    let mut rest = script;
+    while let Some(start) = rest.find(OPEN) {
+        let body_start = start + OPEN.len();
+        let Some(len) = rest[body_start..].find(')') else {
+            break;
+        };
+        out.push_str(&rest[..body_start]);
+        let names: Vec<String> = rest[body_start..body_start + len]
+            .split_whitespace()
+            .map(hashed_object_pattern)
+            .collect();
+        out.push_str(&names.join(" "));
+        rest = &rest[body_start + len..];
+    }
+    out.push_str(rest);
+    out
+}
+
+/// `umm_malloc.cpp.o` → `*umm_malloc_????.cpp.o`; wildcard patterns and
+/// names that aren't `<stem>.<ext>.o` are left alone.
+fn hashed_object_pattern(name: &str) -> String {
+    if name.contains(['*', '?', '/', ':']) {
+        return name.to_string();
+    }
+    match name.strip_suffix(".o").and_then(|n| n.rsplit_once('.')) {
+        Some((stem, ext)) if !stem.is_empty() => format!("*{stem}_????.{ext}.o"),
+        _ => name.to_string(),
     }
 }
 
@@ -267,69 +306,45 @@ impl Linker for Esp8266Linker {
     }
 
     async fn convert_firmware(&self, elf_path: &Path, output_dir: &Path) -> Result<PathBuf> {
+        // Arduino-ESP8266's image is eboot + sketch (`tools/elf2bin.py`). There
+        // is no fallback: an `objcopy -O binary` dump flashes "successfully"
+        // and then never boots.
         let bin_path = output_dir.join("firmware.bin");
-
-        // Try esptool first
-        let elf_str = elf_path.to_string_lossy();
-        let bin_str = bin_path.to_string_lossy();
-        let args = [
-            "esptool",
-            "--chip",
-            &self.mcu_config.esptool.chip,
-            "elf2image",
-            "--flash-mode",
+        let read = |path: &Path| {
+            std::fs::read(path).map_err(|e| {
+                fbuild_core::FbuildError::BuildFailed(format!(
+                    "ESP8266 elf2bin: cannot read {}: {e}",
+                    path.display()
+                ))
+            })
+        };
+        // `max_flash` is the board's flash chip size; the MCU JSON default
+        // ("4MB") covers boards that omit it.
+        let flash_size = self.max_flash.unwrap_or_else(|| {
+            let default = &self.mcu_config.esptool.default_flash_size;
+            default
+                .strip_suffix("MB")
+                .and_then(|mb| mb.parse::<u64>().ok())
+                .map_or(4 << 20, |mb| mb << 20)
+        });
+        let image = super::elf2bin::elf2bin(
+            &read(&self.eboot_elf)?,
+            &read(elf_path)?,
             &self.flash_mode,
-            "--flash-freq",
             &self.flash_freq,
-            "--flash-size",
-            &self.mcu_config.esptool.default_flash_size,
-            &elf_str,
-            "-o",
-            &bin_str,
-        ];
-
-        // FastLED/fbuild#1219: resolve/run esptool under the caller's PATH.
-        let env: Option<Vec<(&str, &str)>> = self.caller_path.as_deref().map(|p| vec![("PATH", p)]);
-        match run_command(
-            &args,
-            None,
-            env.as_deref(),
-            Some(std::time::Duration::from_secs(30)),
-        )
-        .await
-        {
-            Ok(result) if result.success() => {
-                // Verify the output file was actually created with content.
-                // ESP8266 esptool may create segmented files (firmware.bin-0x00000.bin)
-                // instead of a single firmware.bin, leaving it empty.
-                let size = std::fs::metadata(&bin_path).map(|m| m.len()).unwrap_or(0);
-                if size > 0 {
-                    tracing::info!("converted ELF â†’ firmware.bin via esptool");
-                    return Ok(bin_path);
-                }
-                tracing::debug!("esptool produced empty firmware.bin (falling back to objcopy)");
-            }
-            Ok(result) => {
-                tracing::debug!(
-                    "esptool elf2image failed (falling back to objcopy): {}",
-                    result.stderr
-                );
-            }
-            Err(e) => {
-                tracing::debug!("esptool not found (falling back to objcopy): {}", e);
-            }
-        }
-
-        // Fallback to objcopy
-        crate::linker::LinkerBase::objcopy_firmware(
-            &self.objcopy_path,
-            elf_path,
-            output_dir,
-            &self.mcu_config.objcopy.output_format,
-            &self.mcu_config.objcopy.remove_sections,
-            "xtensa-lx106-elf-objcopy",
-        )
-        .await
+            flash_size,
+        )?;
+        std::fs::write(&bin_path, &image).map_err(|e| {
+            fbuild_core::FbuildError::BuildFailed(format!(
+                "failed to write {}: {e}",
+                bin_path.display()
+            ))
+        })?;
+        tracing::info!(
+            "converted ELF -> firmware.bin (eboot + sketch, {} bytes)",
+            image.len()
+        );
+        Ok(bin_path)
     }
 
     fn size_tool_path(&self) -> &Path {
@@ -362,6 +377,22 @@ impl Linker for Esp8266Linker {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn exclude_file_names_match_hashed_objects() {
+        let script = "    *.cpp.o(EXCLUDE_FILE (umm_malloc.cpp.o) .literal* EXCLUDE_FILE (umm_malloc.cpp.o) .text*)\n    KEEP (*(EXCLUDE_FILE (*crtend.o) .ctors))\n";
+        assert_eq!(
+            super::hashed_object_patterns(script),
+            "    *.cpp.o(EXCLUDE_FILE (*umm_malloc_????.cpp.o) .literal* EXCLUDE_FILE (*umm_malloc_????.cpp.o) .text*)\n    KEEP (*(EXCLUDE_FILE (*crtend.o) .ctors))\n"
+        );
+    }
+
+    #[test]
+    fn hashed_pattern_leaves_non_object_names() {
+        assert_eq!(super::hashed_object_pattern("crtend.o"), "crtend.o");
+        assert_eq!(super::hashed_object_pattern("*crtend.o"), "*crtend.o");
+        assert_eq!(super::hashed_object_pattern("a.c.o"), "*a_????.c.o");
+    }
+
     use super::*;
     use crate::esp8266::mcu_config::get_esp8266_config;
 
