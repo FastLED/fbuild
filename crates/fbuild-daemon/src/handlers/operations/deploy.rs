@@ -833,6 +833,74 @@ pub async fn deploy(
 
                 Box::new(deployer)
             }
+            fbuild_core::Platform::Espressif8266 => {
+                // FastLED/fbuild#1657: the ESP8266 build emits one image
+                // (`esptool --chip esp8266 elf2image`, no bootloader or
+                // partition table) that is written at 0x0. esptool and the
+                // NodeMCU/D1 auto-reset are the same as ESP32's, so this is
+                // the ESP32 deployer with a single region. The native espflash
+                // writer is not enabled: espflash does not support ESP8266.
+                let board_config = fbuild_config::BoardConfig::from_board_id_or_default(
+                    &board_id,
+                    "nodemcuv2",
+                    &deploy_board_overrides,
+                    Some(deploy_project.as_path()),
+                );
+                let esptool = fbuild_build::esp8266::mcu_config::get_esp8266_config()?.esptool;
+                let esptool_params = fbuild_deploy::esp32::EsptoolParams {
+                    flash_mode: board_config
+                        .flash_mode
+                        .clone()
+                        .unwrap_or_else(|| esptool.default_flash_mode.clone()),
+                    flash_freq: fbuild_build::esp32::esp32_linker::f_flash_to_esptool_freq(
+                        board_config.f_flash.as_deref(),
+                        &esptool.default_flash_freq,
+                    ),
+                    flash_size: fbuild_build::esp32::mcu_config::bytes_to_flash_size(
+                        board_config.max_flash,
+                        &esptool.default_flash_size,
+                    )
+                    .to_string(),
+                    default_baud: esptool.default_baud.to_string(),
+                    before_reset: "default-reset".to_string(),
+                    after_reset: "hard-reset".to_string(),
+                };
+                let baud = baud_override.map(|b| b.to_string()).unwrap_or_else(|| {
+                    board_config
+                        .upload_speed
+                        .clone()
+                        .unwrap_or_else(|| esptool_params.default_baud.clone())
+                });
+                // The standalone `tool-esptoolpy` that ESP32 deploys use also
+                // flashes ESP8266. It comes from the default pioarduino platform,
+                // not the project's `espressif8266` one, hence no env config.
+                // `FBUILD_ESPTOOL_PATH` still wins; with neither, esptool is
+                // spawned by name on the requesting CLI's PATH (#1234).
+                let esptool_path = fbuild_build::esp32::orchestrator::resolve_deploy_esptool(
+                    &deploy_project,
+                    None,
+                )
+                .await
+                .unwrap_or_else(|e| {
+                    tracing::warn!(
+                        "could not provision esptool for ESP8266 ({e}); using `esptool` on PATH"
+                    );
+                    None
+                });
+                Box::new(
+                    fbuild_deploy::esp32::Esp32Deployer::new(
+                        &esptool.chip,
+                        &baud,
+                        "0x0",
+                        "0x0",
+                        "0x0",
+                        &esptool_params,
+                        false,
+                    )
+                    .with_esptool_path(esptool_path)
+                    .with_caller_path(deploy_caller_path.clone()),
+                )
+            }
             fbuild_core::Platform::AtmelAvr | fbuild_core::Platform::AtmelMegaAvr => {
                 let board_config = fbuild_config::BoardConfig::from_board_id_or_default(
                     &board_id,
