@@ -198,8 +198,28 @@ fn hashed_object_pattern(name: &str) -> String {
 
 #[async_trait::async_trait]
 impl Linker for Esp8266Linker {
+    /// Everything `link` and `generate_linker_scripts` read besides objects and
+    /// `LinkExtraArgs`. Built field by field: `mcu_config.profiles` is a
+    /// `HashMap`, so its `Debug` order isn't stable across processes.
     fn link_fingerprint(&self) -> String {
-        format!("esp8266-image-{IMAGE_GENERATION}")
+        let profile_flags = self
+            .mcu_config
+            .profiles
+            .get(self.profile.as_dir_name())
+            .map(|p| p.link_flags.clone())
+            .unwrap_or_default();
+        format!(
+            "esp8266-image-{IMAGE_GENERATION}|{:?}|{:?}|{:?}|{:?}|{:?}|{:?}|{:?}|{:?}|{:?}",
+            self.gcc_path,
+            self.mcu_config.linker_flags,
+            profile_flags,
+            self.mcu_config.linker_libs,
+            self.mcu_config.defines,
+            self.linker_scripts,
+            self.sdk_lib_dir,
+            self.sdk_nonosdk_lib_dir,
+            self.sdk_ld_dir,
+        )
     }
 
     async fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
