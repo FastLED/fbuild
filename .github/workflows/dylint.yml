@@ -206,6 +206,11 @@ jobs:
       - name: Run dylint over workspace
         env:
           FULL_TARGETS: ${{ inputs.ref != '' || github.event_name == 'workflow_dispatch' }}
+          # The platform-boundary check below reads the observation TSVs a
+          # real Dylint pass writes. A soldr verdict hit (same inputs as an
+          # earlier green run, e.g. the release dry run) skips the pass and
+          # leaves no TSVs, failing the release's full validation.
+          SOLDR_VERDICTS: "off"
         run: |
           status=0
           # The Linux pass covers the whole workspace. Cross-target passes
