@@ -159,7 +159,10 @@ async fn main() {
     // `another_daemon_is_listening`) instead of paying for full initialization
     // only to fail the bind at the very end. The winner keeps `listener` and
     // serves everyone.
-    let addr = format!("0.0.0.0:{}", port);
+    // Loopback only: every client (CLI, PyO3 bindings) connects to 127.0.0.1,
+    // and a wildcard bind also collides with outgoing sockets bound to other
+    // local addresses on the same port (FastLED/fbuild#1700).
+    let addr = format!("127.0.0.1:{}", port);
     // Clean up a stale PID file from a previous unclean kill so the bind-retry
     // path (kernel TIME_WAIT) and `fbuild daemon list` reflect reality.
     if let Some(stale_pid) = read_stale_daemon_pid().await {

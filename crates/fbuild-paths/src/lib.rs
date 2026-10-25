@@ -154,8 +154,11 @@ fn endpoint_key_from_material(material: &str) -> String {
 /// Deterministic default daemon port derived from [`daemon_endpoint_key`].
 ///
 /// On Windows this lands in 10000–49151, below the dynamic range that
-/// Hyper-V/HNS commonly reserves in excluded blocks. Other platforms use the
-/// IANA dynamic range (49152–65535). The result is stable for a given
+/// Hyper-V/HNS commonly reserves in excluded blocks. Other platforms use
+/// 10000–32767, below both the Linux (32768–60999) and macOS (49152–65535)
+/// ephemeral ranges: a daemon port inside them can be taken by any outgoing
+/// connection's source port, which fails the wildcard/loopback bind with
+/// EADDRINUSE while nothing is listening (FastLED/fbuild#1700). The result is stable for a given
 /// version+identity; distinct versions (and dev vs prod, since mode is part of
 /// the identity) get distinct ports. `FBUILD_DAEMON_PORT` still overrides this
 /// (see [`get_daemon_port`]).
@@ -163,13 +166,17 @@ pub fn default_daemon_port() -> u16 {
     port_from_endpoint_key(&daemon_endpoint_key())
 }
 
+/// First port of the default Linux ephemeral range (`ip_local_port_range`).
+/// The non-Windows daemon window stays below it (FastLED/fbuild#1700).
+const LINUX_EPHEMERAL_LOW: u32 = 32768;
+
 /// Map a hex endpoint key into the platform's default daemon-port window.
 /// Pure and deterministic (unit-tested).
 fn port_from_endpoint_key(key: &str) -> u16 {
     let (low, span): (u32, u32) = if fbuild_core::platform::host::is_windows() {
         (10000, 49152 - 10000)
     } else {
-        (49152, 65536 - 49152)
+        (10000, LINUX_EPHEMERAL_LOW - 10000)
     };
 
     let n = u64::from_str_radix(key, 16).unwrap_or(0);
@@ -634,10 +641,31 @@ mod tests {
             );
         } else {
             assert!(
-                (49152..=65535).contains(&p),
-                "port {p} outside dynamic range"
+                (10000..32768).contains(&p),
+                "port {p} is inside an OS ephemeral range"
             );
         }
+    }
+
+    #[test]
+    fn default_daemon_port_is_outside_this_hosts_ephemeral_range() {
+        // FastLED/fbuild#1700: read the live range rather than trusting the
+        // default, since distros and CI images can widen it.
+        let Ok(range) = std::fs::read_to_string("/proc/sys/net/ipv4/ip_local_port_range") else {
+            return;
+        };
+        let bounds: Vec<u16> = range
+            .split_whitespace()
+            .filter_map(|n| n.parse().ok())
+            .collect();
+        let [low, high] = bounds[..] else {
+            panic!("unexpected ip_local_port_range: {range:?}");
+        };
+        let p = default_daemon_port();
+        assert!(
+            !(low..=high).contains(&p),
+            "daemon port {p} is inside the ephemeral range {low}-{high}"
+        );
     }
 
     #[test]
@@ -653,10 +681,7 @@ mod tests {
             if fbuild_core::platform::host::is_windows() {
                 assert!((10000..49152).contains(&p), "key {key} -> {p} out of range");
             } else {
-                assert!(
-                    (49152..=65535).contains(&p),
-                    "key {key} -> {p} out of range"
-                );
+                assert!((10000..32768).contains(&p), "key {key} -> {p} out of range");
             }
         }
         // Two distinct version/identity keys should not collapse to one port
