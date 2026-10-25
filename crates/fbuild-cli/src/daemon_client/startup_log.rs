@@ -90,8 +90,41 @@ fn strip_ansi(line: &str) -> String {
     out
 }
 
+/// Wall-clock budget for a spawned daemon to answer `health()`. Stretched while
+/// the daemon reports `starting` (FastLED/fbuild#1480).
+///
+/// Loaded CI runners need longer than a dev box (#1627), so the default is 30 s
+/// under `CI` and 10 s otherwise; `FBUILD_DAEMON_READINESS_TIMEOUT_SECS`
+/// overrides both.
+pub(super) fn readiness_timeout_secs() -> u64 {
+    readiness_timeout_from(
+        std::env::var("FBUILD_DAEMON_READINESS_TIMEOUT_SECS")
+            .ok()
+            .as_deref(),
+        std::env::var_os("CI").is_some(),
+    )
+}
+
+fn readiness_timeout_from(override_secs: Option<&str>, is_ci: bool) -> u64 {
+    match override_secs.and_then(|v| v.trim().parse::<u64>().ok()) {
+        Some(secs) if secs > 0 => secs,
+        _ if is_ci => 30,
+        _ => 10,
+    }
+}
+
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn readiness_timeout_defaults_and_override() {
+        use super::readiness_timeout_from as t;
+        assert_eq!(t(None, false), 10);
+        assert_eq!(t(None, true), 30);
+        assert_eq!(t(Some("45"), false), 45);
+        assert_eq!(t(Some("0"), true), 30);
+        assert_eq!(t(Some("junk"), false), 10);
+    }
+
     use super::*;
 
     #[test]
