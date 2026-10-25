@@ -310,6 +310,12 @@ impl BuildOrchestrator for Esp8266Orchestrator {
                         ctx.board.flash_mode.clone().unwrap_or_default(),
                     ),
                     ("flash_freq".to_string(), flash_freq.clone()),
+                    // Bump when the linker script rewrite or image layout changes so
+                    // cached firmware from an older generator is relinked.
+                    (
+                        "esp8266_image_generation".to_string(),
+                        super::esp8266_linker::IMAGE_GENERATION.to_string(),
+                    ),
                     (
                         "toolchain_package".to_string(),
                         format!(
@@ -503,7 +509,8 @@ impl BuildOrchestrator for Esp8266Orchestrator {
             ctx.board.max_ram,
             params.verbose,
         )
-        .with_caller_path(params.caller_path.clone());
+        .with_eboot_elf(framework.get_eboot_elf());
+        super::esp8266_linker::invalidate_stale_elf(&ctx.build_dir)?;
 
         // 8. Build LibraryBuildEnv for project-as-library compilation
         let gcc_path = toolchain.get_gcc_path();
