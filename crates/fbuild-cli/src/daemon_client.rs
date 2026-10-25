@@ -10,6 +10,7 @@ use serde::Serialize;
 
 mod identity;
 mod restart_diag;
+mod startup_log;
 mod types;
 pub use identity::warn_if_daemon_identity_mismatch;
 pub use types::*;
@@ -1140,6 +1141,8 @@ async fn start_daemon(client: &DaemonClient) -> fbuild_core::Result<Option<u32>>
     // Retry daemon spawn up to 3 times with exponential backoff
     // (matches Python behavior: [0.0s, 0.5s, 2.0s] delays between attempts)
     let backoff_delays = [0.0, 0.5, 2.0];
+    // Daemon-log lines from here on explain a failure below (#1627).
+    let spawn_started = startup_log::log_timestamp(std::time::SystemTime::now());
 
     for (attempt, &delay) in backoff_delays.iter().enumerate() {
         if attempt > 0 {
@@ -1216,9 +1219,10 @@ async fn start_daemon(client: &DaemonClient) -> fbuild_core::Result<Option<u32>>
          version (FastLED/fbuild#1009), so a version-mismatched daemon listens on a different \
          port than this CLI polls and can never be reached. When running a locally-built CLI, \
          build the daemon too (`soldr cargo build -p fbuild-daemon`) so a sibling binary exists \
-         instead of resolving `fbuild-daemon` from PATH.",
+         instead of resolving `fbuild-daemon` from PATH.{}",
         runtime_diagnostic(),
-        wedged_daemon_hint()
+        wedged_daemon_hint(),
+        startup_log::startup_problems_note(&spawn_started)
     )))
 }
 
