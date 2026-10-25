@@ -130,6 +130,25 @@ fn without_esptool_path_falls_back_to_bare_esptool() {
     );
 }
 
+/// FastLED/fbuild#1657: the ESP8266 deploy writes its single elf2image
+/// output at 0x0 with `--chip esp8266`, and nothing else.
+#[test]
+fn esp8266_single_image_write_flash_args() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let fw = tmp.path().join("firmware.bin");
+    std::fs::write(&fw, b"FIRM").unwrap();
+
+    let params = test_esptool_params();
+    let deployer = Esp32Deployer::new("esp8266", "115200", "0x0", "0x0", "0x0", &params, false);
+    let args = deployer.build_write_flash_args(&fw, "/dev/ttyUSB0", None);
+
+    let chip = args.iter().position(|a| a == "--chip").unwrap();
+    assert_eq!(args[chip + 1], "esp8266");
+    let fw_text = fw.to_string_lossy().to_string();
+    assert_eq!(&args[args.len() - 2..], ["0x0".to_string(), fw_text]);
+    assert_eq!(args.iter().filter(|a| a.as_str() == "0x0").count(), 1);
+}
+
 #[test]
 fn qemu_flash_size_resolution_accepts_supported_sizes() {
     let mut board = fbuild_test_support::board_for_test("esp32-s3-devkitc-1");
