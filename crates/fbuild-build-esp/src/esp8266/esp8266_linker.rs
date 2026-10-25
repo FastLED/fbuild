@@ -16,6 +16,10 @@ use fbuild_core::{BuildProfile, Result, SizeInfo};
 use super::mcu_config::Esp8266McuConfig;
 use crate::linker::{LinkExtraArgs, Linker, LinkerScripts};
 
+/// Generation of the firmware image recipe (linker-script rewrite + elf2bin);
+/// part of the build fingerprint so stale images are relinked when it changes.
+pub(crate) const IMAGE_GENERATION: &str = "2";
+
 /// ESP8266-specific linker using Xtensa LX106 GCC as the link driver.
 pub struct Esp8266Linker {
     gcc_path: PathBuf,
@@ -178,14 +182,15 @@ fn hashed_object_patterns(script: &str) -> String {
     out
 }
 
-/// `umm_malloc.cpp.o` → `*umm_malloc_????.cpp.o`; wildcard patterns and
-/// names that aren't `<stem>.<ext>.o` are left alone.
+/// `umm_malloc.cpp.o` → `umm_malloc.cpp.o *umm_malloc_????.cpp.o` (the literal
+/// name is kept); wildcard patterns and names that aren't `<stem>.<ext>.o` are
+/// left alone.
 fn hashed_object_pattern(name: &str) -> String {
     if name.contains(['*', '?', '/', ':']) {
         return name.to_string();
     }
     match name.strip_suffix(".o").and_then(|n| n.rsplit_once('.')) {
-        Some((stem, ext)) if !stem.is_empty() => format!("*{stem}_????.{ext}.o"),
+        Some((stem, ext)) if !stem.is_empty() => format!("{name} *{stem}_????.{ext}.o"),
         _ => name.to_string(),
     }
 }
@@ -382,7 +387,7 @@ mod tests {
         let script = "    *.cpp.o(EXCLUDE_FILE (umm_malloc.cpp.o) .literal* EXCLUDE_FILE (umm_malloc.cpp.o) .text*)\n    KEEP (*(EXCLUDE_FILE (*crtend.o) .ctors))\n";
         assert_eq!(
             super::hashed_object_patterns(script),
-            "    *.cpp.o(EXCLUDE_FILE (*umm_malloc_????.cpp.o) .literal* EXCLUDE_FILE (*umm_malloc_????.cpp.o) .text*)\n    KEEP (*(EXCLUDE_FILE (*crtend.o) .ctors))\n"
+            "    *.cpp.o(EXCLUDE_FILE (umm_malloc.cpp.o *umm_malloc_????.cpp.o) .literal* EXCLUDE_FILE (umm_malloc.cpp.o *umm_malloc_????.cpp.o) .text*)\n    KEEP (*(EXCLUDE_FILE (*crtend.o) .ctors))\n"
         );
     }
 
@@ -390,7 +395,7 @@ mod tests {
     fn hashed_pattern_leaves_non_object_names() {
         assert_eq!(super::hashed_object_pattern("crtend.o"), "crtend.o");
         assert_eq!(super::hashed_object_pattern("*crtend.o"), "*crtend.o");
-        assert_eq!(super::hashed_object_pattern("a.c.o"), "*a_????.c.o");
+        assert_eq!(super::hashed_object_pattern("a.c.o"), "a.c.o *a_????.c.o");
     }
 
     use super::*;
