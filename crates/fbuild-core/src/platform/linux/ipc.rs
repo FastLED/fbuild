@@ -75,4 +75,36 @@ mod tests {
         assert_eq!(mode & 0o077, 0);
         drop(listener);
     }
+
+    /// FastLED/fbuild#1700: an outgoing connection whose source is
+    /// `127.0.0.2:P` makes a wildcard listener on `P` fail with EADDRINUSE
+    /// although nothing listens there, which the daemon used to report as
+    /// "stale state" and retry until its spawn budget ran out. A loopback
+    /// listener on the same port binds.
+    #[tokio::test]
+    async fn outgoing_socket_blocks_wildcard_bind_but_not_loopback() {
+        use socket2::{Domain, Protocol, Socket, Type};
+
+        let server = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        let client = Socket::new(Domain::IPV4, Type::STREAM, Some(Protocol::TCP)).unwrap();
+        client
+            .bind(&"127.0.0.2:0".parse::<std::net::SocketAddr>().unwrap().into())
+            .unwrap();
+        client
+            .connect(&server.local_addr().unwrap().into())
+            .unwrap();
+        let port = client.local_addr().unwrap().as_socket().unwrap().port();
+
+        let wildcard = crate::platform::ipc::bind_tcp_listener(
+            format!("0.0.0.0:{port}").parse().unwrap(),
+        );
+        assert!(
+            wildcard.is_err(),
+            "wildcard bind on {port} unexpectedly succeeded"
+        );
+        let loopback = crate::platform::ipc::bind_tcp_listener(
+            format!("127.0.0.1:{port}").parse().unwrap(),
+        );
+        assert!(loopback.is_ok(), "loopback bind on {port}: {loopback:?}");
+    }
 }
