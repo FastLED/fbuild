@@ -20,6 +20,25 @@ use crate::linker::{LinkExtraArgs, Linker, LinkerScripts};
 /// part of the build fingerprint so stale images are relinked when it changes.
 pub(crate) const IMAGE_GENERATION: &str = "2";
 
+/// Drop a `firmware.elf` linked by an older [`IMAGE_GENERATION`].
+///
+/// `link_all` reuses an ELF newer than its objects, which can't see a changed
+/// linker-script rewrite; a generation stamp next to the ELF forces the relink.
+pub(crate) fn invalidate_stale_elf(build_dir: &Path) -> Result<()> {
+    let stamp = build_dir.join("esp8266_image_generation");
+    if std::fs::read_to_string(&stamp).ok().as_deref() == Some(IMAGE_GENERATION) {
+        return Ok(());
+    }
+    match std::fs::remove_file(build_dir.join("firmware.elf")) {
+        Ok(()) => {}
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => {}
+        Err(e) => return Err(e.into()),
+    }
+    std::fs::create_dir_all(build_dir)?;
+    std::fs::write(stamp, IMAGE_GENERATION)?;
+    Ok(())
+}
+
 /// ESP8266-specific linker using Xtensa LX106 GCC as the link driver.
 pub struct Esp8266Linker {
     gcc_path: PathBuf,
@@ -382,6 +401,18 @@ impl Linker for Esp8266Linker {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn stale_elf_is_dropped_once_per_generation() {
+        let dir = tempfile::TempDir::new().unwrap();
+        let elf = dir.path().join("firmware.elf");
+        std::fs::write(&elf, b"old").unwrap();
+        super::invalidate_stale_elf(dir.path()).unwrap();
+        assert!(!elf.exists());
+        std::fs::write(&elf, b"new").unwrap();
+        super::invalidate_stale_elf(dir.path()).unwrap();
+        assert!(elf.exists());
+    }
+
     #[test]
     fn exclude_file_names_match_hashed_objects() {
         let script = "    *.cpp.o(EXCLUDE_FILE (umm_malloc.cpp.o) .literal* EXCLUDE_FILE (umm_malloc.cpp.o) .text*)\n    KEEP (*(EXCLUDE_FILE (*crtend.o) .ctors))\n";
