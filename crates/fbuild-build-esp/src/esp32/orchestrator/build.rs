@@ -21,7 +21,8 @@ use super::fingerprint::Esp32FingerprintMetadata;
 use super::framework_libs::prepare_framework_libs;
 use super::helpers::{
     SdkIncludeFarm, apply_effective_define_flags, compile_db_is_current, compile_include_dirs,
-    framework_macro_prefix_map, profile_label, reject_unsupported_sdkconfig_overlay,
+    framework_macro_prefix_map, profile_label, reject_unsupported_esp_framework,
+    reject_unsupported_sdkconfig_overlay,
 };
 use super::local_libs::compile_local_libraries;
 use super::packages::resolve_pioarduino_packages;
@@ -46,6 +47,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &params.project_dir.join("platformio.ini"),
             fbuild_config::PioEnvOverrides::from_map(params.pio_env.clone()),
         )?;
+        reject_unsupported_esp_framework(&config, &params.env_name)?;
         reject_unsupported_sdkconfig_overlay(&config, &params.env_name)?;
 
         let start = Instant::now();
