@@ -111,6 +111,10 @@ pub const IDLE_TIMEOUT: Duration = Duration::from_secs(43200);
 /// Interval for checking stale project locks.
 pub const STALE_LOCK_CHECK_INTERVAL: Duration = Duration::from_secs(60);
 
+/// How often the daemon closes serial sessions whose clients have all exited
+/// (FastLED/fbuild#1429).
+pub const DEAD_CLIENT_SERIAL_RECLAIM_INTERVAL: Duration = Duration::from_secs(2);
+
 use std::time::Duration;
 
 /// Path of the running binary, or an empty string if it cannot be resolved.

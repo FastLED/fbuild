@@ -105,6 +105,59 @@ fn session_stale_reason(session: &PortSessionInfo) -> Option<String> {
     None
 }
 
+/// Every client the session knows about has a recorded pid, and none of
+/// those processes is still running. Unlike [`session_stale_reason`], a
+/// session with no readers or writer but a live (or unknown) owner is kept:
+/// that is the normal deploy → attach hand-off, not an abandoned port.
+fn all_clients_dead(session: &PortSessionInfo) -> bool {
+    let mut ids: Vec<&str> = session
+        .reader_client_ids
+        .iter()
+        .map(String::as_str)
+        .chain(session.owner_client_id.as_deref())
+        .chain(session.writer_client_id.as_deref())
+        .collect();
+    ids.extend(session.clients.iter().map(|c| c.client_id.as_str()));
+    !ids.is_empty()
+        && ids.iter().all(|id| {
+            session
+                .clients
+                .iter()
+                .find(|c| c.client_id == *id)
+                .and_then(|c| c.metadata.pid)
+                .is_some_and(|pid| !is_pid_alive(pid))
+        })
+}
+
+/// Close serial sessions whose every client process has exited, so a port is
+/// not held open (EBUSY to every other opener) for a client that is gone
+/// (FastLED/fbuild#1429). Returns the ports closed.
+pub async fn reclaim_dead_client_serial_sessions(ctx: &DaemonContext) -> Vec<String> {
+    let mut closed = Vec::new();
+    for session in ctx.serial_manager.get_port_sessions() {
+        if !all_clients_dead(&session) {
+            continue;
+        }
+        match ctx
+            .serial_manager
+            .close_port(&session.port, "dead_client_reclaim")
+            .await
+        {
+            Ok(()) => {
+                tracing::info!(
+                    port = %session.port,
+                    "closed serial session: every client process has exited"
+                );
+                closed.push(session.port);
+            }
+            Err(err) => {
+                tracing::warn!(port = %session.port, "failed to reclaim dead-client serial session: {err}")
+            }
+        }
+    }
+    closed
+}
+
 fn live_refusal_reason(session: &PortSessionInfo) -> String {
     if let Some(owner_id) = session.owner_client_id.as_deref() {
         if let Some(owner) = session.clients.iter().find(|c| c.client_id == owner_id) {
@@ -500,6 +553,59 @@ mod tests {
             vec!["COM_TEST_FORCE".to_string()]
         );
         assert!(ctx.serial_manager.get_port_sessions().is_empty());
+    }
+
+    #[tokio::test]
+    async fn reclaim_closes_session_whose_clients_are_all_dead() {
+        let ctx = test_context();
+        insert_serial_session(&ctx, "COM_TEST_DEAD", "client-dead", Some(u32::MAX));
+
+        let closed = reclaim_dead_client_serial_sessions(&ctx).await;
+
+        assert_eq!(closed, vec!["COM_TEST_DEAD".to_string()]);
+        assert!(ctx.serial_manager.get_port_sessions().is_empty());
+    }
+
+    #[tokio::test]
+    async fn reclaim_keeps_live_and_unknown_pid_sessions() {
+        let ctx = test_context();
+        insert_serial_session(
+            &ctx,
+            "COM_TEST_LIVE",
+            "client-live",
+            Some(std::process::id()),
+        );
+        insert_serial_session(&ctx, "COM_TEST_UNKNOWN", "client-unknown", None);
+
+        assert!(reclaim_dead_client_serial_sessions(&ctx).await.is_empty());
+        assert_eq!(ctx.serial_manager.get_port_sessions().len(), 2);
+    }
+
+    #[tokio::test]
+    async fn reclaim_keeps_session_with_a_live_reader_beside_a_dead_owner() {
+        let ctx = test_context();
+        let mut session = SerialSession::new("COM_TEST_MIXED".to_string(), 115200);
+        session.is_open = true;
+        session.owner_client_id = Some("client-dead".to_string());
+        session.reader_client_ids.insert("client-live".to_string());
+        for (client, pid) in [
+            ("client-dead", u32::MAX),
+            ("client-live", std::process::id()),
+        ] {
+            session.client_metadata.insert(
+                client.to_string(),
+                SerialClientMetadata {
+                    pid: Some(pid),
+                    exe: None,
+                    cwd: None,
+                    argv: None,
+                },
+            );
+        }
+        ctx.serial_manager.insert_session_for_test(session);
+
+        assert!(reclaim_dead_client_serial_sessions(&ctx).await.is_empty());
+        assert_eq!(ctx.serial_manager.get_port_sessions().len(), 1);
     }
 
     #[tokio::test]

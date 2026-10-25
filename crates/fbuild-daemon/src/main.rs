@@ -11,7 +11,8 @@ use axum::routing::{get, post};
 use clap::Parser;
 use fbuild_build::compile_backend::CompileBackend;
 use fbuild_daemon::context::{
-    BroadcastHub, DaemonContext, IDLE_TIMEOUT, STALE_LOCK_CHECK_INTERVAL, self_eviction_timeout,
+    BroadcastHub, DEAD_CLIENT_SERIAL_RECLAIM_INTERVAL, DaemonContext, IDLE_TIMEOUT,
+    STALE_LOCK_CHECK_INTERVAL, self_eviction_timeout,
 };
 use fbuild_daemon::handlers::{
     boards, build_progress, cache, devices, emulator, health, libraries, locks, operations,
@@ -456,6 +457,7 @@ async fn main() {
         tokio::spawn(async move {
             let mut daemon_empty_since: Option<std::time::Instant> = None;
             let mut last_lock_cleanup = std::time::Instant::now();
+            let mut last_serial_reclaim = std::time::Instant::now();
             // Periodic reminder of why the daemon is staying alive, so
             // users can see the blocker rather than thinking self-eviction
             // is broken. See FastLED/fbuild#51.
@@ -522,6 +524,14 @@ async fn main() {
                 }
 
                 // --- Periodic stale lock cleanup ---
+                // A port held for a client whose process has exited returns
+                // EBUSY to every other opener (FastLED/fbuild#1429). Checked
+                // often: the next run usually wants the port within seconds.
+                if last_serial_reclaim.elapsed() >= DEAD_CLIENT_SERIAL_RECLAIM_INTERVAL {
+                    last_serial_reclaim = std::time::Instant::now();
+                    fbuild_daemon::handlers::locks::reclaim_dead_client_serial_sessions(&ctx).await;
+                }
+
                 if last_lock_cleanup.elapsed() >= STALE_LOCK_CHECK_INTERVAL {
                     last_lock_cleanup = std::time::Instant::now();
                     let mut cleared = 0usize;
