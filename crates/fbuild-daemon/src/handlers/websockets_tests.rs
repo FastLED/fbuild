@@ -774,6 +774,9 @@ async fn ws_open_port_timeout_names_a_dead_client_holder() {
     .expect_err("hung open_port must time out");
 
     assert!(message.contains(&u32::MAX.to_string()), "{message}");
-    assert!(message.contains("clear-locks --stale"), "{message}");
+    assert!(
+        message.contains("clear-locks --port COM_DEAD --stale"),
+        "{message}"
+    );
     assert!(!message.contains("wedged"), "{message}");
 }

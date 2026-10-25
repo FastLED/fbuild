@@ -147,10 +147,11 @@ pub fn dead_client_holder(
         .collect();
     Some(format!(
         "the daemon still holds {} for exited client pid(s) {}; it is released within {}s, \
-         or run `fbuild daemon clear-locks --stale` now",
+         or run `fbuild daemon clear-locks --port {} --stale` now",
         session.port,
         pids.join(", "),
-        crate::context::DEAD_CLIENT_SERIAL_RECLAIM_INTERVAL.as_secs()
+        crate::context::DEAD_CLIENT_SERIAL_RECLAIM_INTERVAL.as_secs(),
+        session.port
     ))
 }
 
@@ -604,7 +605,10 @@ mod tests {
 
         let hint = dead_client_holder(&ctx.serial_manager, "COM_TEST_DEAD").unwrap();
         assert!(hint.contains(&u32::MAX.to_string()), "{hint}");
-        assert!(hint.contains("clear-locks --stale"), "{hint}");
+        assert!(
+            hint.contains("clear-locks --port COM_TEST_DEAD --stale"),
+            "{hint}"
+        );
         assert!(dead_client_holder(&ctx.serial_manager, "COM_TEST_LIVE").is_none());
         assert!(dead_client_holder(&ctx.serial_manager, "COM_NONE").is_none());
     }
@@ -649,6 +653,24 @@ mod tests {
 
         assert!(reclaim_dead_client_serial_sessions(&ctx).await.is_empty());
         assert_eq!(ctx.serial_manager.get_port_sessions().len(), 1);
+    }
+
+    /// The recovery command `dead_client_holder` prints must work as typed:
+    /// `--port <port> --stale` without `--serial`.
+    #[tokio::test]
+    async fn hinted_clear_locks_command_closes_the_dead_client_session() {
+        let ctx = test_context();
+        insert_serial_session(&ctx, "COM_TEST_HINT", "client-dead", Some(u32::MAX));
+
+        let req = ClearLocksRequest {
+            port: Some("COM_TEST_HINT".to_string()),
+            stale: true,
+            ..Default::default()
+        };
+        let Json(response) = clear_locks(State(ctx.clone()), Some(Json(req))).await;
+
+        assert_eq!(response.cleared_serial_count, 1, "{:?}", response.refused);
+        assert!(ctx.serial_manager.get_port_sessions().is_empty());
     }
 
     #[tokio::test]
