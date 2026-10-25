@@ -5,20 +5,22 @@
 //! platform's linker-script recipe, so the reuse also requires this digest to
 //! match the one written by the last successful link.
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
+
+use fbuild_core::path::NormalizedPath;
 
 use crate::linker::LinkExtraArgs;
 
 /// Sidecar holding the digest of the inputs `firmware.elf` was linked from.
-pub(crate) fn digest_path(elf: &Path) -> PathBuf {
+pub(crate) fn digest_path(elf: &Path) -> NormalizedPath {
     let mut name = elf.as_os_str().to_owned();
     name.push(".link");
-    PathBuf::from(name)
+    NormalizedPath::new(name)
 }
 
 /// Digest of everything besides object contents that shapes the link.
 pub(crate) fn link_digest(
-    objects: &[&PathBuf],
+    objects: impl IntoIterator<Item = impl AsRef<Path>>,
     extra: &LinkExtraArgs,
     platform_fingerprint: &str,
 ) -> String {
@@ -40,7 +42,7 @@ pub(crate) fn link_digest(
     }
     field(b"--objects");
     for object in objects {
-        field(object.to_string_lossy().as_bytes());
+        field(object.as_ref().to_string_lossy().as_bytes());
     }
     format!("{:x}", hasher.finalize())
 }
@@ -63,13 +65,11 @@ mod tests {
     use super::*;
 
     fn digest(objects: &[&str], flags: &[&str], fingerprint: &str) -> String {
-        let objects: Vec<PathBuf> = objects.iter().map(PathBuf::from).collect();
-        let refs: Vec<&PathBuf> = objects.iter().collect();
         let extra = LinkExtraArgs {
             flags: flags.iter().map(|f| f.to_string()).collect(),
             ..Default::default()
         };
-        link_digest(&refs, &extra, fingerprint)
+        link_digest(objects, &extra, fingerprint)
     }
 
     #[test]
