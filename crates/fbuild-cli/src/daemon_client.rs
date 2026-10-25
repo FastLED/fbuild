@@ -947,7 +947,7 @@ async fn try_acquire_broker_daemon() -> fbuild_core::Result<bool> {
 
             let client = DaemonClient::new();
             if client
-                .wait_until_healthy(std::time::Duration::from_secs(READINESS_TIMEOUT_SECS))
+                .wait_until_healthy(std::time::Duration::from_secs(startup_log::readiness_timeout_secs()))
                 .await?
             {
                 let info = client.daemon_info().await?;
@@ -1012,7 +1012,7 @@ async fn ensure_direct_daemon_running() -> fbuild_core::Result<()> {
         fbuild_core::daemon_health::DaemonHealth::Starting { .. }
     ) {
         client
-            .wait_until_healthy(std::time::Duration::from_secs(READINESS_TIMEOUT_SECS))
+            .wait_until_healthy(std::time::Duration::from_secs(startup_log::readiness_timeout_secs()))
             .await?;
     }
 
@@ -1196,7 +1196,7 @@ async fn start_daemon(client: &DaemonClient) -> fbuild_core::Result<Option<u32>>
         // of embedded zccache bring-up in #1462) is waited on instead of being
         // respawned and then reported as failed.
         if client
-            .wait_until_healthy(std::time::Duration::from_secs(READINESS_TIMEOUT_SECS))
+            .wait_until_healthy(std::time::Duration::from_secs(startup_log::readiness_timeout_secs()))
             .await?
         {
             tracing::info!("daemon started successfully (spawned pid {spawned_pid})");
@@ -1205,14 +1205,15 @@ async fn start_daemon(client: &DaemonClient) -> fbuild_core::Result<Option<u32>>
 
         tracing::warn!(
             "daemon did not become healthy within {}s after spawn attempt {}",
-            READINESS_TIMEOUT_SECS,
+            startup_log::readiness_timeout_secs(),
             attempt + 1
         );
     }
 
+    let readiness_secs = startup_log::readiness_timeout_secs();
     Err(fbuild_core::FbuildError::DaemonError(format!(
         "daemon did not become healthy after 3 spawn attempts \
-         ({READINESS_TIMEOUT_SECS}s each). This is a daemon problem, not a defect in the code \
+         ({readiness_secs}s each). This is a daemon problem, not a defect in the code \
          being built — no compilation was attempted.\n{}{}\n\nIf the daemon executable above is \
          not the one \
          you expect, that is the likely cause: the endpoint port is derived from the daemon \
@@ -1257,9 +1258,6 @@ fn wedged_daemon_note(live_daemon_pid: Option<u32>) -> String {
     )
 }
 
-/// Wall-clock budget for a spawned daemon to answer `health()`. Stretched while
-/// the daemon reports `starting` (FastLED/fbuild#1480).
-const READINESS_TIMEOUT_SECS: u64 = 10;
 
 /// How long a daemon may report `starting` before the CLI says on stderr what
 /// it is waiting for.
