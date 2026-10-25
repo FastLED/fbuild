@@ -72,6 +72,44 @@ pub(super) fn flash_settings(
     (flash_freq, flash_mode, flash_size)
 }
 
+/// fbuild builds ESP32 projects only through the Arduino core and its
+/// precompiled ESP-IDF libraries; it has no CMake/`idf.py` component build.
+/// A bare `framework = espidf` project has an `app_main()` and no
+/// `setup()`/`loop()`, so building it as Arduino reports a success that is not
+/// the requested build. Reject it before anything runs (FastLED/fbuild#1664).
+/// `arduino, espidf` still builds, since Arduino-on-IDF links the same SDK,
+/// but it is not an IDF component build and the warning says so.
+pub(super) fn reject_unsupported_esp_framework(
+    config: &fbuild_config::PlatformIOConfig,
+    env_name: &str,
+) -> Result<()> {
+    let env = config.get_env_config(env_name)?;
+    let Some(framework) = env.get("framework") else {
+        return Ok(());
+    };
+    let parts: Vec<&str> = framework.split(',').map(str::trim).collect();
+    let espidf = parts.iter().any(|part| part.eq_ignore_ascii_case("espidf"));
+    let arduino = parts
+        .iter()
+        .any(|part| part.eq_ignore_ascii_case("arduino"));
+    if espidf && !arduino {
+        return Err(fbuild_core::FbuildError::ConfigError(format!(
+            "framework = {framework} is unsupported for environment '{env_name}': fbuild builds \
+             ESP32 projects through the Arduino core only and has no ESP-IDF (CMake/idf.py) \
+             build. Use `framework = arduino`, or build this environment with PlatformIO \
+             (see FastLED/fbuild#1664)"
+        )));
+    }
+    if espidf {
+        tracing::warn!(
+            env = env_name,
+            "framework = {framework}: building with the Arduino core and its precompiled ESP-IDF \
+             libraries; this is not an ESP-IDF component (CMake/idf.py) build (FastLED/fbuild#1664)"
+        );
+    }
+    Ok(())
+}
+
 /// Arduino's packaged ESP-IDF libraries cannot reflect sdkconfig changes without
 /// a hybrid IDF rebuild. Reject overlays before context setup has side effects.
 pub(super) fn reject_unsupported_sdkconfig_overlay(

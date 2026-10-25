@@ -2,7 +2,10 @@
 
 use super::Esp32Orchestrator;
 use super::cdc::{cdc_on_boot_enabled, is_esp32_project, warn_if_cdc_on_boot};
-use super::helpers::{apply_effective_define_flags, reject_unsupported_sdkconfig_overlay};
+use super::helpers::{
+    apply_effective_define_flags, reject_unsupported_esp_framework,
+    reject_unsupported_sdkconfig_overlay,
+};
 use super::helpers::{
     framework_failure_marker, framework_signature, record_failed_framework_lib,
     should_skip_failed_framework_lib,
@@ -35,6 +38,36 @@ fn sdkconfig_overlays_fail_for_arduino_esp32() {
         let error = reject_unsupported_sdkconfig_overlay(&config, "esp32s3").unwrap_err();
         assert!(error.to_string().contains(key), "{error}");
         assert!(error.to_string().contains("#1460"), "{error}");
+    }
+}
+
+fn env_with_framework(framework: &str) -> (tempfile::TempDir, fbuild_config::PlatformIOConfig) {
+    let tmp = tempfile::TempDir::new().unwrap();
+    std::fs::write(
+        tmp.path().join("platformio.ini"),
+        format!(
+            "[env:esp32dev]\nplatform = espressif32\nboard = esp32dev\nframework = {framework}\n"
+        ),
+    )
+    .unwrap();
+    let config =
+        fbuild_config::PlatformIOConfig::from_path(&tmp.path().join("platformio.ini")).unwrap();
+    (tmp, config)
+}
+
+#[test]
+fn bare_espidf_framework_is_rejected_before_building() {
+    let (_tmp, config) = env_with_framework("espidf");
+    let error = reject_unsupported_esp_framework(&config, "esp32dev").unwrap_err();
+    assert!(error.to_string().contains("#1664"), "{error}");
+}
+
+#[test]
+fn arduino_and_dual_frameworks_are_accepted() {
+    for framework in ["arduino", "arduino, espidf", "espidf, arduino"] {
+        let (_tmp, config) = env_with_framework(framework);
+        reject_unsupported_esp_framework(&config, "esp32dev")
+            .unwrap_or_else(|error| panic!("{framework}: {error}"));
     }
 }
 
