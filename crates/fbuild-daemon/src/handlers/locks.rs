@@ -129,6 +129,31 @@ fn all_clients_dead(session: &PortSessionInfo) -> bool {
         })
 }
 
+/// Describe a session on `port` that is held only for exited clients, for
+/// error text: an attach that times out against one should not blame the
+/// serial driver (FastLED/fbuild#1429).
+pub fn dead_client_holder(
+    manager: &fbuild_serial::SharedSerialManager,
+    port: &str,
+) -> Option<String> {
+    let session = manager
+        .get_port_sessions()
+        .into_iter()
+        .find(|session| port_matches(&session.port, port) && all_clients_dead(session))?;
+    let pids: Vec<String> = session
+        .clients
+        .iter()
+        .filter_map(|client| client.metadata.pid.map(|pid| pid.to_string()))
+        .collect();
+    Some(format!(
+        "the daemon still holds {} for exited client pid(s) {}; it is released within {}s, \
+         or run `fbuild daemon clear-locks --stale` now",
+        session.port,
+        pids.join(", "),
+        crate::context::DEAD_CLIENT_SERIAL_RECLAIM_INTERVAL.as_secs()
+    ))
+}
+
 /// Close serial sessions whose every client process has exited, so a port is
 /// not held open (EBUSY to every other opener) for a client that is gone
 /// (FastLED/fbuild#1429). Returns the ports closed.
@@ -564,6 +589,24 @@ mod tests {
 
         assert_eq!(closed, vec!["COM_TEST_DEAD".to_string()]);
         assert!(ctx.serial_manager.get_port_sessions().is_empty());
+    }
+
+    #[test]
+    fn dead_client_holder_names_the_exited_pid_only_for_dead_sessions() {
+        let ctx = test_context();
+        insert_serial_session(&ctx, "COM_TEST_DEAD", "client-dead", Some(u32::MAX));
+        insert_serial_session(
+            &ctx,
+            "COM_TEST_LIVE",
+            "client-live",
+            Some(std::process::id()),
+        );
+
+        let hint = dead_client_holder(&ctx.serial_manager, "COM_TEST_DEAD").unwrap();
+        assert!(hint.contains(&u32::MAX.to_string()), "{hint}");
+        assert!(hint.contains("clear-locks --stale"), "{hint}");
+        assert!(dead_client_holder(&ctx.serial_manager, "COM_TEST_LIVE").is_none());
+        assert!(dead_client_holder(&ctx.serial_manager, "COM_NONE").is_none());
     }
 
     #[tokio::test]

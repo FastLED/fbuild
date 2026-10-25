@@ -284,15 +284,24 @@ pub async fn monitor(
                 StatusCode::GATEWAY_TIMEOUT,
                 Json(OperationResponse::fail(
                     request_id,
-                    match fbuild_serial::port_holders::describe_port_holders(&port).await {
-                        Some(holder) => format!(
-                            "open_port({}) exceeded {}s — {} (timeout cause unknown)",
+                    if let Some(holder) =
+                        crate::handlers::locks::dead_client_holder(&ctx.serial_manager, &port)
+                    {
+                        format!(
+                            "open_port({}) exceeded {}s — {}",
                             port, SERIAL_OPEN_PORT_TIMEOUT_SECS, holder
-                        ),
-                        None => format!(
-                            "open_port({}) exceeded {}s — serial driver may be wedged",
-                            port, SERIAL_OPEN_PORT_TIMEOUT_SECS
-                        ),
+                        )
+                    } else {
+                        match fbuild_serial::port_holders::describe_port_holders(&port).await {
+                            Some(holder) => format!(
+                                "open_port({}) exceeded {}s — {} (timeout cause unknown)",
+                                port, SERIAL_OPEN_PORT_TIMEOUT_SECS, holder
+                            ),
+                            None => format!(
+                                "open_port({}) exceeded {}s — serial driver may be wedged",
+                                port, SERIAL_OPEN_PORT_TIMEOUT_SECS
+                            ),
+                        }
                     },
                 )),
             );
