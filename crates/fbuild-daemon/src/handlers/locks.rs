@@ -129,6 +129,32 @@ fn all_clients_dead(session: &PortSessionInfo) -> bool {
         })
 }
 
+/// Describe a session on `port` that is held only for exited clients, for
+/// error text: an attach that times out against one should not blame the
+/// serial driver (FastLED/fbuild#1429).
+pub fn dead_client_holder(
+    manager: &fbuild_serial::SharedSerialManager,
+    port: &str,
+) -> Option<String> {
+    let session = manager
+        .get_port_sessions()
+        .into_iter()
+        .find(|session| port_matches(&session.port, port) && all_clients_dead(session))?;
+    let pids: Vec<String> = session
+        .clients
+        .iter()
+        .filter_map(|client| client.metadata.pid.map(|pid| pid.to_string()))
+        .collect();
+    Some(format!(
+        "the daemon still holds {} for exited client pid(s) {}; it is released within {}s, \
+         or run `fbuild daemon clear-locks --port {} --stale` now",
+        session.port,
+        pids.join(", "),
+        crate::context::DEAD_CLIENT_SERIAL_RECLAIM_INTERVAL.as_secs(),
+        session.port
+    ))
+}
+
 /// Close serial sessions whose every client process has exited, so a port is
 /// not held open (EBUSY to every other opener) for a client that is gone
 /// (FastLED/fbuild#1429). Returns the ports closed.
@@ -566,6 +592,27 @@ mod tests {
         assert!(ctx.serial_manager.get_port_sessions().is_empty());
     }
 
+    #[test]
+    fn dead_client_holder_names_the_exited_pid_only_for_dead_sessions() {
+        let ctx = test_context();
+        insert_serial_session(&ctx, "COM_TEST_DEAD", "client-dead", Some(u32::MAX));
+        insert_serial_session(
+            &ctx,
+            "COM_TEST_LIVE",
+            "client-live",
+            Some(std::process::id()),
+        );
+
+        let hint = dead_client_holder(&ctx.serial_manager, "COM_TEST_DEAD").unwrap();
+        assert!(hint.contains(&u32::MAX.to_string()), "{hint}");
+        assert!(
+            hint.contains("clear-locks --port COM_TEST_DEAD --stale"),
+            "{hint}"
+        );
+        assert!(dead_client_holder(&ctx.serial_manager, "COM_TEST_LIVE").is_none());
+        assert!(dead_client_holder(&ctx.serial_manager, "COM_NONE").is_none());
+    }
+
     #[tokio::test]
     async fn reclaim_keeps_live_and_unknown_pid_sessions() {
         let ctx = test_context();
@@ -606,6 +653,24 @@ mod tests {
 
         assert!(reclaim_dead_client_serial_sessions(&ctx).await.is_empty());
         assert_eq!(ctx.serial_manager.get_port_sessions().len(), 1);
+    }
+
+    /// The recovery command `dead_client_holder` prints must work as typed:
+    /// `--port <port> --stale` without `--serial`.
+    #[tokio::test]
+    async fn hinted_clear_locks_command_closes_the_dead_client_session() {
+        let ctx = test_context();
+        insert_serial_session(&ctx, "COM_TEST_HINT", "client-dead", Some(u32::MAX));
+
+        let req = ClearLocksRequest {
+            port: Some("COM_TEST_HINT".to_string()),
+            stale: true,
+            ..Default::default()
+        };
+        let Json(response) = clear_locks(State(ctx.clone()), Some(Json(req))).await;
+
+        assert_eq!(response.cleared_serial_count, 1, "{:?}", response.refused);
+        assert!(ctx.serial_manager.get_port_sessions().is_empty());
     }
 
     #[tokio::test]

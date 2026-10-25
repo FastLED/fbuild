@@ -415,6 +415,7 @@ async fn ws_open_port_timeout_returns_error_with_deadline() {
     let result = tokio::time::timeout(
         std::time::Duration::from_secs(1),
         await_ws_serial_open_port(
+            &fbuild_serial::SharedSerialManager::new(),
             "COM_HUNG",
             std::future::pending::<fbuild_core::Result<()>>(),
             std::time::Duration::from_millis(10),
@@ -446,6 +447,7 @@ async fn run_pending_attach_timeout_scope(ctx: std::sync::Arc<DaemonContext>) ->
     assert_eq!(ctx.pending_serial_attach_infos().len(), 1);
 
     let message = await_ws_serial_open_port(
+        &ctx.serial_manager,
         "COM_HUNG",
         std::future::pending::<fbuild_core::Result<()>>(),
         std::time::Duration::from_millis(10),
@@ -741,4 +743,40 @@ fn writer_flushes_data_before_non_data_event() {
         }
         other => panic!("output[2] expected Data, got {:?}", other),
     }
+}
+
+/// FastLED/fbuild#1429: a hung attach against a port the daemon holds for an
+/// exited client names that client instead of blaming the serial driver.
+#[tokio::test]
+async fn ws_open_port_timeout_names_a_dead_client_holder() {
+    let manager = fbuild_serial::SharedSerialManager::new();
+    let mut session = fbuild_serial::SerialSession::new("COM_DEAD".to_string(), 115200);
+    session.is_open = true;
+    session.owner_client_id = Some("client-dead".to_string());
+    session.client_metadata.insert(
+        "client-dead".to_string(),
+        fbuild_serial::SerialClientMetadata {
+            pid: Some(u32::MAX),
+            exe: None,
+            cwd: None,
+            argv: None,
+        },
+    );
+    manager.insert_session_for_test(session);
+
+    let message = await_ws_serial_open_port(
+        &manager,
+        "COM_DEAD",
+        std::future::pending::<fbuild_core::Result<()>>(),
+        std::time::Duration::from_millis(10),
+    )
+    .await
+    .expect_err("hung open_port must time out");
+
+    assert!(message.contains(&u32::MAX.to_string()), "{message}");
+    assert!(
+        message.contains("clear-locks --port COM_DEAD --stale"),
+        "{message}"
+    );
+    assert!(!message.contains("wedged"), "{message}");
 }
