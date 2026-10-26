@@ -130,7 +130,7 @@ setup-soldr       = { only-in = ".github/actions/setup" }
 cache-actions     = { only-in = ".github/actions/setup" }
 
 [allow.workflows]
-"ci-minimal.yml"                 = ["push:main", "pull_request", "workflow_dispatch"]
+"ci-minimal.yml"                 = ["push:main", "pull_request", "merge_group", "workflow_dispatch"]
 "ci-full.yml"                    = ["workflow_call", "workflow_dispatch"]
 "ci-test.yml"                    = ["workflow_call", "workflow_dispatch"]
 "ci-workflow-drift.yml"          = ["workflow_dispatch", "push:main", "pull_request"]
@@ -160,7 +160,7 @@ cache-actions     = { only-in = ".github/actions/setup" }
 "template_native_build.yml"      = ["workflow_call"]
 
 [allow.permissions]
-"actions: write"      = ["dispatch"]
+"actions: write"      = ["dispatch", "cancel-superseded", "queue-cache-janitor"]
 "contents: write"     = ["publish"]
 "pages: write"        = ["publish", "deploy-pages"]
 "attestations: write" = ["build", "publish"]

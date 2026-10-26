@@ -7,6 +7,7 @@ on:
   pull_request:
     branches: [main]
     types: [opened, labeled, unlabeled, synchronize, reopened]
+  merge_group:
   workflow_dispatch: {}
 
 concurrency:
@@ -14,6 +15,24 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  cancel-superseded:
+    name: Cancel superseded queue runs
+    if: ${{ !cancelled() && github.event_name == 'merge_group' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: write
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          sparse-checkout: ci/cancel_superseded.py
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+      - name: Cancel
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 ci/cancel_superseded.py
   verify:
     name: Verify local gate
     continue-on-error: true
@@ -188,3 +207,33 @@ jobs:
             # Path-selected boards: skipped when the PR touches none.
             case "$PR_BOARDS" in success|skipped) ;; *) exit 1 ;; esac
           fi
+  queue-cache-janitor:
+    name: End-of-queue cache janitor
+    needs: [cancel-superseded, verify, linux, board_plan, fbuild_bin, pr_boards, reuse_decision, test, full, selected-coverage]
+    if: always() && github.event_name == 'merge_group'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    concurrency:
+      group: cache-janitor
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      actions: write
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
+          sparse-checkout: ci.toml
+          sparse-checkout-cone-mode: false
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          repository: zackees/ci.yml
+          ref: 953c4e13691b10c1c4f1f9c39fa259fd732c5789
+          path: .ci-lint
+          persist-credentials: false
+          sparse-checkout: ci_lint
+      - name: Sweep caches
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PYTHONPATH: .ci-lint
+        run: python3 -P -m ci_lint cache janitor --repo . --default-branch main

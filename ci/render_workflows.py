@@ -368,6 +368,85 @@ def render_reuse_decision() -> str:
     )
 
 
+# GEN-022 (forge-ci/ci.yml#405): the end-of-queue janitor needs ci-lint with
+# the #405 repo-wide LRU budget pass, which CI_LINT_SHA predates.
+QUEUE_JANITOR_CI_LINT_SHA = "953c4e13691b10c1c4f1f9c39fa259fd732c5789"
+QUEUE_JANITOR_NEEDS = (
+    "cancel-superseded", "verify", "linux", "board_plan", "fbuild_bin", "pr_boards",
+    "reuse_decision", "test", "full", "selected-coverage",
+)
+
+
+def render_cancel_superseded() -> str:
+    """GEN-022 / forge-ci/ci.yml#409: cancel older queue runs for the same PR.
+
+    A queue ref carries the base commit (gh-readonly-queue/main/pr-<N>-<sha>),
+    so the concurrency group never pairs a PR's rebuilt queue run with the one
+    it replaced. No `needs:`; only the end-of-queue janitor depends on it, and
+    local-gate.toml exempts it from verify.
+    """
+    return """  cancel-superseded:
+    name: Cancel superseded queue runs
+    if: ${{ !cancelled() && github.event_name == 'merge_group' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: write
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          sparse-checkout: ci/cancel_superseded.py
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+      - name: Cancel
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 ci/cancel_superseded.py
+"""
+
+
+def render_queue_cache_janitor() -> str:
+    """GEN-022 (forge-ci/ci.yml#405): every merge-queue run ends with the janitor.
+
+    It needs every other job and runs on always(), so the repository stays
+    under [cache].budget by ci-lint's LRU order instead of GitHub's; the
+    non-cancelling `cache-janitor` group keeps one sweep at a time.
+    """
+    return (
+        "  queue-cache-janitor:\n"
+        "    name: End-of-queue cache janitor\n"
+        f"    needs: [{', '.join(QUEUE_JANITOR_NEEDS)}]\n"
+        "    if: always() && github.event_name == 'merge_group'\n"
+        "    runs-on: ubuntu-24.04\n"
+        "    timeout-minutes: 5\n"
+        "    concurrency:\n"
+        "      group: cache-janitor\n"
+        "      cancel-in-progress: false\n"
+        "    permissions:\n"
+        "      contents: read\n"
+        "      actions: write\n"
+        "    steps:\n"
+        "      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6\n"
+        "        with:\n"
+        "          persist-credentials: false\n"
+        "          sparse-checkout: ci.toml\n"
+        "          sparse-checkout-cone-mode: false\n"
+        "      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6\n"
+        "        with:\n"
+        "          repository: zackees/ci.yml\n"
+        f"          ref: {QUEUE_JANITOR_CI_LINT_SHA}\n"
+        "          path: .ci-lint\n"
+        "          persist-credentials: false\n"
+        "          sparse-checkout: ci_lint\n"
+        "      - name: Sweep caches\n"
+        "        env:\n"
+        "          GITHUB_TOKEN: ${{ github.token }}\n"
+        "          PYTHONPATH: .ci-lint\n"
+        "        run: python3 -P -m ci_lint cache janitor --repo . --default-branch main\n"
+    )
+
+
 def render_local_gate_verify() -> str:
     """Report optional local proof without gating hosted validation (#1698)."""
     return """  verify:
@@ -442,6 +521,7 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
         "  pull_request:\n"
         "    branches: [main]\n"
         "    types: [opened, labeled, unlabeled, synchronize, reopened]\n"
+        "  merge_group:\n"
         "  workflow_dispatch: {}\n"
     )
     gate = (
@@ -542,6 +622,7 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
         f"  group: {name}-${{{{ github.event_name == 'pull_request' && github.ref || github.run_id }}}}\n"
         "  cancel-in-progress: ${{ github.event_name == 'pull_request' }}\n\n"
         "jobs:\n"
+        + (render_cancel_superseded() if minimal else "")
         + verify
         + "  linux:\n"
         + ("    if: github.event_name != 'pull_request' || (!contains(github.event.pull_request.labels.*.name, 'ci-test') && !contains(github.event.pull_request.labels.*.name, 'ci-full'))\n" if minimal else gate)
@@ -646,6 +727,7 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
            "            # Path-selected boards: skipped when the PR touches none.\n"
            "            case \"$PR_BOARDS\" in success|skipped) ;; *) exit 1 ;; esac\n"
            "          fi\n"
+           + render_queue_cache_janitor()
            if minimal else "")
     )
 

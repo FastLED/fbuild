@@ -3,6 +3,8 @@
 [gate]
 run = ["uv", "run", "--no-project", "--python", "3.12", "python", "-m", "ci.local_gate"]
 verify = "ci-minimal.yml:verify"
+# cancel-superseded (GEN-022, ci.yml#409) runs only on merge_group, first, with no `needs:`.
+verify-exempt = ["cancel-superseded"]
 mode = "shadow"
 
 [gate.lanes.linux-minimal]
