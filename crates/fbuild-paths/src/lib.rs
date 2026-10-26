@@ -13,6 +13,9 @@ pub mod executable_hash;
 pub mod long_paths;
 pub mod running_process;
 
+#[cfg(test)]
+mod owner_port_tests;
+
 /// The project-local and home-local fbuild directory segment: `.fbuild`.
 ///
 /// This is the canonical spelling. Nothing outside `fbuild-paths` /
@@ -658,54 +661,6 @@ mod tests {
             ),
             "the test binary must not be mistaken for {}",
             daemon_ownership::DAEMON_EXE_STEM
-        );
-    }
-
-    fn claim(version: &str, mode: &str, cache: &str, port: u16) -> daemon_ownership::OwnerClaim {
-        daemon_ownership::OwnerClaim {
-            pid: 42,
-            exe: std::path::PathBuf::from("/x/fbuild-daemon").into(),
-            version: version.to_string(),
-            mode: mode.to_string(),
-            cache_root_key: cache.to_string(),
-            port,
-        }
-    }
-
-    /// Two same-version builds that derive different default ports must
-    /// still find the live daemon that owns their shared cache root.
-    #[test]
-    fn owner_claim_port_is_adopted_for_same_version_identity() {
-        let c = claim("2.5.44", "prod", "/c", 60903);
-        assert_eq!(
-            adoptable_owner_port(&c, "2.5.44", "prod", "/c", |_| true),
-            Some(60903)
-        );
-    }
-
-    #[test]
-    fn owner_claim_port_is_not_adopted_across_identity_or_when_dead() {
-        let c = claim("2.5.44", "prod", "/c", 60903);
-        assert_eq!(
-            adoptable_owner_port(&c, "2.5.44", "prod", "/c", |_| false),
-            None
-        );
-        assert_eq!(
-            adoptable_owner_port(&c, "2.5.45", "prod", "/c", |_| true),
-            None
-        );
-        assert_eq!(
-            adoptable_owner_port(&c, "2.5.44", "dev", "/c", |_| true),
-            None
-        );
-        assert_eq!(
-            adoptable_owner_port(&c, "2.5.44", "prod", "/d", |_| true),
-            None
-        );
-        let zero = claim("2.5.44", "prod", "/c", 0);
-        assert_eq!(
-            adoptable_owner_port(&zero, "2.5.44", "prod", "/c", |_| true),
-            None
         );
     }
 

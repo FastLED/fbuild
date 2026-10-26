@@ -230,7 +230,7 @@ fn no_live_daemon_produces_no_hint() {
 fn foreign_root_owner_message_names_the_owner() {
     let claim = fbuild_paths::daemon_ownership::OwnerClaim {
         pid: 98258,
-        exe: std::path::PathBuf::from("/venv/bin/fbuild-daemon").into(),
+        exe: fbuild_core::path::NormalizedPath::new("/venv/bin/fbuild-daemon"),
         version: "2.5.44".to_string(),
         mode: "prod".to_string(),
         cache_root_key: "/c".to_string(),
