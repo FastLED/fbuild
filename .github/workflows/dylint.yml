@@ -17,6 +17,9 @@ on:
   # Dylint compile cache that subsequent PRs are allowed to restore.
   push:
     branches: [main]
+  # GEN-022: branch protection requires the `Dylint` check, so a merge-queue
+  # run must report it too or the queue stalls. Every job runs unconditionally.
+  merge_group:
 
 # Auto-cancel superseded PR runs: pushing again to a feature branch
 # supersedes the in-flight run instead of queueing behind it. Non-PR
@@ -274,3 +277,36 @@ jobs:
         run: |
           test "$POLICY" = success
           test "$FULL_DYLINT" = success
+
+  # GEN-022 (forge-ci/ci.yml#405): a merge-queue run ends with the cache
+  # janitor, which needs every other job and never cancels a sweep.
+  queue-cache-janitor:
+    name: End-of-queue cache janitor
+    needs: [policy, dylint, gate]
+    if: always() && github.event_name == 'merge_group'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    concurrency:
+      group: cache-janitor
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      actions: write
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
+          sparse-checkout: ci.toml
+          sparse-checkout-cone-mode: false
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          repository: zackees/ci.yml
+          ref: b93b8c4a20ce3cd476c75a278ad01a31bde2438b
+          path: .ci-lint
+          persist-credentials: false
+          sparse-checkout: ci_lint
+      - name: Sweep caches
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PYTHONPATH: .ci-lint
+        run: python3 -P -m ci_lint cache janitor --repo . --default-branch main

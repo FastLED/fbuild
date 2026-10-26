@@ -174,6 +174,15 @@ class FractionalWorkflowTests(unittest.TestCase):
         self.assertNotIn("run_full", full["jobs"]["dylint"]["with"])
         dylint = self.load("dylint.yml")
         self.assertEqual(["main"], dylint[True]["push"]["branches"])
+        # GEN-022: the required `Dylint` check must report on merge-queue runs,
+        # and none of its jobs may be skipped there.
+        self.assertIn("merge_group", dylint[True])
+        self.assertEqual("Dylint", dylint["jobs"]["gate"]["name"])
+        self.assertEqual("always()", dylint["jobs"]["gate"]["if"])
+        self.assertNotIn("if", dylint["jobs"]["policy"])
+        dylint_janitor = dylint["jobs"]["queue-cache-janitor"]
+        self.assertEqual(set(dylint["jobs"]) - {"queue-cache-janitor"}, set(dylint_janitor["needs"]))
+        self.assertEqual("always() && github.event_name == 'merge_group'", dylint_janitor["if"])
         setup = next(
             step for step in dylint["jobs"]["dylint"]["steps"]
             if step.get("uses", "").startswith("zackees/setup-soldr@")
