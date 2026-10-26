@@ -5,6 +5,9 @@
 //! - `Name@version`
 //! - `https://github.com/owner/repo`
 //! - `Name`
+//! - `Name=symlink://path` / `Name=file://path` (named local library)
+//! - `symlink://path`, `file://path`, or a bare directory path (unnamed
+//!   local library; name read from its manifest)
 
 /// Parsed library dependency specification.
 #[derive(Debug, Clone)]
@@ -15,6 +18,12 @@ pub struct LibrarySpec {
     pub github_url: Option<String>,
     /// Local library root from a `Name=symlink://path` or `Name=file://path` dependency.
     pub local_path: Option<fbuild_core::path::NormalizedPath>,
+    /// True for an unnamed local dependency (`symlink://path`, `file://path`
+    /// or a bare directory path). `name` then holds the directory-name
+    /// fallback, and the library manager replaces it with the `name` from the
+    /// library's `library.json` / `library.properties` once the path is
+    /// resolved against the project.
+    pub infer_name: bool,
 }
 
 impl LibrarySpec {
@@ -32,59 +41,31 @@ impl LibrarySpec {
             return None;
         }
 
-        // Skip unnamed local paths. Named local dependencies are handled below.
-        if spec.starts_with("symlink://")
-            || spec.starts_with("file://")
-            || spec.starts_with("./")
-            || spec.starts_with("../")
-            || spec.starts_with('/')
-            || spec.starts_with('\\')
-            || (spec.len() > 2 && spec.as_bytes()[1] == b':')
-        {
-            return None;
+        // Named local dependency: `Name=symlink://path` / `Name=file://path`.
+        // Keep the dependency name so `lib_ignore` and the build output
+        // directory remain deterministic.
+        for sep in ["=symlink://", "=file://"] {
+            if let Some((name, path)) = spec.split_once(sep) {
+                let name = name.trim();
+                let path = strip_file_uri_drive_slash(path.trim());
+                if name.is_empty() || path.is_empty() {
+                    return None;
+                }
+                return Some(Self::local(name.to_string(), path, false));
+            }
         }
 
-        // A named local library is resolved by the build orchestrator relative
-        // to the project directory. Keep the dependency name so `lib_ignore`
-        // and the build output directory remain deterministic.
-        if let Some((name, path)) = spec.split_once("=symlink://") {
-            let name = name.trim();
-            let path = path.trim();
-            if name.is_empty() || path.is_empty() {
+        // Unnamed local dependency, as PlatformIO accepts it:
+        // `symlink://path`, `file://path`, or a bare absolute/relative
+        // directory path. The library is used in place (like `lib/<name>`),
+        // and its name comes from its manifest, falling back to the
+        // directory name.
+        if let Some(path) = local_path_of(spec) {
+            if path.is_empty() {
                 return None;
             }
-            return Some(Self {
-                owner: String::new(),
-                name: name.to_string(),
-                version: None,
-                github_url: None,
-                local_path: Some(fbuild_core::path::NormalizedPath::new(path)),
-            });
-        }
-        if let Some((name, path)) = spec.split_once("=file://") {
-            let name = name.trim();
-            let path = path.trim();
-            if name.is_empty() || path.is_empty() {
-                return None;
-            }
-            // `file:///C:/path` is the standard Windows spelling. Paths use a
-            // leading slash in URI form, but Windows needs the drive prefix.
-            let path = if fbuild_core::platform::host::is_windows()
-                && path.len() > 2
-                && path.as_bytes()[0] == b'/'
-                && path.as_bytes()[2] == b':'
-            {
-                &path[1..]
-            } else {
-                path
-            };
-            return Some(Self {
-                owner: String::new(),
-                name: name.to_string(),
-                version: None,
-                github_url: None,
-                local_path: Some(fbuild_core::path::NormalizedPath::new(path)),
-            });
+            let name = dir_name_fallback(path);
+            return Some(Self::local(name, path, true));
         }
 
         // Handle GitHub URLs
@@ -96,6 +77,7 @@ impl LibrarySpec {
                     version: None,
                     github_url: Some(spec.to_string()),
                     local_path: None,
+                    infer_name: false,
                 });
             }
             return None;
@@ -122,6 +104,7 @@ impl LibrarySpec {
                 version,
                 github_url: None,
                 local_path: None,
+                infer_name: false,
             })
         } else {
             Some(Self {
@@ -130,7 +113,19 @@ impl LibrarySpec {
                 version,
                 github_url: None,
                 local_path: None,
+                infer_name: false,
             })
+        }
+    }
+
+    fn local(name: String, path: &str, infer_name: bool) -> Self {
+        Self {
+            owner: String::new(),
+            name,
+            version: None,
+            github_url: None,
+            local_path: Some(fbuild_core::path::NormalizedPath::new(path)),
+            infer_name,
         }
     }
 
@@ -138,6 +133,51 @@ impl LibrarySpec {
     pub fn sanitized_name(&self) -> String {
         self.name.to_lowercase().replace(['/', '@', ' '], "_")
     }
+}
+
+/// Return the path of an unnamed local `lib_deps` entry, or `None` when the
+/// spec is not a local path.
+fn local_path_of(spec: &str) -> Option<&str> {
+    for scheme in ["symlink://", "file://"] {
+        if let Some(rest) = spec.strip_prefix(scheme) {
+            return Some(strip_file_uri_drive_slash(rest.trim()));
+        }
+    }
+    let is_bare_path = spec.starts_with("./")
+        || spec.starts_with("../")
+        || spec == "."
+        || spec == ".."
+        || spec.starts_with(".\\")
+        || spec.starts_with("..\\")
+        || spec.starts_with('/')
+        || spec.starts_with('\\')
+        || (spec.len() > 2
+            && spec.as_bytes()[1] == b':'
+            && spec.as_bytes()[0].is_ascii_alphabetic());
+    is_bare_path.then_some(spec)
+}
+
+/// `file:///C:/path` is the standard Windows spelling: the URI form keeps a
+/// leading slash, but Windows needs the drive prefix.
+fn strip_file_uri_drive_slash(path: &str) -> &str {
+    if fbuild_core::platform::host::is_windows()
+        && path.len() > 2
+        && path.as_bytes()[0] == b'/'
+        && path.as_bytes()[2] == b':'
+    {
+        &path[1..]
+    } else {
+        path
+    }
+}
+
+/// Last non-trivial path component, used as the name of an unnamed local
+/// library until its manifest is read.
+fn dir_name_fallback(path: &str) -> String {
+    path.split(['/', '\\'])
+        .rfind(|c| !c.is_empty() && *c != "." && *c != "..")
+        .unwrap_or(path)
+        .to_string()
 }
 
 /// Parse owner/name from a GitHub URL without using regex.
@@ -240,8 +280,29 @@ mod tests {
     }
 
     #[test]
-    fn test_parse_skip_unnamed_symlink() {
-        assert!(LibrarySpec::parse("symlink://./").is_none());
+    fn test_parse_unnamed_symlink_absolute() {
+        let spec = LibrarySpec::parse("symlink:///home/me/dev/fastled2").unwrap();
+        assert_eq!(spec.name, "fastled2");
+        assert!(spec.infer_name);
+        assert_eq!(
+            spec.local_path,
+            Some(fbuild_core::path::NormalizedPath::new(
+                "/home/me/dev/fastled2"
+            ))
+        );
+    }
+
+    #[test]
+    fn test_parse_unnamed_symlink_relative() {
+        let spec = LibrarySpec::parse("symlink://../libs/MyLib/").unwrap();
+        assert_eq!(spec.name, "MyLib");
+        assert!(spec.infer_name);
+        assert_eq!(
+            spec.local_path,
+            Some(fbuild_core::path::NormalizedPath::new("../libs/MyLib/"))
+        );
+        // `symlink://./` is the project itself: still a local spec, never dropped.
+        assert!(LibrarySpec::parse("symlink://./").unwrap().infer_name);
     }
 
     #[test]
@@ -280,14 +341,47 @@ mod tests {
     }
 
     #[test]
-    fn test_parse_skip_file() {
-        assert!(LibrarySpec::parse("file://../../fastled9").is_none());
+    fn test_parse_unnamed_file_uri() {
+        let spec = LibrarySpec::parse("file://../../fastled9").unwrap();
+        assert_eq!(spec.name, "fastled9");
+        assert!(spec.infer_name);
+        assert_eq!(
+            spec.local_path,
+            Some(fbuild_core::path::NormalizedPath::new("../../fastled9"))
+        );
     }
 
     #[test]
-    fn test_parse_skip_relative_path() {
-        assert!(LibrarySpec::parse("../../fastled9").is_none());
-        assert!(LibrarySpec::parse("./local_lib").is_none());
+    fn test_parse_bare_paths() {
+        for (raw, name) in [
+            ("../../fastled9", "fastled9"),
+            ("./local_lib", "local_lib"),
+            ("/home/me/dev/fastled2", "fastled2"),
+        ] {
+            let spec = LibrarySpec::parse(raw).unwrap();
+            assert_eq!(spec.name, name, "{raw}");
+            assert!(spec.infer_name, "{raw}");
+            assert_eq!(
+                spec.local_path,
+                Some(fbuild_core::path::NormalizedPath::new(raw))
+            );
+        }
+    }
+
+    #[test]
+    fn test_parse_named_local_does_not_infer() {
+        assert!(
+            !LibrarySpec::parse("FastLED=symlink://../..")
+                .unwrap()
+                .infer_name
+        );
+    }
+
+    #[test]
+    fn test_parse_registry_spec_is_not_local() {
+        let spec = LibrarySpec::parse("fastled/FastLED").unwrap();
+        assert!(spec.local_path.is_none());
+        assert!(!spec.infer_name);
     }
 
     #[test]
