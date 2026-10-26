@@ -1,0 +1,170 @@
+# ci.toml -- FastLED/fbuild's CI contract. Checked and planned by ci-lint
+# (forge-ci/ci.yml). Nothing here generates YAML: it bounds what the YAML may
+# do and decides what each run selects.
+#
+# First declaration for this repository (forge-ci/ci.yml#38). It declares
+# what exists and changes no CI behaviour: fbuild keeps its own workflow
+# shape (ci-minimal.yml as the PR entry point, ~90 rendered build-<board>.yml
+# workflows reached through template_build.yml, acceptance/bench/qemu lanes).
+# Built on the cache measurements of FastLED/fbuild#1652, refreshed against
+# the live listing. Where the YAML and this file disagree, the YAML is right
+# and this file is the bug.
+#
+# `[local.gate]` is deliberately ABSENT: the gate lives in `local-gate.toml`
+# (shadow mode), and declaring both is a GATE-001 violation.
+schema  = 3
+profile = "rust-pypi-app"
+linter  = "zackees/ci.yml@b93b8c4a20ce3cd476c75a278ad01a31bde2438b"   # the pin ci-minimal.yml's verify job checks out
+
+# -- Platforms -----------------------------------------------------------------
+# Exactly Cargo.toml's [workspace.metadata.soldr].targets (CT-006). The
+# release (release-auto.yml -> template_native_build.yml) builds each on its
+# own runner.
+[platforms]
+linux-x64       = { target = "x86_64-unknown-linux-musl",  runs-on = "ubuntu-24.04",     group = "linux" }
+linux-arm64     = { target = "aarch64-unknown-linux-musl", runs-on = "ubuntu-24.04-arm", group = "linux" }
+linux-x64-gnu   = { target = "x86_64-unknown-linux-gnu",   runs-on = "ubuntu-24.04",     group = "linux" }
+linux-arm64-gnu = { target = "aarch64-unknown-linux-gnu",  runs-on = "ubuntu-24.04-arm", group = "linux" }
+windows-x64     = { target = "x86_64-pc-windows-msvc",     runs-on = "windows-2025",     group = "windows" }
+windows-arm64   = { target = "aarch64-pc-windows-msvc",    runs-on = "windows-11-arm",   group = "windows" }
+macos-arm64     = { target = "aarch64-apple-darwin",       runs-on = "macos-15",         group = "macos" }
+macos-x64       = { target = "x86_64-apple-darwin",        runs-on = "macos-15-intel",   group = "macos" }
+
+# -- Python packaging ----------------------------------------------------------
+# pyproject.toml: `fbuild` on PATH is the native binary shipped as a raw wheel
+# script by ci/build_backend.py (not soldr -- PKG-004 reports that).
+[python]
+backend = "soldr"
+cli     = { name = "fbuild", crate = "fbuild-cli", native = true }
+abi3    = "cp310"
+pythons = ["3.12"]
+
+# -- Rust workspace ------------------------------------------------------------
+[rust]
+public  = "crates/fbuild-python"
+private = "crates/fbuild-core"
+
+# -- Suites --------------------------------------------------------------------
+[suites]
+unit        = { run = "uv run ci/test.py", required = true }
+smoke       = { run = "uv run ci/lint.py", required = true }
+dylint      = { run = "uv run ci/run_dylint.py" }
+board-build = { run = "uv run ci/trampoline.py" }
+
+# -- Flows ---------------------------------------------------------------------
+[flow.pr]
+platforms = ["linux-x64"]
+suites    = ["unit", "smoke"]
+
+[flow.main]
+extends = "pr"
+cache   = "write"
+
+[flow.release]
+platforms = "all"
+suites    = "all"
+wheels    = "all"
+publish   = "pypi"
+
+[flow.nightly]
+extends  = "pr"
+schedule = "daily"
+cache    = "write"
+
+# -- Tags ----------------------------------------------------------------------
+# ci-minimal.yml routes on the `ci-test` / `ci-full` PR labels.
+[tags]
+ci-full = { add = { platforms = "all", suites = ["board-build"] } }
+
+# -- Caches --------------------------------------------------------------------
+# Live listing 2026-10-26: 354 entries, 10.68 GB -- OVER GitHub's 10 GiB cap.
+#   setup-soldr-buildcache-*     19 entries 6891 MB (largest 1149 MB)
+#   solo-toolchain-v3-*           7 entries 1194 MB (largest 180 MB)
+#   setup-soldr-cargoregistry-*   3 entries  818 MB (largest 311 MB)
+#   fbuild-toolchain-Linux-*      1 entry    680 MB
+#   setup-soldr-dylint-*          1 entry    544 MB
+#   fbuild-build-Linux-*        231 entries  379 MB (largest 7 MB)
+#   fbuild-dylint-libraries-*     1 entry    108 MB
+#   soldr-mini-v2-*               6 entries   69 MB
+#   soldr-verdict-*, setup-uv-*, setup-soldr-targetcache-*: ~0 MB
+# The buildcache's 19 entries are writer shapes, not platforms; sizes here are
+# per-platform quotas above the largest entry, so CACHE-004 reports the real
+# overrun rather than a number shaped to fit.
+[cache]
+budget   = "9.5GB"
+write-on = ["main", "nightly"]
+never    = []
+retired  = []
+pr       = { mode = "none", families = [], max-per-pr = "0MB", budget = "0MB", trim = "on-close" }
+
+[cache.family]
+compile         = { via = "setup-soldr:build-cache",    max = "1200MB", lockfile = true, per = "platform", min = "1MB", evict = "lru" }
+toolchain       = { via = "setup-soldr:solo-toolchain", max = "200MB",  per = "platform", evict = "lru" }
+registry        = { via = "setup-soldr:cargo-registry", max = "350MB",  lockfile = true, per = "none", evict = "lru" }
+dylint          = { via = "setup-soldr:dylint",         max = "600MB",  per = "none", min = "1MB", evict = "lru" }
+soldr-mini      = { via = "setup-soldr:soldr-mini",     max = "30MB",   per = "platform", min = "1MB", evict = "lru" }
+fbuild-tools    = { prefix = "fbuild-toolchain-",       max = "700MB",  per = "none", evict = "lru" }
+fbuild-build    = { prefix = "fbuild-build-",           max = "400MB",  per = "none", evict = "lru" }
+dylint-libs     = { prefix = "fbuild-dylint-libraries-", max = "150MB", per = "none", evict = "lru" }
+verdict         = { prefix = "soldr-verdict-",          max = "1MB" }
+uv              = { via = "setup-uv",                   max = "100MB",  per = "platform", evict = "lru" }
+
+[cache.promote]
+mode = "off"
+
+# -- Local runs ----------------------------------------------------------------
+# Only the runner: the gate itself lives in `local-gate.toml`.
+[local]
+runner = "bosn-act"
+lanes  = ["linux-minimal", "dylint"]
+cache  = "machine"
+
+# -- Allowlists ----------------------------------------------------------------
+[allow]
+actions           = ["actions/checkout", "actions/upload-artifact", "actions/download-artifact", "actions/cache", "actions/setup-python", "actions/attest-build-provenance", "actions/upload-pages-artifact", "actions/deploy-pages", "actions/configure-pages", "actions/create-github-app-token", "actions/add-to-project", "astral-sh/setup-uv", "zackees/setup-soldr", "arduino/setup-arduino-cli", "pypa/gh-action-pypi-publish", "FastLED/fbuild"]
+tools             = ["soldr", "uv", "python", "python3", "git", "gh", "bosn"]
+secrets           = ["PROJECT_APP_PRIVATE_KEY"]
+platform-selector = "ci/select_boards.py"
+platform-code     = ["ci/select_boards.py"]
+setup-soldr       = { only-in = ".github/actions/setup" }
+cache-actions     = { only-in = ".github/actions/setup" }
+
+[allow.workflows]
+"ci-minimal.yml"                 = ["push:main", "pull_request", "workflow_dispatch"]
+"ci-full.yml"                    = ["workflow_call", "workflow_dispatch"]
+"ci-test.yml"                    = ["workflow_call", "workflow_dispatch"]
+"ci-workflow-drift.yml"          = ["workflow_dispatch", "push:main", "pull_request"]
+"crate-gate.yml"                 = ["push:main", "pull_request", "workflow_dispatch", "workflow_call"]
+"dylint.yml"                     = ["workflow_dispatch", "workflow_call", "pull_request", "push:main"]
+"fmt.yml"                        = ["workflow_dispatch", "workflow_call", "push:main", "pull_request"]
+"lint-subprocess.yml"            = ["workflow_dispatch", "push:main", "pull_request"]
+"loc-gate.yml"                   = ["push:main", "pull_request", "workflow_dispatch"]
+"validate-boards.yml"            = ["workflow_dispatch", "workflow_call", "push:main", "pull_request"]
+"hw-ci.yml"                      = ["schedule", "pull_request", "workflow_dispatch"]
+"platform-boundary-research.yml" = ["workflow_dispatch", "pull_request"]
+"add-to-project.yml"             = ["workflow_dispatch", "issues", "pull_request"]
+"nightly-platforms.yml"          = ["push:main", "schedule", "workflow_dispatch"]
+"benchmark-build-comparison.yml" = ["workflow_dispatch", "push:main", "schedule"]
+"acceptance-205.yml"             = ["workflow_dispatch", "workflow_call", "schedule"]
+"audit-ignored-tests.yml"        = ["schedule", "workflow_dispatch"]
+"esp32s3-size-parity.yml"        = ["workflow_dispatch", "schedule"]
+"bench-205.yml"                  = ["workflow_dispatch", "workflow_call"]
+"check-ubuntu.yml"               = ["workflow_dispatch", "workflow_call"]
+"check-windows.yml"              = ["workflow_dispatch", "workflow_call"]
+"check-macos.yml"                = ["workflow_call"]
+"qemu-linux-runtime.yml"         = ["workflow_dispatch", "workflow_call"]
+"qemu-runtime-bundle.yml"        = ["workflow_dispatch"]
+"build.yml"                      = ["workflow_dispatch"]
+"release-auto.yml"               = ["workflow_dispatch"]
+"template_build.yml"             = ["workflow_call"]
+"template_native_build.yml"      = ["workflow_call"]
+
+[allow.permissions]
+"actions: write"      = ["dispatch"]
+"contents: write"     = ["publish"]
+"pages: write"        = ["publish", "deploy-pages"]
+"attestations: write" = ["build", "publish"]
+"id-token: write"     = ["deploy-pages", "build", "publish", "publish-pypi"]
+
+[publish]
+pypi = { auth = "oidc", environment = "pypi", mode = "rehearsal" }
