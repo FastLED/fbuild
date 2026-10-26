@@ -1,5 +1,12 @@
+# GATE-012 (forge-ci/ci.yml docs/policy-general.md): CodeRabbit is a GitHub
+# App act cannot run, so it must never gate a PR. Review on demand only
+# (`@coderabbitai review`); no commit status, no request-changes/auto-approve.
 reviews:
-  request_changes_workflow: true
+  auto_review:
+    enabled: false
+  commit_status: false
+  fail_commit_status: false
+  request_changes_workflow: false
   pre_merge_checks:
     enabled: true
   path_instructions:
