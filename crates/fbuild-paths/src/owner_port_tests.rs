@@ -4,7 +4,7 @@ use super::{adoptable_owner_port, daemon_ownership};
 
 fn claim(version: &str, mode: &str, cache: &str, port: u16) -> daemon_ownership::OwnerClaim {
     daemon_ownership::OwnerClaim {
-        pid: 42,
+        pid: std::process::id(),
         exe: fbuild_core::path::NormalizedPath::new("/x/fbuild-daemon"),
         version: version.to_string(),
         mode: mode.to_string(),
