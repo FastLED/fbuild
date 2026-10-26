@@ -670,9 +670,10 @@ mod tests {
             ("./vendor/propslib".to_string(), &props, "props_lib"),
             ("symlink://plain".to_string(), &bare, "plain"),
         ] {
-            let installed = download_libraries(std::slice::from_ref(&spec), &[], &project, &libs_dir)
-                .await
-                .unwrap();
+            let installed =
+                download_libraries(std::slice::from_ref(&spec), &[], &project, &libs_dir)
+                    .await
+                    .unwrap();
             assert_eq!(installed.len(), 1, "{spec}");
             assert_eq!(installed[0].lib_dir, canon(dir), "{spec}: used in place");
             assert_eq!(installed[0].name, name, "{spec}");
