@@ -135,7 +135,7 @@ cache-actions     = { only-in = ".github/actions/setup" }
 "ci-test.yml"                    = ["workflow_call", "workflow_dispatch"]
 "ci-workflow-drift.yml"          = ["workflow_dispatch", "push:main", "pull_request"]
 "crate-gate.yml"                 = ["push:main", "pull_request", "workflow_dispatch", "workflow_call"]
-"dylint.yml"                     = ["workflow_dispatch", "workflow_call", "pull_request", "push:main"]
+"dylint.yml"                     = ["workflow_dispatch", "workflow_call", "pull_request", "push:main", "merge_group"]
 "fmt.yml"                        = ["workflow_dispatch", "workflow_call", "push:main", "pull_request"]
 "lint-subprocess.yml"            = ["workflow_dispatch", "push:main", "pull_request"]
 "loc-gate.yml"                   = ["push:main", "pull_request", "workflow_dispatch"]
