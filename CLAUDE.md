@@ -173,6 +173,18 @@ The current inventory is auto-published to a stable tracking issue every Monday 
 - Verify before done. Run tests, demonstrate correctness.
 - Plan non-trivial work in GitHub issues for `FastLED/fbuild`. Capture lessons in the relevant issue or PR discussion; only add repo docs when the information is durable reference material.
 
+## Design principles (fleet directives, zackees/ci.yml#163)
+
+Agent and review guidance from zackees/ci.yml `docs/policy-rust.md` ("Design principles, narrowed"). Not enforced by ci-lint; no rule ID.
+
+1. **Search before you add.** Before adding a resolver, detector, predicate, guard or path helper, `rg` for an existing one. Reuse it, or say in the PR why it does not fit.
+2. **Conflicting implementations get a research issue, not an inline winner.** If the same concept is implemented more than once with observably different behaviour and fixing it needs a design decision, file `research: N conflicting implementations of X -- which is canonical?` listing every copy (`file:line`) and what the difference does to real input; cross-reference it and carry on with your task. Copies that behave identically are a refactor, not an issue.
+3. **Keep behaviour changes and refactors apart.** Separate commits, preferably separate PRs, never one mixed diff. TDD's Red -> Green -> Refactor still holds: the refactor step is its own commit.
+4. **Refactor first only when you would grow a giant function.** If a fix would add more than 50 lines to a function already over 200 lines, extract first in a separate behaviour-preserving change with characterization tests written first (RED -> GREEN). Otherwise fix it where it belongs; no unrequested restructures.
+5. **Function and file size follow the complexity ratchet (`RUST-018`).** New functions stay under clippy's `too_many_lines` (100) and `cognitive_complexity` (25). A function carrying an `#[expect]` must not grow; delete the `expect` once it is back under. Never split a file with `include!` fragments to dodge a length ceiling. Before splitting a hot file, check `git branch -a --contains` for in-flight branches -- a split is a rename and conflicts destructively.
+6. **Fail fast, and delete before you abstract.** Reject invalid input at the boundary with a typed error; never fall back silently to a degraded path. Prefer deleting code to adding a layer. No new trait until there are two real implementations (a test double does not count).
+7. **Existing boundaries beat generic DRY.** Platform modules behind the `enforce_platform_boundary` Dylint, the other Dylint-enforced bans in `dylints/`, the fixed crate set in "Modules-first" above, and documented deliberate copies win over removing duplication. Do not copy code across a crate boundary to get around it -- say the boundary hurts. An undocumented copy is a finding under 2; a documented one is not.
+
 ## Key Constraints
 
 - **No file-based locks, with one sanctioned exception** — almost all synchronization is through the daemon's in-memory managers. The narrow exception is fbuild-daemon startup/lifetime root-ownership and spawn-herd election (soldr-style, FastLED/fbuild#1159): a version-blind `root-owner.lock` held for the daemon's whole lifetime, plus a `spawn.lock` single-flight election for concurrent CLI spawns. zccache compile/object access keeps its own zccache-internal in-memory synchronization — these locks never gate cache reads/writes. Locks are OS-released on process death and must never be manually broken or deleted.
