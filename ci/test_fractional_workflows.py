@@ -297,7 +297,10 @@ class FractionalWorkflowTests(unittest.TestCase):
         self.assertIn("push", minimal[True])
         self.assertIn("pull_request", minimal[True])
         self.assertEqual(
-            {"verify", "linux", "board_plan", "fbuild_bin", "pr_boards", "reuse_decision", "test", "full", "selected-coverage"},
+            {
+                "cancel-superseded", "verify", "linux", "board_plan", "fbuild_bin", "pr_boards",
+                "reuse_decision", "test", "full", "selected-coverage", "queue-cache-janitor",
+            },
             set(minimal["jobs"]),
         )
         # GEN-021 shadow decision (zackees/ci.yml#162): main pushes only, never
@@ -310,7 +313,24 @@ class FractionalWorkflowTests(unittest.TestCase):
         step_budget = sum(step["timeout-minutes"] for step in reuse["steps"])
         self.assertLess(step_budget, reuse["timeout-minutes"])
         self.assertIn("--mode shadow", reuse["steps"][-1]["run"])
-        self.assertFalse(any("reuse_decision" in str(job.get("needs", "")) for job in minimal["jobs"].values()))
+        # GEN-022's end-of-queue janitor (forge-ci/ci.yml#405) is the one job that
+        # needs it: it must run after every other job of a merge_group run.
+        self.assertFalse(any(
+            "reuse_decision" in str(job.get("needs", ""))
+            for name, job in minimal["jobs"].items() if name != "queue-cache-janitor"
+        ))
+        # GEN-022: queue runs, cancel superseded queue runs (#409), and end with
+        # the cache janitor that needs every other job (#405).
+        self.assertIn("merge_group", minimal[True])
+        cancel = minimal["jobs"]["cancel-superseded"]
+        self.assertNotIn("needs", cancel)
+        self.assertIn("github.event_name == 'merge_group'", cancel["if"])
+        self.assertEqual("write", cancel["permissions"]["actions"])
+        janitor = minimal["jobs"]["queue-cache-janitor"]
+        self.assertEqual(set(minimal["jobs"]) - {"queue-cache-janitor"}, set(janitor["needs"]))
+        self.assertEqual("always() && github.event_name == 'merge_group'", janitor["if"])
+        self.assertEqual({"group": "cache-janitor", "cancel-in-progress": False}, janitor["concurrency"])
+        self.assertIn("cache janitor", janitor["steps"][-1]["run"])
         # Path-selected boards run only on the default PR tier.
         plan_if = minimal["jobs"]["board_plan"]["if"]
         self.assertIn("pull_request", plan_if)
