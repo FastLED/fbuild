@@ -968,7 +968,7 @@ checksum = "37909eebbb50d72f9059c3b6d82c0463f2ff062c9e95845c43a6c9c0355411be"
 
 [[package]]
 name = "fbuild-bench-fastled-examples"
-version = "2.5.46"
+version = "2.5.47"
 dependencies = [
  "fbuild-core",
  "fbuild-library-select",
@@ -982,7 +982,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-build"
-version = "2.5.46"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "blake3",
@@ -1019,7 +1019,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-build-arm"
-version = "2.5.46"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "blake3",
@@ -1053,7 +1053,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-build-engine"
-version = "2.5.46"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "blake3",
@@ -1087,7 +1087,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-build-esp"
-version = "2.5.46"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "blake3",
@@ -1122,7 +1122,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-build-mcu"
-version = "2.5.46"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "blake3",
@@ -1156,7 +1156,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-cli"
-version = "2.5.46"
+version = "2.5.47"
 dependencies = [
  "blake3",
  "clap",
@@ -1188,7 +1188,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-config"
-version = "2.5.46"
+version = "2.5.47"
 dependencies = [
  "fbuild-core",
  "fbuild-paths",
@@ -1203,7 +1203,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-core"
-version = "2.5.46"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "fs2",
@@ -1232,7 +1232,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-daemon"
-version = "2.5.46"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "axum 0.7.9",
@@ -1271,7 +1271,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-deploy"
-version = "2.5.46"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "espflash",
@@ -1299,7 +1299,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-header-scan"
-version = "2.5.46"
+version = "2.5.47"
 dependencies = [
  "criterion",
  "fbuild-paths",
@@ -1310,7 +1310,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-library"
-version = "2.5.46"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "axum 0.7.9",
@@ -1342,7 +1342,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-library-select"
-version = "2.5.46"
+version = "2.5.47"
 dependencies = [
  "bincode",
  "blake3",
@@ -1363,7 +1363,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-packages"
-version = "2.5.46"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "axum 0.7.9",
@@ -1395,7 +1395,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-packages-fetch"
-version = "2.5.46"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "axum 0.7.9",
@@ -1424,7 +1424,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-paths"
-version = "2.5.46"
+version = "2.5.47"
 dependencies = [
  "blake3",
  "fbuild-core",
@@ -1436,7 +1436,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-python"
-version = "2.5.46"
+version = "2.5.47"
 dependencies = [
  "base64",
  "fbuild-core",
@@ -1460,7 +1460,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-serial"
-version = "2.5.46"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "base64",
@@ -1483,7 +1483,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-test-support"
-version = "2.5.46"
+version = "2.5.47"
 dependencies = [
  "fbuild-config",
  "fbuild-core",
@@ -1503,7 +1503,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-toolchain"
-version = "2.5.46"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "axum 0.7.9",
@@ -5085,8 +5085,9 @@ dependencies = [
 
 [[package]]
 name = "zccache"
-version = "1.15.6"
-source = "git+https://github.com/zackees/zccache?rev=15ec9537af0d219e07b72ce2b3f97d5f68d72b5e#15ec9537af0d219e07b72ce2b3f97d5f68d72b5e"
+version = "1.15.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c0d1de4b0124890742c3fffe9bd9d3952b76dc336a32ddfd2fdf6bad7dda5305"
 dependencies = [
  "arc-swap",
  "bincode",
@@ -5096,238 +5097,24 @@ dependencies = [
  "flate2",
  "kernal-api",
  "libc",
- "prost",
- "rayon",
- "regex",
- "serde",
- "serde_json",
- "tar",
- "tempfile",
- "thiserror 2.0.20",
- "tokio",
- "tracing",
- "typed-path",
- "uuid",
- "windows-sys 0.61.2",
- "zccache-artifact",
- "zccache-audit",
- "zccache-compile-trace",
- "zccache-compiler",
- "zccache-core",
- "zccache-daemon-core",
- "zccache-depgraph",
- "zccache-fingerprint",
- "zccache-fscache",
- "zccache-hash",
- "zccache-ipc",
- "zccache-protocol",
- "zccache-watcher",
-]
-
-[[package]]
-name = "zccache-artifact"
-version = "1.15.6"
-source = "git+https://github.com/zackees/zccache?rev=15ec9537af0d219e07b72ce2b3f97d5f68d72b5e#15ec9537af0d219e07b72ce2b3f97d5f68d72b5e"
-dependencies = [
- "bincode",
- "dashmap",
- "kernal-api",
- "prost",
- "rayon",
- "serde",
- "serde_json",
- "tempfile",
- "thiserror 2.0.20",
- "tracing",
- "zccache-core",
- "zccache-hash",
-]
-
-[[package]]
-name = "zccache-audit"
-version = "1.15.6"
-source = "git+https://github.com/zackees/zccache?rev=15ec9537af0d219e07b72ce2b3f97d5f68d72b5e#15ec9537af0d219e07b72ce2b3f97d5f68d72b5e"
-dependencies = [
- "serde",
- "serde_json",
- "zccache-core",
-]
-
-[[package]]
-name = "zccache-compile-trace"
-version = "1.15.6"
-source = "git+https://github.com/zackees/zccache?rev=15ec9537af0d219e07b72ce2b3f97d5f68d72b5e#15ec9537af0d219e07b72ce2b3f97d5f68d72b5e"
-dependencies = [
- "zccache-audit",
-]
-
-[[package]]
-name = "zccache-compiler"
-version = "1.15.6"
-source = "git+https://github.com/zackees/zccache?rev=15ec9537af0d219e07b72ce2b3f97d5f68d72b5e#15ec9537af0d219e07b72ce2b3f97d5f68d72b5e"
-dependencies = [
- "clang",
- "kernal-api",
- "serde_json",
- "thiserror 2.0.20",
- "typed-path",
- "zccache-core",
- "zccache-hash",
-]
-
-[[package]]
-name = "zccache-core"
-version = "1.15.6"
-source = "git+https://github.com/zackees/zccache?rev=15ec9537af0d219e07b72ce2b3f97d5f68d72b5e#15ec9537af0d219e07b72ce2b3f97d5f68d72b5e"
-dependencies = [
- "kernal-api",
- "serde",
- "serde_json",
- "thiserror 2.0.20",
- "tracing",
-]
-
-[[package]]
-name = "zccache-daemon-core"
-version = "1.15.6"
-source = "git+https://github.com/zackees/zccache?rev=15ec9537af0d219e07b72ce2b3f97d5f68d72b5e#15ec9537af0d219e07b72ce2b3f97d5f68d72b5e"
-dependencies = [
- "arc-swap",
- "bincode",
- "bytes",
- "clang",
- "dashmap",
- "kernal-api",
  "memchr",
  "prost",
+ "prost-build",
+ "protoc-bin-vendored",
  "rayon",
  "regex",
  "serde",
  "serde_json",
  "sha2",
+ "tar",
  "tempfile",
  "thiserror 2.0.20",
  "tokio",
  "tracing",
- "uuid",
- "zccache-artifact",
- "zccache-audit",
- "zccache-compile-trace",
- "zccache-compiler",
- "zccache-core",
- "zccache-depgraph",
- "zccache-fingerprint",
- "zccache-fscache",
- "zccache-hash",
- "zccache-ipc",
- "zccache-protocol",
- "zccache-watcher",
-]
-
-[[package]]
-name = "zccache-depgraph"
-version = "1.15.6"
-source = "git+https://github.com/zackees/zccache?rev=15ec9537af0d219e07b72ce2b3f97d5f68d72b5e#15ec9537af0d219e07b72ce2b3f97d5f68d72b5e"
-dependencies = [
- "bincode",
- "dashmap",
- "kernal-api",
- "memchr",
- "rayon",
- "serde",
- "serde_json",
- "thiserror 2.0.20",
- "tracing",
- "uuid",
- "zccache-compiler",
- "zccache-core",
- "zccache-hash",
-]
-
-[[package]]
-name = "zccache-fingerprint"
-version = "1.15.6"
-source = "git+https://github.com/zackees/zccache?rev=15ec9537af0d219e07b72ce2b3f97d5f68d72b5e#15ec9537af0d219e07b72ce2b3f97d5f68d72b5e"
-dependencies = [
- "kernal-api",
- "rayon",
- "serde",
- "serde_json",
- "thiserror 2.0.20",
- "tracing",
  "twox-hash",
- "zccache-core",
- "zccache-hash",
-]
-
-[[package]]
-name = "zccache-fscache"
-version = "1.15.6"
-source = "git+https://github.com/zackees/zccache?rev=15ec9537af0d219e07b72ce2b3f97d5f68d72b5e#15ec9537af0d219e07b72ce2b3f97d5f68d72b5e"
-dependencies = [
- "bincode",
- "dashmap",
- "kernal-api",
- "rayon",
- "serde",
- "tracing",
- "zccache-core",
- "zccache-hash",
-]
-
-[[package]]
-name = "zccache-hash"
-version = "1.15.6"
-source = "git+https://github.com/zackees/zccache?rev=15ec9537af0d219e07b72ce2b3f97d5f68d72b5e#15ec9537af0d219e07b72ce2b3f97d5f68d72b5e"
-dependencies = [
- "kernal-api",
- "serde",
-]
-
-[[package]]
-name = "zccache-ipc"
-version = "1.15.6"
-source = "git+https://github.com/zackees/zccache?rev=15ec9537af0d219e07b72ce2b3f97d5f68d72b5e#15ec9537af0d219e07b72ce2b3f97d5f68d72b5e"
-dependencies = [
- "bytes",
- "dashmap",
- "kernal-api",
- "prost",
- "serde",
- "serde_json",
- "thiserror 2.0.20",
- "tokio",
- "tracing",
- "zccache-core",
- "zccache-protocol",
-]
-
-[[package]]
-name = "zccache-protocol"
-version = "1.15.6"
-source = "git+https://github.com/zackees/zccache?rev=15ec9537af0d219e07b72ce2b3f97d5f68d72b5e#15ec9537af0d219e07b72ce2b3f97d5f68d72b5e"
-dependencies = [
- "bytes",
- "kernal-api",
- "prost",
- "prost-build",
- "protoc-bin-vendored",
- "serde",
- "thiserror 2.0.20",
- "zccache-core",
- "zccache-depgraph",
-]
-
-[[package]]
-name = "zccache-watcher"
-version = "1.15.6"
-source = "git+https://github.com/zackees/zccache?rev=15ec9537af0d219e07b72ce2b3f97d5f68d72b5e#15ec9537af0d219e07b72ce2b3f97d5f68d72b5e"
-dependencies = [
- "kernal-api",
- "rayon",
- "tracing",
- "zccache-core",
- "zccache-fscache",
+ "typed-path",
+ "uuid",
+ "windows-sys 0.61.2",
 ]
 
 [[package]]
