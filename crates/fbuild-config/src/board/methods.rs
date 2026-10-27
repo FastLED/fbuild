@@ -295,10 +295,19 @@ impl BoardConfig {
             }
         }
 
-        // Extra flags
+        // Extra flags.
+        //
+        // Board JSON stores string-valued flags with escaped quotes, e.g.
+        // -DUSB_PRODUCT=\"NanoESP32\". PlatformIO feeds `extra_flags` through
+        // Python shlex, so \" is an escaped *literal* quote (not a delimiter)
+        // and the macro body reaches GCC as "NanoESP32". Route through the same
+        // INI shell-quote consumer as `build_flags` (FastLED/fbuild#947) rather
+        // than `shell_split`, which strips the quotes as delimiters but keeps
+        // the backslashes, emitting -DUSB_PRODUCT=\NanoESP32\ and tripping GCC
+        // with `stray '\' in program` (FastLED/fbuild#1760).
         if let Some(ref flags) = self.extra_flags {
             defines.extend(fbuild_core::compiler_flags::parse_define_flags(
-                &fbuild_core::shell_split::split(flags),
+                &crate::ini_parser::parse_flags(flags),
             ));
         }
 

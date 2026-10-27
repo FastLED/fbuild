@@ -709,3 +709,50 @@ fn test_board_without_debug_section() {
         assert!(!tools.is_empty(), "esp32dev should have debug tools");
     }
 }
+
+#[test]
+fn arduino_nano_esp32_uses_hw_gpio_numbers_not_pin_remap() {
+    // Regression for FastLED/fbuild#1760. The bundled snapshot previously
+    // carried `-DBOARD_HAS_PIN_REMAP`; when fbuild compiles the Arduino Nano
+    // ESP32 core, `variants/arduino_nano_nora/io_pin_remap.cpp` then trips its
+    // `#error This build system is not supported. Please rebuild without
+    // BOARD_HAS_PIN_REMAP` guard (that define is only legal alongside
+    // `-DARDUINO_CORE_BUILD` on core TUs, which fbuild does not set).
+    //
+    // Upstream pioarduino replaced the flag with `-DBOARD_USES_HW_GPIO_NUMBERS`,
+    // which selects GPIO-number pin mapping without the guarded `#error`. Match
+    // upstream exactly so the board compiles.
+    let config = BoardConfig::from_board_id("arduino_nano_esp32", &HashMap::new()).unwrap();
+    let defines = config.get_defines();
+    assert!(
+        !defines.contains_key("BOARD_HAS_PIN_REMAP"),
+        "arduino_nano_esp32 must not define BOARD_HAS_PIN_REMAP: {defines:?}"
+    );
+    assert_eq!(
+        defines
+            .get("BOARD_USES_HW_GPIO_NUMBERS")
+            .map(String::as_str),
+        Some("1"),
+        "arduino_nano_esp32 must define BOARD_USES_HW_GPIO_NUMBERS: {defines:?}"
+    );
+}
+
+#[test]
+fn extra_flags_string_defines_keep_quotes_and_drop_escape_backslashes() {
+    // FastLED/fbuild#1760 (error 2). Board JSON stores string-valued flags with
+    // escaped quotes, e.g. `-DUSB_PRODUCT=\"NanoESP32\"`. PlatformIO feeds
+    // `extra_flags` through shlex, so `\"` is an escaped quote — the macro body
+    // must reach GCC as `"NanoESP32"` (a string literal). The old
+    // `shell_split` path stripped the quotes as delimiters but kept the
+    // backslashes, yielding a bare define whose value contained `\`, which GCC
+    // rejected with `stray '\' in program`.
+    let mut config = BoardConfig::from_board_id("arduino_nano_esp32", &HashMap::new()).unwrap();
+    config.extra_flags = Some(r#"-DUSB_PRODUCT=\"NanoESP32\" -DPLAIN"#.to_string());
+    let defines = config.get_defines();
+    assert_eq!(
+        defines.get("USB_PRODUCT").map(String::as_str),
+        Some("\"NanoESP32\""),
+        "escaped quotes must survive as a literal string define: {defines:?}"
+    );
+    assert_eq!(defines.get("PLAIN").map(String::as_str), Some("1"));
+}
