@@ -160,6 +160,35 @@ pub fn hash_files(paths: &[PathBuf]) -> Result<String> {
     Ok(format!("{:x}", hasher.finalize()))
 }
 
+/// Every file under `watch.root` that shapes the fingerprint, sorted.
+///
+/// Symlinks are followed. A PlatformIO project reaches a local library
+/// through `lib/<Lib> -> /elsewhere` (FastLED/fbuild#1753), and a walk that
+/// skips symlinked entries leaves every file under the link target out of
+/// the fingerprint: an edit there never invalidated the warm path, which
+/// then reused the previous `firmware.bin` and flashed byte-identical code.
+/// Cycles are dropped (walkdir reports them as errors) so a self-referential
+/// link cannot hang the build.
+fn watched_files(watch: &FingerprintWatch) -> Vec<PathBuf> {
+    let mut files = Vec::new();
+    for entry in WalkDir::new(&watch.root)
+        .follow_links(true)
+        .into_iter()
+        .filter_entry(|entry| should_descend(entry.path(), &watch.root, &watch.excludes))
+        .flatten()
+    {
+        if !entry.file_type().is_file() {
+            continue;
+        }
+        if !matches_extension(entry.path(), &watch.extensions) {
+            continue;
+        }
+        files.push(entry.into_path());
+    }
+    files.sort();
+    files
+}
+
 pub fn hash_watch_set(watches: &[FingerprintWatch]) -> Result<String> {
     let mut ordered = watches.to_vec();
     ordered.sort_by_key(watch_identity);
@@ -174,21 +203,7 @@ pub fn hash_watch_set(watches: &[FingerprintWatch]) -> Result<String> {
             continue;
         }
 
-        let mut files = Vec::new();
-        for entry in WalkDir::new(&watch.root)
-            .into_iter()
-            .filter_entry(|entry| should_descend(entry.path(), &watch.root, &watch.excludes))
-            .flatten()
-        {
-            if !entry.file_type().is_file() {
-                continue;
-            }
-            if !matches_extension(entry.path(), &watch.extensions) {
-                continue;
-            }
-            files.push(entry.into_path());
-        }
-        files.sort();
+        let files = watched_files(watch);
 
         for file in files {
             hasher.update(b"file\0");
@@ -276,21 +291,7 @@ where
             .collect();
         let mut next_files = Vec::new();
 
-        let mut files = Vec::new();
-        for entry in WalkDir::new(&watch.root)
-            .into_iter()
-            .filter_entry(|entry| should_descend(entry.path(), &watch.root, &watch.excludes))
-            .flatten()
-        {
-            if !entry.file_type().is_file() {
-                continue;
-            }
-            if !matches_extension(entry.path(), &watch.extensions) {
-                continue;
-            }
-            files.push(entry.into_path());
-        }
-        files.sort();
+        let files = watched_files(watch);
 
         for file in files {
             let relative_path = relative_path_for_hash(&watch.root, &file);
@@ -925,5 +926,105 @@ mod tests {
         let b_hash = hash_watch_set_stamps(std::slice::from_ref(&b_watch)).unwrap();
 
         assert_eq!(a_hash, b_hash);
+    }
+    // ---- FastLED/fbuild#1753: symlinked local libraries ----
+    //
+    // A PlatformIO project reaches a working copy through a symlink
+    // (`lib/FastLED -> ~/dev/fastled2`). The fast-path walk used to skip
+    // symlinked entries entirely (`WalkDir` without `follow_links`), so an
+    // edit under the link target left the fingerprint untouched → the warm
+    // path reused the previous firmware.bin and flashed byte-identical code.
+
+    fn make_symlinked_project(tmp: &Path) -> (PathBuf, PathBuf, PathBuf) {
+        let project = tmp.join("project");
+        let lib = project.join("lib");
+        fs::create_dir_all(&lib).unwrap();
+        fs::write(project.join("main.cpp"), "int main() { return 0; }\n").unwrap();
+
+        let target = tmp.join("fastled2");
+        fs::create_dir_all(target.join("src/platforms/esp/32")).unwrap();
+        fs::write(target.join("library.json"), "{}\n").unwrap();
+        let header = target.join("src/platforms/esp/32/fastspi_esp32_idf.h");
+        fs::write(&header, "#pragma once\n#define SPI_PATH 1\n").unwrap();
+
+        std::os::unix::fs::symlink(&target, lib.join("FastLED")).unwrap();
+        (project, target, header)
+    }
+
+    #[test]
+    fn test_hash_watch_set_stamps_sees_edits_under_a_symlinked_library() {
+        if fbuild_core::platform::host::is_windows() {
+            return;
+        }
+        let tmp = tempfile::TempDir::new().unwrap();
+        let (project, _, header) = make_symlinked_project(tmp.path());
+        let watch = make_watch(&project, &tmp.path().join("project.json"));
+
+        let first = hash_watch_set_stamps(std::slice::from_ref(&watch)).unwrap();
+        std::thread::sleep(std::time::Duration::from_millis(20));
+        fs::write(&header, "#pragma once\n#define SPI_PATH 2\n").unwrap();
+        let second = hash_watch_set_stamps(std::slice::from_ref(&watch)).unwrap();
+
+        assert_ne!(
+            first, second,
+            "a header edited under a symlinked library must invalidate the watch set"
+        );
+    }
+
+    #[test]
+    fn test_hash_watch_set_sees_edits_under_a_symlinked_library() {
+        if fbuild_core::platform::host::is_windows() {
+            return;
+        }
+        let tmp = tempfile::TempDir::new().unwrap();
+        let (project, _, header) = make_symlinked_project(tmp.path());
+        let watch = make_watch(&project, &tmp.path().join("project.json"));
+
+        let first = hash_watch_set(std::slice::from_ref(&watch)).unwrap();
+        fs::write(&header, "#pragma once\n#define SPI_PATH 2\n").unwrap();
+        let second = hash_watch_set(std::slice::from_ref(&watch)).unwrap();
+
+        assert_ne!(first, second);
+    }
+
+    #[test]
+    fn test_hash_watch_set_stamps_hashes_a_symlinked_source_file() {
+        if fbuild_core::platform::host::is_windows() {
+            return;
+        }
+        let tmp = tempfile::TempDir::new().unwrap();
+        let src = tmp.path().join("src");
+        fs::create_dir_all(&src).unwrap();
+        let real = tmp.path().join("shared").join("main.cpp");
+        fs::create_dir_all(real.parent().unwrap()).unwrap();
+        fs::write(&real, "int main() { return 1; }\n").unwrap();
+        std::os::unix::fs::symlink(&real, src.join("main.cpp")).unwrap();
+
+        let watch = make_watch(&src, &tmp.path().join("project.json"));
+        let first = hash_watch_set_stamps(std::slice::from_ref(&watch)).unwrap();
+        std::thread::sleep(std::time::Duration::from_millis(20));
+        fs::write(&real, "int main() { return 2; }\n").unwrap();
+        let second = hash_watch_set_stamps(std::slice::from_ref(&watch)).unwrap();
+
+        assert_ne!(first, second);
+    }
+
+    #[test]
+    fn test_hash_watch_set_stamps_tolerates_a_symlink_loop() {
+        if fbuild_core::platform::host::is_windows() {
+            return;
+        }
+        let tmp = tempfile::TempDir::new().unwrap();
+        let src = tmp.path().join("src");
+        let nested = src.join("nested");
+        fs::create_dir_all(&nested).unwrap();
+        fs::write(src.join("main.cpp"), "int main() { return 1; }\n").unwrap();
+        // `src/nested/loop -> src` would recurse forever under a naive walk.
+        std::os::unix::fs::symlink(&src, nested.join("loop")).unwrap();
+
+        let watch = make_watch(&src, &tmp.path().join("project.json"));
+        let hash = hash_watch_set_stamps(std::slice::from_ref(&watch)).unwrap();
+
+        assert!(!hash.is_empty());
     }
 }

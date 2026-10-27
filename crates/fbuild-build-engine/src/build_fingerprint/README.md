@@ -11,6 +11,9 @@ nothing relevant has changed.
   primitives (`hash_watch_set`, `hash_watch_set_stamps`,
   `hash_watch_set_stamps_cached`), and the `WatchSetStampCache` trait
   the daemon implements for cross-invocation memoisation.
+  The watched file set follows symlinks, so a local library reached through
+  `lib/<Lib> -> /elsewhere` still invalidates the warm path when a file under
+  the link target changes (FastLED/fbuild#1753); traversal cycles are dropped.
 - **`fast_path.rs`** -- Shared warm-build cache contract. Orchestrators
   declare required outputs through `FastPathContract`, then use
   `fast_path_check` for reuse decisions and
