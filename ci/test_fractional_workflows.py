@@ -12,6 +12,57 @@ import yaml
 from ci import render_workflows
 
 
+LEVELS = {"none": 0, "read": 1, "write": 2}
+
+
+def _capable(grant, requested):
+    return all(LEVELS[level] <= LEVELS[grant.get(scope, "none")] for scope, level in requested.items())
+
+
+def _callee_name(workflows, job):
+    name = (job.get("uses") or "").rsplit("/", 1)[-1]
+    return name if name in workflows else ""
+
+
+def _caller_grant(workflow, job):
+    return job.get("permissions") or workflow.get("permissions") or {}
+
+
+def called_workflow_failures(workflows):
+    """Permission requests a called workflow makes beyond what its caller grants.
+
+    GitHub enforces this at run startup, so an over-request fails the whole run
+    before any job starts: dylint.yml's merge-queue cache janitor asked for
+    `actions: write` behind callers granting only `contents: read`, which made
+    every release-auto dispatch die with an unexplained `startup_failure`
+    (40425964410).
+    """
+    failures = []
+
+    def visit(name, grant, seen):
+        workflow = workflows[name]
+        declared = workflow.get("permissions") or {}
+        if declared and not _capable(grant, declared):
+            failures.append(f"{name} requests {declared}; caller grants {grant}")
+        if name in seen:
+            return
+        for job_name, job in (workflow.get("jobs") or {}).items():
+            requested = job.get("permissions") or {}
+            if requested and not _capable(grant, requested):
+                failures.append(f"{name}:{job_name} requests {requested}; caller grants {grant}")
+            nested = _callee_name(workflows, job)
+            if nested:
+                visit(nested, requested or declared or grant, seen | {name})
+
+    for name, workflow in workflows.items():
+        for job in (workflow.get("jobs") or {}).values():
+            callee = _callee_name(workflows, job)
+            grant = _caller_grant(workflow, job)
+            if callee and grant:
+                visit(callee, grant, {name})
+    return failures
+
+
 class FractionalWorkflowTests(unittest.TestCase):
     def test_windows_checks_real_modern_esptool_source_install(self):
         job = self.load("check-windows.yml")["jobs"]["check"]
@@ -495,47 +546,9 @@ class FractionalWorkflowTests(unittest.TestCase):
         )
 
     def test_called_workflows_fit_inside_their_callers_grant(self):
-        # A called workflow may not request more permissions than its caller
-        # grants, and GitHub enforces that at run startup: the whole run dies
-        # before any job begins. dylint.yml's merge-queue cache janitor asking
-        # for `actions: write` behind a `contents: read` caller chain killed
-        # every release-auto dispatch (40425964410) without naming the cause.
-        levels = {"none": 0, "read": 1, "write": 2}
         workflows = {path.name: self.load(path.name) for path in render_workflows.WORKFLOWS_DIR.glob("*.yml")}
-
-        def covers(grant, requested):
-            return all(levels[level] <= levels[grant.get(scope, "none")] for scope, level in requested.items())
-
-        def walk(name, grant, seen):
-            workflow = workflows[name]
-            declared = workflow.get("permissions") or None
-            if declared is not None:
-                with self.subTest(workflow=name):
-                    self.assertTrue(covers(grant, declared), f"{name} requests {declared}; caller grants {grant}")
-            if name in seen:
-                return
-            for job_name, job in (workflow.get("jobs") or {}).items():
-                job_grants = job.get("permissions") or None
-                if job_grants is not None:
-                    with self.subTest(workflow=name, job=job_name):
-                        self.assertTrue(covers(grant, job_grants), f"{name}:{job_name} requests {job_grants}; caller grants {grant}")
-                uses = job.get("uses") or ""
-                callee = uses.rsplit("/", 1)[-1]
-                if callee in workflows:
-                    walk(callee, job_grants or declared or grant, seen | {name})
-
-        for name, workflow in workflows.items():
-            for job in (workflow.get("jobs") or {}).values():
-                uses = job.get("uses") or ""
-                callee = uses.rsplit("/", 1)[-1]
-                if callee not in workflows:
-                    continue
-                # A job with no explicit grant inherits the repository default,
-                # which the file does not reveal; only declared grants are checkable.
-                grant = job.get("permissions") or workflow.get("permissions") or None
-                if grant is not None:
-                    walk(callee, grant, {name})
-
+        failures = called_workflow_failures(workflows)
+        self.assertEqual([], failures, "\n".join(failures))
 
 if __name__ == "__main__":
     unittest.main()
