@@ -8,6 +8,53 @@ use fbuild_build::zccache_embedded::FbuildZccacheService;
 use fbuild_core::path::NormalizedPath;
 use zccache::embedded::ShutdownMode;
 
+/// Dump zccache's own account of the session so a failed hit assertion names
+/// its bucket instead of only reporting `cached: false` (FastLED/fbuild#1757).
+///
+/// `compile_journal.jsonl` records `outcome` and `miss_reason` per compile in
+/// the closed vocabulary of `zccache_daemon_core::daemon::compile_journal`;
+/// the lifecycle log records `destination_write_failed` with the raw errno.
+fn zccache_diagnostics(cache_root: &std::path::Path) -> String {
+    /// An embedded service keeps its journals under
+    /// `daemon-state/embedded-*/<version>/logs/`, not directly under the root,
+    /// so the walk is bounded by depth rather than by a fixed path.
+    fn collect(dir: &std::path::Path, depth: usize, out: &mut String) {
+        const LIMIT: usize = 200_000;
+        if depth == 0 || out.len() > LIMIT {
+            return;
+        }
+        let Ok(entries) = std::fs::read_dir(dir) else {
+            return;
+        };
+        for entry in entries.flatten() {
+            let path = entry.path();
+            let Ok(file_type) = entry.file_type() else {
+                continue;
+            };
+            if file_type.is_dir() {
+                collect(&path, depth - 1, out);
+            } else if path.extension().is_some_and(|ext| ext == "jsonl") {
+                let Ok(body) = std::fs::read_to_string(&path) else {
+                    continue;
+                };
+                out.push_str(&format!("--- {} ---\n{body}", path.display()));
+                if !body.ends_with('\n') {
+                    out.push('\n');
+                }
+            }
+        }
+    }
+    let mut out = String::new();
+    collect(cache_root, 6, &mut out);
+    if out.is_empty() {
+        out.push_str(&format!(
+            "<no zccache jsonl logs under {}>\n",
+            cache_root.display()
+        ));
+    }
+    out
+}
+
 fn find_c_compiler() -> NormalizedPath {
     let path_dirs: Vec<_> =
         std::env::split_paths(&std::env::var_os("PATH").expect("PATH should be set")).collect();
@@ -154,7 +201,11 @@ async fn embedded_compilation_cold_miss_then_warm_hit() {
     );
     assert!(
         warm.cached,
-        "second identical compile should be a cache hit"
+        "second identical compile should be a cache hit\n\
+         warm stderr: {}\n\
+         zccache journal (miss_reason names the bucket):\n{}",
+        String::from_utf8_lossy(&warm.stderr),
+        zccache_diagnostics(svc.cache_root()),
     );
     assert!(object.is_file(), "warm hit should materialize the object");
 
