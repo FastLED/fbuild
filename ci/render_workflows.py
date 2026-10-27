@@ -575,9 +575,16 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
         + "    uses: ./.github/workflows/check-macos.yml\n"
         + "    with:\n"
         + f"      ref: {verified_ref}\n"
+        # dylint.yml's merge-queue cache janitor declares `actions: write`.
+        # A called workflow may not request more than its caller grants, so a
+        # missing grant here fails the whole run at startup instead of at the
+        # janitor (release-auto dispatch 40425964410 failed that way).
         + "  dylint:\n"
         + gate
         + "    needs: verify\n"
+        + "    permissions:\n"
+        + "      contents: read\n"
+        + "      actions: write\n"
         + "    uses: ./.github/workflows/dylint.yml\n"
         + "    with:\n"
         + f"      ref: {verified_ref}\n"
