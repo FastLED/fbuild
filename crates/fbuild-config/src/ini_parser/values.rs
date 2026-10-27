@@ -29,7 +29,7 @@ pub(super) fn strip_inline_comment(s: &str) -> String {
 ///   single direct-exec argv element `-DNAME="Demo"`. Backslashes not
 ///   escaping a double quote stay literal (Windows paths) — the one
 ///   deliberate divergence from POSIX shlex.
-pub(super) fn parse_flags(flags_str: &str) -> Vec<String> {
+pub(crate) fn parse_flags(flags_str: &str) -> Vec<String> {
     let mut result = Vec::new();
 
     for line in flags_str.lines() {
