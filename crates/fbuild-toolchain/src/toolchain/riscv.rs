@@ -180,11 +180,18 @@ impl RiscvToolchain {
             format!("-mabi={mabi}"),
             "-print-multi-directory".into(),
         ]);
-        // Short probe: hold the shared fork lock for the whole run.
-        let output = {
+        // Fork under the shared fork lock (released before the wait), with the
+        // stdio `output()` would set, so a stalled probe cannot block loader
+        // installation (coderabbit review on #1633).
+        probe
+            .stdin(std::process::Stdio::null())
+            .stdout(std::process::Stdio::piped())
+            .stderr(std::process::Stdio::piped());
+        let child = {
             let _fork = fbuild_core::platform::process::shared_fork_guard();
-            probe.output().ok()?
+            probe.spawn().ok()?
         };
+        let output = child.wait_with_output().ok()?;
         if !output.status.success() {
             return None;
         }
