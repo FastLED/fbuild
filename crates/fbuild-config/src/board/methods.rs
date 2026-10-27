@@ -311,6 +311,18 @@ impl BoardConfig {
             ));
         }
 
+        // `-DBOARD_HAS_PIN_REMAP` is only legal alongside `-DARDUINO_CORE_BUILD`
+        // on the Arduino core's own translation units (Arduino's `platform.txt`
+        // adds it there). fbuild never defines `ARDUINO_CORE_BUILD`, so passing
+        // the flag through verbatim makes `variants/<board>/io_pin_remap.cpp`
+        // trip `#error This build system is not supported. Please rebuild
+        // without BOARD_HAS_PIN_REMAP` — e.g. Arduino Nano ESP32, whose
+        // PlatformIO board JSON carries the flag (FastLED/fbuild#1760; the
+        // newer pioarduino release swapped it for -DBOARD_USES_HW_GPIO_NUMBERS).
+        // Dropping it matches both the `#error`'s own instruction and the
+        // Arduino default board menu (`PinNumbers=byGPIONumber`, which sets
+        // `-UBOARD_HAS_PIN_REMAP`), i.e. GPIO-number pin mapping.
+        defines.remove("BOARD_HAS_PIN_REMAP");
         defines
     }
 

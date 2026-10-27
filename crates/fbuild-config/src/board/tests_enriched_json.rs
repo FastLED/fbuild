@@ -711,32 +711,38 @@ fn test_board_without_debug_section() {
 }
 
 #[test]
-fn arduino_nano_esp32_uses_hw_gpio_numbers_not_pin_remap() {
-    // Regression for FastLED/fbuild#1760. The bundled snapshot previously
-    // carried `-DBOARD_HAS_PIN_REMAP`; when fbuild compiles the Arduino Nano
-    // ESP32 core, `variants/arduino_nano_nora/io_pin_remap.cpp` then trips its
-    // `#error This build system is not supported. Please rebuild without
-    // BOARD_HAS_PIN_REMAP` guard (that define is only legal alongside
-    // `-DARDUINO_CORE_BUILD` on core TUs, which fbuild does not set).
-    //
-    // Upstream pioarduino replaced the flag with `-DBOARD_USES_HW_GPIO_NUMBERS`,
-    // which selects GPIO-number pin mapping without the guarded `#error`. Match
-    // upstream exactly so the board compiles.
+fn arduino_nano_esp32_does_not_define_board_has_pin_remap() {
+    // Regression for FastLED/fbuild#1760. The bundled snapshot mirrors upstream
+    // PlatformIO (and the CI `validate_boards` gate enforces that), so
+    // `arduino_nano_esp32` legitimately carries `-DBOARD_HAS_PIN_REMAP` in its
+    // `extra_flags`. That flag is only legal alongside `-DARDUINO_CORE_BUILD`
+    // on the Arduino core's own translation units, which fbuild never emits, so
+    // the define must not reach the compiler: otherwise
+    // `variants/arduino_nano_nora/io_pin_remap.cpp` trips its
+    // `#error ... rebuild without BOARD_HAS_PIN_REMAP` guard.
     let config = BoardConfig::from_board_id("arduino_nano_esp32", &HashMap::new()).unwrap();
+    // Sanity-check that the snapshot still carries the flag at the source
+    // level — this test is about the derive step, not the data.
+    assert!(
+        config
+            .extra_flags
+            .as_deref()
+            .is_some_and(|f| f.contains("-DBOARD_HAS_PIN_REMAP")),
+        "snapshot should still mirror upstream PlatformIO: {:?}",
+        config.extra_flags
+    );
     let defines = config.get_defines();
     assert!(
         !defines.contains_key("BOARD_HAS_PIN_REMAP"),
-        "arduino_nano_esp32 must not define BOARD_HAS_PIN_REMAP: {defines:?}"
+        "BOARD_HAS_PIN_REMAP must be dropped from defines: {defines:?}"
     );
+    // Unrelated snapshot flags must survive untouched.
     assert_eq!(
-        defines
-            .get("BOARD_USES_HW_GPIO_NUMBERS")
-            .map(String::as_str),
+        defines.get("BOARD_HAS_PSRAM").map(String::as_str),
         Some("1"),
-        "arduino_nano_esp32 must define BOARD_USES_HW_GPIO_NUMBERS: {defines:?}"
+        "unrelated snapshot flags must survive: {defines:?}"
     );
 }
-
 #[test]
 fn extra_flags_string_defines_keep_quotes_and_drop_escape_backslashes() {
     // FastLED/fbuild#1760 (error 2). Board JSON stores string-valued flags with
