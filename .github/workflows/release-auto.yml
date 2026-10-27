@@ -263,6 +263,12 @@ jobs:
     name: Full validation on release commit
     needs: prepare
     if: needs.prepare.outputs.should_build == 'true'
+    # dylint.yml's merge-queue cache janitor declares `actions: write`; a
+    # called workflow may not request more than its caller grants, or the
+    # whole release run fails at startup.
+    permissions:
+      contents: read
+      actions: write
     uses: ./.github/workflows/ci-full.yml
     with:
       candidate_sha: ${{ needs.prepare.outputs.release_ref }}

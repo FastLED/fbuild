@@ -74,6 +74,10 @@ jobs:
   dylint:
     if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'ci-full')
     needs: verify
+    # The merge-queue cache janitor in dylint.yml declares `actions: write`.
+    permissions:
+      contents: read
+      actions: write
     uses: ./.github/workflows/dylint.yml
     with:
       ref: ${{ needs.verify.outputs.candidate_sha }}
