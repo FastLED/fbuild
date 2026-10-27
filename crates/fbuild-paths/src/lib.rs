@@ -13,6 +13,9 @@ pub mod executable_hash;
 pub mod long_paths;
 pub mod running_process;
 
+#[cfg(test)]
+mod owner_port_tests;
+
 /// The project-local and home-local fbuild directory segment: `.fbuild`.
 ///
 /// This is the canonical spelling. Nothing outside `fbuild-paths` /
@@ -386,7 +389,10 @@ fn read_port_from_file(path: &Path) -> Option<u16> {
 /// Priority:
 /// 1. `FBUILD_DAEMON_PORT` environment variable (if set and valid 1–65535)
 /// 2. Port file for this endpoint (if it exists and is valid)
-/// 3. [`default_daemon_port`] — a deterministic per-(version, cache-identity)
+/// 3. The port of the live daemon that owns this cache root (its
+///    `root-owner.json` claim), when it is the same version, mode and cache
+///    root
+/// 4. [`default_daemon_port`] — a deterministic per-(version, cache-identity)
 ///    port
 ///
 /// FastLED/fbuild#1009: the endpoint is keyed by version+identity (via
@@ -417,8 +423,55 @@ pub fn get_daemon_port() -> u16 {
         // `recorded_daemon_owner_is_dead`.
     }
 
-    // Priority 3: deterministic per-endpoint default.
+    // Priority 3: the live daemon that owns this cache root, when it is the
+    // same version and identity. FastLED/fbuild#1009 keys the endpoint on
+    // version+identity, but two builds that both report the same version can
+    // still derive different ports (e.g. a 2.5.44 wheel built before the
+    // #1700 port-window change and a 2.5.44 dev build after it). The
+    // version-blind root-ownership lock lets only one of them run, so a
+    // client that ignored the owner would spawn daemons that exit on
+    // `root-owner.lock busy` and then report the busy owner as unhealthy.
+    if let Some(port) = daemon_ownership::read_owner_claim().and_then(|claim| {
+        let identity = crate::running_process::DaemonCacheIdentity::discover();
+        adoptable_owner_port(
+            &claim,
+            env!("CARGO_PKG_VERSION"),
+            identity.mode,
+            &identity.cache_root_key,
+            owner_claim_is_live,
+        )
+    }) {
+        return port;
+    }
+
+    // Priority 4: deterministic per-endpoint default.
     default_daemon_port()
+}
+
+/// The owner claim's port, if the claim describes a live daemon this client
+/// may share: same version, mode and cache root. Pure apart from `is_live`.
+fn adoptable_owner_port(
+    claim: &daemon_ownership::OwnerClaim,
+    version: &str,
+    mode: &str,
+    cache_root_key: &str,
+    is_live: impl FnOnce(&daemon_ownership::OwnerClaim) -> bool,
+) -> Option<u16> {
+    (claim.port > 0
+        && claim.version == version
+        && claim.mode == mode
+        && claim.cache_root_key == cache_root_key
+        && is_live(claim))
+    .then_some(claim.port)
+}
+
+/// Positive evidence that the claim's pid is a running `fbuild-daemon`.
+fn owner_claim_is_live(claim: &daemon_ownership::OwnerClaim) -> bool {
+    fbuild_core::platform::process::pid_is_alive(claim.pid)
+        && fbuild_core::platform::process::pid_exe_stem_matches(
+            claim.pid,
+            daemon_ownership::DAEMON_EXE_STEM,
+        )
 }
 
 /// Can we *prove* the daemon that wrote this endpoint's records is gone?

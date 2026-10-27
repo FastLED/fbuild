@@ -1032,6 +1032,11 @@ async fn ensure_direct_daemon_running() -> fbuild_core::Result<()> {
         DaemonProbe::Restarted => true,
         DaemonProbe::NotRunning => false,
     };
+    if !restarted {
+        if let Some(error) = foreign_root_owner_error() {
+            return Err(fbuild_core::FbuildError::DaemonError(error));
+        }
+    }
     let spawned_pid = start_daemon(&client).await?;
     if restarted {
         // FastLED/fbuild#1476: whichever branch `start_daemon` took (spawned,
@@ -1040,6 +1045,40 @@ async fn ensure_direct_daemon_running() -> fbuild_core::Result<()> {
         warn_if_restart_did_not_take(&client, &sibling, spawned_pid).await;
     }
     Ok(())
+}
+
+/// A live daemon of another version or identity owns this cache root on a
+/// port this CLI does not use. A daemon spawned now would only exit on
+/// `root-owner.lock busy`, and three such spawns used to end in a misleading
+/// "daemon did not become healthy" error while the owner was merely busy.
+fn foreign_root_owner_error() -> Option<String> {
+    let claim = fbuild_paths::daemon_ownership::read_owner_claim()?;
+    let own_port = fbuild_paths::get_daemon_port();
+    let live = fbuild_core::platform::process::pid_is_alive(claim.pid)
+        && fbuild_core::platform::process::pid_exe_stem_matches(
+            claim.pid,
+            fbuild_paths::daemon_ownership::DAEMON_EXE_STEM,
+        );
+    (live && claim.port != own_port).then(|| foreign_root_owner_message(&claim, own_port))
+}
+
+fn foreign_root_owner_message(
+    claim: &fbuild_paths::daemon_ownership::OwnerClaim,
+    own_port: u16,
+) -> String {
+    format!(
+        "the fbuild cache root is owned by another fbuild-daemon (pid {}, version {}, mode {}, \
+         port {}, exe {}), which this fbuild {} cannot share; it would use port {}. \
+         No compilation was attempted. Wait for that daemon's work to finish and stop it \
+         (`fbuild daemon stop`), or run the same fbuild build as the client that started it.",
+        claim.pid,
+        claim.version,
+        claim.mode,
+        claim.port,
+        claim.exe.display(),
+        env!("CARGO_PKG_VERSION"),
+        own_port
+    )
 }
 
 enum DaemonProbe {

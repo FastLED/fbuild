@@ -3,8 +3,9 @@
 
 use super::{
     DaemonAcquisition, DaemonClient, DaemonInfoResponse, HealthResponseFull,
-    broker_refusal_is_fatal, daemon_cache_identity_error, launcher_path,
-    restart_diag::SiblingDaemon, same_running_image, should_restart_daemon, wedged_daemon_note,
+    broker_refusal_is_fatal, daemon_cache_identity_error, foreign_root_owner_message,
+    launcher_path, restart_diag::SiblingDaemon, same_running_image, should_restart_daemon,
+    wedged_daemon_note,
 };
 use running_process::broker::client::RefusalKind::{VersionBlocked, VersionUnsupported};
 
@@ -221,4 +222,29 @@ fn a_live_unresponsive_daemon_is_named_along_with_its_recovery() {
 #[test]
 fn no_live_daemon_produces_no_hint() {
     assert_eq!(wedged_daemon_note(None), "");
+}
+
+/// A busy daemon of another build that owns the cache root must be named,
+/// not reported as an unhealthy daemon after three doomed spawns.
+#[test]
+fn foreign_root_owner_message_names_the_owner() {
+    let claim = fbuild_paths::daemon_ownership::OwnerClaim {
+        pid: 98258,
+        exe: fbuild_core::path::NormalizedPath::new("/venv/bin/fbuild-daemon"),
+        version: "2.5.44".to_string(),
+        mode: "prod".to_string(),
+        cache_root_key: "/c".to_string(),
+        port: 60903,
+    };
+    let message = foreign_root_owner_message(&claim, 19142);
+    for needle in [
+        "98258",
+        "2.5.44",
+        "60903",
+        "19142",
+        "/venv/bin/fbuild-daemon",
+        "No compilation",
+    ] {
+        assert!(message.contains(needle), "{needle} missing from: {message}");
+    }
 }
