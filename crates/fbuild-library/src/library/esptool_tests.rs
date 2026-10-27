@@ -100,6 +100,16 @@ fn find_binary_nested_one_level() {
 }
 
 #[test]
+fn find_binary_accepts_a_nested_ape_com() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let inner = tmp.path().join("esptool-any");
+    std::fs::create_dir_all(&inner).unwrap();
+    std::fs::write(inner.join("esptool.com"), b"MZqFpD='\n").unwrap();
+    let found = find_esptool_binary(tmp.path()).unwrap();
+    assert_eq!(found.as_path(), inner.join("esptool.com"));
+}
+
+#[test]
 fn find_binary_missing_returns_none() {
     let tmp = tempfile::TempDir::new().unwrap();
     assert_eq!(find_esptool_binary(tmp.path()), None);
