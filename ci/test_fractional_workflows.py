@@ -494,6 +494,48 @@ class FractionalWorkflowTests(unittest.TestCase):
             release["jobs"]["publish-pypi"]["permissions"],
         )
 
+    def test_called_workflows_fit_inside_their_callers_grant(self):
+        # A called workflow may not request more permissions than its caller
+        # grants, and GitHub enforces that at run startup: the whole run dies
+        # before any job begins. dylint.yml's merge-queue cache janitor asking
+        # for `actions: write` behind a `contents: read` caller chain killed
+        # every release-auto dispatch (40425964410) without naming the cause.
+        levels = {"none": 0, "read": 1, "write": 2}
+        workflows = {path.name: self.load(path.name) for path in render_workflows.WORKFLOWS_DIR.glob("*.yml")}
+
+        def covers(grant, requested):
+            return all(levels[level] <= levels[grant.get(scope, "none")] for scope, level in requested.items())
+
+        def walk(name, grant, seen):
+            workflow = workflows[name]
+            declared = workflow.get("permissions") or None
+            if declared is not None:
+                with self.subTest(workflow=name):
+                    self.assertTrue(covers(grant, declared), f"{name} requests {declared}; caller grants {grant}")
+            if name in seen:
+                return
+            for job_name, job in (workflow.get("jobs") or {}).items():
+                job_grants = job.get("permissions") or None
+                if job_grants is not None:
+                    with self.subTest(workflow=name, job=job_name):
+                        self.assertTrue(covers(grant, job_grants), f"{name}:{job_name} requests {job_grants}; caller grants {grant}")
+                uses = job.get("uses") or ""
+                callee = uses.rsplit("/", 1)[-1]
+                if callee in workflows:
+                    walk(callee, job_grants or declared or grant, seen | {name})
+
+        for name, workflow in workflows.items():
+            for job in (workflow.get("jobs") or {}).values():
+                uses = job.get("uses") or ""
+                callee = uses.rsplit("/", 1)[-1]
+                if callee not in workflows:
+                    continue
+                # A job with no explicit grant inherits the repository default,
+                # which the file does not reveal; only declared grants are checkable.
+                grant = job.get("permissions") or workflow.get("permissions") or None
+                if grant is not None:
+                    walk(callee, grant, {name})
+
 
 if __name__ == "__main__":
     unittest.main()
