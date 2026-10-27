@@ -6,7 +6,7 @@
 //! reused (and flashed) unchanged.
 
 use std::fs;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 use super::{FingerprintWatch, hash_watch_set, hash_watch_set_stamps};
 
@@ -19,7 +19,10 @@ fn make_watch(root: &Path, cache_file: &Path) -> FingerprintWatch {
     }
 }
 
-fn make_symlinked_project(tmp: &Path) -> (PathBuf, PathBuf, PathBuf) {
+/// Lay out `<tmp>/project/lib/FastLED -> <tmp>/fastled2`, the shape #1753
+/// reported: the library (and every header in it) is reachable only through
+/// the link.
+fn make_symlinked_project(tmp: &Path) {
     let project = tmp.join("project");
     let lib = project.join("lib");
     fs::create_dir_all(&lib).unwrap();
@@ -32,7 +35,6 @@ fn make_symlinked_project(tmp: &Path) -> (PathBuf, PathBuf, PathBuf) {
     fs::write(&header, "#pragma once\n#define SPI_PATH 1\n").unwrap();
 
     fbuild_core::platform::fs::symlink_dir(&target, &lib.join("FastLED")).unwrap();
-    (project, target, header)
 }
 
 #[test]
@@ -41,7 +43,12 @@ fn test_hash_watch_set_stamps_sees_edits_under_a_symlinked_library() {
         return;
     }
     let tmp = tempfile::TempDir::new().unwrap();
-    let (project, _, header) = make_symlinked_project(tmp.path());
+    make_symlinked_project(tmp.path());
+    let project = tmp.path().join("project");
+    let header = tmp
+        .path()
+        .join("fastled2")
+        .join("src/platforms/esp/32/fastspi_esp32_idf.h");
     let watch = make_watch(&project, &tmp.path().join("project.json"));
 
     let first = hash_watch_set_stamps(std::slice::from_ref(&watch)).unwrap();
@@ -61,7 +68,12 @@ fn test_hash_watch_set_sees_edits_under_a_symlinked_library() {
         return;
     }
     let tmp = tempfile::TempDir::new().unwrap();
-    let (project, _, header) = make_symlinked_project(tmp.path());
+    make_symlinked_project(tmp.path());
+    let project = tmp.path().join("project");
+    let header = tmp
+        .path()
+        .join("fastled2")
+        .join("src/platforms/esp/32/fastspi_esp32_idf.h");
     let watch = make_watch(&project, &tmp.path().join("project.json"));
 
     let first = hash_watch_set(std::slice::from_ref(&watch)).unwrap();
