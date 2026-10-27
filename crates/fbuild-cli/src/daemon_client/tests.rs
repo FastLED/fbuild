@@ -236,13 +236,17 @@ fn foreign_root_owner_message_names_the_owner() {
         cache_root_key: "/c".to_string(),
         port: 60903,
     };
+    // NormalizedPath renders host-native separators, so assert against the
+    // same path the message will carry on any platform (Windows would turn
+    // the unix literal below into backslashes and fail the match).
+    let exe = claim.exe.display().to_string();
     let message = foreign_root_owner_message(&claim, 19142);
     for needle in [
         "98258",
         "2.5.44",
         "60903",
         "19142",
-        "/venv/bin/fbuild-daemon",
+        exe.as_str(),
         "No compilation",
     ] {
         assert!(message.contains(needle), "{needle} missing from: {message}");
