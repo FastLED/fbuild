@@ -35,6 +35,15 @@ mod tests {
     use super::*;
 
     #[test]
+    fn usb_device_defines_alias_the_registry_compile_identity() {
+        for mcu in ["rp2040", "rp2350"] {
+            let defines = get_rp2040_config_for_mcu(mcu).unwrap().defines_map();
+            assert_eq!(defines.get("USBD_VID").map(String::as_str), Some("USB_VID"));
+            assert_eq!(defines.get("USBD_PID").map(String::as_str), Some("USB_PID"));
+        }
+    }
+
+    #[test]
     fn test_load_rp2040_config() {
         let config = get_rp2040_config_for_mcu("rp2040").unwrap();
         assert_eq!(config.name, "RP2040");

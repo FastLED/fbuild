@@ -27,15 +27,16 @@ jobs:
     name: Check (windows-latest)
     runs-on: windows-latest
     # Cold Windows workspace tests exceeded the old 30-minute cap in the
-    # setup-soldr 0.9.25 full-coverage canary.
-    timeout-minutes: 45
+    # setup-soldr 0.9.25 full-coverage canary, and the lane's own steps now
+    # total ~44-45 min, so runner variance tripped 45 (FastLED/fbuild#1710).
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v6
         with:
           ref: ${{ inputs.ref }}
       - name: Setup soldr
         id: setup-soldr
-        uses: zackees/setup-soldr@67ed4018aca013f8388050ac9bc264244f9b742c
+        uses: zackees/setup-soldr@b782f606a2f3beadc35b9e3bf5b4565e005f52ed # v0.9.86
         with:
           cache-key-suffix: check-windows-check
           cache: true
@@ -61,9 +62,225 @@ jobs:
           [[ "$version" == soldr\ * ]]
       # No separate `cargo check`: clippy type-checks the same
       # `--workspace --all-targets` set (see check-ubuntu.yml for the timing).
+      - name: Setup uv for legacy source package install
+        uses: astral-sh/setup-uv@v3
+
+      # teknic.com is a single vendor host with no CDN. A release gate lost a
+      # ClearCore fetch even after the downloader's 5 attempts over ~3 min,
+      # so keep the installed core between runs. It is only ever read when
+      # its `.install_complete` sentinel is present, and the key follows the
+      # pinned URL and checksum in clearcore_core.rs.
+      - name: Cache ClearCore core
+        uses: actions/cache@v5
+        with:
+          path: ~/.fbuild/dev/cache/platforms/www-ClearCore-1.7.4
+          key: fbuild-clearcore-${{ runner.os }}-${{ hashFiles('crates/fbuild-library/src/library/clearcore_core.rs') }}
+
+      - name: Test SAMD architecture and interrupt override
+        shell: bash
+        env:
+          FBUILD_DEV_MODE: "1"
+        run: |
+          soldr cargo test -p fbuild-build --test it samd_acceptance:: -- --ignored --nocapture
+
       - name: Clippy
         shell: bash
         run: soldr cargo clippy --workspace --all-targets -- -D warnings
       - name: Test
         shell: bash
         run: soldr cargo test --workspace
+      - name: Test large library archive
+        shell: bash
+        env:
+          FBUILD_TEST_CC: C:/Program Files/LLVM/bin/clang.exe
+          FBUILD_TEST_AR: C:/Program Files/LLVM/bin/llvm-ar.exe
+        run: soldr cargo test -p fbuild-library large_archive_handles_windows_command_limit_and_quoted_paths -- --ignored --nocapture
+
+      - name: Build UNO R4 with supported default core
+        shell: bash
+        env:
+          FBUILD_DEV_MODE: "1"
+        run: |
+          soldr cargo test -p fbuild-build --test it renesas_acceptance:: -- --ignored --nocapture
+
+      - name: Build Pico boot2 and default firmware
+        shell: bash
+        env:
+          FBUILD_DEV_MODE: "1"
+        run: |
+          soldr cargo test -p fbuild-build --test it rp2040_acceptance:: -- --ignored --nocapture
+
+      - name: Test ESP32-S3 linker overflow summary
+        shell: bash
+        env:
+          FBUILD_DEV_MODE: "1"
+        run: soldr cargo test -p fbuild-build --test it link_overflow::esp32s3_dram_overflow_still_fails_with_region_summary -- --ignored --nocapture
+
+      # Exercise the real uv-created Windows launcher, beyond the unit fixture.
+      # Cold public install runs fbuild's internal esptool version verification.
+      - name: Install and recheck legacy ESP32 source tools
+        id: legacy-esptool
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $probe = Join-Path $env:RUNNER_TEMP ("fbuild-legacy-esptool-" + [guid]::NewGuid())
+          New-Item -ItemType Directory -Path $probe | Out-Null
+          $env:FBUILD_CACHE_DIR = Join-Path $probe "cache"
+          [Environment]::SetEnvironmentVariable("FBUILD_ESPTOOL_PATH", $null, "Process")
+          @"
+          [env:esp32-idf4]
+          platform = espressif32@4.4.0
+          board = esp32dev
+          framework = arduino
+          "@ | Set-Content -LiteralPath (Join-Path $probe "platformio.ini") -Encoding utf8
+
+          $coldJson = & soldr cargo run -p fbuild-cli --bin fbuild -- install "$probe" -e esp32-idf4 --json
+          if ($LASTEXITCODE -ne 0) { throw "Cold legacy ESP32 install failed ($LASTEXITCODE)" }
+          $coldJson | Write-Output
+          $cold = ($coldJson -join "`n") | ConvertFrom-Json
+          $coldTools = @($cold.environments.packages | Where-Object name -eq "tool-esptoolpy")
+          if ($coldTools.Count -ne 1) { throw "Expected exactly one esptool package" }
+          $coldTool = $coldTools[0]
+          if ($coldTool.version -ne "1.30300.0" -or $coldTool.status -ne "fetched") {
+            throw "Expected a cold install of esptool 3.3 source package 1.30300.0"
+          }
+          if (-not (Test-Path -LiteralPath $coldTool.install_path -PathType Leaf)) {
+            throw "Installed esptool launcher is missing"
+          }
+          if ($coldTool.install_path -notmatch '[\\/]\.fbuild-tools[\\/]esptool[\\/]Scripts[\\/]esptool\.exe$') {
+            throw "Expected the real uv-managed Windows esptool launcher"
+          }
+
+          $warmJson = & soldr cargo run -p fbuild-cli --bin fbuild -- install "$probe" -e esp32-idf4 --check --json
+          if ($LASTEXITCODE -ne 0) { throw "Warm legacy ESP32 check failed ($LASTEXITCODE)" }
+          $warmJson | Write-Output
+          $warm = ($warmJson -join "`n") | ConvertFrom-Json
+          $warmTools = @($warm.environments.packages | Where-Object name -eq "tool-esptoolpy")
+          if ($warmTools.Count -ne 1) { throw "Expected exactly one cached esptool package" }
+          $warmTool = $warmTools[0]
+          if ($warmTool.version -ne "1.30300.0" -or $warmTool.status -ne "present" -or
+              $warmTool.install_path -ne $coldTool.install_path) {
+            throw "Warm check did not reuse the verified source launcher"
+          }
+          # The hosted runner discards RUNNER_TEMP after the job.
+
+      # Pioarduino 55.03.35 pins esptool 5.1.0, whose release has no
+      # Windows standalone binary. Verify the real source-package route.
+      - name: Install and recheck ESP32-C6 source tools
+        id: modern-esptool
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $probe = Join-Path $env:RUNNER_TEMP ("fbuild-modern-esptool-" + [guid]::NewGuid())
+          New-Item -ItemType Directory -Path $probe | Out-Null
+          $env:FBUILD_CACHE_DIR = Join-Path $probe "cache"
+          [Environment]::SetEnvironmentVariable("FBUILD_ESPTOOL_PATH", $null, "Process")
+          @"
+          [env:esp32c6-idf5]
+          platform = https://github.com/pioarduino/platform-espressif32/releases/download/55.03.35/platform-espressif32.zip
+          board = esp32-c6-devkitc-1
+          framework = arduino
+          "@ | Set-Content -LiteralPath (Join-Path $probe "platformio.ini") -Encoding utf8
+
+          $coldJson = & soldr cargo run -p fbuild-cli --bin fbuild -- install "$probe" -e esp32c6-idf5 --json
+          if ($LASTEXITCODE -ne 0) { throw "Cold ESP32-C6 install failed ($LASTEXITCODE)" }
+          $coldJson | Write-Output
+          $cold = ($coldJson -join "`n") | ConvertFrom-Json
+          $coldTools = @($cold.environments.packages | Where-Object name -eq "tool-esptoolpy")
+          if ($coldTools.Count -ne 1) { throw "Expected exactly one esptool package" }
+          $coldTool = $coldTools[0]
+          if ($coldTool.version -ne "5.1.0" -or $coldTool.status -ne "fetched" -or
+              $coldTool.url -ne "https://github.com/pioarduino/esptool/releases/download/v5.1.0/esptool.zip") {
+            throw "Expected a cold install of the pinned esptool 5.1.0 source archive"
+          }
+          if (-not (Test-Path -LiteralPath $coldTool.install_path -PathType Leaf)) {
+            throw "Installed esptool launcher is missing"
+          }
+          if ($coldTool.install_path -notmatch '[\\/]\.fbuild-tools[\\/]esptool[\\/]Scripts[\\/]esptool\.exe$') {
+            throw "Expected the real uv-managed Windows esptool launcher"
+          }
+
+          $warmJson = & soldr cargo run -p fbuild-cli --bin fbuild -- install "$probe" -e esp32c6-idf5 --check --json
+          if ($LASTEXITCODE -ne 0) { throw "Warm ESP32-C6 check failed ($LASTEXITCODE)" }
+          $warmJson | Write-Output
+          $warm = ($warmJson -join "`n") | ConvertFrom-Json
+          $warmTools = @($warm.environments.packages | Where-Object name -eq "tool-esptoolpy")
+          if ($warmTools.Count -ne 1) { throw "Expected exactly one cached esptool package" }
+          $warmTool = $warmTools[0]
+          if ($warmTool.version -ne "5.1.0" -or $warmTool.status -ne "present" -or
+              $warmTool.url -ne $coldTool.url -or $warmTool.install_path -ne $coldTool.install_path) {
+            throw "Warm check did not reuse the verified source launcher"
+          }
+          # The hosted runner discards RUNNER_TEMP after the job.
+
+      - name: Windows long-path repair and fallback smoke
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $registry = 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem'
+          $original = Get-ItemPropertyValue -Path $registry -Name LongPathsEnabled -ErrorAction SilentlyContinue
+          $buildOutput = @(& soldr cargo build -p fbuild-cli -p fbuild-daemon --bins --message-format=json)
+          if ($LASTEXITCODE -ne 0) {
+            $buildOutput | Write-Output
+            throw 'could not build the Windows smoke binaries'
+          }
+          $binPaths = @{}
+          foreach ($line in $buildOutput) {
+            if (-not $line.StartsWith('{')) { continue }
+            $artifact = $line | ConvertFrom-Json
+            if ($artifact.reason -eq 'compiler-artifact' -and ($artifact.target.kind -contains 'bin') -and $artifact.executable) {
+              $binPaths[$artifact.target.name] = $artifact.executable
+            }
+          }
+          foreach ($name in @('fbuild', 'fbuild-daemon')) {
+            if (-not $binPaths.ContainsKey($name) -or -not (Test-Path -LiteralPath $binPaths[$name] -PathType Leaf)) {
+              throw "missing Windows smoke executable: $name"
+            }
+          }
+          $cli = $binPaths['fbuild']
+          $daemon = $binPaths['fbuild-daemon']
+          foreach ($binary in @($cli, $daemon)) {
+            $image = [Text.Encoding]::UTF8.GetString([IO.File]::ReadAllBytes($binary))
+            if ($image -notmatch 'longPathAware[^>]*>true</' -or $image -notmatch 'level="asInvoker"') {
+              throw "Missing Windows manifest in $binary"
+            }
+          }
+          try {
+            # This disposable hosted runner is already elevated. Exercise the
+            # fixed helper without requiring an interactive UAC desktop.
+            New-ItemProperty -Path $registry -Name LongPathsEnabled -PropertyType DWord -Value 0 -Force | Out-Null
+            & $cli --__fix-win-helper
+            if ($LASTEXITCODE -ne 0) { throw 'long-path helper failed' }
+            if ((Get-ItemPropertyValue -Path $registry -Name LongPathsEnabled) -ne 1) {
+              throw 'long-path helper did not verify its change'
+            }
+            & $cli --fix-win --no-update-check
+            if ($LASTEXITCODE -ne 0) { throw 'already-enabled repair failed' }
+            $env:FBUILD_DEV_MODE = '0'
+            $env:RUNNING_PROCESS_DISABLE = '1'
+            & $cli --no-update-check build tests/platform/uno --dry-run
+            if ($LASTEXITCODE -ne 0) { throw 'enabled daemon startup failed' }
+            $before = Get-Content (Join-Path $env:USERPROFILE '.fbuild\prod\daemon\root-owner.json') -Raw | ConvertFrom-Json
+            New-ItemProperty -Path $registry -Name LongPathsEnabled -PropertyType DWord -Value 0 -Force | Out-Null
+            $env:CI = 'true'
+            $output = & $cli --no-update-check install tests/platform/esp32dev --dry-run --json 2> long-path-warning.txt
+            $code = $LASTEXITCODE
+            if ($code -ne 0) { throw "fallback package preview failed: $code" }
+            $output | ConvertFrom-Json | Out-Null
+            $warning = Get-Content long-path-warning.txt -Raw
+            if ($warning -notmatch 'WARNING:' -or $warning -notmatch 'fix-win' -or $warning.Contains([char]27)) {
+              throw 'fallback warning is missing or contains ANSI in redirected stderr'
+            }
+            & $cli --no-update-check build tests/platform/uno --dry-run
+            if ($LASTEXITCODE -ne 0) { throw 'disabled-policy daemon handoff failed' }
+            $after = Get-Content (Join-Path $env:USERPROFILE '.fbuild\prod\daemon\root-owner.json') -Raw | ConvertFrom-Json
+            if ($before.pid -eq $after.pid) { throw 'daemon was reused after the registry changed' }
+            & $cli --no-update-check daemon stop
+            if ($LASTEXITCODE -ne 0) { throw 'smoke daemon did not stop' }
+          } finally {
+            if ($null -eq $original) {
+              Remove-ItemProperty -Path $registry -Name LongPathsEnabled -ErrorAction SilentlyContinue
+            } else {
+              New-ItemProperty -Path $registry -Name LongPathsEnabled -PropertyType DWord -Value $original -Force | Out-Null
+            }
+          }

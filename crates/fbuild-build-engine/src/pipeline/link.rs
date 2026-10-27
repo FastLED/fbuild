@@ -13,6 +13,7 @@ use crate::linker::LinkResult;
 /// and only a one-liner is logged (unless `verbose` is true, which also streams
 /// the full report). When `None`, the report is written to `symbol_analysis.txt`
 /// in the build artifacts directory and streamed to the build log.
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 pub fn handle_link_result(
     link_result: &LinkResult,
     build_log: &mut BuildLog,

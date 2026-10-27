@@ -6,6 +6,36 @@ use std::path::Path;
 
 use fbuild_core::{FbuildError, Result};
 
+/// Check the actual extracted layout before an installer marks it complete.
+fn validate_extraction_tree(root: &Path, required: bool) -> Result<()> {
+    const LEGACY_DIRECTORY_UNITS: usize = 248;
+    if !required {
+        return Ok(());
+    }
+    for entry in walkdir::WalkDir::new(root).follow_links(false) {
+        let entry = entry.map_err(|error| {
+            FbuildError::PackageError(format!(
+                "could not validate extracted Windows paths: {error}"
+            ))
+        })?;
+        if fbuild_core::platform::fs::legacy_path_units(entry.path()) + 1 > LEGACY_DIRECTORY_UNITS {
+            return Err(FbuildError::PackageError(format!(
+                "Windows short-path fallback cannot safely use extracted path {}. Run fbuild --fix-win or use a shorter package location.",
+                entry.path().display()
+            )));
+        }
+    }
+    Ok(())
+}
+
+fn validate_extraction(root: &Path) -> Result<()> {
+    validate_extraction_tree(
+        root,
+        fbuild_paths::long_paths::current_resolution()
+            .is_some_and(|resolution| resolution.observation.requires_fallback()),
+    )
+}
+
 /// Extract an archive into the given directory.
 ///
 /// Supported formats: .tar.gz, .tgz, .tar.bz2, .tar.xz, .txz, .tar.zst, .zip
@@ -94,6 +124,7 @@ fn extract_tar_gz(archive_path: &Path, dest_dir: &Path) -> Result<()> {
             e
         ))
     })?;
+    validate_extraction(dest_dir)?;
     Ok(())
 }
 
@@ -108,6 +139,7 @@ fn extract_tar_bz2(archive_path: &Path, dest_dir: &Path) -> Result<()> {
             e
         ))
     })?;
+    validate_extraction(dest_dir)?;
     Ok(())
 }
 
@@ -128,6 +160,7 @@ fn extract_tar_zst(archive_path: &Path, dest_dir: &Path) -> Result<()> {
             e
         ))
     })?;
+    validate_extraction(dest_dir)?;
     Ok(())
 }
 
@@ -142,6 +175,7 @@ fn extract_tar_xz(archive_path: &Path, dest_dir: &Path) -> Result<()> {
             e
         ))
     })?;
+    validate_extraction(dest_dir)?;
     Ok(())
 }
 
@@ -162,6 +196,7 @@ fn extract_zip(archive_path: &Path, dest_dir: &Path) -> Result<()> {
             e
         ))
     })?;
+    validate_extraction(dest_dir)?;
     // Zip entries without Unix attributes extract without the exec bit; every
     // zip caller (not just staged package installs) needs APE tools runnable.
     mark_ape_executables(dest_dir)?;
@@ -171,6 +206,33 @@ fn extract_zip(archive_path: &Path, dest_dir: &Path) -> Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn windows_path_fallback_rejects_sdk_members_that_still_exceed_the_limit() {
+        let root = tempfile::tempdir().unwrap();
+        let deep = (0..18).fold(root.path().to_path_buf(), |path, _| {
+            path.join("sdk-component")
+        });
+        std::fs::create_dir_all(&deep).unwrap();
+        std::fs::write(deep.join("header.h"), b"// SDK header").unwrap();
+        let error = validate_extraction_tree(root.path(), true)
+            .unwrap_err()
+            .to_string();
+        assert!(error.contains("--fix-win"), "{error}");
+        assert!(error.contains("sdk-component"), "{error}");
+    }
+
+    #[test]
+    fn windows_path_enabled_keeps_extended_sdk_members_available() {
+        let root = tempfile::tempdir().unwrap();
+        let deep = (0..18).fold(root.path().to_path_buf(), |path, _| {
+            path.join("sdk-component")
+        });
+        std::fs::create_dir_all(&deep).unwrap();
+        std::fs::write(deep.join("header.h"), b"// SDK header").unwrap();
+        validate_extraction_tree(root.path(), false).unwrap();
+        assert!(deep.join("header.h").exists());
+    }
 
     #[test]
     fn test_unsupported_format() {

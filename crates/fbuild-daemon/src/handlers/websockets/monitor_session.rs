@@ -20,6 +20,7 @@ pub async fn ws_monitor_session(
     ws.on_upgrade(move |socket| handle_monitor_session_ws(socket, session_id, ctx))
 }
 
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 async fn handle_monitor_session_ws(
     mut socket: WebSocket,
     session_id: String,

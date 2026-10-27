@@ -55,6 +55,7 @@ pub async fn search_library(name: &str) -> Result<Option<String>> {
 /// Uses the package details API to get all versions, then selects the best
 /// match for the given constraint. If no constraint is provided, returns
 /// the latest version.
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 pub async fn resolve_library(
     owner: &str,
     name: &str,

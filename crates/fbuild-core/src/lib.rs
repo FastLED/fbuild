@@ -6,6 +6,7 @@
 //! - Subprocess runner with platform-specific flags
 //! - Size info parsing (avr-size / arm-none-eabi-size output)
 
+pub mod archive;
 pub mod build_log;
 pub mod channel;
 pub mod compiler_flags;

@@ -148,6 +148,7 @@ pub async fn daemon_info(State(ctx): State<Arc<DaemonContext>>) -> Json<DaemonIn
         spawner_cwd: ctx.spawner_cwd.clone(),
         mcp_url: format!("http://127.0.0.1:{}/mcp", ctx.port),
         watch_set_cache: Some(ctx.watch_set_cache.stats()),
+        long_path_support: ctx.long_path_support.clone(),
     })
 }
 
@@ -167,7 +168,7 @@ pub async fn daemon_info(State(ctx): State<Arc<DaemonContext>>) -> Json<DaemonIn
 pub async fn heap_dump(
     ConnectInfo(peer): ConnectInfo<SocketAddr>,
 ) -> (StatusCode, Json<HeapDumpResponse>) {
-    // Loopback only. The daemon binds 0.0.0.0 (see `main.rs`), and this
+    // Loopback only. The daemon binds 127.0.0.1 (see `main.rs`), but this
     // endpoint is not a read: it can switch process-wide profiling on and make
     // the daemon serialize its whole heap on demand. Reachable from off-box
     // that is both a denial-of-service lever and a way to extract allocation

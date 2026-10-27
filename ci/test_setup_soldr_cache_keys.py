@@ -23,6 +23,10 @@ SHARED_BY_DESIGN = {
     # `soldr cargo build -p fbuild-cli -p fbuild-daemon` (debug): the shared
     # fbuild_bin job and template_build.yml's standalone fallback.
     "fbuild-rust-debug",
+    # acceptance-205.yml: every esp32 include-farm parity cell builds the same
+    # `esp32_include_farm_parity` test binary and differs only in test_fn
+    # (FastLED/fbuild#1623).
+    "acceptance-205-esp32_include_farm_parity",
 }
 
 

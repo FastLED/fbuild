@@ -49,6 +49,7 @@ pub async fn resolve_extra_script_overlay(
 /// Python interpreter against the CLI caller's PATH instead of the
 /// daemon's spawn-time PATH (FastLED/fbuild#1219). `None` = legacy
 /// behavior (daemon env).
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub async fn resolve_extra_script_overlay_with_path(
     project_dir: &Path,
     env_name: &str,

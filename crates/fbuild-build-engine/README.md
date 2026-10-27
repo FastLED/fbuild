@@ -4,7 +4,7 @@ Platform-agnostic build engine extracted from `fbuild-build` for compile
 parallelism (FastLED/fbuild#1008).
 
 Holds every shared engine module — `pipeline`, `compiler`, `compile_many`,
-`source_scanner`, `linker`, `build_fingerprint`, `compile_database`,
+`source_scanner`, `linker`, `link_digest`, `link_overflow`, `build_fingerprint`, `compile_database`,
 `symbol_analyzer`, `shrink`, `framework_libs`, `framework_core_cache`,
 `include_farm`,
 `script_runtime`, `flag_overlay`, `build_info`, `build_output`,

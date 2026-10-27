@@ -167,6 +167,7 @@ finally:
 /// exists to prevent, per the #1484 validation note).
 #[test]
 #[ignore = "embeds CPython; run by the python-facade CI job"]
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 fn at_p12_in_process_asyncio_peer() {
     init_python();
     let _env_guard = DAEMON_PORT_ENV_LOCK
@@ -471,7 +472,14 @@ import faulthandler, gc, time
 faulthandler.dump_traceback_later(30, exit=True)
 from _native import SerialMonitor, _live_session_count
 
-baseline = _live_session_count()
+# Sessions from the previous test may still be tearing down; a baseline
+# taken mid-teardown drops before the assert below and fails spuriously.
+drain = time.monotonic() + 10.0
+while _live_session_count() != 0 and time.monotonic() < drain:
+    gc.collect()
+    time.sleep(0.05)
+assert _live_session_count() == 0, "previous sessions did not drain"
+baseline = 0
 
 mon = SerialMonitor(port="TEST_PORT", baud_rate=115200)
 mon.__enter__()
@@ -513,7 +521,13 @@ faulthandler.dump_traceback_later(30, exit=True)
 from _native import AsyncSerialMonitor, _live_session_count
 
 async def main():
-    baseline = _live_session_count()
+    # See the sync half: let the previous test's sessions finish dropping.
+    drain = time.monotonic() + 10.0
+    while _live_session_count() != 0 and time.monotonic() < drain:
+        gc.collect()
+        await asyncio.sleep(0.05)
+    assert _live_session_count() == 0, "previous sessions did not drain"
+    baseline = 0
     mon = AsyncSerialMonitor(port="TEST_PORT", baud_rate=115200)
     await mon.__aenter__()
     assert _live_session_count() == baseline + 1
@@ -534,4 +548,38 @@ asyncio.run(main())
         );
     });
     assert_daemon_saw_teardown(&daemon);
+}
+
+/// Each fixture snippet must release its own globals before the next test.
+#[test]
+#[ignore = "embeds CPython; run by the python-facade CI job"]
+fn snippets_release_previous_monitor_globals() {
+    init_python();
+    let (_port, _daemon) = start_daemon_and_set_env(DaemonKnobs::default());
+    pyo3::Python::attach(|py| {
+        run_snippet(
+            py,
+            r#"
+import faulthandler
+faulthandler.dump_traceback_later(30, exit=True)
+from _native import SerialMonitor
+_previous_snippet_monitor = SerialMonitor(port="TEST_PORT", baud_rate=115200)
+_previous_snippet_monitor.__enter__()
+"#,
+        );
+        run_snippet(
+            py,
+            r#"
+import faulthandler, gc, time
+faulthandler.dump_traceback_later(30, exit=True)
+from _native import _live_session_count
+assert '_previous_snippet_monitor' not in globals(), "previous snippet retained its monitor"
+deadline = time.monotonic() + 5.0
+while _live_session_count() and time.monotonic() < deadline:
+    gc.collect()
+    time.sleep(0.05)
+assert _live_session_count() == 0, "previous snippet retained a live session"
+"#,
+        );
+    });
 }

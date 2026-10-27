@@ -10,7 +10,11 @@ use fbuild_core::BuildProfile;
 pub mod daemon_ownership;
 pub mod dev_daemon_namespace;
 pub mod executable_hash;
+pub mod long_paths;
 pub mod running_process;
+
+#[cfg(test)]
+mod owner_port_tests;
 
 /// The project-local and home-local fbuild directory segment: `.fbuild`.
 ///
@@ -35,6 +39,9 @@ pub const BUILD_DIR_NAME: &str = "build";
 
 /// Check if running in development mode.
 pub fn is_dev_mode() -> bool {
+    if let Some(resolution) = long_paths::current_resolution() {
+        return resolution.dev_mode;
+    }
     std::env::var("FBUILD_DEV_MODE")
         .map(|v| v == "1")
         .unwrap_or(false)
@@ -55,6 +62,9 @@ pub fn get_fbuild_root() -> PathBuf {
 /// so a home-less environment is a diagnosable failure and not a crash; they
 /// had each hand-rolled this path to keep that property (FastLED/fbuild#1349).
 pub fn try_get_fbuild_root() -> Option<PathBuf> {
+    if let Some(resolution) = long_paths::current_resolution() {
+        return Some(resolution.fbuild_root.clone().into_path_buf());
+    }
     let mode = if is_dev_mode() { "dev" } else { "prod" };
     Some(dirs_next()?.join(FBUILD_DIR_NAME).join(mode))
 }
@@ -95,7 +105,10 @@ pub fn tools_dir_label() -> String {
 /// If current mode is dev, returns prod root, and vice versa.
 /// Used for cross-mode daemon discovery.
 pub fn get_other_fbuild_root() -> PathBuf {
-    let home = dirs_next().expect("could not determine home directory");
+    let home = long_paths::current_resolution()
+        .map(|resolution| resolution.home.clone().into_path_buf())
+        .or_else(dirs_next)
+        .expect("could not determine home directory");
     let mode = if is_dev_mode() { "prod" } else { "dev" };
     home.join(FBUILD_DIR_NAME).join(mode)
 }
@@ -144,8 +157,11 @@ fn endpoint_key_from_material(material: &str) -> String {
 /// Deterministic default daemon port derived from [`daemon_endpoint_key`].
 ///
 /// On Windows this lands in 10000–49151, below the dynamic range that
-/// Hyper-V/HNS commonly reserves in excluded blocks. Other platforms use the
-/// IANA dynamic range (49152–65535). The result is stable for a given
+/// Hyper-V/HNS commonly reserves in excluded blocks. Other platforms use
+/// 10000–32767, below both the Linux (32768–60999) and macOS (49152–65535)
+/// ephemeral ranges: a daemon port inside them can be taken by any outgoing
+/// connection's source port, which fails the wildcard/loopback bind with
+/// EADDRINUSE while nothing is listening (FastLED/fbuild#1700). The result is stable for a given
 /// version+identity; distinct versions (and dev vs prod, since mode is part of
 /// the identity) get distinct ports. `FBUILD_DAEMON_PORT` still overrides this
 /// (see [`get_daemon_port`]).
@@ -153,13 +169,17 @@ pub fn default_daemon_port() -> u16 {
     port_from_endpoint_key(&daemon_endpoint_key())
 }
 
+/// First port of the default Linux ephemeral range (`ip_local_port_range`).
+/// The non-Windows daemon window stays below it (FastLED/fbuild#1700).
+const LINUX_EPHEMERAL_LOW: u32 = 32768;
+
 /// Map a hex endpoint key into the platform's default daemon-port window.
 /// Pure and deterministic (unit-tested).
 fn port_from_endpoint_key(key: &str) -> u16 {
     let (low, span): (u32, u32) = if fbuild_core::platform::host::is_windows() {
         (10000, 49152 - 10000)
     } else {
-        (49152, 65536 - 49152)
+        (10000, LINUX_EPHEMERAL_LOW - 10000)
     };
 
     let n = u64::from_str_radix(key, 16).unwrap_or(0);
@@ -186,7 +206,13 @@ pub fn get_daemon_status_file() -> PathBuf {
 }
 
 /// Global cache root (or `FBUILD_CACHE_DIR` override).
+///
+/// After [`long_paths::initialize`], returns the fixed effective selection,
+/// including a Windows short-path fallback when required.
 pub fn get_cache_root() -> PathBuf {
+    if let Some(resolution) = long_paths::current_resolution() {
+        return resolution.cache_root.clone().into_path_buf();
+    }
     if let Ok(dir) = std::env::var("FBUILD_CACHE_DIR") {
         return PathBuf::from(dir);
     }
@@ -195,7 +221,8 @@ pub fn get_cache_root() -> PathBuf {
 
 /// Root directory for short-lived working / scratch dirs.
 ///
-/// FastLED/fbuild#844 ("Bridge pair 10"). Returns `~/.fbuild/{dev|prod}/tmp`.
+/// FastLED/fbuild#844 ("Bridge pair 10"). Defaults to `~/.fbuild/{dev|prod}/tmp`;
+/// an initialized Windows fallback uses its short extraction scratch root.
 /// This is the rooted alternative to `std::env::temp_dir()` and
 /// `tempfile::tempdir()`; per-platform package extractors, framework
 /// hydration, linker scratch dirs, etc. all live under this root so
@@ -205,6 +232,9 @@ pub fn get_cache_root() -> PathBuf {
 /// Note: this does NOT create the directory — pair with
 /// [`temp_subdir`] for the create-on-use pattern.
 pub fn dev_or_prod_temp_root() -> PathBuf {
+    if let Some(resolution) = long_paths::current_resolution() {
+        return resolution.scratch_root.clone().into_path_buf();
+    }
     get_fbuild_root().join("tmp")
 }
 
@@ -231,7 +261,20 @@ pub fn get_project_fbuild_dir(project_dir: &Path) -> PathBuf {
 /// 1. `FBUILD_BUILD_DIR` environment variable (explicit override, useful for
 ///    Windows where long project paths can exceed the 260 character limit)
 /// 2. Default: `<project_dir>/.fbuild/build/`
+///
+/// An initialized Windows fallback redirects deep roots to a directory keyed
+/// by the normalized project and requested root under its short build root.
 pub fn get_project_build_root(project_dir: &Path) -> PathBuf {
+    if let Some(resolution) = long_paths::current_resolution() {
+        let requested = resolution
+            .build_override
+            .clone()
+            .map(|root| root.into_path_buf())
+            .unwrap_or_else(|| get_project_fbuild_dir(project_dir).join(BUILD_DIR_NAME));
+        return resolution
+            .resolve_build_root(project_dir, &requested)
+            .into_path_buf();
+    }
     if let Ok(dir) = std::env::var("FBUILD_BUILD_DIR") {
         return PathBuf::from(dir);
     }
@@ -254,6 +297,9 @@ pub fn get_project_build_root(project_dir: &Path) -> PathBuf {
 /// 2. `FBUILD_BUILD_DIR` env var (process-wide override, primarily for
 ///    Windows long-path workarounds).
 /// 3. `<project_dir>/.fbuild/build` (the default).
+///
+/// When the Windows fallback is active, the selected root is shortened if
+/// needed before appending the environment/profile segments.
 ///
 /// The `<env>/<profile>` segments are appended on top of whichever
 /// root was selected, *unless* `flatten_env` is true or the
@@ -315,11 +361,9 @@ impl BuildLayout {
     /// Resolve the env-rooted build directory.
     pub fn resolve(&self) -> PathBuf {
         let root = if let Some(ref r) = self.override_root {
-            r.clone()
-        } else if let Ok(dir) = std::env::var("FBUILD_BUILD_DIR") {
-            PathBuf::from(dir)
+            long_paths::resolve_build_root(&self.project_dir, r).into_path_buf()
         } else {
-            get_project_fbuild_dir(&self.project_dir).join(BUILD_DIR_NAME)
+            get_project_build_root(&self.project_dir)
         };
 
         let collapse_env = self.flatten_env || self.project_basename_matches_env();
@@ -345,7 +389,10 @@ fn read_port_from_file(path: &Path) -> Option<u16> {
 /// Priority:
 /// 1. `FBUILD_DAEMON_PORT` environment variable (if set and valid 1–65535)
 /// 2. Port file for this endpoint (if it exists and is valid)
-/// 3. [`default_daemon_port`] — a deterministic per-(version, cache-identity)
+/// 3. The port of the live daemon that owns this cache root (its
+///    `root-owner.json` claim), when it is the same version, mode and cache
+///    root
+/// 4. [`default_daemon_port`] — a deterministic per-(version, cache-identity)
 ///    port
 ///
 /// FastLED/fbuild#1009: the endpoint is keyed by version+identity (via
@@ -376,8 +423,55 @@ pub fn get_daemon_port() -> u16 {
         // `recorded_daemon_owner_is_dead`.
     }
 
-    // Priority 3: deterministic per-endpoint default.
+    // Priority 3: the live daemon that owns this cache root, when it is the
+    // same version and identity. FastLED/fbuild#1009 keys the endpoint on
+    // version+identity, but two builds that both report the same version can
+    // still derive different ports (e.g. a 2.5.44 wheel built before the
+    // #1700 port-window change and a 2.5.44 dev build after it). The
+    // version-blind root-ownership lock lets only one of them run, so a
+    // client that ignored the owner would spawn daemons that exit on
+    // `root-owner.lock busy` and then report the busy owner as unhealthy.
+    if let Some(port) = daemon_ownership::read_owner_claim().and_then(|claim| {
+        let identity = crate::running_process::DaemonCacheIdentity::discover();
+        adoptable_owner_port(
+            &claim,
+            env!("CARGO_PKG_VERSION"),
+            identity.mode,
+            &identity.cache_root_key,
+            owner_claim_is_live,
+        )
+    }) {
+        return port;
+    }
+
+    // Priority 4: deterministic per-endpoint default.
     default_daemon_port()
+}
+
+/// The owner claim's port, if the claim describes a live daemon this client
+/// may share: same version, mode and cache root. Pure apart from `is_live`.
+fn adoptable_owner_port(
+    claim: &daemon_ownership::OwnerClaim,
+    version: &str,
+    mode: &str,
+    cache_root_key: &str,
+    is_live: impl FnOnce(&daemon_ownership::OwnerClaim) -> bool,
+) -> Option<u16> {
+    (claim.port > 0
+        && claim.version == version
+        && claim.mode == mode
+        && claim.cache_root_key == cache_root_key
+        && is_live(claim))
+    .then_some(claim.port)
+}
+
+/// Positive evidence that the claim's pid is a running `fbuild-daemon`.
+fn owner_claim_is_live(claim: &daemon_ownership::OwnerClaim) -> bool {
+    fbuild_core::platform::process::pid_is_alive(claim.pid)
+        && fbuild_core::platform::process::pid_exe_stem_matches(
+            claim.pid,
+            daemon_ownership::DAEMON_EXE_STEM,
+        )
 }
 
 /// Can we *prove* the daemon that wrote this endpoint's records is gone?
@@ -516,6 +610,11 @@ fn dirs_next() -> Option<PathBuf> {
     }
 }
 
+/// Normalize the legacy home-directory boundary for new path resolvers.
+pub(crate) fn normalized_home() -> Option<fbuild_core::path::NormalizedPath> {
+    dirs_next().map(fbuild_core::path::NormalizedPath::new)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -595,10 +694,31 @@ mod tests {
             );
         } else {
             assert!(
-                (49152..=65535).contains(&p),
-                "port {p} outside dynamic range"
+                (10000..32768).contains(&p),
+                "port {p} is inside an OS ephemeral range"
             );
         }
+    }
+
+    #[test]
+    fn default_daemon_port_is_outside_this_hosts_ephemeral_range() {
+        // FastLED/fbuild#1700: read the live range rather than trusting the
+        // default, since distros and CI images can widen it.
+        let Ok(range) = std::fs::read_to_string("/proc/sys/net/ipv4/ip_local_port_range") else {
+            return;
+        };
+        let bounds: Vec<u16> = range
+            .split_whitespace()
+            .filter_map(|n| n.parse().ok())
+            .collect();
+        let [low, high] = bounds[..] else {
+            panic!("unexpected ip_local_port_range: {range:?}");
+        };
+        let p = default_daemon_port();
+        assert!(
+            !(low..=high).contains(&p),
+            "daemon port {p} is inside the ephemeral range {low}-{high}"
+        );
     }
 
     #[test]
@@ -614,10 +734,7 @@ mod tests {
             if fbuild_core::platform::host::is_windows() {
                 assert!((10000..49152).contains(&p), "key {key} -> {p} out of range");
             } else {
-                assert!(
-                    (49152..=65535).contains(&p),
-                    "key {key} -> {p} out of range"
-                );
+                assert!((10000..32768).contains(&p), "key {key} -> {p} out of range");
             }
         }
         // Two distinct version/identity keys should not collapse to one port

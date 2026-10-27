@@ -196,6 +196,7 @@ pub async fn run_deploy(
 
     let (caller_pid, caller_cwd) = daemon_client::caller_info();
     let req = DeployRequest {
+        build_dir_override: daemon_client::capture_build_root(&project_dir),
         project_dir,
         environment,
         port,
@@ -272,6 +273,7 @@ pub async fn run_deploy(
 /// through a fresh deployment (never rebuilding), while an already-confirmed
 /// flash only rescans for the recovered runtime endpoint. Default,
 /// `--no-admin`, CI, and non-interactive sessions never elevate.
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 async fn maybe_recover_and_retry(
     resp: OperationResponse,
     client: &DaemonClient,
@@ -464,6 +466,7 @@ pub async fn run_test_emu(
 
     let (caller_pid, caller_cwd) = daemon_client::caller_info();
     let req = TestEmuRequest {
+        build_dir_override: daemon_client::capture_build_root(&project_dir),
         project_dir,
         environment,
         verbose,
@@ -589,6 +592,7 @@ fn select_monitor_port(
 }
 
 #[allow(clippy::too_many_arguments)]
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub async fn run_monitor(
     project_dir: String,
     environment: Option<String>,

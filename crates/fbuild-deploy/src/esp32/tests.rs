@@ -130,6 +130,25 @@ fn without_esptool_path_falls_back_to_bare_esptool() {
     );
 }
 
+/// FastLED/fbuild#1657: the ESP8266 deploy writes its single elf2image
+/// output at 0x0 with `--chip esp8266`, and nothing else.
+#[test]
+fn esp8266_single_image_write_flash_args() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let fw = tmp.path().join("firmware.bin");
+    std::fs::write(&fw, b"FIRM").unwrap();
+
+    let params = test_esptool_params();
+    let deployer = Esp32Deployer::new("esp8266", "115200", "0x0", "0x0", "0x0", &params, false);
+    let args = deployer.build_write_flash_args(&fw, "/dev/ttyUSB0", None);
+
+    let chip = args.iter().position(|a| a == "--chip").unwrap();
+    assert_eq!(args[chip + 1], "esp8266");
+    let fw_text = fw.to_string_lossy().to_string();
+    assert_eq!(&args[args.len() - 2..], ["0x0".to_string(), fw_text]);
+    assert_eq!(args.iter().filter(|a| a.as_str() == "0x0").count(), 1);
+}
+
 #[test]
 fn qemu_flash_size_resolution_accepts_supported_sizes() {
     let mut board = fbuild_test_support::board_for_test("esp32-s3-devkitc-1");
@@ -894,4 +913,51 @@ async fn try_verify_deployment_real_esp32h2() {
 #[ignore = "requires real ESP32-P4 board — set ESP32P4_PORT and ESP32P4_FIRMWARE"]
 async fn try_verify_deployment_real_esp32p4() {
     run_verify_deployment_test("esp32p4", "0x2000", "ESP32P4_PORT", "ESP32P4_FIRMWARE").await;
+}
+
+fn write_test_elf(dir: &Path, with_adc_symbol: bool) -> std::path::PathBuf {
+    use object::write::{Object, Symbol, SymbolSection};
+    use object::{Architecture, BinaryFormat, Endianness, SymbolFlags, SymbolKind, SymbolScope};
+    let mut obj = Object::new(BinaryFormat::Elf, Architecture::Xtensa, Endianness::Little);
+    let name: &[u8] = if with_adc_symbol {
+        b"adc_hw_calibration"
+    } else {
+        b"app_main"
+    };
+    obj.add_symbol(Symbol {
+        name: name.to_vec(),
+        value: 0x4200_0000,
+        size: 4,
+        kind: SymbolKind::Text,
+        scope: SymbolScope::Linkage,
+        weak: false,
+        section: SymbolSection::Absolute,
+        flags: SymbolFlags::None,
+    });
+    let path = dir.join(if with_adc_symbol {
+        "with.elf"
+    } else {
+        "without.elf"
+    });
+    std::fs::write(&path, obj.write().unwrap()).unwrap();
+    path
+}
+
+#[test]
+fn qemu_adc_patch_is_skipped_when_calibration_not_linked() {
+    // Firmware that never links libesp_adc has no adc_hw_calibration
+    // constructor, so there is nothing for QEMU to hang on and nothing to
+    // patch: the deploy must succeed and leave the image untouched.
+    let dir = tempfile::tempdir().unwrap();
+    let elf = write_test_elf(dir.path(), false);
+    let firmware = dir.path().join("firmware.bin");
+    let flash = dir.path().join("flash.bin");
+    std::fs::write(&firmware, [0u8; 16]).unwrap();
+    std::fs::write(&flash, [0xFFu8; 64]).unwrap();
+    super::image::patch_qemu_esp32s3_adc_calibration(&flash, &firmware, &elf, 0).unwrap();
+    assert_eq!(std::fs::read(&flash).unwrap(), vec![0xFFu8; 64]);
+    assert!(
+        super::image::elf_has_symbol(&write_test_elf(dir.path(), true), "adc_hw_calibration")
+            .unwrap()
+    );
 }

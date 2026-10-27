@@ -153,6 +153,10 @@ pip install fbuild
 For source installs, platform notes, and first-run cache behavior, start with
 the [getting started guide](docs/getting-started/README.md).
 
+On Windows, `fbuild --fix-win` enables long paths with administrator approval.
+Interactive ESP32 commands offer this repair when needed; declining uses a
+short cache and prints a yellow warning. See [Windows setup](docs/getting-started/README.md#windows-long-paths).
+
 ## Command Quick Start
 
 fbuild reads the same `platformio.ini` files as PlatformIO. Use these commands

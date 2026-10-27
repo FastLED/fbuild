@@ -135,7 +135,14 @@ async fn active_preemption_error(ctx: &DaemonContext, port: &str) -> Option<Stri
 /// Timeout text for a stalled `open_port`. When another process (often the
 /// daemon itself) visibly holds the port, report contention instead of a
 /// driver wedge (FastLED/fbuild#1429).
-async fn open_port_timeout_message(port: &str, deadline: &str) -> String {
+async fn open_port_timeout_message(
+    manager: &fbuild_serial::SharedSerialManager,
+    port: &str,
+    deadline: &str,
+) -> String {
+    if let Some(holder) = super::locks::dead_client_holder(manager, port) {
+        return format!("open_port({port}) exceeded {deadline}; {holder}");
+    }
     match fbuild_serial::port_holders::describe_port_holders(port).await {
         Some(holder) => {
             format!("open_port({port}) exceeded {deadline}; {holder} (timeout cause unknown)")
@@ -145,6 +152,7 @@ async fn open_port_timeout_message(port: &str, deadline: &str) -> String {
 }
 
 async fn await_ws_serial_open_port<F>(
+    manager: &fbuild_serial::SharedSerialManager,
     port: &str,
     open_future: F,
     timeout: Duration,
@@ -155,10 +163,17 @@ where
     match tokio::time::timeout(timeout, open_future).await {
         Ok(Ok(())) => Ok(()),
         Ok(Err(e)) => Err(format!("failed to open port: {}", e)),
-        Err(_) => Err(open_port_timeout_message(port, &format_timeout_for_error(timeout)).await),
+        Err(_) => {
+            Err(open_port_timeout_message(manager, port, &format_timeout_for_error(timeout)).await)
+        }
     }
 }
 
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    reason = "baseline, zackees/ci.yml#229"
+)]
 async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
     // Mark this attach as pending so the self-eviction loop won't shut the
     // daemon down while we're waiting for `open_port` to finish (USB
@@ -204,6 +219,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                     // Open port if needed
                     if open_if_needed {
                         let open_result = await_ws_serial_open_port(
+                            &ctx.serial_manager,
                             &port,
                             ctx.serial_manager.open_port(
                                 &port,
@@ -492,6 +508,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                                     tokio::time::Instant::now() + WS_SERIAL_RECOVERY_TIMEOUT
                                 });
                                 let opened = await_ws_serial_open_port(
+                                    &ctx.serial_manager,
                                     &recovered_port,
                                     ctx.serial_manager.open_port(
                                         &recovered_port,
@@ -877,6 +894,7 @@ fn build_status_snapshot(ctx: &DaemonContext) -> String {
     ctx.status_snapshot_json()
 }
 
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 async fn handle_status_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
     tracing::info!("Status WebSocket connected");
 
@@ -950,6 +968,7 @@ pub async fn ws_logs(
     ws.on_upgrade(move |socket| handle_logs_ws(socket, ctx))
 }
 
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 async fn handle_logs_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
     tracing::info!("Logs WebSocket connected");
 

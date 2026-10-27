@@ -36,7 +36,7 @@ jobs:
       - uses: astral-sh/setup-uv@v3
       # `--no-project` is load-bearing: without it, `uv run` triggers an
       # editable install of the `fbuild` package, whose build backend
-      # requires a globally-installed `soldr` (see `setup.py` /
+      # requires a globally-installed `soldr` (see `ci/build_backend.py` /
       # `build_backend.py`). This workflow does not install soldr — it
       # is a stdlib-only Python lint, not a Rust build — so the install
       # fails with `ERROR: 'soldr' is required to build fbuild from

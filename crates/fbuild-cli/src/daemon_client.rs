@@ -10,6 +10,7 @@ use serde::Serialize;
 
 mod identity;
 mod restart_diag;
+mod startup_log;
 mod types;
 pub use identity::warn_if_daemon_identity_mismatch;
 pub use types::*;
@@ -73,13 +74,22 @@ pub fn caller_info() -> (Option<u32>, Option<String>) {
     (pid, cwd)
 }
 
-/// Snapshot all `PLATFORMIO_*` env vars from the current process environment.
-///
-/// This is the only place in the codebase where `std::env::vars()` is consulted
-/// for `PLATFORMIO_*` keys (other than `fbuild-paths` startup fallbacks). The
-/// returned map is forwarded to the daemon over HTTP via `BuildRequest.pio_env`
-/// / `DeployRequest.pio_env`, since the daemon process does not inherit caller
-/// env vars.
+/// Capture this caller's selected build root for the request, including fallback.
+pub fn capture_build_root(project_dir: &str) -> Option<String> {
+    Some(
+        fbuild_paths::get_project_build_root(std::path::Path::new(project_dir))
+            .to_string_lossy()
+            .into_owned(),
+    )
+}
+
+pub fn capture_src_dir() -> Option<String> {
+    std::env::var("PLATFORMIO_SRC_DIR")
+        .ok()
+        .filter(|dir| !dir.is_empty())
+}
+
+/// Snapshot caller `PLATFORMIO_*` variables for the daemon request.
 pub fn capture_pio_env() -> BTreeMap<String, String> {
     std::env::vars()
         .filter(|(k, _)| k.starts_with("PLATFORMIO_"))
@@ -432,7 +442,11 @@ impl DaemonClient {
                     match event.event_type.as_str() {
                         "log" => {
                             if let Some(msg) = event.message {
-                                println!("{}", msg);
+                                if msg.starts_with("WARNING:") {
+                                    crate::output::visible_warning(msg);
+                                } else {
+                                    println!("{}", msg);
+                                }
                             }
                         }
                         "status" => {
@@ -527,6 +541,28 @@ impl DaemonClient {
                 "shutdown failed with {status}: {body}"
             )));
         }
+        Ok(())
+    }
+
+    /// Close admission and drain existing HTTP operations; never force-kill.
+    pub async fn shutdown_gracefully(&self) -> fbuild_core::Result<()> {
+        self.client
+            .post(format!("{}/api/daemon/shutdown?force=true", self.base_url))
+            .headers(shutdown_caller_headers())
+            .timeout(std::time::Duration::from_secs(10))
+            .send()
+            .await
+            .map_err(|error| {
+                fbuild_core::FbuildError::DaemonError(format!(
+                    "daemon drain request failed: {error}"
+                ))
+            })?
+            .error_for_status()
+            .map_err(|error| {
+                fbuild_core::FbuildError::DaemonError(format!(
+                    "daemon refused graceful drain: {error}"
+                ))
+            })?;
         Ok(())
     }
 
@@ -831,10 +867,50 @@ async fn same_running_image(
 /// If the daemon binary has been updated since the running daemon started,
 /// gracefully restart it (stale source detection, matching Python behavior).
 pub async fn ensure_daemon_running() -> fbuild_core::Result<()> {
-    if try_acquire_broker_daemon().await? {
-        return Ok(());
+    if fbuild_core::platform::host::is_windows()
+        && fbuild_paths::long_paths::current_resolution().is_none()
+    {
+        tokio::task::spawn_blocking(fbuild_paths::long_paths::initialize)
+            .await
+            .map_err(|error| {
+                fbuild_core::FbuildError::Other(format!("path selection worker failed: {error}"))
+            })??;
     }
-    ensure_direct_daemon_running().await
+    for attempt in 0..3 {
+        crate::cli::windows_long_paths::reconcile_daemon_owner().await?;
+        if !try_acquire_broker_daemon().await? {
+            ensure_direct_daemon_running().await?;
+        }
+        if !fbuild_core::platform::host::is_windows() {
+            return Ok(());
+        }
+        let info = DaemonClient::new().daemon_info().await?;
+        let current = fbuild_paths::long_paths::probe();
+        if let Some(resolution) = fbuild_paths::long_paths::current_resolution() {
+            if resolution.observation.status_key() != current.status_key() {
+                return Err(fbuild_core::FbuildError::DaemonError(
+                    "Windows long-path setting changed during this command. Rerun it to select paths in a fresh process.".into(),
+                ));
+            }
+        }
+        if daemon_cache_identity_error(&info).is_none()
+            && !crate::cli::windows_long_paths::setting_changed(
+                info.long_path_support.as_ref(),
+                &current,
+            )
+        {
+            return Ok(());
+        }
+        if attempt < 2 {
+            crate::output::visible_warning(
+                "Another invocation changed Windows path settings while the daemon started. Renegotiating before submitting work.",
+            );
+        }
+    }
+    Err(fbuild_core::FbuildError::DaemonError(
+        "Windows path settings are changing repeatedly. Retry when the other invocation finishes."
+            .into(),
+    ))
 }
 
 async fn try_acquire_broker_daemon() -> fbuild_core::Result<bool> {
@@ -871,7 +947,9 @@ async fn try_acquire_broker_daemon() -> fbuild_core::Result<bool> {
 
             let client = DaemonClient::new();
             if client
-                .wait_until_healthy(std::time::Duration::from_secs(READINESS_TIMEOUT_SECS))
+                .wait_until_healthy(std::time::Duration::from_secs(
+                    startup_log::readiness_timeout_secs(),
+                ))
                 .await?
             {
                 let info = client.daemon_info().await?;
@@ -936,16 +1014,29 @@ async fn ensure_direct_daemon_running() -> fbuild_core::Result<()> {
         fbuild_core::daemon_health::DaemonHealth::Starting { .. }
     ) {
         client
-            .wait_until_healthy(std::time::Duration::from_secs(READINESS_TIMEOUT_SECS))
+            .wait_until_healthy(std::time::Duration::from_secs(
+                startup_log::readiness_timeout_secs(),
+            ))
             .await?;
     }
 
     let sibling = restart_diag::SiblingDaemon::discover();
+    if fbuild_core::platform::host::is_windows() && client.health().await {
+        let info = client.daemon_info().await?;
+        if let Some(error) = daemon_cache_identity_error(&info) {
+            return Err(fbuild_core::FbuildError::DaemonError(error));
+        }
+    }
     let restarted = match probe_running_daemon(&client, &sibling).await {
         DaemonProbe::Keep => return Ok(()),
         DaemonProbe::Restarted => true,
         DaemonProbe::NotRunning => false,
     };
+    if !restarted {
+        if let Some(error) = foreign_root_owner_error() {
+            return Err(fbuild_core::FbuildError::DaemonError(error));
+        }
+    }
     let spawned_pid = start_daemon(&client).await?;
     if restarted {
         // FastLED/fbuild#1476: whichever branch `start_daemon` took (spawned,
@@ -954,6 +1045,40 @@ async fn ensure_direct_daemon_running() -> fbuild_core::Result<()> {
         warn_if_restart_did_not_take(&client, &sibling, spawned_pid).await;
     }
     Ok(())
+}
+
+/// A live daemon of another version or identity owns this cache root on a
+/// port this CLI does not use. A daemon spawned now would only exit on
+/// `root-owner.lock busy`, and three such spawns used to end in a misleading
+/// "daemon did not become healthy" error while the owner was merely busy.
+fn foreign_root_owner_error() -> Option<String> {
+    let claim = fbuild_paths::daemon_ownership::read_owner_claim()?;
+    let own_port = fbuild_paths::get_daemon_port();
+    let live = fbuild_core::platform::process::pid_is_alive(claim.pid)
+        && fbuild_core::platform::process::pid_exe_stem_matches(
+            claim.pid,
+            fbuild_paths::daemon_ownership::DAEMON_EXE_STEM,
+        );
+    (live && claim.port != own_port).then(|| foreign_root_owner_message(&claim, own_port))
+}
+
+fn foreign_root_owner_message(
+    claim: &fbuild_paths::daemon_ownership::OwnerClaim,
+    own_port: u16,
+) -> String {
+    format!(
+        "the fbuild cache root is owned by another fbuild-daemon (pid {}, version {}, mode {}, \
+         port {}, exe {}), which this fbuild {} cannot share; it would use port {}. \
+         No compilation was attempted. Wait for that daemon's work to finish and stop it \
+         (`fbuild daemon stop`), or run the same fbuild build as the client that started it.",
+        claim.pid,
+        claim.version,
+        claim.mode,
+        claim.port,
+        claim.exe.display(),
+        env!("CARGO_PKG_VERSION"),
+        own_port
+    )
 }
 
 enum DaemonProbe {
@@ -967,6 +1092,7 @@ enum DaemonProbe {
 
 /// Probe the running daemon; shut it down if this CLI's sibling binary
 /// supersedes it.
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 async fn probe_running_daemon(
     client: &DaemonClient,
     sibling: &restart_diag::SiblingDaemon,
@@ -1032,6 +1158,7 @@ async fn probe_running_daemon(
 
 /// Spawn the daemon (or adopt one a concurrent caller started). Returns the
 /// pid this call spawned, or `None` when it adopted an existing daemon.
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 async fn start_daemon(client: &DaemonClient) -> fbuild_core::Result<Option<u32>> {
     tracing::info!("daemon not running, starting...");
 
@@ -1057,6 +1184,8 @@ async fn start_daemon(client: &DaemonClient) -> fbuild_core::Result<Option<u32>>
     // Retry daemon spawn up to 3 times with exponential backoff
     // (matches Python behavior: [0.0s, 0.5s, 2.0s] delays between attempts)
     let backoff_delays = [0.0, 0.5, 2.0];
+    // Daemon-log lines from here on explain a failure below (#1627).
+    let spawn_started = startup_log::log_timestamp(std::time::SystemTime::now());
 
     for (attempt, &delay) in backoff_delays.iter().enumerate() {
         if attempt > 0 {
@@ -1110,7 +1239,9 @@ async fn start_daemon(client: &DaemonClient) -> fbuild_core::Result<Option<u32>>
         // of embedded zccache bring-up in #1462) is waited on instead of being
         // respawned and then reported as failed.
         if client
-            .wait_until_healthy(std::time::Duration::from_secs(READINESS_TIMEOUT_SECS))
+            .wait_until_healthy(std::time::Duration::from_secs(
+                startup_log::readiness_timeout_secs(),
+            ))
             .await?
         {
             tracing::info!("daemon started successfully (spawned pid {spawned_pid})");
@@ -1119,23 +1250,25 @@ async fn start_daemon(client: &DaemonClient) -> fbuild_core::Result<Option<u32>>
 
         tracing::warn!(
             "daemon did not become healthy within {}s after spawn attempt {}",
-            READINESS_TIMEOUT_SECS,
+            startup_log::readiness_timeout_secs(),
             attempt + 1
         );
     }
 
+    let readiness_secs = startup_log::readiness_timeout_secs();
     Err(fbuild_core::FbuildError::DaemonError(format!(
         "daemon did not become healthy after 3 spawn attempts \
-         ({READINESS_TIMEOUT_SECS}s each). This is a daemon problem, not a defect in the code \
+         ({readiness_secs}s each). This is a daemon problem, not a defect in the code \
          being built — no compilation was attempted.\n{}{}\n\nIf the daemon executable above is \
          not the one \
          you expect, that is the likely cause: the endpoint port is derived from the daemon \
          version (FastLED/fbuild#1009), so a version-mismatched daemon listens on a different \
          port than this CLI polls and can never be reached. When running a locally-built CLI, \
          build the daemon too (`soldr cargo build -p fbuild-daemon`) so a sibling binary exists \
-         instead of resolving `fbuild-daemon` from PATH.",
+         instead of resolving `fbuild-daemon` from PATH.{}",
         runtime_diagnostic(),
-        wedged_daemon_hint()
+        wedged_daemon_hint(),
+        startup_log::startup_problems_note(&spawn_started)
     )))
 }
 
@@ -1169,10 +1302,6 @@ fn wedged_daemon_note(live_daemon_pid: Option<u32>) -> String {
          `fbuild daemon kill-all`."
     )
 }
-
-/// Wall-clock budget for a spawned daemon to answer `health()`. Stretched while
-/// the daemon reports `starting` (FastLED/fbuild#1480).
-const READINESS_TIMEOUT_SECS: u64 = 10;
 
 /// How long a daemon may report `starting` before the CLI says on stderr what
 /// it is waiting for.

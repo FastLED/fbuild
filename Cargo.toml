@@ -93,7 +93,7 @@ targets = [
 ]
 
 [workspace.package]
-version = "2.5.33"
+version = "2.5.47"
 edition = "2021"
 rust-version = "1.95.0"
 license = "AGPL-3.0-only"
@@ -127,7 +127,7 @@ tree-sitter = "0.26.9"
 tree-sitter-cpp = "0.23.4"
 flate2 = "1"
 tar = "0.4"
-zip = { version = "2", default-features = false, features = ["deflate"] }
+zip = { version = "9.0.3", default-features = false, features = ["deflate"] }
 xz2 = "0.1"
 bzip2 = "0.5"
 zstd = "0.13"
@@ -156,7 +156,7 @@ mimalloc-pprof = "0.9"
 # something the shipped daemon links. The version MUST equal the
 # `running-process` rev pinned above, for the same `rp_*_public`
 # symbol-duplication reason documented there.
-running-process-probe-daemon = "=4.10.14"
+running-process-probe-daemon = "=4.10.16"
 object = { version = "0.36", default-features = false, features = ["read", "std", "elf", "write"] }
 rusqlite = { version = "0.32", features = ["bundled"] }
 shell-words = "1"
@@ -196,13 +196,25 @@ owo-colors = "4"
 # loopback-HTTP path (see crates/fbuild-daemon/src/broker).
 #
 # Source must match zccache's `running-process` pin exactly (same source and
-# version, not just the same semver; zccache takes =4.10.14 from crates.io). `running-process` exports unmangled `rp_*_public` C
-# symbols; Cargo treats a registry package and a git package as two distinct
-# packages, so a registry pin here plus zccache's git pin puts BOTH copies in
-# the link and every one of those symbols collides (`rust-lld: error:
-# duplicate symbol: rp_native_process_start_public`, …). Keep this pin in
-# lockstep with zccache's resolved `running-process` when repinning zccache.
-running-process = { version = "=4.10.14", default-features = false, features = ["client-async"] }
+# version, not just the same semver; zccache takes =4.10.16 from crates.io).
+# `running-process` exports unmangled `rp_*_public` C symbols; Cargo treats a
+# registry package and a git package as two distinct packages, so a source
+# mismatch puts BOTH copies in the link and every one of those symbols
+# collides (`rust-lld: error: duplicate symbol:
+# rp_native_process_start_public`, …). Keep this pin in lockstep with
+# zccache's resolved `running-process` when repinning zccache.
+running-process = { version = "=4.10.16", default-features = false, features = ["client-async"] }
+
+# One pin for every crate that links zccache (build, build-engine, build-arm,
+# build-esp, build-mcu). It lives here rather than repeated per manifest
+# because the five copies used to drift: a git rev in one and a crates.io
+# version in another resolves BOTH into the link, which is the same
+# duplicate-symbol failure the running-process note above describes.
+#
+# 1.15.8 is the published release carrying the #1757 fix — a destination write
+# that loses a Windows AV/indexer scan window is retried with the #490 ladder
+# instead of degrading to a silent `cached: false` recompile.
+zccache = "=1.15.8"
 
 [profile.dev]
 debug = "line-tables-only"
@@ -220,3 +232,13 @@ debug = "line-tables-only"
 [profile.dev.package."*"]
 opt-level = 3
 debug = false
+
+[workspace.lints.clippy]
+cognitive_complexity = "warn"
+too_many_lines = "warn"
+# Async hazards: a sync guard held across `.await` can deadlock the runtime
+# or block a worker thread. Type list lives in .clippy.toml.
+await_holding_lock = "deny"
+await_holding_refcell_ref = "deny"
+await_holding_invalid_type = "deny"
+large_futures = "warn"

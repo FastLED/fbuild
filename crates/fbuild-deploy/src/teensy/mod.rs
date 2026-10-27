@@ -164,6 +164,7 @@ fn resolve_trigger_port(explicit: Option<&str>) -> Option<String> {
 
 #[async_trait::async_trait]
 impl Deployer for TeensyDeployer {
+    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
     async fn deploy(
         &self,
         _project_dir: &Path,

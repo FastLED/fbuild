@@ -9,8 +9,22 @@ use super::args::DaemonAction;
 use super::purge::format_size;
 use super::show::run_show;
 
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    reason = "baseline, zackees/ci.yml#229"
+)]
 pub async fn run_daemon(action: DaemonAction) -> fbuild_core::Result<()> {
-    let client = DaemonClient::new();
+    let client = fbuild_paths::daemon_ownership::read_owner_claim()
+        .filter(|claim| {
+            fbuild_core::platform::process::pid_exe_stem_matches(
+                claim.pid,
+                fbuild_paths::daemon_ownership::DAEMON_EXE_STEM,
+            )
+        })
+        .map_or_else(DaemonClient::new, |claim| {
+            DaemonClient::with_port(claim.port)
+        });
     match action {
         DaemonAction::Stop => {
             run_daemon_stop(&client).await?;
@@ -21,8 +35,8 @@ pub async fn run_daemon(action: DaemonAction) -> fbuild_core::Result<()> {
                     Ok(info) => {
                         let uptime = format_uptime(info.uptime_seconds);
                         output::result(format!(
-                            "daemon is running at {}",
-                            fbuild_paths::get_daemon_url()
+                            "daemon is running at http://127.0.0.1:{}",
+                            info.port
                         ));
                         output::result(format!("  PID:     {}", info.pid));
                         output::result(format!("  Port:    {}", info.port));
@@ -130,6 +144,7 @@ pub async fn run_daemon(action: DaemonAction) -> fbuild_core::Result<()> {
     Ok(())
 }
 
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 fn run_daemon_running_process(json: bool) -> fbuild_core::Result<()> {
     use fbuild_paths::running_process as rp;
 

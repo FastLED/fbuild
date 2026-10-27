@@ -75,6 +75,7 @@ impl std::fmt::Debug for ResolvedBlob {
 /// The download path runs synchronously by blocking on the existing async
 /// downloader. Callers already on a tokio runtime get `block_in_place`;
 /// off-runtime callers get a fresh single-thread runtime.
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 pub fn resolve(lnk: &LnkFile, cache: &DiskCache) -> Result<ResolvedBlob> {
     // Cache lookup uses (Kind, url, version) where "version" is the sha256.
     // This guarantees that a change to the .lnk's sha256 forces a refetch.

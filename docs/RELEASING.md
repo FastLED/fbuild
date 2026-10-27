@@ -30,8 +30,8 @@ release-auto.yml
 ├── prepare              ── compute candidate version, check tag + PyPI state
 ├── ci-full              ── validate exact candidate SHA and every board/platform job
 ├── build (matrix)       ── build native binaries for 6 targets
-├── build-pypi           ── call `ci/publish.py::build_all_wheels` → 4 wheels
-├── smoke test           ── pip-install one wheel, run `fbuild --version`
+├── build-pypi           ── call `ci/publish.py::build_all_wheels` → 5 wheels
+├── smoke tests          ── install wheels, verify macOS architectures, run CLI + import
 ├── publish              ── create GitHub release + push v<version> tag
 └── publish-pypi         ── upload wheels via trusted publishing (OIDC)
 ```
@@ -44,7 +44,7 @@ should_publish_github = true  IF publish=true AND tag does not exist
 should_publish_pypi = true    IF publish=true AND PyPI has fewer than expected wheels
 ```
 
-The file-count guard exists because a complete `fbuild` release means one wheel per `PLATFORMS` entry in `ci/publish.py` (currently 4: Linux x86_64, Linux aarch64, macOS aarch64, Windows x86_64). Anything less is a partial / stranded release; an explicit retry on the same candidate SHA can rebuild and upload the missing wheels after full CI and release-binary smoke tests pass. Both this gate and the post-upload "Verify all wheels visible on PyPI" check derive their expected counts at run time (from `ci/publish.py::PLATFORMS` and the built wheels respectively) — a stale hardcoded 4 broke the verify gate during the 2.3.22-2.3.24 window. Note the build matrix has more lanes than wheels: the x86_64-apple-darwin and aarch64-pc-windows-msvc binaries ship via the GitHub release archives only (Intel Macs install the arm64 wheel via its dual macosx tag; ARM Windows uses the win_amd64 wheel via emulation).
+The file-count guard exists because a complete `fbuild` release means one wheel per `PLATFORMS` entry in `ci/publish.py` (currently 5: Linux x86_64, Linux aarch64, macOS x86_64, macOS aarch64, Windows x86_64). Anything less is a partial / stranded release; an explicit retry on the same candidate SHA can rebuild and upload the missing wheels after full CI and release-binary smoke tests pass. Both this gate and the post-upload "Verify all wheels visible on PyPI" check derive their expected counts at run time (from `ci/publish.py::PLATFORMS` and the built wheels respectively) — a stale hardcoded 4 broke the verify gate during the 2.3.22-2.3.24 window. Note the build matrix has more lanes than wheels: the aarch64-pc-windows-msvc binaries ship via the GitHub release archives only (ARM Windows uses the win_amd64 wheel via emulation). macOS wheels are separate for Intel and Apple Silicon: each contains matching native extension and CLI binaries. Both hosted macOS release smoke lanes assemble and install the wheel, verify the installed binaries with `lipo -verify_arch`, import the extension, and execute the CLI before publication.
 
 ## Common failure modes
 
@@ -69,7 +69,7 @@ The action will rebuild the missing wheels and upload, leaving the existing whee
 
 ### `prepare` says "no, already shipped"
 
-If `pypi_file_count` already equals `len(PLATFORMS)` (currently 4), the release is complete. Bump to the next version.
+If `pypi_file_count` already equals `len(PLATFORMS)`, the release is complete. Bump to the next version.
 
 ## Library reference: `ci/publish.py`
 

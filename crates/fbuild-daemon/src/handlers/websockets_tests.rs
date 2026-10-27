@@ -6,6 +6,7 @@ use super::*;
 /// change that reorders `write_ack` and `in_waiting` frames.
 #[cfg(target_os = "linux")]
 #[tokio::test]
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 async fn serial_ws_replies_follow_request_order() {
     use std::ffi::CStr;
     use std::os::fd::{AsRawFd, FromRawFd, OwnedFd};
@@ -27,7 +28,7 @@ async fn serial_ws_replies_follow_request_order() {
     assert_eq!(rc, 0, "openpty failed: {}", std::io::Error::last_os_error());
     let _master = unsafe { OwnedFd::from_raw_fd(master_fd) };
     let slave = unsafe { OwnedFd::from_raw_fd(slave_fd) };
-    let mut name = [0i8; 256];
+    let mut name = [0 as std::ffi::c_char; 256];
     let rc = unsafe { libc::ttyname_r(slave.as_raw_fd(), name.as_mut_ptr(), name.len()) };
     assert_eq!(rc, 0, "ttyname_r failed: {rc}");
     let port = unsafe { CStr::from_ptr(name.as_ptr()) }
@@ -143,6 +144,11 @@ async fn serial_ws_preemption_without_recovered_port_closes_monitor() {
 }
 
 #[cfg(target_os = "linux")]
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    reason = "baseline, zackees/ci.yml#229"
+)]
 async fn serial_ws_preemption_reconnects_after_deploy_impl(renumber: bool, fail_recovery: bool) {
     use std::ffi::CStr;
     use std::os::fd::{AsRawFd, FromRawFd, OwnedFd};
@@ -166,7 +172,7 @@ async fn serial_ws_preemption_reconnects_after_deploy_impl(renumber: bool, fail_
     );
     let master = unsafe { OwnedFd::from_raw_fd(master_fd) };
     let slave = unsafe { OwnedFd::from_raw_fd(slave_fd) };
-    let mut name = [0i8; 256];
+    let mut name = [0 as std::ffi::c_char; 256];
     assert_eq!(
         unsafe { libc::ttyname_r(slave.as_raw_fd(), name.as_mut_ptr(), name.len()) },
         0
@@ -194,7 +200,7 @@ async fn serial_ws_preemption_reconnects_after_deploy_impl(renumber: bool, fail_
         );
         recovered_master = Some(unsafe { OwnedFd::from_raw_fd(new_master_fd) });
         let new_slave = unsafe { OwnedFd::from_raw_fd(new_slave_fd) };
-        let mut new_name = [0i8; 256];
+        let mut new_name = [0 as std::ffi::c_char; 256];
         assert_eq!(
             unsafe {
                 libc::ttyname_r(new_slave.as_raw_fd(), new_name.as_mut_ptr(), new_name.len())
@@ -409,6 +415,7 @@ async fn ws_open_port_timeout_returns_error_with_deadline() {
     let result = tokio::time::timeout(
         std::time::Duration::from_secs(1),
         await_ws_serial_open_port(
+            &fbuild_serial::SharedSerialManager::new(),
             "COM_HUNG",
             std::future::pending::<fbuild_core::Result<()>>(),
             std::time::Duration::from_millis(10),
@@ -440,6 +447,7 @@ async fn run_pending_attach_timeout_scope(ctx: std::sync::Arc<DaemonContext>) ->
     assert_eq!(ctx.pending_serial_attach_infos().len(), 1);
 
     let message = await_ws_serial_open_port(
+        &ctx.serial_manager,
         "COM_HUNG",
         std::future::pending::<fbuild_core::Result<()>>(),
         std::time::Duration::from_millis(10),
@@ -735,4 +743,40 @@ fn writer_flushes_data_before_non_data_event() {
         }
         other => panic!("output[2] expected Data, got {:?}", other),
     }
+}
+
+/// FastLED/fbuild#1429: a hung attach against a port the daemon holds for an
+/// exited client names that client instead of blaming the serial driver.
+#[tokio::test]
+async fn ws_open_port_timeout_names_a_dead_client_holder() {
+    let manager = fbuild_serial::SharedSerialManager::new();
+    let mut session = fbuild_serial::SerialSession::new("COM_DEAD".to_string(), 115200);
+    session.is_open = true;
+    session.owner_client_id = Some("client-dead".to_string());
+    session.client_metadata.insert(
+        "client-dead".to_string(),
+        fbuild_serial::SerialClientMetadata {
+            pid: Some(u32::MAX),
+            exe: None,
+            cwd: None,
+            argv: None,
+        },
+    );
+    manager.insert_session_for_test(session);
+
+    let message = await_ws_serial_open_port(
+        &manager,
+        "COM_DEAD",
+        std::future::pending::<fbuild_core::Result<()>>(),
+        std::time::Duration::from_millis(10),
+    )
+    .await
+    .expect_err("hung open_port must time out");
+
+    assert!(message.contains(&u32::MAX.to_string()), "{message}");
+    assert!(
+        message.contains("clear-locks --port COM_DEAD --stale"),
+        "{message}"
+    );
+    assert!(!message.contains("wedged"), "{message}");
 }

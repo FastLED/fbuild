@@ -102,12 +102,16 @@ impl BuildContext {
     /// Orchestrators that want per-phase visibility (see [`crate::perf_log`])
     /// pass in a shared timer. Callers that don't care get zero overhead by
     /// passing `None`.
+    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
     pub async fn new_with_perf(
         params: &BuildParams,
         mut perf: Option<&mut crate::perf_log::PerfTimer>,
     ) -> Result<Self> {
         let project_dir = &params.project_dir;
         let env_name = &params.env_name;
+        fbuild_paths::long_paths::validate_legacy_path(project_dir)?;
+        fbuild_paths::long_paths::validate_legacy_path(&params.build_dir)?;
+        fbuild_paths::long_paths::prepare_build_directory(&params.build_dir)?;
 
         // 1. Parse platformio.ini, attaching any forwarded `PLATFORMIO_*` env
         // var overrides from the CLI caller (the daemon does not inherit

@@ -20,6 +20,11 @@ use std::sync::Arc;
 use super::common::{native_verify_enabled, native_write_enabled};
 
 /// POST /api/deploy
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    reason = "baseline, zackees/ci.yml#229"
+)]
 pub async fn deploy(
     State(ctx): State<Arc<DaemonContext>>,
     Json(req): Json<DeployRequest>,
@@ -457,7 +462,7 @@ pub async fn deploy(
     // Deploy
     let deploy_env = env_name.clone();
     let deploy_project = project_dir.clone();
-    let deploy_port = deploy_port_str.clone();
+    let mut deploy_port = deploy_port_str.clone();
     let deploy_fw = firmware_path.clone();
     let baud_override = req.baud_rate;
     let no_probe_rs = req.no_probe_rs;
@@ -506,6 +511,10 @@ pub async fn deploy(
         // returns to record or invalidate the daemon's trusted-hash
         // cache. Other platforms leave it `None`.
         let mut trusted_hash_update: Option<([u8; 32], String)> = None;
+        // Set by the Espressif32 arm when a TinyUSB bootloader touch moved
+        // flashing to a different ROM port: the app comes back on the
+        // requested runtime port, so report that one for monitoring.
+        let mut runtime_port_override: Option<String> = None;
         let deployer: Box<dyn fbuild_deploy::Deployer> = match platform {
             fbuild_core::Platform::Espressif32 => {
                 let board_config = fbuild_config::BoardConfig::from_board_id_or_default(
@@ -666,6 +675,18 @@ pub async fn deploy(
                 // Falls through to the normal flash path silently on
                 // mismatch or transport error so we never break a deploy
                 // that the verify call didn't understand.
+                // ESP32-S2/S3 TinyUSB CDC apps need a 1200-bps touch to
+                // reach ROM download mode, and may re-enumerate at a new
+                // path; verify and write use the result. The trusted-hash
+                // cache stays keyed to the requested (runtime) port.
+                let trust_port = deploy_port.clone();
+                if let Some(port) = deploy_port.as_deref() {
+                    let resolved = deployer.enter_download_mode(port).await?;
+                    if resolved != port {
+                        runtime_port_override = Some(port.to_string());
+                    }
+                    deploy_port = Some(resolved);
+                }
                 let mut selective_regions: Option<Vec<fbuild_deploy::esp32::FlashRegion>> = None;
                 if let Some(port) = deploy_port.as_deref() {
                     match deployer.try_verify_deployment(&deploy_fw, port).await {
@@ -729,23 +750,26 @@ pub async fn deploy(
                     // Record/invalidate the trusted hash based on
                     // the selective-flash outcome so the next warm
                     // redeploy can short-circuit via trust-skip.
-                    if let Some(hash) = image_hash {
+                    if let (Some(hash), Some(trust_port)) = (image_hash, trust_port.as_deref()) {
                         match &result {
                             Ok(r) if r.success => {
                                 ctx_for_deploy
                                     .device_manager
-                                    .set_trusted_firmware_hash(port, hash);
+                                    .set_trusted_firmware_hash(trust_port, hash);
                             }
                             _ => {
                                 ctx_for_deploy
                                     .device_manager
-                                    .clear_trusted_firmware_hash(port);
+                                    .clear_trusted_firmware_hash(trust_port);
                             }
                         }
                     }
                     // Selective flash did write to flash — return the
                     // deployer so post-deploy recovery runs.
-                    return result.map(|r| {
+                    return result.map(|mut r| {
+                        if let Some(runtime) = runtime_port_override {
+                            r.port = Some(runtime);
+                        }
                         let boxed: Box<dyn fbuild_deploy::Deployer> = Box::new(deployer);
                         (Some(boxed), r)
                     });
@@ -760,9 +784,77 @@ pub async fn deploy(
                 // Stored here so the common tail after the `match`
                 // can reach it without re-threading every arm.
                 // (AVR / other arms leave it `None` → no-op.)
-                trusted_hash_update = image_hash.zip(deploy_port.as_deref().map(str::to_string));
+                trusted_hash_update = image_hash.zip(trust_port);
 
                 Box::new(deployer)
+            }
+            fbuild_core::Platform::Espressif8266 => {
+                // FastLED/fbuild#1657: the ESP8266 build emits one image
+                // (`esptool --chip esp8266 elf2image`, no bootloader or
+                // partition table) that is written at 0x0. esptool and the
+                // NodeMCU/D1 auto-reset are the same as ESP32's, so this is
+                // the ESP32 deployer with a single region. The native espflash
+                // writer is not enabled: espflash does not support ESP8266.
+                let board_config = fbuild_config::BoardConfig::from_board_id_or_default(
+                    &board_id,
+                    "nodemcuv2",
+                    &deploy_board_overrides,
+                    Some(deploy_project.as_path()),
+                );
+                let esptool = fbuild_build::esp8266::mcu_config::get_esp8266_config()?.esptool;
+                let esptool_params = fbuild_deploy::esp32::EsptoolParams {
+                    flash_mode: board_config
+                        .flash_mode
+                        .clone()
+                        .unwrap_or_else(|| esptool.default_flash_mode.clone()),
+                    flash_freq: fbuild_build::esp32::esp32_linker::f_flash_to_esptool_freq(
+                        board_config.f_flash.as_deref(),
+                        &esptool.default_flash_freq,
+                    ),
+                    flash_size: fbuild_build::esp32::mcu_config::bytes_to_flash_size(
+                        board_config.max_flash,
+                        &esptool.default_flash_size,
+                    )
+                    .to_string(),
+                    default_baud: esptool.default_baud.to_string(),
+                    before_reset: "default-reset".to_string(),
+                    after_reset: "hard-reset".to_string(),
+                };
+                let baud = baud_override.map(|b| b.to_string()).unwrap_or_else(|| {
+                    board_config
+                        .upload_speed
+                        .clone()
+                        .unwrap_or_else(|| esptool_params.default_baud.clone())
+                });
+                // The standalone `tool-esptoolpy` that ESP32 deploys use also
+                // flashes ESP8266. It comes from the default pioarduino platform,
+                // not the project's `espressif8266` one, hence no env config.
+                // `FBUILD_ESPTOOL_PATH` still wins; with neither, esptool is
+                // spawned by name on the requesting CLI's PATH (#1234).
+                let esptool_path = fbuild_build::esp32::orchestrator::resolve_deploy_esptool(
+                    &deploy_project,
+                    None,
+                )
+                .await
+                .unwrap_or_else(|e| {
+                    tracing::warn!(
+                        "could not provision esptool for ESP8266 ({e}); using `esptool` on PATH"
+                    );
+                    None
+                });
+                Box::new(
+                    fbuild_deploy::esp32::Esp32Deployer::new(
+                        &esptool.chip,
+                        &baud,
+                        "0x0",
+                        "0x0",
+                        "0x0",
+                        &esptool_params,
+                        false,
+                    )
+                    .with_esptool_path(esptool_path)
+                    .with_caller_path(deploy_caller_path.clone()),
+                )
             }
             fbuild_core::Platform::AtmelAvr | fbuild_core::Platform::AtmelMegaAvr => {
                 let board_config = fbuild_config::BoardConfig::from_board_id_or_default(
@@ -893,7 +985,12 @@ pub async fn deploy(
         }
         // Return the deployer so the async caller can invoke
         // `post_deploy_recovery` after `clear_preemption().await` (#605).
-        result.map(|r| (Some(deployer), r))
+        result.map(|mut r| {
+            if let Some(runtime) = runtime_port_override {
+                r.port = Some(runtime);
+            }
+            (Some(deployer), r)
+        })
     };
     let deploy_result: fbuild_core::Result<(
         Option<Box<dyn fbuild_deploy::Deployer>>,

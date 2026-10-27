@@ -7,31 +7,33 @@ use std::path::{Path, PathBuf};
 
 pub(crate) async fn find_node() -> fbuild_core::Result<PathBuf> {
     let node = fbuild_core::platform::executable::name("node", "node.exe");
-    // Route through fbuild-core's `run_command` so the probe spawn is
-    // captured by the daemon's containment group (issue #32). The probe
-    // is short-lived (`node --version`) but a missing binary should
-    // still bubble up the same way.
-    //
-    // FastLED/fbuild#844: explicit 5 s timeout. `node --version` is a
-    // sub-100ms operation on every supported host — anything longer is a
-    // wedged process node and we want to fall through to the
-    // "not found" error path quickly so the user sees the install
-    // hint instead of a stalled emulator launch.
-    match fbuild_core::subprocess::run_command(
-        &[node, "--version"],
+    // nodejs-wheel exposes a Python launcher on PATH. Spawning that launcher
+    // for emulation means Child::kill stops Python while native Node retains
+    // the output pipes. Ask Node for its own executable so the runner owns
+    // the emulator process directly (#1694). Keep discovery bounded and
+    // contained through the existing subprocess boundary (#32, #844).
+    let executable = match fbuild_core::subprocess::run_command(
+        &[node, "--print", "process.execPath"],
         None,
         None,
         Some(std::time::Duration::from_secs(5)),
     )
     .await
     {
-        Ok(output) if output.success() => Ok(PathBuf::from(node)),
-        _ => Err(fbuild_core::FbuildError::DeployFailed(
+        Ok(output) if output.success() => PathBuf::from(output.stdout.trim()),
+        _ => return Err(fbuild_core::FbuildError::DeployFailed(
             "Node.js is required for headless avr8js emulation but 'node' was not found on PATH. \
              Install Node.js 18+ from https://nodejs.org/"
                 .to_string(),
         )),
+    };
+    if !executable.is_absolute() {
+        return Err(fbuild_core::FbuildError::DeployFailed(format!(
+            "Node.js returned an invalid executable path: {}",
+            executable.display()
+        )));
     }
+    Ok(executable)
 }
 
 /// Env-var that forces `ensure_avr8js_npm` to wipe and reinstall the cache
@@ -77,6 +79,7 @@ pub(crate) enum Avr8jsCachePrep {
 
 /// Inspect `cache_dir`, wipe corrupt/partial installs, and return what was
 /// done. Does NOT run `npm install`.
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 pub(crate) fn prepare_avr8js_cache_for_install(
     cache_dir: &Path,
     force_refresh: bool,

@@ -58,7 +58,8 @@ pub async fn run_bloat_lookup(
         nm.as_deref(),
         cppfilt.as_deref(),
         build_info.as_deref(),
-    )?;
+    )
+    .await?;
 
     let map_path_owned = map
         .map(PathBuf::from)

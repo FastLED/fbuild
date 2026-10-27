@@ -35,9 +35,12 @@ tar = { workspace = true }
 zip = { workspace = true }
 tree-sitter = { workspace = true }
 tree-sitter-cpp = { workspace = true }
-zccache = { git = "https://github.com/zackees/zccache", rev = "b385a7bfb308c2d1456613622ad361eb66d31cdd" }
+zccache = { workspace = true }
 
 [dev-dependencies]
 filetime = { workspace = true }
 fbuild-test-support = { path = "../fbuild-test-support" }
 tokio = { workspace = true, features = ["macros", "rt-multi-thread", "sync"] }
+
+[lints]
+workspace = true

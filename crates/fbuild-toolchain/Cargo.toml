@@ -37,3 +37,6 @@ prost = { workspace = true }
 tempfile = { workspace = true }
 axum = { workspace = true }
 tokio = { workspace = true }
+
+[lints]
+workspace = true

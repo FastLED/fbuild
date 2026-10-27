@@ -1,6 +1,7 @@
 //! ESP8266 platform build support (NodeMCU, Wemos D1, etc.)
 
 mod board_props;
+pub mod elf2bin;
 pub mod esp8266_compiler;
 pub mod esp8266_linker;
 pub mod mcu_config;

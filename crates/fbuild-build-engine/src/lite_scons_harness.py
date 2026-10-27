@@ -278,7 +278,7 @@ class Environment:
             return [str(v) for v in value]
         return [str(value)]
 
-    def _mutate(self, mode, kwargs):
+    def _mutate(self, mode, kwargs):  # noqa: C901
         for scope, value in kwargs.items():
             if scope == "BUILDERS":
                 if isinstance(value, dict):
@@ -391,7 +391,7 @@ class Environment:
         nm = name or callable_obj.__name__
         self._methods[nm] = callable_obj
 
-    def ParseFlagsExtended(self, flag_str):
+    def ParseFlagsExtended(self, flag_str):  # noqa: C901
         """Parse a PlatformIO flag string into per-scope buckets.
 
         Handles both `-Ipath` (joined) and `-I path` (space-separated) forms

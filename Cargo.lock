@@ -92,15 +92,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7f202df86484c868dbad7eaa557ef785d5c66295e41b460ef922eca0723b842c"
 
 [[package]]
-name = "arbitrary"
-version = "1.4.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c3d036a3c4ab069c7b410a2ce876bd74808d2d0888a82667669f8e783a898bf1"
-dependencies = [
- "derive_arbitrary",
-]
-
-[[package]]
 name = "arc-swap"
 version = "1.9.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -830,17 +821,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "derive_arbitrary"
-version = "1.4.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1e567bd82dcff979e4b03460c307b3cdc9e96fde3d73bed1496d2bc75d9dd62a"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn 2.0.117",
-]
-
-[[package]]
 name = "digest"
 version = "0.10.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -988,7 +968,7 @@ checksum = "37909eebbb50d72f9059c3b6d82c0463f2ff062c9e95845c43a6c9c0355411be"
 
 [[package]]
 name = "fbuild-bench-fastled-examples"
-version = "2.5.33"
+version = "2.5.47"
 dependencies = [
  "fbuild-core",
  "fbuild-library-select",
@@ -1002,7 +982,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-build"
-version = "2.5.33"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "blake3",
@@ -1039,7 +1019,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-build-arm"
-version = "2.5.33"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "blake3",
@@ -1073,7 +1053,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-build-engine"
-version = "2.5.33"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "blake3",
@@ -1107,7 +1087,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-build-esp"
-version = "2.5.33"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "blake3",
@@ -1142,7 +1122,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-build-mcu"
-version = "2.5.33"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "blake3",
@@ -1176,7 +1156,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-cli"
-version = "2.5.33"
+version = "2.5.47"
 dependencies = [
  "blake3",
  "clap",
@@ -1208,7 +1188,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-config"
-version = "2.5.33"
+version = "2.5.47"
 dependencies = [
  "fbuild-core",
  "fbuild-paths",
@@ -1223,7 +1203,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-core"
-version = "2.5.33"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "flate2",
@@ -1253,7 +1233,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-daemon"
-version = "2.5.33"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "axum 0.7.9",
@@ -1292,7 +1272,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-deploy"
-version = "2.5.33"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "espflash",
@@ -1320,7 +1300,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-header-scan"
-version = "2.5.33"
+version = "2.5.47"
 dependencies = [
  "criterion",
  "fbuild-paths",
@@ -1331,7 +1311,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-library"
-version = "2.5.33"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "axum 0.7.9",
@@ -1363,7 +1343,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-library-select"
-version = "2.5.33"
+version = "2.5.47"
 dependencies = [
  "bincode",
  "blake3",
@@ -1384,7 +1364,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-packages"
-version = "2.5.33"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "axum 0.7.9",
@@ -1416,7 +1396,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-packages-fetch"
-version = "2.5.33"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "axum 0.7.9",
@@ -1445,7 +1425,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-paths"
-version = "2.5.33"
+version = "2.5.47"
 dependencies = [
  "blake3",
  "fbuild-core",
@@ -1457,7 +1437,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-python"
-version = "2.5.33"
+version = "2.5.47"
 dependencies = [
  "base64",
  "fbuild-core",
@@ -1481,7 +1461,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-serial"
-version = "2.5.33"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "base64",
@@ -1504,7 +1484,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-test-support"
-version = "2.5.33"
+version = "2.5.47"
 dependencies = [
  "fbuild-config",
  "fbuild-core",
@@ -1524,7 +1504,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-toolchain"
-version = "2.5.33"
+version = "2.5.47"
 dependencies = [
  "async-trait",
  "axum 0.7.9",
@@ -1583,6 +1563,7 @@ checksum = "843fba2746e448b37e26a819579957415c8cef339bf08564fe8b7ddbd959573c"
 dependencies = [
  "crc32fast",
  "miniz_oxide",
+ "zlib-rs",
 ]
 
 [[package]]
@@ -2299,9 +2280,9 @@ dependencies = [
 
 [[package]]
 name = "kernal-api"
-version = "0.1.23"
+version = "0.1.26"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "54844116729c2a5c64d5b313d79f839323c044cc01867f7e2bf0f192ac9e6903"
+checksum = "f18d3cbb9bd8f6a590cf9b5a75297c542786fcef93bb3ff7245eb8f8b1b09561"
 dependencies = [
  "blake3",
  "crash-handler",
@@ -2628,6 +2609,18 @@ name = "nix"
 version = "0.30.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "74523f3a35e05aba87a1d978330aef40f67b0304ac79c1c00b294c9830543db6"
+dependencies = [
+ "bitflags 2.11.0",
+ "cfg-if",
+ "cfg_aliases",
+ "libc",
+]
+
+[[package]]
+name = "nix"
+version = "0.31.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cf20d2fde8ff38632c426f1165ed7436270b44f199fc55284c38276f9db47c3d"
 dependencies = [
  "bitflags 2.11.0",
  "cfg-if",
@@ -3430,9 +3423,9 @@ dependencies = [
 
 [[package]]
 name = "running-process"
-version = "4.10.14"
+version = "4.10.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "02f0ff903e7b61396a074648fc6301668492de90aea4b5d09cc914eee9389e9b"
+checksum = "c040ca81d60235a6027ef3115629049829464758e1011500902c8a2355727812"
 dependencies = [
  "anyhow",
  "blake3",
@@ -3461,14 +3454,15 @@ dependencies = [
 
 [[package]]
 name = "running-process-platform-internal"
-version = "4.10.14"
+version = "4.10.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c6e5db04a966dfead09ff660b704c2461a05e8477249b8f10532b41a22219348"
+checksum = "0ef39418f8c71399ea811c5daba36f2325516cc02c3b2169473400411941ed5f"
 dependencies = [
  "blake3",
  "dirs",
  "interprocess",
  "libc",
+ "miniz_oxide",
  "sysinfo",
  "thiserror 2.0.20",
  "tokio",
@@ -3479,9 +3473,9 @@ dependencies = [
 
 [[package]]
 name = "running-process-probe"
-version = "4.10.14"
+version = "4.10.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "42a44810a8ff3d44214a02b2de688a8004cd35fe66c585cde273770d49860a68"
+checksum = "68d60cba7103c84759e85cd98778c44090d01627b1eebbf79c72270c32f772b7"
 dependencies = [
  "crash-handler",
  "framehop",
@@ -3492,6 +3486,7 @@ dependencies = [
  "prost",
  "prost-build",
  "protox",
+ "running-process-platform-internal",
  "thiserror 2.0.20",
  "winapi",
  "windows-sys 0.61.2",
@@ -3499,9 +3494,9 @@ dependencies = [
 
 [[package]]
 name = "running-process-probe-daemon"
-version = "4.10.14"
+version = "4.10.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6276bcbbdb64c0db39e087c2f24fcd02916038550f362bef8a1798506048500d"
+checksum = "1de6766e359cc87de9d22acfee67defd759172c8dfddd6b40c9257e5e3d359b8"
 dependencies = [
  "axum 0.8.9",
  "blake3",
@@ -3518,6 +3513,7 @@ dependencies = [
  "protox",
  "regex",
  "running-process",
+ "running-process-platform-internal",
  "running-process-probe",
  "rusqlite",
  "serde",
@@ -3534,9 +3530,9 @@ dependencies = [
 
 [[package]]
 name = "running-process-protocol"
-version = "4.10.14"
+version = "4.10.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c32daa00db0c79106d3181f1e306efe92a59bd1b0429440bdc5e6debf3cc4345"
+checksum = "c51894dfa970ac24213066f37b33656fd92c7053ef3e94f184b70000d8cf48f7"
 dependencies = [
  "prost",
  "prost-build",
@@ -5090,8 +5086,9 @@ dependencies = [
 
 [[package]]
 name = "zccache"
-version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
+version = "1.15.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c0d1de4b0124890742c3fffe9bd9d3952b76dc336a32ddfd2fdf6bad7dda5305"
 dependencies = [
  "arc-swap",
  "bincode",
@@ -5101,236 +5098,24 @@ dependencies = [
  "flate2",
  "kernal-api",
  "libc",
+ "memchr",
  "prost",
- "rayon",
- "regex",
- "serde",
- "serde_json",
- "tar",
- "tempfile",
- "thiserror 2.0.20",
- "tokio",
- "tracing",
- "typed-path",
- "uuid",
- "windows-sys 0.61.2",
- "zccache-artifact",
- "zccache-audit",
- "zccache-compile-trace",
- "zccache-compiler",
- "zccache-core",
- "zccache-daemon-core",
- "zccache-depgraph",
- "zccache-fingerprint",
- "zccache-fscache",
- "zccache-hash",
- "zccache-ipc",
- "zccache-protocol",
- "zccache-watcher",
-]
-
-[[package]]
-name = "zccache-artifact"
-version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
-dependencies = [
- "bincode",
- "dashmap",
- "kernal-api",
- "prost",
- "rayon",
- "serde",
- "serde_json",
- "tempfile",
- "thiserror 2.0.20",
- "tracing",
- "zccache-core",
- "zccache-hash",
-]
-
-[[package]]
-name = "zccache-audit"
-version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
-dependencies = [
- "serde",
- "serde_json",
- "zccache-core",
-]
-
-[[package]]
-name = "zccache-compile-trace"
-version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
-dependencies = [
- "zccache-audit",
-]
-
-[[package]]
-name = "zccache-compiler"
-version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
-dependencies = [
- "clang",
- "kernal-api",
- "serde_json",
- "thiserror 2.0.20",
- "typed-path",
- "zccache-core",
- "zccache-hash",
-]
-
-[[package]]
-name = "zccache-core"
-version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
-dependencies = [
- "kernal-api",
- "serde",
- "serde_json",
- "thiserror 2.0.20",
- "tracing",
-]
-
-[[package]]
-name = "zccache-daemon-core"
-version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
-dependencies = [
- "arc-swap",
- "bincode",
- "bytes",
- "clang",
- "dashmap",
- "kernal-api",
- "prost",
+ "prost-build",
+ "protoc-bin-vendored",
  "rayon",
  "regex",
  "serde",
  "serde_json",
  "sha2",
+ "tar",
  "tempfile",
  "thiserror 2.0.20",
  "tokio",
  "tracing",
+ "twox-hash",
+ "typed-path",
  "uuid",
- "zccache-artifact",
- "zccache-audit",
- "zccache-compile-trace",
- "zccache-compiler",
- "zccache-core",
- "zccache-depgraph",
- "zccache-fingerprint",
- "zccache-fscache",
- "zccache-hash",
- "zccache-ipc",
- "zccache-protocol",
- "zccache-watcher",
-]
-
-[[package]]
-name = "zccache-depgraph"
-version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
-dependencies = [
- "bincode",
- "dashmap",
- "kernal-api",
- "memchr",
- "rayon",
- "serde",
- "serde_json",
- "thiserror 2.0.20",
- "tracing",
- "uuid",
- "zccache-compiler",
- "zccache-core",
- "zccache-hash",
-]
-
-[[package]]
-name = "zccache-fingerprint"
-version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
-dependencies = [
- "kernal-api",
- "rayon",
- "serde",
- "serde_json",
- "thiserror 2.0.20",
- "tracing",
- "zccache-core",
- "zccache-hash",
-]
-
-[[package]]
-name = "zccache-fscache"
-version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
-dependencies = [
- "bincode",
- "dashmap",
- "kernal-api",
- "rayon",
- "serde",
- "tracing",
- "zccache-core",
- "zccache-hash",
-]
-
-[[package]]
-name = "zccache-hash"
-version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
-dependencies = [
- "kernal-api",
- "serde",
-]
-
-[[package]]
-name = "zccache-ipc"
-version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
-dependencies = [
- "bytes",
- "dashmap",
- "kernal-api",
- "prost",
- "serde",
- "serde_json",
- "thiserror 2.0.20",
- "tokio",
- "tracing",
- "zccache-core",
- "zccache-protocol",
-]
-
-[[package]]
-name = "zccache-protocol"
-version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
-dependencies = [
- "bytes",
- "kernal-api",
- "prost",
- "prost-build",
- "protoc-bin-vendored",
- "serde",
- "thiserror 2.0.20",
- "zccache-core",
- "zccache-depgraph",
-]
-
-[[package]]
-name = "zccache-watcher"
-version = "1.14.14"
-source = "git+https://github.com/zackees/zccache?rev=b385a7bfb308c2d1456613622ad361eb66d31cdd#b385a7bfb308c2d1456613622ad361eb66d31cdd"
-dependencies = [
- "kernal-api",
- "rayon",
- "tracing",
- "zccache-core",
- "zccache-fscache",
+ "windows-sys 0.61.2",
 ]
 
 [[package]]
@@ -5415,20 +5200,24 @@ dependencies = [
 
 [[package]]
 name = "zip"
-version = "2.4.2"
+version = "9.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fabe6324e908f85a1c52063ce7aa26b68dcb7eb6dbc83a2d148403c9bc3eba50"
+checksum = "c2d98561b612a84ae525331a7a094429ef8a5772514ed507ff6db5f54badc971"
 dependencies = [
- "arbitrary",
  "crc32fast",
- "crossbeam-utils",
- "displaydoc",
  "flate2",
  "indexmap",
  "memchr",
- "thiserror 2.0.20",
+ "nix 0.31.3",
+ "typed-path",
  "zopfli",
 ]
+
+[[package]]
+name = "zlib-rs"
+version = "0.6.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b268e58e7c693d7c271f93ffc4ba3b380412554231c85bf61ca7af91042a4112"
 
 [[package]]
 name = "zmij"

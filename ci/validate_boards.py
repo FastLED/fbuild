@@ -360,7 +360,7 @@ def run_external_comparison(output_json: bool = False) -> int:
     return 1 if missing else 0
 
 
-def main() -> int:
+def main() -> int:  # noqa: C901
     # Parse flags
     filter_platforms: set[str] | None = None
     run_external = False

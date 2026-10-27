@@ -2,6 +2,7 @@
 
 import unittest
 import os
+import shlex
 import subprocess
 import tempfile
 import tomllib
@@ -11,13 +12,152 @@ import yaml
 from ci import render_workflows
 
 
+LEVELS = {"none": 0, "read": 1, "write": 2}
+
+
+def _capable(grant, requested):
+    return all(LEVELS[level] <= LEVELS[grant.get(scope, "none")] for scope, level in requested.items())
+
+
+def _callee_name(workflows, job):
+    name = (job.get("uses") or "").rsplit("/", 1)[-1]
+    return name if name in workflows else ""
+
+
+def _caller_grant(workflow, job):
+    return job.get("permissions") or workflow.get("permissions") or {}
+
+
+def called_workflow_failures(workflows):
+    """Permission requests a called workflow makes beyond what its caller grants.
+
+    GitHub enforces this at run startup, so an over-request fails the whole run
+    before any job starts: dylint.yml's merge-queue cache janitor asked for
+    `actions: write` behind callers granting only `contents: read`, which made
+    every release-auto dispatch die with an unexplained `startup_failure`
+    (40425964410).
+    """
+    failures = []
+
+    def visit(name, grant, seen):
+        workflow = workflows[name]
+        declared = workflow.get("permissions") or {}
+        if declared and not _capable(grant, declared):
+            failures.append(f"{name} requests {declared}; caller grants {grant}")
+        if name in seen:
+            return
+        for job_name, job in (workflow.get("jobs") or {}).items():
+            requested = job.get("permissions") or {}
+            if requested and not _capable(grant, requested):
+                failures.append(f"{name}:{job_name} requests {requested}; caller grants {grant}")
+            nested = _callee_name(workflows, job)
+            if nested:
+                visit(nested, requested or declared or grant, seen | {name})
+
+    for name, workflow in workflows.items():
+        for job in (workflow.get("jobs") or {}).values():
+            callee = _callee_name(workflows, job)
+            grant = _caller_grant(workflow, job)
+            if callee and grant:
+                visit(callee, grant, {name})
+    return failures
+
+
 class FractionalWorkflowTests(unittest.TestCase):
-    def test_pr_verifier_enforces_attestation_without_gating_dispatch(self):
+    def test_windows_checks_real_modern_esptool_source_install(self):
+        job = self.load("check-windows.yml")["jobs"]["check"]
+        smoke = next(step for step in job["steps"] if step.get("id") == "modern-esptool")
+        self.assertEqual("windows-latest", job["runs-on"])
+        self.assertEqual("pwsh", smoke["shell"])
+        self.assertNotIn("if", smoke)
+        self.assertFalse(smoke.get("continue-on-error", False))
+        script = smoke["run"]
+        for contract in (
+            "$env:RUNNER_TEMP", "[guid]::NewGuid()", "$env:FBUILD_CACHE_DIR",
+            'SetEnvironmentVariable("FBUILD_ESPTOOL_PATH", $null, "Process")',
+            "https://github.com/pioarduino/platform-espressif32/releases/download/55.03.35/platform-espressif32.zip",
+            "board = esp32-c6-devkitc-1", "framework = arduino",
+            "soldr cargo run -p fbuild-cli --bin fbuild -- install",
+            "--check --json", "$LASTEXITCODE -ne 0", "ConvertFrom-Json",
+            'name -eq "tool-esptoolpy"', 'version -ne "5.1.0"',
+            'status -ne "fetched"', 'status -ne "present"',
+            "https://github.com/pioarduino/esptool/releases/download/v5.1.0/esptool.zip",
+            'Test-Path -LiteralPath $coldTool.install_path -PathType Leaf',
+            '$warmTool.install_path -ne $coldTool.install_path',
+        ):
+            self.assertIn(contract, script)
+        self.assertEqual(2, script.count("soldr cargo run -p fbuild-cli --bin fbuild -- install"))
+        self.assertEqual(2, script.count("$LASTEXITCODE -ne 0"))
+
+    def test_macos_lipo_places_input_before_variadic_architectures(self):
+        job = self.load("release-auto.yml")["jobs"]["macos-release-smoke"]
+        script = next(step["run"] for step in job["steps"] if "lipo " in step.get("run", ""))
+        commands = [shlex.split(line) for line in script.splitlines() if line.strip().startswith("lipo ")]
+        self.assertEqual(2, len(commands))
+        self.assertEqual({"$extension", ".wheel-smoke/bin/fbuild"}, {command[1] for command in commands})
+        for command in commands:
+            # Apple's -verify_arch consumes every remaining argument as an
+            # architecture; putting the input last makes its path an arch.
+            self.assertEqual(["-verify_arch", "$EXPECTED_ARCH"], command[2:])
+
+    def test_windows_checks_real_legacy_esptool_install(self):
+        job = self.load("check-windows.yml")["jobs"]["check"]
+        self.assertEqual("windows-latest", job["runs-on"])
+        steps = job["steps"]
+        smoke = next(step for step in steps if step.get("id") == "legacy-esptool")
+        self.assertEqual("pwsh", smoke["shell"])
+        self.assertNotIn("if", smoke)
+        self.assertFalse(smoke.get("continue-on-error", False))
+        self.assertTrue(any("astral-sh/setup-uv@" in step.get("uses", "") for step in steps[:steps.index(smoke)]))
+        script = smoke["run"]
+        for contract in (
+            "$env:RUNNER_TEMP", "[guid]::NewGuid()", "$env:FBUILD_CACHE_DIR",
+            'SetEnvironmentVariable("FBUILD_ESPTOOL_PATH", $null, "Process")',
+            "platform = espressif32@4.4.0", "board = esp32dev", "framework = arduino",
+            "soldr cargo run -p fbuild-cli --bin fbuild -- install",
+            "--check --json", "$LASTEXITCODE -ne 0", "ConvertFrom-Json",
+            'name -eq "tool-esptoolpy"', 'version -ne "1.30300.0"',
+            'status -ne "fetched"', 'status -ne "present"',
+            'Test-Path -LiteralPath $coldTool.install_path -PathType Leaf',
+            '$warmTool.install_path -ne $coldTool.install_path',
+        ):
+            self.assertIn(contract, script)
+        self.assertEqual(2, script.count("soldr cargo run -p fbuild-cli --bin fbuild -- install"))
+        self.assertNotIn("continue-on-error", script)
+        self.assertNotRegex(script, r"(?im)^\s*&?\s*esptool(?:\.py|\.exe)?\s")
+
+    def test_macos_wheels_use_matching_native_artifacts(self):
+        from ci import publish
+
+        cases = (
+            ("x86_64-apple-darwin", "macosx_10_12_x86_64"),
+            ("aarch64-apple-darwin", "macosx_11_0_arm64"),
+        )
+        for target, tag in cases:
+            with self.subTest(target=target):
+                artifact = f"binaries-{target}"
+                self.assertIn(artifact, publish.ARTIFACT_MAP)
+                subdir = publish.ARTIFACT_MAP[artifact]
+                self.assertEqual([tag], publish.PLATFORMS[subdir])
+
+    def test_pr_verifier_is_advisory_without_gating_dispatch(self):
         config = tomllib.loads((render_workflows.WORKFLOWS_DIR.parents[1] / "local-gate.toml").read_text())
-        self.assertEqual("enforce", config["gate"]["mode"])
+        self.assertEqual("shadow", config["gate"]["mode"])
         steps = self.load("ci-minimal.yml")["jobs"]["verify"]["steps"]
         verifier = next(step for step in steps if "local-gate verify" in step.get("run", ""))
-        self.assertEqual("github.event_name == 'pull_request'", verifier.get("if"))
+        self.assertNotIn("if", verifier)
+        self.assertEqual("${{ github.event_name }}", verifier["env"]["GATE_EVENT"])
+        # Run the generated shell decision itself. A refused attestation must
+        # report a warning on a PR; dispatch does not require one.
+        script = "uvx() { return 7; }\n" + verifier["run"]
+        for event, expected in (("pull_request", 0), ("workflow_dispatch", 0)):
+            with self.subTest(event=event), tempfile.TemporaryFile() as stream:
+                result = subprocess.run(
+                    ["bash", "-e", "-c", script],
+                    env={**os.environ, "GATE_EVENT": event},
+                    stdout=stream, stderr=stream,
+                )
+                self.assertEqual(expected, result.returncode)
 
     def test_ubuntu_build_cache_writers_receive_final_job_status(self):
         jobs = self.load("check-ubuntu.yml")["jobs"]
@@ -35,9 +175,10 @@ class FractionalWorkflowTests(unittest.TestCase):
     def test_local_gate_keeps_required_ubuntu_commands_and_shadow_verification(self):
         minimal = self.load("ci-minimal.yml")["jobs"]
         verifier = minimal["verify"]
+        self.assertTrue(verifier.get("continue-on-error"))
         self.assertTrue(any("local-gate verify" in step.get("run", "") for step in verifier["steps"]))
         for job_id in ("linux", "board_plan", "test", "full", "reuse_decision"):
-            self.assertIn("verify", minimal[job_id]["needs"])
+            self.assertNotIn("verify", minimal[job_id].get("needs", []))
         jobs = self.load("check-ubuntu.yml")["jobs"]
         for job_id, command in (
             ("check", "soldr cargo clippy --workspace --all-targets -- -D warnings"),
@@ -84,6 +225,15 @@ class FractionalWorkflowTests(unittest.TestCase):
         self.assertNotIn("run_full", full["jobs"]["dylint"]["with"])
         dylint = self.load("dylint.yml")
         self.assertEqual(["main"], dylint[True]["push"]["branches"])
+        # GEN-022: the required `Dylint` check must report on merge-queue runs,
+        # and none of its jobs may be skipped there.
+        self.assertIn("merge_group", dylint[True])
+        self.assertEqual("Dylint", dylint["jobs"]["gate"]["name"])
+        self.assertEqual("always()", dylint["jobs"]["gate"]["if"])
+        self.assertNotIn("if", dylint["jobs"]["policy"])
+        dylint_janitor = dylint["jobs"]["queue-cache-janitor"]
+        self.assertEqual(set(dylint["jobs"]) - {"queue-cache-janitor"}, set(dylint_janitor["needs"]))
+        self.assertEqual("always() && github.event_name == 'merge_group'", dylint_janitor["if"])
         setup = next(
             step for step in dylint["jobs"]["dylint"]["steps"]
             if step.get("uses", "").startswith("zackees/setup-soldr@")
@@ -207,7 +357,10 @@ class FractionalWorkflowTests(unittest.TestCase):
         self.assertIn("push", minimal[True])
         self.assertIn("pull_request", minimal[True])
         self.assertEqual(
-            {"verify", "linux", "board_plan", "fbuild_bin", "pr_boards", "reuse_decision", "test", "full", "selected-coverage"},
+            {
+                "cancel-superseded", "verify", "linux", "board_plan", "fbuild_bin", "pr_boards",
+                "reuse_decision", "test", "full", "selected-coverage", "queue-cache-janitor",
+            },
             set(minimal["jobs"]),
         )
         # GEN-021 shadow decision (zackees/ci.yml#162): main pushes only, never
@@ -220,7 +373,24 @@ class FractionalWorkflowTests(unittest.TestCase):
         step_budget = sum(step["timeout-minutes"] for step in reuse["steps"])
         self.assertLess(step_budget, reuse["timeout-minutes"])
         self.assertIn("--mode shadow", reuse["steps"][-1]["run"])
-        self.assertFalse(any("reuse_decision" in str(job.get("needs", "")) for job in minimal["jobs"].values()))
+        # GEN-022's end-of-queue janitor (forge-ci/ci.yml#405) is the one job that
+        # needs it: it must run after every other job of a merge_group run.
+        self.assertFalse(any(
+            "reuse_decision" in str(job.get("needs", ""))
+            for name, job in minimal["jobs"].items() if name != "queue-cache-janitor"
+        ))
+        # GEN-022: queue runs, cancel superseded queue runs (#409), and end with
+        # the cache janitor that needs every other job (#405).
+        self.assertIn("merge_group", minimal[True])
+        cancel = minimal["jobs"]["cancel-superseded"]
+        self.assertNotIn("needs", cancel)
+        self.assertIn("github.event_name == 'merge_group'", cancel["if"])
+        self.assertEqual("write", cancel["permissions"]["actions"])
+        janitor = minimal["jobs"]["queue-cache-janitor"]
+        self.assertEqual(set(minimal["jobs"]) - {"queue-cache-janitor"}, set(janitor["needs"]))
+        self.assertEqual("always() && github.event_name == 'merge_group'", janitor["if"])
+        self.assertEqual({"group": "cache-janitor", "cancel-in-progress": False}, janitor["concurrency"])
+        self.assertIn("cache janitor", janitor["steps"][-1]["run"])
         # Path-selected boards run only on the default PR tier.
         plan_if = minimal["jobs"]["board_plan"]["if"]
         self.assertIn("pull_request", plan_if)
@@ -375,6 +545,10 @@ class FractionalWorkflowTests(unittest.TestCase):
             release["jobs"]["publish-pypi"]["permissions"],
         )
 
+    def test_called_workflows_fit_inside_their_callers_grant(self):
+        workflows = {path.name: self.load(path.name) for path in render_workflows.WORKFLOWS_DIR.glob("*.yml")}
+        failures = called_workflow_failures(workflows)
+        self.assertEqual([], failures, "\n".join(failures))
 
 if __name__ == "__main__":
     unittest.main()

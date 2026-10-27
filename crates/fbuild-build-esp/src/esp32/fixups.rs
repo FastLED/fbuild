@@ -20,21 +20,32 @@ type Rule = fn(Esp32McuConfig) -> Esp32McuConfig;
 
 /// Adapt the recipe to the selected toolchain package.
 ///
-/// - GCC < 14: the paired SDKs (pioarduino 51.x/53.x, Arduino 3.0/3.1) do not
-///   define `__dso_handle` for `-fuse-cxa-atexit`-generated references, on
-///   Xtensa and RISC-V alike.
+/// - GCC < 14, and ESP32-C2/H2 with GCC 14: the paired SDKs do not define
+///   `__dso_handle` for `-fuse-cxa-atexit`-generated references.
 /// - Per-MCU Xtensa packages (GCC 8 and 12) reject the atomics switch.
 /// - Per-MCU Xtensa GCC 8 (official `espressif32` 6.x/7.x) needs its own
 ///   linker recipe, older language standards, and no LTO.
 pub fn for_toolchain(config: Esp32McuConfig, toolchain: &PackageInfo) -> Esp32McuConfig {
-    let per_mcu_xtensa = is_per_mcu_xtensa(&toolchain.name);
-    let config = apply_if(is_before_gcc14(&toolchain.version), config, drop_cxa_atexit);
+    let legacy_xtensa32 = toolchain.name == "toolchain-xtensa32";
+    let per_mcu_xtensa = is_per_mcu_xtensa(&toolchain.name) || legacy_xtensa32;
+    let lacks_dso_handle = matches!(config.mcu.as_str(), "esp32c2" | "esp32h2");
+    let config = apply_if(
+        is_before_gcc14(&toolchain.version) || lacks_dso_handle,
+        config,
+        drop_cxa_atexit,
+    );
     let config = apply_if(per_mcu_xtensa, config, drop_hardware_atomics);
-    apply_if(
-        per_mcu_xtensa && is_gcc8(&toolchain.version),
+    let config = apply_if(
+        (per_mcu_xtensa && is_gcc8(&toolchain.version)) || legacy_xtensa32,
         config,
         legacy_gcc8,
-    )
+    );
+    apply_if(legacy_xtensa32, config, legacy_gcc5)
+}
+
+/// GCC 5 in the official legacy ESP32 package predates `-fmacro-prefix-map`.
+pub fn supports_macro_prefix_map(toolchain: &PackageInfo) -> bool {
+    toolchain.name != "toolchain-xtensa32"
 }
 
 /// Drop LTO when the SDK links with `-fno-lto`: objects compiled with LTO
@@ -79,7 +90,44 @@ fn drop_hardware_atomics(mut config: Esp32McuConfig) -> Esp32McuConfig {
 }
 
 fn legacy_gcc8(config: Esp32McuConfig) -> Esp32McuConfig {
-    without_lto(gcc8_language_standards(gcc8_linker_recipe(config)))
+    let mut config = gcc8_linker_recipe(config);
+    config.linker_flags = without(config.linker_flags, "-Wl,--no-warn-rwx-segments");
+    config.linker_flags = without(config.linker_flags, "-Wl,--wrap=log_printf");
+    without_lto(gcc8_language_standards(config))
+}
+
+fn legacy_gcc5(mut config: Esp32McuConfig) -> Esp32McuConfig {
+    config.compiler_flags.cxx = replaced(config.compiler_flags.cxx, "-std=gnu++11", "-std=gnu++1z");
+    config.linker_flags = [
+        "-nostdlib",
+        "-Wl,-static",
+        "-u",
+        "call_user_start_cpu0",
+        "-Wl,--undefined=uxTopUsedPriority",
+        "-Wl,--gc-sections",
+        "-Wl,-EL",
+        "-u",
+        "ld_include_panic_highint_hdl",
+        "-u",
+        "__cxa_guard_dummy",
+        "-u",
+        "__cxx_fatal_exception",
+    ]
+    .into_iter()
+    .map(str::to_string)
+    .collect();
+    config.linker_scripts = [
+        "esp32_out.ld",
+        "esp32.common.ld",
+        "esp32.rom.ld",
+        "esp32.peripherals.ld",
+        "esp32.rom.libgcc.ld",
+        "esp32.rom.spiram_incompatible_fns.ld",
+    ]
+    .into_iter()
+    .map(str::to_string)
+    .collect();
+    config
 }
 
 /// Swap in the MCU's `legacy_gcc8` linker flags and scripts, if it has them.
@@ -212,6 +260,20 @@ mod tests {
     }
 
     #[test]
+    fn esp32c2_h2_sdk_drops_cxa_atexit_on_gcc14() {
+        for mcu in ["esp32c2", "esp32h2"] {
+            let config = for_toolchain(
+                get_mcu_config(mcu).unwrap(),
+                &toolchain("toolchain-riscv32-esp", "14.2.0+20241119"),
+            );
+            assert!(
+                !has(&config.compiler_flags.cxx, "-fuse-cxa-atexit"),
+                "{mcu} kept -fuse-cxa-atexit without __dso_handle"
+            );
+        }
+    }
+
+    #[test]
     fn unparseable_version_keeps_recipe() {
         // pioarduino 55.x URL toolchain: version is not a bare GCC version.
         let base = get_mcu_config("esp32c6").unwrap();
@@ -234,8 +296,34 @@ mod tests {
         assert!(!has(&config.compiler_flags.cxx, "-std=gnu++2b"));
         assert!(has(&config.linker_flags, "-fno-lto"));
         assert!(!has(&config.linker_flags, "-Wl,--no-warn-rwx-segments"));
+        assert!(!has(&config.linker_flags, "-Wl,--wrap=log_printf"));
         assert!(has(&config.linker_scripts, "esp32s3.rom.newlib-time.ld"));
         assert!(!has_lto(&config));
+    }
+
+    #[test]
+    fn platformio_esp32_gcc8_omits_unsupported_linker_option() {
+        let config = for_toolchain(
+            get_mcu_config("esp32").unwrap(),
+            &toolchain("toolchain-xtensa-esp32", "8.4.0+2021r2-patch3"),
+        );
+        assert!(!has(&config.linker_flags, "-Wl,--no-warn-rwx-segments"));
+    }
+
+    #[test]
+    fn platformio_legacy_xtensa32_uses_supported_flags() {
+        let package = toolchain("toolchain-xtensa32", "2.50200.97");
+        let config = for_toolchain(get_mcu_config("esp32").unwrap(), &package);
+        assert!(!has(
+            &config.compiler_flags.common,
+            "-mdisable-hardware-atomics"
+        ));
+        assert!(has(&config.compiler_flags.cxx, "-std=gnu++1z"));
+        assert!(!has(&config.compiler_flags.cxx, "-std=gnu++2b"));
+        assert!(!has_lto(&config));
+        assert!(!supports_macro_prefix_map(&package));
+        assert!(has(&config.linker_flags, "call_user_start_cpu0"));
+        assert!(!has(&config.linker_flags, "-Wl,--no-warn-rwx-segments"));
     }
 
     #[test]

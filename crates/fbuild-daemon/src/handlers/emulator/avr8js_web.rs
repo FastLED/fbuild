@@ -47,6 +47,7 @@ pub(crate) fn now_unix() -> f64 {
         .as_secs_f64()
 }
 
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub(crate) fn render_page(session_id: &str) -> String {
     format!(
         r#"<!doctype html>

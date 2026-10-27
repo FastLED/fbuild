@@ -514,6 +514,7 @@ impl Drop for EnvVarGuard {
 /// after first run, but still adds 30s+ to first invocation).
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads AVR toolchain + Arduino-AVR core; exercises tar-extract cache path"]
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 async fn cache_survives_tar_extract_uno() {
     let _env = crate::ENV_LOCK.lock().await;
     install_test_compile_backend().await;

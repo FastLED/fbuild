@@ -28,7 +28,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout source
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           ref: ${{ inputs.ref }}
@@ -39,7 +40,8 @@ jobs:
         run: |
           [[ "$CANDIDATE_SHA" =~ ^[0-9a-f]{40}$ ]]
           test "$(git rev-parse HEAD)" = "$CANDIDATE_SHA"
-      - uses: astral-sh/setup-uv@v3
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v3
         with:
           python-version: "3.12"
       # Workspace tests also link the embedded-Python test target, even
@@ -54,7 +56,7 @@ jobs:
           echo "PYTHONHOME=$PYTHONHOME" >> "$GITHUB_ENV"
       - name: Setup soldr
         id: setup-soldr
-        uses: zackees/setup-soldr@d17a58eb2cea17a89af0824fb7c6b24ee68f5083 # setup-soldr#565 exact-main promotion canary
+        uses: zackees/setup-soldr@6bf04d4196ee26fe9d51550187013a7f32955e20 # setup-soldr#582 exact-main promotion canary
         with:
           # Own build-cache store (setup-soldr#237): with no suffix this job
           # shared one Cargo.lock-keyed entry with ~10 other workflows, and
@@ -92,6 +94,8 @@ jobs:
       # Both guards are stdlib-only. `--no-project` skips building the fbuild
       # package, whose soldr build backend is pinned older than the broker
       # setup-soldr started, and the mismatched daemon refused every compile.
+      - name: Check tracked Python complexity ratchet
+        run: uv run --no-project python ci/check_python_complexity.py
       - name: Lint subprocess spawns
         run: uv run --no-project python ci/find_direct_subprocess.py --fail
       - name: Guard production USB VID/PID catalogue literals
@@ -99,6 +103,14 @@ jobs:
       - name: Test
         id: tests
         run: uv run --no-project python ci/test_cache_status.py -- soldr cargo test --workspace
+      - name: Test optional SDK library linkage with native GCC LTO
+        run: |
+          soldr cargo test -p fbuild-build-engine --lib optional_framework_archive_preserves_only_referenced_initializers -- --ignored
+          soldr cargo test -p fbuild-build-arm --lib optional_library_rescans_earlier_dependency_archive -- --ignored
+      - name: Test GNU linker overflow summaries
+        run: soldr cargo test -p fbuild-build --test it link_overflow::failed_link_reports_each_actual_region_capacity -- --ignored --nocapture
+      - name: Test large library archive
+        run: soldr cargo test -p fbuild-library large_archive_handles_windows_command_limit_and_quoted_paths -- --ignored --nocapture
 
   python-facade-tests:
     # FastLED/fbuild#1485 §5.2/§6: the embedded-CPython AT-P integration
@@ -111,7 +123,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout source
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           ref: ${{ inputs.ref }}
@@ -122,11 +135,12 @@ jobs:
         run: |
           [[ "$CANDIDATE_SHA" =~ ^[0-9a-f]{40}$ ]]
           test "$(git rev-parse HEAD)" = "$CANDIDATE_SHA"
-      - uses: astral-sh/setup-uv@v3
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v3
         with:
           python-version: "3.10"
       - name: Setup soldr
-        uses: zackees/setup-soldr@d17a58eb2cea17a89af0824fb7c6b24ee68f5083 # setup-soldr#565 exact-main promotion canary
+        uses: zackees/setup-soldr@6bf04d4196ee26fe9d51550187013a7f32955e20 # setup-soldr#582 exact-main promotion canary
         with:
           cache-key-suffix: python-facades
           job-status: ${{ job.status }}

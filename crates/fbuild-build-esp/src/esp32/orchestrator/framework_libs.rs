@@ -202,6 +202,7 @@ impl FwLibsPlan {
 
     /// Evict (`clean_all`) / hydrate the cache, then classify each selected
     /// library in order: skipped, already archived, or to compile.
+    #[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
     pub(super) fn new(
         ctx: FwLibsContext,
         selected_libraries: &[fbuild_packages::library::FrameworkLibrary],
@@ -352,6 +353,7 @@ impl FwLibsPlan {
     /// selected. Failures are recorded (failure marker + cache) and skipped:
     /// some framework libraries do not build for every chip, and the linker
     /// reports any symbol that was actually needed.
+    #[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
     pub(super) fn finish(
         self,
         compiled: FwLibsCompiled,

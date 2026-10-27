@@ -99,6 +99,7 @@ impl MonitorState {
         self.expect_found
     }
 
+    #[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
     pub(crate) fn process_line(&mut self, line: &str) -> Option<MonitorOutcome> {
         if self.show_timestamp {
             let total_secs = self.start.elapsed().as_secs_f64();
@@ -247,6 +248,7 @@ const MONITOR_DEFAULT_HARD_DEADLINE_SECS: f64 = 300.0;
 const SERIAL_OPEN_PORT_TIMEOUT_SECS: u64 = 30;
 
 /// POST /api/monitor
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub async fn monitor(
     State(ctx): State<Arc<DaemonContext>>,
     Json(req): Json<MonitorRequest>,
@@ -282,15 +284,24 @@ pub async fn monitor(
                 StatusCode::GATEWAY_TIMEOUT,
                 Json(OperationResponse::fail(
                     request_id,
-                    match fbuild_serial::port_holders::describe_port_holders(&port).await {
-                        Some(holder) => format!(
-                            "open_port({}) exceeded {}s — {} (timeout cause unknown)",
+                    if let Some(holder) =
+                        crate::handlers::locks::dead_client_holder(&ctx.serial_manager, &port)
+                    {
+                        format!(
+                            "open_port({}) exceeded {}s — {}",
                             port, SERIAL_OPEN_PORT_TIMEOUT_SECS, holder
-                        ),
-                        None => format!(
-                            "open_port({}) exceeded {}s — serial driver may be wedged",
-                            port, SERIAL_OPEN_PORT_TIMEOUT_SECS
-                        ),
+                        )
+                    } else {
+                        match fbuild_serial::port_holders::describe_port_holders(&port).await {
+                            Some(holder) => format!(
+                                "open_port({}) exceeded {}s — {} (timeout cause unknown)",
+                                port, SERIAL_OPEN_PORT_TIMEOUT_SECS, holder
+                            ),
+                            None => format!(
+                                "open_port({}) exceeded {}s — serial driver may be wedged",
+                                port, SERIAL_OPEN_PORT_TIMEOUT_SECS
+                            ),
+                        }
                     },
                 )),
             );

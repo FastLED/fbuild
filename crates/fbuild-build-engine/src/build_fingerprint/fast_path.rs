@@ -318,6 +318,7 @@ pub fn fast_path_check(
 
 /// Persist the fingerprint after a successful full build and mark the
 /// zccache watch roots successful when available.
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 pub fn persist_fast_path_success(contract: &FastPathContract, inputs: &FastPathPersistInputs<'_>) {
     let persisted_fingerprint = PersistedBuildFingerprint {
         version: BUILD_FINGERPRINT_VERSION,

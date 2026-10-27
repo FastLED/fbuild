@@ -3,4 +3,5 @@
 //! graph separately, so these modules share one link instead.
 
 mod perf_tdd;
+mod pico_sd_diag;
 mod teensy41_ldf_diag;

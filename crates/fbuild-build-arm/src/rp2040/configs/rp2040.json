@@ -56,6 +56,8 @@
   },
 
   "defines": [
-    ["ARDUINO", "10808"]
+    ["ARDUINO", "10808"],
+    ["USBD_VID", "USB_VID"],
+    ["USBD_PID", "USB_PID"]
   ]
 }

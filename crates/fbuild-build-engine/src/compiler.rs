@@ -562,6 +562,11 @@ pub fn build_cpp_flags(common_flags: Vec<String>, config: &dyn McuConfig) -> Vec
 ///   and `extra_flags` (ESP32 uses this for include flags deferred
 ///   from `common_flags`).
 #[allow(clippy::too_many_arguments)]
+#[expect(
+    clippy::cognitive_complexity,
+    clippy::too_many_lines,
+    reason = "baseline, zackees/ci.yml#229"
+)]
 pub async fn compile_source(
     compiler: &Path,
     source: &Path,
@@ -586,6 +591,9 @@ pub async fn compile_source(
     let output_buf = absolute_from_cwd(output);
     let source = source_buf.as_path();
     let output = output_buf.as_path();
+    for path in [compiler, source, output] {
+        fbuild_paths::long_paths::validate_legacy_path(path)?;
+    }
 
     if let Some(parent) = output.parent() {
         std::fs::create_dir_all(parent)?;

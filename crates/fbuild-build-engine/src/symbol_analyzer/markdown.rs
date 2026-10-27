@@ -6,6 +6,7 @@
 //! `SidecarOptions`) is re-exported from the parent module for
 //! back-compat.
 
+use std::fmt::Write as _;
 use std::path::Path;
 
 use fbuild_core::symbol_analysis::graph::{Direction, rank_callees_dual, rank_callers_dual};
@@ -193,13 +194,11 @@ fn emit_backref_graph_section(
     let _ = writeln!(
         out,
         "## Top {limit} symbol graphs\n\n\
-         For each symbol below: a bidirectional `dot` block (callers on \
-         the back-edge side, callees on the forward-edge side), plus a \
-         dual-ranked \"Top callees\" sub-table. The forward edges come \
-         from per-symbol `references_to` (objdump-derived), so the AI \
-         can tell what `ClocklessIdf5` actually calls vs. what its \
-         sibling symbols call. See fbuild #463 (backref walker) + \
-         #471 (forward edges)."
+         For each symbol below: a bidirectional `dot` block with incoming \
+         and outgoing references. Typed analysis distinguishes instruction \
+         references, static pointers and fragment ownership using exact \
+         addresses. Legacy reports retain their caller/callee tables. \
+         An instruction reference does not necessarily represent a call."
     );
     let _ = writeln!(out);
     let index = TuIndex::build(map);
@@ -228,19 +227,27 @@ fn emit_backref_graph_section(
         let _ = writeln!(out, "- **Referenced by**: {} TUs", s.referenced_by.len());
         let _ = writeln!(
             out,
-            "- **References (calls)**: {} symbols",
+            "- **Instruction references**: {} symbols",
             s.references_to.len()
         );
         let _ = writeln!(out);
 
-        emit_dual_callers_subtable(out, map, s);
-        emit_dual_callees_subtable(out, map, s);
+        if map.reference_analysis.disassembly.status
+            == fbuild_core::symbol_analysis::AnalysisStatus::Analyzed
+            || map.reference_analysis.static_data.status
+                == fbuild_core::symbol_analysis::AnalysisStatus::Analyzed
+        {
+            emit_typed_references(out, &index, s);
+        } else {
+            emit_dual_callers_subtable(out, map, s);
+            emit_dual_callees_subtable(out, map, s);
+        }
 
-        let graph = BackrefGraph::build_with_index(map, &index, &s.mangled, &bidir_cfg);
+        let graph = BackrefGraph::build_for_symbol_with_index(map, &index, s, &bidir_cfg);
         let _ = writeln!(out, "<details>");
         let _ = writeln!(
             out,
-            "<summary>Bidirectional graph (callers ← root → callees, Graphviz)</summary>"
+            "<summary>Bidirectional reference graph (incoming ← root → outgoing, Graphviz)</summary>"
         );
         let _ = writeln!(out);
         let _ = writeln!(out, "```dot");
@@ -456,7 +463,7 @@ pub fn write_sidecar_dot_files(
         let rank = i + 1;
         let stem = sanitize_filename(&s.demangled);
         let path = graphs_dir.join(format!("{rank:04}_{stem}.dot"));
-        let graph = BackrefGraph::build_with_index(map, &index, &s.mangled, &options.config);
+        let graph = BackrefGraph::build_for_symbol_with_index(map, &index, s, &options.config);
         let dot = graph.to_dot();
         if let Err(e) = std::fs::write(&path, dot) {
             tracing::warn!(
@@ -502,4 +509,60 @@ fn format_referenced_by(
     }
     // Pipe-escape so the joined string doesn't break MD table cells.
     parts.join(", ").replace('|', "\\|")
+}
+
+fn emit_typed_references(
+    out: &mut String,
+    index: &fbuild_core::symbol_analysis::TuIndex<'_>,
+    symbol: &fbuild_core::symbol_analysis::FineGrainedSymbol,
+) {
+    let identity = fbuild_core::symbol_analysis::SymbolIdentity::from(symbol);
+    for (title, edges, incoming) in [
+        ("Incoming references", index.incoming(&identity), true),
+        ("Outgoing references", index.outgoing(&identity), false),
+    ] {
+        if edges.is_empty() {
+            continue;
+        }
+        let _ = writeln!(
+            out,
+            "\n#### {title}\n\n| Symbol | Address | Bytes | Evidence |\n|---|---:|---:|---|"
+        );
+        let mut ranked = edges.to_vec();
+        ranked.sort_by_key(|edge| {
+            std::cmp::Reverse(
+                index
+                    .symbol(if incoming { &edge.source } else { &edge.target })
+                    .map_or(0, |s| s.size),
+            )
+        });
+        for edge in ranked.iter().take(3) {
+            let endpoint = if incoming { &edge.source } else { &edge.target };
+            let resolved = index.symbol(endpoint);
+            let label = resolved
+                .map_or(endpoint.name.as_str(), |s| s.demangled.as_str())
+                .replace('|', "\\|");
+            let kind = match edge.kind {
+                fbuild_core::symbol_analysis::ReferenceKind::Disassembly => "instruction reference",
+                fbuild_core::symbol_analysis::ReferenceKind::StaticData => "static pointer",
+                fbuild_core::symbol_analysis::ReferenceKind::FragmentOwner => "fragment owner",
+            };
+            let offset = edge
+                .offset
+                .map_or(String::new(), |offset| format!(" + 0x{offset:x}"));
+            let _ = writeln!(
+                out,
+                "| `{label}` | 0x{:x} | {} | {kind}{offset} |",
+                endpoint.address,
+                resolved.map_or(0, |s| s.size)
+            );
+        }
+        if edges.len() > 3 {
+            let _ = writeln!(
+                out,
+                "\n{} additional references in the JSON report.\n",
+                edges.len() - 3
+            );
+        }
+    }
 }

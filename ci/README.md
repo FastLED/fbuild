@@ -2,14 +2,39 @@
 
 Python scripts for CI, packaging, and development tooling. All invoked via `uv run`.
 
-`local_gate.py` runs both required Ubuntu jobs through bosn's pinned act2
-engine and checks clean source identity, native Linux x64 execution and both
-job verdicts. Install bosn 0.1.11 or newer for the stock runner tools.
-`local-gate.toml` enforces PR attestations. The local gate uses the existing
-workflow-dispatch event to run these same jobs before stamping the tree;
-PR verification is confined to PR events. Board builds, extended/full
+`local_gate.py` has separate `--lane linux-minimal` and `--lane dylint` entrypoints.
+The first runs both required Ubuntu jobs through bosn's pinned act2 engine;
+the second replays the entire existing `dylint.yml` workflow with the ordinary
+unlabelled PR event. The default runs both. It checks clean source identity, native Linux x64 execution,
+all three Dylint job verdicts and the completed policy, library and workspace
+steps. The wrapper uses released Bosn >=0.1.22 for the stock runner tools.
+`local-gate.toml` reports optional attestations in shadow mode. The local gate uses the existing
+workflow-dispatch event for the Ubuntu pair and PR/minimal for Dylint before
+stamping the tree. Dispatch Dylint adds cross-target work, so it is not used as
+a substitute for the ordinary PR selection. Library UI fixtures retain their
+existing source-change condition. Shared replay coverage binds every Ubuntu action and command to its literal
+execution name. The advisory verifier runs independently and is not part of the Linux proof. The original Ubuntu
+and Dylint terminal reports are each forwarded unchanged to the pinned shared
+checker. Every concrete job, prerequisite, action and validation command is
+declared. The matching exact-hit guarded library cache save may be skipped;
+validation steps still need executed-success evidence. Dylint retains its
+additional private command checks, and both lanes must pass before stamping. Board builds, extended/full
 mode and other native hosts retain their remote coverage. The migration is
-tracked in [#1635](https://github.com/FastLED/fbuild/issues/1635).
+tracked in [#1635](https://github.com/FastLED/fbuild/issues/1635), with Dylint
+parity and complete cold/warm measurements in [#1643](https://github.com/FastLED/fbuild/issues/1643).
+
+## Optional local proof and repository copies
+
+Bosn freezes source into a separate Git snapshot so concurrent edits cannot change
+what CI tests and workflow Git commands can inspect HEAD and history. Running
+`ci.local_gate` therefore creates an additional repository copy. Respect session
+constraints against copies/worktrees: skip this optional runner when prohibited.
+Do not request a copy exception or stall the work; use hosted CI instead.
+
+Local proof verification is advisory and has no dependency edge to hosted tests,
+board planning, or extended/full selections. Missing proof, verifier failure, or
+runner unavailability must not block those jobs. Their actual test failures still
+fail coverage. This policy is tracked in [#1698](https://github.com/FastLED/fbuild/issues/1698).
 
 ## Contents
 
@@ -39,3 +64,5 @@ tracked in [#1635](https://github.com/FastLED/fbuild/issues/1635).
 - **`hooks/`** -- Claude Code hook scripts (tool guard, lint, readme guard, session lifecycle)
 
 - **`test_cache_status.py`** streams the unchanged Cargo test selection with JSON compiler evidence; only a completed assertion failure enables setup-soldr failure saves. Compiler errors, incomplete logs and cancellation remain blocked.
+
+- **`check_python_complexity.py`** -- Runs configured C901/RUF100 checks on every tracked Python file, including scripts excluded from normal discovery (FastLED/fbuild#1639).

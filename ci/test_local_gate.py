@@ -84,6 +84,15 @@ class RunProofTests(unittest.TestCase):
                 replace(self.proof, jobs=self.proof.jobs[:1]), self.root, self.sha
             )
 
+    def test_advisory_verifier_is_not_part_of_linux_proof(self) -> None:
+        verify_run(self.proof, self.root, self.sha)
+        with self.assertRaises(ValueError):
+            verify_run(
+                replace(self.proof, total=3, completed=3,
+                        jobs=(*self.proof.jobs, JobProof("verify", "completed", "success"))),
+                self.root, self.sha,
+            )
+
     def test_failed_or_skipped_python_suite_fails(self) -> None:
         for verdict in ("failure", "skipped", "cancelled"):
             with self.subTest(verdict=verdict), self.assertRaises(ValueError):

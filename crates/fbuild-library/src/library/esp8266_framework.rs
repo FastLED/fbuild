@@ -204,6 +204,15 @@ impl Esp8266Framework {
         self.get_variants_dir().join(variant_name)
     }
 
+    /// Arduino's second-stage bootloader (`bootloaders/eboot/eboot.elf`),
+    /// written at flash 0x0 ahead of the sketch image.
+    pub fn get_eboot_elf(&self) -> PathBuf {
+        self.resolved_dir()
+            .join("bootloaders")
+            .join("eboot")
+            .join("eboot.elf")
+    }
+
     /// Get path to boards.txt.
     pub fn get_boards_txt(&self) -> PathBuf {
         self.resolved_dir().join("boards.txt")

@@ -220,7 +220,7 @@ def render_fbuild_bin_job(needs: str, condition: str, ref: str) -> str:
         "        with:\n"
         f"          ref: {ref}\n"
         "          persist-credentials: false\n"
-        "      - uses: zackees/setup-soldr@dfbe9627f6cb0226716b61625b99a58949162720\n"
+        "      - uses: zackees/setup-soldr@b782f606a2f3beadc35b9e3bf5b4565e005f52ed # v0.9.86\n"
         "        with:\n"
         "          cache-preset: foundation\n"
         "          prebuild-deps-flags: \"\"\n"
@@ -262,7 +262,6 @@ def render_pr_boards() -> str:
     head = "${{ github.event.pull_request.head.sha }}"
     return (
         "  board_plan:\n"
-        "    needs: verify\n"
         "    name: Select boards for changed paths\n"
         f"    if: {PR_DEFAULT_TIER}\n"
         "    runs-on: ubuntu-latest\n"
@@ -335,7 +334,6 @@ def render_reuse_decision() -> str:
     checkout_t, uv_t, check_t = REUSE_STEP_TIMEOUTS
     return (
         "  reuse_decision:\n"
-        "    needs: verify\n"
         "    name: Verified reuse decision (shadow)\n"
         "    if: github.event_name == 'push' && github.ref == 'refs/heads/main'\n"
         "    runs-on: ubuntu-latest\n"
@@ -370,26 +368,114 @@ def render_reuse_decision() -> str:
     )
 
 
+# GEN-022 (forge-ci/ci.yml#405): the end-of-queue janitor needs ci-lint with
+# the #405 repo-wide LRU budget pass, which CI_LINT_SHA predates.
+QUEUE_JANITOR_CI_LINT_SHA = "953c4e13691b10c1c4f1f9c39fa259fd732c5789"
+QUEUE_JANITOR_NEEDS = (
+    "cancel-superseded", "verify", "linux", "board_plan", "fbuild_bin", "pr_boards",
+    "reuse_decision", "test", "full", "selected-coverage",
+)
+
+
+def render_cancel_superseded() -> str:
+    """GEN-022 / forge-ci/ci.yml#409: cancel older queue runs for the same PR.
+
+    A queue ref carries the base commit (gh-readonly-queue/main/pr-<N>-<sha>),
+    so the concurrency group never pairs a PR's rebuilt queue run with the one
+    it replaced. No `needs:`; only the end-of-queue janitor depends on it, and
+    local-gate.toml exempts it from verify.
+    """
+    return """  cancel-superseded:
+    name: Cancel superseded queue runs
+    if: ${{ !cancelled() && github.event_name == 'merge_group' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: write
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          sparse-checkout: ci/cancel_superseded.py
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+      - name: Cancel
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 ci/cancel_superseded.py
+"""
+
+
+def render_queue_cache_janitor() -> str:
+    """GEN-022 (forge-ci/ci.yml#405): every merge-queue run ends with the janitor.
+
+    It needs every other job and runs on always(), so the repository stays
+    under [cache].budget by ci-lint's LRU order instead of GitHub's; the
+    non-cancelling `cache-janitor` group keeps one sweep at a time.
+    """
+    return (
+        "  queue-cache-janitor:\n"
+        "    name: End-of-queue cache janitor\n"
+        f"    needs: [{', '.join(QUEUE_JANITOR_NEEDS)}]\n"
+        "    if: always() && github.event_name == 'merge_group'\n"
+        "    runs-on: ubuntu-24.04\n"
+        "    timeout-minutes: 5\n"
+        "    concurrency:\n"
+        "      group: cache-janitor\n"
+        "      cancel-in-progress: false\n"
+        "    permissions:\n"
+        "      contents: read\n"
+        "      actions: write\n"
+        "    steps:\n"
+        "      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6\n"
+        "        with:\n"
+        "          persist-credentials: false\n"
+        "          sparse-checkout: ci.toml\n"
+        "          sparse-checkout-cone-mode: false\n"
+        "      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6\n"
+        "        with:\n"
+        "          repository: zackees/ci.yml\n"
+        f"          ref: {QUEUE_JANITOR_CI_LINT_SHA}\n"
+        "          path: .ci-lint\n"
+        "          persist-credentials: false\n"
+        "          sparse-checkout: ci_lint\n"
+        "      - name: Sweep caches\n"
+        "        env:\n"
+        "          GITHUB_TOKEN: ${{ github.token }}\n"
+        "          PYTHONPATH: .ci-lint\n"
+        "        run: python3 -P -m ci_lint cache janitor --repo . --default-branch main\n"
+    )
+
+
 def render_local_gate_verify() -> str:
-    """Enforce PR attestations; dispatch can run the source before it is attested."""
+    """Report optional local proof without gating hosted validation (#1698)."""
     return """  verify:
     name: Verify local gate
+    continue-on-error: true
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout source
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
-          fetch-depth: 2
+          fetch-depth: 0
           persist-credentials: false
-      - uses: astral-sh/setup-uv@v3
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v3
       - name: Verify source-bound local proof
-        if: github.event_name == 'pull_request'
-        run: >-
-          uvx --from git+https://github.com/zackees/ci.yml@9e44971219cd870a2263fa694debc94f57722405
-          ci-lint local-gate verify --repo .
+        env:
+          GATE_EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$GATE_EVENT" = "pull_request" ]; then
+            if ! uvx --from git+https://github.com/zackees/ci.yml@6711e4e418cf9b11de31e30e710b0bb1d9291e5b ci-lint local-gate verify --repo .; then
+              echo "::warning::Optional local proof could not be verified; hosted CI provides validation."
+            fi
+          else
+            echo "Local proof is advisory; hosted CI provides validation"
+          fi
 """
 
 
@@ -435,6 +521,7 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
         "  pull_request:\n"
         "    branches: [main]\n"
         "    types: [opened, labeled, unlabeled, synchronize, reopened]\n"
+        "  merge_group:\n"
         "  workflow_dispatch: {}\n"
     )
     gate = (
@@ -488,9 +575,16 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
         + "    uses: ./.github/workflows/check-macos.yml\n"
         + "    with:\n"
         + f"      ref: {verified_ref}\n"
+        # dylint.yml's merge-queue cache janitor declares `actions: write`.
+        # A called workflow may not request more than its caller grants, so a
+        # missing grant here fails the whole run at startup instead of at the
+        # janitor (release-auto dispatch 40425964410 failed that way).
         + "  dylint:\n"
         + gate
         + "    needs: verify\n"
+        + "    permissions:\n"
+        + "      contents: read\n"
+        + "      actions: write\n"
         + "    uses: ./.github/workflows/dylint.yml\n"
         + "    with:\n"
         + f"      ref: {verified_ref}\n"
@@ -535,10 +629,11 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
         f"  group: {name}-${{{{ github.event_name == 'pull_request' && github.ref || github.run_id }}}}\n"
         "  cancel-in-progress: ${{ github.event_name == 'pull_request' }}\n\n"
         "jobs:\n"
+        + (render_cancel_superseded() if minimal else "")
         + verify
         + "  linux:\n"
         + ("    if: github.event_name != 'pull_request' || (!contains(github.event.pull_request.labels.*.name, 'ci-test') && !contains(github.event.pull_request.labels.*.name, 'ci-full'))\n" if minimal else gate)
-        + "    needs: verify\n"
+        + ("" if minimal else "    needs: verify\n")
         + "    uses: ./.github/workflows/check-ubuntu.yml\n"
         + "    with:\n"
         + ("      ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}\n" if minimal else f"      ref: {verified_ref}\n")
@@ -605,13 +700,11 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
         )
         + (render_pr_boards() + render_reuse_decision() if minimal else "")
         + ("  test:\n"
-           "    needs: verify\n"
            "    if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'ci-test') && !contains(github.event.pull_request.labels.*.name, 'ci-full')\n"
            "    uses: ./.github/workflows/ci-test.yml\n"
            "    with:\n"
            "      candidate_sha: ${{ github.event.pull_request.head.sha }}\n"
            "  full:\n"
-           "    needs: verify\n"
            "    if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'ci-full')\n"
            "    uses: ./.github/workflows/ci-full.yml\n"
            "    with:\n"
@@ -641,6 +734,7 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
            "            # Path-selected boards: skipped when the PR touches none.\n"
            "            case \"$PR_BOARDS\" in success|skipped) ;; *) exit 1 ;; esac\n"
            "          fi\n"
+           + render_queue_cache_janitor()
            if minimal else "")
     )
 
@@ -813,7 +907,7 @@ def write_if_changed(path: Path, new_text: str, check: bool, drift: list[Path], 
         updated.append(path)
 
 
-def main() -> int:
+def main() -> int:  # noqa: C901
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--check", action="store_true", help="exit 1 if committed workflows drift from the SOT")
     args = ap.parse_args()

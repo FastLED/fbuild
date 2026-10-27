@@ -49,3 +49,6 @@ tracing-subscriber = { workspace = true }
 # asyncio behavior (FastLED/fbuild#1485 §5.2). Cargo's per-target feature
 # resolution keeps this out of the normal `cdylib`/`rlib` build.
 pyo3 = { workspace = true, features = ["auto-initialize"] }
+
+[lints]
+workspace = true

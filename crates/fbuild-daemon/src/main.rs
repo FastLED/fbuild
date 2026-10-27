@@ -11,7 +11,8 @@ use axum::routing::{get, post};
 use clap::Parser;
 use fbuild_build::compile_backend::CompileBackend;
 use fbuild_daemon::context::{
-    BroadcastHub, DaemonContext, IDLE_TIMEOUT, STALE_LOCK_CHECK_INTERVAL, self_eviction_timeout,
+    BroadcastHub, DEAD_CLIENT_SERIAL_RECLAIM_INTERVAL, DaemonContext, IDLE_TIMEOUT,
+    STALE_LOCK_CHECK_INTERVAL, self_eviction_timeout,
 };
 use fbuild_daemon::handlers::{
     boards, build_progress, cache, devices, emulator, health, libraries, locks, operations,
@@ -39,6 +40,7 @@ struct Args {
 }
 
 #[tokio::main]
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 async fn main() {
     // FastLED/fbuild#1361 — first statement in the process, ahead of argument
     // parsing, containment setup, the broadcast hub, and the tracing
@@ -52,6 +54,14 @@ async fn main() {
 
     if args.dev {
         unsafe { std::env::set_var("FBUILD_DEV_MODE", "1") };
+    }
+
+    // Resolve Windows fallback roots before cache identity, ownership locks,
+    // endpoint selection, or package managers read any paths. The daemon
+    // never prompts or elevates; interactive repair belongs to the CLI.
+    if let Err(error) = fbuild_paths::long_paths::initialize() {
+        eprintln!("fatal: could not initialize Windows long-path policy: {error}");
+        std::process::exit(1);
     }
 
     // FastLED/fbuild#1285: adopt the dev daemon-identity stamp the spawning
@@ -152,7 +162,10 @@ async fn main() {
     // `another_daemon_is_listening`) instead of paying for full initialization
     // only to fail the bind at the very end. The winner keeps `listener` and
     // serves everyone.
-    let addr = format!("0.0.0.0:{}", port);
+    // Loopback only: every client (CLI, PyO3 bindings) connects to 127.0.0.1,
+    // and a wildcard bind also collides with outgoing sockets bound to other
+    // local addresses on the same port (FastLED/fbuild#1700).
+    let addr = format!("127.0.0.1:{}", port);
     // Clean up a stale PID file from a previous unclean kill so the bind-retry
     // path (kernel TIME_WAIT) and `fbuild daemon list` reflect reality.
     if let Some(stale_pid) = read_stale_daemon_pid().await {
@@ -277,6 +290,10 @@ async fn main() {
         .route_layer(axum::middleware::from_fn_with_state(
             context.clone(),
             fbuild_daemon::shutdown::refuse_new_operations_when_shutting_down,
+        ))
+        .route_layer(axum::middleware::from_fn_with_state(
+            context.clone(),
+            fbuild_daemon::long_paths::operation_policy,
         ));
 
     let app = Router::new()
@@ -446,6 +463,7 @@ async fn main() {
         tokio::spawn(async move {
             let mut daemon_empty_since: Option<std::time::Instant> = None;
             let mut last_lock_cleanup = std::time::Instant::now();
+            let mut last_serial_reclaim = std::time::Instant::now();
             // Periodic reminder of why the daemon is staying alive, so
             // users can see the blocker rather than thinking self-eviction
             // is broken. See FastLED/fbuild#51.
@@ -512,6 +530,14 @@ async fn main() {
                 }
 
                 // --- Periodic stale lock cleanup ---
+                // A port held for a client whose process has exited returns
+                // EBUSY to every other opener (FastLED/fbuild#1429). Checked
+                // often: the next run usually wants the port within seconds.
+                if last_serial_reclaim.elapsed() >= DEAD_CLIENT_SERIAL_RECLAIM_INTERVAL {
+                    last_serial_reclaim = std::time::Instant::now();
+                    fbuild_daemon::handlers::locks::reclaim_dead_client_serial_sessions(&ctx).await;
+                }
+
                 if last_lock_cleanup.elapsed() >= STALE_LOCK_CHECK_INTERVAL {
                     last_lock_cleanup = std::time::Instant::now();
                     let mut cleared = 0usize;
@@ -667,6 +693,7 @@ async fn main() {
 /// `fbuild_core::usb::populate_online_cache_from_paths` helper (its fetch
 /// step does its own parent-dir `create_dir_all`), so we don't touch
 /// `std::fs` from the daemon crate here.
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 fn populate_usb_overlay_best_effort() {
     let dir = fbuild_paths::get_cache_root().join("usb");
     let proto_path = dir.join("usb-vids.proto.zstd");
@@ -780,7 +807,9 @@ async fn bind_listener_with_retry(addr: &str) -> tokio::net::TcpListener {
                 }
                 tracing::warn!(
                     attempt,
-                    "bind to {} failed ({}); no listener present (stale state), retrying in 500ms",
+                    "bind to {} failed ({}); no listener present, so the port is held by \
+                     stale TIME_WAIT state or by another socket (e.g. an outgoing \
+                     connection's ephemeral port; FastLED/fbuild#1700), retrying in 500ms",
                     addr,
                     e
                 );
@@ -794,7 +823,9 @@ async fn bind_listener_with_retry(addr: &str) -> tokio::net::TcpListener {
     }
 
     eprintln!(
-        "failed to bind to {} after 3 attempts: {}",
+        "failed to bind to {} after 3 attempts: {}; nothing is listening there, so \
+         another socket (often an outgoing connection's ephemeral port) holds it; \
+         set FBUILD_DAEMON_PORT to use a different port (FastLED/fbuild#1700)",
         addr,
         last_err
             .map(|e| e.to_string())

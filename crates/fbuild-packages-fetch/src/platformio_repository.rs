@@ -162,7 +162,9 @@ pub async fn resolve_archive_source(
         .await
         .map_err(|error| RepositoryError::Archive(error.to_string()))?;
     let mut hasher = Sha256::new();
-    let mut buffer = [0_u8; 64 * 1024];
+    // Heap, not stack: the buffer is held across `.await`, so an array would
+    // make this future 64 KiB (clippy::large_futures).
+    let mut buffer = vec![0_u8; 64 * 1024];
     loop {
         let read = file
             .read(&mut buffer)

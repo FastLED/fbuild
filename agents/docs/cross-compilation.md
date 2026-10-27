@@ -102,6 +102,20 @@ curl -sL <wheel-url> -o w.whl && python3 -c "import zipfile;zipfile.ZipFile('w.w
 objdump -T x/fbuild/_native.abi3.so | grep -o 'GLIBC_[0-9.]*' | sort -Vu | tail
 ```
 
+## The glibc floor is not a kernel floor
+
+`manylinux_2_17` bounds the **glibc symbols** the binary links, not the
+**kernel** it runs on. manylinux2014 (CentOS 7) ships Linux 3.10, so code that
+reaches newer syscalls must keep a runtime fallback, and calling a syscall
+through `libc::syscall(libc::SYS_…)` to dodge a too-new glibc wrapper does not
+remove that requirement (FastLED/fbuild#1629):
+
+| Syscall / flag | Kernel | glibc wrapper | Fallback rule |
+|---|---|---|---|
+| `memfd_create` | 3.17 | 2.27 | use `SYS_memfd_create`; on `ENOSYS` fall back to a file in the cache dir |
+| `MFD_EXEC` | 6.3 | — | retry without the flag on `EINVAL` |
+| `close_range` | 5.9 | 2.34 | running-process already falls back to closing fds one by one |
+
 ## Pin every toolchain that can float
 
 On 2026-09-03 the 2.5.22 release failed both apple-darwin lanes:

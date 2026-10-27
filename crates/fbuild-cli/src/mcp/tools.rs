@@ -4,6 +4,7 @@ use super::util::uuid_v4;
 use crate::daemon_client::DaemonClient;
 use serde_json::Value;
 
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub(super) async fn execute_tool(
     client: &DaemonClient,
     name: &str,
@@ -99,6 +100,7 @@ pub(super) async fn execute_tool(
 
             let (caller_pid, caller_cwd) = crate::daemon_client::caller_info();
             let req = crate::daemon_client::BuildRequest {
+                build_dir_override: crate::daemon_client::capture_build_root(&project_dir),
                 project_dir,
                 environment,
                 clean_build: clean,
@@ -159,6 +161,7 @@ pub(super) async fn execute_tool(
 
             let (caller_pid, caller_cwd) = crate::daemon_client::caller_info();
             let req = crate::daemon_client::DeployRequest {
+                build_dir_override: crate::daemon_client::capture_build_root(&project_dir),
                 project_dir,
                 environment,
                 port,

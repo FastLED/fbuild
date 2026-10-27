@@ -23,6 +23,84 @@ async fn env_lock() -> tokio::sync::MutexGuard<'static, ()> {
     LOCK.get_or_init(|| Mutex::new(())).lock().await
 }
 
+#[tokio::test]
+#[ignore = "requires Node.js on PATH; run under nodejs-wheel's uv environment for launcher regression"]
+async fn node_discovery_returns_native_executable() {
+    let _guard = env_lock().await;
+    let node = super::avr8js_npm::find_node().await.unwrap();
+    assert!(
+        node.is_absolute(),
+        "must resolve the native executable, not a PATH launcher"
+    );
+    let output = fbuild_core::subprocess::run_command(
+        &[node.to_str().unwrap(), "--print", "process.execPath"],
+        None,
+        None,
+        Some(std::time::Duration::from_secs(5)),
+    )
+    .await
+    .unwrap();
+    assert!(output.success());
+    assert_eq!(node.as_path(), std::path::Path::new(output.stdout.trim()));
+}
+
+#[tokio::test]
+#[ignore = "requires Node.js on PATH; exercises native process shutdown without npm or firmware"]
+async fn resolved_node_headless_shutdown() {
+    use super::avr8js_headless::{RunAvr8jsHeadlessOptions, run_avr8js_headless};
+    use crate::handlers::operations::MonitorOutcome;
+
+    let _guard = env_lock().await;
+    let node = super::avr8js_npm::find_node().await.unwrap();
+    assert!(node.is_absolute());
+    let temp = tempfile::tempdir_in(fbuild_paths::temp_subdir("daemon-tests")).unwrap();
+    let cache = temp.path();
+    let module = cache.join("node_modules/avr8js");
+    std::fs::create_dir_all(&module).unwrap();
+    std::fs::write(module.join("package.json"), "{}").unwrap();
+    let script = cache.join("headless.mjs");
+    let hex = cache.join("unused.hex");
+    std::fs::write(
+        &script,
+        "console.log('READY'); setInterval(() => {}, 1000);",
+    )
+    .unwrap();
+    for (success, error) in [(Some("READY"), None), (None, Some("READY")), (None, None)] {
+        let run = run_avr8js_headless(
+            &node,
+            &script,
+            &hex,
+            16_000_000,
+            cache,
+            RunAvr8jsHeadlessOptions {
+                timeout_secs: Some(if success.is_some() || error.is_some() {
+                    5.0
+                } else {
+                    1.0
+                }),
+                halt_on_error: error,
+                halt_on_success: success,
+                expect: None,
+                show_timestamp: false,
+                verbose: false,
+            },
+        );
+        let result = tokio::time::timeout(std::time::Duration::from_secs(10), run)
+            .await
+            .expect("native Node shutdown must finish")
+            .unwrap();
+        if success.is_some() {
+            assert!(matches!(result.outcome, MonitorOutcome::Success(_)));
+            assert!(result.stdout.contains("READY"));
+        } else if error.is_some() {
+            assert!(matches!(result.outcome, MonitorOutcome::Error(_)));
+            assert!(result.stdout.contains("READY"));
+        } else {
+            assert!(matches!(result.outcome, MonitorOutcome::Timeout { .. }));
+        }
+    }
+}
+
 #[test]
 fn avr8js_cache_is_intact_detects_missing_dir() {
     let tmp = tempfile::TempDir::new().unwrap();

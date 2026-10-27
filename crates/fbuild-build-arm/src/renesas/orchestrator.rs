@@ -46,6 +46,9 @@ struct RenesasFingerprintMetadata {
     board_extra_flags: Option<String>,
     board_upload_protocol: Option<String>,
     board_upload_speed: Option<String>,
+    framework_version: String,
+    framework_url: String,
+    framework_checksum: Option<String>,
     platform: String,
     max_flash: Option<u64>,
     max_ram: Option<u64>,
@@ -125,6 +128,7 @@ impl BuildOrchestrator for RenesasOrchestrator {
         Platform::RenesasRa
     }
 
+    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
     async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
         let compiler_cache: Option<std::path::PathBuf> = None;
@@ -156,6 +160,7 @@ impl BuildOrchestrator for RenesasOrchestrator {
         let core_dir = framework.get_core_dir(&ctx.board.core);
         let variant_dir = framework.get_variant_dir(&ctx.board.variant);
         let build_dir = &ctx.build_dir;
+        let framework_info = fbuild_packages::Package::get_info(&framework);
         let metadata_hash = stable_hash_with_build_config(
             &RenesasFingerprintMetadata {
                 version: BUILD_FINGERPRINT_VERSION,
@@ -170,6 +175,9 @@ impl BuildOrchestrator for RenesasOrchestrator {
                 board_extra_flags: ctx.board.extra_flags.clone(),
                 board_upload_protocol: ctx.board.upload_protocol.clone(),
                 board_upload_speed: ctx.board.upload_speed.clone(),
+                framework_version: framework_info.version,
+                framework_url: framework_info.url,
+                framework_checksum: framework_info.checksum,
                 platform: "renesas-ra".to_string(),
                 max_flash: ctx.board.max_flash,
                 max_ram: ctx.board.max_ram,
@@ -234,7 +242,8 @@ impl BuildOrchestrator for RenesasOrchestrator {
         // Use resolved core_dir/variant_dir instead of get_include_paths() which
         // doesn't account for core_dir overrides.
         let mut include_dirs = vec![core_dir.clone(), variant_dir.clone()];
-        // Renesas core has headers in subdirectories (tinyusb/, usb/, cm_backtrace/)
+        // Renesas core has headers in subdirectories (tinyusb/, usb/, cm_backtrace/).
+        // Keep api/ qualified so String.h cannot shadow the C library's string.h.
         discover_header_subdirs(&core_dir, &mut include_dirs);
         // Arduino API deprecated compatibility headers
         let api_deprecated = core_dir.join("api").join("deprecated");
@@ -404,7 +413,11 @@ fn discover_header_subdirs(dir: &Path, include_dirs: &mut Vec<PathBuf>) {
                 let has_headers = children
                     .flatten()
                     .any(|e| e.path().extension().is_some_and(|ext| ext == "h"));
-                if has_headers {
+                // Arduino includes API headers as api/Foo.h, or relative to
+                // another API header. Adding -Iapi makes <string.h> resolve to
+                // api/String.h on case-insensitive Windows filesystems (#1671).
+                // Still recurse to discover the deprecated compatibility dirs.
+                if has_headers && path != dir.join("api") {
                     include_dirs.push(path.clone());
                 }
             }
@@ -480,6 +493,23 @@ mod tests {
             "empty/ should NOT be in includes: {:?}",
             includes
         );
+    }
+
+    #[test]
+    fn api_headers_do_not_shadow_standard_c_headers() {
+        let tmp = tempfile::tempdir().unwrap();
+        let core = tmp.path().join("cores/arduino");
+        let api = core.join("api");
+        std::fs::create_dir_all(api.join("deprecated")).unwrap();
+        std::fs::write(api.join("String.h"), "").unwrap();
+        std::fs::write(api.join("deprecated/WString.h"), "").unwrap();
+        let mut includes = Vec::new();
+        discover_header_subdirs(&core, &mut includes);
+        assert!(
+            !includes.contains(&api),
+            "-Iapi makes <string.h> resolve to Arduino String.h on Windows"
+        );
+        assert!(includes.contains(&api.join("deprecated")));
     }
 
     #[test]

@@ -6,6 +6,7 @@
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::{BuildProfile, Result};
 
 use super::mcu_config::SamMcuConfig;
@@ -21,6 +22,7 @@ pub struct SamCompiler {
     temp_dir: PathBuf,
     /// PlatformIO `build_unflags`. See FastLED/fbuild#37.
     build_unflags: Vec<String>,
+    cxx_system_includes: Vec<NormalizedPath>,
 }
 
 impl SamCompiler {
@@ -50,6 +52,7 @@ impl SamCompiler {
             profile,
             temp_dir: fbuild_core::response_file::windows_temp_dir(),
             build_unflags: Vec::new(),
+            cxx_system_includes: Vec::new(),
         }
     }
 
@@ -57,6 +60,22 @@ impl SamCompiler {
     pub fn with_build_unflags(mut self, build_unflags: Vec<String>) -> Self {
         self.build_unflags = build_unflags;
         self
+    }
+
+    /// Resolve the actual target's standard headers once, for core and libraries.
+    pub async fn resolve_cxx_system_includes(
+        &mut self,
+        extra: &[String],
+        cwd: &Path,
+    ) -> Result<()> {
+        let base_flags = crate::compiler::build_cpp_flags(self.common_flags(), &self.mcu_config);
+        let (mut flags, extra) =
+            crate::compiler::apply_compile_unflags(base_flags, extra, &self.build_unflags);
+        flags.extend(extra);
+        self.cxx_system_includes =
+            fbuild_packages::toolchain::gcc::cxx_system_includes(&self.gxx_path, &flags, cwd)
+                .await?;
+        Ok(())
     }
 
     /// Build the common ARM Cortex-M3 compiler flags.
@@ -113,7 +132,16 @@ impl Compiler for SamCompiler {
     }
 
     fn cpp_flags(&self) -> Vec<String> {
-        crate::compiler::build_cpp_flags(self.common_flags(), &self.mcu_config)
+        let mut flags = crate::compiler::build_cpp_flags(self.common_flags(), &self.mcu_config);
+        if !self.cxx_system_includes.is_empty() {
+            // Replace the complete builtin list: GCC must not retain a long
+            // duplicate spelling in preference to the canonical -isystem path.
+            flags.push("-nostdinc".into());
+        }
+        for directory in &self.cxx_system_includes {
+            flags.extend(["-isystem".into(), directory.display_slash()]);
+        }
+        flags
     }
 
     fn build_unflags(&self) -> &[String] {
@@ -143,6 +171,23 @@ mod tests {
             BuildProfile::Release,
             false,
         )
+    }
+
+    #[test]
+    fn canonical_cxx_headers_do_not_enter_c_compilation() {
+        let mut compiler = test_compiler();
+        let directory = NormalizedPath::from("/canonical sdk/headers");
+        compiler.cxx_system_includes = vec![directory.clone()];
+        let flags = compiler.cpp_flags();
+        let index = flags.iter().position(|flag| flag == "-isystem").unwrap();
+        assert_eq!(flags[index + 1], directory.display_slash());
+        assert!(flags.iter().any(|flag| flag == "-nostdinc"));
+        assert!(
+            !compiler
+                .c_flags()
+                .iter()
+                .any(|flag| flag == "-isystem" || flag == "-nostdinc")
+        );
     }
 
     #[test]

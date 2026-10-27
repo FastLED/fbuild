@@ -11,6 +11,7 @@ use std::time::Duration;
 /// Reset a device on the given serial port using a platform-appropriate sequence.
 ///
 /// `platform` should be one of: "teensy", "esp32", "avr", "generic".
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 pub fn reset_device(platform: &str, port: &str, verbose: bool) -> Result<bool> {
     if verbose {
         tracing::info!("resetting {} device on {}", platform, port);

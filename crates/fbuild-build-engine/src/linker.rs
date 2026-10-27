@@ -212,6 +212,13 @@ pub trait Linker: Send + Sync {
         None
     }
 
+    /// Platform-owned link inputs the generic digest can't see, such as a
+    /// generated linker script's recipe. A change relinks a reused ELF
+    /// (FastLED/fbuild#1736).
+    fn link_fingerprint(&self) -> String {
+        String::new()
+    }
+
     /// Whether static RAM over the board's maximum fails the build.
     ///
     /// Default `false`: like PlatformIO, RAM overflow is a warning, because the
@@ -237,11 +244,11 @@ pub trait Linker: Send + Sync {
         symbol_analysis: bool,
     ) -> Result<LinkResult> {
         let candidate_elf = output_dir.join("firmware.elf");
+        let all_objects: Vec<&PathBuf> = sketch_objects.iter().chain(core_objects).collect();
+        let digest = crate::link_digest::link_digest(&all_objects, extra, &self.link_fingerprint());
         if candidate_elf.exists() {
-            let can_skip = elf_is_up_to_date(
-                &candidate_elf,
-                sketch_objects.iter().chain(core_objects.iter()),
-            );
+            let can_skip = crate::link_digest::digest_matches(&candidate_elf, &digest)
+                && elf_is_up_to_date(&candidate_elf, all_objects.iter().copied());
             if can_skip {
                 tracing::info!("link: firmware.elf is up-to-date, skipping relink");
                 let firmware_path = self.convert_firmware(&candidate_elf, output_dir).await?;
@@ -276,9 +283,15 @@ pub trait Linker: Send + Sync {
 
         // Pass core objects directly to linker (not archived) for LTO compatibility.
         // With LTO + archives, the linker can't see symbols across TUs properly.
+        let map_path = output_dir.join("firmware.map");
+        let fresh_map = crate::link_overflow::prepare_map(&map_path);
         let elf_path = self
             .link(sketch_objects, core_objects, output_dir, extra)
-            .await?;
+            .await
+            .map_err(|error| {
+                crate::link_overflow::enrich(error, fresh_map.then_some(map_path.as_path()))
+            })?;
+        crate::link_digest::record_digest(&elf_path, &digest);
 
         // Convert and size. Both only read the ELF, so they run together
         // instead of back to back on the critical path (FastLED/fbuild#1468).
@@ -438,47 +451,15 @@ impl LinkerBase {
         output: &Path,
         tool_label: &str,
     ) -> Result<()> {
-        use fbuild_core::subprocess::run_command;
-
-        if let Some(parent) = output.parent() {
-            std::fs::create_dir_all(parent)?;
-        }
-
-        // Remove existing archive to avoid stale objects
-        if output.exists() {
-            std::fs::remove_file(output)?;
-        }
-
-        let mut args: Vec<String> = vec![
-            ar_path.to_string_lossy().to_string(),
-            "rcs".to_string(),
-            output.to_string_lossy().to_string(),
-        ];
-
-        for obj in objects {
-            args.push(obj.to_string_lossy().to_string());
-        }
-
-        let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        // FastLED/fbuild#809: `ar rcs` can have very large arg lists on
-        // teensy41 / NRF52 builds; bound at 2 min so a wedged `ar` does
-        // not block the build pipeline.
-        let result = run_command(
-            &args_ref,
-            None,
-            None,
-            Some(std::time::Duration::from_secs(120)),
+        // Preserve the core archiver's 2-minute watchdog (#809).
+        fbuild_core::archive::create(
+            ar_path,
+            objects,
+            output,
+            tool_label,
+            std::time::Duration::from_secs(120),
         )
-        .await?;
-
-        if !result.success() {
-            return Err(fbuild_core::FbuildError::BuildFailed(format!(
-                "{} failed: {}",
-                tool_label, result.stderr
-            )));
-        }
-
-        Ok(())
+        .await
     }
 
     /// Whether `archive` already holds exactly `objects` and no object is newer.

@@ -61,6 +61,27 @@ fn resolve_local_library_dir(project_dir: &Path, local_path: &Path, name: &str) 
         })
 }
 
+/// Library name declared by a local library's `library.json` or
+/// `library.properties` (PlatformIO's precedence), if any.
+fn read_manifest_name(lib_dir: &Path) -> Option<String> {
+    if let Ok(text) = std::fs::read_to_string(lib_dir.join("library.json")) {
+        if let Ok(json) = serde_json::from_str::<serde_json::Value>(&text) {
+            if let Some(name) = json.get("name").and_then(|n| n.as_str()) {
+                let name = name.trim();
+                if !name.is_empty() {
+                    return Some(name.to_string());
+                }
+            }
+        }
+    }
+    let text = std::fs::read_to_string(lib_dir.join("library.properties")).ok()?;
+    text.lines().find_map(|line| {
+        let (key, value) = line.split_once('=')?;
+        let value = value.trim();
+        (key.trim() == "name" && !value.is_empty()).then(|| value.to_string())
+    })
+}
+
 /// Result of library resolution and compilation.
 pub struct LibraryResult {
     /// All include directories from all libraries (for compiler `-I` flags).
@@ -78,7 +99,13 @@ pub struct LibraryResult {
 pub fn parse_lib_specs(lib_specs: &[String], lib_ignore: &[String]) -> Vec<LibrarySpec> {
     lib_specs
         .iter()
-        .filter_map(|s| LibrarySpec::parse(s))
+        .filter_map(|s| {
+            let parsed = LibrarySpec::parse(s);
+            if parsed.is_none() && !s.trim().is_empty() {
+                tracing::warn!("ignoring unparseable lib_deps entry: {:?}", s);
+            }
+            parsed
+        })
         .filter(|spec| {
             !lib_ignore
                 .iter()
@@ -318,6 +345,18 @@ pub async fn download_libraries(
     for spec in &specs {
         if let Some(local_path) = &spec.local_path {
             let lib_dir = resolve_local_library_dir(project_dir, local_path, &spec.name)?;
+            let mut spec = spec.clone();
+            if spec.infer_name {
+                if let Some(name) = read_manifest_name(&lib_dir) {
+                    spec.name = name;
+                }
+                if lib_ignore
+                    .iter()
+                    .any(|ig| ig.eq_ignore_ascii_case(&spec.name))
+                {
+                    continue;
+                }
+            }
             let sanitized = spec.sanitized_name();
             installed.push(InstalledLibrary::with_build_dir(
                 &lib_dir,
@@ -361,6 +400,7 @@ pub async fn download_libraries(
 /// `lib_dir/library.json` and `lib_dir/src/library.json`) for a `dependencies`
 /// array. Downloads any new dependencies and adds them to the installed list.
 /// Processes recursively until no new dependencies are found.
+#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
 async fn resolve_transitive_deps(
     installed: &mut Vec<InstalledLibrary>,
     downloaded_names: &mut std::collections::HashSet<String>,
@@ -600,6 +640,70 @@ mod tests {
         // symlink to `/private/var`).
         let expected = fbuild_core::path::strip_unc_prefix(&local_src.canonicalize().unwrap());
         assert_eq!(result.include_dirs, vec![expected]);
+    }
+
+    /// Unnamed local `lib_deps` forms resolve in place (no copy), relative
+    /// to the project, and take the manifest name.
+    #[tokio::test]
+    async fn test_unnamed_local_lib_deps_resolve_in_place_with_manifest_name() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let project = tmp.path().join("project");
+        let ext = tmp.path().join("checkout-dir");
+        std::fs::create_dir_all(ext.join("src")).unwrap();
+        std::fs::write(ext.join("library.json"), r#"{"name": "FastLED"}"#).unwrap();
+        let props = project.join("vendor").join("propslib");
+        std::fs::create_dir_all(&props).unwrap();
+        std::fs::write(
+            props.join("library.properties"),
+            "name=Props Lib\nversion=1\n",
+        )
+        .unwrap();
+        let bare = project.join("plain");
+        std::fs::create_dir_all(&bare).unwrap();
+        let libs_dir = tmp.path().join("build").join("libs");
+
+        let canon = |p: &Path| fbuild_core::path::strip_unc_prefix(&p.canonicalize().unwrap());
+        for (spec, dir, name) in [
+            (format!("symlink://{}", ext.display()), &ext, "fastled"),
+            (format!("file://{}", ext.display()), &ext, "fastled"),
+            (ext.display().to_string(), &ext, "fastled"),
+            ("./vendor/propslib".to_string(), &props, "props_lib"),
+            ("symlink://plain".to_string(), &bare, "plain"),
+        ] {
+            let installed =
+                download_libraries(std::slice::from_ref(&spec), &[], &project, &libs_dir)
+                    .await
+                    .unwrap();
+            assert_eq!(installed.len(), 1, "{spec}");
+            assert_eq!(installed[0].lib_dir, canon(dir), "{spec}: used in place");
+            assert_eq!(installed[0].name, name, "{spec}");
+        }
+
+        // lib_ignore applies to the manifest name.
+        let ignored = download_libraries(
+            &[format!("symlink://{}", ext.display())],
+            &["FastLED".to_string()],
+            &project,
+            &libs_dir,
+        )
+        .await
+        .unwrap();
+        assert!(ignored.is_empty());
+    }
+
+    #[tokio::test]
+    async fn test_unnamed_local_lib_dep_missing_path_is_an_error() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let err = download_libraries(
+            &["symlink:///definitely/not/here/fastled".to_string()],
+            &[],
+            tmp.path(),
+            &tmp.path().join("libs"),
+        )
+        .await
+        .err()
+        .expect("missing local library must fail");
+        assert!(err.to_string().contains("does not exist"), "{err}");
     }
 
     // ---- FastLED/fbuild#1559 / #1560 plan-level scheduling tests ----

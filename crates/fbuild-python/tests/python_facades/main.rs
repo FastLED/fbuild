@@ -53,6 +53,7 @@ struct DaemonKnobs {
     fail_first_write: bool,
 }
 
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 async fn handle_ws(stream: tokio::net::TcpStream, knobs: DaemonKnobs) {
     let ws = match tokio_tungstenite::accept_async(stream).await {
         Ok(ws) => ws,
@@ -380,7 +381,11 @@ fn init_python() {
 /// call, per §5.3) and turns a Python exception into a Rust panic with the
 /// traceback printed to stderr.
 fn run_snippet(py: pyo3::Python<'_>, code: &str) {
-    py.run(&std::ffi::CString::new(code).unwrap(), None, None)
+    // Python's default __main__ namespace outlives this test and can retain
+    // monitors through globals or function closures. Keep each snippet's
+    // namespace private so later lifecycle tests observe only their sessions.
+    let globals = pyo3::types::PyDict::new(py);
+    py.run(&std::ffi::CString::new(code).unwrap(), Some(&globals), None)
         .unwrap_or_else(|e| {
             e.print(py);
             panic!("Python snippet failed");

@@ -137,6 +137,7 @@ fn should_emit_dependency_status(status: &fbuild_core::install_status::InstallSt
 }
 
 /// POST /api/build
+#[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
 pub async fn build(
     State(ctx): State<Arc<DaemonContext>>,
     Json(req): Json<BuildRequest>,
