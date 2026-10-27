@@ -93,7 +93,7 @@ targets = [
 ]
 
 [workspace.package]
-version = "2.5.46"
+version = "2.5.47"
 edition = "2021"
 rust-version = "1.95.0"
 license = "AGPL-3.0-only"
@@ -196,13 +196,25 @@ owo-colors = "4"
 # loopback-HTTP path (see crates/fbuild-daemon/src/broker).
 #
 # Source must match zccache's `running-process` pin exactly (same source and
-# version, not just the same semver; zccache takes =4.10.16 from crates.io). `running-process` exports unmangled `rp_*_public` C
-# symbols; Cargo treats a registry package and a git package as two distinct
-# packages, so a registry pin here plus zccache's git pin puts BOTH copies in
-# the link and every one of those symbols collides (`rust-lld: error:
-# duplicate symbol: rp_native_process_start_public`, …). Keep this pin in
-# lockstep with zccache's resolved `running-process` when repinning zccache.
+# version, not just the same semver; zccache takes =4.10.16 from crates.io).
+# `running-process` exports unmangled `rp_*_public` C symbols; Cargo treats a
+# registry package and a git package as two distinct packages, so a source
+# mismatch puts BOTH copies in the link and every one of those symbols
+# collides (`rust-lld: error: duplicate symbol:
+# rp_native_process_start_public`, …). Keep this pin in lockstep with
+# zccache's resolved `running-process` when repinning zccache.
 running-process = { version = "=4.10.16", default-features = false, features = ["client-async"] }
+
+# One pin for every crate that links zccache (build, build-engine, build-arm,
+# build-esp, build-mcu). It lives here rather than repeated per manifest
+# because the five copies used to drift: a git rev in one and a crates.io
+# version in another resolves BOTH into the link, which is the same
+# duplicate-symbol failure the running-process note above describes.
+#
+# 1.15.8 is the published release carrying the #1757 fix — a destination write
+# that loses a Windows AV/indexer scan window is retried with the #490 ladder
+# instead of degrading to a silent `cached: false` recompile.
+zccache = "=1.15.8"
 
 [profile.dev]
 debug = "line-tables-only"
