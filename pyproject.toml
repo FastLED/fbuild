@@ -45,6 +45,13 @@ cache-keys = [
     { file = "Cargo.lock" },
     { file = "crates/**/*.rs" },
     { file = "crates/**/Cargo.toml" },
+    # The backend's own staleness check also watches the toolchain pin, and
+    # the backend itself decides what goes into the wheel.
+    { file = "rust-toolchain.toml" },
+    { file = "ci/build_backend.py" },
+    # A `git pull` to a new HEAD is a new key even if mtimes say otherwise
+    # (FastLED/fbuild editable installs once kept the previous day's binaries).
+    { git = { commit = true } },
 ]
 
 # In-tree backend (ci/build_backend.py): no build requirements, so pip's
