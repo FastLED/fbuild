@@ -295,13 +295,34 @@ impl BoardConfig {
             }
         }
 
-        // Extra flags
+        // Extra flags.
+        //
+        // Board JSON stores string-valued flags with escaped quotes, e.g.
+        // -DUSB_PRODUCT=\"NanoESP32\". PlatformIO feeds `extra_flags` through
+        // Python shlex, so \" is an escaped *literal* quote (not a delimiter)
+        // and the macro body reaches GCC as "NanoESP32". Route through the same
+        // INI shell-quote consumer as `build_flags` (FastLED/fbuild#947) rather
+        // than `shell_split`, which strips the quotes as delimiters but keeps
+        // the backslashes, emitting -DUSB_PRODUCT=\NanoESP32\ and tripping GCC
+        // with `stray '\' in program` (FastLED/fbuild#1760).
         if let Some(ref flags) = self.extra_flags {
             defines.extend(fbuild_core::compiler_flags::parse_define_flags(
-                &fbuild_core::shell_split::split(flags),
+                &crate::ini_parser::parse_flags(flags),
             ));
         }
 
+        // `-DBOARD_HAS_PIN_REMAP` is only legal alongside `-DARDUINO_CORE_BUILD`
+        // on the Arduino core's own translation units (Arduino's `platform.txt`
+        // adds it there). fbuild never defines `ARDUINO_CORE_BUILD`, so passing
+        // the flag through verbatim makes `variants/<board>/io_pin_remap.cpp`
+        // trip `#error This build system is not supported. Please rebuild
+        // without BOARD_HAS_PIN_REMAP` — e.g. Arduino Nano ESP32, whose
+        // PlatformIO board JSON carries the flag (FastLED/fbuild#1760; the
+        // newer pioarduino release swapped it for -DBOARD_USES_HW_GPIO_NUMBERS).
+        // Dropping it matches both the `#error`'s own instruction and the
+        // Arduino default board menu (`PinNumbers=byGPIONumber`, which sets
+        // `-UBOARD_HAS_PIN_REMAP`), i.e. GPIO-number pin mapping.
+        defines.remove("BOARD_HAS_PIN_REMAP");
         defines
     }
 
