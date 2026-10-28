@@ -75,7 +75,11 @@ fn short_root_fails_with_path_required_and_shortfall() {
     let error = preflight(&probe, &roots, cache_root())
         .expect_err("a root below its requirement must fail the build")
         .to_string();
-    assert!(error.contains("/cache"), "{error}");
+    let cache = NormalizedPath::new("/cache");
+    assert!(
+        error.contains(&format!("cache {} has", cache.display())),
+        "{error}"
+    );
     assert!(error.contains("512.00MB free"), "{error}");
     assert!(error.contains("2.00GB"), "{error}");
     assert!(error.contains("short by 1.50GB"), "{error}");
