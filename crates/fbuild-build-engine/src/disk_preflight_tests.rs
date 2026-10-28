@@ -1,0 +1,170 @@
+//! Pre-flight disk-space checks (FastLED/fbuild#1750).
+
+use std::collections::HashMap;
+use std::io;
+use std::path::{Path, PathBuf};
+
+use crate::disk_preflight::*;
+
+/// A volume whose free space the test states outright.
+struct FakeFreeSpace {
+    free: HashMap<PathBuf, u64>,
+    unmeasurable: Vec<PathBuf>,
+    measured: std::cell::RefCell<Vec<PathBuf>>,
+}
+
+impl FakeFreeSpace {
+    fn new(free: &[(&str, u64)]) -> Self {
+        Self {
+            free: free
+                .iter()
+                .map(|(path, bytes)| (PathBuf::from(path), *bytes))
+                .collect(),
+            unmeasurable: Vec::new(),
+            measured: std::cell::RefCell::new(Vec::new()),
+        }
+    }
+
+    fn unmeasurable(mut self, path: &str) -> Self {
+        self.unmeasurable.push(PathBuf::from(path));
+        self
+    }
+}
+
+impl FreeSpace for FakeFreeSpace {
+    fn available(&self, path: &Path) -> io::Result<u64> {
+        self.measured.borrow_mut().push(path.to_path_buf());
+        if self.unmeasurable.iter().any(|bad| bad == path) {
+            return Err(io::Error::new(io::ErrorKind::PermissionDenied, "denied"));
+        }
+        Ok(*self.free.get(path).unwrap_or(&0))
+    }
+}
+
+const GIB: u64 = 1024 * 1024 * 1024;
+
+fn cache_root() -> &'static Path {
+    Path::new("/cache-root")
+}
+
+#[test]
+fn ample_space_is_sufficient_and_prints_one_line() {
+    let probe = FakeFreeSpace::new(&[("/cache", 40 * GIB), ("/project", 40 * GIB)]);
+    let roots = vec![
+        DiskRoot::new("cache", "/cache", 2 * GIB),
+        DiskRoot::new("project", "/project", 256 * 1024 * 1024),
+    ];
+    let report = preflight(&probe, &roots, cache_root()).unwrap();
+    assert!(report.is_sufficient());
+    let line = report.info_line();
+    assert!(
+        !line.contains('\n'),
+        "healthy build must log one line: {line}"
+    );
+    assert!(line.contains("cache"), "{line}");
+    assert!(line.contains("40.00GB free"), "{line}");
+}
+
+#[test]
+fn short_root_fails_with_path_required_and_shortfall() {
+    let probe = FakeFreeSpace::new(&[("/cache", 512 * 1024 * 1024)]);
+    let roots = vec![DiskRoot::new("cache", "/cache", 2 * GIB)];
+    let error = preflight(&probe, &roots, cache_root())
+        .expect_err("a root below its requirement must fail the build")
+        .to_string();
+    assert!(error.contains("/cache"), "{error}");
+    assert!(error.contains("512.00MB free"), "{error}");
+    assert!(error.contains("2.00GB"), "{error}");
+    assert!(error.contains("short by 1.50GB"), "{error}");
+    assert!(error.contains("FBUILD_MIN_DISK_BYTES=0"), "{error}");
+}
+
+#[test]
+fn failure_names_reclaimable_caches_largest_first() {
+    let dir = tempfile::tempdir().unwrap();
+    let small = dir.path().join("core");
+    let large = dir.path().join("platforms");
+    std::fs::create_dir_all(&small).unwrap();
+    std::fs::create_dir_all(&large).unwrap();
+    std::fs::write(small.join("one.o"), vec![0u8; 1024]).unwrap();
+    std::fs::write(large.join("two.o"), vec![0u8; 4096]).unwrap();
+    std::fs::write(dir.path().join("index.sqlite"), vec![0u8; 8192]).unwrap();
+
+    let probe = FakeFreeSpace::new(&[("/cache", 0)]);
+    let roots = vec![DiskRoot::new("cache", "/cache", GIB)];
+    let error = preflight(&probe, &roots, dir.path())
+        .expect_err("a full volume must fail")
+        .to_string();
+
+    assert!(error.contains("platforms 4.00KB"), "{error}");
+    assert!(error.contains("core 1.00KB"), "{error}");
+    let platforms = error.find("platforms").unwrap();
+    let core = error.find("core ").unwrap();
+    assert!(
+        platforms < core,
+        "largest cache must be listed first: {error}"
+    );
+}
+
+#[test]
+fn unmeasurable_root_is_reported_but_not_fatal() {
+    let probe = FakeFreeSpace::new(&[("/project", 40 * GIB)]).unmeasurable("/cache");
+    let roots = vec![
+        DiskRoot::new("cache", "/cache", 2 * GIB),
+        DiskRoot::new("project", "/project", 256 * 1024 * 1024),
+    ];
+    let report = preflight(&probe, &roots, cache_root())
+        .expect("an unreadable volume must not block the build");
+    assert!(report.is_sufficient());
+    assert_eq!(report.unchecked().len(), 1);
+    assert_eq!(report.unchecked()[0].0, "cache");
+}
+
+#[test]
+fn zero_requirement_skips_measurement_entirely() {
+    let probe = FakeFreeSpace::new(&[]);
+    let roots = vec![
+        DiskRoot::new("cache", "/cache", 0),
+        DiskRoot::new("temp", "/temp", 0),
+    ];
+    let report = preflight(&probe, &roots, cache_root()).unwrap();
+    assert!(report.roots().is_empty());
+    assert!(probe.measured.borrow().is_empty());
+    assert!(report.info_line().contains("skipped"));
+}
+
+#[test]
+fn only_the_short_root_is_named_on_failure() {
+    let probe = FakeFreeSpace::new(&[("/cache", 40 * GIB), ("/project", 1024)]);
+    let roots = vec![
+        DiskRoot::new("cache", "/cache", 2 * GIB),
+        DiskRoot::new("project", "/project", 256 * 1024 * 1024),
+    ];
+    let error = preflight(&probe, &roots, cache_root())
+        .expect_err("one short root fails the whole check")
+        .to_string();
+    assert!(error.contains("/project"), "{error}");
+    assert!(
+        !error.contains("/cache has"),
+        "roomy roots stay out: {error}"
+    );
+    assert_eq!(error.matches("short by").count(), 1, "{error}");
+}
+
+#[test]
+fn reclaimable_caches_sizes_depth_one_directories_only() {
+    let dir = tempfile::tempdir().unwrap();
+    std::fs::create_dir_all(dir.path().join("nested/deeper")).unwrap();
+    std::fs::write(dir.path().join("nested/deeper/big.o"), vec![0u8; 3000]).unwrap();
+    std::fs::write(dir.path().join("stray.file"), vec![0u8; 9000]).unwrap();
+
+    let caches = reclaimable_caches(dir.path());
+    assert_eq!(caches.len(), 1, "{caches:?}");
+    assert_eq!(caches[0].name, "nested");
+    assert_eq!(caches[0].bytes, 3000);
+}
+
+#[test]
+fn missing_cache_root_yields_no_reclaimable_caches() {
+    assert!(reclaimable_caches(Path::new("/definitely/not/a/real/cache")).is_empty());
+}
