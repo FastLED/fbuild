@@ -95,6 +95,15 @@ impl BuildOrchestrator for Esp32Orchestrator {
             let _disk_phase = perf.phase("disk-preflight");
             super::disk_requirements::preflight_esp32_disk(&params.project_dir)?;
         }
+        // Measure what this build actually consumes per stage, so the ESP32 disk
+        // requirements can be measured rather than estimated
+        // (FastLED/fbuild#1750 item 1). A no-op unless FBUILD_DISK_FOOTPRINT is
+        // set in the environment the daemon was spawned with.
+        let mut footprint = fbuild_build_engine::disk_footprint::DiskFootprint::new(
+            "esp32",
+            &fbuild_build_engine::disk_preflight::HostFreeSpace,
+            super::disk_requirements::footprint_roots(&params.project_dir),
+        );
         let _resolve_phase = perf.phase("pioarduino-resolve");
         let (toolchain, framework, esptool_bin, platform_info) = resolve_pioarduino_packages(
             &params.project_dir,
@@ -104,6 +113,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         )
         .await?;
         drop(_resolve_phase);
+        footprint.sample("pioarduino-resolve");
         let toolchain_info = fbuild_packages::Package::get_info(&toolchain);
         ctx.build_log
             .push(super::helpers::esp32_package_stack_summary(
@@ -782,6 +792,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let core_objects = core_result.objects;
         let mut sketch_objects = sketch_result.objects;
 
+        footprint.sample("compile");
+
         // 11.5. Process embedded files (board_build.embed_files + embed_txtfiles)
         //
         // `.lnk` entries are pre-resolved: each `.lnk` is parsed, its blob is
@@ -896,6 +908,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
             )
             .await?
         };
+
+        footprint.sample("link-convert");
 
         // 15. Size reporting + result assembly
         let fingerprint_started = Instant::now();
