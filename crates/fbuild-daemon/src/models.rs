@@ -259,6 +259,9 @@ pub struct HealthResponse {
     pub status: String,
     pub uptime_seconds: f64,
     pub version: String,
+    /// Compile-time build id (`<commit>[-dirty]`); absent on daemons that
+    /// predate FastLED/fbuild#1742.
+    pub build_id: String,
     pub pid: u32,
     pub source_mtime: f64,
     /// Path of the running daemon binary; lets a restarting CLI name the image
@@ -281,6 +284,8 @@ pub struct DaemonInfoResponse {
     pub status: String,
     pub uptime_seconds: f64,
     pub version: String,
+    /// Compile-time build id (`<commit>[-dirty]`, FastLED/fbuild#1742).
+    pub build_id: String,
     pub pid: u32,
     pub port: u16,
     pub started_at: f64,
@@ -928,6 +933,7 @@ mod tests {
             status: "healthy".into(),
             uptime_seconds: 42.5,
             version: "2.0.0".into(),
+            build_id: "test".into(),
             pid: 1234,
             source_mtime: 1700000000.0,
             source_exe: "/opt/fbuild/fbuild-daemon".into(),
@@ -949,6 +955,7 @@ mod tests {
             status: "running".into(),
             uptime_seconds: 10.0,
             version: "2.0.0".into(),
+            build_id: "test".into(),
             pid: 5678,
             port: 8765,
             started_at: 1700000000.0,
@@ -997,6 +1004,7 @@ mod tests {
             status: "running".into(),
             uptime_seconds: 10.0,
             version: "2.0.0".into(),
+            build_id: "test".into(),
             pid: 5678,
             port: 8765,
             started_at: 1700000000.0,
@@ -1027,6 +1035,7 @@ mod tests {
             status: "running".into(),
             uptime_seconds: 10.0,
             version: "2.0.0".into(),
+            build_id: "test".into(),
             pid: 5678,
             port: 8765,
             started_at: 1700000000.0,

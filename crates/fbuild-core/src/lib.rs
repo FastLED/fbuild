@@ -7,6 +7,7 @@
 //! - Size info parsing (avr-size / arm-none-eabi-size output)
 
 pub mod archive;
+pub mod build_id;
 pub mod build_log;
 pub mod channel;
 pub mod compiler_flags;

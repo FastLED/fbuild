@@ -66,6 +66,7 @@ fn daemon_info_for_cache_identity(
         status: "running".to_string(),
         uptime_seconds: 1.0,
         version: "2.2.29".to_string(),
+        build_id: "test".to_string(),
         pid: 123,
         port: 8765,
         dev_mode: fbuild_paths::is_dev_mode(),
