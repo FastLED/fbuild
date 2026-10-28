@@ -12,7 +12,7 @@ use std::path::{Path, PathBuf};
 
 use fbuild_core::path::NormalizedPath;
 use fbuild_core::subprocess::run_command;
-use fbuild_core::{BuildProfile, Result, SizeInfo};
+use fbuild_core::{BuildProfile, FbuildError, Result, SizeInfo};
 
 use crate::build_fingerprint::{
     BUILD_FINGERPRINT_VERSION, BinArtifactCache, FileStamp, SizeArtifactCache, load_json, save_json,
@@ -108,6 +108,46 @@ pub(crate) fn esptool_elf2image_argv(
         out_bin.to_string(),
     ]);
     argv
+}
+
+/// The error for a failed ESP32 link, with a full volume translated into the
+/// disk-space message (#1750 item 4) instead of a raw `ENOSPC` line.
+pub(crate) fn link_failure(stderr: &str) -> FbuildError {
+    link_failure_in(stderr, &fbuild_paths::get_cache_root())
+}
+
+/// [`link_failure`] with the cache root injected, so the reclaimable-cache
+/// listing can be exercised without walking this host's real cache.
+pub(crate) fn link_failure_in(stderr: &str, cache_root: &Path) -> FbuildError {
+    if let Some(error) =
+        fbuild_build_engine::disk_preflight::enospc_error("ESP32 link", stderr, cache_root)
+    {
+        return error;
+    }
+    FbuildError::BuildFailed(format!("ESP32 link failed:\n{stderr}"))
+}
+
+/// The error for a failed `esptool elf2image`, translated the same way: the
+/// image write is exactly the step that hits `ENOSPC` on a nearly-full disk.
+pub(crate) fn convert_failure(exit_code: i32, stderr: &str, stdout: &str) -> FbuildError {
+    convert_failure_in(exit_code, stderr, stdout, &fbuild_paths::get_cache_root())
+}
+
+/// [`convert_failure`] with the cache root injected.
+pub(crate) fn convert_failure_in(
+    exit_code: i32,
+    stderr: &str,
+    stdout: &str,
+    cache_root: &Path,
+) -> FbuildError {
+    if let Some(error) =
+        fbuild_build_engine::disk_preflight::enospc_error("esptool elf2image", stderr, cache_root)
+    {
+        return error;
+    }
+    FbuildError::BuildFailed(format!(
+        "esptool elf2image failed (exit={exit_code}):\n{stderr}{stdout}"
+    ))
 }
 
 /// Build the error message for an esptool `elf2image` spawn failure.
@@ -477,7 +517,12 @@ impl Linker for Esp32Linker {
         output_dir: &Path,
         extra: &LinkExtraArgs,
     ) -> Result<PathBuf> {
-        std::fs::create_dir_all(output_dir)?;
+        std::fs::create_dir_all(output_dir).map_err(|error| {
+            // The link output volume is one fbuild writes itself
+            // (FastLED/fbuild#1750 item 4).
+            fbuild_core::disk_full::disk_full_io_error("ESP32 link", output_dir, &error)
+                .unwrap_or_else(|| error.into())
+        })?;
         let elf_path = output_dir.join("firmware.elf");
         let link_args = self.build_link_args(objects, archives, &elf_path, extra);
 
@@ -509,10 +554,7 @@ impl Linker for Esp32Linker {
         };
 
         if !result.success() {
-            return Err(fbuild_core::FbuildError::BuildFailed(format!(
-                "ESP32 link failed:\n{}",
-                result.stderr
-            )));
+            return Err(link_failure(&result.stderr));
         }
 
         Ok(elf_path)
@@ -573,10 +615,11 @@ impl Linker for Esp32Linker {
                 tracing::info!("converted firmware.elf → firmware.bin");
                 Ok(bin_out)
             }
-            Ok(result) => Err(fbuild_core::FbuildError::BuildFailed(format!(
-                "esptool elf2image failed (exit={}):\n{}{}",
-                result.exit_code, result.stderr, result.stdout
-            ))),
+            Ok(result) => Err(convert_failure(
+                result.exit_code,
+                &result.stderr,
+                &result.stdout,
+            )),
             Err(e) => Err(fbuild_core::FbuildError::BuildFailed(
                 esptool_spawn_failure_message(self.esptool_bin.as_deref(), &e.to_string()),
             )),

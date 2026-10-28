@@ -199,38 +199,63 @@ impl PreflightReport {
             ));
         }
         let reclaimable_total: u64 = reclaimable.iter().map(|cache| cache.bytes).sum();
-        if reclaimable.is_empty() {
-            text.push_str(&format!(
-                "\n  no reclaimable caches under {}",
-                cache_root.display()
-            ));
-        } else {
-            let listed: Vec<String> = reclaimable
-                .iter()
-                .map(|cache| format!("{} {}", cache.name, format_bytes(cache.bytes)))
-                .collect();
-            text.push_str(&format!(
-                "\n  reclaimable under {}: {} ({} total)",
-                cache_root.display(),
-                listed.join(", "),
-                format_bytes(reclaimable_total)
-            ));
-        }
+        text.push_str(&reclaimable_line(reclaimable, cache_root));
         if reclaimable_total < self.total_shortfall() {
             text.push_str(&format!(
                 "\n  reclaiming every cache frees {} — the rest must come from this volume",
                 format_bytes(reclaimable_total)
             ));
         }
-        text.push_str(
-            "\nfree space on that volume, or set FBUILD_MIN_DISK_BYTES=0 to skip the pre-flight check",
-        );
+        text.push('\n');
+        text.push_str(fbuild_core::disk_full::DISK_FULL_HINT);
         text
     }
 
     pub fn total_shortfall(&self) -> u64 {
         self.short_roots().map(RootSpace::shortfall).sum()
     }
+}
+
+/// What a user could free without touching their project, as one message line.
+///
+/// Shared by the pre-flight failure (#1750 acceptance criterion 2) and the
+/// translated mid-build `ENOSPC` ([`enospc_failure`]) so both list the same
+/// caches in the same order.
+fn reclaimable_line(reclaimable: &[ReclaimableCache], cache_root: &Path) -> String {
+    if reclaimable.is_empty() {
+        return format!("\n  no reclaimable caches under {}", cache_root.display());
+    }
+    let total: u64 = reclaimable.iter().map(|cache| cache.bytes).sum();
+    let listed: Vec<String> = reclaimable
+        .iter()
+        .map(|cache| format!("{} {}", cache.name, format_bytes(cache.bytes)))
+        .collect();
+    format!(
+        "\n  reclaimable under {}: {} ({} total)",
+        cache_root.display(),
+        listed.join(", "),
+        format_bytes(total)
+    )
+}
+
+/// The pre-flight message, for an `ENOSPC` a tool printed *after* the check
+/// passed (FastLED/fbuild#1750 item 4).
+///
+/// Returns `None` when `tool_output` shows no sign of a full volume, so callers
+/// fall through to their own error text — a link failure from an undefined
+/// reference must not be re-labelled a disk failure.
+pub fn enospc_failure(context: &str, tool_output: &str, cache_root: &Path) -> Option<String> {
+    let signature = fbuild_core::disk_full::enospc_signature(tool_output)?;
+    let reclaimable = reclaimable_caches(cache_root);
+    let mut text = format!(
+        "insufficient disk space:\n  \
+         {context} failed: the volume is full ({signature})\n  \
+         the pre-flight check passed, so the volume filled up during the build"
+    );
+    text.push_str(&reclaimable_line(&reclaimable, cache_root));
+    text.push('\n');
+    text.push_str(fbuild_core::disk_full::DISK_FULL_HINT);
+    Some(text)
 }
 
 /// Measure every checked root without judging it.
@@ -270,6 +295,12 @@ pub fn preflight(
     Err(FbuildError::BuildFailed(
         report.failure_message(&reclaimable, cache_root),
     ))
+}
+
+/// [`enospc_failure`] as the `Err` a tool boundary returns, or `None` when the
+/// output is not a full-volume failure.
+pub fn enospc_error(context: &str, tool_output: &str, cache_root: &Path) -> Option<FbuildError> {
+    enospc_failure(context, tool_output, cache_root).map(FbuildError::BuildFailed)
 }
 
 /// Depth-one cache directories, largest first — the bytes a user could free

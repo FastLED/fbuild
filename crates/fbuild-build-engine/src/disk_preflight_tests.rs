@@ -171,3 +171,47 @@ fn reclaimable_caches_sizes_depth_one_directories_only() {
 fn missing_cache_root_yields_no_reclaimable_caches() {
     assert!(reclaimable_caches(Path::new("/definitely/not/a/real/cache")).is_empty());
 }
+
+#[test]
+fn a_tool_enospc_is_translated_and_lists_reclaimable_caches() {
+    let dir = tempfile::tempdir().unwrap();
+    let platforms = dir.path().join("platforms");
+    std::fs::create_dir_all(&platforms).unwrap();
+    std::fs::write(platforms.join("espressif32.tar.gz"), vec![0u8; 2048]).unwrap();
+
+    let message = enospc_failure(
+        "esptool elf2image",
+        "A fatal error occurred: Could not write firmware.bin: No space left on device",
+        dir.path(),
+    )
+    .expect("a full volume must translate into the disk message");
+
+    assert!(message.contains("insufficient disk space"), "{message}");
+    assert!(message.contains("esptool elf2image failed"), "{message}");
+    assert!(message.contains("platforms 2.00KB"), "{message}");
+    assert_eq!(
+        message.split('\n').next_back(),
+        Some(fbuild_core::disk_full::DISK_FULL_HINT),
+        "a translated ENOSPC must end with the same hint as the pre-flight: {message}"
+    );
+}
+
+#[test]
+fn an_ordinary_tool_error_is_never_relabelled_a_disk_failure() {
+    assert!(
+        enospc_failure(
+            "compiling a.cpp",
+            "a.cpp:3:1: error: 'x' was not declared in this scope",
+            cache_root()
+        )
+        .is_none()
+    );
+    assert!(enospc_error("compiling a.cpp", "", cache_root()).is_none());
+    let translated = enospc_error(
+        "ESP32 link",
+        "ld: final link failed: No space left on device",
+        cache_root(),
+    )
+    .expect("ENOSPC must produce an error");
+    assert!(translated.to_string().contains("insufficient disk space"));
+}

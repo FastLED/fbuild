@@ -216,11 +216,22 @@ pub async fn compile_sources_parallel_shared(
                         Ok(Some(stderr))
                     }
                 }
-                Ok(result) => Err(format!(
-                    "compilation failed for {}:\n{}",
-                    source.display(),
-                    result.stderr
-                )),
+                Ok(result) => Err(
+                    // A full volume is a disk problem, not a source problem
+                    // (FastLED/fbuild#1750 item 4).
+                    crate::disk_preflight::enospc_failure(
+                        &format!("compiling {}", source.display()),
+                        &result.stderr,
+                        &fbuild_paths::get_cache_root(),
+                    )
+                    .unwrap_or_else(|| {
+                        format!(
+                            "compilation failed for {}:\n{}",
+                            source.display(),
+                            result.stderr
+                        )
+                    }),
+                ),
                 Err(e) => Err(e.to_string()),
             }
         });

@@ -449,3 +449,62 @@ async fn link_runs_the_linker_under_the_c_locale() {
 
     assert_eq!(std::fs::read_to_string(&recorded).unwrap(), "C");
 }
+
+#[test]
+fn a_full_volume_turns_the_link_failure_into_the_disk_message() {
+    let dir = tempfile::tempdir().unwrap();
+    std::fs::create_dir_all(dir.path().join("platforms")).unwrap();
+    let message =
+        link_failure_in("ld: final link failed: No space left on device", dir.path()).to_string();
+    assert!(message.contains("insufficient disk space"), "{message}");
+    assert!(message.contains("ESP32 link failed"), "{message}");
+    assert!(
+        message.contains("FBUILD_MIN_DISK_BYTES=0"),
+        "the way out must be named: {message}"
+    );
+}
+
+#[test]
+fn an_ordinary_link_error_keeps_its_original_text() {
+    let dir = tempfile::tempdir().unwrap();
+    let message = link_failure_in("undefined reference to `setup()'", dir.path()).to_string();
+    assert!(message.contains("ESP32 link failed"), "{message}");
+    assert!(message.contains("undefined reference"), "{message}");
+    assert!(!message.contains("insufficient disk space"), "{message}");
+}
+
+#[test]
+fn a_full_volume_turns_the_elf2image_failure_into_the_disk_message() {
+    let dir = tempfile::tempdir().unwrap();
+    let message = convert_failure_in(
+        1,
+        "A fatal error occurred: could not write: ENOSPC",
+        "",
+        dir.path(),
+    )
+    .to_string();
+    assert!(message.contains("insufficient disk space"), "{message}");
+    assert!(message.contains("esptool elf2image failed"), "{message}");
+    assert!(
+        !message.contains("exit=1"),
+        "the disk message replaces the raw text: {message}"
+    );
+}
+
+#[test]
+fn an_ordinary_elf2image_error_keeps_its_original_text() {
+    let dir = tempfile::tempdir().unwrap();
+    let message = convert_failure_in(
+        2,
+        "A fatal error occurred: invalid chip",
+        "stdout line",
+        dir.path(),
+    )
+    .to_string();
+    assert!(
+        message.contains("esptool elf2image failed (exit=2)"),
+        "{message}"
+    );
+    assert!(message.contains("invalid chip"), "{message}");
+    assert!(!message.contains("insufficient disk space"), "{message}");
+}
