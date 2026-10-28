@@ -255,6 +255,8 @@ pub fn enospc_failure(context: &str, tool_output: &str, cache_root: &Path) -> Op
     text.push_str(&reclaimable_line(&reclaimable, cache_root));
     text.push('\n');
     text.push_str(fbuild_core::disk_full::DISK_FULL_HINT);
+    // #1750 item 6: give the failure path room on the volume that just filled.
+    text.push_str(&fbuild_core::disk_reserve::release_note(context));
     Some(text)
 }
 
