@@ -25,6 +25,7 @@ pub mod debug;
 pub mod deploy;
 pub mod device;
 pub mod dispatch;
+pub mod doctor;
 pub mod graph_cmd;
 pub mod ide;
 pub mod ide_debug;

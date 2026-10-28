@@ -807,6 +807,11 @@ pub enum Commands {
         action: super::port_scan::PortAction,
     },
 
+    /// Read-only host diagnostics (FastLED/fbuild#1750). `fbuild doctor
+    /// --check-disk` prints the free space of every root a cold ESP32 build
+    /// writes plus the bytes the caches could give back, without building.
+    Doctor(super::doctor::DoctorArgs),
+
     /// Save / restore / list / verify the fbuild cache as a single
     /// portable `.tar.zst` archive (toolchains, platforms, framework,
     /// downloaded archives, sqlite index). FastLED/fbuild#527. Per-board

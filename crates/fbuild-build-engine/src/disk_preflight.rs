@@ -258,11 +258,33 @@ pub fn enospc_failure(context: &str, tool_output: &str, cache_root: &Path) -> Op
     Some(text)
 }
 
+/// Free space on the volume `path` lives on, walking up to the nearest
+/// existing ancestor when `path` itself does not exist yet.
+///
+/// A build root that the *first* build creates (`<cache>/tmp`) still lives on
+/// some volume, and reporting "could not be measured" for it is a false warning
+/// on every fresh host — `fbuild doctor --check-disk` showed exactly that. Only
+/// `NotFound` walks up; a permission or I/O error stays a root fbuild cannot
+/// measure, so a genuinely unreadable volume is still reported as such.
+fn available_on_volume(probe: &dyn FreeSpace, path: &Path) -> io::Result<u64> {
+    let mut current = path;
+    loop {
+        match probe.available(current) {
+            Ok(free) => return Ok(free),
+            Err(error) if error.kind() == io::ErrorKind::NotFound => match current.parent() {
+                Some(parent) if parent != current => current = parent,
+                _ => return Err(error),
+            },
+            Err(error) => return Err(error),
+        }
+    }
+}
+
 /// Measure every checked root without judging it.
 pub fn measure(probe: &dyn FreeSpace, roots: &[DiskRoot]) -> PreflightReport {
     let mut report = PreflightReport::default();
     for root in roots.iter().filter(|root| root.is_checked()) {
-        match probe.available(root.path.as_ref()) {
+        match available_on_volume(probe, root.path.as_ref()) {
             Ok(free_bytes) => report.roots.push(RootSpace {
                 label: root.label.clone(),
                 path: root.path.clone(),

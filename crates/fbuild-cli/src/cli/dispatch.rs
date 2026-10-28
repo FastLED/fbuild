@@ -22,6 +22,7 @@ use super::daemon_cmd::run_daemon;
 use super::debug::run_debug;
 use super::deploy::{run_deploy, run_monitor, run_test_emu};
 use super::device::run_device;
+use super::doctor::run_doctor;
 use super::graph_cmd::run_bloat_graph;
 use super::ide::{run_ide, run_ide_select};
 use super::libraries::run_libraries;
@@ -760,6 +761,7 @@ pub async fn async_main() {
         Some(Commands::Bringup(args)) => run_bringup(args),
         Some(Commands::Port { action }) => run_port(action),
         Some(Commands::Cache { action }) => run_cache(action),
+        Some(Commands::Doctor(args)) => run_doctor(args),
         // Routed before any daemon-adjacent initialization above. This arm is
         // unreachable but keeps the exhaustive command match honest.
         Some(Commands::UsbRecoveryHelper { .. }) => unreachable!("helper was routed early"),

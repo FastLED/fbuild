@@ -215,3 +215,85 @@ fn an_ordinary_tool_error_is_never_relabelled_a_disk_failure() {
     .expect("ENOSPC must produce an error");
     assert!(translated.to_string().contains("insufficient disk space"));
 }
+
+/// A volume where some paths do not exist yet (`NotFound`) and everything else
+/// resolves the way a real `statvfs` would.
+struct MissingDirsFreeSpace {
+    missing: Vec<NormalizedPath>,
+    free: HashMap<NormalizedPath, u64>,
+    measured: std::cell::RefCell<Vec<NormalizedPath>>,
+}
+
+impl MissingDirsFreeSpace {
+    fn new(missing: &[&str], free: &[(&str, u64)]) -> Self {
+        Self {
+            missing: missing.iter().map(NormalizedPath::new).collect(),
+            free: free
+                .iter()
+                .map(|(path, bytes)| (NormalizedPath::new(path), *bytes))
+                .collect(),
+            measured: std::cell::RefCell::new(Vec::new()),
+        }
+    }
+
+    fn asked(&self) -> Vec<String> {
+        self.measured
+            .borrow()
+            .iter()
+            .map(|path| path.display().to_string())
+            .collect()
+    }
+}
+
+impl FreeSpace for MissingDirsFreeSpace {
+    fn available(&self, path: &Path) -> io::Result<u64> {
+        let key = NormalizedPath::from(path);
+        self.measured.borrow_mut().push(key.clone());
+        if self.missing.contains(&key) {
+            return Err(io::Error::new(io::ErrorKind::NotFound, "no such directory"));
+        }
+        Ok(*self.free.get(&key).unwrap_or(&0))
+    }
+}
+
+#[test]
+fn a_root_that_does_not_exist_yet_is_measured_on_its_volume() {
+    // A fresh host has no `<cache>/tmp`; the scratch root must still report the
+    // cache volume's free space instead of "could not be measured".
+    let probe = MissingDirsFreeSpace::new(&["/cache/tmp"], &[("/cache", 40 * GIB)]);
+    let roots = vec![DiskRoot::new("temp", "/cache/tmp", 64 * 1024 * 1024)];
+    let report = measure(&probe, &roots);
+    assert_eq!(
+        report.unchecked().len(),
+        0,
+        "a create-me-later root is measurable"
+    );
+    assert_eq!(report.roots().len(), 1);
+    assert_eq!(report.roots()[0].free_bytes(), 40 * GIB);
+    assert_eq!(report.roots()[0].label(), "temp");
+    assert_eq!(
+        probe.asked(),
+        vec!["/cache/tmp".to_string(), "/cache".to_string()],
+        "the missing root is asked first, then its ancestor"
+    );
+}
+
+#[test]
+fn a_root_nested_under_missing_dirs_walks_to_the_first_existing_ancestor() {
+    let probe = MissingDirsFreeSpace::new(
+        &["/cache/a/b/c", "/cache/a/b", "/cache/a"],
+        &[("/cache", 7 * GIB)],
+    );
+    let roots = vec![DiskRoot::new("deep", "/cache/a/b/c", 1024)];
+    let report = measure(&probe, &roots);
+    assert_eq!(report.roots()[0].free_bytes(), 7 * GIB);
+}
+
+#[test]
+fn a_permission_error_is_still_unmeasurable_and_never_walks_up() {
+    let probe = FakeFreeSpace::new(&[("/", 40 * GIB)]).unmeasurable("/cache");
+    let roots = vec![DiskRoot::new("cache", "/cache", 2 * GIB)];
+    let report = measure(&probe, &roots);
+    assert_eq!(report.unchecked().len(), 1, "denied is not a missing dir");
+    assert!(report.roots().is_empty());
+}
