@@ -13,8 +13,63 @@ use std::path::{Path, PathBuf};
 
 use fbuild_core::Result;
 
-/// Record the requested ESP32 package pins beside the installed stack so a
-/// successful build cannot conceal a cross-version framework or SDK.
+/// How fbuild integrates ESP-IDF for an environment.
+///
+/// fbuild has no CMake/`idf.py` component build: every ESP32 environment is
+/// compiled with the Arduino core. Recording the mode beside the requested and
+/// resolved frameworks keeps a build log from claiming IDF component coverage
+/// it never produced (FastLED/fbuild#1664).
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub(super) enum Esp32Integration {
+    /// `framework = arduino`: the Arduino core only.
+    ArduinoCore,
+    /// `framework = arduino, espidf`: the Arduino core links the precompiled
+    /// ESP-IDF SDK. Not an ESP-IDF component build.
+    ArduinoOnIdf,
+}
+
+impl Esp32Integration {
+    pub(super) fn label(self) -> &'static str {
+        match self {
+            Self::ArduinoCore => "arduino-core",
+            Self::ArduinoOnIdf => "arduino-on-idf",
+        }
+    }
+}
+
+/// The frameworks an environment's `framework =` value requests.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub(super) struct RequestedFrameworks {
+    pub arduino: bool,
+    pub espidf: bool,
+}
+
+impl RequestedFrameworks {
+    /// `None` when the request is a bare `espidf` build fbuild cannot perform,
+    /// otherwise the integration mode the build will actually use.
+    pub(super) fn integration(self) -> Option<Esp32Integration> {
+        match (self.arduino, self.espidf) {
+            (true, true) => Some(Esp32Integration::ArduinoOnIdf),
+            (false, true) => None,
+            _ => Some(Esp32Integration::ArduinoCore),
+        }
+    }
+}
+
+/// Parse a PlatformIO `framework =` value into the requested frameworks.
+pub(super) fn requested_frameworks(framework: &str) -> RequestedFrameworks {
+    let mut requested = RequestedFrameworks::default();
+    for part in framework.split(',').map(str::trim) {
+        requested.arduino |= part.eq_ignore_ascii_case("arduino");
+        requested.espidf |= part.eq_ignore_ascii_case("espidf");
+    }
+    requested
+}
+
+/// Record the requested framework, the requested package pins and the actual
+/// integration mode beside the installed stack so a successful build cannot
+/// conceal a cross-version framework, an SDK mismatch or an integration mode
+/// other than the one requested (FastLED/fbuild#1664).
 pub(super) fn esp32_package_stack_summary(
     env_config: Option<&HashMap<String, String>>,
     platform: &fbuild_packages::PackageInfo,
@@ -27,6 +82,9 @@ pub(super) fn esp32_package_stack_summary(
         .and_then(|env| env.get("platform"))
         .map_or("<default>", String::as_str);
     let requested_framework = env_config
+        .and_then(|env| env.get("framework"))
+        .map_or("<board default>", String::as_str);
+    let framework_pin = env_config
         .and_then(|env| env.get("platform_packages"))
         .and_then(|raw| {
             raw.lines().find(|line| {
@@ -36,11 +94,14 @@ pub(super) fn esp32_package_stack_summary(
             })
         })
         .map_or("<platform manifest>", str::trim);
+    let integration = requested_frameworks(requested_framework)
+        .integration()
+        .map_or("unsupported-espidf", Esp32Integration::label);
     let sdk_version = installed_framework
         .bundled_esp_idf_version(mcu)
         .unwrap_or_else(|| "unknown (bundled with framework)".to_string());
     format!(
-        "ESP32 packages: requested platform={requested_platform}, framework={requested_framework}; resolved platform={}@{}, framework={}@{}, toolchain={}@{}, ESP-IDF SDK={sdk_version}",
+        "ESP32 packages: requested platform={requested_platform}, framework={requested_framework}, framework_pin={framework_pin}, integration={integration}; resolved platform={}@{}, framework={}@{}, toolchain={}@{}, ESP-IDF SDK={sdk_version}",
         platform.name,
         platform.version,
         framework.name,
@@ -87,11 +148,7 @@ pub(super) fn reject_unsupported_esp_framework(
     let Some(framework) = env.get("framework") else {
         return Ok(());
     };
-    let parts: Vec<&str> = framework.split(',').map(str::trim).collect();
-    let espidf = parts.iter().any(|part| part.eq_ignore_ascii_case("espidf"));
-    let arduino = parts
-        .iter()
-        .any(|part| part.eq_ignore_ascii_case("arduino"));
+    let RequestedFrameworks { arduino, espidf } = requested_frameworks(framework);
     if espidf && !arduino {
         return Err(fbuild_core::FbuildError::ConfigError(format!(
             "framework = {framework} is unsupported for environment '{env_name}': fbuild builds \
