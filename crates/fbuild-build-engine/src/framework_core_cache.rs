@@ -107,7 +107,15 @@ impl FrameworkCoreCache {
         if !self.path.is_dir() {
             return Ok(ArtifactCopyStats::default());
         }
-        let mut outcome = copy_artifacts(&self.path, core_build_dir, false, false)?;
+        let mut outcome = copy_artifacts(&self.path, core_build_dir, false, false, true)?;
+        if outcome.deliveries.aliased() > 0 {
+            tracing::debug!(
+                reflinked = outcome.deliveries.reflinked,
+                hardlinked = outcome.deliveries.hardlinked,
+                copied = outcome.deliveries.copied,
+                "framework core cache hydrate delivered without byte copies"
+            );
+        }
         let refreshed = refresh_command_hashes(
             core_build_dir,
             compiler,
@@ -124,7 +132,9 @@ impl FrameworkCoreCache {
             return Ok(ArtifactCopyStats::default());
         }
         std::fs::create_dir_all(&self.path)?;
-        Ok(copy_artifacts(core_build_dir, &self.path, true, true)?.stats)
+        // Never aliased: the cache owns its own bytes, so a later in-place
+        // write in a project's build dir can never corrupt a shared entry.
+        Ok(copy_artifacts(core_build_dir, &self.path, true, true, false)?.stats)
     }
 
     /// Build-output line for a [`Self::hydrate`] outcome. CI logs only carry
@@ -237,11 +247,18 @@ fn file_content_digest(path: &Path) -> String {
     }
 }
 
+/// Copy one directory of artifacts into another.
+///
+/// `alias_ok` selects how each file is delivered: see [`deliver_artifact`].
+/// Hydration may alias (the build dir only ever replaces cached objects, never
+/// mutates them in place); [`FrameworkCoreCache::store`] may not, because the
+/// cache has to own its bytes.
 fn copy_artifacts(
     src_dir: &Path,
     dst_dir: &Path,
     overwrite: bool,
     include_cmdhash: bool,
+    alias_ok: bool,
 ) -> std::io::Result<ArtifactCopyOutcome> {
     std::fs::create_dir_all(dst_dir)?;
     let mut outcome = ArtifactCopyOutcome::default();
@@ -262,7 +279,9 @@ fn copy_artifacts(
             }
             std::fs::remove_file(&dst)?;
         }
-        copy_preserving_mtime(&src, &dst)?;
+        outcome
+            .deliveries
+            .record(deliver_artifact(&src, &dst, alias_ok)?);
         if is_object_artifact(&src) {
             outcome.copied_objects.insert(entry.file_name());
         }
@@ -275,6 +294,73 @@ fn copy_artifacts(
 struct ArtifactCopyOutcome {
     stats: ArtifactCopyStats,
     copied_objects: HashSet<std::ffi::OsString>,
+    deliveries: DeliveryTally,
+}
+
+/// How each artifact reached the destination, for the hydrate debug line.
+#[derive(Debug, Default, Clone, Copy)]
+struct DeliveryTally {
+    reflinked: usize,
+    hardlinked: usize,
+    copied: usize,
+}
+
+impl DeliveryTally {
+    fn record(&mut self, delivery: Delivery) {
+        match delivery {
+            Delivery::Reflink => self.reflinked += 1,
+            Delivery::HardLink => self.hardlinked += 1,
+            Delivery::Copy => self.copied += 1,
+        }
+    }
+
+    /// Deliveries that avoided copying the object's bytes.
+    fn aliased(&self) -> usize {
+        self.reflinked + self.hardlinked
+    }
+}
+
+/// How a cached artifact reached its destination.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum Delivery {
+    /// Copy-on-write clone: an independent file sharing the original's
+    /// extents (btrfs/XFS/APFS/ReFS). No bytes move and later writes to either
+    /// file stay private.
+    Reflink,
+    /// A second hard link to the cached inode: free on every filesystem, but
+    /// only ever into a build directory, and only on one volume.
+    HardLink,
+    /// A byte-for-byte copy: the portable fallback.
+    Copy,
+}
+
+/// Deliver `src` to `dst`, preferring the cheapest tier the volume supports.
+///
+/// `hydrate` used to `fs::copy` all 118 framework core objects into every new
+/// project directory: 1.17 s of pure byte movement per fresh build, on a
+/// filesystem where nothing was reflinked (`reflink_count=0, copy_count=2` in
+/// the zccache journal; FastLED/fbuild#1414 finding 3). Both cheaper tiers fall
+/// back to the next one when the filesystem refuses them (`EOPNOTSUPP` on an
+/// ext4 reflink, `EXDEV` for a hard link across volumes), so the caller never
+/// has to probe the volume first and a copy is still the floor.
+///
+/// `alias_ok` is the caller's statement that the destination may share storage
+/// with the source. It is false for `store`, where the cache must own its
+/// bytes.
+fn deliver_artifact(src: &Path, dst: &Path, alias_ok: bool) -> std::io::Result<Delivery> {
+    if alias_ok {
+        if reflink_copy::reflink(src, dst).is_ok() {
+            copy_mtime(src, dst);
+            return Ok(Delivery::Reflink);
+        }
+        // A hard link keeps the cached mtime for free and is supported
+        // everywhere a build tree and the cache share a volume.
+        if std::fs::hard_link(src, dst).is_ok() {
+            return Ok(Delivery::HardLink);
+        }
+    }
+    copy_preserving_mtime(src, dst)?;
+    Ok(Delivery::Copy)
 }
 
 fn is_core_artifact(path: &Path, include_cmdhash: bool) -> bool {
@@ -318,6 +404,14 @@ fn refresh_command_hashes(
 
 fn copy_preserving_mtime(src: &Path, dst: &Path) -> std::io::Result<u64> {
     let bytes = std::fs::copy(src, dst)?;
+    copy_mtime(src, dst);
+    Ok(bytes)
+}
+
+/// Give `dst` the source's mtime. Incremental rebuild checks compare mtimes, so
+/// a delivery that lost them would look like a stale object and recompile the
+/// whole framework core — the exact cost the cache exists to avoid.
+fn copy_mtime(src: &Path, dst: &Path) {
     if let (Ok(meta), Ok(file)) = (
         src.metadata(),
         std::fs::File::options().write(true).open(dst),
@@ -326,7 +420,6 @@ fn copy_preserving_mtime(src: &Path, dst: &Path) -> std::io::Result<u64> {
             let _ = file.set_modified(mtime);
         }
     }
-    Ok(bytes)
 }
 
 #[cfg(test)]
@@ -674,7 +767,7 @@ mod tests {
         std::fs::write(src.join("main.cpp.o"), b"cache").unwrap();
         std::fs::write(dst.join("main.cpp.o"), b"project").unwrap();
 
-        let outcome = copy_artifacts(&src, &dst, false, true).unwrap();
+        let outcome = copy_artifacts(&src, &dst, false, true, false).unwrap();
         assert_eq!(outcome.stats.copied, 0);
         assert_eq!(outcome.stats.skipped, 1);
         assert_eq!(std::fs::read(dst.join("main.cpp.o")).unwrap(), b"project");
@@ -731,5 +824,101 @@ mod tests {
             b"sibling"
         );
         selected.remove().unwrap();
+    }
+
+    /// An mtime old enough that "preserved" cannot be confused with "just
+    /// written", which is what makes the assertions below meaningful.
+    fn ancient_mtime() -> std::time::SystemTime {
+        std::time::SystemTime::UNIX_EPOCH + std::time::Duration::from_secs(1_600_000_000)
+    }
+
+    fn set_mtime(path: &Path, mtime: std::time::SystemTime) {
+        std::fs::File::options()
+            .write(true)
+            .open(path)
+            .unwrap()
+            .set_modified(mtime)
+            .unwrap();
+    }
+
+    fn read_mtime(path: &Path) -> std::time::SystemTime {
+        std::fs::metadata(path).unwrap().modified().unwrap()
+    }
+
+    #[test]
+    fn alias_delivery_avoids_copying_bytes_and_keeps_the_mtime() {
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("cached.o");
+        let dst = tmp.path().join("hydrated.o");
+        std::fs::write(&src, b"object bytes").unwrap();
+        set_mtime(&src, ancient_mtime());
+
+        let delivery = deliver_artifact(&src, &dst, true).unwrap();
+
+        // Every normal filesystem supports a hard link, so aliasing must never
+        // degrade to a copy when the caller allows it.
+        assert_ne!(delivery, Delivery::Copy);
+        assert_eq!(std::fs::read(&dst).unwrap(), b"object bytes");
+        // A lost mtime makes an incremental check recompile the whole core.
+        assert_eq!(read_mtime(&dst), ancient_mtime());
+    }
+
+    #[test]
+    fn delivery_without_aliasing_copies_and_stays_independent() {
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("cached.o");
+        let dst = tmp.path().join("stored.o");
+        std::fs::write(&src, b"object bytes").unwrap();
+        set_mtime(&src, ancient_mtime());
+
+        let delivery = deliver_artifact(&src, &dst, false).unwrap();
+
+        assert_eq!(delivery, Delivery::Copy);
+        assert_eq!(read_mtime(&dst), ancient_mtime());
+        // An in-place write to one file must not be visible in the other: that
+        // aliasing is exactly what `store` may not create.
+        std::fs::write(&dst, b"changed!!!!!").unwrap();
+        assert_eq!(std::fs::read(&src).unwrap(), b"object bytes");
+    }
+
+    #[test]
+    fn store_owns_its_bytes_even_though_hydrate_aliases() {
+        let tmp = tempfile::tempdir().unwrap();
+        let build = tmp.path().join("build");
+        let cache = tmp.path().join("cache");
+        std::fs::create_dir_all(&build).unwrap();
+        std::fs::create_dir_all(&cache).unwrap();
+        std::fs::write(build.join("main.cpp.o"), b"object bytes").unwrap();
+
+        copy_artifacts(&build, &cache, true, true, false).unwrap();
+
+        // In-place mutation of the cached entry must leave the build dir alone.
+        std::fs::write(cache.join("main.cpp.o"), b"corrupted!!!").unwrap();
+        assert_eq!(
+            std::fs::read(build.join("main.cpp.o")).unwrap(),
+            b"object bytes"
+        );
+    }
+
+    #[test]
+    fn hydrate_artifacts_alias_when_the_caller_allows_it() {
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("cache-entry");
+        let dst = tmp.path().join("core");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(src.join("a.cpp.o"), b"a").unwrap();
+        std::fs::write(src.join("b.cpp.o"), b"b").unwrap();
+        std::fs::write(src.join("ignored.txt"), b"no").unwrap();
+
+        let aliased = copy_artifacts(&src, &dst, false, false, true).unwrap();
+        assert_eq!(aliased.stats.copied, 2);
+        assert_eq!(aliased.deliveries.aliased(), 2);
+        assert_eq!(aliased.deliveries.copied, 0);
+
+        let fresh = tmp.path().join("fresh");
+        let copied = copy_artifacts(&src, &fresh, false, false, false).unwrap();
+        assert_eq!(copied.stats.copied, 2);
+        assert_eq!(copied.deliveries.aliased(), 0);
+        assert_eq!(copied.deliveries.copied, 2);
     }
 }
