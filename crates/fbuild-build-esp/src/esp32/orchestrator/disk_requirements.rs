@@ -12,6 +12,7 @@ use std::path::Path;
 
 use fbuild_build_engine::disk_preflight::{DiskRoot, FreeSpace, HostFreeSpace, preflight};
 use fbuild_core::Result;
+use fbuild_core::path::NormalizedPath;
 
 /// Free bytes the cache volume must have before a cold ESP32 build: a platform
 /// package (~1.3 GB), a toolchain (~1.0 GB) and the framework install land
@@ -23,7 +24,9 @@ pub const ESP32_CACHE_BYTES: u64 = 2 * 1024 * 1024 * 1024;
 /// firmware image and map file.
 pub const PROJECT_BUILD_BYTES: u64 = 256 * 1024 * 1024;
 
-/// Free bytes the temp volume must have for response files and tool scratch.
+/// Free bytes fbuild's scratch tree must have for response files and tool
+/// scratch. fbuild's scratch lives under the cache root (`<cache>/tmp`), not
+/// `$TMPDIR`, per GATE-012's rooted-tempdir rule.
 pub const TEMP_BYTES: u64 = 64 * 1024 * 1024;
 
 /// Overrides [`ESP32_CACHE_BYTES`]. `0` disables the pre-flight check.
@@ -74,8 +77,13 @@ pub fn disk_roots(project_dir: &Path, cache_bytes: u64) -> Vec<DiskRoot> {
     vec![
         DiskRoot::new("cache", fbuild_paths::get_cache_root(), cache_bytes),
         DiskRoot::new("project", project_dir, PROJECT_BUILD_BYTES),
-        DiskRoot::new("temp", std::env::temp_dir(), TEMP_BYTES),
+        DiskRoot::new("temp", scratch_root(), TEMP_BYTES),
     ]
+}
+
+/// fbuild's scratch tree: `<cache root>/tmp` (never `$TMPDIR`).
+pub fn scratch_root() -> NormalizedPath {
+    NormalizedPath::from(fbuild_paths::get_cache_root().join("tmp"))
 }
 
 /// Whether this build should be checked at all.
