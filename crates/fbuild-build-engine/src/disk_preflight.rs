@@ -14,8 +14,9 @@
 //! step rather than a build side effect.
 
 use std::io;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::{FbuildError, Result};
 
 use crate::build_output::format_bytes;
@@ -24,14 +25,18 @@ use crate::build_output::format_bytes;
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct DiskRoot {
     label: String,
-    path: PathBuf,
+    path: NormalizedPath,
     required_bytes: u64,
 }
 
 impl DiskRoot {
     /// A root the build writes, `label` naming it in the message, with the
     /// bytes it needs free. A `required_bytes` of zero skips the root.
-    pub fn new(label: impl Into<String>, path: impl Into<PathBuf>, required_bytes: u64) -> Self {
+    pub fn new(
+        label: impl Into<String>,
+        path: impl Into<NormalizedPath>,
+        required_bytes: u64,
+    ) -> Self {
         Self {
             label: label.into(),
             path: path.into(),
@@ -60,7 +65,7 @@ impl DiskRoot {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct RootSpace {
     label: String,
-    path: PathBuf,
+    path: NormalizedPath,
     free_bytes: u64,
     required_bytes: u64,
 }
@@ -232,7 +237,7 @@ impl PreflightReport {
 pub fn measure(probe: &dyn FreeSpace, roots: &[DiskRoot]) -> PreflightReport {
     let mut report = PreflightReport::default();
     for root in roots.iter().filter(|root| root.is_checked()) {
-        match probe.available(&root.path) {
+        match probe.available(root.path.as_ref()) {
             Ok(free_bytes) => report.roots.push(RootSpace {
                 label: root.label.clone(),
                 path: root.path.clone(),

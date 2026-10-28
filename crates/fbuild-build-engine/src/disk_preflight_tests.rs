@@ -2,15 +2,17 @@
 
 use std::collections::HashMap;
 use std::io;
-use std::path::{Path, PathBuf};
+use std::path::Path;
+
+use fbuild_core::path::NormalizedPath;
 
 use crate::disk_preflight::*;
 
 /// A volume whose free space the test states outright.
 struct FakeFreeSpace {
-    free: HashMap<PathBuf, u64>,
-    unmeasurable: Vec<PathBuf>,
-    measured: std::cell::RefCell<Vec<PathBuf>>,
+    free: HashMap<NormalizedPath, u64>,
+    unmeasurable: Vec<NormalizedPath>,
+    measured: std::cell::RefCell<Vec<NormalizedPath>>,
 }
 
 impl FakeFreeSpace {
@@ -18,7 +20,7 @@ impl FakeFreeSpace {
         Self {
             free: free
                 .iter()
-                .map(|(path, bytes)| (PathBuf::from(path), *bytes))
+                .map(|(path, bytes)| (NormalizedPath::new(path), *bytes))
                 .collect(),
             unmeasurable: Vec::new(),
             measured: std::cell::RefCell::new(Vec::new()),
@@ -26,18 +28,19 @@ impl FakeFreeSpace {
     }
 
     fn unmeasurable(mut self, path: &str) -> Self {
-        self.unmeasurable.push(PathBuf::from(path));
+        self.unmeasurable.push(NormalizedPath::new(path));
         self
     }
 }
 
 impl FreeSpace for FakeFreeSpace {
     fn available(&self, path: &Path) -> io::Result<u64> {
-        self.measured.borrow_mut().push(path.to_path_buf());
-        if self.unmeasurable.iter().any(|bad| bad == path) {
+        let key = NormalizedPath::from(path);
+        self.measured.borrow_mut().push(key.clone());
+        if self.unmeasurable.contains(&key) {
             return Err(io::Error::new(io::ErrorKind::PermissionDenied, "denied"));
         }
-        Ok(*self.free.get(path).unwrap_or(&0))
+        Ok(*self.free.get(&key).unwrap_or(&0))
     }
 }
 
