@@ -19,12 +19,14 @@ pub mod gc;
 pub mod index;
 pub mod lease;
 pub mod paths;
+pub mod reclaim;
 
 pub use budget::CacheBudget;
 pub use gc::GcReport;
 pub use index::{CacheEntry, CacheIndex};
 pub use lease::Lease;
 pub use paths::Kind;
+pub use reclaim::{RECLAIM_ORDER, ReclaimReport, ReclaimStep};
 
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
@@ -124,6 +126,16 @@ impl DiskCache {
     pub fn run_gc(&self) -> rusqlite::Result<GcReport> {
         let budget = CacheBudget::compute(&self.cache_root);
         gc::run_gc(&self.index, &budget)
+    }
+
+    /// Evict disposable caches in the fixed [`RECLAIM_ORDER`] until
+    /// `needed_bytes` is free (FastLED/fbuild#1750 item 3).
+    ///
+    /// Explicit and budgeted on purpose: the background GC enforces its own
+    /// watermarks mid-build, and #1341 is what that costs. Callers must refuse
+    /// to run this while a build is in progress.
+    pub fn reclaim(&self, needed_bytes: u64, dry_run: bool) -> rusqlite::Result<ReclaimReport> {
+        reclaim::reclaim(&self.index, needed_bytes, dry_run)
     }
 
     /// Reconcile index against filesystem (run on daemon startup).

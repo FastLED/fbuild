@@ -10,6 +10,25 @@ use super::super::paths::{self, Kind};
 use super::pid::is_pid_alive;
 use super::{CacheEntry, CacheIndex};
 
+/// Which phase of the two-phase cache an LRU query walks.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum LruPhase {
+    /// Extracted installs — cheap to rehydrate from an archive.
+    Installed,
+    /// Downloaded archives — the expensive-to-refetch half.
+    Archive,
+}
+
+impl LruPhase {
+    /// The column that must be non-NULL for an entry to be in this phase.
+    fn present_column(self) -> &'static str {
+        match self {
+            Self::Installed => "installed_path",
+            Self::Archive => "archive_path",
+        }
+    }
+}
+
 impl CacheIndex {
     /// Look up an entry by kind, url, and version.
     pub fn lookup(
@@ -196,42 +215,77 @@ impl CacheIndex {
 
     /// Get LRU installed entries (oldest first), skipping pinned.
     pub fn lru_installed_entries(&self, limit: usize) -> rusqlite::Result<Vec<CacheEntry>> {
-        let conn = self.conn.lock().unwrap_or_else(|e| e.into_inner());
-        let mut stmt = conn.prepare(
-            "SELECT id, kind, url, stem, hash, version,
-                    archive_path, archive_bytes, archive_sha256,
-                    installed_path, installed_bytes, installed_at,
-                    archived_at, last_used_at, use_count, pinned
-             FROM entries
-             WHERE installed_path IS NOT NULL AND pinned = 0
-             ORDER BY last_used_at ASC
-             LIMIT ?1",
-        )?;
-
-        let entries = stmt
-            .query_map(params![limit as i64], Self::row_to_entry)?
-            .collect::<Result<Vec<_>, _>>()?;
-        Ok(entries)
+        self.lru_entries(LruPhase::Installed, None, limit)
     }
 
     /// Get LRU archive entries (oldest first), skipping pinned.
     pub fn lru_archive_entries(&self, limit: usize) -> rusqlite::Result<Vec<CacheEntry>> {
+        self.lru_entries(LruPhase::Archive, None, limit)
+    }
+
+    /// Get LRU installed entries of one [`Kind`] (oldest first), skipping
+    /// pinned. On-demand reclaim walks one kind at a time so it can honour its
+    /// fixed eviction order (FastLED/fbuild#1750 item 3).
+    pub fn lru_installed_entries_of_kind(
+        &self,
+        kind: Kind,
+        limit: usize,
+    ) -> rusqlite::Result<Vec<CacheEntry>> {
+        self.lru_entries(LruPhase::Installed, Some(kind), limit)
+    }
+
+    /// Get LRU archive entries of one [`Kind`] (oldest first), skipping pinned.
+    pub fn lru_archive_entries_of_kind(
+        &self,
+        kind: Kind,
+        limit: usize,
+    ) -> rusqlite::Result<Vec<CacheEntry>> {
+        self.lru_entries(LruPhase::Archive, Some(kind), limit)
+    }
+
+    /// Shared LRU query: `phase` selects the column that must be present,
+    /// `kind` narrows to one cache kind, `limit` caps the batch.
+    ///
+    /// The four callers differ only in their `WHERE` clause, so the projection
+    /// and ordering live here once — a new caller cannot silently drop the
+    /// `pinned = 0` filter that keeps a leased entry alive during a build.
+    fn lru_entries(
+        &self,
+        phase: LruPhase,
+        kind: Option<Kind>,
+        limit: usize,
+    ) -> rusqlite::Result<Vec<CacheEntry>> {
         let conn = self.conn.lock().unwrap_or_else(|e| e.into_inner());
-        let mut stmt = conn.prepare(
+        let mut sql = String::from(
             "SELECT id, kind, url, stem, hash, version,
                     archive_path, archive_bytes, archive_sha256,
                     installed_path, installed_bytes, installed_at,
                     archived_at, last_used_at, use_count, pinned
              FROM entries
-             WHERE archive_path IS NOT NULL AND pinned = 0
-             ORDER BY last_used_at ASC
-             LIMIT ?1",
-        )?;
+             WHERE ",
+        );
+        sql.push_str(phase.present_column());
+        sql.push_str(" IS NOT NULL AND pinned = 0");
+        let limit_slot = match kind {
+            Some(_) => {
+                sql.push_str(" AND kind = ?1");
+                "?2"
+            }
+            None => "?1",
+        };
+        sql.push_str(" ORDER BY last_used_at ASC LIMIT ");
+        sql.push_str(limit_slot);
 
-        let entries = stmt
-            .query_map(params![limit as i64], Self::row_to_entry)?
-            .collect::<Result<Vec<_>, _>>()?;
-        Ok(entries)
+        let mut stmt = conn.prepare(&sql)?;
+        let rows = match kind {
+            Some(kind) => stmt
+                .query_map(params![kind.as_str(), limit as i64], Self::row_to_entry)?
+                .collect::<Result<Vec<_>, _>>()?,
+            None => stmt
+                .query_map(params![limit as i64], Self::row_to_entry)?
+                .collect::<Result<Vec<_>, _>>()?,
+        };
+        Ok(rows)
     }
 
     /// Null out the installed_path for an entry (after evicting its directory).
