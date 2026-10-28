@@ -26,7 +26,7 @@ mod boot_artifacts;
 mod build;
 mod cdc;
 mod compile_phases;
-mod disk_requirements;
+pub mod disk_requirements;
 mod embed;
 mod embed_stage;
 mod fingerprint;

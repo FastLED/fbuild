@@ -22,6 +22,7 @@ here and is dispatched from `cli::async_main`.
 - **`daemon_cmd.rs`** -- `run_daemon` and friends (status / restart / kill / locks / cache-stats / gc), process-management helpers
 - **`daemon_stop.rs`** -- `fbuild daemon stop`: `StopPlan` (the decision), termination + exit confirmation (FastLED/fbuild#1360). Tests in `daemon_stop_tests.rs`
 - **`device.rs`** -- `run_device` (list / status / lease / release / take)
+- **`doctor.rs`** -- `run_doctor`: read-only host diagnostics; `--check-disk` reports per-root free space and reclaimable caches without building (#1750). Tests in `doctor_tests.rs`
 - **`show.rs`** -- `run_show`, `show_daemon_logs`
 - **`reset.rs`** -- `run_reset`
 - **`lnk.rs`** -- `run_lnk` (pull / check / add)
