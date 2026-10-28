@@ -146,10 +146,14 @@ fn only_the_short_root_is_named_on_failure() {
     let error = preflight(&probe, &roots, cache_root())
         .expect_err("one short root fails the whole check")
         .to_string();
-    let portable_error = error.replace('\\', "/");
-    assert!(portable_error.contains("/project"), "{error}");
+    let project_path = NormalizedPath::new("/project");
+    let cache_path = NormalizedPath::new("/cache");
     assert!(
-        !portable_error.contains("/cache has"),
+        error.contains(&project_path.display().to_string()),
+        "{error}"
+    );
+    assert!(
+        !error.contains(&format!("{} has", cache_path.display())),
         "roomy roots stay out: {error}"
     );
     assert_eq!(error.matches("short by").count(), 1, "{error}");
