@@ -17,6 +17,7 @@ pub mod build_output;
 pub mod compile_backend;
 pub mod compile_database;
 pub mod compiler;
+pub mod disk_preflight;
 pub mod eh_frame_policy;
 pub mod eh_frame_policy_compute;
 pub mod flag_overlay;
@@ -242,3 +243,6 @@ mod tests {
         warn_debug_build_flags(&["-O2".to_string(), "-Wall".to_string()]);
     }
 }
+
+#[cfg(test)]
+mod disk_preflight_tests;

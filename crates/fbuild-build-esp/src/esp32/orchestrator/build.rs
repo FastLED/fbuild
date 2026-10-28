@@ -87,6 +87,14 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // (`platform-espressif32`) and framework (`framework-arduinoespressif32`)
         // packages can honor consumer-pinned URLs (FastLED/fbuild#672).
         let env_config = ctx.config.get_env_config(&params.env_name).ok();
+        // Fail before package resolution when a root the build writes cannot
+        // hold what a cold ESP32 build needs (FastLED/fbuild#1750): a full disk
+        // otherwise surfaces as a raw ENOSPC from whichever subprocess writes
+        // next, with no statement of the path or the shortfall.
+        if super::disk_requirements::should_preflight(params.clean_only, params.clean_all) {
+            let _disk_phase = perf.phase("disk-preflight");
+            super::disk_requirements::preflight_esp32_disk(&params.project_dir)?;
+        }
         let _resolve_phase = perf.phase("pioarduino-resolve");
         let (toolchain, framework, esptool_bin, platform_info) = resolve_pioarduino_packages(
             &params.project_dir,

@@ -193,7 +193,9 @@ pub fn log_symbol_report(log: &mut BuildLog, symbols: &SymbolMap) {
 ///
 /// Examples: `"31.50KB"`, `"2.00MB"`, `"512 bytes"`
 pub fn format_bytes(bytes: u64) -> String {
-    if bytes >= 1024 * 1024 {
+    if bytes >= 1024 * 1024 * 1024 {
+        format!("{:.2}GB", bytes as f64 / (1024.0 * 1024.0 * 1024.0))
+    } else if bytes >= 1024 * 1024 {
         format!("{:.2}MB", bytes as f64 / (1024.0 * 1024.0))
     } else if bytes >= 1024 {
         format!("{:.2}KB", bytes as f64 / 1024.0)
@@ -217,6 +219,13 @@ mod tests {
     fn test_format_bytes_kb() {
         assert_eq!(format_bytes(1024), "1.00KB");
         assert_eq!(format_bytes(32256), "31.50KB");
+    }
+
+    #[test]
+    fn test_format_bytes_gb() {
+        // Disk pre-flight reports free space in GB (#1750).
+        assert_eq!(format_bytes(1024 * 1024 * 1024), "1.00GB");
+        assert_eq!(format_bytes(40 * 1024 * 1024 * 1024), "40.00GB");
     }
 
     #[test]
