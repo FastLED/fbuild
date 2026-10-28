@@ -160,6 +160,35 @@ pub fn hash_files(paths: &[PathBuf]) -> Result<String> {
     Ok(format!("{:x}", hasher.finalize()))
 }
 
+/// Every file under `watch.root` that shapes the fingerprint, sorted.
+///
+/// Symlinks are followed. A PlatformIO project reaches a local library
+/// through `lib/<Lib> -> /elsewhere` (FastLED/fbuild#1753), and a walk that
+/// skips symlinked entries leaves every file under the link target out of
+/// the fingerprint: an edit there never invalidated the warm path, which
+/// then reused the previous `firmware.bin` and flashed byte-identical code.
+/// Cycles are dropped (walkdir reports them as errors) so a self-referential
+/// link cannot hang the build.
+fn watched_files(watch: &FingerprintWatch) -> Vec<PathBuf> {
+    let mut files = Vec::new();
+    for entry in WalkDir::new(&watch.root)
+        .follow_links(true)
+        .into_iter()
+        .filter_entry(|entry| should_descend(entry.path(), &watch.root, &watch.excludes))
+        .flatten()
+    {
+        if !entry.file_type().is_file() {
+            continue;
+        }
+        if !matches_extension(entry.path(), &watch.extensions) {
+            continue;
+        }
+        files.push(entry.into_path());
+    }
+    files.sort();
+    files
+}
+
 pub fn hash_watch_set(watches: &[FingerprintWatch]) -> Result<String> {
     let mut ordered = watches.to_vec();
     ordered.sort_by_key(watch_identity);
@@ -174,21 +203,7 @@ pub fn hash_watch_set(watches: &[FingerprintWatch]) -> Result<String> {
             continue;
         }
 
-        let mut files = Vec::new();
-        for entry in WalkDir::new(&watch.root)
-            .into_iter()
-            .filter_entry(|entry| should_descend(entry.path(), &watch.root, &watch.excludes))
-            .flatten()
-        {
-            if !entry.file_type().is_file() {
-                continue;
-            }
-            if !matches_extension(entry.path(), &watch.extensions) {
-                continue;
-            }
-            files.push(entry.into_path());
-        }
-        files.sort();
+        let files = watched_files(watch);
 
         for file in files {
             hasher.update(b"file\0");
@@ -276,21 +291,7 @@ where
             .collect();
         let mut next_files = Vec::new();
 
-        let mut files = Vec::new();
-        for entry in WalkDir::new(&watch.root)
-            .into_iter()
-            .filter_entry(|entry| should_descend(entry.path(), &watch.root, &watch.excludes))
-            .flatten()
-        {
-            if !entry.file_type().is_file() {
-                continue;
-            }
-            if !matches_extension(entry.path(), &watch.extensions) {
-                continue;
-            }
-            files.push(entry.into_path());
-        }
-        files.sort();
+        let files = watched_files(watch);
 
         for file in files {
             let relative_path = relative_path_for_hash(&watch.root, &file);
@@ -458,6 +459,9 @@ fn should_descend(path: &Path, root: &Path, excludes: &[String]) -> bool {
         .unwrap_or_default();
     !excludes.iter().any(|exclude| exclude == name)
 }
+
+#[cfg(test)]
+mod symlink_tests;
 
 #[cfg(test)]
 mod tests {
