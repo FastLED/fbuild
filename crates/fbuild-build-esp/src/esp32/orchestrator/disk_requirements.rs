@@ -135,6 +135,11 @@ pub fn should_preflight(clean_only: bool, clean_all: bool) -> bool {
 
 /// Run the pre-flight check for this project before package resolution.
 pub fn preflight_esp32_disk(project_dir: &Path) -> Result<()> {
+    // Commit the ENOSPC emergency reserve before anything else writes
+    // (FastLED/fbuild#1750 item 6). Arming first means the free space measured
+    // below is the space the build can actually use: the reserve is already
+    // spent, and its release is genuinely additional headroom later.
+    fbuild_core::disk_reserve::arm_in(&fbuild_paths::get_cache_root());
     let roots = disk_roots(project_dir, cache_requirement());
     if roots.is_empty() {
         tracing::debug!("disk preflight disabled by {}=0", MIN_DISK_ENV);

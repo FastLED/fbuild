@@ -84,7 +84,11 @@ pub fn disk_full_error(context: &str, signature: &str) -> FbuildError {
         "insufficient disk space:\n  \
          {context} failed: the volume is full ({signature})\n  \
          the pre-flight check passed, so the volume filled up during the build\n  \
-         {DISK_FULL_HINT}"
+         {DISK_FULL_HINT}{}",
+        // #1750 item 6: a full volume mid-build would otherwise also starve the
+        // failure path itself. Releasing the reserve is what makes this message
+        // writable to the log, so it belongs in the message.
+        crate::disk_reserve::release_note(context)
     ))
 }
 
@@ -98,8 +102,9 @@ pub fn disk_full_io_error(context: &str, path: &Path, error: &io::Error) -> Opti
         "insufficient disk space:\n  \
          {context} could not write {}: the volume is full ({error})\n  \
          the pre-flight check passed, so the volume filled up during the build\n  \
-         {DISK_FULL_HINT}",
-        path.display()
+         {DISK_FULL_HINT}{}",
+        path.display(),
+        crate::disk_reserve::release_note(context)
     )))
 }
 
