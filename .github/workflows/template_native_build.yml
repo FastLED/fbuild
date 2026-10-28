@@ -97,7 +97,7 @@ jobs:
       - name: Setup soldr
         id: setup-soldr
         timeout-minutes: 10
-        uses: zackees/setup-soldr@10a58e5c892077586794cca1086c4a8162206bef # exact setup-soldr promotion canary
+        uses: zackees/setup-soldr@2f4be9f8f5806fbe0e8e16cc3534489d147da094 # exact setup-soldr promotion canary
         with:
           cache: true
           build-cache: true

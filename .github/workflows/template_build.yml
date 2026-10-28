@@ -78,7 +78,7 @@ jobs:
         id: setup-soldr
         if: inputs.fbuild-artifact == ''
         # Canary exact setup-soldr main SHA before v0 promotion.
-        uses: zackees/setup-soldr@10a58e5c892077586794cca1086c4a8162206bef # exact setup-soldr promotion canary
+        uses: zackees/setup-soldr@2f4be9f8f5806fbe0e8e16cc3534489d147da094 # exact setup-soldr promotion canary
         with:
           # cache-preset: foundation expands to:
           #   build-cache: true, target-cache: false,
