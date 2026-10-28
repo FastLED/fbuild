@@ -146,9 +146,10 @@ fn only_the_short_root_is_named_on_failure() {
     let error = preflight(&probe, &roots, cache_root())
         .expect_err("one short root fails the whole check")
         .to_string();
-    assert!(error.contains("/project"), "{error}");
+    let portable_error = error.replace('\\', "/");
+    assert!(portable_error.contains("/project"), "{error}");
     assert!(
-        !error.contains("/cache has"),
+        !portable_error.contains("/cache has"),
         "roomy roots stay out: {error}"
     );
     assert_eq!(error.matches("short by").count(), 1, "{error}");
@@ -240,7 +241,7 @@ impl MissingDirsFreeSpace {
         self.measured
             .borrow()
             .iter()
-            .map(|path| path.display().to_string())
+            .map(NormalizedPath::display_slash)
             .collect()
     }
 }
