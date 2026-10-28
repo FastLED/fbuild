@@ -11,6 +11,7 @@ pub mod build_log;
 pub mod channel;
 pub mod compiler_flags;
 pub mod daemon_health;
+pub mod disk_full;
 pub mod elapsed;
 pub mod emulator;
 pub mod env_namespace;

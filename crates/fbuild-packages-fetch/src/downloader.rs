@@ -207,10 +207,20 @@ impl DownloadAttemptError {
                 CHUNK_READ_TIMEOUT.as_secs(),
                 filename
             )),
-            Self::PartFile { path, error } => FbuildError::PackageError(format!(
-                "failed to write partial download at {}: {}",
-                path, error
-            )),
+            Self::PartFile { path, error } => {
+                // A full volume is not a download failure, and retrying it
+                // writes the same bytes again (FastLED/fbuild#1750 item 4).
+                if let Some(signature) = fbuild_core::disk_full::enospc_signature(&error) {
+                    return fbuild_core::disk_full::disk_full_error(
+                        &format!("downloading to {path}"),
+                        signature,
+                    );
+                }
+                FbuildError::PackageError(format!(
+                    "failed to write partial download at {}: {}",
+                    path, error
+                ))
+            }
             Self::BodyTruncated { got, expected } => FbuildError::PackageError(format!(
                 "download of {} ended early: got {} of {} bytes",
                 url, got, expected
