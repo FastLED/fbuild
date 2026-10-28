@@ -266,7 +266,7 @@ pub fn enospc_failure(context: &str, tool_output: &str, cache_root: &Path) -> Op
 /// on every fresh host — `fbuild doctor --check-disk` showed exactly that. Only
 /// `NotFound` walks up; a permission or I/O error stays a root fbuild cannot
 /// measure, so a genuinely unreadable volume is still reported as such.
-fn available_on_volume(probe: &dyn FreeSpace, path: &Path) -> io::Result<u64> {
+pub(crate) fn available_on_volume(probe: &dyn FreeSpace, path: &Path) -> io::Result<u64> {
     let mut current = path;
     loop {
         match probe.available(current) {

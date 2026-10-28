@@ -17,6 +17,7 @@ pub mod build_output;
 pub mod compile_backend;
 pub mod compile_database;
 pub mod compiler;
+pub mod disk_footprint;
 pub mod disk_preflight;
 pub mod eh_frame_policy;
 pub mod eh_frame_policy_compute;
@@ -244,5 +245,7 @@ mod tests {
     }
 }
 
+#[cfg(test)]
+mod disk_footprint_tests;
 #[cfg(test)]
 mod disk_preflight_tests;

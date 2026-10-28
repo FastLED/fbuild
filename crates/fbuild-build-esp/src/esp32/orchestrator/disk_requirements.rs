@@ -6,22 +6,50 @@
 //! build writes and how much room a cold one needs. The estimate is
 //! deliberately conservative and rounded up: a pre-flight check that passes and
 //! then hits `ENOSPC` mid-link is worse than one that asks for a little too
-//! much. #1750 item 1 tightens it once per-stage peak footprints are recorded.
+//! much. The numbers below are now measured rather than estimated: `du` over
+//! hydrated installs, recorded per component in each constant's documentation
+//! (#1750 item 1). `disk_footprint` records what a build actually consumes so
+//! the next correction comes from data, not from a guess.
 
 use std::path::Path;
 
+use fbuild_build_engine::disk_footprint::FootprintRoot;
 use fbuild_build_engine::disk_preflight::{DiskRoot, FreeSpace, HostFreeSpace, preflight};
 use fbuild_core::Result;
 use fbuild_core::path::NormalizedPath;
 
 /// Free bytes the cache volume must have before a cold ESP32 build: a platform
-/// package (~1.3 GB), a toolchain (~1.0 GB) and the framework install land
-/// there. Already-cached packages shrink the real delta, but a host with less
-/// than this cannot finish a cold build (FastLED/fbuild#1750).
-pub const ESP32_CACHE_BYTES: u64 = 2 * 1024 * 1024 * 1024;
+/// package, a toolchain and the framework install all land there, so this is
+/// the measured cold-worst-case footprint plus a small margin
+/// (FastLED/fbuild#1750 item 1).
+///
+/// Measured on a hydrated Linux host (2026-10-28), by `du` over installed
+/// packages rather than estimated:
+///
+/// | component                                   | measured |
+/// |---------------------------------------------|----------|
+/// | pioarduino framework install (incl. `tools/esp32-arduino-libs`, 2.7 GB) | 2.2–2.8 GB |
+/// | platform package (`pioarduino-platform-espressif32`)                  | 28 MB    |
+/// | Xtensa toolchain (`toolchain-xtensa-esp-elf`)                         | 1.1 GB   |
+/// | RISC-V toolchain (`toolchain-riscv32-esp`, ESP32-C3/C6/H2/P4)         | 2.1 GB   |
+///
+/// A cold Xtensa build therefore needs ~3.9 GiB and a cold RISC-V build
+/// ~4.9 GiB of cache volume; 5 GiB covers both. A host that already holds part
+/// of this needs less, and [`MIN_DISK_ENV`] lowers the requirement outright —
+/// the check must not ask for room the build will not use.
+///
+/// The previous estimate (2 GiB) was less than a framework install alone, so it
+/// passed hosts that then hit `ENOSPC` mid-link — the exact failure this check
+/// exists to prevent.
+pub const ESP32_CACHE_BYTES: u64 = 5 * 1024 * 1024 * 1024;
 
 /// Free bytes the project volume must have: the per-env build tree plus the
 /// firmware image and map file.
+///
+/// Measured 2026-10-28 over nine ESP32 test projects on a Linux host: 15–59 MB
+/// per build tree (the largest, ESP32-S3, at 59 MB), so this keeps a wide
+/// margin above observation rather than being tightened to fit it
+/// (FastLED/fbuild#1750 item 1).
 pub const PROJECT_BUILD_BYTES: u64 = 256 * 1024 * 1024;
 
 /// Free bytes fbuild's scratch tree must have for response files and tool
@@ -81,6 +109,17 @@ pub fn disk_roots(project_dir: &Path, cache_bytes: u64) -> Vec<DiskRoot> {
     ]
 }
 
+/// The roots a footprint measurement watches (#1750 item 1): every root an
+/// ESP32 build writes, with no requirement attached. This is measurement, not
+/// judgement — a footprint log must never be able to block a build.
+pub fn footprint_roots(project_dir: &Path) -> Vec<FootprintRoot> {
+    vec![
+        FootprintRoot::new("cache", fbuild_paths::get_cache_root()),
+        FootprintRoot::new("project", project_dir),
+        FootprintRoot::new("temp", scratch_root()),
+    ]
+}
+
 /// fbuild's scratch tree: `<cache root>/tmp` (never `$TMPDIR`).
 pub fn scratch_root() -> NormalizedPath {
     NormalizedPath::from(fbuild_paths::get_cache_root().join("tmp"))
@@ -112,6 +151,15 @@ pub fn preflight_esp32_disk(project_dir: &Path) -> Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn footprint_watches_the_same_three_roots_without_requirements() {
+        let roots = footprint_roots(Path::new("/project"));
+        let labels: Vec<&str> = roots.iter().map(FootprintRoot::label).collect();
+        assert_eq!(labels, vec!["cache", "project", "temp"]);
+        assert_eq!(roots[1].path(), Path::new("/project"));
+        assert_eq!(roots[2].path(), scratch_root().as_path());
+    }
 
     #[test]
     fn unset_or_blank_keeps_the_default() {
