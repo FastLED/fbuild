@@ -911,3 +911,7 @@ use mirrors::{candidate_urls, configured_mirrors, download_from_candidates, get_
 #[cfg(test)]
 #[path = "downloader_tests.rs"]
 mod tests;
+
+#[cfg(test)]
+#[path = "downloader_disk_tests.rs"]
+mod disk_tests;
