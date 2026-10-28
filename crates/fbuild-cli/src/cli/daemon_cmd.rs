@@ -42,6 +42,7 @@ pub async fn run_daemon(action: DaemonAction) -> fbuild_core::Result<()> {
                         output::result(format!("  Port:    {}", info.port));
                         output::result(format!("  Uptime:  {}", uptime));
                         output::result(format!("  Version: {}", info.version));
+                        output::result(format!("  Build:   {}", build_label(&info.build_id)));
                         output::result(format!(
                             "  Mode:    {}",
                             if info.dev_mode { "dev" } else { "prod" }
@@ -308,6 +309,7 @@ pub async fn run_daemon_list(client: &DaemonClient) -> fbuild_core::Result<()> {
                 output::result(format!("  Port:    {}", info.port));
                 output::result(format!("  Uptime:  {}", uptime));
                 output::result(format!("  Version: {}", info.version));
+                output::result(format!("  Build:   {}", build_label(&info.build_id)));
                 output::result(format!(
                     "  Mode:    {}",
                     if info.dev_mode { "dev" } else { "prod" }
@@ -814,4 +816,48 @@ fn clear_daemon_records() -> Vec<&'static str> {
         removed.push("owner-claim");
     }
     removed
+}
+
+/// Render the daemon's build id for `daemon status` / `daemon list`.
+///
+/// A daemon from this same checkout prints its id alone. Anything else is
+/// spelled out, because "same version, different build" is exactly the
+/// confusion FastLED/fbuild#1742 was filed for: an older daemon happily serves
+/// a newer CLI, and a same-version editable install can be from any commit.
+fn build_label(daemon_build_id: &str) -> String {
+    let cli_build_id = fbuild_core::build_id::build_id();
+    let daemon_build_id = daemon_build_id.trim();
+    if daemon_build_id.is_empty() {
+        return format!("{cli_build_id} (daemon predates build ids; reported by this CLI)");
+    }
+    if daemon_build_id == cli_build_id {
+        return daemon_build_id.to_string();
+    }
+    format!("{daemon_build_id} (this CLI: {cli_build_id})")
+}
+
+#[cfg(test)]
+mod build_id_tests {
+    use super::*;
+
+    #[test]
+    fn matching_daemon_reports_the_bare_build_id() {
+        let cli = fbuild_core::build_id::build_id();
+        assert_eq!(build_label(&format!(" {cli} ")), cli);
+    }
+
+    #[test]
+    fn differing_daemon_names_both_builds() {
+        let cli = fbuild_core::build_id::build_id();
+        let label = build_label("0000000000aa");
+        assert!(label.starts_with("0000000000aa"));
+        assert!(label.contains(&format!("this CLI: {cli}")), "{label}");
+    }
+
+    #[test]
+    fn older_daemon_without_a_stamp_still_prints_a_build() {
+        let label = build_label("");
+        assert!(label.contains(&fbuild_core::build_id::build_id()));
+        assert!(label.contains("predates build ids"));
+    }
 }

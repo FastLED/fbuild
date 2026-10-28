@@ -139,6 +139,7 @@ mod tests {
             status: "running".to_string(),
             uptime_seconds: 1.0,
             version: version.to_string(),
+            build_id: "test".to_string(),
             pid: 123,
             port: 8765,
             dev_mode: fbuild_paths::is_dev_mode(),

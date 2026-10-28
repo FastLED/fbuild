@@ -233,6 +233,10 @@ pub struct DaemonInfoResponse {
     pub status: String,
     pub uptime_seconds: f64,
     pub version: String,
+    /// Compile-time build id; absent on daemons that predate
+    /// FastLED/fbuild#1742.
+    #[serde(default)]
+    pub build_id: String,
     pub pid: u32,
     pub port: u16,
     pub dev_mode: bool,

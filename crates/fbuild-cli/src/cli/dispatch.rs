@@ -1,7 +1,6 @@
 //! Top-level async dispatcher: parse argv, set up tracing + Ctrl+C, then
 //! fan out to per-subcommand handlers in the topic modules.
 
-use clap::Parser;
 use std::path::Path;
 
 use crate::{daemon_client, lib_select, mcp, output, update_check};
@@ -39,13 +38,40 @@ use super::symbols_cmd::run_symbols;
 use super::sync_cmd::run_sync_cmd;
 use super::usb_recovery::run_hidden_helper;
 
+/// Parse argv, naming the stamped build id in the long `--version` output
+/// (FastLED/fbuild#1742).
+///
+/// `-V` keeps printing the bare workspace version, so scripts that parse it are
+/// unaffected; only the long form gains the `+git.<commit>` build metadata.
+/// The value is attached here rather than through a `#[command(version)]`
+/// literal because it is computed by `fbuild-core`'s build script.
+fn parse_cli<I, T>(args: I) -> Cli
+where
+    I: IntoIterator<Item = T>,
+    T: Into<std::ffi::OsString> + Clone,
+{
+    use clap::{CommandFactory, FromArgMatches};
+    // clap's `long_version` borrows for the process lifetime and the workspace
+    // does not enable clap's `string` feature, so the computed id is leaked
+    // instead of widening a dependency feature for one startup string.
+    let long_version: &'static str =
+        Box::leak(fbuild_core::build_id::long_version().into_boxed_str());
+    let matches = Cli::command()
+        .long_version(long_version)
+        .get_matches_from(args);
+    match Cli::from_arg_matches(&matches) {
+        Ok(cli) => cli,
+        Err(error) => error.exit(),
+    }
+}
+
 #[expect(
     clippy::cognitive_complexity,
     clippy::too_many_lines,
     reason = "baseline, zackees/ci.yml#229"
 )]
 pub async fn async_main() {
-    let cli = Cli::parse_from(rewrite_args());
+    let cli = parse_cli(rewrite_args());
 
     if cli.fix_win_helper {
         if let Err(error) = super::windows_long_paths::run_helper() {
