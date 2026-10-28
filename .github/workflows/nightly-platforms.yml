@@ -65,7 +65,7 @@ jobs:
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
-      - uses: zackees/setup-soldr@b782f606a2f3beadc35b9e3bf5b4565e005f52ed # v0.9.86
+      - uses: zackees/setup-soldr@10a58e5c892077586794cca1086c4a8162206bef # exact setup-soldr promotion canary
         with:
           cache-preset: foundation
           prebuild-deps-flags: ""
