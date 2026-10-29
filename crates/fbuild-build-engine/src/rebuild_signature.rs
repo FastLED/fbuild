@@ -414,6 +414,17 @@ mod tests {
     /// there to fill.
     #[test]
     fn prefix_map_flags_normalize_their_source_path() {
+        // FastLED/fbuild#1780: a rootless POSIX-looking path is *not* absolute
+        // on Windows, so the flag value would never relativize there and the
+        // assertion below would compare two unrelated paths. Fabricate the
+        // projects under a host-native root instead.
+        let base = if fbuild_core::platform::host::current().is_windows() {
+            "C:/projects"
+        } else {
+            "/home"
+        };
+        let project_a = format!("{base}/one/blink");
+        let project_b = format!("{base}/two/other-blink");
         let compiler = Path::new("/tools/gcc");
         let flags_for =
             |project: &str| vec![format!("-fdebug-prefix-map={project}=."), "-O2".to_string()];
@@ -427,19 +438,16 @@ mod tests {
                 &[],
             )
         };
-        assert_eq!(
-            signature_for("/home/one/blink"),
-            signature_for("/home/two/other-blink")
-        );
+        assert_eq!(signature_for(&project_a), signature_for(&project_b));
         // A different remap target is still a different build.
         let other_target = build_rebuild_signature_for_project(
-            Path::new("/home/one/blink"),
+            Path::new(&project_a),
             compiler,
-            &["-fdebug-prefix-map=/home/one/blink=/elsewhere".to_string()],
+            &[format!("-fdebug-prefix-map={project_a}={base}/elsewhere")],
             &[],
             &[],
             &[],
         );
-        assert_ne!(signature_for("/home/one/blink"), other_target);
+        assert_ne!(signature_for(&project_a), other_target);
     }
 }
