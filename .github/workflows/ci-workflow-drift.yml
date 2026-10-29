@@ -39,7 +39,7 @@ jobs:
       - name: Verify rendered workflows match SOT
         run: uv run --no-project python ci/render_workflows.py --check
       - name: Test hosted CI independence from optional local proof
-        run: uv run --with pyyaml --no-project python -m unittest ci.test_fractional_workflows ci.test_local_gate ci.test_local_dylint_gate
+        run: uv run --with pyyaml --no-project python -m unittest ci.test_fractional_workflows ci.test_local_gate ci.test_local_dylint_gate ci.test_publish_quota
       - name: Verify PR-triggered workflows auto-cancel superseded runs
         run: uv run --with pyyaml --no-project python ci/check_workflow_concurrency.py
       - name: Unit-test the concurrency guard

@@ -27,6 +27,8 @@ workflow imports:
 - :func:`log`, :func:`record_hash`
 - :func:`read_project_meta`
 - :func:`build_wheel`, :func:`build_all_wheels`
+- :data:`PYPI_PROJECT_SIZE_LIMIT_BYTES`, :class:`PyPIStorage`
+- :func:`estimate_upload_storage`, :func:`measured_upload_storage`
 """
 
 from __future__ import annotations
@@ -40,6 +42,8 @@ import stat
 import sys
 import tomllib
 import zipfile
+from collections.abc import Iterable
+from dataclasses import dataclass
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -272,3 +276,158 @@ def build_all_wheels(name: str, version: str, summary: str, requires_python: str
 
     log(f"  {len(wheels)} wheel(s) ready")
     return wheels
+
+
+# ---------------------------------------------------------------------------
+# PyPI storage quota preflight
+# ---------------------------------------------------------------------------
+
+# PyPI refuses uploads once a project's stored bytes reach its project storage
+# limit, and it refuses them *mid-upload*: the first files of a release land and
+# the rest 400 out ("400 Project size too large"). fbuild v2.5.46 stranded that
+# way at 1 of 5 wheels, which leaves the project claiming a version nobody can
+# install (FastLED/fbuild#1756). Both release stages therefore check headroom
+# before a single file is uploaded.
+#
+# https://docs.pypi.org/project-management/storage-limits/
+PYPI_PROJECT_SIZE_LIMIT_BYTES = 10 * 1000**3  # PyPI's "10 GB", counted decimally
+PYPI_STORAGE_LIMITS_URL = "https://docs.pypi.org/project-management/storage-limits/"
+
+
+def _file_bytes(entry: dict) -> int:
+    """Stored size of one PyPI JSON file entry; 0 when the field is absent."""
+    try:
+        return int(entry.get("size") or 0)
+    except (TypeError, ValueError):
+        return 0
+
+
+def pypi_project_bytes(pypi_json: dict) -> int:
+    """Total stored bytes across every file of every version."""
+    releases = pypi_json.get("releases") or {}
+    return sum(_file_bytes(entry) for files in releases.values() for entry in files)
+
+
+def pypi_version_sizes(pypi_json: dict, version: str) -> list[int]:
+    """Stored byte sizes of the files already published for ``version``."""
+    releases = pypi_json.get("releases") or {}
+    return [_file_bytes(entry) for entry in releases.get(version) or []]
+
+
+def _all_file_sizes(pypi_json: dict) -> list[int]:
+    releases = pypi_json.get("releases") or {}
+    return [_file_bytes(entry) for files in releases.values() for entry in files]
+
+
+@dataclass(frozen=True)
+class PyPIStorage:
+    """Headroom verdict for one upload batch."""
+
+    project_bytes: int
+    required_bytes: int
+    limit_bytes: int = PYPI_PROJECT_SIZE_LIMIT_BYTES
+    basis: str = ""
+
+    @property
+    def remaining_bytes(self) -> int:
+        return max(self.limit_bytes - self.project_bytes, 0)
+
+    @property
+    def fits(self) -> bool:
+        return self.project_bytes + self.required_bytes <= self.limit_bytes
+
+    def report(self) -> str:
+        used_gb = self.project_bytes / 1e9
+        limit_gb = self.limit_bytes / 1e9
+        head = (
+            f"PyPI storage: {used_gb:.2f} GB of a {limit_gb:.2f} GB project limit "
+            f"({self.remaining_bytes / 1e9:.2f} GB free)"
+        )
+        need = f"this upload needs {self.required_bytes / 1e6:.0f} MB{self.basis}"
+        if self.fits:
+            return f"{head}\n{need} - headroom is sufficient"
+        shortfall = (self.project_bytes + self.required_bytes - self.limit_bytes) / 1e6
+        return "\n".join(
+            [
+                head,
+                need,
+                f"refusing to publish: this would exceed the limit by {shortfall:.0f} MB, and PyPI",
+                "enforces the limit mid-upload, which strands a version at partial wheels (#1756).",
+                "Free space first: request a project size increase or delete old releases in the",
+                f"PyPI web UI - {PYPI_STORAGE_LIMITS_URL}",
+            ]
+        )
+
+
+def estimate_upload_storage(
+    pypi_json: dict,
+    version: str,
+    expected_wheels: int,
+    limit_bytes: int = PYPI_PROJECT_SIZE_LIMIT_BYTES,
+) -> PyPIStorage:
+    """Preflight for completing ``version``: estimate the missing wheels' weight.
+
+    The wheels are not built yet at this point, so the per-wheel weight is taken
+    from what is already stored - this version's own files when some landed (the
+    stranded-release case), otherwise the largest wheel of any previous release,
+    which errs on the refusing side.
+    """
+    project = pypi_project_bytes(pypi_json)
+    sizes = pypi_version_sizes(pypi_json, version)
+    missing = max(expected_wheels - len(sizes), 0)
+    if sizes:
+        per_wheel, source = max(sizes), "this version's uploaded files"
+    else:
+        others = _all_file_sizes(pypi_json)
+        per_wheel, source = (max(others) if others else 0), "the largest stored file"
+    basis = ""
+    if missing:
+        basis = (
+            f" for {missing} of {expected_wheels} missing wheel(s), at {per_wheel / 1e6:.0f} MB each"
+            f" estimated from {source}"
+        )
+    return PyPIStorage(project, missing * per_wheel, limit_bytes, basis)
+
+
+def measured_upload_storage(
+    pypi_json: dict,
+    wheels: Iterable[Path],
+    limit_bytes: int = PYPI_PROJECT_SIZE_LIMIT_BYTES,
+) -> PyPIStorage:
+    """Preflight with the real wheel sizes, after the wheels are built.
+
+    Wheels already on PyPI are counted again (``skip-existing`` would skip them),
+    so this check is deliberately conservative.
+    """
+    files = list(wheels)
+    project = pypi_project_bytes(pypi_json)
+    required = sum(path.stat().st_size for path in files)
+    return PyPIStorage(project, required, limit_bytes, f" for {len(files)} built wheel(s)")
+
+
+def main(argv: list[str] | None = None) -> int:
+    """CLI used by the Autonomous Release workflow to gate publication."""
+    import argparse
+    import json
+
+    parser = argparse.ArgumentParser(description="PyPI storage headroom preflight.")
+    parser.add_argument("--pypi-json", type=Path, required=True, help="saved /pypi/<name>/json")
+    parser.add_argument("--version", default="", help="version being completed")
+    parser.add_argument("--expected-wheels", type=int, default=0)
+    parser.add_argument("--wheel", type=Path, action="append", default=[], help="built wheel")
+    parser.add_argument("--limit-bytes", type=int, default=PYPI_PROJECT_SIZE_LIMIT_BYTES)
+    args = parser.parse_args(argv)
+
+    data = json.loads(args.pypi_json.read_text(encoding="utf-8"))
+    if args.wheel:
+        storage = measured_upload_storage(data, args.wheel, args.limit_bytes)
+    else:
+        storage = estimate_upload_storage(
+            data, args.version, args.expected_wheels, args.limit_bytes
+        )
+    print(storage.report(), flush=True)
+    return 0 if storage.fits else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

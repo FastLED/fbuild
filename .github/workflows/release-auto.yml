@@ -140,6 +140,15 @@ jobs:
               should_publish_github="true"
             fi
             if [ "$pypi_file_count" -lt "$expected_wheels" ]; then
+              # PyPI enforces its project storage limit *mid-upload*: it accepts
+              # the first files of a release and then 400s the rest, which
+              # stranded v2.5.46 at 1 of 5 wheels (#1756). Refuse up front while
+              # nothing has been uploaded, so a version is never half-published.
+              if ! python -m ci.publish --pypi-json "$pypi_json" \
+                --version "$cargo_version" --expected-wheels "$expected_wheels"; then
+                echo "refusing publication: PyPI project storage headroom is insufficient (see above)" >&2
+                exit 1
+              fi
               should_publish_pypi="true"
             fi
           fi
@@ -457,6 +466,21 @@ jobs:
           wheels = publish.build_all_wheels(*meta)
           print(f"Built {len(wheels)} wheel(s)")
           PY
+
+      - name: Check PyPI storage headroom
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          # Measured guard, downstream of "Build wheels": the real wheel sizes
+          # are known here and PyPI is asked for the project's stored total
+          # right before the publish job runs (#1756).
+          project="$(python -c 'import ci.publish; print(ci.publish.read_project_meta()[0])')"
+          pypi_json="$(mktemp)"
+          curl -fsSL --connect-timeout 10 --max-time 30 \
+            "https://pypi.org/pypi/${project}/json" -o "$pypi_json"
+
+          python -m ci.publish --pypi-json "$pypi_json" --wheel dist/wheels/*.whl
 
       - name: Smoke test Linux x86_64 wheel
         timeout-minutes: 5
