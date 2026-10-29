@@ -94,6 +94,20 @@ objdump -T <lib>.so | grep -o 'GLIBC_[0-9.]*' | sort -Vu | tail -4
 python3 -c "d=open('<bin>','rb').read(8); print(d[:4].hex(), hex(int.from_bytes(d[4:8],'little')))"
 ```
 
+The same check is a PR gate now (`ci/check_glibc_floor.py`, job `glibc-floor`
+in `check-ubuntu.yml`): it cross-links `fbuild-cli` + `fbuild-daemon` for
+`x86_64-unknown-linux-gnu` and `aarch64-unknown-linux-gnu` under soldr's
+glibc-2.17 sysroot and fails on any `GLIBC_` symbol above the floor, naming the
+symbols that need it. Run it locally against any linked binary:
+
+```bash
+uv run --no-project python ci/check_glibc_floor.py --floor 2.17 <binary>
+```
+
+A *host-native* debug binary is not a valid input: it links against the host
+glibc (2.39+ on recent distros) and will always fail. The guard is meaningful
+only on artifacts built through soldr's catalogue sysroot.
+
 The published wheel is downloadable, so the shipped floor is always
 checkable after the fact:
 
