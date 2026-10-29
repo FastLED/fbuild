@@ -27,11 +27,18 @@ fn debug_prefix_map_covers_a_build_dir_inside_the_project() {
 fn debug_prefix_map_covers_an_external_build_root() {
     let layout = BuildLayout::new("/work/sketch".into(), "uno".into(), BuildProfile::Quick)
         .with_override_root(Some("/tmp/short-build-dir".into()));
+    // The external build dir is joined with the HOST separator, so build the
+    // expectation the same way instead of hard-coding POSIX slashes: on Windows
+    // the flag value legitimately renders as `\tmp\short-build-dir\uno\quick`.
+    let external_build = Path::new("/tmp/short-build-dir").join("uno").join("quick");
     assert_eq!(
         layout.debug_prefix_map_args(),
         vec![
             "-fdebug-prefix-map=/work/sketch=.".to_string(),
-            "-fdebug-prefix-map=/tmp/short-build-dir/uno/quick=fbuild-build".to_string(),
+            format!(
+                "-fdebug-prefix-map={}=fbuild-build",
+                external_build.display()
+            ),
         ]
     );
 }
