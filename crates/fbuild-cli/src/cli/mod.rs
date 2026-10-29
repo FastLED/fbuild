@@ -15,6 +15,7 @@ pub mod boards;
 pub mod bringup;
 pub mod build;
 pub mod build_progress;
+pub mod buildfs;
 pub mod cache;
 pub mod clang_tools;
 pub mod clangd_config;

@@ -108,6 +108,46 @@ BOOTSEL mass-storage. `uf2` preserves the mass-storage-first order with
 picotool as the fallback. The picotool load timeout defaults to 60s and is
 configurable with `FBUILD_RP2040_PICOTOOL_TIMEOUT_SECS`.
 
+### `fbuild buildfs`
+
+Build a flash filesystem image (LittleFS or SPIFFS) from the project's `data/`
+directory — the fbuild equivalent of PlatformIO's `buildfs` target
+(FastLED/fbuild#1358).
+
+```bash
+fbuild buildfs
+fbuild buildfs -e esp32s3
+fbuild buildfs --check-only
+fbuild buildfs --partitions partitions_custom.csv --output fs.bin
+```
+
+Inputs are the files under `data/` (or `data_dir` from `platformio.ini`).
+fbuild blob pointers (`.fetch`, and the legacy JSON `.lnk`) are resolved and
+packed under their projected name; the pointer itself never ships. Plain-text
+`.lnk` files are FastLED's on-device asset links, so they ship as ordinary
+data. A pointer that fails to parse is an error rather than a file the device
+would receive instead of its content.
+
+The filesystem partition's offset and size come from the board's partition CSV
+(`board_build.partitions`, else the framework's `default.csv`; override with
+`--partitions`). The image is sized to that region, and an oversized `data/`
+fails here — before any image tool runs — instead of failing to mount on the
+device:
+
+```
+data/ does not fit the 'spiffs' filesystem partition: needs ~1581056 bytes,
+partition holds 1441792 (over by 139264 bytes). ...
+```
+
+The format defaults to the partition's subtype; `--filesystem littlefs|spiffs`
+overrides it and warns when the two disagree, since the firmware mounts what
+the partition table declares. `mklittlefs`/`mkspiffs` are resolved from the
+PlatformIO package directory, then `PATH`; `--tool <path>` pins one.
+
+The image lands in the environment's build directory (`<build>/<filesystem>.bin`)
+and `--check-only` reports the size plan without running the tool. Flashing the
+image (`uploadfs`) is not part of this command yet.
+
 ### `fbuild monitor`
 
 Attach to serial output.
