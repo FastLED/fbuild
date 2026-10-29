@@ -8,6 +8,7 @@ use std::path::{Path, PathBuf};
 use fbuild_core::BuildProfile;
 
 pub mod daemon_ownership;
+pub mod debug_prefix_map;
 pub mod dev_daemon_namespace;
 pub mod executable_hash;
 pub mod long_paths;
@@ -16,6 +17,7 @@ pub mod running_process;
 #[cfg(test)]
 mod owner_port_tests;
 
+pub use debug_prefix_map::{DEBUG_PREFIX_MAP_ROOT, debug_prefix_map_args};
 /// The project-local and home-local fbuild directory segment: `.fbuild`.
 ///
 /// This is the canonical spelling. Nothing outside `fbuild-paths` /
@@ -375,57 +377,6 @@ impl BuildLayout {
         };
         with_env.join(self.profile.as_dir_name())
     }
-
-    /// `-fdebug-prefix-map` arguments that make the debug info this build
-    /// writes independent of where the project lives.
-    ///
-    /// The compiler records its working directory as `DW_AT_comp_dir`, so two
-    /// byte-identical sketches in two directories produce different objects and
-    /// no compiler cache can reuse them (FastLED/fbuild#1347, #1414 finding 1).
-    /// Mapping the project root to `.` records that directory, and every source
-    /// path under it, identically in every checkout.
-    ///
-    /// `-fdebug-prefix-map` rather than `-ffile-prefix-map` is deliberate:
-    /// the umbrella spelling is GCC 8+, while avr-gcc 7.3 and the legacy ESP32
-    /// GCC 5 only have the debug variant, and `__FILE__` is already covered by
-    /// the `-fmacro-prefix-map` flags. Debug info is the part that is not.
-    ///
-    /// Debuggers resolve the recorded `.` against their own working
-    /// directory, so start gdb/lldb from the project root — the source names it
-    /// then looks for (`src/main.cpp`) are exactly the ones on disk.
-    pub fn debug_prefix_map_args(&self) -> Vec<String> {
-        debug_prefix_map_args(&self.project_dir, &self.resolve())
-    }
-}
-
-/// The replacement root used by [`debug_prefix_map_args`]: `DW_AT_comp_dir`
-/// becomes `.`, i.e. relative to the project root.
-pub const DEBUG_PREFIX_MAP_ROOT: &str = ".";
-
-/// See [`BuildLayout::debug_prefix_map_args`].
-///
-/// `DW_AT_comp_dir` is the compile workspace, which
-/// `fbuild_core::path::compile_cwd_from_output` anchors at the project root
-/// (source arguments are already project-relative there), so mapping the
-/// project root to `.` makes the recorded directory and every recorded source
-/// path location-independent.
-///
-/// A build root outside the project (`FBUILD_BUILD_DIR` or an explicit
-/// override) is mapped as well, to a distinct stable label: stages that
-/// compile into it without a `.fbuild` component pass absolute paths, and
-/// those would otherwise keep the machine-specific tree.
-pub fn debug_prefix_map_args(project_dir: &Path, build_dir: &Path) -> Vec<String> {
-    let mut args = vec![format!(
-        "-fdebug-prefix-map={}={DEBUG_PREFIX_MAP_ROOT}",
-        project_dir.display()
-    )];
-    if !build_dir.starts_with(project_dir) {
-        args.push(format!(
-            "-fdebug-prefix-map={}=fbuild-build",
-            build_dir.display()
-        ));
-    }
-    args
 }
 
 /// Read and validate a port number from a port file.
@@ -1030,66 +981,6 @@ mod tests {
         assert!(dir.exists() || dir.parent().map(|p| !p.exists()).unwrap_or(true));
         // Cleanup best-effort.
         let _ = std::fs::remove_dir_all(&dir);
-    }
-
-    #[test]
-    fn debug_prefix_map_covers_a_build_dir_inside_the_project() {
-        let project = PathBuf::from("/work/sketch");
-        let layout = BuildLayout::new(project, "esp32dev".into(), BuildProfile::Release);
-        assert_eq!(
-            layout.debug_prefix_map_args(),
-            vec!["-fdebug-prefix-map=/work/sketch=.".to_string()]
-        );
-    }
-
-    #[test]
-    fn debug_prefix_map_covers_an_external_build_root() {
-        let project = PathBuf::from("/work/sketch");
-        let root = PathBuf::from("/tmp/short-build-dir");
-        let layout = BuildLayout::new(project, "uno".into(), BuildProfile::Quick)
-            .with_override_root(Some(root.clone()));
-        assert_eq!(
-            layout.debug_prefix_map_args(),
-            vec![
-                "-fdebug-prefix-map=/work/sketch=.".to_string(),
-                format!(
-                    "-fdebug-prefix-map={}=fbuild-build",
-                    root.join("uno").join("quick").display()
-                ),
-            ]
-        );
-    }
-
-    /// A build dir that *is* the project dir is already covered, so only one
-    /// flag is emitted.
-    #[test]
-    fn debug_prefix_map_skips_a_build_dir_equal_to_the_project() {
-        let project = PathBuf::from("/work/sketch");
-        assert_eq!(
-            debug_prefix_map_args(&project, &project),
-            vec!["-fdebug-prefix-map=/work/sketch=.".to_string()]
-        );
-    }
-
-    /// The point of the flags: the remapped *target* is the same no matter
-    /// where the project lives, so the objects compare equal.
-    #[test]
-    fn debug_prefix_map_targets_do_not_depend_on_the_project_path() {
-        let args_for = |project: &str| {
-            BuildLayout::new(
-                PathBuf::from(project),
-                "esp32dev".into(),
-                BuildProfile::Release,
-            )
-            .debug_prefix_map_args()
-        };
-        let a = args_for("/home/one/blink");
-        let b = args_for("/home/two/other-blink");
-        assert_eq!(a.len(), b.len());
-        for (left, right) in a.iter().zip(&b) {
-            let target = |flag: &str| flag.rsplit_once('=').unwrap().1.to_string();
-            assert_eq!(target(left), target(right), "{left} vs {right}");
-        }
     }
 
     #[test]
