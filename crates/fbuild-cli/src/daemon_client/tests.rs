@@ -238,14 +238,11 @@ fn foreign_root_owner_message_names_the_owner() {
         port: 60903,
     };
     let message = foreign_root_owner_message(&claim, 19142);
-    for needle in [
-        "98258",
-        "2.5.44",
-        "60903",
-        "19142",
-        "/venv/bin/fbuild-daemon",
-        "No compilation",
-    ] {
+    assert!(
+        message.contains(&claim.exe.display().to_string()),
+        "{message}"
+    );
+    for needle in ["98258", "2.5.44", "60903", "19142", "No compilation"] {
         assert!(message.contains(needle), "{needle} missing from: {message}");
     }
 }
