@@ -112,6 +112,66 @@ jobs:
       - name: Test large library archive
         run: soldr cargo test -p fbuild-library large_archive_handles_windows_command_limit_and_quoted_paths -- --ignored --nocapture
 
+  glibc-floor:
+    # FastLED/fbuild#1629. The manylinux_2_17 tag is assigned from a filename
+    # map in ci/publish.py, not measured, and `cargo check` never links -- so a
+    # too-new glibc symbol (libc::memfd_create, glibc 2.27+, was the real case)
+    # survives every PR gate and only fails in the release cross-link lane.
+    # Cross-link the two shipped binaries for both Linux arches under soldr's
+    # glibc-2.17 sysroot, then read the linked symbol tables. No new workflow
+    # file: this is another job in the existing Ubuntu lane.
+    name: glibc 2.17 floor (linux x86_64 + aarch64)
+    runs-on: ubuntu-latest
+    # Cold cache: two release cross-links of fbuild-cli + fbuild-daemon.
+    # Measured ~16 min for the daemon alone on a loaded 16-core host with an
+    # empty cache; 60 leaves room for the first (cache-miss) run.
+    timeout-minutes: 60
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: ${{ inputs.ref }}
+      - name: Verify candidate SHA
+        if: inputs.ref != ''
+        env:
+          CANDIDATE_SHA: ${{ inputs.ref }}
+        run: |
+          [[ "$CANDIDATE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          test "$(git rev-parse HEAD)" = "$CANDIDATE_SHA"
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          python-version: "3.12"
+      # Own build-cache store: this job cross-links two release targets and
+      # must not compete with (or poison) the test job's cache generation.
+      - name: Setup soldr
+        uses: zackees/setup-soldr@6bf04d4196ee26fe9d51550187013a7f32955e20 # setup-soldr#582 exact-main promotion canary
+        with:
+          cache-key-suffix: glibc-floor
+          job-status: ${{ job.status }}
+          cache: true
+          build-cache: true
+          target-cache: true
+          prebuild-deps: none
+          linker: platform-default
+      - name: Self-test the floor guard
+        run: uv run --no-project python -m unittest ci.test_check_glibc_floor
+      - name: Cross-link release binaries
+        timeout-minutes: 45
+        run: |
+          for target in x86_64-unknown-linux-gnu aarch64-unknown-linux-gnu; do
+            soldr prepare --target "$target"
+            soldr build --release --target "$target" -p fbuild-cli -p fbuild-daemon
+          done
+      - name: Enforce the manylinux_2_17 floor
+        run: |
+          uv run --no-project python ci/check_glibc_floor.py --floor 2.17 \
+            target/x86_64-unknown-linux-gnu/release/fbuild \
+            target/x86_64-unknown-linux-gnu/release/fbuild-daemon \
+            target/aarch64-unknown-linux-gnu/release/fbuild \
+            target/aarch64-unknown-linux-gnu/release/fbuild-daemon
+
   python-facade-tests:
     # FastLED/fbuild#1485 §5.2/§6: the embedded-CPython AT-P integration
     # tests need libpython at link and run time, so they're `#[ignore]`d
