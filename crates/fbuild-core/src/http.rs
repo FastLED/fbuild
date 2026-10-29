@@ -37,6 +37,18 @@ pub const DEFAULT_TIMEOUT: Duration = Duration::from_secs(300);
 /// kill a download.
 pub const DEFAULT_CONNECT_TIMEOUT: Duration = Duration::from_secs(30);
 
+/// User agent sent by every shared client.
+///
+/// `dl.registry.platformio.org` now answers anything that does not identify
+/// itself as PlatformIO Core with `403 This download method is not
+/// supported. Please use PlatformIO Core to install packages.` The check is a
+/// prefix test on `PlatformIO/`, so a cold toolchain download failed for every
+/// board whose archive was not already cached (FastLED/fbuild#1783). fbuild
+/// still names itself in the comment so registry-side logs are not lying.
+pub fn registry_user_agent() -> String {
+    format!("PlatformIO/6.2.0 (fbuild/{})", env!("CARGO_PKG_VERSION"))
+}
+
 static CLIENT: OnceLock<Client> = OnceLock::new();
 
 /// Process-shared async [`reqwest::Client`]. Lazily built on first call.
@@ -46,6 +58,7 @@ static CLIENT: OnceLock<Client> = OnceLock::new();
 pub fn client() -> &'static Client {
     CLIENT.get_or_init(|| {
         Client::builder()
+            .user_agent(registry_user_agent())
             .timeout(DEFAULT_TIMEOUT)
             .connect_timeout(DEFAULT_CONNECT_TIMEOUT)
             .build()
@@ -61,6 +74,7 @@ pub fn client() -> &'static Client {
 /// deadline.
 pub fn client_with_timeout(total: Duration) -> Client {
     Client::builder()
+        .user_agent(registry_user_agent())
         .timeout(total)
         .connect_timeout(DEFAULT_CONNECT_TIMEOUT)
         .build()
@@ -76,6 +90,7 @@ pub fn client_with_timeout(total: Duration) -> Client {
 /// it inside an `async fn`, you almost certainly want [`client()`].
 pub fn blocking_client(total: Duration) -> reqwest::blocking::Client {
     reqwest::blocking::Client::builder()
+        .user_agent(registry_user_agent())
         .timeout(total)
         .connect_timeout(DEFAULT_CONNECT_TIMEOUT)
         .build()
@@ -98,6 +113,21 @@ mod tests {
     #[test]
     fn client_with_timeout_builds() {
         let _c = client_with_timeout(Duration::from_secs(10));
+    }
+
+    /// The registry only redirects downloads to agents whose UA starts with
+    /// `PlatformIO/`; anything else is a 403 (FastLED/fbuild#1783).
+    #[test]
+    fn registry_user_agent_identifies_as_platformio() {
+        let ua = registry_user_agent();
+        assert!(
+            ua.starts_with("PlatformIO/"),
+            "UA must satisfy the registry gate: {ua}"
+        );
+        assert!(
+            ua.contains(&format!("fbuild/{}", env!("CARGO_PKG_VERSION"))),
+            "UA must name fbuild: {ua}"
+        );
     }
 
     /// `blocking_client` builds successfully — the OS-thread path.
