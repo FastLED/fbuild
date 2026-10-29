@@ -71,6 +71,25 @@ The action will rebuild the missing wheels and upload, leaving the existing whee
 
 If `pypi_file_count` already equals `len(PLATFORMS)`, the release is complete. Bump to the next version.
 
+### `refusing publication: PyPI project storage headroom is insufficient`
+
+PyPI caps a project's total stored bytes (10 GB) and enforces the cap **mid-upload**: it accepts the
+first files of a release and then rejects the rest with `400 Project size too large`. That is how
+v2.5.46 was left at 1 of 5 wheels (#1756) — the project advertised a version almost nobody could
+install.
+
+Two guards now check headroom *before* anything is uploaded, both in `ci/publish.py`:
+
+- `prepare` estimates the missing wheels from the files already stored for the version (or the
+  largest wheel of any older release) and refuses the dispatch while nothing has been uploaded.
+- `build-pypi` repeats the check with the **real** wheel sizes once the wheels exist, right before
+  `publish-pypi` runs.
+
+Recovery is a maintainer action: request a project size increase, or delete old releases in the PyPI
+web UI (there is no file-delete API and publishing uses trusted publishing, so this cannot be
+automated from CI). Then re-dispatch the same candidate SHA with `publish=true` — `prepare` sees
+partial wheel coverage, the guards see the freed headroom, and only the missing wheels upload.
+
 ## Library reference: `ci/publish.py`
 
 The module is consumed by `release-auto.yml`'s `build-pypi` step. Public surface (anything else is implementation detail):
@@ -85,8 +104,10 @@ The module is consumed by `release-auto.yml`'s `build-pypi` step. Public surface
 | `build_wheel(...)` | Assemble one platform wheel |
 | `build_all_wheels(...)` | Assemble every configured platform; fail fast on missing |
 | `log(msg)`, `record_hash(bytes)` | Internal helpers, also re-exported |
+| `PYPI_PROJECT_SIZE_LIMIT_BYTES`, `PyPIStorage` | PyPI storage headroom verdict |
+| `estimate_upload_storage(...)`, `measured_upload_storage(...)` | Preflight before any upload |
 
-The module intentionally has no CLI entry point, no `argparse`, no upload code, and no PyPI auth logic. PyPI authentication is handled by GitHub's OIDC trusted publishing — there are no secrets to manage.
+The module has one narrow CLI, used as a publication gate: `python -m ci.publish --pypi-json <saved /pypi/fbuild/json> [--version V --expected-wheels N | --wheel dist/wheels/*.whl]`. It prints the storage verdict and exits non-zero when the upload would not fit (see below). It still contains no upload code and no PyPI auth logic. PyPI authentication is handled by GitHub's OIDC trusted publishing — there are no secrets to manage.
 
 ## Adding a new platform
 
