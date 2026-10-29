@@ -18,7 +18,7 @@
 //! Flashing the image (`uploadfs`) is the deploy half of #1358 and is not part
 //! of this command.
 
-use std::collections::BTreeMap;
+use std::collections::HashMap;
 use std::path::Path;
 use std::time::Duration;
 
@@ -298,12 +298,20 @@ pub struct BuildfsArgs {
     pub json: bool,
 }
 
-struct ProjectContext {
-    project_dir: NormalizedPath,
-    env: String,
-    data_dir: NormalizedPath,
-    partitions_csv: NormalizedPath,
-    configured_fs: Option<String>,
+pub(crate) struct ProjectContext {
+    pub(crate) project_dir: NormalizedPath,
+    pub(crate) env: String,
+    pub(crate) data_dir: NormalizedPath,
+    pub(crate) partitions_csv: NormalizedPath,
+    /// `board_build.filesystem`, when the environment declares one.
+    pub(crate) configured_fs: Option<String>,
+    /// The environment's full `[env:...]` map. `uploadfs` needs `platform` and
+    /// `board` from it, and the esptool resolver needs the whole thing.
+    pub(crate) env_config: HashMap<String, String>,
+    /// `board_build.*` / `board_upload.*` overrides — `board`, `partitions`,
+    /// flash parameters, and the board-config lookup `uploadfs` builds its
+    /// deployer from.
+    pub(crate) board_overrides: HashMap<String, String>,
 }
 
 /// Resolve the project's environment, data directory and partition table.
@@ -323,7 +331,8 @@ fn resolve_context(args: &BuildfsArgs, project_dir: &Path) -> Result<ProjectCont
             .unwrap_or_else(|| "default".to_string()),
     };
 
-    let mut board_overrides = BTreeMap::new();
+    let mut board_overrides = HashMap::new();
+    let mut env_config = HashMap::new();
     let mut data_dir_name = None;
     if let Some(config) = ini.as_ref() {
         if !config.has_environment(&env) {
@@ -333,11 +342,9 @@ fn resolve_context(args: &BuildfsArgs, project_dir: &Path) -> Result<ProjectCont
                 config.get_environments().join(", ")
             )));
         }
-        for (key, value) in config.get_board_overrides(&env)? {
-            board_overrides.insert(key, value);
-        }
-        data_dir_name = config
-            .get_env_config(&env)?
+        board_overrides = config.get_board_overrides(&env)?;
+        env_config = config.get_env_config(&env)?.clone();
+        data_dir_name = env_config
             .get("data_dir")
             .map(|value| value.trim().to_string())
             .filter(|value| !value.is_empty());
@@ -371,6 +378,8 @@ fn resolve_context(args: &BuildfsArgs, project_dir: &Path) -> Result<ProjectCont
         data_dir,
         partitions_csv,
         configured_fs: board_overrides.get("filesystem").cloned(),
+        env_config,
+        board_overrides,
     })
 }
 
@@ -638,9 +647,24 @@ fn resolve_tool(kind: FsKind, explicit: Option<&Path>) -> Result<NormalizedPath>
     )))
 }
 
-/// Resolve, stage, size-check and build the filesystem image.
-pub async fn run(args: BuildfsArgs, project_dir: &Path) -> Result<()> {
-    let context = resolve_context(&args, project_dir)?;
+/// Everything `fbuild buildfs` and `fbuild uploadfs` must agree on: the
+/// partition the image belongs in, the format, and where the image lands.
+///
+/// `uploadfs` flashes the file recorded here at the offset recorded here, so
+/// the two commands can never disagree about which region a `data/` tree ends
+/// up in (FastLED/fbuild#1358).
+pub(crate) struct ImagePlan {
+    pub(crate) context: ProjectContext,
+    pub(crate) partition: Partition,
+    pub(crate) kind: FsKind,
+    pub(crate) build_dir: NormalizedPath,
+    pub(crate) image: NormalizedPath,
+}
+
+/// Resolve the environment, data directory, partition CSV, target partition,
+/// image format and output path — the read-only half of `buildfs`.
+pub(crate) fn plan_image(args: &BuildfsArgs, project_dir: &Path) -> Result<ImagePlan> {
+    let context = resolve_context(args, project_dir)?;
     let csv = std::fs::read_to_string(context.partitions_csv.as_path()).map_err(|e| {
         FbuildError::ConfigError(format!(
             "failed to read {}: {e}",
@@ -664,21 +688,38 @@ pub async fn run(args: BuildfsArgs, project_dir: &Path) -> Result<()> {
         )
         .resolve(),
     );
-    let staging = build_dir.join("fs_stage");
+    let image = match &args.output {
+        Some(path) => absolute(context.project_dir.as_path(), path),
+        None => build_dir.join(kind.image_name()),
+    };
+
+    Ok(ImagePlan {
+        context,
+        partition,
+        kind,
+        build_dir,
+        image,
+    })
+}
+
+/// Resolve, stage, size-check and build the filesystem image.
+pub async fn run(args: BuildfsArgs, project_dir: &Path) -> Result<()> {
+    let plan = plan_image(&args, project_dir)?;
+    let context = &plan.context;
+    let partition = &plan.partition;
+    let kind = plan.kind;
+    let staging = plan.build_dir.join("fs_stage");
     stage_data(&context.data_dir, &staging)?;
     let files = measure_staging(&staging)?;
     let required = estimate_image_bytes(&files);
-    check_capacity(required, &partition)?;
+    check_capacity(required, partition)?;
 
     let tool = if args.check_only {
         None
     } else {
         Some(resolve_tool(kind, args.tool.as_deref().map(Path::new))?)
     };
-    let image = match &args.output {
-        Some(path) => absolute(context.project_dir.as_path(), path),
-        None => build_dir.join(kind.image_name()),
-    };
+    let image = &plan.image;
 
     if let Some(tool) = tool.as_ref() {
         if let Some(parent) = image.as_path().parent() {
@@ -686,7 +727,7 @@ pub async fn run(args: BuildfsArgs, project_dir: &Path) -> Result<()> {
                 FbuildError::BuildFailed(format!("failed to create {}: {e}", parent.display()))
             })?;
         }
-        run_image_tool(tool, &staging, partition.size, &image).await?;
+        run_image_tool(tool, &staging, partition.size, image).await?;
     }
 
     let image_bytes = if tool.is_some() {
@@ -699,12 +740,12 @@ pub async fn run(args: BuildfsArgs, project_dir: &Path) -> Result<()> {
 
     report(&Report {
         args: &args,
-        context: &context,
-        partition: &partition,
+        context,
+        partition,
         kind,
         files: &files,
         required,
-        image: &image,
+        image,
         image_bytes,
         tool: tool.as_ref(),
     });

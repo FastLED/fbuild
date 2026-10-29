@@ -32,7 +32,7 @@ mod qemu;
 mod tests;
 mod verify;
 
-pub use deployer::{Esp32Deployer, EsptoolParams};
+pub use deployer::{Esp32Deployer, EsptoolParams, RegionFlashResult};
 pub use qemu::{
     build_qemu_args, build_qemu_esp32s3_args, create_qemu_flash_image,
     resolve_qemu_flash_size_bytes,

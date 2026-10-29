@@ -686,8 +686,16 @@ pub enum Commands {
     /// mounts and an oversized `data/` fails here instead of failing to
     /// mount on the device.
     ///
-    /// Flashing the image (`uploadfs`) is not part of this command.
+    /// Flash the image with `fbuild uploadfs`.
     Buildfs(super::buildfs::BuildfsArgs),
+    /// Flash a filesystem image to the partition it was built for —
+    /// PlatformIO's `uploadfs` (FastLED/fbuild#1358).
+    ///
+    /// The offset and capacity check come from the same partition CSV
+    /// `fbuild buildfs` sizes the image with, so the image is written exactly
+    /// where the firmware mounts it. A missing image is built first unless
+    /// `--no-build` is given, and `--verify` reads the region back afterwards.
+    Uploadfs(super::uploadfs::UploadfsArgs),
     /// Diagnostic: drive the LDF-style library-selection resolver and print
     /// the selected library set. Useful for debugging FastLED/fbuild#202 /
     /// `#204`-style "library not found" issues without running a full build.
@@ -1140,6 +1148,7 @@ pub const KNOWN_SUBCOMMANDS: &[&str] = &[
     "sync",
     "install",
     "buildfs",
+    "uploadfs",
 ];
 
 /// Rewrite `fbuild <dir> <subcommand> ...` → `fbuild <subcommand> <dir> ...`

@@ -145,8 +145,39 @@ the partition table declares. `mklittlefs`/`mkspiffs` are resolved from the
 PlatformIO package directory, then `PATH`; `--tool <path>` pins one.
 
 The image lands in the environment's build directory (`<build>/<filesystem>.bin`)
-and `--check-only` reports the size plan without running the tool. Flashing the
-image (`uploadfs`) is not part of this command yet.
+and `--check-only` reports the size plan without running the tool.
+
+### `fbuild uploadfs`
+
+Flash that image to the filesystem partition — the fbuild equivalent of
+PlatformIO's `uploadfs` target (FastLED/fbuild#1358).
+
+```bash
+fbuild uploadfs
+fbuild uploadfs -e esp32s3 --port /dev/ttyACM0
+fbuild uploadfs --image build/littlefs.bin --no-build --verify
+fbuild uploadfs --verify --json
+```
+
+The offset comes from the same partition CSV `buildfs` sizes the image with, so
+the image is written exactly where the firmware mounts it; there is no offset
+flag to get wrong. A missing image is built first (PlatformIO's `uploadfs`
+implies `buildfs`) unless `--no-build` asks for the existing file as-is, and an
+image larger than the partition is refused before the flasher runs.
+
+The flash goes through the same `esptool` deployer `fbuild deploy` uses, with
+the board's own flash mode/frequency/size and the esptool the build resolved. A
+running daemon is asked to preempt the port first, so a monitor session does not
+turn the flash into a "port busy" failure. With no `--port`, the only detected
+serial port is used; several ports is an error naming them, never a guess.
+
+`--verify` reads the region back with `esptool verify-flash` after writing, so
+success means the device holds exactly this image rather than only that esptool
+exited zero.
+
+Environments without a flashable filesystem are a clear error: AVR has only
+EEPROM, Teensy 4.x's `LittleFS_Program` is runtime-only and wiped by every
+re-upload, and ESP8266 image building is not implemented.
 
 ### `fbuild monitor`
 
