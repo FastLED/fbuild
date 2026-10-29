@@ -288,7 +288,7 @@ pub async fn run_iwyu(
             // Cache miss — run IWYU. Parallel async fan-out inside the CLI binary
             // (no daemon containment group in this process).
             // allow-direct-spawn: parallel async fan-out in CLI; no containment group here.
-            let mut cmd = tokio::process::Command::new(tool.as_ref());
+            let mut cmd = fbuild_core::platform::process::tokio_command(tool.as_ref());
             cmd.arg("-p").arg(p_dir.as_ref());
             cmd.arg("-Xiwyu").arg("--no_comments");
             cmd.arg("-Xiwyu").arg("--quoted_includes_first");
@@ -299,8 +299,21 @@ pub async fn run_iwyu(
             cmd.arg(&file);
             // FastLED/fbuild#810: cap each IWYU invocation at 120s so a wedged
             // subprocess can't hang the whole fan-out forever.
-            let output =
-                match tokio::time::timeout(std::time::Duration::from_secs(120), cmd.output()).await
+            // Fork under the shared fork lock (released before the await), with
+            // the stdio `output()` would set.
+            cmd.stdin(std::process::Stdio::null())
+                .stdout(std::process::Stdio::piped())
+                .stderr(std::process::Stdio::piped());
+            let child = {
+                let _fork = fbuild_core::platform::process::shared_fork_guard();
+                cmd.spawn()
+            };
+            let output = match child {
+                Ok(child) => match tokio::time::timeout(
+                    std::time::Duration::from_secs(120),
+                    child.wait_with_output(),
+                )
+                .await
                 {
                     Ok(res) => res,
                     Err(_) => {
@@ -311,7 +324,9 @@ pub async fn run_iwyu(
                             src_path,
                         );
                     }
-                };
+                },
+                Err(e) => Err(e),
+            };
 
             match output {
                 Ok(out) => {
@@ -575,7 +590,7 @@ pub async fn run_clang_tool(
                 .await
                 .expect("fbuild-cli: clang-tool semaphore is never closed before all tasks finish");
             // allow-direct-spawn: parallel async fan-out (clang-tidy) in CLI binary.
-            let mut cmd = tokio::process::Command::new(tool.as_ref());
+            let mut cmd = fbuild_core::platform::process::tokio_command(tool.as_ref());
             cmd.arg("-p").arg(pd.as_ref());
             for arg in &extra {
                 cmd.arg(arg);
@@ -586,15 +601,30 @@ pub async fn run_clang_tool(
             }
             // FastLED/fbuild#810: cap each clang-tidy invocation at 120s so a
             // wedged subprocess can't hang the whole fan-out forever.
-            let output =
-                match tokio::time::timeout(std::time::Duration::from_secs(120), cmd.output()).await
+            // Fork under the shared fork lock (released before the await), with
+            // the stdio `output()` would set.
+            cmd.stdin(std::process::Stdio::null())
+                .stdout(std::process::Stdio::piped())
+                .stderr(std::process::Stdio::piped());
+            let child = {
+                let _fork = fbuild_core::platform::process::shared_fork_guard();
+                cmd.spawn()
+            };
+            let output = match child {
+                Ok(child) => match tokio::time::timeout(
+                    std::time::Duration::from_secs(120),
+                    child.wait_with_output(),
+                )
+                .await
                 {
                     Ok(res) => res,
                     Err(_) => Err(std::io::Error::new(
                         std::io::ErrorKind::TimedOut,
                         "clang-tidy timed out after 120s",
                     )),
-                };
+                },
+                Err(e) => Err(e),
+            };
             (file, output)
         });
         handles.push(handle);

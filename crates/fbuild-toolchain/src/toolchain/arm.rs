@@ -119,9 +119,7 @@ impl crate::Package for ArmToolchain {
             return false;
         }
         let root = find_bin_root(&self.base.install_path());
-        root.join("bin")
-            .join(tool_name("arm-none-eabi-gcc"))
-            .exists()
+        tool_binary(&root.join("bin"), "arm-none-eabi-gcc").exists()
     }
 
     fn get_info(&self) -> PackageInfo {
@@ -247,14 +245,9 @@ fn find_bin_root(install_dir: &Path) -> PathBuf {
     install_dir.to_path_buf()
 }
 
-/// Get the tool binary name with .exe extension on Windows.
-fn tool_name(name: &str) -> String {
-    fbuild_core::platform::executable::native_name(name)
-}
-
-/// Get the full path to a tool binary.
+/// Get the full path to a tool binary (native spelling, or a `.com`/`.exe` APE).
 fn tool_binary(bin_dir: &Path, name: &str) -> PathBuf {
-    bin_dir.join(tool_name(name))
+    fbuild_core::platform::executable::resolve_tool_in(bin_dir, name).into_path_buf()
 }
 
 #[cfg(test)]
@@ -268,15 +261,6 @@ mod tests {
         let (url, _checksum) = platform_package();
         assert!(url.starts_with("https://developer.arm.com"));
         assert!(url.contains("arm-none-eabi"));
-    }
-
-    #[test]
-    fn test_tool_name_platform() {
-        let name = tool_name("arm-none-eabi-gcc");
-        assert_eq!(
-            name,
-            fbuild_core::platform::executable::native_name("arm-none-eabi-gcc")
-        );
     }
 
     #[test]
@@ -311,6 +295,31 @@ mod tests {
         let tmp = tempfile::TempDir::new().unwrap();
         let tc = ArmToolchain::with_cache_root(tmp.path(), &tmp.path().join("cache"));
         assert!(!tc.is_installed());
+    }
+
+    /// A package shipping each host tool as one APE `bin/<tool>.com` validates,
+    /// reports installed, and resolves every tool to the `.com` file.
+    #[test]
+    fn test_arm_toolchain_finds_ape_com_tools() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let tc = ArmToolchain::with_cache_root(tmp.path(), &tmp.path().join("cache"));
+        let install = tc.base.install_path();
+        let bin = install.join("bin");
+        std::fs::create_dir_all(&bin).unwrap();
+        let tools = ["gcc", "g++", "ar", "objcopy", "size"];
+        assert!(ArmToolchain::validate(&install).is_err());
+        for tool in tools {
+            std::fs::write(bin.join(format!("arm-none-eabi-{tool}.com")), b"MZqFpD='\n").unwrap();
+        }
+        ArmToolchain::validate(&install).expect("APE .com tools satisfy validation");
+        std::fs::write(
+            crate::disk_cache::paths::install_complete_sentinel(&install),
+            "",
+        )
+        .unwrap();
+        assert!(tc.is_installed());
+        assert_eq!(tc.get_gcc_path(), bin.join("arm-none-eabi-gcc.com"));
+        assert_eq!(tc.get_size_path(), bin.join("arm-none-eabi-size.com"));
     }
 
     /// Checksums that are present must be valid 64-char lowercase hex (SHA-256).

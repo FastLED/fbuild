@@ -204,9 +204,7 @@ impl crate::Package for Esp32Toolchain {
             return false;
         }
         let root = find_bin_root(&self.base.install_path());
-        root.join("bin")
-            .join(tool_name(&format!("{}gcc", self.prefix)))
-            .exists()
+        tool_binary(&root.join("bin"), &format!("{}gcc", self.prefix)).exists()
     }
 
     fn get_info(&self) -> PackageInfo {
@@ -392,14 +390,9 @@ fn find_bin_root(install_dir: &Path) -> PathBuf {
     install_dir.to_path_buf()
 }
 
-/// Get the tool binary name with .exe extension on Windows.
-fn tool_name(name: &str) -> String {
-    fbuild_core::platform::executable::native_name(name)
-}
-
-/// Get the full path to a tool binary.
+/// Get the full path to a tool binary (native spelling, or a `.com`/`.exe` APE).
 fn tool_binary(bin_dir: &Path, name: &str) -> PathBuf {
-    bin_dir.join(tool_name(name))
+    fbuild_core::platform::executable::resolve_tool_in(bin_dir, name).into_path_buf()
 }
 
 #[cfg(test)]
@@ -419,15 +412,6 @@ mod tests {
         let (url, _checksum) = platform_package(false);
         assert!(url.contains("xtensa-esp-elf"));
         assert!(url.contains("espressif"));
-    }
-
-    #[test]
-    fn test_tool_name_platform() {
-        let name = tool_name("riscv32-esp-elf-gcc");
-        assert_eq!(
-            name,
-            fbuild_core::platform::executable::native_name("riscv32-esp-elf-gcc")
-        );
     }
 
     #[test]

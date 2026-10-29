@@ -139,6 +139,9 @@ fn resolves_exact_platform_payload_and_checksum() {
     );
 }
 
+/// A registry file with no `system` (or `"system": null`) is a host-universal
+/// payload, e.g. one APE build of a tool for every host. It must parse and
+/// resolve like `"*"`, while an exact host match still wins.
 #[test]
 fn selects_host_file_and_range_without_substituting_another_build() {
     let response = r#"{

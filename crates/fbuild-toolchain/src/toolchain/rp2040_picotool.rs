@@ -67,11 +67,15 @@ impl Rp2040Picotool {
     }
 
     pub fn executable(&self) -> PathBuf {
-        self.resolved_dir().join(picotool_name())
+        fbuild_core::platform::executable::resolve_tool_in(&self.resolved_dir(), PICOTOOL)
+            .into_path_buf()
     }
 
     fn validate(install_dir: &Path) -> fbuild_core::Result<()> {
-        let executable = find_picotool_root(install_dir).join(picotool_name());
+        let executable = fbuild_core::platform::executable::resolve_tool_in(
+            &find_picotool_root(install_dir),
+            PICOTOOL,
+        );
         if !executable.is_file() {
             return Err(fbuild_core::FbuildError::PackageError(format!(
                 "managed picotool executable not found at {}; managed picotool assets exist for {} (the windows asset is x86_64 and is also what Windows ARM64 receives, relying on x64 emulation) — other host platforms are unsupported",
@@ -184,19 +188,18 @@ fn platform_package() -> PlatformPackage {
 }
 
 fn find_picotool_root(install_dir: &Path) -> PathBuf {
-    if install_dir.join(picotool_name()).is_file() {
+    if fbuild_core::platform::executable::find_tool_in(install_dir, PICOTOOL).is_some() {
         return install_dir.to_path_buf();
     }
     let nested = install_dir.join("picotool");
-    if nested.join(picotool_name()).is_file() {
+    if fbuild_core::platform::executable::find_tool_in(&nested, PICOTOOL).is_some() {
         return nested;
     }
     install_dir.to_path_buf()
 }
 
-fn picotool_name() -> &'static str {
-    fbuild_core::platform::executable::name("picotool", "picotool.exe")
-}
+/// Executable stem; the native spelling or a `.com`/`.exe` APE is accepted.
+const PICOTOOL: &str = "picotool";
 
 #[cfg(test)]
 mod tests {
@@ -217,7 +220,11 @@ mod tests {
         let temp = tempfile::tempdir().unwrap();
         let nested = temp.path().join("picotool");
         std::fs::create_dir(&nested).unwrap();
-        std::fs::write(nested.join(picotool_name()), []).unwrap();
+        std::fs::write(
+            nested.join(fbuild_core::platform::executable::native_name(PICOTOOL)),
+            [],
+        )
+        .unwrap();
         assert_eq!(find_picotool_root(temp.path()), nested);
     }
 
