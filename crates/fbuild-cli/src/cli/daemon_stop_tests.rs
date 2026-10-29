@@ -62,3 +62,27 @@ fn a_live_non_daemon_pid_fails_the_identity_gate() {
         "the test binary is not an fbuild-daemon, so the gate must reject it"
     );
 }
+/// FastLED/fbuild#1627: after every spawn attempt fails, an unresponsive
+/// daemon that still owns this endpoint's cache root is retired and retried
+/// instead of failing the build outright.
+#[test]
+fn a_failed_spawn_retires_a_verified_unresponsive_daemon() {
+    assert_eq!(
+        plan_spawn_recovery(false, Some(4321)),
+        SpawnRecovery::RetireAndRetry(4321)
+    );
+}
+
+#[test]
+fn a_failed_spawn_with_nothing_alive_to_retire_gives_up() {
+    assert_eq!(plan_spawn_recovery(false, None), SpawnRecovery::GiveUp);
+}
+
+/// A daemon that answers is never retired, however the spawn attempts went:
+/// it may be serving a concurrent build, and adopting it is what the failed
+/// spawn was trying to do in the first place.
+#[test]
+fn a_healthy_endpoint_is_adopted_never_retired() {
+    assert_eq!(plan_spawn_recovery(true, Some(4321)), SpawnRecovery::Adopt);
+    assert_eq!(plan_spawn_recovery(true, None), SpawnRecovery::Adopt);
+}
