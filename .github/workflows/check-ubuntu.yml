@@ -122,7 +122,10 @@ jobs:
     # file: this is another job in the existing Ubuntu lane.
     name: glibc 2.17 floor (linux x86_64 + aarch64)
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    # Cold cache: two release cross-links of fbuild-cli + fbuild-daemon.
+    # Measured ~16 min for the daemon alone on a loaded 16-core host with an
+    # empty cache; 60 leaves room for the first (cache-miss) run.
+    timeout-minutes: 60
     steps:
       - name: Checkout source
         uses: actions/checkout@v6
@@ -155,7 +158,7 @@ jobs:
       - name: Self-test the floor guard
         run: uv run --no-project python -m unittest ci.test_check_glibc_floor
       - name: Cross-link release binaries
-        timeout-minutes: 35
+        timeout-minutes: 45
         run: |
           for target in x86_64-unknown-linux-gnu aarch64-unknown-linux-gnu; do
             soldr prepare --target "$target"
