@@ -238,6 +238,13 @@ pub struct DaemonInfoResponse {
     #[serde(default)]
     pub build_id: String,
     pub pid: u32,
+    /// Resident set size in bytes, absent on daemons that predate
+    /// FastLED/fbuild#1785 or hosts that cannot report it.
+    #[serde(default)]
+    pub rss_bytes: Option<u64>,
+    /// Peak resident set size in bytes (FastLED/fbuild#1785).
+    #[serde(default)]
+    pub peak_rss_bytes: Option<u64>,
     pub port: u16,
     pub dev_mode: bool,
     #[serde(default)]

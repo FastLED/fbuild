@@ -30,6 +30,41 @@ pub(crate) async fn daemon_terminate_signal() {
     }
 }
 
+/// Resident memory of `pid` from `/proc/<pid>/status`.
+///
+/// `VmRSS` is the current resident set and `VmHWM` the high-water mark. Both
+/// are accounted in KiB. A process that is gone, or a kernel without the
+/// field, yields `None` rather than a zero (FastLED/fbuild#1785).
+pub(crate) fn resident_memory(pid: u32) -> Option<crate::platform::process::MemoryUsage> {
+    let status = std::fs::read_to_string(format!("/proc/{pid}/status")).ok()?;
+    let mut resident_bytes = None;
+    let mut peak_resident_bytes = None;
+    for line in status.lines() {
+        if let Some(value) = line.strip_prefix("VmRSS:") {
+            resident_bytes = parse_status_kib(value);
+        } else if let Some(value) = line.strip_prefix("VmHWM:") {
+            peak_resident_bytes = parse_status_kib(value);
+        }
+    }
+    Some(crate::platform::process::MemoryUsage {
+        resident_bytes: resident_bytes?,
+        peak_resident_bytes,
+    })
+}
+
+/// Parse the `"   1234 kB"` tail of a `/proc/<pid>/status` memory line.
+///
+/// Bare `kB` is 1024 bytes on Linux; anything else is not a size we can name,
+/// so it is reported as absent.
+fn parse_status_kib(value: &str) -> Option<u64> {
+    let mut fields = value.split_whitespace();
+    let amount: u64 = fields.next()?.parse().ok()?;
+    if fields.next()? != "kB" {
+        return None;
+    }
+    amount.checked_mul(1024)
+}
+
 pub(crate) fn daemon_graceful_termination_budget() -> std::time::Duration {
     std::time::Duration::from_secs(crate::daemon_health::TERMINATE_EXIT_BUDGET.as_secs() + 1)
 }

@@ -24,6 +24,57 @@ pub(crate) async fn daemon_terminate_signal() {
     }
 }
 
+/// Resident memory of `pid` from `proc_pidinfo(PROC_PIDTASKINFO)`.
+///
+/// The task port only resolves for processes this user may inspect, so a
+/// denied or vanished pid yields `None`. macOS exposes no per-pid high-water
+/// mark; `getrusage` covers this process only, and is used for that case
+/// (FastLED/fbuild#1785).
+pub(crate) fn resident_memory(pid: u32) -> Option<crate::platform::process::MemoryUsage> {
+    let pid = i32::try_from(pid).ok()?;
+    let mut info = std::mem::MaybeUninit::<libc::proc_taskinfo>::zeroed();
+    let size = std::mem::size_of::<libc::proc_taskinfo>() as libc::c_int;
+    // SAFETY: the buffer is `size` bytes and initialized before any read; the
+    // kernel writes at most that many bytes into it.
+    let written = unsafe {
+        libc::proc_pidinfo(
+            pid,
+            libc::PROC_PIDTASKINFO,
+            0,
+            info.as_mut_ptr().cast(),
+            size,
+        )
+    };
+    if written != size {
+        return None;
+    }
+    // SAFETY: a full-size reply initializes the whole struct.
+    let info = unsafe { info.assume_init() };
+    let peak_resident_bytes = if pid == std::process::id() as i32 {
+        peak_resident_memory_bytes()
+    } else {
+        None
+    };
+    Some(crate::platform::process::MemoryUsage {
+        resident_bytes: info.pti_resident_size,
+        peak_resident_bytes,
+    })
+}
+
+/// This process's peak resident set from `RUSAGE_SELF`.
+fn peak_resident_memory_bytes() -> Option<u64> {
+    let mut usage = std::mem::MaybeUninit::<libc::rusage>::zeroed();
+    // SAFETY: `getrusage` writes one `rusage` into the provided pointer.
+    let result = unsafe { libc::getrusage(libc::RUSAGE_SELF, usage.as_mut_ptr()) };
+    if result != 0 {
+        return None;
+    }
+    // SAFETY: a zero return means the struct was filled.
+    let usage = unsafe { usage.assume_init() };
+    // macOS reports `ru_maxrss` in bytes; other Unix hosts use KiB.
+    u64::try_from(usage.ru_maxrss).ok()
+}
+
 pub(crate) fn daemon_graceful_termination_budget() -> std::time::Duration {
     std::time::Duration::from_secs(crate::daemon_health::TERMINATE_EXIT_BUDGET.as_secs() + 1)
 }

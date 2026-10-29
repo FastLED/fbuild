@@ -287,6 +287,14 @@ pub struct DaemonInfoResponse {
     /// Compile-time build id (`<commit>[-dirty]`, FastLED/fbuild#1742).
     pub build_id: String,
     pub pid: u32,
+    /// Resident set size of the daemon in bytes (FastLED/fbuild#1785).
+    /// Absent on hosts that cannot report it -- never a bogus zero.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub rss_bytes: Option<u64>,
+    /// Peak resident set size so far, which is what a wedged daemon is
+    /// judged by (FastLED/fbuild#1785).
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub peak_rss_bytes: Option<u64>,
     pub port: u16,
     pub started_at: f64,
     pub dev_mode: bool,
@@ -957,6 +965,8 @@ mod tests {
             version: "2.0.0".into(),
             build_id: "test".into(),
             pid: 5678,
+            rss_bytes: Some(4096),
+            peak_rss_bytes: Some(8192),
             port: 8765,
             started_at: 1700000000.0,
             dev_mode: false,
@@ -996,6 +1006,9 @@ mod tests {
         assert!(json.contains("\"source_mtime\""));
         assert!(json.contains("\"spawner_cwd\""));
         assert!(json.contains("\"mcp_url\""));
+        // FastLED/fbuild#1785: the daemon reports its own memory.
+        assert!(json.contains("\"rss_bytes\":4096"));
+        assert!(json.contains("\"peak_rss_bytes\":8192"));
     }
 
     #[test]
@@ -1006,6 +1019,8 @@ mod tests {
             version: "2.0.0".into(),
             build_id: "test".into(),
             pid: 5678,
+            rss_bytes: None,
+            peak_rss_bytes: None,
             port: 8765,
             started_at: 1700000000.0,
             dev_mode: false,
@@ -1037,6 +1052,8 @@ mod tests {
             version: "2.0.0".into(),
             build_id: "test".into(),
             pid: 5678,
+            rss_bytes: None,
+            peak_rss_bytes: None,
             port: 8765,
             started_at: 1700000000.0,
             dev_mode: false,
