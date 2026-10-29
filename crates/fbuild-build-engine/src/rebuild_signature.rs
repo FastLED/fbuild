@@ -415,11 +415,25 @@ mod tests {
     #[test]
     fn prefix_map_flags_normalize_their_source_path() {
         let compiler = Path::new("/tools/gcc");
-        let flags_for =
-            |project: &str| vec![format!("-fdebug-prefix-map={project}=."), "-O2".to_string()];
-        let signature_for = |project: &str| {
+        // The two project roots must be ABSOLUTE ON THIS HOST: the flag value is
+        // only normalized when `looks_like_absolute_path` accepts it, and a
+        // POSIX literal like `/home/one/blink` is not absolute on Windows, so
+        // the map flag would stay verbatim and the two projects would (correctly)
+        // hash differently. Anchoring both under the host temp dir keeps the
+        // intent -- two different project dirs must share a signature -- and
+        // works on every platform.
+        let root = std::env::temp_dir();
+        let one = root.join("fbuild-prefix-map-one").join("blink");
+        let two = root.join("fbuild-prefix-map-two").join("other-blink");
+        let flags_for = |project: &Path| {
+            vec![
+                format!("-fdebug-prefix-map={}=.", project.display()),
+                "-O2".to_string(),
+            ]
+        };
+        let signature_for = |project: &Path| {
             build_rebuild_signature_for_project(
-                Path::new(project),
+                project,
                 compiler,
                 &flags_for(project),
                 &[],
@@ -427,19 +441,16 @@ mod tests {
                 &[],
             )
         };
-        assert_eq!(
-            signature_for("/home/one/blink"),
-            signature_for("/home/two/other-blink")
-        );
+        assert_eq!(signature_for(&one), signature_for(&two));
         // A different remap target is still a different build.
         let other_target = build_rebuild_signature_for_project(
-            Path::new("/home/one/blink"),
+            &one,
             compiler,
-            &["-fdebug-prefix-map=/home/one/blink=/elsewhere".to_string()],
+            &[format!("-fdebug-prefix-map={}=/elsewhere", one.display())],
             &[],
             &[],
             &[],
         );
-        assert_ne!(signature_for("/home/one/blink"), other_target);
+        assert_ne!(signature_for(&one), other_target);
     }
 }
