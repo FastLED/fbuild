@@ -342,6 +342,18 @@ impl BuildOrchestrator for Esp32Orchestrator {
             user_flags.extend(framework_macro_prefix_map(&core_dir));
             user_flags.extend(sdk_farm.as_ref().map(SdkIncludeFarm::macro_prefix_map));
         }
+        // FastLED/fbuild#1414: without this the compiler records the absolute
+        // build directory as `DW_AT_comp_dir` and absolute source paths, so two
+        // identical sketches in two directories compile to different objects
+        // and zccache can never serve the second one. Both the framework and
+        // the sketch stage get the same mapping, so a hydrated core object and a
+        // freshly compiled one still compare equal. `-fdebug-prefix-map` exists
+        // back to GCC 4.3, so the legacy ESP32 GCC 5 toolchain is covered too
+        // (unlike `-fmacro-prefix-map` just above).
+        user_flags.extend(fbuild_paths::debug_prefix_map_args(
+            &params.project_dir,
+            &ctx.build_dir,
+        ));
         let mut user_build_flags = ctx.config.get_build_flags(&params.env_name)?;
         user_build_flags.extend(params.extra_build_flags.clone());
         user_flags.extend(user_build_flags.clone());
