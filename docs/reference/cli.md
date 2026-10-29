@@ -140,7 +140,7 @@ known limitations.
 | `fbuild device lease <port>` | Acquire a device lease. |
 | `fbuild device release <port>` | Release a device lease. |
 | `fbuild device take <port> --reason <text>` | Preempt the current holder. |
-| `fbuild daemon status` | Show daemon status. |
+| `fbuild daemon status` | Show daemon status, including the daemon's resident memory and peak (`Memory:` line; omitted on hosts that cannot report it — FastLED/fbuild#1785). |
 | `fbuild daemon stop` | Stop the daemon gracefully. |
 | `fbuild daemon restart` | Restart the daemon. |
 | `fbuild daemon list` | List running daemon instances. |

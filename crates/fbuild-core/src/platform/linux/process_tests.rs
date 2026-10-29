@@ -38,3 +38,26 @@ fn contained_child_outlives_the_thread_that_spawned_it() {
         "contained child was killed when its spawning thread exited: {status:?}"
     );
 }
+
+#[test]
+fn resident_memory_of_the_current_process_is_reported() {
+    let usage = super::resident_memory(std::process::id()).expect("current process resident set");
+    assert!(usage.resident_bytes > 0);
+    let peak = usage.peak_resident_bytes.expect("Linux reports VmHWM");
+    assert!(peak >= usage.resident_bytes, "peak {peak} < rss {}", usage.resident_bytes);
+}
+
+#[test]
+fn a_pid_without_a_proc_entry_reports_nothing() {
+    // Above the kernel's default `pid_max` (4194304), so no `/proc` entry can
+    // exist: the answer must be `None`, never a zero-sized working set.
+    assert!(super::resident_memory(9_000_000).is_none());
+}
+
+#[test]
+fn status_memory_lines_parse_as_kib() {
+    assert_eq!(super::parse_status_kib("     1024 kB"), Some(1_048_576));
+    assert_eq!(super::parse_status_kib("  0 kB"), Some(0));
+    assert_eq!(super::parse_status_kib("     1024 MB"), None);
+    assert_eq!(super::parse_status_kib(""), None);
+}

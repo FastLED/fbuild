@@ -141,6 +141,8 @@ mod tests {
             version: version.to_string(),
             build_id: "test".to_string(),
             pid: 123,
+            rss_bytes: None,
+            peak_rss_bytes: None,
             port: 8765,
             dev_mode: fbuild_paths::is_dev_mode(),
             operation_in_progress: false,
