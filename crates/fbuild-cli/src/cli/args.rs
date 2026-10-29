@@ -678,6 +678,16 @@ pub enum Commands {
         #[command(subcommand)]
         action: LnkAction,
     },
+    /// Build a flash filesystem image (LittleFS/SPIFFS) from the project's
+    /// `data/` directory — PlatformIO's `buildfs` (FastLED/fbuild#1358).
+    ///
+    /// The filesystem partition's offset and size come from the board's
+    /// partition CSV, so the image is sized for the region the firmware
+    /// mounts and an oversized `data/` fails here instead of failing to
+    /// mount on the device.
+    ///
+    /// Flashing the image (`uploadfs`) is not part of this command.
+    Buildfs(super::buildfs::BuildfsArgs),
     /// Diagnostic: drive the LDF-style library-selection resolver and print
     /// the selected library set. Useful for debugging FastLED/fbuild#202 /
     /// `#204`-style "library not found" issues without running a full build.
@@ -1129,6 +1139,7 @@ pub const KNOWN_SUBCOMMANDS: &[&str] = &[
     "bloat",
     "sync",
     "install",
+    "buildfs",
 ];
 
 /// Rewrite `fbuild <dir> <subcommand> ...` → `fbuild <subcommand> <dir> ...`
