@@ -11,7 +11,7 @@
 
 use std::path::Path;
 
-use fbuild_core::path::normalize_for_key;
+use fbuild_core::path::{NormalizedPath, normalize_for_key};
 
 use crate::BuildLayout;
 
@@ -55,14 +55,20 @@ impl BuildLayout {
 /// compile into it without a `.fbuild` component pass absolute paths, and
 /// those would otherwise keep the machine-specific tree.
 pub fn debug_prefix_map_args(project_dir: &Path, build_dir: &Path) -> Vec<String> {
+    // Forward slashes, not the native rendering: the whole point of these
+    // flags is that the recorded path is identical in every checkout, and that
+    // includes checkouts on another OS. Native separators made the same
+    // project emit `/p/sketch=...` on Linux and a backslash-spelled variant on Windows,
+    // so the core cache could never share objects across hosts
+    // (FastLED/fbuild#1780). Both spellings compile; only one is stable.
     let mut args = vec![format!(
         "-fdebug-prefix-map={}={DEBUG_PREFIX_MAP_ROOT}",
-        project_dir.display()
+        NormalizedPath::new(project_dir).display_slash()
     )];
     if !is_within(build_dir, project_dir) {
         args.push(format!(
             "-fdebug-prefix-map={}=fbuild-build",
-            build_dir.display()
+            NormalizedPath::new(build_dir).display_slash()
         ));
     }
     args
