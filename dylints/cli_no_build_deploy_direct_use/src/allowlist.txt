@@ -36,3 +36,11 @@ crates/fbuild-cli/src/cli/install.rs
 # benefit. This may migrate to the daemon if/when reset gains state
 # (lock holding, port multiplexing).
 crates/fbuild-cli/src/cli/reset.rs
+
+# `fbuild uploadfs` writes one filesystem region to the offset the project's
+# partition CSV already declares (`buildfs::plan_image`) — no firmware build,
+# no monitor orchestration, no trusted-hash state. It preempts the daemon's
+# serial lease through `/api/devices/:port/preempt` itself, so the only thing a
+# daemon round-trip would add is a copy of the partition-plan resolution that
+# must stay in the CLI for `buildfs` (FastLED/fbuild#1358).
+crates/fbuild-cli/src/cli/uploadfs.rs

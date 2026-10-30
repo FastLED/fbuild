@@ -28,4 +28,9 @@ here and is dispatched from `cli::async_main`.
 - **`lnk.rs`** -- `run_lnk` (pull / check / add)
 - **`install.rs`** -- `run_install`: in-process `fbuild install` over `fbuild_build::provision_env`, text / JSON rendering, `--check` exit codes (FastLED/fbuild#1433)
 - **`windows_long_paths.rs`** -- Windows preflight, explicit UAC repair, fresh command restart, and graceful daemon handoff (#1673)
+- **`buildfs.rs`** -- `run` / `plan_image`: assemble a LittleFS/SPIFFS image from `data/`
+  at the partition CSV's filesystem region (#1358). Tests in `buildfs_tests.rs`
+- **`uploadfs.rs`** -- `run`: flash that image to the same offset through the `esptool`
+  deployer, with `--verify` readback and a daemon port preempt (#1358). Tests in
+  `uploadfs_tests.rs`
 - **`tests.rs`** -- unit tests for argument normalization and `fbuild ci` parsing

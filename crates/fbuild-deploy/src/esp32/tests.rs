@@ -22,7 +22,7 @@ use super::verify::{FlashRegion, RegionVerifyResult, VerifyOutcome, parse_verify
 use crate::Deployer;
 
 /// Test params matching ESP32-C6 JSON config values.
-fn test_esptool_params() -> EsptoolParams {
+pub(super) fn test_esptool_params() -> EsptoolParams {
     EsptoolParams {
         flash_mode: "dio".to_string(),
         flash_freq: "80m".to_string(),

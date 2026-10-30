@@ -636,6 +636,10 @@ pub async fn async_main() {
             let project_dir = resolve_project_dir(args.project_dir.clone(), &top_level_project_dir);
             super::buildfs::run(args, std::path::Path::new(&project_dir)).await
         }
+        Some(Commands::Uploadfs(args)) => {
+            let project_dir = resolve_project_dir(args.project_dir.clone(), &top_level_project_dir);
+            super::uploadfs::run(args, std::path::Path::new(&project_dir)).await
+        }
         Some(Commands::LibSelect {
             project_dir,
             environment,
