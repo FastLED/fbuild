@@ -6,62 +6,90 @@
 
 use super::*;
 
+const REGISTRY_URL: &str = "https://dl.registry.platformio.org/download/platformio/tool/\
+                            framework-arduino-avr/5.4.0/framework-arduino-avr-5.4.0.tar.gz";
+
 /// A 403 from the registry names the User-Agent gate, so the next operator to
 /// hit it is not left reading a bare "HTTP 403 Forbidden" — which is exactly
 /// what made the original board-matrix outage hard to diagnose.
 #[test]
 fn registry_403_error_points_at_the_user_agent_gate() {
-    let url = "https://dl.registry.platformio.org/download/platformio/tool/\
-               framework-arduino-avr/5.4.0/framework-arduino-avr-5.4.0.tar.gz";
-    let rendered = DownloadAttemptError::HttpStatus(reqwest::StatusCode::FORBIDDEN, None)
-        .into_fbuild_error(url)
-        .to_string();
+    let rendered = DownloadAttemptError::HttpStatus(
+        reqwest::StatusCode::FORBIDDEN,
+        None,
+        Some("dl.registry.platformio.org".to_string()),
+    )
+    .into_fbuild_error(REGISTRY_URL)
+    .to_string();
     assert!(rendered.contains("User-Agent"), "{rendered}");
     assert!(rendered.contains("PlatformIO/"), "{rendered}");
 }
 
-/// The hint is scoped: it must not editorialize on unrelated hosts, nor on
-/// statuses that have nothing to do with the gate.
+/// The hint is scoped: it must not editorialize on statuses that have nothing
+/// to do with the gate, nor on hosts that are not the gating registry.
 #[test]
 fn registry_gate_hint_stays_scoped() {
     use reqwest::StatusCode as S;
-    let registry = "https://dl.registry.platformio.org/download/x.tar.gz";
-    let elsewhere = "https://github.com/FastLED/fbuild/releases/download/x.tar.gz";
+    let registry = Some("dl.registry.platformio.org");
 
     assert!(!registry_gate_hint(registry, S::FORBIDDEN).is_empty());
     assert!(registry_gate_hint(registry, S::NOT_FOUND).is_empty());
-    assert!(registry_gate_hint(elsewhere, S::FORBIDDEN).is_empty());
+    assert!(registry_gate_hint(Some("github.com"), S::FORBIDDEN).is_empty());
+    assert!(registry_gate_hint(None, S::FORBIDDEN).is_empty());
 }
 
-/// The host test compares the parsed hostname, not a substring. A mirror that
-/// merely carries the registry's name in its path is a different server and
-/// must not collect the hint; hostnames are case-insensitive per RFC 4343, so
-/// an uppercase spelling must still collect it.
+/// The hint follows the host that *answered*, not the one we asked.
+///
+/// reqwest follows redirects by default and the registry 302s to a CDN, so a
+/// 403 from that CDN (an expired signed URL, say) must not be blamed on
+/// fbuild's User-Agent even though the requested URL still names the registry.
 #[test]
-fn registry_gate_hint_matches_the_host_not_the_substring() {
+fn a_cdn_403_after_a_redirect_is_not_blamed_on_the_user_agent() {
+    let rendered = DownloadAttemptError::HttpStatus(
+        reqwest::StatusCode::FORBIDDEN,
+        None,
+        Some("usc1.contabostorage.com".to_string()),
+    )
+    .into_fbuild_error(REGISTRY_URL)
+    .to_string();
+
+    assert!(rendered.contains("HTTP 403"), "{rendered}");
+    assert!(
+        !rendered.contains("User-Agent"),
+        "a CDN's 403 is not the registry's UA gate: {rendered}"
+    );
+}
+
+/// The host is compared whole, not as a substring: a server that merely
+/// carries the registry's name inside its own hostname is a different server.
+#[test]
+fn registry_gate_hint_matches_the_host_not_a_substring() {
     use reqwest::StatusCode as S;
-
     for impostor in [
-        "https://mirror.example/dl.registry.platformio.org/pkg.tar.gz",
-        "https://dl.registry.platformio.org.evil.test/pkg.tar.gz",
-        "https://evil.test/?q=dl.registry.platformio.org",
+        "dl.registry.platformio.org.evil.test",
+        "mirror.example",
+        "notdl.registry.platformio.org",
     ] {
         assert!(
-            registry_gate_hint(impostor, S::FORBIDDEN).is_empty(),
-            "the registry name in a path or sibling domain is not the gating host: {impostor}"
+            registry_gate_hint(Some(impostor), S::FORBIDDEN).is_empty(),
+            "{impostor} is not the gating host"
         );
     }
+}
 
-    for real in [
-        "https://DL.REGISTRY.PLATFORMIO.ORG/download/x.tar.gz",
-        "https://dl.registry.PlatformIO.org/download/x.tar.gz",
+/// DNS hostnames are case-insensitive (RFC 4343), so a registry that answers
+/// under a different spelling still collects the hint.
+#[test]
+fn registry_gate_hint_ignores_host_case() {
+    use reqwest::StatusCode as S;
+    for spelling in [
+        "DL.REGISTRY.PLATFORMIO.ORG",
+        "dl.registry.PlatformIO.org",
+        "Dl.Registry.Platformio.Org",
     ] {
         assert!(
-            !registry_gate_hint(real, S::FORBIDDEN).is_empty(),
-            "hostnames are case-insensitive: {real}"
+            !registry_gate_hint(Some(spelling), S::FORBIDDEN).is_empty(),
+            "hostnames are case-insensitive: {spelling}"
         );
     }
-
-    // Garbage in must not panic, and must not earn the hint.
-    assert!(registry_gate_hint("not a url", S::FORBIDDEN).is_empty());
 }

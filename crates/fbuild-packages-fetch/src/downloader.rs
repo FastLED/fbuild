@@ -128,8 +128,14 @@ fn is_transient(err: &reqwest::Error) -> bool {
 #[derive(Debug)]
 enum DownloadAttemptError {
     Request(reqwest::Error),
-    /// A non-2xx answer, with the server's `Retry-After` when it sent one.
-    HttpStatus(reqwest::StatusCode, Option<Duration>),
+    /// A non-2xx answer, with the server's `Retry-After` when it sent one and
+    /// the lowercased host that actually answered.
+    ///
+    /// The host is the *responding* one, not the requested one: reqwest
+    /// follows redirects by default and the PlatformIO registry 302s to a CDN,
+    /// so blaming the requested URL would misattribute a CDN's 403 to the
+    /// registry's User-Agent gate.
+    HttpStatus(reqwest::StatusCode, Option<Duration>, Option<String>),
     Body(reqwest::Error),
     BodyStalled {
         filename: String,
@@ -178,21 +184,21 @@ const PLATFORMIO_DOWNLOAD_HOST: &str = "dl.registry.platformio.org";
 /// anything that reads like a UA problem. A bare "HTTP 403 Forbidden" sent a
 /// whole board matrix red with no hint about where to look
 /// (FastLED/fbuild#1783), so name the gate in the message itself.
-/// Whether `url`'s **host** is the gating registry.
+/// The host that answered a request, for [`registry_gate_hint`].
 ///
-/// Compares the parsed hostname, not a substring: a mirror that merely carries
-/// the registry's name in its path (`https://mirror.test/dl.registry.platformio.org/x`)
-/// must not collect the hint, and DNS hostnames are case-insensitive so an
-/// uppercase spelling must still collect it.
-fn is_platformio_download_host(url: &str) -> bool {
-    reqwest::Url::parse(url)
-        .ok()
-        .and_then(|parsed| parsed.host_str().map(str::to_ascii_lowercase))
-        .is_some_and(|host| host == PLATFORMIO_DOWNLOAD_HOST)
+/// `response.url()` is the *final* URL after any redirects, which is the one
+/// whose 403 we are explaining.
+fn responding_host(response: &reqwest::Response) -> Option<String> {
+    response.url().host_str().map(str::to_string)
 }
 
-fn registry_gate_hint(url: &str, status: reqwest::StatusCode) -> &'static str {
-    if status == reqwest::StatusCode::FORBIDDEN && is_platformio_download_host(url) {
+/// Keyed on the host that answered, compared whole rather than as a substring:
+/// a CDN that merely carries the registry's name is a different server and
+/// must not collect the hint. Case-insensitively, because DNS hostnames are
+/// (RFC 4343) and we would rather not depend on a caller to normalize.
+fn registry_gate_hint(host: Option<&str>, status: reqwest::StatusCode) -> &'static str {
+    let is_registry = host.is_some_and(|host| host.eq_ignore_ascii_case(PLATFORMIO_DOWNLOAD_HOST));
+    if status == reqwest::StatusCode::FORBIDDEN && is_registry {
         " — the registry gates downloads on User-Agent and rejects anything \
          not starting with `PlatformIO/`; check fbuild_core::http::registry_user_agent \
          is still applied to the shared client (FastLED/fbuild#1783)"
@@ -206,7 +212,7 @@ impl DownloadAttemptError {
         match self {
             Self::Request(error) | Self::Body(error) => is_transient(error),
             // 5xx, plus the two 4xx answers that mean "try again later".
-            Self::HttpStatus(status, _) => is_retryable_status(*status),
+            Self::HttpStatus(status, ..) => is_retryable_status(*status),
             Self::BodyStalled { .. } => true,
             // A truncated body is the failure this retry loop exists for.
             Self::BodyTruncated { .. } => true,
@@ -219,7 +225,7 @@ impl DownloadAttemptError {
     /// The server's own `Retry-After`, when this failure carried one.
     fn retry_after(&self) -> Option<Duration> {
         match self {
-            Self::HttpStatus(_, after) => *after,
+            Self::HttpStatus(_, after, _) => *after,
             _ => None,
         }
     }
@@ -229,11 +235,11 @@ impl DownloadAttemptError {
             Self::Request(error) => {
                 FbuildError::PackageError(format!("failed to download {}: {}", url, error))
             }
-            Self::HttpStatus(status, _) => FbuildError::PackageError(format!(
+            Self::HttpStatus(status, _, host) => FbuildError::PackageError(format!(
                 "download failed for {}: HTTP {}{}",
                 url,
                 status,
-                registry_gate_hint(url, status)
+                registry_gate_hint(host.as_deref(), status)
             )),
             Self::Body(error) => {
                 FbuildError::PackageError(format!("failed to read response body: {}", error))
@@ -269,7 +275,7 @@ impl Display for DownloadAttemptError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
             Self::Request(error) => write!(f, "request error: {error}"),
-            Self::HttpStatus(status, _) => write!(f, "HTTP {status}"),
+            Self::HttpStatus(status, ..) => write!(f, "HTTP {status}"),
             Self::Body(error) => write!(f, "response body error: {error}"),
             Self::BodyStalled { filename } => write!(
                 f,
@@ -350,6 +356,7 @@ async fn open_attempt_from(
         return Err(DownloadAttemptError::HttpStatus(
             status,
             retry_after(response.headers()),
+            responding_host(&response),
         ));
     }
 
