@@ -147,6 +147,32 @@ PlatformIO package directory, then `PATH`; `--tool <path>` pins one.
 The image lands in the environment's build directory (`<build>/<filesystem>.bin`)
 and `--check-only` reports the size plan without running the tool.
 
+#### RP2040 (arduino-pico)
+
+An RP2040 project has no partition CSV: arduino-pico's own `boards.txt`
+declares the filesystem bounds per `flash` menu option. `fbuild buildfs` reads
+them through the same loader the build uses, so the image region and the
+firmware's `FS_START`/`FS_END` defines cannot disagree:
+
+```ini
+[env:rpipico]
+platform = raspberrypi
+board = rpipico
+board_build.filesystem_size = 0.5m
+```
+
+```bash
+fbuild buildfs -e rpipico      # -> .pio-equivalent build dir/littlefs.bin, 512 KB
+```
+
+arduino-pico ships one filesystem driver, so `--filesystem=spiffs` is refused
+rather than silently building littlefs. A board whose selected flash menu
+reserves no filesystem (`fs_start == fs_end`, the 2 MB Pico default) fails with
+the byte sizes and the `board_build.filesystem_size` knob to set; without a
+volume there is nowhere for `data/` to mount. Flashing that image is not
+`uploadfs` — an RP2040 filesystem goes over PICOBOOT/UF2, and `uploadfs` stays
+ESP32-only until that transport lands.
+
 ### `fbuild uploadfs`
 
 Flash that image to the filesystem partition — the fbuild equivalent of

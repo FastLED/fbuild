@@ -16,6 +16,7 @@ pub mod bringup;
 pub mod build;
 pub mod build_progress;
 pub mod buildfs;
+mod buildfs_rp2040;
 pub mod cache;
 pub mod clang_tools;
 pub mod clangd_config;
