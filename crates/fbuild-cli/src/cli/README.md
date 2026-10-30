@@ -35,6 +35,6 @@ here and is dispatched from `cli::async_main`.
 - **`buildfs_esp8266.rs`** -- ESP8266 region from the `eesz` menu's `eagle.flash.*.ld`
   (`_FS_start`/`_FS_end`/`_FS_page`/`_FS_block`). Tests in `buildfs_esp8266_tests.rs`
 - **`uploadfs.rs`** -- `run`: flash that image to the same offset through the `esptool`
-  deployer, with `--verify` readback and a daemon port preempt (#1358). Tests in
-  `uploadfs_tests.rs`
+  deployer (ESP32 partition offsets, ESP8266 mapped addresses minus `0x40200000`), with
+  `--verify` readback and a daemon port preempt (#1358). Tests in `uploadfs_tests.rs`
 - **`tests.rs`** -- unit tests for argument normalization and `fbuild ci` parsing

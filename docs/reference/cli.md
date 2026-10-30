@@ -170,8 +170,8 @@ rather than silently building littlefs. A board whose selected flash menu
 reserves no filesystem (`fs_start == fs_end`, the 2 MB Pico default) fails with
 the byte sizes and the `board_build.filesystem_size` knob to set; without a
 volume there is nowhere for `data/` to mount. Flashing that image is not
-`uploadfs` — an RP2040 filesystem goes over PICOBOOT/UF2, and `uploadfs` stays
-ESP32-only until that transport lands.
+`uploadfs` — an RP2040 filesystem goes over PICOBOOT/UF2, which fbuild does not
+drive yet.
 
 #### ESP8266 (arduino-esp8266)
 
@@ -199,8 +199,9 @@ wrong geometry would not mount. LittleFS is the default (SPIFFS is deprecated
 upstream); `--filesystem spiffs` builds a SPIFFS image instead. A script that
 declares no `_FS_start`/`_FS_end` (or omits `_FS_block`/`_FS_page`) is an error
 naming `board_build.eesz`, rather than a guessed region. `--filesystem` and the
-`board_build.flash_ld` override behave as elsewhere; flashing stays ESP32-only,
-since the device offset is this address minus the `0x40200000` flash mapping.
+`board_build.flash_ld` override behave as elsewhere. `fbuild uploadfs` writes
+this image too: the device offset is the script's `_FS_start` minus the
+`0x40200000` flash mapping (0x200000 for a 4M2M `nodemcuv2`).
 
 ### `fbuild uploadfs`
 
@@ -214,9 +215,10 @@ fbuild uploadfs --image build/littlefs.bin --no-build --verify
 fbuild uploadfs --verify --json
 ```
 
-The offset comes from the same partition CSV `buildfs` sizes the image with, so
-the image is written exactly where the firmware mounts it; there is no offset
-flag to get wrong. A missing image is built first (PlatformIO's `uploadfs`
+The offset comes from the same layout `buildfs` sizes the image with — a
+partition CSV on ESP32, the `_FS_start`/`_FS_end` pair the firmware links
+against elsewhere — so the image is written exactly where the firmware mounts
+it; there is no offset flag to get wrong. A missing image is built first (PlatformIO's `uploadfs`
 implies `buildfs`) unless `--no-build` asks for the existing file as-is, and an
 image larger than the partition is refused before the flasher runs.
 
@@ -230,9 +232,14 @@ serial port is used; several ports is an error naming them, never a guess.
 success means the device holds exactly this image rather than only that esptool
 exited zero.
 
+ESP8266 goes over the same esptool serial transport, with `--chip esp8266`; an
+ESP8266 build does not provision an esptool fbuild can drive (its platform pins
+the v4 source package), so that upload uses `FBUILD_ESPTOOL_PATH` when set, else
+the managed v5 esptool, else an `esptool` on `PATH`.
+
 Environments without a flashable filesystem are a clear error: AVR has only
-EEPROM, Teensy 4.x's `LittleFS_Program` is runtime-only and wiped by every
-re-upload, and ESP8266 image building is not implemented.
+EEPROM, and Teensy 4.x's `LittleFS_Program` is runtime-only, wiped by every
+re-upload.
 
 ### `fbuild monitor`
 
