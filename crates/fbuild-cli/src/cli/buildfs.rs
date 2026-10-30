@@ -26,16 +26,10 @@ use clap::Args;
 use fbuild_core::path::NormalizedPath;
 use fbuild_core::{FbuildError, Result};
 
+use crate::cli::buildfs_esp8266;
+use crate::cli::buildfs_geometry::FsGeometry;
 use crate::cli::buildfs_rp2040;
 use crate::output;
-
-/// Allocation unit of the ESP32 flash filesystems: the arduino-esp32 builder
-/// formats both LittleFS and SPIFFS with 4096-byte blocks and 256-byte pages.
-pub(crate) const BLOCK_SIZE: u64 = 4096;
-/// Filesystem page (the smallest addressable unit inside a block).
-pub(crate) const PAGE_SIZE: u64 = 256;
-/// Metadata pairs LittleFS reserves at the start of the volume, in blocks.
-pub(crate) const METADATA_BLOCKS: u64 = 2;
 
 /// Which flash filesystem the image is formatted with.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -210,29 +204,6 @@ pub(crate) struct StagedFile {
     pub bytes: u64,
 }
 
-fn align_up(value: u64, align: u64) -> u64 {
-    value.div_ceil(align) * align
-}
-
-/// Conservative size of the resulting image: every file occupies whole pages,
-/// each path segment costs a small directory entry, and LittleFS keeps two
-/// metadata blocks at the head of the volume.
-///
-/// The authoritative check is still the image tool's own `-s` bound; this
-/// estimate exists so the common "data/ outgrew the partition" case fails
-/// before any tool runs, with numbers the user can act on.
-pub(crate) fn estimate_image_bytes(files: &[StagedFile]) -> u64 {
-    let data: u64 = files
-        .iter()
-        .map(|f| align_up(f.bytes.max(1), PAGE_SIZE))
-        .sum();
-    let directory: u64 = files
-        .iter()
-        .map(|f| f.relative.split('/').count() as u64 * PAGE_SIZE)
-        .sum();
-    data + directory + METADATA_BLOCKS * BLOCK_SIZE
-}
-
 /// Fail when the staged payload cannot fit the filesystem partition.
 pub(crate) fn check_capacity(required: u64, partition: &Partition) -> Result<()> {
     if required <= partition.size {
@@ -246,21 +217,6 @@ pub(crate) fn check_capacity(required: u64, partition: &Partition) -> Result<()>
         partition.size,
         required - partition.size
     )))
-}
-
-/// `mklittlefs`/`mkspiffs` argv (same `-c/-b/-p/-s <image>` contract).
-pub(crate) fn fs_tool_args(staging: &Path, image_size: u64, image: &Path) -> Vec<String> {
-    vec![
-        "-c".to_string(),
-        staging.display().to_string(),
-        "-b".to_string(),
-        BLOCK_SIZE.to_string(),
-        "-p".to_string(),
-        PAGE_SIZE.to_string(),
-        "-s".to_string(),
-        image_size.to_string(),
-        image.display().to_string(),
-    ]
 }
 
 /// `fbuild buildfs` arguments.
@@ -364,9 +320,13 @@ fn resolve_context(args: &BuildfsArgs, project_dir: &Path) -> Result<ProjectCont
         None => absolute(project_dir, data_dir_name.as_deref().unwrap_or("data")),
     };
 
-    // RP2040 projects have no partition CSV: the arduino-pico `flash` menu owns
-    // the filesystem bounds, and `plan_image` reads them from `boards.txt`.
-    let partitions_csv = if matches!(platform, Some(fbuild_core::Platform::RaspberryPi)) {
+    // RP2040 and ESP8266 projects have no partition CSV: arduino-pico's `flash`
+    // menu and esp8266's `eagle.flash.*.ld` own the filesystem bounds, and
+    // `plan_image` reads them from the framework instead.
+    let partitions_csv = if matches!(
+        platform,
+        Some(fbuild_core::Platform::RaspberryPi | fbuild_core::Platform::Espressif8266)
+    ) {
         None
     } else {
         Some(match &args.partitions {
@@ -397,6 +357,17 @@ fn resolve_context(args: &BuildfsArgs, project_dir: &Path) -> Result<ProjectCont
         env_config,
         board_overrides,
     })
+}
+
+/// The `board` an environment targets, from `board_build.board` or the
+/// environment's own `board` key.
+pub(crate) fn board_id(context: &ProjectContext) -> Option<String> {
+    context
+        .board_overrides
+        .get("board")
+        .or_else(|| context.env_config.get("board"))
+        .map(|value| value.trim().to_string())
+        .filter(|value| !value.is_empty())
 }
 
 fn absolute(project_dir: &Path, value: &str) -> NormalizedPath {
@@ -673,31 +644,58 @@ pub(crate) struct ImagePlan {
     pub(crate) context: ProjectContext,
     pub(crate) partition: Partition,
     pub(crate) kind: FsKind,
+    /// Block/page geometry the image must be formatted with.
+    pub(crate) geometry: FsGeometry,
     pub(crate) build_dir: NormalizedPath,
     pub(crate) image: NormalizedPath,
+}
+
+/// ESP8266's plan: the `eesz` menu's `eagle.flash.*.ld` owns the region *and*
+/// the block/page geometry, so both come from one file.
+fn esp8266_plan(
+    context: &ProjectContext,
+    args: &BuildfsArgs,
+) -> Result<(Partition, FsKind, FsGeometry)> {
+    let board_id = board_id(context).ok_or_else(|| {
+        FbuildError::ConfigError(format!(
+            "environment '{}' declares no `board`; `fbuild buildfs` needs one to find the \
+             esp8266 flash menu option that reserves the filesystem",
+            context.env
+        ))
+    })?;
+    let kind = buildfs_esp8266::resolve_kind(
+        args.filesystem.as_deref(),
+        context.configured_fs.as_deref(),
+    )?;
+    let region = buildfs_esp8266::resolve_region(&board_id, &context.board_overrides)?;
+    Ok((
+        Partition {
+            label: "filesystem".to_string(),
+            kind: "data".to_string(),
+            subtype: kind.as_str().to_string(),
+            offset: region.offset,
+            size: region.size,
+        },
+        kind,
+        FsGeometry::from_parts(region.block, region.page),
+    ))
 }
 
 /// Resolve the environment, data directory, partition CSV, target partition,
 /// image format and output path — the read-only half of `buildfs`.
 pub(crate) fn plan_image(args: &BuildfsArgs, project_dir: &Path) -> Result<ImagePlan> {
     let context = resolve_context(args, project_dir)?;
-    let (partition, kind) = match context.platform {
+    let (partition, kind, geometry) = match context.platform {
         // arduino-pico declares the filesystem bounds outright, per `flash`
         // menu option; there is no partition table to read.
         Some(fbuild_core::Platform::RaspberryPi) => {
-            let board_id = context
-                .board_overrides
-                .get("board")
-                .or_else(|| context.env_config.get("board"))
-                .map(|value| value.trim().to_string())
-                .filter(|value| !value.is_empty())
-                .ok_or_else(|| {
-                    FbuildError::ConfigError(format!(
-                        "environment '{}' declares no `board`; `fbuild buildfs` needs one to find \
+            let board_id = board_id(&context).ok_or_else(|| {
+                FbuildError::ConfigError(format!(
+                    "environment '{}' declares no `board`; `fbuild buildfs` needs one to find \
                          the arduino-pico flash menu option that reserves the filesystem",
-                        context.env
-                    ))
-                })?;
+                    context.env
+                ))
+            })?;
             let kind = buildfs_rp2040::resolve_kind(
                 args.filesystem.as_deref(),
                 context.configured_fs.as_deref(),
@@ -712,8 +710,10 @@ pub(crate) fn plan_image(args: &BuildfsArgs, project_dir: &Path) -> Result<Image
                     size: region.size,
                 },
                 kind,
+                FsGeometry::ESP32,
             )
         }
+        Some(fbuild_core::Platform::Espressif8266) => esp8266_plan(&context, args)?,
         Some(fbuild_core::Platform::Espressif32) | None => {
             let partitions_csv = context.partitions_csv.as_ref().ok_or_else(|| {
                 FbuildError::ConfigError(format!(
@@ -734,12 +734,13 @@ pub(crate) fn plan_image(args: &BuildfsArgs, project_dir: &Path) -> Result<Image
                 context.configured_fs.as_deref(),
                 &partition,
             )?;
-            (partition, kind)
+            (partition, kind, FsGeometry::ESP32)
         }
         Some(other) => {
             return Err(FbuildError::ConfigError(format!(
-                "`fbuild buildfs` builds filesystem images for ESP32 (partition table) and RP2040 \
-                 (arduino-pico flash menu) only; environment '{}' targets {other:?}",
+                "`fbuild buildfs` builds filesystem images for ESP32 (partition table), ESP8266 \
+                 (eagle.flash linker script) and RP2040 (arduino-pico flash menu) only; \
+                 environment '{}' targets {other:?}",
                 context.env
             )));
         }
@@ -762,6 +763,7 @@ pub(crate) fn plan_image(args: &BuildfsArgs, project_dir: &Path) -> Result<Image
         context,
         partition,
         kind,
+        geometry,
         build_dir,
         image,
     })
@@ -776,7 +778,7 @@ pub async fn run(args: BuildfsArgs, project_dir: &Path) -> Result<()> {
     let staging = plan.build_dir.join("fs_stage");
     stage_data(&context.data_dir, &staging)?;
     let files = measure_staging(&staging)?;
-    let required = estimate_image_bytes(&files);
+    let required = plan.geometry.estimate_bytes(&files);
     check_capacity(required, partition)?;
 
     let tool = if args.check_only {
@@ -792,7 +794,7 @@ pub async fn run(args: BuildfsArgs, project_dir: &Path) -> Result<()> {
                 FbuildError::BuildFailed(format!("failed to create {}: {e}", parent.display()))
             })?;
         }
-        run_image_tool(tool, &staging, partition.size, image).await?;
+        run_image_tool(tool, &staging, partition.size, image, plan.geometry).await?;
     }
 
     let image_bytes = if tool.is_some() {
@@ -914,9 +916,10 @@ async fn run_image_tool(
     staging: &NormalizedPath,
     size: u64,
     image: &NormalizedPath,
+    geometry: FsGeometry,
 ) -> Result<()> {
     let tool_path = tool.as_path().to_string_lossy().into_owned();
-    let argv = fs_tool_args(staging.as_path(), size, image.as_path());
+    let argv = geometry.tool_args(staging.as_path(), size, image.as_path());
     let mut args: Vec<&str> = vec![tool_path.as_str()];
     args.extend(argv.iter().map(String::as_str));
     let result =

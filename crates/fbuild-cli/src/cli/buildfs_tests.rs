@@ -1,6 +1,7 @@
 //! Unit + acceptance tests for `fbuild buildfs` (FastLED/fbuild#1358).
 
 use super::*;
+use crate::cli::buildfs_geometry::FsGeometry;
 
 const DEFAULT_CSV: &str = "\
 # ESP32 default partition table
@@ -71,20 +72,21 @@ fn table_without_filesystem_partition_is_an_actionable_error() {
 
 #[test]
 fn estimate_aligns_to_pages_and_reserves_metadata() {
-    let single = estimate_image_bytes(&[StagedFile {
+    const PAGE_SIZE: u64 = 256;
+    const BLOCK_SIZE: u64 = 4096;
+    const METADATA_BLOCKS: u64 = 2;
+    let geometry = FsGeometry::ESP32;
+    let single = geometry.estimate_bytes(&[StagedFile {
         relative: "a.txt".to_string(),
         bytes: 1,
     }]);
     assert_eq!(single, PAGE_SIZE + PAGE_SIZE + METADATA_BLOCKS * BLOCK_SIZE);
 
-    let nested = estimate_image_bytes(&[StagedFile {
+    let nested = geometry.estimate_bytes(&[StagedFile {
         relative: "dir/sub/a.bin".to_string(),
         bytes: 7000,
     }]);
-    assert_eq!(
-        nested,
-        align_up(7000, PAGE_SIZE) + 3 * PAGE_SIZE + METADATA_BLOCKS * BLOCK_SIZE
-    );
+    assert_eq!(nested, 7168 + 3 * PAGE_SIZE + METADATA_BLOCKS * BLOCK_SIZE);
 }
 
 #[test]
@@ -104,7 +106,7 @@ fn capacity_reports_the_shortfall() {
 
 #[test]
 fn tool_argv_uses_the_partition_size_as_the_image_bound() {
-    let args = fs_tool_args(
+    let args = FsGeometry::ESP32.tool_args(
         Path::new("/stage"),
         0x16_0000,
         Path::new("/out/littlefs.bin"),
