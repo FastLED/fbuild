@@ -101,7 +101,7 @@ fn absolute(project_dir: &Path, value: &str) -> NormalizedPath {
 
 /// Reject environments whose platform has no flash filesystem.
 ///
-/// ESP32 is the only platform fbuild builds images for; AVR has just EEPROM and
+/// ESP32 is the only platform `uploadfs` can write to; AVR has just EEPROM and
 /// Teensy 4.x's `LittleFS_Program` is runtime-only (re-uploading wipes it), so
 /// there is nothing correct to flash there and saying so beats a silent no-op.
 fn require_flash_filesystem(platform: Option<&str>, env: &str) -> Result<()> {
