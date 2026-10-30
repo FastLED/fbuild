@@ -1,6 +1,7 @@
 //! Tests for retry tuning, jitter and mirror fallback (FastLED/fbuild#1463).
 //! Shares the local-server helpers of [`super::tests`].
 
+use super::mirrors::{MIRROR_FIRST_ENV, attempt_order, mirror_first_requested};
 use super::tests::{
     FAST_RETRY_TIMING, complete_response, network_test_guard, run_flaky_server, test_client,
 };
@@ -207,4 +208,188 @@ async fn mirrors_are_only_used_after_the_primary_fails() {
         err.contains("also tried 1 mirror(s)") && err.contains(&format!("127.0.0.1:{b}")),
         "{err}"
     );
+}
+
+/// `{path}` must reproduce the registry's own layout under the mirror, so a
+/// bucket that mirrors `…/download/<owner>/<type>/<pkg>/<ver>/<file>` is hit
+/// at exactly that key.
+#[test]
+fn candidate_urls_expand_path_for_a_registry_download_url() {
+    let primary = "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-avr/5.4.0/framework-arduino-avr-5.4.0.tar.gz";
+    assert_eq!(
+        candidate_urls(
+            primary,
+            &["https://fbuild.sfo3.digitaloceanspaces.com/{path}".to_string()]
+        ),
+        vec![
+            primary.to_string(),
+            "https://fbuild.sfo3.digitaloceanspaces.com/platformio/tool/framework-arduino-avr/5.4.0/framework-arduino-avr-5.4.0.tar.gz".to_string(),
+        ]
+    );
+}
+
+/// Off the registry there is no registry-relative path, so `{path}` degrades
+/// to the file name — the same value `{filename}` produces.
+#[test]
+fn candidate_urls_path_falls_back_to_the_file_name_off_registry() {
+    let mirrors = vec!["https://mirror.example/{path}".to_string()];
+    assert_eq!(
+        candidate_urls("https://vendor.example/files/ClearCore-1.7.4.zip", &mirrors)[1],
+        "https://mirror.example/ClearCore-1.7.4.zip"
+    );
+    // A `/download/` segment on some other host is not a registry path.
+    assert_eq!(
+        candidate_urls(
+            "https://github.com/o/r/releases/download/v1.2.3/pkg.tar.gz",
+            &mirrors
+        )[1],
+        "https://mirror.example/pkg.tar.gz"
+    );
+}
+
+/// `{filename}`, bare bases and `{path}` coexist, and the mirror order given
+/// in the env var is the order tried.
+#[test]
+fn candidate_urls_keep_every_template_form_in_the_configured_order() {
+    let primary = "https://dl.registry.platformio.org/download/platformio/platform/espressif32/6.5.0/espressif32-6.5.0.tar.gz";
+    let mirrors = vec![
+        "https://a.example/{path}".to_string(),
+        "https://b.example/base/".to_string(),
+        "https://c.example/{filename}?raw=1".to_string(),
+    ];
+    assert_eq!(
+        candidate_urls(primary, &mirrors),
+        vec![
+            primary.to_string(),
+            "https://a.example/platformio/platform/espressif32/6.5.0/espressif32-6.5.0.tar.gz"
+                .to_string(),
+            "https://b.example/base/espressif32-6.5.0.tar.gz".to_string(),
+            "https://c.example/espressif32-6.5.0.tar.gz?raw=1".to_string(),
+        ]
+    );
+}
+
+#[test]
+fn attempt_order_tries_the_primary_first_by_default() {
+    assert_eq!(attempt_order(3, false), vec![0, 1, 2]);
+    assert_eq!(attempt_order(1, false), vec![0]);
+}
+
+/// Mirror-first moves every mirror ahead of the primary, which stays the
+/// last resort so a stale mirror can never be the only thing tried.
+#[test]
+fn attempt_order_tries_mirrors_first_when_requested() {
+    assert_eq!(attempt_order(3, true), vec![1, 2, 0]);
+    assert_eq!(
+        attempt_order(1, true),
+        vec![0],
+        "no mirrors, nothing to swap"
+    );
+}
+
+#[tokio::test]
+async fn mirror_first_env_follows_the_truthy_convention() {
+    let _guard = network_test_guard().await;
+    for (value, expected) in [
+        ("1", true),
+        ("true", true),
+        ("TRUE", true),
+        ("yes", true),
+        (" 1 ", true),
+        ("0", false),
+        ("", false),
+        ("false", false),
+        ("FALSE", false),
+    ] {
+        let _env = MirrorFirstEnv::set(value);
+        assert_eq!(
+            mirror_first_requested(),
+            expected,
+            "{MIRROR_FIRST_ENV}={value:?}"
+        );
+    }
+    let _unset = MirrorFirstEnv::unset();
+    assert!(!mirror_first_requested(), "unset must keep today's order");
+}
+
+/// Mirror-first: a healthy mirror serves the file and the primary is never
+/// contacted. The unset case is covered by
+/// [`mirrors_are_only_used_after_the_primary_fails`].
+#[tokio::test]
+async fn mirror_first_serves_from_the_mirror_without_touching_the_primary() {
+    let _guard = network_test_guard().await;
+    let _env = MirrorFirstEnv::set("1");
+    let primary_hits = std::sync::Arc::new(AtomicUsize::new(0));
+    let primary = run_constant_server(complete_response(), primary_hits.clone()).await;
+    let mirror_hits = std::sync::Arc::new(AtomicUsize::new(0));
+    let mirror = run_constant_server(complete_response(), mirror_hits.clone()).await;
+
+    let urls = candidate_urls(
+        &format!("http://127.0.0.1:{primary}/f.bin"),
+        &[format!("http://127.0.0.1:{mirror}")],
+    );
+    let bytes = get_from_candidates(&test_client(), &urls, FAST_RETRY_TIMING)
+        .await
+        .expect("the mirror should serve the file");
+
+    assert_eq!(bytes, b"hello");
+    assert_eq!(mirror_hits.load(Ordering::SeqCst), 1, "mirror goes first");
+    assert_eq!(
+        primary_hits.load(Ordering::SeqCst),
+        0,
+        "a healthy mirror must spare the primary"
+    );
+}
+
+/// Even when the mirrors lead, the reported failure is still the primary
+/// URL's own error with the mirrors named.
+#[tokio::test]
+async fn mirror_first_still_reports_the_primary_error_when_everything_is_down() {
+    let _guard = network_test_guard().await;
+    let _env = MirrorFirstEnv::set("1");
+    let down = "HTTP/1.1 503 Service Unavailable\r\nContent-Length: 0\r\nConnection: close\r\n\r\n";
+    let primary = run_constant_server(down, std::sync::Arc::new(AtomicUsize::new(0))).await;
+    let mirror = run_constant_server(down, std::sync::Arc::new(AtomicUsize::new(0))).await;
+    let urls = candidate_urls(
+        &format!("http://127.0.0.1:{primary}/f.bin"),
+        &[format!("http://127.0.0.1:{mirror}")],
+    );
+
+    let err = get_from_candidates(&test_client(), &urls, FAST_RETRY_TIMING)
+        .await
+        .expect_err("everything is down")
+        .to_string();
+
+    assert!(err.contains(&format!("127.0.0.1:{primary}")), "{err}");
+    assert!(
+        err.contains("also tried 1 mirror(s)") && err.contains(&format!("127.0.0.1:{mirror}")),
+        "{err}"
+    );
+}
+
+/// Scoped `FBUILD_DOWNLOAD_MIRROR_FIRST` override, restored on drop. Holders
+/// must also hold [`network_test_guard`]: the env is process-global.
+struct MirrorFirstEnv(Option<String>);
+
+impl MirrorFirstEnv {
+    fn set(value: &str) -> Self {
+        let scoped = Self(std::env::var(MIRROR_FIRST_ENV).ok());
+        std::env::set_var(MIRROR_FIRST_ENV, value);
+        scoped
+    }
+
+    fn unset() -> Self {
+        let scoped = Self(std::env::var(MIRROR_FIRST_ENV).ok());
+        std::env::remove_var(MIRROR_FIRST_ENV);
+        scoped
+    }
+}
+
+impl Drop for MirrorFirstEnv {
+    fn drop(&mut self) {
+        match self.0.take() {
+            Some(previous) => std::env::set_var(MIRROR_FIRST_ENV, previous),
+            None => std::env::remove_var(MIRROR_FIRST_ENV),
+        }
+    }
 }
