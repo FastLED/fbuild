@@ -9,6 +9,24 @@ gates:
   general/all/dylint-policy: {lane: dylint, fidelity: native}
   rust/x86_64-unknown-linux-gnu/dylint-library-check: {lane: dylint, fidelity: native}
   rust/x86_64-unknown-linux-gnu/workspace-dylint: {lane: dylint, fidelity: native}
+  # RUST-033 (#1793): the `lint` lane runs the whole lint phase with
+  # --cross-dylint, so one pass proves clippy and Dylint per target.
+  rust/x86_64-unknown-linux-musl/clippy: {lane: lint, fidelity: native}
+  rust/x86_64-unknown-linux-musl/dylint: {lane: lint, fidelity: native}
+  rust/aarch64-unknown-linux-musl/clippy: {lane: lint, fidelity: native}
+  rust/aarch64-unknown-linux-musl/dylint: {lane: lint, fidelity: native}
+  rust/x86_64-unknown-linux-gnu/clippy: {lane: lint, fidelity: native}
+  rust/x86_64-unknown-linux-gnu/dylint: {lane: lint, fidelity: native}
+  rust/aarch64-unknown-linux-gnu/clippy: {lane: lint, fidelity: native}
+  rust/aarch64-unknown-linux-gnu/dylint: {lane: lint, fidelity: native}
+  rust/x86_64-apple-darwin/clippy: {lane: lint, fidelity: native}
+  rust/x86_64-apple-darwin/dylint: {lane: lint, fidelity: native}
+  rust/aarch64-apple-darwin/clippy: {lane: lint, fidelity: native}
+  rust/aarch64-apple-darwin/dylint: {lane: lint, fidelity: native}
+  rust/x86_64-pc-windows-msvc/clippy: {lane: lint, fidelity: native}
+  rust/x86_64-pc-windows-msvc/dylint: {lane: lint, fidelity: native}
+  rust/aarch64-pc-windows-msvc/clippy: {lane: lint, fidelity: native}
+  rust/aarch64-pc-windows-msvc/dylint: {lane: lint, fidelity: native}
 jobs:
   ci-minimal.yml:linux: [general/all/ubuntu-ci-guards, rust/x86_64-unknown-linux-gnu/workspace-clippy, rust/x86_64-unknown-linux-gnu/workspace-test, rust/x86_64-unknown-linux-gnu/python-facade-test]
   dylint.yml:policy: [general/all/dylint-policy]
