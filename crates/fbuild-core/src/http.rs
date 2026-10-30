@@ -135,4 +135,145 @@ mod tests {
     fn blocking_client_builds() {
         let _c = blocking_client(Duration::from_secs(10));
     }
+
+    /// Minimal response: enough for reqwest to consider the exchange
+    /// complete so `send()` resolves and we can inspect what it sent.
+    const MIN_RESPONSE: &[u8] = b"HTTP/1.1 200 OK\r\nContent-Length: 2\r\n\r\nok";
+
+    /// Pull the `User-Agent` value out of a raw HTTP request head. Header
+    /// names are case-insensitive per RFC 9110, hence the ASCII fold.
+    fn user_agent_of(head: &str) -> Option<&str> {
+        head.lines()
+            .find(|line| line.to_ascii_lowercase().starts_with("user-agent:"))
+            .map(|line| line["user-agent:".len()..].trim())
+    }
+
+    /// Assert a captured request head carries a gate-satisfying UA.
+    ///
+    /// This is the assertion that guards the outage. The string-only test
+    /// above cannot see a builder that forgot `.user_agent(...)`; this can,
+    /// because it reads what actually went onto the socket.
+    fn assert_passes_registry_gate(head: &str, who: &str) {
+        let ua = user_agent_of(head)
+            .unwrap_or_else(|| panic!("{who} sent no User-Agent header; head was:\n{head}"));
+        assert!(
+            ua.starts_with("PlatformIO/"),
+            "{who} sent User-Agent {ua:?}; dl.registry.platformio.org answers \
+             anything not starting with `PlatformIO/` with 403 \
+             (FastLED/fbuild#1783)"
+        );
+        assert_eq!(ua, registry_user_agent(), "{who} must send the shared UA");
+    }
+
+    /// Read one HTTP request head (through the blank line) off a stream.
+    async fn read_head(stream: &mut tokio::net::TcpStream) -> String {
+        use tokio::io::AsyncReadExt;
+        let mut buf = Vec::new();
+        let mut chunk = [0u8; 1024];
+        while !buf.windows(4).any(|w| w == b"\r\n\r\n") {
+            match stream.read(&mut chunk).await.expect("read request") {
+                0 => break,
+                n => buf.extend_from_slice(&chunk[..n]),
+            }
+        }
+        String::from_utf8_lossy(&buf).into_owned()
+    }
+
+    /// Serve exactly one request on loopback; hand back its head.
+    async fn capture_one_request_head() -> (std::net::SocketAddr, tokio::task::JoinHandle<String>) {
+        use tokio::io::AsyncWriteExt;
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0")
+            .await
+            .expect("bind loopback");
+        let address = listener.local_addr().expect("local addr");
+        let server = tokio::spawn(async move {
+            let (mut stream, _) = listener.accept().await.expect("accept");
+            let head = read_head(&mut stream).await;
+            stream.write_all(MIN_RESPONSE).await.expect("respond");
+            stream.flush().await.expect("flush");
+            head
+        });
+        (address, server)
+    }
+
+    /// The shared async client really puts the UA on the wire.
+    ///
+    /// Loopback only — no network egress, so this runs wherever CI runs.
+    #[tokio::test]
+    async fn shared_client_sends_platformio_user_agent_on_the_wire() {
+        let (address, server) = capture_one_request_head().await;
+        let response = client()
+            .get(format!("http://{address}/download/toolchain.tar.gz"))
+            .send()
+            .await
+            .expect("loopback GET should succeed");
+        assert!(response.status().is_success());
+        assert_passes_registry_gate(&server.await.expect("server task"), "client()");
+    }
+
+    /// Same guarantee for the per-call-timeout variant.
+    #[tokio::test]
+    async fn client_with_timeout_sends_platformio_user_agent_on_the_wire() {
+        let (address, server) = capture_one_request_head().await;
+        client_with_timeout(Duration::from_secs(10))
+            .get(format!("http://{address}/"))
+            .send()
+            .await
+            .expect("loopback GET should succeed");
+        assert_passes_registry_gate(&server.await.expect("server task"), "client_with_timeout()");
+    }
+
+    /// And for the blocking client. Deliberately a plain `#[test]`: reqwest's
+    /// blocking surface refuses to run inside a tokio runtime, which is the
+    /// very reason this variant exists.
+    #[test]
+    fn blocking_client_sends_platformio_user_agent_on_the_wire() {
+        use std::io::{Read, Write};
+
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").expect("bind loopback");
+        let address = listener.local_addr().expect("local addr");
+        let server = std::thread::spawn(move || {
+            let (mut stream, _) = listener.accept().expect("accept");
+            let mut buf = Vec::new();
+            let mut chunk = [0u8; 1024];
+            while !buf.windows(4).any(|w| w == b"\r\n\r\n") {
+                match stream.read(&mut chunk).expect("read request") {
+                    0 => break,
+                    n => buf.extend_from_slice(&chunk[..n]),
+                }
+            }
+            stream.write_all(MIN_RESPONSE).expect("respond");
+            stream.flush().expect("flush");
+            String::from_utf8_lossy(&buf).into_owned()
+        });
+
+        blocking_client(Duration::from_secs(10))
+            .get(format!("http://{address}/"))
+            .send()
+            .expect("loopback GET should succeed");
+        assert_passes_registry_gate(&server.join().expect("server thread"), "blocking_client()");
+    }
+
+    /// Live proof against the real CDN, for a human debugging a recurrence.
+    /// Ignored: CI has no guaranteed network egress and this asserts the
+    /// behaviour of a third-party service.
+    #[tokio::test]
+    #[ignore = "requires network egress to dl.registry.platformio.org"]
+    async fn live_registry_accepts_our_user_agent() {
+        let response = client()
+            .get(concat!(
+                "https://dl.registry.platformio.org/download/platformio/tool/",
+                "framework-arduino-avr/5.4.0/framework-arduino-avr-5.4.0.tar.gz"
+            ))
+            .header("Range", "bytes=0-1023")
+            .send()
+            .await
+            .expect("registry GET");
+        assert!(
+            response.status().is_success(),
+            "registry rejected UA {:?} with {}",
+            registry_user_agent(),
+            response.status()
+        );
+    }
 }

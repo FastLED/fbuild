@@ -159,6 +159,16 @@ pub struct CheckOptions {
 const CACHE_FILENAME: &str = "update_check.json";
 const DEFAULT_TTL_SECS: u64 = 24 * 60 * 60; // 24 hours per issue's default suggestion.
 const HTTP_TIMEOUT: Duration = Duration::from_secs(3);
+/// Per-request UA that deliberately overrides the shared client's
+/// `PlatformIO/...` default (`fbuild_core::http::registry_user_agent`).
+///
+/// That default exists only to satisfy `dl.registry.platformio.org`, which
+/// 403s any other agent (FastLED/fbuild#1783). The two endpoints below are
+/// PyPI and the GitHub API, neither of which gates on UA — so here we can and
+/// should be honest about who is calling. Claiming to be PlatformIO Core
+/// would misattribute fbuild's requests in PyPI download statistics.
+///
+/// Do not "unify" this with the registry UA: the override is the point.
 const USER_AGENT: &str = concat!("fbuild-cli/", env!("CARGO_PKG_VERSION"));
 
 /// Top-level entry point. Non-blocking on all paths that matter — completes

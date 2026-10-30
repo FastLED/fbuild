@@ -168,6 +168,26 @@ fn retry_after(headers: &reqwest::header::HeaderMap) -> Option<Duration> {
     Some(Duration::from_secs(secs))
 }
 
+/// Host that gates downloads on the client's `User-Agent`.
+const PLATFORMIO_DOWNLOAD_HOST: &str = "dl.registry.platformio.org";
+
+/// Extra sentence appended to a bare `HTTP 403` from the PlatformIO registry.
+///
+/// The registry answers any request whose UA does not start with
+/// `PlatformIO/` with `403 This download method is not supported` — not with
+/// anything that reads like a UA problem. A bare "HTTP 403 Forbidden" sent a
+/// whole board matrix red with no hint about where to look
+/// (FastLED/fbuild#1783), so name the gate in the message itself.
+fn registry_gate_hint(url: &str, status: reqwest::StatusCode) -> &'static str {
+    if status == reqwest::StatusCode::FORBIDDEN && url.contains(PLATFORMIO_DOWNLOAD_HOST) {
+        " — the registry gates downloads on User-Agent and rejects anything \
+         not starting with `PlatformIO/`; check fbuild_core::http::registry_user_agent \
+         is still applied to the shared client (FastLED/fbuild#1783)"
+    } else {
+        ""
+    }
+}
+
 impl DownloadAttemptError {
     fn is_retryable(&self) -> bool {
         match self {
@@ -196,9 +216,12 @@ impl DownloadAttemptError {
             Self::Request(error) => {
                 FbuildError::PackageError(format!("failed to download {}: {}", url, error))
             }
-            Self::HttpStatus(status, _) => {
-                FbuildError::PackageError(format!("download failed for {}: HTTP {}", url, status))
-            }
+            Self::HttpStatus(status, _) => FbuildError::PackageError(format!(
+                "download failed for {}: HTTP {}{}",
+                url,
+                status,
+                registry_gate_hint(url, status)
+            )),
             Self::Body(error) => {
                 FbuildError::PackageError(format!("failed to read response body: {}", error))
             }
@@ -915,3 +938,7 @@ mod tests;
 #[cfg(test)]
 #[path = "downloader_disk_tests.rs"]
 mod disk_tests;
+
+#[cfg(test)]
+#[path = "downloader_gate_tests.rs"]
+mod gate_tests;
