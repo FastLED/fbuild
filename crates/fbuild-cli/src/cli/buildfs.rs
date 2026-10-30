@@ -26,6 +26,7 @@ use clap::Args;
 use fbuild_core::path::NormalizedPath;
 use fbuild_core::{FbuildError, Result};
 
+use crate::cli::buildfs_rp2040;
 use crate::output;
 
 /// Allocation unit of the ESP32 flash filesystems: the arduino-esp32 builder
@@ -302,7 +303,11 @@ pub(crate) struct ProjectContext {
     pub(crate) project_dir: NormalizedPath,
     pub(crate) env: String,
     pub(crate) data_dir: NormalizedPath,
-    pub(crate) partitions_csv: NormalizedPath,
+    /// ESP32 partition CSV. `None` on a platform that does not declare one
+    /// (RP2040 sizes its filesystem from the arduino-pico `flash` menu).
+    pub(crate) partitions_csv: Option<NormalizedPath>,
+    /// Platform of the target environment (`platform = ...`).
+    pub(crate) platform: Option<fbuild_core::Platform>,
     /// `board_build.filesystem`, when the environment declares one.
     pub(crate) configured_fs: Option<String>,
     /// The environment's full `[env:...]` map. `uploadfs` needs `platform` and
@@ -350,26 +355,36 @@ fn resolve_context(args: &BuildfsArgs, project_dir: &Path) -> Result<ProjectCont
             .filter(|value| !value.is_empty());
     }
 
+    let platform = env_config
+        .get("platform")
+        .and_then(|value| fbuild_core::Platform::from_platform_str(value));
+
     let data_dir = match &args.data_dir {
         Some(dir) => absolute(project_dir, dir),
         None => absolute(project_dir, data_dir_name.as_deref().unwrap_or("data")),
     };
 
-    let partitions_csv = match &args.partitions {
-        Some(path) => {
-            let path = absolute(project_dir, path);
-            if !path.is_file() {
-                return Err(FbuildError::ConfigError(format!(
-                    "--partitions {} does not exist",
-                    path.display()
-                )));
+    // RP2040 projects have no partition CSV: the arduino-pico `flash` menu owns
+    // the filesystem bounds, and `plan_image` reads them from `boards.txt`.
+    let partitions_csv = if matches!(platform, Some(fbuild_core::Platform::RaspberryPi)) {
+        None
+    } else {
+        Some(match &args.partitions {
+            Some(path) => {
+                let path = absolute(project_dir, path);
+                if !path.is_file() {
+                    return Err(FbuildError::ConfigError(format!(
+                        "--partitions {} does not exist",
+                        path.as_path().display()
+                    )));
+                }
+                path
             }
-            path
-        }
-        None => resolve_partitions_csv(
-            project_dir,
-            board_overrides.get("partitions").map(String::as_str),
-        )?,
+            None => resolve_partitions_csv(
+                project_dir,
+                board_overrides.get("partitions").map(String::as_str),
+            )?,
+        })
     };
 
     Ok(ProjectContext {
@@ -377,6 +392,7 @@ fn resolve_context(args: &BuildfsArgs, project_dir: &Path) -> Result<ProjectCont
         env,
         data_dir,
         partitions_csv,
+        platform,
         configured_fs: board_overrides.get("filesystem").cloned(),
         env_config,
         board_overrides,
@@ -665,20 +681,69 @@ pub(crate) struct ImagePlan {
 /// image format and output path — the read-only half of `buildfs`.
 pub(crate) fn plan_image(args: &BuildfsArgs, project_dir: &Path) -> Result<ImagePlan> {
     let context = resolve_context(args, project_dir)?;
-    let csv = std::fs::read_to_string(context.partitions_csv.as_path()).map_err(|e| {
-        FbuildError::ConfigError(format!(
-            "failed to read {}: {e}",
-            context.partitions_csv.as_path().display()
-        ))
-    })?;
-    let table = parse_partition_table(&csv)?;
-    let partition = select_fs_partition(&table, args.fs_partition.as_deref())?;
-
-    let kind = resolve_kind(
-        args.filesystem.as_deref(),
-        context.configured_fs.as_deref(),
-        &partition,
-    )?;
+    let (partition, kind) = match context.platform {
+        // arduino-pico declares the filesystem bounds outright, per `flash`
+        // menu option; there is no partition table to read.
+        Some(fbuild_core::Platform::RaspberryPi) => {
+            let board_id = context
+                .board_overrides
+                .get("board")
+                .or_else(|| context.env_config.get("board"))
+                .map(|value| value.trim().to_string())
+                .filter(|value| !value.is_empty())
+                .ok_or_else(|| {
+                    FbuildError::ConfigError(format!(
+                        "environment '{}' declares no `board`; `fbuild buildfs` needs one to find \
+                         the arduino-pico flash menu option that reserves the filesystem",
+                        context.env
+                    ))
+                })?;
+            let kind = buildfs_rp2040::resolve_kind(
+                args.filesystem.as_deref(),
+                context.configured_fs.as_deref(),
+            )?;
+            let region = buildfs_rp2040::resolve_region(&board_id, &context.board_overrides)?;
+            (
+                Partition {
+                    label: "filesystem".to_string(),
+                    kind: "data".to_string(),
+                    subtype: kind.as_str().to_string(),
+                    offset: region.offset,
+                    size: region.size,
+                },
+                kind,
+            )
+        }
+        Some(fbuild_core::Platform::Espressif32) | None => {
+            let partitions_csv = context.partitions_csv.as_ref().ok_or_else(|| {
+                FbuildError::ConfigError(format!(
+                    "environment '{}' resolved no partition table; pass --partitions <csv>",
+                    context.env
+                ))
+            })?;
+            let csv = std::fs::read_to_string(partitions_csv.as_path()).map_err(|e| {
+                FbuildError::ConfigError(format!(
+                    "failed to read {}: {e}",
+                    partitions_csv.as_path().display()
+                ))
+            })?;
+            let table = parse_partition_table(&csv)?;
+            let partition = select_fs_partition(&table, args.fs_partition.as_deref())?;
+            let kind = resolve_kind(
+                args.filesystem.as_deref(),
+                context.configured_fs.as_deref(),
+                &partition,
+            )?;
+            (partition, kind)
+        }
+        Some(other) => {
+            return Err(FbuildError::ConfigError(format!(
+                "`fbuild buildfs` builds filesystem images for ESP32 (partition table) and RP2040 \
+                 (arduino-pico flash menu) only; environment '{}' targets {other:?}",
+                context.env
+            )));
+        }
+    };
 
     let build_dir = NormalizedPath::new(
         fbuild_paths::BuildLayout::new(
