@@ -178,8 +178,21 @@ const PLATFORMIO_DOWNLOAD_HOST: &str = "dl.registry.platformio.org";
 /// anything that reads like a UA problem. A bare "HTTP 403 Forbidden" sent a
 /// whole board matrix red with no hint about where to look
 /// (FastLED/fbuild#1783), so name the gate in the message itself.
+/// Whether `url`'s **host** is the gating registry.
+///
+/// Compares the parsed hostname, not a substring: a mirror that merely carries
+/// the registry's name in its path (`https://mirror.test/dl.registry.platformio.org/x`)
+/// must not collect the hint, and DNS hostnames are case-insensitive so an
+/// uppercase spelling must still collect it.
+fn is_platformio_download_host(url: &str) -> bool {
+    reqwest::Url::parse(url)
+        .ok()
+        .and_then(|parsed| parsed.host_str().map(str::to_ascii_lowercase))
+        .is_some_and(|host| host == PLATFORMIO_DOWNLOAD_HOST)
+}
+
 fn registry_gate_hint(url: &str, status: reqwest::StatusCode) -> &'static str {
-    if status == reqwest::StatusCode::FORBIDDEN && url.contains(PLATFORMIO_DOWNLOAD_HOST) {
+    if status == reqwest::StatusCode::FORBIDDEN && is_platformio_download_host(url) {
         " — the registry gates downloads on User-Agent and rejects anything \
          not starting with `PlatformIO/`; check fbuild_core::http::registry_user_agent \
          is still applied to the shared client (FastLED/fbuild#1783)"
