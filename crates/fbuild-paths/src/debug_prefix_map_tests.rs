@@ -27,12 +27,27 @@ fn debug_prefix_map_covers_a_build_dir_inside_the_project() {
 fn debug_prefix_map_covers_an_external_build_root() {
     let layout = BuildLayout::new("/work/sketch".into(), "uno".into(), BuildProfile::Quick)
         .with_override_root(Some("/tmp/short-build-dir".into()));
-    assert_eq!(
-        layout.debug_prefix_map_args(),
-        vec![
-            "-fdebug-prefix-map=/work/sketch=.".to_string(),
-            "-fdebug-prefix-map=/tmp/short-build-dir/uno/quick=fbuild-build".to_string(),
-        ]
+    // Rendered paths are host-specific (Windows normalises to `\` and the
+    // override root comes back with a leading separator), so assert the MEANING
+    // of the second flag instead of string-matching a separator style.
+    let args = layout.debug_prefix_map_args();
+    assert_eq!(args.len(), 2, "{args:?}");
+    assert_eq!(args[0], "-fdebug-prefix-map=/work/sketch=.");
+    let external = &args[1];
+    assert!(
+        external.starts_with("-fdebug-prefix-map=") && external.ends_with("=fbuild-build"),
+        "{external}"
+    );
+    let mapped = external
+        .trim_start_matches("-fdebug-prefix-map=")
+        .trim_end_matches("=fbuild-build");
+    assert!(
+        mapped.contains("short-build-dir"),
+        "the override root must be mapped, got {mapped}"
+    );
+    assert!(
+        Path::new(mapped).ends_with(Path::new("uno").join("quick")),
+        "the mapped root must be <override>/<target>/<profile>, got {mapped}"
     );
 }
 
