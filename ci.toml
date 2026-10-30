@@ -116,7 +116,7 @@ mode = "off"
 # Only the runner: the gate itself lives in `local-gate.toml`.
 [local]
 runner = "bosn-act"
-lanes  = ["linux-minimal", "dylint"]
+lanes  = ["linux-minimal", "dylint", "lint"]
 cache  = "machine"
 
 # -- Allowlists ----------------------------------------------------------------
