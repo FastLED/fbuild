@@ -76,13 +76,17 @@ pub(super) fn candidate_urls(url: &str, mirrors: &[String]) -> Vec<String> {
     let path = registry_relative_path(url).unwrap_or(filename);
     let mut urls = vec![url.to_string()];
     for mirror in mirrors {
-        urls.push(if mirror.contains("{path}") {
-            mirror.replace("{path}", path)
-        } else if mirror.contains("{filename}") {
-            mirror.replace("{filename}", filename)
-        } else {
-            format!("{}/{}", mirror.trim_end_matches('/'), filename)
-        });
+        urls.push(
+            if mirror.contains("{path}") || mirror.contains("{filename}") {
+                // Both, so a template naming both never ships a literal
+                // placeholder in the request.
+                mirror
+                    .replace("{path}", path)
+                    .replace("{filename}", filename)
+            } else {
+                format!("{}/{}", mirror.trim_end_matches('/'), filename)
+            },
+        );
     }
     urls
 }

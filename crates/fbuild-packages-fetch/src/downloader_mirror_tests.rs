@@ -256,6 +256,7 @@ fn candidate_urls_keep_every_template_form_in_the_configured_order() {
         "https://a.example/{path}".to_string(),
         "https://b.example/base/".to_string(),
         "https://c.example/{filename}?raw=1".to_string(),
+        "https://d.example/{path}?name={filename}".to_string(),
     ];
     assert_eq!(
         candidate_urls(primary, &mirrors),
@@ -265,6 +266,9 @@ fn candidate_urls_keep_every_template_form_in_the_configured_order() {
                 .to_string(),
             "https://b.example/base/espressif32-6.5.0.tar.gz".to_string(),
             "https://c.example/espressif32-6.5.0.tar.gz?raw=1".to_string(),
+            // A template naming both leaves no literal placeholder behind.
+            "https://d.example/platformio/platform/espressif32/6.5.0/espressif32-6.5.0.tar.gz?name=espressif32-6.5.0.tar.gz"
+                .to_string(),
         ]
     );
 }
