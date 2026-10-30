@@ -36,7 +36,7 @@ jobs:
           ref: ${{ inputs.ref }}
       - name: Setup soldr
         id: setup-soldr
-        uses: zackees/setup-soldr@b782f606a2f3beadc35b9e3bf5b4565e005f52ed # v0.9.86
+        uses: zackees/setup-soldr@5d6965527b1bcee437d8aefb28cb38f3acfabd5c # v0.9.86
         with:
           cache-key-suffix: check-windows-check
           cache: true
