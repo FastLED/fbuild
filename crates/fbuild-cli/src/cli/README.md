@@ -30,6 +30,10 @@ here and is dispatched from `cli::async_main`.
 - **`windows_long_paths.rs`** -- Windows preflight, explicit UAC repair, fresh command restart, and graceful daemon handoff (#1673)
 - **`buildfs.rs`** -- `run` / `plan_image`: assemble a LittleFS/SPIFFS image from `data/`
   at the partition CSV's filesystem region (#1358). Tests in `buildfs_tests.rs`
+- **`buildfs_geometry.rs`** -- `FsGeometry`: the block/page size one volume is
+  formatted and mounted with (ESP32 4096/256, ESP8266 from `_FS_block`/`_FS_page`)
+- **`buildfs_esp8266.rs`** -- ESP8266 region from the `eesz` menu's `eagle.flash.*.ld`
+  (`_FS_start`/`_FS_end`/`_FS_page`/`_FS_block`). Tests in `buildfs_esp8266_tests.rs`
 - **`uploadfs.rs`** -- `run`: flash that image to the same offset through the `esptool`
   deployer, with `--verify` readback and a daemon port preempt (#1358). Tests in
   `uploadfs_tests.rs`

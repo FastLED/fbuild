@@ -173,6 +173,35 @@ volume there is nowhere for `data/` to mount. Flashing that image is not
 `uploadfs` — an RP2040 filesystem goes over PICOBOOT/UF2, and `uploadfs` stays
 ESP32-only until that transport lands.
 
+#### ESP8266 (arduino-esp8266)
+
+An ESP8266 module has no partition table either. Its flash layout comes from the
+`eesz` "Flash Size" menu option in arduino-esp8266's `boards.txt`, which names a
+linker script; `fbuild buildfs` reads that script and takes the region *and* the
+filesystem geometry from it. Those are the same symbols the firmware links
+against (`_FS_start`, `_FS_end`, `_FS_block`, `_FS_page`), so the image cannot
+be sized or formatted differently from the volume the device mounts:
+
+```ini
+[env:nodemcuv2]
+platform = espressif8266
+board = nodemcuv2
+board_build.eesz = 4M2M      ; FS:2MB -> eagle.flash.4m2m.ld
+```
+
+```bash
+fbuild buildfs -e nodemcuv2  # -> 2072576-byte littlefs image at 0x40400000
+```
+
+The block/page size is the script's own (`_FS_block`/`_FS_page`, 8192/256 for a
+4 MB layout), never the ESP32 builder's 4096/256 — an image formatted with the
+wrong geometry would not mount. LittleFS is the default (SPIFFS is deprecated
+upstream); `--filesystem spiffs` builds a SPIFFS image instead. A script that
+declares no `_FS_start`/`_FS_end` (or omits `_FS_block`/`_FS_page`) is an error
+naming `board_build.eesz`, rather than a guessed region. `--filesystem` and the
+`board_build.flash_ld` override behave as elsewhere; flashing stays ESP32-only,
+since the device offset is this address minus the `0x40200000` flash mapping.
+
 ### `fbuild uploadfs`
 
 Flash that image to the filesystem partition — the fbuild equivalent of
