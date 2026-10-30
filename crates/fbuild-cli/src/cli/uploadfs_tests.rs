@@ -104,19 +104,24 @@ fn choose_port_refuses_to_guess_between_ports() {
 /// `--image` is resolved against the project, like every other path flag.
 #[test]
 fn absolute_resolves_relative_paths_against_the_project() {
+    // Compare components, not display strings: Windows renders the joined
+    // path with `\` separators.
     let project = Path::new("/work/blink");
-    assert_eq!(
-        absolute(project, "build/littlefs.bin")
+    let relative = absolute(project, "build/littlefs.bin");
+    assert!(
+        relative
             .as_path()
-            .display()
-            .to_string(),
-        "/work/blink/build/littlefs.bin"
+            .components()
+            .eq(Path::new("/work/blink/build/littlefs.bin").components()),
+        "{}",
+        relative.as_path().display()
     );
-    assert_eq!(
-        absolute(project, "/tmp/fs.bin")
-            .as_path()
-            .display()
-            .to_string(),
-        "/tmp/fs.bin"
+    // A host-absolute path is kept as is (`/tmp/..` has no drive on Windows).
+    let elsewhere = std::env::temp_dir().join("fs.bin");
+    let kept = absolute(project, elsewhere.to_str().expect("utf-8 temp dir"));
+    assert!(
+        kept.as_path().components().eq(elsewhere.components()),
+        "{}",
+        kept.as_path().display()
     );
 }
