@@ -8,8 +8,8 @@
 //! `FS_START`/`FS_END` defines cannot drift apart (FastLED/fbuild#1358).
 //!
 //! Only the image-assembly half lives here: flashing an RP2040 filesystem is a
-//! PICOBOOT/UF2 operation, not an `esptool` region write, and `fbuild uploadfs`
-//! stays ESP32-only until that transport exists.
+//! UF2 transfer into the ROM BOOTSEL volume, not an `esptool` region write, so
+//! the flashing half lives in `uploadfs_rp2040`.
 
 use std::collections::HashMap;
 use std::path::Path;

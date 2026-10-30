@@ -340,6 +340,92 @@ pub fn encode_uf2_for_family(binary: &[u8], family_id: u32) -> Vec<u8> {
     encode_uf2_at_address(binary, RP2040_UF2_BASE_ADDRESS, family_id)
 }
 
+/// Build UF2 blocks for a raw flash *region* image — a filesystem image whose
+/// first byte belongs at `base_address` — rather than a bootable firmware image.
+///
+/// RP2040 flash is XIP-mapped at `0x1000_0000` and the ROM BOOTSEL parser
+/// programs QSPI at the address each block names, so arduino-pico's absolute
+/// `build.fs_start` (for example `0x1017f000`) is already the address to encode;
+/// unlike the ESP8266 linker-script addresses no mapping is removed. The ROM also
+/// requires every block target to be 256-byte aligned, so a region that is not is
+/// a hard error instead of a UF2 the ROM would silently reject
+/// (FastLED/fbuild#1358).
+pub fn encode_uf2_for_region(image: &[u8], base_address: u64) -> Result<Vec<u8>> {
+    if image.is_empty() {
+        return Err(FbuildError::DeployFailed(
+            "refusing to build an RP2040 UF2 from an empty region image".to_string(),
+        ));
+    }
+    let address = u32::try_from(base_address).map_err(|_| {
+        FbuildError::DeployFailed(format!(
+            "RP2040 region address 0x{base_address:x} does not fit a 32-bit flash address"
+        ))
+    })?;
+    if !address.is_multiple_of(UF2_PAYLOAD_SIZE as u32) {
+        return Err(FbuildError::DeployFailed(format!(
+            "RP2040 region address 0x{address:x} is not {UF2_PAYLOAD_SIZE}-byte aligned; the ROM \
+             BOOTSEL parser rejects unaligned UF2 blocks"
+        )));
+    }
+    let uf2 = encode_uf2_at_address(image, address, RP2040_FAMILY_ID);
+    validate_uf2(&uf2, RP2040_FAMILY_ID)?;
+    Ok(uf2)
+}
+
+/// Mounted Pico BOOTSEL volumes on this host, deduplicated and sorted.
+pub fn bootsel_volumes() -> Vec<PathBuf> {
+    find_uf2_volumes(&volume_roots())
+}
+
+/// Write already-encoded UF2 blocks into a mounted BOOTSEL volume as `NEW.UF2`.
+///
+/// The transfer contract is `fbuild deploy`'s: one sequential write, flush,
+/// close, and the write counts as accepted only when every byte was reported
+/// written — or the ROM ejected the volume after the final byte. The caller
+/// confirms the flash by waiting for the volume to disappear.
+pub fn write_uf2_to_volume(uf2: &[u8], volume: &Path) -> Result<PathBuf> {
+    if !has_uf2_marker(volume) {
+        return Err(FbuildError::DeployFailed(format!(
+            "{} does not contain INFO_UF2.TXT; hold BOOTSEL while plugging the board in and retry",
+            volume.display()
+        )));
+    }
+    let destination = volume.join("NEW.UF2");
+    let expected = uf2.len() as u64;
+    match write_uf2_slice(&destination, uf2) {
+        Ok(written) if written == expected => Ok(destination),
+        Ok(written) => Err(FbuildError::DeployFailed(format!(
+            "failed to copy RP2040 UF2 to {}: writer reported {written} of {expected} bytes without \
+             an error",
+            destination.display()
+        ))),
+        Err(failure)
+            if failure.bytes_written == expected
+                && is_device_disappearance_error(&failure.error)
+                && wait_for_volume_disappearance(volume, Duration::from_secs(2)).is_ok() =>
+        {
+            tracing::debug!(
+                error = %failure.error,
+                volume = %volume.display(),
+                "RP2040 volume ejected while the host finalized NEW.UF2; treating transfer as accepted"
+            );
+            Ok(destination)
+        }
+        Err(failure) => Err(FbuildError::DeployFailed(format!(
+            "failed to copy RP2040 UF2 to {} ({} of {expected} bytes written): {}",
+            destination.display(),
+            failure.bytes_written,
+            failure.error
+        ))),
+    }
+}
+
+fn write_uf2_slice(destination: &Path, bytes: &[u8]) -> std::result::Result<u64, Uf2WriteFailure> {
+    let output =
+        open_uf2_destination(destination).map_err(|error| Uf2WriteFailure::new(error, 0))?;
+    write_uf2_bytes(output, bytes)
+}
+
 fn encode_uf2_at_address(binary: &[u8], base_address: u32, family_id: u32) -> Vec<u8> {
     let block_count = binary.len().div_ceil(UF2_PAYLOAD_SIZE).max(1);
     let mut output = Vec::with_capacity(block_count * UF2_BLOCK_SIZE);
@@ -4145,3 +4231,7 @@ mod tests {
         ));
     }
 }
+
+#[cfg(test)]
+#[path = "rp2040_region_tests.rs"]
+mod region_tests;

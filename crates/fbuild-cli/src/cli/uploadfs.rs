@@ -20,6 +20,10 @@
 //! already speaks flash offsets, while an ESP8266 `eagle.flash.*.ld` speaks CPU
 //! addresses (`_FS_start`), so the `0x40200000` flash mapping is removed before
 //! esptool sees the offset.
+//!
+//! RP2040 (arduino-pico) qualifies as well, but not over esptool: the region is
+//! written as UF2 blocks into the mounted ROM BOOTSEL volume, at the absolute
+//! `build.fs_start` address the firmware mounts. See [`uploadfs_rp2040`].
 
 use std::path::Path;
 
@@ -29,6 +33,7 @@ use fbuild_core::{FbuildError, Result};
 
 use super::buildfs::{self, BuildfsArgs, ImagePlan, Partition};
 use super::buildfs_esp8266;
+use super::uploadfs_rp2040;
 use crate::output;
 
 /// `fbuild uploadfs` arguments.
@@ -106,24 +111,27 @@ fn absolute(project_dir: &Path, value: &str) -> NormalizedPath {
 
 /// Reject environments whose platform has no flash filesystem.
 ///
-/// ESP32 and ESP8266 both have one and both flash over `esptool`, so both are
-/// accepted. AVR has just EEPROM, Teensy 4.x's `LittleFS_Program` is
-/// runtime-only (re-uploading wipes it), and an RP2040 image is written over
-/// PICOBOOT rather than a flash offset, so there is nothing correct to write
-/// there today and saying so beats a silent no-op.
+/// ESP32 and ESP8266 have one and both flash over `esptool`; RP2040 (arduino-pico)
+/// has one too, but it is written as UF2 blocks into the ROM BOOTSEL volume
+/// instead, so it takes a separate transport. AVR has just EEPROM and Teensy
+/// 4.x's `LittleFS_Program` is runtime-only (re-uploading wipes it), so saying so
+/// beats a silent no-op.
 fn require_flash_filesystem(platform: Option<&str>, env: &str) -> Result<()> {
     match platform.and_then(fbuild_core::Platform::from_platform_str) {
-        Some(fbuild_core::Platform::Espressif32 | fbuild_core::Platform::Espressif8266) => Ok(()),
+        Some(
+            fbuild_core::Platform::Espressif32
+            | fbuild_core::Platform::Espressif8266
+            | fbuild_core::Platform::RaspberryPi,
+        ) => Ok(()),
         Some(platform) => Err(FbuildError::ConfigError(format!(
             "`fbuild uploadfs` writes a filesystem image at the region the build's own flash \
              layout declares; environment '{env}' targets {platform:?}, which has no flash \
-             filesystem fbuild can write (AVR has only EEPROM, Teensy 4.x's LittleFS_Program is \
-             runtime-only and wiped by every re-upload, RP2040 images are written over PICOBOOT \
-             and fbuild does not drive that transport yet)"
+             filesystem fbuild can write (AVR has only EEPROM, and Teensy 4.x's LittleFS_Program \
+             is runtime-only and wiped by every re-upload)"
         ))),
         None => Err(FbuildError::ConfigError(format!(
             "environment '{env}' declares no supported platform; `fbuild uploadfs` needs an \
-             ESP32 or ESP8266 environment"
+             ESP32, ESP8266 or RP2040 environment"
         ))),
     }
 }
@@ -386,6 +394,43 @@ async fn resolve_image(
     Ok((image, image_bytes))
 }
 
+/// Flash an RP2040 filesystem region over the ROM BOOTSEL volume.
+fn run_rp2040(
+    args: &UploadfsArgs,
+    plan: &ImagePlan,
+    image: &NormalizedPath,
+    image_bytes: u64,
+) -> Result<()> {
+    uploadfs_rp2040::require_verify_supported(args.verify)?;
+    if args.port.is_some() || args.baud.is_some() {
+        output::warn(
+            "ignoring --port/--baud for an RP2040 filesystem flash: a BOOTSEL board is a \
+             mass-storage volume, not a serial port",
+        );
+    }
+    let flashed = uploadfs_rp2040::flash(plan, image.as_path())?;
+    let offset = format!("0x{:x}", plan.partition.offset);
+    output::progress(format!(
+        "writing {} bytes as {} UF2 blocks @ {} into {}",
+        image_bytes, flashed.blocks, offset, flashed.destination
+    ));
+    report(
+        &UploadReport {
+            args,
+            plan,
+            image,
+            image_bytes,
+            port: None,
+            volume: Some(flashed.volume.as_str()),
+            blocks: Some(flashed.blocks),
+            offset: &offset,
+            verified: false,
+        },
+        "the ROM BOOTSEL volume ejected, confirming the write",
+    );
+    Ok(())
+}
+
 /// Resolve, build (if needed) and flash the filesystem image.
 pub async fn run(args: UploadfsArgs, project_dir: &Path) -> Result<()> {
     let plan = buildfs::plan_image(&args.build_args(), project_dir)?;
@@ -395,6 +440,12 @@ pub async fn run(args: UploadfsArgs, project_dir: &Path) -> Result<()> {
     )?;
 
     let (image, image_bytes) = resolve_image(&args, &plan, project_dir).await?;
+
+    // RP2040 is a UF2 transfer into the mounted BOOTSEL volume, not a serial
+    // flash: no port, no daemon lease, and no readback to verify against.
+    if plan.context.platform == Some(fbuild_core::Platform::RaspberryPi) {
+        return run_rp2040(&args, &plan, &image, image_bytes);
+    }
 
     let port = match fbuild_serial::port_selector::resolve_port_arg(args.port.clone())? {
         Some(port) => port,
@@ -452,15 +503,20 @@ pub async fn run(args: UploadfsArgs, project_dir: &Path) -> Result<()> {
         false
     };
 
-    report(&UploadReport {
-        args: &args,
-        plan: &plan,
-        image: &image,
-        image_bytes,
-        port: &port,
-        offset: &offset,
-        verified,
-    });
+    report(
+        &UploadReport {
+            args: &args,
+            plan: &plan,
+            image: &image,
+            image_bytes,
+            port: Some(&port),
+            volume: None,
+            blocks: None,
+            offset: &offset,
+            verified,
+        },
+        "pass --verify to read the region back",
+    );
     Ok(())
 }
 
@@ -469,12 +525,17 @@ struct UploadReport<'a> {
     plan: &'a ImagePlan,
     image: &'a NormalizedPath,
     image_bytes: u64,
-    port: &'a str,
+    /// Serial port the flash was driven through (ESP32/ESP8266).
+    port: Option<&'a str>,
+    /// Mounted BOOTSEL volume the UF2 was dropped into (RP2040).
+    volume: Option<&'a str>,
+    /// UF2 blocks written (RP2040 only).
+    blocks: Option<usize>,
     offset: &'a str,
     verified: bool,
 }
 
-fn report(report: &UploadReport<'_>) {
+fn report(report: &UploadReport<'_>, confirmation: &str) {
     let partition: &Partition = &report.plan.partition;
     if report.args.json {
         let summary = serde_json::json!({
@@ -489,12 +550,19 @@ fn report(report: &UploadReport<'_>) {
             "image": report.image.as_path().display().to_string(),
             "image_bytes": report.image_bytes,
             "port": report.port,
+            "volume": report.volume,
+            "uf2_blocks": report.blocks,
             "offset_hex": report.offset,
             "verified": report.verified,
         });
         output::result(serde_json::to_string_pretty(&summary).unwrap_or_default());
         return;
     }
+    let endpoint = match (report.port, report.volume) {
+        (Some(port), _) => port,
+        (None, Some(volume)) => volume,
+        (None, None) => "unknown target",
+    };
     output::result(format!(
         "flashed {} {} ({} bytes) to '{}' @ {} on {}",
         report.plan.kind.as_str(),
@@ -502,12 +570,12 @@ fn report(report: &UploadReport<'_>) {
         report.image_bytes,
         partition.label,
         report.offset,
-        report.port
+        endpoint
     ));
     if report.verified {
         output::result(format!("verified: {} matches the device", report.offset));
     } else {
-        output::result("not verified (pass --verify to read the region back)");
+        output::result(format!("not verified: {confirmation}"));
     }
 }
 

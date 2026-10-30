@@ -169,9 +169,9 @@ arduino-pico ships one filesystem driver, so `--filesystem=spiffs` is refused
 rather than silently building littlefs. A board whose selected flash menu
 reserves no filesystem (`fs_start == fs_end`, the 2 MB Pico default) fails with
 the byte sizes and the `board_build.filesystem_size` knob to set; without a
-volume there is nowhere for `data/` to mount. Flashing that image is not
-`uploadfs` — an RP2040 filesystem goes over PICOBOOT/UF2, which fbuild does not
-drive yet.
+volume there is nowhere for `data/` to mount. `fbuild uploadfs` writes the image
+as UF2 blocks into the board's mounted ROM BOOTSEL volume at the absolute
+`build.fs_start` address — the same address the firmware's `FS_START` mounts.
 
 #### ESP8266 (arduino-esp8266)
 
@@ -236,6 +236,16 @@ ESP8266 goes over the same esptool serial transport, with `--chip esp8266`; an
 ESP8266 build does not provision an esptool fbuild can drive (its platform pins
 the v4 source package), so that upload uses `FBUILD_ESPTOOL_PATH` when set, else
 the managed v5 esptool, else an `esptool` on `PATH`.
+
+RP2040 is a different transport again: the region cannot be written over a serial
+port, so put the board in BOOTSEL mode (hold BOOTSEL while plugging it in) and
+run `fbuild uploadfs -e rpipico`. fbuild encodes the image as UF2 blocks whose
+first block addresses `build.fs_start` and writes them to the single mounted
+`RPI-RP2` volume as `NEW.UF2`; the ROM programs QSPI, then ejects the volume,
+which is the write's confirmation. There is no `--port` (BOOTSEL is mass storage,
+not a serial port) and no `--verify`: a region can only be read back over
+PICOBOOT, so `--verify` is refused instead of reported as unverified. Two mounted
+Pico volumes are an error naming both, never a guess.
 
 Environments without a flashable filesystem are a clear error: AVR has only
 EEPROM, and Teensy 4.x's `LittleFS_Program` is runtime-only, wiped by every

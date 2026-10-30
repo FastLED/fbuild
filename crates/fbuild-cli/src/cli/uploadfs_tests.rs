@@ -53,12 +53,18 @@ fn require_flash_filesystem_accepts_esptool_platforms() {
     assert!(require_flash_filesystem(Some("espressif8266"), "nodemcuv2").is_ok());
 }
 
-/// AVR, Teensy and RP2040 have no filesystem a build tool can flash over
-/// esptool; the error is the whole point (the issue asks for a clear failure,
-/// never a silent no-op).
+/// RP2040 has a flash filesystem too, written as UF2 blocks rather than an
+/// esptool region.
+#[test]
+fn require_flash_filesystem_accepts_rp2040() {
+    assert!(require_flash_filesystem(Some("raspberrypi"), "rpipico").is_ok());
+}
+
+/// AVR and Teensy have no filesystem a build tool can flash; the error is the
+/// whole point (the issue asks for a clear failure, never a silent no-op).
 #[test]
 fn require_flash_filesystem_rejects_platforms_without_one() {
-    for platform in ["atmelavr", "teensy", "raspberrypi"] {
+    for platform in ["atmelavr", "teensy"] {
         let error = require_flash_filesystem(Some(platform), "uno")
             .expect_err("platform without a flash filesystem must be rejected")
             .to_string();
@@ -75,7 +81,7 @@ fn require_flash_filesystem_rejects_a_missing_platform() {
         .expect_err("a missing platform cannot be flashed")
         .to_string();
     assert!(
-        error.contains("needs an ESP32 or ESP8266 environment"),
+        error.contains("needs an ESP32, ESP8266 or RP2040 environment"),
         "{error}"
     );
 }

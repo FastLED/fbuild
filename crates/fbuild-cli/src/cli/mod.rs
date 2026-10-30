@@ -51,6 +51,7 @@ pub mod sync_cmd;
 pub mod udev;
 pub mod udev_install;
 pub mod uploadfs;
+pub mod uploadfs_rp2040;
 // #1148 supplies the helper foundation; #1147 is deliberately its first
 // production consumer once RP2040 deployment can emit a typed request.
 #[allow(
