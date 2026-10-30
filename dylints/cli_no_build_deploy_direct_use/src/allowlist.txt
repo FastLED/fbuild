@@ -50,3 +50,11 @@ crates/fbuild-cli/src/cli/uploadfs.rs
 # `0x40200000` mapping already removed. The contract under test IS the esptool
 # command line, so faking the deployer would test nothing (FastLED/fbuild#1358).
 crates/fbuild-cli/src/cli/uploadfs_tests.rs
+
+# `uploadfs_rp2040.rs` encodes one filesystem image as UF2 blocks and drops them
+# into the mounted ROM BOOTSEL volume — the RP2040 half of `fbuild uploadfs`
+# (FastLED/fbuild#1358). Like the ESP32/ESP8266 half it is a single-region write
+# with no firmware build and no trusted-hash state, and it preempts the daemon's
+# serial lease only where a port exists; there is no port on BOOTSEL, so a daemon
+# round-trip could not even be addressed.
+crates/fbuild-cli/src/cli/uploadfs_rp2040.rs
