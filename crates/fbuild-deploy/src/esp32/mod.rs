@@ -13,6 +13,8 @@
 //!   verify/write paths, and the [`crate::Deployer`] impl.
 //! * `verify`   — `FlashRegion`, `RegionVerifyResult`, `VerifyOutcome`,
 //!   and the `parse_verify_regions` helper.
+//! * `region`   — single file-at-offset flash/verify for `fbuild uploadfs`
+//!   ([`RegionFlashResult`]).
 //! * `qemu`     — QEMU flash-image assembly and argv builders.
 //! * `image`    — ESP image header constants, byte patching, checksum
 //!   and SHA-256 trailer repair, and raw binary I/O helpers.
@@ -28,13 +30,17 @@ mod image;
 mod native_usb;
 mod parse;
 mod qemu;
+mod region;
+#[cfg(test)]
+mod region_tests;
 #[cfg(test)]
 mod tests;
 mod verify;
 
-pub use deployer::{Esp32Deployer, EsptoolParams, RegionFlashResult};
+pub use deployer::{Esp32Deployer, EsptoolParams};
 pub use qemu::{
     build_qemu_args, build_qemu_esp32s3_args, create_qemu_flash_image,
     resolve_qemu_flash_size_bytes,
 };
+pub use region::RegionFlashResult;
 pub use verify::{FlashRegion, RegionVerifyResult, VerifyOutcome, parse_verify_regions};
