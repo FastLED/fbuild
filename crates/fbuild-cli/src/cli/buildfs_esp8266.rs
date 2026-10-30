@@ -12,10 +12,10 @@
 //! re-deriving the layout from `build.spiffs_start` / `build.spiffs_end` (the
 //! duplicated values in `boards.txt`) or from the flash-size name.
 //!
-//! Only the image-assembly half lives here: flashing an ESP8266 is a serial
-//! esptool write whose offset is the filesystem address minus the `0x40200000`
-//! flash mapping, and `fbuild uploadfs` stays ESP32-only until that transport
-//! is added.
+//! The image-assembly half lives here, plus the one address conversion flashing
+//! needs: an ESP8266 is flashed by a serial esptool write whose offset is the
+//! filesystem address minus the [`FLASH_MAPPED_BASE`] flash mapping. `fbuild
+//! uploadfs` applies it through [`flash_offset`].
 
 use std::collections::HashMap;
 use std::path::Path;
@@ -26,6 +26,23 @@ use fbuild_core::{FbuildError, Result};
 /// The PlatformIO package that owns arduino-esp8266's `boards.txt` and linker
 /// scripts.
 const FRAMEWORK_PACKAGE: &str = "framework-arduinoespressif8266";
+
+/// Address the ESP8266 CPU maps its flash at.
+///
+/// A linker script names the filesystem in that mapped space (`_FS_start =
+/// 0x40200000 + …`), while `esptool write-flash` takes an offset from the start
+/// of the chip. One subtraction is the whole conversion.
+pub(crate) const FLASH_MAPPED_BASE: u64 = 0x4020_0000;
+
+/// Convert a linker-script filesystem address into an esptool flash offset.
+pub(crate) fn flash_offset(mapped: u64) -> Result<u64> {
+    mapped.checked_sub(FLASH_MAPPED_BASE).ok_or_else(|| {
+        FbuildError::ConfigError(format!(
+            "filesystem address 0x{mapped:x} is below the ESP8266 flash mapping \
+             0x{FLASH_MAPPED_BASE:x}; the linker script does not describe this chip"
+        ))
+    })
+}
 
 /// The filesystem region and geometry an `eagle.flash.*.ld` declares.
 #[derive(Debug, Clone, PartialEq, Eq)]

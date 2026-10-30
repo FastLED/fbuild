@@ -15,7 +15,11 @@
 //!   bytes landed rather than only that esptool exited zero.
 //!
 //! Flashing a filesystem is meaningful only where the platform has one, so a
-//! non-ESP32 environment is a clear error instead of a silent no-op.
+//! platform without one is a clear error instead of a silent no-op. ESP32 and
+//! ESP8266 both qualify, but they name the region differently: a partition CSV
+//! already speaks flash offsets, while an ESP8266 `eagle.flash.*.ld` speaks CPU
+//! addresses (`_FS_start`), so the `0x40200000` flash mapping is removed before
+//! esptool sees the offset.
 
 use std::path::Path;
 
@@ -24,6 +28,7 @@ use fbuild_core::path::NormalizedPath;
 use fbuild_core::{FbuildError, Result};
 
 use super::buildfs::{self, BuildfsArgs, ImagePlan, Partition};
+use super::buildfs_esp8266;
 use crate::output;
 
 /// `fbuild uploadfs` arguments.
@@ -101,22 +106,38 @@ fn absolute(project_dir: &Path, value: &str) -> NormalizedPath {
 
 /// Reject environments whose platform has no flash filesystem.
 ///
-/// ESP32 is the only platform `uploadfs` can write to; AVR has just EEPROM and
-/// Teensy 4.x's `LittleFS_Program` is runtime-only (re-uploading wipes it), so
-/// there is nothing correct to flash there and saying so beats a silent no-op.
+/// ESP32 and ESP8266 both have one and both flash over `esptool`, so both are
+/// accepted. AVR has just EEPROM, Teensy 4.x's `LittleFS_Program` is
+/// runtime-only (re-uploading wipes it), and an RP2040 image is written over
+/// PICOBOOT rather than a flash offset, so there is nothing correct to write
+/// there today and saying so beats a silent no-op.
 fn require_flash_filesystem(platform: Option<&str>, env: &str) -> Result<()> {
     match platform.and_then(fbuild_core::Platform::from_platform_str) {
-        Some(fbuild_core::Platform::Espressif32) => Ok(()),
+        Some(fbuild_core::Platform::Espressif32 | fbuild_core::Platform::Espressif8266) => Ok(()),
         Some(platform) => Err(FbuildError::ConfigError(format!(
-            "`fbuild uploadfs` flashes an ESP32 flash-filesystem partition built from an ESP32 \
-             partition table; environment '{env}' targets {platform:?}, which fbuild does not \
-             build filesystem images for (AVR has only EEPROM, Teensy 4.x's LittleFS_Program is \
-             runtime-only and wiped by every re-upload, ESP8266 is not implemented)"
+            "`fbuild uploadfs` writes a filesystem image at the region the build's own flash \
+             layout declares; environment '{env}' targets {platform:?}, which has no flash \
+             filesystem fbuild can write (AVR has only EEPROM, Teensy 4.x's LittleFS_Program is \
+             runtime-only and wiped by every re-upload, RP2040 images are written over PICOBOOT \
+             and fbuild does not drive that transport yet)"
         ))),
         None => Err(FbuildError::ConfigError(format!(
             "environment '{env}' declares no supported platform; `fbuild uploadfs` needs an \
-             ESP32 environment"
+             ESP32 or ESP8266 environment"
         ))),
+    }
+}
+
+/// The `write-flash` offset for the planned region.
+///
+/// An ESP32 partition table already speaks flash offsets. An ESP8266 linker
+/// script does not: `_FS_start` is the address the CPU maps that flash at, so
+/// the mapping has to come back off before esptool is handed the offset —
+/// otherwise the write lands a gigabyte past the end of the chip.
+fn flash_offset_for(platform: Option<fbuild_core::Platform>, region: u64) -> Result<u64> {
+    match platform {
+        Some(fbuild_core::Platform::Espressif8266) => buildfs_esp8266::flash_offset(region),
+        _ => Ok(region),
     }
 }
 
@@ -236,14 +257,94 @@ async fn esp32_deployer(
     Ok(deployer)
 }
 
-/// Resolve, build (if needed) and flash the filesystem image.
-pub async fn run(args: UploadfsArgs, project_dir: &Path) -> Result<()> {
-    let plan = buildfs::plan_image(&args.build_args(), project_dir)?;
-    require_flash_filesystem(
-        plan.context.env_config.get("platform").map(String::as_str),
-        &plan.context.env,
-    )?;
+/// Build the deployer for an ESP8266 filesystem region.
+///
+/// An ESP8266 build emits a single image (`esptool --chip esp8266 elf2image`,
+/// no bootloader and no partition table), so the deployer is the ESP32 one with
+/// every fixed region at `0x0`: only the region `uploadfs` passes to
+/// `flash_region` is written. The board still owns flash mode/frequency/size and
+/// `upload_speed`, and the native espflash writer stays off because espflash
+/// does not support ESP8266.
+async fn esp8266_deployer(
+    project_dir: &Path,
+    plan: &ImagePlan,
+    baud: Option<u32>,
+) -> Result<fbuild_deploy::esp32::Esp32Deployer> {
+    let board_id = buildfs::board_id(&plan.context).unwrap_or_else(|| "nodemcuv2".to_string());
+    let board = fbuild_config::BoardConfig::from_board_id_or_default(
+        &board_id,
+        "nodemcuv2",
+        &plan.context.board_overrides,
+        Some(project_dir),
+    );
+    let esptool = fbuild_build::esp8266::mcu_config::get_esp8266_config()?.esptool;
+    let esptool_params = fbuild_deploy::esp32::EsptoolParams {
+        flash_mode: board
+            .flash_mode
+            .clone()
+            .unwrap_or_else(|| esptool.default_flash_mode.clone()),
+        flash_freq: fbuild_build::esp32::esp32_linker::f_flash_to_esptool_freq(
+            board.f_flash.as_deref(),
+            &esptool.default_flash_freq,
+        ),
+        flash_size: fbuild_build::esp32::mcu_config::bytes_to_flash_size(
+            board.max_flash,
+            &esptool.default_flash_size,
+        )
+        .to_string(),
+        default_baud: esptool.default_baud.to_string(),
+        before_reset: "default-reset".to_string(),
+        after_reset: "hard-reset".to_string(),
+    };
+    let baud = baud
+        .map(|value| value.to_string())
+        .or_else(|| board.upload_speed.clone())
+        .unwrap_or_else(|| esptool_params.default_baud.clone());
+    // An ESP8266 build does not provision an esptool fbuild can use: the
+    // `tool-esptoolpy` its platform pins is the v4 source package, and this
+    // deployer speaks v5's hyphenated CLI (`write-flash`, `default-reset`).
+    // So: an explicit `FBUILD_ESPTOOL_PATH` wins, then the managed standalone
+    // v5 binary `fbuild deploy` resolves for the Espressif32 platform, then a
+    // bare `esptool` on PATH. The environment config is deliberately not passed
+    // through: it names `espressif8266`, which the ESP32 resolver treats as an
+    // unsupported alias rather than a reason to skip provisioning.
+    let esptool_path = match fbuild_packages::library::esptool_path_override()? {
+        Some(path) => Some(path),
+        None => match fbuild_build::esp32::orchestrator::resolve_deploy_esptool(project_dir, None)
+            .await
+        {
+            Ok(path) => path,
+            Err(error) => {
+                output::warn(format!(
+                    "could not resolve a managed esptool ({error}); falling back to `esptool` on PATH"
+                ));
+                None
+            }
+        },
+    };
+    Ok(fbuild_deploy::esp32::Esp32Deployer::new(
+        &esptool.chip,
+        &baud,
+        "0x0",
+        "0x0",
+        "0x0",
+        &esptool_params,
+        false,
+    )
+    .with_esptool_path(esptool_path)
+    .with_caller_path(std::env::var("PATH").ok()))
+}
 
+/// Resolve the image to flash, building it first when it is missing.
+///
+/// PlatformIO's `uploadfs` implies `buildfs`, so a missing image is built rather
+/// than refused; `--no-build` asks for the file as-is. Returns the path and its
+/// size, already checked against the planned partition.
+async fn resolve_image(
+    args: &UploadfsArgs,
+    plan: &ImagePlan,
+    project_dir: &Path,
+) -> Result<(NormalizedPath, u64)> {
     let image = match &args.image {
         Some(path) => absolute(project_dir, path),
         None => plan.image.clone(),
@@ -282,6 +383,18 @@ pub async fn run(args: UploadfsArgs, project_dir: &Path) -> Result<()> {
             plan.partition.size
         )));
     }
+    Ok((image, image_bytes))
+}
+
+/// Resolve, build (if needed) and flash the filesystem image.
+pub async fn run(args: UploadfsArgs, project_dir: &Path) -> Result<()> {
+    let plan = buildfs::plan_image(&args.build_args(), project_dir)?;
+    require_flash_filesystem(
+        plan.context.env_config.get("platform").map(String::as_str),
+        &plan.context.env,
+    )?;
+
+    let (image, image_bytes) = resolve_image(&args, &plan, project_dir).await?;
 
     let port = match fbuild_serial::port_selector::resolve_port_arg(args.port.clone())? {
         Some(port) => port,
@@ -289,8 +402,19 @@ pub async fn run(args: UploadfsArgs, project_dir: &Path) -> Result<()> {
     };
     preempt_running_daemon(&port).await;
 
-    let deployer = esp32_deployer(project_dir, &plan, args.baud).await?;
-    let offset = format!("0x{:x}", plan.partition.offset);
+    let (deployer, offset) = match plan.context.platform {
+        Some(fbuild_core::Platform::Espressif8266) => (
+            esp8266_deployer(project_dir, &plan, args.baud).await?,
+            format!(
+                "0x{:x}",
+                flash_offset_for(plan.context.platform, plan.partition.offset)?
+            ),
+        ),
+        _ => (
+            esp32_deployer(project_dir, &plan, args.baud).await?,
+            format!("0x{:x}", plan.partition.offset),
+        ),
+    };
     output::progress(format!(
         "flashing {} ({} bytes) to '{}' @ {} on {}",
         image.as_path().display(),
