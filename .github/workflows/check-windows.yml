@@ -39,7 +39,7 @@ jobs:
           ref: ${{ inputs.ref }}
       - name: Setup soldr
         id: setup-soldr
-        uses: zackees/setup-soldr@9337570234850b50322e696037127fa3cf8ac703 # setup-soldr#629 S3 remote cache
+        uses: zackees/setup-soldr@35b5765c99cf392c259e684daeda10a950f72fff # setup-soldr#629 S3 remote cache
         with:
           s3-bucket: forge-ci-cache
           s3-endpoint: sfo3.digitaloceanspaces.com
