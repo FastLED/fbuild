@@ -50,7 +50,7 @@ their allowlist entries should be removed.
 
 ## Toolchain
 
-Pinned to `nightly-2026-05-28` and Dylint 6.0.3, matching every other
+Pinned to `nightly-2026-08-15` and Dylint 6.2.0, matching every other
 Dylint library in this repository.
 
 ## Running locally
