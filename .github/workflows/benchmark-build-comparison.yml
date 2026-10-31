@@ -9,6 +9,9 @@ on:
       - 'bench/fastled-examples/src/build_comparison*.rs'
       - 'bench/fastled-examples/Cargo.toml'
       - '.github/workflows/benchmark-build-comparison.yml'
+      # Server-side download fallback settings ride the same Pages site
+      # (FastLED/fbuild#1810).
+      - 'site/mirror/**'
   schedule:
     # Off-hour UTC slot avoids the hosted-runner top-of-hour surge.
     - cron: '17 9 * * *'
@@ -191,6 +194,22 @@ jobs:
         with:
           name: build-comparison-site-${{ github.sha }}
           path: benchmark-stats
+
+      - name: Check out the mirror manifest
+        uses: actions/checkout@v6
+        with:
+          path: repo
+          sparse-checkout: site/mirror
+          sparse-checkout-cone-mode: false
+
+      # Pages deploys replace the whole site, so every deploy must carry the
+      # download mirror manifest fbuild clients fetch (FastLED/fbuild#1810).
+      - name: Add the mirror manifest to the site
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p benchmark-stats/mirror
+          cp repo/site/mirror/manifest.json benchmark-stats/mirror/manifest.json
 
       - name: Publish one-commit benchmark-stats branch
         shell: bash

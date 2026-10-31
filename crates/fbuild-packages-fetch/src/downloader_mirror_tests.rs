@@ -2,8 +2,8 @@
 //! Shares the local-server helpers of [`super::tests`].
 
 use super::mirrors::{
-    DEFAULT_MIRROR, MIRROR_FIRST_ENV, MIRRORS_ENV, attempt_order, candidate_urls,
-    mirror_first_requested, resolve_candidates,
+    Candidates, DEFAULT_MIRROR, MIRROR_FIRST_ENV, MIRRORS_ENV, attempt_order, candidate_urls,
+    mirror_first_requested, resolve_with,
 };
 use super::tests::{
     FAST_RETRY_TIMING, complete_response, network_test_guard, run_flaky_server, test_client,
@@ -84,8 +84,7 @@ async fn buffered_download_falls_back_to_a_mirror_when_the_primary_is_down() {
     );
     let bytes = get_from_candidates(
         &test_client(),
-        &urls,
-        mirror_first_requested(),
+        &Candidates::new(urls, mirror_first_requested()),
         FAST_RETRY_TIMING,
     )
     .await
@@ -128,10 +127,9 @@ async fn streaming_download_falls_back_to_a_mirror_when_the_primary_is_down() {
 
     download_from_candidates(
         &test_client(),
-        &urls,
+        &Candidates::new(urls, mirror_first_requested()),
         temp.path(),
         &mut progress,
-        mirror_first_requested(),
         FAST_RETRY_TIMING,
     )
     .await
@@ -165,10 +163,9 @@ async fn streaming_mirror_with_a_query_string_keeps_the_primary_file_name() {
 
     download_from_candidates(
         &test_client(),
-        &urls,
+        &Candidates::new(urls, mirror_first_requested()),
         temp.path(),
         &mut progress,
-        mirror_first_requested(),
         FAST_RETRY_TIMING,
     )
     .await
@@ -199,8 +196,7 @@ async fn mirrors_are_only_used_after_the_primary_fails() {
     );
     get_from_candidates(
         &test_client(),
-        &urls,
-        mirror_first_requested(),
+        &Candidates::new(urls, mirror_first_requested()),
         FAST_RETRY_TIMING,
     )
     .await
@@ -216,8 +212,7 @@ async fn mirrors_are_only_used_after_the_primary_fails() {
     );
     let err = get_from_candidates(
         &test_client(),
-        &urls,
-        mirror_first_requested(),
+        &Candidates::new(urls, mirror_first_requested()),
         FAST_RETRY_TIMING,
     )
     .await
@@ -300,8 +295,8 @@ async fn unset_env_prefers_the_built_in_bucket_for_mirrored_hosts() {
 
     let registry = "https://dl.registry.platformio.org/download/platformio/platform/espressif32/6.5.0/espressif32-6.5.0.tar.gz";
     assert_eq!(
-        resolve_candidates(registry),
-        (
+        resolve_with(registry, None),
+        Candidates::new(
             vec![
                 registry.to_string(),
                 format!("{bucket}platformio/platform/espressif32/6.5.0/espressif32-6.5.0.tar.gz"),
@@ -312,8 +307,8 @@ async fn unset_env_prefers_the_built_in_bucket_for_mirrored_hosts() {
 
     let github = "https://github.com/o/r/archive/refs/tags/1.0.tar.gz";
     assert_eq!(
-        resolve_candidates(github),
-        (
+        resolve_with(github, None),
+        Candidates::new(
             vec![
                 github.to_string(),
                 format!("{bucket}github.com/o/r/archive/refs/tags/1.0.tar.gz"),
@@ -323,7 +318,10 @@ async fn unset_env_prefers_the_built_in_bucket_for_mirrored_hosts() {
     );
 
     let other = "https://vendor.example/files/pkg.zip";
-    assert_eq!(resolve_candidates(other), (vec![other.to_string()], false));
+    assert_eq!(
+        resolve_with(other, None),
+        Candidates::new(vec![other.to_string()], false)
+    );
 }
 
 /// `FBUILD_DOWNLOAD_MIRROR_FIRST=0` keeps the built-in bucket but puts the
@@ -335,15 +333,14 @@ async fn env_overrides_the_built_in_bucket() {
     {
         let _mirrors = ScopedEnv::unset(MIRRORS_ENV);
         let _first = ScopedEnv::set(MIRROR_FIRST_ENV, "0");
-        let (urls, mirror_first) = resolve_candidates(registry);
-        assert_eq!(urls.len(), 2, "{urls:?}");
-        assert!(!mirror_first);
+        let candidates = resolve_with(registry, None);
+        assert_eq!(candidates.order, vec![0, 1], "{candidates:?}");
     }
     let _mirrors = ScopedEnv::set(MIRRORS_ENV, "");
     let _first = ScopedEnv::unset(MIRROR_FIRST_ENV);
     assert_eq!(
-        resolve_candidates(registry),
-        (vec![registry.to_string()], false)
+        resolve_with(registry, None),
+        Candidates::new(vec![registry.to_string()], false)
     );
 }
 
@@ -439,8 +436,7 @@ async fn mirror_first_serves_from_the_mirror_without_touching_the_primary() {
     );
     let bytes = get_from_candidates(
         &test_client(),
-        &urls,
-        mirror_first_requested(),
+        &Candidates::new(urls, mirror_first_requested()),
         FAST_RETRY_TIMING,
     )
     .await
@@ -471,8 +467,7 @@ async fn mirror_first_still_reports_the_primary_error_when_everything_is_down() 
 
     let err = get_from_candidates(
         &test_client(),
-        &urls,
-        mirror_first_requested(),
+        &Candidates::new(urls, mirror_first_requested()),
         FAST_RETRY_TIMING,
     )
     .await
@@ -488,16 +483,16 @@ async fn mirror_first_still_reports_the_primary_error_when_everything_is_down() 
 
 /// Scoped override of any env var, restored on drop. Holders must also hold
 /// [`network_test_guard`]: the env is process-global.
-struct ScopedEnv(&'static str, Option<String>);
+pub(super) struct ScopedEnv(&'static str, Option<String>);
 
 impl ScopedEnv {
-    fn set(name: &'static str, value: &str) -> Self {
+    pub(super) fn set(name: &'static str, value: &str) -> Self {
         let scoped = Self(name, std::env::var(name).ok());
         std::env::set_var(name, value);
         scoped
     }
 
-    fn unset(name: &'static str) -> Self {
+    pub(super) fn unset(name: &'static str) -> Self {
         let scoped = Self(name, std::env::var(name).ok());
         std::env::remove_var(name);
         scoped

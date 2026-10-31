@@ -31,4 +31,30 @@ export FBUILD_DOWNLOAD_MIRROR_FIRST=0
 export FBUILD_DOWNLOAD_MIRRORS=
 ```
 
+### Server-side fallback settings (FastLED/fbuild#1810)
+
+Before falling back to the built-in bucket rule, fbuild checks a
+[zackees/manifest.json](https://github.com/zackees/manifest.json) v1 `Release`
+published at <https://fastled.github.io/fbuild/mirror/manifest.json> (source:
+[`site/mirror/manifest.json`](../../site/mirror/README.md)). An asset listing
+the requested URL decides the candidate URLs and their order. Its `sha256`
+guards mirror bytes: a mirror serving anything else is skipped. Vendor bytes
+are never rejected for a manifest mismatch; verifying them is the caller's job.
+`yanked: true` means vendor only.
+
+Precedence: `FBUILD_DOWNLOAD_MIRRORS` (set, even empty) > manifest entry >
+built-in bucket > vendor alone. `FBUILD_DOWNLOAD_MIRROR_FIRST`, when set,
+overrides the manifest's order.
+
+| Variable | Meaning |
+|---|---|
+| `FBUILD_MIRROR_MANIFEST_URL` | Manifest source(s), comma/whitespace separated. Empty disables the manifest. Default: the Pages URL, then the raw file on `main`. |
+
+The manifest is fetched once per process (10 s budget per source) and cached
+under `<cache root>/mirror-manifest/` for 24 h. If the server is down or serves
+an invalid document, fbuild uses the stale cache; with no cache, it uses the
+built-in rule. One invalid entry (non-HTTPS URL, duplicate URL, bad sha256,
+wrong `kind`/`schema_version`) rejects the whole document. A body over 8 MiB is
+also rejected. Downloads to the loopback host never consult the manifest.
+
 A failed fetch reports the attempt count and time spent, and names any mirrors tried.
