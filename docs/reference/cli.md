@@ -90,8 +90,12 @@ Common options include `--port`, `--clean`, `--monitor`, `--timeout`,
 `--skip-build`, `--baud`, `--to device|emu|emulator`, `--emulator`, and
 `--output-dir`.
 
-`--transport picotool|uf2` selects the RP2040/RP2350 deploy transport
-(FastLED/fbuild#1162). Before either transport runs, fbuild tries the normal
+`--transport picotool|uf2|swd` selects the RP2040/RP2350 deploy transport
+(FastLED/fbuild#1162, #1423). `swd` skips the target's USB stack entirely and
+flashes the build's ELF through a CMSIS-DAP probe with probe-rs, so it is the
+only transport that reaches a board whose firmware wedged before USB bring-up;
+`--port` is unused there, and a missing probe fails with probe-rs's own
+`No probes were found` diagnostics instead of falling back to a USB transport. Before either transport runs, fbuild tries the normal
 1200-bps CDC touch. If no BOOTSEL endpoint appears and the selected runtime
 port supplied an exact VID, PID, and USB serial, fbuild asks the Pico SDK
 application reset interface to enter BOOTSEL, then reacquires it. Windows uses

@@ -75,15 +75,18 @@ const DEFAULT_PICOTOOL_LOAD_TIMEOUT: Duration = Duration::from_secs(60);
 /// load attempt.
 const PICOTOOL_INFO_PROBE_TIMEOUT: Duration = Duration::from_secs(10);
 
-/// Which stock RP2040 transport fbuild attempts first (FastLED/fbuild#1162).
+/// Which RP2040 transport fbuild uses (FastLED/fbuild#1162, #1423).
 /// `Picotool` tries the PICOBOOT vendor interface first and falls back to
 /// BOOTSEL mass-storage; `Uf2` preserves the historical mass-storage-first
-/// order with picotool as the fallback.
+/// order with picotool as the fallback. `Swd` bypasses the target's USB
+/// entirely and flashes through a CMSIS-DAP probe with probe-rs, which is the
+/// only path that reaches a board whose firmware wedged before USB bring-up.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum Rp2040Transport {
     #[default]
     Picotool,
     Uf2,
+    Swd,
 }
 
 /// Parse the `--transport` CLI flag / `DeployRequest.transport` wire value.
@@ -92,6 +95,7 @@ pub fn parse_rp2040_transport(raw: Option<&str>) -> Result<Rp2040Transport> {
     match raw {
         Some("picotool") | None => Ok(Rp2040Transport::Picotool),
         Some("uf2") => Ok(Rp2040Transport::Uf2),
+        Some("swd") => Ok(Rp2040Transport::Swd),
         Some(other) => Err(FbuildError::DeployFailed(format!(
             "unsupported RP2040 deploy transport: {other}"
         ))),
@@ -109,11 +113,41 @@ fn should_attempt_picotool_first(
     preflight: Option<&preflight::PicobootPreflight>,
 ) -> bool {
     match transport {
-        Rp2040Transport::Uf2 => false,
+        Rp2040Transport::Uf2 | Rp2040Transport::Swd => false,
         Rp2040Transport::Picotool => {
             matches!(preflight, None | Some(preflight::PicobootPreflight::Ready))
         }
     }
+}
+
+/// probe-rs's built-in target name for an RP-series chip family.
+fn probe_rs_chip_for_family(family_id: u32) -> &'static str {
+    if family_id == RP2350_FAMILY_ID {
+        "RP2350"
+    } else {
+        "RP2040"
+    }
+}
+
+/// Pick the image probe-rs can flash over SWD. SWD needs an ELF or Intel HEX
+/// because a bare `.bin`/`.uf2` carries no load address for probe-rs, so the
+/// RP build's co-located ELF is preferred over the UF2 the USB transports use.
+fn swd_artifact_for(firmware_path: &Path) -> Result<PathBuf> {
+    let extension = firmware_path
+        .extension()
+        .and_then(|value| value.to_str())
+        .map(str::to_ascii_lowercase);
+    if extension.as_deref() == Some("hex") && firmware_path.is_file() {
+        return Ok(firmware_path.to_path_buf());
+    }
+    if let Some(elf) = crate::lpc::elf_sibling_of(firmware_path) {
+        return Ok(elf);
+    }
+    Err(FbuildError::DeployFailed(format!(
+        "SWD deploy needs an ELF or Intel HEX image, but {} is {:?} and no sibling .elf exists; SWD cannot flash a bare .bin or .uf2 without an explicit load address",
+        firmware_path.display(),
+        extension.as_deref().unwrap_or("unknown")
+    )))
 }
 
 fn rp_family_name(family_id: u32) -> &'static str {
@@ -1419,6 +1453,78 @@ impl Rp2040Deployer {
         self
     }
 
+    /// Flash over SWD through a CMSIS-DAP probe (FastLED/fbuild#1423).
+    ///
+    /// probe-rs binds to the probe on the board's debug header and drives the
+    /// target's debug port directly, so no USB endpoint has to enumerate on
+    /// the target and `--port` is irrelevant. A missing probe fails with
+    /// probe-rs's own `No probes were found` diagnostics rather than silently
+    /// falling back to a transport that also needs USB.
+    async fn deploy_via_swd(
+        &self,
+        firmware_path: &Path,
+        port: Option<&str>,
+    ) -> Result<DeploymentResult> {
+        let chip = probe_rs_chip_for_family(self.family_id);
+        let artifact = swd_artifact_for(firmware_path)?;
+        let probe_rs_binary = crate::probe_rs::ensure_probe_rs_installed().await?;
+        let download = {
+            let binary = probe_rs_binary.clone();
+            let artifact = artifact.clone();
+            tokio::task::spawn_blocking(move || {
+                crate::probe_rs::run_probe_rs_download(&binary, chip, None, &artifact)
+            })
+            .await
+            .map_err(|error| {
+                FbuildError::DeployFailed(format!("probe-rs SWD download task failed: {error}"))
+            })??
+        };
+        if !download.success() {
+            return Err(FbuildError::DeployFailed(format!(
+                "probe-rs SWD flash of {} exited {}; confirm a CMSIS-DAP probe is wired to the board debug header and the target is powered\nstdout:\n{}\nstderr:\n{}",
+                artifact.display(),
+                download.exit_code,
+                download.stdout.trim(),
+                download.stderr.trim()
+            )));
+        }
+        let reset = {
+            let binary = probe_rs_binary.clone();
+            tokio::task::spawn_blocking(move || {
+                crate::probe_rs::run_probe_rs_reset(&binary, chip, None)
+            })
+            .await
+            .map_err(|error| {
+                FbuildError::DeployFailed(format!("probe-rs SWD reset task failed: {error}"))
+            })??
+        };
+        let mut stdout = download.stdout;
+        stdout.push_str(&reset.stdout);
+        let mut stderr = download.stderr;
+        stderr.push_str(&reset.stderr);
+        let reset_note = if reset.success() {
+            ""
+        } else {
+            " (flash verified; reset did not report success)"
+        };
+        let port_note = if port.is_some() {
+            "; --port ignored, probe-rs selects the CMSIS-DAP probe directly"
+        } else {
+            ""
+        };
+        Ok(DeploymentResult {
+            success: true,
+            message: format!(
+                "firmware flashed via probe-rs SWD (chip={chip}, image={}){reset_note}{port_note}",
+                artifact.display()
+            ),
+            port: None,
+            stdout,
+            stderr,
+            outcome: DeployOutcome::FullFlash,
+        })
+    }
+
     pub fn for_mcu(mcu: &str) -> Result<Self> {
         let mut deployer = Self::default();
         match mcu.to_ascii_lowercase().as_str() {
@@ -1900,6 +2006,11 @@ impl Deployer for Rp2040Deployer {
         firmware_path: &Path,
         port: Option<&str>,
     ) -> Result<DeploymentResult> {
+        if self.transport == Rp2040Transport::Swd {
+            // SWD has no dependency on the target's USB stack (that is the
+            // whole point), so skip the BOOTSEL/runtime profile preparation.
+            return self.deploy_via_swd(firmware_path, port).await;
+        }
         tokio::task::spawn_blocking(ensure_verified_usb_profiles)
             .await
             .map_err(|error| {
@@ -2148,6 +2259,12 @@ impl Deployer for Rp2040Deployer {
             picotool_confirmed,
             prior_transport_failure,
         ) = match transport {
+            Rp2040Transport::Swd => {
+                return Err(FbuildError::DeployFailed(
+                    "internal error: SWD transport reached the BOOTSEL dispatch; it must be handled before USB preparation"
+                        .to_string(),
+                ));
+            }
             Rp2040Transport::Uf2 => {
                 if let Some(volume) = volume {
                     let transfer = run_mass_storage_transfer(
@@ -4152,6 +4269,44 @@ mod tests {
             parse_rp2040_transport(None).unwrap(),
             Rp2040Transport::Picotool
         );
+    }
+
+    #[test]
+    fn parse_transport_maps_swd() {
+        assert_eq!(
+            parse_rp2040_transport(Some("swd")).unwrap(),
+            Rp2040Transport::Swd
+        );
+    }
+
+    #[test]
+    fn swd_transport_never_attempts_picotool_first() {
+        assert!(!should_attempt_picotool_first(Rp2040Transport::Swd, None));
+    }
+
+    #[test]
+    fn swd_chip_follows_the_board_family() {
+        assert_eq!(probe_rs_chip_for_family(RP2040_FAMILY_ID), "RP2040");
+        assert_eq!(probe_rs_chip_for_family(RP2350_FAMILY_ID), "RP2350");
+    }
+
+    #[test]
+    fn swd_artifact_prefers_the_co_located_elf() {
+        let dir = tempdir().unwrap();
+        let uf2 = dir.path().join("firmware.uf2");
+        let elf = dir.path().join("firmware.elf");
+        fs::write(&uf2, b"uf2").unwrap();
+        fs::write(&elf, b"elf").unwrap();
+        assert_eq!(swd_artifact_for(&uf2).unwrap(), elf);
+    }
+
+    #[test]
+    fn swd_artifact_rejects_an_image_without_a_load_address() {
+        let dir = tempdir().unwrap();
+        let bin = dir.path().join("firmware.bin");
+        fs::write(&bin, b"bin").unwrap();
+        let error = swd_artifact_for(&bin).unwrap_err();
+        assert!(error.to_string().contains("needs an ELF or Intel HEX"));
     }
 
     #[test]

@@ -297,9 +297,10 @@ pub enum Commands {
         /// CH32V deploy protocol: `wlink` (default) or factory USB-ISP `isp`
         #[arg(long, value_parser = ["wlink", "isp"])]
         protocol: Option<String>,
-        /// RP2040 deploy transport: `picotool` (default, PICOBOOT-primary)
-        /// or `uf2` (mass-storage primary, historical order)
-        #[arg(long, value_parser = ["picotool", "uf2"])]
+        /// RP2040 deploy transport: `picotool` (default, PICOBOOT-primary),
+        /// `uf2` (mass-storage primary, historical order) or `swd` (CMSIS-DAP
+        /// probe via probe-rs; reaches a board that never enumerates USB)
+        #[arg(long, value_parser = ["picotool", "uf2", "swd"])]
         transport: Option<String>,
         #[arg(short = 'c', long)]
         clean: bool,
