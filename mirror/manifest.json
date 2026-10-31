@@ -1,0 +1,217 @@
+{
+  "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+  "kind": "Release",
+  "schema_version": 1,
+  "tool": "fbuild-download-mirror",
+  "version": "2026.10.31",
+  "components": [
+    {
+      "id": "platformio/tool/framework-arduino-avr-digistump/1.7.2/framework-arduino-avr-digistump-1.7.2.tar.gz",
+      "required": false,
+      "asset": {
+        "filename": "framework-arduino-avr-digistump-1.7.2.tar.gz",
+        "size_bytes": 814008,
+        "urls": [
+          "https://fbuild.sfo3.digitaloceanspaces.com/platformio/tool/framework-arduino-avr-digistump/1.7.2/framework-arduino-avr-digistump-1.7.2.tar.gz",
+          "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-avr-digistump/1.7.2/framework-arduino-avr-digistump-1.7.2.tar.gz"
+        ],
+        "sha256": "82ca5345922196acfa99a607cb300fa92c8ec16950667fdddbc9babddae75d2d"
+      }
+    },
+    {
+      "id": "platformio/tool/framework-arduino-avr-majorcore/3.1.0/framework-arduino-avr-majorcore-3.1.0.tar.gz",
+      "required": false,
+      "asset": {
+        "filename": "framework-arduino-avr-majorcore-3.1.0.tar.gz",
+        "size_bytes": 997362,
+        "urls": [
+          "https://fbuild.sfo3.digitaloceanspaces.com/platformio/tool/framework-arduino-avr-majorcore/3.1.0/framework-arduino-avr-majorcore-3.1.0.tar.gz",
+          "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-avr-majorcore/3.1.0/framework-arduino-avr-majorcore-3.1.0.tar.gz"
+        ],
+        "sha256": "99b606a1ef59ee3c8caed7c7a3778875a22b0af6fdfcc7f21890b2caeca662e6"
+      }
+    },
+    {
+      "id": "platformio/tool/framework-arduino-avr-megacore/3.1.0/framework-arduino-avr-megacore-3.1.0.tar.gz",
+      "required": false,
+      "asset": {
+        "filename": "framework-arduino-avr-megacore-3.1.0.tar.gz",
+        "size_bytes": 2719321,
+        "urls": [
+          "https://fbuild.sfo3.digitaloceanspaces.com/platformio/tool/framework-arduino-avr-megacore/3.1.0/framework-arduino-avr-megacore-3.1.0.tar.gz",
+          "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-avr-megacore/3.1.0/framework-arduino-avr-megacore-3.1.0.tar.gz"
+        ],
+        "sha256": "b2daa8f3432141ce21557b419b91605275b9e5fdb5f49eb8b1d3aaca5ff256ed"
+      }
+    },
+    {
+      "id": "platformio/tool/framework-arduino-avr-microcore/2.5.2/framework-arduino-avr-microcore-2.5.2.tar.gz",
+      "required": false,
+      "asset": {
+        "filename": "framework-arduino-avr-microcore-2.5.2.tar.gz",
+        "size_bytes": 244604,
+        "urls": [
+          "https://fbuild.sfo3.digitaloceanspaces.com/platformio/tool/framework-arduino-avr-microcore/2.5.2/framework-arduino-avr-microcore-2.5.2.tar.gz",
+          "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-avr-microcore/2.5.2/framework-arduino-avr-microcore-2.5.2.tar.gz"
+        ],
+        "sha256": "9fd6d1074fac692e15e1f4cbfc7c7b0df7bfedcddfafccb39889c622b97ddc11"
+      }
+    },
+    {
+      "id": "platformio/tool/framework-arduino-avr-mightycore/3.1.0/framework-arduino-avr-mightycore-3.1.0.tar.gz",
+      "required": false,
+      "asset": {
+        "filename": "framework-arduino-avr-mightycore-3.1.0.tar.gz",
+        "size_bytes": 1279865,
+        "urls": [
+          "https://fbuild.sfo3.digitaloceanspaces.com/platformio/tool/framework-arduino-avr-mightycore/3.1.0/framework-arduino-avr-mightycore-3.1.0.tar.gz",
+          "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-avr-mightycore/3.1.0/framework-arduino-avr-mightycore-3.1.0.tar.gz"
+        ],
+        "sha256": "adba55b2b6254974cce65a63ecb75c3407ac7140b095c32e930394f27d18030b"
+      }
+    },
+    {
+      "id": "platformio/tool/framework-arduino-avr-minicore/3.1.2/framework-arduino-avr-minicore-3.1.2.tar.gz",
+      "required": false,
+      "asset": {
+        "filename": "framework-arduino-avr-minicore-3.1.2.tar.gz",
+        "size_bytes": 1136314,
+        "urls": [
+          "https://fbuild.sfo3.digitaloceanspaces.com/platformio/tool/framework-arduino-avr-minicore/3.1.2/framework-arduino-avr-minicore-3.1.2.tar.gz",
+          "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-avr-minicore/3.1.2/framework-arduino-avr-minicore-3.1.2.tar.gz"
+        ],
+        "sha256": "3cc43553f35d2d00a277d488eefba628816104ae61a9ca9cecd60470f555c9f6"
+      }
+    },
+    {
+      "id": "platformio/tool/framework-arduino-avr/5.4.0/framework-arduino-avr-5.4.0.tar.gz",
+      "required": false,
+      "asset": {
+        "filename": "framework-arduino-avr-5.4.0.tar.gz",
+        "size_bytes": 565720,
+        "urls": [
+          "https://fbuild.sfo3.digitaloceanspaces.com/platformio/tool/framework-arduino-avr/5.4.0/framework-arduino-avr-5.4.0.tar.gz",
+          "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-avr/5.4.0/framework-arduino-avr-5.4.0.tar.gz"
+        ],
+        "sha256": "bf85bcca114bad389fec51fecbf9b66821a233b366bd3f85cdb1cdcba6a28659"
+      }
+    },
+    {
+      "id": "platformio/tool/framework-arduino-megaavr-dxcore/1.6.2/framework-arduino-megaavr-dxcore-1.6.2.tar.gz",
+      "required": false,
+      "asset": {
+        "filename": "framework-arduino-megaavr-dxcore-1.6.2.tar.gz",
+        "size_bytes": 6584481,
+        "urls": [
+          "https://fbuild.sfo3.digitaloceanspaces.com/platformio/tool/framework-arduino-megaavr-dxcore/1.6.2/framework-arduino-megaavr-dxcore-1.6.2.tar.gz",
+          "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-megaavr-dxcore/1.6.2/framework-arduino-megaavr-dxcore-1.6.2.tar.gz"
+        ],
+        "sha256": "72a8cdff1dba8da9f7cabb18db0e8e9ef5f412bc68bb269e72cfa5ad1ab9f911"
+      }
+    },
+    {
+      "id": "platformio/tool/framework-arduino-sam/1.6.12/framework-arduino-sam-1.6.12.tar.gz",
+      "required": false,
+      "asset": {
+        "filename": "framework-arduino-sam-1.6.12.tar.gz",
+        "size_bytes": 37924299,
+        "urls": [
+          "https://fbuild.sfo3.digitaloceanspaces.com/platformio/tool/framework-arduino-sam/1.6.12/framework-arduino-sam-1.6.12.tar.gz",
+          "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-sam/1.6.12/framework-arduino-sam-1.6.12.tar.gz"
+        ],
+        "sha256": "c657856d3aa8e8355c2feac26b8865b580725a914ac614a0b8c1d5fdd27494b9"
+      }
+    },
+    {
+      "id": "platformio/tool/framework-arduinoadafruitnrf52/1.10601.0/framework-arduinoadafruitnrf52-1.10601.0.tar.gz",
+      "required": false,
+      "asset": {
+        "filename": "framework-arduinoadafruitnrf52-1.10601.0.tar.gz",
+        "size_bytes": 19607455,
+        "urls": [
+          "https://fbuild.sfo3.digitaloceanspaces.com/platformio/tool/framework-arduinoadafruitnrf52/1.10601.0/framework-arduinoadafruitnrf52-1.10601.0.tar.gz",
+          "https://dl.registry.platformio.org/download/platformio/tool/framework-arduinoadafruitnrf52/1.10601.0/framework-arduinoadafruitnrf52-1.10601.0.tar.gz"
+        ],
+        "sha256": "97b1d49248182ef48450833dc843eeb82c71222c813a47231ca9bfe1d30ecb37"
+      }
+    },
+    {
+      "id": "platformio/tool/framework-arduinoespressif32/3.20017.241212+sha.dcc1105b/framework-arduinoespressif32-3.20017.241212+sha.dcc1105b.tar.gz",
+      "required": false,
+      "asset": {
+        "filename": "framework-arduinoespressif32-3.20017.241212+sha.dcc1105b.tar.gz",
+        "size_bytes": 246321254,
+        "urls": [
+          "https://fbuild.sfo3.digitaloceanspaces.com/platformio/tool/framework-arduinoespressif32/3.20017.241212+sha.dcc1105b/framework-arduinoespressif32-3.20017.241212+sha.dcc1105b.tar.gz",
+          "https://dl.registry.platformio.org/download/platformio/tool/framework-arduinoespressif32/3.20017.241212+sha.dcc1105b/framework-arduinoespressif32-3.20017.241212+sha.dcc1105b.tar.gz"
+        ],
+        "sha256": "7dbcfb86f9dfd5ecf6c881ed8226239d9ef63f27e1e1a2ddd87a87762e2ffbc9"
+      }
+    },
+    {
+      "id": "platformio/tool/framework-arduinoteensy/1.159.0/framework-arduinoteensy-1.159.0.tar.gz",
+      "required": false,
+      "asset": {
+        "filename": "framework-arduinoteensy-1.159.0.tar.gz",
+        "size_bytes": 22630689,
+        "urls": [
+          "https://fbuild.sfo3.digitaloceanspaces.com/platformio/tool/framework-arduinoteensy/1.159.0/framework-arduinoteensy-1.159.0.tar.gz",
+          "https://dl.registry.platformio.org/download/platformio/tool/framework-arduinoteensy/1.159.0/framework-arduinoteensy-1.159.0.tar.gz"
+        ],
+        "sha256": "c511fa047471c656bc28cfe5e95eacb223f83cc7a3b31fcf652e25b5e73f7838"
+      }
+    },
+    {
+      "id": "platformio/tool/framework-arduinoteensy/1.160.0/framework-arduinoteensy-1.160.0.tar.gz",
+      "required": false,
+      "asset": {
+        "filename": "framework-arduinoteensy-1.160.0.tar.gz",
+        "size_bytes": 22462028,
+        "urls": [
+          "https://fbuild.sfo3.digitaloceanspaces.com/platformio/tool/framework-arduinoteensy/1.160.0/framework-arduinoteensy-1.160.0.tar.gz",
+          "https://dl.registry.platformio.org/download/platformio/tool/framework-arduinoteensy/1.160.0/framework-arduinoteensy-1.160.0.tar.gz"
+        ],
+        "sha256": "b1c21d181257eee1ac34bdaf417ab79608dab1a22ff5d44370fee35d56ede34d"
+      }
+    },
+    {
+      "id": "platformio/tool/framework-cmsis-atmel/1.2.2/framework-cmsis-atmel-1.2.2.tar.gz",
+      "required": false,
+      "asset": {
+        "filename": "framework-cmsis-atmel-1.2.2.tar.gz",
+        "size_bytes": 4146988,
+        "urls": [
+          "https://fbuild.sfo3.digitaloceanspaces.com/platformio/tool/framework-cmsis-atmel/1.2.2/framework-cmsis-atmel-1.2.2.tar.gz",
+          "https://dl.registry.platformio.org/download/platformio/tool/framework-cmsis-atmel/1.2.2/framework-cmsis-atmel-1.2.2.tar.gz"
+        ],
+        "sha256": "de7778f049e2558e1c8dbb50478f47c5680d4b393bc49e702203ffdd7a6ca60c"
+      }
+    },
+    {
+      "id": "platformio/tool/framework-cmsis/2.50700.210515/framework-cmsis-2.50700.210515.tar.gz",
+      "required": false,
+      "asset": {
+        "filename": "framework-cmsis-2.50700.210515.tar.gz",
+        "size_bytes": 30705818,
+        "urls": [
+          "https://fbuild.sfo3.digitaloceanspaces.com/platformio/tool/framework-cmsis/2.50700.210515/framework-cmsis-2.50700.210515.tar.gz",
+          "https://dl.registry.platformio.org/download/platformio/tool/framework-cmsis/2.50700.210515/framework-cmsis-2.50700.210515.tar.gz"
+        ],
+        "sha256": "c45aee42cad60ce1167b3ee15f36f624bb0d9878d831d3d4e32665c47d9635bb"
+      }
+    },
+    {
+      "id": "platformio/tool/toolchain-xtensa/2.100300.220621/toolchain-xtensa-linux_x86_64-2.100300.220621.tar.gz",
+      "required": false,
+      "asset": {
+        "filename": "toolchain-xtensa-linux_x86_64-2.100300.220621.tar.gz",
+        "size_bytes": 74422751,
+        "urls": [
+          "https://fbuild.sfo3.digitaloceanspaces.com/platformio/tool/toolchain-xtensa/2.100300.220621/toolchain-xtensa-linux_x86_64-2.100300.220621.tar.gz",
+          "https://dl.registry.platformio.org/download/platformio/tool/toolchain-xtensa/2.100300.220621/toolchain-xtensa-linux_x86_64-2.100300.220621.tar.gz"
+        ],
+        "sha256": "a3d51bebcfaa2f5cca154956fee3e9270b6d0e9c5d51de6034a86aaa606ea8a5"
+      }
+    }
+  ]
+}
