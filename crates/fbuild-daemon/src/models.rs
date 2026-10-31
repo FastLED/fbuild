@@ -96,7 +96,7 @@ pub struct DeployRequest {
     /// Explicit deploy protocol, currently `isp` or `wlink` for CH32V.
     #[serde(default)]
     pub protocol: Option<String>,
-    /// RP2040 deploy transport, `picotool` (default) or `uf2`.
+    /// RP2040 deploy transport, `picotool` (default), `uf2` or `swd`.
     #[serde(default)]
     pub transport: Option<String>,
     #[serde(default)]
