@@ -56,7 +56,7 @@ jobs:
           echo "PYTHONHOME=$PYTHONHOME" >> "$GITHUB_ENV"
       - name: Setup soldr
         id: setup-soldr
-        uses: zackees/setup-soldr@794fb3083729fd6be3396ab6cbd573c9f756d2f5 # setup-soldr#582 exact-main promotion canary
+        uses: zackees/setup-soldr@ddbca94c93ad90081890579a8cdd24f6214b8b56 # setup-soldr#582 exact-main promotion canary
         with:
           # Own build-cache store (setup-soldr#237): with no suffix this job
           # shared one Cargo.lock-keyed entry with ~10 other workflows, and
@@ -146,7 +146,7 @@ jobs:
       # Own build-cache store: this job cross-links two release targets and
       # must not compete with (or poison) the test job's cache generation.
       - name: Setup soldr
-        uses: zackees/setup-soldr@794fb3083729fd6be3396ab6cbd573c9f756d2f5 # setup-soldr#582 exact-main promotion canary
+        uses: zackees/setup-soldr@ddbca94c93ad90081890579a8cdd24f6214b8b56 # setup-soldr#582 exact-main promotion canary
         with:
           cache-key-suffix: glibc-floor
           job-status: ${{ job.status }}
@@ -200,7 +200,7 @@ jobs:
         with:
           python-version: "3.10"
       - name: Setup soldr
-        uses: zackees/setup-soldr@794fb3083729fd6be3396ab6cbd573c9f756d2f5 # setup-soldr#582 exact-main promotion canary
+        uses: zackees/setup-soldr@ddbca94c93ad90081890579a8cdd24f6214b8b56 # setup-soldr#582 exact-main promotion canary
         with:
           cache-key-suffix: python-facades
           job-status: ${{ job.status }}

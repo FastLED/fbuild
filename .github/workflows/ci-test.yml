@@ -70,7 +70,7 @@ jobs:
         with:
           ref: ${{ needs.verify.outputs.candidate_sha }}
           persist-credentials: false
-      - uses: zackees/setup-soldr@794fb3083729fd6be3396ab6cbd573c9f756d2f5 # v0.9.86
+      - uses: zackees/setup-soldr@ddbca94c93ad90081890579a8cdd24f6214b8b56 # v0.9.86
         with:
           cache-preset: foundation
           prebuild-deps-flags: ""
