@@ -209,7 +209,8 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p benchmark-stats/mirror
-          cp repo/site/mirror/manifest.json benchmark-stats/mirror/manifest.json
+          # The Index points at per-owner shards (FastLED/fbuild#1815); ship them too.
+          cp -a repo/site/mirror/. benchmark-stats/mirror/
 
       - name: Publish one-commit benchmark-stats branch
         shell: bash
