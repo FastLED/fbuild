@@ -22,6 +22,7 @@ concurrency:
 jobs:
   build:
     uses: ./.github/workflows/template_build.yml
+    secrets: inherit
     with:
       workflow-name: "NXP LPCXpresso804"
       test-dir: "tests/platform/lpcxpresso804"

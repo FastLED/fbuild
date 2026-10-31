@@ -63,6 +63,7 @@ jobs:
   linux:
     if: github.event_name != 'pull_request' || (!contains(github.event.pull_request.labels.*.name, 'ci-test') && !contains(github.event.pull_request.labels.*.name, 'ci-full'))
     uses: ./.github/workflows/check-ubuntu.yml
+    secrets: inherit
     with:
       ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
   board_plan:
@@ -96,13 +97,17 @@ jobs:
       CARGO_TERM_COLOR: always
       RUSTFLAGS: "-D warnings"
       SOLDR_TARGET_BLOCK_FREE_GB: "2"
+      SOLDR_S3_CACHE_ACCESS_KEY: ${{ secrets.SOLDR_S3_CACHE_ACCESS_KEY }}
+      SOLDR_S3_CACHE_SECRET_KEY: ${{ secrets.SOLDR_S3_CACHE_SECRET_KEY }}
     steps:
       - uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
-      - uses: zackees/setup-soldr@794fb3083729fd6be3396ab6cbd573c9f756d2f5 # v0.9.86
+      - uses: zackees/setup-soldr@9337570234850b50322e696037127fa3cf8ac703 # setup-soldr#629 S3 remote cache
         with:
+          s3-bucket: forge-ci-cache
+          s3-endpoint: sfo3.digitaloceanspaces.com
           cache-preset: foundation
           prebuild-deps-flags: ""
           prebuild-deps: none
@@ -130,6 +135,7 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.board_plan.outputs.matrix) }}
     uses: ./.github/workflows/template_build.yml
+    secrets: inherit
     with:
       workflow-name: ${{ matrix.workflow_name }}
       test-dir: ${{ matrix.test_dir }}

@@ -22,6 +22,7 @@ concurrency:
 jobs:
   build:
     uses: ./.github/workflows/template_build.yml
+    secrets: inherit
     with:
       workflow-name: "Adafruit QT Py M0"
       test-dir: "tests/platform/qtpy_m0"

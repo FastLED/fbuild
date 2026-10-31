@@ -22,6 +22,7 @@ concurrency:
 jobs:
   build:
     uses: ./.github/workflows/template_build.yml
+    secrets: inherit
     with:
       workflow-name: "Atmel SAM3X8E (Due)"
       test-dir: "tests/platform/sam3x8e_due"

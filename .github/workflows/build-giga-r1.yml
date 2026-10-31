@@ -22,6 +22,7 @@ concurrency:
 jobs:
   build:
     uses: ./.github/workflows/template_build.yml
+    secrets: inherit
     with:
       workflow-name: "Arduino GIGA R1 M7"
       test-dir: "tests/platform/giga_r1_m7"

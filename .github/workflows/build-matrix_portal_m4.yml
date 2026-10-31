@@ -22,6 +22,7 @@ concurrency:
 jobs:
   build:
     uses: ./.github/workflows/template_build.yml
+    secrets: inherit
     with:
       workflow-name: "Adafruit Matrix Portal M4"
       test-dir: "tests/platform/matrix_portal_m4"

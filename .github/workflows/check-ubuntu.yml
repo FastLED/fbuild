@@ -27,6 +27,9 @@ jobs:
     name: Check (ubuntu-latest)
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      SOLDR_S3_CACHE_ACCESS_KEY: ${{ secrets.SOLDR_S3_CACHE_ACCESS_KEY }}
+      SOLDR_S3_CACHE_SECRET_KEY: ${{ secrets.SOLDR_S3_CACHE_SECRET_KEY }}
     steps:
       - name: Checkout source
         uses: actions/checkout@v6
@@ -56,8 +59,10 @@ jobs:
           echo "PYTHONHOME=$PYTHONHOME" >> "$GITHUB_ENV"
       - name: Setup soldr
         id: setup-soldr
-        uses: zackees/setup-soldr@794fb3083729fd6be3396ab6cbd573c9f756d2f5 # setup-soldr#582 exact-main promotion canary
+        uses: zackees/setup-soldr@9337570234850b50322e696037127fa3cf8ac703 # setup-soldr#629 S3 remote cache
         with:
+          s3-bucket: forge-ci-cache
+          s3-endpoint: sfo3.digitaloceanspaces.com
           # Own build-cache store (setup-soldr#237): with no suffix this job
           # shared one Cargo.lock-keyed entry with ~10 other workflows, and
           # the first small job to save it (165 MB) froze it -- an exact hit
@@ -126,6 +131,9 @@ jobs:
     # Measured ~16 min for the daemon alone on a loaded 16-core host with an
     # empty cache; 60 leaves room for the first (cache-miss) run.
     timeout-minutes: 60
+    env:
+      SOLDR_S3_CACHE_ACCESS_KEY: ${{ secrets.SOLDR_S3_CACHE_ACCESS_KEY }}
+      SOLDR_S3_CACHE_SECRET_KEY: ${{ secrets.SOLDR_S3_CACHE_SECRET_KEY }}
     steps:
       - name: Checkout source
         uses: actions/checkout@v6
@@ -146,8 +154,10 @@ jobs:
       # Own build-cache store: this job cross-links two release targets and
       # must not compete with (or poison) the test job's cache generation.
       - name: Setup soldr
-        uses: zackees/setup-soldr@794fb3083729fd6be3396ab6cbd573c9f756d2f5 # setup-soldr#582 exact-main promotion canary
+        uses: zackees/setup-soldr@9337570234850b50322e696037127fa3cf8ac703 # setup-soldr#629 S3 remote cache
         with:
+          s3-bucket: forge-ci-cache
+          s3-endpoint: sfo3.digitaloceanspaces.com
           cache-key-suffix: glibc-floor
           job-status: ${{ job.status }}
           cache: true
@@ -182,6 +192,9 @@ jobs:
     name: Python facade tests (ubuntu-latest)
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    env:
+      SOLDR_S3_CACHE_ACCESS_KEY: ${{ secrets.SOLDR_S3_CACHE_ACCESS_KEY }}
+      SOLDR_S3_CACHE_SECRET_KEY: ${{ secrets.SOLDR_S3_CACHE_SECRET_KEY }}
     steps:
       - name: Checkout source
         uses: actions/checkout@v6
@@ -200,8 +213,10 @@ jobs:
         with:
           python-version: "3.10"
       - name: Setup soldr
-        uses: zackees/setup-soldr@794fb3083729fd6be3396ab6cbd573c9f756d2f5 # setup-soldr#582 exact-main promotion canary
+        uses: zackees/setup-soldr@9337570234850b50322e696037127fa3cf8ac703 # setup-soldr#629 S3 remote cache
         with:
+          s3-bucket: forge-ci-cache
+          s3-endpoint: sfo3.digitaloceanspaces.com
           cache-key-suffix: python-facades
           job-status: ${{ job.status }}
           save-on-failure: ${{ job.status == 'failure' && steps.tests.outputs.assertion_failure_only == 'true' }}

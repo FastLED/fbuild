@@ -30,14 +30,19 @@ jobs:
     # setup-soldr 0.9.25 full-coverage canary, and the lane's own steps now
     # total ~44-45 min, so runner variance tripped 45 (FastLED/fbuild#1710).
     timeout-minutes: 60
+    env:
+      SOLDR_S3_CACHE_ACCESS_KEY: ${{ secrets.SOLDR_S3_CACHE_ACCESS_KEY }}
+      SOLDR_S3_CACHE_SECRET_KEY: ${{ secrets.SOLDR_S3_CACHE_SECRET_KEY }}
     steps:
       - uses: actions/checkout@v6
         with:
           ref: ${{ inputs.ref }}
       - name: Setup soldr
         id: setup-soldr
-        uses: zackees/setup-soldr@794fb3083729fd6be3396ab6cbd573c9f756d2f5 # v0.9.86
+        uses: zackees/setup-soldr@9337570234850b50322e696037127fa3cf8ac703 # setup-soldr#629 S3 remote cache
         with:
+          s3-bucket: forge-ci-cache
+          s3-endpoint: sfo3.digitaloceanspaces.com
           cache-key-suffix: check-windows-check
           cache: true
           build-cache: true
