@@ -13,8 +13,9 @@
 //! missing entry or a failed write all fall back to running the tool; nothing
 //! here can make a build fail.
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
+use fbuild_core::path::NormalizedPath;
 use sha2::{Digest, Sha256};
 
 use crate::build_fingerprint::FileStamp;
@@ -60,8 +61,8 @@ impl ArtifactKey {
         Some(Self { digest: hex })
     }
 
-    fn path_in(&self, cache_root: &Path) -> PathBuf {
-        cache_root
+    fn path_in(&self, cache_root: &Path) -> NormalizedPath {
+        NormalizedPath::new(cache_root)
             .join(CACHE_DIR_NAME)
             .join(format!("{}.bin", self.digest))
     }
@@ -70,6 +71,7 @@ impl ArtifactKey {
     /// unusable entry: the caller must run the tool.
     pub(super) fn materialize(&self, cache_root: &Path, destination: &Path) -> bool {
         let cached = self.path_in(cache_root);
+        let cached = cached.as_path();
         if !cached.exists() {
             return false;
         }
@@ -90,6 +92,7 @@ impl ArtifactKey {
     /// full cache root only costs the next build a re-run.
     pub(super) fn store(&self, cache_root: &Path, produced: &Path) {
         let target = self.path_in(cache_root);
+        let target = target.as_path();
         let Some(parent) = target.parent() else {
             return;
         };
